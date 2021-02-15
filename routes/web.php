@@ -11,10 +11,10 @@ Route::get('/', function () {
 });
 
 
-Route::get('/{any}', function ($any) {
-    $view = str_replace('.html', '', $any);
-    return view($view);
-});
+// Route::get('/{any}', function ($any) {
+//     $view = str_replace('.html', '', $any);
+//     return view($view);
+// });
 
 Route::view('/view-layouts', function() {
    return view('activities');
