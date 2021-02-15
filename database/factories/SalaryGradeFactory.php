@@ -7,6 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(SalaryGrade::class, function (Faker $faker) {
     return [
+        'salary_grade_no' => $faker->randomNumber,
         'salary_grade_step1' => $faker->randomNumber,
         'salary_grade_step2' => $faker->randomNumber,
         'salary_grade_step3' => $faker->randomNumber,

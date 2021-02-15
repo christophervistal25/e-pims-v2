@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\SalaryGrade;
 use Yajra\Datatables\Datatables;
+
 class SalaryGradeController extends Controller
 {
     /**
@@ -15,22 +16,11 @@ class SalaryGradeController extends Controller
     public function index()
     {
         $salary_grade = SalaryGrade::get();
-        return view('/salarygrade', compact("salary_grade"));
+        return view('SalaryGrade.SalaryGrade');
     }
-    public function list(Request $request)
+    public function list()
     {
-        // return Datatables::of(SalaryGrade::query())->make(true);
-        if ($request->ajax()) {
-            $data = SalaryGrade::query();
-            return Datatables::of($data)
-                    ->addColumn('action', function($row){
-                        $btn = '<a href="2" class="edit btn btn-info btn-sm">Edit</a>';
-                            return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
-        }
-        return view('/edit');
+      return Datatables::of(SalaryGrade::query())->make(true);
     }
 
     /**
@@ -52,6 +42,7 @@ class SalaryGradeController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+            'salary_grade_no' => 'required',
             'salary_grade_step1' => 'required',
             'salary_grade_step2' => 'required',
             'salary_grade_step3' => 'required',
@@ -60,10 +51,10 @@ class SalaryGradeController extends Controller
             'salary_grade_step6' => 'required',
             'salary_grade_step7' => 'required',
             'salary_grade_step8' => 'required',
-            'salary_grade_year' => 'required',
+            'salary_grade_year'  => 'required',
         ]);
-
         $salarygrade = new SalaryGrade;
+        $salarygrade->salary_grade_no=$request['salary_grade_no'];
         $salarygrade->salary_grade_step1=$request['salary_grade_step1'];
         $salarygrade->salary_grade_step2=$request['salary_grade_step2'];
         $salarygrade->salary_grade_step3=$request['salary_grade_step3'];
@@ -74,7 +65,7 @@ class SalaryGradeController extends Controller
         $salarygrade->salary_grade_step8=$request['salary_grade_step8'];
         $salarygrade->salary_grade_year=$request['salary_grade_year'];
         $salarygrade->save();
-        return redirect('/salary_grade')->with('success','Added Successfully');
+        return redirect('/salary-grade')->with('success','Added Successfully');
     }
 
     /**

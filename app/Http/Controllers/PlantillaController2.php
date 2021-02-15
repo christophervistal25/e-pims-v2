@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use App\Plantilla;
+
 class PlantillaController extends Controller
 {
     /**
@@ -14,11 +15,7 @@ class PlantillaController extends Controller
      */
     public function index()
     {
-        return view('Plantilla.Plantilla');
-    }
-    public function list()
-    {
-        return Datatables::of(Plantilla::query())->make(true);
+        //
     }
 
     /**
@@ -48,9 +45,13 @@ class PlantillaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        
+    }
+    public function list()
+    {
+        return Datatables::of(Plantilla::query())->make(true);
     }
 
     /**
