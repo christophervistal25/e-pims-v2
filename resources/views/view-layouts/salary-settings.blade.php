@@ -29,14 +29,11 @@
 	<!-- Main Wrapper -->
 	<div class="main-wrapper">
 		<!-- Header -->
-		<?php  
-		// <!-- Header -->
+		
 		@include('layouts/includes/header')
-		// <!-- /Header -->
-		// <!-- Sidebar -->
-		@include('layouts/includes/settings-sidebar')
-		// <!-- /Sidebar -->
-		?>
+            
+			@include('layouts/includes/sidebar')
+	
 		<!-- Page Wrapper -->
 		<div class="page-wrapper">
 			<!-- Page Content -->
