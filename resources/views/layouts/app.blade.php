@@ -8,16 +8,13 @@
 	<meta name="author" content="Dreamguys - Bootstrap Admin Template">
 	<meta name="robots" content="noindex, nofollow">
 	<title>Blank Page - HRMS admin template</title>
-	<!-- Favicon -->
-	<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-	<!-- Fontawesome CSS -->
-	<link rel="stylesheet" href="assets/css/font-awesome.min.css">
-	<!-- Lineawesome CSS -->
-	<link rel="stylesheet" href="assets/css/line-awesome.min.css">
-	<!-- Main CSS -->
-	<link rel="stylesheet" href="assets/css/style.css">
+	<link rel="shortcut icon" type="image/x-icon" href="{{ asset('/assets/img/favicon.png') }}">
+	<link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('/assets/css/font-awesome.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('/assets/css/line-awesome.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('/assets/css/select2.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('/assets/css/bootstrap-datetimepicker.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     @stack('page-css')
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
@@ -590,15 +587,19 @@
 		<!-- /Page Wrapper -->
 	</div>
 	<!-- /Main Wrapper -->
-	<!-- jQuery -->
-	<script src="assets/js/jquery-3.2.1.min.js"></script>
-	<!-- Bootstrap Core JS -->
-	<script src="assets/js/popper.min.js"></script>
-	<script src="assets/js/bootstrap.min.js"></script>
-	<!-- Slimscroll JS -->
-	<script src="assets/js/jquery.slimscroll.min.js"></script>
-	<!-- Custom JS -->
-	<script src="assets/js/app.js"></script>
+	<script
+	src="https://code.jquery.com/jquery-3.5.1.min.js"
+	integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+	crossorigin="anonymous"></script>
+	<script src="{{asset('/assets/js/jquery-3.2.1.min.js')}}"></script>
+	<script src="{{ asset('/assets/js/popper.min.js') }}"></script>
+	<script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
+	<script src="{{ asset('/assets/js/jquery.slimscroll.min.js') }}"></script>
+	<script src="{{ asset('/assets/js/select2.min.js') }}"></script>
+	<script src="{{ asset('/assets/js/moment.min.js') }}"></script>
+	<script src="{{ asset('/assets/js/bootstrap-datetimepicker.min.js') }}"></script>
+	<script src="{{ asset('/assets/js/app.js') }}"></script>
+	<script src="{{ asset('/assets/js/searchable.js') }}"></script>
     @stack('page-scripts')
 </body>
 </html>

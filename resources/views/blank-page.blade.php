@@ -2,7 +2,7 @@
 @section('title', 'Employee')
 @prepend('page-css')
 {{-- CSS HERE --}}
-@endpreprend
+@endpeprend
 @section('content')
 <h1>Hello , World</h1>
 @push('page-scripts')
