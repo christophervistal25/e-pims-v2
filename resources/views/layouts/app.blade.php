@@ -18,6 +18,7 @@
 	<link rel="stylesheet" href="assets/css/line-awesome.min.css">
 	<!-- Main CSS -->
 	<link rel="stylesheet" href="assets/css/style.css">
+    @stack('page-css')
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
 			<script src="assets/js/html5shiv.min.js"></script>
@@ -598,5 +599,6 @@
 	<script src="assets/js/jquery.slimscroll.min.js"></script>
 	<!-- Custom JS -->
 	<script src="assets/js/app.js"></script>
+    @stack('page-scripts')
 </body>
 </html>

@@ -11,6 +11,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call([
+            AreaCodeSeeder::class,
+            AreaTypeSeeder::class,
+            StatusSeeder::class,
+            LevelSeeder::class,
+            SalaryGradeSeeder::class,
+            PlantillaSeeder::class,
+            OfficeSeeder::class,
+
+            ]);
         // $this->call(UsersTableSeeder::class);
     }
 }
