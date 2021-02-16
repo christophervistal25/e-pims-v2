@@ -12,16 +12,16 @@
                 <div class="row">
                     <div class="form-group form-focus select-focus col-5">
                         <select class="select floating" id="filter_year" onchange="filter_year();">
-                            @for($i = 5; $i >= 1; $i--)
-                                {{ $date1 = date("Y",strtotime("+$i year")) }}
-                                <option value={{ $date1 }}>{{ $date1 }}</option>
-                            @endfor 
-                                {{ $date = date("Y") }}
-                                <option selected value={{ $date }}>{{ $date }}</option>
-                            @for($ii = 1; $ii <= 5; $ii++)
-                                {{ $date2 = date("Y",strtotime("-$ii year")) }}
-                                <option value={{ $date2 }}>{{ $date2 }}</option>
-                            @endfor 
+                            @foreach (range(5, 1) as $year)
+                            {{ $year1 = date("Y",strtotime("+$year year")) }}
+                            <option value={{ $year1 }}>{{ $year1 }}</option>
+                            @endforeach
+                            {{ $date = date("Y") }}
+                            <option selected value={{ $date }}>{{ $date }}</option>
+                                @foreach (range(1, 5) as $year)
+                                {{ $year2 = date("Y",strtotime("-$year year")) }}
+                                <option value={{ $year2 }}>{{ $year2 }}</option>
+                            @endforeach 
                         </select>
                         <label style="padding-left:10px;" class="focus-label">Select Year</label>
                     </div>

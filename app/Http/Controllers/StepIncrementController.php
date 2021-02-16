@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
-use App\Plantilla;
 
-class PlantillaController extends Controller
+class StepIncrementController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +13,7 @@ class PlantillaController extends Controller
      */
     public function index()
     {
-        //
+        return view('StepIncrement.StepIncrement');
     }
 
     /**
@@ -45,13 +43,9 @@ class PlantillaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show($id)
     {
-        
-    }
-    public function list()
-    {
-        return Datatables::of(Plantilla::query())->make(true);
+        //
     }
 
     /**

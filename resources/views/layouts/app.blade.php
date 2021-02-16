@@ -571,7 +571,7 @@
 						<div class="col-sm-12">
 							<h3 class="page-title">@yield('title')</h3>
 							<ul class="breadcrumb">
-								<li class="breadcrumb-item"><a href="index.html">@yield('title')</a></li>
+								<li class="breadcrumb-item"><a href="">@yield('title')</a></li>
 								<li class="breadcrumb-item active"></li>
 							</ul>
 						</div>
