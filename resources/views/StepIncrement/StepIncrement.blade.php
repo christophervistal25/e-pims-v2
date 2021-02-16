@@ -1,12 +1,9 @@
 @extends('layouts.app')
 @section('title', 'Step Increment')
 @prepend('page-css')
-{{-- CSS HERE --}}
+<link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 @endprepend
 @section('content')
-
-
-
 <div class="kanban-board card mb-0">
     <div class="card-body">
         <div class="row">
@@ -18,13 +15,18 @@
                 <label>Date:</label>
                 <input class="form-control" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" id="" name="" type="date" readonly>
             </div>
-            <div class="form-group col-6 col-lg-3">
+            <div class="form-group col-6 col-lg-2">
                 <label>Employee Id:</label>
                 <input class="form-control" value="" id="" name="" type="text" readonly>
             </div>
-            <div class="form-group col-6 col-lg-4">
+            <div class="form-group col-6 col-lg-5">
                 <label>Employee Name:</label>
-                <input class="form-control" value="" id="" name="" type="text" readonly>
+                <select class="form-control selectpicker" data-live-search="true">
+                    <option>Search Name Here</option>
+                    <option>Hot Dog, Fries and a Soda</option>
+                    <option>Burger, Shake and a Smile</option>
+                    <option>Sugar, Spice and all things nice</option>
+                  </select>
             </div>
             <div class="form-group col-6 col-lg-4">
                 <label>Position:</label>
@@ -100,21 +102,12 @@
             </div>
             <div class="form-group col-12 col-lg-12 ">
                <button type="submit" class="btn btn-secondary float-right">Cancel</button>
-               <button type="submit" style="margin-right:10px" class="float-right btn btn-success">Save & Print</button>
+              <button type="submit" style="margin-right:10px"  class="float-right btn btn-success">Save & Print</button>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
 @push('page-scripts')
-{{-- JS SCRIPTS HERE --}}
+<script src="{{ asset('/assets/js/custom.js') }}"></script>
 @endpush
 @endsection
