@@ -187,7 +187,7 @@ a:focus {
 	border-color: #e3e3e3;
     box-shadow: none;
     font-size: 15px;
-    height: 44px;
+    height: 40px;
 }
 .form-control:focus {
 	border-color: #ccc;
@@ -3325,6 +3325,10 @@ table.dataTable thead > tr > td.sorting {
 }
 .staff-msg {
 	margin-top: 30px;
+}
+.button-sub {
+	margin-top: 30px;
+	color: white;
 }
 .experience-box {
 	position: relative;
@@ -8157,4 +8161,8 @@ ul.comment-list li ul.children {
 		font-size: 14px;
 		min-width: inherit;
 	}
+}
+
+.step-increment {
+	border-top: 3px dashed #ccc;
 }
