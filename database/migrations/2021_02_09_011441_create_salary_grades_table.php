@@ -15,17 +15,16 @@ class CreateSalaryGradesTable extends Migration
     {
         Schema::create('salary_grades', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('salary_grade_no');
-            $table->decimal('salary_grade_step1', 11,2);
-            $table->decimal('salary_grade_step2', 11,2);
-            $table->decimal('salary_grade_step3', 11,2);
-            $table->decimal('salary_grade_step4', 11,2);
-            $table->decimal('salary_grade_step5', 11,2);
-            $table->decimal('salary_grade_step6', 11,2);
-            $table->decimal('salary_grade_step7', 11,2);
-            $table->decimal('salary_grade_step8', 11,2);
-            $table->string('salary_grade_year');
-            // $table->string('salary_grade_active');
+            $table->integer('sg_no');
+            $table->decimal('sg_step1', 11,2);
+            $table->decimal('sg_step2', 11,2);
+            $table->decimal('sg_step3', 11,2);
+            $table->decimal('sg_step4', 11,2);
+            $table->decimal('sg_step5', 11,2);
+            $table->decimal('sg_step6', 11,2);
+            $table->decimal('sg_step7', 11,2);
+            $table->decimal('sg_step8', 11,2);
+            $table->integer('sg_year');            
             $table->timestamps();
         });
     }

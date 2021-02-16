@@ -13,12 +13,10 @@ class CreateDivisionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('divisions', function (Blueprint $table) {
-            $table->id('division_id');
-            $table->string('division_code');
+        Schema::create('divisions', function (Blueprint $table) {        
+            $table->string('division_code',25);
             $table->string('division_name');
-            $table->string('office_code');
-            $table->string('division_active');
+            $table->string('office_code');            
             $table->timestamps();
         });
     }
