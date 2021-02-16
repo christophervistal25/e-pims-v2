@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class SalaryGrade extends Model
 {
     protected $fillable = [
-        'id','salary_grade_step1', 'salary_grade_step2','salary_grade_step3','salary_grade_step4','salary_grade_step5','salary_grade_step6','salary_grade_step7','salary_grade_step8','salary_grade_year',
+        'sg_step1',
+        'sg_step2',
+        'sg_step3',
+        'sg_step4',
+        'sg_step5',
+        'sg_step6',
+        'sg_step7',
+        'sg_step8',
+        'sg_year',
     ];
 }

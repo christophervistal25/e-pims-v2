@@ -17,7 +17,7 @@ class OfficeSeeder extends Seeder
             Office::create([
                 'office_code' => $array1[$i],
                 'office_name' => $array2[$i],
-                'office_active' => 'active',
+                // 'office_active' => 'active',
             ]);
         }
     }

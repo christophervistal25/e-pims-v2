@@ -89,20 +89,20 @@
                     @for($i = 5; $i >= 1; $i--)
                     {{ $date1 = date("Y",strtotime("+$i year")) }}
                     <option value={{ $date1 }}>{{ $date1 }}</option>
-                @endfor 
+                @endfor
                     {{ $date = date("Y") }}
                     <option selected value={{ $date }}>{{ $date }}</option>
                 @for($ii = 1; $ii <= 5; $ii++)
                     {{ $date2 = date("Y",strtotime("-$ii year")) }}
                     <option value={{ $date2 }}>{{ $date2 }}</option>
-                @endfor 
+                @endfor
                 </select>
             </div>
             <div class="form-group submit-section col-12">
                 <button type="submit" class="btn btn-success submit-btn float-right">Save</button>
                 <button style="margin-right:10px;" type="button" id="cancelbutton" class="btn btn-primary submit-btn float-right">Cancel</button>
             </div>
-            
+
         </div>
         </form>
     </div>
@@ -122,7 +122,7 @@
                                 @foreach (range(1, 5) as $year)
                                 {{ $year2 = date("Y",strtotime("-$year year")) }}
                                 <option value={{ $year2 }}>{{ $year2 }}</option>
-                            @endforeach 
+                            @endforeach
                         </select>
                         <label style="padding-left:10px;" class="focus-label">Select Year</label>
                     </div>
@@ -167,26 +167,26 @@
             serverSide: true,
             ajax: '/salary-grade-list',
             columns: [
-                { data: 'salary_grade_no', name: 'salary_grade_no' },
-                { data: 'salary_grade_step1', name: 'salary_grade_step1' },
-                { data: 'salary_grade_step2', name: 'salary_grade_step2' },
-                { data: 'salary_grade_step3', name: 'salary_grade_step3' },
-                { data: 'salary_grade_step4', name: 'salary_grade_step4' },
-                { data: 'salary_grade_step5', name: 'salary_grade_step5' },
-                { data: 'salary_grade_step6', name: 'salary_grade_step6' },
-                { data: 'salary_grade_step7', name: 'salary_grade_step7' },
-                { data: 'salary_grade_step8', name: 'salary_grade_step8' },
-                { data: 'salary_grade_year', name: 'salary_grade_year' },
+                { data: 'sg_no', name: 'sg_no' },
+                { data: 'sg_step1', name: 'sg_step1' },
+                { data: 'sg_step2', name: 'sg_step2' },
+                { data: 'sg_step3', name: 'sg_step3' },
+                { data: 'sg_step4', name: 'sg_step4' },
+                { data: 'sg_step5', name: 'sg_step5' },
+                { data: 'sg_step6', name: 'sg_step6' },
+                { data: 'sg_step7', name: 'sg_step7' },
+                { data: 'sg_step8', name: 'sg_step8' },
+                { data: 'sg_year', name: 'sg_year' },
             ]
         });
         myTable.columns(9).search(year);
-        myTable.draw(); 
+        myTable.draw();
         function filter_year(){
         var filter_year = document.getElementById('filter_year').value;
         localStorage.setItem('salary_grade_filter_year', filter_year);
         var ls = localStorage.getItem('salary_grade_filter_year');
         myTable.columns(9).search(ls);
-        myTable.draw(); 
+        myTable.draw();
     }
     </script>
     {{-- code for number only --}}
