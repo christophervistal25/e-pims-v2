@@ -43,29 +43,29 @@ class SalaryGradeController extends Controller
     {
 
         $this->validate($request, [
-            'salary_grade_no'    => 'required',
-            'salary_grade_step1' => 'required',
-            'salary_grade_step2' => 'required',
-            'salary_grade_step3' => 'required',
-            'salary_grade_step4' => 'required',
-            'salary_grade_step5' => 'required',
-            'salary_grade_step6' => 'required',
-            'salary_grade_step7' => 'required',
-            'salary_grade_step8' => 'required',
-            'salary_grade_year'  => 'required',
+            'sg_no'    => 'required',
+            'sg_step1' => 'required',
+            'sg_step2' => 'required',
+            'sg_step3' => 'required',
+            'sg_step4' => 'required',
+            'sg_step5' => 'required',
+            'sg_step6' => 'required',
+            'sg_step7' => 'required',
+            'sg_step8' => 'required',
+            'sg_year'  => 'required',
         ]);
 
         $salarygrade           = new SalaryGrade;
-        $salarygrade->sg_no    = $request['salary_grade_no'];
-        $salarygrade->sg_step1 = $request['salary_grade_step1'];
-        $salarygrade->sg_step2 = $request['salary_grade_step2'];
-        $salarygrade->sg_step3 = $request['salary_grade_step3'];
-        $salarygrade->sg_step4 = $request['salary_grade_step4'];
-        $salarygrade->sg_step5 = $request['salary_grade_step5'];
-        $salarygrade->sg_step6 = $request['salary_grade_step6'];
-        $salarygrade->sg_step7 = $request['salary_grade_step7'];
-        $salarygrade->sg_step8 = $request['salary_grade_step8'];
-        $salarygrade->sg_year  = $request['salary_grade_year'];
+        $salarygrade->sg_no = $request['sg_no'];   
+        $salarygrade->sg_step1 = $request['sg_step1'];
+        $salarygrade->sg_step2 = $request['sg_step2'];
+        $salarygrade->sg_step3 = $request['sg_step3'];
+        $salarygrade->sg_step4 = $request['sg_step4'];
+        $salarygrade->sg_step5 = $request['sg_step5'];
+        $salarygrade->sg_step6 = $request['sg_step6'];
+        $salarygrade->sg_step7 = $request['sg_step7'];
+        $salarygrade->sg_step8 = $request['sg_step8'];
+        $salarygrade->sg_year = $request['sg_year' ];
         $salarygrade->save();
         return redirect('/salary-grade')->with('success','Added Successfully');
     }
