@@ -8,19 +8,20 @@ class CreateEmployeesTable extends Migration
 {
     /**
      * Run the migrations.
-     *
+     *git 
      * @return void
      */
     public function up()
     {
         Schema::create('employees', function (Blueprint $table) {
-            $table->string('employee_id',25);
+            $table->string('employee_id',15);
             $table->string('lastname',60);
             $table->string('firstname',60);
             $table->string('middlename',60);
             $table->string('sex',15);
             $table->date('date_birth');
-            $table->string('status',25);
+            $table->string('place_birth',120);
+            $table->string('status',20);
             $table->timestamps();
         });
     }

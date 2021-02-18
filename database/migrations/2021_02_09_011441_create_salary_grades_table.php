@@ -24,7 +24,7 @@ class CreateSalaryGradesTable extends Migration
             $table->decimal('sg_step6', 11,2);
             $table->decimal('sg_step7', 11,2);
             $table->decimal('sg_step8', 11,2);
-            $table->integer('sg_year');            
+            $table->year('sg_year');            
             $table->timestamps();
         });
     }
