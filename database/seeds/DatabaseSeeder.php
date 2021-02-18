@@ -12,9 +12,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([            
-            SalaryGradeSeeder::class,
-            PlantillaSeeder::class,
+          
+            EmployeeSeeder::class,
+            // PlantillaSeeder::class,
             OfficeSeeder::class,
+            SalaryGradeSeeder::class,
+           
 
             ]);
         // $this->call(UsersTableSeeder::class);

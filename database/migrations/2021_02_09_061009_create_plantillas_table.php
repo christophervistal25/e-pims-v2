@@ -41,6 +41,9 @@ class CreatePlantillasTable extends Migration
             $table->string('area_code',25);
             $table->string('area_type',25);
             $table->string('area_level',25);
+            $table->foreign('employee_id')
+            ->references('id')
+            ->on('employees');
             $table->timestamps();
         });
     }

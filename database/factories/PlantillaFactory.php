@@ -3,6 +3,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Plantilla;
+use App\Employee;
 use Faker\Generator as Faker;
 
 $factory->define(Plantilla::class, function (Faker $faker) {
