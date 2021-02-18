@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use App\Plantilla;
+use App\Employee;
+use App\Office;
 class PlantillaController extends Controller
 {
     /**
@@ -14,7 +16,9 @@ class PlantillaController extends Controller
      */
     public function index()
     {
-        return view('Plantilla.Plantilla');
+        $employee = Employee::get();
+        $office = Office::get();
+        return view('Plantilla.Plantilla', compact('employee', 'office'));
     }
     public function list()
     {

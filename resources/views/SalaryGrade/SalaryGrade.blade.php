@@ -13,7 +13,7 @@
             <div class="row">
             <div class="form-group col-6 col-lg-2">
                 <label>Salary Grade <span class="text-danger">*</span></label>
-                <select name="salary_grade_no" value="{{ old('salary_grade_no') }}" class="select floating {{ $errors->has('salary_grade_no')  ? 'is-invalid' : ''}}">
+                <select name="sg_no" value="{{ old('sg_no') }}" class="select floating {{ $errors->has('sg_no')  ? 'is-invalid' : ''}}">
                    @foreach (range(1, 35) as $salarygrade)
                      <option value="{{ $salarygrade }}">{{ $salarygrade }}</option>
                    @endforeach
@@ -21,71 +21,71 @@
             </div>
             <div class="form-group col-6 col-lg-2">
                 <label>Step 1 <span class="text-danger">*</span></label>
-                <input class="form-control {{ $errors->has('salary_grade_step1')  ? 'is-invalid' : ''}}" value="{{ old('salary_grade_step1') }}" id="salary-grade" name="salary_grade_step1" type="text" maxlength="12">
-                @if($errors->has('salary_grade_step1'))
+                <input class="form-control {{ $errors->has('sg_step1')  ? 'is-invalid' : ''}}" value="{{ old('sg_step1') }}" id="salary-grade" name="sg_step1" type="text" maxlength="12">
+                @if($errors->has('sg_step1'))
                 <small  class="form-text text-danger">
-                {{ $errors->first('salary_grade_step1') }} </small>
+                {{ $errors->first('sg_step1') }} </small>
                 @endif
             </div>
             <div class="form-group col-6 col-lg-2">
                 <label>Step 2 <span class="text-danger">*</span></label>
-                <input class="form-control {{ $errors->has('salary_grade_step2')  ? 'is-invalid' : ''}}" value="{{ old('salary_grade_step2') }}" id="salary-grade" name="salary_grade_step2" type="text" maxlength="12">
-                @if($errors->has('salary_grade_step2'))
+                <input class="form-control {{ $errors->has('sg_step2')  ? 'is-invalid' : ''}}" value="{{ old('sg_step2') }}" id="salary-grade" name="sg_step2" type="text" maxlength="12">
+                @if($errors->has('sg_step2'))
                 <small  class="form-text text-danger">
-                {{ $errors->first('salary_grade_step2') }} </small>
+                {{ $errors->first('sg_step2') }} </small>
                 @endif
             </div>
             <div class="form-group col-6 col-lg-2">
                 <label>Step 3 <span class="text-danger">*</span></label>
-                <input class="form-control {{ $errors->has('salary_grade_step3')  ? 'is-invalid' : ''}}" value="{{ old('salary_grade_step3') }}" id="salary-grade" name="salary_grade_step3" type="text" maxlength="12">
-                @if($errors->has('salary_grade_step3'))
+                <input class="form-control {{ $errors->has('sg_step3')  ? 'is-invalid' : ''}}" value="{{ old('sg_step3') }}" id="salary-grade" name="sg_step3" type="text" maxlength="12">
+                @if($errors->has('sg_step3'))
                 <small  class="form-text text-danger">
-                {{ $errors->first('salary_grade_step3') }} </small>
+                {{ $errors->first('sg_step3') }} </small>
                 @endif
             </div>
             <div class="form-group col-6 col-lg-2">
                 <label>Step 4 <span class="text-danger">*</span></label>
-                <input class="form-control {{ $errors->has('salary_grade_step4')  ? 'is-invalid' : ''}}" value="{{ old('salary_grade_step4') }}" id="salary-grade" name="salary_grade_step4" type="text" maxlength="12">
-                @if($errors->has('salary_grade_step4'))
+                <input class="form-control {{ $errors->has('sg_step4')  ? 'is-invalid' : ''}}" value="{{ old('sg_step4') }}" id="salary-grade" name="sg_step4" type="text" maxlength="12">
+                @if($errors->has('sg_step4'))
                 <small  class="form-text text-danger">
-                {{ $errors->first('salary_grade_step4') }} </small>
+                {{ $errors->first('sg_step4') }} </small>
                 @endif
             </div>
             <div class="form-group col-6 col-lg-2">
                 <label>Step 5 <span class="text-danger">*</span></label>
-                <input class="form-control {{ $errors->has('salary_grade_step5')  ? 'is-invalid' : ''}}" value="{{ old('salary_grade_step5') }}" id="salary-grade" name="salary_grade_step5" type="text" maxlength="12">
-                @if($errors->has('salary_grade_step5'))
+                <input class="form-control {{ $errors->has('sg_step5')  ? 'is-invalid' : ''}}" value="{{ old('sg_step5') }}" id="salary-grade" name="sg_step5" type="text" maxlength="12">
+                @if($errors->has('sg_step5'))
                 <small  class="form-text text-danger">
-                {{ $errors->first('salary_grade_step5') }} </small>
+                {{ $errors->first('sg_step5') }} </small>
                 @endif
             </div>
             <div class="form-group col-6 col-lg-2">
                 <label>Step 6 <span class="text-danger">*</span></label>
-                <input class="form-control {{ $errors->has('salary_grade_step6')  ? 'is-invalid' : ''}}" value="{{ old('salary_grade_step6') }}" id="salary-grade" name="salary_grade_step6" type="text" maxlength="12">
-                @if($errors->has('salary_grade_step6'))
+                <input class="form-control {{ $errors->has('sg_step6')  ? 'is-invalid' : ''}}" value="{{ old('sg_step6') }}" id="salary-grade" name="sg_step6" type="text" maxlength="12">
+                @if($errors->has('sg_step6'))
                 <small  class="form-text text-danger">
-                {{ $errors->first('salary_grade_step6') }} </small>
+                {{ $errors->first('sg_step6') }} </small>
                 @endif
             </div>
             <div class="form-group col-6 col-lg-2">
                 <label>Step 7 <span class="text-danger">*</span></label>
-                <input class="form-control {{ $errors->has('salary_grade_step7')  ? 'is-invalid' : ''}}" value="{{ old('salary_grade_step7') }}" id="salary-grade" name="salary_grade_step7" type="text" maxlength="12">
-                @if($errors->has('salary_grade_step7'))
+                <input class="form-control {{ $errors->has('sg_step7')  ? 'is-invalid' : ''}}" value="{{ old('sg_step7') }}" id="salary-grade" name="sg_step7" type="text" maxlength="12">
+                @if($errors->has('sg_step7'))
                 <small  class="form-text text-danger">
-                {{ $errors->first('salary_grade_step7') }} </small>
+                {{ $errors->first('sg_step7') }} </small>
                 @endif
             </div>
             <div class="form-group col-5 col-lg-2">
                 <label>Step 8 <span class="text-danger">*</span></label>
-                <input class="form-control {{ $errors->has('salary_grade_step8')  ? 'is-invalid' : ''}}" value="{{ old('salary_grade_step8') }}" id="salary-grade" name="salary_grade_step8" type="text" maxlength="12">
-                @if($errors->has('salary_grade_step8'))
+                <input class="form-control {{ $errors->has('sg_step8')  ? 'is-invalid' : ''}}" value="{{ old('sg_step8') }}" id="salary-grade" name="sg_step8" type="text" maxlength="12">
+                @if($errors->has('sg_step8'))
                 <small  class="form-text text-danger">
-                {{ $errors->first('salary_grade_step8') }} </small>
+                {{ $errors->first('sg_step8') }} </small>
                 @endif
             </div>
             <div class="form-group col-7 col-lg-2">
                 <label>Salary Grade Year <span class="text-danger">*</span></label>
-                <select name="salary_grade_year" value="{{ old('salary_grade_year') }}" class="select floating">
+                <select name="sg_year" value="{{ old('sg_year') }}" class="select floating">
                     @for($i = 5; $i >= 1; $i--)
                     {{ $date1 = date("Y",strtotime("+$i year")) }}
                     <option value={{ $date1 }}>{{ $date1 }}</option>
@@ -167,16 +167,16 @@
             serverSide: true,
             ajax: '/salary-grade-list',
             columns: [
-                { data: 'salary_grade_no', name: 'salary_grade_no' },
-                { data: 'salary_grade_step1', name: 'salary_grade_step1' },
-                { data: 'salary_grade_step2', name: 'salary_grade_step2' },
-                { data: 'salary_grade_step3', name: 'salary_grade_step3' },
-                { data: 'salary_grade_step4', name: 'salary_grade_step4' },
-                { data: 'salary_grade_step5', name: 'salary_grade_step5' },
-                { data: 'salary_grade_step6', name: 'salary_grade_step6' },
-                { data: 'salary_grade_step7', name: 'salary_grade_step7' },
-                { data: 'salary_grade_step8', name: 'salary_grade_step8' },
-                { data: 'salary_grade_year', name: 'salary_grade_year' },
+                { data: 'sg_no', name: 'sg_no' },
+                { data: 'sg_step1', name: 'sg_step1' },
+                { data: 'sg_step2', name: 'sg_step2' },
+                { data: 'sg_step3', name: 'sg_step3' },
+                { data: 'sg_step4', name: 'sg_step4' },
+                { data: 'sg_step5', name: 'sg_step5' },
+                { data: 'sg_step6', name: 'sg_step6' },
+                { data: 'sg_step7', name: 'sg_step7' },
+                { data: 'sg_step8', name: 'sg_step8' },
+                { data: 'sg_year', name: 'sg_year' },
             ]
         });
         myTable.columns(9).search(year);

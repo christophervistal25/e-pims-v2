@@ -21,16 +21,16 @@ class SalaryGradeSeeder extends Seeder
         $array8 = ['','12756','13493','14319','15192','16115','17092','18124','19438','20725','22477','25952','28117','30547','33297','36323','39650','43311','47338','53746','60389','67837','76253','85975','97152','110753','125150','141420','159804','180579','204054','306999','367609','0'];
         for($i = 1; $i <= 33; $i++){
             SalaryGrade::create([
-                'salary_grade_no' => $i,
-                'salary_grade_step1' => $array1[$i],
-                'salary_grade_step2' => $array2[$i],
-                'salary_grade_step3' => $array3[$i],
-                'salary_grade_step4' => $array4[$i],
-                'salary_grade_step5' => $array5[$i],
-                'salary_grade_step6' => $array6[$i],
-                'salary_grade_step7' => $array7[$i],
-                'salary_grade_step8' => $array8[$i],
-                'salary_grade_year' => '2021',
+                'sg_no' => $i,
+                'sg_step1' => $array1[$i],
+                'sg_step2' => $array2[$i],
+                'sg_step3' => $array3[$i],
+                'sg_step4' => $array4[$i],
+                'sg_step5' => $array5[$i],
+                'sg_step6' => $array6[$i],
+                'sg_step7' => $array7[$i],
+                'sg_step8' => $array8[$i],
+                'sg_year' => '2021',
             ]);
         }
     }

@@ -20,10 +20,7 @@ class CreatePlantillasTable extends Migration
             $table->integer('new_item_no');
             $table->string('position_title');
             $table->string('position_title_ext');
-            $table->string('employee_id',25);
-            //$table->Integer('current_salary_grade');
-            //$table->string('current_step_no');
-            //$table->bigInteger('current_salary_amount');
+            $table->bigInteger('employee_id')->unsigned();
             $table->string('office_code',25);
             $table->string('division_code',25);
             $table->date('date_original_appointment');
@@ -32,22 +29,21 @@ class CreatePlantillasTable extends Migration
             $table->integer('dbm_previous_sg_no');
             $table->integer('dbm_previous_step_no');
             $table->year('dbm_previous_sg_year');
-            //$table->integer('dbm_previous_amount');
             $table->integer('dbm_current_sg_no');
             $table->integer('dbm_current_step_no');
             $table->year('dbm_current_sg_year');
-            //$table->bigInteger('dbm_current_amount');
             $table->integer('csc_previous_sg_no');
             $table->integer('csc_previous_step_no');
             $table->year('csc_previous_sg_year');
-            //$table->bigInteger('csc_previous_amount');
             $table->integer('csc_current_sg_no');
             $table->integer('csc_current_step_no');
             $table->year('csc_current_sg_year');
-            //$table->bigInteger('csc_current_amount');
             $table->string('area_code',25);
             $table->string('area_type',25);
             $table->string('area_level',25);
+            $table->foreign('employee_id')
+            ->references('id')
+            ->on('employees');
             $table->timestamps();
         });
     }
