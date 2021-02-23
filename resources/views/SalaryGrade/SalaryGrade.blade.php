@@ -14,7 +14,7 @@
             <div class="form-group col-6 col-lg-2">
                 <label>Salary Grade <span class="text-danger">*</span></label>
                 <select name="sg_no" value="{{ old('sg_no') }}" class="select floating {{ $errors->has('sg_no')  ? 'is-invalid' : ''}}">
-                    <option selected>Please Select</option>
+                    <option selected></option>
                    @foreach (range(1, 35) as $salarygrade)
                      <option value="{{ $salarygrade }}">{{ $salarygrade }}</option>
                    @endforeach

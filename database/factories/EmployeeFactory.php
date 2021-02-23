@@ -14,6 +14,7 @@ $factory->define(Employee::class, function (Faker $faker) {
         'middlename' => $faker->lastname,
         'sex' => $faker->titleMale,
         'date_birth' => $faker->date,
+        'place_birth' => $faker->city,
         'status' => $faker->city,
     ];
 });
