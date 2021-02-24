@@ -47,17 +47,6 @@ class Employee extends Model
     ];
 
 
-    /**
-     * Generate unique Employee I.D for every employee
-     */
-    public static function boot()
-    {
-        parent::boot();
-        self::creating(function($employee) {
-            $employee->employee_id = str_pad($employee->count() + 1, 7, 0, STR_PAD_LEFT);
-        });
-    }
-
 
     /**
      * Set the firstname of employee to uppercase

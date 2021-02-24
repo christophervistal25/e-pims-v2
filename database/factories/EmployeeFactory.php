@@ -6,8 +6,12 @@ use App\Employee;
 use App\Plantilla;
 use Faker\Generator as Faker;
 
+/**
+ * Employee ID process
+ */
 $factory->define(Employee::class, function (Faker $faker) {
     return [
+        'employee_id'          => $faker->ean8,
         'lastname'             => $faker->lastname,
         'firstname'            => $faker->name,
         'middlename'           => $faker->lastname,
