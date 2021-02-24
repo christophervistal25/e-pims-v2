@@ -16,10 +16,10 @@ Route::view('/view-layouts', function() {
 
 
 //salary grade
-Route::Resource('/salary-grade', 'SalaryGradeController');
 Route::get('/salary-grade-list', 'SalaryGradecontroller@list');
+Route::Resource('/salary-grade', 'SalaryGradeController');
 //plantilla
-Route::Resource('/plantilla', 'PlantillaController');
 Route::get('/plantilla-list', 'Plantillacontroller@list');
+Route::Resource('/plantilla', 'PlantillaController');
 //step Increment
 Route::Resource('/step-increment', 'StepIncrementController');
