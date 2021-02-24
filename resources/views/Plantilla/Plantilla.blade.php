@@ -68,10 +68,10 @@
                     </div>
                     <div class="form-group col-6 col-lg-3">
                         <label>Current Salary Grade<span class="text-danger">*</span></label>
-                        <select name="current_salary_grade" id="currentSalarygrade" value="" class="select floating {{ $errors->has('current_salary_grade')  ? 'is-invalid' : ''}}">
+                        <select name="current_salary_grade" value="" class="select floating {{ $errors->has('current_salary_grade')  ? 'is-invalid' : ''}}" id="currentSalarygrade">
                           
-                           @foreach ($salarygrade as $salarygrades)
-                             <option {{ old('current_salary_grade') == $salarygrades ? 'selected' : '' }} value="{{ $salarygrades->sg_no }}">{{ $salarygrades->sg_no }}</option>
+                           @foreach (range(1 , 33) as $salarygrades)
+                             <option {{ old('current_salary_grade') == $salarygrades ? 'selected' : '' }} value="{{ $salarygrades}}">{{ $salarygrades}}</option>
                            @endforeach
                         </select>
                         @if($errors->has('current_salary_grade'))
@@ -93,6 +93,29 @@
                          @endif
                     </div>
                     <div class="form-group col-6 col-lg-3">
+                        <label>Current SG Year<span class="text-danger">*</span></label>
+                        <select name="currentSgyear" id="currentSgyear" value="" class="select floating">
+                            <option>{{ old('currentSgyear') }}</option>
+                            {{ $year2 = date("Y",strtotime("-1 year")) }}
+                            <option value={{ $year2 }}>{{ $year2 }}</option>
+                            {{ $year3 = date("Y",strtotime("-0 year")) }}
+                            <option value={{ $year3 }}>{{ $year3 }}</option>
+                            @foreach (range(1, 10) as $year)
+                            {{ $year1 = date("Y",strtotime("$year year")) }}
+                            <option value={{ $year1 }}>{{ $year1 }}</option>
+                            @endforeach
+                         </select>
+                         @if($errors->has('currentSgyear'))
+                         <small  class="form-text text-danger">
+                         {{ $errors->first('currentSgyear') }} </small>
+                         @endif
+                    </div>
+
+
+
+
+
+                    <div class="form-group col-6 col-lg-3">
                         <label>Current Salary Amount<span class="text-danger">*</span></label>
                         <input value="{{ old('current_salary_amount') }}" class="form-control {{ $errors->has('current_salary_amount')  ? 'is-invalid' : ''}}" name="current_salary_amount" id="currentSalaryamount" type="text">
                         @if($errors->has('current_salary_amount'))
@@ -100,7 +123,7 @@
                         {{ $errors->first('current_salary_amount') }} </small>
                         @endif
                     </div>
-                    <div class="form-group col-6 col-lg-5">
+                    <div class="form-group col-6 col-lg-3">
                         <label>Office<span class="text-danger">*</span></label>
                         <select value="" name="office_code" class="select {{ $errors->has('office_code')  ? 'is-invalid' : ''}}">
                             <option>{{ old('office_code') }}</option>
@@ -113,7 +136,7 @@
                         {{ $errors->first('office_code') }} </small>
                         @endif
                     </div>
-                    <div class="form-group col-4 col-lg-4">
+                    <div class="form-group col-4 col-lg-3">
                         <label>Division<span class="text-danger">*</span></label>
                         <select value="" name="division_code" class="select {{ $errors->has('division_code')  ? 'is-invalid' : ''}}">
                             <option>{{ old('division_code') }}</option>
@@ -182,7 +205,7 @@
                         <label>DBM Previous</label>
                     </div>
                     <div class="form-group col-3">
-                        <select value="" name="dbm_previous_sg_no" class="select floating {{ $errors->has('dbm_previous_sg_no')  ? 'is-invalid' : ''}}">
+                        <select value="" name="dbm_previous_sg_no" class="select floating {{ $errors->has('dbm_previous_sg_no')  ? 'is-invalid' : ''}}" id="dbmPreviousSgno">
                             <option>{{ old('dbm_previous_sg_no') }}</option>
                            @foreach (range(1, 35) as $salarygrade)
                              <option value="{{ $salarygrade }}">{{ $salarygrade }}</option>
@@ -194,7 +217,7 @@
                         @endif
                     </div>
                     <div class="form-group col-3">
-                        <select value="" name="dbm_previous_step_no" class="select floating {{ $errors->has('dbm_previous_step_no')  ? 'is-invalid' : ''}}">
+                        <select value="" name="dbm_previous_step_no" class="select floating {{ $errors->has('dbm_previous_step_no')  ? 'is-invalid' : ''}}" id="dbmPreviousStepno">
                             <option>{{ old('dbm_previous_step_no') }}</option>
                             @foreach (range(1, 8) as $step_no)
                               <option value="{{ $step_no }}">{{ $step_no }}</option>
@@ -206,7 +229,7 @@
                          @endif
                     </div>
                     <div class="form-group col-3">
-                        <select value="" class="select floating {{ $errors->has('dbm_previous_sg_year')  ? 'is-invalid' : ''}}"  name="dbm_previous_sg_year">
+                        <select value="" class="select floating {{ $errors->has('dbm_previous_sg_year')  ? 'is-invalid' : ''}}"  name="dbm_previous_sg_year" id="dbmPreviousSgyear">
                             <option>{{ old('dbm_previous_sg_year') }}</option>
                             {{ $year2 = date("Y",strtotime("-1 year")) }}
                             <option value={{ $year2 }}>{{ $year2 }}</option>
@@ -223,7 +246,7 @@
                         @endif
                     </div>
                     <div class="form-group col-2">
-                        <input value="{{ old('dbm_previous_amount') }}" class="form-control {{ $errors->has('dbm_previous_amount')  ? 'is-invalid' : ''}}" name="dbm_previous_amount" id="num-only" type="text">
+                        <input value="{{ old('dbm_previous_amount') }}" class="form-control {{ $errors->has('dbm_previous_amount')  ? 'is-invalid' : ''}}" name="dbm_previous_amount" id="dbmPreviousAmount" type="text">
                         @if($errors->has('dbm_previous_amount'))
                         <small  class="form-text text-danger">
                         {{ $errors->first('dbm_previous_amount') }} </small>
@@ -233,7 +256,7 @@
                         <label>DBM Current</label>
                     </div>
                     <div class="form-group col-3">
-                        <select value="" name="dbm_current_sg_no" class="select floating {{ $errors->has('dbm_current_sg_no')  ? 'is-invalid' : ''}}">
+                        <select value="" name="dbm_current_sg_no" class="select floating {{ $errors->has('dbm_current_sg_no')  ? 'is-invalid' : ''}}" id="dbmCurrentSgno">
                             <option>{{ old('dbm_current_sg_no') }}</option>
                            @foreach (range(1, 35) as $currentsg)
                              <option value="{{ $currentsg }}">{{ $currentsg }}</option>
@@ -245,7 +268,7 @@
                         @endif
                     </div>
                     <div class="form-group col-3">
-                        <select value="" name="dbm_current_step_no" class="select floating {{ $errors->has('dbm_current_step_no')  ? 'is-invalid' : ''}}">
+                        <select value="" name="dbm_current_step_no" class="select floating {{ $errors->has('dbm_current_step_no')  ? 'is-invalid' : ''}}" id="dbmCurrentStepno">
                             <option>{{ old('dbm_current_step_no') }}</option>
                             @foreach (range(1, 8) as $step_no)
                               <option value="{{ $step_no }}">{{ $step_no }}</option>
@@ -257,7 +280,7 @@
                          @endif
                     </div>
                      <div class="form-group col-3">
-                        <select value="" class="select floating {{ $errors->has('dbm_current_sg_year')  ? 'is-invalid' : ''}}" name="dbm_current_sg_year">
+                        <select value="" class="select floating {{ $errors->has('dbm_current_sg_year')  ? 'is-invalid' : ''}}" name="dbm_current_sg_year" id="dbmCurrentSgyear">
                             <option>{{ old('dbm_current_sg_year') }}</option>
                             {{ $year2 = date("Y",strtotime("-1 year")) }}
                             <option value={{ $year2 }}>{{ $year2 }}</option>
@@ -274,7 +297,7 @@
                         @endif
                     </div>
                     <div class="form-group col-2">
-                        <input value="{{ old('dbm_current_amount') }}" class="form-control {{ $errors->has('dbm_current_amount')  ? 'is-invalid' : ''}}" name="dbm_current_amount" id="num-only" type="text">
+                        <input value="{{ old('dbm_current_amount') }}" class="form-control {{ $errors->has('dbm_current_amount')  ? 'is-invalid' : ''}}" name="dbm_current_amount" id="dbmCurrentAmount" type="text">
                         @if($errors->has('dbm_current_amount'))
                         <small  class="form-text text-danger">
                         {{ $errors->first('dbm_current_amount') }} </small>
@@ -284,7 +307,7 @@
                         <label>CSC Previous</label>
                     </div>
                     <div class="form-group col-3">
-                        <select value="" name="csc_previous_sg_no" class="select floating {{ $errors->has('csc_previous_sg_no')  ? 'is-invalid' : ''}}">
+                        <select value="" name="csc_previous_sg_no" class="select floating {{ $errors->has('csc_previous_sg_no')  ? 'is-invalid' : ''}}" id="cscPreviousSgno">
                             <option>{{ old('csc_previous_sg_no') }}</option>
                            @foreach (range(1, 35) as $salarygrade)
                              <option value="{{ $salarygrade }}">{{ $salarygrade }}</option>
@@ -296,7 +319,7 @@
                         @endif
                     </div>
                     <div class="form-group col-3">
-                        <select value="" name="csc_previous_step_no" class="select floating {{ $errors->has('csc_previous_step_no')  ? 'is-invalid' : ''}}">
+                        <select value="" name="csc_previous_step_no" class="select floating {{ $errors->has('csc_previous_step_no')  ? 'is-invalid' : ''}}" id="cscPreviousStepno">
                             <option>{{ old('csc_previous_step_no') }}</option>
                             @foreach (range(1, 8) as $step_no)
                               <option value="{{ $step_no }}">{{ $step_no }}</option>
@@ -308,7 +331,7 @@
                          @endif
                     </div>
                     <div class="form-group col-3">
-                        <select value="" class="select floating {{ $errors->has('csc_previous_sg_year')  ? 'is-invalid' : ''}}" name="csc_previous_sg_year" >
+                        <select value="" class="select floating {{ $errors->has('csc_previous_sg_year')  ? 'is-invalid' : ''}}" name="csc_previous_sg_year" id="cscPreviousSgyear">
                                 <option>{{ old('csc_previous_sg_year') }}</option>
                                 {{ $year2 = date("Y",strtotime("-1 year")) }}
                                 <option value={{ $year2 }}>{{ $year2 }}</option>
@@ -325,7 +348,7 @@
                         @endif
                     </div>
                     <div class="form-group col-2">
-                        <input value="{{ old('csc_previous_amount') }}" class="form-control {{ $errors->has('csc_previous_amount')  ? 'is-invalid' : ''}}" name="csc_previous_amount" id="num-only" type="text">
+                        <input value="{{ old('csc_previous_amount') }}" class="form-control {{ $errors->has('csc_previous_amount')  ? 'is-invalid' : ''}}" name="csc_previous_amount" id="cscPreviousAmount" type="text">
                         @if($errors->has('csc_previous_amount'))
                         <small  class="form-text text-danger">
                         {{ $errors->first('csc_previous_amount') }} </small>
@@ -335,7 +358,7 @@
                         <label>CSC Current</label>
                     </div>
                     <div class="form-group col-3">
-                        <select value="" name="csc_current_sg_no" class="select floating {{ $errors->has('csc_current_sg_no')  ? 'is-invalid' : ''}}">
+                        <select value="" name="csc_current_sg_no" class="select floating {{ $errors->has('csc_current_sg_no')  ? 'is-invalid' : ''}}" id="cscCurrentSgno">
                             <option>{{ old('csc_current_sg_no') }}</option>
                            @foreach (range(1, 35) as $salarygrade)
                              <option value="{{ $salarygrade }}">{{ $salarygrade }}</option>
@@ -347,7 +370,7 @@
                         @endif
                     </div>
                     <div class="form-group col-3">
-                        <select value="" name="csc_current_step_no" class="select floating {{ $errors->has('csc_current_step_no')  ? 'is-invalid' : ''}}">
+                        <select value="" name="csc_current_step_no" class="select floating {{ $errors->has('csc_current_step_no')  ? 'is-invalid' : ''}}" id="cscCurrentStepno">
                             <option>{{ old('csc_current_step_no') }}</option>
                             @foreach (range(1, 8) as $step_no)
                               <option value="{{ $step_no }}">{{ $step_no }}</option>
@@ -359,7 +382,7 @@
                          @endif
                     </div>
                     <div class="form-group col-3">
-                        <select value="" class="select floating {{ $errors->has('csc_current_sg_year')  ? 'is-invalid' : ''}}" name="csc_current_sg_year" >
+                        <select value="" class="select floating {{ $errors->has('csc_current_sg_year')  ? 'is-invalid' : ''}}" name="csc_current_sg_year" id="cscCurrentSgyear">
                                 <option>{{ old('csc_current_sg_year') }}</option>
                                 {{ $year2 = date("Y",strtotime("-1 year")) }}
                                 <option value={{ $year2 }}>{{ $year2 }}</option>
@@ -376,7 +399,7 @@
                         @endif
                     </div>
                     <div class="form-group col-2">
-                        <input value="{{ old('csc_current_amount') }}" class="form-control {{ $errors->has('csc_current_amount')  ? 'is-invalid' : ''}}" name="csc_current_amount" id="num-only" type="text">
+                        <input value="{{ old('csc_current_amount') }}" class="form-control {{ $errors->has('csc_current_amount')  ? 'is-invalid' : ''}}" name="csc_current_amount" id="cscCurrentAmount" type="text">
                         @if($errors->has('csc_current_amount'))
                         <small  class="form-text text-danger">
                         {{ $errors->first('csc_current_amount') }} </small>
@@ -480,92 +503,6 @@ $.ajaxSetup({
 </script>
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-<script>
-    $(function() {
-        $('#plantilla').DataTable({
-    processing: true,
-    serverSide: true,
-    ajax: '/plantilla-list',
-    columns: [
-            { data: 'plantilla_id', name: 'plantilla_id' },
-            { data: 'old_item_no', name: 'old_item_no' },
-            { data: 'new_item_no', name: 'new_item_no' },
-            { data: 'position_title', name: 'position_title' },
-            { data: 'employee_id', name: 'employee_id' },
-            { data: 'office_code', name: 'office_code' },
-            { data: 'status', name: 'status' },
-    ]
-});
-});
-</script>
- {{-- code for show add form--}}
- <script>
-    $(document).ready(function(){
-    $("#addbutton").click(function(){
-        $("#add").attr("class", "page-header");
-        $("#table").attr("class", "page-header d-none");
-    });
-    });
-    </script>
-    {{-- code for show table --}}
-    <script>
-        $(document).ready(function(){
-          $("#cancelbutton").click(function(){
-            $("#add").attr("class", "page-header f-none");
-            $("#table").attr("class", "page-header");
-          });
-        });
-    </script>
-    {{-- code for getting emp id from name --}}
-    <script>
-    var select = document.getElementById('employee_name');
-    var input = document.getElementById('employee_id');
-    select.onchange = function() {
-        input.value = select.value;
-    }
-    </script>
-
-    <script>
-    var select = document.getElementById('currentSalarygrade');
-    var input = document.getElementById('currentSalaryamount');
-    select.onchange = function() {
-        input.value = select.value;
-    }
-    </script>
-    {{-- code for number only --}}
-    <script>
-        $(function(){
-            $("input[id='num-only']").on('input', function (e) {
-              $(this).val($(this).val().replace(/[^0-9.]/g, ''));
-            });
-          });
-        </script>
-        <script>
-            $(document).ready(function() {
-                $("#currentSalarygrade").change(function(){
-                  var salaryList = $('#currentSalarygrade').val();
-                    $.ajax({
-                        url: `/api/salaryList/${salaryList}`, 
-                        success:function(response){
-                            console.log(response)
-                        }
-                    });
-                });
-            });
-        </script>
-        <script>
-            $(document).ready(function() {
-                $("#currentStepno").change(function(){
-                  var salarySteplist = $('#currentStepno').val();
-                  var salaryList = $('#currentSalarygrade').val();
-                    $.ajax({
-                        url: `/api/salarySteplist/${salarySteplist}/${salaryList}`, 
-                        success:function(response){
-                            console.log(response)
-                        }
-                    });
-                });
-            });
-        </script>
+<script src="{{ asset('/assets/js/plantilla.js') }}"></script>
 @endpush
 @endsection
