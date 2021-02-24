@@ -81,4 +81,9 @@ class Employee extends Model
         return $this->hasMany(Plantilla::class);
     }
 
+    public function spouse_child()
+    {
+        return $this->hasMany(EmployeeSpouseChildren::class, 'employee_id', 'employee_id');
+    }
+
 }

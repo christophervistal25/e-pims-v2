@@ -15,7 +15,7 @@ class CreateEmployeeSpouseChildrensTable extends Migration
     {
         Schema::create('employee_spouse_childrens', function (Blueprint $table) {
             $table->id();
-            $table->string('spouse_id');
+            $table->string('employee_id');
             $table->string('name');
             $table->date('date_of_birth');
             $table->timestamps();
