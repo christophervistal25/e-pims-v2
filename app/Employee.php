@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
+    public $primaryKey = 'employee_id';
+
     protected $fillable = [
-        'id','employee_id', 'old_item_no','lastname','firstname','middlename','sex','employee_ids','date_birth','status',
+        'employee_id', 'old_item_no','lastname','firstname','middlename','sex','employee_ids','date_birth','status',
     ];
     public function plantilla()
     {
