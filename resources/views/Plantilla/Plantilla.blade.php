@@ -68,10 +68,10 @@
                     </div>
                     <div class="form-group col-6 col-lg-3">
                         <label>Current Salary Grade<span class="text-danger">*</span></label>
-                        <select name="current_salary_grade" value="" class="select floating {{ $errors->has('current_salary_grade')  ? 'is-invalid' : ''}}">
-                            <option>{{ old('current_salary_grade') }}</option>
-                           @foreach (range(1, 35) as $salarygrade)
-                             <option value="{{ $salarygrade }}">{{ $salarygrade }}</option>
+                        <select name="current_salary_grade" id="currentSalarygrade" value="" class="select floating {{ $errors->has('current_salary_grade')  ? 'is-invalid' : ''}}">
+                          
+                           @foreach ($salarygrade as $salarygrades)
+                             <option {{ old('current_salary_grade') == $salarygrades ? 'selected' : '' }} value="{{ $salarygrades->sg_no }}">{{ $salarygrades->sg_no }}</option>
                            @endforeach
                         </select>
                         @if($errors->has('current_salary_grade'))
@@ -81,7 +81,7 @@
                     </div>
                     <div class="form-group col-6 col-lg-2">
                         <label>Current Step No<span class="text-danger">*</span></label>
-                        <select name="current_step_no" value="" class="select floating {{ $errors->has('current_step_no')  ? 'is-invalid' : ''}}">
+                        <select name="current_step_no" id="currentStepno" value="" class="select floating {{ $errors->has('current_step_no')  ? 'is-invalid' : ''}}">
                             <option>{{ old('current_step_no') }}</option>
                             @foreach (range(1, 8) as $step_no)
                               <option value="{{ $step_no }}">{{ $step_no }}</option>
@@ -94,7 +94,7 @@
                     </div>
                     <div class="form-group col-6 col-lg-3">
                         <label>Current Salary Amount<span class="text-danger">*</span></label>
-                        <input value="{{ old('current_salary_amount') }}" class="form-control {{ $errors->has('current_salary_amount')  ? 'is-invalid' : ''}}" name="current_salary_amount" id="num-only" type="text">
+                        <input value="{{ old('current_salary_amount') }}" class="form-control {{ $errors->has('current_salary_amount')  ? 'is-invalid' : ''}}" name="current_salary_amount" id="currentSalaryamount" type="text">
                         @if($errors->has('current_salary_amount'))
                         <small  class="form-text text-danger">
                         {{ $errors->first('current_salary_amount') }} </small>
@@ -151,7 +151,7 @@
                             <option value="Coterminous-Temporary">Coterminous-Temporary</option>
                             <option value="Permanent">Permanent</option>
                             <option value="Provisional">Provisional</option>
-                            <option value="Regular_Permanent">Regular Permanent</option>
+                            <option value="Regular Permanent">Regular Permanent</option>
                             <option value="Substitute">Substitute</option>
                             <option value="Temporary">Temporary</option>
                             <option value="Elected">Elected</option>
@@ -471,6 +471,13 @@
 </div>
 @include('Plantilla.add-ons.plantillamodal')
 @push('page-scripts')
+<script>
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+</script>
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 <script>
@@ -504,7 +511,7 @@
     <script>
         $(document).ready(function(){
           $("#cancelbutton").click(function(){
-            $("#add").attr("class", "page-header d-none");
+            $("#add").attr("class", "page-header f-none");
             $("#table").attr("class", "page-header");
           });
         });
@@ -517,6 +524,14 @@
         input.value = select.value;
     }
     </script>
+
+    <script>
+    var select = document.getElementById('currentSalarygrade');
+    var input = document.getElementById('currentSalaryamount');
+    select.onchange = function() {
+        input.value = select.value;
+    }
+    </script>
     {{-- code for number only --}}
     <script>
         $(function(){
@@ -524,6 +539,33 @@
               $(this).val($(this).val().replace(/[^0-9.]/g, ''));
             });
           });
+        </script>
+        <script>
+            $(document).ready(function() {
+                $("#currentSalarygrade").change(function(){
+                  var salaryList = $('#currentSalarygrade').val();
+                    $.ajax({
+                        url: `/api/salaryList/${salaryList}`, 
+                        success:function(response){
+                            console.log(response)
+                        }
+                    });
+                });
+            });
+        </script>
+        <script>
+            $(document).ready(function() {
+                $("#currentStepno").change(function(){
+                  var salarySteplist = $('#currentStepno').val();
+                  var salaryList = $('#currentSalarygrade').val();
+                    $.ajax({
+                        url: `/api/salarySteplist/${salarySteplist}/${salaryList}`, 
+                        success:function(response){
+                            console.log(response)
+                        }
+                    });
+                });
+            });
         </script>
 @endpush
 @endsection

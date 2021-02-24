@@ -6,20 +6,32 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use App\Plantilla;
 use App\Employee;
+use App\SalaryGrade;
 use App\Office;
 class PlantillaController extends Controller
 {
+
+    public function employee()
+    {
+        return Employe::get();
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $req)
     {
         $employee = Employee::get();
         $office = Office::get();
-        return view('Plantilla.Plantilla', compact('employee', 'office'));
+        $salarygrade = SalaryGrade::get(['sg_no']);
+        // $sg_no = 1;
+        // $selected_step = 2;
+        // $currentSalaryamount = SalaryGrade::where('sg_no', $sg_no)->first(['sg_year', 'sg_step' . $selected_step ]);
+        // dd($currentSalaryamount);
+        return view('Plantilla.Plantilla', compact('employee', 'office', 'salarygrade'));
     }
+    // }
     public function list()
     {
         return Datatables::of(Plantilla::query())->make(true);

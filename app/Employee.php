@@ -15,4 +15,9 @@ class Employee extends Model
     {
         return $this->hasMany(Plantilla::class);
     }
+
+    public function information()
+    {
+        return $this->hasOne(EmployeePersonalInformation::class);
+    }
 }
