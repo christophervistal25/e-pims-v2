@@ -71,19 +71,26 @@ class Employee extends Model
         $this->attributes['suffix'] = strtoupper($value);
     }
 
-    public function family_background()
-    {
-        return $this->hasOne(EmployeeFamilyBackground::class, 'employee_id', 'employee_id');
-    }
 
     public function plantilla()
     {
         return $this->hasMany(Plantilla::class);
     }
 
+
+    public function family_background()
+    {
+        return $this->hasOne(EmployeeFamilyBackground::class, 'employee_id', 'employee_id');
+    }
+
     public function spouse_child()
     {
         return $this->hasMany(EmployeeSpouseChildren::class, 'employee_id', 'employee_id');
+    }
+
+    public function educational_background()
+    {
+        return $this->hasOne(EmployeeEducationalBackground::class, 'employee_id', 'employee_id');
     }
 
 }
