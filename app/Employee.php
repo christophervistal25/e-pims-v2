@@ -128,4 +128,17 @@ class Employee extends Model
         return $this->hasOne(EmployeeRelevantQuery::class, 'employee_id', 'employee_id');
     }
 
+    /**
+     * Get all employees with passed relation.
+     */
+    public static function getWithRelations(array $relations = [])
+    {
+        return self::with($relations)->get();
+    }
+
+    public static function fetchWithRelations(array $relations = [], string $employeeId)
+    {
+        return self::with($relations)->find($employeeId);
+    }
+
 }
