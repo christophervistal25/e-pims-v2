@@ -2,10 +2,6 @@
 @section('title', 'Plantilla')
 @prepend('page-css')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
-<<<<<<< HEAD
-=======
-<link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
->>>>>>> add2
 @endprepend
 @section('content')
 <div class="content container-fluid">
