@@ -9,12 +9,12 @@ use Faker\Generator as Faker;
 $factory->define(Employee::class, function (Faker $faker) {
     return [
         'employee_id' => $faker->randomNumber,
-        'lastname' => $faker->lastname,
-        'firstname' => $faker->name,
-        'middlename' => $faker->lastname,
-        'sex' => $faker->titleMale,
-        'date_birth' => $faker->date,
+        'lastname'    => $faker->lastname,
+        'firstname'   => $faker->name,
+        'middlename'  => $faker->lastname,
+        'sex'         => $faker->titleMale,
+        'date_birth'  => $faker->date,
         'place_birth' => $faker->city,
-        'status' => $faker->city,
+        'status'      => $faker->city,
     ];
 });
