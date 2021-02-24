@@ -93,4 +93,39 @@ class Employee extends Model
         return $this->hasOne(EmployeeEducationalBackground::class, 'employee_id', 'employee_id');
     }
 
+    public function civil_service()
+    {
+        return $this->hasMany(EmployeeCivilService::class, 'employee_id', 'employee_id');
+    }
+
+    public function work_experience()
+    {
+        return $this->hasMany(EmployeeWorkExperience::class, 'employee_id', 'employee_id');
+    }
+
+    public function voluntary_work()
+    {
+        return $this->hasMany(EmployeeVoluntaryWork::class, 'employee_id', 'employee_id');
+    }
+
+    public function program_attained()
+    {
+        return $this->hasMany(EmployeeTrainingAttained::class, 'employee_id', 'employee_id');
+    }
+
+    public function other_information()
+    {
+        return $this->hasMany(EmployeeOtherInformation::class, 'employee_id', 'employee_id');
+    }
+
+    public function references()
+    {
+        return $this->hasMany(EmployeeReference::class, 'employee_id', 'employee_id');
+    }
+
+    public function relevant_queries()
+    {
+        return $this->hasOne(EmployeeRelevantQuery::class, 'employee_id', 'employee_id');
+    }
+
 }

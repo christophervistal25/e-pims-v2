@@ -6,6 +6,10 @@ Route::get('/employee-dashboard', function () {
     return view('employee-dashboard');
 });
 
+
+Route::get('/testing', function () {
+    return App\Employee::with(['educational_background', 'civil_service', 'work_experience', 'voluntary_work', 'program_attained'])->get()->take(1);
+});
 Route::get('/', function () {
     return view('blank-page');
 });
