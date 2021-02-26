@@ -74,7 +74,8 @@ class Employee extends Model
 
     public function plantilla()
     {
-        return $this->hasMany(Plantilla::class);
+        return $this->hasOne(Plantilla::class, 'employee_id', 'employee_id');
+        // return $this->hasMany(Plantilla::class, 'employee_id', 'employee_id');
     }
 
 
@@ -82,6 +83,7 @@ class Employee extends Model
     {
         return $this->hasOne(EmployeeFamilyBackground::class, 'employee_id', 'employee_id');
     }
+
 
     public function spouse_child()
     {
