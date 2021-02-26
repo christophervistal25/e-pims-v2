@@ -42,8 +42,37 @@
 
 
 @push('page-scripts')
+<script>
+    $.ajaxSetup({
+    headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });   
+</script>
 <script src="/assets/js/custom/personaldatasheet/countries.js"></script>
 <script src="/assets/js/custom/personaldatasheet/create-person-data.js"></script>
 <script src="/assets/js/custom/personaldatasheet/same-address.js"></script>
+<script>
+    $('#btnSubmitPersonalInformation').click((e) => {
+        e.preventDefault();
+
+        // Collect all fields of personal information
+        let formValues = $('#personalInformationForm').serialize();
+
+        $.ajax({
+            url : "{{  route('pds.person.info.store') }}",
+            method : "POST",
+            data : formValues,
+            success :(response) => {
+                console.log(`success response ${response}`)
+            },
+            error : (response) => {
+                console.log(`error response ${response}`)
+            },
+            
+        });
+        
+    });
+</script>
 @endpush
 @endsection

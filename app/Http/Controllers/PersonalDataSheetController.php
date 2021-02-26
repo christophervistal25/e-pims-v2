@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Employee;
+use App\Http\Repositories\EmployeeRepository;
 
 class PersonalDataSheetController extends Controller
 {
+    public function __construct(EmployeeRepository $employeeRepository)
+    {
+        $this->employeeRepository = $employeeRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -26,6 +32,14 @@ class PersonalDataSheetController extends Controller
         return view('PersonalData.create');
     }
 
+    /**
+     * Store person information in storage.
+     */
+    public function storePersonInformation(Request $request)
+    {
+        return $this->employeeRepository->addPersonInformation($request->all());
+    }
+    
     /**
      * Store a newly created resource in storage.
      *

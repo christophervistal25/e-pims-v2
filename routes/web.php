@@ -28,5 +28,7 @@ Route::Resource('/plantilla', 'PlantillaController');
 Route::Resource('/step-increment', 'StepIncrementController');
 
 Route::group(['prefix' => 'employee'], function () {
+    Route::post('person/information/store', 'PersonalDataSheetController@storePersonInformation')
+            ->name('pds.person.info.store');
     Route::resource('data', 'PersonalDataSheetController');
 });

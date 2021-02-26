@@ -8,216 +8,223 @@
 			</button>
 			</h5>
 		</div>
-		<div id="personalInformation" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+		<div id="personalInformation" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
 			
 			<div class="p-3">
 				<div class="alert alert-secondary text-center" role="alert" >PERSONAL INFORMATION</div>
 			</div>
-			<div class="row pr-3 pl-3">
-				<div class="form-group col-lg-3">
-					<label for="surname">SURNAME</label><span class="text-danger">*</span>
-					<input type="text" class="form-control" id="surname" placeholder="Enter Surname">
+			<form id="personalInformationForm">
+				<div class="row pr-3 pl-3">
+					<div class="form-group col-lg-3">
+						<label for="surname">SURNAME</label><span class="text-danger">*</span>
+						<input type="text" class="form-control" id="surname" placeholder="Enter Surname" name="surname">
+					</div>
+					<div class="form-group col-lg-3">
+						<label for="firstname">FIRST NAME</label><span class="text-danger"><span class="text-danger">*</span>
+						<input type="text" class="form-control" id="firstname" placeholder="Enter First Name" name="firstname">
+					</div>
+					<div class="form-group col-lg-3">
+						<label for="middlename">MIDDLE NAME</label><span class="text-danger"><span class="text-danger">*</span>
+						<input type="text" class="form-control" id="middlename" placeholder="Enter Middle Name" name="middlename">
+					</div>
+					<div class="form-group col-lg-3">
+						<label for="nameextension">NAME EXTENSION</label><span class="text-danger">
+						<input type="text" class="form-control"  maxlength="3"
+						id="nameextension" placeholder="(JR.,SR.)" name="nameExtension">
+					</div>
 				</div>
-				<div class="form-group col-lg-3">
-					<label for="firstname">FIRST NAME</label><span class="text-danger"><span class="text-danger">*</span>
-					<input type="text" class="form-control" id="firstname" placeholder="Enter First Name">
+				<div class="row pl-3 pr-3">
+					<div class="form-group col-lg-3">
+						<label for="dateofbirth">DATE OF BIRTH</label><span class="text-danger">*</span>
+						<input class="form-control" type="date" name="dateOfBirth" />
+					</div>
+					<div class="form-group col-lg-9">
+						<label for="placeofbirth">PLACE OF BIRTH</label><span class="text-danger">*</span>
+						<input type="text" class="form-control" id="placeofbirth" placeholder="Enter Place of Birth" name="placeOfBirth">
+					</div>
 				</div>
-				<div class="form-group col-lg-3">
-					<label for="middlename">MIDDLE NAME</label><span class="text-danger"><span class="text-danger">*</span>
-					<input type="text" class="form-control" id="middlename" placeholder="Enter Middle Name">
+				<div class="row pl-3 pr-3">
+					<div class="form-group col-lg-6">
+						<label for="sex">SEX</label><span class="text-danger">*</span>
+						<select class="form-control" id="sex" name="sex">
+							<option value="MALE">MALE</option>
+							<option value="FEMALE">FEMALE</option>
+						</select>
+					</div>
+					<div class="form-group col-lg-6">
+						<label for="status">STATUS</label><span class="text-danger">*</span>
+						<select class="form-control" id="status" name="status">
+							<option value="SINGLE">SINGLE</option>
+							<option value="MARRIED">MARRIED</option>
+							<option value="WIDOWED">WIDOWED</option>
+							<option value="SEPARATED">SEPARATED</option>
+							<option value="OTHERS">OTHERS</option>
+						</select>
+					</div>
 				</div>
-				<div class="form-group col-lg-3">
-					<label for="nameextension">NAME EXTENSION</label><span class="text-danger">
-					<input type="text" class="form-control"  maxlength="3"
-					id="nameextension" placeholder="(JR.,SR.)">
+				<div class="row pl-3 pr-3">
+					<div class="form group col-lg-4">
+						<label for="height">HEIGHT</label><span class="text-danger">*</span>
+						<input type="text" id="height" class="form-control" placeholder="Enter height in meter" name="height">
+					</div>
+					<div class="form-group col-lg-4">
+						<label for="weight">WEIGHT</label><span class="text-danger">*</span>
+						<input type="text" name="weight" id="weight" class="form-control" placeholder="Enter weight in kilogram" name="weight">
+					</div>
+					<div class="form-group col-lg-4">
+						<label for="bloodtype">BLOODTYPE</label><span class="text-danger">*</span>
+						<input type="text" name="bloodtype" id="bloodtype" class=form-control placeholder="Enter bloodtype" name="bloodType">
+					</div>
 				</div>
-			</div>
-			<div class="row pl-3 pr-3">
-				<div class="form-group col-lg-3">
-					<label for="dateofbirth">DATE OF BIRTH</label><span class="text-danger">*</span>
-					<input class="form-control" type="date" />
+				<div class="row pl-3 pr-3">
+					<div class="form-group col-lg-4">
+						<label for="gsisidno">GSIS ID NUMBER</label><span class="text-danger">*</span>
+						<input type="text" name="gsisIdNo" id="gsisidno" class=form-control placeholder="Enter GSIS ID No.">
+					</div>
+					<div class="form-group col-lg-4">
+						<label for="pagibigidno">PAG-IBIG ID NUMBER</label><span class="text-danger">*</span>
+						<input type="text" name="pagibigIdNo" id="pagibigidno" class=form-control placeholder="Enter PAG-IBIG ID No.">
+					</div>
+					<div class="form-group col-lg-4">
+						<label for="philhealthidno">PHILHEALTH ID NUMBER</label><span class="text-danger">*</span>
+						<input type="text" name="philHealthIdNo" id="philhealthidno" class=form-control placeholder="Enter PHILHEALTH ID No.">
+					</div>
 				</div>
-				<div class="form-group col-lg-9">
-					<label for="placeofbirth">PLACE OF BIRTH</label><span class="text-danger">*</span>
-					<input type="text" class="form-control" id="placeofbirth" placeholder="Enter Place of Birth">
+				<div class="row pl-3 pr-3">
+					<div class="form-group col-lg-4">
+						<label for="sssidno">SSS ID NUMBER</label><span class="text-danger">*</span>
+						<input type="text" name="sssIdNo" id="sssidno" class=form-control placeholder="Enter SSS ID No.">
+					</div>
+					
+					<div class="form-group col-lg-4">
+						<label for="tinidno">TIN ID NUMBER</label><span class="text-danger">*</span>
+						<input type="text" name="tinIdNo" id="tinidno" class=form-control placeholder="Enter TIN ID No.">
+					</div>
+					
+					<div class="form-group col-lg-4">
+						<label for="agencyempidno">AGENCY EMPLOYEE NUMBER</label><span class="text-danger">*</span>
+						<input type="text" name="agencyEmpIdNo" id="agencyempidno" class=form-control placeholder="Enter agency employee no.">
+					</div>
 				</div>
-			</div>
-			<div class="row pl-3 pr-3">
-				<div class="form-group col-lg-6">
-					<label for="sex">SEX</label><span class="text-danger">*</span>
-					<select class="form-control" id="sex">
-						<option value="MALE">MALE</option>
-						<option value="FEMALE">FEMALE</option>
-					</select>
-				</div>
-				<div class="form-group col-lg-6">
-					<label for="status">STATUS</label><span class="text-danger">*</span>
-					<select class="form-control" id="status">
-						<option value="SINGLE">SINGLE</option>
-						<option value="MARRIED">MARRIED</option>
-						<option value="WIDOWED">WIDOWED</option>
-						<option value="SEPARATED">SEPARATED</option>
-						<option value="OTHERS">OTHERS</option>
-					</select>
-				</div>
-			</div>
-			<div class="row pl-3 pr-3">
-				<div class="form group col-lg-4">
-					<label for="height">HEIGHT</label><span class="text-danger">*</span>
-					<input type="text" id="height" class="form-control" placeholder="Enter height in meter">
-				</div>
-				<div class="form-group col-lg-4">
-					<label for="weight">WEIGHT</label><span class="text-danger">*</span>
-					<input type="text" name="weight" id="weight" class="form-control" placeholder="Enter weight in kilogram">
-				</div>
-				<div class="form-group col-lg-4">
-					<label for="bloodtype">BLOODTYPE</label><span class="text-danger">*</span>
-					<input type="text" name="bloodtype" id="bloodtype" class=form-control placeholder="Enter bloodtype">
-				</div>
-			</div>
-			<div class="row pl-3 pr-3">
-				<div class="form-group col-lg-4">
-					<label for="gsisidno">GSIS ID NUMBER</label><span class="text-danger">*</span>
-					<input type="text" name="gsisidno" id="gsisidno" class=form-control placeholder="Enter GSIS ID No.">
-				</div>
-				<div class="form-group col-lg-4">
-					<label for="pagibigidno">PAG-IBIG ID NUMBER</label><span class="text-danger">*</span>
-					<input type="text" name="pagibigidno" id="pagibigidno" class=form-control placeholder="Enter PAG-IBIG ID No.">
-				</div>
-				<div class="form-group col-lg-4">
-					<label for="philhealthidno">PHILHEALTH ID NUMBER</label><span class="text-danger">*</span>
-					<input type="text" name="philhealthidno" id="philhealthidno" class=form-control placeholder="Enter PHILHEALTH ID No.">
-				</div>
-			</div>
-			<div class="row pl-3 pr-3">
-				<div class="form-group col-lg-4">
-					<label for="sssidno">SSS ID NUMBER</label><span class="text-danger">*</span>
-					<input type="text" name="sssidno" id="sssidno" class=form-control placeholder="Enter SSS ID No.">
-				</div>
-				
-				<div class="form-group col-lg-4">
-					<label for="tinidno">TIN ID NUMBER</label><span class="text-danger">*</span>
-					<input type="text" name="tinidno" id="tinidno" class=form-control placeholder="Enter TIN ID No.">
-				</div>
-				
-				<div class="form-group col-lg-4">
-					<label for="agencyempidno">AGENCY EMPLOYEE NUMBER</label><span class="text-danger">*</span>
-					<input type="text" name="agencyempidno" id="agencyempidno" class=form-control placeholder="Enter agency employee no.">
-				</div>
-			</div>
-			<div class="row pl-3 pr-3">
-				<div class="form-group col-lg-4">
-					<label for="citizenship">CITIZENSHIP</label><span class="text-danger">*</span>
-					<select class="form-control" id="citizenship">
-						<option value="FILIPINO">FILIPINO</option>
-						<option value="DUAL CITIZEN">DUAL CITIZEN</option>
-					</select>
-				</div>
-				<div class="form-group col-lg-4 d-none" id="citizenshipby-container">
-					<label for="citizenshipby">BY</label><span class="text-danger">*</span>
-					<select class="form-control" id="citizenshipby">
-						<option value="BIRTH">BIRTH</option>
-						<option value="NATURALIZATION">NATURALIZATION</option>
-					</select>
-				</div>
+				<div class="row pl-3 pr-3">
+					<div class="form-group col-lg-4">
+						<label for="citizenship">CITIZENSHIP</label><span class="text-danger">*</span>
+						<select class="form-control" id="citizenship" name="citizenship">
+							<option value="FILIPINO">FILIPINO</option>
+							<option value="DUAL CITIZEN">DUAL CITIZEN</option>
+						</select>
+					</div>
+					<div class="form-group col-lg-4 d-none" id="citizenshipby-container">
+						<label for="citizenshipby">BY</label><span class="text-danger">*</span>
+						<select class="form-control" id="citizenshipby" name="citizenshipBy">
+							<option value="BIRTH">BIRTH</option>
+							<option value="NATURALIZATION">NATURALIZATION</option>
+						</select>
+					</div>
 
-                <div class="form-group col-lg-4 d-none" id="country-container">
-					<label for="countries">INDICATE COUNTRY</label><span class="text-danger">*</span>
-					<select class="form-control" id="countries"></select>
+					<div class="form-group col-lg-4 d-none" id="country-container">
+						<label for="countries">INDICATE COUNTRY</label><span class="text-danger">*</span>
+						<select class="form-control" id="countries" name="country"></select>
+					</div>
+					
+					<div class="form-group col-lg-4">
+						<label for="telno">TELEPHONE NUMBER</label>
+						<input type="text" id="telno" class="form-control" placeholder="Enter Telephone Number" name="telephoneNumber">
+					</div>
+					<div class="form-group col-lg-4">
+						<label for="mobileno">MOBILE NUMBER</label><span class="text-danger">*</span>
+						<input type="text" id="mobileno" class="form-control" placeholder="Enter Mobile Number" name="mobileNumber">
+					</div>
+					<div class="form-group col-lg-4">
+						<label for="email">EMAIL ADDRESS</label>
+						<input type="email" id="email" class="form-control" placeholder="Enter your email address" name="emailAddress">
+					</div>
+					
 				</div>
-                
-                <div class="form-group col-lg-4">
-					<label for="telno">TELEPHONE NUMBER</label>
-					<input type="text" id="telno" class="form-control" placeholder="Enter Telephone Number">
+				
+				{{-- BEGIN OF RESIDENTIAL ADDRESS --}}
+				<div class="pl-3 pr-3">
+					<div class="alert alert-secondary text-center" role="alert" >RESIDENTIAL ADDRESS</div>
 				</div>
-				<div class="form-group col-lg-4">
-					<label for="mobileno">MOBILE NUMBER</label><span class="text-danger">*</span>
-					<input type="text" id="mobileno" class="form-control" placeholder="Enter Telephone Number">
+				<div class="row pl-3 pr-3">
+					<div class="form-group col-lg-4">
+						<label for="lotno">HOUSE/BLOCK/LOT NO.</label><span class="text-danger">*</span>
+						<input type="text" name="residentialLotNo" id="lotno" class=form-control placeholder="Enter house/block/lot no.">
+					</div>
+					<div class="form-group col-lg-4">
+						<label for="street">STREET</label><span class="text-danger">*</span>
+						<input type="text" name="residentialStreet" id="street" class=form-control placeholder="Enter Street">
+					</div>
+					<div class="form-group col-lg-4">
+						<label for="subdivision">SUBDIVISION/VILLAGE</label><span class="text-danger">*</span>
+						<input type="text" name="residentialSubdivision" id="subdivision" class=form-control placeholder="Enter Subdivision or Village">
+					</div>
 				</div>
-				<div class="form-group col-lg-4">
-					<label for="email">EMAIL ADDRESS</label>
-					<input type="email" id="email" class="form-control" placeholder="Optional">
+				<div class="row pl-3 pr-3">
+					<div class="form-group col-lg-3">
+						<label for="barangay">BARANGAY</label><span class="text-danger">*</span>
+						<input type="text" name="residentialBarangay" id="barangay" class=form-control placeholder="Enter Barangay">
+					</div>
+					<div class="form-group col-lg-3">
+						<label for="city">CITY/MUNICIPALITY</label><span class="text-danger">*</span>
+						<input type="text" name="residentialCity" id="city" class=form-control placeholder="Enter City or Municipality">
+					</div>
+					<div class="form-group col-lg-3">
+						<label for="province">PROVINCE</label><span class="text-danger">*</span>
+						<input type="text" name="residentialProvince" id="province" class=form-control placeholder="Enter Province">
+					</div>
+					<div class="form-group col-lg-3">
+						<label for="zipcode">ZIP CODE</label><span class="text-danger">*</span>
+						<input type="text" name="residentialZipCode" id="zipcode" class="form-control" placeholder="Enter Zipcode">
+					</div>
 				</div>
-                
-			</div>
-			
-			{{-- BEGIN OF RESIDENTIAL ADDRESS --}}
-			<div class="pl-3 pr-3">
-				<div class="alert alert-secondary text-center" role="alert" >RESIDENTIAL ADDRESS</div>
-			</div>
-			<div class="row pl-3 pr-3">
-				<div class="form-group col-lg-4">
-					<label for="lotno">HOUSE/BLOCK/LOT NO.</label><span class="text-danger">*</span>
-					<input type="text" name="lotno" id="lotno" class=form-control placeholder="Enter house/block/lot no.">
+				<div class="pl-3 pr-3">
+					<div class="alert alert-secondary text-center" role="alert">PERMANENT ADDRESS</div>
+					<div class="form-group">
+						<label class="checkbox-inline">
+							<input type="checkbox" id="same-as-above">SAME AS ABOVE
+						</label>
+					</div>
 				</div>
-				<div class="form-group col-lg-4">
-					<label for="street">STREET</label><span class="text-danger">*</span>
-					<input type="text" name="street" id="street" class=form-control placeholder="Enter Street">
+				<div class="row pl-3 pr-3">
+					<div class="form-group col-lg-4">
+						<label for="lotno">HOUSE/BLOCK/LOT NO.</label><span class="text-danger">*</span>
+						<input type="text" name="permanentLotNo" id="permanent_lotno" class=form-control placeholder="Enter house/block/lot no.">
+					</div>
+					<div class="form-group col-lg-4">
+						<label for="street">STREET</label><span class="text-danger">*</span>
+						<input type="text" name="permanentStreet" id="permanent_street" class=form-control placeholder="Enter Street">
+					</div>
+					<div class="form-group col-lg-4">
+						<label for="subdivision">SUBDIVISION/VILLAGE</label><span class="text-danger">*</span>
+						<input type="text" name="permanentSubdivision" id="permanent_subdivision" class=form-control placeholder="Enter Subdivision or Village">
+					</div>
 				</div>
-				<div class="form-group col-lg-4">
-					<label for="subdivision">SUBDIVISION/VILLAGE</label><span class="text-danger">*</span>
-					<input type="text" name="subdivision" id="subdivision" class=form-control placeholder="Enter Subdivision or Village">
+				
+				<div class="row pl-3 pr-3">
+					<div class="form-group col-lg-3">
+						<label for="barangay">BARANGAY</label><span class="text-danger">*</span>
+						<input type="text" name="permanentBarangay" id="permanent_barangay" class=form-control placeholder="Enter Barangay">
+					</div>
+					<div class="form-group col-lg-3">
+						<label for="city">CITY/MUNICIPALITY</label><span class="text-danger">*</span>
+						<input type="text" name="permanentCity" id="permanent_city" class=form-control placeholder="Enter City or Municipality">
+					</div>
+					<div class="form-group col-lg-3">
+						<label for="province">PROVINCE</label><span class="text-danger">*</span>
+						<input type="text" name="permanentProvince" id="permanent_province" class=form-control placeholder="Enter Province">
+					</div>
+					<div class="form-group col-lg-3">
+						<label for="zipcode">ZIP CODE</label><span class="text-danger">*</span>
+						<input type="text" name="permanentZipCode" id="permanent_zipcode" class="form-control" placeholder="Enter Zipcode">
+					</div>
 				</div>
-			</div>
-			<div class="row pl-3 pr-3">
-				<div class="form-group col-lg-3">
-					<label for="barangay">BARANGAY</label><span class="text-danger">*</span>
-					<input type="text" name="barangay" id="barangay" class=form-control placeholder="Enter Barangay">
+				<div class="p-3 float-right">
+					<button class="btn btn-primary" id="btnSubmitPersonalInformation">NEXT</button>
 				</div>
-				<div class="form-group col-lg-3">
-					<label for="city">CITY/MUNICIPALITY</label><span class="text-danger">*</span>
-					<input type="text" name="city" id="city" class=form-control placeholder="Enter City or Municipality">
-				</div>
-				<div class="form-group col-lg-3">
-					<label for="province">PROVINCE</label><span class="text-danger">*</span>
-					<input type="text" name="province" id="province" class=form-control placeholder="Enter Province">
-				</div>
-				<div class="form-group col-lg-3">
-					<label for="zipcode">ZIP CODE</label><span class="text-danger">*</span>
-					<input type="text" name="zipcode" id="zipcode" class="form-control" placeholder="Enter Zipcode">
-				</div>
-			</div>
-			<div class="pl-3 pr-3">
-				<div class="alert alert-secondary text-center" role="alert">PERMANENT ADDRESS</div>
-				<div class="form-group">
-					<label class="checkbox-inline">
-						<input type="checkbox" name="same_as_above" id="same-as-above">SAME AS ABOVE
-					</label>
-				</div>
-			</div>
-			<div class="row pl-3 pr-3">
-				<div class="form-group col-lg-4">
-					<label for="lotno">HOUSE/BLOCK/LOT NO.</label><span class="text-danger">*</span>
-					<input type="text" name="lotno" id="permanent_lotno" class=form-control placeholder="Enter house/block/lot no.">
-				</div>
-				<div class="form-group col-lg-4">
-					<label for="street">STREET</label><span class="text-danger">*</span>
-					<input type="text" name="street" id="permanent_street" class=form-control placeholder="Enter Street">
-				</div>
-				<div class="form-group col-lg-4">
-					<label for="subdivision">SUBDIVISION/VILLAGE</label><span class="text-danger">*</span>
-					<input type="text" name="subdivision" id="permanent_subdivision" class=form-control placeholder="Enter Subdivision or Village">
-				</div>
-			</div>
-			
-			<div class="row pl-3 pr-3">
-				<div class="form-group col-lg-3">
-					<label for="barangay">BARANGAY</label><span class="text-danger">*</span>
-					<input type="text" name="barangay" id="permanent_barangay" class=form-control placeholder="Enter Barangay">
-				</div>
-				<div class="form-group col-lg-3">
-					<label for="city">CITY/MUNICIPALITY</label><span class="text-danger">*</span>
-					<input type="text" name="city" id="permanent_city" class=form-control placeholder="Enter City or Municipality">
-				</div>
-				<div class="form-group col-lg-3">
-					<label for="province">PROVINCE</label><span class="text-danger">*</span>
-					<input type="text" name="province" id="permanent_province" class=form-control placeholder="Enter Province">
-				</div>
-				<div class="form-group col-lg-3">
-					<label for="zipcode">ZIP CODE</label><span class="text-danger">*</span>
-					<input type="text" name="zipcode" id="permanent_zipcode" class="form-control" placeholder="Enter Zipcode">
-				</div>
-			</div>
+				<div class="clearfix"></div>
+			</form>
+
 		</div>
 	</div>
 	{{-- END OF PERSONAL INFORMATION --}}
