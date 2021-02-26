@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOfficesTable extends Migration
+class CreateEmployeeSpouseChildrensTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateOfficesTable extends Migration
      */
     public function up()
     {
-        Schema::create('offices', function (Blueprint $table) {            
-            $table->string('office_code',25);
-            $table->string('office_name');
-            // $table->string('office_short_name');
-            // $table->string('office_address');
-            // $table->string('office_short_address');
+        Schema::create('employee_spouse_childrens', function (Blueprint $table) {
+            $table->id();
+            $table->string('employee_id');
+            $table->string('name');
+            $table->date('date_of_birth');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateOfficesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('offices');
+        Schema::dropIfExists('employee_spouse_childrens');
     }
 }

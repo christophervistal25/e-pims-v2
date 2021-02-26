@@ -41,7 +41,6 @@ class SalaryGradeController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->validate($request, [
             'sg_no'    => 'required',
             'sg_step1' => 'required',
