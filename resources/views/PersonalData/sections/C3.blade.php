@@ -3,8 +3,8 @@
 
     <div class="card">
       <div class="card-header" id="headingOne">
-        <h5 class="mb-0">
-          <button class="btn btn-link" data-toggle="collapse" data-target="#voluntary" aria-expanded="true" aria-controls="voluntary">
+        <h5 class="mb-0" data-toggle="collapse" data-target="#voluntary" aria-expanded="true" aria-controls="voluntary" style="cursor:pointer;">
+          <button class="btn btn-link">
             VI. VOLUNTARY WORK OR INVOLVEMENT IN CIVIC / NON-GOVERNMENT / PEOPLE / VOLUNTARY ORGANIZATION/S
           </button>
         </h5>
@@ -66,8 +66,8 @@
     {{-- BEGIN OF LEARNING AND DEVELOPMENT --}}
     <div class="card">
         <div class="card-header" id="headingOne">
-          <h5 class="mb-0">
-            <button class="btn btn-link" data-toggle="collapse" data-target="#learningAndDevelopment" aria-expanded="true" aria-controls="learningAndDevelopment">
+          <h5 class="mb-0" data-toggle="collapse" data-target="#learningAndDevelopment" aria-expanded="true" aria-controls="learningAndDevelopment" style="cursor: pointer;">
+            <button class="btn btn-link">
                 VII.  LEARNING AND DEVELOPMENT (L&D) INTERVENTIONS/TRAINING PROGRAMS ATTENDED
             </button>
           </h5>
@@ -132,8 +132,8 @@
        {{-- BEGIN OF OTHER INFORMATION --}}
     <div class="card">
         <div class="card-header" id="headingOne">
-          <h5 class="mb-0">
-            <button class="btn btn-link" data-toggle="collapse" data-target="#otherInformation" aria-expanded="true" aria-controls="otherInformation">
+          <h5 class="mb-0" data-toggle="collapse" data-target="#otherInformation" aria-expanded="true" aria-controls="otherInformation" style="cursor: pointer">
+            <button class="btn btn-link">
                 VIII.  OTHER INFORMATION
             </button>
           </h5>

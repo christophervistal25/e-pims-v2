@@ -2,8 +2,8 @@
 <div id="accordion">
     <div class="card">
       <div class="card-header" id="headingOne">
-        <h5 class="mb-0">
-          <button class="btn btn-link" data-toggle="collapse" data-target="#civilService" aria-expanded="true" aria-controls="civilService">
+        <h5 class="mb-0" data-toggle="collapse" data-target="#civilService" aria-expanded="true" aria-controls="civilService" style="cursor: pointer;">
+          <button class="btn btn-link" >
             IV. Civil Service Egibility
           </button>
         </h5>
@@ -64,10 +64,11 @@
         </div>
       </div>
     </div>
+
     <div class="card">
       <div class="card-header" id="headingTwo">
-        <h5 class="mb-0">
-          <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#workExperience" aria-expanded="false" aria-controls="workExperience">
+        <h5 class="mb-0" data-toggle="collapse" data-target="#workExperience" aria-expanded="false" aria-controls="workExperience" style="cursor: pointer;">
+          <button class="btn btn-link collapsed" >
             V. Work Experience
           </button>
         </h5>
