@@ -6,6 +6,10 @@ Route::get('/employee-dashboard', function () {
     return view('employee-dashboard');
 });
 
+
+Route::get('/testing', function () {
+    return App\Employee::with(['educational_background', 'civil_service', 'work_experience', 'voluntary_work', 'program_attained'])->get()->take(1);
+});
 Route::get('/', function () {
     return view('blank-page');
 });
@@ -16,10 +20,10 @@ Route::view('/view-layouts', function() {
 
 
 //salary grade
-Route::Resource('/salary-grade', 'SalaryGradeController');
 Route::get('/salary-grade-list', 'SalaryGradecontroller@list');
+Route::Resource('/salary-grade', 'SalaryGradeController');
 //plantilla
-Route::Resource('/plantilla', 'PlantillaController');
 Route::get('/plantilla-list', 'Plantillacontroller@list');
+Route::Resource('/plantilla', 'PlantillaController');
 //step Increment
 Route::Resource('/step-increment', 'StepIncrementController');

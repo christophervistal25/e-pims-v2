@@ -14,10 +14,15 @@
             <div class="form-group col-6 col-lg-2">
                 <label>Salary Grade <span class="text-danger">*</span></label>
                 <select name="sg_no" value="{{ old('sg_no') }}" class="select floating {{ $errors->has('sg_no')  ? 'is-invalid' : ''}}">
+                    <option selected></option>
                    @foreach (range(1, 35) as $salarygrade)
                      <option value="{{ $salarygrade }}">{{ $salarygrade }}</option>
                    @endforeach
                 </select>
+                @if($errors->has('sg_no'))
+                <small  class="form-text text-danger">
+                {{ $errors->first('sg_no') }} </small>
+                @endif
             </div>
             <div class="form-group col-6 col-lg-2">
                 <label>Step 1 <span class="text-danger">*</span></label>
@@ -86,6 +91,7 @@
             <div class="form-group col-7 col-lg-2">
                 <label>Salary Grade Year <span class="text-danger">*</span></label>
                 <select name="sg_year" value="{{ old('sg_year') }}" class="select floating">
+                    <option selected>Please Selected</option>
                     @for($i = 5; $i >= 1; $i--)
                     {{ $date1 = date("Y",strtotime("+$i year")) }}
                     <option value={{ $date1 }}>{{ $date1 }}</option>
