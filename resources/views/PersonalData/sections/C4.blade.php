@@ -386,7 +386,7 @@
           </h5>
         </div>
 
-        <div id="govermentIssuedId" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+        <div id="govermentIssuedId" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
           <div class="card-body">
               {{-- BEGIN CONTENT OF GOVERMENT ISSUED ID  --}}
               <table class="table table-bordered">
