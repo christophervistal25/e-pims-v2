@@ -8166,3 +8166,12 @@ ul.comment-list li ul.children {
 .step-increment {
 	border-top: 3px dashed #ccc;
 }
+input[type="checkbox"]{
+	/* Double-sized Checkboxes */
+	-ms-transform: scale(2); /* IE */
+	-moz-transform: scale(2); /* FF */
+	-webkit-transform: scale(2); /* Safari and Chrome */
+	-o-transform: scale(2); /* Opera */
+	padding: 10px;
+	margin: 0 10px 0 10px;
+}

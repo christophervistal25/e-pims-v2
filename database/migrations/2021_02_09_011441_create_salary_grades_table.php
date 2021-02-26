@@ -15,7 +15,7 @@ class CreateSalaryGradesTable extends Migration
     {
         Schema::create('salary_grades', function (Blueprint $table) {
             $table->id();
-            $table->integer('sg_no');
+            $table->integer('sg_no')->unique();
             $table->decimal('sg_step1', 11,2);
             $table->decimal('sg_step2', 11,2);
             $table->decimal('sg_step3', 11,2);

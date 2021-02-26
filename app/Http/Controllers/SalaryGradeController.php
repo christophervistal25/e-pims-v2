@@ -18,9 +18,24 @@ class SalaryGradeController extends Controller
         $salary_grade = SalaryGrade::get();
         return view('SalaryGrade.SalaryGrade');
     }
-    public function list()
+    public function list(Request $request)
     {
-      return Datatables::of(SalaryGrade::query())->make(true);
+    //   return Datatables::of(SalaryGrade::query())->make(true);
+
+      if ($request->ajax()) {
+        $data = SalaryGrade::select('*');
+        return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+   
+                       $btn = '<a href="" class="edit btn btn-info btn-sm">View</a>';
+     
+                        return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+    }
+    return view('users');
     }
 
     /**
@@ -42,29 +57,29 @@ class SalaryGradeController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'sg_no'    => 'required',
-            'sg_step1' => 'required',
-            'sg_step2' => 'required',
-            'sg_step3' => 'required',
-            'sg_step4' => 'required',
-            'sg_step5' => 'required',
-            'sg_step6' => 'required',
-            'sg_step7' => 'required',
-            'sg_step8' => 'required',
-            'sg_year'  => 'required',
+            'sgNo'    => 'required|unique:salary_grades,sg_no|in:' . implode(',',range(1, 33)),
+            'sgStep1' => 'required',
+            'sgStep2' => 'required',
+            'sgStep3' => 'required',
+            'sgStep4' => 'required',
+            'sgStep5' => 'required',
+            'sgStep6' => 'required',
+            'sgStep7' => 'required',
+            'sgStep8' => 'required',
+            'sgYear'  => 'required|date_format:Y',
         ]);
 
         $salarygrade           = new SalaryGrade;
-        $salarygrade->sg_no = $request['sg_no'];   
-        $salarygrade->sg_step1 = $request['sg_step1'];
-        $salarygrade->sg_step2 = $request['sg_step2'];
-        $salarygrade->sg_step3 = $request['sg_step3'];
-        $salarygrade->sg_step4 = $request['sg_step4'];
-        $salarygrade->sg_step5 = $request['sg_step5'];
-        $salarygrade->sg_step6 = $request['sg_step6'];
-        $salarygrade->sg_step7 = $request['sg_step7'];
-        $salarygrade->sg_step8 = $request['sg_step8'];
-        $salarygrade->sg_year = $request['sg_year' ];
+        $salarygrade->sg_no    = $request['sgNo'];   
+        $salarygrade->sg_step1 = $request['sgStep1'];
+        $salarygrade->sg_step2 = $request['sgStep2'];
+        $salarygrade->sg_step3 = $request['sgStep3'];
+        $salarygrade->sg_step4 = $request['sgStep4'];
+        $salarygrade->sg_step5 = $request['sgStep5'];
+        $salarygrade->sg_step6 = $request['sgStep6'];
+        $salarygrade->sg_step7 = $request['sgStep7'];
+        $salarygrade->sg_step8 = $request['sgStep8'];
+        $salarygrade->sg_year  = $request['sgYear' ];
         $salarygrade->save();
         return redirect('/salary-grade')->with('success','Added Successfully');
     }

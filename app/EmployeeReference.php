@@ -11,5 +11,5 @@ class EmployeeReference extends Model
         'name',
         'address',
         'telephone_number'
-    ]
+    ];
 }

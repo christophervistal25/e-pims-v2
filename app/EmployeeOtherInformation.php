@@ -11,5 +11,5 @@ class EmployeeOtherInformation extends Model
         'special_skill',
         'non_academic',
         'organization',
-    ]
+    ];
 }
