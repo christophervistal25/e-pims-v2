@@ -70,7 +70,7 @@
                     <input type="text" class="form-control rounded-0 border-0" placeholder="">
                 </td>
                 <td>
-                    <input type="text" class="form-control rounded-0 border-0" placeholder="">
+                    <input type="text" class="form-control rounded-0 border-0 text-uppercase" maxlength="1" placeholder="">
                 </td>
                 <td class='align-middle'>
                     <button class="btn btn-sm rounded-pill btn-danger align-middle text-center" data-target="${rowID}">
