@@ -11,7 +11,7 @@
 		<div id="personalInformation" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
 			
 			<div class="p-3">
-				<div class="alert alert-secondary text-center" role="alert" >PERSONAL INFORMATION</div>
+				<div class="alert alert-secondary text-center font-weight-bold" role="alert">PERSONAL INFORMATION</div>
 			</div>
 			<form id="personalInformationForm">
 				<div class="row pr-3 pl-3">
@@ -144,7 +144,7 @@
 				
 				{{-- BEGIN OF RESIDENTIAL ADDRESS --}}
 				<div class="pl-3 pr-3">
-					<div class="alert alert-secondary text-center" role="alert" >RESIDENTIAL ADDRESS</div>
+					<div class="alert alert-secondary text-center font-weight-bold" role="alert" >RESIDENTIAL ADDRESS</div>
 				</div>
 				<div class="row pl-3 pr-3">
 					<div class="form-group col-lg-4">
@@ -175,11 +175,11 @@
 					</div>
 					<div class="form-group col-lg-3">
 						<label for="zipcode">ZIP CODE</label><span class="text-danger">*</span>
-						<input type="text" name="residentialZipCode" id="zipcode" class="form-control" placeholder="Enter Zipcode">
+						<input type="number" name="residentialZipCode" id="zipcode" class="form-control" placeholder="Enter Zipcode">
 					</div>
 				</div>
 				<div class="pl-3 pr-3">
-					<div class="alert alert-secondary text-center" role="alert">PERMANENT ADDRESS</div>
+					<div class="alert alert-secondary text-center font-weight-bold" role="alert">PERMANENT ADDRESS</div>
 					<div class="form-group">
 						<label class="checkbox-inline">
 							<input type="checkbox" id="same-as-above">SAME AS ABOVE
@@ -216,7 +216,7 @@
 					</div>
 					<div class="form-group col-lg-3">
 						<label for="zipcode">ZIP CODE</label><span class="text-danger">*</span>
-						<input type="text" name="permanentZipCode" id="permanent_zipcode" class="form-control" placeholder="Enter Zipcode">
+						<input type="number" name="permanentZipCode" id="permanent_zipcode" class="form-control" placeholder="Enter Zipcode">
 					</div>
 				</div>
 				<div class="p-3 float-right">
@@ -240,7 +240,7 @@
 		</div>
 		<div id="familyBackground" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
 			<div class="p-3">
-				<div class="alert alert-secondary text-center" role="alert">FAMILY BACKGROUND</div>
+				<div class="alert alert-secondary text-center font-weight-bold" role="alert">FAMILY BACKGROUND</div>
 			</div>
 			{{-- BEGIN OF SPOUSE --}}
 			<div class="row pr-3 pl-3">
@@ -324,21 +324,18 @@
 			<hr>
 			{{-- BEGIN OF MOTHER --}}
 			<div class="row pr-3 pl-3">
+				
 				<div class="form-group col-lg-3">
-					<label for="ssurname">MOTHER'S MAIDEN NAME</label>
-					<input type="text" class="form-control " id="ssurname" name="ssurname" placeholder="Enter Mother's Maiden Name" value="">
-				</div>
-				<div class="form-group col-lg-3">
-					<label for="snameexten">MOTHER'S SURNAME</label>
-					<input type="text" maxlength="3" class="form-control " id="snameexten" name="snameexten" placeholder="Enter Mother's Surname" value="">
+					<label for="snameexten">MOTHER'S MAIDEN SURNAME</label>
+					<input type="text" maxlength="3" class="form-control " id="snameexten" name="snameexten" placeholder="Enter Mother's Maiden Surname" value="">
 				</div>
 				<div class="form-group col-lg-3 ">
 					<label for="sfirstname">MOTHER'S FIRST NAME</label>
 					<input type="text" class="form-control  " id="sfirstname" name="sfirstname" placeholder="Enter Mother's First Name" value="">
 				</div>
 				<div class="form-group col-lg-3">
-					<label for="smiddleame">MOTHER'S MIDDLE NAME</label>
-					<input type="text" class="form-control " id="smiddleame" name="smiddleame" placeholder="Enter Mother's Middle Name" value="">
+					<label for="smiddleame">MOTHER'S MAIDEN MIDDLE NAME</label>
+					<input type="text" class="form-control " id="smiddleame" name="smiddleame" placeholder="Enter Mother's Maiden Middle Name" value="">
 				</div>
 			</div>
 			{{-- END OF MOTHER --}}
@@ -358,90 +355,96 @@
 		</div>
 		<div id="educationalBackground" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
 			<div class="p-3">
-				<div class="alert alert-secondary text-center" role="alert">ELEMETARY</div>
+				<div class="alert alert-secondary text-center font-weight-bold" role="alert">ELEMENTARY</div>
 			</div>
 			{{-- BEGIN OF ELEMETARY --}}
             <div class="pl-3 pr-3 pb-3">
                 <div class="row">
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>ELEMENTARY</label>
                         <input type="text" class="form-control" placeholder="Name of School">
                     </div>
 
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>BASIC EDUCATION/DEGREE/COURSE</label>
                         <input type="text" class="form-control" placeholder="Name of School">
                     </div>
 
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (FROM)</label>
                         <input type="date" class="form-control" placeholder="Name of School">
                     </div>
-                    <div class="col-lg-2">
+
+                    <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (TO)</label>
                         <input type="date" class="form-control" placeholder="Name of School">
                     </div>
-
-                    <div class="col-lg-2">
+				</div>
+					<div class="pr-3 pb-3 py-3">
+						<div class="row">
+                    <div class="col-lg-3">
                         <label>HIGHEST LEVEL/ UNIT EARNED</label>
                         <input type="number" class="form-control" placeholder="(if not graduated)">
                     </div>
 
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>YEAR GRADUATED</label>
                         <input type="text" class="form-control" placeholder="">
                     </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-lg-4">
+					
+					<div class="col-lg-6">
                         <label>SCHOLARSHIP/ ACADEMIC HONORS RECEIVED</label>
-                        <input type="text" class="form-control" placeholder="(if not graduated)">
-                    </div>
-                </div>
+                        <input type="text" class="form-control">
+						</div>
+                	</div>
+				</div>
             </div>
 			{{-- END OF ELEMENTARY --}}
 
             <hr>
 
             <div class="p-3">
-				<div class="alert alert-secondary text-center" role="alert">SECONDARY</div>
+				<div class="alert alert-secondary text-center font-weight-bold" role="alert">SECONDARY</div>
 			</div>
 			{{-- BEGIN OF SECONDARY --}}
             <div class="pl-3 pr-3 pb-3">
                 <div class="row">
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>SECONDARY</label>
                         <input type="text" class="form-control" placeholder="Name of School">
                     </div>
 
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>BASIC EDUCATION/DEGREE/COURSE</label>
                         <input type="text" class="form-control" placeholder="Name of School">
                     </div>
 
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (FROM)</label>
                         <input type="date" class="form-control" placeholder="Name of School">
                     </div>
-                    <div class="col-lg-2">
+
+                    <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (TO)</label>
                         <input type="date" class="form-control" placeholder="Name of School">
                     </div>
-
-                    <div class="col-lg-2">
+				</div>
+			<div class="pr-3 pb-3 py-3">
+				<div class="row">
+                    <div class="col-lg-3">
                         <label>HIGHEST LEVEL/ UNIT EARNED</label>
                         <input type="number" class="form-control" placeholder="(if not graduated)">
                     </div>
 
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>YEAR GRADUATED</label>
                         <input type="text" class="form-control" placeholder="">
                     </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-lg-4">
+                
+                    <div class="col-lg-6">
                         <label>SCHOLARSHIP/ ACADEMIC HONORS RECEIVED</label>
-                        <input type="text" class="form-control" placeholder="(if not graduated)">
+                        <input type="text" class="form-control">
+						</div>
                     </div>
                 </div>
             </div>
@@ -450,139 +453,151 @@
             <hr>
 
             <div class="p-3">
-				<div class="alert alert-secondary text-center" role="alert">VOCATIONAL / TRADE COURSE</div>
+				<div class="alert alert-secondary text-center font-weight-bold" role="alert">VOCATIONAL / TRADE COURSE</div>
 			</div>
 			{{-- BEGIN OF VOCATIONAL / TRADE COURSE --}}
             <div class="pl-3 pr-3 pb-3">
                 <div class="row">
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>VOCATIONAL / TRADE COURSE</label>
                         <input type="text" class="form-control" placeholder="Name of School">
                     </div>
 
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>BASIC EDUCATION/DEGREE/COURSE</label>
                         <input type="text" class="form-control" placeholder="Name of School">
                     </div>
 
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (FROM)</label>
                         <input type="date" class="form-control" placeholder="Name of School">
                     </div>
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (TO)</label>
                         <input type="date" class="form-control" placeholder="Name of School">
                     </div>
-
-                    <div class="col-lg-2">
+				</div>
+			</div>
+			<div class="pl-3 pr-3 pb-3">
+				<div class="row">
+                    <div class="col-lg-3">
                         <label>HIGHEST LEVEL/ UNIT EARNED</label>
                         <input type="number" class="form-control" placeholder="(if not graduated)">
                     </div>
 
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>YEAR GRADUATED</label>
                         <input type="text" class="form-control" placeholder="">
                     </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-lg-4">
+                
+                    <div class="col-lg-6">
                         <label>SCHOLARSHIP/ ACADEMIC HONORS RECEIVED</label>
-                        <input type="text" class="form-control" placeholder="(if not graduated)">
+                        <input type="text" class="form-control">
                     </div>
-                </div>
-            </div>
+			</div>
+        </div>    
 			{{-- END OF VOCATIONAL / TRADE COURSE --}}
 
             <hr>
 
             <div class="p-3">
-				<div class="alert alert-secondary text-center" role="alert">COLLEGE</div>
+				<div class="alert alert-secondary text-center font-weight-bold" role="alert">COLLEGE</div>
 			</div>
 			{{-- BEGIN OF COLLEGE --}}
             <div class="pl-3 pr-3 pb-3">
                 <div class="row">
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>COLLEGE</label>
                         <input type="text" class="form-control" placeholder="Name of School">
                     </div>
 
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>BASIC EDUCATION/DEGREE/COURSE</label>
                         <input type="text" class="form-control" placeholder="Name of School">
                     </div>
 
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (FROM)</label>
                         <input type="date" class="form-control" placeholder="Name of School">
                     </div>
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (TO)</label>
                         <input type="date" class="form-control" placeholder="Name of School">
                     </div>
-
-                    <div class="col-lg-2">
+				</div>
+			</div>
+			
+			<div class="pl-3 pr-3 pb-3">
+                <div class="row">
+                    <div class="col-lg-3">
                         <label>HIGHEST LEVEL/ UNIT EARNED</label>
                         <input type="number" class="form-control" placeholder="(if not graduated)">
                     </div>
 
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>YEAR GRADUATED</label>
                         <input type="text" class="form-control" placeholder="">
                     </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-lg-4">
+                
+                    <div class="col-lg-6">
                         <label>SCHOLARSHIP/ ACADEMIC HONORS RECEIVED</label>
-                        <input type="text" class="form-control" placeholder="(if not graduated)">
+                        <input type="text" class="form-control">
                     </div>
                 </div>
-            </div>
+			</div>
+            
 			{{-- END OF COLLEGE --}}
 
             <hr>
 
             <div class="p-3">
-				<div class="alert alert-secondary text-center" role="alert">GRADUATE STUDIES</div>
+				<div class="alert alert-secondary text-center font-weight-bold" role="alert">GRADUATE STUDIES</div>
 			</div>
 			{{-- BEGIN OF GRADUATE STUDIES --}}
             <div class="pl-3 pr-3 pb-3">
                 <div class="row">
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>GRADUATE STUDIES</label>
                         <input type="text" class="form-control" placeholder="Name of School">
                     </div>
 
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>BASIC EDUCATION/DEGREE/COURSE</label>
                         <input type="text" class="form-control" placeholder="Name of School">
                     </div>
 
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (FROM)</label>
                         <input type="date" class="form-control" placeholder="Name of School">
                     </div>
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (TO)</label>
                         <input type="date" class="form-control" placeholder="Name of School">
                     </div>
+				</div>
+			</div>
 
-                    <div class="col-lg-2">
+			<div class="pl-3 pr-3 pb-3">
+                <div class="row">
+                    <div class="col-lg-3">
                         <label>HIGHEST LEVEL/ UNIT EARNED</label>
                         <input type="number" class="form-control" placeholder="(if not graduated)">
                     </div>
 
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <label>YEAR GRADUATED</label>
                         <input type="text" class="form-control" placeholder="">
                     </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-lg-4">
+	
+                    <div class="col-lg-6">
                         <label>SCHOLARSHIP/ ACADEMIC HONORS RECEIVED</label>
-                        <input type="text" class="form-control" placeholder="(if not graduated)">
+                        <input type="text" class="form-control">
                     </div>
-                </div>
-            </div>
+				</div>
+			</div>
+		
+                
+            
 			{{-- END OF GRADUATE STUDIES --}}
 		</div>
 	</div>
