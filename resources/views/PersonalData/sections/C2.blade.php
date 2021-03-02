@@ -85,7 +85,9 @@
                   <td rowspan="2" class="align-middle">MONTHLY SALARY</td>
                   <td rowspan="2" class="align-middle">SALARY/ JOB/ PAY GRADE <br> (if applicable) <br> & STEP  (Format "00-0")/ INCREMENT</td>
                   <td rowspan="2" class="align-middle">STATUS OF APPOINTMENT</td>
-                  <td rowspan="2" class="align-middle">GOV'T SERVICE (Y/ N)</td>
+                  
+                  <td rowspan="2" class="align-middle">GOV'T SERVICE (Y/ N)             </td>
+                    </input>
                   <td rowspan="2" class="pl-4 pr-4">&nbsp;</td>
                 </tr>
 
@@ -121,7 +123,7 @@
                             <input type="text" class="form-control rounded-0 border-0" placeholder="">
                         </td>
                         <td>
-                            <input type="text" class="form-control rounded-0 border-0" placeholder="">
+                            <input type="text" class="form-control rounded-0 border-0 text-uppercase" maxlength="1" placeholder="">
                         </td>
                         <td class="jumbotron"></td>
                     </tr>

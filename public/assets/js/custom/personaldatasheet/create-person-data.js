@@ -4,6 +4,7 @@
     let learningAndDevelopmentDynamicRowIndex = 0;
     let otherInformationDynamicRowIndex       = 0;
     let referencesDynamicRowIndex             = 0;
+    let spouseDynamicRowIndex                 = 0;
 
     // This will add new table row for civil service in C2 TAB
     $('#btnAddNewFieldCivilServiceRow').click((e) => {
@@ -69,7 +70,7 @@
                     <input type="text" class="form-control rounded-0 border-0" placeholder="">
                 </td>
                 <td>
-                    <input type="text" class="form-control rounded-0 border-0" placeholder="">
+                    <input type="text" class="form-control rounded-0 border-0 text-uppercase" maxlength="1" placeholder="">
                 </td>
                 <td class='align-middle'>
                     <button class="btn btn-sm rounded-pill btn-danger align-middle text-center" data-target="${rowID}">
@@ -189,6 +190,31 @@
         `);
     });
 
+    // Function for generating new spouse field in spouse family background section. 
+    
+    $('#generateNewSpouseField').click((e) => {
+        spouseDynamicRowIndex++;
+        let rowID = `dynamic-row-spouse-${spouseDynamicRowIndex}`;
+        $('#dynamic-row-for-spouse').append(`
+        <div class='row pl-3 pr-3' id='${rowID}'>
+            <div class="form-group col-lg-6">
+                    <label for="stelno">NAME OF CHILDREN</label>
+					<input type="text" class="form-control" id="stelno" placeholder="Enter Name of Children">
+            </div>
+            <div class="form-group col-lg-5">
+                <label for="stelno">DATE OF BIRTH</label>
+                <input type="date" class="form-control" id="stelno" placeholder="Enter Spouse's Business Address">
+            </div>
+
+            <div class="col-lg-1">
+                <button class="btn btn-danger rounded-circle btn-sm mt-4" data-target="${rowID}">
+                    <i class="fa fa-times" style='pointer-events:none;'></i>
+                </button>
+            </div>
+        </div>
+        `);
+    });
+
     // Capture the click event inside of DOM
     $(document).on( "click", (e) => {
         let button = e.target;
@@ -202,6 +228,7 @@
         }
     });
 
+    // Function for clicking table cell with checkbox child element.
     $('td').click((e) => {
         let CHECKBOX_INDEX = 0;
 

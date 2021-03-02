@@ -35,15 +35,18 @@ class Employee extends Model
         'residential_barangay',
         'residential_city',
         'residential_province',
+        'residential_zip_code',
         'permanent_house_no',
         'permanent_street',
         'permanent_village',
         'permanent_barangay',
         'permanent_city',
         'permanent_province',
+        'permanent_zip_code',
         'telephone_no',
         'mobile_no',
         'email_address',
+        'status',
     ];
 
 

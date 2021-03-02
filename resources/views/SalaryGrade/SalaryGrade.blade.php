@@ -184,10 +184,10 @@
             </div>
         </div>
         <div class="table" style="overflow-x:auto;">
-        <table class="table table-bordered text-center" id="myTable"  style="width:100%;">
+        <table width="100%" cellspacing="0" class="table table-bordered text-center" id="myTable">
             <thead>
               <tr>
-                <td scope="col" class="text-center font-weight-bold">Salary Grade</td>
+                <td width="5" scope="col" class="text-center font-weight-bold">Salary Grade</td>
                 <td scope="col" class="text-center font-weight-bold">Step 1</td>
                 <td scope="col" class="text-center font-weight-bold">Step 2</td>
                 <td scope="col" class="text-center font-weight-bold">Step 3</td>
@@ -196,7 +196,7 @@
                 <td scope="col" class="text-center font-weight-bold">Step 6</td>
                 <td scope="col" class="text-center font-weight-bold">Step 7</td>
                 <td scope="col" class="text-center font-weight-bold">Step 8</td>
-                <td scope="col" class="text-center font-weight-bold">Salary Grade Year</td>
+                <td scope="col" class="text-center font-weight-bold">Salary Grade Base Year</td>
                 <td scope="col" class="text-center font-weight-bold">Action</td>
               </tr>
             </thead>
@@ -211,28 +211,17 @@
 
 {{-- code for yajra datatable --}}
 <script>
-    var date = new Date();
-    var year = date.getFullYear();
-    var myTable = $('#myTable').DataTable({
+    let date = new Date();
+    let year = date.getFullYear();
+    let myTable = $('#myTable').DataTable({
             processing: true,
             serverSide: true,
             pageLength: 35,
             lengthMenu: [ 35, 50, 75, 100 ],
-            aoColumns: [
-            { sWidth: '1%' },
-            { sWidth: '9%' },
-            { sWidth: '9%' },
-            { sWidth: '9%' },
-            { sWidth: '9%' },
-            { sWidth: '9%' },
-            { sWidth: '9%' },
-            { sWidth: '9%' },
-            { sWidth: '9%' },
-            { sWidth: '9%' },
-            { sWidth: '10%' } ],
+            autoWidth: false,
             ajax: '/salary-grade-list',
             columns: [
-                { data: 'sg_no', name: 'sg_no', width: '10px' },
+                { data: 'sg_no', name: 'sg_no'},
                 { data: 'sg_step1', name: 'sg_step1' },
                 { data: 'sg_step2', name: 'sg_step2' },
                 { data: 'sg_step3', name: 'sg_step3' },
