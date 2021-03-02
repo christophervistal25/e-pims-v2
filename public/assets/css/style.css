@@ -8175,3 +8175,45 @@ input[type="checkbox"]{
 	padding: 10px;
 	margin: 0 10px 0 10px;
 }
+
+.body-container {
+	margin-top: 40px;
+	text-align: center;
+}
+
+.card-body-p {
+	margin-left: 60px;
+	margin-right: 60px;
+	margin-top: 70px;
+}
+
+.date{
+	text-align: right;
+	margin-right: 80px;
+}
+
+.amount{
+	padding: 110px;
+	text-decoration: underline;
+}
+
+.respectfully {
+	text-align: right;
+	margin-right: 130px;
+}
+
+.boxing{
+	border: 1px solid transparent;
+	border-bottom-color: black;
+	padding-left: 30px;
+}
+
+.gov {
+	text-align: right;
+	margin-right: 20px;
+}
+
+.signatory{
+	text-align: right;
+	margin-right: 67px;
+}

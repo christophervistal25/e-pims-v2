@@ -18,6 +18,7 @@ class StepIncrementController extends Controller
     {
         $employee = Employee::with('plantilla')->get();
         return view('StepIncrement.StepIncrement', compact('employee'));
+        
     }
 
     /**
@@ -71,7 +72,7 @@ class StepIncrementController extends Controller
             // $step_increment->salary_amount_to=$request['amount2'];
             // $step_increment->monthly_difference=$request['monthlyDifference'];
             $step_increment->save();
-            return redirect('/step-increment')->with('success','Successfully Added!');
+            return redirect('/print-increment')->with('success','Successfully Added!');
     }
 
     /**
