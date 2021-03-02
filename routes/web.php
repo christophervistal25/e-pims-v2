@@ -19,8 +19,11 @@ Route::view('/view-layouts', function() {
 });
 
 //salary grade
+
 Route::get('/salary-grade-list', 'SalaryGradecontroller@list');
-Route::Resource('/salary-grade', 'SalaryGradeController');
+Route::resource('/salary-grade', 'SalaryGradeController');
+
+
 //plantilla
 Route::get('/plantilla-list', 'Plantillacontroller@list');
 Route::Resource('/plantilla', 'PlantillaController');

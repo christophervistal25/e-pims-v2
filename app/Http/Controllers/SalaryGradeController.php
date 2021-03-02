@@ -27,15 +27,13 @@ class SalaryGradeController extends Controller
         return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-   
-                       $btn = '<a href="" class="edit btn btn-info btn-sm">View</a>';
-     
+                       $btn = "<a href='". route('salary-grade.edit', $row->id) . "' class='edit btn btn-info btn-sm'>Edit</a>";
                         return $btn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
     }
-    return view('users');
+    return view('SalaryGrade.SalaryGrade');
     }
 
     /**
@@ -81,7 +79,7 @@ class SalaryGradeController extends Controller
         $salarygrade->sg_step8 = $request['sgStep8'];
         $salarygrade->sg_year  = $request['sgYear' ];
         $salarygrade->save();
-        return redirect('/salary-grade')->with('success','Added Successfully');
+        return back()->with('success','Added Successfully');
     }
 
     /**
@@ -103,7 +101,8 @@ class SalaryGradeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $salaryGrade = SalaryGrade::find($id);
+        return view ('SalaryGrade.edit', compact('salaryGrade'));
     }
 
     /**
@@ -115,7 +114,32 @@ class SalaryGradeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'sgNo'    => 'required|in:' . implode(',',range(1, 33)),
+            'sgStep1' => 'required',
+            'sgStep2' => 'required',
+            'sgStep3' => 'required',
+            'sgStep4' => 'required',
+            'sgStep5' => 'required',
+            'sgStep6' => 'required',
+            'sgStep7' => 'required',
+            'sgStep8' => 'required',
+            'sgYear'  => 'required|date_format:Y',
+        ]);
+
+        $salarygrade           = SalaryGrade::find($id);
+        $salarygrade->sg_no    = $request['sgNo'];   
+        $salarygrade->sg_step1 = $request['sgStep1'];
+        $salarygrade->sg_step2 = $request['sgStep2'];
+        $salarygrade->sg_step3 = $request['sgStep3'];
+        $salarygrade->sg_step4 = $request['sgStep4'];
+        $salarygrade->sg_step5 = $request['sgStep5'];
+        $salarygrade->sg_step6 = $request['sgStep6'];
+        $salarygrade->sg_step7 = $request['sgStep7'];
+        $salarygrade->sg_step8 = $request['sgStep8'];
+        $salarygrade->sg_year  = $request['sgYear' ];
+        $salarygrade->save();
+        return back()->with('success','Updated Successfully');
     }
 
     /**
