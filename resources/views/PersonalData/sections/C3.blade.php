@@ -31,19 +31,19 @@
             <tbody id="dynamic-row-voluntary-data">
                 <tr>
                     <td>
-                        <input type="text" class="form-control rounded-0 border-0" placeholder="NAME">
+                        <input type="text" class="form-control rounded-0 border-0" placeholder="NAME" name="volunOrg[nameOfOrg]">
                     </td>
                     <td>
-                        <input type="date" class="form-control rounded-0 border-0" placeholder="FROM">
+                        <input type="date" class="form-control rounded-0 border-0" placeholder="FROM" name="volunOrg[from]">
                     </td>
                     <td>
-                        <input type="date" class="form-control rounded-0 border-0" placeholder="TO">
+                        <input type="date" class="form-control rounded-0 border-0" placeholder="TO" name="volunOrg[to]">
                     </td>
                     <td>
-                        <input type="number" class="form-control rounded-0 border-0" placeholder="Hours">
+                        <input type="number" class="form-control rounded-0 border-0" placeholder="Hours" name="volunOrg[noOfHrs]">
                     </td>
                     <td>
-                        <input type="text" class="form-control rounded-0 border-0" placeholder="Position">
+                        <input type="text" class="form-control rounded-0 border-0" placeholder="Position" name="volunOrg[position]">
                     </td>
                     <td class="jumbotron"></td>
                 </tr>
@@ -95,22 +95,22 @@
               <tbody id="dynamic-row-learning-and-development-data">
                   <tr>
                       <td>
-                          <input type="text" class="form-control rounded-0 border-0" placeholder="NAME">
+                          <input type="text" class="form-control rounded-0 border-0" placeholder="NAME" name="learnDev[nameOfTraining]">
                       </td>
                       <td>
-                          <input type="date" class="form-control rounded-0 border-0" placeholder="FROM">
+                          <input type="date" class="form-control rounded-0 border-0" placeholder="FROM" name="learnDev[from]">
                       </td>
                       <td>
-                          <input type="date" class="form-control rounded-0 border-0" placeholder="TO">
+                          <input type="date" class="form-control rounded-0 border-0" placeholder="TO" name="learnDev[to]">
                       </td>
                       <td>
-                          <input type="number" class="form-control rounded-0 border-0" placeholder="Hours">
+                          <input type="number" class="form-control rounded-0 border-0" placeholder="Hours" name="learnDev[noOfHours]">
                       </td>
                       <td>
-                          <input type="text" class="form-control rounded-0 border-0" placeholder="">
+                          <input type="text" class="form-control rounded-0 border-0" placeholder="" name="learnDev[typeOfLD]">
                       </td>
                       <td>
-                        <input type="text" class="form-control rounded-0 border-0" placeholder="">
+                        <input type="text" class="form-control rounded-0 border-0" placeholder="" name="learnDev[conducted]">
                       </td>
                       <td class="jumbotron"></td>
                   </tr>
@@ -129,7 +129,7 @@
       </div>
       {{-- END OF LEARNING AND DEVELOPMENT --}}
 
-       {{-- BEGIN OF OTHER INFORMATION --}}
+      {{-- BEGIN OF OTHER INFORMATION --}}
     <div class="card">
         <div class="card-header" id="headingOne">
           <h5 class="mb-0" data-toggle="collapse" data-target="#otherInformation" aria-expanded="true" aria-controls="otherInformation" style="cursor: pointer">
@@ -156,13 +156,13 @@
               <tbody id="dynamic-row-other-information-data">
                   <tr>
                       <td>
-                          <input type="text" class="form-control rounded-0 border-0" placeholder="Input">
+                          <input type="text" class="form-control rounded-0 border-0" placeholder="Input" name="otherInfo[skill]">
                       </td>
                       <td>
-                          <input type="text" class="form-control rounded-0 border-0" placeholder="Input">
+                          <input type="text" class="form-control rounded-0 border-0" placeholder="Input" name="otherInfo[recog]">
                       </td>
                       <td>
-                          <input type="text" class="form-control rounded-0 border-0" placeholder="Input">
+                          <input type="text" class="form-control rounded-0 border-0" placeholder="Input" name="otherInfo[memAssociation]">
                       </td>
                       <td class="jumbotron"></td>
                   </tr>

@@ -15,7 +15,7 @@ Route::get('/', function () {
 });
 
 Route::view('/view-layouts', function() {
-   return view('activities');
+return view('activities');
 });
 
 
@@ -30,3 +30,8 @@ Route::get('/plantilla-list', 'Plantillacontroller@list');
 Route::Resource('/plantilla', 'PlantillaController');
 //step Increment
 Route::Resource('/step-increment', 'StepIncrementController');
+
+
+Route::group(['prefix' => 'employee'], function () {
+    Route::resource('data', 'PersonalDataSheetController');
+});

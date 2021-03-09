@@ -60,7 +60,7 @@
         let formValues = $('#personalInformationForm').serialize();
 
         $.ajax({
-            url : "{{  route('pds.person.info.store') }}",
+            url : '',
             method : "POST",
             data : formValues,
             success :(response) => {

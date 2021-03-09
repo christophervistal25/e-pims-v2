@@ -351,13 +351,13 @@
                   <tbody id="dynamic-row-references-data">
                       <tr>
                           <td>
-                            <input type="text" class="form-control rounded-0 border-0" placeholder="NAME">
+                            <input type="text" class="form-control rounded-0 border-0" placeholder="NAME" name="references[mameOfRef]">
                           </td>
                           <td>
-                              <input type="text" class="form-control rounded-0 border-0" placeholder="ADDRESS">
+                              <input type="text" class="form-control rounded-0 border-0" placeholder="ADDRESS" name="references[refAdd]">
                           </td>
                           <td>
-                              <input type="text" class="form-control rounded-0 border-0" placeholder="TEL. NO">
+                              <input type="text" class="form-control rounded-0 border-0" placeholder="TEL. NO" name="references[refTelNo]">
                           </td>
 
                           <td class="jumbotron">&nbsp;</td>
@@ -400,13 +400,13 @@
                   <tbody id="dynamic-row-references-data">
                       <tr>
                           <td>
-                            <input type="text" class="form-control rounded-0 border-0" placeholder="">
+                            <input type="text" class="form-control rounded-0 border-0" placeholder="" name="govId[nameOfGovId]">
                           </td>
                           <td>
-                              <input type="text" class="form-control rounded-0 border-0" placeholder="">
+                              <input type="text" class="form-control rounded-0 border-0" placeholder="" name="govId[idNo]">
                           </td>
                           <td>
-                              <input type="text" class="form-control rounded-0 border-0" placeholder="">
+                              <input type="text" class="form-control rounded-0 border-0" placeholder="" name="govId[dateOfIssuance]">
                           </td>
                       </tr>
                   </tbody>
