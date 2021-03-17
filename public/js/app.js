@@ -1908,6 +1908,8 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2149,23 +2151,88 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    familyShow: {
+    family_show: {
+      required: true
+    },
+    employee_id: {
       required: true
     }
   },
   data: function data() {
     return {
+      isLoading: false,
+      isComplete: false,
       noOfSpouse: 1,
       familyBackground: {
-        spouse: {}
+        employee_id: "",
+        spouse: {},
+        ssurname: "",
+        sfirstname: "",
+        smiddleame: "",
+        snameexten: "",
+        soccupation: "",
+        sempname: "",
+        sbusadd: "",
+        stelno: "",
+        cname: "",
+        cdateOfBirth: "",
+        fsurname: "",
+        ffirstname: "",
+        fmiddlename: "",
+        fnameexten: "",
+        msurname: "",
+        mfirstname: "",
+        mmiddlename: ""
       }
     };
   },
   methods: {
     generateNewSpuseField: function generateNewSpuseField() {
       this.noOfSpouse++;
+    },
+    submitPersonFamilyBackground: function submitPersonFamilyBackground() {
+      var _this = this;
+
+      this.isLoading = true;
+      this.familyBackground.employee_id = this.employee_id;
+      window.axios.post("/employee/personal/family/background/store", this.familyBackground).then(function (response) {
+        _this.isLoading = false;
+        _this.isComplete = true;
+
+        _this.$emit("display-family-background", response.data.employee_id);
+
+        sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
+          title: "Good job!",
+          text: "Min sulod na ang data!",
+          icon: "success"
+        });
+      })["catch"](function (err) {
+        return _this.isLoading = false;
+      });
     }
   }
 });
@@ -2854,7 +2921,7 @@ __webpack_require__.r(__webpack_exports__);
             _this.isLoading = false;
             _this.isComplete = true;
 
-            _this.$emit("display-family-background");
+            _this.$emit("display-family-background", response.data.employee_id);
 
             sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
               title: "Good job!",
@@ -2909,6 +2976,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2932,7 +3002,8 @@ __webpack_require__.r(__webpack_exports__);
         no_of_items: 3
       }],
       selectedTab: {},
-      isFamilyBackgroundShow: false
+      isFamilyBackgroundShow: false,
+      employee_id: null
     };
   },
   methods: {
@@ -2943,8 +3014,9 @@ __webpack_require__.r(__webpack_exports__);
       this.selectedTab = tab;
       tab.status = true;
     },
-    displayFamilyBackground: function displayFamilyBackground() {
+    displayFamilyBackground: function displayFamilyBackground(employee_id) {
       this.isFamilyBackgroundShow = true;
+      this.employee_id = employee_id;
     }
   },
   created: function created() {
@@ -20692,13 +20764,32 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "card-header" }, [
+        _c("h5", { staticClass: "mb-0 p-3" }, [
+          _vm._v("\n                FAMILY BACKGROUND\n                "),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.isComplete,
+                  expression: "isComplete"
+                }
+              ],
+              class: _vm.isComplete ? "text-success" : "text-danger"
+            },
+            [_vm._v("\n                    - VERIFIED")]
+          )
+        ])
+      ]),
       _vm._v(" "),
       _c(
         "div",
         {
           staticClass: "collapse",
-          class: _vm.familyShow ? "show" : "",
+          class: _vm.family_show && !_vm.isComplete ? "show" : "",
           attrs: {
             id: "familyBackground",
             "aria-labelledby": "headingOne",
@@ -20706,18 +20797,385 @@ var render = function() {
           }
         },
         [
-          _vm._m(1),
+          _vm._m(0),
           _vm._v(" "),
-          _vm._m(2),
+          _c("div", { staticClass: "row pr-3 pl-3" }, [
+            _c("div", { staticClass: "form-group col-lg-3" }, [
+              _c("label", { attrs: { for: "ssurname" } }, [
+                _vm._v("SPOUSE'S SURNAME")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.familyBackground.ssurname,
+                    expression: "familyBackground.ssurname"
+                  }
+                ],
+                staticClass: "form-control ",
+                attrs: {
+                  type: "text",
+                  id: "ssurname",
+                  placeholder: "Enter Spouse's Surname",
+                  value: ""
+                },
+                domProps: { value: _vm.familyBackground.ssurname },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.familyBackground,
+                      "ssurname",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-lg-3 " }, [
+              _c("label", { attrs: { for: "sfirstname" } }, [
+                _vm._v("SPOUSE'S FIRST NAME")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.familyBackground.sfirstname,
+                    expression: "familyBackground.sfirstname"
+                  }
+                ],
+                staticClass: "form-control  ",
+                attrs: {
+                  type: "text",
+                  id: "sfirstname",
+                  placeholder: "Enter Spouse's First Name",
+                  value: ""
+                },
+                domProps: { value: _vm.familyBackground.sfirstname },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.familyBackground,
+                      "sfirstname",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-lg-3" }, [
+              _c("label", { attrs: { for: "smiddleame" } }, [
+                _vm._v("SPOUSE'S MIDDLE NAME")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.familyBackground.smiddleame,
+                    expression: "familyBackground.smiddleame"
+                  }
+                ],
+                staticClass: "form-control ",
+                attrs: {
+                  type: "text",
+                  id: "smiddleame",
+                  placeholder: "Enter Spouse's Middle Name",
+                  value: ""
+                },
+                domProps: { value: _vm.familyBackground.smiddleame },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.familyBackground,
+                      "smiddleame",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-lg-3" }, [
+              _c("label", { attrs: { for: "snameexten" } }, [
+                _vm._v("SPOUSE'S NAME EXTENSION")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.familyBackground.snameexten,
+                    expression: "familyBackground.snameexten"
+                  }
+                ],
+                staticClass: "form-control ",
+                attrs: {
+                  type: "text",
+                  maxlength: "3",
+                  id: "snameexten",
+                  placeholder: "(JR., SR.)",
+                  value: ""
+                },
+                domProps: { value: _vm.familyBackground.snameexten },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.familyBackground,
+                      "snameexten",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ])
+          ]),
           _vm._v(" "),
-          _vm._m(3),
+          _c("div", { staticClass: "row pl-3 pr-3" }, [
+            _c("div", { staticClass: "form-group col-lg-6" }, [
+              _c("label", { attrs: { for: "soccupation" } }, [
+                _vm._v("SPOUSE'S OCCUPATION")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.familyBackground.soccupation,
+                    expression: "familyBackground.soccupation"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  id: "soccupation",
+                  placeholder: "Enter Spouse's Occupation"
+                },
+                domProps: { value: _vm.familyBackground.soccupation },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.familyBackground,
+                      "soccupation",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-lg-6" }, [
+              _c("label", { attrs: { for: "sempname" } }, [
+                _vm._v("SPOUSE'S EMPLOYER/BUSINESS NAME")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.familyBackground.sempname,
+                    expression: "familyBackground.sempname"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  id: "sempname",
+                  placeholder: "Enter Spouse's Employer/Business Name"
+                },
+                domProps: { value: _vm.familyBackground.sempname },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.familyBackground,
+                      "sempname",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ])
+          ]),
           _vm._v(" "),
-          _vm._m(4),
+          _c("div", { staticClass: "row pl-3 pr-3" }, [
+            _c("div", { staticClass: "form-group col-sm-6" }, [
+              _c("label", { attrs: { for: "sbusadd" } }, [
+                _vm._v("SPOUSE'S BUSINESS ADDRESS")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.familyBackground.sbusadd,
+                    expression: "familyBackground.sbusadd"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  id: "sbusadd",
+                  placeholder: "Enter Spouse's Business Address"
+                },
+                domProps: { value: _vm.familyBackground.sbusadd },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.familyBackground,
+                      "sbusadd",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-sm-6" }, [
+              _c("label", { attrs: { for: "stelno" } }, [
+                _vm._v("SPOUSE'S TELEPHONE NUMBER")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.familyBackground.stelno,
+                    expression: "familyBackground.stelno"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  id: "stelno",
+                  placeholder: "Enter Spouse's Telephone Number"
+                },
+                domProps: { value: _vm.familyBackground.stelno },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.familyBackground,
+                      "stelno",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ])
+          ]),
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
           _vm._l(_vm.noOfSpouse, function(no, index) {
-            return _c("div", { key: index }, [_vm._m(5, true)])
+            return _c("div", { key: index }, [
+              _c("div", { staticClass: "row pl-3 pr-3" }, [
+                _c("div", { staticClass: "form-group col-lg-6" }, [
+                  _c("label", { attrs: { for: "cname" } }, [
+                    _vm._v("NAME OF CHILDREN")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.familyBackground.cname,
+                        expression: "familyBackground.cname"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      id: "cname",
+                      placeholder: "Enter Name of Children"
+                    },
+                    domProps: { value: _vm.familyBackground.cname },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.familyBackground,
+                          "cname",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group col-lg-6" }, [
+                  _c("label", { attrs: { for: "cdateOfBirth" } }, [
+                    _vm._v("DATE OF BIRTH")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.familyBackground.cdateOfBirth,
+                        expression: "familyBackground.cdateOfBirth"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "date",
+                      id: "cdateOfBirth",
+                      placeholder: "Enter Spouse's Business Address"
+                    },
+                    domProps: { value: _vm.familyBackground.cdateOfBirth },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.familyBackground,
+                          "cdateOfBirth",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ])
+              ])
+            ])
           }),
           _vm._v(" "),
           _c("div", { staticClass: "col-lg-2 offset-10 text-right" }, [
@@ -20733,11 +21191,305 @@ var render = function() {
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
-          _vm._m(6),
+          _c("div", { staticClass: "row pr-3 pl-3" }, [
+            _c("div", { staticClass: "form-group col-lg-3" }, [
+              _c("label", { attrs: { for: "fsurname" } }, [
+                _vm._v("FATHER'S SURNAME")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.familyBackground.fsurname,
+                    expression: "familyBackground.fsurname"
+                  }
+                ],
+                staticClass: "form-control ",
+                attrs: {
+                  type: "text",
+                  id: "fsurname",
+                  placeholder: "Enter Father's Surname",
+                  value: ""
+                },
+                domProps: { value: _vm.familyBackground.fsurname },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.familyBackground,
+                      "fsurname",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-lg-3 " }, [
+              _c("label", { attrs: { for: "ffirstname" } }, [
+                _vm._v("FATHER'S FIRST NAME")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.familyBackground.ffirstname,
+                    expression: "familyBackground.ffirstname"
+                  }
+                ],
+                staticClass: "form-control  ",
+                attrs: {
+                  type: "text",
+                  id: "ffirstname",
+                  placeholder: "Enter Father's First Name",
+                  value: ""
+                },
+                domProps: { value: _vm.familyBackground.ffirstname },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.familyBackground,
+                      "ffirstname",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-lg-3" }, [
+              _c("label", { attrs: { for: "fmiddlename" } }, [
+                _vm._v("FATHER'S MIDDLE NAME")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.familyBackground.fmiddlename,
+                    expression: "familyBackground.fmiddlename"
+                  }
+                ],
+                staticClass: "form-control ",
+                attrs: {
+                  type: "text",
+                  id: "fmiddlename",
+                  placeholder: "Enter Father's Middle Name",
+                  value: ""
+                },
+                domProps: { value: _vm.familyBackground.fmiddlename },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.familyBackground,
+                      "fmiddlename",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-lg-3" }, [
+              _c("label", { attrs: { for: "fnameexten" } }, [
+                _vm._v("FATHER'S NAME EXTENSION")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.familyBackground.fnameexten,
+                    expression: "familyBackground.fnameexten"
+                  }
+                ],
+                staticClass: "form-control ",
+                attrs: {
+                  type: "text",
+                  maxlength: "3",
+                  id: "fnameexten",
+                  placeholder: "(JR., SR.)",
+                  value: ""
+                },
+                domProps: { value: _vm.familyBackground.fnameexten },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.familyBackground,
+                      "fnameexten",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ])
+          ]),
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
-          _vm._m(7)
+          _c("div", { staticClass: "row pr-3 pl-3" }, [
+            _c("div", { staticClass: "form-group col-lg-3" }, [
+              _c("label", { attrs: { for: "msurname" } }, [
+                _vm._v("MOTHER'S MAIDEN SURNAME")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.familyBackground.msurname,
+                    expression: "familyBackground.msurname"
+                  }
+                ],
+                staticClass: "form-control ",
+                attrs: {
+                  type: "text",
+                  maxlength: "3",
+                  id: "msurname",
+                  placeholder: "Enter Mother's Maiden Surname",
+                  value: ""
+                },
+                domProps: { value: _vm.familyBackground.msurname },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.familyBackground,
+                      "msurname",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-lg-3 " }, [
+              _c("label", { attrs: { for: "mfirstname" } }, [
+                _vm._v("MOTHER'S FIRST NAME")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.familyBackground.mfirstname,
+                    expression: "familyBackground.mfirstname"
+                  }
+                ],
+                staticClass: "form-control  ",
+                attrs: {
+                  type: "text",
+                  id: "mfirstname",
+                  placeholder: "Enter Mother's First Name",
+                  value: ""
+                },
+                domProps: { value: _vm.familyBackground.mfirstname },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.familyBackground,
+                      "mfirstname",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-lg-3" }, [
+              _c("label", { attrs: { for: "mmiddlename" } }, [
+                _vm._v("MOTHER'S MAIDEN MIDDLE NAME")
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.familyBackground.mmiddlename,
+                    expression: "familyBackground.mmiddlename"
+                  }
+                ],
+                staticClass: "form-control ",
+                attrs: {
+                  type: "text",
+                  id: "mmiddlename",
+                  placeholder: "Enter Mother's Maiden Middle Name",
+                  value: ""
+                },
+                domProps: { value: _vm.familyBackground.mmiddlename },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.familyBackground,
+                      "mmiddlename",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "float-right" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary font-weight-bold mr-3 mb-2",
+                on: { click: _vm.submitPersonFamilyBackground }
+              },
+              [
+                _vm._v("\n                    NEXT\n                    "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.isLoading,
+                        expression: "isLoading"
+                      }
+                    ],
+                    staticClass: "spinner-border spinner-border-sm mb-1",
+                    attrs: { role: "status" }
+                  },
+                  [
+                    _c("span", { staticClass: "sr-only" }, [
+                      _vm._v("Loading...")
+                    ])
+                  ]
+                )
+              ]
+            )
+          ])
         ],
         2
       )
@@ -20745,16 +21497,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h5", { staticClass: "mb-0 p-3" }, [
-        _vm._v("\n                FAMILY BACKGROUND\n            ")
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -20768,326 +21510,6 @@ var staticRenderFns = [
         },
         [_vm._v("\n                    FAMILY BACKGROUND\n                ")]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row pr-3 pl-3" }, [
-      _c("div", { staticClass: "form-group col-lg-3" }, [
-        _c("label", { attrs: { for: "ssurname" } }, [
-          _vm._v("SPOUSE'S SURNAME")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control ",
-          attrs: {
-            type: "text",
-            id: "ssurname",
-            name: "familyBackground[ssurname]",
-            placeholder: "Enter Spouse's Surname",
-            value: ""
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group col-lg-3 " }, [
-        _c("label", { attrs: { for: "sfirstname" } }, [
-          _vm._v("SPOUSE'S FIRST NAME")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control  ",
-          attrs: {
-            type: "text",
-            id: "sfirstname",
-            name: "familyBackground[sfirstname]",
-            placeholder: "Enter Spouse's First Name",
-            value: ""
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group col-lg-3" }, [
-        _c("label", { attrs: { for: "smiddleame" } }, [
-          _vm._v("SPOUSE'S MIDDLE NAME")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control ",
-          attrs: {
-            type: "text",
-            id: "smiddleame",
-            name: "familyBackground[smiddleame]",
-            placeholder: "Enter Spouse's Middle Name",
-            value: ""
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group col-lg-3" }, [
-        _c("label", { attrs: { for: "snameexten" } }, [
-          _vm._v("SPOUSE'S NAME EXTENSION")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control ",
-          attrs: {
-            type: "text",
-            maxlength: "3",
-            id: "snameexten",
-            name: "familyBackground[snameexten]",
-            placeholder: "(JR., SR.)",
-            value: ""
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row pl-3 pr-3" }, [
-      _c("div", { staticClass: "form-group col-lg-6" }, [
-        _c("label", { attrs: { for: "soccupation" } }, [
-          _vm._v("SPOUSE'S OCCUPATION")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "soccupation",
-            placeholder: "Enter Spouse's Occupation",
-            name: "familyBackground[soccupation]"
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group col-lg-6" }, [
-        _c("label", { attrs: { for: "sempname" } }, [
-          _vm._v("SPOUSE'S EMPLOYER/BUSINESS NAME")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "sempname",
-            placeholder: "Enter Spouse's Employer/Business Name",
-            name: "familyBackground[sempname]"
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row pl-3 pr-3" }, [
-      _c("div", { staticClass: "form-group col-sm-6" }, [
-        _c("label", { attrs: { for: "sbusadd" } }, [
-          _vm._v("SPOUSE'S BUSINESS ADDRESS")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "sbusadd",
-            placeholder: "Enter Spouse's Business Address",
-            name: "familyBackground[sbusadd]"
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group col-sm-6" }, [
-        _c("label", { attrs: { for: "stelno" } }, [
-          _vm._v("SPOUSE'S TELEPHONE NUMBER")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "stelno",
-            placeholder: "Enter Spouse's Telephone Number",
-            name: "familyBackground[stelno]"
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row pl-3 pr-3" }, [
-      _c("div", { staticClass: "form-group col-lg-6" }, [
-        _c("label", { attrs: { for: "cname" } }, [_vm._v("NAME OF CHILDREN")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "cname",
-            placeholder: "Enter Name of Children",
-            name: "familyBackground[cname]"
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group col-lg-6" }, [
-        _c("label", { attrs: { for: "cdateOfBirth" } }, [
-          _vm._v("DATE OF BIRTH")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "date",
-            id: "cdateOfBirth",
-            placeholder: "Enter Spouse's Business Address",
-            name: "familyBackground[cdateOfBirth]"
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row pr-3 pl-3" }, [
-      _c("div", { staticClass: "form-group col-lg-3" }, [
-        _c("label", { attrs: { for: "fsurname" } }, [
-          _vm._v("FATHER'S SURNAME")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control ",
-          attrs: {
-            type: "text",
-            id: "fsurname",
-            name: "familyBackground[fsurname]",
-            placeholder: "Enter Father's Surname",
-            value: ""
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group col-lg-3 " }, [
-        _c("label", { attrs: { for: "ffirstname" } }, [
-          _vm._v("FATHER'S FIRST NAME")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control  ",
-          attrs: {
-            type: "text",
-            id: "ffirstname",
-            name: "familyBackground[ffirstname]",
-            placeholder: "Enter Father's First Name",
-            value: ""
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group col-lg-3" }, [
-        _c("label", { attrs: { for: "fmiddlename" } }, [
-          _vm._v("FATHER'S MIDDLE NAME")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control ",
-          attrs: {
-            type: "text",
-            id: "fmiddlename",
-            name: "familyBackground[fmiddlename]",
-            placeholder: "Enter Father's Middle Name",
-            value: ""
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group col-lg-3" }, [
-        _c("label", { attrs: { for: "fnameexten" } }, [
-          _vm._v("FATHER'S NAME EXTENSION")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control ",
-          attrs: {
-            type: "text",
-            maxlength: "3",
-            id: "fnameexten",
-            name: "familyBackground[fnameexten]",
-            placeholder: "(JR., SR.)",
-            value: ""
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row pr-3 pl-3" }, [
-      _c("div", { staticClass: "form-group col-lg-3" }, [
-        _c("label", { attrs: { for: "msurname" } }, [
-          _vm._v("MOTHER'S MAIDEN SURNAME")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control ",
-          attrs: {
-            type: "text",
-            maxlength: "3",
-            id: "msurname",
-            name: "familyBackground[msurname]",
-            placeholder: "Enter Mother's Maiden Surname",
-            value: ""
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group col-lg-3 " }, [
-        _c("label", { attrs: { for: "mfirstname" } }, [
-          _vm._v("MOTHER'S FIRST NAME")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control  ",
-          attrs: {
-            type: "text",
-            id: "mfirstname",
-            name: "familyBackground[mfirstname]",
-            placeholder: "Enter Mother's First Name",
-            value: ""
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group col-lg-3" }, [
-        _c("label", { attrs: { for: "mmiddlename" } }, [
-          _vm._v("MOTHER'S MAIDEN MIDDLE NAME")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control ",
-          attrs: {
-            type: "text",
-            id: "mmiddlename",
-            name: "familyBackground[mmiddlename]",
-            placeholder: "Enter Mother's Maiden Middle Name",
-            value: ""
-          }
-        })
-      ])
     ])
   }
 ]
@@ -22851,7 +23273,10 @@ var render = function() {
       _vm._v(" "),
       _vm.selectedTab.name === "C1"
         ? _c("family-background", {
-            attrs: { familyShow: _vm.isFamilyBackgroundShow }
+            attrs: {
+              family_show: _vm.isFamilyBackgroundShow,
+              employee_id: _vm.employee_id
+            }
           })
         : _vm._e()
     ],

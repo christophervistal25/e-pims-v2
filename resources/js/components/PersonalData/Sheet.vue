@@ -11,12 +11,15 @@
                 </button>
             </div>
         </div>
+
         <personal-information
             @display-family-background="displayFamilyBackground"
             v-if="selectedTab.name === 'C1'"
         ></personal-information>
+
         <family-background
-            :familyShow="isFamilyBackgroundShow"
+            :family_show="isFamilyBackgroundShow"
+            :employee_id="employee_id"
             v-if="selectedTab.name === 'C1'"
         ></family-background>
     </div>
@@ -52,7 +55,8 @@ export default {
                 }
             ],
             selectedTab: {},
-            isFamilyBackgroundShow: false
+            isFamilyBackgroundShow: false,
+            employee_id: null
         };
     },
     methods: {
@@ -61,8 +65,9 @@ export default {
             this.selectedTab = tab;
             tab.status = true;
         },
-        displayFamilyBackground() {
+        displayFamilyBackground(employee_id) {
             this.isFamilyBackgroundShow = true;
+            this.employee_id = employee_id;
         }
     },
     created() {

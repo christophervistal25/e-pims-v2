@@ -4,12 +4,18 @@
             <div class="card-header">
                 <h5 class="mb-0 p-3">
                     FAMILY BACKGROUND
+                    <span
+                        v-show="isComplete"
+                        :class="isComplete ? 'text-success' : 'text-danger'"
+                    >
+                        - VERIFIED</span
+                    >
                 </h5>
             </div>
             <div
                 id="familyBackground"
                 class="collapse"
-                :class="familyShow ? 'show' : ''"
+                :class="family_show && !isComplete ? 'show' : ''"
                 aria-labelledby="headingOne"
                 data-parent="#accordion"
             >
@@ -28,7 +34,7 @@
                             type="text"
                             class="form-control "
                             id="ssurname"
-                            name="familyBackground[ssurname]"
+                            v-model="familyBackground.ssurname"
                             placeholder="Enter Spouse's Surname"
                             value=""
                         />
@@ -39,7 +45,7 @@
                             type="text"
                             class="form-control  "
                             id="sfirstname"
-                            name="familyBackground[sfirstname]"
+                            v-model="familyBackground.sfirstname"
                             placeholder="Enter Spouse's First Name"
                             value=""
                         />
@@ -50,7 +56,7 @@
                             type="text"
                             class="form-control "
                             id="smiddleame"
-                            name="familyBackground[smiddleame]"
+                            v-model="familyBackground.smiddleame"
                             placeholder="Enter Spouse's Middle Name"
                             value=""
                         />
@@ -62,7 +68,7 @@
                             maxlength="3"
                             class="form-control "
                             id="snameexten"
-                            name="familyBackground[snameexten]"
+                            v-model="familyBackground.snameexten"
                             placeholder="(JR., SR.)"
                             value=""
                         />
@@ -76,7 +82,7 @@
                             class="form-control"
                             id="soccupation"
                             placeholder="Enter Spouse's Occupation"
-                            name="familyBackground[soccupation]"
+                            v-model="familyBackground.soccupation"
                         />
                     </div>
                     <div class="form-group col-lg-6">
@@ -88,7 +94,7 @@
                             class="form-control"
                             id="sempname"
                             placeholder="Enter Spouse's Employer/Business Name"
-                            name="familyBackground[sempname]"
+                            v-model="familyBackground.sempname"
                         />
                     </div>
                 </div>
@@ -100,7 +106,7 @@
                             class="form-control"
                             id="sbusadd"
                             placeholder="Enter Spouse's Business Address"
-                            name="familyBackground[sbusadd]"
+                            v-model="familyBackground.sbusadd"
                         />
                     </div>
                     <div class="form-group col-sm-6">
@@ -110,7 +116,7 @@
                             class="form-control"
                             id="stelno"
                             placeholder="Enter Spouse's Telephone Number"
-                            name="familyBackground[stelno]"
+                            v-model="familyBackground.stelno"
                         />
                     </div>
                 </div>
@@ -124,7 +130,7 @@
                                 class="form-control"
                                 id="cname"
                                 placeholder="Enter Name of Children"
-                                name="familyBackground[cname]"
+                                v-model="familyBackground.cname"
                             />
                         </div>
                         <div class="form-group col-lg-6">
@@ -134,7 +140,7 @@
                                 class="form-control"
                                 id="cdateOfBirth"
                                 placeholder="Enter Spouse's Business Address"
-                                name="familyBackground[cdateOfBirth]"
+                                v-model="familyBackground.cdateOfBirth"
                             />
                         </div>
                     </div>
@@ -155,7 +161,7 @@
                             type="text"
                             class="form-control "
                             id="fsurname"
-                            name="familyBackground[fsurname]"
+                            v-model="familyBackground.fsurname"
                             placeholder="Enter Father's Surname"
                             value=""
                         />
@@ -166,7 +172,7 @@
                             type="text"
                             class="form-control  "
                             id="ffirstname"
-                            name="familyBackground[ffirstname]"
+                            v-model="familyBackground.ffirstname"
                             placeholder="Enter Father's First Name"
                             value=""
                         />
@@ -177,7 +183,7 @@
                             type="text"
                             class="form-control "
                             id="fmiddlename"
-                            name="familyBackground[fmiddlename]"
+                            v-model="familyBackground.fmiddlename"
                             placeholder="Enter Father's Middle Name"
                             value=""
                         />
@@ -189,7 +195,7 @@
                             maxlength="3"
                             class="form-control "
                             id="fnameexten"
-                            name="familyBackground[fnameexten]"
+                            v-model="familyBackground.fnameexten"
                             placeholder="(JR., SR.)"
                             value=""
                         />
@@ -204,7 +210,7 @@
                             maxlength="3"
                             class="form-control "
                             id="msurname"
-                            name="familyBackground[msurname]"
+                            v-model="familyBackground.msurname"
                             placeholder="Enter Mother's Maiden Surname"
                             value=""
                         />
@@ -215,7 +221,7 @@
                             type="text"
                             class="form-control  "
                             id="mfirstname"
-                            name="familyBackground[mfirstname]"
+                            v-model="familyBackground.mfirstname"
                             placeholder="Enter Mother's First Name"
                             value=""
                         />
@@ -228,11 +234,26 @@
                             type="text"
                             class="form-control "
                             id="mmiddlename"
-                            name="familyBackground[mmiddlename]"
+                            v-model="familyBackground.mmiddlename"
                             placeholder="Enter Mother's Maiden Middle Name"
                             value=""
                         />
                     </div>
+                </div>
+                <div class="float-right">
+                    <button
+                        class="btn btn-primary font-weight-bold mr-3 mb-2"
+                        @click="submitPersonFamilyBackground"
+                    >
+                        NEXT
+                        <div
+                            class="spinner-border spinner-border-sm mb-1"
+                            role="status"
+                            v-show="isLoading"
+                        >
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </button>
                 </div>
             </div>
         </div>
@@ -240,23 +261,71 @@
 </template>
 
 <script>
+import swal from "sweetalert";
 export default {
     props: {
-        familyShow: {
+        family_show: {
+            required: true
+        },
+        employee_id: {
             required: true
         }
     },
     data() {
         return {
+            isLoading: false,
+            isComplete: false,
             noOfSpouse: 1,
             familyBackground: {
-                spouse: {}
+                employee_id: "",
+                spouse: {},
+                ssurname: "",
+                sfirstname: "",
+                smiddleame: "",
+                snameexten: "",
+                soccupation: "",
+                sempname: "",
+                sbusadd: "",
+                stelno: "",
+                cname: "",
+                cdateOfBirth: "",
+                fsurname: "",
+                ffirstname: "",
+                fmiddlename: "",
+                fnameexten: "",
+                msurname: "",
+                mfirstname: "",
+                mmiddlename: ""
             }
         };
     },
     methods: {
         generateNewSpuseField() {
             this.noOfSpouse++;
+        },
+        submitPersonFamilyBackground() {
+            this.isLoading = true;
+            this.familyBackground.employee_id = this.employee_id;
+
+            window.axios
+                .post(
+                    "/employee/personal/family/background/store",
+                    this.familyBackground
+                )
+                .then(response => {
+                    this.isLoading = false;
+                    this.isComplete = true;
+                    this.$emit(
+                        "display-family-background",
+                        response.data.employee_id
+                    );
+                    swal({
+                        title: "Good job!",
+                        text: "Min sulod na ang data!",
+                        icon: "success"
+                    });
+                })
+                .catch(err => (this.isLoading = false));
         }
     }
 };

@@ -673,7 +673,10 @@ export default {
                         .then(response => {
                             this.isLoading = false;
                             this.isComplete = true;
-                            this.$emit("display-family-background");
+                            this.$emit(
+                                "display-family-background",
+                                response.data.employee_id
+                            );
                             swal({
                                 title: "Good job!",
                                 text: "Min sulod na ang data!",

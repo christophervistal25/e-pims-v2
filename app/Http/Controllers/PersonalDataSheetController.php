@@ -40,6 +40,11 @@ class PersonalDataSheetController extends Controller
         return $this->employeeRepository->addPersonInformation($request->all());
     }
 
+    public function storePersonFamilyBackground(Request $request)
+    {
+        return $this->employeeRepository->addPersonFamilybackground($request->all());
+    }
+
     public function validatePersonInformation(Request $request)
     {
         $this->validate($request, [

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Repositories;
 use App\Employee;
+use App\EmployeeFamilyBackground;
 
 class EmployeeRepository
 {
@@ -50,5 +51,36 @@ class EmployeeRepository
                 'email_address'        => $data['emailAddress'],
                 'status'               => '',
             ]);
+    }
+
+    /**
+     * Add Employee family background.
+     */
+    public function addPersonFamilyBackground(array $data = []) :EmployeeFamilyBackground
+    {
+        $employee = Employee::find($data['employee_id']);
+
+        $employeeFamilyBackground = new EmployeeFamilyBackground();
+
+        $employeeFamilyBackground->spouse_firstname              = $data['sfirstname'];
+        $employeeFamilyBackground->spouse_lastname               = $data['ssurname'];
+        $employeeFamilyBackground->spouse_middlename             = $data['smiddleame'];
+        $employeeFamilyBackground->spouse_extension              = $data['snameexten'];
+        $employeeFamilyBackground->spouse_occupation             = $data['soccupation'];
+        $employeeFamilyBackground->spouse_employer_business_name = $data['sempname'];
+        $employeeFamilyBackground->spouse_business_address       = $data['sbusadd'];
+        $employeeFamilyBackground->spouse_telephone_number       = $data['stelno'];
+        $employeeFamilyBackground->father_firstname              = $data['ffirstname'];
+        $employeeFamilyBackground->father_lastname               = $data['fsurname'];
+        $employeeFamilyBackground->father_middlename             = $data['fmiddlename'];
+        $employeeFamilyBackground->father_extension              = $data['fnameexten'];
+        $employeeFamilyBackground->mother_maidenname             = $data['msurname'];
+        $employeeFamilyBackground->mother_lastname               = $data['msurname'];
+        $employeeFamilyBackground->mother_firstname              = $data['mfirstname'];
+        $employeeFamilyBackground->mother_middlename             = $data['mmiddlename'];
+
+
+        return $employee->family_background()->save($employeeFamilyBackground);
+
     }
 }
