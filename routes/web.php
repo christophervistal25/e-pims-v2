@@ -30,3 +30,4 @@ Route::get('/plantilla-list', 'Plantillacontroller@list');
 Route::Resource('/plantilla', 'PlantillaController');
 //step Increment
 Route::Resource('/step-increment', 'StepIncrementController');
+Route::Resource('/print-increment', 'PrintIncrementController');
