@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePlantillasTable extends Migration
+class CreatePlatillaCscSchedulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreatePlantillasTable extends Migration
      */
     public function up()
     {
-        Schema::create('plantillas', function (Blueprint $table) {
-            $table->id('plantilla_id');
+        Schema::create('platilla_csc_schedules', function (Blueprint $table) {
+            $table->id();
+            $table->bigInteger('plantilla_id');
             $table->integer('old_item_no');
             $table->integer('item_no');
             $table->bigInteger('position_id');
@@ -34,7 +35,8 @@ class CreatePlantillasTable extends Migration
             $table->string('office_code');
             $table->bigInteger('division_id');            
 
-            $table->string('status');            
+            $table->string('status');        
+            $table->year('covered_year');        
             $table->timestamps();
         });
     }
@@ -46,6 +48,6 @@ class CreatePlantillasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plantillas');
+        Schema::dropIfExists('platilla_csc_schedules');
     }
 }
