@@ -31,23 +31,23 @@
             <tbody id="dynamic-row-civil-service-data">
                 <tr>
                     <th scope="row">
-                      <input type="text" class="form-control rounded-0 border-0" placeholder="Input here...">
+                      <input type="text" class="form-control rounded-0 border-0" placeholder="Input here..." name="civilService[careerServ]">
                     </th>
                     <td>
-                      <input type="number" class="form-control rounded-0 border-0" placeholder="e.g. 91.2">
+                      <input type="number" class="form-control rounded-0 border-0" placeholder="e.g. 91.2" name="civilService[rating]">
                     </td>
                     <td>
-                        <input type="date" class="form-control rounded-0 border-0" placeholder="Input">
+                        <input type="date" class="form-control rounded-0 border-0" placeholder="Input" name="civilService[dateOfExam]">
                     </td>
                     <td>
-                        <input type="text" class="form-control rounded-0 border-0" placeholder="e.g Tandag">
+                        <input type="text" class="form-control rounded-0 border-0" placeholder="e.g Tandag" name="civilService[placeOfExam]">
                     </td>
 
                     <td>
-                        <input type="text" class="form-control rounded-0 border-0" placeholder="e.g. 2015">
+                        <input type="text" class="form-control rounded-0 border-0" placeholder="e.g. 2015" name="civilService[number]">
                     </td>
                     <td>
-                        <input type="text" class="form-control rounded-0 border-0" placeholder="e.g. 2016">
+                        <input type="text" class="form-control rounded-0 border-0" placeholder="e.g. 2016" name="civilService[dateOfValid]">
                     </td>
                     <td class="jumbotron"></td>
                 </tr>
@@ -85,7 +85,7 @@
                   <td rowspan="2" class="align-middle">MONTHLY SALARY</td>
                   <td rowspan="2" class="align-middle">SALARY/ JOB/ PAY GRADE <br> (if applicable) <br> & STEP  (Format "00-0")/ INCREMENT</td>
                   <td rowspan="2" class="align-middle">STATUS OF APPOINTMENT</td>
-                  
+
                   <td rowspan="2" class="align-middle">GOV'T SERVICE (Y/ N)             </td>
                     </input>
                   <td rowspan="2" class="pl-4 pr-4">&nbsp;</td>
@@ -101,29 +101,29 @@
                 <tbody id="dynamic-row-work-experience-data">
                     <tr>
                         <th scope="row">
-                          <input type="date" class="form-control rounded-0 border-0" placeholder="FROM">
+                          <input type="date" class="form-control rounded-0 border-0" placeholder="FROM" name="workExp[from]">
                         </th>
                         <td>
-                          <input type="date" class="form-control rounded-0 border-0" placeholder="TO">
+                          <input type="date" class="form-control rounded-0 border-0" placeholder="TO" name="workExp[to]">
                         </td>
                         <td>
-                            <input type="text" class="form-control rounded-0 border-0" placeholder="Input">
+                            <input type="text" class="form-control rounded-0 border-0" placeholder="Input" name="workExp[position]">
                         </td>
                         <td>
-                            <input type="text" class="form-control rounded-0 border-0" placeholder="e.g Tandag">
+                            <input type="text" class="form-control rounded-0 border-0" placeholder="e.g Tandag" name="workExp[dept]">
                         </td>
 
                         <td>
-                            <input type="text" class="form-control rounded-0 border-0" placeholder="">
+                            <input type="text" class="form-control rounded-0 border-0" placeholder="" name="workExp[monSalary]">
                         </td>
                         <td>
-                            <input type="text" class="form-control rounded-0 border-0" placeholder="">
+                            <input type="text" class="form-control rounded-0 border-0" placeholder="" name="workExp[payGrade]">
                         </td>
                         <td>
-                            <input type="text" class="form-control rounded-0 border-0" placeholder="">
+                            <input type="text" class="form-control rounded-0 border-0" placeholder="" name="workExp[statOfApp]">
                         </td>
                         <td>
-                            <input type="text" class="form-control rounded-0 border-0 text-uppercase" maxlength="1" placeholder="">
+                            <input type="text" class="form-control rounded-0 border-0 text-uppercase" maxlength="1" placeholder="" name="workExp[govServ]">
                         </td>
                         <td class="jumbotron"></td>
                     </tr>

@@ -15,14 +15,16 @@ class CreateSalaryAdjustmentsTable extends Migration
     {
         Schema::create('salary_adjustments', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('plantilla_id');
+            $table->string('employee_id');
+            $table->integer('item_no');
+            $table->bigInteger('position_id');
             $table->date('date_adjustment');            
-            $table->integer('sg_no_from');
-            $table->integer('step_no_from');
-            $table->year('sg_year_from');            
-            $table->integer('sg_no_to');
-            $table->integer('step_no_to');
-            $table->year('sg_year_to');
+            $table->integer('sg_no');
+            $table->integer('step_no');
+            $table->decimal('salary_previous',11,2);            
+            $table->decimal('salary_new',11,2);            
+            $table->decimal('salary_diff',11,2);            
+            
             $table->timestamps();
         });
     }
