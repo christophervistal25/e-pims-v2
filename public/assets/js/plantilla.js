@@ -30,11 +30,11 @@
             });
             });
         // {{-- code for getting emp id from name --}}
-        var select = document.getElementById('employee_name');
-        var input = document.getElementById('employee_id');
-        select.onchange = function() {
-            input.value = select.value;
-        }
+        // var select = document.getElementById('employee_name');
+        // var input = document.getElementById('employee_id');
+        // select.onchange = function() {
+        //     input.value = select.value;
+        // }
         // {{-- code for number only --}}
             $(function(){
                 $("input[id='num-only']").on('input', function (e) {
@@ -48,8 +48,11 @@
                     let currentSalarygrade = $('#currentSalarygrade').val();
                     let currentStepno = $('#currentStepno').val();
                     let currentSgyear = $('#currentSgyear').val();
+                    console.log(currentSalarygrade);
+                    console.log(currentStepno);
+                    console.log(currentSgyear);
                         $.ajax({
-                            url: `/api/salarySteplist/${currentSalarygrade}/${currentStepno}/${currentSgyear}`, 
+                            url: `/api/salarySteplist/${currentSalarygrade}/${currentStepno}/${currentSgyear}`,
                                 success:(response) => {
                                     if(response == ''){
                                         $('#currentSalaryamount').val('No Data');
@@ -93,6 +96,10 @@
                                 });
                             });
                 });
+
+
+
+                
    
             $(document).ready(function() {
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////

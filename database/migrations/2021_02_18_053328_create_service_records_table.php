@@ -15,15 +15,17 @@ class CreateServiceRecordsTable extends Migration
     {
         Schema::create('service_records', function (Blueprint $table) {
             $table->id();
-            $table->string('employee_id',25);
+            $table->string('employee_id');
             $table->date('service_from_date');
             $table->date('service_to_date');
-            $table->string('designation');
-            $table->string('status',20);
-            $table->string('salary',20);
-            $table->string('leave_without_pay',20);
-            $table->string('separation_date',25);
-            $table->string('separation_cause',30);
+            $table->bigInteger('position_id');
+            $table->string('status');
+            $table->string('salary');
+            $table->string('office_name');
+            $table->string('office_address');
+            $table->string('leave_without_pay');
+            $table->string('separation_date');
+            $table->string('separation_cause');
             $table->timestamps();
         });
     }
