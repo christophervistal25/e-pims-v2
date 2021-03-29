@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/employee-dashboard', function () {
     return view('employee-dashboard');
 });
@@ -15,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::view('/view-layouts', function() {
-return view('activities');
+    return view('activities');
 });
 
 
@@ -34,4 +35,7 @@ Route::Resource('/step-increment', 'StepIncrementController');
 
 Route::group(['prefix' => 'employee'], function () {
     Route::resource('data', 'PersonalDataSheetController');
+    Route::post('/personal/information/store', 'PersonalDataSheetController@storePersonInformation');
+    Route::post('/personal/family/background/store', 'PersonalDataSheetController@storePersonFamilyBackground');
+    // Route::post('/personal/information/store', 'PersonalDataSheetController@validatePersonInformation');
 });

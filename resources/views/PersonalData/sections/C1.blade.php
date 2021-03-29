@@ -9,9 +9,9 @@
 			</h5>
 		</div>
 		<div id="personalInformation" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-			
+
 			<div class="p-3">
-				<div class="alert alert-secondary text-center font-weight-bold" 
+				<div class="alert alert-secondary text-center font-weight-bold"
 				role="alert">PERSONAL INFORMATION
 				</div>
 			</div>
@@ -20,7 +20,7 @@
 					<div class="form-group col-lg-3">
 						<label for="surname">SURNAME</label>
 						<span class="text-danger">*</span>
-						<input type="text" 
+						<input type="text"
 						class="form-control" id="surname" placeholder="Enter Surname" name="personalInformation[surname]">
 					</div>
 					<div class="form-group col-lg-3">
@@ -73,11 +73,11 @@
 					</div>
 					<div class="form-group col-lg-4">
 						<label for="weight">WEIGHT</label><span class="text-danger">*</span>
-						<input type="text" name="personalInformation[weight]" id="weight" class="form-control" placeholder="Enter weight in kilogram" name="personalInformation[weight]">
+						<input type="text"  id="weight" class="form-control" placeholder="Enter weight in kilogram" name="personalInformation[weight]">
 					</div>
 					<div class="form-group col-lg-4">
 						<label for="bloodtype">BLOODTYPE</label><span class="text-danger">*</span>
-						<input type="text" name="bloodtype" id="bloodtype" class=form-control placeholder="Enter bloodtype" name="personalInformation[bloodType]">
+						<input type="text" class=form-control placeholder="Enter bloodtype" name="personalInformation[bloodType]">
 					</div>
 				</div>
 				<div class="row pl-3 pr-3">
@@ -99,12 +99,12 @@
 						<label for="sssidno">SSS ID NUMBER</label><span class="text-danger">*</span>
 						<input type="text" name="personalInformation[sssIdNo]" id="sssidno" class=form-control placeholder="Enter SSS ID No.">
 					</div>
-					
+
 					<div class="form-group col-lg-4">
 						<label for="tinidno">TIN ID NUMBER</label><span class="text-danger">*</span>
 						<input type="text" name="personalInformation[tinIdNo]" id="tinidno" class=form-control placeholder="Enter TIN ID No.">
 					</div>
-					
+
 					<div class="form-group col-lg-4">
 						<label for="agencyempidno">AGENCY EMPLOYEE NUMBER</label><span class="text-danger">*</span>
 						<input type="text" name="personalInformation[agencyEmpIdNo]" id="agencyempidno" class=form-control placeholder="Enter agency employee no.">
@@ -130,7 +130,7 @@
 						<label for="countries">INDICATE COUNTRY</label><span class="text-danger">*</span>
 						<select class="form-control" id="countries" name="personalInformation[country]"></select>
 					</div>
-					
+
 					<div class="form-group col-lg-4">
 						<label for="telno">TELEPHONE NUMBER</label>
 						<input type="text" id="telno" class="form-control" placeholder="Enter Telephone Number" name="personalInformation[telephoneNumber]">
@@ -143,9 +143,9 @@
 						<label for="email">EMAIL ADDRESS</label>
 						<input type="email" id="email" class="form-control" placeholder="Enter your email address" name="personalInformation[emailAddress]">
 					</div>
-					
+
 				</div>
-				
+
 				{{-- BEGIN OF RESIDENTIAL ADDRESS --}}
 				<div class="pl-3 pr-3">
 					<div class="alert alert-secondary text-center font-weight-bold" role="alert" >RESIDENTIAL ADDRESS</div>
@@ -204,7 +204,7 @@
 						<input type="text" name="personalInformation[permanentSubdivision]" id="permanent_subdivision" class=form-control placeholder="Enter Subdivision or Village">
 					</div>
 				</div>
-				
+
 				<div class="row pl-3 pr-3">
 					<div class="form-group col-lg-3">
 						<label for="barangay">BARANGAY</label><span class="text-danger">*</span>
@@ -232,7 +232,7 @@
 		</div>
 	</div>
 	{{-- END OF PERSONAL INFORMATION --}}
-    
+
 	{{-- BEGIN OF FAMILY BACKGROUND --}}
 	<div class="card">
 		<div class="card-header" id="headingOne">
@@ -328,7 +328,7 @@
 			<hr>
 			{{-- BEGIN OF MOTHER --}}
 			<div class="row pr-3 pl-3">
-				
+
 				<div class="form-group col-lg-3">
 					<label for="msurname">MOTHER'S MAIDEN SURNAME</label>
 					<input type="text" maxlength="3" class="form-control " id="msurname" name="familyBackground[msurname]" placeholder="Enter Mother's Maiden Surname" value="">
@@ -343,7 +343,7 @@
 				</div>
 			</div>
 			{{-- END OF MOTHER --}}
-			
+
 		</div>
 	</div>
 	{{-- END OF FAMILY BACKGROUND --}}
@@ -395,7 +395,7 @@
                         <label>YEAR GRADUATED</label>
                         <input type="text" class="form-control" placeholder="" name="educationalBackground[eyrGrad]">
                     </div>
-					
+
 					<div class="col-lg-6">
                         <label>SCHOLARSHIP/ ACADEMIC HONORS RECEIVED</label>
                         <input type="text" class="form-control" name="educationalBackground[escholarship]">
@@ -444,7 +444,7 @@
                         <label>YEAR GRADUATED</label>
                         <input type="text" class="form-control" placeholder="" name="educationalBackground[eyrGrad]">
                     </div>
-                
+
                     <div class="col-lg-6">
                         <label>SCHOLARSHIP/ ACADEMIC HONORS RECEIVED</label>
                         <input type="text" class="form-control" name="educationalBackground[sscholarship]">
@@ -493,13 +493,13 @@
                         <label>YEAR GRADUATED</label>
                         <input type="text" class="form-control" placeholder="" name=educationalBackground[vyrGrad]>
                     </div>
-                
+
                     <div class="col-lg-6">
                         <label>SCHOLARSHIP/ ACADEMIC HONORS RECEIVED</label>
                         <input type="text" class="form-control" name="educationalBackground[vscholarship]">
                     </div>
 			</div>
-        </div>    
+        </div>
 			{{-- END OF VOCATIONAL / TRADE COURSE --}}
 
             <hr>
@@ -530,7 +530,7 @@
                     </div>
 				</div>
 			</div>
-			
+
 			<div class="pl-3 pr-3 pb-3">
                 <div class="row">
                     <div class="col-lg-3">
@@ -542,14 +542,14 @@
                         <label>YEAR GRADUATED</label>
                         <input type="text" class="form-control" placeholder="" name="educationalBackground[cyrGrad]">
                     </div>
-                
+
                     <div class="col-lg-6">
                         <label>SCHOLARSHIP/ ACADEMIC HONORS RECEIVED</label>
                         <input type="text" class="form-control" name="educationalBackground[cscholarship]">
                     </div>
                 </div>
 			</div>
-            
+
 			{{-- END OF COLLEGE --}}
 
             <hr>
@@ -592,7 +592,7 @@
                         <label>YEAR GRADUATED</label>
                         <input type="text" class="form-control" placeholder="" name="educationalBackground[gyrGrad]">
                     </div>
-	
+
                     <div class="col-lg-6">
                         <label>SCHOLARSHIP/ ACADEMIC HONORS RECEIVED</label>
                         <input type="text" class="form-control" name="educationalBackground[gscholarship]">
