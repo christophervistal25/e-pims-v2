@@ -45,6 +45,46 @@ class PersonalDataSheetController extends Controller
         return $this->employeeRepository->addPersonFamilybackground($request->all());
     }
 
+    public function storeEducationalBackground(Request $request)
+    {
+        return $this->employeeRepository->addEducationalBackground($request->all());
+    }
+
+    public function storeCivilService(Request $request)
+    {
+        return $this->employeeRepository->addCivilService($request->all());
+    }
+
+    public function storeWorkExperience(Request $request)
+    {
+        return $this->employeeRepository->addWorkExperience($request->all());
+    }
+
+    public function storeVoluntary(Request $request)
+    {
+        return $this->employeeRepository->addVoluntary($request->all());
+    }
+
+    public function storeLearning(Request $request)
+    {
+        return $this->employeeRepository->addLearning($request->all());
+    }
+
+    public function storeOtherInformation(Request $request)
+    {
+        return $this->employeeRepository->addOtherInformation($request->all());
+    }
+
+    public function storeRelevantQueries(Request $request)
+    {
+        return $this->employeeRepository->addRelevantQueries($request->all());
+    }
+
+    public function storeReferences(Request $request)
+    {
+        return $this->employeeRepository->addReferences($request->all());
+    }
+
     public function validatePersonInformation(Request $request)
     {
         $this->validate($request, [

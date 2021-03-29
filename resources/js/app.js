@@ -1,6 +1,8 @@
 require("./bootstrap");
+// require("vue-tabs-chrome");
 
 window.Vue = require("vue");
+Vue.use("vue-tabs-chrome", require("vue-tabs-chrome"));
 
 Vue.component("sample", require("./components/Sample.vue").default);
 
@@ -11,12 +13,63 @@ Vue.component(
 );
 Vue.component(
     "personal-information",
-    require("./components/PersonalData/Information.vue").default
+    require("./components/PersonalData/C1/Information.vue").default
 );
+
 Vue.component(
     "family-background",
-    require("./components/PersonalData/FamilyBackground.vue").default
+    require("./components/PersonalData/C1/FamilyBackground.vue").default
 );
+
+Vue.component(
+    "educational-background",
+    require("./components/PersonalData/C1/EducationalBackground.vue").default
+);
+
+Vue.component(
+    "civil-service",
+    require("./components/PersonalData/C2/CivilService.vue").default
+);
+
+Vue.component(
+    "work-experience",
+    require("./components/PersonalData/C2/WorkExperience.vue").default
+);
+
+Vue.component(
+    "voluntary",
+    require("./components/PersonalData/C3/Voluntary.vue").default
+);
+
+Vue.component(
+    "learning-and-development",
+    require("./components/PersonalData/C3/Learning.vue").default
+);
+
+Vue.component(
+    "other-information",
+    require("./components/PersonalData/C3/OtherInformation.vue").default
+);
+
+Vue.component(
+    "relevant-queries",
+    require("./components/PersonalData/C4/RelevantQueries.vue").default
+);
+
+Vue.component(
+    "references",
+    require("./components/PersonalData/C4/Reference.vue").default
+);
+
+Vue.component(
+    "goverment-issued-id",
+    require("./components/PersonalData/C4/GovernmentIssuedID.vue").default
+);
+
+Vue.component("employee-table", require("./components/Employee/Table.vue"));
+
+Vue.component("tab-view", require("./components/Employee/Tab.vue"));
+Vue.component("employee-records", require("./components/Employee/Records.vue"));
 
 const app = new Vue({
     el: "#app"
