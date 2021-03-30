@@ -9,6 +9,8 @@ use App\EmployeeVoluntaryWork;
 use App\EmployeeTrainingAttained;
 use App\EmployeeOtherInformation;
 use App\EmployeeReference;
+use App\EmployeeRelevantQuery;
+use App\EmployeeSpouseChildren;
 
 class EmployeeRepository
 {
@@ -60,12 +62,28 @@ class EmployeeRepository
             ]);
     }
 
+    private function insertChilds(Employee $employee, array $childs = [])
+    {
+        $childrens = [];
+
+        foreach($childs as $child) {
+            $childrens[] = new EmployeeSpouseChildren([
+                'name'          => $child['cname'],
+                'date_of_birth' => $child['cdateOfBirth'],
+            ]);
+        }
+
+        $employee->spouse_child()->saveMany($childrens);
+    }
     /**
      * Add Employee family background.
      */
     public function addPersonFamilyBackground(array $data = []) :EmployeeFamilyBackground
     {
+
         $employee = Employee::find($data['employee_id']);
+
+        $this->insertChilds($employee, $data['spouse']);
 
         $employeeFamilyBackground = new EmployeeFamilyBackground();
 
@@ -88,6 +106,9 @@ class EmployeeRepository
 
 
         return $employee->family_background()->save($employeeFamilyBackground);
+
+
+
 
     }
 
@@ -249,9 +270,37 @@ class EmployeeRepository
        return $employee->other_information()->saveMany($otherInformations);
     }
 
-    public function addRelevantQueries(array $queries = []) :array
+    public function addRelevantQueries(array $queries = [])
     {
-        dd($queries);
+        $employee = Employee::find('856194');
+        $relevantQuery = new EmployeeRelevantQuery();
+        $relevantQuery->question_34_a_answer =  $queries['no_34_a'];
+        $relevantQuery->question_34_a_details = $queries['no_34_a_details'];
+        $relevantQuery->question_34_b_answer =  $queries['no_34_b'];
+        $relevantQuery->question_34_b_details = $queries['no_34_b_details'];
+        $relevantQuery->question_35_a_answer =  $queries['no_35_a'];
+        $relevantQuery->question_35_a_details = $queries['no_35_a_details'];
+        $relevantQuery->question_35_b_answer =  $queries['no_35_b'];
+        $relevantQuery->question_35_b_details = $queries['no_35_b_details'];
+        $relevantQuery->question_36_a_answer =  $queries['no_36'];
+        $relevantQuery->question_36_a_details = $queries['no_36_details'];
+        $relevantQuery->question_37_a_answer =  $queries['no_37'];
+        $relevantQuery->question_37_a_details = $queries['no_37_details'];
+        $relevantQuery->question_38_a_answer =  $queries['no_38_a'];
+        $relevantQuery->question_38_a_details = $queries['no_38_a_details'];
+        $relevantQuery->question_38_b_answer =  $queries['no_38_b'];
+        $relevantQuery->question_38_b_details = $queries['no_38_b_details'];
+        $relevantQuery->question_39_a_answer =  $queries['no_39'];
+        $relevantQuery->question_39_a_details = $queries['no_39_details'];
+        $relevantQuery->question_40_a_answer =  $queries['no_40_a'];
+        $relevantQuery->question_40_a_details = $queries['no_40_a_details'];
+        $relevantQuery->question_40_b_answer =  $queries['no_40_b'];
+        $relevantQuery->question_40_b_details = $queries['no_40_b_details'];
+        $relevantQuery->question_40_c_answer =  $queries['no_40_c'];
+        $relevantQuery->question_40_c_details = $queries['no_40_c_details'];
+
+        return $employee->relevant_queries()->save($relevantQuery);
+
     }
 
     public function addReferences(array $references = []) : array

@@ -36,15 +36,19 @@
         <!-- END OF C2 -->
 
         <!-- C3 -->
-        <voluntary v-if="false"></voluntary>
-        <learning-and-development v-if="false"></learning-and-development>
-        <other-information v-if="false"></other-information>
+        <voluntary v-if="selectedTab.name === 'C3'"></voluntary>
+        <learning-and-development
+            v-if="selectedTab.name === 'C3'"
+        ></learning-and-development>
+        <other-information v-if="selectedTab.name === 'C3'"></other-information>
         <!-- END OF C3 -->
 
         <!-- C4 -->
-        <relevant-queries v-if="true"></relevant-queries>
-        <references v-if="true"></references>
-        <goverment-issued-id v-if="true"></goverment-issued-id>
+        <relevant-queries v-if="selectedTab.name === 'C4'"></relevant-queries>
+        <references v-if="selectedTab.name === 'C4'"></references>
+        <goverment-issued-id
+            v-if="selectedTab.name === 'C4'"
+        ></goverment-issued-id>
         <!-- END OF C4 -->
     </div>
 </template>
@@ -84,7 +88,7 @@ export default {
             tabs: [
                 {
                     name: "C1",
-                    status: false,
+                    status: true,
                     no_of_items: 3
                 },
                 {
@@ -99,7 +103,7 @@ export default {
                 },
                 {
                     name: "C4",
-                    status: true,
+                    status: false,
                     no_of_items: 3
                 }
             ],
@@ -128,5 +132,3 @@ export default {
     }
 };
 </script>
-
-<style></style>

@@ -2959,10 +2959,12 @@ __webpack_require__.r(__webpack_exports__);
     return {
       isLoading: false,
       isComplete: false,
-      noOfSpouse: 1,
+      spouse: [{
+        cname: "",
+        cdateOfBirth: ""
+      }],
       familyBackground: {
         employee_id: "",
-        spouse: {},
         ssurname: "",
         sfirstname: "",
         smiddleame: "",
@@ -2985,13 +2987,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     generateNewSpuseField: function generateNewSpuseField() {
-      this.noOfSpouse++;
+      this.spouse.push({
+        name: "",
+        dateOfBirth: ""
+      });
     },
     submitPersonFamilyBackground: function submitPersonFamilyBackground() {
       var _this = this;
 
       this.isLoading = true;
       this.familyBackground.employee_id = this.employee_id;
+      this.familyBackground.spouse = this.spouse;
       window.axios.post("/employee/personal/family/background/store", this.familyBackground).then(function (response) {
         _this.isLoading = false;
         _this.isComplete = true;
@@ -5670,6 +5676,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -5703,7 +5749,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     submit: function submit() {
-      console.log(this.relevantQueries);
+      window.axios.post("/employee/personal/relevant/queries", this.relevantQueries).then(function (response) {
+        console.log(response.data);
+      })["catch"](function (err) {});
     },
     cellClick: function cellClick(element) {}
   }
@@ -5731,6 +5779,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _C4_RelevantQueries_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./C4/RelevantQueries.vue */ "./resources/js/components/PersonalData/C4/RelevantQueries.vue");
 /* harmony import */ var _C4_Reference_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./C4/Reference.vue */ "./resources/js/components/PersonalData/C4/Reference.vue");
 /* harmony import */ var _C4_GovernmentIssuedID_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./C4/GovernmentIssuedID.vue */ "./resources/js/components/PersonalData/C4/GovernmentIssuedID.vue");
+//
+//
+//
+//
 //
 //
 //
@@ -5811,7 +5863,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       tabs: [{
         name: "C1",
-        status: false,
+        status: true,
         no_of_items: 3
       }, {
         name: "C2",
@@ -5823,7 +5875,7 @@ __webpack_require__.r(__webpack_exports__);
         no_of_items: 3
       }, {
         name: "C4",
-        status: true,
+        status: false,
         no_of_items: 3
       }],
       selectedTab: {},
@@ -25772,7 +25824,7 @@ var render = function() {
         "div",
         {
           staticClass: "collapse",
-          class: _vm.family_show && !_vm.isComplete ? "show" : "",
+          class: _vm.family_show && !_vm.isComplete ? "show" : "show",
           attrs: {
             id: "familyBackground",
             "aria-labelledby": "headingOne",
@@ -26083,7 +26135,7 @@ var render = function() {
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
-          _vm._l(_vm.noOfSpouse, function(no, index) {
+          _vm._l(_vm.spouse, function(spouse, index) {
             return _c("div", { key: index }, [
               _c("div", { staticClass: "row pl-3 pr-3" }, [
                 _c("div", { staticClass: "form-group col-lg-6" }, [
@@ -26096,8 +26148,8 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.familyBackground.cname,
-                        expression: "familyBackground.cname"
+                        value: spouse.cname,
+                        expression: "spouse.cname"
                       }
                     ],
                     staticClass: "form-control",
@@ -26106,17 +26158,13 @@ var render = function() {
                       id: "cname",
                       placeholder: "Enter Name of Children"
                     },
-                    domProps: { value: _vm.familyBackground.cname },
+                    domProps: { value: spouse.cname },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(
-                          _vm.familyBackground,
-                          "cname",
-                          $event.target.value
-                        )
+                        _vm.$set(spouse, "cname", $event.target.value)
                       }
                     }
                   })
@@ -26132,8 +26180,8 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.familyBackground.cdateOfBirth,
-                        expression: "familyBackground.cdateOfBirth"
+                        value: spouse.cdateOfBirth,
+                        expression: "spouse.cdateOfBirth"
                       }
                     ],
                     staticClass: "form-control",
@@ -26142,17 +26190,13 @@ var render = function() {
                       id: "cdateOfBirth",
                       placeholder: "Enter Spouse's Business Address"
                     },
-                    domProps: { value: _vm.familyBackground.cdateOfBirth },
+                    domProps: { value: spouse.cdateOfBirth },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(
-                          _vm.familyBackground,
-                          "cdateOfBirth",
-                          $event.target.value
-                        )
+                        _vm.$set(spouse, "cdateOfBirth", $event.target.value)
                       }
                     }
                   })
@@ -30301,7 +30345,7 @@ var render = function() {
                     _c(
                       "label",
                       {
-                        staticClass: "form-check-label pr-2",
+                        staticClass: "form-check-label pr-2 text-sm",
                         attrs: { for: "yes_34_a" }
                       },
                       [
@@ -30397,75 +30441,93 @@ var render = function() {
             _c("tr", [
               _vm._m(3),
               _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_34_b,
-                        expression: "relevantQueries.no_34_b"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "radio", value: "yes" },
-                    domProps: {
-                      checked: _vm._q(_vm.relevantQueries.no_34_b, "yes")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.relevantQueries, "no_34_b", "yes")
-                      }
+              _c(
+                "td",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.relevantQueries.no_34_b = "yes"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label  pr-2",
-                      attrs: { for: "yes_b_34" }
-                    },
-                    [_vm._v("YES")]
-                  )
-                ])
-              ]),
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_34_b,
+                          expression: "relevantQueries.no_34_b"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { id: "yes_34_b", type: "radio", value: "yes" },
+                      domProps: {
+                        checked: _vm._q(_vm.relevantQueries.no_34_b, "yes")
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.relevantQueries, "no_34_b", "yes")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label  pr-2",
+                        attrs: { for: "yes_b_34" }
+                      },
+                      [_vm._v("YES")]
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_34_b,
-                        expression: "relevantQueries.no_34_b"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "radio", value: "no" },
-                    domProps: {
-                      checked: _vm._q(_vm.relevantQueries.no_34_b, "no")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.relevantQueries, "no_34_b", "no")
-                      }
+              _c(
+                "td",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.relevantQueries.no_34_b = "no"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label  pr-2",
-                      attrs: { for: "no_b_34" }
-                    },
-                    [_vm._v("NO")]
-                  )
-                ])
-              ]),
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_34_b,
+                          expression: "relevantQueries.no_34_b"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { type: "radio", value: "no", id: "no_34_b" },
+                      domProps: {
+                        checked: _vm._q(_vm.relevantQueries.no_34_b, "no")
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.relevantQueries, "no_34_b", "no")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label  pr-2",
+                        attrs: { for: "no_34_b" }
+                      },
+                      [_vm._v("NO")]
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c("td", { staticClass: "w-25" }, [
                 _c("div", { staticClass: "form-check" }, [
@@ -30510,77 +30572,97 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_35_a,
-                        expression: "relevantQueries.no_35_a"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "radio", value: "yes" },
-                    domProps: {
-                      checked: _vm._q(_vm.relevantQueries.no_35_a, "yes")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.relevantQueries, "no_35_a", "yes")
-                      }
+              _c(
+                "td",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.relevantQueries.no_35_a = "yes"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label  pr-2",
-                      attrs: { for: "yes_a_35" }
-                    },
-                    [_vm._v("YES")]
-                  )
-                ])
-              ]),
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_35_a,
+                          expression: "relevantQueries.no_35_a"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { type: "radio", value: "yes", id: "yes_35_a" },
+                      domProps: {
+                        checked: _vm._q(_vm.relevantQueries.no_35_a, "yes")
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.relevantQueries, "no_35_a", "yes")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label  pr-2",
+                        attrs: { for: "yes_35_a" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                                    YES\n                                "
+                        )
+                      ]
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_35_a,
-                        expression: "relevantQueries.no_35_a"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "radio", value: "no" },
-                    domProps: {
-                      checked: _vm._q(_vm.relevantQueries.no_35_a, "no")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.relevantQueries, "no_35_a", "no")
-                      }
+              _c(
+                "td",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.relevantQueries.no_35_a = "no"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label pr-2",
-                      attrs: { for: "no_a_35" }
-                    },
-                    [_vm._v("NO")]
-                  )
-                ])
-              ]),
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_35_a,
+                          expression: "relevantQueries.no_35_a"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { type: "radio", value: "no", id: "no_35_a" },
+                      domProps: {
+                        checked: _vm._q(_vm.relevantQueries.no_35_a, "no")
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.relevantQueries, "no_35_a", "no")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label pr-2",
+                        attrs: { for: "no_35_a" }
+                      },
+                      [_vm._v("NO")]
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c("td", { staticClass: "w-25" }, [
                 _c("div", { staticClass: "form-check" }, [
@@ -30621,77 +30703,93 @@ var render = function() {
             _c("tr", [
               _vm._m(4),
               _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_35_b,
-                        expression: "relevantQueries.no_35_b"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "radio", value: "yes" },
-                    domProps: {
-                      checked: _vm._q(_vm.relevantQueries.no_35_b, "yes")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.relevantQueries, "no_35_b", "yes")
-                      }
+              _c(
+                "td",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.relevantQueries.no_35_b = "yes"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label  pr-2",
-                      attrs: { for: "yes_b_35" }
-                    },
-                    [_vm._v("YES")]
-                  )
-                ])
-              ]),
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_35_b,
+                          expression: "relevantQueries.no_35_b"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { id: "yes_b_35", type: "radio", value: "yes" },
+                      domProps: {
+                        checked: _vm._q(_vm.relevantQueries.no_35_b, "yes")
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.relevantQueries, "no_35_b", "yes")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label  pr-2",
+                        attrs: { for: "yes_b_35" }
+                      },
+                      [_vm._v("YES")]
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_35_b,
-                        expression: "relevantQueries.no_35_b"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "radio", value: "no" },
-                    domProps: {
-                      checked: _vm._q(_vm.relevantQueries.no_35_b, "no")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.relevantQueries, "no_35_b", "no")
-                      }
+              _c(
+                "td",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.relevantQueries.no_35_b = "no"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label  pr-2",
-                      attrs: { for: "no_b_35" }
-                    },
-                    [_vm._v("NO")]
-                  )
-                ])
-              ]),
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_35_b,
+                          expression: "relevantQueries.no_35_b"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { id: "no_b_35", type: "radio", value: "no" },
+                      domProps: {
+                        checked: _vm._q(_vm.relevantQueries.no_35_b, "no")
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.relevantQueries, "no_35_b", "no")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label  pr-2",
+                        attrs: { for: "no_b_35" }
+                      },
+                      [_vm._v("NO")]
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c("td", { staticClass: "w-25" }, [
                 _c("div", { staticClass: "form-check" }, [
@@ -30736,77 +30834,93 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_36,
-                        expression: "relevantQueries.no_36"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "radio", value: "yes" },
-                    domProps: {
-                      checked: _vm._q(_vm.relevantQueries.no_36, "yes")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.relevantQueries, "no_36", "yes")
-                      }
+              _c(
+                "td",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.relevantQueries.no_36 = "yes"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label  pr-2",
-                      attrs: { for: "yes_36" }
-                    },
-                    [_vm._v("YES")]
-                  )
-                ])
-              ]),
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_36,
+                          expression: "relevantQueries.no_36"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { id: "yes_36", type: "radio", value: "yes" },
+                      domProps: {
+                        checked: _vm._q(_vm.relevantQueries.no_36, "yes")
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.relevantQueries, "no_36", "yes")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label  pr-2",
+                        attrs: { for: "yes_36" }
+                      },
+                      [_vm._v("YES")]
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_36,
-                        expression: "relevantQueries.no_36"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "radio", value: "no" },
-                    domProps: {
-                      checked: _vm._q(_vm.relevantQueries.no_36, "no")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.relevantQueries, "no_36", "no")
-                      }
+              _c(
+                "td",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.relevantQueries.no_36 = "no"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label pr-2",
-                      attrs: { for: "no_36" }
-                    },
-                    [_vm._v("NO")]
-                  )
-                ])
-              ]),
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_36,
+                          expression: "relevantQueries.no_36"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { type: "radio", value: "no", id: "no_36" },
+                      domProps: {
+                        checked: _vm._q(_vm.relevantQueries.no_36, "no")
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.relevantQueries, "no_36", "no")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label pr-2",
+                        attrs: { for: "no_36" }
+                      },
+                      [_vm._v("NO")]
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c("td", { staticClass: "w-25" }, [
                 _c("div", { staticClass: "form-check" }, [
@@ -30846,73 +30960,93 @@ var render = function() {
             _c("tr", [
               _vm._m(5),
               _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_37,
-                        expression: "relevantQueries.no_37"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "radio", value: "yes" },
-                    domProps: {
-                      checked: _vm._q(_vm.relevantQueries.no_37, "yes")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.relevantQueries, "no_37", "yes")
-                      }
+              _c(
+                "td",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.relevantQueries.no_37 = "yes"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label  pr-2",
-                      attrs: { for: "yes_37" }
-                    },
-                    [_vm._v("YES")]
-                  )
-                ])
-              ]),
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_37,
+                          expression: "relevantQueries.no_37"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { type: "radio", value: "yes", id: "yes_37" },
+                      domProps: {
+                        checked: _vm._q(_vm.relevantQueries.no_37, "yes")
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.relevantQueries, "no_37", "yes")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label  pr-2",
+                        attrs: { for: "yes_37" }
+                      },
+                      [_vm._v("YES")]
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_37,
-                        expression: "relevantQueries.no_37"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "radio", value: "no" },
-                    domProps: {
-                      checked: _vm._q(_vm.relevantQueries.no_37, "no")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.relevantQueries, "no_37", "no")
-                      }
+              _c(
+                "td",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.relevantQueries.no_37 = "no"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label pr-2",
-                      attrs: { for: "no_37" }
-                    },
-                    [_vm._v("NO")]
-                  )
-                ])
-              ]),
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_37,
+                          expression: "relevantQueries.no_37"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { type: "radio", value: "no", id: "no_37" },
+                      domProps: {
+                        checked: _vm._q(_vm.relevantQueries.no_37, "no")
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.relevantQueries, "no_37", "no")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label pr-2",
+                        attrs: { for: "no_37" }
+                      },
+                      [_vm._v("NO")]
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c("td", { staticClass: "w-25" }, [
                 _c("div", { staticClass: "form-check" }, [
@@ -30956,77 +31090,93 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_38_a,
-                        expression: "relevantQueries.no_38_a"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "radio", value: "yes" },
-                    domProps: {
-                      checked: _vm._q(_vm.relevantQueries.no_38_a, "yes")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.relevantQueries, "no_38_a", "yes")
-                      }
+              _c(
+                "td",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.relevantQueries.no_38_a = "yes"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label  pr-2",
-                      attrs: { for: "yes_a_38" }
-                    },
-                    [_vm._v("YES")]
-                  )
-                ])
-              ]),
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_38_a,
+                          expression: "relevantQueries.no_38_a"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { type: "radio", value: "yes", id: "yes_a_38" },
+                      domProps: {
+                        checked: _vm._q(_vm.relevantQueries.no_38_a, "yes")
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.relevantQueries, "no_38_a", "yes")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label  pr-2",
+                        attrs: { for: "yes_a_38" }
+                      },
+                      [_vm._v("YES")]
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_38_a,
-                        expression: "relevantQueries.no_38_a"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "radio", value: "no" },
-                    domProps: {
-                      checked: _vm._q(_vm.relevantQueries.no_38_a, "no")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.relevantQueries, "no_38_a", "no")
-                      }
+              _c(
+                "td",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.relevantQueries.no_38_a = "no"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label pr-2",
-                      attrs: { for: "no_a_38" }
-                    },
-                    [_vm._v("NO")]
-                  )
-                ])
-              ]),
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_38_a,
+                          expression: "relevantQueries.no_38_a"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { type: "radio", value: "no", id: "no_a_38" },
+                      domProps: {
+                        checked: _vm._q(_vm.relevantQueries.no_38_a, "no")
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.relevantQueries, "no_38_a", "no")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label pr-2",
+                        attrs: { for: "no_a_38" }
+                      },
+                      [_vm._v("NO")]
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c("td", { staticClass: "w-25" }, [
                 _c("div", { staticClass: "form-check" }, [
@@ -31067,77 +31217,93 @@ var render = function() {
             _c("tr", [
               _vm._m(6),
               _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_38_b,
-                        expression: "relevantQueries.no_38_b"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "radio", value: "yes" },
-                    domProps: {
-                      checked: _vm._q(_vm.relevantQueries.no_38_b, "yes")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.relevantQueries, "no_38_b", "yes")
-                      }
+              _c(
+                "td",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.relevantQueries.no_38_b = "yes"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label  pr-2",
-                      attrs: { for: "yes_b_38" }
-                    },
-                    [_vm._v("YES")]
-                  )
-                ])
-              ]),
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_38_b,
+                          expression: "relevantQueries.no_38_b"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { type: "radio", value: "yes", id: "yes_b_38" },
+                      domProps: {
+                        checked: _vm._q(_vm.relevantQueries.no_38_b, "yes")
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.relevantQueries, "no_38_b", "yes")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label  pr-2",
+                        attrs: { for: "yes_b_38" }
+                      },
+                      [_vm._v("YES")]
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_38_b,
-                        expression: "relevantQueries.no_38_b"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "radio", value: "no" },
-                    domProps: {
-                      checked: _vm._q(_vm.relevantQueries.no_38_b, "no")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.relevantQueries, "no_38_b", "no")
-                      }
+              _c(
+                "td",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.relevantQueries.no_38_b = "no"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label  pr-2",
-                      attrs: { for: "no_b_38" }
-                    },
-                    [_vm._v("NO")]
-                  )
-                ])
-              ]),
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_38_b,
+                          expression: "relevantQueries.no_38_b"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { type: "radio", value: "no", id: "no_b_38" },
+                      domProps: {
+                        checked: _vm._q(_vm.relevantQueries.no_38_b, "no")
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.relevantQueries, "no_38_b", "no")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label  pr-2",
+                        attrs: { for: "no_b_38" }
+                      },
+                      [_vm._v("NO")]
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c("td", { staticClass: "w-25" }, [
                 _c("div", { staticClass: "form-check" }, [
@@ -31182,77 +31348,93 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_39,
-                        expression: "relevantQueries.no_39"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "radio", value: "yes" },
-                    domProps: {
-                      checked: _vm._q(_vm.relevantQueries.no_39, "yes")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.relevantQueries, "no_39", "yes")
-                      }
+              _c(
+                "td",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.relevantQueries.no_39 = "yes"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label  pr-2",
-                      attrs: { for: "yes_39" }
-                    },
-                    [_vm._v("YES")]
-                  )
-                ])
-              ]),
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_39,
+                          expression: "relevantQueries.no_39"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { type: "radio", value: "yes", id: "yes_39" },
+                      domProps: {
+                        checked: _vm._q(_vm.relevantQueries.no_39, "yes")
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.relevantQueries, "no_39", "yes")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label  pr-2",
+                        attrs: { for: "yes_39" }
+                      },
+                      [_vm._v("YES")]
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_39,
-                        expression: "relevantQueries.no_39"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "radio", value: "no" },
-                    domProps: {
-                      checked: _vm._q(_vm.relevantQueries.no_39, "no")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.relevantQueries, "no_39", "no")
-                      }
+              _c(
+                "td",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.relevantQueries.no_39 = "no"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label pr-2",
-                      attrs: { for: "no_39" }
-                    },
-                    [_vm._v("NO")]
-                  )
-                ])
-              ]),
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_39,
+                          expression: "relevantQueries.no_39"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { type: "radio", value: "no", id: "no_39" },
+                      domProps: {
+                        checked: _vm._q(_vm.relevantQueries.no_39, "no")
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.relevantQueries, "no_39", "no")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label pr-2",
+                        attrs: { for: "no_39" }
+                      },
+                      [_vm._v("NO")]
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c("td", { staticClass: "w-25" }, [
                 _c("div", { staticClass: "form-check" }, [
@@ -31294,77 +31476,93 @@ var render = function() {
             _c("tr", [
               _vm._m(8),
               _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_40_a,
-                        expression: "relevantQueries.no_40_a"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "radio", value: "yes" },
-                    domProps: {
-                      checked: _vm._q(_vm.relevantQueries.no_40_a, "yes")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.relevantQueries, "no_40_a", "yes")
-                      }
+              _c(
+                "td",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.relevantQueries.no_40_a = "yes"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label  pr-2",
-                      attrs: { for: "yes_a_40" }
-                    },
-                    [_vm._v("YES")]
-                  )
-                ])
-              ]),
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_40_a,
+                          expression: "relevantQueries.no_40_a"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { type: "radio", value: "yes", id: "yes_a_40" },
+                      domProps: {
+                        checked: _vm._q(_vm.relevantQueries.no_40_a, "yes")
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.relevantQueries, "no_40_a", "yes")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label  pr-2",
+                        attrs: { for: "yes_a_40" }
+                      },
+                      [_vm._v("YES")]
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_40_a,
-                        expression: "relevantQueries.no_40_a"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "radio", value: "no" },
-                    domProps: {
-                      checked: _vm._q(_vm.relevantQueries.no_40_a, "no")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.relevantQueries, "no_40_a", "no")
-                      }
+              _c(
+                "td",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.relevantQueries.no_40_a = "no"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label  pr-2",
-                      attrs: { for: "no_a_40" }
-                    },
-                    [_vm._v("NO")]
-                  )
-                ])
-              ]),
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_40_a,
+                          expression: "relevantQueries.no_40_a"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { type: "radio", value: "no", id: "no_a_40" },
+                      domProps: {
+                        checked: _vm._q(_vm.relevantQueries.no_40_a, "no")
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.relevantQueries, "no_40_a", "no")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label  pr-2",
+                        attrs: { for: "no_a_40" }
+                      },
+                      [_vm._v("NO")]
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c("td", { staticClass: "w-25" }, [
                 _c("div", { staticClass: "form-check" }, [
@@ -31405,77 +31603,93 @@ var render = function() {
             _c("tr", [
               _vm._m(9),
               _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_40_b,
-                        expression: "relevantQueries.no_40_b"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "radio", value: "yes" },
-                    domProps: {
-                      checked: _vm._q(_vm.relevantQueries.no_40_b, "yes")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.relevantQueries, "no_40_b", "yes")
-                      }
+              _c(
+                "td",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.relevantQueries.no_40_b = "yes"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label  pr-2",
-                      attrs: { for: "yes_b_40" }
-                    },
-                    [_vm._v("YES")]
-                  )
-                ])
-              ]),
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_40_b,
+                          expression: "relevantQueries.no_40_b"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { type: "radio", value: "yes", id: "yes_b_40" },
+                      domProps: {
+                        checked: _vm._q(_vm.relevantQueries.no_40_b, "yes")
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.relevantQueries, "no_40_b", "yes")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label  pr-2",
+                        attrs: { for: "yes_b_40" }
+                      },
+                      [_vm._v("YES")]
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "form-check " }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_40_b,
-                        expression: "relevantQueries.no_40_b"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "radio", value: "no" },
-                    domProps: {
-                      checked: _vm._q(_vm.relevantQueries.no_40_b, "no")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.relevantQueries, "no_40_b", "no")
-                      }
+              _c(
+                "td",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.relevantQueries.no_40_b = "no"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label  pr-2",
-                      attrs: { for: "no_b_40" }
-                    },
-                    [_vm._v("NO")]
-                  )
-                ])
-              ]),
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-check " }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_40_b,
+                          expression: "relevantQueries.no_40_b"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { type: "radio", value: "no", id: "no_b_40" },
+                      domProps: {
+                        checked: _vm._q(_vm.relevantQueries.no_40_b, "no")
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.relevantQueries, "no_40_b", "no")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label  pr-2",
+                        attrs: { for: "no_b_40" }
+                      },
+                      [_vm._v("NO")]
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c("td", { staticClass: "w-25" }, [
                 _c("div", { staticClass: "form-check" }, [
@@ -31516,77 +31730,93 @@ var render = function() {
             _c("tr", [
               _vm._m(10),
               _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_40_c,
-                        expression: "relevantQueries.no_40_c"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "radio", id: "no_c_40", value: "yes" },
-                    domProps: {
-                      checked: _vm._q(_vm.relevantQueries.no_40_c, "yes")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.relevantQueries, "no_40_c", "yes")
-                      }
+              _c(
+                "td",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.relevantQueries.no_40_c = "yes"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label  pr-2",
-                      attrs: { for: "yes_c_40" }
-                    },
-                    [_vm._v("YES")]
-                  )
-                ])
-              ]),
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_40_c,
+                          expression: "relevantQueries.no_40_c"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { type: "radio", id: "no_c_40", value: "yes" },
+                      domProps: {
+                        checked: _vm._q(_vm.relevantQueries.no_40_c, "yes")
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.relevantQueries, "no_40_c", "yes")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label  pr-2",
+                        attrs: { for: "yes_c_40" }
+                      },
+                      [_vm._v("YES")]
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
-              _c("td", {}, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_40_c,
-                        expression: "relevantQueries.no_40_c"
-                      }
-                    ],
-                    staticClass: "form-check-input",
-                    attrs: { type: "radio", id: "no_c_40", value: "no" },
-                    domProps: {
-                      checked: _vm._q(_vm.relevantQueries.no_40_c, "no")
-                    },
-                    on: {
-                      change: function($event) {
-                        return _vm.$set(_vm.relevantQueries, "no_40_c", "no")
-                      }
+              _c(
+                "td",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.relevantQueries.no_40_c = "no"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c(
-                    "label",
-                    {
-                      staticClass: "form-check-label pr-2",
-                      attrs: { for: "no_c_40" }
-                    },
-                    [_vm._v("NO")]
-                  )
-                ])
-              ]),
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_40_c,
+                          expression: "relevantQueries.no_40_c"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: { type: "radio", id: "no_c_40", value: "no" },
+                      domProps: {
+                        checked: _vm._q(_vm.relevantQueries.no_40_c, "no")
+                      },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.relevantQueries, "no_40_c", "no")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "form-check-label pr-2",
+                        attrs: { for: "no_c_40" }
+                      },
+                      [_vm._v("NO")]
+                    )
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c("td", { staticClass: "w-25" }, [
                 _c("div", { staticClass: "form-check" }, [
@@ -31656,11 +31886,13 @@ var staticRenderFns = [
     return _c("tr", [
       _c(
         "td",
-        { staticClass: " text-left", staticStyle: { background: "#EAEAEA" } },
+        { staticClass: "text-left", staticStyle: { background: "#EAEAEA" } },
         [
-          _vm._v(
-            "\n                            34. Are you related by consanguinity or affinity\n                            to the appointing or recommending authority, or\n                            to the chief of bureau or office or to the\n                            person who has immediate supervision over you in\n                            the Office, Bureau or Department where you will\n                            be apppointed,\n                        "
-          )
+          _c("span", { staticClass: "text-sm" }, [
+            _vm._v(
+              "\n                                34. Are you related by consanguinity or\n                                affinity to the appointing or recommending\n                                authority, or to the chief of bureau or\n                                office or to the person who has immediate\n                                supervision over you in the Office, Bureau\n                                or Department where you will be apppointed,\n                            "
+            )
+          ])
         ]
       ),
       _vm._v(" "),
@@ -31679,7 +31911,7 @@ var staticRenderFns = [
         attrs: { scope: "row" }
       },
       [
-        _c("span", { staticClass: "ml-4" }, [
+        _c("span", { staticClass: "ml-4 text-sm" }, [
           _vm._v("a. within the third degree?")
         ])
       ]
@@ -31908,17 +32140,17 @@ var render = function() {
       _vm._v(" "),
       _vm.selectedTab.name === "C2" ? _c("work-experience") : _vm._e(),
       _vm._v(" "),
-      false ? undefined : _vm._e(),
+      _vm.selectedTab.name === "C3" ? _c("voluntary") : _vm._e(),
       _vm._v(" "),
-      false ? undefined : _vm._e(),
+      _vm.selectedTab.name === "C3" ? _c("learning-and-development") : _vm._e(),
       _vm._v(" "),
-      false ? undefined : _vm._e(),
+      _vm.selectedTab.name === "C3" ? _c("other-information") : _vm._e(),
       _vm._v(" "),
-      true ? _c("relevant-queries") : undefined,
+      _vm.selectedTab.name === "C4" ? _c("relevant-queries") : _vm._e(),
       _vm._v(" "),
-      true ? _c("references") : undefined,
+      _vm.selectedTab.name === "C4" ? _c("references") : _vm._e(),
       _vm._v(" "),
-      true ? _c("goverment-issued-id") : undefined
+      _vm.selectedTab.name === "C4" ? _c("goverment-issued-id") : _vm._e()
     ],
     1
   )
