@@ -6,11 +6,10 @@
         ajax: '/plantilla-list',
         columns: [
                 { data: 'plantilla_id', name: 'plantilla_id' },
-                { data: 'old_item_no', name: 'old_item_no' },
-                { data: 'new_item_no', name: 'new_item_no' },
-                { data: 'position_title', name: 'position_title' },
+                { data: 'item_no', name: 'item_no' },
+                { data: 'position_id', name: 'position_title' },
                 { data: 'employee_id', name: 'employee_id' },
-                { data: 'office_code', name: 'office_code' },
+                { data: 'office_code', name: 'office' },
                 { data: 'status', name: 'status' },
         ]
     });

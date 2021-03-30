@@ -28,9 +28,11 @@ Route::resource('/salary-grade', 'SalaryGradeController');
 
 //plantilla
 Route::get('/plantilla-list', 'Plantillacontroller@list');
+Route::post('/plantilla', 'PlantillaController@addPosition');
 Route::Resource('/plantilla', 'PlantillaController');
 //step Increment
 Route::Resource('/step-increment', 'StepIncrementController');
+<<<<<<< HEAD
 
 
 Route::group(['prefix' => 'employee'], function () {
@@ -47,4 +49,6 @@ Route::group(['prefix' => 'employee'], function () {
     Route::post('/personal/references', 'PersonalDataSheetController@storeReferences');
     // Route::post('/personal/information/store', 'PersonalDataSheetController@validatePersonInformation');
 });
+=======
+>>>>>>> add
 Route::Resource('/print-increment', 'PrintIncrementController');
