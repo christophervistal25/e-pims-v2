@@ -99,9 +99,13 @@
                                     Government Unit - Career Employees)?</span
                                 >
                             </td>
-                            <td class="">
+                            <td 
+                            class=""
+                                @click="relevantQueries.no_34_b = 'yes'"
+                            >
                                 <div class="form-check">
                                     <input
+                                        id="yes_34_b"
                                         type="radio"
                                         class="form-check-input"
                                         value="yes"
@@ -114,18 +118,18 @@
                                     >
                                 </div>
                             </td>
-                            <td class="">
+                            <td @click="relevantQueries.no_34_b = 'no'">
                                 <div class="form-check">
                                     <input
                                         type="radio"
                                         class="form-check-input"
                                         value="no"
+                                        id="no_34_b"
                                         v-model="relevantQueries.no_34_b"
                                     />
-                                    <br />
                                     <label
                                         class="form-check-label  pr-2"
-                                        for="no_b_34"
+                                        for="no_34_b"
                                         >NO</label
                                     >
                                 </div>
@@ -154,34 +158,39 @@
                                 35. a. Have you ever been found guilty of any
                                 administrative offense?
                             </td>
-                            <td class="">
+                            <td
+                                class=""
+                                @click="relevantQueries.no_35_a = 'yes'"
+                                >
                                 <div class="form-check">
                                     <input
                                         type="radio"
                                         class="form-check-input"
                                         v-model="relevantQueries.no_35_a"
                                         value="yes"
+                                        id="yes_35_a"
                                     />
-                                    <br />
                                     <label
                                         class="form-check-label  pr-2"
-                                        for="yes_a_35"
-                                        >YES</label
+                                        for="yes_35_a"
+                                        >
+                                            YES
+                                        </label
                                     >
                                 </div>
                             </td>
-                            <td class="">
+                            <td @click="relevantQueries.no_35_a = 'no'">
                                 <div class="form-check">
                                     <input
                                         type="radio"
                                         class="form-check-input"
                                         value="no"
+                                        id="no_35_a"
                                         v-model="relevantQueries.no_35_a"
                                     />
-                                    <br />
                                     <label
                                         class="form-check-label pr-2"
-                                        for="no_a_35"
+                                        for="no_35_a"
                                         >NO</label
                                     >
                                 </div>
@@ -210,15 +219,16 @@
                                     any court?</span
                                 >
                             </td>
-                            <td class="">
+                            <td class=""
+                                @click="relevantQueries.no_35_b = 'yes'">
                                 <div class="form-check">
                                     <input
+                                        id="yes_b_35"
                                         type="radio"
                                         class="form-check-input"
                                         v-model="relevantQueries.no_35_b"
                                         value="yes"
                                     />
-                                    <br />
                                     <label
                                         class="form-check-label  pr-2"
                                         for="yes_b_35"
@@ -226,15 +236,15 @@
                                     >
                                 </div>
                             </td>
-                            <td class="">
+                            <td @click="relevantQueries.no_35_b = 'no'">
                                 <div class="form-check">
                                     <input
+                                        id="no_b_35"
                                         type="radio"
                                         class="form-check-input"
                                         v-model="relevantQueries.no_35_b"
                                         value="no"
                                     />
-                                    <br />
                                     <label
                                         class="form-check-label  pr-2"
                                         for="no_b_35"
@@ -268,15 +278,16 @@
                                 regulation by any court or tribunal?
                             </td>
 
-                            <td class="">
+                            <td class=""
+                                @click="relevantQueries.no_36 = 'yes'">
                                 <div class="form-check">
                                     <input
+                                        id="yes_36"
                                         type="radio"
                                         class="form-check-input"
                                         v-model="relevantQueries.no_36"
                                         value="yes"
                                     />
-                                    <br />
                                     <label
                                         class="form-check-label  pr-2"
                                         for="yes_36"
@@ -284,15 +295,15 @@
                                     >
                                 </div>
                             </td>
-                            <td class="">
+                            <td @click="relevantQueries.no_36 = 'no'">
                                 <div class="form-check">
                                     <input
                                         type="radio"
                                         class="form-check-input"
                                         v-model="relevantQueries.no_36"
                                         value="no"
+                                        id="no_36"
                                     />
-                                    <br />
                                     <label
                                         class="form-check-label pr-2"
                                         for="no_36"
@@ -329,13 +340,15 @@
                                 </span>
                             </td>
 
-                            <td class="">
+                            <td class=""
+                                @click="relevantQueries.no_37 = 'yes'">
                                 <div class="form-check">
                                     <input
                                         type="radio"
                                         class="form-check-input"
                                         v-model="relevantQueries.no_37"
                                         value="yes"
+                                        id="yes_37"
                                     />
                                     <label
                                         class="form-check-label  pr-2"
@@ -344,13 +357,14 @@
                                     >
                                 </div>
                             </td>
-                            <td class="">
+                            <td @click="relevantQueries.no_37 = 'no'">
                                 <div class="form-check">
                                     <input
                                         type="radio"
                                         class="form-check-input"
                                         v-model="relevantQueries.no_37"
                                         value="no"
+                                        id="no_37"
                                     />
                                     <label
                                         class="form-check-label pr-2"
@@ -382,15 +396,16 @@
                                 national or local election held within the last
                                 year (except Barangay election)?
                             </td>
-                            <td class="">
+                            <td class=""
+                                @click="relevantQueries.no_38_a = 'yes'">
                                 <div class="form-check">
                                     <input
                                         type="radio"
                                         class="form-check-input"
                                         v-model="relevantQueries.no_38_a"
                                         value="yes"
+                                        id="yes_a_38"
                                     />
-                                    <br />
                                     <label
                                         class="form-check-label  pr-2"
                                         for="yes_a_38"
@@ -398,15 +413,15 @@
                                     >
                                 </div>
                             </td>
-                            <td class="">
+                            <td @click="relevantQueries.no_38_a = 'no'">
                                 <div class="form-check">
                                     <input
                                         type="radio"
                                         class="form-check-input"
                                         v-model="relevantQueries.no_38_a"
                                         value="no"
+                                        id="no_a_38"
                                     />
-                                    <br />
                                     <label
                                         class="form-check-label pr-2"
                                         for="no_a_38"
@@ -441,15 +456,16 @@
                                     candidate?</span
                                 >
                             </td>
-                            <td class="">
+                            <td class=""
+                                @click="relevantQueries.no_38_b = 'yes'">
                                 <div class="form-check">
                                     <input
                                         type="radio"
                                         class="form-check-input"
                                         v-model="relevantQueries.no_38_b"
                                         value="yes"
+                                        id="yes_b_38"
                                     />
-                                    <br />
                                     <label
                                         class="form-check-label  pr-2"
                                         for="yes_b_38"
@@ -457,15 +473,16 @@
                                     >
                                 </div>
                             </td>
-                            <td class="">
+                            <td class=""
+                                @click="relevantQueries.no_38_b = 'no'">
                                 <div class="form-check">
                                     <input
                                         type="radio"
                                         class="form-check-input"
                                         v-model="relevantQueries.no_38_b"
                                         value="no"
+                                        id="no_b_38"
                                     />
-                                    <br />
                                     <label
                                         class="form-check-label  pr-2"
                                         for="no_b_38"
@@ -498,15 +515,16 @@
                                 or permanent resident of another country?
                             </td>
 
-                            <td class="">
+                            <td class=""
+                                @click="relevantQueries.no_39 = 'yes'">
                                 <div class="form-check">
                                     <input
                                         type="radio"
                                         class="form-check-input"
                                         v-model="relevantQueries.no_39"
                                         value="yes"
+                                        id="yes_39"
                                     />
-                                    <br />
                                     <label
                                         class="form-check-label  pr-2"
                                         for="yes_39"
@@ -514,15 +532,16 @@
                                     >
                                 </div>
                             </td>
-                            <td class="">
+                            <td class=""
+                                @click="relevantQueries.no_39 = 'no'">
                                 <div class="form-check">
                                     <input
                                         type="radio"
                                         class="form-check-input"
                                         v-model="relevantQueries.no_39"
                                         value="no"
+                                        id="no_39"
                                     />
-                                    <br />
                                     <label
                                         class="form-check-label pr-2"
                                         for="no_39"
@@ -568,15 +587,16 @@
                                     group?</span
                                 >
                             </td>
-                            <td class="">
+                            <td class=""
+                                @click="relevantQueries.no_40_a = 'yes'">
                                 <div class="form-check">
                                     <input
                                         type="radio"
                                         class="form-check-input"
                                         v-model="relevantQueries.no_40_a"
                                         value="yes"
+                                        id="yes_a_40"
                                     />
-                                    <br />
                                     <label
                                         class="form-check-label  pr-2"
                                         for="yes_a_40"
@@ -584,15 +604,16 @@
                                     >
                                 </div>
                             </td>
-                            <td class="">
+                            <td class=""
+                                @click="relevantQueries.no_40_a = 'no'">
                                 <div class="form-check">
                                     <input
                                         type="radio"
                                         class="form-check-input"
                                         v-model="relevantQueries.no_40_a"
                                         value="no"
+                                        id="no_a_40"
                                     />
-                                    <br />
                                     <label
                                         class="form-check-label  pr-2"
                                         for="no_a_40"
@@ -626,15 +647,16 @@
                                     >b. Are you a person with disability?</span
                                 >
                             </td>
-                            <td class="">
+                            <td class=""
+                                @click="relevantQueries.no_40_b = 'yes'">
                                 <div class="form-check">
                                     <input
                                         type="radio"
                                         class="form-check-input"
                                         v-model="relevantQueries.no_40_b"
                                         value="yes"
+                                        id="yes_b_40"
                                     />
-                                    <br />
                                     <label
                                         class="form-check-label  pr-2"
                                         for="yes_b_40"
@@ -642,15 +664,16 @@
                                     >
                                 </div>
                             </td>
-                            <td class="">
+                            <td class=""
+                                @click="relevantQueries.no_40_b = 'no'">
                                 <div class="form-check ">
                                     <input
                                         type="radio"
                                         class="form-check-input"
                                         v-model="relevantQueries.no_40_b"
                                         value="no"
+                                        id="no_b_40"
                                     />
-                                    <br />
                                     <label
                                         class="form-check-label  pr-2"
                                         for="no_b_40"
@@ -685,7 +708,8 @@
                                     >c. Are you a solo parent?</span
                                 >
                             </td>
-                            <td class="">
+                            <td class=""
+                                @click="relevantQueries.no_40_c = 'yes'">
                                 <div class="form-check">
                                     <input
                                         type="radio"
@@ -694,7 +718,6 @@
                                         v-model="relevantQueries.no_40_c"
                                         value="yes"
                                     />
-                                    <br />
                                     <label
                                         class="form-check-label  pr-2"
                                         for="yes_c_40"
@@ -702,7 +725,8 @@
                                     >
                                 </div>
                             </td>
-                            <td class="">
+                            <td class=""
+                                @click="relevantQueries.no_40_c = 'no'">
                                 <div class="form-check">
                                     <input
                                         type="radio"
@@ -711,7 +735,6 @@
                                         v-model="relevantQueries.no_40_c"
                                         value="no"
                                     />
-                                    <br />
                                     <label
                                         class="form-check-label pr-2"
                                         for="no_c_40"
