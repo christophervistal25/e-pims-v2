@@ -36,31 +36,35 @@
                                     >a. within the third degree?</span
                                 >
                             </td>
-                            <td class="">
+                            <td
+                                class=""
+                                @click="relevantQueries.no_34_a = 'yes'"
+                            >
                                 <div class="form-check">
                                     <input
+                                        id="yes_34_a"
                                         type="radio"
                                         value="yes"
                                         class="form-check-input"
                                         v-model="relevantQueries.no_34_a"
                                     />
-                                    <br />
                                     <label
-                                        class="form-check-label  pr-2"
-                                        for="yes_a_34"
-                                        >YES</label
+                                        for="yes_34_a"
+                                        class="form-check-label pr-2"
                                     >
+                                        YES
+                                    </label>
                                 </div>
                             </td>
-                            <td class="">
+                            <td @click="relevantQueries.no_34_a = 'no'">
                                 <div class="form-check">
                                     <input
                                         type="radio"
                                         value="no"
+                                        id="no_a_34"
                                         class="form-check-input"
                                         v-model="relevantQueries.no_34_a"
                                     />
-                                    <br />
                                     <label
                                         class="form-check-label  pr-2"
                                         for="no_a_34"
@@ -103,7 +107,6 @@
                                         value="yes"
                                         v-model="relevantQueries.no_34_b"
                                     />
-                                    <br />
                                     <label
                                         class="form-check-label  pr-2"
                                         for="yes_b_34"
@@ -751,49 +754,56 @@
 export default {
     data() {
         return {
-            relevantQueries: [
-                {
-                    no_34_a: "",
-                    no_34_a_details: "",
-                    no_34_b: "",
-                    no_34_b_details: "",
+            relevantQueries: {
+                no_34_a: "",
+                no_34_a_details: "",
+                no_34_b: "",
+                no_34_b_details: "",
 
-                    no_35_a: "",
-                    no_35_a_details: "",
-                    no_35_b: "",
-                    no_35_b_details: "",
+                no_35_a: "",
+                no_35_a_details: "",
+                no_35_b: "",
+                no_35_b_details: "",
 
-                    no_36: "",
-                    no_36_details: "",
-                    no_37: "",
-                    no_37_details: "",
+                no_36: "",
+                no_36_details: "",
+                no_37: "",
+                no_37_details: "",
 
-                    no_38_a: "",
-                    no_38_a_details: "",
-                    no_38_b: "",
-                    no_38_b_details: "",
+                no_38_a: "",
+                no_38_a_details: "",
+                no_38_b: "",
+                no_38_b_details: "",
 
-                    no_39: "",
-                    no_39_details: "",
+                no_39: "",
+                no_39_details: "",
 
-                    no_40_a: "",
-                    no_40_a_details: "",
+                no_40_a: "",
+                no_40_a_details: "",
 
-                    no_40_b: "",
-                    no_40_b_details: "",
+                no_40_b: "",
+                no_40_b_details: "",
 
-                    no_40_c: "",
-                    no_40_c_details: ""
-                }
-            ]
+                no_40_c: "",
+                no_40_c_details: ""
+            }
         };
     },
     methods: {
         submit() {
             console.log(this.relevantQueries);
-        }
+        },
+        cellClick(element) {}
     }
 };
 </script>
 
-<style></style>
+<style scoped>
+td {
+    cursor: pointer;
+    transition: all 300ms ease-in-out;
+}
+td:hover {
+    background: #f1f2f3;
+}
+</style>

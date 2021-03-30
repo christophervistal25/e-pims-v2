@@ -31,7 +31,6 @@ Route::get('/plantilla-list', 'Plantillacontroller@list');
 Route::Resource('/plantilla', 'PlantillaController');
 //step Increment
 Route::Resource('/step-increment', 'StepIncrementController');
-<<<<<<< HEAD
 
 
 Route::group(['prefix' => 'employee'], function () {
@@ -48,6 +47,4 @@ Route::group(['prefix' => 'employee'], function () {
     Route::post('/personal/references', 'PersonalDataSheetController@storeReferences');
     // Route::post('/personal/information/store', 'PersonalDataSheetController@validatePersonInformation');
 });
-=======
 Route::Resource('/print-increment', 'PrintIncrementController');
->>>>>>> 91a0d1e871fc7fbc69353407883a5a14a7933121
