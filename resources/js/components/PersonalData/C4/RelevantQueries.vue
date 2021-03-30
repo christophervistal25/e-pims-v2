@@ -791,7 +791,15 @@ export default {
     },
     methods: {
         submit() {
-            console.log(this.relevantQueries);
+            window.axios
+                .post(
+                    "/employee/personal/relevant/queries",
+                    this.relevantQueries
+                )
+                .then(response => {
+                    console.log(response.data);
+                })
+                .catch(err => {});
         },
         cellClick(element) {}
     }
