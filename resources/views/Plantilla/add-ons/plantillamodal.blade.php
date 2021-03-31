@@ -8,20 +8,15 @@
                   </button>
             </div>
             <div class="modal-body">
-                <form action="/plantilla" method="POST">
-                   @csrf
                     <div class="row">
                     <div class="form-group col-12">
                         <label class="d-block">Position Name</label>
-                        <input placeholder="Input Position Name" class="form-control" id="positionName" name="positionName" type="text">
+                        <input placeholder="Input Position Name" class="form-control" id="positionName" name="positionName" type="text" >
                     </div>
                     <div class="form-group submit-section col-12">
                         <button id="btnPosition" type="submit" class="btn btn-success submit-btn">Save</button>
                     </div>
-                    <div class="result">
-                    </div>
                 </div>
-                </form>
             </div>
         </div>
     </div>

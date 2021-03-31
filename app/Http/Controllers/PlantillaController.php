@@ -149,15 +149,5 @@ class PlantillaController extends Controller
     {
         //
     }
-    public function addPosition(Request $request)
-    {
-        // $this->validate($request, [
-        //     'positionName'                        => 'required|unique:positions,position_name',
-        // ]);
-        $addPosition = new Position;
-        $addPosition->position_name     = $request['positionName'];
-        $addPosition->save();
-        return redirect('/plantilla')->with('success','Added Successfully');
-    }
 
 }
