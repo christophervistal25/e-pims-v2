@@ -18,29 +18,55 @@ class CreateEmployeeRelevantQueriesTable extends Migration
 
             $table->string('employee_id');
 
-            $table->string('affinity_in_government');
-            $table->string('affinity_in_government_answer');
-            $table->string('afffinity_in_government_details');
+            // $table->string('affinity_in_government');
+            // $table->string('affinity_in_government_answer');
+            // $table->string('afffinity_in_government_details')->nullable();
 
-            $table->string('filed_cases');
-            $table->string('filed_cases_answer');
-            $table->string('filed_cases_details');
+            // $table->string('filed_cases');
+            // $table->string('filed_cases_answer');
+            // $table->string('filed_cases_details')->nullable();
 
-            $table->string('conviction_violation');
-            $table->string('conviction_violation_answer');
-            $table->string('conviction_violation_details');
+            // $table->string('conviction_violation');
+            // $table->string('conviction_violation_answer');
+            // $table->string('conviction_violation_details')->nullable();
 
-            $table->string('service_record');
-            $table->string('service_record_answer');
-            $table->string('service_record_details');
+            // $table->string('service_record');
+            // $table->string('service_record_answer');
+            // $table->string('service_record_details')->nullable();
 
-            $table->string('electoral_and_immigration');
-            $table->string('electoral_and_immigration_answer');
-            $table->string('electoral_and_immigration_details');
+            // $table->string('electoral_and_immigration');
+            // $table->string('electoral_and_immigration_answer');
+            // $table->string('electoral_and_immigration_details')->nullable();
 
-            $table->string('indigency_social_matters');
-            $table->string('indigency_social_matters_answer');
-            $table->string('indigency_social_matters_details');
+            // $table->string('indigency_social_matters');
+            // $table->string('indigency_social_matters_answer');
+            // $table->string('indigency_social_matters_details')->nullable();
+
+
+            $table->string('question_34_a_answer');
+            $table->string('question_34_a_details')->nullable();
+            $table->string('question_34_b_answer');
+            $table->string('question_34_b_details')->nullable();
+            $table->string('question_35_a_answer');
+            $table->string('question_35_a_details')->nullable();
+            $table->string('question_35_b_answer');
+            $table->string('question_35_b_details')->nullable();
+            $table->string('question_36_a_answer');
+            $table->string('question_36_a_details')->nullable();
+            $table->string('question_37_a_answer');
+            $table->string('question_37_a_details')->nullable();
+            $table->string('question_38_a_answer');
+            $table->string('question_38_a_details')->nullable();
+            $table->string('question_38_b_answer');
+            $table->string('question_38_b_details')->nullable();
+            $table->string('question_39_a_answer');
+            $table->string('question_39_a_details')->nullable();
+            $table->string('question_40_a_answer');
+            $table->string('question_40_a_details')->nullable();
+            $table->string('question_40_b_answer');
+            $table->string('question_40_b_details')->nullable();
+            $table->string('question_40_c_answer');
+            $table->string('question_40_c_details')->nullable();
 
             $table->timestamps();
         });

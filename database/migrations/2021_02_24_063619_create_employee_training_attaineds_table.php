@@ -19,7 +19,7 @@ class CreateEmployeeTrainingAttainedsTable extends Migration
             $table->string('title');
             $table->date('date_of_attendance_from');
             $table->date('date_of_attendance_to');
-            $table->bigInteger('numbe_of_hours');
+            $table->bigInteger('number_of_hours');
             $table->string('type_of_id');
             $table->string('sponsored_by');
             $table->timestamps();

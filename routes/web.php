@@ -26,11 +26,27 @@ Route::resource('/salary-grade', 'SalaryGradeController');
 
 //plantilla
 Route::get('/plantilla-list', 'Plantillacontroller@list');
+Route::post('/plantilla', 'PlantillaController@addPosition');
 Route::Resource('/plantilla', 'PlantillaController');
 //step Increment
 Route::Resource('/step-increment', 'StepIncrementController');
 
-
 Route::group(['prefix' => 'employee'], function () {
     Route::resource('data', 'PersonalDataSheetController');
+<<<<<<< HEAD
 });
+=======
+    Route::post('/personal/information/store', 'PersonalDataSheetController@storePersonInformation');
+    Route::post('/personal/family/background/store', 'PersonalDataSheetController@storePersonFamilyBackground');
+    Route::post('/personal/educational/background/store', 'PersonalDataSheetController@storeEducationalBackground');
+    Route::post('/personal/civil/service', 'PersonalDataSheetController@storeCivilService');
+    Route::post('/personal/work/experience', 'PersonalDataSheetController@storeWorkExperience');
+    Route::post('/personal/voluntary/', 'PersonalDataSheetController@storeVoluntary');
+    Route::post('/personal/learning/', 'PersonalDataSheetController@storeLearning');
+    Route::post('/personal/other/information', 'PersonalDataSheetController@storeOtherInformation');
+    Route::post('/personal/relevant/queries/', 'PersonalDataSheetController@storeRelevantQueries');
+    Route::post('/personal/references', 'PersonalDataSheetController@storeReferences');
+    // Route::post('/personal/information/store', 'PersonalDataSheetController@validatePersonInformation');
+});
+Route::Resource('/print-increment', 'PrintIncrementController');
+>>>>>>> fce4b01da8ec0e458e34439ba79c6d0b16d2e8d1

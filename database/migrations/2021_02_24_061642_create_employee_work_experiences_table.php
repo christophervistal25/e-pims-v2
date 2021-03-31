@@ -17,7 +17,7 @@ class CreateEmployeeWorkExperiencesTable extends Migration
             $table->id();
             $table->string('employee_id');
             $table->date('from')->nullabe();
-            $table->string('to')->nullable();
+            $table->date('to')->nullable();
             $table->string('position_title')->nullable();
             $table->string('office')->nullable();
             $table->bigInteger('monthly_salary')->nullable();

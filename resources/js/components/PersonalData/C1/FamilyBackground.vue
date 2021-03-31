@@ -121,7 +121,7 @@
                     </div>
                 </div>
                 <hr />
-                <div v-for="(no, index) in noOfSpouse" :key="index">
+                <div v-for="(spouse, index) in spouse" :key="index">
                     <div class="row pl-3 pr-3">
                         <div class="form-group col-lg-6">
                             <label for="cname">NAME OF CHILDREN</label>
@@ -130,7 +130,7 @@
                                 class="form-control"
                                 id="cname"
                                 placeholder="Enter Name of Children"
-                                v-model="familyBackground.cname"
+                                v-model="spouse.cname"
                             />
                         </div>
                         <div class="form-group col-lg-6">
@@ -140,7 +140,7 @@
                                 class="form-control"
                                 id="cdateOfBirth"
                                 placeholder="Enter Spouse's Business Address"
-                                v-model="familyBackground.cdateOfBirth"
+                                v-model="spouse.cdateOfBirth"
                             />
                         </div>
                     </div>
@@ -275,10 +275,15 @@ export default {
         return {
             isLoading: false,
             isComplete: false,
-            noOfSpouse: 1,
+            spouse: [
+                {
+                    cname: "",
+                    cdateOfBirth: ""
+                }
+            ],
             familyBackground: {
                 employee_id: "",
-                spouse: {},
+
                 ssurname: "",
                 sfirstname: "",
                 smiddleame: "",
@@ -301,11 +306,15 @@ export default {
     },
     methods: {
         generateNewSpuseField() {
-            this.noOfSpouse++;
+            this.spouse.push({
+                name: "",
+                dateOfBirth: ""
+            });
         },
         submitPersonFamilyBackground() {
             this.isLoading = true;
             this.familyBackground.employee_id = this.employee_id;
+            this.familyBackground.spouse = this.spouse;
 
             window.axios
                 .post(
@@ -315,8 +324,9 @@ export default {
                 .then(response => {
                     this.isLoading = false;
                     this.isComplete = true;
+
                     this.$emit(
-                        "display-family-background",
+                        "display-educational-background",
                         response.data.employee_id
                     );
                     swal({

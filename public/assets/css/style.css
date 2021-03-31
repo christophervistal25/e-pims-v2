@@ -9610,81 +9610,65 @@ ul.comment-list li ul.children {
 }
 
 .step-increment {
-    border-top: 3px dashed #ccc;
+	border-top: 3px dashed #ccc;
+}
+input[type="checkbox"]{
+	/* Double-sized Checkboxes */
+	-ms-transform: scale(2); /* IE */
+	-moz-transform: scale(2); /* FF */
+	-webkit-transform: scale(2); /* Safari and Chrome */
+	-o-transform: scale(2); /* Opera */
+	padding: 10px;
+	margin: 0 10px 0 10px;
 }
 
-input[type="checkbox"] {
-    /* Double-sized Checkboxes */
-    -ms-transform: scale(2);
-    /* IE */
-    -moz-transform: scale(2);
-    /* FF */
-    -webkit-transform: scale(2);
-    /* Safari and Chrome */
-    -o-transform: scale(2);
-    /* Opera */
-    padding: 10px;
-    margin: 0 10px 0 10px;
+.body-container {
+	margin-top: 40px;
+	text-align: center;
 }
 
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
+.card-body-p {
+	margin-left: 60px;
+	margin-right: 60px;
+	margin-top: 70px;
 }
 
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
+.date{
+	text-align: right;
+	margin-right: 80px;
 }
 
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
+.amount{
+	padding: 110px;
+	text-decoration: underline;
 }
 
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
+.respectfully {
+	text-align: right;
+	margin-right: 130px;
 }
 
-input:checked+.slider {
-    background-color: #2196F3;
+.boxing{
+	border: 1px solid transparent;
+	border-bottom-color: black;
+	padding-left: 30px;
 }
 
-input:focus+.slider {
-    box-shadow: 0 0 1px #2196F3;
+.gov {
+	text-align: right;
+	margin-right: 20px;
 }
 
-input:checked+.slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
+.signatory{
+	text-align: right;
+	margin-right: 67px;
 }
 
-
-/* Rounded sliders */
-
-.slider.round {
-    border-radius: 34px;
+#addPosition{
+    margin-top:30px;
 }
-
-.slider.round:before {
-    border-radius: 50%;
+@media only screen and (max-width: 700px) {
+    #addPosition{
+        margin-top: 1px;
+    }
 }

@@ -13,6 +13,12 @@ class PlantillaController extends Controller
                             ->where('sg_year', $sg_year)
                             ->first(['sg_year' ,'sg_step' . $sg_step]);
     }
+
+
+
+
+
+    
     public function dbmPrevious($sg_no, $sg_step, $sg_year)
     {
         // ->where(['sg_no' => $sg_no, 'sg_year' => $sg_year])

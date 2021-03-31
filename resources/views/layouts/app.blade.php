@@ -34,7 +34,7 @@
 		<![endif]-->
 </head>
 
-<body>
+<body class='mini-sidebar'>
 	<!-- Main Wrapper -->
 	<div class="main-wrapper" id="app">
 		<!-- Header -->
@@ -77,7 +77,7 @@
 				<!-- Flag -->
 				<li class="nav-item dropdown has-arrow flag-nav">
 					<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button">
-						<img src=" alt="" height="20"> <span>English</span>
+						<img src="" alt="" height="20"> <span>English</span>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right">
 						<a href="javascript:void(0);" class="dropdown-item">
