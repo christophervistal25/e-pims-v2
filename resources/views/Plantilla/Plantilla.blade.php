@@ -283,23 +283,39 @@ $.ajaxSetup({
 });
 
 $(document).ready(function () {
-    $('#btnPosition').click(function (e) {
-      e.preventDefault();
-      var name = $('#positionName').val();
-      console.log(name);
+    $('#btnPosition').click(function (response) {
+      let name = $('#positionName').val();
+      if(name!=""){
       $.ajax({
           type: "POST",
-          url: '/plantilla',
+          url: '/api/addPosition',
           data: { 
-              "position_name": name 
+              "positionName": name 
             },
-        //   success: function (data) {
-        //     $('.result').html(data);
-        //     $('/plantilla')[0].reset();
-        //   }
+          success: function (response) {
+          if(response.success){
+            $('.modal').each(function(){
+                    $(this).modal('hide');
+                });
+            swal("Sucessfully Added!", "", "success");
+            document.getElementById('positionName').value = '';
+            }
+        },
+        error: function (response) {
+                if( response.status === 422 ) {
+                    swal("The position name has already been taken", "", "error");
+                }
+            }
+
+
+      
+
         });
+    }else{
+        swal("Please Input Position Name!", "", "warning");
+		}
     });
-  });ss
+  });
 
 
 
