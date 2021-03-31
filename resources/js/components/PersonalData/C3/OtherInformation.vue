@@ -13,14 +13,14 @@
                         <tr class="text-center" style="background: #EAEAEA;">
                             <td
                                 rowspan="2"
-                                class="align-middle"
+                                class="align-middle text-sm"
                                 scope="colgroup"
                             >
                                 31. SPECIAL SKILLS and HOBBIES
                             </td>
                             <td
                                 rowspan="2"
-                                class="align-middle"
+                                class="align-middle text-sm"
                                 scope="colgroup"
                             >
                                 32. NON-ACADEMIC DISTINCTIONS / RECOGNITION
@@ -28,7 +28,7 @@
                             </td>
                             <td
                                 rowspan="2"
-                                class="align-middle"
+                                class="align-middle text-sm"
                                 scope="colgroup"
                             >
                                 33. MEMBERSHIP IN ASSOCIATION/ORGANIZATION
