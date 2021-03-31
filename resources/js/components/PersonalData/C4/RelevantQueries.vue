@@ -15,13 +15,15 @@
 
                         <!-- {{-- BEGIN OF 34 --}} -->
                         <tr>
-                            <td style="background: #EAEAEA;" class=" text-left">
-                                34. Are you related by consanguinity or affinity
-                                to the appointing or recommending authority, or
-                                to the chief of bureau or office or to the
-                                person who has immediate supervision over you in
-                                the Office, Bureau or Department where you will
-                                be apppointed,
+                            <td style="background: #EAEAEA;" class="text-left">
+                                <span class="text-sm">
+                                    34. Are you related by consanguinity or
+                                    affinity to the appointing or recommending
+                                    authority, or to the chief of bureau or
+                                    office or to the person who has immediate
+                                    supervision over you in the Office, Bureau
+                                    or Department where you will be apppointed,
+                                </span>
                             </td>
                             <td colspan="3"></td>
                         </tr>
@@ -32,7 +34,7 @@
                                 style="background: #EAEAEA;"
                                 class="border-0"
                             >
-                                <span class="ml-4"
+                                <span class="ml-4 text-sm"
                                     >a. within the third degree?</span
                                 >
                             </td>
@@ -50,7 +52,7 @@
                                     />
                                     <label
                                         for="yes_34_a"
-                                        class="form-check-label pr-2"
+                                        class="form-check-label pr-2 text-sm"
                                     >
                                         YES
                                     </label>
@@ -99,8 +101,8 @@
                                     Government Unit - Career Employees)?</span
                                 >
                             </td>
-                            <td 
-                            class=""
+                            <td
+                                class=""
                                 @click="relevantQueries.no_34_b = 'yes'"
                             >
                                 <div class="form-check">
@@ -161,7 +163,7 @@
                             <td
                                 class=""
                                 @click="relevantQueries.no_35_a = 'yes'"
-                                >
+                            >
                                 <div class="form-check">
                                     <input
                                         type="radio"
@@ -173,10 +175,9 @@
                                     <label
                                         class="form-check-label  pr-2"
                                         for="yes_35_a"
-                                        >
-                                            YES
-                                        </label
                                     >
+                                        YES
+                                    </label>
                                 </div>
                             </td>
                             <td @click="relevantQueries.no_35_a = 'no'">
@@ -219,8 +220,10 @@
                                     any court?</span
                                 >
                             </td>
-                            <td class=""
-                                @click="relevantQueries.no_35_b = 'yes'">
+                            <td
+                                class=""
+                                @click="relevantQueries.no_35_b = 'yes'"
+                            >
                                 <div class="form-check">
                                     <input
                                         id="yes_b_35"
@@ -278,8 +281,7 @@
                                 regulation by any court or tribunal?
                             </td>
 
-                            <td class=""
-                                @click="relevantQueries.no_36 = 'yes'">
+                            <td class="" @click="relevantQueries.no_36 = 'yes'">
                                 <div class="form-check">
                                     <input
                                         id="yes_36"
@@ -340,8 +342,7 @@
                                 </span>
                             </td>
 
-                            <td class=""
-                                @click="relevantQueries.no_37 = 'yes'">
+                            <td class="" @click="relevantQueries.no_37 = 'yes'">
                                 <div class="form-check">
                                     <input
                                         type="radio"
@@ -396,8 +397,10 @@
                                 national or local election held within the last
                                 year (except Barangay election)?
                             </td>
-                            <td class=""
-                                @click="relevantQueries.no_38_a = 'yes'">
+                            <td
+                                class=""
+                                @click="relevantQueries.no_38_a = 'yes'"
+                            >
                                 <div class="form-check">
                                     <input
                                         type="radio"
@@ -456,8 +459,10 @@
                                     candidate?</span
                                 >
                             </td>
-                            <td class=""
-                                @click="relevantQueries.no_38_b = 'yes'">
+                            <td
+                                class=""
+                                @click="relevantQueries.no_38_b = 'yes'"
+                            >
                                 <div class="form-check">
                                     <input
                                         type="radio"
@@ -473,8 +478,10 @@
                                     >
                                 </div>
                             </td>
-                            <td class=""
-                                @click="relevantQueries.no_38_b = 'no'">
+                            <td
+                                class=""
+                                @click="relevantQueries.no_38_b = 'no'"
+                            >
                                 <div class="form-check">
                                     <input
                                         type="radio"
@@ -515,8 +522,7 @@
                                 or permanent resident of another country?
                             </td>
 
-                            <td class=""
-                                @click="relevantQueries.no_39 = 'yes'">
+                            <td class="" @click="relevantQueries.no_39 = 'yes'">
                                 <div class="form-check">
                                     <input
                                         type="radio"
@@ -532,8 +538,7 @@
                                     >
                                 </div>
                             </td>
-                            <td class=""
-                                @click="relevantQueries.no_39 = 'no'">
+                            <td class="" @click="relevantQueries.no_39 = 'no'">
                                 <div class="form-check">
                                     <input
                                         type="radio"
@@ -587,8 +592,10 @@
                                     group?</span
                                 >
                             </td>
-                            <td class=""
-                                @click="relevantQueries.no_40_a = 'yes'">
+                            <td
+                                class=""
+                                @click="relevantQueries.no_40_a = 'yes'"
+                            >
                                 <div class="form-check">
                                     <input
                                         type="radio"
@@ -604,8 +611,10 @@
                                     >
                                 </div>
                             </td>
-                            <td class=""
-                                @click="relevantQueries.no_40_a = 'no'">
+                            <td
+                                class=""
+                                @click="relevantQueries.no_40_a = 'no'"
+                            >
                                 <div class="form-check">
                                     <input
                                         type="radio"
@@ -647,8 +656,10 @@
                                     >b. Are you a person with disability?</span
                                 >
                             </td>
-                            <td class=""
-                                @click="relevantQueries.no_40_b = 'yes'">
+                            <td
+                                class=""
+                                @click="relevantQueries.no_40_b = 'yes'"
+                            >
                                 <div class="form-check">
                                     <input
                                         type="radio"
@@ -664,8 +675,10 @@
                                     >
                                 </div>
                             </td>
-                            <td class=""
-                                @click="relevantQueries.no_40_b = 'no'">
+                            <td
+                                class=""
+                                @click="relevantQueries.no_40_b = 'no'"
+                            >
                                 <div class="form-check ">
                                     <input
                                         type="radio"
@@ -708,8 +721,10 @@
                                     >c. Are you a solo parent?</span
                                 >
                             </td>
-                            <td class=""
-                                @click="relevantQueries.no_40_c = 'yes'">
+                            <td
+                                class=""
+                                @click="relevantQueries.no_40_c = 'yes'"
+                            >
                                 <div class="form-check">
                                     <input
                                         type="radio"
@@ -725,8 +740,10 @@
                                     >
                                 </div>
                             </td>
-                            <td class=""
-                                @click="relevantQueries.no_40_c = 'no'">
+                            <td
+                                class=""
+                                @click="relevantQueries.no_40_c = 'no'"
+                            >
                                 <div class="form-check">
                                     <input
                                         type="radio"
@@ -814,7 +831,15 @@ export default {
     },
     methods: {
         submit() {
-            console.log(this.relevantQueries);
+            window.axios
+                .post(
+                    "/employee/personal/relevant/queries",
+                    this.relevantQueries
+                )
+                .then(response => {
+                    console.log(response.data);
+                })
+                .catch(err => {});
         },
         cellClick(element) {}
     }

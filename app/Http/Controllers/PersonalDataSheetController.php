@@ -52,6 +52,7 @@ class PersonalDataSheetController extends Controller
 
     public function storeCivilService(Request $request)
     {
+        dd($request->all());
         return $this->employeeRepository->addCivilService($request->all());
     }
 

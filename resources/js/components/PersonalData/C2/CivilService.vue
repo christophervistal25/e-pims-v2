@@ -7,7 +7,7 @@
                 </h5>
             </div>
 
-            <div class="collapse show">
+            <div class="collapse" :class="!isComplete ? 'show' : ''">
                 <div class="card-body">
                     <table class="table table-bordered">
                         <tr class="text-center" style="background: #EAEAEA;">
@@ -91,28 +91,30 @@
                                     <button
                                         v-show="index != 0"
                                         @click="removeField(index)"
-                                        class="btn btn-sm btn-danger font-weight-bold mt-1"
+                                        class="btn btn-sm btn-danger font-weight-bold mt-1 rounded-circle"
                                     >
                                         X
+                                    </button>
+                                </td>
+                                <td>
+                                    <button
+                                        v-if="index == (civilService.length - 1)"
+                                        class="btn btn-primary rounded-circle font-weight-bold"
+                                        @click="addNewFieldCivilServiceRow"
+                                    >
+                                        <i class="fa fa-plus"></i>
                                     </button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                     <div class="float-right mb-3">
-                        <button
-                            class="btn btn-primary"
-                            @click="addNewFieldCivilServiceRow"
-                        >
-                            <i class="fa fa-plus"></i>
-                            Add new field
-                        </button>
+                        
 
                         <button
-                            class="btn btn-success"
+                            class="btn btn-primary font-weight-bold"
                             @click="submitCivilService"
                         >
-                            <i class="fa fa-plus"></i>
                             NEXT
 
                             <div
@@ -133,7 +135,11 @@
 <script>
 import swal from "sweetalert";
 export default {
-    props: {},
+    props: {
+        employee_id : {
+            required : true,
+        }
+    },
     data() {
         return {
             isComplete: false,
@@ -146,7 +152,8 @@ export default {
                     rating: "",
                     careerServ: "",
                     number: "",
-                    dateOfValid: ""
+                    dateOfValid: "",
+                    employee_id : this.employee_id,
                 }
             ]
         };
@@ -160,7 +167,8 @@ export default {
                 rating: "",
                 careerServ: "",
                 number: "",
-                dateOfValid: ""
+                dateOfValid: "",
+                employee_id : this.employee_id,
             });
         },
         submitCivilService() {
@@ -170,6 +178,7 @@ export default {
                 .then(response => {
                     this.isLoading = false;
                     this.isComplete = true;
+                    this.$emit('display-work-experience');
                     swal({
                         title: "Good job!",
                         text: "Min sulod na ang data!",
@@ -186,5 +195,3 @@ export default {
     }
 };
 </script>
-
-<style></style>

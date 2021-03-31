@@ -4,9 +4,9 @@
             <div class="card-header">
                 <h5 class="mb-0 p-2">
                     PERSONAL INFORMATION
-                    <span
-                        v-show="isComplete"
-                        :class="isComplete ? 'text-success' : 'text-danger'"
+                    <span 
+                    v-show="isComplete" 
+                    :class="isComplete ? 'text-success' : 'text-danger'"
                     >
                         - VERIFIED</span
                     >

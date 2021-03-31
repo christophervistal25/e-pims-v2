@@ -24,27 +24,38 @@
             v-if="selectedTab.name === 'C1'"
         ></family-background>
 
-        <educational-background
+        <educational-background 
             :educational_background="isEducationalBackground"
             :employee_id="employee_id"
             v-if="selectedTab.name === 'C1'"
+            @next_tab="openNextTab"
         ></educational-background>
 
         <!-- C2 -->
-        <civil-service v-if="selectedTab.name === 'C2'"></civil-service>
-        <work-experience v-if="selectedTab.name === 'C2'"></work-experience>
+        <civil-service 
+            @display-work-experience="isWorkExperienceShow = true"
+            :employee_id="employee_id"
+            v-if="selectedTab.name === 'C2'"></civil-service>
+        <work-experience 
+            :work_experience="isWorkExperienceShow"
+            :employee_id="employee_id"
+            v-if="selectedTab.name === 'C2'"></work-experience>
         <!-- END OF C2 -->
 
         <!-- C3 -->
-        <voluntary v-if="false"></voluntary>
-        <learning-and-development v-if="false"></learning-and-development>
-        <other-information v-if="false"></other-information>
+        <voluntary v-if="selectedTab.name === 'C3'"></voluntary>
+        <learning-and-development
+            v-if="selectedTab.name === 'C3'"
+        ></learning-and-development>
+        <other-information v-if="selectedTab.name === 'C3'"></other-information>
         <!-- END OF C3 -->
 
         <!-- C4 -->
-        <relevant-queries v-if="true"></relevant-queries>
-        <references v-if="true"></references>
-        <goverment-issued-id v-if="true"></goverment-issued-id>
+        <relevant-queries v-if="selectedTab.name === 'C4'"></relevant-queries>
+        <references v-if="selectedTab.name === 'C4'"></references>
+        <goverment-issued-id
+            v-if="selectedTab.name === 'C4'"
+        ></goverment-issued-id>
         <!-- END OF C4 -->
     </div>
 </template>
@@ -84,7 +95,7 @@ export default {
             tabs: [
                 {
                     name: "C1",
-                    status: false,
+                    status: true,
                     no_of_items: 3
                 },
                 {
@@ -99,13 +110,14 @@ export default {
                 },
                 {
                     name: "C4",
-                    status: true,
+                    status: false,
                     no_of_items: 3
                 }
             ],
             selectedTab: {},
             isFamilyBackgroundShow: false,
             isEducationalBackground: false,
+            isWorkExperienceShow: false,
             employee_id: null
         };
     },
@@ -121,12 +133,25 @@ export default {
         },
         dispalyEducationalBackground() {
             this.isEducationalBackground = true;
+        },
+        openNextTab() {
+            // Get the current opened tab.
+            let currentActiveTab = this.tabs.filter((tab) => tab.status);
+            // Get the key of current tab
+            let [currentTabKey] = Object.keys(currentActiveTab);
+            
+            // Set the display of current tab to false;
+            this.tabs[currentTabKey].status = false;
+            // Change the status of next tab.
+            let nextTab = this.tabs[++currentTabKey];
+            nextTab.status = true;
+            // Show next tab
+            this.selectedTab = nextTab;
         }
     },
     created() {
+        // set the default tab display to C1
         this.selectedTab = this.tabs[0];
     }
 };
 </script>
-
-<style></style>

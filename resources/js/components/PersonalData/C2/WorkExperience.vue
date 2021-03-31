@@ -1,12 +1,15 @@
 <template>
-    <divA class="card">
+    <div class="card">
         <div class="card-header">
             <h5 class="mb-0 p-2">
                 V. WORK EXPERIENCE
             </h5>
         </div>
 
-        <div class="collapse show">
+        <div
+            class="collapse"
+            :class="work_experience && !isComplete ? 'show' : ''"
+            >
             <div class="card-body">
                 <table class="table table-bordered">
                     <tr class="text-center" style="background: #EAEAEA;">
@@ -151,11 +154,16 @@
                 </div>
             </div>
         </div>
-    </divA>
+    </div>
 </template>
 
 <script>
 export default {
+    props : {
+        work_experience : {
+            required : true,
+        }
+    },
     data() {
         return {
             isComplete: false,
