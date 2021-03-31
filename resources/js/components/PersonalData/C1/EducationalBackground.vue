@@ -535,6 +535,8 @@ export default {
                         text: "Min sulod na ang data!",
                         icon: "success"
                     });
+                    // When it's done call event listener 
+                    this.$emit('next_tab');
                 })
                 .catch(err => {});
         }

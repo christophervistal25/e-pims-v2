@@ -15,7 +15,7 @@
             <div
                 id="familyBackground"
                 class="collapse"
-                :class="family_show && !isComplete ? 'show' : 'show'"
+                :class="family_show && !isComplete ? 'show' : ''"
                 aria-labelledby="headingOne"
                 data-parent="#accordion"
             >

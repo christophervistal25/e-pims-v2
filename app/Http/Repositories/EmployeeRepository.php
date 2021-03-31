@@ -14,6 +14,7 @@ use App\EmployeeSpouseChildren;
 
 class EmployeeRepository
 {
+    public const FIRST_INDEX = 0;
     /**
      * For development purpose randomly generate employee_id
      */
@@ -159,8 +160,9 @@ class EmployeeRepository
 
     public function addCivilService(array $civilRecords = []) :array
     {
-
-        $employee = Employee::find('988957');
+        // Get the employee id of each record.
+        $employeeId = $civilRecords[self::FIRST_INDEX]['employee_id'];
+        $employee = Employee::find($employeeId);
         foreach($civilRecords as $record) {
             if(!is_null($record['rating'])) {
                 $records[] = EmployeeCivilService::firstOrNew(
@@ -176,7 +178,7 @@ class EmployeeRepository
                         'license_number'       => $record['number'],
                         'date_of_validitiy'    => $record['dateOfValid'],
                     ]
-                  );
+                );
             }
         }
 
@@ -267,7 +269,7 @@ class EmployeeRepository
             ]);
         }
 
-       return $employee->other_information()->saveMany($otherInformations);
+        return $employee->other_information()->saveMany($otherInformations);
     }
 
     public function addRelevantQueries(array $queries = [])
