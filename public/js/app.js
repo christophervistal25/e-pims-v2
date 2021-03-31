@@ -2664,7 +2664,9 @@ __webpack_require__.r(__webpack_exports__);
           title: "Good job!",
           text: "Min sulod na ang data!",
           icon: "success"
-        });
+        }); // When it's done call event listener 
+
+        _this.$emit('next_tab');
       })["catch"](function (err) {});
     }
   }
@@ -3865,9 +3867,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: {},
+  props: {
+    employee_id: {
+      required: true
+    }
+  },
   data: function data() {
     var _ref;
 
@@ -3880,7 +3888,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         dateOfExam: "",
         rating: "",
         careerServ: ""
-      }, _defineProperty(_ref, "number", ""), _defineProperty(_ref, "dateOfValid", ""), _ref)]
+      }, _defineProperty(_ref, "number", ""), _defineProperty(_ref, "dateOfValid", ""), _defineProperty(_ref, "employee_id", this.employee_id), _ref)]
     };
   },
   methods: {
@@ -3893,7 +3901,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         dateOfExam: "",
         rating: "",
         careerServ: ""
-      }, _defineProperty(_this$civilService$pu, "number", ""), _defineProperty(_this$civilService$pu, "dateOfValid", ""), _this$civilService$pu));
+      }, _defineProperty(_this$civilService$pu, "number", ""), _defineProperty(_this$civilService$pu, "dateOfValid", ""), _defineProperty(_this$civilService$pu, "employee_id", this.employee_id), _this$civilService$pu));
     },
     submitCivilService: function submitCivilService() {
       var _this = this;
@@ -3902,6 +3910,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       window.axios.post("/employee/personal/civil/service", this.civilService).then(function (response) {
         _this.isLoading = false;
         _this.isComplete = true;
+
+        _this.$emit('display-work-experience');
+
         sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
           title: "Good job!",
           text: "Min sulod na ang data!",
@@ -4084,7 +4095,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    work_experience: {
+      required: true
+    }
+  },
   data: function data() {
     return {
       isComplete: false,
@@ -5779,6 +5798,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _C4_RelevantQueries_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./C4/RelevantQueries.vue */ "./resources/js/components/PersonalData/C4/RelevantQueries.vue");
 /* harmony import */ var _C4_Reference_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./C4/Reference.vue */ "./resources/js/components/PersonalData/C4/Reference.vue");
 /* harmony import */ var _C4_GovernmentIssuedID_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./C4/GovernmentIssuedID.vue */ "./resources/js/components/PersonalData/C4/GovernmentIssuedID.vue");
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5881,6 +5919,7 @@ __webpack_require__.r(__webpack_exports__);
       selectedTab: {},
       isFamilyBackgroundShow: false,
       isEducationalBackground: false,
+      isWorkExperienceShow: false,
       employee_id: null
     };
   },
@@ -5898,9 +5937,28 @@ __webpack_require__.r(__webpack_exports__);
     },
     dispalyEducationalBackground: function dispalyEducationalBackground() {
       this.isEducationalBackground = true;
+    },
+    openNextTab: function openNextTab() {
+      // Get the current opened tab.
+      var currentActiveTab = this.tabs.filter(function (tab) {
+        return tab.status;
+      }); // Get the key of current tab
+
+      var _Object$keys = Object.keys(currentActiveTab),
+          _Object$keys2 = _slicedToArray(_Object$keys, 1),
+          currentTabKey = _Object$keys2[0]; // Set the display of current tab to false;
+
+
+      this.tabs[currentTabKey].status = false; // Change the status of next tab.
+
+      var nextTab = this.tabs[++currentTabKey];
+      nextTab.status = true; // Show next tab
+
+      this.selectedTab = nextTab;
     }
   },
   created: function created() {
+    // set the default tab display to C1
     this.selectedTab = this.tabs[0];
   }
 });
@@ -25824,7 +25882,7 @@ var render = function() {
         "div",
         {
           staticClass: "collapse",
-          class: _vm.family_show && !_vm.isComplete ? "show" : "show",
+          class: _vm.family_show && !_vm.isComplete ? "show" : "",
           attrs: {
             id: "familyBackground",
             "aria-labelledby": "headingOne",
@@ -28264,245 +28322,248 @@ var render = function() {
     _c("div", { staticClass: "card" }, [
       _vm._m(0),
       _vm._v(" "),
-      _c("div", { staticClass: "collapse show" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("table", { staticClass: "table table-bordered" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _vm._m(2),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.civilService, function(civil, index) {
-                return _c("tr", { key: index }, [
-                  _c("th", { attrs: { scope: "row" } }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: civil.careerServ,
-                          expression: "civil.careerServ"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "text", placeholder: "Input here..." },
-                      domProps: { value: civil.careerServ },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(civil, "careerServ", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: civil.rating,
-                          expression: "civil.rating"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "number", placeholder: "e.g. 91.2" },
-                      domProps: { value: civil.rating },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(civil, "rating", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: civil.dateOfExam,
-                          expression: "civil.dateOfExam"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "date", placeholder: "Input" },
-                      domProps: { value: civil.dateOfExam },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(civil, "dateOfExam", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: civil.placeOfExam,
-                          expression: "civil.placeOfExam"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "text", placeholder: "e.g Tandag" },
-                      domProps: { value: civil.placeOfExam },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(civil, "placeOfExam", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: civil.number,
-                          expression: "civil.number"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "text", placeholder: "e.g. 2015" },
-                      domProps: { value: civil.number },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(civil, "number", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: civil.dateOfValid,
-                          expression: "civil.dateOfValid"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "date", placeholder: "e.g. 2016" },
-                      domProps: { value: civil.dateOfValid },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(civil, "dateOfValid", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "jumbotron" }, [
-                    _c(
-                      "button",
-                      {
+      _c(
+        "div",
+        { staticClass: "collapse", class: !_vm.isComplete ? "show" : "" },
+        [
+          _c("div", { staticClass: "card-body" }, [
+            _c("table", { staticClass: "table table-bordered" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _vm._m(2),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.civilService, function(civil, index) {
+                  return _c("tr", { key: index }, [
+                    _c("th", { attrs: { scope: "row" } }, [
+                      _c("input", {
                         directives: [
                           {
-                            name: "show",
-                            rawName: "v-show",
-                            value: index != 0,
-                            expression: "index != 0"
+                            name: "model",
+                            rawName: "v-model",
+                            value: civil.careerServ,
+                            expression: "civil.careerServ"
                           }
                         ],
-                        staticClass:
-                          "btn btn-sm btn-danger font-weight-bold mt-1",
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "text", placeholder: "Input here..." },
+                        domProps: { value: civil.careerServ },
                         on: {
-                          click: function($event) {
-                            return _vm.removeField(index)
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(civil, "careerServ", $event.target.value)
                           }
                         }
-                      },
-                      [
-                        _vm._v(
-                          "\n                                    X\n                                "
-                        )
-                      ]
-                    )
-                  ])
-                ])
-              }),
-              0
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "float-right mb-3" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                on: { click: _vm.addNewFieldCivilServiceRow }
-              },
-              [
-                _c("i", { staticClass: "fa fa-plus" }),
-                _vm._v(
-                  "\n                        Add new field\n                    "
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-success",
-                on: { click: _vm.submitCivilService }
-              },
-              [
-                _c("i", { staticClass: "fa fa-plus" }),
-                _vm._v(
-                  "\n                        NEXT\n\n                        "
-                ),
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.isLoading,
-                        expression: "isLoading"
-                      }
-                    ],
-                    staticClass: "spinner-border spinner-border-sm mb-1",
-                    attrs: { role: "status" }
-                  },
-                  [
-                    _c("span", { staticClass: "sr-only" }, [
-                      _vm._v("Loading...")
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: civil.rating,
+                            expression: "civil.rating"
+                          }
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "number", placeholder: "e.g. 91.2" },
+                        domProps: { value: civil.rating },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(civil, "rating", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: civil.dateOfExam,
+                            expression: "civil.dateOfExam"
+                          }
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "date", placeholder: "Input" },
+                        domProps: { value: civil.dateOfExam },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(civil, "dateOfExam", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: civil.placeOfExam,
+                            expression: "civil.placeOfExam"
+                          }
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "text", placeholder: "e.g Tandag" },
+                        domProps: { value: civil.placeOfExam },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(civil, "placeOfExam", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: civil.number,
+                            expression: "civil.number"
+                          }
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "text", placeholder: "e.g. 2015" },
+                        domProps: { value: civil.number },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(civil, "number", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: civil.dateOfValid,
+                            expression: "civil.dateOfValid"
+                          }
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "date", placeholder: "e.g. 2016" },
+                        domProps: { value: civil.dateOfValid },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(civil, "dateOfValid", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "jumbotron" }, [
+                      _c(
+                        "button",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: index != 0,
+                              expression: "index != 0"
+                            }
+                          ],
+                          staticClass:
+                            "btn btn-sm btn-danger font-weight-bold mt-1 rounded-circle",
+                          on: {
+                            click: function($event) {
+                              return _vm.removeField(index)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    X\n                                "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      index == _vm.civilService.length - 1
+                        ? _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-primary rounded-circle font-weight-bold",
+                              on: { click: _vm.addNewFieldCivilServiceRow }
+                            },
+                            [_c("i", { staticClass: "fa fa-plus" })]
+                          )
+                        : _vm._e()
                     ])
-                  ]
-                )
-              ]
-            )
+                  ])
+                }),
+                0
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "float-right mb-3" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary font-weight-bold",
+                  on: { click: _vm.submitCivilService }
+                },
+                [
+                  _vm._v(
+                    "\n                        NEXT\n\n                        "
+                  ),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.isLoading,
+                          expression: "isLoading"
+                        }
+                      ],
+                      staticClass: "spinner-border spinner-border-sm mb-1",
+                      attrs: { role: "status" }
+                    },
+                    [
+                      _c("span", { staticClass: "sr-only" }, [
+                        _vm._v("Loading...")
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ])
           ])
-        ])
-      ])
+        ]
+      )
     ])
   ])
 }
@@ -28525,31 +28586,50 @@ var staticRenderFns = [
       "tr",
       { staticClass: "text-center", staticStyle: { background: "#EAEAEA" } },
       [
-        _c("td", { staticClass: "align-middle", attrs: { rowspan: "2" } }, [
-          _vm._v(
-            "\n                            27. CAREER SERVICE/ RA 1080 (BOARD/ BAR) UNDER\n                            SPECIAL LAWS/ CES/ CSEE BARANGAY ELIGIBILITY /\n                            DRIVER'S LICENSE\n                        "
-          )
-        ]),
+        _c(
+          "td",
+          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
+          [
+            _vm._v(
+              "\n                            27. CAREER SERVICE/ RA 1080 (BOARD/ BAR) UNDER\n                            SPECIAL LAWS/ CES/ CSEE BARANGAY ELIGIBILITY /\n                            DRIVER'S LICENSE\n                        "
+            )
+          ]
+        ),
         _vm._v(" "),
-        _c("td", { staticClass: "align-middle", attrs: { rowspan: "2" } }, [
-          _vm._v("RATING")
-        ]),
+        _c(
+          "td",
+          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
+          [_vm._v("RATING")]
+        ),
         _vm._v(" "),
-        _c("td", { staticClass: "align-middle", attrs: { rowspan: "2" } }, [
-          _vm._v(
-            "\n                            DATE OF EXAMINATION / CONFERMENT\n                        "
-          )
-        ]),
+        _c(
+          "td",
+          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
+          [
+            _vm._v(
+              "\n                            DATE OF EXAMINATION / CONFERMENT\n                        "
+            )
+          ]
+        ),
         _vm._v(" "),
-        _c("td", { staticClass: "align-middle", attrs: { rowspan: "2" } }, [
-          _vm._v(
-            "\n                            PLACE OF EXAMINATION / CONFERMENT\n                        "
-          )
-        ]),
+        _c(
+          "td",
+          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
+          [
+            _vm._v(
+              "\n                            PLACE OF EXAMINATION / CONFERMENT\n                        "
+            )
+          ]
+        ),
         _vm._v(" "),
-        _c("td", { attrs: { colspan: "2", scope: "colgroup" } }, [
-          _vm._v("LICENSE")
-        ]),
+        _c(
+          "td",
+          {
+            staticClass: "text-sm",
+            attrs: { colspan: "2", scope: "colgroup" }
+          },
+          [_vm._v("LICENSE")]
+        ),
         _vm._v(" "),
         _c("td", { staticClass: "pl-4 pr-4", attrs: { rowspan: "2" } }, [
           _vm._v(" ")
@@ -28562,15 +28642,21 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", { staticStyle: { background: "#EAEAEA" } }, [
-      _c("td", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v("NUMBER")
-      ]),
+      _c(
+        "td",
+        { staticClass: "text-center text-sm", attrs: { scope: "col" } },
+        [_vm._v("NUMBER")]
+      ),
       _vm._v(" "),
-      _c("td", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v(
-          "\n                            Date of Validity\n                        "
-        )
-      ])
+      _c(
+        "td",
+        { staticClass: "text-center text-sm", attrs: { scope: "col" } },
+        [
+          _vm._v(
+            "\n                            Date of Validity\n                        "
+          )
+        ]
+      )
     ])
   }
 ]
@@ -28595,396 +28681,438 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("divA", { staticClass: "card" }, [
-    _c("div", { staticClass: "card-header" }, [
+  return _c("div", { staticClass: "card" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "collapse",
+        class: _vm.work_experience && !_vm.isComplete ? "show" : ""
+      },
+      [
+        _c("div", { staticClass: "card-body" }, [
+          _c("table", { staticClass: "table table-bordered" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _vm._m(2),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.workExperience, function(workExperience, index) {
+                return _c("tr", { key: index }, [
+                  _c("th", { attrs: { scope: "row" } }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: workExperience.from,
+                          expression: "workExperience.from"
+                        }
+                      ],
+                      staticClass: "form-control rounded-0 border-0",
+                      attrs: { type: "date", placeholder: "FROM" },
+                      domProps: { value: workExperience.from },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(workExperience, "from", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: workExperience.to,
+                          expression: "workExperience.to"
+                        }
+                      ],
+                      staticClass: "form-control rounded-0 border-0",
+                      attrs: { type: "date", placeholder: "TO" },
+                      domProps: { value: workExperience.to },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(workExperience, "to", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: workExperience.position,
+                          expression: "workExperience.position"
+                        }
+                      ],
+                      staticClass: "form-control rounded-0 border-0",
+                      attrs: { type: "text", placeholder: "Input" },
+                      domProps: { value: workExperience.position },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            workExperience,
+                            "position",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: workExperience.dept,
+                          expression: "workExperience.dept"
+                        }
+                      ],
+                      staticClass: "form-control rounded-0 border-0",
+                      attrs: { type: "text", placeholder: "e.g Tandag" },
+                      domProps: { value: workExperience.dept },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(workExperience, "dept", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: workExperience.monSalary,
+                          expression: "workExperience.monSalary"
+                        }
+                      ],
+                      staticClass: "form-control rounded-0 border-0",
+                      attrs: { type: "number", placeholder: "" },
+                      domProps: { value: workExperience.monSalary },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            workExperience,
+                            "monSalary",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: workExperience.payGrade,
+                          expression: "workExperience.payGrade"
+                        }
+                      ],
+                      staticClass: "form-control rounded-0 border-0",
+                      attrs: { type: "number", placeholder: "" },
+                      domProps: { value: workExperience.payGrade },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            workExperience,
+                            "payGrade",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: workExperience.statOfApp,
+                          expression: "workExperience.statOfApp"
+                        }
+                      ],
+                      staticClass: "form-control rounded-0 border-0",
+                      attrs: { type: "text", placeholder: "" },
+                      domProps: { value: workExperience.statOfApp },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            workExperience,
+                            "statOfApp",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: workExperience.govServ,
+                          expression: "workExperience.govServ"
+                        }
+                      ],
+                      staticClass:
+                        "form-control rounded-0 border-0 text-uppercase",
+                      attrs: { type: "text", maxlength: "1", placeholder: "" },
+                      domProps: { value: workExperience.govServ },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            workExperience,
+                            "govServ",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "jumbotron" }, [
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: index != 0,
+                            expression: "index != 0"
+                          }
+                        ],
+                        staticClass: "btn btn-sm btn-danger font-weight-bold",
+                        on: {
+                          click: function($event) {
+                            return _vm.removeField(index)
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                                X\n                            "
+                        )
+                      ]
+                    )
+                  ])
+                ])
+              }),
+              0
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "float-right mb-3" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary",
+                on: { click: _vm.btnAddNewWorkExperienceField }
+              },
+              [
+                _c("i", { staticClass: "fa fa-plus" }),
+                _vm._v("\n                    Add new field\n                ")
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-success",
+                on: { click: _vm.submitWorkExperience }
+              },
+              [
+                _c("i", { staticClass: "fa fa-plus" }),
+                _vm._v("\n                    NEXT\n\n                    "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.isLoading,
+                        expression: "isLoading"
+                      }
+                    ],
+                    staticClass: "spinner-border spinner-border-sm mb-1",
+                    attrs: { role: "status" }
+                  },
+                  [
+                    _c("span", { staticClass: "sr-only" }, [
+                      _vm._v("Loading...")
+                    ])
+                  ]
+                )
+              ]
+            )
+          ])
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
       _c("h5", { staticClass: "mb-0 p-2" }, [
         _vm._v("\n            V. WORK EXPERIENCE\n        ")
       ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "collapse show" }, [
-      _c("div", { staticClass: "card-body" }, [
-        _c("table", { staticClass: "table table-bordered" }, [
-          _c(
-            "tr",
-            {
-              staticClass: "text-center",
-              staticStyle: { background: "#EAEAEA" }
-            },
-            [
-              _c("td", { attrs: { colspan: "2", scope: "colgroup" } }, [
-                _vm._v(
-                  "\n                        28. INCLUSIVE DATES (mm/dd/yyyy)\n                    "
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "td",
-                { staticClass: "align-middle", attrs: { rowspan: "2" } },
-                [
-                  _vm._v(
-                    "\n                        POSITION TITLE (Write in full/Do not abbreviate)\n                    "
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                { staticClass: "align-middle", attrs: { rowspan: "2" } },
-                [
-                  _vm._v(
-                    "\n                        DEPARTMENT / AGENCY / OFFICE / COMPANY (Write in\n                        full/Do not abbreviate)\n                    "
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                { staticClass: "align-middle", attrs: { rowspan: "2" } },
-                [_vm._v("MONTHLY SALARY")]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                { staticClass: "align-middle", attrs: { rowspan: "2" } },
-                [
-                  _vm._v("\n                        SALARY/ JOB/ PAY GRADE "),
-                  _c("br"),
-                  _vm._v("\n                        (if applicable) "),
-                  _c("br"),
-                  _vm._v(
-                    '\n                        & STEP (Format "00-0")/ INCREMENT\n                    '
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                { staticClass: "align-middle", attrs: { rowspan: "2" } },
-                [
-                  _vm._v(
-                    "\n                        STATUS OF APPOINTMENT\n                    "
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                { staticClass: "align-middle", attrs: { rowspan: "2" } },
-                [
-                  _vm._v(
-                    "\n                        GOV'T SERVICE (Y/ N)\n                    "
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c("td", { staticClass: "pl-4 pr-4", attrs: { rowspan: "2" } }, [
-                _vm._v(" ")
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c("tr", { staticStyle: { background: "#EAEAEA" } }, [
-            _c("td", { staticClass: "text-center", attrs: { scope: "col" } }, [
-              _vm._v("FROM")
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "text-center", attrs: { scope: "col" } }, [
-              _vm._v("TO")
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.workExperience, function(workExperience, index) {
-              return _c("tr", { key: index }, [
-                _c("th", { attrs: { scope: "row" } }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: workExperience.from,
-                        expression: "workExperience.from"
-                      }
-                    ],
-                    staticClass: "form-control rounded-0 border-0",
-                    attrs: { type: "date", placeholder: "FROM" },
-                    domProps: { value: workExperience.from },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(workExperience, "from", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: workExperience.to,
-                        expression: "workExperience.to"
-                      }
-                    ],
-                    staticClass: "form-control rounded-0 border-0",
-                    attrs: { type: "date", placeholder: "TO" },
-                    domProps: { value: workExperience.to },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(workExperience, "to", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: workExperience.position,
-                        expression: "workExperience.position"
-                      }
-                    ],
-                    staticClass: "form-control rounded-0 border-0",
-                    attrs: { type: "text", placeholder: "Input" },
-                    domProps: { value: workExperience.position },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          workExperience,
-                          "position",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: workExperience.dept,
-                        expression: "workExperience.dept"
-                      }
-                    ],
-                    staticClass: "form-control rounded-0 border-0",
-                    attrs: { type: "text", placeholder: "e.g Tandag" },
-                    domProps: { value: workExperience.dept },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(workExperience, "dept", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: workExperience.monSalary,
-                        expression: "workExperience.monSalary"
-                      }
-                    ],
-                    staticClass: "form-control rounded-0 border-0",
-                    attrs: { type: "number", placeholder: "" },
-                    domProps: { value: workExperience.monSalary },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          workExperience,
-                          "monSalary",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: workExperience.payGrade,
-                        expression: "workExperience.payGrade"
-                      }
-                    ],
-                    staticClass: "form-control rounded-0 border-0",
-                    attrs: { type: "number", placeholder: "" },
-                    domProps: { value: workExperience.payGrade },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          workExperience,
-                          "payGrade",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: workExperience.statOfApp,
-                        expression: "workExperience.statOfApp"
-                      }
-                    ],
-                    staticClass: "form-control rounded-0 border-0",
-                    attrs: { type: "text", placeholder: "" },
-                    domProps: { value: workExperience.statOfApp },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          workExperience,
-                          "statOfApp",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: workExperience.govServ,
-                        expression: "workExperience.govServ"
-                      }
-                    ],
-                    staticClass:
-                      "form-control rounded-0 border-0 text-uppercase",
-                    attrs: { type: "text", maxlength: "1", placeholder: "" },
-                    domProps: { value: workExperience.govServ },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(workExperience, "govServ", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "jumbotron" }, [
-                  _c(
-                    "button",
-                    {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: index != 0,
-                          expression: "index != 0"
-                        }
-                      ],
-                      staticClass: "btn btn-sm btn-danger font-weight-bold",
-                      on: {
-                        click: function($event) {
-                          return _vm.removeField(index)
-                        }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                                X\n                            "
-                      )
-                    ]
-                  )
-                ])
-              ])
-            }),
-            0
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "float-right mb-3" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary",
-              on: { click: _vm.btnAddNewWorkExperienceField }
-            },
-            [
-              _c("i", { staticClass: "fa fa-plus" }),
-              _vm._v("\n                    Add new field\n                ")
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-success",
-              on: { click: _vm.submitWorkExperience }
-            },
-            [
-              _c("i", { staticClass: "fa fa-plus" }),
-              _vm._v("\n                    NEXT\n\n                    "),
-              _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.isLoading,
-                      expression: "isLoading"
-                    }
-                  ],
-                  staticClass: "spinner-border spinner-border-sm mb-1",
-                  attrs: { role: "status" }
-                },
-                [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
-              )
-            ]
-          )
-        ])
-      ])
     ])
-  ])
-}
-var staticRenderFns = []
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "tr",
+      { staticClass: "text-center", staticStyle: { background: "#EAEAEA" } },
+      [
+        _c(
+          "td",
+          {
+            staticClass: "text-sm",
+            attrs: { colspan: "2", scope: "colgroup" }
+          },
+          [
+            _vm._v(
+              "\n                        28. INCLUSIVE DATES (mm/dd/yyyy)\n                    "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "td",
+          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
+          [
+            _vm._v(
+              "\n                        POSITION TITLE (Write in full/Do not abbreviate)\n                    "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "td",
+          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
+          [
+            _vm._v(
+              "\n                        DEPARTMENT / AGENCY / OFFICE / COMPANY (Write in\n                        full/Do not abbreviate)\n                    "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "td",
+          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
+          [_vm._v("MONTHLY SALARY")]
+        ),
+        _vm._v(" "),
+        _c(
+          "td",
+          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
+          [
+            _vm._v("\n                        SALARY/ JOB/ PAY GRADE "),
+            _c("br"),
+            _vm._v("\n                        (if applicable) "),
+            _c("br"),
+            _vm._v(
+              '\n                        & STEP (Format "00-0")/ INCREMENT\n                    '
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "td",
+          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
+          [
+            _vm._v(
+              "\n                        STATUS OF APPOINTMENT\n                    "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "td",
+          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
+          [
+            _vm._v(
+              "\n                        GOV'T SERVICE (Y/ N)\n                    "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c("td", { staticClass: "pl-4 pr-4", attrs: { rowspan: "2" } }, [
+          _vm._v(" ")
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", { staticStyle: { background: "#EAEAEA" } }, [
+      _c(
+        "td",
+        { staticClass: "text-center text-sm", attrs: { scope: "col" } },
+        [_vm._v("FROM")]
+      ),
+      _vm._v(" "),
+      _c(
+        "td",
+        { staticClass: "text-center text-sm", attrs: { scope: "col" } },
+        [_vm._v("TO")]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -29275,12 +29403,15 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "tr",
-      { staticClass: "text-center", staticStyle: { background: "#EAEAEA" } },
+      {
+        staticClass: "text-center text-sm",
+        staticStyle: { background: "#EAEAEA" }
+      },
       [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { rowspan: "2", scope: "colgroup" }
           },
           [
@@ -29293,7 +29424,7 @@ var staticRenderFns = [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { colspan: "2", scope: "colgroup" }
           },
           [
@@ -29306,7 +29437,7 @@ var staticRenderFns = [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { rowspan: "2", scope: "colgroup" }
           },
           [
@@ -29319,7 +29450,7 @@ var staticRenderFns = [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { rowspan: "2", scope: "colgroup" }
           },
           [
@@ -29332,7 +29463,7 @@ var staticRenderFns = [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { rowspan: "2", scope: "colgroup" }
           },
           [
@@ -29353,13 +29484,17 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", { staticStyle: { background: "#EAEAEA" } }, [
-      _c("td", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v("FROM")
-      ]),
+      _c(
+        "td",
+        { staticClass: "text-center text-sm", attrs: { scope: "col" } },
+        [_vm._v("FROM")]
+      ),
       _vm._v(" "),
-      _c("td", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v("TO")
-      ])
+      _c(
+        "td",
+        { staticClass: "text-center text-sm", attrs: { scope: "col" } },
+        [_vm._v("TO")]
+      )
     ])
   }
 ]
@@ -29582,7 +29717,7 @@ var staticRenderFns = [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { rowspan: "2", scope: "colgroup" }
           },
           [
@@ -29595,7 +29730,7 @@ var staticRenderFns = [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { rowspan: "2", scope: "colgroup" }
           },
           [
@@ -29608,7 +29743,7 @@ var staticRenderFns = [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { rowspan: "2", scope: "colgroup" }
           },
           [
@@ -29882,7 +30017,7 @@ var staticRenderFns = [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { rowspan: "2", scope: "colgroup" }
           },
           [
@@ -29895,7 +30030,7 @@ var staticRenderFns = [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { colspan: "2", scope: "colgroup" }
           },
           [
@@ -29908,7 +30043,7 @@ var staticRenderFns = [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { rowspan: "2", scope: "colgroup" }
           },
           [
@@ -29921,7 +30056,7 @@ var staticRenderFns = [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { rowspan: "2", scope: "colgroup" }
           },
           [
@@ -29931,9 +30066,11 @@ var staticRenderFns = [
           ]
         ),
         _vm._v(" "),
-        _c("td", { staticClass: "align-middle", attrs: { rowspan: "2" } }, [
-          _vm._v(" ")
-        ])
+        _c(
+          "td",
+          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
+          [_vm._v(" ")]
+        )
       ]
     )
   },
@@ -29942,13 +30079,17 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", { staticStyle: { background: "#EAEAEA" } }, [
-      _c("td", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v("FROM")
-      ]),
+      _c(
+        "td",
+        { staticClass: "text-center text-sm", attrs: { scope: "col" } },
+        [_vm._v("FROM")]
+      ),
       _vm._v(" "),
-      _c("td", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v("TO")
-      ])
+      _c(
+        "td",
+        { staticClass: "text-center text-sm", attrs: { scope: "col" } },
+        [_vm._v("TO")]
+      )
     ])
   }
 ]
@@ -29994,7 +30135,7 @@ var staticRenderFns = [
               _c(
                 "tr",
                 {
-                  staticClass: "text-center",
+                  staticClass: "text-center text-sm",
                   staticStyle: { background: "#EAEAEA" }
                 },
                 [
@@ -30268,7 +30409,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tr", { staticClass: "text-center jumbotron" }, [
+    return _c("tr", { staticClass: "text-center jumbotron text-sm" }, [
       _c("td", [_vm._v("NAME")]),
       _vm._v(" "),
       _c("td", [_vm._v("ADDRESS")]),
@@ -30566,11 +30707,18 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("tr", [
-              _c("td", { staticStyle: { background: "#EAEAEA" } }, [
-                _vm._v(
-                  "\n                            35. a. Have you ever been found guilty of any\n                            administrative offense?\n                        "
-                )
-              ]),
+              _c(
+                "td",
+                {
+                  staticClass: "text-sm",
+                  staticStyle: { background: "#EAEAEA" }
+                },
+                [
+                  _vm._v(
+                    "\n                            35. a. Have you ever been found guilty of any\n                            administrative offense?\n                        "
+                  )
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "td",
@@ -30828,11 +30976,18 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("tr", [
-              _c("td", { staticStyle: { background: "#EAEAEA" } }, [
-                _vm._v(
-                  "\n                            36. Have you ever been convicted of any crime or\n                            violation of any law, decree, ordinance or\n                            regulation by any court or tribunal?\n                        "
-                )
-              ]),
+              _c(
+                "td",
+                {
+                  staticClass: "text-sm",
+                  staticStyle: { background: "#EAEAEA" }
+                },
+                [
+                  _vm._v(
+                    "\n                            36. Have you ever been convicted of any crime or\n                            violation of any law, decree, ordinance or\n                            regulation by any court or tribunal?\n                        "
+                  )
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "td",
@@ -31084,11 +31239,18 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("tr", [
-              _c("td", { staticStyle: { background: "#EAEAEA" } }, [
-                _vm._v(
-                  "\n                            38. a. Have you ever been a candidate in a\n                            national or local election held within the last\n                            year (except Barangay election)?\n                        "
-                )
-              ]),
+              _c(
+                "td",
+                {
+                  staticClass: "text-sm",
+                  staticStyle: { background: "#EAEAEA" }
+                },
+                [
+                  _vm._v(
+                    "\n                            38. a. Have you ever been a candidate in a\n                            national or local election held within the last\n                            year (except Barangay election)?\n                        "
+                  )
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "td",
@@ -31342,11 +31504,18 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("tr", [
-              _c("td", { staticStyle: { background: "#EAEAEA" } }, [
-                _vm._v(
-                  "\n                            39. Have you acquired the status of an immigrant\n                            or permanent resident of another country?\n                        "
-                )
-              ]),
+              _c(
+                "td",
+                {
+                  staticClass: "text-sm",
+                  staticStyle: { background: "#EAEAEA" }
+                },
+                [
+                  _vm._v(
+                    "\n                            39. Have you acquired the status of an immigrant\n                            or permanent resident of another country?\n                        "
+                  )
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "td",
@@ -31929,7 +32098,7 @@ var staticRenderFns = [
         attrs: { scope: "row" }
       },
       [
-        _c("span", { staticClass: "ml-4" }, [
+        _c("span", { staticClass: "ml-4 text-sm" }, [
           _vm._v(
             "b. within the fourth degree (for Local\n                                Government Unit - Career Employees)?"
           )
@@ -31945,7 +32114,7 @@ var staticRenderFns = [
       "td",
       { staticStyle: { background: "#EAEAEA" }, attrs: { scope: "row" } },
       [
-        _c("span", { staticClass: "ml-4" }, [
+        _c("span", { staticClass: "ml-4 text-sm" }, [
           _vm._v(
             "b. Have you been criminally charged before\n                                any court?"
           )
@@ -31973,7 +32142,7 @@ var staticRenderFns = [
       "td",
       { staticStyle: { background: "#EAEAEA" }, attrs: { scope: "row" } },
       [
-        _c("span", { staticClass: "ml-4" }, [
+        _c("span", { staticClass: "ml-4 text-sm" }, [
           _vm._v(
             "b. Have you resigned from the government\n                                service during the three (3)-month period\n                                before the last election to promote/actively\n                                campaign for a national or local\n                                candidate?"
           )
@@ -31988,7 +32157,10 @@ var staticRenderFns = [
     return _c("tr", [
       _c(
         "td",
-        { staticClass: " text-left", staticStyle: { background: "#EAEAEA" } },
+        {
+          staticClass: "text-left text-sm",
+          staticStyle: { background: "#EAEAEA" }
+        },
         [
           _vm._v(
             "\n                            40. Pursuant to: (a) Indigenous People's Act (RA\n                            8371); (b) Magna Carta for Disabled Persons (RA\n                            7277); and (c) Solo Parents Welfare Act of 2000\n                            (RA 8972), please answer the following items:\n                        "
@@ -32011,7 +32183,7 @@ var staticRenderFns = [
         attrs: { scope: "row" }
       },
       [
-        _c("span", { staticClass: "ml-4" }, [
+        _c("span", { staticClass: "ml-4 text-sm" }, [
           _vm._v(
             "a. Are you a member of any indigenous\n                                group?"
           )
@@ -32031,7 +32203,7 @@ var staticRenderFns = [
         attrs: { scope: "row" }
       },
       [
-        _c("span", { staticClass: "ml-4" }, [
+        _c("span", { staticClass: "ml-4 text-sm" }, [
           _vm._v("b. Are you a person with disability?")
         ])
       ]
@@ -32049,7 +32221,7 @@ var staticRenderFns = [
         attrs: { scope: "row" }
       },
       [
-        _c("span", { staticClass: "ml-4" }, [
+        _c("span", { staticClass: "ml-4 text-sm" }, [
           _vm._v("c. Are you a solo parent?")
         ])
       ]
@@ -32132,13 +32304,30 @@ var render = function() {
             attrs: {
               educational_background: _vm.isEducationalBackground,
               employee_id: _vm.employee_id
+            },
+            on: { next_tab: _vm.openNextTab }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.selectedTab.name === "C2"
+        ? _c("civil-service", {
+            attrs: { employee_id: _vm.employee_id },
+            on: {
+              "display-work-experience": function($event) {
+                _vm.isWorkExperienceShow = true
+              }
             }
           })
         : _vm._e(),
       _vm._v(" "),
-      _vm.selectedTab.name === "C2" ? _c("civil-service") : _vm._e(),
-      _vm._v(" "),
-      _vm.selectedTab.name === "C2" ? _c("work-experience") : _vm._e(),
+      _vm.selectedTab.name === "C2"
+        ? _c("work-experience", {
+            attrs: {
+              work_experience: _vm.isWorkExperienceShow,
+              employee_id: _vm.employee_id
+            }
+          })
+        : _vm._e(),
       _vm._v(" "),
       _vm.selectedTab.name === "C3" ? _c("voluntary") : _vm._e(),
       _vm._v(" "),
@@ -45559,8 +45748,8 @@ component.options.__file = "resources/js/components/Sample.vue"
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\e-pims\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\e-pims\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/paulbaron/e-pims/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/paulbaron/e-pims/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
