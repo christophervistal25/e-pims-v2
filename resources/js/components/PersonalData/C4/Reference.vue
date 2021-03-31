@@ -14,7 +14,7 @@
             <div class="collapse show">
                 <div class="card-body">
                     <table class="table table-bordered">
-                        <tr class="text-center jumbotron">
+                        <tr class="text-center jumbotron text-sm">
                             <td>NAME</td>
                             <td>ADDRESS</td>
                             <td colspan="2">TEL. NO</td>

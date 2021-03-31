@@ -19,35 +19,35 @@
             <div class="card-body">
                 <table class="table table-bordered">
                     <tr class="text-center" style="background: #EAEAEA;">
-                        <td colspan="2" scope="colgroup">
+                        <td colspan="2" scope="colgroup" class="text-sm">
                             28. INCLUSIVE DATES (mm/dd/yyyy)
                         </td>
-                        <td rowspan="2" class="align-middle">
+                        <td rowspan="2" class="align-middle text-sm">
                             POSITION TITLE (Write in full/Do not abbreviate)
                         </td>
-                        <td rowspan="2" class="align-middle">
+                        <td rowspan="2" class="align-middle text-sm">
                             DEPARTMENT / AGENCY / OFFICE / COMPANY (Write in
                             full/Do not abbreviate)
                         </td>
-                        <td rowspan="2" class="align-middle">MONTHLY SALARY</td>
-                        <td rowspan="2" class="align-middle">
+                        <td rowspan="2" class="align-middle text-sm">MONTHLY SALARY</td>
+                        <td rowspan="2" class="align-middle text-sm">
                             SALARY/ JOB/ PAY GRADE <br />
                             (if applicable) <br />
                             & STEP (Format "00-0")/ INCREMENT
                         </td>
-                        <td rowspan="2" class="align-middle">
+                        <td rowspan="2" class="align-middle text-sm">
                             STATUS OF APPOINTMENT
                         </td>
 
-                        <td rowspan="2" class="align-middle">
+                        <td rowspan="2" class="align-middle text-sm">
                             GOV'T SERVICE (Y/ N)
                         </td>
                         <td rowspan="2" class="pl-4 pr-4">&nbsp;</td>
                     </tr>
 
                     <tr style="background: #EAEAEA;">
-                        <td scope="col" class="text-center">FROM</td>
-                        <td scope="col" class="text-center">TO</td>
+                        <td scope="col" class="text-center text-sm">FROM</td>
+                        <td scope="col" class="text-center text-sm">TO</td>
                     </tr>
 
                     <tbody>

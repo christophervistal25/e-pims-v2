@@ -11,23 +11,23 @@
             <div class="card-body">
                 <table class="table table-bordered">
                     <tr class="text-center" style="background: #EAEAEA;">
-                        <td rowspan="2" class="align-middle" scope="colgroup">
+                        <td rowspan="2" class="align-middle text-sm" scope="colgroup">
                             NAME & ADDRESS OF ORGANIZATION (Write in full)
                         </td>
-                        <td colspan="2" class="align-middle" scope="colgroup">
+                        <td colspan="2" class="align-middle text-sm" scope="colgroup">
                             INCLUSIVE DATES (mm/dd/yyyy)
                         </td>
-                        <td rowspan="2" class="align-middle" scope="colgroup">
+                        <td rowspan="2" class="align-middle text-sm" scope="colgroup">
                             NUMBES OF HOURS
                         </td>
-                        <td rowspan="2" class="align-middle" scope="colgroup">
+                        <td rowspan="2" class="align-middle text-sm" scope="colgroup">
                             POSITION / NATURE OF WORK
                         </td>
-                        <td rowspan="2" class="align-middle">&nbsp;</td>
+                        <td rowspan="2" class="align-middle text-sm">&nbsp;</td>
                     </tr>
                     <tr style="background: #EAEAEA;">
-                        <td scope="col" class="text-center">FROM</td>
-                        <td scope="col" class="text-center">TO</td>
+                        <td scope="col" class="text-center text-sm">FROM</td>
+                        <td scope="col" class="text-center text-sm">TO</td>
                     </tr>
 
                     <tbody>

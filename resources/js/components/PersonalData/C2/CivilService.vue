@@ -17,24 +17,24 @@
                 <div class="card-body">
                     <table class="table table-bordered">
                         <tr class="text-center" style="background: #EAEAEA;">
-                            <td rowspan="2" class="align-middle">
+                            <td rowspan="2" class="align-middle text-sm">
                                 27. CAREER SERVICE/ RA 1080 (BOARD/ BAR) UNDER
                                 SPECIAL LAWS/ CES/ CSEE BARANGAY ELIGIBILITY /
                                 DRIVER'S LICENSE
                             </td>
-                            <td rowspan="2" class="align-middle">RATING</td>
-                            <td rowspan="2" class="align-middle">
+                            <td rowspan="2" class="align-middle text-sm">RATING</td>
+                            <td rowspan="2" class="align-middle text-sm">
                                 DATE OF EXAMINATION / CONFERMENT
                             </td>
-                            <td rowspan="2" class="align-middle">
+                            <td rowspan="2" class="align-middle text-sm">
                                 PLACE OF EXAMINATION / CONFERMENT
                             </td>
-                            <td colspan="2" scope="colgroup">LICENSE</td>
+                            <td colspan="2" scope="colgroup" class="text-sm">LICENSE</td>
                             <td rowspan="2" class="pl-4 pr-4">&nbsp;</td>
                         </tr>
                         <tr style="background: #EAEAEA;">
-                            <td scope="col" class="text-center">NUMBER</td>
-                            <td scope="col" class="text-center">
+                            <td scope="col" class="text-center text-sm">NUMBER</td>
+                            <td scope="col" class="text-center text-sm">
                                 Date of Validity
                             </td>
                         </tr>

@@ -11,10 +11,10 @@
             <div>
                 <div class="card-body">
                     <table class="table table-bordered">
-                        <tr class="text-center" style="background: #EAEAEA;">
+                        <tr class="text-center text-sm" style="background: #EAEAEA;">
                             <td
                                 rowspan="2"
-                                class="align-middle"
+                                class="align-middle text-sm"
                                 scope="colgroup"
                             >
                                 TITLE OF LEARNING AND DEVELOPMENT
@@ -22,21 +22,21 @@
                             </td>
                             <td
                                 colspan="2"
-                                class="align-middle"
+                                class="align-middle text-sm"
                                 scope="colgroup"
                             >
                                 INCLUSIVE DATES OF ATTENDANCE (mm/dd/yyyy)
                             </td>
                             <td
                                 rowspan="2"
-                                class="align-middle"
+                                class="align-middle text-sm"
                                 scope="colgroup"
                             >
                                 NUMBES OF HOURS
                             </td>
                             <td
                                 rowspan="2"
-                                class="align-middle"
+                                class="align-middle text-sm"
                                 scope="colgroup"
                             >
                                 Type of LD(Managerial/
@@ -44,7 +44,7 @@
                             </td>
                             <td
                                 rowspan="2"
-                                class="align-middle"
+                                class="align-middle text-sm"
                                 scope="colgroup"
                             >
                                 CONDUCTED/ SPONSORED (Write in full)
@@ -52,8 +52,8 @@
                             <td rowspan="2" class="align-middle">&nbsp;</td>
                         </tr>
                         <tr style="background: #EAEAEA;">
-                            <td scope="col" class="text-center">FROM</td>
-                            <td scope="col" class="text-center">TO</td>
+                            <td scope="col" class="text-center text-sm">FROM</td>
+                            <td scope="col" class="text-center text-sm">TO</td>
                         </tr>
 
                         <tbody>

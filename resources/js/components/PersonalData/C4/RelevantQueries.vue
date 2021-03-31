@@ -96,7 +96,7 @@
                                 style="background: #EAEAEA;"
                                 class="border-0"
                             >
-                                <span class="ml-4"
+                                <span class="ml-4 text-sm"
                                     >b. within the fourth degree (for Local
                                     Government Unit - Career Employees)?</span
                                 >
@@ -156,7 +156,7 @@
 
                         <!-- {{-- BEGIN OF 35 --}} -->
                         <tr>
-                            <td style="background: #EAEAEA;" class="">
+                            <td style="background: #EAEAEA;" class="text-sm">
                                 35. a. Have you ever been found guilty of any
                                 administrative offense?
                             </td>
@@ -215,7 +215,7 @@
 
                         <tr>
                             <td scope="row" style="background: #EAEAEA;">
-                                <span class="ml-4"
+                                <span class="ml-4 text-sm"
                                     >b. Have you been criminally charged before
                                     any court?</span
                                 >
@@ -275,7 +275,7 @@
 
                         <!-- {{-- BEGIN OF 36 --}} -->
                         <tr>
-                            <td style="background: #EAEAEA;" class="">
+                            <td style="background: #EAEAEA;" class="text-sm">
                                 36. Have you ever been convicted of any crime or
                                 violation of any law, decree, ordinance or
                                 regulation by any court or tribunal?
@@ -392,7 +392,7 @@
 
                         <!-- {{-- BEGIN OF 38 --}} -->
                         <tr>
-                            <td style="background: #EAEAEA;" class="">
+                            <td style="background: #EAEAEA;" class="text-sm">
                                 38. a. Have you ever been a candidate in a
                                 national or local election held within the last
                                 year (except Barangay election)?
@@ -451,7 +451,7 @@
 
                         <tr>
                             <td scope="row" style="background: #EAEAEA;">
-                                <span class="ml-4"
+                                <span class="ml-4 text-sm"
                                     >b. Have you resigned from the government
                                     service during the three (3)-month period
                                     before the last election to promote/actively
@@ -517,7 +517,7 @@
 
                         <!-- {{-- BEGIN OF 39 --}} -->
                         <tr>
-                            <td style="background: #EAEAEA;" class="">
+                            <td style="background: #EAEAEA;" class="text-sm">
                                 39. Have you acquired the status of an immigrant
                                 or permanent resident of another country?
                             </td>
@@ -572,7 +572,7 @@
 
                         <!-- {{-- BEGIN OF 40 --}} -->
                         <tr>
-                            <td style="background: #EAEAEA;" class=" text-left">
+                            <td style="background: #EAEAEA;" class="text-left text-sm">
                                 40. Pursuant to: (a) Indigenous People's Act (RA
                                 8371); (b) Magna Carta for Disabled Persons (RA
                                 7277); and (c) Solo Parents Welfare Act of 2000
@@ -587,7 +587,7 @@
                                 style="background: #EAEAEA;"
                                 class="border-0"
                             >
-                                <span class="ml-4"
+                                <span class="ml-4 text-sm"
                                     >a. Are you a member of any indigenous
                                     group?</span
                                 >
@@ -652,7 +652,7 @@
                                 style="background: #EAEAEA;"
                                 class="border-0"
                             >
-                                <span class="ml-4"
+                                <span class="ml-4 text-sm"
                                     >b. Are you a person with disability?</span
                                 >
                             </td>
@@ -717,7 +717,7 @@
                                 style="background: #EAEAEA;"
                                 class="border-0"
                             >
-                                <span class="ml-4"
+                                <span class="ml-4 text-sm"
                                     >c. Are you a solo parent?</span
                                 >
                             </td>

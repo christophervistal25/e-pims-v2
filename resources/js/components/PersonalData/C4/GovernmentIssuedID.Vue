@@ -10,7 +10,7 @@
             <div class="collapse show">
                 <div class="card-body">
                     <table class="table table-bordered">
-                        <tr class="text-center" style="background: #EAEAEA;">
+                        <tr class="text-center text-sm" style="background: #EAEAEA;">
                             <td>Government Issued ID</td>
                             <td>ID/License/Passport No.</td>
                             <td>Date/Place of Issuance</td>
