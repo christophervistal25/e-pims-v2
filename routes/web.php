@@ -37,7 +37,7 @@ Route::group(['prefix' => 'employee'], function () {
     Route::resource('data', 'PersonalDataSheetController');
     Route::post('/personal/information/store', 'PersonalDataSheetController@storePersonInformation');
     Route::post('/personal/family/background/store', 'PersonalDataSheetController@storePersonFamilyBackground');
-    Route::post('/personal/educational/background/store', 'PersonalDataSheestController@storeEducationalBackground');
+    Route::post('/personal/educational/background/store', 'PersonalDataSheetController@storeEducationalBackground');
     Route::post('/personal/civil/service', 'PersonalDataSheetController@storeCivilService');
     Route::post('/personal/work/experience', 'PersonalDataSheetController@storeWorkExperience');
     Route::post('/personal/voluntary/', 'PersonalDataSheetController@storeVoluntary');
