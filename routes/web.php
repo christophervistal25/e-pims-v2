@@ -26,7 +26,6 @@ Route::resource('/salary-grade', 'SalaryGradeController');
 
 //plantilla
 Route::get('/plantilla-list', 'Plantillacontroller@list');
-Route::post('/plantilla', 'PlantillaController@addPosition');
 Route::Resource('/plantilla', 'PlantillaController');
 //step Increment
 Route::Resource('/step-increment', 'StepIncrementController');
