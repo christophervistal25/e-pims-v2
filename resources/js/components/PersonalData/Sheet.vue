@@ -24,7 +24,7 @@
             v-if="selectedTab.name === 'C1'"
         ></family-background>
 
-        <educational-background 
+        <educational-background
             :educational_background="isEducationalBackground"
             :employee_id="employee_id"
             v-if="selectedTab.name === 'C1'"
@@ -32,14 +32,18 @@
         ></educational-background>
 
         <!-- C2 -->
-        <civil-service 
-            @display-work-experience="isWorkExperienceShow = true"
+        <civil-service
+            @display-work-experience="workExperienceSection"
             :employee_id="employee_id"
-            v-if="selectedTab.name === 'C2'"></civil-service>
-        <work-experience 
+            v-if="selectedTab.name === 'C2'"
+        ></civil-service>
+
+        <work-experience
             :work_experience="isWorkExperienceShow"
             :employee_id="employee_id"
-            v-if="selectedTab.name === 'C2'"></work-experience>
+            v-if="selectedTab.name === 'C2'"
+            @next_tab="openNextTab"
+        ></work-experience>
         <!-- END OF C2 -->
 
         <!-- C3 -->
@@ -122,6 +126,10 @@ export default {
         };
     },
     methods: {
+        workExperienceSection(employee_id) {
+            this.employee_id = employee_id;
+            this.isWorkExperienceShow = true;
+        },
         openTab(tab) {
             this.tabs.map(tab => (tab.status = false));
             this.selectedTab = tab;
@@ -136,17 +144,15 @@ export default {
         },
         openNextTab() {
             // Get the current opened tab.
-            let currentActiveTab = this.tabs.filter((tab) => tab.status);
-            // Get the key of current tab
-            let [currentTabKey] = Object.keys(currentActiveTab);
-            
-            // Set the display of current tab to false;
-            this.tabs[currentTabKey].status = false;
-            // Change the status of next tab.
-            let nextTab = this.tabs[++currentTabKey];
-            nextTab.status = true;
-            // Show next tab
-            this.selectedTab = nextTab;
+            let currentTabName = this.selectedTab.name;
+            this.tabs.map((tab, index) => {
+                if (currentTabName == tab.name) {
+                    this.selectedTab = this.tabs[index + 1];
+                    this.selectedTab.status = true;
+                } else {
+                    tab.status = false;
+                }
+            });
         }
     },
     created() {

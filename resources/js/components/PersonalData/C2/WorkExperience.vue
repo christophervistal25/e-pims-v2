@@ -3,13 +3,19 @@
         <div class="card-header">
             <h5 class="mb-0 p-2">
                 V. WORK EXPERIENCE
+                <span
+                    v-show="isComplete"
+                    :class="isComplete ? 'text-success' : 'text-danger'"
+                >
+                    - VERIFIED</span
+                >
             </h5>
         </div>
 
         <div
             class="collapse"
             :class="work_experience && !isComplete ? 'show' : ''"
-            >
+        >
             <div class="card-body">
                 <table class="table table-bordered">
                     <tr class="text-center" style="background: #EAEAEA;">
@@ -118,10 +124,19 @@
                             <td class="jumbotron">
                                 <button
                                     v-show="index != 0"
-                                    class="btn btn-sm btn-danger font-weight-bold"
+                                    class="btn btn-sm btn-danger font-weight-bold rounded-circle"
                                     @click="removeField(index)"
                                 >
                                     X
+                                </button>
+                            </td>
+                            <td>
+                                <button
+                                    v-if="index == noOfFields - 1"
+                                    class="btn btn-primary font-weight-bold rounded-circle"
+                                    @click="btnAddNewWorkExperienceField"
+                                >
+                                    <i class="fa fa-plus"></i>
                                 </button>
                             </td>
                         </tr>
@@ -129,18 +144,9 @@
                 </table>
                 <div class="float-right mb-3">
                     <button
-                        class="btn btn-primary"
-                        @click="btnAddNewWorkExperienceField"
-                    >
-                        <i class="fa fa-plus"></i>
-                        Add new field
-                    </button>
-
-                    <button
-                        class="btn btn-success"
+                        class="btn btn-primary font-weight-bold"
                         @click="submitWorkExperience"
                     >
-                        <i class="fa fa-plus"></i>
                         NEXT
 
                         <div
@@ -159,15 +165,19 @@
 
 <script>
 export default {
-    props : {
-        work_experience : {
-            required : true,
+    props: {
+        work_experience: {
+            required: true
+        },
+        employee_id: {
+            required: true
         }
     },
     data() {
         return {
             isComplete: false,
             isLoading: false,
+            noOfFields: 0,
             workExperience: [
                 {
                     from: "",
@@ -177,10 +187,16 @@ export default {
                     monSalary: "",
                     payGrade: "",
                     statOfApp: "",
-                    govServ: "N"
+                    govServ: "N",
+                    employee_id: this.employee_id
                 }
             ]
         };
+    },
+    watch: {
+        workExperience(from, to) {
+            this.noOfFields = to.length;
+        }
     },
     methods: {
         btnAddNewWorkExperienceField() {
@@ -192,7 +208,8 @@ export default {
                 monSalary: "",
                 payGrade: "",
                 statOfApp: "",
-                govServ: "N"
+                govServ: "N",
+                employee_id: this.employee_id
             });
         },
         submitWorkExperience() {
@@ -202,6 +219,9 @@ export default {
                 .then(response => {
                     this.isLoading = false;
                     this.isComplete = true;
+
+                    this.$emit("next_tab");
+
                     swal({
                         title: "Good job!",
                         text: "Min sulod na ang data!",
@@ -215,6 +235,9 @@ export default {
                 this.workExperience.splice(index, 1);
             }
         }
+    },
+    created() {
+        this.noOfFields = this.workExperience.length;
     }
 };
 </script>

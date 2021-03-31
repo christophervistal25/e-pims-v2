@@ -75,10 +75,19 @@
                             <td class="jumbotron">
                                 <button
                                     v-show="index != 0"
-                                    class="btn btn-sm btn-danger font-weight-bold mt-1"
+                                    class="btn btn-sm btn-danger font-weight-bold mt-1 rounded-circle"
                                     @click="removeField(index)"
                                 >
                                     X
+                                </button>
+                            </td>
+                            <td>
+                                <button
+                                    v-if="index == noOfFields - 1"
+                                    class="btn btn-primary rounded-circle font-weight-bold"
+                                    @click="addNewFieldVoluntary"
+                                >
+                                    <i class="fa fa-plus"></i>
                                 </button>
                             </td>
                         </tr>
@@ -86,14 +95,9 @@
                 </table>
                 <div class="float-right mb-3">
                     <button
-                        class="btn btn-primary"
-                        @click="addNewFieldVoluntary"
+                        class="btn btn-primary font-weight-bold"
+                        @click="submitVoluntary"
                     >
-                        <i class="fa fa-plus"></i>
-                        Add new field
-                    </button>
-
-                    <button class="btn btn-success" @click="submitVoluntary">
                         <i class="fa fa-plus"></i>
                         NEXT
                         <div
@@ -117,6 +121,7 @@ export default {
         return {
             isComplete: false,
             isLoading: false,
+            noOfFields: 0,
             volunOrg: [
                 {
                     nameOfOrg: "",
@@ -127,6 +132,11 @@ export default {
                 }
             ]
         };
+    },
+    watch: {
+        volunOrg(from, to) {
+            this.noOfFields = to.length;
+        }
     },
     methods: {
         addNewFieldVoluntary() {
@@ -157,6 +167,9 @@ export default {
                     });
                 });
         }
+    },
+    created() {
+        this.noOfFields = this.volunOrg.length;
     }
 };
 </script>

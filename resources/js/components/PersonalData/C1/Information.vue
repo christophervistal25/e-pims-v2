@@ -4,9 +4,9 @@
             <div class="card-header">
                 <h5 class="mb-0 p-2">
                     PERSONAL INFORMATION
-                    <span 
-                    v-show="isComplete" 
-                    :class="isComplete ? 'text-success' : 'text-danger'"
+                    <span
+                        v-show="isComplete"
+                        :class="isComplete ? 'text-success' : 'text-danger'"
                     >
                         - VERIFIED</span
                     >
@@ -655,41 +655,28 @@ export default {
         submitPersonalInformation(e) {
             e.preventDefault();
             this.isLoading = true;
-            swal({
-                title: "Did you double check all the data?",
-                // text: "Create new employee?",
-                text: "",
-                icon: "warning",
-                buttons: ["CHECK AGAIN", "YES"],
-                dangerMode: true
-            }).then(proceed => {
-                if (proceed) {
-                    // Send data
-                    window.axios
-                        .post(
-                            "/employee/personal/information/store",
-                            this.personal_data
-                        )
-                        .then(response => {
-                            this.isLoading = false;
-                            this.isComplete = true;
-                            this.$emit(
-                                "display-family-background",
-                                response.data.employee_id
-                            );
-                            swal({
-                                title: "Good job!",
-                                text: "Min sulod na ang data!",
-                                icon: "success"
-                            });
-                        })
-                        .catch(response => {
-                            this.isLoading = false;
-                        });
-                } else {
+
+            window.axios
+                .post(
+                    "/employee/personal/information/store",
+                    this.personal_data
+                )
+                .then(response => {
                     this.isLoading = false;
-                }
-            });
+                    this.isComplete = true;
+                    this.$emit(
+                        "display-family-background",
+                        response.data.employee_id
+                    );
+                    swal({
+                        title: "Good job!",
+                        text: "Min sulod na ang data!",
+                        icon: "success"
+                    });
+                })
+                .catch(response => {
+                    this.isLoading = false;
+                });
         }
     }
 };

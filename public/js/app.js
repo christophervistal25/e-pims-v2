@@ -2664,7 +2664,9 @@ __webpack_require__.r(__webpack_exports__);
           title: "Good job!",
           text: "Min sulod na ang data!",
           icon: "success"
-        });
+        }); // When it's done call event listener 
+
+        _this.$emit('next_tab');
       })["catch"](function (err) {});
     }
   }
@@ -3686,33 +3688,19 @@ __webpack_require__.r(__webpack_exports__);
 
       e.preventDefault();
       this.isLoading = true;
-      sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
-        title: "Did you double check all the data?",
-        // text: "Create new employee?",
-        text: "",
-        icon: "warning",
-        buttons: ["CHECK AGAIN", "YES"],
-        dangerMode: true
-      }).then(function (proceed) {
-        if (proceed) {
-          // Send data
-          window.axios.post("/employee/personal/information/store", _this.personal_data).then(function (response) {
-            _this.isLoading = false;
-            _this.isComplete = true;
+      window.axios.post("/employee/personal/information/store", this.personal_data).then(function (response) {
+        _this.isLoading = false;
+        _this.isComplete = true;
 
-            _this.$emit("display-family-background", response.data.employee_id);
+        _this.$emit("display-family-background", response.data.employee_id);
 
-            sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
-              title: "Good job!",
-              text: "Min sulod na ang data!",
-              icon: "success"
-            });
-          })["catch"](function (response) {
-            _this.isLoading = false;
-          });
-        } else {
-          _this.isLoading = false;
-        }
+        sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
+          title: "Good job!",
+          text: "Min sulod na ang data!",
+          icon: "success"
+        });
+      })["catch"](function (response) {
+        _this.isLoading = false;
       });
     }
   }
@@ -3865,9 +3853,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: {},
+  props: {
+    employee_id: {
+      required: true
+    }
+  },
   data: function data() {
     var _ref;
 
@@ -3880,7 +3878,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         dateOfExam: "",
         rating: "",
         careerServ: ""
-      }, _defineProperty(_ref, "number", ""), _defineProperty(_ref, "dateOfValid", ""), _ref)]
+      }, _defineProperty(_ref, "number", ""), _defineProperty(_ref, "dateOfValid", ""), _defineProperty(_ref, "employee_id", this.employee_id), _ref)]
     };
   },
   methods: {
@@ -3893,7 +3891,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         dateOfExam: "",
         rating: "",
         careerServ: ""
-      }, _defineProperty(_this$civilService$pu, "number", ""), _defineProperty(_this$civilService$pu, "dateOfValid", ""), _this$civilService$pu));
+      }, _defineProperty(_this$civilService$pu, "number", ""), _defineProperty(_this$civilService$pu, "dateOfValid", ""), _defineProperty(_this$civilService$pu, "employee_id", this.employee_id), _this$civilService$pu));
     },
     submitCivilService: function submitCivilService() {
       var _this = this;
@@ -3902,6 +3900,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       window.axios.post("/employee/personal/civil/service", this.civilService).then(function (response) {
         _this.isLoading = false;
         _this.isComplete = true;
+
+        _this.$emit("display-work-experience", _this.employee_id);
+
         sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
           title: "Good job!",
           text: "Min sulod na ang data!",
@@ -4084,11 +4085,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    work_experience: {
+      required: true
+    },
+    employee_id: {
+      required: true
+    }
+  },
   data: function data() {
     return {
       isComplete: false,
       isLoading: false,
+      noOfFields: 0,
       workExperience: [{
         from: "",
         to: "",
@@ -4097,9 +4116,15 @@ __webpack_require__.r(__webpack_exports__);
         monSalary: "",
         payGrade: "",
         statOfApp: "",
-        govServ: "N"
+        govServ: "N",
+        employee_id: this.employee_id
       }]
     };
+  },
+  watch: {
+    workExperience: function workExperience(from, to) {
+      this.noOfFields = to.length;
+    }
   },
   methods: {
     btnAddNewWorkExperienceField: function btnAddNewWorkExperienceField() {
@@ -4111,7 +4136,8 @@ __webpack_require__.r(__webpack_exports__);
         monSalary: "",
         payGrade: "",
         statOfApp: "",
-        govServ: "N"
+        govServ: "N",
+        employee_id: this.employee_id
       });
     },
     submitWorkExperience: function submitWorkExperience() {
@@ -4121,6 +4147,9 @@ __webpack_require__.r(__webpack_exports__);
       window.axios.post("/employee/personal/work/experience", this.workExperience).then(function (response) {
         _this.isLoading = false;
         _this.isComplete = true;
+
+        _this.$emit("next_tab");
+
         swal({
           title: "Good job!",
           text: "Min sulod na ang data!",
@@ -4133,6 +4162,9 @@ __webpack_require__.r(__webpack_exports__);
         this.workExperience.splice(index, 1);
       }
     }
+  },
+  created: function created() {
+    this.noOfFields = this.workExperience.length;
   }
 });
 
@@ -4641,12 +4673,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       isComplete: false,
       isLoading: false,
+      noOfFields: 0,
       volunOrg: [{
         nameOfOrg: "",
         from: "",
@@ -4655,6 +4692,11 @@ __webpack_require__.r(__webpack_exports__);
         position: ""
       }]
     };
+  },
+  watch: {
+    volunOrg: function volunOrg(from, to) {
+      this.noOfFields = to.length;
+    }
   },
   methods: {
     addNewFieldVoluntary: function addNewFieldVoluntary() {
@@ -4685,6 +4727,9 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
     }
+  },
+  created: function created() {
+    this.noOfFields = this.volunOrg.length;
   }
 });
 
@@ -5834,6 +5879,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5881,10 +5937,15 @@ __webpack_require__.r(__webpack_exports__);
       selectedTab: {},
       isFamilyBackgroundShow: false,
       isEducationalBackground: false,
+      isWorkExperienceShow: false,
       employee_id: null
     };
   },
   methods: {
+    workExperienceSection: function workExperienceSection(employee_id) {
+      this.employee_id = employee_id;
+      this.isWorkExperienceShow = true;
+    },
     openTab: function openTab(tab) {
       this.tabs.map(function (tab) {
         return tab.status = false;
@@ -5898,9 +5959,24 @@ __webpack_require__.r(__webpack_exports__);
     },
     dispalyEducationalBackground: function dispalyEducationalBackground() {
       this.isEducationalBackground = true;
+    },
+    openNextTab: function openNextTab() {
+      var _this = this;
+
+      // Get the current opened tab.
+      var currentTabName = this.selectedTab.name;
+      this.tabs.map(function (tab, index) {
+        if (currentTabName == tab.name) {
+          _this.selectedTab = _this.tabs[index + 1];
+          _this.selectedTab.status = true;
+        } else {
+          tab.status = false;
+        }
+      });
     }
   },
   created: function created() {
+    // set the default tab display to C1
     this.selectedTab = this.tabs[0];
   }
 });
@@ -25824,7 +25900,7 @@ var render = function() {
         "div",
         {
           staticClass: "collapse",
-          class: _vm.family_show && !_vm.isComplete ? "show" : "show",
+          class: _vm.family_show && !_vm.isComplete ? "show" : "",
           attrs: {
             id: "familyBackground",
             "aria-labelledby": "headingOne",
@@ -28262,261 +28338,275 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "card-header" }, [
+        _c("h5", { staticClass: "mb-0 p-2" }, [
+          _vm._v(
+            "\n                IV. Civil Service Egibility\n                "
+          ),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.isComplete,
+                  expression: "isComplete"
+                }
+              ],
+              class: _vm.isComplete ? "text-success" : "text-danger"
+            },
+            [_vm._v("\n                    - VERIFIED")]
+          )
+        ])
+      ]),
       _vm._v(" "),
-      _c("div", { staticClass: "collapse show" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("table", { staticClass: "table table-bordered" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _vm._m(2),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.civilService, function(civil, index) {
-                return _c("tr", { key: index }, [
-                  _c("th", { attrs: { scope: "row" } }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: civil.careerServ,
-                          expression: "civil.careerServ"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "text", placeholder: "Input here..." },
-                      domProps: { value: civil.careerServ },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(civil, "careerServ", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: civil.rating,
-                          expression: "civil.rating"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "number", placeholder: "e.g. 91.2" },
-                      domProps: { value: civil.rating },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(civil, "rating", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: civil.dateOfExam,
-                          expression: "civil.dateOfExam"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "date", placeholder: "Input" },
-                      domProps: { value: civil.dateOfExam },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(civil, "dateOfExam", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: civil.placeOfExam,
-                          expression: "civil.placeOfExam"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "text", placeholder: "e.g Tandag" },
-                      domProps: { value: civil.placeOfExam },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(civil, "placeOfExam", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: civil.number,
-                          expression: "civil.number"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "text", placeholder: "e.g. 2015" },
-                      domProps: { value: civil.number },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(civil, "number", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: civil.dateOfValid,
-                          expression: "civil.dateOfValid"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "date", placeholder: "e.g. 2016" },
-                      domProps: { value: civil.dateOfValid },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(civil, "dateOfValid", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "jumbotron" }, [
-                    _c(
-                      "button",
-                      {
+      _c(
+        "div",
+        { staticClass: "collapse", class: !_vm.isComplete ? "show" : "" },
+        [
+          _c("div", { staticClass: "card-body" }, [
+            _c("table", { staticClass: "table table-bordered" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.civilService, function(civil, index) {
+                  return _c("tr", { key: index }, [
+                    _c("th", { attrs: { scope: "row" } }, [
+                      _c("input", {
                         directives: [
                           {
-                            name: "show",
-                            rawName: "v-show",
-                            value: index != 0,
-                            expression: "index != 0"
+                            name: "model",
+                            rawName: "v-model",
+                            value: civil.careerServ,
+                            expression: "civil.careerServ"
                           }
                         ],
-                        staticClass:
-                          "btn btn-sm btn-danger font-weight-bold mt-1",
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "text", placeholder: "Input here..." },
+                        domProps: { value: civil.careerServ },
                         on: {
-                          click: function($event) {
-                            return _vm.removeField(index)
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(civil, "careerServ", $event.target.value)
                           }
                         }
-                      },
-                      [
-                        _vm._v(
-                          "\n                                    X\n                                "
-                        )
-                      ]
-                    )
-                  ])
-                ])
-              }),
-              0
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "float-right mb-3" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                on: { click: _vm.addNewFieldCivilServiceRow }
-              },
-              [
-                _c("i", { staticClass: "fa fa-plus" }),
-                _vm._v(
-                  "\n                        Add new field\n                    "
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-success",
-                on: { click: _vm.submitCivilService }
-              },
-              [
-                _c("i", { staticClass: "fa fa-plus" }),
-                _vm._v(
-                  "\n                        NEXT\n\n                        "
-                ),
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.isLoading,
-                        expression: "isLoading"
-                      }
-                    ],
-                    staticClass: "spinner-border spinner-border-sm mb-1",
-                    attrs: { role: "status" }
-                  },
-                  [
-                    _c("span", { staticClass: "sr-only" }, [
-                      _vm._v("Loading...")
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: civil.rating,
+                            expression: "civil.rating"
+                          }
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "number", placeholder: "e.g. 91.2" },
+                        domProps: { value: civil.rating },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(civil, "rating", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: civil.dateOfExam,
+                            expression: "civil.dateOfExam"
+                          }
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "date", placeholder: "Input" },
+                        domProps: { value: civil.dateOfExam },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(civil, "dateOfExam", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: civil.placeOfExam,
+                            expression: "civil.placeOfExam"
+                          }
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "text", placeholder: "e.g Tandag" },
+                        domProps: { value: civil.placeOfExam },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(civil, "placeOfExam", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: civil.number,
+                            expression: "civil.number"
+                          }
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "text", placeholder: "e.g. 2015" },
+                        domProps: { value: civil.number },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(civil, "number", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: civil.dateOfValid,
+                            expression: "civil.dateOfValid"
+                          }
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "date", placeholder: "e.g. 2016" },
+                        domProps: { value: civil.dateOfValid },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(civil, "dateOfValid", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "jumbotron" }, [
+                      _c(
+                        "button",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: index != 0,
+                              expression: "index != 0"
+                            }
+                          ],
+                          staticClass:
+                            "btn btn-sm btn-danger font-weight-bold mt-1 rounded-circle",
+                          on: {
+                            click: function($event) {
+                              return _vm.removeField(index)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    X\n                                "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      index == _vm.civilService.length - 1
+                        ? _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-primary rounded-circle font-weight-bold",
+                              on: { click: _vm.addNewFieldCivilServiceRow }
+                            },
+                            [_c("i", { staticClass: "fa fa-plus" })]
+                          )
+                        : _vm._e()
                     ])
-                  ]
-                )
-              ]
-            )
+                  ])
+                }),
+                0
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "float-right mb-3" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary font-weight-bold",
+                  on: { click: _vm.submitCivilService }
+                },
+                [
+                  _vm._v(
+                    "\n                        NEXT\n\n                        "
+                  ),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.isLoading,
+                          expression: "isLoading"
+                        }
+                      ],
+                      staticClass: "spinner-border spinner-border-sm mb-1",
+                      attrs: { role: "status" }
+                    },
+                    [
+                      _c("span", { staticClass: "sr-only" }, [
+                        _vm._v("Loading...")
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ])
           ])
-        ])
-      ])
+        ]
+      )
     ])
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h5", { staticClass: "mb-0 p-2" }, [
-        _vm._v("\n                IV. Civil Service Egibility\n            ")
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -28595,396 +28685,416 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("divA", { staticClass: "card" }, [
+  return _c("div", { staticClass: "card" }, [
     _c("div", { staticClass: "card-header" }, [
       _c("h5", { staticClass: "mb-0 p-2" }, [
-        _vm._v("\n            V. WORK EXPERIENCE\n        ")
+        _vm._v("\n            V. WORK EXPERIENCE\n            "),
+        _c(
+          "span",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.isComplete,
+                expression: "isComplete"
+              }
+            ],
+            class: _vm.isComplete ? "text-success" : "text-danger"
+          },
+          [_vm._v("\n                - VERIFIED")]
+        )
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "collapse show" }, [
-      _c("div", { staticClass: "card-body" }, [
-        _c("table", { staticClass: "table table-bordered" }, [
-          _c(
-            "tr",
-            {
-              staticClass: "text-center",
-              staticStyle: { background: "#EAEAEA" }
-            },
-            [
-              _c("td", { attrs: { colspan: "2", scope: "colgroup" } }, [
-                _vm._v(
-                  "\n                        28. INCLUSIVE DATES (mm/dd/yyyy)\n                    "
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "td",
-                { staticClass: "align-middle", attrs: { rowspan: "2" } },
-                [
-                  _vm._v(
-                    "\n                        POSITION TITLE (Write in full/Do not abbreviate)\n                    "
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                { staticClass: "align-middle", attrs: { rowspan: "2" } },
-                [
-                  _vm._v(
-                    "\n                        DEPARTMENT / AGENCY / OFFICE / COMPANY (Write in\n                        full/Do not abbreviate)\n                    "
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                { staticClass: "align-middle", attrs: { rowspan: "2" } },
-                [_vm._v("MONTHLY SALARY")]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                { staticClass: "align-middle", attrs: { rowspan: "2" } },
-                [
-                  _vm._v("\n                        SALARY/ JOB/ PAY GRADE "),
-                  _c("br"),
-                  _vm._v("\n                        (if applicable) "),
-                  _c("br"),
-                  _vm._v(
-                    '\n                        & STEP (Format "00-0")/ INCREMENT\n                    '
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                { staticClass: "align-middle", attrs: { rowspan: "2" } },
-                [
-                  _vm._v(
-                    "\n                        STATUS OF APPOINTMENT\n                    "
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                { staticClass: "align-middle", attrs: { rowspan: "2" } },
-                [
-                  _vm._v(
-                    "\n                        GOV'T SERVICE (Y/ N)\n                    "
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c("td", { staticClass: "pl-4 pr-4", attrs: { rowspan: "2" } }, [
-                _vm._v(" ")
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c("tr", { staticStyle: { background: "#EAEAEA" } }, [
-            _c("td", { staticClass: "text-center", attrs: { scope: "col" } }, [
-              _vm._v("FROM")
-            ]),
+    _c(
+      "div",
+      {
+        staticClass: "collapse",
+        class: _vm.work_experience && !_vm.isComplete ? "show" : ""
+      },
+      [
+        _c("div", { staticClass: "card-body" }, [
+          _c("table", { staticClass: "table table-bordered" }, [
+            _vm._m(0),
             _vm._v(" "),
-            _c("td", { staticClass: "text-center", attrs: { scope: "col" } }, [
-              _vm._v("TO")
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.workExperience, function(workExperience, index) {
-              return _c("tr", { key: index }, [
-                _c("th", { attrs: { scope: "row" } }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: workExperience.from,
-                        expression: "workExperience.from"
-                      }
-                    ],
-                    staticClass: "form-control rounded-0 border-0",
-                    attrs: { type: "date", placeholder: "FROM" },
-                    domProps: { value: workExperience.from },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(workExperience, "from", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: workExperience.to,
-                        expression: "workExperience.to"
-                      }
-                    ],
-                    staticClass: "form-control rounded-0 border-0",
-                    attrs: { type: "date", placeholder: "TO" },
-                    domProps: { value: workExperience.to },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(workExperience, "to", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: workExperience.position,
-                        expression: "workExperience.position"
-                      }
-                    ],
-                    staticClass: "form-control rounded-0 border-0",
-                    attrs: { type: "text", placeholder: "Input" },
-                    domProps: { value: workExperience.position },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          workExperience,
-                          "position",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: workExperience.dept,
-                        expression: "workExperience.dept"
-                      }
-                    ],
-                    staticClass: "form-control rounded-0 border-0",
-                    attrs: { type: "text", placeholder: "e.g Tandag" },
-                    domProps: { value: workExperience.dept },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(workExperience, "dept", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: workExperience.monSalary,
-                        expression: "workExperience.monSalary"
-                      }
-                    ],
-                    staticClass: "form-control rounded-0 border-0",
-                    attrs: { type: "number", placeholder: "" },
-                    domProps: { value: workExperience.monSalary },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          workExperience,
-                          "monSalary",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: workExperience.payGrade,
-                        expression: "workExperience.payGrade"
-                      }
-                    ],
-                    staticClass: "form-control rounded-0 border-0",
-                    attrs: { type: "number", placeholder: "" },
-                    domProps: { value: workExperience.payGrade },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          workExperience,
-                          "payGrade",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: workExperience.statOfApp,
-                        expression: "workExperience.statOfApp"
-                      }
-                    ],
-                    staticClass: "form-control rounded-0 border-0",
-                    attrs: { type: "text", placeholder: "" },
-                    domProps: { value: workExperience.statOfApp },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          workExperience,
-                          "statOfApp",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: workExperience.govServ,
-                        expression: "workExperience.govServ"
-                      }
-                    ],
-                    staticClass:
-                      "form-control rounded-0 border-0 text-uppercase",
-                    attrs: { type: "text", maxlength: "1", placeholder: "" },
-                    domProps: { value: workExperience.govServ },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(workExperience, "govServ", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "jumbotron" }, [
-                  _c(
-                    "button",
-                    {
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.workExperience, function(workExperience, index) {
+                return _c("tr", { key: index }, [
+                  _c("th", { attrs: { scope: "row" } }, [
+                    _c("input", {
                       directives: [
                         {
-                          name: "show",
-                          rawName: "v-show",
-                          value: index != 0,
-                          expression: "index != 0"
+                          name: "model",
+                          rawName: "v-model",
+                          value: workExperience.from,
+                          expression: "workExperience.from"
                         }
                       ],
-                      staticClass: "btn btn-sm btn-danger font-weight-bold",
+                      staticClass: "form-control rounded-0 border-0",
+                      attrs: { type: "date", placeholder: "FROM" },
+                      domProps: { value: workExperience.from },
                       on: {
-                        click: function($event) {
-                          return _vm.removeField(index)
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(workExperience, "from", $event.target.value)
                         }
                       }
-                    },
-                    [
-                      _vm._v(
-                        "\n                                X\n                            "
-                      )
-                    ]
-                  )
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: workExperience.to,
+                          expression: "workExperience.to"
+                        }
+                      ],
+                      staticClass: "form-control rounded-0 border-0",
+                      attrs: { type: "date", placeholder: "TO" },
+                      domProps: { value: workExperience.to },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(workExperience, "to", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: workExperience.position,
+                          expression: "workExperience.position"
+                        }
+                      ],
+                      staticClass: "form-control rounded-0 border-0",
+                      attrs: { type: "text", placeholder: "Input" },
+                      domProps: { value: workExperience.position },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            workExperience,
+                            "position",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: workExperience.dept,
+                          expression: "workExperience.dept"
+                        }
+                      ],
+                      staticClass: "form-control rounded-0 border-0",
+                      attrs: { type: "text", placeholder: "e.g Tandag" },
+                      domProps: { value: workExperience.dept },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(workExperience, "dept", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: workExperience.monSalary,
+                          expression: "workExperience.monSalary"
+                        }
+                      ],
+                      staticClass: "form-control rounded-0 border-0",
+                      attrs: { type: "number", placeholder: "" },
+                      domProps: { value: workExperience.monSalary },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            workExperience,
+                            "monSalary",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: workExperience.payGrade,
+                          expression: "workExperience.payGrade"
+                        }
+                      ],
+                      staticClass: "form-control rounded-0 border-0",
+                      attrs: { type: "number", placeholder: "" },
+                      domProps: { value: workExperience.payGrade },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            workExperience,
+                            "payGrade",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: workExperience.statOfApp,
+                          expression: "workExperience.statOfApp"
+                        }
+                      ],
+                      staticClass: "form-control rounded-0 border-0",
+                      attrs: { type: "text", placeholder: "" },
+                      domProps: { value: workExperience.statOfApp },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            workExperience,
+                            "statOfApp",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: workExperience.govServ,
+                          expression: "workExperience.govServ"
+                        }
+                      ],
+                      staticClass:
+                        "form-control rounded-0 border-0 text-uppercase",
+                      attrs: { type: "text", maxlength: "1", placeholder: "" },
+                      domProps: { value: workExperience.govServ },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            workExperience,
+                            "govServ",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "jumbotron" }, [
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: index != 0,
+                            expression: "index != 0"
+                          }
+                        ],
+                        staticClass:
+                          "btn btn-sm btn-danger font-weight-bold rounded-circle",
+                        on: {
+                          click: function($event) {
+                            return _vm.removeField(index)
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                                X\n                            "
+                        )
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    index == _vm.noOfFields - 1
+                      ? _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-primary font-weight-bold rounded-circle",
+                            on: { click: _vm.btnAddNewWorkExperienceField }
+                          },
+                          [_c("i", { staticClass: "fa fa-plus" })]
+                        )
+                      : _vm._e()
+                  ])
                 ])
-              ])
-            }),
-            0
+              }),
+              0
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "float-right mb-3" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary font-weight-bold",
+                on: { click: _vm.submitWorkExperience }
+              },
+              [
+                _vm._v("\n                    NEXT\n\n                    "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.isLoading,
+                        expression: "isLoading"
+                      }
+                    ],
+                    staticClass: "spinner-border spinner-border-sm mb-1",
+                    attrs: { role: "status" }
+                  },
+                  [
+                    _c("span", { staticClass: "sr-only" }, [
+                      _vm._v("Loading...")
+                    ])
+                  ]
+                )
+              ]
+            )
+          ])
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "tr",
+      { staticClass: "text-center", staticStyle: { background: "#EAEAEA" } },
+      [
+        _c("td", { attrs: { colspan: "2", scope: "colgroup" } }, [
+          _vm._v(
+            "\n                        28. INCLUSIVE DATES (mm/dd/yyyy)\n                    "
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "float-right mb-3" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary",
-              on: { click: _vm.btnAddNewWorkExperienceField }
-            },
-            [
-              _c("i", { staticClass: "fa fa-plus" }),
-              _vm._v("\n                    Add new field\n                ")
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-success",
-              on: { click: _vm.submitWorkExperience }
-            },
-            [
-              _c("i", { staticClass: "fa fa-plus" }),
-              _vm._v("\n                    NEXT\n\n                    "),
-              _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.isLoading,
-                      expression: "isLoading"
-                    }
-                  ],
-                  staticClass: "spinner-border spinner-border-sm mb-1",
-                  attrs: { role: "status" }
-                },
-                [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
-              )
-            ]
+        _c("td", { staticClass: "align-middle", attrs: { rowspan: "2" } }, [
+          _vm._v(
+            "\n                        POSITION TITLE (Write in full/Do not abbreviate)\n                    "
           )
+        ]),
+        _vm._v(" "),
+        _c("td", { staticClass: "align-middle", attrs: { rowspan: "2" } }, [
+          _vm._v(
+            "\n                        DEPARTMENT / AGENCY / OFFICE / COMPANY (Write in\n                        full/Do not abbreviate)\n                    "
+          )
+        ]),
+        _vm._v(" "),
+        _c("td", { staticClass: "align-middle", attrs: { rowspan: "2" } }, [
+          _vm._v("MONTHLY SALARY")
+        ]),
+        _vm._v(" "),
+        _c("td", { staticClass: "align-middle", attrs: { rowspan: "2" } }, [
+          _vm._v("\n                        SALARY/ JOB/ PAY GRADE "),
+          _c("br"),
+          _vm._v("\n                        (if applicable) "),
+          _c("br"),
+          _vm._v(
+            '\n                        & STEP (Format "00-0")/ INCREMENT\n                    '
+          )
+        ]),
+        _vm._v(" "),
+        _c("td", { staticClass: "align-middle", attrs: { rowspan: "2" } }, [
+          _vm._v(
+            "\n                        STATUS OF APPOINTMENT\n                    "
+          )
+        ]),
+        _vm._v(" "),
+        _c("td", { staticClass: "align-middle", attrs: { rowspan: "2" } }, [
+          _vm._v(
+            "\n                        GOV'T SERVICE (Y/ N)\n                    "
+          )
+        ]),
+        _vm._v(" "),
+        _c("td", { staticClass: "pl-4 pr-4", attrs: { rowspan: "2" } }, [
+          _vm._v(" ")
         ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", { staticStyle: { background: "#EAEAEA" } }, [
+      _c("td", { staticClass: "text-center", attrs: { scope: "col" } }, [
+        _vm._v("FROM")
+      ]),
+      _vm._v(" "),
+      _c("td", { staticClass: "text-center", attrs: { scope: "col" } }, [
+        _vm._v("TO")
       ])
     ])
-  ])
-}
-var staticRenderFns = []
+  }
+]
 render._withStripped = true
 
 
@@ -29793,7 +29903,7 @@ var render = function() {
                         }
                       ],
                       staticClass:
-                        "btn btn-sm btn-danger font-weight-bold mt-1",
+                        "btn btn-sm btn-danger font-weight-bold mt-1 rounded-circle",
                       on: {
                         click: function($event) {
                           return _vm.removeField(index)
@@ -29806,6 +29916,20 @@ var render = function() {
                       )
                     ]
                   )
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  index == _vm.noOfFields - 1
+                    ? _c(
+                        "button",
+                        {
+                          staticClass:
+                            "btn btn-primary rounded-circle font-weight-bold",
+                          on: { click: _vm.addNewFieldVoluntary }
+                        },
+                        [_c("i", { staticClass: "fa fa-plus" })]
+                      )
+                    : _vm._e()
                 ])
               ])
             }),
@@ -29817,19 +29941,7 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn btn-primary",
-              on: { click: _vm.addNewFieldVoluntary }
-            },
-            [
-              _c("i", { staticClass: "fa fa-plus" }),
-              _vm._v("\n                    Add new field\n                ")
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-success",
+              staticClass: "btn btn-primary font-weight-bold",
               on: { click: _vm.submitVoluntary }
             },
             [
@@ -32132,13 +32244,27 @@ var render = function() {
             attrs: {
               educational_background: _vm.isEducationalBackground,
               employee_id: _vm.employee_id
-            }
+            },
+            on: { next_tab: _vm.openNextTab }
           })
         : _vm._e(),
       _vm._v(" "),
-      _vm.selectedTab.name === "C2" ? _c("civil-service") : _vm._e(),
+      _vm.selectedTab.name === "C2"
+        ? _c("civil-service", {
+            attrs: { employee_id: _vm.employee_id },
+            on: { "display-work-experience": _vm.workExperienceSection }
+          })
+        : _vm._e(),
       _vm._v(" "),
-      _vm.selectedTab.name === "C2" ? _c("work-experience") : _vm._e(),
+      _vm.selectedTab.name === "C2"
+        ? _c("work-experience", {
+            attrs: {
+              work_experience: _vm.isWorkExperienceShow,
+              employee_id: _vm.employee_id
+            },
+            on: { next_tab: _vm.openNextTab }
+          })
+        : _vm._e(),
       _vm._v(" "),
       _vm.selectedTab.name === "C3" ? _c("voluntary") : _vm._e(),
       _vm._v(" "),

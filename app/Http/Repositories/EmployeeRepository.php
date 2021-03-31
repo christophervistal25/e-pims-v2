@@ -115,7 +115,6 @@ class EmployeeRepository
 
     public function addEducationalBackground(array $data = []) :EmployeeEducationalBackground
     {
-        // dd($data);
         $employee = Employee::find($data['employee_id']);
 
         $employeeEducationalBackground                                                     = new EmployeeEducationalBackground();
@@ -188,7 +187,7 @@ class EmployeeRepository
     public function addWorkExperience(array $workExperiences = []) :array
     {
 
-        $employee = Employee::find('856194');
+        $employee = Employee::find($workExperiences[self::FIRST_INDEX]['employee_id']);
 
         foreach($workExperiences as $record) {
             if(!is_null($record['from'])) {

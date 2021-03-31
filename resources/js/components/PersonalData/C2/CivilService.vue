@@ -4,6 +4,12 @@
             <div class="card-header">
                 <h5 class="mb-0 p-2">
                     IV. Civil Service Egibility
+                    <span
+                        v-show="isComplete"
+                        :class="isComplete ? 'text-success' : 'text-danger'"
+                    >
+                        - VERIFIED</span
+                    >
                 </h5>
             </div>
 
@@ -98,7 +104,7 @@
                                 </td>
                                 <td>
                                     <button
-                                        v-if="index == (civilService.length - 1)"
+                                        v-if="index == civilService.length - 1"
                                         class="btn btn-primary rounded-circle font-weight-bold"
                                         @click="addNewFieldCivilServiceRow"
                                     >
@@ -109,8 +115,6 @@
                         </tbody>
                     </table>
                     <div class="float-right mb-3">
-                        
-
                         <button
                             class="btn btn-primary font-weight-bold"
                             @click="submitCivilService"
@@ -136,8 +140,8 @@
 import swal from "sweetalert";
 export default {
     props: {
-        employee_id : {
-            required : true,
+        employee_id: {
+            required: true
         }
     },
     data() {
@@ -153,7 +157,7 @@ export default {
                     careerServ: "",
                     number: "",
                     dateOfValid: "",
-                    employee_id : this.employee_id,
+                    employee_id: this.employee_id
                 }
             ]
         };
@@ -168,7 +172,7 @@ export default {
                 careerServ: "",
                 number: "",
                 dateOfValid: "",
-                employee_id : this.employee_id,
+                employee_id: this.employee_id
             });
         },
         submitCivilService() {
@@ -178,7 +182,7 @@ export default {
                 .then(response => {
                     this.isLoading = false;
                     this.isComplete = true;
-                    this.$emit('display-work-experience');
+                    this.$emit("display-work-experience", this.employee_id);
                     swal({
                         title: "Good job!",
                         text: "Min sulod na ang data!",
