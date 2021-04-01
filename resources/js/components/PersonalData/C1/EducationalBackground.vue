@@ -445,6 +445,7 @@
                 <button
                     class="btn btn-primary font-weight-bold mr-3 mb-2"
                     @click="submitEducationalBackground"
+                    :disabled="isLoading"
                 >
                     NEXT
                     <div
@@ -516,7 +517,9 @@ export default {
     methods: {
         submitEducationalBackground() {
             this.isLoading = true;
-            this.educationalBackground.employee_id = localStorage.getItem('employee_id');
+            this.educationalBackground.employee_id = localStorage.getItem(
+                "employee_id"
+            );
             window.axios
                 .post(
                     "/employee/personal/educational/background/store",
@@ -531,10 +534,10 @@ export default {
                         text: "Min sulod na ang data!",
                         icon: "success"
                     });
-                    // When it's done call event listener 
-                    this.$emit('next_tab');
+                    // When it's done call event listener
+                    this.$emit("next_tab");
                 })
-                .catch(err => {});
+                .catch(err => (this.isLoading = false));
         }
     }
 };

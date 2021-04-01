@@ -2596,6 +2596,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     educational_background: {
@@ -2653,7 +2654,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.isLoading = true;
-      this.educationalBackground.employee_id = localStorage.getItem('employee_id');
+      this.educationalBackground.employee_id = localStorage.getItem("employee_id");
       window.axios.post("/employee/personal/educational/background/store", this.educationalBackground).then(function (response) {
         _this.isLoading = false;
         _this.isComplete = true;
@@ -2661,10 +2662,12 @@ __webpack_require__.r(__webpack_exports__);
           title: "Good job!",
           text: "Min sulod na ang data!",
           icon: "success"
-        }); // When it's done call event listener 
+        }); // When it's done call event listener
 
-        _this.$emit('next_tab');
-      })["catch"](function (err) {});
+        _this.$emit("next_tab");
+      })["catch"](function (err) {
+        return _this.isLoading = false;
+      });
     }
   }
 });
@@ -2682,6 +2685,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
 //
 //
 //
@@ -3022,7 +3027,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.isLoading = true;
-      this.familyBackground.employee_id = localStorage.getItem('employee_id');
+      this.familyBackground.employee_id = localStorage.getItem("employee_id");
       this.familyBackground.spouse = this.spouse;
       window.axios.post("/employee/personal/family/background/store", this.familyBackground).then(function (response) {
         _this.isLoading = false;
@@ -3058,6 +3063,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
+//
 //
 //
 //
@@ -3718,7 +3724,7 @@ __webpack_require__.r(__webpack_exports__);
       window.axios.post("/employee/personal/information/store", this.personal_data).then(function (response) {
         _this.isLoading = false;
         _this.isComplete = true;
-        localStorage.setItem('employee_id', response.data.employee_id);
+        localStorage.setItem("employee_id", response.data.employee_id);
 
         _this.$emit("display-family-background");
 
@@ -3890,6 +3896,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3904,7 +3920,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         dateOfExam: "",
         rating: "",
         careerServ: ""
-      }, _defineProperty(_ref, "number", ""), _defineProperty(_ref, "dateOfValid", ""), _defineProperty(_ref, "employee_id", localStorage.getItem('employee_id')), _ref)]
+      }, _defineProperty(_ref, "number", ""), _defineProperty(_ref, "dateOfValid", ""), _defineProperty(_ref, "employee_id", localStorage.getItem("employee_id")), _ref)]
     };
   },
   methods: {
@@ -3917,7 +3933,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         dateOfExam: "",
         rating: "",
         careerServ: ""
-      }, _defineProperty(_this$civilService$pu, "number", ""), _defineProperty(_this$civilService$pu, "dateOfValid", ""), _defineProperty(_this$civilService$pu, "employee_id", localStorage.getItem('employee_id')), _this$civilService$pu));
+      }, _defineProperty(_this$civilService$pu, "number", ""), _defineProperty(_this$civilService$pu, "dateOfValid", ""), _defineProperty(_this$civilService$pu, "employee_id", localStorage.getItem("employee_id")), _this$civilService$pu));
+    },
+    skipSection: function skipSection() {
+      this.isComplete = true;
+      this.$emit("display-work-experience");
     },
     submitCivilService: function submitCivilService() {
       var _this = this;
@@ -3927,14 +3947,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.isLoading = false;
         _this.isComplete = true;
 
-        _this.$emit("display-work-experience", _this.employee_id);
+        _this.$emit("display-work-experience");
 
         sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
           title: "Good job!",
           text: "Min sulod na ang data!",
           icon: "success"
         });
-      })["catch"](function (err) {});
+      })["catch"](function (err) {
+        return _this.isLoading = false;
+      });
     },
     removeField: function removeField(index) {
       if (index != 0) {
@@ -4120,6 +4142,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     work_experience: {
@@ -4131,7 +4162,7 @@ __webpack_require__.r(__webpack_exports__);
       isComplete: false,
       isLoading: false,
       noOfFields: 0,
-      employee_id: '',
+      employee_id: "",
       workExperience: [{
         from: "",
         to: "",
@@ -4141,7 +4172,7 @@ __webpack_require__.r(__webpack_exports__);
         payGrade: "",
         statOfApp: "",
         govServ: "N",
-        employee_id: localStorage.getItem('employee_id')
+        employee_id: localStorage.getItem("employee_id")
       }]
     };
   },
@@ -4161,8 +4192,12 @@ __webpack_require__.r(__webpack_exports__);
         payGrade: "",
         statOfApp: "",
         govServ: "N",
-        employee_id: localStorage.getItem('employee_id')
+        employee_id: localStorage.getItem("employee_id")
       });
+    },
+    skipSection: function skipSection() {
+      this.isComplete = true;
+      this.$emit("next_tab");
     },
     submitWorkExperience: function submitWorkExperience() {
       var _this = this;
@@ -4179,7 +4214,9 @@ __webpack_require__.r(__webpack_exports__);
           text: "Min sulod na ang data!",
           icon: "success"
         });
-      })["catch"](function (err) {});
+      })["catch"](function (err) {
+        return _this.isLoading = false;
+      });
     },
     removeField: function removeField(index) {
       if (index != 0) {
@@ -4362,6 +4399,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     show_panel: {
@@ -4380,7 +4434,7 @@ __webpack_require__.r(__webpack_exports__);
         noOfHours: "",
         typeOfLD: "",
         conducted: "",
-        employee_id: localStorage.getItem('employee_id')
+        employee_id: localStorage.getItem("employee_id")
       }]
     };
   },
@@ -4398,13 +4452,17 @@ __webpack_require__.r(__webpack_exports__);
         noOfHours: "",
         typeOfLD: "",
         conducted: "",
-        employee_id: localStorage.getItem('employee_id')
+        employee_id: localStorage.getItem("employee_id")
       });
     },
     removeField: function removeField(index) {
       if (index !== 0) {
         this.learnDev.splice(index, 1);
       }
+    },
+    skipSection: function skipSection() {
+      this.isComplete = true;
+      this.$emit("display-other-information");
     },
     submitLearningAndDevelopment: function submitLearningAndDevelopment() {
       var _this = this;
@@ -4414,13 +4472,15 @@ __webpack_require__.r(__webpack_exports__);
         _this.isLoading = false;
         _this.isComplete = true;
 
-        _this.$emit('display-other-information');
+        _this.$emit("display-other-information");
 
         swal({
           title: "Good job!",
           text: "Min sulod na ang data!",
           icon: "success"
         });
+      })["catch"](function (err) {
+        return _this.isLoading = false;
       });
     }
   },
@@ -4558,6 +4618,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -4574,7 +4644,7 @@ __webpack_require__.r(__webpack_exports__);
         skill: "",
         recog: "",
         memAssociation: "",
-        employee_id: localStorage.getItem('employee_id')
+        employee_id: localStorage.getItem("employee_id")
       }]
     };
   },
@@ -4589,8 +4659,12 @@ __webpack_require__.r(__webpack_exports__);
         skill: "",
         recog: "",
         memAssociation: "",
-        employee_id: localStorage.getItem('employee_id')
+        employee_id: localStorage.getItem("employee_id")
       });
+    },
+    skipSection: function skipSection() {
+      this.isComplete = false;
+      this.$emit("next_tab");
     },
     submitOtherInformation: function submitOtherInformation() {
       var _this = this;
@@ -4607,6 +4681,8 @@ __webpack_require__.r(__webpack_exports__);
           text: "Min sulod na ang data!",
           icon: "success"
         });
+      })["catch"](function (err) {
+        return _this.isLoading = false;
       });
     },
     removeField: function removeField(index) {
@@ -4754,6 +4830,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -4767,7 +4866,7 @@ __webpack_require__.r(__webpack_exports__);
         to: "",
         noOfHrs: "",
         position: "",
-        employee_id: localStorage.getItem('employee_id')
+        employee_id: localStorage.getItem("employee_id")
       }]
     };
   },
@@ -4784,13 +4883,17 @@ __webpack_require__.r(__webpack_exports__);
         to: "",
         noOfHrs: "",
         position: "",
-        employee_id: localStorage.getItem('employee_id')
+        employee_id: localStorage.getItem("employee_id")
       });
     },
     removeField: function removeField(index) {
       if (index != 0) {
         this.volunOrg.splice(index, 1);
       }
+    },
+    skipSection: function skipSection() {
+      this.isComplete = true;
+      this.$emit("display-learning-and-development");
     },
     submitVoluntary: function submitVoluntary() {
       var _this = this;
@@ -4807,6 +4910,8 @@ __webpack_require__.r(__webpack_exports__);
           text: "Min sulod na ang data!",
           icon: "success"
         });
+      })["catch"](function (err) {
+        return _this.isLoading = false;
       });
     }
   },
@@ -4900,6 +5005,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     show_panel: {
@@ -4914,7 +5026,7 @@ __webpack_require__.r(__webpack_exports__);
         nameOfGovId: "",
         idNo: "",
         dateOfIssuance: "",
-        employee_id: localStorage.getItem('employee_id')
+        employee_id: localStorage.getItem("employee_id")
       }
     };
   },
@@ -4923,7 +5035,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.isLoading = true;
-      window.axios.post('/employee/personal/issued/id', this.governmentId).then(function (response) {
+      window.axios.post("/employee/personal/issued/id", this.governmentId).then(function (response) {
         _this.isComplete = true;
         _this.isLoading = false;
         swal({
@@ -4932,7 +5044,7 @@ __webpack_require__.r(__webpack_exports__);
           icon: "success"
         });
       })["catch"](function (err) {
-        return console.log(err);
+        return _this.isLoading = false;
       });
     }
   }
@@ -5051,6 +5163,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     show_panel: {
@@ -5066,7 +5180,7 @@ __webpack_require__.r(__webpack_exports__);
         refName: "",
         refAdd: "",
         refTelNo: "",
-        employee_id: localStorage.getItem('employee_id')
+        employee_id: localStorage.getItem("employee_id")
       }]
     };
   },
@@ -5081,7 +5195,7 @@ __webpack_require__.r(__webpack_exports__);
         refName: "",
         refAdd: "",
         refTelNo: "",
-        employee_id: localStorage.getItem('employee_id')
+        employee_id: localStorage.getItem("employee_id")
       });
     },
     removeField: function removeField(index) {
@@ -5097,13 +5211,15 @@ __webpack_require__.r(__webpack_exports__);
         _this.isLoading = false;
         _this.isComplete = true;
 
-        _this.$emit('display-issued-id');
+        _this.$emit("display-issued-id");
 
         swal({
           title: "Good job!",
           text: "Min sulod na ang data!",
           icon: "success"
         });
+      })["catch"](function (err) {
+        return _this.isLoading = false;
       });
     }
   },
@@ -5125,6 +5241,63 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5971,19 +6144,21 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.isLoading = true;
-      this.relevantQueries.employee_id = localStorage.getItem('employee_id');
+      this.relevantQueries.employee_id = localStorage.getItem("employee_id");
       window.axios.post("/employee/personal/relevant/queries", this.relevantQueries).then(function (response) {
         _this.isComplete = true;
         _this.isLoading = false;
 
-        _this.$emit('display-reference');
+        _this.$emit("display-reference");
 
         sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
           title: "Good job!",
           text: "Min sulod na ang data!",
           icon: "success"
         });
-      })["catch"](function (err) {});
+      })["catch"](function (err) {
+        return _this.isLoading = false;
+      });
     }
   },
   created: function created() {}
@@ -6011,6 +6186,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _C4_RelevantQueries_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./C4/RelevantQueries.vue */ "./resources/js/components/PersonalData/C4/RelevantQueries.vue");
 /* harmony import */ var _C4_Reference_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./C4/Reference.vue */ "./resources/js/components/PersonalData/C4/Reference.vue");
 /* harmony import */ var _C4_GovernmentIssuedID_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./C4/GovernmentIssuedID.vue */ "./resources/js/components/PersonalData/C4/GovernmentIssuedID.vue");
+//
+//
+//
 //
 //
 //
@@ -6162,8 +6340,7 @@ __webpack_require__.r(__webpack_exports__);
       needToShowLearningAndDevelopment: false,
       needToShowOtherInformation: false,
       needToShowReference: false,
-      needToShowIssuedID: false,
-      employee_id: null
+      needToShowIssuedID: false
     };
   },
   methods: {
@@ -6230,7 +6407,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\ntd[data-v-295e1eb5] {\r\n    cursor: pointer;\r\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-295e1eb5]:hover {\r\n    background: #f1f2f3;\n}\r\n", ""]);
+exports.push([module.i, "\ntd[data-v-295e1eb5] {\n    cursor: pointer;\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-295e1eb5]:hover {\n    background: #f1f2f3;\n}\n", ""]);
 
 // exports
 
@@ -6249,7 +6426,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.dash-border[data-v-273b49a5] {\n    border-color : #007bff;\n    border-width : 4px;  \n    border-style : dashed;\n}\n", ""]);
+exports.push([module.i, "\n.dash-border[data-v-273b49a5] {\n    border-color: #007bff;\n    border-width: 4px;\n    border-style: dashed;\n}\n", ""]);
 
 // exports
 
@@ -26032,6 +26209,7 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-primary font-weight-bold mr-3 mb-2",
+              attrs: { disabled: _vm.isLoading },
               on: { click: _vm.submitEducationalBackground }
             },
             [
@@ -26888,6 +27066,7 @@ var render = function() {
               "button",
               {
                 staticClass: "btn btn-primary font-weight-bold mr-3 mb-2",
+                attrs: { disabled: _vm.isLoading },
                 on: { click: _vm.submitPersonFamilyBackground }
               },
               [
@@ -26943,7 +27122,9 @@ var staticRenderFns = [
     return _c("thead", [
       _c("tr", [
         _c("th", { staticClass: "font-weight-bold" }, [
-          _vm._v("NAME OF CHILDREN")
+          _vm._v(
+            "\n                                NAME OF CHILDREN\n                            "
+          )
         ]),
         _vm._v(" "),
         _c("th", { staticClass: "font-weight-bold" }, [_vm._v("DATE OF BIRTH")])
@@ -28584,6 +28765,7 @@ var render = function() {
               "button",
               {
                 staticClass: "btn btn-primary font-weight-bold",
+                attrs: { disabled: _vm.isLoading },
                 on: { click: _vm.submitPersonalInformation }
               },
               [
@@ -28904,18 +29086,18 @@ var render = function() {
             _c("div", { staticClass: "float-right mb-3" }, [
               _c(
                 "button",
-                { staticClass: "btn btn-warning font-weight-bold" },
-                [
-                  _vm._v(
-                    "\n                        RESET NO VALUES\n                    "
-                  )
-                ]
+                {
+                  staticClass: "btn btn-danger font-weight-bold",
+                  on: { click: _vm.skipSection }
+                },
+                [_vm._v("\n                        SKIP\n                    ")]
               ),
               _vm._v(" "),
               _c(
                 "button",
                 {
                   staticClass: "btn btn-primary font-weight-bold",
+                  attrs: { disabled: _vm.isLoading },
                   on: { click: _vm.submitCivilService }
                 },
                 [
@@ -28973,7 +29155,11 @@ var staticRenderFns = [
         _c(
           "td",
           { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
-          [_vm._v("RATING")]
+          [
+            _vm._v(
+              "\n                            RATING\n                        "
+            )
+          ]
         ),
         _vm._v(" "),
         _c(
@@ -29002,7 +29188,11 @@ var staticRenderFns = [
             staticClass: "text-sm",
             attrs: { colspan: "2", scope: "colgroup" }
           },
-          [_vm._v("LICENSE")]
+          [
+            _vm._v(
+              "\n                            LICENSE\n                        "
+            )
+          ]
         ),
         _vm._v(" "),
         _c("td", { staticClass: "pl-4 pr-4", attrs: { rowspan: "2" } }, [
@@ -29019,7 +29209,11 @@ var staticRenderFns = [
       _c(
         "td",
         { staticClass: "text-center text-sm", attrs: { scope: "col" } },
-        [_vm._v("NUMBER")]
+        [
+          _vm._v(
+            "\n                            NUMBER\n                        "
+          )
+        ]
       ),
       _vm._v(" "),
       _c(
@@ -29358,7 +29552,17 @@ var render = function() {
             _c(
               "button",
               {
+                staticClass: "btn btn-danger font-weight-bold",
+                on: { click: _vm.skipSection }
+              },
+              [_vm._v("\n                    SKIP\n                ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
                 staticClass: "btn btn-primary font-weight-bold",
+                attrs: { disabled: _vm.isLoading },
                 on: { click: _vm.submitWorkExperience }
               },
               [
@@ -29436,7 +29640,11 @@ var staticRenderFns = [
         _c(
           "td",
           { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
-          [_vm._v("MONTHLY SALARY")]
+          [
+            _vm._v(
+              "\n                        MONTHLY SALARY\n                    "
+            )
+          ]
         ),
         _vm._v(" "),
         _c(
@@ -29762,7 +29970,17 @@ var render = function() {
               _c(
                 "button",
                 {
+                  staticClass: "btn btn-danger font-weight-bold",
+                  on: { click: _vm.skipSection }
+                },
+                [_vm._v("\n                        SKIP\n                    ")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
                   staticClass: "btn btn-primary font-weight-bold",
+                  attrs: { disabled: _vm.isLoading },
                   on: { click: _vm.submitLearningAndDevelopment }
                 },
                 [
@@ -29889,7 +30107,7 @@ var staticRenderFns = [
       _c(
         "td",
         { staticClass: "text-center text-sm", attrs: { scope: "col" } },
-        [_vm._v("FROM")]
+        [_vm._v("\n                            FROM\n                        ")]
       ),
       _vm._v(" "),
       _c(
@@ -29939,7 +30157,7 @@ var render = function() {
               ],
               class: _vm.isComplete ? "text-success" : "text-danger"
             },
-            [_vm._v("\n                - VERIFIED")]
+            [_vm._v("\n                    - VERIFIED")]
           )
         ])
       ]),
@@ -30086,7 +30304,17 @@ var render = function() {
               _c(
                 "button",
                 {
+                  staticClass: "btn btn-danger font-weight-bold",
+                  on: { click: _vm.skipSection }
+                },
+                [_vm._v("\n                        SKIP\n                    ")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
                   staticClass: "btn btn-primary font-weight-bold",
+                  attrs: { disabled: _vm.isLoading },
                   on: { click: _vm.submitOtherInformation }
                 },
                 [
@@ -30407,7 +30635,17 @@ var render = function() {
             _c(
               "button",
               {
+                staticClass: "btn btn-danger font-weight-bold",
+                on: { click: _vm.skipSection }
+              },
+              [_vm._v("\n                    SKIP\n                ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
                 staticClass: "btn btn-primary font-weight-bold",
+                attrs: { disabled: _vm.isLoading },
                 on: { click: _vm.submitVoluntary }
               },
               [
@@ -30680,6 +30918,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-primary",
+                    attrs: { disabled: _vm.isLoading },
                     on: { click: _vm.submitIssuedID }
                   },
                   [
@@ -30931,6 +31170,7 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-primary",
+                  attrs: { disabled: _vm.isLoading },
                   on: { click: _vm.submitReferences }
                 },
                 [
@@ -31093,6 +31333,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         _vm.relevantQueries.no_34_a = "no"
+                        _vm.relevantQueries.no_34_a_details = ""
                       }
                     }
                   },
@@ -31228,6 +31469,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         _vm.relevantQueries.no_34_b = "no"
+                        _vm.relevantQueries.no_34_b_details = ""
                       }
                     }
                   },
@@ -31378,6 +31620,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         _vm.relevantQueries.no_35_a = "no"
+                        _vm.relevantQueries.no_35_a_details = ""
                       }
                     }
                   },
@@ -31513,6 +31756,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         _vm.relevantQueries.no_35_b = "no"
+                        _vm.relevantQueries.no_35_b_details = ""
                       }
                     }
                   },
@@ -31655,6 +31899,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         _vm.relevantQueries.no_36 = "no"
+                        _vm.relevantQueries.no_36_details = ""
                       }
                     }
                   },
@@ -31781,6 +32026,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         _vm.relevantQueries.no_37 = "no"
+                        _vm.relevantQueries.no_37_details = ""
                       }
                     }
                   },
@@ -31922,6 +32168,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         _vm.relevantQueries.no_38_a = "no"
+                        _vm.relevantQueries.no_38_a_details = ""
                       }
                     }
                   },
@@ -32057,6 +32304,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         _vm.relevantQueries.no_38_b = "no"
+                        _vm.relevantQueries.no_38_b_details = ""
                       }
                     }
                   },
@@ -32199,6 +32447,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         _vm.relevantQueries.no_39 = "no"
+                        _vm.relevantQueries.no_39_details = ""
                       }
                     }
                   },
@@ -32331,6 +32580,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         _vm.relevantQueries.no_40_a = "no"
+                        _vm.relevantQueries.no_40_a_details = ""
                       }
                     }
                   },
@@ -32466,6 +32716,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         _vm.relevantQueries.no_40_b = "no"
+                        _vm.relevantQueries.no_40_b_details = ""
                       }
                     }
                   },
@@ -32686,6 +32937,7 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-primary  font-weight-bold",
+                  attrs: { disabled: _vm.isLoading },
                   on: { click: _vm.submit }
                 },
                 [
@@ -32947,9 +33199,9 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\n                     " +
+                    "\n                    " +
                       _vm._s(tab.name) +
-                      "\n                 "
+                      "\n                "
                   )
                 ]
               )

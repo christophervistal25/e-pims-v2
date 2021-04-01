@@ -6,18 +6,24 @@
                     VII. LEARNING AND DEVELOPMENT (L&D) INTERVENTIONS/TRAINING
                     PROGRAMS ATTENDED
                     <span
-                    v-show="isComplete"
-                    :class="isComplete ? 'text-success' : 'text-danger'"
+                        v-show="isComplete"
+                        :class="isComplete ? 'text-success' : 'text-danger'"
                     >
                         - VERIFIED</span
                     >
                 </h5>
             </div>
 
-            <div class="collapse" :class="!isComplete && show_panel ? 'show' : '' ">
+            <div
+                class="collapse"
+                :class="!isComplete && show_panel ? 'show' : ''"
+            >
                 <div class="card-body">
                     <table class="table table-bordered">
-                        <tr class="text-center text-sm" style="background: #EAEAEA;">
+                        <tr
+                            class="text-center text-sm"
+                            style="background: #EAEAEA;"
+                        >
                             <td
                                 rowspan="2"
                                 class="align-middle text-sm"
@@ -58,7 +64,9 @@
                             <td rowspan="2" class="align-middle">&nbsp;</td>
                         </tr>
                         <tr style="background: #EAEAEA;">
-                            <td scope="col" class="text-center text-sm">FROM</td>
+                            <td scope="col" class="text-center text-sm">
+                                FROM
+                            </td>
                             <td scope="col" class="text-center text-sm">TO</td>
                         </tr>
 
@@ -128,7 +136,9 @@
                                     <button
                                         v-if="index == noOfFields - 1"
                                         class="btn btn-primary font-weight-bold rounded-circle"
-                                        @click="addNewLearningAndDevelopmentField"
+                                        @click="
+                                            addNewLearningAndDevelopmentField
+                                        "
                                     >
                                         <i class="fa fa-plus"></i>
                                     </button>
@@ -138,8 +148,15 @@
                     </table>
                     <div class="float-right mb-3">
                         <button
+                            class="btn btn-danger font-weight-bold"
+                            @click="skipSection"
+                        >
+                            SKIP
+                        </button>
+                        <button
                             class="btn btn-primary font-weight-bold"
                             @click="submitLearningAndDevelopment"
+                            :disabled="isLoading"
                         >
                             NEXT
                             <div
@@ -159,16 +176,16 @@
 
 <script>
 export default {
-    props : {
-        show_panel : {
-            required : true
+    props: {
+        show_panel: {
+            required: true
         }
     },
     data() {
         return {
             isLoading: false,
             isComplete: false,
-            noOfFields : 0,
+            noOfFields: 0,
             learnDev: [
                 {
                     nameOfTraining: "",
@@ -177,12 +194,12 @@ export default {
                     noOfHours: "",
                     typeOfLD: "",
                     conducted: "",
-                    employee_id : localStorage.getItem('employee_id'),
+                    employee_id: localStorage.getItem("employee_id")
                 }
             ]
         };
     },
-    watch : {
+    watch: {
         learnDev(from, to) {
             this.noOfFields = to.length;
         }
@@ -196,13 +213,17 @@ export default {
                 noOfHours: "",
                 typeOfLD: "",
                 conducted: "",
-                employee_id : localStorage.getItem('employee_id'),
+                employee_id: localStorage.getItem("employee_id")
             });
         },
         removeField(index) {
             if (index !== 0) {
                 this.learnDev.splice(index, 1);
             }
+        },
+        skipSection() {
+            this.isComplete = true;
+            this.$emit("display-other-information");
         },
         submitLearningAndDevelopment() {
             this.isLoading = true;
@@ -211,17 +232,18 @@ export default {
                 .then(response => {
                     this.isLoading = false;
                     this.isComplete = true;
-                    this.$emit('display-other-information');
+                    this.$emit("display-other-information");
                     swal({
                         title: "Good job!",
                         text: "Min sulod na ang data!",
                         icon: "success"
                     });
-                });
+                })
+                .catch(err => (this.isLoading = false));
         }
     },
     created() {
-       this.noOfFields = this.learnDev.length; 
+        this.noOfFields = this.learnDev.length;
     }
 };
 </script>

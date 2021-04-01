@@ -5,18 +5,24 @@
                 <h5 class="mb-0 p-2">
                     GOVERNMENT ISSUED ID
                     <span
-                    v-show="isComplete"
-                    :class="isComplete ? 'text-success' : 'text-danger'"
+                        v-show="isComplete"
+                        :class="isComplete ? 'text-success' : 'text-danger'"
                     >
                         - VERIFIED</span
                     >
                 </h5>
             </div>
 
-            <div class="collapse" :class="!isComplete && show_panel ? 'show' : ''">
+            <div
+                class="collapse"
+                :class="!isComplete && show_panel ? 'show' : ''"
+            >
                 <div class="card-body">
                     <table class="table table-bordered">
-                        <tr class="text-center text-sm" style="background: #EAEAEA;">
+                        <tr
+                            class="text-center text-sm"
+                            style="background: #EAEAEA;"
+                        >
                             <td>Government Issued ID</td>
                             <td>ID/License/Passport No.</td>
                             <td>Date/Place of Issuance</td>
@@ -53,8 +59,9 @@
                     </table>
                     <diva class="float-right mb-3">
                         <button
-                        class="btn btn-primary"
-                        @click="submitIssuedID"
+                            class="btn btn-primary"
+                            @click="submitIssuedID"
+                            :disabled="isLoading"
                         >
                             FINAL TOUCH
                             <div
@@ -74,37 +81,39 @@
 
 <script>
 export default {
-    props : {
-        show_panel : {
-            required : true,
-        },
+    props: {
+        show_panel: {
+            required: true
+        }
     },
     data() {
         return {
-            isComplete : false,
-            isLoading : false,
+            isComplete: false,
+            isLoading: false,
             governmentId: {
                 nameOfGovId: "",
                 idNo: "",
                 dateOfIssuance: "",
-                employee_id : localStorage.getItem('employee_id'),
+                employee_id: localStorage.getItem("employee_id")
             }
         };
     },
     methods: {
         submitIssuedID() {
             this.isLoading = true;
-            window.axios.post('/employee/personal/issued/id', this.governmentId)
-                .then((response) => {
+            window.axios
+                .post("/employee/personal/issued/id", this.governmentId)
+                .then(response => {
                     this.isComplete = true;
-                    this.isLoading = false;   
+                    this.isLoading = false;
                     swal({
                         title: "Good job!",
                         text: "Min sulod na ang data!",
                         icon: "success"
                     });
-                }).catch(err => console.log(err));
-        },
+                })
+                .catch(err => (this.isLoading = false));
+        }
     }
 };
 </script>

@@ -9,15 +9,18 @@
                         applicant /appointee)</span
                     >
                     <span
-                    v-show="isComplete"
-                    :class="isComplete ? 'text-success' : 'text-danger'"
+                        v-show="isComplete"
+                        :class="isComplete ? 'text-success' : 'text-danger'"
                     >
                         - VERIFIED</span
                     >
                 </h5>
             </div>
 
-            <div class="collapse" :class="!isComplete && show_panel ? 'show' : ''">
+            <div
+                class="collapse"
+                :class="!isComplete && show_panel ? 'show' : ''"
+            >
                 <div class="card-body">
                     <table class="table table-bordered">
                         <tr class="text-center jumbotron text-sm">
@@ -65,7 +68,7 @@
                                         X
                                     </button>
                                 </td>
-                                <td class='text-center'>
+                                <td class="text-center">
                                     <button
                                         v-if="index == noOfFields - 1"
                                         class="btn btn-primary font-weight-bold rounded-circle"
@@ -78,11 +81,10 @@
                         </tbody>
                     </table>
                     <div class="float-right mb-3">
-                        
-
                         <button
                             class="btn btn-primary"
                             @click="submitReferences"
+                            :disabled="isLoading"
                         >
                             NEXT
                             <div
@@ -102,27 +104,27 @@
 
 <script>
 export default {
-    props : {
-        show_panel : {
-            required : true,
-        },
+    props: {
+        show_panel: {
+            required: true
+        }
     },
     data() {
         return {
             isLoading: false,
             isComplete: false,
-            noOfFields : 0,
+            noOfFields: 0,
             references: [
                 {
                     refName: "",
                     refAdd: "",
                     refTelNo: "",
-                    employee_id : localStorage.getItem('employee_id'),
+                    employee_id: localStorage.getItem("employee_id")
                 }
             ]
         };
     },
-    watch : {
+    watch: {
         references(from, to) {
             this.noOfFields = to.length;
         }
@@ -133,7 +135,7 @@ export default {
                 refName: "",
                 refAdd: "",
                 refTelNo: "",
-                employee_id : localStorage.getItem('employee_id'),
+                employee_id: localStorage.getItem("employee_id")
             });
         },
         removeField(index) {
@@ -148,13 +150,14 @@ export default {
                 .then(response => {
                     this.isLoading = false;
                     this.isComplete = true;
-                    this.$emit('display-issued-id')
+                    this.$emit("display-issued-id");
                     swal({
                         title: "Good job!",
                         text: "Min sulod na ang data!",
                         icon: "success"
                     });
-                });
+                })
+                .catch(err => (this.isLoading = false));
         }
     },
     created() {

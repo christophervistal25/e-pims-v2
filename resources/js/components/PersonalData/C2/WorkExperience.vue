@@ -29,7 +29,9 @@
                             DEPARTMENT / AGENCY / OFFICE / COMPANY (Write in
                             full/Do not abbreviate)
                         </td>
-                        <td rowspan="2" class="align-middle text-sm">MONTHLY SALARY</td>
+                        <td rowspan="2" class="align-middle text-sm">
+                            MONTHLY SALARY
+                        </td>
                         <td rowspan="2" class="align-middle text-sm">
                             SALARY/ JOB/ PAY GRADE <br />
                             (if applicable) <br />
@@ -144,8 +146,15 @@
                 </table>
                 <div class="float-right mb-3">
                     <button
+                        class="btn btn-danger font-weight-bold"
+                        @click="skipSection"
+                    >
+                        SKIP
+                    </button>
+                    <button
                         class="btn btn-primary font-weight-bold"
                         @click="submitWorkExperience"
+                        :disabled="isLoading"
                     >
                         NEXT
 
@@ -175,7 +184,7 @@ export default {
             isComplete: false,
             isLoading: false,
             noOfFields: 0,
-            employee_id : '',
+            employee_id: "",
             workExperience: [
                 {
                     from: "",
@@ -186,7 +195,7 @@ export default {
                     payGrade: "",
                     statOfApp: "",
                     govServ: "N",
-                    employee_id: localStorage.getItem('employee_id'),
+                    employee_id: localStorage.getItem("employee_id")
                 }
             ]
         };
@@ -207,8 +216,12 @@ export default {
                 payGrade: "",
                 statOfApp: "",
                 govServ: "N",
-                employee_id: localStorage.getItem('employee_id'),
+                employee_id: localStorage.getItem("employee_id")
             });
+        },
+        skipSection() {
+            this.isComplete = true;
+            this.$emit("next_tab");
         },
         submitWorkExperience() {
             this.isLoading = true;
@@ -226,7 +239,7 @@ export default {
                         icon: "success"
                     });
                 })
-                .catch(err => {});
+                .catch(err => (this.isLoading = false));
         },
         removeField(index) {
             if (index != 0) {

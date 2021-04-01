@@ -5,15 +5,18 @@
                 <h5 class="mb-0 p-2">
                     VIII. OTHER INFORMATION
                     <span
-                    v-show="isComplete"
-                    :class="isComplete ? 'text-success' : 'text-danger'"
-                >
-                    - VERIFIED</span
-                >
+                        v-show="isComplete"
+                        :class="isComplete ? 'text-success' : 'text-danger'"
+                    >
+                        - VERIFIED</span
+                    >
                 </h5>
             </div>
 
-            <div class="collapse" :class="!isComplete && show_panel ? 'show' : ''">
+            <div
+                class="collapse"
+                :class="!isComplete && show_panel ? 'show' : ''"
+            >
                 <div class="card-body">
                     <table class="table table-bordered">
                         <tr class="text-center" style="background: #EAEAEA;">
@@ -81,7 +84,7 @@
                                         X
                                     </button>
                                 </td>
-                                <td class='text-center'>
+                                <td class="text-center">
                                     <button
                                         v-if="index == noOfFields - 1"
                                         class="btn btn-primary font-weight-bold rounded-circle"
@@ -95,8 +98,15 @@
                     </table>
                     <div class="float-right mb-3">
                         <button
+                            class="btn btn-danger font-weight-bold"
+                            @click="skipSection"
+                        >
+                            SKIP
+                        </button>
+                        <button
                             class="btn btn-primary font-weight-bold"
                             @click="submitOtherInformation"
+                            :disabled="isLoading"
                         >
                             NEXT
                             <div
@@ -117,27 +127,27 @@
 <script>
 import swal from "sweetalert";
 export default {
-    props : {
-        show_panel : {
-            required : true,
+    props: {
+        show_panel: {
+            required: true
         }
     },
     data() {
         return {
             isLoading: false,
             isComplete: false,
-            noOfFields : 0,
+            noOfFields: 0,
             otherInformation: [
                 {
                     skill: "",
                     recog: "",
                     memAssociation: "",
-                    employee_id : localStorage.getItem('employee_id'),
+                    employee_id: localStorage.getItem("employee_id")
                 }
             ]
         };
     },
-    watch : {
+    watch: {
         otherInformation(from, to) {
             this.noOfFields = to.length;
         }
@@ -148,8 +158,12 @@ export default {
                 skill: "",
                 recog: "",
                 memAssociation: "",
-                employee_id : localStorage.getItem('employee_id'),
+                employee_id: localStorage.getItem("employee_id")
             });
+        },
+        skipSection() {
+            this.isComplete = false;
+            this.$emit("next_tab");
         },
         submitOtherInformation() {
             this.isLoading = true;
@@ -167,7 +181,8 @@ export default {
                         text: "Min sulod na ang data!",
                         icon: "success"
                     });
-                });
+                })
+                .catch(err => (this.isLoading = false));
         },
         removeField(index) {
             if (index !== 0) {

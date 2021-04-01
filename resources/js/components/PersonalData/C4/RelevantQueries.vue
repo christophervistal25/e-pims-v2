@@ -5,8 +5,8 @@
                 <h5 class="mb-0 p-2">
                     RELEVANT QUERIES
                     <span
-                    v-show="isComplete"
-                    :class="isComplete ? 'text-success' : 'text-danger'"
+                        v-show="isComplete"
+                        :class="isComplete ? 'text-success' : 'text-danger'"
                     >
                         - VERIFIED</span
                     >
@@ -64,7 +64,12 @@
                                     </label>
                                 </div>
                             </td>
-                            <td @click="relevantQueries.no_34_a = 'no'">
+                            <td
+                                @click="
+                                    relevantQueries.no_34_a = 'no';
+                                    relevantQueries.no_34_a_details = '';
+                                "
+                            >
                                 <div class="form-check">
                                     <input
                                         type="radio"
@@ -126,7 +131,12 @@
                                     >
                                 </div>
                             </td>
-                            <td @click="relevantQueries.no_34_b = 'no'">
+                            <td
+                                @click="
+                                    relevantQueries.no_34_b = 'no';
+                                    relevantQueries.no_34_b_details = '';
+                                "
+                            >
                                 <div class="form-check">
                                     <input
                                         type="radio"
@@ -186,7 +196,12 @@
                                     </label>
                                 </div>
                             </td>
-                            <td @click="relevantQueries.no_35_a = 'no'">
+                            <td
+                                @click="
+                                    relevantQueries.no_35_a = 'no';
+                                    relevantQueries.no_35_a_details = '';
+                                "
+                            >
                                 <div class="form-check">
                                     <input
                                         type="radio"
@@ -245,7 +260,12 @@
                                     >
                                 </div>
                             </td>
-                            <td @click="relevantQueries.no_35_b = 'no'">
+                            <td
+                                @click="
+                                    relevantQueries.no_35_b = 'no';
+                                    relevantQueries.no_35_b_details = '';
+                                "
+                            >
                                 <div class="form-check">
                                     <input
                                         id="no_b_35"
@@ -303,7 +323,12 @@
                                     >
                                 </div>
                             </td>
-                            <td @click="relevantQueries.no_36 = 'no'">
+                            <td
+                                @click="
+                                    relevantQueries.no_36 = 'no';
+                                    relevantQueries.no_36_details = '';
+                                "
+                            >
                                 <div class="form-check">
                                     <input
                                         type="radio"
@@ -364,7 +389,12 @@
                                     >
                                 </div>
                             </td>
-                            <td @click="relevantQueries.no_37 = 'no'">
+                            <td
+                                @click="
+                                    relevantQueries.no_37 = 'no';
+                                    relevantQueries.no_37_details = '';
+                                "
+                            >
                                 <div class="form-check">
                                     <input
                                         type="radio"
@@ -422,7 +452,12 @@
                                     >
                                 </div>
                             </td>
-                            <td @click="relevantQueries.no_38_a = 'no'">
+                            <td
+                                @click="
+                                    relevantQueries.no_38_a = 'no';
+                                    relevantQueries.no_38_a_details = '';
+                                "
+                            >
                                 <div class="form-check">
                                     <input
                                         type="radio"
@@ -486,7 +521,10 @@
                             </td>
                             <td
                                 class=""
-                                @click="relevantQueries.no_38_b = 'no'"
+                                @click="
+                                    relevantQueries.no_38_b = 'no';
+                                    relevantQueries.no_38_b_details = '';
+                                "
                             >
                                 <div class="form-check">
                                     <input
@@ -544,7 +582,13 @@
                                     >
                                 </div>
                             </td>
-                            <td class="" @click="relevantQueries.no_39 = 'no'">
+                            <td
+                                class=""
+                                @click="
+                                    relevantQueries.no_39 = 'no';
+                                    relevantQueries.no_39_details = '';
+                                "
+                            >
                                 <div class="form-check">
                                     <input
                                         type="radio"
@@ -578,7 +622,10 @@
 
                         <!-- {{-- BEGIN OF 40 --}} -->
                         <tr>
-                            <td style="background: #EAEAEA;" class="text-left text-sm">
+                            <td
+                                style="background: #EAEAEA;"
+                                class="text-left text-sm"
+                            >
                                 40. Pursuant to: (a) Indigenous People's Act (RA
                                 8371); (b) Magna Carta for Disabled Persons (RA
                                 7277); and (c) Solo Parents Welfare Act of 2000
@@ -619,7 +666,10 @@
                             </td>
                             <td
                                 class=""
-                                @click="relevantQueries.no_40_a = 'no'"
+                                @click="
+                                    relevantQueries.no_40_a = 'no';
+                                    relevantQueries.no_40_a_details = '';
+                                "
                             >
                                 <div class="form-check">
                                     <input
@@ -683,7 +733,10 @@
                             </td>
                             <td
                                 class=""
-                                @click="relevantQueries.no_40_b = 'no'"
+                                @click="
+                                    relevantQueries.no_40_b = 'no';
+                                    relevantQueries.no_40_b_details = '';
+                                "
                             >
                                 <div class="form-check ">
                                     <input
@@ -748,7 +801,10 @@
                             </td>
                             <td
                                 class=""
-                                @click="relevantQueries.no_40_c = 'no'; relevantQueries.no_40_c_details = ''"
+                                @click="
+                                    relevantQueries.no_40_c = 'no';
+                                    relevantQueries.no_40_c_details = '';
+                                "
                             >
                                 <div class="form-check">
                                     <input
@@ -786,8 +842,9 @@
 
                     <div class="float-right mb-3">
                         <button
-                        class="btn btn-primary  font-weight-bold"
-                        @click="submit"
+                            class="btn btn-primary  font-weight-bold"
+                            @click="submit"
+                            :disabled="isLoading"
                         >
                             NEXT
                             <div
@@ -806,12 +863,12 @@
 </template>
 
 <script>
-import swal from 'sweetalert';
+import swal from "sweetalert";
 export default {
     data() {
         return {
-            isComplete : false,
-            isLoading : false,
+            isComplete: false,
+            isLoading: false,
             relevantQueries: {
                 no_34_a: "",
                 no_34_a_details: "",
@@ -850,7 +907,9 @@ export default {
     methods: {
         submit() {
             this.isLoading = true;
-            this.relevantQueries.employee_id = localStorage.getItem('employee_id');
+            this.relevantQueries.employee_id = localStorage.getItem(
+                "employee_id"
+            );
             window.axios
                 .post(
                     "/employee/personal/relevant/queries",
@@ -859,18 +918,17 @@ export default {
                 .then(response => {
                     this.isComplete = true;
                     this.isLoading = false;
-                    this.$emit('display-reference');
+                    this.$emit("display-reference");
                     swal({
                         title: "Good job!",
                         text: "Min sulod na ang data!",
                         icon: "success"
                     });
                 })
-                .catch(err => {});
-        },
+                .catch(err => (this.isLoading = false));
+        }
     },
-    created() {
-    }
+    created() {}
 };
 </script>
 

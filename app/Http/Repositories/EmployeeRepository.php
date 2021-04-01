@@ -232,7 +232,7 @@ class EmployeeRepository
         return $employee->voluntary_work()->saveMany($records);
     }
 
-    public function addLearning(array $trainings = []) :string
+    public function addLearning(array $trainings = []) :array
     {
         $employeeId = $trainings[self::FIRST_INDEX]['employee_id'];
 
@@ -257,10 +257,10 @@ class EmployeeRepository
             }
         }
 
-        return $employeeId;
+        return $employee->program_attained()->saveMany($records);
     }
 
-    public function addOtherInformation(array $informations = [])  :string
+    public function addOtherInformation(array $informations = [])  :array
     {
         $employeeId = $informations[self::FIRST_INDEX]['employee_id'];
 
@@ -274,7 +274,7 @@ class EmployeeRepository
             ]);
         }
 
-        return $employeeId;
+        return $employee->other_information()->saveMany($otherInformations);
     }
 
     public function addRelevantQueries(array $queries = [])
@@ -335,7 +335,7 @@ class EmployeeRepository
         $employeeIssuedId->id_type = $data['nameOfGovId'];
         $employeeIssuedId->id_no = $data['idNo'];
         $employeeIssuedId->date = $data['dateOfIssuance'];
-        
+
         return $employee->issued_id()->save($employeeIssuedId);
     }
 }

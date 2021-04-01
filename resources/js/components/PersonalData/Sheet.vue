@@ -1,6 +1,6 @@
 <template>
-   <div>
-         <!-- <div>
+    <div>
+        <!-- <div>
             <div class="container dash-border p-4">
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates labore alias quasi facere, ipsa porro ipsam culpa voluptate voluptatibus quas. Id minus, veniam facilis eum commodi nemo unde laudantium eos?</p>
 
@@ -61,8 +61,10 @@
             <!-- END OF C2 -->
 
             <!-- C3 -->
-            <voluntary 
-                @display-learning-and-development="displayLearningAndDevelopment"
+            <voluntary
+                @display-learning-and-development="
+                    displayLearningAndDevelopment
+                "
                 v-if="selectedTab.name === 'C3'"
             ></voluntary>
 
@@ -72,7 +74,7 @@
                 :show_panel="needToShowLearningAndDevelopment"
             ></learning-and-development>
 
-            <other-information 
+            <other-information
                 v-if="selectedTab.name === 'C3'"
                 :show_panel="needToShowOtherInformation"
                 @next_tab="openNextTab"
@@ -80,21 +82,22 @@
             <!-- END OF C3 -->
 
             <!-- C4 -->
-            <relevant-queries 
+            <relevant-queries
                 v-if="selectedTab.name === 'C4'"
                 @display-reference="displayReference"
             ></relevant-queries>
             <references
                 :show_panel="needToShowReference"
                 @display-issued-id="displayIssuedID"
-                v-if="selectedTab.name === 'C4'"></references>
+                v-if="selectedTab.name === 'C4'"
+            ></references>
             <goverment-issued-id
                 :show_panel="needToShowIssuedID"
                 v-if="selectedTab.name === 'C4'"
             ></goverment-issued-id>
             <!-- END OF C4 -->
         </div>
-   </div>
+    </div>
 </template>
 
 <script>
@@ -125,11 +128,11 @@ export default {
         OtherInformation,
         RelevantQueries,
         Reference,
-        GovernmentIssuedID,
+        GovernmentIssuedID
     },
     data() {
         return {
-            hasSelecType : false,
+            hasSelecType: false,
             tabs: [
                 {
                     name: "C1",
@@ -156,11 +159,10 @@ export default {
             isFamilyBackgroundShow: false,
             isEducationalBackground: false,
             isWorkExperienceShow: false,
-            needToShowLearningAndDevelopment : false,
-            needToShowOtherInformation : false,
-            needToShowReference : false,
-            needToShowIssuedID: false,
-            employee_id: null
+            needToShowLearningAndDevelopment: false,
+            needToShowOtherInformation: false,
+            needToShowReference: false,
+            needToShowIssuedID: false
         };
     },
     methods: {
@@ -184,7 +186,7 @@ export default {
         },
         displayIssuedID() {
             this.needToShowIssuedID = true;
-        },     
+        },
         openTab(tab) {
             this.tabs.map(tab => (tab.status = false));
             this.selectedTab = tab;
@@ -201,7 +203,7 @@ export default {
                     tab.status = false;
                 }
             });
-        },
+        }
     },
     created() {
         // set the default tab display to C1
@@ -210,9 +212,9 @@ export default {
 };
 </script>
 <style scoped>
-    .dash-border {
-        border-color : #007bff;
-        border-width : 4px;  
-        border-style : dashed;
-    }
+.dash-border {
+    border-color: #007bff;
+    border-width: 4px;
+    border-style: dashed;
+}
 </style>

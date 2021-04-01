@@ -560,6 +560,7 @@
                     <button
                         class="btn btn-primary font-weight-bold"
                         @click="submitPersonalInformation"
+                        :disabled="isLoading"
                     >
                         NEXT
 
@@ -664,7 +665,10 @@ export default {
                 .then(response => {
                     this.isLoading = false;
                     this.isComplete = true;
-                    localStorage.setItem('employee_id', response.data.employee_id);
+                    localStorage.setItem(
+                        "employee_id",
+                        response.data.employee_id
+                    );
                     this.$emit("display-family-background");
 
                     swal({

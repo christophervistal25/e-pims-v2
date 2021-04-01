@@ -17,16 +17,32 @@
             <div class="card-body">
                 <table class="table table-bordered">
                     <tr class="text-center" style="background: #EAEAEA;">
-                        <td rowspan="2" class="align-middle text-sm" scope="colgroup">
+                        <td
+                            rowspan="2"
+                            class="align-middle text-sm"
+                            scope="colgroup"
+                        >
                             NAME & ADDRESS OF ORGANIZATION (Write in full)
                         </td>
-                        <td colspan="2" class="align-middle text-sm" scope="colgroup">
+                        <td
+                            colspan="2"
+                            class="align-middle text-sm"
+                            scope="colgroup"
+                        >
                             INCLUSIVE DATES (mm/dd/yyyy)
                         </td>
-                        <td rowspan="2" class="align-middle text-sm" scope="colgroup">
+                        <td
+                            rowspan="2"
+                            class="align-middle text-sm"
+                            scope="colgroup"
+                        >
                             NUMBES OF HOURS
                         </td>
-                        <td rowspan="2" class="align-middle text-sm" scope="colgroup">
+                        <td
+                            rowspan="2"
+                            class="align-middle text-sm"
+                            scope="colgroup"
+                        >
                             POSITION / NATURE OF WORK
                         </td>
                         <td rowspan="2" class="align-middle text-sm">&nbsp;</td>
@@ -87,7 +103,7 @@
                                     X
                                 </button>
                             </td>
-                            <td class='text-center'>
+                            <td class="text-center">
                                 <button
                                     v-if="index == noOfFields - 1"
                                     class="btn btn-primary rounded-circle font-weight-bold"
@@ -101,8 +117,15 @@
                 </table>
                 <div class="float-right mb-3">
                     <button
+                        class="btn btn-danger font-weight-bold"
+                        @click="skipSection"
+                    >
+                        SKIP
+                    </button>
+                    <button
                         class="btn btn-primary font-weight-bold"
                         @click="submitVoluntary"
+                        :disabled="isLoading"
                     >
                         NEXT
                         <div
@@ -134,7 +157,7 @@ export default {
                     to: "",
                     noOfHrs: "",
                     position: "",
-                    employee_id : localStorage.getItem('employee_id'),
+                    employee_id: localStorage.getItem("employee_id")
                 }
             ]
         };
@@ -152,13 +175,17 @@ export default {
                 to: "",
                 noOfHrs: "",
                 position: "",
-                employee_id : localStorage.getItem('employee_id'),
+                employee_id: localStorage.getItem("employee_id")
             });
         },
         removeField(index) {
             if (index != 0) {
                 this.volunOrg.splice(index, 1);
             }
+        },
+        skipSection() {
+            this.isComplete = true;
+            this.$emit("display-learning-and-development");
         },
         submitVoluntary() {
             this.isLoading = true;
@@ -173,7 +200,8 @@ export default {
                         text: "Min sulod na ang data!",
                         icon: "success"
                     });
-                });
+                })
+                .catch(err => (this.isLoading = false));
         }
     },
     created() {

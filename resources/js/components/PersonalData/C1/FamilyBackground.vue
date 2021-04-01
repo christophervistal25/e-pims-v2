@@ -122,10 +122,12 @@
                 </div>
                 <hr />
                 <div class="p-2">
-                     <table class="table table-bordered">
+                    <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th class="font-weight-bold">NAME OF CHILDREN</th>
+                                <th class="font-weight-bold">
+                                    NAME OF CHILDREN
+                                </th>
                                 <th class="font-weight-bold">DATE OF BIRTH</th>
                             </tr>
                         </thead>
@@ -148,9 +150,8 @@
                                         placeholder="Enter Spouse's Business Address"
                                         v-model="spouse.cdateOfBirth"
                                     />
-                                    
                                 </td>
-                                <td class='text-center'>
+                                <td class="text-center">
                                     <button
                                         v-show="index != 0"
                                         @click="removeField(index)"
@@ -159,7 +160,7 @@
                                         X
                                     </button>
                                 </td>
-                                <td class='text-center'>
+                                <td class="text-center">
                                     <button
                                         v-if="index == noOfSpouseFields - 1"
                                         class="btn btn-primary rounded-circle"
@@ -263,6 +264,7 @@
                     <button
                         class="btn btn-primary font-weight-bold mr-3 mb-2"
                         @click="submitPersonFamilyBackground"
+                        :disabled="isLoading"
                     >
                         NEXT
                         <div
@@ -291,7 +293,7 @@ export default {
         return {
             isLoading: false,
             isComplete: false,
-            noOfSpouseFields : 0,
+            noOfSpouseFields: 0,
             spouse: [
                 {
                     cname: "",
@@ -321,7 +323,7 @@ export default {
             }
         };
     },
-    watch : {
+    watch: {
         spouse(from, to) {
             this.noOfSpouseFields = to.length;
         }
@@ -340,7 +342,9 @@ export default {
         },
         submitPersonFamilyBackground() {
             this.isLoading = true;
-            this.familyBackground.employee_id = localStorage.getItem('employee_id');
+            this.familyBackground.employee_id = localStorage.getItem(
+                "employee_id"
+            );
             this.familyBackground.spouse = this.spouse;
 
             window.axios

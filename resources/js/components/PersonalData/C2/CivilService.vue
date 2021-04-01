@@ -22,18 +22,24 @@
                                 SPECIAL LAWS/ CES/ CSEE BARANGAY ELIGIBILITY /
                                 DRIVER'S LICENSE
                             </td>
-                            <td rowspan="2" class="align-middle text-sm">RATING</td>
+                            <td rowspan="2" class="align-middle text-sm">
+                                RATING
+                            </td>
                             <td rowspan="2" class="align-middle text-sm">
                                 DATE OF EXAMINATION / CONFERMENT
                             </td>
                             <td rowspan="2" class="align-middle text-sm">
                                 PLACE OF EXAMINATION / CONFERMENT
                             </td>
-                            <td colspan="2" scope="colgroup" class="text-sm">LICENSE</td>
+                            <td colspan="2" scope="colgroup" class="text-sm">
+                                LICENSE
+                            </td>
                             <td rowspan="2" class="pl-4 pr-4">&nbsp;</td>
                         </tr>
                         <tr style="background: #EAEAEA;">
-                            <td scope="col" class="text-center text-sm">NUMBER</td>
+                            <td scope="col" class="text-center text-sm">
+                                NUMBER
+                            </td>
                             <td scope="col" class="text-center text-sm">
                                 Date of Validity
                             </td>
@@ -115,12 +121,16 @@
                         </tbody>
                     </table>
                     <div class="float-right mb-3">
-                        <button class='btn btn-warning font-weight-bold'>
-                            RESET NO VALUES
+                        <button
+                            class="btn btn-danger font-weight-bold"
+                            @click="skipSection"
+                        >
+                            SKIP
                         </button>
                         <button
                             class="btn btn-primary font-weight-bold"
                             @click="submitCivilService"
+                            :disabled="isLoading"
                         >
                             NEXT
 
@@ -155,7 +165,7 @@ export default {
                     careerServ: "",
                     number: "",
                     dateOfValid: "",
-                    employee_id : localStorage.getItem('employee_id'),
+                    employee_id: localStorage.getItem("employee_id")
                 }
             ]
         };
@@ -170,8 +180,12 @@ export default {
                 careerServ: "",
                 number: "",
                 dateOfValid: "",
-                employee_id : localStorage.getItem('employee_id'),
+                employee_id: localStorage.getItem("employee_id")
             });
+        },
+        skipSection() {
+            this.isComplete = true;
+            this.$emit("display-work-experience");
         },
         submitCivilService() {
             this.isLoading = true;
@@ -180,14 +194,14 @@ export default {
                 .then(response => {
                     this.isLoading = false;
                     this.isComplete = true;
-                    this.$emit("display-work-experience", this.employee_id);
+                    this.$emit("display-work-experience");
                     swal({
                         title: "Good job!",
                         text: "Min sulod na ang data!",
                         icon: "success"
                     });
                 })
-                .catch(err => {});
+                .catch(err => (this.isLoading = false));
         },
         removeField(index) {
             if (index != 0) {
