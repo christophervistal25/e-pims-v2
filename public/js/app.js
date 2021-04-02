@@ -2600,9 +2600,6 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     educational_background: {
       required: true
-    },
-    employee_id: {
-      required: true
     }
   },
   data: function data() {
@@ -2656,7 +2653,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.isLoading = true;
-      this.educationalBackground.employee_id = this.employee_id;
+      this.educationalBackground.employee_id = localStorage.getItem('employee_id');
       window.axios.post("/employee/personal/educational/background/store", this.educationalBackground).then(function (response) {
         _this.isLoading = false;
         _this.isComplete = true;
@@ -2947,13 +2944,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     family_show: {
-      required: true
-    },
-    employee_id: {
       required: true
     }
   },
@@ -2961,6 +2974,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       isLoading: false,
       isComplete: false,
+      noOfSpouseFields: 0,
       spouse: [{
         cname: "",
         cdateOfBirth: ""
@@ -2987,6 +3001,11 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
+  watch: {
+    spouse: function spouse(from, to) {
+      this.noOfSpouseFields = to.length;
+    }
+  },
   methods: {
     generateNewSpuseField: function generateNewSpuseField() {
       this.spouse.push({
@@ -2994,17 +3013,22 @@ __webpack_require__.r(__webpack_exports__);
         dateOfBirth: ""
       });
     },
+    removeField: function removeField(index) {
+      if (index != 0) {
+        this.spouse.splice(index, 1);
+      }
+    },
     submitPersonFamilyBackground: function submitPersonFamilyBackground() {
       var _this = this;
 
       this.isLoading = true;
-      this.familyBackground.employee_id = this.employee_id;
+      this.familyBackground.employee_id = localStorage.getItem('employee_id');
       this.familyBackground.spouse = this.spouse;
       window.axios.post("/employee/personal/family/background/store", this.familyBackground).then(function (response) {
         _this.isLoading = false;
         _this.isComplete = true;
 
-        _this.$emit("display-educational-background", response.data.employee_id);
+        _this.$emit("display-educational-background");
 
         sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
           title: "Good job!",
@@ -3015,6 +3039,9 @@ __webpack_require__.r(__webpack_exports__);
         return _this.isLoading = false;
       });
     }
+  },
+  created: function created() {
+    this.noOfSpouseFields = this.spouse.length;
   }
 });
 
@@ -3691,8 +3718,9 @@ __webpack_require__.r(__webpack_exports__);
       window.axios.post("/employee/personal/information/store", this.personal_data).then(function (response) {
         _this.isLoading = false;
         _this.isComplete = true;
+        localStorage.setItem('employee_id', response.data.employee_id);
 
-        _this.$emit("display-family-background", response.data.employee_id);
+        _this.$emit("display-family-background");
 
         sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
           title: "Good job!",
@@ -3859,13 +3887,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    employee_id: {
-      required: true
-    }
-  },
   data: function data() {
     var _ref;
 
@@ -3878,7 +3904,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         dateOfExam: "",
         rating: "",
         careerServ: ""
-      }, _defineProperty(_ref, "number", ""), _defineProperty(_ref, "dateOfValid", ""), _defineProperty(_ref, "employee_id", this.employee_id), _ref)]
+      }, _defineProperty(_ref, "number", ""), _defineProperty(_ref, "dateOfValid", ""), _defineProperty(_ref, "employee_id", localStorage.getItem('employee_id')), _ref)]
     };
   },
   methods: {
@@ -3891,7 +3917,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         dateOfExam: "",
         rating: "",
         careerServ: ""
-      }, _defineProperty(_this$civilService$pu, "number", ""), _defineProperty(_this$civilService$pu, "dateOfValid", ""), _defineProperty(_this$civilService$pu, "employee_id", this.employee_id), _this$civilService$pu));
+      }, _defineProperty(_this$civilService$pu, "number", ""), _defineProperty(_this$civilService$pu, "dateOfValid", ""), _defineProperty(_this$civilService$pu, "employee_id", localStorage.getItem('employee_id')), _this$civilService$pu));
     },
     submitCivilService: function submitCivilService() {
       var _this = this;
@@ -4098,9 +4124,6 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     work_experience: {
       required: true
-    },
-    employee_id: {
-      required: true
     }
   },
   data: function data() {
@@ -4108,6 +4131,7 @@ __webpack_require__.r(__webpack_exports__);
       isComplete: false,
       isLoading: false,
       noOfFields: 0,
+      employee_id: '',
       workExperience: [{
         from: "",
         to: "",
@@ -4117,7 +4141,7 @@ __webpack_require__.r(__webpack_exports__);
         payGrade: "",
         statOfApp: "",
         govServ: "N",
-        employee_id: this.employee_id
+        employee_id: localStorage.getItem('employee_id')
       }]
     };
   },
@@ -4137,7 +4161,7 @@ __webpack_require__.r(__webpack_exports__);
         payGrade: "",
         statOfApp: "",
         govServ: "N",
-        employee_id: this.employee_id
+        employee_id: localStorage.getItem('employee_id')
       });
     },
     submitWorkExperience: function submitWorkExperience() {
@@ -4333,20 +4357,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    show_panel: {
+      required: true
+    }
+  },
   data: function data() {
     return {
       isLoading: false,
       isComplete: false,
+      noOfFields: 0,
       learnDev: [{
         nameOfTraining: "",
         from: "",
         to: "",
         noOfHours: "",
         typeOfLD: "",
-        conducted: ""
+        conducted: "",
+        employee_id: localStorage.getItem('employee_id')
       }]
     };
+  },
+  watch: {
+    learnDev: function learnDev(from, to) {
+      this.noOfFields = to.length;
+    }
   },
   methods: {
     addNewLearningAndDevelopmentField: function addNewLearningAndDevelopmentField() {
@@ -4356,7 +4397,8 @@ __webpack_require__.r(__webpack_exports__);
         to: "",
         noOfHours: "",
         typeOfLD: "",
-        conducted: ""
+        conducted: "",
+        employee_id: localStorage.getItem('employee_id')
       });
     },
     removeField: function removeField(index) {
@@ -4371,6 +4413,9 @@ __webpack_require__.r(__webpack_exports__);
       window.axios.post("/employee/personal/learning", this.learnDev).then(function (response) {
         _this.isLoading = false;
         _this.isComplete = true;
+
+        _this.$emit('display-other-information');
+
         swal({
           title: "Good job!",
           text: "Min sulod na ang data!",
@@ -4378,6 +4423,9 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
     }
+  },
+  created: function created() {
+    this.noOfFields = this.learnDev.length;
   }
 });
 
@@ -4505,25 +4553,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    show_panel: {
+      required: true
+    }
+  },
   data: function data() {
     return {
       isLoading: false,
       isComplete: false,
+      noOfFields: 0,
       otherInformation: [{
         skill: "",
         recog: "",
-        memAssociation: ""
+        memAssociation: "",
+        employee_id: localStorage.getItem('employee_id')
       }]
     };
+  },
+  watch: {
+    otherInformation: function otherInformation(from, to) {
+      this.noOfFields = to.length;
+    }
   },
   methods: {
     addNewOtherInformationField: function addNewOtherInformationField() {
       this.otherInformation.push({
         skill: "",
         recog: "",
-        memAssociation: ""
+        memAssociation: "",
+        employee_id: localStorage.getItem('employee_id')
       });
     },
     submitOtherInformation: function submitOtherInformation() {
@@ -4533,6 +4599,9 @@ __webpack_require__.r(__webpack_exports__);
       window.axios.post("/employee/personal/other/information", this.otherInformation).then(function (response) {
         _this.isComplete = true;
         _this.isLoading = false;
+
+        _this.$emit("next_tab");
+
         sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
           title: "Good job!",
           text: "Min sulod na ang data!",
@@ -4545,6 +4614,9 @@ __webpack_require__.r(__webpack_exports__);
         this.otherInformation.splice(index, 1);
       }
     }
+  },
+  created: function created() {
+    this.noOfFields = this.otherInformation.length;
   }
 });
 
@@ -4677,6 +4749,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -4689,7 +4766,8 @@ __webpack_require__.r(__webpack_exports__);
         from: "",
         to: "",
         noOfHrs: "",
-        position: ""
+        position: "",
+        employee_id: localStorage.getItem('employee_id')
       }]
     };
   },
@@ -4705,7 +4783,8 @@ __webpack_require__.r(__webpack_exports__);
         from: "",
         to: "",
         noOfHrs: "",
-        position: ""
+        position: "",
+        employee_id: localStorage.getItem('employee_id')
       });
     },
     removeField: function removeField(index) {
@@ -4720,6 +4799,9 @@ __webpack_require__.r(__webpack_exports__);
       window.axios.post("/employee/personal/voluntary", this.volunOrg).then(function (response) {
         _this.isLoading = false;
         _this.isComplete = true;
+
+        _this.$emit("display-learning-and-development");
+
         sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
           title: "Good job!",
           text: "Min sulod na ang data!",
@@ -4797,17 +4879,63 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    show_panel: {
+      required: true
+    }
+  },
   data: function data() {
     return {
+      isComplete: false,
+      isLoading: false,
       governmentId: {
         nameOfGovId: "",
         idNo: "",
-        dateOfIssuance: ""
+        dateOfIssuance: "",
+        employee_id: localStorage.getItem('employee_id')
       }
     };
   },
-  methods: {}
+  methods: {
+    submitIssuedID: function submitIssuedID() {
+      var _this = this;
+
+      this.isLoading = true;
+      window.axios.post('/employee/personal/issued/id', this.governmentId).then(function (response) {
+        _this.isComplete = true;
+        _this.isLoading = false;
+        swal({
+          title: "Good job!",
+          text: "Min sulod na ang data!",
+          icon: "success"
+        });
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -4916,24 +5044,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    show_panel: {
+      required: true
+    }
+  },
   data: function data() {
     return {
       isLoading: false,
       isComplete: false,
+      noOfFields: 0,
       references: [{
         refName: "",
         refAdd: "",
-        refTelNo: ""
+        refTelNo: "",
+        employee_id: localStorage.getItem('employee_id')
       }]
     };
+  },
+  watch: {
+    references: function references(from, to) {
+      this.noOfFields = to.length;
+    }
   },
   methods: {
     addNewReferenceField: function addNewReferenceField() {
       this.references.push({
         refName: "",
         refAdd: "",
-        refTelNo: ""
+        refTelNo: "",
+        employee_id: localStorage.getItem('employee_id')
       });
     },
     removeField: function removeField(index) {
@@ -4948,6 +5096,9 @@ __webpack_require__.r(__webpack_exports__);
       window.axios.post("/employee/personal/references", this.references).then(function (response) {
         _this.isLoading = false;
         _this.isComplete = true;
+
+        _this.$emit('display-issued-id');
+
         swal({
           title: "Good job!",
           text: "Min sulod na ang data!",
@@ -4955,6 +5106,9 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
     }
+  },
+  created: function created() {
+    this.noOfFields = this.references.length;
   }
 });
 
@@ -4969,6 +5123,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -5761,9 +5917,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      isComplete: false,
+      isLoading: false,
       relevantQueries: {
         no_34_a: "",
         no_34_a_details: "",
@@ -5794,12 +5968,25 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     submit: function submit() {
+      var _this = this;
+
+      this.isLoading = true;
+      this.relevantQueries.employee_id = localStorage.getItem('employee_id');
       window.axios.post("/employee/personal/relevant/queries", this.relevantQueries).then(function (response) {
-        console.log(response.data);
+        _this.isComplete = true;
+        _this.isLoading = false;
+
+        _this.$emit('display-reference');
+
+        sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
+          title: "Good job!",
+          text: "Min sulod na ang data!",
+          icon: "success"
+        });
       })["catch"](function (err) {});
-    },
-    cellClick: function cellClick(element) {}
-  }
+    }
+  },
+  created: function created() {}
 });
 
 /***/ }),
@@ -5824,6 +6011,39 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _C4_RelevantQueries_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./C4/RelevantQueries.vue */ "./resources/js/components/PersonalData/C4/RelevantQueries.vue");
 /* harmony import */ var _C4_Reference_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./C4/Reference.vue */ "./resources/js/components/PersonalData/C4/Reference.vue");
 /* harmony import */ var _C4_GovernmentIssuedID_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./C4/GovernmentIssuedID.vue */ "./resources/js/components/PersonalData/C4/GovernmentIssuedID.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5917,6 +6137,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      hasSelecType: false,
       tabs: [{
         name: "C1",
         status: true,
@@ -5938,13 +6159,34 @@ __webpack_require__.r(__webpack_exports__);
       isFamilyBackgroundShow: false,
       isEducationalBackground: false,
       isWorkExperienceShow: false,
+      needToShowLearningAndDevelopment: false,
+      needToShowOtherInformation: false,
+      needToShowReference: false,
+      needToShowIssuedID: false,
       employee_id: null
     };
   },
   methods: {
-    workExperienceSection: function workExperienceSection(employee_id) {
-      this.employee_id = employee_id;
+    workExperienceSection: function workExperienceSection() {
       this.isWorkExperienceShow = true;
+    },
+    displayFamilyBackground: function displayFamilyBackground() {
+      this.isFamilyBackgroundShow = true;
+    },
+    dispalyEducationalBackground: function dispalyEducationalBackground() {
+      this.isEducationalBackground = true;
+    },
+    displayLearningAndDevelopment: function displayLearningAndDevelopment() {
+      this.needToShowLearningAndDevelopment = true;
+    },
+    displayOtherInformation: function displayOtherInformation() {
+      this.needToShowOtherInformation = true;
+    },
+    displayReference: function displayReference() {
+      this.needToShowReference = true;
+    },
+    displayIssuedID: function displayIssuedID() {
+      this.needToShowIssuedID = true;
     },
     openTab: function openTab(tab) {
       this.tabs.map(function (tab) {
@@ -5952,13 +6194,6 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.selectedTab = tab;
       tab.status = true;
-    },
-    displayFamilyBackground: function displayFamilyBackground(employee_id) {
-      this.isFamilyBackgroundShow = true;
-      this.employee_id = employee_id;
-    },
-    dispalyEducationalBackground: function dispalyEducationalBackground() {
-      this.isEducationalBackground = true;
     },
     openNextTab: function openNextTab() {
       var _this = this;
@@ -5995,7 +6230,26 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\ntd[data-v-295e1eb5] {\n    cursor: pointer;\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-295e1eb5]:hover {\n    background: #f1f2f3;\n}\n", ""]);
+exports.push([module.i, "\ntd[data-v-295e1eb5] {\r\n    cursor: pointer;\r\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-295e1eb5]:hover {\r\n    background: #f1f2f3;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/Sheet.vue?vue&type=style&index=0&id=273b49a5&scoped=true&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PersonalData/Sheet.vue?vue&type=style&index=0&id=273b49a5&scoped=true&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.dash-border[data-v-273b49a5] {\n    border-color : #007bff;\n    border-width : 4px;  \n    border-style : dashed;\n}\n", ""]);
 
 // exports
 
@@ -23725,6 +23979,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/Sheet.vue?vue&type=style&index=0&id=273b49a5&scoped=true&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PersonalData/Sheet.vue?vue&type=style&index=0&id=273b49a5&scoped=true&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Sheet.vue?vue&type=style&index=0&id=273b49a5&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/Sheet.vue?vue&type=style&index=0&id=273b49a5&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/lib/addStyles.js":
 /*!****************************************************!*\
   !*** ./node_modules/style-loader/lib/addStyles.js ***!
@@ -26211,85 +26495,123 @@ var render = function() {
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
-          _vm._l(_vm.spouse, function(spouse, index) {
-            return _c("div", { key: index }, [
-              _c("div", { staticClass: "row pl-3 pr-3" }, [
-                _c("div", { staticClass: "form-group col-lg-6" }, [
-                  _c("label", { attrs: { for: "cname" } }, [
-                    _vm._v("NAME OF CHILDREN")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: spouse.cname,
-                        expression: "spouse.cname"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      id: "cname",
-                      placeholder: "Enter Name of Children"
-                    },
-                    domProps: { value: spouse.cname },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+          _c("div", { staticClass: "p-2" }, [
+            _c("table", { staticClass: "table table-bordered" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.spouse, function(spouse, index) {
+                  return _c("tr", { key: index }, [
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: spouse.cname,
+                            expression: "spouse.cname"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          id: "cname",
+                          placeholder: "Enter Name of Children"
+                        },
+                        domProps: { value: spouse.cname },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(spouse, "cname", $event.target.value)
+                          }
                         }
-                        _vm.$set(spouse, "cname", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group col-lg-6" }, [
-                  _c("label", { attrs: { for: "cdateOfBirth" } }, [
-                    _vm._v("DATE OF BIRTH")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: spouse.cdateOfBirth,
-                        expression: "spouse.cdateOfBirth"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "date",
-                      id: "cdateOfBirth",
-                      placeholder: "Enter Spouse's Business Address"
-                    },
-                    domProps: { value: spouse.cdateOfBirth },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: spouse.cdateOfBirth,
+                            expression: "spouse.cdateOfBirth"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "date",
+                          id: "cdateOfBirth",
+                          placeholder: "Enter Spouse's Business Address"
+                        },
+                        domProps: { value: spouse.cdateOfBirth },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              spouse,
+                              "cdateOfBirth",
+                              $event.target.value
+                            )
+                          }
                         }
-                        _vm.$set(spouse, "cdateOfBirth", $event.target.value)
-                      }
-                    }
-                  })
-                ])
-              ])
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-center" }, [
+                      _c(
+                        "button",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: index != 0,
+                              expression: "index != 0"
+                            }
+                          ],
+                          staticClass:
+                            "btn btn-danger font-weight-bold rounded-circle",
+                          on: {
+                            click: function($event) {
+                              return _vm.removeField(index)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    X\n                                "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-center" }, [
+                      index == _vm.noOfSpouseFields - 1
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary rounded-circle",
+                              on: { click: _vm.generateNewSpuseField }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                    +\n                                "
+                              )
+                            ]
+                          )
+                        : _vm._e()
+                    ])
+                  ])
+                }),
+                0
+              )
             ])
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-2 offset-10 text-right" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary rounded-circle",
-                on: { click: _vm.generateNewSpuseField }
-              },
-              [_vm._v("\n                    +\n                ")]
-            )
           ]),
           _vm._v(" "),
           _c("hr"),
@@ -26593,8 +26915,7 @@ var render = function() {
               ]
             )
           ])
-        ],
-        2
+        ]
       )
     ])
   ])
@@ -26613,6 +26934,20 @@ var staticRenderFns = [
         },
         [_vm._v("\n                    FAMILY BACKGROUND\n                ")]
       )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { staticClass: "font-weight-bold" }, [
+          _vm._v("NAME OF CHILDREN")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "font-weight-bold" }, [_vm._v("DATE OF BIRTH")])
+      ])
     ])
   }
 ]
@@ -28375,7 +28710,7 @@ var render = function() {
                 "tbody",
                 _vm._l(_vm.civilService, function(civil, index) {
                   return _c("tr", { key: index }, [
-                    _c("th", { attrs: { scope: "row" } }, [
+                    _c("td", { attrs: { scope: "row" } }, [
                       _c("input", {
                         directives: [
                           {
@@ -28569,6 +28904,16 @@ var render = function() {
             _c("div", { staticClass: "float-right mb-3" }, [
               _c(
                 "button",
+                { staticClass: "btn btn-warning font-weight-bold" },
+                [
+                  _vm._v(
+                    "\n                        RESET NO VALUES\n                    "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
                 {
                   staticClass: "btn btn-primary font-weight-bold",
                   on: { click: _vm.submitCivilService }
@@ -28615,31 +28960,50 @@ var staticRenderFns = [
       "tr",
       { staticClass: "text-center", staticStyle: { background: "#EAEAEA" } },
       [
-        _c("td", { staticClass: "align-middle", attrs: { rowspan: "2" } }, [
-          _vm._v(
-            "\n                            27. CAREER SERVICE/ RA 1080 (BOARD/ BAR) UNDER\n                            SPECIAL LAWS/ CES/ CSEE BARANGAY ELIGIBILITY /\n                            DRIVER'S LICENSE\n                        "
-          )
-        ]),
+        _c(
+          "td",
+          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
+          [
+            _vm._v(
+              "\n                            27. CAREER SERVICE/ RA 1080 (BOARD/ BAR) UNDER\n                            SPECIAL LAWS/ CES/ CSEE BARANGAY ELIGIBILITY /\n                            DRIVER'S LICENSE\n                        "
+            )
+          ]
+        ),
         _vm._v(" "),
-        _c("td", { staticClass: "align-middle", attrs: { rowspan: "2" } }, [
-          _vm._v("RATING")
-        ]),
+        _c(
+          "td",
+          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
+          [_vm._v("RATING")]
+        ),
         _vm._v(" "),
-        _c("td", { staticClass: "align-middle", attrs: { rowspan: "2" } }, [
-          _vm._v(
-            "\n                            DATE OF EXAMINATION / CONFERMENT\n                        "
-          )
-        ]),
+        _c(
+          "td",
+          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
+          [
+            _vm._v(
+              "\n                            DATE OF EXAMINATION / CONFERMENT\n                        "
+            )
+          ]
+        ),
         _vm._v(" "),
-        _c("td", { staticClass: "align-middle", attrs: { rowspan: "2" } }, [
-          _vm._v(
-            "\n                            PLACE OF EXAMINATION / CONFERMENT\n                        "
-          )
-        ]),
+        _c(
+          "td",
+          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
+          [
+            _vm._v(
+              "\n                            PLACE OF EXAMINATION / CONFERMENT\n                        "
+            )
+          ]
+        ),
         _vm._v(" "),
-        _c("td", { attrs: { colspan: "2", scope: "colgroup" } }, [
-          _vm._v("LICENSE")
-        ]),
+        _c(
+          "td",
+          {
+            staticClass: "text-sm",
+            attrs: { colspan: "2", scope: "colgroup" }
+          },
+          [_vm._v("LICENSE")]
+        ),
         _vm._v(" "),
         _c("td", { staticClass: "pl-4 pr-4", attrs: { rowspan: "2" } }, [
           _vm._v(" ")
@@ -28652,15 +29016,21 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", { staticStyle: { background: "#EAEAEA" } }, [
-      _c("td", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v("NUMBER")
-      ]),
+      _c(
+        "td",
+        { staticClass: "text-center text-sm", attrs: { scope: "col" } },
+        [_vm._v("NUMBER")]
+      ),
       _vm._v(" "),
-      _c("td", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v(
-          "\n                            Date of Validity\n                        "
-        )
-      ])
+      _c(
+        "td",
+        { staticClass: "text-center text-sm", attrs: { scope: "col" } },
+        [
+          _vm._v(
+            "\n                            Date of Validity\n                        "
+          )
+        ]
+      )
     ])
   }
 ]
@@ -29030,49 +29400,78 @@ var staticRenderFns = [
       "tr",
       { staticClass: "text-center", staticStyle: { background: "#EAEAEA" } },
       [
-        _c("td", { attrs: { colspan: "2", scope: "colgroup" } }, [
-          _vm._v(
-            "\n                        28. INCLUSIVE DATES (mm/dd/yyyy)\n                    "
-          )
-        ]),
+        _c(
+          "td",
+          {
+            staticClass: "text-sm",
+            attrs: { colspan: "2", scope: "colgroup" }
+          },
+          [
+            _vm._v(
+              "\n                        28. INCLUSIVE DATES (mm/dd/yyyy)\n                    "
+            )
+          ]
+        ),
         _vm._v(" "),
-        _c("td", { staticClass: "align-middle", attrs: { rowspan: "2" } }, [
-          _vm._v(
-            "\n                        POSITION TITLE (Write in full/Do not abbreviate)\n                    "
-          )
-        ]),
+        _c(
+          "td",
+          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
+          [
+            _vm._v(
+              "\n                        POSITION TITLE (Write in full/Do not abbreviate)\n                    "
+            )
+          ]
+        ),
         _vm._v(" "),
-        _c("td", { staticClass: "align-middle", attrs: { rowspan: "2" } }, [
-          _vm._v(
-            "\n                        DEPARTMENT / AGENCY / OFFICE / COMPANY (Write in\n                        full/Do not abbreviate)\n                    "
-          )
-        ]),
+        _c(
+          "td",
+          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
+          [
+            _vm._v(
+              "\n                        DEPARTMENT / AGENCY / OFFICE / COMPANY (Write in\n                        full/Do not abbreviate)\n                    "
+            )
+          ]
+        ),
         _vm._v(" "),
-        _c("td", { staticClass: "align-middle", attrs: { rowspan: "2" } }, [
-          _vm._v("MONTHLY SALARY")
-        ]),
+        _c(
+          "td",
+          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
+          [_vm._v("MONTHLY SALARY")]
+        ),
         _vm._v(" "),
-        _c("td", { staticClass: "align-middle", attrs: { rowspan: "2" } }, [
-          _vm._v("\n                        SALARY/ JOB/ PAY GRADE "),
-          _c("br"),
-          _vm._v("\n                        (if applicable) "),
-          _c("br"),
-          _vm._v(
-            '\n                        & STEP (Format "00-0")/ INCREMENT\n                    '
-          )
-        ]),
+        _c(
+          "td",
+          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
+          [
+            _vm._v("\n                        SALARY/ JOB/ PAY GRADE "),
+            _c("br"),
+            _vm._v("\n                        (if applicable) "),
+            _c("br"),
+            _vm._v(
+              '\n                        & STEP (Format "00-0")/ INCREMENT\n                    '
+            )
+          ]
+        ),
         _vm._v(" "),
-        _c("td", { staticClass: "align-middle", attrs: { rowspan: "2" } }, [
-          _vm._v(
-            "\n                        STATUS OF APPOINTMENT\n                    "
-          )
-        ]),
+        _c(
+          "td",
+          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
+          [
+            _vm._v(
+              "\n                        STATUS OF APPOINTMENT\n                    "
+            )
+          ]
+        ),
         _vm._v(" "),
-        _c("td", { staticClass: "align-middle", attrs: { rowspan: "2" } }, [
-          _vm._v(
-            "\n                        GOV'T SERVICE (Y/ N)\n                    "
-          )
-        ]),
+        _c(
+          "td",
+          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
+          [
+            _vm._v(
+              "\n                        GOV'T SERVICE (Y/ N)\n                    "
+            )
+          ]
+        ),
         _vm._v(" "),
         _c("td", { staticClass: "pl-4 pr-4", attrs: { rowspan: "2" } }, [
           _vm._v(" ")
@@ -29085,13 +29484,17 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", { staticStyle: { background: "#EAEAEA" } }, [
-      _c("td", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v("FROM")
-      ]),
+      _c(
+        "td",
+        { staticClass: "text-center text-sm", attrs: { scope: "col" } },
+        [_vm._v("FROM")]
+      ),
       _vm._v(" "),
-      _c("td", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v("TO")
-      ])
+      _c(
+        "td",
+        { staticClass: "text-center text-sm", attrs: { scope: "col" } },
+        [_vm._v("TO")]
+      )
     ])
   }
 ]
@@ -29118,251 +29521,280 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "card-header" }, [
+        _c("h5", { staticClass: "mb-0 p-2" }, [
+          _vm._v(
+            "\n                VII. LEARNING AND DEVELOPMENT (L&D) INTERVENTIONS/TRAINING\n                PROGRAMS ATTENDED\n                "
+          ),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.isComplete,
+                  expression: "isComplete"
+                }
+              ],
+              class: _vm.isComplete ? "text-success" : "text-danger"
+            },
+            [_vm._v("\n                    - VERIFIED")]
+          )
+        ])
+      ]),
       _vm._v(" "),
-      _c("div", [
-        _c("div", { staticClass: "card-body" }, [
-          _c("table", { staticClass: "table table-bordered" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _vm._m(2),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.learnDev, function(learnDev, index) {
-                return _c("tr", { key: index }, [
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: learnDev.nameOfTraining,
-                          expression: "learnDev.nameOfTraining"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "text", placeholder: "NAME" },
-                      domProps: { value: learnDev.nameOfTraining },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            learnDev,
-                            "nameOfTraining",
-                            $event.target.value
-                          )
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: learnDev.from,
-                          expression: "learnDev.from"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "date", placeholder: "FROM" },
-                      domProps: { value: learnDev.from },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(learnDev, "from", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: learnDev.to,
-                          expression: "learnDev.to"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "date", placeholder: "TO" },
-                      domProps: { value: learnDev.to },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(learnDev, "to", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: learnDev.noOfHours,
-                          expression: "learnDev.noOfHours"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "number", placeholder: "Hours" },
-                      domProps: { value: learnDev.noOfHours },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(learnDev, "noOfHours", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: learnDev.typeOfLD,
-                          expression: "learnDev.typeOfLD"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "text", placeholder: "" },
-                      domProps: { value: learnDev.typeOfLD },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(learnDev, "typeOfLD", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: learnDev.conducted,
-                          expression: "learnDev.conducted"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "text", placeholder: "" },
-                      domProps: { value: learnDev.conducted },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(learnDev, "conducted", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "jumbotron" }, [
-                    _c(
-                      "button",
-                      {
+      _c(
+        "div",
+        {
+          staticClass: "collapse",
+          class: !_vm.isComplete && _vm.show_panel ? "show" : ""
+        },
+        [
+          _c("div", { staticClass: "card-body" }, [
+            _c("table", { staticClass: "table table-bordered" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.learnDev, function(learnDev, index) {
+                  return _c("tr", { key: index }, [
+                    _c("td", [
+                      _c("input", {
                         directives: [
                           {
-                            name: "show",
-                            rawName: "v-show",
-                            value: index != 0,
-                            expression: "index != 0"
+                            name: "model",
+                            rawName: "v-model",
+                            value: learnDev.nameOfTraining,
+                            expression: "learnDev.nameOfTraining"
                           }
                         ],
-                        staticClass:
-                          "btn btn-sm btn-danger font-weight-bold mt-2",
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "text", placeholder: "NAME" },
+                        domProps: { value: learnDev.nameOfTraining },
                         on: {
-                          click: function($event) {
-                            return _vm.removeField(index)
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              learnDev,
+                              "nameOfTraining",
+                              $event.target.value
+                            )
                           }
                         }
-                      },
-                      [
-                        _vm._v(
-                          "\n                                    X\n                                "
-                        )
-                      ]
-                    )
-                  ])
-                ])
-              }),
-              0
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "float-right mb-3" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                on: { click: _vm.addNewLearningAndDevelopmentField }
-              },
-              [
-                _c("i", { staticClass: "fa fa-plus" }),
-                _vm._v(
-                  "\n                        Add new field\n                    "
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-success",
-                on: { click: _vm.submitLearningAndDevelopment }
-              },
-              [
-                _c("i", { staticClass: "fa fa-plus" }),
-                _vm._v(
-                  "\n                        NEXT\n\n                        "
-                ),
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.isLoading,
-                        expression: "isLoading"
-                      }
-                    ],
-                    staticClass: "spinner-border spinner-border-sm mb-1",
-                    attrs: { role: "status" }
-                  },
-                  [
-                    _c("span", { staticClass: "sr-only" }, [
-                      _vm._v("Loading...")
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: learnDev.from,
+                            expression: "learnDev.from"
+                          }
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "date", placeholder: "FROM" },
+                        domProps: { value: learnDev.from },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(learnDev, "from", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: learnDev.to,
+                            expression: "learnDev.to"
+                          }
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "date", placeholder: "TO" },
+                        domProps: { value: learnDev.to },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(learnDev, "to", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: learnDev.noOfHours,
+                            expression: "learnDev.noOfHours"
+                          }
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "number", placeholder: "Hours" },
+                        domProps: { value: learnDev.noOfHours },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(learnDev, "noOfHours", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: learnDev.typeOfLD,
+                            expression: "learnDev.typeOfLD"
+                          }
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "text", placeholder: "" },
+                        domProps: { value: learnDev.typeOfLD },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(learnDev, "typeOfLD", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: learnDev.conducted,
+                            expression: "learnDev.conducted"
+                          }
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "text", placeholder: "" },
+                        domProps: { value: learnDev.conducted },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(learnDev, "conducted", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "jumbotron" }, [
+                      _c(
+                        "button",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: index != 0,
+                              expression: "index != 0"
+                            }
+                          ],
+                          staticClass:
+                            "btn btn-sm btn-danger font-weight-bold mt-2 rounded-circle",
+                          on: {
+                            click: function($event) {
+                              return _vm.removeField(index)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    X\n                                "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      index == _vm.noOfFields - 1
+                        ? _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-primary font-weight-bold rounded-circle",
+                              on: {
+                                click: _vm.addNewLearningAndDevelopmentField
+                              }
+                            },
+                            [_c("i", { staticClass: "fa fa-plus" })]
+                          )
+                        : _vm._e()
                     ])
-                  ]
-                )
-              ]
-            )
+                  ])
+                }),
+                0
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "float-right mb-3" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary font-weight-bold",
+                  on: { click: _vm.submitLearningAndDevelopment }
+                },
+                [
+                  _vm._v(
+                    "\n                        NEXT\n                        "
+                  ),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.isLoading,
+                          expression: "isLoading"
+                        }
+                      ],
+                      staticClass: "spinner-border spinner-border-sm mb-1",
+                      attrs: { role: "status" }
+                    },
+                    [
+                      _c("span", { staticClass: "sr-only" }, [
+                        _vm._v("Loading...")
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ])
           ])
-        ])
-      ])
+        ]
+      )
     ])
   ])
 }
@@ -29371,26 +29803,17 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h5", { staticClass: "mb-0 p-2" }, [
-        _vm._v(
-          "\n                VII. LEARNING AND DEVELOPMENT (L&D) INTERVENTIONS/TRAINING\n                PROGRAMS ATTENDED\n            "
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c(
       "tr",
-      { staticClass: "text-center", staticStyle: { background: "#EAEAEA" } },
+      {
+        staticClass: "text-center text-sm",
+        staticStyle: { background: "#EAEAEA" }
+      },
       [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { rowspan: "2", scope: "colgroup" }
           },
           [
@@ -29403,7 +29826,7 @@ var staticRenderFns = [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { colspan: "2", scope: "colgroup" }
           },
           [
@@ -29416,7 +29839,7 @@ var staticRenderFns = [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { rowspan: "2", scope: "colgroup" }
           },
           [
@@ -29429,7 +29852,7 @@ var staticRenderFns = [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { rowspan: "2", scope: "colgroup" }
           },
           [
@@ -29442,7 +29865,7 @@ var staticRenderFns = [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { rowspan: "2", scope: "colgroup" }
           },
           [
@@ -29463,13 +29886,17 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", { staticStyle: { background: "#EAEAEA" } }, [
-      _c("td", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v("FROM")
-      ]),
+      _c(
+        "td",
+        { staticClass: "text-center text-sm", attrs: { scope: "col" } },
+        [_vm._v("FROM")]
+      ),
       _vm._v(" "),
-      _c("td", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v("TO")
-      ])
+      _c(
+        "td",
+        { staticClass: "text-center text-sm", attrs: { scope: "col" } },
+        [_vm._v("TO")]
+      )
     ])
   }
 ]
@@ -29496,191 +29923,206 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "card-header" }, [
+        _c("h5", { staticClass: "mb-0 p-2" }, [
+          _vm._v("\n                VIII. OTHER INFORMATION\n                "),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.isComplete,
+                  expression: "isComplete"
+                }
+              ],
+              class: _vm.isComplete ? "text-success" : "text-danger"
+            },
+            [_vm._v("\n                - VERIFIED")]
+          )
+        ])
+      ]),
       _vm._v(" "),
-      _c("div", { staticClass: "collapse show" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("table", { staticClass: "table table-bordered" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.otherInformation, function(otherInfo, index) {
-                return _c("tr", { key: index }, [
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: otherInfo.skill,
-                          expression: "otherInfo.skill"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "text", placeholder: "" },
-                      domProps: { value: otherInfo.skill },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(otherInfo, "skill", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: otherInfo.recog,
-                          expression: "otherInfo.recog"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "text", placeholder: "" },
-                      domProps: { value: otherInfo.recog },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(otherInfo, "recog", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: otherInfo.memAssociation,
-                          expression: "otherInfo.memAssociation"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "text", placeholder: "" },
-                      domProps: { value: otherInfo.memAssociation },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            otherInfo,
-                            "memAssociation",
-                            $event.target.value
-                          )
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "jumbotron" }, [
-                    _c(
-                      "button",
-                      {
+      _c(
+        "div",
+        {
+          staticClass: "collapse",
+          class: !_vm.isComplete && _vm.show_panel ? "show" : ""
+        },
+        [
+          _c("div", { staticClass: "card-body" }, [
+            _c("table", { staticClass: "table table-bordered" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.otherInformation, function(otherInfo, index) {
+                  return _c("tr", { key: index }, [
+                    _c("td", [
+                      _c("input", {
                         directives: [
                           {
-                            name: "show",
-                            rawName: "v-show",
-                            value: index != 0,
-                            expression: "index != 0"
+                            name: "model",
+                            rawName: "v-model",
+                            value: otherInfo.skill,
+                            expression: "otherInfo.skill"
                           }
                         ],
-                        staticClass:
-                          "btn btn-sm btn-danger font-weight-bold mt-2",
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "text", placeholder: "" },
+                        domProps: { value: otherInfo.skill },
                         on: {
-                          click: function($event) {
-                            return _vm.removeField(index)
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(otherInfo, "skill", $event.target.value)
                           }
                         }
-                      },
-                      [
-                        _vm._v(
-                          "\n                                    X\n                                "
-                        )
-                      ]
-                    )
-                  ])
-                ])
-              }),
-              0
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "float-right mb-3" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                on: { click: _vm.addNewOtherInformationField }
-              },
-              [
-                _c("i", { staticClass: "fa fa-plus" }),
-                _vm._v(
-                  "\n                        Add new field\n                    "
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-success",
-                on: { click: _vm.submitOtherInformation }
-              },
-              [
-                _c("i", { staticClass: "fa fa-plus" }),
-                _vm._v(
-                  "\n                        NEXT\n\n                        "
-                ),
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.isLoading,
-                        expression: "isLoading"
-                      }
-                    ],
-                    staticClass: "spinner-border spinner-border-sm mb-1",
-                    attrs: { role: "status" }
-                  },
-                  [
-                    _c("span", { staticClass: "sr-only" }, [
-                      _vm._v("Loading...")
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: otherInfo.recog,
+                            expression: "otherInfo.recog"
+                          }
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "text", placeholder: "" },
+                        domProps: { value: otherInfo.recog },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(otherInfo, "recog", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: otherInfo.memAssociation,
+                            expression: "otherInfo.memAssociation"
+                          }
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "text", placeholder: "" },
+                        domProps: { value: otherInfo.memAssociation },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              otherInfo,
+                              "memAssociation",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "jumbotron text-center" }, [
+                      _c(
+                        "button",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: index != 0,
+                              expression: "index != 0"
+                            }
+                          ],
+                          staticClass:
+                            "btn btn-sm btn-danger font-weight-bold mt-2 rounded-circle",
+                          on: {
+                            click: function($event) {
+                              return _vm.removeField(index)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    X\n                                "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-center" }, [
+                      index == _vm.noOfFields - 1
+                        ? _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-primary font-weight-bold rounded-circle",
+                              on: { click: _vm.addNewOtherInformationField }
+                            },
+                            [_c("i", { staticClass: "fa fa-plus" })]
+                          )
+                        : _vm._e()
                     ])
-                  ]
-                )
-              ]
-            )
+                  ])
+                }),
+                0
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "float-right mb-3" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary font-weight-bold",
+                  on: { click: _vm.submitOtherInformation }
+                },
+                [
+                  _vm._v(
+                    "\n                        NEXT\n                        "
+                  ),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.isLoading,
+                          expression: "isLoading"
+                        }
+                      ],
+                      staticClass: "spinner-border spinner-border-sm mb-1",
+                      attrs: { role: "status" }
+                    },
+                    [
+                      _c("span", { staticClass: "sr-only" }, [
+                        _vm._v("Loading...")
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ])
           ])
-        ])
-      ])
+        ]
+      )
     ])
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h5", { staticClass: "mb-0 p-2" }, [
-        _vm._v("\n                VIII. OTHER INFORMATION\n            ")
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -29692,7 +30134,7 @@ var staticRenderFns = [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { rowspan: "2", scope: "colgroup" }
           },
           [
@@ -29705,7 +30147,7 @@ var staticRenderFns = [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { rowspan: "2", scope: "colgroup" }
           },
           [
@@ -29718,7 +30160,7 @@ var staticRenderFns = [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { rowspan: "2", scope: "colgroup" }
           },
           [
@@ -29757,232 +30199,248 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "card-header" }, [
+      _c("h5", { staticClass: "p-2 mb-0" }, [
+        _vm._v(
+          "\n            VI. VOLUNTARY WORK OR INVOLVEMENT IN CIVIC / NON-GOVERNMENT /\n            PEOPLE / VOLUNTARY ORGANIZATION/S\n            "
+        ),
+        _c(
+          "span",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.isComplete,
+                expression: "isComplete"
+              }
+            ],
+            class: _vm.isComplete ? "text-success" : "text-danger"
+          },
+          [_vm._v("\n                - VERIFIED")]
+        )
+      ])
+    ]),
     _vm._v(" "),
-    _c("div", { staticClass: "collapse show" }, [
-      _c("div", { staticClass: "card-body" }, [
-        _c("table", { staticClass: "table table-bordered" }, [
-          _vm._m(1),
-          _vm._v(" "),
-          _vm._m(2),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.volunOrg, function(volunOrg, index) {
-              return _c("tr", { key: index }, [
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: volunOrg.nameOfOrg,
-                        expression: "volunOrg.nameOfOrg"
-                      }
-                    ],
-                    staticClass: "form-control rounded-0 border-0",
-                    attrs: { type: "text", placeholder: "NAME" },
-                    domProps: { value: volunOrg.nameOfOrg },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(volunOrg, "nameOfOrg", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: volunOrg.from,
-                        expression: "volunOrg.from"
-                      }
-                    ],
-                    staticClass: "form-control rounded-0 border-0",
-                    attrs: { type: "date", placeholder: "FROM" },
-                    domProps: { value: volunOrg.from },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(volunOrg, "from", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: volunOrg.to,
-                        expression: "volunOrg.to"
-                      }
-                    ],
-                    staticClass: "form-control rounded-0 border-0",
-                    attrs: { type: "date", placeholder: "TO" },
-                    domProps: { value: volunOrg.to },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(volunOrg, "to", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: volunOrg.noOfHrs,
-                        expression: "volunOrg.noOfHrs"
-                      }
-                    ],
-                    staticClass: "form-control rounded-0 border-0",
-                    attrs: { type: "number", placeholder: "Hours" },
-                    domProps: { value: volunOrg.noOfHrs },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(volunOrg, "noOfHrs", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: volunOrg.position,
-                        expression: "volunOrg.position"
-                      }
-                    ],
-                    staticClass: "form-control rounded-0 border-0",
-                    attrs: { type: "text", placeholder: "Position" },
-                    domProps: { value: volunOrg.position },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(volunOrg, "position", $event.target.value)
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "jumbotron" }, [
-                  _c(
-                    "button",
-                    {
+    _c(
+      "div",
+      { staticClass: "collapse", class: !_vm.isComplete ? "show" : "" },
+      [
+        _c("div", { staticClass: "card-body" }, [
+          _c("table", { staticClass: "table table-bordered" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.volunOrg, function(volunOrg, index) {
+                return _c("tr", { key: index }, [
+                  _c("td", [
+                    _c("input", {
                       directives: [
                         {
-                          name: "show",
-                          rawName: "v-show",
-                          value: index != 0,
-                          expression: "index != 0"
+                          name: "model",
+                          rawName: "v-model",
+                          value: volunOrg.nameOfOrg,
+                          expression: "volunOrg.nameOfOrg"
                         }
                       ],
-                      staticClass:
-                        "btn btn-sm btn-danger font-weight-bold mt-1 rounded-circle",
+                      staticClass: "form-control rounded-0 border-0",
+                      attrs: { type: "text", placeholder: "NAME" },
+                      domProps: { value: volunOrg.nameOfOrg },
                       on: {
-                        click: function($event) {
-                          return _vm.removeField(index)
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(volunOrg, "nameOfOrg", $event.target.value)
                         }
                       }
-                    },
-                    [
-                      _vm._v(
-                        "\n                                X\n                            "
-                      )
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  index == _vm.noOfFields - 1
-                    ? _c(
-                        "button",
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
                         {
-                          staticClass:
-                            "btn btn-primary rounded-circle font-weight-bold",
-                          on: { click: _vm.addNewFieldVoluntary }
-                        },
-                        [_c("i", { staticClass: "fa fa-plus" })]
-                      )
-                    : _vm._e()
+                          name: "model",
+                          rawName: "v-model",
+                          value: volunOrg.from,
+                          expression: "volunOrg.from"
+                        }
+                      ],
+                      staticClass: "form-control rounded-0 border-0",
+                      attrs: { type: "date", placeholder: "FROM" },
+                      domProps: { value: volunOrg.from },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(volunOrg, "from", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: volunOrg.to,
+                          expression: "volunOrg.to"
+                        }
+                      ],
+                      staticClass: "form-control rounded-0 border-0",
+                      attrs: { type: "date", placeholder: "TO" },
+                      domProps: { value: volunOrg.to },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(volunOrg, "to", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: volunOrg.noOfHrs,
+                          expression: "volunOrg.noOfHrs"
+                        }
+                      ],
+                      staticClass: "form-control rounded-0 border-0",
+                      attrs: { type: "number", placeholder: "Hours" },
+                      domProps: { value: volunOrg.noOfHrs },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(volunOrg, "noOfHrs", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: volunOrg.position,
+                          expression: "volunOrg.position"
+                        }
+                      ],
+                      staticClass: "form-control rounded-0 border-0",
+                      attrs: { type: "text", placeholder: "Position" },
+                      domProps: { value: volunOrg.position },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(volunOrg, "position", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center jumbotron" }, [
+                    _c(
+                      "button",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: index != 0,
+                            expression: "index != 0"
+                          }
+                        ],
+                        staticClass:
+                          "btn btn-sm btn-danger font-weight-bold mt-1 rounded-circle",
+                        on: {
+                          click: function($event) {
+                            return _vm.removeField(index)
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                                X\n                            "
+                        )
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center" }, [
+                    index == _vm.noOfFields - 1
+                      ? _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-primary rounded-circle font-weight-bold",
+                            on: { click: _vm.addNewFieldVoluntary }
+                          },
+                          [_c("i", { staticClass: "fa fa-plus" })]
+                        )
+                      : _vm._e()
+                  ])
                 ])
-              ])
-            }),
-            0
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "float-right mb-3" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary font-weight-bold",
-              on: { click: _vm.submitVoluntary }
-            },
-            [
-              _c("i", { staticClass: "fa fa-plus" }),
-              _vm._v("\n                    NEXT\n                    "),
-              _c(
-                "div",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.isLoading,
-                      expression: "isLoading"
-                    }
-                  ],
-                  staticClass: "spinner-border spinner-border-sm mb-1",
-                  attrs: { role: "status" }
-                },
-                [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
-              )
-            ]
-          )
+              }),
+              0
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "float-right mb-3" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary font-weight-bold",
+                on: { click: _vm.submitVoluntary }
+              },
+              [
+                _vm._v("\n                    NEXT\n                    "),
+                _c(
+                  "div",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.isLoading,
+                        expression: "isLoading"
+                      }
+                    ],
+                    staticClass: "spinner-border spinner-border-sm mb-1",
+                    attrs: { role: "status" }
+                  },
+                  [
+                    _c("span", { staticClass: "sr-only" }, [
+                      _vm._v("Loading...")
+                    ])
+                  ]
+                )
+              ]
+            )
+          ])
         ])
-      ])
-    ])
+      ]
+    )
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h5", { staticClass: "p-2 mb-0" }, [
-        _vm._v(
-          "\n            VI. VOLUNTARY WORK OR INVOLVEMENT IN CIVIC / NON-GOVERNMENT /\n            PEOPLE / VOLUNTARY ORGANIZATION/S\n        "
-        )
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -29994,7 +30452,7 @@ var staticRenderFns = [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { rowspan: "2", scope: "colgroup" }
           },
           [
@@ -30007,7 +30465,7 @@ var staticRenderFns = [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { colspan: "2", scope: "colgroup" }
           },
           [
@@ -30020,7 +30478,7 @@ var staticRenderFns = [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { rowspan: "2", scope: "colgroup" }
           },
           [
@@ -30033,7 +30491,7 @@ var staticRenderFns = [
         _c(
           "td",
           {
-            staticClass: "align-middle",
+            staticClass: "align-middle text-sm",
             attrs: { rowspan: "2", scope: "colgroup" }
           },
           [
@@ -30043,9 +30501,11 @@ var staticRenderFns = [
           ]
         ),
         _vm._v(" "),
-        _c("td", { staticClass: "align-middle", attrs: { rowspan: "2" } }, [
-          _vm._v(" ")
-        ])
+        _c(
+          "td",
+          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
+          [_vm._v(" ")]
+        )
       ]
     )
   },
@@ -30054,13 +30514,17 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", { staticStyle: { background: "#EAEAEA" } }, [
-      _c("td", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v("FROM")
-      ]),
+      _c(
+        "td",
+        { staticClass: "text-center text-sm", attrs: { scope: "col" } },
+        [_vm._v("FROM")]
+      ),
       _vm._v(" "),
-      _c("td", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v("TO")
-      ])
+      _c(
+        "td",
+        { staticClass: "text-center text-sm", attrs: { scope: "col" } },
+        [_vm._v("TO")]
+      )
     ])
   }
 ]
@@ -30085,80 +30549,193 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }, [
+        _c("h5", { staticClass: "mb-0 p-2" }, [
+          _vm._v("\n                GOVERNMENT ISSUED ID\n                "),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.isComplete,
+                  expression: "isComplete"
+                }
+              ],
+              class: _vm.isComplete ? "text-success" : "text-danger"
+            },
+            [_vm._v("\n                    - VERIFIED")]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "collapse",
+          class: !_vm.isComplete && _vm.show_panel ? "show" : ""
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "card-body" },
+            [
+              _c("table", { staticClass: "table table-bordered" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("tbody", [
+                  _c("tr", [
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.governmentId.nameOfGovId,
+                            expression: "governmentId.nameOfGovId"
+                          }
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "text", placeholder: "" },
+                        domProps: { value: _vm.governmentId.nameOfGovId },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.governmentId,
+                              "nameOfGovId",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.governmentId.idNo,
+                            expression: "governmentId.idNo"
+                          }
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "text", placeholder: "" },
+                        domProps: { value: _vm.governmentId.idNo },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.governmentId,
+                              "idNo",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.governmentId.dateOfIssuance,
+                            expression: "governmentId.dateOfIssuance"
+                          }
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "text", placeholder: "" },
+                        domProps: { value: _vm.governmentId.dateOfIssuance },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.governmentId,
+                              "dateOfIssuance",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("diva", { staticClass: "float-right mb-3" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    on: { click: _vm.submitIssuedID }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        FINAL TOUCH\n                        "
+                    ),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.isLoading,
+                            expression: "isLoading"
+                          }
+                        ],
+                        staticClass: "spinner-border spinner-border-sm mb-1",
+                        attrs: { role: "status" }
+                      },
+                      [
+                        _c("span", { staticClass: "sr-only" }, [
+                          _vm._v("Loading...")
+                        ])
+                      ]
+                    )
+                  ]
+                )
+              ])
+            ],
+            1
+          )
+        ]
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header" }, [
-          _c("h5", { staticClass: "mb-0 p-2" }, [
-            _vm._v("\n                GOVERTMENT ISSUED ID\n            ")
-          ])
-        ]),
+    return _c(
+      "tr",
+      {
+        staticClass: "text-center text-sm",
+        staticStyle: { background: "#EAEAEA" }
+      },
+      [
+        _c("td", [_vm._v("Government Issued ID")]),
         _vm._v(" "),
-        _c("div", { staticClass: "collapse show" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _c("table", { staticClass: "table table-bordered" }, [
-              _c(
-                "tr",
-                {
-                  staticClass: "text-center",
-                  staticStyle: { background: "#EAEAEA" }
-                },
-                [
-                  _c("td", [_vm._v("Government Issued ID")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("ID/License/Passport No.")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("Date/Place of Issuance")])
-                ]
-              ),
-              _vm._v(" "),
-              _c("tbody", { attrs: { id: "dynamic-row-references-data" } }, [
-                _c("tr", [
-                  _c("td", [
-                    _c("input", {
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: {
-                        type: "text",
-                        placeholder: "",
-                        name: "governmentId.nameOfGovId"
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: {
-                        type: "text",
-                        placeholder: "",
-                        name: "governmentId.idNo"
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: {
-                        type: "text",
-                        placeholder: "",
-                        name: "governmentId.dateOfIssuance"
-                      }
-                    })
-                  ])
-                ])
-              ])
-            ])
-          ])
-        ])
-      ])
-    ])
+        _c("td", [_vm._v("ID/License/Passport No.")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Date/Place of Issuance")])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -30184,96 +30761,125 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "card-header" }, [
+        _c("h5", { staticClass: "mb-0 p-2" }, [
+          _vm._v("\n                41. REFERENCES\n                "),
+          _c("span", { staticClass: "text-danger text-sm" }, [
+            _vm._v(
+              "(Person not related by consanguinity or affinity to\n                    applicant /appointee)"
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.isComplete,
+                  expression: "isComplete"
+                }
+              ],
+              class: _vm.isComplete ? "text-success" : "text-danger"
+            },
+            [_vm._v("\n                    - VERIFIED")]
+          )
+        ])
+      ]),
       _vm._v(" "),
-      _c("div", { staticClass: "collapse show" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("table", { staticClass: "table table-bordered" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.references, function(references, index) {
-                return _c("tr", { key: index }, [
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: references.refName,
-                          expression: "references.refName"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "text", placeholder: "NAME" },
-                      domProps: { value: references.refName },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+      _c(
+        "div",
+        {
+          staticClass: "collapse",
+          class: !_vm.isComplete && _vm.show_panel ? "show" : ""
+        },
+        [
+          _c("div", { staticClass: "card-body" }, [
+            _c("table", { staticClass: "table table-bordered" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.references, function(references, index) {
+                  return _c("tr", { key: index }, [
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: references.refName,
+                            expression: "references.refName"
                           }
-                          _vm.$set(references, "refName", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: references.refAdd,
-                          expression: "references.refAdd"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "text", placeholder: "ADDRESS" },
-                      domProps: { value: references.refAdd },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "text", placeholder: "NAME" },
+                        domProps: { value: references.refName },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(references, "refName", $event.target.value)
                           }
-                          _vm.$set(references, "refAdd", $event.target.value)
                         }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: references.refTelNo,
-                          expression: "references.refTelNo"
-                        }
-                      ],
-                      staticClass: "form-control rounded-0 border-0",
-                      attrs: { type: "text", placeholder: "TEL. NO" },
-                      domProps: { value: references.refTelNo },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: references.refAdd,
+                            expression: "references.refAdd"
                           }
-                          _vm.$set(references, "refTelNo", $event.target.value)
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "text", placeholder: "ADDRESS" },
+                        domProps: { value: references.refAdd },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(references, "refAdd", $event.target.value)
+                          }
                         }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "td",
-                    {
-                      staticClass: "jumbotron text-center",
-                      attrs: { colspan: "2" }
-                    },
-                    [
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: references.refTelNo,
+                            expression: "references.refTelNo"
+                          }
+                        ],
+                        staticClass: "form-control rounded-0 border-0",
+                        attrs: { type: "text", placeholder: "TEL. NO" },
+                        domProps: { value: references.refTelNo },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              references,
+                              "refTelNo",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "jumbotron text-center" }, [
                       _c(
                         "button",
                         {
@@ -30285,7 +30891,8 @@ var render = function() {
                               expression: "index != 0"
                             }
                           ],
-                          staticClass: "btn-sm btn-danger font-weight-bold",
+                          staticClass:
+                            "btn btn-danger font-weight-bold rounded-circle",
                           on: {
                             click: function($event) {
                               return _vm.removeField(index)
@@ -30298,65 +30905,64 @@ var render = function() {
                           )
                         ]
                       )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-center" }, [
+                      index == _vm.noOfFields - 1
+                        ? _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-primary font-weight-bold rounded-circle",
+                              on: { click: _vm.addNewReferenceField }
+                            },
+                            [_c("i", { staticClass: "fa fa-plus" })]
+                          )
+                        : _vm._e()
+                    ])
+                  ])
+                }),
+                0
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "float-right mb-3" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  on: { click: _vm.submitReferences }
+                },
+                [
+                  _vm._v(
+                    "\n                        NEXT\n                        "
+                  ),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.isLoading,
+                          expression: "isLoading"
+                        }
+                      ],
+                      staticClass: "spinner-border spinner-border-sm mb-1",
+                      attrs: { role: "status" }
+                    },
+                    [
+                      _c("span", { staticClass: "sr-only" }, [
+                        _vm._v("Loading...")
+                      ])
                     ]
                   )
-                ])
-              }),
-              0
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "float-right mb-3" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                on: { click: _vm.addNewReferenceField }
-              },
-              [
-                _c("i", { staticClass: "fa fa-plus" }),
-                _vm._v(
-                  "\n                        Add new field\n                    "
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-success",
-                on: { click: _vm.submitReferences }
-              },
-              [
-                _c("i", { staticClass: "fa fa-plus" }),
-                _vm._v(
-                  "\n                        NEXT\n\n                        "
-                ),
-                _c(
-                  "div",
-                  {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.isLoading,
-                        expression: "isLoading"
-                      }
-                    ],
-                    staticClass: "spinner-border spinner-border-sm mb-1",
-                    attrs: { role: "status" }
-                  },
-                  [
-                    _c("span", { staticClass: "sr-only" }, [
-                      _vm._v("Loading...")
-                    ])
-                  ]
-                )
-              ]
-            )
+                ]
+              )
+            ])
           ])
-        ])
-      ])
+        ]
+      )
     ])
   ])
 }
@@ -30365,22 +30971,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h5", { staticClass: "mb-0 p-2" }, [
-        _vm._v("\n                41. REFERENCES\n                "),
-        _c("span", { staticClass: "text-danger text-sm" }, [
-          _vm._v(
-            "(Person not related by consanguinity or affinity to\n                    applicant /appointee)"
-          )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", { staticClass: "text-center jumbotron" }, [
+    return _c("tr", { staticClass: "text-center jumbotron text-sm" }, [
       _c("td", [_vm._v("NAME")]),
       _vm._v(" "),
       _c("td", [_vm._v("ADDRESS")]),
@@ -30412,1585 +31003,1725 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("div", { staticClass: "collapse show" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("table", { staticClass: "table table-bordered" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c("tr", [
-              _vm._m(2),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_34_a = "yes"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_34_a,
-                          expression: "relevantQueries.no_34_a"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { id: "yes_34_a", type: "radio", value: "yes" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_34_a, "yes")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_34_a", "yes")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label pr-2 text-sm",
-                        attrs: { for: "yes_34_a" }
-                      },
-                      [
-                        _vm._v(
-                          "\n                                    YES\n                                "
-                        )
-                      ]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_34_a = "no"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_34_a,
-                          expression: "relevantQueries.no_34_a"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "radio", value: "no", id: "no_a_34" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_34_a, "no")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_34_a", "no")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label  pr-2",
-                        attrs: { for: "no_a_34" }
-                      },
-                      [_vm._v("NO")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("td", { staticClass: "w-25" }, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_34_a_details,
-                        expression:
-                          "\n                                        relevantQueries.no_34_a_details\n                                    "
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      readonly: _vm.relevantQueries.no_34_a !== "yes",
-                      placeholder: "If YES, then give details"
-                    },
-                    domProps: { value: _vm.relevantQueries.no_34_a_details },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.relevantQueries,
-                          "no_34_a_details",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _vm._m(3),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_34_b = "yes"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_34_b,
-                          expression: "relevantQueries.no_34_b"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { id: "yes_34_b", type: "radio", value: "yes" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_34_b, "yes")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_34_b", "yes")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label  pr-2",
-                        attrs: { for: "yes_b_34" }
-                      },
-                      [_vm._v("YES")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_34_b = "no"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_34_b,
-                          expression: "relevantQueries.no_34_b"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "radio", value: "no", id: "no_34_b" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_34_b, "no")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_34_b", "no")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label  pr-2",
-                        attrs: { for: "no_34_b" }
-                      },
-                      [_vm._v("NO")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("td", { staticClass: "w-25" }, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_34_b_details,
-                        expression:
-                          "\n                                        relevantQueries.no_34_b_details\n                                    "
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      placeholder: "If YES, then give details",
-                      readonly: _vm.relevantQueries.no_34_b !== "yes"
-                    },
-                    domProps: { value: _vm.relevantQueries.no_34_b_details },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.relevantQueries,
-                          "no_34_b_details",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("td", { staticStyle: { background: "#EAEAEA" } }, [
-                _vm._v(
-                  "\n                            35. a. Have you ever been found guilty of any\n                            administrative offense?\n                        "
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_35_a = "yes"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_35_a,
-                          expression: "relevantQueries.no_35_a"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "radio", value: "yes", id: "yes_35_a" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_35_a, "yes")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_35_a", "yes")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label  pr-2",
-                        attrs: { for: "yes_35_a" }
-                      },
-                      [
-                        _vm._v(
-                          "\n                                    YES\n                                "
-                        )
-                      ]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_35_a = "no"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_35_a,
-                          expression: "relevantQueries.no_35_a"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "radio", value: "no", id: "no_35_a" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_35_a, "no")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_35_a", "no")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label pr-2",
-                        attrs: { for: "no_35_a" }
-                      },
-                      [_vm._v("NO")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("td", { staticClass: "w-25" }, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_35_a_details,
-                        expression:
-                          "\n                                        relevantQueries.no_35_a_details\n                                    "
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      placeholder: "If YES, then give details",
-                      readonly: _vm.relevantQueries.no_35_a !== "yes"
-                    },
-                    domProps: { value: _vm.relevantQueries.no_35_a_details },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.relevantQueries,
-                          "no_35_a_details",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _vm._m(4),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_35_b = "yes"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_35_b,
-                          expression: "relevantQueries.no_35_b"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { id: "yes_b_35", type: "radio", value: "yes" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_35_b, "yes")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_35_b", "yes")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label  pr-2",
-                        attrs: { for: "yes_b_35" }
-                      },
-                      [_vm._v("YES")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_35_b = "no"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_35_b,
-                          expression: "relevantQueries.no_35_b"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { id: "no_b_35", type: "radio", value: "no" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_35_b, "no")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_35_b", "no")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label  pr-2",
-                        attrs: { for: "no_b_35" }
-                      },
-                      [_vm._v("NO")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("td", { staticClass: "w-25" }, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_35_b_details,
-                        expression:
-                          "\n                                        relevantQueries.no_35_b_details\n                                    "
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      placeholder: "If YES, then give details",
-                      readonly: _vm.relevantQueries.no_35_b !== "yes"
-                    },
-                    domProps: { value: _vm.relevantQueries.no_35_b_details },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.relevantQueries,
-                          "no_35_b_details",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("td", { staticStyle: { background: "#EAEAEA" } }, [
-                _vm._v(
-                  "\n                            36. Have you ever been convicted of any crime or\n                            violation of any law, decree, ordinance or\n                            regulation by any court or tribunal?\n                        "
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_36 = "yes"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_36,
-                          expression: "relevantQueries.no_36"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { id: "yes_36", type: "radio", value: "yes" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_36, "yes")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_36", "yes")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label  pr-2",
-                        attrs: { for: "yes_36" }
-                      },
-                      [_vm._v("YES")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_36 = "no"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_36,
-                          expression: "relevantQueries.no_36"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "radio", value: "no", id: "no_36" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_36, "no")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_36", "no")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label pr-2",
-                        attrs: { for: "no_36" }
-                      },
-                      [_vm._v("NO")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("td", { staticClass: "w-25" }, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_36_details,
-                        expression: "relevantQueries.no_36_details"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      placeholder: "If YES, then give details",
-                      readonly: _vm.relevantQueries.no_36 !== "yes"
-                    },
-                    domProps: { value: _vm.relevantQueries.no_36_details },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.relevantQueries,
-                          "no_36_details",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _vm._m(5),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_37 = "yes"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_37,
-                          expression: "relevantQueries.no_37"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "radio", value: "yes", id: "yes_37" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_37, "yes")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_37", "yes")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label  pr-2",
-                        attrs: { for: "yes_37" }
-                      },
-                      [_vm._v("YES")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_37 = "no"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_37,
-                          expression: "relevantQueries.no_37"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "radio", value: "no", id: "no_37" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_37, "no")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_37", "no")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label pr-2",
-                        attrs: { for: "no_37" }
-                      },
-                      [_vm._v("NO")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("td", { staticClass: "w-25" }, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_37_details,
-                        expression: "relevantQueries.no_37_details"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      placeholder: "If YES, then give details",
-                      readonly: _vm.relevantQueries.no_37 !== "yes"
-                    },
-                    domProps: { value: _vm.relevantQueries.no_37_details },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.relevantQueries,
-                          "no_37_details",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("td", { staticStyle: { background: "#EAEAEA" } }, [
-                _vm._v(
-                  "\n                            38. a. Have you ever been a candidate in a\n                            national or local election held within the last\n                            year (except Barangay election)?\n                        "
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_38_a = "yes"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_38_a,
-                          expression: "relevantQueries.no_38_a"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "radio", value: "yes", id: "yes_a_38" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_38_a, "yes")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_38_a", "yes")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label  pr-2",
-                        attrs: { for: "yes_a_38" }
-                      },
-                      [_vm._v("YES")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_38_a = "no"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_38_a,
-                          expression: "relevantQueries.no_38_a"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "radio", value: "no", id: "no_a_38" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_38_a, "no")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_38_a", "no")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label pr-2",
-                        attrs: { for: "no_a_38" }
-                      },
-                      [_vm._v("NO")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("td", { staticClass: "w-25" }, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_38_a_details,
-                        expression:
-                          "\n                                        relevantQueries.no_38_a_details\n                                    "
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      placeholder: "If YES, then give details",
-                      readonly: _vm.relevantQueries.no_38_a !== "yes"
-                    },
-                    domProps: { value: _vm.relevantQueries.no_38_a_details },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.relevantQueries,
-                          "no_38_a_details",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _vm._m(6),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_38_b = "yes"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_38_b,
-                          expression: "relevantQueries.no_38_b"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "radio", value: "yes", id: "yes_b_38" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_38_b, "yes")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_38_b", "yes")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label  pr-2",
-                        attrs: { for: "yes_b_38" }
-                      },
-                      [_vm._v("YES")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_38_b = "no"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_38_b,
-                          expression: "relevantQueries.no_38_b"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "radio", value: "no", id: "no_b_38" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_38_b, "no")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_38_b", "no")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label  pr-2",
-                        attrs: { for: "no_b_38" }
-                      },
-                      [_vm._v("NO")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("td", { staticClass: "w-25" }, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_38_b_details,
-                        expression:
-                          "\n                                        relevantQueries.no_38_b_details\n                                    "
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      placeholder: "If YES, then give details",
-                      readonly: _vm.relevantQueries.no_38_b !== "yes"
-                    },
-                    domProps: { value: _vm.relevantQueries.no_38_b_details },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.relevantQueries,
-                          "no_38_b_details",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _c("td", { staticStyle: { background: "#EAEAEA" } }, [
-                _vm._v(
-                  "\n                            39. Have you acquired the status of an immigrant\n                            or permanent resident of another country?\n                        "
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_39 = "yes"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_39,
-                          expression: "relevantQueries.no_39"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "radio", value: "yes", id: "yes_39" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_39, "yes")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_39", "yes")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label  pr-2",
-                        attrs: { for: "yes_39" }
-                      },
-                      [_vm._v("YES")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_39 = "no"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_39,
-                          expression: "relevantQueries.no_39"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "radio", value: "no", id: "no_39" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_39, "no")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_39", "no")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label pr-2",
-                        attrs: { for: "no_39" }
-                      },
-                      [_vm._v("NO")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("td", { staticClass: "w-25" }, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_39_details,
-                        expression: "relevantQueries.no_39_details"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      placeholder: "If YES, then give details",
-                      readonly: _vm.relevantQueries.no_39 !== "yes"
-                    },
-                    domProps: { value: _vm.relevantQueries.no_39_details },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.relevantQueries,
-                          "no_39_details",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._m(7),
-            _vm._v(" "),
-            _c("tr", [
-              _vm._m(8),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_40_a = "yes"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_40_a,
-                          expression: "relevantQueries.no_40_a"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "radio", value: "yes", id: "yes_a_40" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_40_a, "yes")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_40_a", "yes")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label  pr-2",
-                        attrs: { for: "yes_a_40" }
-                      },
-                      [_vm._v("YES")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_40_a = "no"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_40_a,
-                          expression: "relevantQueries.no_40_a"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "radio", value: "no", id: "no_a_40" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_40_a, "no")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_40_a", "no")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label  pr-2",
-                        attrs: { for: "no_a_40" }
-                      },
-                      [_vm._v("NO")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("td", { staticClass: "w-25" }, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_40_a_details,
-                        expression:
-                          "\n                                        relevantQueries.no_40_a_details\n                                    "
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      placeholder: "If YES, then give details",
-                      readonly: _vm.relevantQueries.no_40_a !== "yes"
-                    },
-                    domProps: { value: _vm.relevantQueries.no_40_a_details },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.relevantQueries,
-                          "no_40_a_details",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _vm._m(9),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_40_b = "yes"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_40_b,
-                          expression: "relevantQueries.no_40_b"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "radio", value: "yes", id: "yes_b_40" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_40_b, "yes")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_40_b", "yes")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label  pr-2",
-                        attrs: { for: "yes_b_40" }
-                      },
-                      [_vm._v("YES")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_40_b = "no"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check " }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_40_b,
-                          expression: "relevantQueries.no_40_b"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "radio", value: "no", id: "no_b_40" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_40_b, "no")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_40_b", "no")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label  pr-2",
-                        attrs: { for: "no_b_40" }
-                      },
-                      [_vm._v("NO")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("td", { staticClass: "w-25" }, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_40_b_details,
-                        expression:
-                          "\n                                        relevantQueries.no_40_b_details\n                                    "
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      placeholder: "If YES, then give details",
-                      readonly: _vm.relevantQueries.no_40_b !== "yes"
-                    },
-                    domProps: { value: _vm.relevantQueries.no_40_b_details },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.relevantQueries,
-                          "no_40_b_details",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("tr", [
-              _vm._m(10),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_40_c = "yes"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_40_c,
-                          expression: "relevantQueries.no_40_c"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "radio", id: "no_c_40", value: "yes" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_40_c, "yes")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_40_c", "yes")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label  pr-2",
-                        attrs: { for: "yes_c_40" }
-                      },
-                      [_vm._v("YES")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "td",
-                {
-                  on: {
-                    click: function($event) {
-                      _vm.relevantQueries.no_40_c = "no"
-                    }
-                  }
-                },
-                [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.relevantQueries.no_40_c,
-                          expression: "relevantQueries.no_40_c"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "radio", id: "no_c_40", value: "no" },
-                      domProps: {
-                        checked: _vm._q(_vm.relevantQueries.no_40_c, "no")
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.relevantQueries, "no_40_c", "no")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-check-label pr-2",
-                        attrs: { for: "no_c_40" }
-                      },
-                      [_vm._v("NO")]
-                    )
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("td", { staticClass: "w-25" }, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.relevantQueries.no_40_c_details,
-                        expression:
-                          "\n                                        relevantQueries.no_40_c_details\n                                    "
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      placeholder: "If YES, then give details",
-                      readonly: _vm.relevantQueries.no_40_c !== "yes"
-                    },
-                    domProps: { value: _vm.relevantQueries.no_40_c_details },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.relevantQueries,
-                          "no_40_c_details",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  })
-                ])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
+      _c("div", { staticClass: "card-header" }, [
+        _c("h5", { staticClass: "mb-0 p-2" }, [
+          _vm._v("\n                RELEVANT QUERIES\n                "),
           _c(
-            "button",
+            "span",
             {
-              staticClass: "btn btn-primary btn-sm font-weight-bold",
-              on: { click: _vm.submit }
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.isComplete,
+                  expression: "isComplete"
+                }
+              ],
+              class: _vm.isComplete ? "text-success" : "text-danger"
             },
-            [_vm._v("\n                    next\n                ")]
+            [_vm._v("\n                    - VERIFIED")]
           )
         ])
-      ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "collapse", class: !_vm.isComplete ? "show" : "" },
+        [
+          _c("div", { staticClass: "card-body" }, [
+            _c("table", { staticClass: "table table-bordered" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("tr", [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_34_a = "yes"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_34_a,
+                            expression: "relevantQueries.no_34_a"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { id: "yes_34_a", type: "radio", value: "yes" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_34_a, "yes")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(
+                              _vm.relevantQueries,
+                              "no_34_a",
+                              "yes"
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label pr-2 text-sm",
+                          attrs: { for: "yes_34_a" }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    YES\n                                "
+                          )
+                        ]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_34_a = "no"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_34_a,
+                            expression: "relevantQueries.no_34_a"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "radio", value: "no", id: "no_a_34" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_34_a, "no")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(
+                              _vm.relevantQueries,
+                              "no_34_a",
+                              "no"
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label  pr-2",
+                          attrs: { for: "no_a_34" }
+                        },
+                        [_vm._v("NO")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("td", { staticClass: "w-25" }, [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_34_a_details,
+                          expression:
+                            "\n                                        relevantQueries.no_34_a_details\n                                    "
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        readonly: _vm.relevantQueries.no_34_a !== "yes",
+                        placeholder: "If YES, then give details"
+                      },
+                      domProps: { value: _vm.relevantQueries.no_34_a_details },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.relevantQueries,
+                            "no_34_a_details",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _vm._m(2),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_34_b = "yes"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_34_b,
+                            expression: "relevantQueries.no_34_b"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { id: "yes_34_b", type: "radio", value: "yes" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_34_b, "yes")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(
+                              _vm.relevantQueries,
+                              "no_34_b",
+                              "yes"
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label  pr-2",
+                          attrs: { for: "yes_b_34" }
+                        },
+                        [_vm._v("YES")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_34_b = "no"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_34_b,
+                            expression: "relevantQueries.no_34_b"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "radio", value: "no", id: "no_34_b" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_34_b, "no")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(
+                              _vm.relevantQueries,
+                              "no_34_b",
+                              "no"
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label  pr-2",
+                          attrs: { for: "no_34_b" }
+                        },
+                        [_vm._v("NO")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("td", { staticClass: "w-25" }, [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_34_b_details,
+                          expression:
+                            "\n                                        relevantQueries.no_34_b_details\n                                    "
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        placeholder: "If YES, then give details",
+                        readonly: _vm.relevantQueries.no_34_b !== "yes"
+                      },
+                      domProps: { value: _vm.relevantQueries.no_34_b_details },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.relevantQueries,
+                            "no_34_b_details",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c(
+                  "td",
+                  {
+                    staticClass: "text-sm",
+                    staticStyle: { background: "#EAEAEA" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                            35. a. Have you ever been found guilty of any\n                            administrative offense?\n                        "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_35_a = "yes"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_35_a,
+                            expression: "relevantQueries.no_35_a"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "radio", value: "yes", id: "yes_35_a" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_35_a, "yes")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(
+                              _vm.relevantQueries,
+                              "no_35_a",
+                              "yes"
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label  pr-2",
+                          attrs: { for: "yes_35_a" }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    YES\n                                "
+                          )
+                        ]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_35_a = "no"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_35_a,
+                            expression: "relevantQueries.no_35_a"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "radio", value: "no", id: "no_35_a" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_35_a, "no")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(
+                              _vm.relevantQueries,
+                              "no_35_a",
+                              "no"
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label pr-2",
+                          attrs: { for: "no_35_a" }
+                        },
+                        [_vm._v("NO")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("td", { staticClass: "w-25" }, [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_35_a_details,
+                          expression:
+                            "\n                                        relevantQueries.no_35_a_details\n                                    "
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        placeholder: "If YES, then give details",
+                        readonly: _vm.relevantQueries.no_35_a !== "yes"
+                      },
+                      domProps: { value: _vm.relevantQueries.no_35_a_details },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.relevantQueries,
+                            "no_35_a_details",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _vm._m(3),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_35_b = "yes"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_35_b,
+                            expression: "relevantQueries.no_35_b"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { id: "yes_b_35", type: "radio", value: "yes" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_35_b, "yes")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(
+                              _vm.relevantQueries,
+                              "no_35_b",
+                              "yes"
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label  pr-2",
+                          attrs: { for: "yes_b_35" }
+                        },
+                        [_vm._v("YES")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_35_b = "no"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_35_b,
+                            expression: "relevantQueries.no_35_b"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { id: "no_b_35", type: "radio", value: "no" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_35_b, "no")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(
+                              _vm.relevantQueries,
+                              "no_35_b",
+                              "no"
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label  pr-2",
+                          attrs: { for: "no_b_35" }
+                        },
+                        [_vm._v("NO")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("td", { staticClass: "w-25" }, [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_35_b_details,
+                          expression:
+                            "\n                                        relevantQueries.no_35_b_details\n                                    "
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        placeholder: "If YES, then give details",
+                        readonly: _vm.relevantQueries.no_35_b !== "yes"
+                      },
+                      domProps: { value: _vm.relevantQueries.no_35_b_details },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.relevantQueries,
+                            "no_35_b_details",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c(
+                  "td",
+                  {
+                    staticClass: "text-sm",
+                    staticStyle: { background: "#EAEAEA" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                            36. Have you ever been convicted of any crime or\n                            violation of any law, decree, ordinance or\n                            regulation by any court or tribunal?\n                        "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_36 = "yes"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_36,
+                            expression: "relevantQueries.no_36"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { id: "yes_36", type: "radio", value: "yes" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_36, "yes")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(_vm.relevantQueries, "no_36", "yes")
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label  pr-2",
+                          attrs: { for: "yes_36" }
+                        },
+                        [_vm._v("YES")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_36 = "no"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_36,
+                            expression: "relevantQueries.no_36"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "radio", value: "no", id: "no_36" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_36, "no")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(_vm.relevantQueries, "no_36", "no")
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label pr-2",
+                          attrs: { for: "no_36" }
+                        },
+                        [_vm._v("NO")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("td", { staticClass: "w-25" }, [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_36_details,
+                          expression: "relevantQueries.no_36_details"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        placeholder: "If YES, then give details",
+                        readonly: _vm.relevantQueries.no_36 !== "yes"
+                      },
+                      domProps: { value: _vm.relevantQueries.no_36_details },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.relevantQueries,
+                            "no_36_details",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _vm._m(4),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_37 = "yes"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_37,
+                            expression: "relevantQueries.no_37"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "radio", value: "yes", id: "yes_37" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_37, "yes")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(_vm.relevantQueries, "no_37", "yes")
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label  pr-2",
+                          attrs: { for: "yes_37" }
+                        },
+                        [_vm._v("YES")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_37 = "no"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_37,
+                            expression: "relevantQueries.no_37"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "radio", value: "no", id: "no_37" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_37, "no")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(_vm.relevantQueries, "no_37", "no")
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label pr-2",
+                          attrs: { for: "no_37" }
+                        },
+                        [_vm._v("NO")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("td", { staticClass: "w-25" }, [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_37_details,
+                          expression: "relevantQueries.no_37_details"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        placeholder: "If YES, then give details",
+                        readonly: _vm.relevantQueries.no_37 !== "yes"
+                      },
+                      domProps: { value: _vm.relevantQueries.no_37_details },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.relevantQueries,
+                            "no_37_details",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c(
+                  "td",
+                  {
+                    staticClass: "text-sm",
+                    staticStyle: { background: "#EAEAEA" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                            38. a. Have you ever been a candidate in a\n                            national or local election held within the last\n                            year (except Barangay election)?\n                        "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_38_a = "yes"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_38_a,
+                            expression: "relevantQueries.no_38_a"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "radio", value: "yes", id: "yes_a_38" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_38_a, "yes")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(
+                              _vm.relevantQueries,
+                              "no_38_a",
+                              "yes"
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label  pr-2",
+                          attrs: { for: "yes_a_38" }
+                        },
+                        [_vm._v("YES")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_38_a = "no"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_38_a,
+                            expression: "relevantQueries.no_38_a"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "radio", value: "no", id: "no_a_38" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_38_a, "no")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(
+                              _vm.relevantQueries,
+                              "no_38_a",
+                              "no"
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label pr-2",
+                          attrs: { for: "no_a_38" }
+                        },
+                        [_vm._v("NO")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("td", { staticClass: "w-25" }, [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_38_a_details,
+                          expression:
+                            "\n                                        relevantQueries.no_38_a_details\n                                    "
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        placeholder: "If YES, then give details",
+                        readonly: _vm.relevantQueries.no_38_a !== "yes"
+                      },
+                      domProps: { value: _vm.relevantQueries.no_38_a_details },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.relevantQueries,
+                            "no_38_a_details",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _vm._m(5),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_38_b = "yes"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_38_b,
+                            expression: "relevantQueries.no_38_b"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "radio", value: "yes", id: "yes_b_38" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_38_b, "yes")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(
+                              _vm.relevantQueries,
+                              "no_38_b",
+                              "yes"
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label  pr-2",
+                          attrs: { for: "yes_b_38" }
+                        },
+                        [_vm._v("YES")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_38_b = "no"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_38_b,
+                            expression: "relevantQueries.no_38_b"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "radio", value: "no", id: "no_b_38" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_38_b, "no")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(
+                              _vm.relevantQueries,
+                              "no_38_b",
+                              "no"
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label  pr-2",
+                          attrs: { for: "no_b_38" }
+                        },
+                        [_vm._v("NO")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("td", { staticClass: "w-25" }, [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_38_b_details,
+                          expression:
+                            "\n                                        relevantQueries.no_38_b_details\n                                    "
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        placeholder: "If YES, then give details",
+                        readonly: _vm.relevantQueries.no_38_b !== "yes"
+                      },
+                      domProps: { value: _vm.relevantQueries.no_38_b_details },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.relevantQueries,
+                            "no_38_b_details",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c(
+                  "td",
+                  {
+                    staticClass: "text-sm",
+                    staticStyle: { background: "#EAEAEA" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                            39. Have you acquired the status of an immigrant\n                            or permanent resident of another country?\n                        "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_39 = "yes"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_39,
+                            expression: "relevantQueries.no_39"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "radio", value: "yes", id: "yes_39" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_39, "yes")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(_vm.relevantQueries, "no_39", "yes")
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label  pr-2",
+                          attrs: { for: "yes_39" }
+                        },
+                        [_vm._v("YES")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_39 = "no"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_39,
+                            expression: "relevantQueries.no_39"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "radio", value: "no", id: "no_39" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_39, "no")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(_vm.relevantQueries, "no_39", "no")
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label pr-2",
+                          attrs: { for: "no_39" }
+                        },
+                        [_vm._v("NO")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("td", { staticClass: "w-25" }, [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_39_details,
+                          expression: "relevantQueries.no_39_details"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        placeholder: "If YES, then give details",
+                        readonly: _vm.relevantQueries.no_39 !== "yes"
+                      },
+                      domProps: { value: _vm.relevantQueries.no_39_details },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.relevantQueries,
+                            "no_39_details",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(6),
+              _vm._v(" "),
+              _c("tr", [
+                _vm._m(7),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_40_a = "yes"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_40_a,
+                            expression: "relevantQueries.no_40_a"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "radio", value: "yes", id: "yes_a_40" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_40_a, "yes")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(
+                              _vm.relevantQueries,
+                              "no_40_a",
+                              "yes"
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label  pr-2",
+                          attrs: { for: "yes_a_40" }
+                        },
+                        [_vm._v("YES")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_40_a = "no"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_40_a,
+                            expression: "relevantQueries.no_40_a"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "radio", value: "no", id: "no_a_40" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_40_a, "no")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(
+                              _vm.relevantQueries,
+                              "no_40_a",
+                              "no"
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label  pr-2",
+                          attrs: { for: "no_a_40" }
+                        },
+                        [_vm._v("NO")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("td", { staticClass: "w-25" }, [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_40_a_details,
+                          expression:
+                            "\n                                        relevantQueries.no_40_a_details\n                                    "
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        placeholder: "If YES, then give details",
+                        readonly: _vm.relevantQueries.no_40_a !== "yes"
+                      },
+                      domProps: { value: _vm.relevantQueries.no_40_a_details },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.relevantQueries,
+                            "no_40_a_details",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _vm._m(8),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_40_b = "yes"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_40_b,
+                            expression: "relevantQueries.no_40_b"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "radio", value: "yes", id: "yes_b_40" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_40_b, "yes")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(
+                              _vm.relevantQueries,
+                              "no_40_b",
+                              "yes"
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label  pr-2",
+                          attrs: { for: "yes_b_40" }
+                        },
+                        [_vm._v("YES")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_40_b = "no"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check " }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_40_b,
+                            expression: "relevantQueries.no_40_b"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "radio", value: "no", id: "no_b_40" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_40_b, "no")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(
+                              _vm.relevantQueries,
+                              "no_40_b",
+                              "no"
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label  pr-2",
+                          attrs: { for: "no_b_40" }
+                        },
+                        [_vm._v("NO")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("td", { staticClass: "w-25" }, [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_40_b_details,
+                          expression:
+                            "\n                                        relevantQueries.no_40_b_details\n                                    "
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        placeholder: "If YES, then give details",
+                        readonly: _vm.relevantQueries.no_40_b !== "yes"
+                      },
+                      domProps: { value: _vm.relevantQueries.no_40_b_details },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.relevantQueries,
+                            "no_40_b_details",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _vm._m(9),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_40_c = "yes"
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_40_c,
+                            expression: "relevantQueries.no_40_c"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "radio", id: "yes_c_40", value: "yes" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_40_c, "yes")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(
+                              _vm.relevantQueries,
+                              "no_40_c",
+                              "yes"
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label  pr-2",
+                          attrs: { for: "yes_c_40" }
+                        },
+                        [_vm._v("YES")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  {
+                    on: {
+                      click: function($event) {
+                        _vm.relevantQueries.no_40_c = "no"
+                        _vm.relevantQueries.no_40_c_details = ""
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "form-check" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.relevantQueries.no_40_c,
+                            expression: "relevantQueries.no_40_c"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: { type: "radio", id: "no_c_40", value: "no" },
+                        domProps: {
+                          checked: _vm._q(_vm.relevantQueries.no_40_c, "no")
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(
+                              _vm.relevantQueries,
+                              "no_40_c",
+                              "no"
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-check-label pr-2",
+                          attrs: { for: "no_c_40" }
+                        },
+                        [_vm._v("NO")]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("td", { staticClass: "w-25" }, [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.relevantQueries.no_40_c_details,
+                          expression:
+                            "\n                                        relevantQueries.no_40_c_details\n                                    "
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        placeholder: "If YES, then give details",
+                        readonly: _vm.relevantQueries.no_40_c !== "yes"
+                      },
+                      domProps: { value: _vm.relevantQueries.no_40_c_details },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.relevantQueries,
+                            "no_40_c_details",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "float-right mb-3" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary  font-weight-bold",
+                  on: { click: _vm.submit }
+                },
+                [
+                  _vm._v(
+                    "\n                        NEXT\n                        "
+                  ),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.isLoading,
+                          expression: "isLoading"
+                        }
+                      ],
+                      staticClass: "spinner-border spinner-border-sm mb-1",
+                      attrs: { role: "status" }
+                    },
+                    [
+                      _c("span", { staticClass: "sr-only" }, [
+                        _vm._v("Loading...")
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ])
+          ])
+        ]
+      )
     ])
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h5", { staticClass: "mb-0 p-2" }, [
-        _vm._v("\n                RELEVANT QUERIES\n            ")
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -32041,7 +32772,7 @@ var staticRenderFns = [
         attrs: { scope: "row" }
       },
       [
-        _c("span", { staticClass: "ml-4" }, [
+        _c("span", { staticClass: "ml-4 text-sm" }, [
           _vm._v(
             "b. within the fourth degree (for Local\n                                Government Unit - Career Employees)?"
           )
@@ -32057,7 +32788,7 @@ var staticRenderFns = [
       "td",
       { staticStyle: { background: "#EAEAEA" }, attrs: { scope: "row" } },
       [
-        _c("span", { staticClass: "ml-4" }, [
+        _c("span", { staticClass: "ml-4 text-sm" }, [
           _vm._v(
             "b. Have you been criminally charged before\n                                any court?"
           )
@@ -32085,7 +32816,7 @@ var staticRenderFns = [
       "td",
       { staticStyle: { background: "#EAEAEA" }, attrs: { scope: "row" } },
       [
-        _c("span", { staticClass: "ml-4" }, [
+        _c("span", { staticClass: "ml-4 text-sm" }, [
           _vm._v(
             "b. Have you resigned from the government\n                                service during the three (3)-month period\n                                before the last election to promote/actively\n                                campaign for a national or local\n                                candidate?"
           )
@@ -32100,7 +32831,10 @@ var staticRenderFns = [
     return _c("tr", [
       _c(
         "td",
-        { staticClass: " text-left", staticStyle: { background: "#EAEAEA" } },
+        {
+          staticClass: "text-left text-sm",
+          staticStyle: { background: "#EAEAEA" }
+        },
         [
           _vm._v(
             "\n                            40. Pursuant to: (a) Indigenous People's Act (RA\n                            8371); (b) Magna Carta for Disabled Persons (RA\n                            7277); and (c) Solo Parents Welfare Act of 2000\n                            (RA 8972), please answer the following items:\n                        "
@@ -32123,7 +32857,7 @@ var staticRenderFns = [
         attrs: { scope: "row" }
       },
       [
-        _c("span", { staticClass: "ml-4" }, [
+        _c("span", { staticClass: "ml-4 text-sm" }, [
           _vm._v(
             "a. Are you a member of any indigenous\n                                group?"
           )
@@ -32143,7 +32877,7 @@ var staticRenderFns = [
         attrs: { scope: "row" }
       },
       [
-        _c("span", { staticClass: "ml-4" }, [
+        _c("span", { staticClass: "ml-4 text-sm" }, [
           _vm._v("b. Are you a person with disability?")
         ])
       ]
@@ -32161,7 +32895,7 @@ var staticRenderFns = [
         attrs: { scope: "row" }
       },
       [
-        _c("span", { staticClass: "ml-4" }, [
+        _c("span", { staticClass: "ml-4 text-sm" }, [
           _vm._v("c. Are you a solo parent?")
         ])
       ]
@@ -32174,10 +32908,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/Sheet.vue?vue&type=template&id=273b49a5&":
-/*!*********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PersonalData/Sheet.vue?vue&type=template&id=273b49a5& ***!
-  \*********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/Sheet.vue?vue&type=template&id=273b49a5&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PersonalData/Sheet.vue?vue&type=template&id=273b49a5&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -32189,97 +32923,122 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container-fluid" },
-    [
-      _c(
-        "div",
-        { staticClass: "row" },
-        _vm._l(_vm.tabs, function(tab, key) {
-          return _c("div", { key: key, staticClass: "col-lg-3" }, [
-            _c(
-              "button",
-              {
-                staticClass:
-                  "btn btn-block font-weight-bold text-uppercase m-2",
-                class: [tab.status ? "btn-primary" : "btn-danger"],
-                on: {
-                  click: function($event) {
-                    return _vm.openTab(tab)
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "container-fluid" },
+      [
+        _c(
+          "div",
+          { staticClass: "row" },
+          _vm._l(_vm.tabs, function(tab, key) {
+            return _c("div", { key: key, staticClass: "col-lg-3" }, [
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "btn btn-block font-weight-bold text-uppercase m-2",
+                  class: [tab.status ? "btn-primary" : "btn-danger"],
+                  on: {
+                    click: function($event) {
+                      return _vm.openTab(tab)
+                    }
                   }
-                }
-              },
-              [
-                _vm._v(
-                  "\n                " + _vm._s(tab.name) + "\n            "
-                )
-              ]
-            )
-          ])
-        }),
-        0
-      ),
-      _vm._v(" "),
-      _vm.selectedTab.name === "C1"
-        ? _c("personal-information", {
-            on: { "display-family-background": _vm.displayFamilyBackground }
-          })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.selectedTab.name === "C1"
-        ? _c("family-background", {
-            attrs: {
-              family_show: _vm.isFamilyBackgroundShow,
-              employee_id: _vm.employee_id
-            },
-            on: {
-              "display-educational-background": _vm.dispalyEducationalBackground
-            }
-          })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.selectedTab.name === "C1"
-        ? _c("educational-background", {
-            attrs: {
-              educational_background: _vm.isEducationalBackground,
-              employee_id: _vm.employee_id
-            },
-            on: { next_tab: _vm.openNextTab }
-          })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.selectedTab.name === "C2"
-        ? _c("civil-service", {
-            attrs: { employee_id: _vm.employee_id },
-            on: { "display-work-experience": _vm.workExperienceSection }
-          })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.selectedTab.name === "C2"
-        ? _c("work-experience", {
-            attrs: {
-              work_experience: _vm.isWorkExperienceShow,
-              employee_id: _vm.employee_id
-            },
-            on: { next_tab: _vm.openNextTab }
-          })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.selectedTab.name === "C3" ? _c("voluntary") : _vm._e(),
-      _vm._v(" "),
-      _vm.selectedTab.name === "C3" ? _c("learning-and-development") : _vm._e(),
-      _vm._v(" "),
-      _vm.selectedTab.name === "C3" ? _c("other-information") : _vm._e(),
-      _vm._v(" "),
-      _vm.selectedTab.name === "C4" ? _c("relevant-queries") : _vm._e(),
-      _vm._v(" "),
-      _vm.selectedTab.name === "C4" ? _c("references") : _vm._e(),
-      _vm._v(" "),
-      _vm.selectedTab.name === "C4" ? _c("goverment-issued-id") : _vm._e()
-    ],
-    1
-  )
+                },
+                [
+                  _vm._v(
+                    "\n                     " +
+                      _vm._s(tab.name) +
+                      "\n                 "
+                  )
+                ]
+              )
+            ])
+          }),
+          0
+        ),
+        _vm._v(" "),
+        _vm.selectedTab.name === "C1"
+          ? _c("personal-information", {
+              on: { "display-family-background": _vm.displayFamilyBackground }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.selectedTab.name === "C1"
+          ? _c("family-background", {
+              attrs: { family_show: _vm.isFamilyBackgroundShow },
+              on: {
+                "display-educational-background":
+                  _vm.dispalyEducationalBackground
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.selectedTab.name === "C1"
+          ? _c("educational-background", {
+              attrs: { educational_background: _vm.isEducationalBackground },
+              on: { next_tab: _vm.openNextTab }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.selectedTab.name === "C2"
+          ? _c("civil-service", {
+              on: { "display-work-experience": _vm.workExperienceSection }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.selectedTab.name === "C2"
+          ? _c("work-experience", {
+              attrs: { work_experience: _vm.isWorkExperienceShow },
+              on: { next_tab: _vm.openNextTab }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.selectedTab.name === "C3"
+          ? _c("voluntary", {
+              on: {
+                "display-learning-and-development":
+                  _vm.displayLearningAndDevelopment
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.selectedTab.name === "C3"
+          ? _c("learning-and-development", {
+              attrs: { show_panel: _vm.needToShowLearningAndDevelopment },
+              on: { "display-other-information": _vm.displayOtherInformation }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.selectedTab.name === "C3"
+          ? _c("other-information", {
+              attrs: { show_panel: _vm.needToShowOtherInformation },
+              on: { next_tab: _vm.openNextTab }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.selectedTab.name === "C4"
+          ? _c("relevant-queries", {
+              on: { "display-reference": _vm.displayReference }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.selectedTab.name === "C4"
+          ? _c("references", {
+              attrs: { show_panel: _vm.needToShowReference },
+              on: { "display-issued-id": _vm.displayIssuedID }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.selectedTab.name === "C4"
+          ? _c("goverment-issued-id", {
+              attrs: { show_panel: _vm.needToShowIssuedID }
+            })
+          : _vm._e()
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -45575,9 +46334,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Sheet_vue_vue_type_template_id_273b49a5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Sheet.vue?vue&type=template&id=273b49a5& */ "./resources/js/components/PersonalData/Sheet.vue?vue&type=template&id=273b49a5&");
+/* harmony import */ var _Sheet_vue_vue_type_template_id_273b49a5_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Sheet.vue?vue&type=template&id=273b49a5&scoped=true& */ "./resources/js/components/PersonalData/Sheet.vue?vue&type=template&id=273b49a5&scoped=true&");
 /* harmony import */ var _Sheet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Sheet.vue?vue&type=script&lang=js& */ "./resources/js/components/PersonalData/Sheet.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _Sheet_vue_vue_type_style_index_0_id_273b49a5_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Sheet.vue?vue&type=style&index=0&id=273b49a5&scoped=true&lang=css& */ "./resources/js/components/PersonalData/Sheet.vue?vue&type=style&index=0&id=273b49a5&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -45585,13 +46346,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _Sheet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Sheet_vue_vue_type_template_id_273b49a5___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Sheet_vue_vue_type_template_id_273b49a5___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _Sheet_vue_vue_type_template_id_273b49a5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Sheet_vue_vue_type_template_id_273b49a5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  null,
+  "273b49a5",
   null
   
 )
@@ -45617,19 +46378,35 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/PersonalData/Sheet.vue?vue&type=template&id=273b49a5&":
-/*!***************************************************************************************!*\
-  !*** ./resources/js/components/PersonalData/Sheet.vue?vue&type=template&id=273b49a5& ***!
-  \***************************************************************************************/
+/***/ "./resources/js/components/PersonalData/Sheet.vue?vue&type=style&index=0&id=273b49a5&scoped=true&lang=css&":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/PersonalData/Sheet.vue?vue&type=style&index=0&id=273b49a5&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Sheet_vue_vue_type_style_index_0_id_273b49a5_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Sheet.vue?vue&type=style&index=0&id=273b49a5&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/Sheet.vue?vue&type=style&index=0&id=273b49a5&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Sheet_vue_vue_type_style_index_0_id_273b49a5_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Sheet_vue_vue_type_style_index_0_id_273b49a5_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Sheet_vue_vue_type_style_index_0_id_273b49a5_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Sheet_vue_vue_type_style_index_0_id_273b49a5_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+
+
+/***/ }),
+
+/***/ "./resources/js/components/PersonalData/Sheet.vue?vue&type=template&id=273b49a5&scoped=true&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/PersonalData/Sheet.vue?vue&type=template&id=273b49a5&scoped=true& ***!
+  \***************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Sheet_vue_vue_type_template_id_273b49a5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Sheet.vue?vue&type=template&id=273b49a5& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/Sheet.vue?vue&type=template&id=273b49a5&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Sheet_vue_vue_type_template_id_273b49a5___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Sheet_vue_vue_type_template_id_273b49a5_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Sheet.vue?vue&type=template&id=273b49a5&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/Sheet.vue?vue&type=template&id=273b49a5&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Sheet_vue_vue_type_template_id_273b49a5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Sheet_vue_vue_type_template_id_273b49a5___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Sheet_vue_vue_type_template_id_273b49a5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

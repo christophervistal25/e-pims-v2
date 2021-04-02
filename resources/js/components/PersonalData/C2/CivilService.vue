@@ -44,14 +44,14 @@
                                 v-for="(civil, index) in civilService"
                                 :key="index"
                             >
-                                <th scope="row">
+                                <td scope="row">
                                     <input
                                         type="text"
                                         class="form-control rounded-0 border-0"
                                         placeholder="Input here..."
                                         v-model="civil.careerServ"
                                     />
-                                </th>
+                                </td>
                                 <td>
                                     <input
                                         type="number"
@@ -115,6 +115,9 @@
                         </tbody>
                     </table>
                     <div class="float-right mb-3">
+                        <button class='btn btn-warning font-weight-bold'>
+                            RESET NO VALUES
+                        </button>
                         <button
                             class="btn btn-primary font-weight-bold"
                             @click="submitCivilService"
@@ -139,11 +142,6 @@
 <script>
 import swal from "sweetalert";
 export default {
-    props: {
-        employee_id: {
-            required: true
-        }
-    },
     data() {
         return {
             isComplete: false,
@@ -157,7 +155,7 @@ export default {
                     careerServ: "",
                     number: "",
                     dateOfValid: "",
-                    employee_id: this.employee_id
+                    employee_id : localStorage.getItem('employee_id'),
                 }
             ]
         };
@@ -172,7 +170,7 @@ export default {
                 careerServ: "",
                 number: "",
                 dateOfValid: "",
-                employee_id: this.employee_id
+                employee_id : localStorage.getItem('employee_id'),
             });
         },
         submitCivilService() {

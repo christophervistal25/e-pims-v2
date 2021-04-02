@@ -5,10 +5,16 @@
                 <h5 class="mb-0 p-2">
                     VII. LEARNING AND DEVELOPMENT (L&D) INTERVENTIONS/TRAINING
                     PROGRAMS ATTENDED
+                    <span
+                    v-show="isComplete"
+                    :class="isComplete ? 'text-success' : 'text-danger'"
+                    >
+                        - VERIFIED</span
+                    >
                 </h5>
             </div>
 
-            <div>
+            <div class="collapse" :class="!isComplete && show_panel ? 'show' : '' ">
                 <div class="card-body">
                     <table class="table table-bordered">
                         <tr class="text-center text-sm" style="background: #EAEAEA;">
@@ -113,9 +119,18 @@
                                     <button
                                         v-show="index != 0"
                                         @click="removeField(index)"
-                                        class="btn btn-sm btn-danger font-weight-bold mt-2"
+                                        class="btn btn-sm btn-danger font-weight-bold mt-2 rounded-circle"
                                     >
                                         X
+                                    </button>
+                                </td>
+                                <td>
+                                    <button
+                                        v-if="index == noOfFields - 1"
+                                        class="btn btn-primary font-weight-bold rounded-circle"
+                                        @click="addNewLearningAndDevelopmentField"
+                                    >
+                                        <i class="fa fa-plus"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -123,20 +138,10 @@
                     </table>
                     <div class="float-right mb-3">
                         <button
-                            class="btn btn-primary"
-                            @click="addNewLearningAndDevelopmentField"
-                        >
-                            <i class="fa fa-plus"></i>
-                            Add new field
-                        </button>
-
-                        <button
-                            class="btn btn-success"
+                            class="btn btn-primary font-weight-bold"
                             @click="submitLearningAndDevelopment"
                         >
-                            <i class="fa fa-plus"></i>
                             NEXT
-
                             <div
                                 class="spinner-border spinner-border-sm mb-1"
                                 v-show="isLoading"
@@ -154,10 +159,16 @@
 
 <script>
 export default {
+    props : {
+        show_panel : {
+            required : true
+        }
+    },
     data() {
         return {
             isLoading: false,
             isComplete: false,
+            noOfFields : 0,
             learnDev: [
                 {
                     nameOfTraining: "",
@@ -165,10 +176,16 @@ export default {
                     to: "",
                     noOfHours: "",
                     typeOfLD: "",
-                    conducted: ""
+                    conducted: "",
+                    employee_id : localStorage.getItem('employee_id'),
                 }
             ]
         };
+    },
+    watch : {
+        learnDev(from, to) {
+            this.noOfFields = to.length;
+        }
     },
     methods: {
         addNewLearningAndDevelopmentField() {
@@ -178,7 +195,8 @@ export default {
                 to: "",
                 noOfHours: "",
                 typeOfLD: "",
-                conducted: ""
+                conducted: "",
+                employee_id : localStorage.getItem('employee_id'),
             });
         },
         removeField(index) {
@@ -193,6 +211,7 @@ export default {
                 .then(response => {
                     this.isLoading = false;
                     this.isComplete = true;
+                    this.$emit('display-other-information');
                     swal({
                         title: "Good job!",
                         text: "Min sulod na ang data!",
@@ -200,6 +219,9 @@ export default {
                     });
                 });
         }
+    },
+    created() {
+       this.noOfFields = this.learnDev.length; 
     }
 };
 </script>

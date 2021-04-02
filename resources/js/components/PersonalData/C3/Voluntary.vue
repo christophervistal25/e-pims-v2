@@ -4,10 +4,16 @@
             <h5 class="p-2 mb-0">
                 VI. VOLUNTARY WORK OR INVOLVEMENT IN CIVIC / NON-GOVERNMENT /
                 PEOPLE / VOLUNTARY ORGANIZATION/S
+                <span
+                    v-show="isComplete"
+                    :class="isComplete ? 'text-success' : 'text-danger'"
+                >
+                    - VERIFIED</span
+                >
             </h5>
         </div>
 
-        <div class="collapse show">
+        <div class="collapse" :class="!isComplete ? 'show' : ''">
             <div class="card-body">
                 <table class="table table-bordered">
                     <tr class="text-center" style="background: #EAEAEA;">
@@ -72,7 +78,7 @@
                                     v-model="volunOrg.position"
                                 />
                             </td>
-                            <td class="jumbotron">
+                            <td class="text-center jumbotron">
                                 <button
                                     v-show="index != 0"
                                     class="btn btn-sm btn-danger font-weight-bold mt-1 rounded-circle"
@@ -81,7 +87,7 @@
                                     X
                                 </button>
                             </td>
-                            <td>
+                            <td class='text-center'>
                                 <button
                                     v-if="index == noOfFields - 1"
                                     class="btn btn-primary rounded-circle font-weight-bold"
@@ -98,7 +104,6 @@
                         class="btn btn-primary font-weight-bold"
                         @click="submitVoluntary"
                     >
-                        <i class="fa fa-plus"></i>
                         NEXT
                         <div
                             class="spinner-border spinner-border-sm mb-1"
@@ -128,7 +133,8 @@ export default {
                     from: "",
                     to: "",
                     noOfHrs: "",
-                    position: ""
+                    position: "",
+                    employee_id : localStorage.getItem('employee_id'),
                 }
             ]
         };
@@ -145,7 +151,8 @@ export default {
                 from: "",
                 to: "",
                 noOfHrs: "",
-                position: ""
+                position: "",
+                employee_id : localStorage.getItem('employee_id'),
             });
         },
         removeField(index) {
@@ -160,6 +167,7 @@ export default {
                 .then(response => {
                     this.isLoading = false;
                     this.isComplete = true;
+                    this.$emit("display-learning-and-development");
                     swal({
                         title: "Good job!",
                         text: "Min sulod na ang data!",

@@ -52,7 +52,6 @@ class PersonalDataSheetController extends Controller
 
     public function storeCivilService(Request $request)
     {
-        dd($request->all());
         return $this->employeeRepository->addCivilService($request->all());
     }
 
@@ -84,6 +83,11 @@ class PersonalDataSheetController extends Controller
     public function storeReferences(Request $request)
     {
         return $this->employeeRepository->addReferences($request->all());
+    }
+    
+    public function storeIssuedID(Request $request)
+    {
+        return $this->employeeRepository->addIssuedID($request->all());
     }
 
     public function validatePersonInformation(Request $request)

@@ -168,9 +168,6 @@ export default {
     props: {
         work_experience: {
             required: true
-        },
-        employee_id: {
-            required: true
         }
     },
     data() {
@@ -178,6 +175,7 @@ export default {
             isComplete: false,
             isLoading: false,
             noOfFields: 0,
+            employee_id : '',
             workExperience: [
                 {
                     from: "",
@@ -188,7 +186,7 @@ export default {
                     payGrade: "",
                     statOfApp: "",
                     govServ: "N",
-                    employee_id: this.employee_id
+                    employee_id: localStorage.getItem('employee_id'),
                 }
             ]
         };
@@ -209,7 +207,7 @@ export default {
                 payGrade: "",
                 statOfApp: "",
                 govServ: "N",
-                employee_id: this.employee_id
+                employee_id: localStorage.getItem('employee_id'),
             });
         },
         submitWorkExperience() {

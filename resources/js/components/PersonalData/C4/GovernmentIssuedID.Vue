@@ -3,11 +3,17 @@
         <div class="card">
             <div class="card-header">
                 <h5 class="mb-0 p-2">
-                    GOVERTMENT ISSUED ID
+                    GOVERNMENT ISSUED ID
+                    <span
+                    v-show="isComplete"
+                    :class="isComplete ? 'text-success' : 'text-danger'"
+                    >
+                        - VERIFIED</span
+                    >
                 </h5>
             </div>
 
-            <div class="collapse show">
+            <div class="collapse" :class="!isComplete && show_panel ? 'show' : ''">
                 <div class="card-body">
                     <table class="table table-bordered">
                         <tr class="text-center text-sm" style="background: #EAEAEA;">
@@ -16,14 +22,14 @@
                             <td>Date/Place of Issuance</td>
                         </tr>
 
-                        <tbody id="dynamic-row-references-data">
+                        <tbody>
                             <tr>
                                 <td>
                                     <input
                                         type="text"
                                         class="form-control rounded-0 border-0"
                                         placeholder=""
-                                        name="governmentId.nameOfGovId"
+                                        v-model="governmentId.nameOfGovId"
                                     />
                                 </td>
                                 <td>
@@ -31,7 +37,7 @@
                                         type="text"
                                         class="form-control rounded-0 border-0"
                                         placeholder=""
-                                        name="governmentId.idNo"
+                                        v-model="governmentId.idNo"
                                     />
                                 </td>
                                 <td>
@@ -39,12 +45,27 @@
                                         type="text"
                                         class="form-control rounded-0 border-0"
                                         placeholder=""
-                                        name="governmentId.dateOfIssuance"
+                                        v-model="governmentId.dateOfIssuance"
                                     />
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+                    <diva class="float-right mb-3">
+                        <button
+                        class="btn btn-primary"
+                        @click="submitIssuedID"
+                        >
+                            FINAL TOUCH
+                            <div
+                                class="spinner-border spinner-border-sm mb-1"
+                                v-show="isLoading"
+                                role="status"
+                            >
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </button>
+                    </diva>
                 </div>
             </div>
         </div>
@@ -53,17 +74,37 @@
 
 <script>
 export default {
+    props : {
+        show_panel : {
+            required : true,
+        },
+    },
     data() {
         return {
+            isComplete : false,
+            isLoading : false,
             governmentId: {
                 nameOfGovId: "",
                 idNo: "",
-                dateOfIssuance: ""
+                dateOfIssuance: "",
+                employee_id : localStorage.getItem('employee_id'),
             }
         };
     },
-    methods: {}
+    methods: {
+        submitIssuedID() {
+            this.isLoading = true;
+            window.axios.post('/employee/personal/issued/id', this.governmentId)
+                .then((response) => {
+                    this.isComplete = true;
+                    this.isLoading = false;   
+                    swal({
+                        title: "Good job!",
+                        text: "Min sulod na ang data!",
+                        icon: "success"
+                    });
+                }).catch(err => console.log(err));
+        },
+    }
 };
 </script>
-
-<style></style>

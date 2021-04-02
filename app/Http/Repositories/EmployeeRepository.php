@@ -11,6 +11,7 @@ use App\EmployeeOtherInformation;
 use App\EmployeeReference;
 use App\EmployeeRelevantQuery;
 use App\EmployeeSpouseChildren;
+use App\EmployeeIssuedID;
 
 class EmployeeRepository
 {
@@ -211,7 +212,7 @@ class EmployeeRepository
 
     public function addVoluntary(array $voluntaryRecord = []) :array
     {
-        $employee = Employee::find('856194');
+        $employee = Employee::find($voluntaryRecord[self::FIRST_INDEX]['employee_id']);
         $records = [];
 
         foreach($voluntaryRecord as $record) {
@@ -231,10 +232,14 @@ class EmployeeRepository
         return $employee->voluntary_work()->saveMany($records);
     }
 
-    public function addLearning(array $trainings = []) :array
+    public function addLearning(array $trainings = []) :string
     {
-        $employee = Employee::find('856194');
+        $employeeId = $trainings[self::FIRST_INDEX]['employee_id'];
+
+        $employee = Employee::find($employeeId);
+
         $records = [];
+
         foreach($trainings as $training) {
             if(!is_null($training['noOfHours'])) {
                 $records[] = EmployeeTrainingAttained::firstOrNew([
@@ -252,13 +257,14 @@ class EmployeeRepository
             }
         }
 
-        return $employee->program_attained()->saveMany($records);
-
+        return $employeeId;
     }
 
-    public function addOtherInformation(array $informations = [])  :array
+    public function addOtherInformation(array $informations = [])  :string
     {
-        $employee = Employee::find('856194');
+        $employeeId = $informations[self::FIRST_INDEX]['employee_id'];
+
+        $employee = Employee::find($employeeId);
         $otherInformations = [];
         foreach($informations as $information) {
             $otherInformations[] = EmployeeOtherInformation::firstOrNew([
@@ -268,12 +274,12 @@ class EmployeeRepository
             ]);
         }
 
-        return $employee->other_information()->saveMany($otherInformations);
+        return $employeeId;
     }
 
     public function addRelevantQueries(array $queries = [])
     {
-        $employee = Employee::find('856194');
+        $employee = Employee::find($queries['employee_id']);
         $relevantQuery = new EmployeeRelevantQuery();
         $relevantQuery->question_34_a_answer =  $queries['no_34_a'];
         $relevantQuery->question_34_a_details = $queries['no_34_a_details'];
@@ -306,7 +312,10 @@ class EmployeeRepository
 
     public function addReferences(array $references = []) : array
     {
-        $employee = Employee::find('856194');
+        $employeeId = $references[self::FIRST_INDEX]['employee_id'];
+
+        $employee = Employee::find($employeeId);
+
         foreach($references as $reference) {
             $records[] = EmployeeReference::firstOrNew([
                 'name'             => $reference['refName'],
@@ -316,5 +325,17 @@ class EmployeeRepository
         }
 
         return $employee->references()->saveMany($records);
+    }
+
+    public function addIssuedID(array $data = [])
+    {
+        $employee = Employee::find($data['employee_id']);
+
+        $employeeIssuedId = new EmployeeIssuedID();
+        $employeeIssuedId->id_type = $data['nameOfGovId'];
+        $employeeIssuedId->id_no = $data['idNo'];
+        $employeeIssuedId->date = $data['dateOfIssuance'];
+        
+        return $employee->issued_id()->save($employeeIssuedId);
     }
 }

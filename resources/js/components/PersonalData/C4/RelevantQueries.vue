@@ -4,10 +4,16 @@
             <div class="card-header">
                 <h5 class="mb-0 p-2">
                     RELEVANT QUERIES
+                    <span
+                    v-show="isComplete"
+                    :class="isComplete ? 'text-success' : 'text-danger'"
+                    >
+                        - VERIFIED</span
+                    >
                 </h5>
             </div>
 
-            <div class="collapse show">
+            <div class="collapse" :class="!isComplete ? 'show' : ''">
                 <div class="card-body">
                     <!-- {{-- BEGIN CONTENT OF RELEVANT QUERIES --}} -->
                     <table class="table table-bordered">
@@ -729,7 +735,7 @@
                                     <input
                                         type="radio"
                                         class="form-check-input"
-                                        id="no_c_40"
+                                        id="yes_c_40"
                                         v-model="relevantQueries.no_40_c"
                                         value="yes"
                                     />
@@ -742,7 +748,7 @@
                             </td>
                             <td
                                 class=""
-                                @click="relevantQueries.no_40_c = 'no'"
+                                @click="relevantQueries.no_40_c = 'no'; relevantQueries.no_40_c_details = ''"
                             >
                                 <div class="form-check">
                                     <input
@@ -778,12 +784,21 @@
                         <!-- {{-- END OF 40 --}} -->
                     </table>
 
-                    <button
-                        class="btn btn-primary btn-sm font-weight-bold"
+                    <div class="float-right mb-3">
+                        <button
+                        class="btn btn-primary  font-weight-bold"
                         @click="submit"
-                    >
-                        next
-                    </button>
+                        >
+                            NEXT
+                            <div
+                                class="spinner-border spinner-border-sm mb-1"
+                                v-show="isLoading"
+                                role="status"
+                            >
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -791,9 +806,12 @@
 </template>
 
 <script>
+import swal from 'sweetalert';
 export default {
     data() {
         return {
+            isComplete : false,
+            isLoading : false,
             relevantQueries: {
                 no_34_a: "",
                 no_34_a_details: "",
@@ -831,17 +849,27 @@ export default {
     },
     methods: {
         submit() {
+            this.isLoading = true;
+            this.relevantQueries.employee_id = localStorage.getItem('employee_id');
             window.axios
                 .post(
                     "/employee/personal/relevant/queries",
                     this.relevantQueries
                 )
                 .then(response => {
-                    console.log(response.data);
+                    this.isComplete = true;
+                    this.isLoading = false;
+                    this.$emit('display-reference');
+                    swal({
+                        title: "Good job!",
+                        text: "Min sulod na ang data!",
+                        icon: "success"
+                    });
                 })
                 .catch(err => {});
         },
-        cellClick(element) {}
+    },
+    created() {
     }
 };
 </script>

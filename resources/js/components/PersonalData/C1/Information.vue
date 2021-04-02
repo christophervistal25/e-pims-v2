@@ -664,10 +664,9 @@ export default {
                 .then(response => {
                     this.isLoading = false;
                     this.isComplete = true;
-                    this.$emit(
-                        "display-family-background",
-                        response.data.employee_id
-                    );
+                    localStorage.setItem('employee_id', response.data.employee_id);
+                    this.$emit("display-family-background");
+
                     swal({
                         title: "Good job!",
                         text: "Min sulod na ang data!",

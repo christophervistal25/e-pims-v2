@@ -8,10 +8,16 @@
                         >(Person not related by consanguinity or affinity to
                         applicant /appointee)</span
                     >
+                    <span
+                    v-show="isComplete"
+                    :class="isComplete ? 'text-success' : 'text-danger'"
+                    >
+                        - VERIFIED</span
+                    >
                 </h5>
             </div>
 
-            <div class="collapse show">
+            <div class="collapse" :class="!isComplete && show_panel ? 'show' : ''">
                 <div class="card-body">
                     <table class="table table-bordered">
                         <tr class="text-center jumbotron text-sm">
@@ -50,34 +56,35 @@
                                     />
                                 </td>
 
-                                <td class="jumbotron text-center" colspan="2">
+                                <td class="jumbotron text-center">
                                     <button
                                         v-show="index != 0"
                                         @click="removeField(index)"
-                                        class="btn-sm btn-danger font-weight-bold"
+                                        class="btn btn-danger font-weight-bold rounded-circle"
                                     >
                                         X
+                                    </button>
+                                </td>
+                                <td class='text-center'>
+                                    <button
+                                        v-if="index == noOfFields - 1"
+                                        class="btn btn-primary font-weight-bold rounded-circle"
+                                        @click="addNewReferenceField"
+                                    >
+                                        <i class="fa fa-plus"></i>
                                     </button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                     <div class="float-right mb-3">
+                        
+
                         <button
                             class="btn btn-primary"
-                            @click="addNewReferenceField"
-                        >
-                            <i class="fa fa-plus"></i>
-                            Add new field
-                        </button>
-
-                        <button
-                            class="btn btn-success"
                             @click="submitReferences"
                         >
-                            <i class="fa fa-plus"></i>
                             NEXT
-
                             <div
                                 class="spinner-border spinner-border-sm mb-1"
                                 v-show="isLoading"
@@ -95,25 +102,38 @@
 
 <script>
 export default {
+    props : {
+        show_panel : {
+            required : true,
+        },
+    },
     data() {
         return {
             isLoading: false,
             isComplete: false,
+            noOfFields : 0,
             references: [
                 {
                     refName: "",
                     refAdd: "",
-                    refTelNo: ""
+                    refTelNo: "",
+                    employee_id : localStorage.getItem('employee_id'),
                 }
             ]
         };
+    },
+    watch : {
+        references(from, to) {
+            this.noOfFields = to.length;
+        }
     },
     methods: {
         addNewReferenceField() {
             this.references.push({
                 refName: "",
                 refAdd: "",
-                refTelNo: ""
+                refTelNo: "",
+                employee_id : localStorage.getItem('employee_id'),
             });
         },
         removeField(index) {
@@ -128,6 +148,7 @@ export default {
                 .then(response => {
                     this.isLoading = false;
                     this.isComplete = true;
+                    this.$emit('display-issued-id')
                     swal({
                         title: "Good job!",
                         text: "Min sulod na ang data!",
@@ -135,6 +156,9 @@ export default {
                     });
                 });
         }
+    },
+    created() {
+        this.noOfFields = this.references.length;
     }
 };
 </script>

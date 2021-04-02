@@ -465,16 +465,12 @@ export default {
     props: {
         educational_background: {
             required: true
-        },
-        employee_id: {
-            required: true
         }
     },
     data() {
         return {
             //Educational Background Guide for properties
             // E- Elemementary => (sample : ebasicEduc)
-
             isComplete: false,
             isLoading: false,
             educationalBackground: {
@@ -520,7 +516,7 @@ export default {
     methods: {
         submitEducationalBackground() {
             this.isLoading = true;
-            this.educationalBackground.employee_id = this.employee_id;
+            this.educationalBackground.employee_id = localStorage.getItem('employee_id');
             window.axios
                 .post(
                     "/employee/personal/educational/background/store",
