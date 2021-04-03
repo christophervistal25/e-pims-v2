@@ -1,23 +1,27 @@
 <template>
     <div>
         <div class="card">
-            <div class="card-header">
+            <div
+                class="card-header"
+                :data-target="isComplete ? '#familyBackground' : ''"
+                :data-toggle="isComplete ? 'collapse' : ''"
+                :style="isComplete ? 'cursor : pointer;' : ''"
+            >
                 <h5 class="mb-0 p-3">
                     FAMILY BACKGROUND
                     <span
                         v-show="isComplete"
                         :class="isComplete ? 'text-success' : 'text-danger'"
                     >
-                        - VERIFIED</span
-                    >
+                        - VERIFIED
+                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    </span>
                 </h5>
             </div>
             <div
-                id="familyBackground"
                 class="collapse"
-                :class="family_show && !isComplete ? 'show' : ''"
-                aria-labelledby="headingOne"
-                data-parent="#accordion"
+                :class="show_panel && !isComplete ? 'show' : ''"
+                :id="isComplete ? 'familyBackground' : ''"
             >
                 <div class="p-3">
                     <div
@@ -264,6 +268,7 @@
                     <button
                         class="btn btn-primary font-weight-bold mr-3 mb-2"
                         @click="submitPersonFamilyBackground"
+                        v-if="!isComplete"
                         :disabled="isLoading"
                     >
                         NEXT
@@ -285,7 +290,7 @@
 import swal from "sweetalert";
 export default {
     props: {
-        family_show: {
+        show_panel: {
             required: true
         }
     },
@@ -356,10 +361,16 @@ export default {
                     this.isLoading = false;
                     this.isComplete = true;
 
-                    this.$emit("display-educational-background");
+                    this.$emit("next-panel-educational-background");
+
+                    localStorage.setItem(
+                        "family_background",
+                        JSON.stringify(response.data)
+                    );
+
                     swal({
                         title: "Good job!",
-                        text: "Min sulod na ang data!",
+                        text: "Employee Family background successfully add",
                         icon: "success"
                     });
                 })
@@ -368,6 +379,21 @@ export default {
     },
     created() {
         this.noOfSpouseFields = this.spouse.length;
+    },
+    mounted() {
+        if (localStorage.getItem("family_background")) {
+            let familyBackgroundData = JSON.parse(
+                localStorage.getItem("family_background")
+            );
+
+            this.familyBackground = familyBackgroundData;
+
+            this.spouse = familyBackgroundData.spouse;
+
+            this.isComplete = true;
+
+            this.$emit("next-panel-educational-background");
+        }
     }
 };
 </script>

@@ -2597,6 +2597,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     educational_background: {
@@ -2662,12 +2670,20 @@ __webpack_require__.r(__webpack_exports__);
           title: "Good job!",
           text: "Min sulod na ang data!",
           icon: "success"
-        }); // When it's done call event listener
+        });
+        localStorage.setItem("educational_background", JSON.stringify(response.data)); // When it's done call event listener
 
         _this.$emit("next_tab");
       })["catch"](function (err) {
         return _this.isLoading = false;
       });
+    }
+  },
+  mounted: function mounted() {
+    if (localStorage.getItem("educational_background")) {
+      console.log("sample");
+      this.educationalBackground = JSON.parse(localStorage.getItem("educational_background"));
+      this.isComplete = true;
     }
   }
 });
@@ -2968,10 +2984,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    family_show: {
+    show_panel: {
       required: true
     }
   },
@@ -3033,11 +3054,12 @@ __webpack_require__.r(__webpack_exports__);
         _this.isLoading = false;
         _this.isComplete = true;
 
-        _this.$emit("display-educational-background");
+        _this.$emit("next-panel-educational-background");
 
+        localStorage.setItem("family_background", JSON.stringify(response.data));
         sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
           title: "Good job!",
-          text: "Min sulod na ang data!",
+          text: "Employee Family background successfully add",
           icon: "success"
         });
       })["catch"](function (err) {
@@ -3047,6 +3069,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.noOfSpouseFields = this.spouse.length;
+  },
+  mounted: function mounted() {
+    if (localStorage.getItem("family_background")) {
+      var familyBackgroundData = JSON.parse(localStorage.getItem("family_background"));
+      this.familyBackground = familyBackgroundData;
+      this.spouse = familyBackgroundData.spouse;
+      this.isComplete = true;
+      this.$emit("next-panel-educational-background");
+    }
   }
 });
 
@@ -3063,6 +3094,17 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3725,17 +3767,26 @@ __webpack_require__.r(__webpack_exports__);
         _this.isLoading = false;
         _this.isComplete = true;
         localStorage.setItem("employee_id", response.data.employee_id);
+        localStorage.setItem("personal_information", JSON.stringify(response.data));
 
-        _this.$emit("display-family-background");
+        _this.$emit("next-panel-family-background");
 
         sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
           title: "Good job!",
-          text: "Min sulod na ang data!",
+          text: "Employee Personal Information successfully add.",
           icon: "success"
         });
       })["catch"](function (response) {
         _this.isLoading = false;
       });
+    }
+  },
+  mounted: function mounted() {
+    // This simply means that the user already filled this section.
+    if (localStorage.getItem("personal_information")) {
+      this.personal_data.personalInformation = JSON.parse(localStorage.getItem("personal_information"));
+      this.isComplete = true;
+      this.$emit("next-panel-family-background");
     }
   }
 });
@@ -3755,6 +3806,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3949,6 +4018,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this.$emit("display-work-experience");
 
+        localStorage.setItem("civil_service", JSON.stringify(response.data));
         sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
           title: "Good job!",
           text: "Min sulod na ang data!",
@@ -3962,6 +4032,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (index != 0) {
         this.civilService.splice(index, 1);
       }
+    }
+  },
+  mounted: function mounted() {
+    if (localStorage.getItem("civil_service")) {
+      this.civilService = JSON.parse(localStorage.getItem("civil_service"));
+      this.isComplete = true;
+      this.$emit("display-work-experience");
     }
   }
 });
@@ -3977,6 +4054,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4416,6 +4500,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     show_panel: {
@@ -4502,6 +4593,13 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4853,6 +4951,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -4931,6 +5039,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5165,6 +5280,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     show_panel: {
@@ -5241,6 +5363,16 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6288,6 +6420,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -6334,8 +6468,8 @@ __webpack_require__.r(__webpack_exports__);
         no_of_items: 3
       }],
       selectedTab: {},
-      isFamilyBackgroundShow: false,
-      isEducationalBackground: false,
+      familyBackgroundPanel: false,
+      educationalBackgroundPanel: false,
       isWorkExperienceShow: false,
       needToShowLearningAndDevelopment: false,
       needToShowOtherInformation: false,
@@ -6347,11 +6481,11 @@ __webpack_require__.r(__webpack_exports__);
     workExperienceSection: function workExperienceSection() {
       this.isWorkExperienceShow = true;
     },
-    displayFamilyBackground: function displayFamilyBackground() {
-      this.isFamilyBackgroundShow = true;
+    displayFamilyBackgroundPanel: function displayFamilyBackgroundPanel() {
+      this.familyBackgroundPanel = true;
     },
-    dispalyEducationalBackground: function dispalyEducationalBackground() {
-      this.isEducationalBackground = true;
+    displayEducationalBackgroundPanel: function displayEducationalBackgroundPanel() {
+      this.educationalBackgroundPanel = true;
     },
     displayLearningAndDevelopment: function displayLearningAndDevelopment() {
       this.needToShowLearningAndDevelopment = true;
@@ -25068,32 +25202,50 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card" }, [
-    _c("div", { staticClass: "card-header" }, [
-      _c("h5", { staticClass: "mb-0 p-2" }, [
-        _vm._v("\n            EDUCATIONAL BACKGROUND\n            "),
-        _c(
-          "span",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.isComplete,
-                expression: "isComplete"
-              }
-            ],
-            class: _vm.isComplete ? "text-success" : "text-danger"
-          },
-          [_vm._v("\n                - VERIFIED")]
-        )
-      ])
-    ]),
+    _c(
+      "div",
+      {
+        staticClass: "card-header",
+        style: _vm.isComplete ? "cursor : pointer;" : "",
+        attrs: {
+          "data-target": _vm.isComplete ? "#educationalBackground" : "",
+          "data-toggle": _vm.isComplete ? "collapse" : ""
+        }
+      },
+      [
+        _c("h5", { staticClass: "mb-0 p-2" }, [
+          _vm._v("\n            EDUCATIONAL BACKGROUND\n            "),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.isComplete,
+                  expression: "isComplete"
+                }
+              ],
+              class: _vm.isComplete ? "text-success" : "text-danger"
+            },
+            [
+              _vm._v("\n                - VERIFIED\n                "),
+              _c("i", {
+                staticClass: "fa fa-caret-down",
+                attrs: { "aria-hidden": "true" }
+              })
+            ]
+          )
+        ])
+      ]
+    ),
     _vm._v(" "),
     _c(
       "div",
       {
         staticClass: "collapse",
-        class: _vm.educational_background && !_vm.isComplete ? "show" : ""
+        class: _vm.educational_background && !_vm.isComplete ? "show" : "",
+        attrs: { id: _vm.isComplete ? "educationalBackground" : "" }
       },
       [
         _vm._m(0),
@@ -26205,33 +26357,39 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "float-right" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary font-weight-bold mr-3 mb-2",
-              attrs: { disabled: _vm.isLoading },
-              on: { click: _vm.submitEducationalBackground }
-            },
-            [
-              _vm._v("\n                NEXT\n                "),
-              _c(
-                "div",
+          !_vm.isComplete
+            ? _c(
+                "button",
                 {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.isLoading,
-                      expression: "isLoading"
-                    }
-                  ],
-                  staticClass: "spinner-border spinner-border-sm mb-1",
-                  attrs: { role: "status" }
+                  staticClass: "btn btn-primary font-weight-bold mr-3 mb-2",
+                  attrs: { disabled: _vm.isLoading },
+                  on: { click: _vm.submitEducationalBackground }
                 },
-                [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+                [
+                  _vm._v("\n                NEXT\n                "),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.isLoading,
+                          expression: "isLoading"
+                        }
+                      ],
+                      staticClass: "spinner-border spinner-border-sm mb-1",
+                      attrs: { role: "status" }
+                    },
+                    [
+                      _c("span", { staticClass: "sr-only" }, [
+                        _vm._v("Loading...")
+                      ])
+                    ]
+                  )
+                ]
               )
-            ]
-          )
+            : _vm._e()
         ])
       ]
     )
@@ -26337,37 +26495,52 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }, [
-        _c("h5", { staticClass: "mb-0 p-3" }, [
-          _vm._v("\n                FAMILY BACKGROUND\n                "),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.isComplete,
-                  expression: "isComplete"
-                }
-              ],
-              class: _vm.isComplete ? "text-success" : "text-danger"
-            },
-            [_vm._v("\n                    - VERIFIED")]
-          )
-        ])
-      ]),
+      _c(
+        "div",
+        {
+          staticClass: "card-header",
+          style: _vm.isComplete ? "cursor : pointer;" : "",
+          attrs: {
+            "data-target": _vm.isComplete ? "#familyBackground" : "",
+            "data-toggle": _vm.isComplete ? "collapse" : ""
+          }
+        },
+        [
+          _c("h5", { staticClass: "mb-0 p-3" }, [
+            _vm._v("\n                FAMILY BACKGROUND\n                "),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.isComplete,
+                    expression: "isComplete"
+                  }
+                ],
+                class: _vm.isComplete ? "text-success" : "text-danger"
+              },
+              [
+                _vm._v(
+                  "\n                    - VERIFIED\n                    "
+                ),
+                _c("i", {
+                  staticClass: "fa fa-caret-down",
+                  attrs: { "aria-hidden": "true" }
+                })
+              ]
+            )
+          ])
+        ]
+      ),
       _vm._v(" "),
       _c(
         "div",
         {
           staticClass: "collapse",
-          class: _vm.family_show && !_vm.isComplete ? "show" : "",
-          attrs: {
-            id: "familyBackground",
-            "aria-labelledby": "headingOne",
-            "data-parent": "#accordion"
-          }
+          class: _vm.show_panel && !_vm.isComplete ? "show" : "",
+          attrs: { id: _vm.isComplete ? "familyBackground" : "" }
         },
         [
           _vm._m(0),
@@ -27062,37 +27235,39 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "float-right" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary font-weight-bold mr-3 mb-2",
-                attrs: { disabled: _vm.isLoading },
-                on: { click: _vm.submitPersonFamilyBackground }
-              },
-              [
-                _vm._v("\n                    NEXT\n                    "),
-                _c(
-                  "div",
+            !_vm.isComplete
+              ? _c(
+                  "button",
                   {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.isLoading,
-                        expression: "isLoading"
-                      }
-                    ],
-                    staticClass: "spinner-border spinner-border-sm mb-1",
-                    attrs: { role: "status" }
+                    staticClass: "btn btn-primary font-weight-bold mr-3 mb-2",
+                    attrs: { disabled: _vm.isLoading },
+                    on: { click: _vm.submitPersonFamilyBackground }
                   },
                   [
-                    _c("span", { staticClass: "sr-only" }, [
-                      _vm._v("Loading...")
-                    ])
+                    _vm._v("\n                    NEXT\n                    "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.isLoading,
+                            expression: "isLoading"
+                          }
+                        ],
+                        staticClass: "spinner-border spinner-border-sm mb-1",
+                        attrs: { role: "status" }
+                      },
+                      [
+                        _c("span", { staticClass: "sr-only" }, [
+                          _vm._v("Loading...")
+                        ])
+                      ]
+                    )
                   ]
                 )
-              ]
-            )
+              : _vm._e()
           ])
         ]
       )
@@ -27155,30 +27330,53 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }, [
-        _c("h5", { staticClass: "mb-0 p-2" }, [
-          _vm._v("\n                PERSONAL INFORMATION\n                "),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.isComplete,
-                  expression: "isComplete"
-                }
-              ],
-              class: _vm.isComplete ? "text-success" : "text-danger"
-            },
-            [_vm._v("\n                    - VERIFIED")]
-          )
-        ])
-      ]),
+      _c(
+        "div",
+        {
+          staticClass: "card-header",
+          style: _vm.isComplete ? "cursor : pointer;" : "",
+          attrs: {
+            "data-target": _vm.isComplete ? "#information" : "",
+            "data-toggle": _vm.isComplete ? "collapse" : ""
+          }
+        },
+        [
+          _c("h5", { staticClass: "mb-0 p-2" }, [
+            _vm._v("\n                PERSONAL INFORMATION\n                "),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.isComplete,
+                    expression: "isComplete"
+                  }
+                ],
+                class: _vm.isComplete ? "text-success" : "text-danger"
+              },
+              [
+                _vm._v(
+                  "\n                    - VERIFIED\n                    "
+                ),
+                _c("i", {
+                  staticClass: "fa fa-caret-down",
+                  attrs: { "aria-hidden": "true" }
+                })
+              ]
+            )
+          ])
+        ]
+      ),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "collapse", class: _vm.isComplete ? "" : "show" },
+        {
+          staticClass: "collapse",
+          class: _vm.isComplete ? "" : "show",
+          attrs: { id: _vm.isComplete ? "information" : "" }
+        },
         [
           _vm._m(0),
           _vm._v(" "),
@@ -28761,37 +28959,41 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "p-3 float-right" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary font-weight-bold",
-                attrs: { disabled: _vm.isLoading },
-                on: { click: _vm.submitPersonalInformation }
-              },
-              [
-                _vm._v("\n                    NEXT\n\n                    "),
-                _c(
-                  "div",
+            !_vm.isComplete
+              ? _c(
+                  "button",
                   {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.isLoading,
-                        expression: "isLoading"
-                      }
-                    ],
-                    staticClass: "spinner-border spinner-border-sm mb-1",
-                    attrs: { role: "status" }
+                    staticClass: "btn btn-primary font-weight-bold",
+                    attrs: { disabled: _vm.isLoading },
+                    on: { click: _vm.submitPersonalInformation }
                   },
                   [
-                    _c("span", { staticClass: "sr-only" }, [
-                      _vm._v("Loading...")
-                    ])
+                    _vm._v(
+                      "\n                    NEXT\n\n                    "
+                    ),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.isLoading,
+                            expression: "isLoading"
+                          }
+                        ],
+                        staticClass: "spinner-border spinner-border-sm mb-1",
+                        attrs: { role: "status" }
+                      },
+                      [
+                        _c("span", { staticClass: "sr-only" }, [
+                          _vm._v("Loading...")
+                        ])
+                      ]
+                    )
                   ]
                 )
-              ]
-            )
+              : _vm._e()
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "clearfix" })
@@ -28855,38 +29057,145 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }, [
-        _c("h5", { staticClass: "mb-0 p-2" }, [
-          _vm._v(
-            "\n                IV. Civil Service Egibility\n                "
-          ),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.isComplete,
-                  expression: "isComplete"
-                }
-              ],
-              class: _vm.isComplete ? "text-success" : "text-danger"
-            },
-            [_vm._v("\n                    - VERIFIED")]
-          )
-        ])
-      ]),
+      _c(
+        "div",
+        {
+          staticClass: "card-header",
+          style: _vm.isComplete ? "cursor : pointer;" : "",
+          attrs: {
+            "data-target": _vm.isComplete ? "#civilService" : "",
+            "data-toggle": _vm.isComplete ? "collapse" : ""
+          }
+        },
+        [
+          _c("h5", { staticClass: "mb-0 p-2" }, [
+            _vm._v(
+              "\n                IV. Civil Service Egibility\n                "
+            ),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.isComplete,
+                    expression: "isComplete"
+                  }
+                ],
+                class: _vm.isComplete ? "text-success" : "text-danger"
+              },
+              [
+                _vm._v(
+                  "\n                    - VERIFIED\n                    "
+                ),
+                _c("i", {
+                  staticClass: "fa fa-caret-down",
+                  attrs: { "aria-hidden": "true" }
+                })
+              ]
+            )
+          ])
+        ]
+      ),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "collapse", class: !_vm.isComplete ? "show" : "" },
+        {
+          staticClass: "collapse",
+          class: !_vm.isComplete ? "show" : "",
+          attrs: { id: _vm.isComplete ? "civilService" : "" }
+        },
         [
           _c("div", { staticClass: "card-body" }, [
             _c("table", { staticClass: "table table-bordered" }, [
-              _vm._m(0),
+              _c(
+                "tr",
+                {
+                  staticClass: "text-center",
+                  staticStyle: { background: "#EAEAEA" }
+                },
+                [
+                  _c(
+                    "td",
+                    {
+                      staticClass: "align-middle text-sm",
+                      attrs: { rowspan: "2" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            27. CAREER SERVICE/ RA 1080 (BOARD/ BAR) UNDER\n                            SPECIAL LAWS/ CES/ CSEE BARANGAY ELIGIBILITY /\n                            DRIVER'S LICENSE\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass: "align-middle text-sm",
+                      attrs: { rowspan: "2" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            RATING\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass: "align-middle text-sm",
+                      attrs: { rowspan: "2" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            DATE OF EXAMINATION / CONFERMENT\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass: "align-middle text-sm",
+                      attrs: { rowspan: "2" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            PLACE OF EXAMINATION / CONFERMENT\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass: "text-sm",
+                      attrs: { colspan: "2", scope: "colgroup" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            LICENSE\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  !_vm.isComplete
+                    ? _c(
+                        "td",
+                        { staticClass: "pl-4 pr-4", attrs: { rowspan: "2" } },
+                        [
+                          _vm._v(
+                            "\n                             \n                        "
+                          )
+                        ]
+                      )
+                    : _vm._e()
+                ]
+              ),
               _vm._v(" "),
-              _vm._m(1),
+              _vm._m(0),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -29036,47 +29345,51 @@ var render = function() {
                       })
                     ]),
                     _vm._v(" "),
-                    _c("td", { staticClass: "jumbotron" }, [
-                      _c(
-                        "button",
-                        {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: index != 0,
-                              expression: "index != 0"
-                            }
-                          ],
-                          staticClass:
-                            "btn btn-sm btn-danger font-weight-bold mt-1 rounded-circle",
-                          on: {
-                            click: function($event) {
-                              return _vm.removeField(index)
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                    X\n                                "
-                          )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      index == _vm.civilService.length - 1
-                        ? _c(
+                    !_vm.isComplete
+                      ? _c("td", { staticClass: "jumbotron" }, [
+                          _c(
                             "button",
                             {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: index != 0,
+                                  expression: "index != 0"
+                                }
+                              ],
                               staticClass:
-                                "btn btn-primary rounded-circle font-weight-bold",
-                              on: { click: _vm.addNewFieldCivilServiceRow }
+                                "btn btn-sm btn-danger font-weight-bold mt-1 rounded-circle",
+                              on: {
+                                click: function($event) {
+                                  return _vm.removeField(index)
+                                }
+                              }
                             },
-                            [_c("i", { staticClass: "fa fa-plus" })]
+                            [
+                              _vm._v(
+                                "\n                                    X\n                                "
+                              )
+                            ]
                           )
-                        : _vm._e()
-                    ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.isComplete
+                      ? _c("td", [
+                          index == _vm.civilService.length - 1
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-primary rounded-circle font-weight-bold",
+                                  on: { click: _vm.addNewFieldCivilServiceRow }
+                                },
+                                [_c("i", { staticClass: "fa fa-plus" })]
+                              )
+                            : _vm._e()
+                        ])
+                      : _vm._e()
                   ])
                 }),
                 0
@@ -29084,20 +29397,27 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "float-right mb-3" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-danger font-weight-bold",
-                  on: { click: _vm.skipSection }
-                },
-                [_vm._v("\n                        SKIP\n                    ")]
-              ),
+              !_vm.isComplete
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger font-weight-bold",
+                      attrs: { disabled: _vm.isLoading },
+                      on: { click: _vm.skipSection }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        SKIP\n                    "
+                      )
+                    ]
+                  )
+                : _vm._e(),
               _vm._v(" "),
               _c(
                 "button",
                 {
                   staticClass: "btn btn-primary font-weight-bold",
-                  attrs: { disabled: _vm.isLoading },
+                  attrs: { disabled: _vm.isLoading || _vm.isComplete },
                   on: { click: _vm.submitCivilService }
                 },
                 [
@@ -29134,73 +29454,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "tr",
-      { staticClass: "text-center", staticStyle: { background: "#EAEAEA" } },
-      [
-        _c(
-          "td",
-          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
-          [
-            _vm._v(
-              "\n                            27. CAREER SERVICE/ RA 1080 (BOARD/ BAR) UNDER\n                            SPECIAL LAWS/ CES/ CSEE BARANGAY ELIGIBILITY /\n                            DRIVER'S LICENSE\n                        "
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "td",
-          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
-          [
-            _vm._v(
-              "\n                            RATING\n                        "
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "td",
-          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
-          [
-            _vm._v(
-              "\n                            DATE OF EXAMINATION / CONFERMENT\n                        "
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "td",
-          { staticClass: "align-middle text-sm", attrs: { rowspan: "2" } },
-          [
-            _vm._v(
-              "\n                            PLACE OF EXAMINATION / CONFERMENT\n                        "
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "td",
-          {
-            staticClass: "text-sm",
-            attrs: { colspan: "2", scope: "colgroup" }
-          },
-          [
-            _vm._v(
-              "\n                            LICENSE\n                        "
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c("td", { staticClass: "pl-4 pr-4", attrs: { rowspan: "2" } }, [
-          _vm._v(" ")
-        ])
-      ]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -29250,32 +29503,50 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card" }, [
-    _c("div", { staticClass: "card-header" }, [
-      _c("h5", { staticClass: "mb-0 p-2" }, [
-        _vm._v("\n            V. WORK EXPERIENCE\n            "),
-        _c(
-          "span",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.isComplete,
-                expression: "isComplete"
-              }
-            ],
-            class: _vm.isComplete ? "text-success" : "text-danger"
-          },
-          [_vm._v("\n                - VERIFIED")]
-        )
-      ])
-    ]),
+    _c(
+      "div",
+      {
+        staticClass: "card-header",
+        style: _vm.isComplete ? "cursor : pointer;" : "",
+        attrs: {
+          "data-target": _vm.isComplete ? "#workExperience" : "",
+          "data-toggle": _vm.isComplete ? "collapse" : ""
+        }
+      },
+      [
+        _c("h5", { staticClass: "mb-0 p-2" }, [
+          _vm._v("\n            V. WORK EXPERIENCE\n            "),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.isComplete,
+                  expression: "isComplete"
+                }
+              ],
+              class: _vm.isComplete ? "text-success" : "text-danger"
+            },
+            [
+              _vm._v("\n                - VERIFIED\n                "),
+              _c("i", {
+                staticClass: "fa fa-caret-down",
+                attrs: { "aria-hidden": "true" }
+              })
+            ]
+          )
+        ])
+      ]
+    ),
     _vm._v(" "),
     _c(
       "div",
       {
         staticClass: "collapse",
-        class: _vm.work_experience && !_vm.isComplete ? "show" : ""
+        class: _vm.work_experience && !_vm.isComplete ? "show" : "",
+        attrs: { id: _vm.isComplete ? "workExperience" : "" }
       },
       [
         _c("div", { staticClass: "card-body" }, [
@@ -29729,34 +30000,54 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }, [
-        _c("h5", { staticClass: "mb-0 p-2" }, [
-          _vm._v(
-            "\n                VII. LEARNING AND DEVELOPMENT (L&D) INTERVENTIONS/TRAINING\n                PROGRAMS ATTENDED\n                "
-          ),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.isComplete,
-                  expression: "isComplete"
-                }
-              ],
-              class: _vm.isComplete ? "text-success" : "text-danger"
-            },
-            [_vm._v("\n                    - VERIFIED")]
-          )
-        ])
-      ]),
+      _c(
+        "div",
+        {
+          staticClass: "card-header",
+          style: _vm.isComplete ? "cursor : pointer;" : "",
+          attrs: {
+            "data-target": _vm.isComplete ? "#learning" : "",
+            "data-toggle": _vm.isComplete ? "collapse" : ""
+          }
+        },
+        [
+          _c("h5", { staticClass: "mb-0 p-2" }, [
+            _vm._v(
+              "\n                VII. LEARNING AND DEVELOPMENT (L&D) INTERVENTIONS/TRAINING\n                PROGRAMS ATTENDED\n                "
+            ),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.isComplete,
+                    expression: "isComplete"
+                  }
+                ],
+                class: _vm.isComplete ? "text-success" : "text-danger"
+              },
+              [
+                _vm._v(
+                  "\n                    - VERIFIED\n                    "
+                ),
+                _c("i", {
+                  staticClass: "fa fa-caret-down",
+                  attrs: { "aria-hidden": "true" }
+                })
+              ]
+            )
+          ])
+        ]
+      ),
       _vm._v(" "),
       _c(
         "div",
         {
           staticClass: "collapse",
-          class: !_vm.isComplete && _vm.show_panel ? "show" : ""
+          class: !_vm.isComplete && _vm.show_panel ? "show" : "",
+          attrs: { id: _vm.isComplete ? "learning" : "" }
         },
         [
           _c("div", { staticClass: "card-body" }, [
@@ -30141,32 +30432,54 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }, [
-        _c("h5", { staticClass: "mb-0 p-2" }, [
-          _vm._v("\n                VIII. OTHER INFORMATION\n                "),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.isComplete,
-                  expression: "isComplete"
-                }
-              ],
-              class: _vm.isComplete ? "text-success" : "text-danger"
-            },
-            [_vm._v("\n                    - VERIFIED")]
-          )
-        ])
-      ]),
+      _c(
+        "div",
+        {
+          staticClass: "card-header",
+          style: _vm.isComplete ? "cursor : pointer;" : "",
+          attrs: {
+            "data-target": _vm.isComplete ? "#otherInformation" : "",
+            "data-toggle": _vm.isComplete ? "collapse" : ""
+          }
+        },
+        [
+          _c("h5", { staticClass: "mb-0 p-2" }, [
+            _vm._v(
+              "\n                VIII. OTHER INFORMATION\n                "
+            ),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.isComplete,
+                    expression: "isComplete"
+                  }
+                ],
+                class: _vm.isComplete ? "text-success" : "text-danger"
+              },
+              [
+                _vm._v(
+                  "\n                    - VERIFIED\n                    "
+                ),
+                _c("i", {
+                  staticClass: "fa fa-caret-down",
+                  attrs: { "aria-hidden": "true" }
+                })
+              ]
+            )
+          ])
+        ]
+      ),
       _vm._v(" "),
       _c(
         "div",
         {
           staticClass: "collapse",
-          class: !_vm.isComplete && _vm.show_panel ? "show" : ""
+          class: !_vm.isComplete && _vm.show_panel ? "show" : "",
+          attrs: { id: _vm.isComplete ? "otherInformation" : "" }
         },
         [
           _c("div", { staticClass: "card-body" }, [
@@ -30427,32 +30740,53 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card" }, [
-    _c("div", { staticClass: "card-header" }, [
-      _c("h5", { staticClass: "p-2 mb-0" }, [
-        _vm._v(
-          "\n            VI. VOLUNTARY WORK OR INVOLVEMENT IN CIVIC / NON-GOVERNMENT /\n            PEOPLE / VOLUNTARY ORGANIZATION/S\n            "
-        ),
-        _c(
-          "span",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.isComplete,
-                expression: "isComplete"
-              }
-            ],
-            class: _vm.isComplete ? "text-success" : "text-danger"
-          },
-          [_vm._v("\n                - VERIFIED")]
-        )
-      ])
-    ]),
+    _c(
+      "div",
+      {
+        staticClass: "card-header",
+        style: _vm.isComplete ? "cursor : pointer;" : "",
+        attrs: {
+          "data-target": _vm.isComplete ? "#voluntary" : "",
+          "data-toggle": _vm.isComplete ? "collapse" : ""
+        }
+      },
+      [
+        _c("h5", { staticClass: "p-2 mb-0" }, [
+          _vm._v(
+            "\n            VI. VOLUNTARY WORK OR INVOLVEMENT IN CIVIC / NON-GOVERNMENT /\n            PEOPLE / VOLUNTARY ORGANIZATION/S\n            "
+          ),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.isComplete,
+                  expression: "isComplete"
+                }
+              ],
+              class: _vm.isComplete ? "text-success" : "text-danger"
+            },
+            [
+              _vm._v("\n                - VERIFIED\n                "),
+              _c("i", {
+                staticClass: "fa fa-caret-down",
+                attrs: { "aria-hidden": "true" }
+              })
+            ]
+          )
+        ])
+      ]
+    ),
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "collapse", class: !_vm.isComplete ? "show" : "" },
+      {
+        staticClass: "collapse",
+        class: !_vm.isComplete ? "show" : "",
+        attrs: { id: _vm.isComplete ? "voluntary" : "" }
+      },
       [
         _c("div", { staticClass: "card-body" }, [
           _c("table", { staticClass: "table table-bordered" }, [
@@ -30789,32 +31123,52 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }, [
-        _c("h5", { staticClass: "mb-0 p-2" }, [
-          _vm._v("\n                GOVERNMENT ISSUED ID\n                "),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.isComplete,
-                  expression: "isComplete"
-                }
-              ],
-              class: _vm.isComplete ? "text-success" : "text-danger"
-            },
-            [_vm._v("\n                    - VERIFIED")]
-          )
-        ])
-      ]),
+      _c(
+        "div",
+        {
+          staticClass: "card-header",
+          style: _vm.isComplete ? "cursor : pointer;" : "",
+          attrs: {
+            "data-target": _vm.isComplete ? "#government" : "",
+            "data-toggle": _vm.isComplete ? "collapse" : ""
+          }
+        },
+        [
+          _c("h5", { staticClass: "mb-0 p-2" }, [
+            _vm._v("\n                GOVERNMENT ISSUED ID\n                "),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.isComplete,
+                    expression: "isComplete"
+                  }
+                ],
+                class: _vm.isComplete ? "text-success" : "text-danger"
+              },
+              [
+                _vm._v(
+                  "\n                    - VERIFIED\n                    "
+                ),
+                _c("i", {
+                  staticClass: "fa fa-caret-down",
+                  attrs: { "aria-hidden": "true" }
+                })
+              ]
+            )
+          ])
+        ]
+      ),
       _vm._v(" "),
       _c(
         "div",
         {
           staticClass: "collapse",
-          class: !_vm.isComplete && _vm.show_panel ? "show" : ""
+          class: !_vm.isComplete && _vm.show_panel ? "show" : "",
+          attrs: { id: _vm.isComplete ? "government" : "" }
         },
         [
           _c(
@@ -31000,38 +31354,58 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }, [
-        _c("h5", { staticClass: "mb-0 p-2" }, [
-          _vm._v("\n                41. REFERENCES\n                "),
-          _c("span", { staticClass: "text-danger text-sm" }, [
-            _vm._v(
-              "(Person not related by consanguinity or affinity to\n                    applicant /appointee)"
+      _c(
+        "div",
+        {
+          staticClass: "card-header",
+          style: _vm.isComplete ? "cursor : pointer;" : "",
+          attrs: {
+            "data-target": _vm.isComplete ? "#reference" : "",
+            "data-toggle": _vm.isComplete ? "collapse" : ""
+          }
+        },
+        [
+          _c("h5", { staticClass: "mb-0 p-2" }, [
+            _vm._v("\n                41. REFERENCES\n                "),
+            _c("span", { staticClass: "text-danger text-sm" }, [
+              _vm._v(
+                "(Person not related by consanguinity or affinity to\n                    applicant /appointee)"
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.isComplete,
+                    expression: "isComplete"
+                  }
+                ],
+                class: _vm.isComplete ? "text-success" : "text-danger"
+              },
+              [
+                _vm._v(
+                  "\n                    - VERIFIED\n                    "
+                ),
+                _c("i", {
+                  staticClass: "fa fa-caret-down",
+                  attrs: { "aria-hidden": "true" }
+                })
+              ]
             )
-          ]),
-          _vm._v(" "),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.isComplete,
-                  expression: "isComplete"
-                }
-              ],
-              class: _vm.isComplete ? "text-success" : "text-danger"
-            },
-            [_vm._v("\n                    - VERIFIED")]
-          )
-        ])
-      ]),
+          ])
+        ]
+      ),
       _vm._v(" "),
       _c(
         "div",
         {
           staticClass: "collapse",
-          class: !_vm.isComplete && _vm.show_panel ? "show" : ""
+          class: !_vm.isComplete && _vm.show_panel ? "show" : "",
+          attrs: { id: _vm.isComplete ? "reference" : "" }
         },
         [
           _c("div", { staticClass: "card-body" }, [
@@ -31243,30 +31617,53 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }, [
-        _c("h5", { staticClass: "mb-0 p-2" }, [
-          _vm._v("\n                RELEVANT QUERIES\n                "),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.isComplete,
-                  expression: "isComplete"
-                }
-              ],
-              class: _vm.isComplete ? "text-success" : "text-danger"
-            },
-            [_vm._v("\n                    - VERIFIED")]
-          )
-        ])
-      ]),
+      _c(
+        "div",
+        {
+          staticClass: "card-header",
+          style: _vm.isComplete ? "cursor : pointer;" : "",
+          attrs: {
+            "data-target": _vm.isComplete ? "#relevantQueries" : "",
+            "data-toggle": _vm.isComplete ? "collapse" : ""
+          }
+        },
+        [
+          _c("h5", { staticClass: "mb-0 p-2" }, [
+            _vm._v("\n                RELEVANT QUERIES\n                "),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.isComplete,
+                    expression: "isComplete"
+                  }
+                ],
+                class: _vm.isComplete ? "text-success" : "text-danger"
+              },
+              [
+                _vm._v(
+                  "\n                    - VERIFIED\n                    "
+                ),
+                _c("i", {
+                  staticClass: "fa fa-caret-down",
+                  attrs: { "aria-hidden": "true" }
+                })
+              ]
+            )
+          ])
+        ]
+      ),
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "collapse", class: !_vm.isComplete ? "show" : "" },
+        {
+          staticClass: "collapse",
+          class: !_vm.isComplete ? "show" : "",
+          attrs: { id: _vm.isComplete ? "relevantQueries" : "" }
+        },
         [
           _c("div", { staticClass: "card-body" }, [
             _c("table", { staticClass: "table table-bordered" }, [
@@ -33212,23 +33609,25 @@ var render = function() {
         _vm._v(" "),
         _vm.selectedTab.name === "C1"
           ? _c("personal-information", {
-              on: { "display-family-background": _vm.displayFamilyBackground }
+              on: {
+                "next-panel-family-background": _vm.displayFamilyBackgroundPanel
+              }
             })
           : _vm._e(),
         _vm._v(" "),
         _vm.selectedTab.name === "C1"
           ? _c("family-background", {
-              attrs: { family_show: _vm.isFamilyBackgroundShow },
+              attrs: { show_panel: _vm.familyBackgroundPanel },
               on: {
-                "display-educational-background":
-                  _vm.dispalyEducationalBackground
+                "next-panel-educational-background":
+                  _vm.displayEducationalBackgroundPanel
               }
             })
           : _vm._e(),
         _vm._v(" "),
         _vm.selectedTab.name === "C1"
           ? _c("educational-background", {
-              attrs: { educational_background: _vm.isEducationalBackground },
+              attrs: { educational_background: _vm.educationalBackgroundPanel },
               on: { next_tab: _vm.openNextTab }
             })
           : _vm._e(),

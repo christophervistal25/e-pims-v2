@@ -1,18 +1,28 @@
 <template>
     <div>
         <div class="card">
-            <div class="card-header">
+            <div
+                class="card-header"
+                :data-target="isComplete ? '#information' : ''"
+                :data-toggle="isComplete ? 'collapse' : ''"
+                :style="isComplete ? 'cursor : pointer;' : ''"
+            >
                 <h5 class="mb-0 p-2">
                     PERSONAL INFORMATION
                     <span
                         v-show="isComplete"
                         :class="isComplete ? 'text-success' : 'text-danger'"
                     >
-                        - VERIFIED</span
-                    >
+                        - VERIFIED
+                        <i class="fa fa-caret-down" aria-hidden="true"></i
+                    ></span>
                 </h5>
             </div>
-            <div class="collapse" :class="isComplete ? '' : 'show'">
+            <div
+                class="collapse"
+                :class="isComplete ? '' : 'show'"
+                :id="isComplete ? 'information' : ''"
+            >
                 <div class="p-3">
                     <div
                         class="alert alert-secondary text-center font-weight-bold"
@@ -560,6 +570,7 @@
                     <button
                         class="btn btn-primary font-weight-bold"
                         @click="submitPersonalInformation"
+                        v-if="!isComplete"
                         :disabled="isLoading"
                     >
                         NEXT
@@ -665,21 +676,40 @@ export default {
                 .then(response => {
                     this.isLoading = false;
                     this.isComplete = true;
+
                     localStorage.setItem(
                         "employee_id",
                         response.data.employee_id
                     );
-                    this.$emit("display-family-background");
+
+                    localStorage.setItem(
+                        "personal_information",
+                        JSON.stringify(response.data)
+                    );
+
+                    this.$emit("next-panel-family-background");
 
                     swal({
                         title: "Good job!",
-                        text: "Min sulod na ang data!",
+                        text: "Employee Personal Information successfully add.",
                         icon: "success"
                     });
                 })
                 .catch(response => {
                     this.isLoading = false;
                 });
+        }
+    },
+    mounted() {
+        // This simply means that the user already filled this section.
+        if (localStorage.getItem("personal_information")) {
+            this.personal_data.personalInformation = JSON.parse(
+                localStorage.getItem("personal_information")
+            );
+
+            this.isComplete = true;
+
+            this.$emit("next-panel-family-background");
         }
     }
 };

@@ -1,19 +1,26 @@
 <template>
     <div class="card">
-        <div class="card-header">
+        <div
+            class="card-header"
+            :data-target="isComplete ? '#educationalBackground' : ''"
+            :data-toggle="isComplete ? 'collapse' : ''"
+            :style="isComplete ? 'cursor : pointer;' : ''"
+        >
             <h5 class="mb-0 p-2">
                 EDUCATIONAL BACKGROUND
                 <span
                     v-show="isComplete"
                     :class="isComplete ? 'text-success' : 'text-danger'"
                 >
-                    - VERIFIED</span
-                >
+                    - VERIFIED
+                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </span>
             </h5>
         </div>
         <div
             class="collapse"
             :class="educational_background && !isComplete ? 'show' : ''"
+            :id="isComplete ? 'educationalBackground' : ''"
         >
             <div class="p-3">
                 <div
@@ -445,6 +452,7 @@
                 <button
                     class="btn btn-primary font-weight-bold mr-3 mb-2"
                     @click="submitEducationalBackground"
+                    v-if="!isComplete"
                     :disabled="isLoading"
                 >
                     NEXT
@@ -534,10 +542,26 @@ export default {
                         text: "Min sulod na ang data!",
                         icon: "success"
                     });
+
+                    localStorage.setItem(
+                        "educational_background",
+                        JSON.stringify(response.data)
+                    );
+
                     // When it's done call event listener
                     this.$emit("next_tab");
                 })
                 .catch(err => (this.isLoading = false));
+        }
+    },
+    mounted() {
+        if (localStorage.getItem("educational_background")) {
+            console.log("sample");
+            this.educationalBackground = JSON.parse(
+                localStorage.getItem("educational_background")
+            );
+
+            this.isComplete = true;
         }
     }
 };

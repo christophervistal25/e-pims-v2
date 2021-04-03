@@ -1,6 +1,11 @@
 <template>
     <div class="card">
-        <div class="card-header">
+        <div
+            class="card-header"
+            :data-target="isComplete ? '#voluntary' : ''"
+            :data-toggle="isComplete ? 'collapse' : ''"
+            :style="isComplete ? 'cursor : pointer;' : ''"
+        >
             <h5 class="p-2 mb-0">
                 VI. VOLUNTARY WORK OR INVOLVEMENT IN CIVIC / NON-GOVERNMENT /
                 PEOPLE / VOLUNTARY ORGANIZATION/S
@@ -8,12 +13,17 @@
                     v-show="isComplete"
                     :class="isComplete ? 'text-success' : 'text-danger'"
                 >
-                    - VERIFIED</span
-                >
+                    - VERIFIED
+                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </span>
             </h5>
         </div>
 
-        <div class="collapse" :class="!isComplete ? 'show' : ''">
+        <div
+            class="collapse"
+            :class="!isComplete ? 'show' : ''"
+            :id="isComplete ? 'voluntary' : ''"
+        >
             <div class="card-body">
                 <table class="table table-bordered">
                     <tr class="text-center" style="background: #EAEAEA;">

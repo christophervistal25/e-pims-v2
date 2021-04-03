@@ -19,11 +19,12 @@ class EmployeeRepository
     /**
      * For development purpose randomly generate employee_id
      */
-    public function addPersonInformation(array $data = []) :Employee
+    public function addPersonInformation(array $data = []) :array
     {
         $data = $data['personalInformation'];
 
-        return Employee::create([
+        $employee =  Employee::create([
+
                 'employee_id'          => mt_rand(100000, 999999),
                 'lastname'             => $data['surname'],
                 'firstname'            => $data['firstname'],
@@ -62,6 +63,10 @@ class EmployeeRepository
                 'email_address'        => $data['emailAddress'],
                 'status'               => '',
             ]);
+
+
+            $data['employee_id'] = $employee->employee_id;
+        return $data;
     }
 
     private function insertChilds(Employee $employee, array $childs = [])
@@ -69,18 +74,18 @@ class EmployeeRepository
         $childrens = [];
 
         foreach($childs as $child) {
-            $childrens[] = new EmployeeSpouseChildren([
-                'name'          => $child['cname'],
-                'date_of_birth' => $child['cdateOfBirth'],
-            ]);
+            if(!is_null($child['cname'])) {
+                $childrens[] = new EmployeeSpouseChildren([
+                    'name'          => $child['cname'],
+                    'date_of_birth' => $child['cdateOfBirth'],
+                ]);
+            }
         }
 
         $employee->spouse_child()->saveMany($childrens);
     }
-    /**
-     * Add Employee family background.
-     */
-    public function addPersonFamilyBackground(array $data = []) :EmployeeFamilyBackground
+
+    public function addPersonFamilyBackground(array $data = []) :array
     {
 
         $employee = Employee::find($data['employee_id']);
@@ -107,14 +112,13 @@ class EmployeeRepository
         $employeeFamilyBackground->mother_middlename             = $data['mmiddlename'];
 
 
-        return $employee->family_background()->save($employeeFamilyBackground);
+        $employee->family_background()->save($employeeFamilyBackground);
 
-
-
+        return $data;
 
     }
 
-    public function addEducationalBackground(array $data = []) :EmployeeEducationalBackground
+    public function addEducationalBackground(array $data = []) :array
     {
         $employee = Employee::find($data['employee_id']);
 
@@ -155,7 +159,9 @@ class EmployeeRepository
         $employeeEducationalBackground->graduate_studies_year_graduated                    = $data['gyrGrad'];
         $employeeEducationalBackground->graduate_studies_scholarship                       = $data['gscholarship'];
 
-        return $employee->educational_background()->save($employeeEducationalBackground);
+        $employee->educational_background()->save($employeeEducationalBackground);
+
+        return $data;
     }
 
     public function addCivilService(array $civilRecords = []) :array
@@ -182,7 +188,9 @@ class EmployeeRepository
             }
         }
 
-        return $employee->civil_service()->saveMany($records);
+        $employee->civil_service()->saveMany($records);
+
+        return $civilRecords;
     }
 
     public function addWorkExperience(array $workExperiences = []) :array

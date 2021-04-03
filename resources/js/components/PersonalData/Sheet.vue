@@ -31,18 +31,20 @@
             </div>
 
             <personal-information
-                @display-family-background="displayFamilyBackground"
+                v-on:next-panel-family-background="displayFamilyBackgroundPanel"
                 v-if="selectedTab.name === 'C1'"
             ></personal-information>
 
             <family-background
-                :family_show="isFamilyBackgroundShow"
-                @display-educational-background="dispalyEducationalBackground"
+                :show_panel="familyBackgroundPanel"
+                v-on:next-panel-educational-background="
+                    displayEducationalBackgroundPanel
+                "
                 v-if="selectedTab.name === 'C1'"
             ></family-background>
 
             <educational-background
-                :educational_background="isEducationalBackground"
+                :educational_background="educationalBackgroundPanel"
                 v-if="selectedTab.name === 'C1'"
                 @next_tab="openNextTab"
             ></educational-background>
@@ -156,8 +158,8 @@ export default {
                 }
             ],
             selectedTab: {},
-            isFamilyBackgroundShow: false,
-            isEducationalBackground: false,
+            familyBackgroundPanel: false,
+            educationalBackgroundPanel: false,
             isWorkExperienceShow: false,
             needToShowLearningAndDevelopment: false,
             needToShowOtherInformation: false,
@@ -169,11 +171,11 @@ export default {
         workExperienceSection() {
             this.isWorkExperienceShow = true;
         },
-        displayFamilyBackground() {
-            this.isFamilyBackgroundShow = true;
+        displayFamilyBackgroundPanel() {
+            this.familyBackgroundPanel = true;
         },
-        dispalyEducationalBackground() {
-            this.isEducationalBackground = true;
+        displayEducationalBackgroundPanel() {
+            this.educationalBackgroundPanel = true;
         },
         displayLearningAndDevelopment() {
             this.needToShowLearningAndDevelopment = true;

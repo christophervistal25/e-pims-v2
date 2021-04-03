@@ -1,19 +1,29 @@
 <template>
     <div>
         <div class="card">
-            <div class="card-header">
+            <div
+                class="card-header"
+                :data-target="isComplete ? '#civilService' : ''"
+                :data-toggle="isComplete ? 'collapse' : ''"
+                :style="isComplete ? 'cursor : pointer;' : ''"
+            >
                 <h5 class="mb-0 p-2">
                     IV. Civil Service Egibility
                     <span
                         v-show="isComplete"
                         :class="isComplete ? 'text-success' : 'text-danger'"
                     >
-                        - VERIFIED</span
-                    >
+                        - VERIFIED
+                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    </span>
                 </h5>
             </div>
 
-            <div class="collapse" :class="!isComplete ? 'show' : ''">
+            <div
+                class="collapse"
+                :class="!isComplete ? 'show' : ''"
+                :id="isComplete ? 'civilService' : ''"
+            >
                 <div class="card-body">
                     <table class="table table-bordered">
                         <tr class="text-center" style="background: #EAEAEA;">
@@ -34,7 +44,13 @@
                             <td colspan="2" scope="colgroup" class="text-sm">
                                 LICENSE
                             </td>
-                            <td rowspan="2" class="pl-4 pr-4">&nbsp;</td>
+                            <td
+                                rowspan="2"
+                                class="pl-4 pr-4"
+                                v-if="!isComplete"
+                            >
+                                &nbsp;
+                            </td>
                         </tr>
                         <tr style="background: #EAEAEA;">
                             <td scope="col" class="text-center text-sm">
@@ -99,7 +115,7 @@
                                         v-model="civil.dateOfValid"
                                     />
                                 </td>
-                                <td class="jumbotron">
+                                <td class="jumbotron" v-if="!isComplete">
                                     <button
                                         v-show="index != 0"
                                         @click="removeField(index)"
@@ -108,7 +124,7 @@
                                         X
                                     </button>
                                 </td>
-                                <td>
+                                <td v-if="!isComplete">
                                     <button
                                         v-if="index == civilService.length - 1"
                                         class="btn btn-primary rounded-circle font-weight-bold"
@@ -124,13 +140,15 @@
                         <button
                             class="btn btn-danger font-weight-bold"
                             @click="skipSection"
+                            v-if="!isComplete"
+                            :disabled="isLoading"
                         >
                             SKIP
                         </button>
                         <button
                             class="btn btn-primary font-weight-bold"
                             @click="submitCivilService"
-                            :disabled="isLoading"
+                            :disabled="isLoading || isComplete"
                         >
                             NEXT
 
@@ -195,6 +213,10 @@ export default {
                     this.isLoading = false;
                     this.isComplete = true;
                     this.$emit("display-work-experience");
+                    localStorage.setItem(
+                        "civil_service",
+                        JSON.stringify(response.data)
+                    );
                     swal({
                         title: "Good job!",
                         text: "Min sulod na ang data!",
@@ -207,6 +229,17 @@ export default {
             if (index != 0) {
                 this.civilService.splice(index, 1);
             }
+        }
+    },
+    mounted() {
+        if (localStorage.getItem("civil_service")) {
+            this.civilService = JSON.parse(
+                localStorage.getItem("civil_service")
+            );
+
+            this.isComplete = true;
+
+            this.$emit("display-work-experience");
         }
     }
 };

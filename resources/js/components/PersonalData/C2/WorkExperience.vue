@@ -1,20 +1,27 @@
 <template>
     <div class="card">
-        <div class="card-header">
+        <div
+            class="card-header"
+            :data-target="isComplete ? '#workExperience' : ''"
+            :data-toggle="isComplete ? 'collapse' : ''"
+            :style="isComplete ? 'cursor : pointer;' : ''"
+        >
             <h5 class="mb-0 p-2">
                 V. WORK EXPERIENCE
                 <span
                     v-show="isComplete"
                     :class="isComplete ? 'text-success' : 'text-danger'"
                 >
-                    - VERIFIED</span
-                >
+                    - VERIFIED
+                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </span>
             </h5>
         </div>
 
         <div
             class="collapse"
             :class="work_experience && !isComplete ? 'show' : ''"
+            :id="isComplete ? 'workExperience' : ''"
         >
             <div class="card-body">
                 <table class="table table-bordered">

@@ -1,7 +1,12 @@
 <template>
     <div>
         <div class="card">
-            <div class="card-header">
+            <div
+                class="card-header"
+                :data-target="isComplete ? '#learning' : ''"
+                :data-toggle="isComplete ? 'collapse' : ''"
+                :style="isComplete ? 'cursor : pointer;' : ''"
+            >
                 <h5 class="mb-0 p-2">
                     VII. LEARNING AND DEVELOPMENT (L&D) INTERVENTIONS/TRAINING
                     PROGRAMS ATTENDED
@@ -9,14 +14,16 @@
                         v-show="isComplete"
                         :class="isComplete ? 'text-success' : 'text-danger'"
                     >
-                        - VERIFIED</span
-                    >
+                        - VERIFIED
+                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    </span>
                 </h5>
             </div>
 
             <div
                 class="collapse"
                 :class="!isComplete && show_panel ? 'show' : ''"
+                :id="isComplete ? 'learning' : ''"
             >
                 <div class="card-body">
                     <table class="table table-bordered">
