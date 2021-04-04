@@ -8,14 +8,9 @@
                 :style="isComplete ? 'cursor : pointer;' : ''"
             >
                 <h5 class="mb-0 p-2">
+                    <i v-if="isComplete" class="fa fa-check text-success"></i>
                     PERSONAL INFORMATION
-                    <span
-                        v-show="isComplete"
-                        :class="isComplete ? 'text-success' : 'text-danger'"
-                    >
-                        - VERIFIED
-                        <i class="fa fa-caret-down" aria-hidden="true"></i
-                    ></span>
+                    <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
                 </h5>
             </div>
             <div
@@ -591,7 +586,7 @@
 </template>
 
 <script>
-import swal from "sweetalert";
+
 export default {
     data() {
         return {
@@ -689,11 +684,7 @@ export default {
 
                     this.$emit("next-panel-family-background");
 
-                    swal({
-                        title: "Good job!",
-                        text: "Employee Personal Information successfully add.",
-                        icon: "success"
-                    });
+                 
                 })
                 .catch(response => {
                     this.isLoading = false;

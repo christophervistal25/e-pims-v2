@@ -7,14 +7,9 @@
             :style="isComplete ? 'cursor : pointer;' : ''"
         >
             <h5 class="mb-0 p-2">
+                <i v-if="isComplete" class="fa fa-check text-success"></i>
                 EDUCATIONAL BACKGROUND
-                <span
-                    v-show="isComplete"
-                    :class="isComplete ? 'text-success' : 'text-danger'"
-                >
-                    - VERIFIED
-                    <i class="fa fa-caret-down" aria-hidden="true"></i>
-                </span>
+                <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
             </h5>
         </div>
         <div
@@ -537,12 +532,6 @@ export default {
                     this.isLoading = false;
                     this.isComplete = true;
 
-                    swal({
-                        title: "Good job!",
-                        text: "Min sulod na ang data!",
-                        icon: "success"
-                    });
-
                     localStorage.setItem(
                         "educational_background",
                         JSON.stringify(response.data)
@@ -556,11 +545,9 @@ export default {
     },
     mounted() {
         if (localStorage.getItem("educational_background")) {
-            console.log("sample");
             this.educationalBackground = JSON.parse(
                 localStorage.getItem("educational_background")
             );
-
             this.isComplete = true;
         }
     }

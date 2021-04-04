@@ -8,14 +8,9 @@
                 :style="isComplete ? 'cursor : pointer;' : ''"
             >
                 <h5 class="mb-0 p-2">
+                    <i v-if="isComplete" class="fa fa-check text-success"></i>
                     IV. Civil Service Egibility
-                    <span
-                        v-show="isComplete"
-                        :class="isComplete ? 'text-success' : 'text-danger'"
-                    >
-                        - VERIFIED
-                        <i class="fa fa-caret-down" aria-hidden="true"></i>
-                    </span>
+                    <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
                 </h5>
             </div>
 
@@ -149,6 +144,7 @@
                             class="btn btn-primary font-weight-bold"
                             @click="submitCivilService"
                             :disabled="isLoading || isComplete"
+                            v-if="!isComplete"
                         >
                             NEXT
 
@@ -168,7 +164,6 @@
 </template>
 
 <script>
-import swal from "sweetalert";
 export default {
     data() {
         return {
@@ -217,11 +212,7 @@ export default {
                         "civil_service",
                         JSON.stringify(response.data)
                     );
-                    swal({
-                        title: "Good job!",
-                        text: "Min sulod na ang data!",
-                        icon: "success"
-                    });
+                  
                 })
                 .catch(err => (this.isLoading = false));
         },

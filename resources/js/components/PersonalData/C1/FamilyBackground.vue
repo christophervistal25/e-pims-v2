@@ -8,14 +8,9 @@
                 :style="isComplete ? 'cursor : pointer;' : ''"
             >
                 <h5 class="mb-0 p-3">
+                    <i v-if="isComplete" class="fa fa-check text-success"></i>
                     FAMILY BACKGROUND
-                    <span
-                        v-show="isComplete"
-                        :class="isComplete ? 'text-success' : 'text-danger'"
-                    >
-                        - VERIFIED
-                        <i class="fa fa-caret-down" aria-hidden="true"></i>
-                    </span>
+                    <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
                 </h5>
             </div>
             <div
@@ -287,7 +282,6 @@
 </template>
 
 <script>
-import swal from "sweetalert";
 export default {
     props: {
         show_panel: {
@@ -368,11 +362,7 @@ export default {
                         JSON.stringify(response.data)
                     );
 
-                    swal({
-                        title: "Good job!",
-                        text: "Employee Family background successfully add",
-                        icon: "success"
-                    });
+                    
                 })
                 .catch(err => (this.isLoading = false));
         }

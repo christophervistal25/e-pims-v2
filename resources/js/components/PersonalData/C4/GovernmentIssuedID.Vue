@@ -8,14 +8,9 @@
                 :style="isComplete ? 'cursor : pointer;' : ''"
             >
                 <h5 class="mb-0 p-2">
+                    <i v-if="isComplete" class="fa fa-check text-success"></i>
                     GOVERNMENT ISSUED ID
-                    <span
-                        v-show="isComplete"
-                        :class="isComplete ? 'text-success' : 'text-danger'"
-                    >
-                        - VERIFIED
-                        <i class="fa fa-caret-down" aria-hidden="true"></i>
-                    </span>
+                    <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
                 </h5>
             </div>
 
@@ -66,7 +61,7 @@
                     </table>
                     <diva class="float-right mb-3">
                         <button
-                            class="btn btn-primary"
+                            class="btn btn-primary font-weight-bold"
                             @click="submitIssuedID"
                             :disabled="isLoading"
                         >
@@ -106,6 +101,19 @@ export default {
         };
     },
     methods: {
+        removeSavedItemsInStorage() {
+            localStorage.removeItem('learning');
+            localStorage.removeItem('voluntary');
+            localStorage.removeItem('family_background');
+            localStorage.removeItem('educational_background');
+            localStorage.removeItem('relevant_queries');
+            localStorage.removeItem('civil_service');
+            localStorage.removeItem('other_information');
+            localStorage.removeItem('employee_id');
+            localStorage.removeItem('work_experience');
+            localStorage.removeItem('personal_information');
+            localStorage.removeItem('references');
+        },
         submitIssuedID() {
             this.isLoading = true;
             window.axios
@@ -113,9 +121,10 @@ export default {
                 .then(response => {
                     this.isComplete = true;
                     this.isLoading = false;
+                    this.removeSavedItemsInStorage();
                     swal({
                         title: "Good job!",
-                        text: "Min sulod na ang data!",
+                        text: "Successfully create new personal data sheet",
                         icon: "success"
                     });
                 })

@@ -1,5 +1,4 @@
 require("./bootstrap");
-// require("vue-tabs-chrome");
 
 window.Vue = require("vue");
 Vue.use("vue-tabs-chrome", require("vue-tabs-chrome"));
@@ -66,10 +65,9 @@ Vue.component(
     require("./components/PersonalData/C4/GovernmentIssuedID.vue").default
 );
 
-Vue.component("employee-table", require("./components/Employee/Table.vue"));
-
-Vue.component("tab-view", require("./components/Employee/Tab.vue"));
-Vue.component("employee-records", require("./components/Employee/Records.vue"));
+Vue.component("employee-table", require("./components/Employee/Table.vue").default);
+Vue.component("tab-view", require("./components/Employee/Tab.vue").default);
+Vue.component("employee-records", require("./components/Employee/Records.vue").default);
 
 const app = new Vue({
     el: "#app"

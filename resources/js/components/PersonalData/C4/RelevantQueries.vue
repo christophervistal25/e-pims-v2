@@ -8,14 +8,9 @@
                 :style="isComplete ? 'cursor : pointer;' : ''"
             >
                 <h5 class="mb-0 p-2">
+                    <i v-if="isComplete" class="fa fa-check text-success"></i>
                     RELEVANT QUERIES
-                    <span
-                        v-show="isComplete"
-                        :class="isComplete ? 'text-success' : 'text-danger'"
-                    >
-                        - VERIFIED
-                        <i class="fa fa-caret-down" aria-hidden="true"></i>
-                    </span>
+                    <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
                 </h5>
             </div>
 
@@ -855,6 +850,7 @@
                             class="btn btn-primary  font-weight-bold"
                             @click="submit"
                             :disabled="isLoading"
+                            v-if="!isComplete"
                         >
                             NEXT
                             <div
@@ -873,7 +869,7 @@
 </template>
 
 <script>
-import swal from "sweetalert";
+
 export default {
     data() {
         return {
@@ -928,17 +924,20 @@ export default {
                 .then(response => {
                     this.isComplete = true;
                     this.isLoading = false;
+                    localStorage.setItem('relevant_queries', JSON.stringify(response.data));
                     this.$emit("display-reference");
-                    swal({
-                        title: "Good job!",
-                        text: "Min sulod na ang data!",
-                        icon: "success"
-                    });
                 })
                 .catch(err => (this.isLoading = false));
         }
     },
-    created() {}
+    created() {},
+    mounted() {
+        if(localStorage.getItem('relevant_queries')) {
+            this.relevantQueries = JSON.parse(localStorage.getItem('relevant_queries'));
+            this.isComplete = true;
+            this.$emit("display-reference");
+        }
+    }
 };
 </script>
 

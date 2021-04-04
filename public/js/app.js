@@ -2600,11 +2600,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     educational_background: {
@@ -2666,11 +2661,6 @@ __webpack_require__.r(__webpack_exports__);
       window.axios.post("/employee/personal/educational/background/store", this.educationalBackground).then(function (response) {
         _this.isLoading = false;
         _this.isComplete = true;
-        swal({
-          title: "Good job!",
-          text: "Min sulod na ang data!",
-          icon: "success"
-        });
         localStorage.setItem("educational_background", JSON.stringify(response.data)); // When it's done call event listener
 
         _this.$emit("next_tab");
@@ -2681,7 +2671,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     if (localStorage.getItem("educational_background")) {
-      console.log("sample");
       this.educationalBackground = JSON.parse(localStorage.getItem("educational_background"));
       this.isComplete = true;
     }
@@ -2699,8 +2688,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
-/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2984,12 +2971,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     show_panel: {
@@ -3057,11 +3038,6 @@ __webpack_require__.r(__webpack_exports__);
         _this.$emit("next-panel-educational-background");
 
         localStorage.setItem("family_background", JSON.stringify(response.data));
-        sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
-          title: "Good job!",
-          text: "Employee Family background successfully add",
-          icon: "success"
-        });
       })["catch"](function (err) {
         return _this.isLoading = false;
       });
@@ -3092,8 +3068,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
-/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -3681,12 +3655,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3770,12 +3738,6 @@ __webpack_require__.r(__webpack_exports__);
         localStorage.setItem("personal_information", JSON.stringify(response.data));
 
         _this.$emit("next-panel-family-background");
-
-        sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
-          title: "Good job!",
-          text: "Employee Personal Information successfully add.",
-          icon: "success"
-        });
       })["catch"](function (response) {
         _this.isLoading = false;
       });
@@ -3802,8 +3764,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
-/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 //
@@ -3971,11 +3931,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _ref;
@@ -4019,11 +3974,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.$emit("display-work-experience");
 
         localStorage.setItem("civil_service", JSON.stringify(response.data));
-        sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
-          title: "Good job!",
-          text: "Min sulod na ang data!",
-          icon: "success"
-        });
       })["catch"](function (err) {
         return _this.isLoading = false;
       });
@@ -4054,9 +4004,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
 //
 //
 //
@@ -4290,14 +4237,9 @@ __webpack_require__.r(__webpack_exports__);
       window.axios.post("/employee/personal/work/experience", this.workExperience).then(function (response) {
         _this.isLoading = false;
         _this.isComplete = true;
+        localStorage.setItem('work_experience', JSON.stringify(response.data));
 
         _this.$emit("next_tab");
-
-        swal({
-          title: "Good job!",
-          text: "Min sulod na ang data!",
-          icon: "success"
-        });
       })["catch"](function (err) {
         return _this.isLoading = false;
       });
@@ -4310,6 +4252,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.noOfFields = this.workExperience.length;
+  },
+  mounted: function mounted() {
+    if (localStorage.getItem('work_experience')) {
+      this.workExperience = JSON.parse(localStorage.getItem('work_experience'));
+      this.isComplete = true;
+    }
   }
 });
 
@@ -4324,9 +4272,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
 //
 //
 //
@@ -4562,14 +4507,9 @@ __webpack_require__.r(__webpack_exports__);
       window.axios.post("/employee/personal/learning", this.learnDev).then(function (response) {
         _this.isLoading = false;
         _this.isComplete = true;
+        localStorage.setItem('learning', JSON.stringify(response.data));
 
         _this.$emit("display-other-information");
-
-        swal({
-          title: "Good job!",
-          text: "Min sulod na ang data!",
-          icon: "success"
-        });
       })["catch"](function (err) {
         return _this.isLoading = false;
       });
@@ -4577,6 +4517,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.noOfFields = this.learnDev.length;
+
+    if (localStorage.getItem('learning')) {
+      this.learnDev = JSON.parse(localStorage.getItem('learning'));
+      this.isComplete = true;
+      this.$emit("display-other-information");
+    }
   }
 });
 
@@ -4591,8 +4537,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
-/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -4723,10 +4667,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     show_panel: {
@@ -4771,14 +4711,9 @@ __webpack_require__.r(__webpack_exports__);
       window.axios.post("/employee/personal/other/information", this.otherInformation).then(function (response) {
         _this.isComplete = true;
         _this.isLoading = false;
+        localStorage.setItem('other_information', JSON.stringify(response.data));
 
         _this.$emit("next_tab");
-
-        sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
-          title: "Good job!",
-          text: "Min sulod na ang data!",
-          icon: "success"
-        });
       })["catch"](function (err) {
         return _this.isLoading = false;
       });
@@ -4791,6 +4726,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.noOfFields = this.otherInformation.length;
+
+    if (localStorage.getItem('other_information')) {
+      this.otherInformation = JSON.parse(localStorage.getItem('other_information'));
+      this.isComplete = true;
+    }
   }
 });
 
@@ -4807,9 +4747,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
 //
 //
 //
@@ -5010,14 +4947,9 @@ __webpack_require__.r(__webpack_exports__);
       window.axios.post("/employee/personal/voluntary", this.volunOrg).then(function (response) {
         _this.isLoading = false;
         _this.isComplete = true;
+        localStorage.setItem('voluntary', JSON.stringify(response.data));
 
         _this.$emit("display-learning-and-development");
-
-        sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
-          title: "Good job!",
-          text: "Min sulod na ang data!",
-          icon: "success"
-        });
       })["catch"](function (err) {
         return _this.isLoading = false;
       });
@@ -5025,6 +4957,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.noOfFields = this.volunOrg.length;
+  },
+  mounted: function mounted() {
+    if (localStorage.getItem('voluntary')) {
+      this.volunOrg = JSON.parse(localStorage.getItem('voluntary'));
+      this.isComplete = true;
+      this.$emit("display-learning-and-development");
+    }
   }
 });
 
@@ -5039,11 +4978,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
 //
 //
 //
@@ -5146,6 +5080,19 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    removeSavedItemsInStorage: function removeSavedItemsInStorage() {
+      localStorage.removeItem('learning');
+      localStorage.removeItem('voluntary');
+      localStorage.removeItem('family_background');
+      localStorage.removeItem('educational_background');
+      localStorage.removeItem('relevant_queries');
+      localStorage.removeItem('civil_service');
+      localStorage.removeItem('other_information');
+      localStorage.removeItem('employee_id');
+      localStorage.removeItem('work_experience');
+      localStorage.removeItem('personal_information');
+      localStorage.removeItem('references');
+    },
     submitIssuedID: function submitIssuedID() {
       var _this = this;
 
@@ -5153,9 +5100,12 @@ __webpack_require__.r(__webpack_exports__);
       window.axios.post("/employee/personal/issued/id", this.governmentId).then(function (response) {
         _this.isComplete = true;
         _this.isLoading = false;
+
+        _this.removeSavedItemsInStorage();
+
         swal({
           title: "Good job!",
-          text: "Min sulod na ang data!",
+          text: "Successfully create new personal data sheet",
           icon: "success"
         });
       })["catch"](function (err) {
@@ -5171,191 +5121,6 @@ __webpack_require__.r(__webpack_exports__);
 /*!************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PersonalData/C4/Reference.vue?vue&type=script&lang=js& ***!
   \************************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    show_panel: {
-      required: true
-    }
-  },
-  data: function data() {
-    return {
-      isLoading: false,
-      isComplete: false,
-      noOfFields: 0,
-      references: [{
-        refName: "",
-        refAdd: "",
-        refTelNo: "",
-        employee_id: localStorage.getItem("employee_id")
-      }]
-    };
-  },
-  watch: {
-    references: function references(from, to) {
-      this.noOfFields = to.length;
-    }
-  },
-  methods: {
-    addNewReferenceField: function addNewReferenceField() {
-      this.references.push({
-        refName: "",
-        refAdd: "",
-        refTelNo: "",
-        employee_id: localStorage.getItem("employee_id")
-      });
-    },
-    removeField: function removeField(index) {
-      if (index != 0) {
-        this.references.splice(index, 1);
-      }
-    },
-    submitReferences: function submitReferences() {
-      var _this = this;
-
-      this.isLoading = true;
-      window.axios.post("/employee/personal/references", this.references).then(function (response) {
-        _this.isLoading = false;
-        _this.isComplete = true;
-
-        _this.$emit("display-issued-id");
-
-        swal({
-          title: "Good job!",
-          text: "Min sulod na ang data!",
-          icon: "success"
-        });
-      })["catch"](function (err) {
-        return _this.isLoading = false;
-      });
-    }
-  },
-  created: function created() {
-    this.noOfFields = this.references.length;
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/C4/RelevantQueries.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PersonalData/C4/RelevantQueries.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -5470,774 +5235,953 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    show_panel: {
+      required: true
+    }
+  },
+  data: function data() {
+    return {
+      isLoading: false,
+      isComplete: false,
+      noOfFields: 0,
+      references: [{
+        refName: "",
+        refAdd: "",
+        refTelNo: "",
+        employee_id: localStorage.getItem("employee_id")
+      }]
+    };
+  },
+  watch: {
+    references: function references(from, to) {
+      this.noOfFields = to.length;
+    }
+  },
+  methods: {
+    addNewReferenceField: function addNewReferenceField() {
+      this.references.push({
+        refName: "",
+        refAdd: "",
+        refTelNo: "",
+        employee_id: localStorage.getItem("employee_id")
+      });
+    },
+    removeField: function removeField(index) {
+      if (index != 0) {
+        this.references.splice(index, 1);
+      }
+    },
+    submitReferences: function submitReferences() {
+      var _this = this;
+
+      this.isLoading = true;
+      window.axios.post("/employee/personal/references", this.references).then(function (response) {
+        _this.isLoading = false;
+        _this.isComplete = true;
+        localStorage.setItem('references', JSON.stringify(response.data));
+
+        _this.$emit("display-issued-id");
+      })["catch"](function (err) {
+        return _this.isLoading = false;
+      });
+    }
+  },
+  created: function created() {
+    this.noOfFields = this.references.length;
+  },
+  mounted: function mounted() {
+    if (localStorage.getItem('references')) {
+      this.references = JSON.parse(localStorage.getItem('references'));
+      this.isComplete = true;
+      this.$emit("display-issued-id");
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/C4/RelevantQueries.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PersonalData/C4/RelevantQueries.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -6280,20 +6224,22 @@ __webpack_require__.r(__webpack_exports__);
       window.axios.post("/employee/personal/relevant/queries", this.relevantQueries).then(function (response) {
         _this.isComplete = true;
         _this.isLoading = false;
+        localStorage.setItem('relevant_queries', JSON.stringify(response.data));
 
         _this.$emit("display-reference");
-
-        sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
-          title: "Good job!",
-          text: "Min sulod na ang data!",
-          icon: "success"
-        });
       })["catch"](function (err) {
         return _this.isLoading = false;
       });
     }
   },
-  created: function created() {}
+  created: function created() {},
+  mounted: function mounted() {
+    if (localStorage.getItem('relevant_queries')) {
+      this.relevantQueries = JSON.parse(localStorage.getItem('relevant_queries'));
+      this.isComplete = true;
+      this.$emit("display-reference");
+    }
+  }
 });
 
 /***/ }),
@@ -6541,7 +6487,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\ntd[data-v-295e1eb5] {\n    cursor: pointer;\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-295e1eb5]:hover {\n    background: #f1f2f3;\n}\n", ""]);
+exports.push([module.i, "\ntd[data-v-295e1eb5] {\r\n    cursor: pointer;\r\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-295e1eb5]:hover {\r\n    background: #f1f2f3;\n}\r\n", ""]);
 
 // exports
 
@@ -6560,7 +6506,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.dash-border[data-v-273b49a5] {\n    border-color: #007bff;\n    border-width: 4px;\n    border-style: dashed;\n}\n", ""]);
+exports.push([module.i, "\n.dash-border[data-v-273b49a5] {\r\n    border-color: #007bff;\r\n    border-width: 4px;\r\n    border-style: dashed;\n}\r\n", ""]);
 
 // exports
 
@@ -25214,28 +25160,16 @@ var render = function() {
       },
       [
         _c("h5", { staticClass: "mb-0 p-2" }, [
+          _vm.isComplete
+            ? _c("i", { staticClass: "fa fa-check text-success" })
+            : _vm._e(),
           _vm._v("\n            EDUCATIONAL BACKGROUND\n            "),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.isComplete,
-                  expression: "isComplete"
-                }
-              ],
-              class: _vm.isComplete ? "text-success" : "text-danger"
-            },
-            [
-              _vm._v("\n                - VERIFIED\n                "),
-              _c("i", {
-                staticClass: "fa fa-caret-down",
+          _vm.isComplete
+            ? _c("i", {
+                staticClass: "text-success float-right fa fa-caret-down",
                 attrs: { "aria-hidden": "true" }
               })
-            ]
-          )
+            : _vm._e()
         ])
       ]
     ),
@@ -26507,30 +26441,16 @@ var render = function() {
         },
         [
           _c("h5", { staticClass: "mb-0 p-3" }, [
+            _vm.isComplete
+              ? _c("i", { staticClass: "fa fa-check text-success" })
+              : _vm._e(),
             _vm._v("\n                FAMILY BACKGROUND\n                "),
-            _c(
-              "span",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.isComplete,
-                    expression: "isComplete"
-                  }
-                ],
-                class: _vm.isComplete ? "text-success" : "text-danger"
-              },
-              [
-                _vm._v(
-                  "\n                    - VERIFIED\n                    "
-                ),
-                _c("i", {
-                  staticClass: "fa fa-caret-down",
+            _vm.isComplete
+              ? _c("i", {
+                  staticClass: "text-success float-right fa fa-caret-down",
                   attrs: { "aria-hidden": "true" }
                 })
-              ]
-            )
+              : _vm._e()
           ])
         ]
       ),
@@ -27342,30 +27262,16 @@ var render = function() {
         },
         [
           _c("h5", { staticClass: "mb-0 p-2" }, [
+            _vm.isComplete
+              ? _c("i", { staticClass: "fa fa-check text-success" })
+              : _vm._e(),
             _vm._v("\n                PERSONAL INFORMATION\n                "),
-            _c(
-              "span",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.isComplete,
-                    expression: "isComplete"
-                  }
-                ],
-                class: _vm.isComplete ? "text-success" : "text-danger"
-              },
-              [
-                _vm._v(
-                  "\n                    - VERIFIED\n                    "
-                ),
-                _c("i", {
-                  staticClass: "fa fa-caret-down",
+            _vm.isComplete
+              ? _c("i", {
+                  staticClass: "text-success float-right fa fa-caret-down",
                   attrs: { "aria-hidden": "true" }
                 })
-              ]
-            )
+              : _vm._e()
           ])
         ]
       ),
@@ -29069,32 +28975,18 @@ var render = function() {
         },
         [
           _c("h5", { staticClass: "mb-0 p-2" }, [
+            _vm.isComplete
+              ? _c("i", { staticClass: "fa fa-check text-success" })
+              : _vm._e(),
             _vm._v(
               "\n                IV. Civil Service Egibility\n                "
             ),
-            _c(
-              "span",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.isComplete,
-                    expression: "isComplete"
-                  }
-                ],
-                class: _vm.isComplete ? "text-success" : "text-danger"
-              },
-              [
-                _vm._v(
-                  "\n                    - VERIFIED\n                    "
-                ),
-                _c("i", {
-                  staticClass: "fa fa-caret-down",
+            _vm.isComplete
+              ? _c("i", {
+                  staticClass: "text-success float-right fa fa-caret-down",
                   attrs: { "aria-hidden": "true" }
                 })
-              ]
-            )
+              : _vm._e()
           ])
         ]
       ),
@@ -29413,39 +29305,41 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary font-weight-bold",
-                  attrs: { disabled: _vm.isLoading || _vm.isComplete },
-                  on: { click: _vm.submitCivilService }
-                },
-                [
-                  _vm._v(
-                    "\n                        NEXT\n\n                        "
-                  ),
-                  _c(
-                    "div",
+              !_vm.isComplete
+                ? _c(
+                    "button",
                     {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.isLoading,
-                          expression: "isLoading"
-                        }
-                      ],
-                      staticClass: "spinner-border spinner-border-sm mb-1",
-                      attrs: { role: "status" }
+                      staticClass: "btn btn-primary font-weight-bold",
+                      attrs: { disabled: _vm.isLoading || _vm.isComplete },
+                      on: { click: _vm.submitCivilService }
                     },
                     [
-                      _c("span", { staticClass: "sr-only" }, [
-                        _vm._v("Loading...")
-                      ])
+                      _vm._v(
+                        "\n                        NEXT\n\n                        "
+                      ),
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.isLoading,
+                              expression: "isLoading"
+                            }
+                          ],
+                          staticClass: "spinner-border spinner-border-sm mb-1",
+                          attrs: { role: "status" }
+                        },
+                        [
+                          _c("span", { staticClass: "sr-only" }, [
+                            _vm._v("Loading...")
+                          ])
+                        ]
+                      )
                     ]
                   )
-                ]
-              )
+                : _vm._e()
             ])
           ])
         ]
@@ -29515,28 +29409,16 @@ var render = function() {
       },
       [
         _c("h5", { staticClass: "mb-0 p-2" }, [
+          _vm.isComplete
+            ? _c("i", { staticClass: "fa fa-check text-success" })
+            : _vm._e(),
           _vm._v("\n            V. WORK EXPERIENCE\n            "),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.isComplete,
-                  expression: "isComplete"
-                }
-              ],
-              class: _vm.isComplete ? "text-success" : "text-danger"
-            },
-            [
-              _vm._v("\n                - VERIFIED\n                "),
-              _c("i", {
-                staticClass: "fa fa-caret-down",
+          _vm.isComplete
+            ? _c("i", {
+                staticClass: "text-success float-right fa fa-caret-down",
                 attrs: { "aria-hidden": "true" }
               })
-            ]
-          )
+            : _vm._e()
         ])
       ]
     ),
@@ -29820,46 +29702,52 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "float-right mb-3" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-danger font-weight-bold",
-                on: { click: _vm.skipSection }
-              },
-              [_vm._v("\n                    SKIP\n                ")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary font-weight-bold",
-                attrs: { disabled: _vm.isLoading },
-                on: { click: _vm.submitWorkExperience }
-              },
-              [
-                _vm._v("\n                    NEXT\n\n                    "),
-                _c(
-                  "div",
+            !_vm.isComplete
+              ? _c(
+                  "button",
                   {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.isLoading,
-                        expression: "isLoading"
-                      }
-                    ],
-                    staticClass: "spinner-border spinner-border-sm mb-1",
-                    attrs: { role: "status" }
+                    staticClass: "btn btn-danger font-weight-bold",
+                    on: { click: _vm.skipSection }
+                  },
+                  [_vm._v("\n                    SKIP\n                ")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            !_vm.isComplete
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary font-weight-bold",
+                    attrs: { disabled: _vm.isLoading },
+                    on: { click: _vm.submitWorkExperience }
                   },
                   [
-                    _c("span", { staticClass: "sr-only" }, [
-                      _vm._v("Loading...")
-                    ])
+                    _vm._v(
+                      "\n                    NEXT\n\n                    "
+                    ),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.isLoading,
+                            expression: "isLoading"
+                          }
+                        ],
+                        staticClass: "spinner-border spinner-border-sm mb-1",
+                        attrs: { role: "status" }
+                      },
+                      [
+                        _c("span", { staticClass: "sr-only" }, [
+                          _vm._v("Loading...")
+                        ])
+                      ]
+                    )
                   ]
                 )
-              ]
-            )
+              : _vm._e()
           ])
         ])
       ]
@@ -30012,32 +29900,18 @@ var render = function() {
         },
         [
           _c("h5", { staticClass: "mb-0 p-2" }, [
+            _vm.isComplete
+              ? _c("i", { staticClass: "fa fa-check text-success" })
+              : _vm._e(),
             _vm._v(
-              "\n                VII. LEARNING AND DEVELOPMENT (L&D) INTERVENTIONS/TRAINING\n                PROGRAMS ATTENDED\n                "
+              "\n                VII. LEARNING AND DEVELOPMENT (L&D) INTERVENTIONS/TRAINING\n                PROGRAMS ATTENDED\n            "
             ),
-            _c(
-              "span",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.isComplete,
-                    expression: "isComplete"
-                  }
-                ],
-                class: _vm.isComplete ? "text-success" : "text-danger"
-              },
-              [
-                _vm._v(
-                  "\n                    - VERIFIED\n                    "
-                ),
-                _c("i", {
-                  staticClass: "fa fa-caret-down",
+            _vm.isComplete
+              ? _c("i", {
+                  staticClass: "text-success float-right fa fa-caret-down",
                   attrs: { "aria-hidden": "true" }
                 })
-              ]
-            )
+              : _vm._e()
           ])
         ]
       ),
@@ -30258,48 +30132,56 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "float-right mb-3" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-danger font-weight-bold",
-                  on: { click: _vm.skipSection }
-                },
-                [_vm._v("\n                        SKIP\n                    ")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary font-weight-bold",
-                  attrs: { disabled: _vm.isLoading },
-                  on: { click: _vm.submitLearningAndDevelopment }
-                },
-                [
-                  _vm._v(
-                    "\n                        NEXT\n                        "
-                  ),
-                  _c(
-                    "div",
+              !_vm.isComplete
+                ? _c(
+                    "button",
                     {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.isLoading,
-                          expression: "isLoading"
-                        }
-                      ],
-                      staticClass: "spinner-border spinner-border-sm mb-1",
-                      attrs: { role: "status" }
+                      staticClass: "btn btn-danger font-weight-bold",
+                      on: { click: _vm.skipSection }
                     },
                     [
-                      _c("span", { staticClass: "sr-only" }, [
-                        _vm._v("Loading...")
-                      ])
+                      _vm._v(
+                        "\n                        SKIP\n                    "
+                      )
                     ]
                   )
-                ]
-              )
+                : _vm._e(),
+              _vm._v(" "),
+              !_vm.isComplete
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary font-weight-bold",
+                      attrs: { disabled: _vm.isLoading },
+                      on: { click: _vm.submitLearningAndDevelopment }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        NEXT\n                        "
+                      ),
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.isLoading,
+                              expression: "isLoading"
+                            }
+                          ],
+                          staticClass: "spinner-border spinner-border-sm mb-1",
+                          attrs: { role: "status" }
+                        },
+                        [
+                          _c("span", { staticClass: "sr-only" }, [
+                            _vm._v("Loading...")
+                          ])
+                        ]
+                      )
+                    ]
+                  )
+                : _vm._e()
             ])
           ])
         ]
@@ -30444,32 +30326,18 @@ var render = function() {
         },
         [
           _c("h5", { staticClass: "mb-0 p-2" }, [
+            _vm.isComplete
+              ? _c("i", { staticClass: "fa fa-check text-success" })
+              : _vm._e(),
             _vm._v(
               "\n                VIII. OTHER INFORMATION\n                "
             ),
-            _c(
-              "span",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.isComplete,
-                    expression: "isComplete"
-                  }
-                ],
-                class: _vm.isComplete ? "text-success" : "text-danger"
-              },
-              [
-                _vm._v(
-                  "\n                    - VERIFIED\n                    "
-                ),
-                _c("i", {
-                  staticClass: "fa fa-caret-down",
+            _vm.isComplete
+              ? _c("i", {
+                  staticClass: "text-success float-right fa fa-caret-down",
                   attrs: { "aria-hidden": "true" }
                 })
-              ]
-            )
+              : _vm._e()
           ])
         ]
       ),
@@ -30614,48 +30482,56 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "float-right mb-3" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-danger font-weight-bold",
-                  on: { click: _vm.skipSection }
-                },
-                [_vm._v("\n                        SKIP\n                    ")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary font-weight-bold",
-                  attrs: { disabled: _vm.isLoading },
-                  on: { click: _vm.submitOtherInformation }
-                },
-                [
-                  _vm._v(
-                    "\n                        NEXT\n                        "
-                  ),
-                  _c(
-                    "div",
+              !_vm.isComplete
+                ? _c(
+                    "button",
                     {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.isLoading,
-                          expression: "isLoading"
-                        }
-                      ],
-                      staticClass: "spinner-border spinner-border-sm mb-1",
-                      attrs: { role: "status" }
+                      staticClass: "btn btn-danger font-weight-bold",
+                      on: { click: _vm.skipSection }
                     },
                     [
-                      _c("span", { staticClass: "sr-only" }, [
-                        _vm._v("Loading...")
-                      ])
+                      _vm._v(
+                        "\n                        SKIP\n                    "
+                      )
                     ]
                   )
-                ]
-              )
+                : _vm._e(),
+              _vm._v(" "),
+              !_vm.isComplete
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary font-weight-bold",
+                      attrs: { disabled: _vm.isLoading },
+                      on: { click: _vm.submitOtherInformation }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        NEXT\n                        "
+                      ),
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.isLoading,
+                              expression: "isLoading"
+                            }
+                          ],
+                          staticClass: "spinner-border spinner-border-sm mb-1",
+                          attrs: { role: "status" }
+                        },
+                        [
+                          _c("span", { staticClass: "sr-only" }, [
+                            _vm._v("Loading...")
+                          ])
+                        ]
+                      )
+                    ]
+                  )
+                : _vm._e()
             ])
           ])
         ]
@@ -30752,30 +30628,18 @@ var render = function() {
       },
       [
         _c("h5", { staticClass: "p-2 mb-0" }, [
+          _vm.isComplete
+            ? _c("i", { staticClass: "fa fa-check text-success" })
+            : _vm._e(),
           _vm._v(
             "\n            VI. VOLUNTARY WORK OR INVOLVEMENT IN CIVIC / NON-GOVERNMENT /\n            PEOPLE / VOLUNTARY ORGANIZATION/S\n            "
           ),
-          _c(
-            "span",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.isComplete,
-                  expression: "isComplete"
-                }
-              ],
-              class: _vm.isComplete ? "text-success" : "text-danger"
-            },
-            [
-              _vm._v("\n                - VERIFIED\n                "),
-              _c("i", {
-                staticClass: "fa fa-caret-down",
+          _vm.isComplete
+            ? _c("i", {
+                staticClass: "text-success float-right fa fa-caret-down",
                 attrs: { "aria-hidden": "true" }
               })
-            ]
-          )
+            : _vm._e()
         ])
       ]
     ),
@@ -30966,46 +30830,50 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "float-right mb-3" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-danger font-weight-bold",
-                on: { click: _vm.skipSection }
-              },
-              [_vm._v("\n                    SKIP\n                ")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary font-weight-bold",
-                attrs: { disabled: _vm.isLoading },
-                on: { click: _vm.submitVoluntary }
-              },
-              [
-                _vm._v("\n                    NEXT\n                    "),
-                _c(
-                  "div",
+            !_vm.isComplete
+              ? _c(
+                  "button",
                   {
-                    directives: [
-                      {
-                        name: "show",
-                        rawName: "v-show",
-                        value: _vm.isLoading,
-                        expression: "isLoading"
-                      }
-                    ],
-                    staticClass: "spinner-border spinner-border-sm mb-1",
-                    attrs: { role: "status" }
+                    staticClass: "btn btn-danger font-weight-bold",
+                    on: { click: _vm.skipSection }
+                  },
+                  [_vm._v("\n                    SKIP\n                ")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            !_vm.isComplete
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary font-weight-bold",
+                    attrs: { disabled: _vm.isLoading },
+                    on: { click: _vm.submitVoluntary }
                   },
                   [
-                    _c("span", { staticClass: "sr-only" }, [
-                      _vm._v("Loading...")
-                    ])
+                    _vm._v("\n                    NEXT\n                    "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.isLoading,
+                            expression: "isLoading"
+                          }
+                        ],
+                        staticClass: "spinner-border spinner-border-sm mb-1",
+                        attrs: { role: "status" }
+                      },
+                      [
+                        _c("span", { staticClass: "sr-only" }, [
+                          _vm._v("Loading...")
+                        ])
+                      ]
+                    )
                   ]
                 )
-              ]
-            )
+              : _vm._e()
           ])
         ])
       ]
@@ -31135,30 +31003,16 @@ var render = function() {
         },
         [
           _c("h5", { staticClass: "mb-0 p-2" }, [
+            _vm.isComplete
+              ? _c("i", { staticClass: "fa fa-check text-success" })
+              : _vm._e(),
             _vm._v("\n                GOVERNMENT ISSUED ID\n                "),
-            _c(
-              "span",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.isComplete,
-                    expression: "isComplete"
-                  }
-                ],
-                class: _vm.isComplete ? "text-success" : "text-danger"
-              },
-              [
-                _vm._v(
-                  "\n                    - VERIFIED\n                    "
-                ),
-                _c("i", {
-                  staticClass: "fa fa-caret-down",
+            _vm.isComplete
+              ? _c("i", {
+                  staticClass: "text-success float-right fa fa-caret-down",
                   attrs: { "aria-hidden": "true" }
                 })
-              ]
-            )
+              : _vm._e()
           ])
         ]
       ),
@@ -31271,7 +31125,7 @@ var render = function() {
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-primary",
+                    staticClass: "btn btn-primary font-weight-bold",
                     attrs: { disabled: _vm.isLoading },
                     on: { click: _vm.submitIssuedID }
                   },
@@ -31366,6 +31220,9 @@ var render = function() {
         },
         [
           _c("h5", { staticClass: "mb-0 p-2" }, [
+            _vm.isComplete
+              ? _c("i", { staticClass: "fa fa-check text-success" })
+              : _vm._e(),
             _vm._v("\n                41. REFERENCES\n                "),
             _c("span", { staticClass: "text-danger text-sm" }, [
               _vm._v(
@@ -31373,29 +31230,12 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c(
-              "span",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.isComplete,
-                    expression: "isComplete"
-                  }
-                ],
-                class: _vm.isComplete ? "text-success" : "text-danger"
-              },
-              [
-                _vm._v(
-                  "\n                    - VERIFIED\n                    "
-                ),
-                _c("i", {
-                  staticClass: "fa fa-caret-down",
+            _vm.isComplete
+              ? _c("i", {
+                  staticClass: "text-success float-right fa fa-caret-down",
                   attrs: { "aria-hidden": "true" }
                 })
-              ]
-            )
+              : _vm._e()
           ])
         ]
       ),
@@ -31540,39 +31380,41 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "float-right mb-3" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary",
-                  attrs: { disabled: _vm.isLoading },
-                  on: { click: _vm.submitReferences }
-                },
-                [
-                  _vm._v(
-                    "\n                        NEXT\n                        "
-                  ),
-                  _c(
-                    "div",
+              !_vm.isComplete
+                ? _c(
+                    "button",
                     {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.isLoading,
-                          expression: "isLoading"
-                        }
-                      ],
-                      staticClass: "spinner-border spinner-border-sm mb-1",
-                      attrs: { role: "status" }
+                      staticClass: "btn btn-primary font-weight-bold",
+                      attrs: { disabled: _vm.isLoading },
+                      on: { click: _vm.submitReferences }
                     },
                     [
-                      _c("span", { staticClass: "sr-only" }, [
-                        _vm._v("Loading...")
-                      ])
+                      _vm._v(
+                        "\n                        NEXT\n                        "
+                      ),
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.isLoading,
+                              expression: "isLoading"
+                            }
+                          ],
+                          staticClass: "spinner-border spinner-border-sm mb-1",
+                          attrs: { role: "status" }
+                        },
+                        [
+                          _c("span", { staticClass: "sr-only" }, [
+                            _vm._v("Loading...")
+                          ])
+                        ]
+                      )
                     ]
                   )
-                ]
-              )
+                : _vm._e()
             ])
           ])
         ]
@@ -31629,30 +31471,16 @@ var render = function() {
         },
         [
           _c("h5", { staticClass: "mb-0 p-2" }, [
+            _vm.isComplete
+              ? _c("i", { staticClass: "fa fa-check text-success" })
+              : _vm._e(),
             _vm._v("\n                RELEVANT QUERIES\n                "),
-            _c(
-              "span",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.isComplete,
-                    expression: "isComplete"
-                  }
-                ],
-                class: _vm.isComplete ? "text-success" : "text-danger"
-              },
-              [
-                _vm._v(
-                  "\n                    - VERIFIED\n                    "
-                ),
-                _c("i", {
-                  staticClass: "fa fa-caret-down",
+            _vm.isComplete
+              ? _c("i", {
+                  staticClass: "text-success float-right fa fa-caret-down",
                   attrs: { "aria-hidden": "true" }
                 })
-              ]
-            )
+              : _vm._e()
           ])
         ]
       ),
@@ -33330,39 +33158,41 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "float-right mb-3" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary  font-weight-bold",
-                  attrs: { disabled: _vm.isLoading },
-                  on: { click: _vm.submit }
-                },
-                [
-                  _vm._v(
-                    "\n                        NEXT\n                        "
-                  ),
-                  _c(
-                    "div",
+              !_vm.isComplete
+                ? _c(
+                    "button",
                     {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.isLoading,
-                          expression: "isLoading"
-                        }
-                      ],
-                      staticClass: "spinner-border spinner-border-sm mb-1",
-                      attrs: { role: "status" }
+                      staticClass: "btn btn-primary  font-weight-bold",
+                      attrs: { disabled: _vm.isLoading },
+                      on: { click: _vm.submit }
                     },
                     [
-                      _c("span", { staticClass: "sr-only" }, [
-                        _vm._v("Loading...")
-                      ])
+                      _vm._v(
+                        "\n                        NEXT\n                        "
+                      ),
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.isLoading,
+                              expression: "isLoading"
+                            }
+                          ],
+                          staticClass: "spinner-border spinner-border-sm mb-1",
+                          attrs: { role: "status" }
+                        },
+                        [
+                          _c("span", { staticClass: "sr-only" }, [
+                            _vm._v("Loading...")
+                          ])
+                        ]
+                      )
                     ]
                   )
-                ]
-              )
+                : _vm._e()
             ])
           ])
         ]
@@ -45925,8 +45755,7 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // require("vue-tabs-chrome");
-
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 Vue.use("vue-tabs-chrome", __webpack_require__(/*! vue-tabs-chrome */ "./node_modules/vue-tabs-chrome/lib/vue-tabs-chrome.umd.min.js"));
@@ -45944,9 +45773,9 @@ Vue.component("other-information", __webpack_require__(/*! ./components/Personal
 Vue.component("relevant-queries", __webpack_require__(/*! ./components/PersonalData/C4/RelevantQueries.vue */ "./resources/js/components/PersonalData/C4/RelevantQueries.vue")["default"]);
 Vue.component("references", __webpack_require__(/*! ./components/PersonalData/C4/Reference.vue */ "./resources/js/components/PersonalData/C4/Reference.vue")["default"]);
 Vue.component("goverment-issued-id", __webpack_require__(/*! ./components/PersonalData/C4/GovernmentIssuedID.vue */ "./resources/js/components/PersonalData/C4/GovernmentIssuedID.vue")["default"]);
-Vue.component("employee-table", __webpack_require__(/*! ./components/Employee/Table.vue */ "./resources/js/components/Employee/Table.vue"));
-Vue.component("tab-view", __webpack_require__(/*! ./components/Employee/Tab.vue */ "./resources/js/components/Employee/Tab.vue"));
-Vue.component("employee-records", __webpack_require__(/*! ./components/Employee/Records.vue */ "./resources/js/components/Employee/Records.vue"));
+Vue.component("employee-table", __webpack_require__(/*! ./components/Employee/Table.vue */ "./resources/js/components/Employee/Table.vue")["default"]);
+Vue.component("tab-view", __webpack_require__(/*! ./components/Employee/Tab.vue */ "./resources/js/components/Employee/Tab.vue")["default"]);
+Vue.component("employee-records", __webpack_require__(/*! ./components/Employee/Records.vue */ "./resources/js/components/Employee/Records.vue")["default"]);
 var app = new Vue({
   el: "#app"
 });

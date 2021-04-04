@@ -215,7 +215,9 @@ class EmployeeRepository
             }
         }
 
-        return $employee->civil_service()->saveMany($records);
+        $employee->civil_service()->saveMany($records);
+        
+        return $workExperiences;
     }
 
     public function addVoluntary(array $voluntaryRecord = []) :array
@@ -237,7 +239,8 @@ class EmployeeRepository
             }
         }
 
-        return $employee->voluntary_work()->saveMany($records);
+       $employee->voluntary_work()->saveMany($records);
+       return $voluntaryRecord;
     }
 
     public function addLearning(array $trainings = []) :array
@@ -265,7 +268,8 @@ class EmployeeRepository
             }
         }
 
-        return $employee->program_attained()->saveMany($records);
+        $employee->program_attained()->saveMany($records);
+        return $trainings;
     }
 
     public function addOtherInformation(array $informations = [])  :array
@@ -282,10 +286,11 @@ class EmployeeRepository
             ]);
         }
 
-        return $employee->other_information()->saveMany($otherInformations);
+        $employee->other_information()->saveMany($otherInformations);
+        return $informations;
     }
 
-    public function addRelevantQueries(array $queries = [])
+    public function addRelevantQueries(array $queries = []) :array
     {
         $employee = Employee::find($queries['employee_id']);
         $relevantQuery = new EmployeeRelevantQuery();
@@ -314,8 +319,9 @@ class EmployeeRepository
         $relevantQuery->question_40_c_answer =  $queries['no_40_c'];
         $relevantQuery->question_40_c_details = $queries['no_40_c_details'];
 
-        return $employee->relevant_queries()->save($relevantQuery);
+        $employee->relevant_queries()->save($relevantQuery);
 
+        return $queries;
     }
 
     public function addReferences(array $references = []) : array
@@ -332,7 +338,8 @@ class EmployeeRepository
             ]);
         }
 
-        return $employee->references()->saveMany($records);
+        $employee->references()->saveMany($records);
+        return $references;
     }
 
     public function addIssuedID(array $data = [])

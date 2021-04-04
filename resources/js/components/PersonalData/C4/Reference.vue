@@ -8,18 +8,13 @@
                 :style="isComplete ? 'cursor : pointer;' : ''"
             >
                 <h5 class="mb-0 p-2">
+                    <i v-if="isComplete" class="fa fa-check text-success"></i>
                     41. REFERENCES
                     <span class="text-danger text-sm"
                         >(Person not related by consanguinity or affinity to
                         applicant /appointee)</span
                     >
-                    <span
-                        v-show="isComplete"
-                        :class="isComplete ? 'text-success' : 'text-danger'"
-                    >
-                        - VERIFIED
-                        <i class="fa fa-caret-down" aria-hidden="true"></i>
-                    </span>
+                    <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
                 </h5>
             </div>
 
@@ -89,9 +84,10 @@
                     </table>
                     <div class="float-right mb-3">
                         <button
-                            class="btn btn-primary"
+                            class="btn btn-primary font-weight-bold"
                             @click="submitReferences"
                             :disabled="isLoading"
+                            v-if="!isComplete"
                         >
                             NEXT
                             <div
@@ -110,6 +106,7 @@
 </template>
 
 <script>
+import swal from 'sweetalert';
 export default {
     props: {
         show_panel: {
@@ -157,18 +154,21 @@ export default {
                 .then(response => {
                     this.isLoading = false;
                     this.isComplete = true;
+                    localStorage.setItem('references', JSON.stringify(response.data));
                     this.$emit("display-issued-id");
-                    swal({
-                        title: "Good job!",
-                        text: "Min sulod na ang data!",
-                        icon: "success"
-                    });
                 })
                 .catch(err => (this.isLoading = false));
         }
     },
     created() {
         this.noOfFields = this.references.length;
+    },
+    mounted() {
+        if(localStorage.getItem('references')) {
+            this.references = JSON.parse(localStorage.getItem('references'));
+            this.isComplete = true;
+            this.$emit("display-issued-id");
+        }
     }
 };
 </script>

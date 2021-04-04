@@ -7,14 +7,9 @@
             :style="isComplete ? 'cursor : pointer;' : ''"
         >
             <h5 class="mb-0 p-2">
+                <i v-if="isComplete" class="fa fa-check text-success"></i>
                 V. WORK EXPERIENCE
-                <span
-                    v-show="isComplete"
-                    :class="isComplete ? 'text-success' : 'text-danger'"
-                >
-                    - VERIFIED
-                    <i class="fa fa-caret-down" aria-hidden="true"></i>
-                </span>
+                <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
             </h5>
         </div>
 
@@ -155,6 +150,7 @@
                     <button
                         class="btn btn-danger font-weight-bold"
                         @click="skipSection"
+                        v-if="!isComplete"
                     >
                         SKIP
                     </button>
@@ -162,6 +158,7 @@
                         class="btn btn-primary font-weight-bold"
                         @click="submitWorkExperience"
                         :disabled="isLoading"
+                        v-if="!isComplete"
                     >
                         NEXT
 
@@ -238,13 +235,10 @@ export default {
                     this.isLoading = false;
                     this.isComplete = true;
 
+                    localStorage.setItem('work_experience', JSON.stringify(response.data));
                     this.$emit("next_tab");
 
-                    swal({
-                        title: "Good job!",
-                        text: "Min sulod na ang data!",
-                        icon: "success"
-                    });
+                
                 })
                 .catch(err => (this.isLoading = false));
         },
@@ -256,7 +250,13 @@ export default {
     },
     created() {
         this.noOfFields = this.workExperience.length;
-    }
+    },
+    mounted() {
+        if(localStorage.getItem('work_experience')) {
+            this.workExperience = JSON.parse(localStorage.getItem('work_experience'));
+            this.isComplete = true;
+        }
+    },
 };
 </script>
 

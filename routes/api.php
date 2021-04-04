@@ -6,3 +6,9 @@ Route::get('/dbmCurrent/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController
 Route::get('/cscPrevious/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@cscPrevious');
 
 Route::post('/addPosition' , 'Api\PlantillaController@addPosition');
+
+
+Route::group(['prefix' => 'employee'], function () {
+    Route::get('employees', 'Api\EmployeeController@list');
+});
+

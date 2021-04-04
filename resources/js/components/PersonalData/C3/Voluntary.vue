@@ -7,15 +7,10 @@
             :style="isComplete ? 'cursor : pointer;' : ''"
         >
             <h5 class="p-2 mb-0">
+                <i v-if="isComplete" class="fa fa-check text-success"></i>
                 VI. VOLUNTARY WORK OR INVOLVEMENT IN CIVIC / NON-GOVERNMENT /
                 PEOPLE / VOLUNTARY ORGANIZATION/S
-                <span
-                    v-show="isComplete"
-                    :class="isComplete ? 'text-success' : 'text-danger'"
-                >
-                    - VERIFIED
-                    <i class="fa fa-caret-down" aria-hidden="true"></i>
-                </span>
+                <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
             </h5>
         </div>
 
@@ -129,6 +124,7 @@
                     <button
                         class="btn btn-danger font-weight-bold"
                         @click="skipSection"
+                        v-if="!isComplete"
                     >
                         SKIP
                     </button>
@@ -136,6 +132,7 @@
                         class="btn btn-primary font-weight-bold"
                         @click="submitVoluntary"
                         :disabled="isLoading"
+                        v-if="!isComplete"
                     >
                         NEXT
                         <div
@@ -204,18 +201,24 @@ export default {
                 .then(response => {
                     this.isLoading = false;
                     this.isComplete = true;
+
+                    localStorage.setItem('voluntary', JSON.stringify(response.data));
+
                     this.$emit("display-learning-and-development");
-                    swal({
-                        title: "Good job!",
-                        text: "Min sulod na ang data!",
-                        icon: "success"
-                    });
+
                 })
                 .catch(err => (this.isLoading = false));
         }
     },
     created() {
         this.noOfFields = this.volunOrg.length;
+    },
+    mounted() {
+        if(localStorage.getItem('voluntary')) {
+            this.volunOrg = JSON.parse(localStorage.getItem('voluntary'));
+            this.isComplete = true;
+            this.$emit("display-learning-and-development");
+        }
     }
 };
 </script>

@@ -8,14 +8,9 @@
                 :style="isComplete ? 'cursor : pointer;' : ''"
             >
                 <h5 class="mb-0 p-2">
+                    <i v-if="isComplete" class="fa fa-check text-success"></i>
                     VIII. OTHER INFORMATION
-                    <span
-                        v-show="isComplete"
-                        :class="isComplete ? 'text-success' : 'text-danger'"
-                    >
-                        - VERIFIED
-                        <i class="fa fa-caret-down" aria-hidden="true"></i>
-                    </span>
+                    <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
                 </h5>
             </div>
 
@@ -107,6 +102,7 @@
                         <button
                             class="btn btn-danger font-weight-bold"
                             @click="skipSection"
+                            v-if="!isComplete"
                         >
                             SKIP
                         </button>
@@ -114,6 +110,7 @@
                             class="btn btn-primary font-weight-bold"
                             @click="submitOtherInformation"
                             :disabled="isLoading"
+                            v-if="!isComplete"
                         >
                             NEXT
                             <div
@@ -132,7 +129,7 @@
 </template>
 
 <script>
-import swal from "sweetalert";
+
 export default {
     props: {
         show_panel: {
@@ -182,12 +179,9 @@ export default {
                 .then(response => {
                     this.isComplete = true;
                     this.isLoading = false;
+                    localStorage.setItem('other_information', JSON.stringify(response.data));
                     this.$emit("next_tab");
-                    swal({
-                        title: "Good job!",
-                        text: "Min sulod na ang data!",
-                        icon: "success"
-                    });
+                   
                 })
                 .catch(err => (this.isLoading = false));
         },
@@ -199,6 +193,10 @@ export default {
     },
     created() {
         this.noOfFields = this.otherInformation.length;
+        if(localStorage.getItem('other_information')) {
+            this.otherInformation = JSON.parse(localStorage.getItem('other_information'));
+            this.isComplete = true;
+        }
     }
 };
 </script>
