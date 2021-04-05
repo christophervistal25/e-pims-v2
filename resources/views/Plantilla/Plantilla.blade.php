@@ -38,8 +38,9 @@
 
                     <div class="form-group col-12 col-lg-5">
                         <label>Position<span class="text-danger">*</span></label>
-                        <select value="" class="form-control form-control-xs selectpicker {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}" 
+                        <select value=""  class="form-control form-control-xs selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}" 
                         name="positionTitle" data-live-search="true" id="positionTitle">
+                        <option></option>
                         @foreach($position as $positions)
                             <option {{ old('positionTitle') == $positions->position_name ? 'selected' : '' }} value="{{ $positions->position_name}}">{{ $positions->position_name }}</option>
                         @endforeach
@@ -49,6 +50,9 @@
                         {{ $errors->first('positionTitle') }} </small>
                         @endif
                     </div>
+
+               
+                   
 
                     <div class="form-group col-12 col-lg-1">
                         <button id="addPosition" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addPositionBtn"><i class="la la-plus"></i></button>
@@ -67,6 +71,7 @@
                         <label>Employee Name<span class="text-danger">*</span></label>
                         <select value="" class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" 
                         name="employeeName" data-live-search="true" id="employeeName">
+                        <option></option>
                         @foreach($employee as $employees)
                         <option {{ old('employeeName') == $employees->employee_id ? 'selected' : '' }} value="{{ $employees->employee_id }}"> {{ $employees->lastname }}, {{ $employees->firstname }} {{ $employees->middlename }}</option>
                     @endforeach
@@ -281,7 +286,6 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
-
 $(document).ready(function () {
     $('#btnPosition').click(function (response) {
       let name = $('#positionName').val();
@@ -298,7 +302,8 @@ $(document).ready(function () {
                     $(this).modal('hide');
                 });
             swal("Sucessfully Added!", "", "success");
-            document.getElementById('positionName').value = '';
+            $("#positionTitle").append('<option value='+ name + '>'+ name + '</option>');
+            $('#positionTitle').selectpicker('refresh');
             }
         },
         error: function (response) {
@@ -306,20 +311,12 @@ $(document).ready(function () {
                     swal("The position name has already been taken", "", "error");
                 }
             }
-
-
-      
-
         });
     }else{
         swal("Please Input Position Name!", "", "warning");
 		}
     });
   });
-
-
-
-
 </script>
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
