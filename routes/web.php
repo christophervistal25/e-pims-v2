@@ -26,6 +26,7 @@ Route::resource('/salary-grade', 'SalaryGradeController');
 
 //plantilla
 Route::get('/plantilla-list', 'Plantillacontroller@list');
+Route::post('/plantilla', 'PlantillaController@addPosition');
 Route::Resource('/plantilla', 'PlantillaController');
 //step Increment
 Route::Resource('/step-increment', 'StepIncrementController');
@@ -42,7 +43,6 @@ Route::group(['prefix' => 'employee'], function () {
     Route::post('/personal/other/information', 'PersonalDataSheetController@storeOtherInformation');
     Route::post('/personal/relevant/queries/', 'PersonalDataSheetController@storeRelevantQueries');
     Route::post('/personal/references', 'PersonalDataSheetController@storeReferences');
-    Route::post('/personal/issued/id', 'PersonalDataSheetController@storeIssuedID');
     // Route::post('/personal/information/store', 'PersonalDataSheetController@validatePersonInformation');
 });
 Route::Resource('/print-increment', 'PrintIncrementController');
