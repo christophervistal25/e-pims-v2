@@ -42,9 +42,21 @@ class PlantillaController extends Controller
         return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade'));
     }
     // }
-    public function list()
+    public function list(Request $request)
     {
-        return Datatables::of(Plantilla::query())->make(true);
+        // return Datatables::of(Plantilla::query())->make(true);
+        if ($request->ajax()) {
+            $data = Plantilla::select('*');
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row){
+                           $btn = "<a href='". route('plantilla.edit', $row->plantilla_id) . "' class='text-white edit btn btn-info btn-sm'>Edit</a>";
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('SalaryGrade.SalaryGrade');
     }
 
     /**
@@ -74,14 +86,13 @@ class PlantillaController extends Controller
             'salaryGrade'                   => 'required|in:' . implode(',',range(1, 33)),
             'stepNo'                        => 'required|in:' . implode(',',range(1, 8)),
             'salaryAmount'                  => 'required',
-            'officeCode'                    => 'required|in:' . implode(',',range(10001, 10025)),
-            'divisionId'                    => 'required|in:' . implode(',',range(10001, 10025)),
+            'officeCode'                    => 'required|in:' . implode(',',range(10001, 10056)),
+            'divisionId'                    => 'required|in:' . implode(',',range(10001, 10056)),
             'originalAppointment'           => 'required',
             'lastPromotion'                 => 'required',
-            'status'                        => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary
-                                                ,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
-            'areaCode'                      => 'required|in: Region 1,Region 2,Region 3,Region 4,Region 5,Region 6,Region 7,Region 8,Region 9,Region 10,Region 11,  Region 12,NCR,CAR,CARAGA, ARMM',
-            'areaType'                      => 'required|in:Region,Province,District,Municipality,Foreign Post',
+            'status'                        => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
+            'areaCode'                      => 'required',
+            'areaType'                      => 'required',
             'areaLevel'                     => 'required|in:K,T,S,A',
         ]);
         $plantilla = new Plantilla;
@@ -102,7 +113,8 @@ class PlantillaController extends Controller
         $plantilla->area_type              = $request['areaType'];
         $plantilla->area_level             = $request['areaLevel'];
         $plantilla->save();
-        return redirect('/plantilla')->with('success','Added Successfully');
+        // return redirect('/plantilla')->with('success','Added Successfully');
+        return response()->json(['success'=>true]);
     }
 
     /**
@@ -122,9 +134,22 @@ class PlantillaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($plantilla_id)
     {
-        //
+        $employee = Employee::get();
+        $office = Office::get();
+        $position = Position::get();
+        $salarygrade = SalaryGrade::get(['sg_no']);
+        $status = ['Please Select', 'Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
+        count($status) - 1;
+        $areacode = ['Please Select', 'Region 1', 'Region 2','Region 3','Region 4','Region 5', 'Region 6', 'Region 7',  'Region 8', 'Region 9', 'Region 10', 'Region 11', 'Region 12','NCR', 'CAR', 'CARAGA', 'ARMM'];
+        count($areacode) - 1;
+        $areatype = ['Please Select','Region','Province','District','Municipality','Foreign Post'];
+        count($areatype) - 1;
+        $arealevel = ['Please Select','K','T','S','A'];
+        count($arealevel) - 1;
+        $plantilla = Plantilla::find($plantilla_id);
+        return view ('Plantilla.edit', compact('plantilla','employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade'));
     }
 
     /**
