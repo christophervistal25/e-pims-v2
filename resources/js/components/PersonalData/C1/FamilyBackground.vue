@@ -10,7 +10,11 @@
                 <h5 class="mb-0 p-3">
                     <i v-if="isComplete" class="fa fa-check text-success"></i>
                     FAMILY BACKGROUND
-                    <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
+                    <i
+                        v-if="isComplete"
+                        class="text-success float-right fa fa-caret-down"
+                        aria-hidden="true"
+                    ></i>
                 </h5>
             </div>
             <div
@@ -26,153 +30,177 @@
                         FAMILY BACKGROUND
                     </div>
                 </div>
-                <div class="row pr-3 pl-3">
-                    <div class="form-group col-lg-3">
-                        <label for="ssurname">SPOUSE'S SURNAME</label>
+                <div class="form-check">
+                    <label for="#spouse">
                         <input
-                            type="text"
-                            class="form-control "
-                            id="ssurname"
-                            v-model="familyBackground.ssurname"
-                            placeholder="Enter Spouse's Surname"
-                            value=""
+                            id="spouse"
+                            type="checkbox"
+                            @click="hasSpouse = !hasSpouse"
                         />
-                    </div>
-                    <div class="form-group col-lg-3 ">
-                        <label for="sfirstname">SPOUSE'S FIRST NAME</label>
-                        <input
-                            type="text"
-                            class="form-control  "
-                            id="sfirstname"
-                            v-model="familyBackground.sfirstname"
-                            placeholder="Enter Spouse's First Name"
-                            value=""
-                        />
-                    </div>
-                    <div class="form-group col-lg-3">
-                        <label for="smiddleame">SPOUSE'S MIDDLE NAME</label>
-                        <input
-                            type="text"
-                            class="form-control "
-                            id="smiddleame"
-                            v-model="familyBackground.smiddleame"
-                            placeholder="Enter Spouse's Middle Name"
-                            value=""
-                        />
-                    </div>
-                    <div class="form-group col-lg-3">
-                        <label for="snameexten">SPOUSE'S NAME EXTENSION</label>
-                        <input
-                            type="text"
-                            maxlength="3"
-                            class="form-control "
-                            id="snameexten"
-                            v-model="familyBackground.snameexten"
-                            placeholder="(JR., SR.)"
-                            value=""
-                        />
-                    </div>
+                        Do you have spouse?
+                    </label>
                 </div>
-                <div class="row pl-3 pr-3">
-                    <div class="form-group col-lg-6">
-                        <label for="soccupation">SPOUSE'S OCCUPATION</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="soccupation"
-                            placeholder="Enter Spouse's Occupation"
-                            v-model="familyBackground.soccupation"
-                        />
+                <section v-if="hasSpouse">
+                    <div class="row pr-3 pl-3">
+                        <div class="form-group col-lg-3">
+                            <label for="ssurname">SPOUSE'S SURNAME</label>
+                            <input
+                                type="text"
+                                class="form-control "
+                                id="ssurname"
+                                v-model="familyBackground.ssurname"
+                                placeholder="Enter Spouse's Surname"
+                                value=""
+                            />
+                        </div>
+                        <div class="form-group col-lg-3 ">
+                            <label for="sfirstname">SPOUSE'S FIRST NAME</label>
+                            <input
+                                type="text"
+                                class="form-control  "
+                                id="sfirstname"
+                                v-model="familyBackground.sfirstname"
+                                placeholder="Enter Spouse's First Name"
+                                value=""
+                            />
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label for="smiddleame">SPOUSE'S MIDDLE NAME</label>
+                            <input
+                                type="text"
+                                class="form-control "
+                                id="smiddleame"
+                                v-model="familyBackground.smiddleame"
+                                placeholder="Enter Spouse's Middle Name"
+                                value=""
+                            />
+                        </div>
+                        <div class="form-group col-lg-3">
+                            <label for="snameexten"
+                                >SPOUSE'S NAME EXTENSION</label
+                            >
+                            <input
+                                type="text"
+                                maxlength="3"
+                                class="form-control "
+                                id="snameexten"
+                                v-model="familyBackground.snameexten"
+                                placeholder="(JR., SR.)"
+                                value=""
+                            />
+                        </div>
                     </div>
-                    <div class="form-group col-lg-6">
-                        <label for="sempname"
-                            >SPOUSE'S EMPLOYER/BUSINESS NAME</label
-                        >
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="sempname"
-                            placeholder="Enter Spouse's Employer/Business Name"
-                            v-model="familyBackground.sempname"
-                        />
+                    <div class="row pl-3 pr-3">
+                        <div class="form-group col-lg-6">
+                            <label for="soccupation">SPOUSE'S OCCUPATION</label>
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="soccupation"
+                                placeholder="Enter Spouse's Occupation"
+                                v-model="familyBackground.soccupation"
+                            />
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="sempname"
+                                >SPOUSE'S EMPLOYER/BUSINESS NAME</label
+                            >
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="sempname"
+                                placeholder="Enter Spouse's Employer/Business Name"
+                                v-model="familyBackground.sempname"
+                            />
+                        </div>
                     </div>
-                </div>
-                <div class="row pl-3 pr-3">
-                    <div class="form-group col-sm-6">
-                        <label for="sbusadd">SPOUSE'S BUSINESS ADDRESS</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="sbusadd"
-                            placeholder="Enter Spouse's Business Address"
-                            v-model="familyBackground.sbusadd"
-                        />
+                    <div class="row pl-3 pr-3">
+                        <div class="form-group col-sm-6">
+                            <label for="sbusadd"
+                                >SPOUSE'S BUSINESS ADDRESS</label
+                            >
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="sbusadd"
+                                placeholder="Enter Spouse's Business Address"
+                                v-model="familyBackground.sbusadd"
+                            />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="stelno"
+                                >SPOUSE'S TELEPHONE NUMBER</label
+                            >
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="stelno"
+                                placeholder="Enter Spouse's Telephone Number"
+                                v-model="familyBackground.stelno"
+                            />
+                        </div>
                     </div>
-                    <div class="form-group col-sm-6">
-                        <label for="stelno">SPOUSE'S TELEPHONE NUMBER</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="stelno"
-                            placeholder="Enter Spouse's Telephone Number"
-                            v-model="familyBackground.stelno"
-                        />
+                    <hr />
+                    <div class="p-2">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="font-weight-bold">
+                                        NAME OF CHILDREN
+                                    </th>
+                                    <th class="font-weight-bold">
+                                        DATE OF BIRTH
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    v-for="(spouse, index) in spouse"
+                                    :key="index"
+                                >
+                                    <td>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="cname"
+                                            placeholder="Enter Name of Children"
+                                            v-model="spouse.cname"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            type="date"
+                                            class="form-control"
+                                            id="cdateOfBirth"
+                                            placeholder="Enter Spouse's Business Address"
+                                            v-model="spouse.cdateOfBirth"
+                                        />
+                                    </td>
+                                    <td class="text-center">
+                                        <button
+                                            v-show="index != 0"
+                                            @click="removeField(index)"
+                                            class="btn btn-danger font-weight-bold rounded-circle"
+                                        >
+                                            X
+                                        </button>
+                                    </td>
+                                    <td class="text-center">
+                                        <button
+                                            v-if="index == noOfSpouseFields - 1"
+                                            class="btn btn-primary rounded-circle"
+                                            @click="generateNewSpuseField"
+                                        >
+                                            +
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                </div>
+                </section>
                 <hr />
-                <div class="p-2">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th class="font-weight-bold">
-                                    NAME OF CHILDREN
-                                </th>
-                                <th class="font-weight-bold">DATE OF BIRTH</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(spouse, index) in spouse" :key="index">
-                                <td>
-                                    <input
-                                        type="text"
-                                        class="form-control"
-                                        id="cname"
-                                        placeholder="Enter Name of Children"
-                                        v-model="spouse.cname"
-                                    />
-                                </td>
-                                <td>
-                                    <input
-                                        type="date"
-                                        class="form-control"
-                                        id="cdateOfBirth"
-                                        placeholder="Enter Spouse's Business Address"
-                                        v-model="spouse.cdateOfBirth"
-                                    />
-                                </td>
-                                <td class="text-center">
-                                    <button
-                                        v-show="index != 0"
-                                        @click="removeField(index)"
-                                        class="btn btn-danger font-weight-bold rounded-circle"
-                                    >
-                                        X
-                                    </button>
-                                </td>
-                                <td class="text-center">
-                                    <button
-                                        v-if="index == noOfSpouseFields - 1"
-                                        class="btn btn-primary rounded-circle"
-                                        @click="generateNewSpuseField"
-                                    >
-                                        +
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <hr />
+
                 <div class="row pr-3 pl-3">
                     <div class="form-group col-lg-3">
                         <label for="fsurname">FATHER'S SURNAME</label>
@@ -292,6 +320,7 @@ export default {
         return {
             isLoading: false,
             isComplete: false,
+            hasSpouse: false,
             noOfSpouseFields: 0,
             spouse: [
                 {
@@ -361,8 +390,6 @@ export default {
                         "family_background",
                         JSON.stringify(response.data)
                     );
-
-                    
                 })
                 .catch(err => (this.isLoading = false));
         }
