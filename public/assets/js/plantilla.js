@@ -6,11 +6,10 @@
         ajax: '/plantilla-list',
         columns: [
                 { data: 'plantilla_id', name: 'plantilla_id' },
-                { data: 'old_item_no', name: 'old_item_no' },
-                { data: 'new_item_no', name: 'new_item_no' },
-                { data: 'position_title', name: 'position_title' },
+                { data: 'item_no', name: 'item_no' },
+                { data: 'position_id', name: 'position_title' },
                 { data: 'employee_id', name: 'employee_id' },
-                { data: 'office_code', name: 'office_code' },
+                { data: 'office_code', name: 'office' },
                 { data: 'status', name: 'status' },
         ]
     });
@@ -30,11 +29,11 @@
             });
             });
         // {{-- code for getting emp id from name --}}
-        var select = document.getElementById('employee_name');
-        var input = document.getElementById('employee_id');
-        select.onchange = function() {
-            input.value = select.value;
-        }
+        // var select = document.getElementById('employee_name');
+        // var input = document.getElementById('employee_id');
+        // select.onchange = function() {
+        //     input.value = select.value;
+        // }
         // {{-- code for number only --}}
             $(function(){
                 $("input[id='num-only']").on('input', function (e) {
@@ -48,8 +47,11 @@
                     let currentSalarygrade = $('#currentSalarygrade').val();
                     let currentStepno = $('#currentStepno').val();
                     let currentSgyear = $('#currentSgyear').val();
+                    console.log(currentSalarygrade);
+                    console.log(currentStepno);
+                    console.log(currentSgyear);
                         $.ajax({
-                            url: `/api/salarySteplist/${currentSalarygrade}/${currentStepno}/${currentSgyear}`, 
+                            url: `/api/salarySteplist/${currentSalarygrade}/${currentStepno}/${currentSgyear}`,
                                 success:(response) => {
                                     if(response == ''){
                                         $('#currentSalaryamount').val('No Data');
@@ -93,6 +95,10 @@
                                 });
                             });
                 });
+
+
+
+                
    
             $(document).ready(function() {
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////

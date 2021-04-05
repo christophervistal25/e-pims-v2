@@ -8,6 +8,7 @@ use App\Plantilla;
 use App\Employee;
 use App\SalaryGrade;
 use App\Office;
+use App\Position;
 class PlantillaController extends Controller
 {
 
@@ -24,12 +25,21 @@ class PlantillaController extends Controller
     {
         $employee = Employee::get();
         $office = Office::get();
+        $position = Position::get();
         $salarygrade = SalaryGrade::get(['sg_no']);
+        $status = ['Please Select', 'Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
+        count($status) - 1;
+        $areacode = ['Please Select', 'Region 1', 'Region 2','Region 3','Region 4','Region 5', 'Region 6', 'Region 7',  'Region 8', 'Region 9', 'Region 10', 'Region 11', 'Region 12','NCR', 'CAR', 'CARAGA', 'ARMM'];
+        count($areacode) - 1;
+        $areatype = ['Please Select','Region','Province','District','Municipality','Foreign Post'];
+        count($areatype) - 1;
+        $arealevel = ['Please Select','K','T','S','A'];
+        count($arealevel) - 1;
         // $sg_no = 1;
         // $selected_step = 2;
         // $currentSalaryamount = SalaryGrade::where('sg_no', $sg_no)->first(['sg_year', 'sg_step' . $selected_step ]);
         // dd($currentSalaryamount);
-        return view('Plantilla.Plantilla', compact('employee', 'office', 'salarygrade'));
+        return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade'));
     }
     // }
     public function list()
@@ -55,74 +65,42 @@ class PlantillaController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->validate($request, [
-            'old_item_no'                        => 'required',
-            'new_item_no'                        => 'required',
-            'position_title'                     => 'required',
-            'position_title_ext'                 => 'required',
-            'employee_id'                        => 'required',
-            'employee_name'                      => 'required',
-            'current_salary_grade'               => 'required',
-            'current_step_no'                    => 'required',
-            'current_salary_amount'              => 'required',
-            'office_code'                        => 'required',
-            'division_code'                      => 'required',
-            'date_original_appointment'          => 'required',
-            'date_last_promotion'                => 'required',
-            'status'                             => 'required',
-            'dbm_previous_sg_no'                 => 'required',
-            'dbm_previous_step_no'               => 'required',
-            'dbm_previous_sg_year'               => 'required',
-            'dbm_previous_amount'                => 'required',
-            'dbm_current_sg_no'                  => 'required',
-            'dbm_current_step_no'                => 'required',
-            'dbm_current_sg_year'                => 'required',
-            'dbm_current_amount'                 => 'required',
-            'csc_previous_sg_no'                 => 'required',
-            'csc_previous_step_no'               => 'required',
-            'csc_previous_sg_year'               => 'required',
-            'csc_previous_amount'                => 'required',
-            'csc_current_sg_no'                  => 'required',
-            'csc_current_step_no'                => 'required',
-            'csc_current_sg_year'                => 'required',
-            'csc_current_amount'                 => 'required',
-            'area_code'                          => 'required',
-            'area_type'                          => 'required',
-            'area_level'                         => 'required',
+            'itemNo'                        => 'required',
+            'oldItemNo'                     => 'required',
+            'positionTitle'                 => 'required',
+            'employeeName'                  => 'required',
+            'salaryGrade'                   => 'required|in:' . implode(',',range(1, 33)),
+            'stepNo'                        => 'required|in:' . implode(',',range(1, 8)),
+            'salaryAmount'                  => 'required',
+            'officeCode'                    => 'required|in:' . implode(',',range(10001, 10025)),
+            'divisionId'                    => 'required|in:' . implode(',',range(10001, 10025)),
+            'originalAppointment'           => 'required',
+            'lastPromotion'                 => 'required',
+            'status'                        => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary
+                                                ,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
+            'areaCode'                      => 'required|in: Region 1,Region 2,Region 3,Region 4,Region 5,Region 6,Region 7,Region 8,Region 9,Region 10,Region 11,  Region 12,NCR,CAR,CARAGA, ARMM',
+            'areaType'                      => 'required|in:Region,Province,District,Municipality,Foreign Post',
+            'areaLevel'                     => 'required|in:K,T,S,A',
         ]);
         $plantilla = new Plantilla;
-        $plantilla->old_item_no          = $request['old_item_no'];
-        $plantilla->new_item_no          = $request['new_item_no'];
-        $plantilla->position_title      = $request['position_title'];
-        $plantilla->position_title_ext  = $request['position_title_ext'];
-        $plantilla->employee_id         = $request['employee_id'];
-        $plantilla->current_salary_grade = $request['current_salary_grade'];
-        $plantilla->current_step_no      = $request['current_step_no'];
-        $plantilla->current_salary_amount = $request['current_salary_amount'];
-        $plantilla->office_code          = $request['office_code'];
-        $plantilla->division_code        = $request['division_code'];
-        $plantilla->date_original_appointment = $request['date_original_appointment'];
-        $plantilla->date_last_promotion  = $request['date_last_promotion'];
-        $plantilla->status               = $request['status'];
-        $plantilla->dbm_previous_sg_no   = $request['dbm_previous_sg_no'];
-        $plantilla->dbm_previous_step_no = $request['dbm_previous_step_no'];
-        $plantilla->dbm_previous_sg_year = $request['dbm_previous_sg_year'];
-        $plantilla->dbm_previous_amount  = $request['dbm_previous_amount'];
-        $plantilla->dbm_current_sg_no    = $request['dbm_current_sg_no'];
-        $plantilla->dbm_current_step_no  = $request['dbm_current_step_no'];
-        $plantilla->dbm_current_sg_year  = $request['dbm_current_sg_year'];
-        $plantilla->dbm_current_amount   = $request['dbm_current_amount'];
-        $plantilla->csc_previous_sg_no   = $request['csc_previous_sg_no'];
-        $plantilla->csc_previous_step_no = $request['csc_previous_step_no'];
-        $plantilla->csc_previous_sg_year = $request['csc_previous_sg_year'];
-        $plantilla->csc_previous_amount  = $request['csc_previous_amount'];
-        $plantilla->csc_current_sg_no   = $request['csc_current_sg_no'];
-        $plantilla->csc_current_step_no  = $request['csc_current_step_no'];
-        $plantilla->csc_current_sg_year  = $request['csc_current_sg_year'];
-        $plantilla->csc_current_amount   = $request['csc_current_amount'];
-        $plantilla->area_code            = $request['area_code'];
-        $plantilla->area_type            = $request['area_type'];
-        $plantilla->area_level           = $request['area_level'];
+        $plantilla->item_no                = $request['itemNo'];
+        $plantilla->old_item_no            = $request['oldItemNo'];
+        $plantilla->position_id            = $request['positionTitle'];
+        $plantilla->position_ext           = $request['positionTitleExt'];
+        $plantilla->employee_id            = $request['employeeName'];
+        $plantilla->sg_no                  = $request['salaryGrade'];
+        $plantilla->step_no                = $request['stepNo'];
+        $plantilla->salary_amount          = $request['salaryAmount'];
+        $plantilla->office_code            = $request['officeCode'];
+        $plantilla->division_id            = $request['divisionId'];
+        $plantilla->date_original_appointment = $request['originalAppointment'];
+        $plantilla->date_last_promotion    = $request['lastPromotion'];
+        $plantilla->status                 = $request['status'];
+        $plantilla->area_code              = $request['areaCode'];
+        $plantilla->area_type              = $request['areaType'];
+        $plantilla->area_level             = $request['areaLevel'];
         $plantilla->save();
         return redirect('/plantilla')->with('success','Added Successfully');
     }
@@ -171,4 +149,5 @@ class PlantillaController extends Controller
     {
         //
     }
+
 }

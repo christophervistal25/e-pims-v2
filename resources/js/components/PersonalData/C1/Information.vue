@@ -1,18 +1,23 @@
 <template>
     <div>
         <div class="card">
-            <div class="card-header">
+            <div
+                class="card-header"
+                :data-target="isComplete ? '#information' : ''"
+                :data-toggle="isComplete ? 'collapse' : ''"
+                :style="isComplete ? 'cursor : pointer;' : ''"
+            >
                 <h5 class="mb-0 p-2">
+                    <i v-if="isComplete" class="fa fa-check text-success"></i>
                     PERSONAL INFORMATION
-                    <span
-                        v-show="isComplete"
-                        :class="isComplete ? 'text-success' : 'text-danger'"
-                    >
-                        - VERIFIED</span
-                    >
+                    <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
                 </h5>
             </div>
-            <div class="collapse" :class="isComplete ? '' : 'show'">
+            <div
+                class="collapse"
+                :class="isComplete ? '' : 'show'"
+                :id="isComplete ? 'information' : ''"
+            >
                 <div class="p-3">
                     <div
                         class="alert alert-secondary text-center font-weight-bold"
@@ -560,6 +565,8 @@
                     <button
                         class="btn btn-primary font-weight-bold"
                         @click="submitPersonalInformation"
+                        v-if="!isComplete"
+                        :disabled="isLoading"
                     >
                         NEXT
 
@@ -579,7 +586,7 @@
 </template>
 
 <script>
-import swal from "sweetalert";
+
 export default {
     data() {
         return {
@@ -655,41 +662,45 @@ export default {
         submitPersonalInformation(e) {
             e.preventDefault();
             this.isLoading = true;
-            swal({
-                title: "Did you double check all the data?",
-                // text: "Create new employee?",
-                text: "",
-                icon: "warning",
-                buttons: ["CHECK AGAIN", "YES"],
-                dangerMode: true
-            }).then(proceed => {
-                if (proceed) {
-                    // Send data
-                    window.axios
-                        .post(
-                            "/employee/personal/information/store",
-                            this.personal_data
-                        )
-                        .then(response => {
-                            this.isLoading = false;
-                            this.isComplete = true;
-                            this.$emit(
-                                "display-family-background",
-                                response.data.employee_id
-                            );
-                            swal({
-                                title: "Good job!",
-                                text: "Min sulod na ang data!",
-                                icon: "success"
-                            });
-                        })
-                        .catch(response => {
-                            this.isLoading = false;
-                        });
-                } else {
+
+            window.axios
+                .post(
+                    "/employee/personal/information/store",
+                    this.personal_data
+                )
+                .then(response => {
                     this.isLoading = false;
-                }
-            });
+                    this.isComplete = true;
+
+                    localStorage.setItem(
+                        "employee_id",
+                        response.data.employee_id
+                    );
+
+                    localStorage.setItem(
+                        "personal_information",
+                        JSON.stringify(response.data)
+                    );
+
+                    this.$emit("next-panel-family-background");
+
+                 
+                })
+                .catch(response => {
+                    this.isLoading = false;
+                });
+        }
+    },
+    mounted() {
+        // This simply means that the user already filled this section.
+        if (localStorage.getItem("personal_information")) {
+            this.personal_data.personalInformation = JSON.parse(
+                localStorage.getItem("personal_information")
+            );
+
+            this.isComplete = true;
+
+            this.$emit("next-panel-family-background");
         }
     }
 };

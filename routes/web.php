@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-
 Route::get('/employee-dashboard', function () {
     return view('employee-dashboard');
 });
@@ -21,7 +20,6 @@ Route::view('/view-layouts', function() {
 
 
 //salary grade
-
 Route::get('/salary-grade-list', 'SalaryGradecontroller@list');
 Route::resource('/salary-grade', 'SalaryGradeController');
 
@@ -32,10 +30,19 @@ Route::Resource('/plantilla', 'PlantillaController');
 //step Increment
 Route::Resource('/step-increment', 'StepIncrementController');
 
-
 Route::group(['prefix' => 'employee'], function () {
     Route::resource('data', 'PersonalDataSheetController');
     Route::post('/personal/information/store', 'PersonalDataSheetController@storePersonInformation');
     Route::post('/personal/family/background/store', 'PersonalDataSheetController@storePersonFamilyBackground');
+    Route::post('/personal/educational/background/store', 'PersonalDataSheetController@storeEducationalBackground');
+    Route::post('/personal/civil/service', 'PersonalDataSheetController@storeCivilService');
+    Route::post('/personal/work/experience', 'PersonalDataSheetController@storeWorkExperience');
+    Route::post('/personal/voluntary/', 'PersonalDataSheetController@storeVoluntary');
+    Route::post('/personal/learning/', 'PersonalDataSheetController@storeLearning');
+    Route::post('/personal/other/information', 'PersonalDataSheetController@storeOtherInformation');
+    Route::post('/personal/relevant/queries/', 'PersonalDataSheetController@storeRelevantQueries');
+    Route::post('/personal/references', 'PersonalDataSheetController@storeReferences');
+    Route::post('/personal/issued/id', 'PersonalDataSheetController@storeIssuedID');
     // Route::post('/personal/information/store', 'PersonalDataSheetController@validatePersonInformation');
 });
+Route::Resource('/print-increment', 'PrintIncrementController');

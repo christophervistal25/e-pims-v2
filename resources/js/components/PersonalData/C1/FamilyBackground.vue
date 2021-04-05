@@ -1,23 +1,22 @@
 <template>
     <div>
         <div class="card">
-            <div class="card-header">
+            <div
+                class="card-header"
+                :data-target="isComplete ? '#familyBackground' : ''"
+                :data-toggle="isComplete ? 'collapse' : ''"
+                :style="isComplete ? 'cursor : pointer;' : ''"
+            >
                 <h5 class="mb-0 p-3">
+                    <i v-if="isComplete" class="fa fa-check text-success"></i>
                     FAMILY BACKGROUND
-                    <span
-                        v-show="isComplete"
-                        :class="isComplete ? 'text-success' : 'text-danger'"
-                    >
-                        - VERIFIED</span
-                    >
+                    <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
                 </h5>
             </div>
             <div
-                id="familyBackground"
                 class="collapse"
-                :class="family_show && !isComplete ? 'show' : ''"
-                aria-labelledby="headingOne"
-                data-parent="#accordion"
+                :class="show_panel && !isComplete ? 'show' : ''"
+                :id="isComplete ? 'familyBackground' : ''"
             >
                 <div class="p-3">
                     <div
@@ -121,37 +120,57 @@
                     </div>
                 </div>
                 <hr />
-                <div v-for="(no, index) in noOfSpouse" :key="index">
-                    <div class="row pl-3 pr-3">
-                        <div class="form-group col-lg-6">
-                            <label for="cname">NAME OF CHILDREN</label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="cname"
-                                placeholder="Enter Name of Children"
-                                v-model="familyBackground.cname"
-                            />
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label for="cdateOfBirth">DATE OF BIRTH</label>
-                            <input
-                                type="date"
-                                class="form-control"
-                                id="cdateOfBirth"
-                                placeholder="Enter Spouse's Business Address"
-                                v-model="familyBackground.cdateOfBirth"
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 offset-10 text-right">
-                    <button
-                        class="btn btn-primary rounded-circle"
-                        @click="generateNewSpuseField"
-                    >
-                        +
-                    </button>
+                <div class="p-2">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="font-weight-bold">
+                                    NAME OF CHILDREN
+                                </th>
+                                <th class="font-weight-bold">DATE OF BIRTH</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(spouse, index) in spouse" :key="index">
+                                <td>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="cname"
+                                        placeholder="Enter Name of Children"
+                                        v-model="spouse.cname"
+                                    />
+                                </td>
+                                <td>
+                                    <input
+                                        type="date"
+                                        class="form-control"
+                                        id="cdateOfBirth"
+                                        placeholder="Enter Spouse's Business Address"
+                                        v-model="spouse.cdateOfBirth"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <button
+                                        v-show="index != 0"
+                                        @click="removeField(index)"
+                                        class="btn btn-danger font-weight-bold rounded-circle"
+                                    >
+                                        X
+                                    </button>
+                                </td>
+                                <td class="text-center">
+                                    <button
+                                        v-if="index == noOfSpouseFields - 1"
+                                        class="btn btn-primary rounded-circle"
+                                        @click="generateNewSpuseField"
+                                    >
+                                        +
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <hr />
                 <div class="row pr-3 pl-3">
@@ -244,6 +263,8 @@
                     <button
                         class="btn btn-primary font-weight-bold mr-3 mb-2"
                         @click="submitPersonFamilyBackground"
+                        v-if="!isComplete"
+                        :disabled="isLoading"
                     >
                         NEXT
                         <div
@@ -261,13 +282,9 @@
 </template>
 
 <script>
-import swal from "sweetalert";
 export default {
     props: {
-        family_show: {
-            required: true
-        },
-        employee_id: {
+        show_panel: {
             required: true
         }
     },
@@ -275,10 +292,16 @@ export default {
         return {
             isLoading: false,
             isComplete: false,
-            noOfSpouse: 1,
+            noOfSpouseFields: 0,
+            spouse: [
+                {
+                    cname: "",
+                    cdateOfBirth: ""
+                }
+            ],
             familyBackground: {
                 employee_id: "",
-                spouse: {},
+
                 ssurname: "",
                 sfirstname: "",
                 smiddleame: "",
@@ -299,13 +322,29 @@ export default {
             }
         };
     },
+    watch: {
+        spouse(from, to) {
+            this.noOfSpouseFields = to.length;
+        }
+    },
     methods: {
         generateNewSpuseField() {
-            this.noOfSpouse++;
+            this.spouse.push({
+                name: "",
+                dateOfBirth: ""
+            });
+        },
+        removeField(index) {
+            if (index != 0) {
+                this.spouse.splice(index, 1);
+            }
         },
         submitPersonFamilyBackground() {
             this.isLoading = true;
-            this.familyBackground.employee_id = this.employee_id;
+            this.familyBackground.employee_id = localStorage.getItem(
+                "employee_id"
+            );
+            this.familyBackground.spouse = this.spouse;
 
             window.axios
                 .post(
@@ -315,17 +354,35 @@ export default {
                 .then(response => {
                     this.isLoading = false;
                     this.isComplete = true;
-                    this.$emit(
-                        "display-family-background",
-                        response.data.employee_id
+
+                    this.$emit("next-panel-educational-background");
+
+                    localStorage.setItem(
+                        "family_background",
+                        JSON.stringify(response.data)
                     );
-                    swal({
-                        title: "Good job!",
-                        text: "Min sulod na ang data!",
-                        icon: "success"
-                    });
+
+                    
                 })
                 .catch(err => (this.isLoading = false));
+        }
+    },
+    created() {
+        this.noOfSpouseFields = this.spouse.length;
+    },
+    mounted() {
+        if (localStorage.getItem("family_background")) {
+            let familyBackgroundData = JSON.parse(
+                localStorage.getItem("family_background")
+            );
+
+            this.familyBackground = familyBackgroundData;
+
+            this.spouse = familyBackgroundData.spouse;
+
+            this.isComplete = true;
+
+            this.$emit("next-panel-educational-background");
         }
     }
 };

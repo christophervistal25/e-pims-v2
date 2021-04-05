@@ -1,0 +1,257 @@
+<template>
+    <div>
+        <div class="card">
+            <div
+                class="card-header"
+                :data-target="isComplete ? '#learning' : ''"
+                :data-toggle="isComplete ? 'collapse' : ''"
+                :style="isComplete ? 'cursor : pointer;' : ''"
+            >
+                <h5 class="mb-0 p-2">
+                <i v-if="isComplete" class="fa fa-check text-success"></i>
+                    VII. LEARNING AND DEVELOPMENT (L&D) INTERVENTIONS/TRAINING
+                    PROGRAMS ATTENDED
+                <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
+                </h5>
+            </div>
+
+            <div
+                class="collapse"
+                :class="!isComplete && show_panel ? 'show' : ''"
+                :id="isComplete ? 'learning' : ''"
+            >
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <tr
+                            class="text-center text-sm"
+                            style="background: #EAEAEA;"
+                        >
+                            <td
+                                rowspan="2"
+                                class="align-middle text-sm"
+                                scope="colgroup"
+                            >
+                                TITLE OF LEARNING AND DEVELOPMENT
+                                INTERVENTIONS/TRAINING PROGRAMS (Write in full)
+                            </td>
+                            <td
+                                colspan="2"
+                                class="align-middle text-sm"
+                                scope="colgroup"
+                            >
+                                INCLUSIVE DATES OF ATTENDANCE (mm/dd/yyyy)
+                            </td>
+                            <td
+                                rowspan="2"
+                                class="align-middle text-sm"
+                                scope="colgroup"
+                            >
+                                NUMBES OF HOURS
+                            </td>
+                            <td
+                                rowspan="2"
+                                class="align-middle text-sm"
+                                scope="colgroup"
+                            >
+                                Type of LD(Managerial/
+                                Supervisory/Technical/etc)
+                            </td>
+                            <td
+                                rowspan="2"
+                                class="align-middle text-sm"
+                                scope="colgroup"
+                            >
+                                CONDUCTED/ SPONSORED (Write in full)
+                            </td>
+                            <td rowspan="2" class="align-middle">&nbsp;</td>
+                        </tr>
+                        <tr style="background: #EAEAEA;">
+                            <td scope="col" class="text-center text-sm">
+                                FROM
+                            </td>
+                            <td scope="col" class="text-center text-sm">TO</td>
+                        </tr>
+
+                        <tbody>
+                            <tr
+                                v-for="(learnDev, index) in learnDev"
+                                :key="index"
+                            >
+                                <td>
+                                    <input
+                                        type="text"
+                                        class="form-control rounded-0 border-0"
+                                        placeholder="NAME"
+                                        v-model="learnDev.nameOfTraining"
+                                    />
+                                </td>
+                                <td>
+                                    <input
+                                        type="date"
+                                        class="form-control rounded-0 border-0"
+                                        placeholder="FROM"
+                                        v-model="learnDev.from"
+                                    />
+                                </td>
+                                <td>
+                                    <input
+                                        type="date"
+                                        class="form-control rounded-0 border-0"
+                                        placeholder="TO"
+                                        v-model="learnDev.to"
+                                    />
+                                </td>
+                                <td>
+                                    <input
+                                        type="number"
+                                        class="form-control rounded-0 border-0"
+                                        placeholder="Hours"
+                                        v-model="learnDev.noOfHours"
+                                    />
+                                </td>
+                                <td>
+                                    <input
+                                        type="text"
+                                        class="form-control rounded-0 border-0"
+                                        placeholder=""
+                                        v-model="learnDev.typeOfLD"
+                                    />
+                                </td>
+                                <td>
+                                    <input
+                                        type="text"
+                                        class="form-control rounded-0 border-0"
+                                        placeholder=""
+                                        v-model="learnDev.conducted"
+                                    />
+                                </td>
+                                <td class="jumbotron">
+                                    <button
+                                        v-show="index != 0"
+                                        @click="removeField(index)"
+                                        class="btn btn-sm btn-danger font-weight-bold mt-2 rounded-circle"
+                                    >
+                                        X
+                                    </button>
+                                </td>
+                                <td>
+                                    <button
+                                        v-if="index == noOfFields - 1"
+                                        class="btn btn-primary font-weight-bold rounded-circle"
+                                        @click="
+                                            addNewLearningAndDevelopmentField
+                                        "
+                                    >
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="float-right mb-3">
+                        <button
+                            class="btn btn-danger font-weight-bold"
+                            @click="skipSection"
+                            v-if="!isComplete"
+                        >
+                            SKIP
+                        </button>
+                        <button
+                            class="btn btn-primary font-weight-bold"
+                            @click="submitLearningAndDevelopment"
+                            :disabled="isLoading"
+                            v-if="!isComplete"
+                        >
+                            NEXT
+                            <div
+                                class="spinner-border spinner-border-sm mb-1"
+                                v-show="isLoading"
+                                role="status"
+                            >
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    props: {
+        show_panel: {
+            required: true
+        }
+    },
+    data() {
+        return {
+            isLoading: false,
+            isComplete: false,
+            noOfFields: 0,
+            learnDev: [
+                {
+                    nameOfTraining: "",
+                    from: "",
+                    to: "",
+                    noOfHours: "",
+                    typeOfLD: "",
+                    conducted: "",
+                    employee_id: localStorage.getItem("employee_id")
+                }
+            ]
+        };
+    },
+    watch: {
+        learnDev(from, to) {
+            this.noOfFields = to.length;
+        }
+    },
+    methods: {
+        addNewLearningAndDevelopmentField() {
+            this.learnDev.push({
+                nameOfTraining: "",
+                from: "",
+                to: "",
+                noOfHours: "",
+                typeOfLD: "",
+                conducted: "",
+                employee_id: localStorage.getItem("employee_id")
+            });
+        },
+        removeField(index) {
+            if (index !== 0) {
+                this.learnDev.splice(index, 1);
+            }
+        },
+        skipSection() {
+            this.isComplete = true;
+            this.$emit("display-other-information");
+        },
+        submitLearningAndDevelopment() {
+            this.isLoading = true;
+            window.axios
+                .post("/employee/personal/learning", this.learnDev)
+                .then(response => {
+                    this.isLoading = false;
+                    this.isComplete = true;
+                    localStorage.setItem('learning', JSON.stringify(response.data));
+                    this.$emit("display-other-information");
+                   
+                })
+                .catch(err => (this.isLoading = false));
+        }
+    },
+    created() {
+        this.noOfFields = this.learnDev.length;
+        if(localStorage.getItem('learning')) {
+            this.learnDev = JSON.parse(localStorage.getItem('learning'));
+            this.isComplete = true;
+            this.$emit("display-other-information");
+        }
+    }
+};
+</script>
+
+<style></style>

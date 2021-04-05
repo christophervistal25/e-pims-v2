@@ -133,6 +133,11 @@ class Employee extends Model
         return $this->hasOne(EmployeeRelevantQuery::class, 'employee_id', 'employee_id');
     }
 
+    public function issued_id()
+    {
+        return $this->hasOne(EmployeeIssuedID::class, 'employee_id', 'employee_id');
+    }
+
     /**
      * Get all employees with passed relation.
      */
@@ -145,5 +150,6 @@ class Employee extends Model
     {
         return self::with($relations)->find($employeeId);
     }
+    
 
 }

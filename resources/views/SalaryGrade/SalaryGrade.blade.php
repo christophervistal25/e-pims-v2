@@ -18,7 +18,7 @@
             <div class="form-group col-12 col-lg-4">
                 <label>Salary Grade <span class="text-danger">*</span></label>
                 <select name="sgNo" value="{{ old('sgNo') }}" class="select floating {{ $errors->has('sgNo')  ? 'is-invalid' : ''}}" id="sgNo">
-                    <option selected>Please Select</option>
+                    <option selected>Please Select</option>s
                    @foreach (range(1, 33) as $salarygrade)
                      <option {{ old('sgNo') == $salarygrade ? 'selected' : '' }} value="{{ $salarygrade }}">{{ $salarygrade }}</option>
                    @endforeach
@@ -187,7 +187,7 @@
         <table width="100%" cellspacing="0" class="table table-bordered text-center" id="myTable">
             <thead>
               <tr>
-                <td width="5" scope="col" class="text-center font-weight-bold">Salary Grade</td>
+                <td style="width:10px; important: !;" scope="col" class="text-center font-weight-bold">Salary Grade</td>
                 <td scope="col" class="text-center font-weight-bold">Step 1</td>
                 <td scope="col" class="text-center font-weight-bold">Step 2</td>
                 <td scope="col" class="text-center font-weight-bold">Step 3</td>
@@ -206,6 +206,7 @@
 </div>
     </div>
 </div>
+
 @push('page-scripts')
 <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 

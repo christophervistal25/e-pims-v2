@@ -9756,6 +9756,7 @@ input[type="checkbox"]{
 	margin-right: 67px;
 }
 
+<<<<<<< HEAD
 .switch {
     position: relative;
     display: inline-block;
@@ -9817,3 +9818,13 @@ input:checked+.slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+=======
+#addPosition{
+    margin-top:30px;
+}
+@media only screen and (max-width: 700px) {
+    #addPosition{
+        margin-top: 1px;
+    }
+}
+>>>>>>> 10379482cd826a58c867a7ac225c8fa1340fbd15

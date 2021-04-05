@@ -8,10 +8,10 @@ class EmployeeVoluntaryWork extends Model
 {
     protected $fillable = [
         'employee_id',
-        'name',
-        'address_of_organization',
+        'name_and_address',
         'inclusive_date_from',
         'inclusive_date_to',
+        'no_of_hours',
         'position'
     ];
 }

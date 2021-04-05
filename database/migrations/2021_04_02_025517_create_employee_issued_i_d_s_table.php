@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEmployeeVoluntaryWorksTable extends Migration
+class CreateEmployeeIssuedIDSTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateEmployeeVoluntaryWorksTable extends Migration
      */
     public function up()
     {
-        Schema::create('employee_voluntary_works', function (Blueprint $table) {
+        Schema::create('employee_issued_i_d_s', function (Blueprint $table) {
             $table->id();
             $table->string('employee_id');
-            $table->string('name_and_address');
-            $table->date('inclusive_date_from');
-            $table->date('inclusive_date_to');
-            $table->integer('no_of_hours');
-            $table->string('position');
+            $table->string('id_type');
+            $table->string('id_no');
+            $table->string('date');
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ class CreateEmployeeVoluntaryWorksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employee_voluntary_works');
+        Schema::dropIfExists('employee_issued_i_d_s');
     }
 }
