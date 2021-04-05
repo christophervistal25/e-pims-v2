@@ -135,7 +135,7 @@
                 <div class="row pl-3 pr-3">
                     <div class="form group col-lg-4">
                         <label for="height">HEIGHT</label
-                        ><span class="text-danger">*</span>
+                        ><span class="text-danger">*</span><span class="text-sm text-secondary">(m)</span>
                         <input
                             type="number"
                             id="height"
@@ -146,7 +146,7 @@
                     </div>
                     <div class="form-group col-lg-4">
                         <label for="weight">WEIGHT</label
-                        ><span class="text-danger">*</span>
+                        ><span class="text-danger">*</span><span class="text-sm text-secondary">(kg)</span>
                         <input
                             type="number"
                             id="weight"
@@ -297,7 +297,7 @@
                             type="text"
                             id="telno"
                             class="form-control"
-                            placeholder="Enter Telephone Number"
+                            placeholder="Optional"
                             v-model="
                                 personal_data.personalInformation
                                     .telephoneNumber
@@ -323,7 +323,7 @@
                             type="email"
                             id="email"
                             class="form-control"
-                            placeholder="Enter your email address"
+                            placeholder="Optional"
                             v-model="
                                 personal_data.personalInformation.emailAddress
                             "
@@ -342,7 +342,7 @@
                 <div class="row pl-3 pr-3">
                     <div class="form-group col-lg-4">
                         <label for="lotno">HOUSE/BLOCK/LOT NO.</label
-                        ><span class="text-danger">*</span>
+                        >
                         <input
                             type="text"
                             v-model="
@@ -370,7 +370,7 @@
                     </div>
                     <div class="form-group col-lg-4">
                         <label for="subdivision">SUBDIVISION/VILLAGE</label
-                        ><span class="text-danger">*</span>
+                        >
                         <input
                             type="text"
                             v-model="
@@ -462,7 +462,7 @@
                 <div class="row pl-3 pr-3">
                     <div class="form-group col-lg-4">
                         <label for="lotno">HOUSE/BLOCK/LOT NO.</label
-                        ><span class="text-danger">*</span>
+                        >
                         <input
                             type="text"
                             v-model="
@@ -475,7 +475,7 @@
                     </div>
                     <div class="form-group col-lg-4">
                         <label for="street">STREET</label
-                        ><span class="text-danger">*</span>
+                        >
                         <input
                             type="text"
                             v-model="
@@ -489,7 +489,7 @@
                     </div>
                     <div class="form-group col-lg-4">
                         <label for="subdivision">SUBDIVISION/VILLAGE</label
-                        ><span class="text-danger">*</span>
+                        >
                         <input
                             type="text"
                             v-model="
