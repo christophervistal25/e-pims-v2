@@ -53,7 +53,6 @@
                     </div>
                     <div class="form-group col-lg-3">
                         <label for="middlename">MIDDLE NAME</label>
-                        <span class="text-danger">*</span>
                         <input
                             type="text"
                             class="form-control"
@@ -158,7 +157,7 @@
                     </div>
                     <div class="form-group col-lg-4">
                         <label for="bloodtype">BLOODTYPE</label
-                        ><span class="text-danger">*</span>
+                        >
                         <input
                             type="text"
                             class="form-control"
@@ -357,7 +356,7 @@
                     </div>
                     <div class="form-group col-lg-4">
                         <label for="street">STREET</label
-                        ><span class="text-danger">*</span>
+                        >
                         <input
                             type="text"
                             v-model="
