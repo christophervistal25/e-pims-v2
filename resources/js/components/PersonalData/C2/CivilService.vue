@@ -9,7 +9,7 @@
             >
                 <h5 class="mb-0 p-2">
                     <i v-if="isComplete" class="fa fa-check text-success"></i>
-                    IV. Civil Service Egibility
+                    IV. Civil Service Eligibility
                     <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
                 </h5>
             </div>
