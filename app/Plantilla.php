@@ -13,4 +13,5 @@ class Plantilla extends Model
     {
         return $this->belongsTo(Employee::class);
     }
+    protected $primaryKey = 'plantilla_id';
 }
