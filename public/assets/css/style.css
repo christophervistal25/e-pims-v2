@@ -3442,6 +3442,7 @@ table.dataTable thead>tr>td.sorting {
     top: -14px;
     font-size: 12px;
     z-index: 1;
+<<<<<<< HEAD
 }
 
 .form-focus .form-control:focus~.focus-label,
@@ -3453,6 +3454,19 @@ table.dataTable thead>tr>td.sorting {
     z-index: 1;
 }
 
+=======
+}
+
+.form-focus .form-control:focus~.focus-label,
+.form-focus .form-control:-webkit-autofill~.focus-label {
+    opacity: 1;
+    font-weight: 300;
+    top: -14px;
+    font-size: 12px;
+    z-index: 1;
+}
+
+>>>>>>> indexFunctions
 .form-focus .form-control {
     height: 50px;
     padding: 21px 12px 6px;
@@ -3958,6 +3972,7 @@ table.dataTable thead>tr>td.sorting {
     margin: 0;
     padding: 0;
     position: relative;
+<<<<<<< HEAD
 }
 
 .experience-list::before {
@@ -4019,6 +4034,69 @@ table.dataTable thead>tr>td.sorting {
     line-height: 1.35;
 }
 
+=======
+}
+
+.experience-list::before {
+    background: #ddd;
+    bottom: 0;
+    content: "";
+    left: 8px;
+    position: absolute;
+    top: 8px;
+    width: 2px;
+}
+
+.experience-list>li {
+    position: relative;
+}
+
+.experience-list>li:last-child .experience-content {
+    margin-bottom: 0;
+}
+
+.experience-user .avatar {
+    height: 32px;
+    line-height: 32px;
+    margin: 0;
+    width: 32px;
+}
+
+.experience-list>li .experience-user {
+    background: #fff;
+    height: 10px;
+    left: 4px;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 4px;
+    width: 10px;
+}
+
+.experience-list>li .experience-content {
+    background-color: #fff;
+    margin: 0 0 20px 40px;
+    padding: 0;
+    position: relative;
+}
+
+.experience-list>li .experience-content .timeline-content {
+    color: #9e9e9e;
+}
+
+.experience-list>li .experience-content .timeline-content a.name {
+    color: #616161;
+    font-weight: bold;
+}
+
+.experience-list>li .time {
+    color: #bdbdbd;
+    display: block;
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+>>>>>>> indexFunctions
 .before-circle {
     background-color: #ddd;
     border-radius: 50%;
@@ -7996,6 +8074,7 @@ ul.comment-list li ul.children {
 .kanban-list>.kanban-wrap>.card>.kanban-box>.task-body>.kanban-footer>.task-users>.task-avatar>img {
     width: 24px;
     height: 24px;
+<<<<<<< HEAD
 }
 
 .kanban-list>.kanban-wrap>.card>.kanban-box>.task-body>.kanban-footer>.task-users>.ks-amount {
@@ -8007,6 +8086,19 @@ ul.comment-list li ul.children {
     top: 1px;
 }
 
+=======
+}
+
+.kanban-list>.kanban-wrap>.card>.kanban-box>.task-body>.kanban-footer>.task-users>.ks-amount {
+    font-size: 10px;
+    font-weight: 500;
+    display: inline-block;
+    margin-left: 3px;
+    position: relative;
+    top: 1px;
+}
+
+>>>>>>> indexFunctions
 .kanban-list.kanban-danger {
     background-color: #fef7f6;
 }
@@ -9662,4 +9754,66 @@ input[type="checkbox"]{
 .signatory{
 	text-align: right;
 	margin-right: 67px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #3abe4c;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #3abe4c;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+
+/* Rounded sliders */
+
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
 }
