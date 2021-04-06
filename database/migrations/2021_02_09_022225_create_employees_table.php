@@ -50,8 +50,6 @@ class CreateEmployeesTable extends Migration
             $table->string('telephone_no')->nullable();
             $table->string('mobile_no')->unique();
             $table->string('email_address')->nullable();
-            $table->string('status');
-            $table->string('image')->default('no_image.png');
             $table->timestamps();
         });
     }

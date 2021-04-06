@@ -46,7 +46,6 @@ class Employee extends Model
         'telephone_no',
         'mobile_no',
         'email_address',
-        'status',
     ];
 
 
