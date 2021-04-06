@@ -36,7 +36,7 @@
                                     <input
                                         type="text"
                                         class="form-control rounded-0 border-0"
-                                        placeholder=""
+                                        placeholder="e.g Philhealth"
                                         v-model="governmentId.nameOfGovId"
                                     />
                                 </td>
@@ -44,7 +44,7 @@
                                     <input
                                         type="text"
                                         class="form-control rounded-0 border-0"
-                                        placeholder=""
+                                        placeholder="Enter ID Number"
                                         v-model="governmentId.idNo"
                                     />
                                 </td>

@@ -11,6 +11,7 @@
                 { data: 'employee_id', name: 'employee_id' },
                 { data: 'office_code', name: 'office' },
                 { data: 'status', name: 'status' },
+                {data: 'action', name: 'action'},
         ]
     });
     });
@@ -251,5 +252,63 @@
                             });
                 /////////////////////////////////////////////////////////////////////////////////////////////////
                 });
-    
-            
+
+/////////add position function
+                $(document).ready(function () {
+                    $('#btnPosition').click(function (response) {
+                      let name = $('#positionName').val();
+                      if(name!=""){
+                      $.ajax({
+                          type: "POST",
+                          url: '/api/addPosition',
+                          data: { 
+                              "positionName": name 
+                            },
+                          success: function (response) {
+                          if(response.success){
+                            $('.modal').each(function(){
+                                    $(this).modal('hide');
+                                });
+                            swal("Sucessfully Added!", "", "success");
+                            document.getElementById('positionName').value = '';
+                            $("#positionTitle").append('<option value='+ name + '>'+ name + '</option>');
+                            $('#positionTitle').selectpicker('refresh');
+                            }
+                        },
+                        error: function (response) {
+                                if( response.status === 422 ) {
+                                    swal("The position name has already been taken", "", "error");
+                                }
+                            }
+                        });
+                    }else{
+                        swal("Please Input Position Name!", "", "warning");
+                        }
+            });
+});
+
+//// add new plantilla
+$(document).ready(function () {
+    $('#plantillaForm').submit(function (e) {
+        e.preventDefault();
+        let data = $(this).serialize();
+        $.ajax({
+            type: "POST",
+            url: '/plantilla',
+            data : data,
+            success: function (response) {
+                if(response.success){
+                    location.reload();
+                    swal("Sucessfully Added!", "", "success");
+                }
+        },
+            error: function (response) {
+                console.log(response);
+                    if( response.status === 422 ) {
+                        // swal("Oops...", response.responseText, "error");
+                        swal("Error saving", '', "error");
+                    }
+            }
+        });
+    });
+});
