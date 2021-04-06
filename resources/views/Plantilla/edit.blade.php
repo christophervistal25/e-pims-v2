@@ -5,21 +5,32 @@
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 @endprepend
 @section('content')
+
+<div class="kanban-board mb-0">
+<div class="col-12">
+    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+      @if(Session::has('alert-' . $msg))
+      <div class="alert bg-success  text-white p-3 mb-2 text-center"><b>{{ Session::get('alert-' . $msg) }}</b></div>
+      @endif
+    @endforeach
+  </div>
+</div>
 <div class="content container-fluid">
-    <div class="kanban-board card mb-0">    
+    <div class="kanban-board card mb-0">   
         <div class="card-body">
             <div id="add" class="page-header {{  count($errors->all())  !== 0 }}">
-                <form action="{{ route('plantilla.update', $plantilla->plantilla_id) }}" method="post" id="plantillaForm">
+                <form action="{{ route('plantilla.update', $plantilla->plantilla_id) }}" method="post" id="plantillaEditForm">
                     @csrf
+                    @method('PUT')
                     <div class="row">
-
+                       
                     <div class="col-12">
                         <div class="alert alert-secondary text-center font-weight-bold" role="alert" >Edit Plantilla</div>
                     </div>
                 
                     <div class="form-group col-12 col-lg-2">
                         <label>Item No<span class="text-danger">*</span></label>
-                        <input value="{{ old('itemNo') ?? $plantilla->item_no }}" class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" name="itemNo" id="num-only" type="text" placeholder="Item No.">
+                        <input  value="{{ old('itemNo') ?? $plantilla->item_no }}" class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" name="itemNo" id="num-only" type="text" placeholder="Item No.">
                         @if($errors->has('itemNo'))
                         <small  class="form-text text-danger">
                         {{ $errors->first('itemNo') }} </small>
@@ -238,8 +249,8 @@
                     </div>
 
                     <div class="form-group form-group submit-section col-12">
-                        <button type="submit" id="save" class="btn btn-success submit-btn float-right">Save</button>
-                        <button style="margin-right:10px;" type="button" id="cancelbutton" class="text-white btn btn-warning submit-btn float-right">Cancel</button>
+                        <button type="submit" class="btn btn-success submit-btn float-right">Update</button>
+                        <a href="/plantilla"><button style="margin-right:10px;" type="button" class="text-white btn btn-warning submit-btn float-right"><i class="la la-arrow-left"></i>Back</button></a>
                     </div>
                 </div>
                 </form>
