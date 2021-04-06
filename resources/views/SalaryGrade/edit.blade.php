@@ -154,7 +154,7 @@
             </div>
             <div class="form-group submit-section col-12">
                 <button type="submit" class="btn btn-success submit-btn float-right">Update</button>
-               <a href="/salary-grade"><button style="margin-right:10px;" type="button" id="cancelbutton" class="btn btn-primary submit-btn float-right">Back</button>
+               <a href="/salary-grade"><button style="margin-right:10px;" type="button" id="cancelbutton" class="btn btn-warning submit-btn float-right text-white"><i class="la la-arrow-left"></i>Back</button>
             </div>
         </div>
         </form>

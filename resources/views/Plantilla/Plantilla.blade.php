@@ -254,7 +254,7 @@
             </div>
         </div>
         <div class="table" style="overflow-x:auto;">
-            <table class="table table-bordered" id="plantilla"  style="width:100%;">
+            <table class="table table-bordered text-center" id="plantilla"  style="width:100%;">
                 <thead>
                   <tr>
                     <td scope="col" class="text-center font-weight-bold">ID</td>

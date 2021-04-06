@@ -27,7 +27,7 @@ class SalaryGradeController extends Controller
         return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                       $btn = "<a href='". route('salary-grade.edit', $row->id) . "' class='edit btn btn-info btn-sm'>Edit</a>";
+                       $btn = "<a href='". route('salary-grade.edit', $row->id) . "' class='edit btn btn-primary btn-sm'>Edit</a>";
                         return $btn;
                 })
                 ->rawColumns(['action'])
