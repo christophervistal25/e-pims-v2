@@ -35,14 +35,14 @@ class CreateEmployeesTable extends Migration
             $table->string('citizenship');
             $table->string('residential_house_no')->nullable();
             $table->string('residential_street')->nullable();
-            $table->string('residential_village');
+            $table->string('residential_village')->nullable();
             $table->string('residential_barangay');
             $table->string('residential_city');
             $table->string('residential_province');
             $table->string('residential_zip_code');
             $table->string('permanent_house_no')->nullable();
             $table->string('permanent_street')->nullable();
-            $table->string('permanent_village');
+            $table->string('permanent_village')->nullable();
             $table->string('permanent_barangay');
             $table->string('permanent_city');
             $table->string('permanent_province');

@@ -12,3 +12,16 @@ Route::group(['prefix' => 'employee'], function () {
     Route::get('employees', 'Api\EmployeeController@list');
 });
 
+Route::group(['prefix' => 'province'], function () {
+    Route::get('/all/with/city', 'Api\ProvinceController@allWithCity');
+    Route::get('/all/with/barangay', 'Api\ProvinceController@allWithCityAndBarangay');
+    Route::get('/all/with/city/barangay', 'Api\ProvinceController@allWithCityAndBarangay');
+    Route::get('all', 'Api\ProvinceController@all');
+    Route::get('/{code}', 'Api\ProvinceController@show');
+    Route::get('/cities/by/{code}', 'Api\ProvinceController@citiesByProvince');
+});
+
+Route::group(['prefix' => 'city'], function () {
+    Route::get('/barangay/by/{code}', 'Api\CityController@barangaysByCode');
+});
+

@@ -21,7 +21,6 @@ class EmployeeRepository
      */
     public function addPersonInformation(array $data = []) :array
     {
-        $data = $data['personalInformation'];
 
         $employee =  Employee::create([
 
@@ -216,7 +215,7 @@ class EmployeeRepository
         }
 
         $employee->civil_service()->saveMany($records);
-        
+
         return $workExperiences;
     }
 

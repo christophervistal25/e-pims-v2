@@ -206,34 +206,56 @@
                         <label for="fsurname">FATHER'S SURNAME</label>
                         <input
                             type="text"
-                            class="form-control "
+                            class="form-control"
+                            :class="
+                                !errors.hasOwnProperty('fsurname')
+                                    ? ''
+                                    : 'is-invalid'
+                            "
                             id="fsurname"
                             v-model="familyBackground.fsurname"
                             placeholder="Enter Father's Surname"
                             value=""
                         />
+                        <p class="text-danger text-sm">{{ errors.fsurname }}</p>
                     </div>
                     <div class="form-group col-lg-3 ">
                         <label for="ffirstname">FATHER'S FIRST NAME</label>
                         <input
                             type="text"
-                            class="form-control  "
+                            class="form-control"
+                            :class="
+                                !errors.hasOwnProperty('ffirstname')
+                                    ? ''
+                                    : 'is-invalid'
+                            "
                             id="ffirstname"
                             v-model="familyBackground.ffirstname"
                             placeholder="Enter Father's First Name"
                             value=""
                         />
+                        <p class="text-danger text-sm">
+                            {{ errors.ffirstname }}
+                        </p>
                     </div>
                     <div class="form-group col-lg-3">
                         <label for="fmiddlename">FATHER'S MIDDLE NAME</label>
                         <input
                             type="text"
-                            class="form-control "
+                            class="form-control"
+                            :class="
+                                !errors.hasOwnProperty('fmiddlename')
+                                    ? ''
+                                    : 'is-invalid'
+                            "
                             id="fmiddlename"
                             v-model="familyBackground.fmiddlename"
                             placeholder="Enter Father's Middle Name"
                             value=""
                         />
+                        <p class="text-danger text-sm">
+                            {{ errors.fmiddlename }}
+                        </p>
                     </div>
                     <div class="form-group col-lg-3">
                         <label for="fnameexten">FATHER'S NAME EXTENSION</label>
@@ -255,23 +277,37 @@
                         <input
                             type="text"
                             maxlength="3"
-                            class="form-control "
+                            class="form-control"
+                            :class="
+                                !errors.hasOwnProperty('msurname')
+                                    ? ''
+                                    : 'is-invalid'
+                            "
                             id="msurname"
                             v-model="familyBackground.msurname"
                             placeholder="Enter Mother's Maiden Surname"
                             value=""
                         />
+                        <p class="text-danger text-sm">{{ errors.msurname }}</p>
                     </div>
                     <div class="form-group col-lg-3 ">
                         <label for="mfirstname">MOTHER'S FIRST NAME</label>
                         <input
                             type="text"
-                            class="form-control  "
+                            :class="
+                                !errors.hasOwnProperty('mfirstname')
+                                    ? ''
+                                    : 'is-invalid'
+                            "
+                            class="form-control"
                             id="mfirstname"
                             v-model="familyBackground.mfirstname"
                             placeholder="Enter Mother's First Name"
                             value=""
                         />
+                        <p class="text-danger text-sm">
+                            {{ errors.mfirstname }}
+                        </p>
                     </div>
                     <div class="form-group col-lg-3">
                         <label for="mmiddlename"
@@ -281,10 +317,18 @@
                             type="text"
                             class="form-control "
                             id="mmiddlename"
+                            :class="
+                                !errors.hasOwnProperty('mmiddlename')
+                                    ? ''
+                                    : 'is-invalid'
+                            "
                             v-model="familyBackground.mmiddlename"
                             placeholder="Enter Mother's Maiden Middle Name"
                             value=""
                         />
+                        <p class="text-danger text-sm">
+                            {{ errors.mmiddlename }}
+                        </p>
                     </div>
                 </div>
                 <div class="float-right">
@@ -348,7 +392,8 @@ export default {
                 msurname: "",
                 mfirstname: "",
                 mmiddlename: ""
-            }
+            },
+            errors: {}
         };
     },
     watch: {
@@ -391,7 +436,21 @@ export default {
                         JSON.stringify(response.data)
                     );
                 })
-                .catch(err => (this.isLoading = false));
+                .catch(error => {
+                    this.isLoading = false;
+                    this.errors = {};
+                    if (error.response.status === 422) {
+                        Object.keys(error.response.data.errors).map(
+                            (field, index) => {
+                                let [fieldMessage] = error.response.data.errors[
+                                    field
+                                ];
+                                this.errors[field] = fieldMessage;
+                            }
+                        );
+                        console.log(this.errors);
+                    }
+                });
         }
     },
     created() {

@@ -9,7 +9,11 @@
             <h5 class="mb-0 p-2">
                 <i v-if="isComplete" class="fa fa-check text-success"></i>
                 EDUCATIONAL BACKGROUND
-                <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
+                <i
+                    v-if="isComplete"
+                    class="text-success float-right fa fa-caret-down"
+                    aria-hidden="true"
+                ></i>
             </h5>
         </div>
         <div
@@ -54,7 +58,15 @@
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.eperiodFrom"
+                            :class="
+                                !errors.hasOwnProperty('eperiodFrom')
+                                    ? ''
+                                    : 'is-invalid'
+                            "
                         />
+                        <p class="text-danger text-sm">
+                            {{ errors.eperiodFrom }}
+                        </p>
                     </div>
 
                     <div class="col-lg-3">
@@ -64,7 +76,15 @@
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.eperiodTo"
+                            :class="
+                                !errors.hasOwnProperty('eperiodTo')
+                                    ? ''
+                                    : 'is-invalid'
+                            "
                         />
+                        <p class="text-danger text-sm">
+                            {{ errors.eperiodTo }}
+                        </p>
                     </div>
                 </div>
                 <div class="pr-3 pb-3 py-3">
@@ -86,7 +106,15 @@
                                 class="form-control"
                                 placeholder=""
                                 v-model="educationalBackground.eyrGrad"
+                                :class="
+                                    !errors.hasOwnProperty('eyrGrad')
+                                        ? ''
+                                        : 'is-invalid'
+                                "
                             />
+                            <p class="text-danger text-sm">
+                                {{ errors.eyrGrad }}
+                            </p>
                         </div>
 
                         <div class="col-lg-6">
@@ -140,7 +168,15 @@
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.speriodFrom"
+                            :class="
+                                !errors.hasOwnProperty('speriodFrom')
+                                    ? ''
+                                    : 'is-invalid'
+                            "
                         />
+                        <p class="text-danger text-sm">
+                            {{ errors.speriodFrom }}
+                        </p>
                     </div>
 
                     <div class="col-lg-3">
@@ -150,7 +186,15 @@
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.speriodTo"
+                            :class="
+                                !errors.hasOwnProperty('speriodTo')
+                                    ? ''
+                                    : 'is-invalid'
+                            "
                         />
+                        <p class="text-danger text-sm">
+                            {{ errors.speriodTo }}
+                        </p>
                     </div>
                 </div>
                 <div class="pr-3 pb-3 py-3">
@@ -172,7 +216,15 @@
                                 class="form-control"
                                 placeholder=""
                                 v-model="educationalBackground.syrGrad"
+                                :class="
+                                    !errors.hasOwnProperty('syrGrad')
+                                        ? ''
+                                        : 'is-invalid'
+                                "
                             />
+                            <p class="text-danger text-sm">
+                                {{ errors.syrGrad }}
+                            </p>
                         </div>
 
                         <div class="col-lg-6">
@@ -226,7 +278,15 @@
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.vperiodFrom"
+                            :class="
+                                !errors.hasOwnProperty('vperiodFrom')
+                                    ? ''
+                                    : 'is-invalid'
+                            "
                         />
+                        <p class="text-danger text-sm">
+                            {{ errors.vperiodFrom }}
+                        </p>
                     </div>
                     <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (TO)</label>
@@ -235,7 +295,15 @@
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.vperiodTo"
+                            :class="
+                                !errors.hasOwnProperty('vperiodTo')
+                                    ? ''
+                                    : 'is-invalid'
+                            "
                         />
+                        <p class="text-danger text-sm">
+                            {{ errors.vperiodTo }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -258,7 +326,13 @@
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.vyrGrad"
+                            :class="
+                                !errors.hasOwnProperty('vyrGrad')
+                                    ? ''
+                                    : 'is-invalid'
+                            "
                         />
+                        <p class="text-danger text-sm">{{ errors.vyrGrad }}</p>
                     </div>
 
                     <div class="col-lg-6">
@@ -311,16 +385,30 @@
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.cperiodFrom"
+                            :class="
+                                !errors.hasOwnProperty('cperiodFrom')
+                                    ? ''
+                                    : 'is-invalid'
+                            "
                         />
+                        <p class="text-danger">{{ errors.cperiodFrom }}</p>
                     </div>
                     <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (TO)</label>
                         <input
                             type="date"
                             class="form-control"
-                            placeholder=""
                             v-model="educationalBackground.cperiodTo"
+                            :class="
+                                !errors.hasOwnProperty('cperiodTo')
+                                    ? ''
+                                    : 'is-invalid'
+                            "
+                            placeholder=""
                         />
+                        <p class="text-danger text-sm">
+                            {{ errors.cperiodTo }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -344,7 +432,15 @@
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.cyrGrad"
+                            :class="
+                                !errors.hasOwnProperty('cyrGrad')
+                                    ? ''
+                                    : 'is-invalid'
+                            "
                         />
+                        <p class="text-danger text-sm">
+                            {{ errors.cyrGrad }}
+                        </p>
                     </div>
 
                     <div class="col-lg-6">
@@ -397,7 +493,15 @@
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.gperiodFrom"
+                            :class="
+                                !errors.hasOwnProperty('gperiodFrom')
+                                    ? ''
+                                    : 'is-invalid'
+                            "
                         />
+                        <p class="text-danger text-sm">
+                            {{ errors.gperiodFrom }}
+                        </p>
                     </div>
                     <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (TO)</label>
@@ -406,7 +510,15 @@
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.gperiodTo"
+                            :class="
+                                !errors.hasOwnProperty('gperiodTo')
+                                    ? ''
+                                    : 'is-invalid'
+                            "
                         />
+                        <p class="text-danger text-sm">
+                            {{ errors.gperiodTo }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -430,7 +542,13 @@
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.gyrGrad"
+                            :class="
+                                !errors.hasOwnProperty('gyrGrad')
+                                    ? ''
+                                    : 'is-invalid'
+                            "
                         />
+                        <p class="text-danger text-sm">{{ errors.gyrGrad }}</p>
                     </div>
 
                     <div class="col-lg-6">
@@ -514,7 +632,8 @@ export default {
                 gunitEarned: "",
                 gyrGrad: "",
                 gscholarship: ""
-            }
+            },
+            errors: {}
         };
     },
     methods: {
@@ -540,7 +659,21 @@ export default {
                     // When it's done call event listener
                     this.$emit("next_tab");
                 })
-                .catch(err => (this.isLoading = false));
+                .catch(error => {
+                    this.isLoading = false;
+                    this.errors = {};
+                    if (error.response.status === 422) {
+                        Object.keys(error.response.data.errors).map(
+                            (field, index) => {
+                                let [fieldMessage] = error.response.data.errors[
+                                    field
+                                ];
+                                this.errors[field] = fieldMessage;
+                            }
+                        );
+                        console.log(this.errors);
+                    }
+                });
         }
     },
     mounted() {

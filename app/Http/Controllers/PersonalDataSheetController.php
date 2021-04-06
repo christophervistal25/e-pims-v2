@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Employee;
 use App\Http\Repositories\EmployeeRepository;
+use  App\Http\Requests\C1\PersonalInformationRequest;
+use  App\Http\Requests\C1\FamilyBackgroundRequest;
+use  App\Http\Requests\C1\EducationalBackgroundRequest;
+
 
 class PersonalDataSheetController extends Controller
 {
@@ -35,17 +39,17 @@ class PersonalDataSheetController extends Controller
     /**
      * Store person information in storage.
      */
-    public function storePersonInformation(Request $request)
+    public function storePersonInformation(PersonalInformationRequest $request)
     {
         return $this->employeeRepository->addPersonInformation($request->all());
     }
 
-    public function storePersonFamilyBackground(Request $request)
+    public function storePersonFamilyBackground(FamilyBackgroundRequest $request)
     {
         return $this->employeeRepository->addPersonFamilybackground($request->all());
     }
 
-    public function storeEducationalBackground(Request $request)
+    public function storeEducationalBackground(EducationalBackgroundRequest $request)
     {
         return $this->employeeRepository->addEducationalBackground($request->all());
     }
@@ -84,18 +88,13 @@ class PersonalDataSheetController extends Controller
     {
         return $this->employeeRepository->addReferences($request->all());
     }
-    
+
     public function storeIssuedID(Request $request)
     {
         return $this->employeeRepository->addIssuedID($request->all());
     }
 
-    public function validatePersonInformation(Request $request)
-    {
-        $this->validate($request, [
-            'personalInformation.*' => 'required',
-        ]);
-    }
+
 
     /**
      * Store a newly created resource in storage.
