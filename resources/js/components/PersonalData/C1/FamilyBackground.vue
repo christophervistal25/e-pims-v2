@@ -47,24 +47,28 @@
                             ><span class="text-danger">*</span>
                             <input
                                 type="text"
-                                class="form-control "
+                                class="form-control"
+                                :class="errors.hasOwnProperty('ssurname') ? 'is-invalid' : ''"
                                 id="ssurname"
                                 v-model="familyBackground.ssurname"
                                 placeholder="Enter Spouse's Surname"
                                 value=""
                             />
+                            <p class='text-danger text-sm'>{{ errors.ssurname }}</p>
                         </div>
                         <div class="form-group col-lg-3 ">
                             <label for="sfirstname">SPOUSE'S FIRST NAME</label
                             ><span class="text-danger">*</span>
                             <input
                                 type="text"
-                                class="form-control  "
+                                class="form-control"
+                                :class="errors.hasOwnProperty('sfirstname') ? 'is-invalid' : ''"
                                 id="sfirstname"
                                 v-model="familyBackground.sfirstname"
                                 placeholder="Enter Spouse's First Name"
                                 value=""
                             />
+                            <p class='text-danger text-sm'>{{ errors.sfirstname }}</p>
                         </div>
                         <div class="form-group col-lg-3">
                             <label for="smiddleame">SPOUSE'S MIDDLE NAME</label>
@@ -168,14 +172,18 @@
                                         v-model="spouse.cname"
                                     />
                                 </td>
-                                <td>
+                                <td class='align-middle'>
                                     <input
                                         type="date"
                                         class="form-control"
+                                        :class="errors.hasOwnProperty(`spouse.${index}.cdateOfBirth`) ? 'is-invalid' : ''"
                                         id="cdateOfBirth"
                                         placeholder="Enter Spouse's Business Address"
                                         v-model="spouse.cdateOfBirth"
                                     />
+                                    <div class='text-right'>
+                                        <span class='text-danger text-xs'>{{ errors[`spouse.${index}.cdateOfBirth`] }}</span>
+                                    </div>
                                 </td>
                                 <td class="text-center">
                                     <button
@@ -403,8 +411,8 @@ export default {
     methods: {
         generateNewSpuseField() {
             this.spouse.push({
-                name: "",
-                dateOfBirth: ""
+                cname: "",
+                cdateOfBirth: ""
             });
         },
         removeField(index) {
@@ -417,6 +425,7 @@ export default {
             this.familyBackground.employee_id = localStorage.getItem(
                 "employee_id"
             );
+            this.familyBackground.has_spouse = this.hasSpouse;
             this.familyBackground.spouse = this.spouse;
 
             window.axios
@@ -447,7 +456,6 @@ export default {
                                 this.errors[field] = fieldMessage;
                             }
                         );
-                        console.log(this.errors);
                     }
                 });
         }

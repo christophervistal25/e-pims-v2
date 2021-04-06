@@ -129,7 +129,6 @@ export default {
                         this.isLoading = false;
                         this.removeSavedItemsInStorage();
                         swal({
-                            title: "Good job!",
                             text: "Successfully create new personal data sheet",
                             icon: "success"
                         });

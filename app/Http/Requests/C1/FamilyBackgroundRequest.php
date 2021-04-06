@@ -24,8 +24,9 @@ class FamilyBackgroundRequest extends FormRequest
     public function rules()
     {
         return [
-            'ssurname'     => [],
-            'sfirstname'   => [],
+            'has_spouse' => ['nullable'],
+            'ssurname'     => ['required_if:has_spouse,true'],
+            'sfirstname'   => ['required_if:has_spouse,true'],
             'smiddleame'   => [],
             'snameexten'   => [],
             'soccupation'  => [],
@@ -33,7 +34,7 @@ class FamilyBackgroundRequest extends FormRequest
             'sbusadd'      => [],
             'stelno'       => [],
             'cname'        => [],
-            'cdateOfBirth.*' => ['required_with:cname.*'],
+            'spouse.*.cdateOfBirth' => ['required_with:spouse.*.cname'],
             'fsurname'     => 'required|regex:/^[a-zA-Z]+$/u',
             'ffirstname'   => 'required|regex:/^[a-zA-Z]+$/u',
             'fmiddlename'  => 'required|regex:/^[a-zA-Z]+$/u',
@@ -53,6 +54,15 @@ class FamilyBackgroundRequest extends FormRequest
             'msurname'    => 'Mother\'s Surname',
             'mfirstname'   => 'Mother\'s Firstname',
             'mmiddlename'  => 'Mother\'s Middlename',
+            'sfirstname' => 'Spouse\'s Firstname',
+            'ssurname' => 'Spouse\'s Surname' 
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'spouse.*.cdateOfBirth.required_with' => 'The Date of birth field is required when Name of children is present.'
         ];
     }
 }

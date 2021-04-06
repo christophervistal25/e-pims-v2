@@ -671,7 +671,6 @@ export default {
                                 this.errors[field] = fieldMessage;
                             }
                         );
-                        console.log(this.errors);
                     }
                 });
         }
