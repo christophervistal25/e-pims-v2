@@ -43,7 +43,7 @@
                 <section v-if="hasSpouse">
                     <div class="row pr-3 pl-3">
                         <div class="form-group col-lg-3">
-                            <label for="ssurname">SPOUSE'S SURNAME</label>
+                            <label for="ssurname">SPOUSE'S SURNAME</label><span class="text-danger">*</span>
                             <input
                                 type="text"
                                 class="form-control "
@@ -54,7 +54,7 @@
                             />
                         </div>
                         <div class="form-group col-lg-3 ">
-                            <label for="sfirstname">SPOUSE'S FIRST NAME</label>
+                            <label for="sfirstname">SPOUSE'S FIRST NAME</label><span class="text-danger">*</span>
                             <input
                                 type="text"
                                 class="form-control  "
@@ -141,7 +141,10 @@
                         </div>
                     </div>
                     <hr />
-                    <div class="p-2">
+                    
+                </section>
+                <hr />
+                <div class="p-2">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -163,7 +166,7 @@
                                             type="text"
                                             class="form-control"
                                             id="cname"
-                                            placeholder="Enter Name of Children"
+                                            placeholder="Enter Full Name of Children"
                                             v-model="spouse.cname"
                                         />
                                     </td>
@@ -198,26 +201,24 @@
                             </tbody>
                         </table>
                     </div>
-                </section>
-                <hr />
 
                 <div class="row pr-3 pl-3">
                     <div class="form-group col-lg-3">
                         <label for="fsurname">FATHER'S SURNAME</label>
                         <input
                             type="text"
-                            class="form-control "
+                            class="form-control"
                             id="fsurname"
                             v-model="familyBackground.fsurname"
                             placeholder="Enter Father's Surname"
                             value=""
                         />
                     </div>
-                    <div class="form-group col-lg-3 ">
+                    <div class="form-group col-lg-3">
                         <label for="ffirstname">FATHER'S FIRST NAME</label>
                         <input
                             type="text"
-                            class="form-control  "
+                            class="form-control"
                             id="ffirstname"
                             v-model="familyBackground.ffirstname"
                             placeholder="Enter Father's First Name"
@@ -247,6 +248,7 @@
                             value=""
                         />
                     </div>
+                    
                 </div>
                 <hr />
                 <div class="row pr-3 pl-3">
@@ -286,6 +288,7 @@
                             value=""
                         />
                     </div>
+                    
                 </div>
                 <div class="float-right">
                     <button
