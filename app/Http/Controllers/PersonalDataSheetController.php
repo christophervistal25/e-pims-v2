@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Employee;
 use App\Http\Repositories\EmployeeRepository;
+use App\Http\Requests\C4\RelevantQueriesRequest;
 
 class PersonalDataSheetController extends Controller
 {
@@ -75,7 +76,7 @@ class PersonalDataSheetController extends Controller
         return $this->employeeRepository->addOtherInformation($request->all());
     }
 
-    public function storeRelevantQueries(Request $request)
+    public function storeRelevantQueries(RelevantQueriesRequest $request)
     {
         return $this->employeeRepository->addRelevantQueries($request->all());
     }
