@@ -29,6 +29,9 @@ Route::get('/plantilla-list', 'Plantillacontroller@list');
 Route::Resource('/plantilla', 'PlantillaController');
 //step Increment
 Route::Resource('/step-increment', 'StepIncrementController');
+//salary adjustment
+Route::Resource('/salary-adjustment', 'SalaryAdjustmentController');
+
 
 Route::group(['prefix' => 'employee'], function () {
     Route::resource('data', 'PersonalDataSheetController');
