@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use App\Office;
 class Plantilla extends Model
 {
     protected $fillable = [
@@ -15,5 +15,18 @@ class Plantilla extends Model
     public function employee()
     {
         return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
+<<<<<<< HEAD
+=======
+    }
+
+    public function office()
+    {
+        return $this->hasOne(Office::class);
+    }
+
+    public function position()
+    {
+        return $this->hasMany(Position::class);
+>>>>>>> 788c25a3a9d8d3fb83dafc09e8ca054bf00d2058
     }
 }

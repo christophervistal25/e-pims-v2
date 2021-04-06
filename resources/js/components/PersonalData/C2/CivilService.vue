@@ -28,7 +28,7 @@
                                 DRIVER'S LICENSE
                             </td>
                             <td rowspan="2" class="align-middle text-sm">
-                                RATING
+                                RATING <span class="text-secondary">(If Applicable)</span>
                             </td>
                             <td rowspan="2" class="align-middle text-sm">
                                 DATE OF EXAMINATION / CONFERMENT
@@ -37,7 +37,7 @@
                                 PLACE OF EXAMINATION / CONFERMENT
                             </td>
                             <td colspan="2" scope="colgroup" class="text-sm">
-                                LICENSE
+                                LICENSE <span class="text-secondary">(If Applicable)</span>
                             </td>
                             <td
                                 rowspan="2"
@@ -73,7 +73,7 @@
                                     <input
                                         type="number"
                                         class="form-control rounded-0 border-0"
-                                        placeholder="e.g. 91.2"
+                                        placeholder="e.g. 91.2%"
                                         v-model="civil.rating"
                                     />
                                 </td>

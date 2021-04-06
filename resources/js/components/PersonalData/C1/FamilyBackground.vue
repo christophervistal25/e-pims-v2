@@ -43,7 +43,8 @@
                 <section v-if="hasSpouse">
                     <div class="row pr-3 pl-3">
                         <div class="form-group col-lg-3">
-                            <label for="ssurname">SPOUSE'S SURNAME</label>
+                            <label for="ssurname">SPOUSE'S SURNAME</label
+                            ><span class="text-danger">*</span>
                             <input
                                 type="text"
                                 class="form-control "
@@ -54,7 +55,8 @@
                             />
                         </div>
                         <div class="form-group col-lg-3 ">
-                            <label for="sfirstname">SPOUSE'S FIRST NAME</label>
+                            <label for="sfirstname">SPOUSE'S FIRST NAME</label
+                            ><span class="text-danger">*</span>
                             <input
                                 type="text"
                                 class="form-control  "
@@ -141,65 +143,62 @@
                         </div>
                     </div>
                     <hr />
-                    <div class="p-2">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th class="font-weight-bold">
-                                        NAME OF CHILDREN
-                                    </th>
-                                    <th class="font-weight-bold">
-                                        DATE OF BIRTH
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr
-                                    v-for="(spouse, index) in spouse"
-                                    :key="index"
-                                >
-                                    <td>
-                                        <input
-                                            type="text"
-                                            class="form-control"
-                                            id="cname"
-                                            placeholder="Enter Name of Children"
-                                            v-model="spouse.cname"
-                                        />
-                                    </td>
-                                    <td>
-                                        <input
-                                            type="date"
-                                            class="form-control"
-                                            id="cdateOfBirth"
-                                            placeholder="Enter Spouse's Business Address"
-                                            v-model="spouse.cdateOfBirth"
-                                        />
-                                    </td>
-                                    <td class="text-center">
-                                        <button
-                                            v-show="index != 0"
-                                            @click="removeField(index)"
-                                            class="btn btn-danger font-weight-bold rounded-circle"
-                                        >
-                                            X
-                                        </button>
-                                    </td>
-                                    <td class="text-center">
-                                        <button
-                                            v-if="index == noOfSpouseFields - 1"
-                                            class="btn btn-primary rounded-circle"
-                                            @click="generateNewSpuseField"
-                                        >
-                                            +
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
                 </section>
                 <hr />
+                <div class="p-2">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="font-weight-bold">
+                                    NAME OF CHILDREN
+                                </th>
+                                <th class="font-weight-bold">
+                                    DATE OF BIRTH
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(spouse, index) in spouse" :key="index">
+                                <td>
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        id="cname"
+                                        placeholder="Enter Full Name of Children"
+                                        v-model="spouse.cname"
+                                    />
+                                </td>
+                                <td>
+                                    <input
+                                        type="date"
+                                        class="form-control"
+                                        id="cdateOfBirth"
+                                        placeholder="Enter Spouse's Business Address"
+                                        v-model="spouse.cdateOfBirth"
+                                    />
+                                </td>
+                                <td class="text-center">
+                                    <button
+                                        v-show="index != 0"
+                                        @click="removeField(index)"
+                                        class="btn btn-danger font-weight-bold rounded-circle"
+                                    >
+                                        X
+                                    </button>
+                                </td>
+                                <td class="text-center">
+                                    <button
+                                        v-if="index == noOfSpouseFields - 1"
+                                        class="btn btn-primary rounded-circle"
+                                        @click="generateNewSpuseField"
+                                    >
+                                        +
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
                 <div class="row pr-3 pl-3">
                     <div class="form-group col-lg-3">
@@ -207,11 +206,6 @@
                         <input
                             type="text"
                             class="form-control"
-                            :class="
-                                !errors.hasOwnProperty('fsurname')
-                                    ? ''
-                                    : 'is-invalid'
-                            "
                             id="fsurname"
                             v-model="familyBackground.fsurname"
                             placeholder="Enter Father's Surname"
@@ -219,16 +213,11 @@
                         />
                         <p class="text-danger text-sm">{{ errors.fsurname }}</p>
                     </div>
-                    <div class="form-group col-lg-3 ">
+                    <div class="form-group col-lg-3">
                         <label for="ffirstname">FATHER'S FIRST NAME</label>
                         <input
                             type="text"
                             class="form-control"
-                            :class="
-                                !errors.hasOwnProperty('ffirstname')
-                                    ? ''
-                                    : 'is-invalid'
-                            "
                             id="ffirstname"
                             v-model="familyBackground.ffirstname"
                             placeholder="Enter Father's First Name"

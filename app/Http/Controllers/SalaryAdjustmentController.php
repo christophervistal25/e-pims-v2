@@ -7,17 +7,12 @@ use App\Employee;
 use App\StepIncrement;
 use App\Plantilla;
 
-class StepIncrementController extends Controller
+class SalaryAdjustmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $employee = Employee::with('plantilla')->get();
-        return view('StepIncrement.StepIncrement', compact('employee'));
+        return view('SalaryAdjustment.SalaryAdjustment', compact('employee'));
         
     }
 
