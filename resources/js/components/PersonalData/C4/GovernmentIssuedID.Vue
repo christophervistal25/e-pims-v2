@@ -37,6 +37,7 @@
                                         type="text"
                                         class="form-control rounded-0 border-0"
                                         placeholder="e.g Philhealth"
+                                        :class="errors.hasOwnProperty('nameOfGovId') ? 'is-invalid' : ''"
                                         v-model="governmentId.nameOfGovId"
                                     />
                                 </td>
@@ -44,6 +45,7 @@
                                     <input
                                         type="text"
                                         class="form-control rounded-0 border-0"
+                                        :class="errors.hasOwnProperty('idNo') ? 'is-invalid' : ''"
                                         placeholder="Enter ID Number"
                                         v-model="governmentId.idNo"
                                     />
@@ -52,6 +54,7 @@
                                     <input
                                         type="text"
                                         class="form-control rounded-0 border-0"
+                                        :class="errors.hasOwnProperty('dateOfIssuance') ? 'is-invalid' : ''"
                                         placeholder=""
                                         v-model="governmentId.dateOfIssuance"
                                     />
@@ -59,7 +62,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <diva class="float-right mb-3">
+                    <div class="float-right mb-3">
                         <button
                             class="btn btn-primary font-weight-bold"
                             @click="submitIssuedID"
@@ -74,7 +77,7 @@
                                 <span class="sr-only">Loading...</span>
                             </div>
                         </button>
-                    </diva>
+                    </div>
                 </div>
             </div>
         </div>
@@ -97,7 +100,8 @@ export default {
                 idNo: "",
                 dateOfIssuance: "",
                 employee_id: localStorage.getItem("employee_id")
-            }
+            },
+            errors : {},
         };
     },
     methods: {
@@ -119,16 +123,34 @@ export default {
             window.axios
                 .post("/employee/personal/issued/id", this.governmentId)
                 .then(response => {
-                    this.isComplete = true;
-                    this.isLoading = false;
-                    this.removeSavedItemsInStorage();
-                    swal({
-                        title: "Good job!",
-                        text: "Successfully create new personal data sheet",
-                        icon: "success"
-                    });
+                    if(response.status === 201) {
+                        this.errors = {};
+                        this.isComplete = true;
+                        this.isLoading = false;
+                        this.removeSavedItemsInStorage();
+                        swal({
+                            title: "Good job!",
+                            text: "Successfully create new personal data sheet",
+                            icon: "success"
+                        });
+                    }
+                    
                 })
-                .catch(err => (this.isLoading = false));
+                .catch(error => {
+                    this.isLoading = false
+                    this.errors = {};
+                    // Check the error status code.
+                    if (error.response.status === 422) {
+                        Object.keys(error.response.data.errors).map(
+                            (field, index) => {
+                                let [fieldMessage] = error.response.data.errors[
+                                    field
+                                ];
+                                this.errors[field] = fieldMessage;
+                            }
+                        );
+                    }
+                });
         }
     }
 };

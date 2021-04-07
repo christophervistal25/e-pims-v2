@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Employee;
 use App\Http\Repositories\EmployeeRepository;
+use App\Http\Requests\C1\PersonalInformationRequest;
+use App\Http\Requests\C1\FamilyBackgroundRequest;
+use App\Http\Requests\C1\EducationalBackgroundRequest;
 use App\Http\Requests\C4\RelevantQueriesRequest;
+use App\Http\Requests\C4\GovernmentIssuedIDRequest;
 
 class PersonalDataSheetController extends Controller
 {
@@ -86,7 +90,7 @@ class PersonalDataSheetController extends Controller
         return $this->employeeRepository->addReferences($request->all());
     }
 
-    public function storeIssuedID(Request $request)
+    public function storeIssuedID(GovernmentIssuedIDRequest $request)
     {
         return $this->employeeRepository->addIssuedID($request->all());
     }

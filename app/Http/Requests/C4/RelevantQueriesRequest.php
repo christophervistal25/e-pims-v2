@@ -24,38 +24,37 @@ class RelevantQueriesRequest extends FormRequest
     public function rules()
     {
         return [
+            'no_34_a'         => ['required'],
+            'no_34_a_details' => ['required_if:no_34_a,yes'],
+            'no_34_b'         => ['required'],
+            'no_34_b_details' => ['required_if:no_34_b,yes'],
 
-            'no_34_a' => [],
-            'no_34_a_details' => [],
-            'no_34_b' => [],
-            'no_34_b_details' => [],
+            'no_35_a'         => ['required'],
+            'no_35_a_details' => ['required_if:no_35_a,yes'],
+            'no_35_b'         => ['required'],
+            'no_35_b_details' => ['required_if:no_35_b,yes'],
 
-            'no_35_a' => [],
-            'no_35_a_details' => [],
-            'no_35_b' => [],
-            'no_35_b_details' => [],
+            'no_36'         => ['required'],
+            'no_36_details' => ['required_if:no_36,yes'],
+            'no_37'         => ['required'],
+            'no_37_details' => ['required_if:no_37,yes'],
 
-            'no_36' => [],
-            'no_36_details' => [],
-            'no_37' => [],
-            'no_37_details' => [],
+            'no_38_a'         => ['required'],
+            'no_38_a_details' => ['required_if:no_38_a,yes'],
+            'no_38_b'         => ['required'],
+            'no_38_b_details' => ['required_if:no_38_b,yes'],
 
-            'no_38_a' => [],
-            'no_38_a_details' => [],
-            'no_38_b' => [],
-            'no_38_b_details' => [],
+            'no_39'         => ['required'],
+            'no_39_details' => ['required_if:no_39,yes'],
 
-            'no_39' => [],
-            'no_39_details' => [],
+            'no_40_a'         => ['required'],
+            'no_40_a_details' => ['required_if:no_40_a,yes'],
 
-            'no_40_a' => [],
-            'no_40_a_details' => [],
+            'no_40_b'         => ['required'],
+            'no_40_b_details' => ['required_if:no_40_b,yes'],
 
-            'no_40_b' => [],
-            'no_40_b_details' => [],
-
-            'no_40_c' => [],
-            'no_40_c_details' => []
+            'no_40_c'         => ['required'],
+            'no_40_c_details' => ['required_if:no_40_c,yes']
         ];
     }
 }

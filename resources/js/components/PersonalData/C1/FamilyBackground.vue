@@ -207,6 +207,11 @@
                             type="text"
                             class="form-control"
                             id="fsurname"
+                            :class="
+                                !errors.hasOwnProperty('fsurname')
+                                    ? ''
+                                    : 'is-invalid'
+                            "
                             v-model="familyBackground.fsurname"
                             placeholder="Enter Father's Surname"
                             value=""
@@ -219,6 +224,11 @@
                             type="text"
                             class="form-control"
                             id="ffirstname"
+                             :class="
+                                !errors.hasOwnProperty('ffirstname')
+                                    ? ''
+                                    : 'is-invalid'
+                            "
                             v-model="familyBackground.ffirstname"
                             placeholder="Enter Father's First Name"
                             value=""

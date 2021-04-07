@@ -1042,19 +1042,23 @@ export default {
                     this.personal_data
                 )
                 .then(response => {
-                    this.isLoading = false;
-                    this.isComplete = true;
-                    localStorage.setItem(
-                        "employee_id",
-                        response.data.employee_id
-                    );
 
-                    localStorage.setItem(
-                        "personal_information",
-                        JSON.stringify(response.data)
-                    );
+                    if(response.status === 200) {
+                        this.errors = {};
+                        this.isLoading = false;
+                        this.isComplete = true;
+                        localStorage.setItem(
+                            "employee_id",
+                            response.data.employee_id
+                        );
 
-                    this.$emit("next-panel-family-background");
+                        localStorage.setItem(
+                            "personal_information",
+                            JSON.stringify(response.data)
+                        );
+
+                        this.$emit("next-panel-family-background");
+                    }
                 })
                 .catch(error => {
                     this.isLoading = false;

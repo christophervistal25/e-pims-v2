@@ -43,14 +43,18 @@
                             <td
                                 scope="row"
                                 style="background: #EAEAEA;"
+                                :class="errors.hasOwnProperty('no_34_a') || errors.hasOwnProperty('no_34_a_details') ? 'bg-danger text-white' : 'text-dark'"
                                 class="border-0"
                             >
+                                
+
                                 <span class="ml-4 text-sm"
-                                    >a. within the third degree?</span
+                                    >
+                                    <i v-if="errors.hasOwnProperty('no_34_a') || errors.hasOwnProperty('no_34_a_details')" class="fa fa-times text-white " aria-hidden="true"></i>
+                                    a. within the third degree?</span
                                 >
                             </td>
                             <td
-                                class=""
                                 @click="relevantQueries.no_34_a = 'yes'"
                             >
                                 <div class="form-check">
@@ -95,6 +99,7 @@
                                     <input
                                         type="text"
                                         class="form-control"
+                                        :class="errors.hasOwnProperty('no_34_a_details') ? 'is-invalid' : ''"
                                         :readonly="
                                             relevantQueries.no_34_a !== 'yes'
                                         "
@@ -110,10 +115,13 @@
                             <td
                                 scope="row"
                                 style="background: #EAEAEA;"
+                                :class="errors.hasOwnProperty('no_34_b') || errors.hasOwnProperty('no_34_b_details') ? 'bg-danger text-white' : 'text-dark'"
                                 class="border-0"
                             >
                                 <span class="ml-4 text-sm"
-                                    >b. within the fourth degree (for Local
+                                    > 
+                                    <i v-if="errors.hasOwnProperty('no_34_b') || errors.hasOwnProperty('no_34_b_details')" class="fa fa-times text-white " aria-hidden="true"></i>
+                                    b. within the fourth degree (for Local
                                     Government Unit - Career Employees)?</span
                                 >
                             </td>
@@ -162,6 +170,7 @@
                                     <input
                                         type="text"
                                         class="form-control"
+                                        :class="errors.hasOwnProperty('no_34_b_details') ? 'is-invalid' : ''"
                                         placeholder="If YES, then give details"
                                         :readonly="
                                             relevantQueries.no_34_b !== 'yes'
@@ -177,7 +186,12 @@
 
                         <!-- {{-- BEGIN OF 35 --}} -->
                         <tr>
-                            <td style="background: #EAEAEA;" class="text-sm">
+                            <td 
+                                style="background: #EAEAEA;" 
+                                class="text-sm border-0"
+                                :class="errors.hasOwnProperty('no_35_a') || errors.hasOwnProperty('no_35_a_details') ? 'bg-danger text-white' : 'text-dark'"
+                                >
+                                <i v-if="errors.hasOwnProperty('no_35_a') || errors.hasOwnProperty('no_35_a_details')" class="fa fa-times text-white " aria-hidden="true"></i>
                                 35. a. Have you ever been found guilty of any
                                 administrative offense?
                             </td>
@@ -228,6 +242,7 @@
                                         type="text"
                                         class="form-control"
                                         placeholder="If YES, then give details"
+                                        :class="errors.hasOwnProperty('no_35_a_details') ? 'is-invalid' : ''"
                                         :readonly="
                                             relevantQueries.no_35_a !== 'yes'
                                         "
@@ -240,9 +255,16 @@
                         </tr>
 
                         <tr>
-                            <td scope="row" style="background: #EAEAEA;">
+                            <td 
+                                scope="row"
+                                style="background: #EAEAEA;"
+                                class='border-0'
+                                :class="errors.hasOwnProperty('no_35_b') || errors.hasOwnProperty('no_35_b_details') ? 'bg-danger text-white' : 'text-dark'"
+                                >
                                 <span class="ml-4 text-sm"
-                                    >b. Have you been criminally charged before
+                                    >
+                                    <i v-if="errors.hasOwnProperty('no_35_b') || errors.hasOwnProperty('no_35_b_details')" class="fa fa-times text-white " aria-hidden="true"></i>
+                                    b. Have you been criminally charged before
                                     any court?</span
                                 >
                             </td>
@@ -292,6 +314,7 @@
                                         type="text"
                                         class="form-control"
                                         placeholder="If YES, then give details"
+                                        :class="errors.hasOwnProperty('no_35_b_details') ? 'is-invalid' : ''"
                                         :readonly="
                                             relevantQueries.no_35_b !== 'yes'
                                         "
@@ -306,7 +329,12 @@
 
                         <!-- {{-- BEGIN OF 36 --}} -->
                         <tr>
-                            <td style="background: #EAEAEA;" class="text-sm">
+                            <td 
+                            style="background: #EAEAEA;" 
+                            class="border-0 text-sm"
+                            :class="errors.hasOwnProperty('no_36') || errors.hasOwnProperty('no_36_details') ? 'bg-danger text-white' : 'text-dark'"
+                            >
+                            <i v-if="errors.hasOwnProperty('no_36') || errors.hasOwnProperty('no_36_details')" class="fa fa-times text-white " aria-hidden="true"></i>
                                 36. Have you ever been convicted of any crime or
                                 violation of any law, decree, ordinance or
                                 regulation by any court or tribunal?
@@ -355,6 +383,7 @@
                                         type="text"
                                         class="form-control"
                                         placeholder="If YES, then give details"
+                                        :class="errors.hasOwnProperty('no_36_details') ? 'is-invalid' : ''"
                                         :readonly="
                                             relevantQueries.no_36 !== 'yes'
                                         "
@@ -367,8 +396,13 @@
 
                         <!-- {{-- BEGIN OF 37 --}} -->
                         <tr>
-                            <td style="background: #EAEAEA;">
+                            <td 
+                            style="background: #EAEAEA;"
+                            class='border-0'
+                            :class="errors.hasOwnProperty('no_37') || errors.hasOwnProperty('no_37_details') ? 'bg-danger text-white' : 'text-dark'"
+                            >
                                 <span class="text-sm">
+                                    <i v-if="errors.hasOwnProperty('no_37') || errors.hasOwnProperty('no_37_details')" class="fa fa-times text-white " aria-hidden="true"></i>
                                     37. Have you ever been separated from the
                                     service in any of the following modes:
                                     resignation, retirement, dropped from the
@@ -420,6 +454,7 @@
                                     <input
                                         type="text"
                                         class="form-control"
+                                        :class="errors.hasOwnProperty('no_37_details') ? 'is-invalid' : ''"
                                         placeholder="If YES, then give details"
                                         :readonly="
                                             relevantQueries.no_37 !== 'yes'
@@ -433,7 +468,12 @@
 
                         <!-- {{-- BEGIN OF 38 --}} -->
                         <tr>
-                            <td style="background: #EAEAEA;" class="text-sm">
+                            <td 
+                                style="background: #EAEAEA;"
+                                class="border-0 text-sm"
+                                :class="errors.hasOwnProperty('no_38_a') || errors.hasOwnProperty('no_38_a_details') ? 'bg-danger text-white' : 'text-dark'"
+                                >
+                                <i v-if="errors.hasOwnProperty('no_38_a') || errors.hasOwnProperty('no_38_a_details')" class="fa fa-times text-white " aria-hidden="true"></i>
                                 38. a. Have you ever been a candidate in a
                                 national or local election held within the last
                                 year (except Barangay election)?
@@ -483,6 +523,7 @@
                                     <input
                                         type="text"
                                         class="form-control"
+                                        :class="errors.hasOwnProperty('no_38_a_details') ? 'is-invalid' : ''"
                                         placeholder="If YES, then give details"
                                         :readonly="
                                             relevantQueries.no_38_a !== 'yes'
@@ -496,9 +537,15 @@
                         </tr>
 
                         <tr>
-                            <td scope="row" style="background: #EAEAEA;">
-                                <span class="ml-4 text-sm"
-                                    >b. Have you resigned from the government
+                            <td 
+                                scope="row" 
+                                style="background: #EAEAEA;"
+                                class='border-0'
+                                :class="errors.hasOwnProperty('no_38_b') || errors.hasOwnProperty('no_38_b_details') ? 'bg-danger text-white' : 'text-dark'"
+                                >
+                                <span class="ml-4 text-sm">
+                                    <i v-if="errors.hasOwnProperty('no_38_b') || errors.hasOwnProperty('no_38_b_details')" class="fa fa-times text-white " aria-hidden="true"></i>
+                                    b. Have you resigned from the government
                                     service during the three (3)-month period
                                     before the last election to promote/actively
                                     campaign for a national or local
@@ -552,6 +599,7 @@
                                         type="text"
                                         class="form-control"
                                         placeholder="If YES, then give details"
+                                        :class="errors.hasOwnProperty('no_38_b_details') ? 'is-invalid' : ''"
                                         :readonly="
                                             relevantQueries.no_38_b !== 'yes'
                                         "
@@ -566,7 +614,12 @@
 
                         <!-- {{-- BEGIN OF 39 --}} -->
                         <tr>
-                            <td style="background: #EAEAEA;" class="text-sm">
+                            <td 
+                                style="background: #EAEAEA;" 
+                                class="border-0 text-sm"
+                                :class="errors.hasOwnProperty('no_39') || errors.hasOwnProperty('no_39_details') ? 'bg-danger text-white' : 'text-dark'"
+                                >
+                                <i v-if="errors.hasOwnProperty('no_39') || errors.hasOwnProperty('no_39_details')" class="fa fa-times text-white " aria-hidden="true"></i>
                                 39. Have you acquired the status of an immigrant
                                 or permanent resident of another country?
                             </td>
@@ -614,6 +667,7 @@
                                     <input
                                         type="text"
                                         class="form-control"
+                                        :class="errors.hasOwnProperty('no_39_details') ? 'is-invalid' : ''"
                                         placeholder="If YES, then give details"
                                         :readonly="
                                             relevantQueries.no_39 !== 'yes'
@@ -629,7 +683,7 @@
                         <tr>
                             <td
                                 style="background: #EAEAEA;"
-                                class="text-left text-sm"
+                                class="border-0 text-left text-sm"
                             >
                                 40. Pursuant to: (a) Indigenous People's Act (RA
                                 8371); (b) Magna Carta for Disabled Persons (RA
@@ -644,9 +698,13 @@
                                 scope="row"
                                 style="background: #EAEAEA;"
                                 class="border-0"
+                                :class="errors.hasOwnProperty('no_40_a') || errors.hasOwnProperty('no_40_a_details') ? 'bg-danger text-white' : 'text-dark'"
                             >
                                 <span class="ml-4 text-sm"
-                                    >a. Are you a member of any indigenous
+                                    >
+                            <i v-if="errors.hasOwnProperty('no_40_a') || errors.hasOwnProperty('no_40_a_details')" class="fa fa-times text-white " aria-hidden="true"></i>
+                                    
+                                    a. Are you a member of any indigenous
                                     group?</span
                                 >
                             </td>
@@ -697,6 +755,7 @@
                                         type="text"
                                         class="form-control"
                                         placeholder="If YES, then give details"
+                                        :class="errors.hasOwnProperty('no_40_a_details') ? 'is-invalid' : ''"
                                         :readonly="
                                             relevantQueries.no_40_a !== 'yes'
                                         "
@@ -712,9 +771,12 @@
                                 scope="row"
                                 style="background: #EAEAEA;"
                                 class="border-0"
+                                :class="errors.hasOwnProperty('no_40_b') || errors.hasOwnProperty('no_40_b_details') ? 'bg-danger text-white' : 'text-dark'"
                             >
                                 <span class="ml-4 text-sm"
-                                    >b. Are you a person with disability?</span
+                                    >
+                                    <i v-if="errors.hasOwnProperty('no_40_b') || errors.hasOwnProperty('no_40_b_details')" class="fa fa-times text-white " aria-hidden="true"></i>
+                                    b. Are you a person with disability?</span
                                 >
                             </td>
                             <td
@@ -763,6 +825,7 @@
                                     <input
                                         type="text"
                                         class="form-control"
+                                        :class="errors.hasOwnProperty('no_40_b_details') ? 'is-invalid' : ''"
                                         placeholder="If YES, then give details"
                                         :readonly="
                                             relevantQueries.no_40_b !== 'yes'
@@ -780,9 +843,12 @@
                                 scope="row"
                                 style="background: #EAEAEA;"
                                 class="border-0"
+                                :class="errors.hasOwnProperty('no_40_c') || errors.hasOwnProperty('no_40_c_details') ? 'bg-danger text-white' : 'text-dark'"
                             >
                                 <span class="ml-4 text-sm"
-                                    >c. Are you a solo parent?</span
+                                    >
+                                    <i v-if="errors.hasOwnProperty('no_40_c') || errors.hasOwnProperty('no_40_c_details')" class="fa fa-times text-white " aria-hidden="true"></i>
+                                    c. Are you a solo parent?</span
                                 >
                             </td>
                             <td
@@ -832,6 +898,7 @@
                                         type="text"
                                         class="form-control"
                                         placeholder="If YES, then give details"
+                                        :class="errors.hasOwnProperty('no_40_c_details') ? 'is-invalid' : ''"
                                         :readonly="
                                             relevantQueries.no_40_c !== 'yes'
                                         "
@@ -907,7 +974,8 @@ export default {
 
                 no_40_c: "",
                 no_40_c_details: ""
-            }
+            },
+            errors : {},
         };
     },
     methods: {
@@ -922,12 +990,31 @@ export default {
                     this.relevantQueries
                 )
                 .then(response => {
-                    this.isComplete = true;
-                    this.isLoading = false;
-                    localStorage.setItem('relevant_queries', JSON.stringify(response.data));
-                    this.$emit("display-reference");
+                    if(response.status === 200) {
+                        this.isComplete = true;
+                        this.isLoading = false;
+                        this.errors = {};
+                        
+                        localStorage.setItem('relevant_queries', JSON.stringify(response.data));
+                        this.$emit("display-reference");
+                    }
+                    
                 })
-                .catch(err => (this.isLoading = false));
+                .catch(error => {
+                    this.isLoading = false
+                    this.errors = {};
+                    // Check the error status code.
+                    if (error.response.status === 422) {
+                        Object.keys(error.response.data.errors).map(
+                            (field, index) => {
+                                let [fieldMessage] = error.response.data.errors[
+                                    field
+                                ];
+                                this.errors[field] = fieldMessage;
+                            }
+                        );
+                    }
+                });
         }
     },
     created() {},

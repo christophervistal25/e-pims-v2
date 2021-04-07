@@ -84,6 +84,14 @@
                     </table>
                     <div class="float-right mb-3">
                         <button
+                            class="btn btn-danger font-weight-bold"
+                            @click="skipSection"
+                            v-if="!isComplete"
+                            :disabled="isLoading"
+                        >
+                            SKIP
+                        </button>
+                        <button
                             class="btn btn-primary font-weight-bold"
                             @click="submitReferences"
                             :disabled="isLoading"
@@ -158,7 +166,11 @@ export default {
                     this.$emit("display-issued-id");
                 })
                 .catch(err => (this.isLoading = false));
-        }
+        },
+        skipSection() {
+            this.isComplete = true;
+            this.$emit("display-issued-id");
+        },
     },
     created() {
         this.noOfFields = this.references.length;
