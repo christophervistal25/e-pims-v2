@@ -46,6 +46,7 @@
                                         class="form-control rounded-0 border-0"
                                         placeholder="NAME"
                                         v-model="references.refName"
+                                        style="text-transform:uppercase"
                                     />
                                 </td>
                                 <td>
@@ -54,6 +55,7 @@
                                         class="form-control rounded-0 border-0"
                                         placeholder="ADDRESS"
                                         v-model="references.refAdd"
+                                        style="text-transform:uppercase"
                                     />
                                 </td>
                                 <td>

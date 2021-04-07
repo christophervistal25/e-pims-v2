@@ -77,6 +77,7 @@
                                         class="form-control rounded-0 border-0"
                                         placeholder="Input here..."
                                         v-model="civil.careerServ"
+                                        style="text-transform:uppercase"
                                     />
                                 </td>
                                 <td>
@@ -101,6 +102,7 @@
                                         class="form-control rounded-0 border-0"
                                         placeholder="e.g Tandag"
                                         v-model="civil.placeOfExam"
+                                        style="text-transform:uppercase"
                                     />
                                 </td>
 

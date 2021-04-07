@@ -69,6 +69,7 @@
                                     class="form-control rounded-0 border-0"
                                     placeholder="NAME"
                                     v-model="volunOrg.nameOfOrg"
+                                    style="text-transform:uppercase"
                                 />
                             </td>
                             <td>
@@ -101,6 +102,7 @@
                                     class="form-control rounded-0 border-0"
                                     placeholder="Position"
                                     v-model="volunOrg.position"
+                                    style="text-transform:uppercase"
                                 />
                             </td>
                             <td class="text-center jumbotron">

@@ -63,6 +63,7 @@
                                         class="form-control rounded-0 border-0"
                                         placeholder=""
                                         v-model="otherInfo.skill"
+                                        style="text-transform:uppercase"
                                     />
                                 </td>
                                 <td>
@@ -71,6 +72,7 @@
                                         class="form-control rounded-0 border-0"
                                         placeholder=""
                                         v-model="otherInfo.recog"
+                                        style="text-transform:uppercase"
                                     />
                                 </td>
                                 <td>
@@ -79,6 +81,7 @@
                                         class="form-control rounded-0 border-0"
                                         placeholder=""
                                         v-model="otherInfo.memAssociation"
+                                        style="text-transform:uppercase"
                                     />
                                 </td>
                                 <td class="jumbotron text-center">

@@ -38,6 +38,7 @@
                             class="form-control"
                             placeholder="Name of School"
                             v-model="educationalBackground.elementary"
+                            style="text-transform:uppercase"
                         />
                     </div>
 
@@ -48,6 +49,7 @@
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.ebasicEduc"
+                            style="text-transform:uppercase"
                         />
                     </div>
 
@@ -123,6 +125,7 @@
                                 type="text"
                                 class="form-control"
                                 v-model="educationalBackground.escholarship"
+                                style="text-transform:uppercase"
                             />
                         </div>
                     </div>
@@ -148,6 +151,7 @@
                             class="form-control"
                             placeholder="Name of School"
                             v-model="educationalBackground.snameOfSchool"
+                            style="text-transform:uppercase"
                         />
                     </div>
 
@@ -158,6 +162,7 @@
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.sbasicEduc"
+                            style="text-transform:uppercase"
                         />
                     </div>
 
@@ -233,6 +238,7 @@
                                 type="text"
                                 class="form-control"
                                 v-model="educationalBackground.sscholarship"
+                                style="text-transform:uppercase"
                             />
                         </div>
                     </div>
@@ -258,6 +264,7 @@
                             class="form-control"
                             placeholder="Name of School"
                             v-model="educationalBackground.vnameOfVoc"
+                            style="text-transform:uppercase"
                         />
                     </div>
 
@@ -268,6 +275,7 @@
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.vbasicEduc"
+                            style="text-transform:uppercase"
                         />
                     </div>
 
@@ -341,6 +349,7 @@
                             type="text"
                             class="form-control"
                             v-model="educationalBackground.vscholarship"
+                            style="text-transform:uppercase"
                         />
                     </div>
                 </div>
@@ -365,6 +374,7 @@
                             class="form-control"
                             placeholder="Name of School"
                             v-model="educationalBackground.cnameOfSchool"
+                            style="text-transform:uppercase"
                         />
                     </div>
 
@@ -375,6 +385,7 @@
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.cbasicEduc"
+                            style="text-transform:uppercase"
                         />
                     </div>
 
@@ -449,6 +460,7 @@
                             type="text"
                             class="form-control"
                             v-model="educationalBackground.cscholarship"
+                            style="text-transform:uppercase"
                         />
                     </div>
                 </div>
@@ -473,6 +485,7 @@
                             class="form-control"
                             placeholder="Name of School"
                             v-model="educationalBackground.gnameOfSchool"
+                            style="text-transform:uppercase"
                         />
                     </div>
 
@@ -483,6 +496,7 @@
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.gbasicEduc"
+                            style="text-transform:uppercase"
                         />
                     </div>
 
@@ -557,6 +571,7 @@
                             type="text"
                             class="form-control"
                             v-model="educationalBackground.gscholarship"
+                            style="text-transform:uppercase"
                         />
                     </div>
                 </div>

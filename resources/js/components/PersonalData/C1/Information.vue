@@ -45,6 +45,7 @@
                             id="surname"
                             placeholder="Enter Surname"
                             v-model="personal_data.surname"
+                            style="text-transform:uppercase"
                         />
                         <p class="text-danger text-sm">
                             {{ errors.surname }}
@@ -60,6 +61,7 @@
                             placeholder="Enter First Name"
                             :class="errors.firstname ? 'is-invalid' : ''"
                             v-model="personal_data.firstname"
+                            style="text-transform:uppercase"
                         />
                         <p class="text-danger text-sm">
                             {{ errors.firstname }}
@@ -78,6 +80,7 @@
                             id="middlename"
                             placeholder="Enter Middle Name"
                             v-model="personal_data.middlename"
+                            style="text-transform:uppercase"
                         />
                         <p class="text-danger text-sm">
                             {{ errors.middlename }}
@@ -97,6 +100,7 @@
                             id="nameextension"
                             placeholder="(JR.,SR.)"
                             v-model="personal_data.nameExtension"
+                            style="text-transform:uppercase"
                         />
                         <p class="text-danger text-sm">
                             {{ errors.nameExtension }}
@@ -135,6 +139,7 @@
                             "
                             placeholder="Enter Place of Birth"
                             v-model="personal_data.placeOfBirth"
+                            style="text-transform:uppercase"
                         />
                         <p class="text-danger text-sm">
                             {{ errors.placeOfBirth }}
@@ -232,6 +237,7 @@
                             class="form-control"
                             placeholder="Enter bloodtype"
                             v-model="personal_data.bloodType"
+                            style="text-transform:uppercase"
                         />
                     </div>
                 </div>
@@ -434,6 +440,7 @@
                             id="lotno"
                             class="form-control"
                             placeholder="Enter house/block/lot no."
+                            style="text-transform:uppercase"
                         />
                     </div>
                     <div class="form-group col-lg-4">
@@ -444,6 +451,7 @@
                             id="street"
                             class="form-control"
                             placeholder="Enter Street"
+                            style="text-transform:uppercase"
                         />
                     </div>
                     <div class="form-group col-lg-4">
@@ -454,6 +462,7 @@
                             id="subdivision"
                             class="form-control"
                             placeholder="Enter Subdivision or Village"
+                            style="text-transform:uppercase"
                         />
                     </div>
                 </div>
@@ -584,6 +593,7 @@
                             :readonly="isSameAsAbove ? true : false"
                             class="form-control"
                             placeholder="Enter house/block/lot no."
+                            style="text-transform:uppercase"
                         />
                     </div>
                     <div class="form-group col-lg-4">
@@ -594,6 +604,7 @@
                             :readonly="isSameAsAbove ? true : false"
                             class="form-control"
                             placeholder="Enter Street"
+                            style="text-transform:uppercase"
                         />
                     </div>
                     <div class="form-group col-lg-4">
@@ -604,6 +615,7 @@
                             :readonly="isSameAsAbove ? true : false"
                             class="form-control"
                             placeholder="Enter Subdivision or Village"
+                            style="text-transform:uppercase"
                         />
                     </div>
                 </div>

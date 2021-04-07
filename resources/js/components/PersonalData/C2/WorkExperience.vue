@@ -85,6 +85,7 @@
                                     class="form-control rounded-0 border-0"
                                     placeholder="Input"
                                     v-model="workExperience.position"
+                                    style="text-transform:uppercase"
                                 />
                             </td>
                             <td>
@@ -93,6 +94,7 @@
                                     class="form-control rounded-0 border-0"
                                     placeholder="e.g Tandag"
                                     v-model="workExperience.dept"
+                                    style="text-transform:uppercase"
                                 />
                             </td>
 
@@ -116,8 +118,9 @@
                                 <input
                                     type="text"
                                     class="form-control rounded-0 border-0"
-                                    placeholder=""
+                                    placeholder="e.g J.O"
                                     v-model="workExperience.statOfApp"
+                                    style="text-transform:uppercase"
                                 />
                             </td>
                             <td>
