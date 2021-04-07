@@ -48,7 +48,7 @@ class PlantillaController extends Controller
         $addPosition = new Position;
         $addPosition->position_name     = $request['positionName'];
         $addPosition->save();
-        return response()->json(['success'=>true]);
+        return response()->json(['success'=>true, 'position_id' => $addPosition->position_id]);
 
     }
 }
