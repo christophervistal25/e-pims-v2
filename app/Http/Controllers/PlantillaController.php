@@ -24,9 +24,9 @@ class PlantillaController extends Controller
      */
     public function index(Request $req)
     {
-        $employee = Employee::get();
-        $office = Office::get();
-        $position = Position::get();
+        $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->get();
+        $office = Office::select('office_code', 'office_name')->get();
+        $position = Position::select('position_id', 'position_name')->get();
         $salarygrade = SalaryGrade::get(['sg_no']);
         $status = ['Please Select', 'Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
         count($status) - 1;
@@ -36,26 +36,26 @@ class PlantillaController extends Controller
         count($areatype) - 1;
         $arealevel = ['Please Select','K','T','S','A'];
         count($arealevel) - 1;
-        // $sg_no = 1;
-        // $selected_step = 2;
-        // $currentSalaryamount = SalaryGrade::where('sg_no', $sg_no)->first(['sg_year', 'sg_step' . $selected_step ]);
-        // dd($currentSalaryamount);
         return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade'));
     }
-    // }
+
     public function list(Request $request)
     {
-        // return Datatables::of(Plantilla::query())->make(true);
-        // $employee = Employee::get();
-        // $office = Office::where('office_code')->get('office_name');
-        // $position = Position::where('')->get();
-
         if ($request->ajax()) {
-            $data = Plantilla::query();
-            return Datatables::of($data)
+            $data = Plantilla::select('plantilla_id', 'item_no', 'position_id', 'office_code', 'status', 'employee_id')->with('office:office_code,office_short_name','positions:position_id,position_name', 'employee:employee_id,firstname,middlename,lastname,extension');
+            return (new Datatables)->eloquent($data)
                     ->addIndexColumn()
+                    ->addColumn('employee', function ($row) {
+                        return $row->employee->firstname;
+                    })
+                    ->addColumn('positions', function ($row) {
+                        return $row->positions->position_name;
+                    })
+                    ->addColumn('office', function ($row) {
+                        return $row->office->office_short_name;
+                    })
                     ->addColumn('action', function($row){
-                           $btn = "<a href='". route('plantilla.edit', $row->plantilla_id) . "' class='text-white edit btn btn-primary btn-sm'>Edit</a>";
+                        $btn = "<a href='". route('plantilla.edit', $row->plantilla_id) . "' class='text-white edit btn btn-primary btn-sm'>Edit</a>";
                             return $btn;
                     })
                     ->rawColumns(['action'])
@@ -71,7 +71,6 @@ class PlantillaController extends Controller
      */
     public function create()
     {
-       
     }
 
     /**
@@ -117,7 +116,6 @@ class PlantillaController extends Controller
         $plantilla->area_type              = $request['areaType'];
         $plantilla->area_level             = $request['areaLevel'];
         $plantilla->save();
-        // return redirect('/plantilla')->with('success','Added Successfully');
         return response()->json(['success'=>true]);
     }
 

@@ -19,11 +19,11 @@ class Plantilla extends Model
 
     public function office()
     {
-        return $this->hasOne(Office::class);
+        return $this->hasOne(Office::class, 'office_code', 'office_code');
     }
 
-    public function position()
+    public function positions()
     {
-        return $this->hasMany(Position::class);
+        return $this->hasOne(Position::class, 'position_id', 'position_id');
     }
 }
