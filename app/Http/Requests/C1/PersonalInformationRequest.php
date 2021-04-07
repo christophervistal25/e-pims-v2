@@ -38,7 +38,7 @@ class PersonalInformationRequest extends FormRequest
             'status'                 => 'required|in:'  . implode(',', $status),
             'height'                 => ['required', 'integer'],
             'weight'                 => ['required', 'integer'],
-            'bloodType'              => 'required',
+            'bloodType'              => ['required', 'max:3'],
             'gsisIdNo'               => [],
             'pagibigIdNo'            => [],
             'philHealthIdNo'         => [],
@@ -57,14 +57,14 @@ class PersonalInformationRequest extends FormRequest
             'residentialBarangay'    => ['required', 'exists:barangays,code'],
             'residentialCity'        => ['required', 'exists:cities,code'],
             'residentialProvince'    => ['required', 'exists:provinces,code'],
-            'residentialZipCode'     => ['required', 'integer'],
+            'residentialZipCode'     => ['required', 'max:4'],
             'permanentLotNo'         => [],
             'permanentStreet'        => [],
             'permanentSubdivision'   => [],
             'permanentBarangay'      => ['required', 'exists:barangays,code'],
             'permanentCity'          => ['required', 'exists:cities,code'],
             'permanentProvince'      => ['required', 'exists:provinces,code'],
-            'permanentZipCode'       => ['required', 'integer']
+            'permanentZipCode'       => ['required', 'max:4']
         ];
     }
 }

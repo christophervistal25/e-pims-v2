@@ -63,21 +63,37 @@
                             v-for="(workExperience, index) in workExperience"
                             :key="index"
                         >
-                            <th scope="row">
+                            <td scope="row">
                                 <input
                                     type="date"
                                     class="form-control rounded-0 border-0"
                                     placeholder="FROM"
+                                    :class="
+                                        errors.hasOwnProperty(`${index}.from`)
+                                            ? 'is-invalid'
+                                            : ''
+                                    "
                                     v-model="workExperience.from"
                                 />
-                            </th>
+                                <p class="text-danger text-sm">
+                                    {{ errors[`${index}.from`] }}
+                                </p>
+                            </td>
                             <td>
                                 <input
                                     type="date"
                                     class="form-control rounded-0 border-0"
+                                    :class="
+                                        errors.hasOwnProperty(`${index}.to`)
+                                            ? 'is-invalid'
+                                            : ''
+                                    "
                                     placeholder="TO"
                                     v-model="workExperience.to"
                                 />
+                                <p class="text-danger text-sm">
+                                    {{ errors[`${index}.to`] }}
+                                </p>
                             </td>
                             <td>
                                 <input
@@ -85,8 +101,18 @@
                                     class="form-control rounded-0 border-0"
                                     placeholder="Input"
                                     v-model="workExperience.position"
+                                    :class="
+                                        errors.hasOwnProperty(
+                                            `${index}.position`
+                                        )
+                                            ? 'is-invalid'
+                                            : ''
+                                    "
                                     style="text-transform:uppercase"
                                 />
+                                <p class="text-danger text-sm">
+                                    {{ errors[`${index}.position`] }}
+                                </p>
                             </td>
                             <td>
                                 <input
@@ -94,8 +120,16 @@
                                     class="form-control rounded-0 border-0"
                                     placeholder="e.g Tandag"
                                     v-model="workExperience.dept"
+                                    :class="
+                                        errors.hasOwnProperty(`${index}.dept`)
+                                            ? 'is-invalid'
+                                            : ''
+                                    "
                                     style="text-transform:uppercase"
                                 />
+                                <p class="text-danger text-sm">
+                                    {{ errors[`${index}.dept`] }}
+                                </p>
                             </td>
 
                             <td>
@@ -103,34 +137,74 @@
                                     type="number"
                                     class="form-control rounded-0 border-0"
                                     placeholder=""
+                                    :class="
+                                        errors.hasOwnProperty(
+                                            `${index}.monSalary`
+                                        )
+                                            ? 'is-invalid'
+                                            : ''
+                                    "
                                     v-model="workExperience.monSalary"
                                 />
+                                <p class="text-danger text-sm">
+                                    {{ errors[`${index}.monSalary`] }}
+                                </p>
                             </td>
                             <td>
                                 <input
                                     type="number"
                                     class="form-control rounded-0 border-0"
                                     placeholder=""
+                                    :class="
+                                        errors.hasOwnProperty(
+                                            `${index}.payGrade`
+                                        )
+                                            ? 'is-invalid'
+                                            : ''
+                                    "
                                     v-model="workExperience.payGrade"
                                 />
+                                <p class="text-danger text-sm">
+                                    {{ errors[`${index}.payGrade`] }}
+                                </p>
                             </td>
                             <td>
                                 <input
                                     type="text"
                                     class="form-control rounded-0 border-0"
+                                    :class="
+                                        errors.hasOwnProperty(
+                                            `${index}.statOfApp`
+                                        )
+                                            ? 'is-invalid'
+                                            : ''
+                                    "
                                     placeholder="e.g J.O"
                                     v-model="workExperience.statOfApp"
                                     style="text-transform:uppercase"
                                 />
+                                <p class="text-danger text-sm">
+                                    {{ errors[`${index}.statOfApp`] }}
+                                </p>
                             </td>
                             <td>
                                 <input
                                     type="text"
                                     class="form-control rounded-0 border-0 text-uppercase"
+                                    :class="
+                                        errors.hasOwnProperty(
+                                            `${index}.govServ`
+                                        )
+                                            ? 'is-invalid'
+                                            : ''
+                                    "
                                     maxlength="1"
                                     placeholder=""
                                     v-model="workExperience.govServ"
                                 />
+                                <p class="text-danger text-sm">
+                                    {{ errors[`${index}.govServ`] }}
+                                </p>
                             </td>
                             <td class="jumbotron">
                                 <button
@@ -205,10 +279,11 @@ export default {
                     monSalary: "",
                     payGrade: "",
                     statOfApp: "",
-                    govServ: "N",
+                    govServ: "",
                     employee_id: localStorage.getItem("employee_id")
                 }
-            ]
+            ],
+            errors: {}
         };
     },
     watch: {
@@ -226,7 +301,7 @@ export default {
                 monSalary: "",
                 payGrade: "",
                 statOfApp: "",
-                govServ: "N",
+                govServ: "",
                 employee_id: localStorage.getItem("employee_id")
             });
         },
@@ -241,6 +316,7 @@ export default {
                 .then(response => {
                     this.isLoading = false;
                     this.isComplete = true;
+                    this.errors = {};
 
                     localStorage.setItem(
                         "work_experience",
@@ -248,7 +324,21 @@ export default {
                     );
                     this.$emit("next_tab");
                 })
-                .catch(err => (this.isLoading = false));
+                .catch(error => {
+                    this.isLoading = false;
+                    this.errors = {};
+                    // Check the error status code.
+                    if (error.response.status === 422) {
+                        Object.keys(error.response.data.errors).map(
+                            (field, index) => {
+                                let [fieldMessage] = error.response.data.errors[
+                                    field
+                                ];
+                                this.errors[field] = fieldMessage;
+                            }
+                        );
+                    }
+                });
         },
         removeField(index) {
             if (index != 0) {

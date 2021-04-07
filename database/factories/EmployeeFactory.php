@@ -11,6 +11,7 @@ use Faker\Generator as Faker;
  */
 $factory->define(Employee::class, function (Faker $faker) {
     return [
+        'trans_no'             => $faker->randomDigit(),
         'employee_id'          => $faker->ean8,
         'lastname'             => $faker->lastname,
         'firstname'            => $faker->name,
@@ -39,7 +40,7 @@ $factory->define(Employee::class, function (Faker $faker) {
         'residential_barangay' => $faker->city,
         'residential_city'     => $faker->city,
         'residential_province' => $faker->city,
-        'residential_zip_code'   => '8300',
+        'residential_zip_code' => '8300',
         'permanent_house_no'   => '',
         'permanent_street'     => '',
         'permanent_village'    => $faker->city,

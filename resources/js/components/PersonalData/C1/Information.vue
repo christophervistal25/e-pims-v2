@@ -235,10 +235,18 @@
                         <input
                             type="text"
                             class="form-control"
+                            :class="
+                                errors.hasOwnProperty('bloodType')
+                                    ? 'is-invalid'
+                                    : ''
+                            "
                             placeholder="Enter bloodtype"
                             v-model="personal_data.bloodType"
                             style="text-transform:uppercase"
                         />
+                        <p class="text-danger text-sm">
+                            {{ errors.bloodType }}
+                        </p>
                     </div>
                 </div>
                 <div class="row pl-3 pr-3">

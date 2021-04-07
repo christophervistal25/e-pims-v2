@@ -56,7 +56,7 @@
                     <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (FROM)</label>
                         <input
-                            type="date"
+                            type="month"
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.eperiodFrom"
@@ -74,7 +74,7 @@
                     <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (TO)</label>
                         <input
-                            type="date"
+                            type="month"
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.eperiodTo"
@@ -104,10 +104,20 @@
                         <div class="col-lg-3">
                             <label>YEAR GRADUATED</label>
                             <input
-                                type="text"
+                                type="number"
                                 class="form-control"
                                 placeholder=""
                                 v-model="educationalBackground.eyrGrad"
+                                @input="
+                                    if (
+                                        educationalBackground.eyrGrad.length >
+                                        yearMaxLength
+                                    )
+                                        educationalBackground.eyrGrad = educationalBackground.eyrGrad.slice(
+                                            0,
+                                            yearMaxLength
+                                        );
+                                "
                                 :class="
                                     !errors.hasOwnProperty('eyrGrad')
                                         ? ''
@@ -169,7 +179,7 @@
                     <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (FROM)</label>
                         <input
-                            type="date"
+                            type="month"
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.speriodFrom"
@@ -187,7 +197,7 @@
                     <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (TO)</label>
                         <input
-                            type="date"
+                            type="month"
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.speriodTo"
@@ -217,10 +227,20 @@
                         <div class="col-lg-3">
                             <label>YEAR GRADUATED</label>
                             <input
-                                type="text"
+                                type="number"
                                 class="form-control"
                                 placeholder=""
                                 v-model="educationalBackground.syrGrad"
+                                @input="
+                                    if (
+                                        educationalBackground.syrGrad.length >
+                                        yearMaxLength
+                                    )
+                                        educationalBackground.syrGrad = educationalBackground.syrGrad.slice(
+                                            0,
+                                            yearMaxLength
+                                        );
+                                "
                                 :class="
                                     !errors.hasOwnProperty('syrGrad')
                                         ? ''
@@ -282,7 +302,7 @@
                     <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (FROM)</label>
                         <input
-                            type="date"
+                            type="month"
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.vperiodFrom"
@@ -299,7 +319,7 @@
                     <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (TO)</label>
                         <input
-                            type="date"
+                            type="month"
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.vperiodTo"
@@ -330,10 +350,20 @@
                     <div class="col-lg-3">
                         <label>YEAR GRADUATED</label>
                         <input
-                            type="text"
+                            type="number"
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.vyrGrad"
+                            @input="
+                                if (
+                                    educationalBackground.vyrGrad.length >
+                                    yearMaxLength
+                                )
+                                    educationalBackground.vyrGrad = educationalBackground.vyrGrad.slice(
+                                        0,
+                                        yearMaxLength
+                                    );
+                            "
                             :class="
                                 !errors.hasOwnProperty('vyrGrad')
                                     ? ''
@@ -392,7 +422,7 @@
                     <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (FROM)</label>
                         <input
-                            type="date"
+                            type="month"
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.cperiodFrom"
@@ -407,7 +437,7 @@
                     <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (TO)</label>
                         <input
-                            type="date"
+                            type="month"
                             class="form-control"
                             v-model="educationalBackground.cperiodTo"
                             :class="
@@ -439,10 +469,20 @@
                     <div class="col-lg-3">
                         <label>YEAR GRADUATED</label>
                         <input
-                            type="text"
+                            type="number"
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.cyrGrad"
+                            @input="
+                                if (
+                                    educationalBackground.cyrGrad.length >
+                                    yearMaxLength
+                                )
+                                    educationalBackground.cyrGrad = educationalBackground.cyrGrad.slice(
+                                        0,
+                                        yearMaxLength
+                                    );
+                            "
                             :class="
                                 !errors.hasOwnProperty('cyrGrad')
                                     ? ''
@@ -503,7 +543,7 @@
                     <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (FROM)</label>
                         <input
-                            type="date"
+                            type="month"
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.gperiodFrom"
@@ -520,7 +560,7 @@
                     <div class="col-lg-3">
                         <label>PERIOD OF ATTENDANCE (TO)</label>
                         <input
-                            type="date"
+                            type="month"
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.gperiodTo"
@@ -552,10 +592,20 @@
                     <div class="col-lg-3">
                         <label>YEAR GRADUATED</label>
                         <input
-                            type="text"
+                            type="number"
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.gyrGrad"
+                            @input="
+                                if (
+                                    educationalBackground.gyrGrad.length >
+                                    yearMaxLength
+                                )
+                                    educationalBackground.gyrGrad = educationalBackground.gyrGrad.slice(
+                                        0,
+                                        yearMaxLength
+                                    );
+                            "
                             :class="
                                 !errors.hasOwnProperty('gyrGrad')
                                     ? ''
@@ -610,6 +660,7 @@ export default {
             // E- Elemementary => (sample : ebasicEduc)
             isComplete: false,
             isLoading: false,
+            yearMaxLength: 4,
             educationalBackground: {
                 employee_id: "",
                 elementary: "",

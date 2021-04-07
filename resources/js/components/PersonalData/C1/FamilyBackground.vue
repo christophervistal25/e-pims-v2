@@ -48,14 +48,20 @@
                             <input
                                 type="text"
                                 class="form-control"
-                                :class="errors.hasOwnProperty('ssurname') ? 'is-invalid' : ''"
+                                :class="
+                                    errors.hasOwnProperty('ssurname')
+                                        ? 'is-invalid'
+                                        : ''
+                                "
                                 id="ssurname"
                                 v-model="familyBackground.ssurname"
                                 placeholder="Enter Spouse's Surname"
                                 value=""
                                 style="text-transform:uppercase"
                             />
-                            <p class='text-danger text-sm'>{{ errors.ssurname }}</p>
+                            <p class="text-danger text-sm">
+                                {{ errors.ssurname }}
+                            </p>
                         </div>
                         <div class="form-group col-lg-3 ">
                             <label for="sfirstname">SPOUSE'S FIRST NAME</label
@@ -63,14 +69,20 @@
                             <input
                                 type="text"
                                 class="form-control"
-                                :class="errors.hasOwnProperty('sfirstname') ? 'is-invalid' : ''"
+                                :class="
+                                    errors.hasOwnProperty('sfirstname')
+                                        ? 'is-invalid'
+                                        : ''
+                                "
                                 id="sfirstname"
                                 v-model="familyBackground.sfirstname"
                                 placeholder="Enter Spouse's First Name"
                                 value=""
                                 style="text-transform:uppercase"
                             />
-                            <p class='text-danger text-sm'>{{ errors.sfirstname }}</p>
+                            <p class="text-danger text-sm">
+                                {{ errors.sfirstname }}
+                            </p>
                         </div>
                         <div class="form-group col-lg-3">
                             <label for="smiddleame">SPOUSE'S MIDDLE NAME</label>
@@ -180,17 +192,27 @@
                                         style="text-transform:uppercase"
                                     />
                                 </td>
-                                <td class='align-middle'>
+                                <td class="align-middle">
                                     <input
                                         type="date"
                                         class="form-control"
-                                        :class="errors.hasOwnProperty(`spouse.${index}.cdateOfBirth`) ? 'is-invalid' : ''"
+                                        :class="
+                                            errors.hasOwnProperty(
+                                                `spouse.${index}.cdateOfBirth`
+                                            )
+                                                ? 'is-invalid'
+                                                : ''
+                                        "
                                         id="cdateOfBirth"
                                         placeholder="Enter Spouse's Business Address"
                                         v-model="spouse.cdateOfBirth"
                                     />
-                                    <div class='text-right'>
-                                        <span class='text-danger text-xs'>{{ errors[`spouse.${index}.cdateOfBirth`] }}</span>
+                                    <div class="text-right">
+                                        <span class="text-danger text-xs">{{
+                                            errors[
+                                                `spouse.${index}.cdateOfBirth`
+                                            ]
+                                        }}</span>
                                     </div>
                                 </td>
                                 <td class="text-center">
@@ -295,7 +317,6 @@
                         <label for="msurname">MOTHER'S MAIDEN SURNAME</label>
                         <input
                             type="text"
-                            maxlength="3"
                             class="form-control"
                             :class="
                                 !errors.hasOwnProperty('msurname')

@@ -92,6 +92,13 @@
                                     <input
                                         type="date"
                                         class="form-control rounded-0 border-0"
+                                        :class="
+                                            errors.hasOwnProperty(
+                                                `${index}.dateOfExam`
+                                            )
+                                                ? 'border is-invalid'
+                                                : ''
+                                        "
                                         placeholder="Input"
                                         v-model="civil.dateOfExam"
                                     />
@@ -101,6 +108,13 @@
                                         type="text"
                                         class="form-control rounded-0 border-0"
                                         placeholder="e.g Tandag"
+                                        :class="
+                                            errors.hasOwnProperty(
+                                                `${index}.placeOfExam`
+                                            )
+                                                ? 'border is-invalid'
+                                                : ''
+                                        "
                                         v-model="civil.placeOfExam"
                                         style="text-transform:uppercase"
                                     />
@@ -192,7 +206,8 @@ export default {
                     dateOfValid: "",
                     employee_id: localStorage.getItem("employee_id")
                 }
-            ]
+            ],
+            errors: {}
         };
     },
     methods: {
@@ -219,13 +234,28 @@ export default {
                 .then(response => {
                     this.isLoading = false;
                     this.isComplete = true;
+                    this.errors = {};
                     this.$emit("display-work-experience");
                     localStorage.setItem(
                         "civil_service",
                         JSON.stringify(response.data)
                     );
                 })
-                .catch(err => (this.isLoading = false));
+                .catch(error => {
+                    this.isLoading = false;
+                    this.errors = {};
+                    // Check the error status code.
+                    if (error.response.status === 422) {
+                        Object.keys(error.response.data.errors).map(
+                            (field, index) => {
+                                let [fieldMessage] = error.response.data.errors[
+                                    field
+                                ];
+                                this.errors[field] = fieldMessage;
+                            }
+                        );
+                    }
+                });
         },
         removeField(index) {
             if (index != 0) {

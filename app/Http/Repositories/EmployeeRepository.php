@@ -167,6 +167,7 @@ class EmployeeRepository
         // Get the employee id of each record.
         $employeeId = $civilRecords[self::FIRST_INDEX]['employee_id'];
         $employee = Employee::find($employeeId);
+        $records = [];
         foreach($civilRecords as $record) {
             if(!is_null($record['rating'])) {
                 $records[] = EmployeeCivilService::firstOrNew(

@@ -51,6 +51,13 @@ class Employee extends Model
     ];
 
 
+    public static function boot()
+    {
+        parent::boot();
+        self::creating(function($employee) {
+            $employee->trans_no = str_pad((self::count() + 1), 3, 0, STR_PAD_LEFT);
+        });
+    }
 
     /**
      * Set the firstname of employee to uppercase

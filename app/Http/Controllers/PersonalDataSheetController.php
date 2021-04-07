@@ -8,6 +8,8 @@ use App\Http\Repositories\EmployeeRepository;
 use App\Http\Requests\C1\PersonalInformationRequest;
 use App\Http\Requests\C1\FamilyBackgroundRequest;
 use App\Http\Requests\C1\EducationalBackgroundRequest;
+use App\Http\Requests\C2\CivilServiceRequest;
+use App\Http\Requests\C2\WorkExperienceRequest;
 use App\Http\Requests\C4\RelevantQueriesRequest;
 use App\Http\Requests\C4\GovernmentIssuedIDRequest;
 
@@ -55,12 +57,12 @@ class PersonalDataSheetController extends Controller
         return $this->employeeRepository->addEducationalBackground($request->all());
     }
 
-    public function storeCivilService(Request $request)
+    public function storeCivilService(CivilServiceRequest $request)
     {
         return $this->employeeRepository->addCivilService($request->all());
     }
 
-    public function storeWorkExperience(Request $request)
+    public function storeWorkExperience(WorkExperienceRequest $request)
     {
         return $this->employeeRepository->addWorkExperience($request->all());
     }
