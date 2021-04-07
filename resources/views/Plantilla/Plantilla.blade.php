@@ -19,20 +19,16 @@
                 
                     <div class="form-group col-12 col-lg-2">
                         <label>Item No<span class="text-danger">*</span></label>
-                        <input value="{{ old('itemNo') }}" class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" name="itemNo" id="num-only" type="text" placeholder="Item No.">
-                        @if($errors->has('itemNo'))
-                        <small  class="form-text text-danger">
-                        {{ $errors->first('itemNo') }} </small>
-                        @endif
+                        <input value="{{ old('itemNo') }}" class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" name="itemNo" id="itemNo" type="text" placeholder="Item No.">
+                        <div id='item-no-error-message' class='text-danger'>
+                        </div>
                     </div>
 
                     <div class="form-group col-12 col-lg-2">
                         <label>Old Item No<span class="text-danger">*</span></label>
-                        <input value="{{ old('oldItemNo') }}" class="form-control {{ $errors->has('oldItemNo')  ? 'is-invalid' : ''}}" name="oldItemNo" id="num-only" type="text" placeholder="Old Item No">
-                        @if($errors->has('oldItemNo'))
-                        <small  class="form-text text-danger">
-                        {{ $errors->first('oldItemNo') }} </small>
-                        @endif
+                        <input value="{{ old('oldItemNo') }}" class="form-control {{ $errors->has('oldItemNo')  ? 'is-invalid' : ''}}" name="oldItemNo" id="oldItemNo" type="text" placeholder="Old Item No">
+                        <div id='old_item-no-error-message' class='text-danger'>
+                        </div>
                     </div>
 
                     <div class="form-group col-12 col-lg-5">
@@ -44,10 +40,8 @@
                             <option {{ old('positionTitle') == $positions->position_id ? 'selected' : '' }} value="{{ $positions->position_id}}">{{ $positions->position_name }}</option>
                         @endforeach
                         </select>
-                        @if($errors->has('positionTitle'))
-                        <small  class="form-text text-danger">
-                        {{ $errors->first('positionTitle') }} </small>
-                        @endif
+                        <div id='position-title-error-message' class='text-danger'>
+                        </div>
                     </div>
                     <div class="form-group col-12 col-lg-1">
                         <button id="addPosition" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addPositionBtn"><i class="la la-plus"></i></button>
@@ -56,10 +50,6 @@
                     <div class="form-group col-12 col-lg-2">
                         <label>Position Ext</label>
                         <input value="{{ old('positionTitleExt') }}" class="form-control {{ $errors->has('positionTitleExt')  ? 'is-invalid' : ''}}" name="positionTitleExt" type="text">
-                        @if($errors->has('positionTitleExt'))
-                        <small  class="form-text text-danger">
-                        {{ $errors->first('positionTitleExt') }} </small>
-                        @endif
                     </div>
 
                     <div class="form-group col-12 col-lg-4">
@@ -71,10 +61,8 @@
                         <option {{ old('employeeName') == $employees->employee_id ? 'selected' : '' }} value="{{ $employees->employee_id }}"> {{ $employees->lastname }}, {{ $employees->firstname }} {{ $employees->middlename }}</option>
                     @endforeach
                         </select>
-                        @if($errors->has('employeeName'))
-                        <small  class="form-text text-danger">
-                        {{ $errors->first('employeeName') }} </small>
-                        @endif
+                        <div id='employee-name-error-message' class='text-danger'>
+                        </div>
                     </div>
 
                     <div class="form-group col-12 col-lg-3">
@@ -85,10 +73,8 @@
                              <option {{ old('salaryGrade') == $salarygrades ? 'selected' : '' }} value="{{ $salarygrades}}">{{ $salarygrades}}</option>
                            @endforeach
                         </select>
-                        @if($errors->has('salaryGrade'))
-                        <small  class="form-text text-danger">
-                        {{ $errors->first('salaryGrade') }} </small>
-                        @endif
+                        <div id='salary-grade-error-message' class='text-danger'>
+                        </div>
                     </div>
 
                     <div class="form-group col-12 col-lg-2">
@@ -99,10 +85,8 @@
                               <option {{ old('stepNo') == $step_no ? 'selected' : '' }} value="{{ $step_no}}">{{ $step_no}}</option>
                             @endforeach
                          </select>
-                         @if($errors->has('stepNo'))
-                         <small  class="form-text text-danger">
-                         {{ $errors->first('stepNo') }} </small>
-                         @endif
+                         <div id='steps-error-message' class='text-danger'>
+                        </div>
                     </div>
 
                     <div class="form-group col-12 col-lg-3 d-none">
@@ -120,61 +104,51 @@
                     <div class="form-group col-12 col-lg-3">
                         <label>Salary Amount<span class="text-danger">*</span></label>
                         <input value="{{ old('salaryAmount') }}" class="form-control {{ $errors->has('salaryAmount')  ? 'is-invalid' : ''}}" name="salaryAmount" id="currentSalaryamount" type="text" readonly>
-                        @if($errors->has('salaryAmount'))
-                        <small  class="form-text text-danger">
-                        {{ $errors->first('salaryAmount') }} </small>
-                        @endif
+                        <div id='salary-amount-error-message' class='text-danger'>
+                        </div>
                     </div>
 
                     <div class="form-group col-12 col-lg-3">
                         <label>Office<span class="text-danger">*</span></label>
-                        <select value="" name="officeCode" class="select {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}">
+                        <select value="" name="officeCode" class="select {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}" id="officeCode">
                             <option>Please Select</option>
                             @foreach($office as $offices)
                             <option {{ old('officeCode') == $offices->office_code ? 'selected' : '' }} value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
                             @endforeach
                         </select>
-                        @if($errors->has('officeCode'))
-                        <small  class="form-text text-danger">
-                        {{ $errors->first('officeCode') }} </small>
-                        @endif
+                        <div id='office-error-message' class='text-danger'>
+                        </div>
                     </div>
 
                     <div class="form-group col-12 col-lg-3">
                         <label>Division<span class="text-danger">*</span></label>
-                        <select value="" name="divisionId" class="select {{ $errors->has('divisionId')  ? 'is-invalid' : ''}}">
+                        <select value="" name="divisionId" class="select {{ $errors->has('divisionId')  ? 'is-invalid' : ''}}" id="divisionId">
                             <option>Please Select</option>
                             @foreach($office as $offices)
                             <option {{ old('divisionId') == $offices->office_code ? 'selected' : '' }} value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
                             @endforeach
                         </select>
-                        @if($errors->has('divisionId'))
-                        <small  class="form-text text-danger">
-                        {{ $errors->first('divisionId') }} </small>
-                        @endif
+                        <div id='division-error-message' class='text-danger'>
+                        </div>
                     </div>
 
                     <div class="form-group col-12 col-lg-3">
                         <label>Original Appointment<span class="text-danger">*</span></label>
-                        <input value="{{ old('originalAppointment') }}" class="form-control {{ $errors->has('originalAppointment')  ? 'is-invalid' : ''}}" name="originalAppointment" type="date">
-                        @if($errors->has('originalAppointment'))
-                        <small  class="form-text text-danger">
-                        {{ $errors->first('originalAppointment') }} </small>
-                        @endif
+                        <input value="{{ old('originalAppointment') }}" class="form-control {{ $errors->has('originalAppointment')  ? 'is-invalid' : ''}}" name="originalAppointment" type="date" id="originalAppointment">
+                        <div id='original-appointment-error-message' class='text-danger'>
+                        </div>
                     </div>
 
                     <div class="form-group col-12 col-lg-3">
                         <label>Last Promotion</label>
-                        <input value="{{ old('lastPromotion') }}" class="form-control {{ $errors->has('lastPromotion')  ? 'is-invalid' : ''}}" name="lastPromotion" type="date">
-                        @if($errors->has('lastPromotion'))
-                        <small  class="form-text text-danger">
-                        {{ $errors->first('lastPromotion') }} </small>
-                        @endif
+                        <input value="{{ old('lastPromotion') }}" class="form-control {{ $errors->has('lastPromotion')  ? 'is-invalid' : ''}}" name="lastPromotion" type="date" id="lastPromotion">
+                        <div id='last-promotion-error-message' class='text-danger'>
+                        </div>
                     </div>
                 
                     <div class="form-group col-12 col-lg-4">
                         <label>Status <span class="text-danger">*</span></label>
-                        <select value="" name="status" class="select {{ $errors->has('status')  ? 'is-invalid' : ''}}">
+                        <select value="" name="status" class="select {{ $errors->has('status')  ? 'is-invalid' : ''}}" id="status">
                             @foreach(range(0, 10) as $statuses)
                                 @if($status[$statuses] == old('status'))
                                     <option value="{{ $status[$statuses]}}" selected>{{ $status[$statuses] }}</option>
@@ -183,15 +157,13 @@
                                 @endif
                             @endforeach
                         </select>
-                        @if($errors->has('status'))
-                        <small  class="form-text text-danger">
-                        {{ $errors->first('status') }} </small>
-                        @endif
+                        <div id='status-error-message' class='text-danger'>
+                        </div>
                     </div>
 
                     <div class="form-group col-12 col-lg-3">
                         <label>Area Code<span class="text-danger">*</span></label>
-                        <select name="areaCode" value="" class="select floating {{ $errors->has('areaCode')  ? 'is-invalid' : ''}}">
+                        <select name="areaCode" value="" class="select floating {{ $errors->has('areaCode')  ? 'is-invalid' : ''}}" id="areaCode">
                             @foreach(range(0, 16) as $areacodes)
                                 @if($areacode[$areacodes] == old('areaCode'))
                                     <option value="{{ $areacode[$areacodes]}}" selected>{{ $areacode[$areacodes] }}</option>
@@ -200,15 +172,13 @@
                                 @endif
                             @endforeach
                         </select>
-                        @if($errors->has('areaCode'))
-                        <small  class="form-text text-danger">
-                        {{ $errors->first('areaCode') }} </small>
-                        @endif
+                        <div id='area-code-error-message' class='text-danger'>
+                        </div>
                     </div>
                     
                     <div class="form-group form-group col-12 col-lg-3">
                         <label>Area Type<span class="text-danger">*</span></label>
-                        <select name="areaType" value="" class="select floating {{ $errors->has('areaType')  ? 'is-invalid' : ''}}">
+                        <select name="areaType" value="" class="select floating {{ $errors->has('areaType')  ? 'is-invalid' : ''}}" id="areaType">
                             @foreach(range(0, 5) as $areatypes)
                             @if($areatype[$areatypes] == old('areaType'))
                                 <option value="{{ $areatype[$areatypes]}}" selected>{{ $areatype[$areatypes] }}</option>
@@ -217,15 +187,13 @@
                             @endif
                         @endforeach
                         </select>
-                        @if($errors->has('areaType'))
-                        <small  class="form-text text-danger">
-                        {{ $errors->first('areaType') }} </small>
-                        @endif
+                        <div id='area-type-error-message' class='text-danger'>
+                        </div>
                     </div>
 
                     <div class="form-group form-group col-12 col-lg-2">
                         <label>Area Level<span class="text-danger">*</span></label>
-                        <select name="areaLevel" value="" class="select floating {{ $errors->has('areaLevel')  ? 'is-invalid' : ''}}">
+                        <select name="areaLevel" value="" class="select floating {{ $errors->has('areaLevel')  ? 'is-invalid' : ''}}" id="areaLevel">
                         @foreach(range(0, 4) as $arealevels)
                                 @if($arealevel[$arealevels] == old('areaLevel'))
                                     <option value="{{ $arealevel[$arealevels]}}" selected>{{ $arealevel[$arealevels] }}</option>
@@ -234,10 +202,8 @@
                                 @endif
                         @endforeach
                         </select>
-                        @if($errors->has('areaLevel'))
-                        <small  class="form-text text-danger">
-                        {{ $errors->first('areaLevel') }} </small>
-                        @endif
+                        <div id='area-level-error-message' class='text-danger'>
+                        </div>
                     </div>
 
                     <div class="form-group form-group submit-section col-12">
