@@ -14,6 +14,7 @@ class CreateEmployeesTable extends Migration
     public function up()
     {
         Schema::create('employees', function (Blueprint $table) {
+            $table->autoIncrement('trans_no');
             $table->string('employee_id')->primary();
             $table->string('lastname',60);
             $table->string('firstname',60);
@@ -27,6 +28,8 @@ class CreateEmployeesTable extends Migration
             $table->integer('weight');
             $table->string('blood_type')->nullable();
             $table->string('gsis_id_no')->nullable();
+            $table->string('gsis_policy_no')->nullable();
+            $table->string('gsis_bp_no')->nullable();
             $table->string('pag_ibig_no')->nullable();
             $table->string('philhealth_no')->nullable();
             $table->string('sss_no')->nullable();
