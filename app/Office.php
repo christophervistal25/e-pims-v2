@@ -10,8 +10,8 @@ class Office extends Model
         'office_code',
         'office_name'
     ];
-    public function officeCode()
+    public function office()
     {
-        return $this->belongsTo(Plantilla::class, 'employee_id', 'employee_id');
+        return $this->belongsTo(Plantilla::class, 'office_code', 'office_code');
     }
 }
