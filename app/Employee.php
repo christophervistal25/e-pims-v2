@@ -23,6 +23,8 @@ class Employee extends Model
         'weight',
         'blood_type',
         'gsis_id_no',
+        'gsis_policy_no',
+        'gsis_bp_no',
         'pag_ibig_no',
         'philhealth_no',
         'sss_no',
@@ -149,6 +151,6 @@ class Employee extends Model
     {
         return self::with($relations)->find($employeeId);
     }
-    
+
 
 }

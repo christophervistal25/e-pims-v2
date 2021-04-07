@@ -34,7 +34,7 @@
 		<![endif]-->
 </head>
 
-<body class='mini-sidebar'>
+<body   >
 	<!-- Main Wrapper -->
 	<div class="main-wrapper" id="app">
 		<!-- Header -->

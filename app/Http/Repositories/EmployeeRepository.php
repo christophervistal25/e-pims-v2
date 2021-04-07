@@ -88,7 +88,6 @@ class EmployeeRepository
     {
 
         $employee = Employee::find($data['employee_id']);
-
         $this->insertChilds($employee, $data['spouse']);
 
         $employeeFamilyBackground = new EmployeeFamilyBackground();
