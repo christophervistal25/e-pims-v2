@@ -7,9 +7,9 @@
         columns: [
                 { data: 'plantilla_id', name: 'plantilla_id' },
                 { data: 'item_no', name: 'item_no' },
-                { data: 'position_id', name: 'position_title' },
-                { data: 'employee_id', name: 'employee_id' },
-                { data: 'office_code', name: 'office' },
+                { data: 'positions', name: 'positions' },
+                { data: 'employee', name: 'employee' },
+                { data: 'office', name: 'office' },
                 { data: 'status', name: 'status' },
                 {data: 'action', name: 'action'},
         ]

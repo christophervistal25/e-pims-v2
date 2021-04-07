@@ -47,6 +47,7 @@
                                                 : ''
                                         "
                                         v-model="governmentId.nameOfGovId"
+                                        style="text-transform:uppercase"
                                     />
                                 </td>
                                 <td>
@@ -75,6 +76,7 @@
                                         "
                                         placeholder=""
                                         v-model="governmentId.dateOfIssuance"
+                                        style="text-transform:uppercase"
                                     />
                                 </td>
                             </tr>

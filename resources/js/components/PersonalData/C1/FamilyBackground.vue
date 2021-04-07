@@ -53,6 +53,7 @@
                                 v-model="familyBackground.ssurname"
                                 placeholder="Enter Spouse's Surname"
                                 value=""
+                                style="text-transform:uppercase"
                             />
                             <p class='text-danger text-sm'>{{ errors.ssurname }}</p>
                         </div>
@@ -67,6 +68,7 @@
                                 v-model="familyBackground.sfirstname"
                                 placeholder="Enter Spouse's First Name"
                                 value=""
+                                style="text-transform:uppercase"
                             />
                             <p class='text-danger text-sm'>{{ errors.sfirstname }}</p>
                         </div>
@@ -79,6 +81,7 @@
                                 v-model="familyBackground.smiddleame"
                                 placeholder="Enter Spouse's Middle Name"
                                 value=""
+                                style="text-transform:uppercase"
                             />
                         </div>
                         <div class="form-group col-lg-3">
@@ -93,6 +96,7 @@
                                 v-model="familyBackground.snameexten"
                                 placeholder="(JR., SR.)"
                                 value=""
+                                style="text-transform:uppercase"
                             />
                         </div>
                     </div>
@@ -105,6 +109,7 @@
                                 id="soccupation"
                                 placeholder="Enter Spouse's Occupation"
                                 v-model="familyBackground.soccupation"
+                                style="text-transform:uppercase"
                             />
                         </div>
                         <div class="form-group col-lg-6">
@@ -117,6 +122,7 @@
                                 id="sempname"
                                 placeholder="Enter Spouse's Employer/Business Name"
                                 v-model="familyBackground.sempname"
+                                style="text-transform:uppercase"
                             />
                         </div>
                     </div>
@@ -131,6 +137,7 @@
                                 id="sbusadd"
                                 placeholder="Enter Spouse's Business Address"
                                 v-model="familyBackground.sbusadd"
+                                style="text-transform:uppercase"
                             />
                         </div>
                         <div class="form-group col-sm-6">
@@ -170,6 +177,7 @@
                                         id="cname"
                                         placeholder="Enter Full Name of Children"
                                         v-model="spouse.cname"
+                                        style="text-transform:uppercase"
                                     />
                                 </td>
                                 <td class='align-middle'>
@@ -223,6 +231,7 @@
                             v-model="familyBackground.fsurname"
                             placeholder="Enter Father's Surname"
                             value=""
+                            style="text-transform:uppercase"
                         />
                         <p class="text-danger text-sm">{{ errors.fsurname }}</p>
                     </div>
@@ -232,7 +241,7 @@
                             type="text"
                             class="form-control"
                             id="ffirstname"
-                             :class="
+                            :class="
                                 !errors.hasOwnProperty('ffirstname')
                                     ? ''
                                     : 'is-invalid'
@@ -240,6 +249,7 @@
                             v-model="familyBackground.ffirstname"
                             placeholder="Enter Father's First Name"
                             value=""
+                            style="text-transform:uppercase"
                         />
                         <p class="text-danger text-sm">
                             {{ errors.ffirstname }}
@@ -259,6 +269,7 @@
                             v-model="familyBackground.fmiddlename"
                             placeholder="Enter Father's Middle Name"
                             value=""
+                            style="text-transform:uppercase"
                         />
                         <p class="text-danger text-sm">
                             {{ errors.fmiddlename }}
@@ -274,6 +285,7 @@
                             v-model="familyBackground.fnameexten"
                             placeholder="(JR., SR.)"
                             value=""
+                            style="text-transform:uppercase"
                         />
                     </div>
                 </div>
@@ -294,6 +306,7 @@
                             v-model="familyBackground.msurname"
                             placeholder="Enter Mother's Maiden Surname"
                             value=""
+                            style="text-transform:uppercase"
                         />
                         <p class="text-danger text-sm">{{ errors.msurname }}</p>
                     </div>
@@ -311,6 +324,7 @@
                             v-model="familyBackground.mfirstname"
                             placeholder="Enter Mother's First Name"
                             value=""
+                            style="text-transform:uppercase"
                         />
                         <p class="text-danger text-sm">
                             {{ errors.mfirstname }}
@@ -332,6 +346,7 @@
                             v-model="familyBackground.mmiddlename"
                             placeholder="Enter Mother's Maiden Middle Name"
                             value=""
+                            style="text-transform:uppercase"
                         />
                         <p class="text-danger text-sm">
                             {{ errors.mmiddlename }}

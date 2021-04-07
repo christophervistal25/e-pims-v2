@@ -87,6 +87,7 @@
                                         class="form-control rounded-0 border-0"
                                         placeholder="NAME"
                                         v-model="learnDev.nameOfTraining"
+                                        style="text-transform:uppercase"
                                     />
                                 </td>
                                 <td>
@@ -119,6 +120,7 @@
                                         class="form-control rounded-0 border-0"
                                         placeholder=""
                                         v-model="learnDev.typeOfLD"
+                                        style="text-transform:uppercase"
                                     />
                                 </td>
                                 <td>
@@ -127,6 +129,7 @@
                                         class="form-control rounded-0 border-0"
                                         placeholder=""
                                         v-model="learnDev.conducted"
+                                        style="text-transform:uppercase"
                                     />
                                 </td>
                                 <td class="jumbotron">

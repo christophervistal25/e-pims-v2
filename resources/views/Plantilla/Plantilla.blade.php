@@ -260,7 +260,7 @@
                     <td scope="col" class="text-center font-weight-bold">ID</td>
                     <td scope="col" class="text-center font-weight-bold">Item No</td>
                     <td scope="col" class="text-center font-weight-bold">Position Title</td>
-                    <td scope="col" class="text-center font-weight-bold">Employee ID</td>
+                    <td scope="col" class="text-center font-weight-bold">Employee Name</td>
                     <td scope="col" class="text-center font-weight-bold">Office</td>
                     <td scope="col" class="text-center font-weight-bold">Status</td>
                     <td scope="col" class="text-center font-weight-bold">Action</td>
