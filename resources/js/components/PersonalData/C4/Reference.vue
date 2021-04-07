@@ -14,7 +14,11 @@
                         >(Person not related by consanguinity or affinity to
                         applicant /appointee)</span
                     >
-                    <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
+                    <i
+                        v-if="isComplete"
+                        class="text-success float-right fa fa-caret-down"
+                        aria-hidden="true"
+                    ></i>
                 </h5>
             </div>
 
@@ -114,7 +118,7 @@
 </template>
 
 <script>
-import swal from 'sweetalert';
+import swal from "sweetalert";
 export default {
     props: {
         show_panel: {
@@ -162,7 +166,10 @@ export default {
                 .then(response => {
                     this.isLoading = false;
                     this.isComplete = true;
-                    localStorage.setItem('references', JSON.stringify(response.data));
+                    localStorage.setItem(
+                        "references",
+                        JSON.stringify(response.data)
+                    );
                     this.$emit("display-issued-id");
                 })
                 .catch(err => (this.isLoading = false));
@@ -170,14 +177,14 @@ export default {
         skipSection() {
             this.isComplete = true;
             this.$emit("display-issued-id");
-        },
+        }
     },
     created() {
         this.noOfFields = this.references.length;
     },
     mounted() {
-        if(localStorage.getItem('references')) {
-            this.references = JSON.parse(localStorage.getItem('references'));
+        if (localStorage.getItem("references")) {
+            this.references = JSON.parse(localStorage.getItem("references"));
             this.isComplete = true;
             this.$emit("display-issued-id");
         }

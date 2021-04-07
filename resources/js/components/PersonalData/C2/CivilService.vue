@@ -10,7 +10,11 @@
                 <h5 class="mb-0 p-2">
                     <i v-if="isComplete" class="fa fa-check text-success"></i>
                     IV. Civil Service Eligibility
-                    <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
+                    <i
+                        v-if="isComplete"
+                        class="text-success float-right fa fa-caret-down"
+                        aria-hidden="true"
+                    ></i>
                 </h5>
             </div>
 
@@ -28,7 +32,10 @@
                                 DRIVER'S LICENSE
                             </td>
                             <td rowspan="2" class="align-middle text-sm">
-                                RATING <span class="text-secondary">(If Applicable)</span>
+                                RATING
+                                <span class="text-secondary"
+                                    >(If Applicable)</span
+                                >
                             </td>
                             <td rowspan="2" class="align-middle text-sm">
                                 DATE OF EXAMINATION / CONFERMENT
@@ -37,7 +44,10 @@
                                 PLACE OF EXAMINATION / CONFERMENT
                             </td>
                             <td colspan="2" scope="colgroup" class="text-sm">
-                                LICENSE <span class="text-secondary">(If Applicable)</span>
+                                LICENSE
+                                <span class="text-secondary"
+                                    >(If Applicable)</span
+                                >
                             </td>
                             <td
                                 rowspan="2"
@@ -212,7 +222,6 @@ export default {
                         "civil_service",
                         JSON.stringify(response.data)
                     );
-                  
                 })
                 .catch(err => (this.isLoading = false));
         },

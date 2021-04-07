@@ -9,7 +9,11 @@
             <h5 class="mb-0 p-2">
                 <i v-if="isComplete" class="fa fa-check text-success"></i>
                 V. WORK EXPERIENCE
-                <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
+                <i
+                    v-if="isComplete"
+                    class="text-success float-right fa fa-caret-down"
+                    aria-hidden="true"
+                ></i>
             </h5>
         </div>
 
@@ -235,10 +239,11 @@ export default {
                     this.isLoading = false;
                     this.isComplete = true;
 
-                    localStorage.setItem('work_experience', JSON.stringify(response.data));
+                    localStorage.setItem(
+                        "work_experience",
+                        JSON.stringify(response.data)
+                    );
                     this.$emit("next_tab");
-
-                
                 })
                 .catch(err => (this.isLoading = false));
         },
@@ -252,11 +257,13 @@ export default {
         this.noOfFields = this.workExperience.length;
     },
     mounted() {
-        if(localStorage.getItem('work_experience')) {
-            this.workExperience = JSON.parse(localStorage.getItem('work_experience'));
+        if (localStorage.getItem("work_experience")) {
+            this.workExperience = JSON.parse(
+                localStorage.getItem("work_experience")
+            );
             this.isComplete = true;
         }
-    },
+    }
 };
 </script>
 

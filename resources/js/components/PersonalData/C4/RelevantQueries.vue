@@ -46,7 +46,7 @@
                                 :class="errors.hasOwnProperty('no_34_a') || errors.hasOwnProperty('no_34_a_details') ? 'bg-danger text-white' : 'text-dark'"
                                 class="border-0"
                             >
-                                
+
 
                                 <span class="ml-4 text-sm"
                                     >
@@ -119,7 +119,7 @@
                                 class="border-0"
                             >
                                 <span class="ml-4 text-sm"
-                                    > 
+                                    >
                                     <i v-if="errors.hasOwnProperty('no_34_b') || errors.hasOwnProperty('no_34_b_details')" class="fa fa-times text-white " aria-hidden="true"></i>
                                     b. within the fourth degree (for Local
                                     Government Unit - Career Employees)?</span
@@ -186,8 +186,8 @@
 
                         <!-- {{-- BEGIN OF 35 --}} -->
                         <tr>
-                            <td 
-                                style="background: #EAEAEA;" 
+                            <td
+                                style="background: #EAEAEA;"
                                 class="text-sm border-0"
                                 :class="errors.hasOwnProperty('no_35_a') || errors.hasOwnProperty('no_35_a_details') ? 'bg-danger text-white' : 'text-dark'"
                                 >
@@ -255,7 +255,7 @@
                         </tr>
 
                         <tr>
-                            <td 
+                            <td
                                 scope="row"
                                 style="background: #EAEAEA;"
                                 class='border-0'
@@ -329,8 +329,8 @@
 
                         <!-- {{-- BEGIN OF 36 --}} -->
                         <tr>
-                            <td 
-                            style="background: #EAEAEA;" 
+                            <td
+                            style="background: #EAEAEA;"
                             class="border-0 text-sm"
                             :class="errors.hasOwnProperty('no_36') || errors.hasOwnProperty('no_36_details') ? 'bg-danger text-white' : 'text-dark'"
                             >
@@ -396,7 +396,7 @@
 
                         <!-- {{-- BEGIN OF 37 --}} -->
                         <tr>
-                            <td 
+                            <td
                             style="background: #EAEAEA;"
                             class='border-0'
                             :class="errors.hasOwnProperty('no_37') || errors.hasOwnProperty('no_37_details') ? 'bg-danger text-white' : 'text-dark'"
@@ -468,7 +468,7 @@
 
                         <!-- {{-- BEGIN OF 38 --}} -->
                         <tr>
-                            <td 
+                            <td
                                 style="background: #EAEAEA;"
                                 class="border-0 text-sm"
                                 :class="errors.hasOwnProperty('no_38_a') || errors.hasOwnProperty('no_38_a_details') ? 'bg-danger text-white' : 'text-dark'"
@@ -537,8 +537,8 @@
                         </tr>
 
                         <tr>
-                            <td 
-                                scope="row" 
+                            <td
+                                scope="row"
                                 style="background: #EAEAEA;"
                                 class='border-0'
                                 :class="errors.hasOwnProperty('no_38_b') || errors.hasOwnProperty('no_38_b_details') ? 'bg-danger text-white' : 'text-dark'"
@@ -614,8 +614,8 @@
 
                         <!-- {{-- BEGIN OF 39 --}} -->
                         <tr>
-                            <td 
-                                style="background: #EAEAEA;" 
+                            <td
+                                style="background: #EAEAEA;"
                                 class="border-0 text-sm"
                                 :class="errors.hasOwnProperty('no_39') || errors.hasOwnProperty('no_39_details') ? 'bg-danger text-white' : 'text-dark'"
                                 >
@@ -703,7 +703,7 @@
                                 <span class="ml-4 text-sm"
                                     >
                             <i v-if="errors.hasOwnProperty('no_40_a') || errors.hasOwnProperty('no_40_a_details')" class="fa fa-times text-white " aria-hidden="true"></i>
-                                    
+
                                     a. Are you a member of any indigenous
                                     group?</span
                                 >
@@ -994,11 +994,11 @@ export default {
                         this.isComplete = true;
                         this.isLoading = false;
                         this.errors = {};
-                        
+
                         localStorage.setItem('relevant_queries', JSON.stringify(response.data));
                         this.$emit("display-reference");
                     }
-                    
+
                 })
                 .catch(error => {
                     this.isLoading = false

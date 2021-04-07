@@ -8,10 +8,14 @@
                 :style="isComplete ? 'cursor : pointer;' : ''"
             >
                 <h5 class="mb-0 p-2">
-                <i v-if="isComplete" class="fa fa-check text-success"></i>
+                    <i v-if="isComplete" class="fa fa-check text-success"></i>
                     VII. LEARNING AND DEVELOPMENT (L&D) INTERVENTIONS/TRAINING
                     PROGRAMS ATTENDED
-                <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
+                    <i
+                        v-if="isComplete"
+                        class="text-success float-right fa fa-caret-down"
+                        aria-hidden="true"
+                    ></i>
                 </h5>
             </div>
 
@@ -236,17 +240,19 @@ export default {
                 .then(response => {
                     this.isLoading = false;
                     this.isComplete = true;
-                    localStorage.setItem('learning', JSON.stringify(response.data));
+                    localStorage.setItem(
+                        "learning",
+                        JSON.stringify(response.data)
+                    );
                     this.$emit("display-other-information");
-                   
                 })
                 .catch(err => (this.isLoading = false));
         }
     },
     created() {
         this.noOfFields = this.learnDev.length;
-        if(localStorage.getItem('learning')) {
-            this.learnDev = JSON.parse(localStorage.getItem('learning'));
+        if (localStorage.getItem("learning")) {
+            this.learnDev = JSON.parse(localStorage.getItem("learning"));
             this.isComplete = true;
             this.$emit("display-other-information");
         }

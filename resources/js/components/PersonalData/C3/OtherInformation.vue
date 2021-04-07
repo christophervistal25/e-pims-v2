@@ -10,7 +10,11 @@
                 <h5 class="mb-0 p-2">
                     <i v-if="isComplete" class="fa fa-check text-success"></i>
                     VIII. OTHER INFORMATION
-                    <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
+                    <i
+                        v-if="isComplete"
+                        class="text-success float-right fa fa-caret-down"
+                        aria-hidden="true"
+                    ></i>
                 </h5>
             </div>
 
@@ -129,7 +133,6 @@
 </template>
 
 <script>
-
 export default {
     props: {
         show_panel: {
@@ -179,9 +182,11 @@ export default {
                 .then(response => {
                     this.isComplete = true;
                     this.isLoading = false;
-                    localStorage.setItem('other_information', JSON.stringify(response.data));
+                    localStorage.setItem(
+                        "other_information",
+                        JSON.stringify(response.data)
+                    );
                     this.$emit("next_tab");
-                   
                 })
                 .catch(err => (this.isLoading = false));
         },
@@ -193,8 +198,10 @@ export default {
     },
     created() {
         this.noOfFields = this.otherInformation.length;
-        if(localStorage.getItem('other_information')) {
-            this.otherInformation = JSON.parse(localStorage.getItem('other_information'));
+        if (localStorage.getItem("other_information")) {
+            this.otherInformation = JSON.parse(
+                localStorage.getItem("other_information")
+            );
             this.isComplete = true;
         }
     }

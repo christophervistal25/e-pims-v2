@@ -359,11 +359,13 @@ class OfficeSeeder extends Seeder
 
         foreach($offices as $office) {
             Office::create([
-                'office_code'       => $office['office_code'],
-                'office_name'       => $office['office_name'],
-                'office_short_name' => $office['office_short_name'],
-                'office_address' => ' ',
+                'office_code'          => $office['office_code'],
+                'office_name'          => $office['office_name'],
+                'office_short_name'    => $office['office_short_name'],
+                'office_address'       => ' ',
                 'office_short_address' => ' ',
+                'office_head'          => $office['office_head'],
+                'position_name'        => $office['position_name']
             ]);
         }
 

@@ -10,7 +10,11 @@
                 <h5 class="mb-0 p-2">
                     <i v-if="isComplete" class="fa fa-check text-success"></i>
                     GOVERNMENT ISSUED ID
-                    <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
+                    <i
+                        v-if="isComplete"
+                        class="text-success float-right fa fa-caret-down"
+                        aria-hidden="true"
+                    ></i>
                 </h5>
             </div>
 
@@ -37,7 +41,11 @@
                                         type="text"
                                         class="form-control rounded-0 border-0"
                                         placeholder="e.g Philhealth"
-                                        :class="errors.hasOwnProperty('nameOfGovId') ? 'is-invalid' : ''"
+                                        :class="
+                                            errors.hasOwnProperty('nameOfGovId')
+                                                ? 'is-invalid'
+                                                : ''
+                                        "
                                         v-model="governmentId.nameOfGovId"
                                     />
                                 </td>
@@ -45,7 +53,11 @@
                                     <input
                                         type="text"
                                         class="form-control rounded-0 border-0"
-                                        :class="errors.hasOwnProperty('idNo') ? 'is-invalid' : ''"
+                                        :class="
+                                            errors.hasOwnProperty('idNo')
+                                                ? 'is-invalid'
+                                                : ''
+                                        "
                                         placeholder="Enter ID Number"
                                         v-model="governmentId.idNo"
                                     />
@@ -54,7 +66,13 @@
                                     <input
                                         type="text"
                                         class="form-control rounded-0 border-0"
-                                        :class="errors.hasOwnProperty('dateOfIssuance') ? 'is-invalid' : ''"
+                                        :class="
+                                            errors.hasOwnProperty(
+                                                'dateOfIssuance'
+                                            )
+                                                ? 'is-invalid'
+                                                : ''
+                                        "
                                         placeholder=""
                                         v-model="governmentId.dateOfIssuance"
                                     />
@@ -101,29 +119,29 @@ export default {
                 dateOfIssuance: "",
                 employee_id: localStorage.getItem("employee_id")
             },
-            errors : {},
+            errors: {}
         };
     },
     methods: {
         removeSavedItemsInStorage() {
-            localStorage.removeItem('learning');
-            localStorage.removeItem('voluntary');
-            localStorage.removeItem('family_background');
-            localStorage.removeItem('educational_background');
-            localStorage.removeItem('relevant_queries');
-            localStorage.removeItem('civil_service');
-            localStorage.removeItem('other_information');
-            localStorage.removeItem('employee_id');
-            localStorage.removeItem('work_experience');
-            localStorage.removeItem('personal_information');
-            localStorage.removeItem('references');
+            localStorage.removeItem("learning");
+            localStorage.removeItem("voluntary");
+            localStorage.removeItem("family_background");
+            localStorage.removeItem("educational_background");
+            localStorage.removeItem("relevant_queries");
+            localStorage.removeItem("civil_service");
+            localStorage.removeItem("other_information");
+            localStorage.removeItem("employee_id");
+            localStorage.removeItem("work_experience");
+            localStorage.removeItem("personal_information");
+            localStorage.removeItem("references");
         },
         submitIssuedID() {
             this.isLoading = true;
             window.axios
                 .post("/employee/personal/issued/id", this.governmentId)
                 .then(response => {
-                    if(response.status === 201) {
+                    if (response.status === 201) {
                         this.errors = {};
                         this.isComplete = true;
                         this.isLoading = false;
@@ -133,10 +151,9 @@ export default {
                             icon: "success"
                         });
                     }
-                    
                 })
                 .catch(error => {
-                    this.isLoading = false
+                    this.isLoading = false;
                     this.errors = {};
                     // Check the error status code.
                     if (error.response.status === 422) {

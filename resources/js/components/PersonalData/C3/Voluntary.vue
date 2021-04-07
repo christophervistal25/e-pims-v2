@@ -10,7 +10,11 @@
                 <i v-if="isComplete" class="fa fa-check text-success"></i>
                 VI. VOLUNTARY WORK OR INVOLVEMENT IN CIVIC / NON-GOVERNMENT /
                 PEOPLE / VOLUNTARY ORGANIZATION/S
-                <i v-if="isComplete" class="text-success float-right fa fa-caret-down" aria-hidden="true"></i>
+                <i
+                    v-if="isComplete"
+                    class="text-success float-right fa fa-caret-down"
+                    aria-hidden="true"
+                ></i>
             </h5>
         </div>
 
@@ -202,10 +206,12 @@ export default {
                     this.isLoading = false;
                     this.isComplete = true;
 
-                    localStorage.setItem('voluntary', JSON.stringify(response.data));
+                    localStorage.setItem(
+                        "voluntary",
+                        JSON.stringify(response.data)
+                    );
 
                     this.$emit("display-learning-and-development");
-
                 })
                 .catch(err => (this.isLoading = false));
         }
@@ -214,8 +220,8 @@ export default {
         this.noOfFields = this.volunOrg.length;
     },
     mounted() {
-        if(localStorage.getItem('voluntary')) {
-            this.volunOrg = JSON.parse(localStorage.getItem('voluntary'));
+        if (localStorage.getItem("voluntary")) {
+            this.volunOrg = JSON.parse(localStorage.getItem("voluntary"));
             this.isComplete = true;
             this.$emit("display-learning-and-development");
         }

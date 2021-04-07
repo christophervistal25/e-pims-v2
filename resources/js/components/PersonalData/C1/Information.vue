@@ -1042,8 +1042,7 @@ export default {
                     this.personal_data
                 )
                 .then(response => {
-
-                    if(response.status === 200) {
+                    if (response.status === 200) {
                         this.errors = {};
                         this.isLoading = false;
                         this.isComplete = true;
