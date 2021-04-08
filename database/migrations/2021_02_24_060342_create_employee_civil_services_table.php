@@ -16,12 +16,12 @@ class CreateEmployeeCivilServicesTable extends Migration
         Schema::create('employee_civil_services', function (Blueprint $table) {
             $table->id();
             $table->string('employee_id');
-            $table->string('career_service');
-            $table->decimal('rating', 11, 2);
-            $table->date('date_of_examination');
-            $table->text('place_of_examination');
-            $table->string('license_number');
-            $table->date('date_of_validitiy');
+            $table->string('career_service')->nullable();
+            $table->decimal('rating', 11, 2)->nullable();
+            $table->date('date_of_examination')->nullable();
+            $table->text('place_of_examination')->nullable();
+            $table->string('license_number')->nullable();
+            $table->date('date_of_validitiy')->nullable();
             $table->timestamps();
         });
     }
