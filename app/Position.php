@@ -6,5 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Position extends Model
 {
-    protected $fillable = ['position_id', 'position_name'];
+    protected $fillable = [
+        'position_id', 
+        'position_name'
+    ];
 }

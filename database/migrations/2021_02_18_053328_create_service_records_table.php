@@ -16,7 +16,7 @@ class CreateServiceRecordsTable extends Migration
         Schema::create('service_records', function (Blueprint $table) {
             $table->id();
             $table->string('employee_id');
-            $table->string('service_from_string');
+            $table->string('service_from_date');
             $table->string('service_to_date');
             $table->bigInteger('position_id');
             $table->string('status');

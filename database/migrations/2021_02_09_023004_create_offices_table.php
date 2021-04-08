@@ -16,9 +16,9 @@ class CreateOfficesTable extends Migration
         Schema::create('offices', function (Blueprint $table) {            
             $table->string('office_code',25)->primary();
             $table->string('office_name');
-            $table->string('office_short_name');
-            $table->string('office_address');
-            $table->string('office_short_address');
+            // $table->string('office_short_name');
+            // $table->string('office_address');
+            // $table->string('office_short_address');
             $table->timestamps();
         });
     }
