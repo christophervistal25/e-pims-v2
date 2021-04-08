@@ -18,4 +18,9 @@ class SalaryGrade extends Model
         'sg_step8',
         'sg_year',
     ];
+
+    public function position()
+    {
+        return $this->belongsTo(Position::class, 'sg_no', 'salary_grade');
+    }
 }

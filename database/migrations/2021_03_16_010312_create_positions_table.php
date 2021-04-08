@@ -17,6 +17,7 @@ class CreatePositionsTable extends Migration
             $table->id('position_id');
             $table->string('position_code');
             $table->string('position_name');
+            $table->integer('salary_grade');
             $table->string('position_short_name');
             $table->timestamps();
         });

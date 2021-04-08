@@ -28559,9 +28559,10 @@ class PositionSeeder extends Seeder
 
             foreach($positions as $position) {
                 Position::create([
-                    'position_code'       => $position['PosCode'],
-                    'position_name'       => $position['PositionName'],
-                    'position_short_name' => $position['ShortName'],
+                    'position_code'         => $position['PosCode'],
+                    'position_name'         => $position['PositionName'],
+                    'position_short_name'   => $position['ShortName'],
+                    'salary_grade'          => $position['SalaryGrade'],
                 ]);
             }
     }
