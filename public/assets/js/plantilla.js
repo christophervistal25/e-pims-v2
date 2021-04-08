@@ -7,11 +7,11 @@
         columns: [
                 { data: 'plantilla_id', name: 'plantilla_id' },
                 { data: 'item_no', name: 'item_no' },
-                { data: 'positions', name: 'positions' },
-                { data: 'employee', name: 'employee' },
-                { data: 'office', name: 'office' },
-                { data: 'status', name: 'status' },
-                {data: 'action', name: 'action'},
+                { data: 'positions', name: 'positions.position_name', searchable: true, sortable : false, visible:true  },
+                { data: 'employee', name: 'employee.firstname', searchable: true, sortable : false, visible:true },
+                { data: 'office', name: 'office.office_short_name', searchable: true, sortable : false, visible:true },
+                { data: 'status', name: 'status', sortable : false,},
+                {data: 'action', name: 'action', searchable: false, sortable : false,},
         ]
     });
     });

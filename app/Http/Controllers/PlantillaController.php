@@ -46,7 +46,7 @@ class PlantillaController extends Controller
             return (new Datatables)->eloquent($data)
                     ->addIndexColumn()
                     ->addColumn('employee', function ($row) {
-                        return $row->employee->firstname;
+                        return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->surname;
                     })
                     ->addColumn('positions', function ($row) {
                         return $row->positions->position_name;
