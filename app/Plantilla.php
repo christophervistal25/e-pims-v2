@@ -42,7 +42,6 @@ class Plantilla extends Model
     {
         return $this->hasOne(Position::class, 'position_id', 'position_id');
     }
-    protected $primaryKey = 'plantilla_id';
 
     public function position()
     {

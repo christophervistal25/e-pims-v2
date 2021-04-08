@@ -19,7 +19,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<!-- <script src="{{ asset('/js/app.js') }}" defer></script> -->
+	<script src="{{ asset('/js/app.js') }}" defer></script>
 
 	<style>
 		body {

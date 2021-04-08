@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Position extends Model
 {
-    protected $fillable = ['position_id', 'position_name', 'position_code', 'salary_grade', 'position_short_name'];
+    protected $fillable = ['position_name'];
 
     protected $primaryKey = 'position_id';
 
