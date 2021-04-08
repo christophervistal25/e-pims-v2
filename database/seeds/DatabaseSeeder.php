@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
 
             EmployeeSeeder::class,
+<<<<<<< HEAD
             // ProvinceSeeder::class,
             // CitySeeder::class,
             // BarangaySeeder::class,
@@ -21,6 +22,14 @@ class DatabaseSeeder extends Seeder
                 OfficeSeeder::class,
                 SalaryGradeSeeder::class,
                 PositionSeeder::class,
+=======
+            
+            OfficeSeeder::class,
+            SalaryGradeSeeder::class,
+            PlantillaSeeder::class,
+
+
+>>>>>>> salaryadjustment
             ]);
         // $this->call(UsersTableSeeder::class);
     }

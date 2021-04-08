@@ -19,6 +19,7 @@ class Position extends Model
     {
         return $this->hasOne(SalaryGrade::class, 'sg_no', 'salary_grade');
     }
+   
 }
 
 

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Salary Adjustment')
+@section('title', 'Step Increment')
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 @endprepend
