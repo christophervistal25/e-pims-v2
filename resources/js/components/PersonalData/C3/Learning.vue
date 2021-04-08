@@ -30,6 +30,7 @@
                             class="text-center text-sm"
                             style="background: #EAEAEA;"
                         >
+                            <td></td>
                             <td
                                 rowspan="2"
                                 class="align-middle text-sm"
@@ -70,6 +71,7 @@
                             <td rowspan="2" class="align-middle">&nbsp;</td>
                         </tr>
                         <tr style="background: #EAEAEA;">
+                            <td></td>
                             <td scope="col" class="text-center text-sm">
                                 FROM
                             </td>
@@ -81,12 +83,39 @@
                                 v-for="(learnDev, index) in learnDev"
                                 :key="index"
                             >
+                                <td
+                                    @click="displayRowErrorMessage(index)"
+                                    class="align-middle text-center"
+                                    :style="
+                                        rowErrors.includes(`${index}.`)
+                                            ? 'cursor:pointer'
+                                            : ''
+                                    "
+                                    :class="
+                                        rowErrors.includes(`${index}.`)
+                                            ? 'bg-danger text-white'
+                                            : ''
+                                    "
+                                >
+                                    <i
+                                        v-if="rowErrors.includes(`${index}.`)"
+                                        class="fa fa-exclamation-triangle"
+                                        aria-hidden="true"
+                                    ></i>
+                                </td>
                                 <td>
                                     <input
                                         type="text"
                                         class="form-control rounded-0 border-0"
                                         placeholder="NAME"
                                         v-model="learnDev.nameOfTraining"
+                                        :class="
+                                            errors.hasOwnProperty(
+                                                `${index}.nameOfTraining`
+                                            )
+                                                ? 'is-invalid'
+                                                : ''
+                                        "
                                         style="text-transform:uppercase"
                                     />
                                 </td>
@@ -94,6 +123,13 @@
                                     <input
                                         type="date"
                                         class="form-control rounded-0 border-0"
+                                        :class="
+                                            errors.hasOwnProperty(
+                                                `${index}.from`
+                                            )
+                                                ? 'is-invalid'
+                                                : ''
+                                        "
                                         placeholder="FROM"
                                         v-model="learnDev.from"
                                     />
@@ -102,6 +138,11 @@
                                     <input
                                         type="date"
                                         class="form-control rounded-0 border-0"
+                                        :class="
+                                            errors.hasOwnProperty(`${index}.to`)
+                                                ? 'is-invalid'
+                                                : ''
+                                        "
                                         placeholder="TO"
                                         v-model="learnDev.to"
                                     />
@@ -110,6 +151,13 @@
                                     <input
                                         type="number"
                                         class="form-control rounded-0 border-0"
+                                        :class="
+                                            errors.hasOwnProperty(
+                                                `${index}.noOfHours`
+                                            )
+                                                ? 'is-invalid'
+                                                : ''
+                                        "
                                         placeholder="Hours"
                                         v-model="learnDev.noOfHours"
                                     />
@@ -118,6 +166,13 @@
                                     <input
                                         type="text"
                                         class="form-control rounded-0 border-0"
+                                        :class="
+                                            errors.hasOwnProperty(
+                                                `${index}.typeOfLD`
+                                            )
+                                                ? 'is-invalid'
+                                                : ''
+                                        "
                                         placeholder=""
                                         v-model="learnDev.typeOfLD"
                                         style="text-transform:uppercase"
@@ -127,6 +182,13 @@
                                     <input
                                         type="text"
                                         class="form-control rounded-0 border-0"
+                                        :class="
+                                            errors.hasOwnProperty(
+                                                `${index}.conducted`
+                                            )
+                                                ? 'is-invalid'
+                                                : ''
+                                        "
                                         placeholder=""
                                         v-model="learnDev.conducted"
                                         style="text-transform:uppercase"
@@ -207,7 +269,9 @@ export default {
                     conducted: "",
                     employee_id: localStorage.getItem("employee_id")
                 }
-            ]
+            ],
+            errors: {},
+            rowErrors: ""
         };
     },
     watch: {
@@ -243,13 +307,49 @@ export default {
                 .then(response => {
                     this.isLoading = false;
                     this.isComplete = true;
+                    this.errors = {};
+
                     localStorage.setItem(
                         "learning",
                         JSON.stringify(response.data)
                     );
                     this.$emit("display-other-information");
                 })
-                .catch(err => (this.isLoading = false));
+                .catch(error => {
+                    this.isLoading = false;
+                    this.errors = {};
+                    // Check the error status code.
+                    if (error.response.status === 422) {
+                        Object.keys(error.response.data.errors).map(
+                            (field, index) => {
+                                let [fieldMessage] = error.response.data.errors[
+                                    field
+                                ];
+                                this.errors[field] = fieldMessage;
+                            }
+                        );
+                        /* Merge all errors with join method for easily checking if an index of dynamic row is present or has error.*/
+                        this.rowErrors = Object.keys(this.errors).join(",");
+                    }
+                });
+        },
+        displayRowErrorMessage(index) {
+            let parentElement = document.createElement("ul");
+
+            for (let [field, error] of Object.entries(this.errors)) {
+                if (field.includes(`${index}.`)) {
+                    let errorElement = document.createElement("li");
+                    errorElement.innerHTML = error;
+                    parentElement.appendChild(errorElement);
+                }
+            }
+
+            swal({
+                content: parentElement,
+                title: "Opps!",
+                icon: "error",
+                dangerMode: true
+            });
         }
     },
     created() {

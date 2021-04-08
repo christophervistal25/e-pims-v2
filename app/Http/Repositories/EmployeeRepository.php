@@ -222,6 +222,7 @@ class EmployeeRepository
     public function addVoluntary(array $voluntaryRecord = []) :array
     {
         $employee = Employee::find($voluntaryRecord[self::FIRST_INDEX]['employee_id']);
+        
         $records = [];
 
         foreach($voluntaryRecord as $record) {

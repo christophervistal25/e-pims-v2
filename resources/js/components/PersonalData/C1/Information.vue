@@ -97,6 +97,7 @@
                                     : 'is-invalid'
                             "
                             maxlength="3"
+                            max="3"
                             id="nameextension"
                             placeholder="(JR.,SR.)"
                             v-model="personal_data.nameExtension"
@@ -235,6 +236,7 @@
                         <input
                             type="text"
                             class="form-control"
+                            maxlength="3"
                             :class="
                                 errors.hasOwnProperty('bloodType')
                                     ? 'is-invalid'
@@ -562,6 +564,16 @@
                             type="number"
                             v-model="personal_data.residentialZipCode"
                             class="form-control"
+                            @input="
+                                    if (
+                                        personal_data.residentialZipCode.length >
+                                        zipCodeMaxLength
+                                    )
+                                        personal_data.residentialZipCode = personal_data.residentialZipCode.slice(
+                                            0,
+                                            zipCodeMaxLength
+                                        );
+                                "
                             :class="
                                 !errors.hasOwnProperty('residentialZipCode')
                                     ? ''
@@ -740,6 +752,16 @@
                         <input
                             type="number"
                             v-model="personal_data.permanentZipCode"
+                            @input="
+                                    if (
+                                        personal_data.permanentZipCode.length >
+                                        zipCodeMaxLength
+                                    )
+                                        personal_data.permanentZipCode = personal_data.permanentZipCode.slice(
+                                            0,
+                                            zipCodeMaxLength
+                                        );
+                                "
                             :class="
                                 !errors.hasOwnProperty('permanentZipCode')
                                     ? ''
@@ -757,6 +779,11 @@
                 <div class="p-3 float-right">
                     <button
                         class="btn btn-primary font-weight-bold"
+                        :class="
+                            Object.keys(errors).length != 0
+                                ? 'btn-danger'
+                                : 'btn-primary'
+                        "
                         @click="submitPersonalInformation"
                         v-if="!isComplete"
                         :disabled="isLoading"
@@ -785,6 +812,7 @@ export default {
             isLoading: false,
             isComplete: false,
             isSameAsAbove: false,
+            zipCodeMaxLength : 4,
             personal_data: {
                 surname: "",
                 firstname: "",

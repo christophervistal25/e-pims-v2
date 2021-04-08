@@ -25,6 +25,7 @@
             <div class="card-body">
                 <table class="table table-bordered">
                     <tr class="text-center" style="background: #EAEAEA;">
+                        <td class="p-4"></td>
                         <td colspan="2" scope="colgroup" class="text-sm">
                             28. INCLUSIVE DATES (mm/dd/yyyy)
                         </td>
@@ -54,6 +55,7 @@
                     </tr>
 
                     <tr style="background: #EAEAEA;">
+                        <td class="p-4"></td>
                         <td scope="col" class="text-center text-sm">FROM</td>
                         <td scope="col" class="text-center text-sm">TO</td>
                     </tr>
@@ -63,6 +65,26 @@
                             v-for="(workExperience, index) in workExperience"
                             :key="index"
                         >
+                            <td
+                                @click="displayRowErrorMessage(index)"
+                                class="align-middle text-center"
+                                :style="
+                                    rowErrors.includes(`${index}.`)
+                                        ? 'cursor:pointer'
+                                        : ''
+                                "
+                                :class="
+                                    rowErrors.includes(`${index}.`)
+                                        ? 'bg-danger text-white'
+                                        : ''
+                                "
+                            >
+                                <i
+                                    v-if="rowErrors.includes(`${index}.`)"
+                                    class="fa fa-exclamation-triangle"
+                                    aria-hidden="true"
+                                ></i>
+                            </td>
                             <td scope="row">
                                 <input
                                     type="date"
@@ -75,9 +97,9 @@
                                     "
                                     v-model="workExperience.from"
                                 />
-                                <p class="text-danger text-sm">
+                                <!-- <p class="text-danger text-sm">
                                     {{ errors[`${index}.from`] }}
-                                </p>
+                                </p> -->
                             </td>
                             <td>
                                 <input
@@ -91,9 +113,9 @@
                                     placeholder="TO"
                                     v-model="workExperience.to"
                                 />
-                                <p class="text-danger text-sm">
+                                <!-- <p class="text-danger text-sm">
                                     {{ errors[`${index}.to`] }}
-                                </p>
+                                </p> -->
                             </td>
                             <td>
                                 <input
@@ -110,9 +132,9 @@
                                     "
                                     style="text-transform:uppercase"
                                 />
-                                <p class="text-danger text-sm">
+                                <!-- <p class="text-danger text-sm">
                                     {{ errors[`${index}.position`] }}
-                                </p>
+                                </p> -->
                             </td>
                             <td>
                                 <input
@@ -127,9 +149,9 @@
                                     "
                                     style="text-transform:uppercase"
                                 />
-                                <p class="text-danger text-sm">
+                                <!-- <p class="text-danger text-sm">
                                     {{ errors[`${index}.dept`] }}
-                                </p>
+                                </p> -->
                             </td>
 
                             <td>
@@ -146,9 +168,9 @@
                                     "
                                     v-model="workExperience.monSalary"
                                 />
-                                <p class="text-danger text-sm">
+                                <!-- <p class="text-danger text-sm">
                                     {{ errors[`${index}.monSalary`] }}
-                                </p>
+                                </p> -->
                             </td>
                             <td>
                                 <input
@@ -164,9 +186,9 @@
                                     "
                                     v-model="workExperience.payGrade"
                                 />
-                                <p class="text-danger text-sm">
+                                <!-- <p class="text-danger text-sm">
                                     {{ errors[`${index}.payGrade`] }}
-                                </p>
+                                </p> -->
                             </td>
                             <td>
                                 <input
@@ -183,9 +205,9 @@
                                     v-model="workExperience.statOfApp"
                                     style="text-transform:uppercase"
                                 />
-                                <p class="text-danger text-sm">
+                                <!-- <p class="text-danger text-sm">
                                     {{ errors[`${index}.statOfApp`] }}
-                                </p>
+                                </p> -->
                             </td>
                             <td>
                                 <input
@@ -202,11 +224,11 @@
                                     placeholder=""
                                     v-model="workExperience.govServ"
                                 />
-                                <p class="text-danger text-sm">
+                                <!-- <p class="text-danger text-sm">
                                     {{ errors[`${index}.govServ`] }}
-                                </p>
+                                </p> -->
                             </td>
-                            <td class="jumbotron">
+                            <td class="jumbotron align-middle">
                                 <button
                                     v-show="index != 0"
                                     class="btn btn-sm btn-danger font-weight-bold rounded-circle"
@@ -215,7 +237,7 @@
                                     X
                                 </button>
                             </td>
-                            <td>
+                            <td class="align-middle">
                                 <button
                                     v-if="index == noOfFields - 1"
                                     class="btn btn-primary font-weight-bold rounded-circle"
@@ -238,6 +260,11 @@
                     <button
                         class="btn btn-primary font-weight-bold"
                         @click="submitWorkExperience"
+                        :class="
+                            Object.keys(errors).length != 0
+                                ? 'btn-danger'
+                                : 'btn-primary'
+                        "
                         :disabled="isLoading"
                         v-if="!isComplete"
                     >
@@ -258,6 +285,7 @@
 </template>
 
 <script>
+import swal from "sweetalert";
 export default {
     props: {
         work_experience: {
@@ -283,7 +311,8 @@ export default {
                     employee_id: localStorage.getItem("employee_id")
                 }
             ],
-            errors: {}
+            errors: {},
+            rowErrors: ""
         };
     },
     watch: {
@@ -337,6 +366,8 @@ export default {
                                 this.errors[field] = fieldMessage;
                             }
                         );
+                        /* Merge all errors with join method for easily checking if an index of dynamic row is present or has error.*/
+                        this.rowErrors = Object.keys(this.errors).join(",");
                     }
                 });
         },
@@ -344,6 +375,24 @@ export default {
             if (index != 0) {
                 this.workExperience.splice(index, 1);
             }
+        },
+        displayRowErrorMessage(index) {
+            let parentElement = document.createElement("ul");
+
+            for (let [field, error] of Object.entries(this.errors)) {
+                if (field.includes(`${index}.`)) {
+                    let errorElement = document.createElement("li");
+                    errorElement.innerHTML = error;
+                    parentElement.appendChild(errorElement);
+                }
+            }
+
+            swal({
+                content: parentElement,
+                title: "Opps!",
+                icon: "error",
+                dangerMode: true
+            });
         }
     },
     created() {

@@ -24,14 +24,14 @@ class WorkExperienceRequest extends FormRequest
     public function rules()
     {
         return [
-            "*.from"      => ['nullable', 'required_with:*.to', 'date'],
-            "*.to"        => ['nullable', 'required_with:*.from', 'date'],
-            "*.position"  => ['nullable', 'required_with:*.from', 'required_with:*.to'],
-            "*.dept"      => ['nullable', 'required_with:*.position', 'string'],
-            "*.monSalary" => ['nullable'],
-            "*.payGrade"  => ['nullable'],
-            "*.statOfApp" => ['required'],
-            "*.govServ"   => ['required', 'in:Y,N,y,n'],
+            '*.from'      => ['nullable', 'required_with:*.statOfApp', 'required_with:*.govServ', 'required_with:*.to', 'date'],
+            '*.to'        => ['nullable', 'required_with:*.statOfApp', 'required_with:*.govServ', 'required_with:*.from', 'date'],
+            '*.position'  => ['nullable', 'required_with:*.statOfApp', 'required_with:*.govServ', 'required_with:*.from', 'required_with:*.to'],
+            '*.dept'      => ['nullable', 'required_with:*.statOfApp', 'required_with:*.govServ', 'required_with:*.position', 'string'],
+            '*.monSalary' => ['nullable', 'required_with:*.statOfApp', 'required_with:*.govServ'],
+            '*.payGrade'  => ['nullable', 'required_with:*.statOfApp', 'required_with:*.govServ'],
+            '*.statOfApp' => ['required'],
+            '*.govServ'   => ['required', 'in:Y,N,y,n'],
         ];
     }
 
