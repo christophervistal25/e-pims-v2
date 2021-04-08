@@ -21,12 +21,12 @@ class CreateEmployeeEducationalBackgroundsTable extends Migration
             $table->string('elementary_education')->nullable();
             $table->string('elementary_period_from')->nullable();
             $table->string('elementary_period_to')->nullable();
-            $table->string('elementary_highest_level_units_earned')->nullabe();
+            $table->string('elementary_highest_level_units_earned')->nullable();
             $table->string('elementary_year_graduated')->nullable();
             $table->string('elementary_scholarship')->nullable();
 
             $table->string('secondary_name')->nullable();
-            $table->string('secondary_education')->nullabe();
+            $table->string('secondary_education')->nullable();
             $table->string('secondary_period_from')->nullable();
             $table->string('secondary_period_to')->nullable();
             $table->string('secondary_highest_level_units_earned')->nullable();
