@@ -17,20 +17,20 @@ class CreateEmployeeEducationalBackgroundsTable extends Migration
             $table->id();
             $table->string('employee_id');
 
-            $table->string('elementary_name');
+            $table->string('elementary_name')->nullable();
             $table->string('elementary_education')->nullable();
-            $table->string('elementary_period_from');
-            $table->string('elementary_period_to');
+            $table->string('elementary_period_from')->nullable();
+            $table->string('elementary_period_to')->nullable();
             $table->string('elementary_highest_level_units_earned')->nullabe();
-            $table->string('elementary_year_graduated');
+            $table->string('elementary_year_graduated')->nullable();
             $table->string('elementary_scholarship')->nullable();
 
-            $table->string('secondary_name');
+            $table->string('secondary_name')->nullable();
             $table->string('secondary_education')->nullabe();
-            $table->string('secondary_period_from');
-            $table->string('secondary_period_to');
+            $table->string('secondary_period_from')->nullable();
+            $table->string('secondary_period_to')->nullable();
             $table->string('secondary_highest_level_units_earned')->nullable();
-            $table->string('secondary_year_graduated');
+            $table->string('secondary_year_graduated')->nullable();
             $table->string('secondary_scholarship')->nullable();
 
             $table->string('vocational_trade_course_name')->nullable();
