@@ -16,11 +16,11 @@ class CreateEmployeeVoluntaryWorksTable extends Migration
         Schema::create('employee_voluntary_works', function (Blueprint $table) {
             $table->id();
             $table->string('employee_id');
-            $table->string('name_and_address');
-            $table->date('inclusive_date_from');
-            $table->date('inclusive_date_to');
-            $table->integer('no_of_hours');
-            $table->string('position');
+            $table->string('name_and_address')->nullable();
+            $table->date('inclusive_date_from')->nullable();
+            $table->date('inclusive_date_to')->nullable();
+            $table->integer('no_of_hours')->nullable();
+            $table->string('position')->nullable();
             $table->timestamps();
         });
     }

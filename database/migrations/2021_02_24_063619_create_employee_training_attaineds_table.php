@@ -16,12 +16,12 @@ class CreateEmployeeTrainingAttainedsTable extends Migration
         Schema::create('employee_training_attaineds', function (Blueprint $table) {
             $table->id();
             $table->string('employee_id');
-            $table->string('title');
-            $table->date('date_of_attendance_from');
-            $table->date('date_of_attendance_to');
-            $table->bigInteger('number_of_hours');
-            $table->string('type_of_id');
-            $table->string('sponsored_by');
+            $table->string('title')->nullable();
+            $table->date('date_of_attendance_from')->nullable();
+            $table->date('date_of_attendance_to')->nullable();
+            $table->bigInteger('number_of_hours')->nullable();
+            $table->string('type_of_id')->nullable();
+            $table->string('sponsored_by')->nullable();
             $table->timestamps();
         });
     }
