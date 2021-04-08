@@ -513,7 +513,7 @@
                                     ? ''
                                     : 'is-invalid'
                             "
-                            :readonly="
+                            :disabled="
                                 personal_data.residentialProvince ? false : true
                             "
                             placeholder="Enter City or Municipality"
@@ -540,7 +540,7 @@
                                     ? ''
                                     : 'is-invalid'
                             "
-                            :readonly="
+                            :disabled="
                                 personal_data.residentialCity ? false : true
                             "
                         >
@@ -635,12 +635,13 @@
                         <select
                             type="text"
                             v-model="personal_data.permanentProvince"
+                            @change="permanentProvinceChange"
                             :class="
                                 !errors.hasOwnProperty('permanentProvince')
                                     ? ''
                                     : 'is-invalid'
                             "
-                            :readonly="isSameAsAbove ? true : false"
+                            :disabled="isSameAsAbove ? true : false"
                             class="form-control"
                         >
                             <option
@@ -666,16 +667,22 @@
                         ><span class="text-danger">*</span>
                         <select
                             v-model="personal_data.permanentCity"
+                            @change="permanentMunicipalChange"
                             :class="
                                 !errors.hasOwnProperty('permanentCity')
                                     ? ''
                                     : 'is-invalid'
                             "
-                            :readonly="isSameAsAbove ? true : false"
+                            :disabled="
+                                (isSameAsAbove ? true : false) ||
+                                    (personal_data.permanentProvince == ''
+                                        ? true
+                                        : false)
+                            "
                             class="form-control"
                         >
                             <option
-                                v-for="(city, index) in cities"
+                                v-for="(city, index) in permanentCities"
                                 :key="index"
                                 :value="city.code"
                                 :selected="
@@ -696,7 +703,12 @@
                         ><span class="text-danger">*</span>
                         <select
                             v-model="personal_data.permanentBarangay"
-                            :readonly="isSameAsAbove ? true : false"
+                            :disabled="
+                                (isSameAsAbove ? true : false) ||
+                                    (personal_data.permanentProvince == ''
+                                        ? true
+                                        : false)
+                            "
                             :class="
                                 !errors.hasOwnProperty('permanentBarangay')
                                     ? ''
@@ -705,7 +717,7 @@
                             class="form-control"
                         >
                             <option
-                                v-for="(barangay, index) in barangays"
+                                v-for="(barangay, index) in permanentBarangays"
                                 :key="index"
                                 :value="barangay.code"
                                 :selected="
@@ -733,7 +745,7 @@
                                     ? ''
                                     : 'is-invalid'
                             "
-                            :readonly="isSameAsAbove ? true : false"
+                            :disabled="isSameAsAbove ? true : false"
                             class="form-control"
                             placeholder="Enter Zipcode"
                         />
@@ -1012,6 +1024,8 @@ export default {
             provinces: [],
             cities: [],
             barangays: [],
+            permanentCities: [],
+            permanentBarangays: [],
             errors: {}
         };
     },
@@ -1031,6 +1045,20 @@ export default {
                 )
                 .then(response => (this.barangays = response.data));
         },
+        permanentProvinceChange() {
+            window
+                .axios(
+                    `/api/province/cities/by/${this.personal_data.permanentProvince}`
+                )
+                .then(response => (this.permanentCities = response.data));
+        },
+        permanentMunicipalChange() {
+            window
+                .axios(
+                    `/api/city/barangay/by/${this.personal_data.permanentCity}`
+                )
+                .then(response => (this.permanentBarangays = response.data));
+        },
         sameAsAboveAddress() {
             this.isSameAsAbove = !this.isSameAsAbove;
 
@@ -1043,6 +1071,8 @@ export default {
                 this.personal_data.permanentProvince = "";
                 this.personal_data.permanentZipCode = "";
             } else {
+                this.permanentCities = this.cities;
+                this.permanentBarangays = this.barangays;
                 this.personal_data.permanentLotNo = this.personal_data.residentialLotNo;
                 this.personal_data.permanentStreet = this.personal_data.residentialStreet;
                 this.personal_data.permanentSubdivision = this.personal_data.residentialSubdivision;
