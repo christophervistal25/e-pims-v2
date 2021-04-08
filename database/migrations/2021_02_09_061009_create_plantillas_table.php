@@ -18,7 +18,7 @@ class CreatePlantillasTable extends Migration
             $table->integer('old_item_no');
             $table->integer('item_no');
             $table->bigInteger('position_id');
-            $table->string('position_ext');
+            $table->string('position_ext')->nullable();
             $table->integer('sg_no');
             $table->integer('step_no');
             $table->decimal('salary_amount',11,2);
