@@ -31,7 +31,7 @@ class WorkExperienceRequest extends FormRequest
             "*.monSalary" => ['nullable'],
             "*.payGrade"  => ['nullable'],
             "*.statOfApp" => ['required'],
-            "*.govServ"   => ['required', 'in:Y,N'],
+            "*.govServ"   => ['required', 'in:Y,N,y,n'],
         ];
     }
 
