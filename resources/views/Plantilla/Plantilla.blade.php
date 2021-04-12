@@ -31,7 +31,20 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-12 col-lg-5">
+                    <div class="form-group col-12 col-lg-4">
+                        <label>Employee Name<span class="text-danger">*</span></label>
+                        <select value="" class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" 
+                        name="employeeName" data-live-search="true" id="employeeName">
+                        <option></option>
+                        @foreach($employee as $employees)
+                        <option {{ old('employeeName') == $employees->employee_id ? 'selected' : '' }} value="{{ $employees->employee_id }}"> {{ $employees->firstname }} {{ $employees->middlename }} {{ $employees->lastname }}</option>
+                    @endforeach
+                        </select>
+                        <div id='employee-name-error-message' class='text-danger'>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-12 col-lg-3">
                         <label>Position<span class="text-danger">*</span></label>
                         <select value=""  class="form-control form-control-xs selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}" 
                         name="positionTitle" data-live-search="true" id="positionTitle">
@@ -47,22 +60,9 @@
                         <button id="addPosition" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addPositionBtn"><i class="la la-plus"></i></button>
                     </div>
 
-                    <div class="form-group col-12 col-lg-2">
+                    <div class="form-group col-12 col-lg-3">
                         <label>Position Ext</label>
                         <input value="{{ old('positionTitleExt') }}" class="form-control {{ $errors->has('positionTitleExt')  ? 'is-invalid' : ''}}" name="positionTitleExt" type="text">
-                    </div>
-
-                    <div class="form-group col-12 col-lg-4">
-                        <label>Employee Name<span class="text-danger">*</span></label>
-                        <select value="" class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" 
-                        name="employeeName" data-live-search="true" id="employeeName">
-                        <option></option>
-                        @foreach($employee as $employees)
-                        <option {{ old('employeeName') == $employees->employee_id ? 'selected' : '' }} value="{{ $employees->employee_id }}"> {{ $employees->lastname }}, {{ $employees->firstname }} {{ $employees->middlename }}</option>
-                    @endforeach
-                        </select>
-                        <div id='employee-name-error-message' class='text-danger'>
-                        </div>
                     </div>
 
                     <div class="form-group col-12 col-lg-3">
@@ -77,7 +77,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-12 col-lg-2">
+                    <div class="form-group col-12 col-lg-3">
                         <label>Steps<span class="text-danger">*</span></label>
                         <select name="stepNo" id="currentStepno" value="" class="select floating {{ $errors->has('stepNo')  ? 'is-invalid' : ''}}">
                             <option>Please Select</option>
