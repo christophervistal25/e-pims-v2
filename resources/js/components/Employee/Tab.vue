@@ -1,31 +1,38 @@
 <template>
     <div v-show="view_change">
-        <div class="row">
-            <div class="col-3 mr-5">
-                <table class="table table-bordered">
+        <div class="row p-0">
+            <div class="col-4">
+                <input
+                    type="text"
+                    class="form-control form-control-sm mb-2"
+                    placeholder="Search..."
+                />
+                <table class="table table-hover table-bordered">
                     <thead>
                         <tr>
                             <th>Employee ID</th>
-                            <th>Name</th>
+                            <th>Fullname</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>2</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>3</td>
+                        <tr v-for="(employee, index) in employees" :key="index">
+                            <td class="text-xs">{{ employee.employee_id }}</td>
+                            <td
+                                class="text-xs cursor-pointer"
+                                @click="
+                                    showOtherInformation(employee.employee_id)
+                                "
+                            >
+                                {{ employee.lastname }} ,
+                                {{ employee.firstname }}
+                                {{ employee.middlename }}
+                                {{ employee.extension }}
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="col-8 ">
+            <div class="col-7">
                 <div class="content">
                     <vue-tabs-chrome
                         ref="tab"
@@ -67,24 +74,32 @@ export default {
                     key: "personal_info"
                 },
                 {
+                    label: "Family Background",
+                    key: "family_background"
+                },
+                {
                     label: "Educational Background",
                     key: "educational_background"
                 }
             ],
-            msgList: []
+            msgList: [],
+            employees: []
         };
     },
     methods: {
+        showOtherInformation(employee_id) {
+            this.$refs.tab.addTab();
+        },
         addTab() {
-            let item = "tab" + Date.now();
-            let newTabs = [
-                {
-                    label: "New Tab",
-                    key: item
-                }
-            ];
-            this.$refs.tab.addTab(...newTabs);
-            this.tab = item;
+            // let item = "tab" + Date.now();
+            // let newTabs = [
+            //     {
+            //         label: "New Tab",
+            //         key: item
+            //     }
+            // ];
+            // this.$refs.tab.addTab(...newTabs);
+            // this.tab = item;
         },
         handleDragStart(e, tab, index) {
             console.info("dragstart", e, tab, index);
@@ -114,6 +129,18 @@ export default {
             console.info(e, tab, index);
             this.msgList.push("click");
         }
+    },
+    created() {
+        window.axios.get(`/api/employee/employees`).then(response => {
+            if (response.status === 200) {
+                this.employees = response.data.data;
+            }
+        });
     }
 };
 </script>
+<style scoped>
+.cursor-pointer {
+    cursor: pointer;
+}
+</style>

@@ -65,9 +65,24 @@ Vue.component(
     require("./components/PersonalData/C4/GovernmentIssuedID.vue").default
 );
 
-Vue.component("employee-table", require("./components/Employee/Table.vue").default);
+Vue.component(
+    "employee-table",
+    require("./components/Employee/Table.vue").default
+);
 Vue.component("tab-view", require("./components/Employee/Tab.vue").default);
-Vue.component("employee-records", require("./components/Employee/Records.vue").default);
+Vue.component(
+    "employee-records",
+    require("./components/Employee/Records.vue").default
+);
+Vue.component(
+    "employee",
+    require("./components/Employee/Employee.vue").default
+);
+
+Vue.component(
+    "basic-information",
+    require("./components/Employee/BasicInformation.vue").default
+);
 
 const app = new Vue({
     el: "#app"

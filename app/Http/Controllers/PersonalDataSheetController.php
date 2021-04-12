@@ -120,7 +120,8 @@ class PersonalDataSheetController extends Controller
      */
     public function show($id)
     {
-        //
+        $employee = Employee::find($id);
+        return view('PersonalData.create', compact('employee'));
     }
 
     /**

@@ -36,6 +36,7 @@ Route::Resource('/salary-adjustment', 'SalaryAdjustmentController');
 
 
 Route::group(['prefix' => 'employee'], function () {
+    Route::get('/record', 'EmployeeController@index')->name('employee.index');
     Route::resource('data', 'PersonalDataSheetController');
     Route::post('/personal/information/store', 'PersonalDataSheetController@storePersonInformation');
     Route::post('/personal/family/background/store', 'PersonalDataSheetController@storePersonFamilyBackground');

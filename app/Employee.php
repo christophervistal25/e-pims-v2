@@ -146,6 +146,11 @@ class Employee extends Model
         return $this->hasOne(EmployeeIssuedID::class, 'employee_id', 'employee_id');
     }
 
+    public function status()
+    {
+        return $this->hasOne(RefStatus::class, 'stat_code', 'status');
+    }
+
     /**
      * Get all employees with passed relation.
      */
