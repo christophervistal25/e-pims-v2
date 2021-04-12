@@ -1,7 +1,7 @@
 require("./bootstrap");
 
 window.Vue = require("vue");
-Vue.use("vue-tabs-chrome", require("vue-tabs-chrome"));
+
 
 Vue.component("sample", require("./components/Sample.vue").default);
 
@@ -82,6 +82,52 @@ Vue.component(
 Vue.component(
     "basic-information",
     require("./components/Employee/BasicInformation.vue").default
+);
+
+Vue.component(
+    "view-personal-information",
+    require("./components/Employee/ViewPersonalInformation.vue").default
+);
+
+Vue.component(
+    "view-family-background",
+    require("./components/Employee/ViewFamilyBackground.vue").default
+);
+
+
+Vue.component(
+    "view-educational-background",
+    require("./components/Employee/ViewEducationalBackground.vue").default
+);
+
+Vue.component(
+    "view-work-experience",
+    require("./components/Employee/ViewWorkExperience.vue").default
+);
+
+Vue.component(
+    "view-civil-service",
+    require("./components/Employee/ViewCivilService.vue").default
+);
+
+
+Vue.component(
+    "view-learning-and-development",
+    require("./components/Employee/ViewLearningAndDevelopment.vue").default
+);
+Vue.component(
+    "view-other-information",
+    require("./components/Employee/ViewOtherInformation.vue").default
+);
+
+Vue.component(
+    "view-references",
+    require("./components/Employee/ViewReferences.vue").default
+);
+
+Vue.component(
+    "view-government-issued-id",
+    require("./components/Employee/ViewGovernmentIssuedID.vue").default
 );
 
 const app = new Vue({

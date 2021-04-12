@@ -159,9 +159,15 @@ class Employee extends Model
         return self::with($relations)->get();
     }
 
-    public static function fetchWithRelations(array $relations = [], string $employeeId)
+    public static function fetchWithRelations(array $relations = [], string $employeeId) :Employee
     {
         return self::with($relations)->find($employeeId);
+    }
+
+    public static function fetchWithFullInformation(string $employeeId) :Employee
+    {
+        return self::with([
+            'family_background', 'spouse_child', 'educational_background', 'civil_service', 'work_experience', 'voluntary_work', 'program_attained','other_information','references', 'relevant_queries', 'issued_id', 'status'])->find($employeeId);
     }
 
 

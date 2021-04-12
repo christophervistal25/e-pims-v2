@@ -10,7 +10,7 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<title>@yield('title') |  e-Pims</title>
 	{{-- <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/assets/img/favicon.png') }}"> --}}
-	<link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}">
+	{{-- <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}"> --}}
 	<link rel="stylesheet" href="{{ asset('/assets/css/font-awesome.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('/assets/css/line-awesome.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('/assets/css/select2.min.css') }}">
@@ -194,7 +194,7 @@
 							<span>Personal Information Module</span>
 						</li>
 						<li class="submenu">
-							<a href="#" class='text-decoration-none'><i class="la la-user"></i> <span> Employees </span> <span class="menu-arrow"></span></a>
+							<a href="#" class='text-decoration-none'><i class="la la-users"></i> <span> Employees </span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
 								<li>
                                     <a class='text-decoration-none' href="{{ route('employee.index') }}">

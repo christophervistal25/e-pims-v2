@@ -12,4 +12,9 @@ class EmployeeController extends Controller
     {
         return Employee::select(['employee_id', 'lastname', 'firstname', 'middlename', 'extension'])->paginate(10);
     }
+
+    public function show(string $employeeIdNumber) :Employee
+    {
+       return Employee::fetchWithFullInformation($employeeIdNumber);
+    }
 }
