@@ -39,30 +39,31 @@ class StepIncrementController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [        
-                'employee_id' => 'required',
-                'date_step_increment' => 'required',                
-                'sg_no_to' => 'required',
-                'step_no_to' => 'required',                
-                'amount_to' => 'required',
+        $this->validate($request, [
+                'employeeName'      => 'required',
+                'dateStepIncrement' => 'required',
+                'sgNo2'             => 'required',
+                'stepNo2'           => 'required',
+                'amount2'           => 'required',
         
-         ]);
+        ]);
+            $step_increments = new StepIncrement;
+            $step_increments->employee_id             = $request['employeeID'];
+            $step_increments->item_no                 = $request['itemNoFrom'];
+            $step_increments->position_id             = $request['positionID'];
+            $step_increments->date_step_increment     = $request['dateStepIncrement'];
+            $step_increments->date_latest_appointment = $request['datePromotion'];
+            $step_increments->sg_no_from              = $request['sgNoFrom'];
+            $step_increments->step_no_from            = $request['stepNoFrom'];
+            $step_increments->salary_amount_from      = $request['amountFrom'];
+            $step_increments->sg_no_to                = $request['sgNo2'];
+            $step_increments->step_no_to              = $request['stepNo2'];
+            $step_increments->salary_amount_to        = $request['amount2'];
+            $step_increments->salary_diff             = $request['monthlyDifference'];
+            $step_increments->save();
+        
 
-        $step_increment = New StepIncrement;
-        $step_increment->employee_id=$request['employeeId'];
-        $step_increment->item_no=$request['item_no'];
-        $step_increment->position_id=$request['position_id'];
-        $step_increment->date_step_increment=$request['dateStepIncrement'];
-        $step_increment->date_latest_appointment=$request['datePromotion'];
-        $step_increment->sg_no_from=$request['sgNo'];
-        $step_increment->step_no_from=$request['stepNo'];            
-        $step_increment->salary_amount_from=$request['amount'];
-        $step_increment->sg_no_to=$request['sg_no2'];
-        $step_increment->step_no_to=$request['stepNo2'];
-        $step_increment->salary_amount_to=$request['amount2'];            
-        $step_increment->salary_diff=$request['monthlyDifference'];
-        $step_increment->save();
-        return redirect('/print-increment')->with('success','Successfully Added!');
+        return redirect('/step-increment')->with('success', true);
     }
 
     /**

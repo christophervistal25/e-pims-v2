@@ -30,7 +30,8 @@ Route::post('/plantilla', 'PlantillaController@addPosition');
 Route::Resource('/plantilla', 'PlantillaController');
 
 //'plantilla'p Increment
-Route::Resource('/step-increment', 'StepIncrementController');
+Route::resource('/step-increment', 'StepIncrementController');
+
 //salary adjustment
 Route::Resource('/salary-adjustment', 'SalaryAdjustmentController');
 
