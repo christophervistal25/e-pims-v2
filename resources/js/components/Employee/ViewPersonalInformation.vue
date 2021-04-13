@@ -1,56 +1,334 @@
 <template>
     <div>
         <div v-if="employee.hasOwnProperty('employee_id')">
-            <p>Surname : {{ employee.lastname }}</p>
-            <p>Firstname : {{ employee.firstname }}</p>
-            <p>Middlename : {{ employee.middlename }}</p>
-            <p>Extension : {{ employee.extension }}</p>
-            <p>agency_employee_no : {{ employee.agency_employee_no }}</p>
-            <p>blood_type : {{ employee.blood_type }}</p>
-            <p>citizenship : {{ employee.citizenship }}</p>
-            <p>civil_status : {{ employee.civil_status }}</p>
-            <p>date_birth : {{ employee.date_birth }}</p>
-            <p>email_address : {{ employee.email_address }}</p>
-            <p>employee_id : {{ employee.employee_id }}</p>
-            <p>extension : {{ employee.extension }}</p>
-            <p>firstname : {{ employee.firstname }}</p>
-            <p>gsis_bp_no : {{ employee.gsis_bp_no }}</p>
-            <p>gsis_id_no : {{ employee.gsis_id_no }}</p>
-            <p>gsis_policy_no : {{ employee.gsis_policy_no }}</p>
-            <p>height : {{ employee.height }}</p>
-            <p>lastname : {{ employee.lastname }}</p>
-            <p>middlename : {{ employee.middlename }}</p>
-            <p>mobile_no : {{ employee.mobile_no }}</p>
-            <p>pag_ibig_no : {{ employee.pag_ibig_no }}</p>
-            <p>permanent_barangay : {{ employee.permanent_barangay }}</p>
-            <p>permanent_city : {{ employee.permanent_city }}</p>
-            <p>permanent_house_no : {{ employee.permanent_house_no }}</p>
-            <p>permanent_province : {{ employee.permanent_province }}</p>
-            <p>permanent_street : {{ employee.permanent_street }}</p>
-            <p>permanent_village : {{ employee.permanent_village }}</p>
-            <p>permanent_zip_code : {{ employee.permanent_zip_code }}</p>
-            <p>philhealth_no : {{ employee.philhealth_no }}</p>
-            <p>place_birth : {{ employee.place_birth }}</p>
-            <p>residential_barangay : {{ employee.residential_barangay }}</p>
-            <p>residential_city : {{ employee.residential_city }}</p>
-            <p>residential_house_no : {{ employee.residential_house_no }}</p>
-            <p>residential_province : {{ employee.residential_province }}</p>
-            <p>residential_street : {{ employee.residential_street }}</p>
-            <p>residential_village : {{ employee.residential_village }}</p>
-            <p>residential_zip_code : {{ employee.residential_zip_code }}</p>
-            <p>sex : {{ employee.sex }}</p>
-            <p>sss_no : {{ employee.sss_no }}</p>
-            <p>status : {{ employee.status }}</p>
-            <p>telephone_no : {{ employee.telephone_no }}</p>
-            <p>tin_no : {{ employee.tin_no }}</p>
-            <p>trans_no : {{ employee.trans_no }}</p>
-            <p>weight : {{ employee.weight }}</p>
+            <div class="form-group">
+                <label>Surname</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.lastname"
+                />
+            </div>
+            <div class="form-group">
+                <label>Firstname</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.firstname"
+                />
+            </div>
+            <div class="form-group">
+                <label>Middlename</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.middlename"
+                />
+            </div>
+            <div class="form-group">
+                <label>Extension</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.extension"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">agency employee no.</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.agency_employee_no"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">blood type</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.blood_type"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">citizenship</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.citizenship"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">civil status</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.civil_status"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">date birth</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.date_birth"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">email address</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.email_address"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">employee ID</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.employee_id"
+                />
+            </div>
+            <div class="form-group">
+                <label>extension</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.extension"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-uppercase">gsis bp no</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.gsis_bp_no"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-uppercase">gsis id no</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.gsis_id_no"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-uppercase">gsis policy no</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.gsis_policy_no"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">height</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.height"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">mobile no</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.mobile_no"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">pag ibig no</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.pag_ibig_no"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">permanent barangay</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.permanent_barangay"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">permanent city</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.permanent_city"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">permanent house NO</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.permanent_house_no"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">permanent province</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.permanent_province"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">permanent street</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.permanent_street"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">permanent village</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.permanent_village"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">permanent zip code</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.permanent_zip_code"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">philhealth no</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.philhealth_no"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">place birth</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.place_birth"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">residential barangay</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.residential_barangay"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">residential city</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.residential_city"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">residential house no</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.residential_house_no"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">residential province</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.residential_province"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">residential street</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.residential_street"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">residential village</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.residential_village"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">residential zip code</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.residential_zip_code"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">sex</label>
+                <input type="text" class="form-control" :value="employee.sex" />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize"
+                    ><span class="text-uppercase">sss</span> no</label
+                >
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.sss_no"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">status</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.status"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">telephone no</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.telephone_no"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">tin no</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.tin_no"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">trans no</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.trans_no"
+                />
+            </div>
+            <div class="form-group">
+                <label class="text-capitalize">weight</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.weight"
+                />
+            </div>
         </div>
-        <div v-else>
-            <p class="font-weight-bold">
-                Select Employee to view it's information
-            </p>
-        </div>
+        <div v-else></div>
     </div>
 </template>
 

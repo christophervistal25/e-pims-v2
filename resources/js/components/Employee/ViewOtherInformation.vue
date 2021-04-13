@@ -7,9 +7,31 @@
                     v-for="(information, index) in employee.other_information"
                     :key="index"
                 >
-                    <p>special_skill : {{ information.special_skill }}</p>
-                    <p>non_academic : {{ information.non_academic }}</p>
-                    <p>organization : {{ information.organization }}</p>
+                    <div class="form-group">
+                        <label class="text-capitalize">Special Skill</label
+                        ><input
+                            type="text"
+                            class="form-control"
+                            :value="information.special_skill"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-capitalize">Non Academic</label
+                        ><input
+                            type="text"
+                            class="form-control"
+                            :value="information.non_academic"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label class="text-capitalize">Organization</label
+                        ><input
+                            type="text"
+                            class="form-control"
+                            :value="information.organization"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
