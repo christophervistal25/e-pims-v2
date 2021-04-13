@@ -1,182 +1,422 @@
 <template>
     <div>
         <div v-if="employee.hasOwnProperty('educational_background')">
-            <p>
-                elementary_name :
-                {{ employee.educational_background.elementary_name }}
-            </p>
-            <p>
-                elementary_education :
-                {{ employee.educational_background.elementary_education }}
-            </p>
-            <p>
-                elementary_period_from :
-                {{ employee.educational_background.elementary_period_from }}
-            </p>
-            <p>
-                elementary_period_to :
-                {{ employee.educational_background.elementary_period_to }}
-            </p>
-            <p>
-                elementary_highest_level_units_earned :
-                {{
-                    employee.educational_background
-                        .elementary_highest_level_units_earned
-                }}
-            </p>
-            <p>
-                elementary_year_graduated :
-                {{ employee.educational_background.elementary_year_graduated }}
-            </p>
-            <p>
-                elementary_scholarship :
-                {{ employee.educational_background.elementary_scholarship }}
-            </p>
-            <p>
-                secondary_name :
-                {{ employee.educational_background.secondary_name }}
-            </p>
-            <p>
-                secondary_education :
-                {{ employee.educational_background.secondary_education }}
-            </p>
-            <p>
-                secondary_period_from :
-                {{ employee.educational_background.secondary_period_from }}
-            </p>
-            <p>
-                secondary_period_to :
-                {{ employee.educational_background.secondary_period_to }}
-            </p>
-            <p>
-                secondary_highest_level_units_earned :
-                {{
-                    employee.educational_background
-                        .secondary_highest_level_units_earned
-                }}
-            </p>
-            <p>
-                secondary_year_graduated :
-                {{ employee.educational_background.secondary_year_graduated }}
-            </p>
-            <p>
-                secondary_scholarship :
-                {{ employee.educational_background.secondary_scholarship }}
-            </p>
-            <p>
-                vocational_trade_course_name :
-                {{
-                    employee.educational_background.vocational_trade_course_name
-                }}
-            </p>
-            <p>
-                vocational_education :
-                {{ employee.educational_background.vocational_education }}
-            </p>
-            <p>
-                vocational_trade_course_period_from :
-                {{
-                    employee.educational_background
-                        .vocational_trade_course_period_from
-                }}
-            </p>
-            <p>
-                vocational_trade_course_period_to :
-                {{
-                    employee.educational_background
-                        .vocational_trade_course_period_to
-                }}
-            </p>
-            <p>
-                vocational_trade_course_highest_level_units_earned :
-                {{
-                    employee.educational_background
-                        .vocational_trade_course_highest_level_units_earned
-                }}
-            </p>
-            <p>
-                vocational_trade_course_year_graduated :
-                {{
-                    employee.educational_background
-                        .vocational_trade_course_year_graduated
-                }}
-            </p>
-            <p>
-                vocational_trade_course_scholarship :
-                {{
-                    employee.educational_background
-                        .vocational_trade_course_scholarship
-                }}
-            </p>
-            <p>
-                college_name :
-                {{ employee.educational_background.college_name }}
-            </p>
-            <p>
-                college_education :
-                {{ employee.educational_background.college_education }}
-            </p>
-            <p>
-                college_period_from :
-                {{ employee.educational_background.college_period_from }}
-            </p>
-            <p>
-                college_period_to :
-                {{ employee.educational_background.college_period_to }}
-            </p>
-            <p>
-                college_highest_level_units_earned :
-                {{
-                    employee.educational_background
-                        .college_highest_level_units_earned
-                }}
-            </p>
-            <p>
-                college_year_graduated :
-                {{ employee.educational_background.college_year_graduated }}
-            </p>
-            <p>
-                college_scholarship :
-                {{ employee.educational_background.college_scholarship }}
-            </p>
-            <p>
-                graduate_studies_name :
-                {{ employee.educational_background.graduate_studies_name }}
-            </p>
-            <p>
-                graduate_studies_education :
-                {{ employee.educational_background.graduate_studies_education }}
-            </p>
-            <p>
-                graduate_studies_period_from :
-                {{
-                    employee.educational_background.graduate_studies_period_from
-                }}
-            </p>
-            <p>
-                graduate_studies_period_to :
-                {{ employee.educational_background.graduate_studies_period_to }}
-            </p>
-            <p>
-                graduate_studies_highest_level_units_earned :
-                {{
-                    employee.educational_background
-                        .graduate_studies_highest_level_units_earned
-                }}
-            </p>
-            <p>
-                graduate_studies_year_graduated :
-                {{
-                    employee.educational_background
-                        .graduate_studies_year_graduated
-                }}
-            </p>
-            <p>
-                graduate_studies_scholarship :
-                {{
-                    employee.educational_background.graduate_studies_scholarship
-                }}
-            </p>
+            <div class="form-group">
+                <label class="text-capitalize">elementary name : </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.educational_background.elementary_name"
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize">elementary education : </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background.elementary_education
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize">elementary period from : </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background.elementary_period_from
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize">elementary period to : </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background.elementary_period_to
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize"
+                    >elementary highest level units earned :
+                </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background
+                            .elementary_highest_level_units_earned
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize"
+                    >elementary year graduated :
+                </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background
+                            .elementary_year_graduated
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize">elementary scholarship : </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background.elementary_scholarship
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize">secondary name : </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.educational_background.secondary_name"
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize">secondary education : </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.educational_background.secondary_education"
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize">secondary period from : </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background.secondary_period_from
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize">secondary period to : </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.educational_background.secondary_period_to"
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize"
+                    >secondary highest level units earned :
+                </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background
+                            .secondary_highest_level_units_earned
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize"
+                    >secondary year graduated :
+                </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background.secondary_year_graduated
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize">secondary scholarship : </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background.secondary_scholarship
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize"
+                    >vocational trade course name :
+                </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background
+                            .vocational_trade_course_name
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize">vocational education : </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background.vocational_education
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize"
+                    >vocational trade course period from :
+                </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background
+                            .vocational_trade_course_period_from
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize"
+                    >vocational trade course period to :
+                </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background
+                            .vocational_trade_course_period_to
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label>
+                    vocational trade course highest level units earned :</label
+                >
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background
+                            .vocational_trade_course_highest_level_units_earned
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize"
+                    >vocational trade course year graduated :
+                </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background
+                            .vocational_trade_course_year_graduated
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize"
+                    >vocational trade course scholarship :
+                </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background
+                            .vocational_trade_course_scholarship
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize">college name : </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.educational_background.college_name"
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize">college education : </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.educational_background.college_education"
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize">college period from : </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.educational_background.college_period_from"
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize">college period to : </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.educational_background.college_period_to"
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize"
+                    >college highest level units earned :
+                </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background
+                            .college_highest_level_units_earned
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize">college year graduated : </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background.college_year_graduated
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize">college scholarship : </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="employee.educational_background.college_scholarship"
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize">graduate studies name : </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background.graduate_studies_name
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize"
+                    >graduate studies education :
+                </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background
+                            .graduate_studies_education
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize"
+                    >graduate studies period from :
+                </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background
+                            .graduate_studies_period_from
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize"
+                    >graduate studies period to :
+                </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background
+                            .graduate_studies_period_to
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize"
+                    >graduate studies highest level units earned :
+                </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background
+                            .graduate_studies_highest_level_units_earned
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize"
+                    >graduate studies year graduated :
+                </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background
+                            .graduate_studies_year_graduated
+                    "
+                />
+            </div>
+
+            <div class="form-group">
+                <label class="text-capitalize"
+                    >graduate studies scholarship :
+                </label>
+                <input
+                    type="text"
+                    class="form-control"
+                    :value="
+                        employee.educational_background
+                            .graduate_studies_scholarship
+                    "
+                />
+            </div>
         </div>
     </div>
 </template>

@@ -7,23 +7,63 @@
                     v-for="(civil_service, index) in employee.civil_service"
                     :key="index"
                 >
-                    <p>career_service : {{ civil_service.career_service }}</p>
-                    <p>rating : {{ civil_service.rating }}</p>
-                    <p>
-                        date_of_examination :
-                        {{ civil_service.date_of_examination }}
-                    </p>
-                    <p>
-                        place_of_examination :
-                        {{ civil_service.place_of_examination }}
-                    </p>
-                    <p>license_number : {{ civil_service.license_number }}</p>
-                    <p>
-                        date_of_validitiy :
-                        {{ civil_service.date_of_validitiy }}
-                    </p>
-                    <p>created_at : {{ civil_service.created_at }}</p>
-                    <p>updated_at : {{ civil_service.updated_at }}</p>
+                    <div class="form-group">
+                        <label class="text-capitalize">career service</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            :value="civil_service.career_service"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-capitalize">rating</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            :value="civil_service.rating"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-capitalize"
+                            >date of examination</label
+                        >
+                        <input
+                            type="text"
+                            class="form-control"
+                            :value="civil_service.date_of_examination"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-capitalize"
+                            >place of examination</label
+                        >
+                        <input
+                            type="text"
+                            class="form-control"
+                            :value="civil_service.place_of_examination"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-capitalize">license number</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            :value="civil_service.license_number"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-capitalize">date of validitiy</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            :value="civil_service.date_of_validitiy"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
