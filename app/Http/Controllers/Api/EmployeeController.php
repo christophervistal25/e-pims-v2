@@ -8,6 +8,7 @@ use App\Employee;
 
 class EmployeeController extends Controller
 {
+    // Method to display all employee in PDS
     public function list()
     {
         return Employee::select(['employee_id', 'lastname', 'firstname', 'middlename', 'extension'])->paginate(10);
@@ -15,6 +16,12 @@ class EmployeeController extends Controller
 
     public function show(string $employeeIdNumber) :Employee
     {
-       return Employee::fetchWithFullInformation($employeeIdNumber);
+        return Employee::fetchWithFullInformation($employeeIdNumber);
     }
+
+    public function records()
+    {
+        return Employee::select(['employee_id', 'lastname', 'firstname', 'middlename', 'extension'])->paginate(10);
+    }
+
 }
