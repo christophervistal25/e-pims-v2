@@ -86,7 +86,7 @@
 
                     <div class="form-group col-12 col-lg-3">
                         <label>Steps<span class="text-danger">*</span></label>
-                        <select name="stepNo" id="currentStepno" value="" class="select floating {{ $errors->has('stepNo')  ? 'is-invalid' : ''}}">
+                        <select name="stepNo" value="" class="select floating {{ $errors->has('stepNo')  ? 'is-invalid' : ''}}"  id="currentStepno">
                             <option>Please Select</option>
                             @foreach (range(1, 8) as $step_no)
                               <option {{ old('stepNo') == $step_no ? 'selected' : '' }} value="{{ $step_no}}">{{ $step_no}}</option>
