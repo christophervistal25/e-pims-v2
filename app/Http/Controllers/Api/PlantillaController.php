@@ -43,10 +43,16 @@ class PlantillaController extends Controller
     // add position function
     public function addPosition(Request $request){
            $this->validate($request, [
+            'positionCode'  => 'required|unique:positions,position_code', 
             'positionName'  => 'required|unique:positions,position_name', 
+            'salaryGrades'  => 'required|in:' . implode(',',range(1, 33)), 
+            'positionShortName'  => 'required', 
         ]);
         $addPosition = new Position;
+        $addPosition->position_code     = $request['positionCode'];
         $addPosition->position_name     = $request['positionName'];
+        $addPosition->salary_grade     = $request['salaryGrades'];
+        $addPosition->position_short_name     = $request['positionShortName'];
         $addPosition->save();
         return response()->json(['success'=>true, 'position_id' => $addPosition->position_id]);
 

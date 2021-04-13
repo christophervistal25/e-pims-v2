@@ -10,8 +10,27 @@
             <div class="modal-body">
                     <div class="row">
                     <div class="form-group col-12">
+                        <label class="d-block">Position Code</label>
+                        <input placeholder="Input Position Code" class="form-control" id="positionCode" name="positionCode" type="text" >
+                    </div>
+                    <div class="form-group col-12">
                         <label class="d-block">Position Name</label>
                         <input placeholder="Input Position Name" class="form-control" id="positionName" name="positionName" type="text" >
+                    </div>
+
+                    <div class="form-group col-12">
+                        <label class="d-block">Salary Grade</label>
+                        <select name="salaryGrades" id="salaryGrades" class="select floating">
+                            <option selected="selected">Please Select</option>
+                            @foreach (range(1, 33) as $step_no)
+                                <option value="{{ $step_no}}">{{ $step_no}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group col-12">
+                        <label class="d-block">Position Short Name</label>
+                        <input placeholder="Input Position Short Name" class="form-control" id="positionShortName" name="positionShortName" type="text" >
                     </div>
                     <div class="form-group submit-section col-12">
                         <button id="btnPosition" type="submit" class="btn btn-success submit-btn">Save</button>
