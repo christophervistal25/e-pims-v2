@@ -46,6 +46,22 @@
                 $(this).val($(this).val().replace(/[^0-9.]/g, ''));
                 });
             });
+////////////////////////////// position display salary grade
+            $(document).ready(function() {
+                $("#positionTitle").change(function(){
+                let positionTitle = $('#positionTitle').val();
+                let currentStepno = $('#currentStepno').val();
+                        $.ajax({
+                            url: `/api/positionSalaryGrade/${positionTitle}`,
+                            success:(response) => {
+                                    let currentSalaryGrade = response.salary_grade.sg_no;
+                                    $('#currentSalarygrade').val(currentSalaryGrade);
+                                    let currentSalaryAmount = response.salary_grade['sg_step' + currentStepno];
+                                    $('#currentSalaryamount').val(currentSalaryAmount);
+                            }
+                    });
+                });
+            });
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 $(document).ready(function() {
@@ -53,7 +69,6 @@
                     let currentSalarygrade = $('#currentSalarygrade').val();
                     let currentStepno = $('#currentStepno').val();
                     let currentSgyear = $('#currentSgyear').val();
-               
                         $.ajax({
                             url: `/api/salarySteplist/${currentSalarygrade}/${currentStepno}/${currentSgyear}`,
                                 success:(response) => {
@@ -77,6 +92,7 @@
                                             $('#currentSalaryamount').val('No Data');
                                         }else{
                                             let currentSalaryAmount = response['sg_step' + currentStepno];
+                                            console.log(response);
                                             $('#currentSalaryamount').val(currentSalaryAmount);
                                         }
                                     }
@@ -99,162 +115,156 @@
                                 });
                             });
                 });
-
-
-
-                
-   
-            $(document).ready(function() {
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////
-                $("#dbmPreviousSgno").change(function(){
-                let dbmPreviousSg = $('#dbmPreviousSgno').val();
-                let dbmPreviousStep = $('#dbmPreviousStepno').val();
-                let dbmPreviousSgyear = $('#dbmPreviousSgyear').val();
-                    $.ajax({
-                        url: `/api/dbmPrevious/${dbmPreviousSg}/${dbmPreviousStep}/${dbmPreviousSgyear}`, 
-                        success:(response) => {
-                            if(response == ''){ 
-                                $('#dbmPreviousAmount').val('No Data');
-                            }else{
-                                var currentSalaryAmount = response['sg_step' + dbmPreviousStep];
-                                $('#dbmPreviousAmount').val(currentSalaryAmount);
-                            }
-                           
-                        }
-                    });
-                });
-                $("#dbmPreviousStepno").change(function(){
-                let dbmPreviousSg = $('#dbmPreviousSgno').val();
-                let dbmPreviousStep = $('#dbmPreviousStepno').val();
-                let dbmPreviousSgyear = $('#dbmPreviousSgyear').val();
-                    $.ajax({
-                        url: `/api/dbmPrevious/${dbmPreviousSg}/${dbmPreviousStep}/${dbmPreviousSgyear}`, 
-                        success:(response) => {
-                            if(response == ''){ 
-                                $('#dbmPreviousAmount').val('No Data');
-                            }else{
-                                var currentSalaryAmount = response['sg_step' + dbmPreviousStep];
-                                $('#dbmPreviousAmount').val(currentSalaryAmount);
-                            }
-                        }
-                    });
-                });
-                $("#dbmPreviousSgyear").change(function(){
-                let dbmPreviousSg = $('#dbmPreviousSgno').val();
-                let dbmPreviousStep = $('#dbmPreviousStepno').val();
-                let dbmPreviousSgyear = $('#dbmPreviousSgyear').val();
-                    $.ajax({
-                        url: `/api/dbmPrevious/${dbmPreviousSg}/${dbmPreviousStep}/${dbmPreviousSgyear}`, 
-                        success:(response) => {
-                            if(response == ''){
-                                $('#dbmPreviousAmount').val('No Data');
-                            } else {
-                                let currentSalaryAmount = response['sg_step' + dbmPreviousStep];
-                                $('#dbmPreviousAmount').val(currentSalaryAmount);
-                            }
-                        }
-                    });
-                });
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                $("#dbmCurrentSgno").change(function(){
-                    let dbmCurrentSg = $('#dbmCurrentSgno').val();
-                    let dbmCurrentStep = $('#dbmCurrentStepno').val();
-                    let dbmCurrentSgyear = $('#dbmCurrentSgyear').val();
-                        $.ajax({
-                            url: `/api/dbmCurrent/${dbmCurrentSg}/${dbmCurrentStep}/${dbmCurrentSgyear}`, 
-                            success:(response) => {
-                                if(response == ''){
-                                    $('#dbmCurrentAmount').val('No Data');
-                                } else {
-                                    let currentSalaryAmount = response['sg_step' + dbmCurrentStep];
-                                    $('#dbmCurrentAmount').val(currentSalaryAmount);
-                                }
-                            }
-                        });
-                    });
-                    $("#dbmCurrentStepno").change(function(){
-                        let dbmCurrentSg = $('#dbmCurrentSgno').val();
-                        let dbmCurrentStep = $('#dbmCurrentStepno').val();
-                        let dbmCurrentSgyear = $('#dbmCurrentSgyear').val();
-                            $.ajax({
-                                url: `/api/dbmCurrent/${dbmCurrentSg}/${dbmCurrentStep}/${dbmCurrentSgyear}`, 
-                                success:(response) => {
-                                    if(response == ''){
-                                        $('#dbmCurrentAmount').val('No Data');
-                                    } else {
-                                        let currentSalaryAmount = response['sg_step' + dbmCurrentStep];
-                                        $('#dbmCurrentAmount').val(currentSalaryAmount);
-                                    }
-                                }
-                            });
-                        });
-                        $("#dbmCurrentSgyear").change(function(){
-                            let dbmCurrentSg = $('#dbmCurrentSgno').val();
-                            let dbmCurrentStep = $('#dbmCurrentStepno').val();
-                            let dbmCurrentSgyear = $('#dbmCurrentSgyear').val();
-                                $.ajax({
-                                    url: `/api/dbmCurrent/${dbmCurrentSg}/${dbmCurrentStep}/${dbmCurrentSgyear}`, 
-                                    success:(response) => {
-                                        if(response == ''){
-                                            $('#dbmCurrentAmount').val('No Data');
-                                        } else {
-                                            let currentSalaryAmount = response['sg_step' + dbmCurrentStep];
-                                            $('#dbmCurrentAmount').val(currentSalaryAmount);
-                                        }
-                                    }
-                                });
-                            });
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                $("#cscPreviousSgno").change(function(){
-                    let cscPreviousSg = $('#cscPreviousSgno').val();
-                    let cscPreviousStep = $('#cscPreviousStepno').val();
-                    let cscPreviousSgyear = $('#cscPreviousSgyear').val();
-                        $.ajax({
-                            url: `/api/cscPrevious/${cscPreviousSg}/${cscPreviousStep}/${cscPreviousSgyear}`, 
-                            success:(response) => {
-                                if(response == ''){
-                                    $('#cscPreviousAmount').val('No Data');
-                                } else {
-                                    let currentSalaryAmount = response['sg_step' + cscPreviousStep];
-                                    $('#cscPreviousAmount').val(currentSalaryAmount);
-                                }
-                            }
-                        });
-                    });
-                    $("#cscPreviousStepno").change(function(){
-                        let cscPreviousSg = $('#cscPreviousSgno').val();
-                        let cscPreviousStep = $('#cscPreviousStepno').val();
-                        let cscPreviousSgyear = $('#cscPreviousSgyear').val();
-                            $.ajax({
-                                url: `/api/cscPrevious/${cscPreviousSg}/${cscPreviousStep}/${cscPreviousSgyear}`, 
-                                success:(response) => {
-                                    if(response == ''){
-                                        $('#cscPreviousAmount').val('No Data');
-                                    } else {
-                                        let currentSalaryAmount = response['sg_step' + cscPreviousStep];
-                                        $('#cscPreviousAmount').val(currentSalaryAmount);
-                                    }
-                                }
-                            });
-                        });
-                        $("#cscPreviousSgyear").change(function(){
-                            let cscPreviousSg = $('#cscPreviousSgno').val();
-                            let cscPreviousStep = $('#cscPreviousStepno').val();
-                            let cscPreviousSgyear = $('#cscPreviousSgyear').val();
-                                $.ajax({
-                                    url: `/api/cscPrevious/${cscPreviousSg}/${cscPreviousStep}/${cscPreviousSgyear}`, 
-                                    success:(response) => {
-                                        if(response == ''){
-                                            $('#cscPreviousAmount').val('No Data');
-                                        } else {
-                                            let currentSalaryAmount = response['sg_step' + cscPreviousStep];
-                                            $('#cscPreviousAmount').val(currentSalaryAmount);
-                                        }
-                                    }
-                                });
-                            });
-                /////////////////////////////////////////////////////////////////////////////////////////////////
-                });
+            // $(document).ready(function() {
+            //     /////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //     $("#dbmPreviousSgno").change(function(){
+            //     let dbmPreviousSg = $('#dbmPreviousSgno').val();
+            //     let dbmPreviousStep = $('#dbmPreviousStepno').val();
+            //     let dbmPreviousSgyear = $('#dbmPreviousSgyear').val();
+            //         $.ajax({
+            //             url: `/api/dbmPrevious/${dbmPreviousSg}/${dbmPreviousStep}/${dbmPreviousSgyear}`, 
+            //             success:(response) => {
+            //                 if(response == ''){ 
+            //                     $('#dbmPreviousAmount').val('No Data');
+            //                 }else{
+            //                     var currentSalaryAmount = response['sg_step' + dbmPreviousStep];
+            //                     $('#dbmPreviousAmount').val(currentSalaryAmount);
+            //                 }
+            //             }
+            //         });
+            //     });
+            //     $("#dbmPreviousStepno").change(function(){
+            //     let dbmPreviousSg = $('#dbmPreviousSgno').val();
+            //     let dbmPreviousStep = $('#dbmPreviousStepno').val();
+            //     let dbmPreviousSgyear = $('#dbmPreviousSgyear').val();
+            //         $.ajax({
+            //             url: `/api/dbmPrevious/${dbmPreviousSg}/${dbmPreviousStep}/${dbmPreviousSgyear}`, 
+            //             success:(response) => {
+            //                 if(response == ''){ 
+            //                     $('#dbmPreviousAmount').val('No Data');
+            //                 }else{
+            //                     var currentSalaryAmount = response['sg_step' + dbmPreviousStep];
+            //                     $('#dbmPreviousAmount').val(currentSalaryAmount);
+            //                 }
+            //             }
+            //         });
+            //     });
+            //     $("#dbmPreviousSgyear").change(function(){
+            //     let dbmPreviousSg = $('#dbmPreviousSgno').val();
+            //     let dbmPreviousStep = $('#dbmPreviousStepno').val();
+            //     let dbmPreviousSgyear = $('#dbmPreviousSgyear').val();
+            //         $.ajax({
+            //             url: `/api/dbmPrevious/${dbmPreviousSg}/${dbmPreviousStep}/${dbmPreviousSgyear}`, 
+            //             success:(response) => {
+            //                 if(response == ''){
+            //                     $('#dbmPreviousAmount').val('No Data');
+            //                 } else {
+            //                     let currentSalaryAmount = response['sg_step' + dbmPreviousStep];
+            //                     $('#dbmPreviousAmount').val(currentSalaryAmount);
+            //                 }
+            //             }
+            //         });
+            //     });
+            //     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //     $("#dbmCurrentSgno").change(function(){
+            //         let dbmCurrentSg = $('#dbmCurrentSgno').val();
+            //         let dbmCurrentStep = $('#dbmCurrentStepno').val();
+            //         let dbmCurrentSgyear = $('#dbmCurrentSgyear').val();
+            //             $.ajax({
+            //                 url: `/api/dbmCurrent/${dbmCurrentSg}/${dbmCurrentStep}/${dbmCurrentSgyear}`, 
+            //                 success:(response) => {
+            //                     if(response == ''){
+            //                         $('#dbmCurrentAmount').val('No Data');
+            //                     } else {
+            //                         let currentSalaryAmount = response['sg_step' + dbmCurrentStep];
+            //                         $('#dbmCurrentAmount').val(currentSalaryAmount);
+            //                     }
+            //                 }
+            //             });
+            //         });
+            //         $("#dbmCurrentStepno").change(function(){
+            //             let dbmCurrentSg = $('#dbmCurrentSgno').val();
+            //             let dbmCurrentStep = $('#dbmCurrentStepno').val();
+            //             let dbmCurrentSgyear = $('#dbmCurrentSgyear').val();
+            //                 $.ajax({
+            //                     url: `/api/dbmCurrent/${dbmCurrentSg}/${dbmCurrentStep}/${dbmCurrentSgyear}`, 
+            //                     success:(response) => {
+            //                         if(response == ''){
+            //                             $('#dbmCurrentAmount').val('No Data');
+            //                         } else {
+            //                             let currentSalaryAmount = response['sg_step' + dbmCurrentStep];
+            //                             $('#dbmCurrentAmount').val(currentSalaryAmount);
+            //                         }
+            //                     }
+            //                 });
+            //             });
+            //             $("#dbmCurrentSgyear").change(function(){
+            //                 let dbmCurrentSg = $('#dbmCurrentSgno').val();
+            //                 let dbmCurrentStep = $('#dbmCurrentStepno').val();
+            //                 let dbmCurrentSgyear = $('#dbmCurrentSgyear').val();
+            //                     $.ajax({
+            //                         url: `/api/dbmCurrent/${dbmCurrentSg}/${dbmCurrentStep}/${dbmCurrentSgyear}`, 
+            //                         success:(response) => {
+            //                             if(response == ''){
+            //                                 $('#dbmCurrentAmount').val('No Data');
+            //                             } else {
+            //                                 let currentSalaryAmount = response['sg_step' + dbmCurrentStep];
+            //                                 $('#dbmCurrentAmount').val(currentSalaryAmount);
+            //                             }
+            //                         }
+            //                     });
+            //                 });
+            //     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //     $("#cscPreviousSgno").change(function(){
+            //         let cscPreviousSg = $('#cscPreviousSgno').val();
+            //         let cscPreviousStep = $('#cscPreviousStepno').val();
+            //         let cscPreviousSgyear = $('#cscPreviousSgyear').val();
+            //             $.ajax({
+            //                 url: `/api/cscPrevious/${cscPreviousSg}/${cscPreviousStep}/${cscPreviousSgyear}`, 
+            //                 success:(response) => {
+            //                     if(response == ''){
+            //                         $('#cscPreviousAmount').val('No Data');
+            //                     } else {
+            //                         let currentSalaryAmount = response['sg_step' + cscPreviousStep];
+            //                         $('#cscPreviousAmount').val(currentSalaryAmount);
+            //                     }
+            //                 }
+            //             });
+            //         });
+            //         $("#cscPreviousStepno").change(function(){
+            //             let cscPreviousSg = $('#cscPreviousSgno').val();
+            //             let cscPreviousStep = $('#cscPreviousStepno').val();
+            //             let cscPreviousSgyear = $('#cscPreviousSgyear').val();
+            //                 $.ajax({
+            //                     url: `/api/cscPrevious/${cscPreviousSg}/${cscPreviousStep}/${cscPreviousSgyear}`, 
+            //                     success:(response) => {
+            //                         if(response == ''){
+            //                             $('#cscPreviousAmount').val('No Data');
+            //                         } else {
+            //                             let currentSalaryAmount = response['sg_step' + cscPreviousStep];
+            //                             $('#cscPreviousAmount').val(currentSalaryAmount);
+            //                         }
+            //                     }
+            //                 });
+            //             });
+            //             $("#cscPreviousSgyear").change(function(){
+            //                 let cscPreviousSg = $('#cscPreviousSgno').val();
+            //                 let cscPreviousStep = $('#cscPreviousStepno').val();
+            //                 let cscPreviousSgyear = $('#cscPreviousSgyear').val();
+            //                     $.ajax({
+            //                         url: `/api/cscPrevious/${cscPreviousSg}/${cscPreviousStep}/${cscPreviousSgyear}`, 
+            //                         success:(response) => {
+            //                             if(response == ''){
+            //                                 $('#cscPreviousAmount').val('No Data');
+            //                             } else {
+            //                                 let currentSalaryAmount = response['sg_step' + cscPreviousStep];
+            //                                 $('#cscPreviousAmount').val(currentSalaryAmount);
+            //                             }
+            //                         }
+            //                     });
+            //                 });
+            //     /////////////////////////////////////////////////////////////////////////////////////////////////
+            //     });
 
 /////////add position function
                 $(document).ready(function () {
@@ -267,6 +277,7 @@
                         data: { 
                             "positionName": name 
                             },
+                       
                         success: function (response) {
                         if(response.success){
                             $('.modal').each(function(){
@@ -385,8 +396,6 @@ $(document).ready(function () {
                             $('#division-error-message').html('');
                             $('#division-error-message').append(`<span>${errors.divisionId[0]}</span>`);
                         }
-
-                      
                         // swal("Oops...", response.responseText, "error");
                         swal("Error saving", '', "error");
                     }
