@@ -16,9 +16,9 @@ class CreateEmployeeReferencesTable extends Migration
         Schema::create('employee_references', function (Blueprint $table) {
             $table->id();
             $table->string('employee_id');
-            $table->string('name');
-            $table->string('address');
-            $table->string('telephone_number');
+            $table->string('name')->nullable();
+            $table->string('address')->nullable();
+            $table->string('telephone_number')->nullable();
             $table->timestamps();
         });
     }

@@ -51,6 +51,6 @@ $factory->define(Employee::class, function (Faker $faker) {
         'telephone_no'         => $faker->phoneNumber,
         'mobile_no'            => $faker->phoneNumber,
         'email_address'        => $faker->email,
-        // 'status'               => $faker->city,
+        'status'               =>  $faker->numberBetween(1, 5),
     ];
 });

@@ -5,11 +5,14 @@ Route::get('/dbmPrevious/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaControlle
 Route::get('/dbmCurrent/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@dbmCurrent');
 Route::get('/cscPrevious/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@cscPrevious');
 
+Route::get('/positionSalaryGrade/{positionTitle}' , 'Api\PlantillaController@positionSalaryGrade');
+
 Route::post('/addPosition' , 'Api\PlantillaController@addPosition');
 
 
 Route::group(['prefix' => 'employee'], function () {
     Route::get('employees', 'Api\EmployeeController@list');
+    Route::get('show/{employeeIdNumber}', 'Api\EmployeeController@show');
 });
 
 Route::group(['prefix' => 'province'], function () {

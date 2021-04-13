@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePositionsTable extends Migration
+class CreateRefStatusesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreatePositionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('positions', function (Blueprint $table) {
-            $table->id('position_id');
-            $table->string('position_code');
-            $table->string('position_name');
-            $table->integer('salary_grade');
-            $table->string('position_short_name');
+        Schema::create('ref_statuses', function (Blueprint $table) {
+            $table->id();
+            $table->integer('stat_code');
+            $table->string('status_name');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreatePositionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('positions');
+        Schema::dropIfExists('ref_statuses');
     }
 }

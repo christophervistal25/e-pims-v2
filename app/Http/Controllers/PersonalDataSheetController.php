@@ -10,6 +10,8 @@ use App\Http\Requests\C1\FamilyBackgroundRequest;
 use App\Http\Requests\C1\EducationalBackgroundRequest;
 use App\Http\Requests\C2\CivilServiceRequest;
 use App\Http\Requests\C2\WorkExperienceRequest;
+use App\Http\Requests\C3\VoluntaryWorkRequest;
+use App\Http\Requests\C3\LearningRequest;
 use App\Http\Requests\C4\RelevantQueriesRequest;
 use App\Http\Requests\C4\GovernmentIssuedIDRequest;
 
@@ -67,12 +69,12 @@ class PersonalDataSheetController extends Controller
         return $this->employeeRepository->addWorkExperience($request->all());
     }
 
-    public function storeVoluntary(Request $request)
+    public function storeVoluntary(VoluntaryWorkRequest $request)
     {
         return $this->employeeRepository->addVoluntary($request->all());
     }
 
-    public function storeLearning(Request $request)
+    public function storeLearning(LearningRequest $request)
     {
         return $this->employeeRepository->addLearning($request->all());
     }
@@ -118,7 +120,8 @@ class PersonalDataSheetController extends Controller
      */
     public function show($id)
     {
-        //
+        $employee = Employee::find($id);
+        return view('PersonalData.create', compact('employee'));
     }
 
     /**

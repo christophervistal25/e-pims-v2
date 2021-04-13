@@ -16,9 +16,9 @@ class CreateEmployeeOtherInformationTable extends Migration
         Schema::create('employee_other_information', function (Blueprint $table) {
             $table->id();
             $table->string('employee_id');
-            $table->string('special_skill');
-            $table->string('non_academic');
-            $table->string('organization');
+            $table->string('special_skill')->nullable();
+            $table->string('non_academic')->nullable();
+            $table->string('organization')->nullable();
             $table->timestamps();
         });
     }
