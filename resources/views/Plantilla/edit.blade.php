@@ -46,13 +46,28 @@
                         @endif
                     </div>
 
-                    <div class="form-group col-12 col-lg-5">
+                    <div class="form-group col-12 col-lg-4">
+                        <label>Employee Name<span class="text-danger">*</span></label>
+                        <select value="{{ old('employeeName') }}" class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" 
+                        name="employeeName" data-live-search="true" id="employeeName" data-size="5">
+                        <option></option>
+                        @foreach($employee as $employees)
+                        <option {{ $plantilla->employee_id == $employees->employee_id ? 'selected' : '' }} value="{{ $employees->employee_id }}"> {{ $employees->lastname }}, {{ $employees->firstname }} {{ $employees->middlename }}</option>
+                    @endforeach
+                        </select>
+                        @if($errors->has('employeeName'))
+                        <small  class="form-text text-danger">
+                        {{ $errors->first('employeeName') }} </small>
+                        @endif
+                    </div>
+
+                    <div class="form-group col-12 col-lg-4">
                         <label>Position<span class="text-danger">*</span></label>
                         <select value="{{ old('positionTitle') }}"  class="form-control form-control-xs selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}" 
-                        name="positionTitle" data-live-search="true" id="positionTitle">
+                        name="positionTitle" data-live-search="true" id="positionTitle" data-width="100%">
                         <option></option>
                         @foreach($position as $positions)
-                            <option {{ $plantilla->position_id == $positions->position_id ? 'selected' : '' }} value="{{ $positions->position_id}}">{{ $positions->position_name }}</option>
+                            <option style="width:350px;"  {{ $plantilla->position_id == $positions->position_id ? 'selected' : '' }} value="{{ $positions->position_id}}">{{ $positions->position_name }}</option>
                         @endforeach
                         </select>
                         @if($errors->has('positionTitle'))
@@ -70,36 +85,13 @@
                         @endif
                     </div>
 
-                    <div class="form-group col-12 col-lg-4">
-                        <label>Employee Name<span class="text-danger">*</span></label>
-                        <select value="{{ old('employeeName') }}" class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" 
-                        name="employeeName" data-live-search="true" id="employeeName">
-                        <option></option>
-                        @foreach($employee as $employees)
-                        <option {{ $plantilla->employee_id == $employees->employee_id ? 'selected' : '' }} value="{{ $employees->employee_id }}"> {{ $employees->lastname }}, {{ $employees->firstname }} {{ $employees->middlename }}</option>
-                    @endforeach
-                        </select>
-                        @if($errors->has('employeeName'))
-                        <small  class="form-text text-danger">
-                        {{ $errors->first('employeeName') }} </small>
-                        @endif
-                    </div>
 
                     <div class="form-group col-12 col-lg-3">
                         <label>Salary Grade<span class="text-danger">*</span></label>
-                        <select name="salaryGrade" value="" class="select floating {{ $errors->has('salaryGrade')  ? 'is-invalid' : ''}}" id="currentSalarygrade">
-                            <option>Please Select</option>
-                           @foreach (range(1 , 33) as $salarygrades)
-                             <option {{ $plantilla->sg_no == $salarygrades ? 'selected' : '' }} value="{{ $salarygrades}}">{{ $salarygrades}}</option>
-                           @endforeach
-                        </select>
-                        @if($errors->has('salaryGrade'))
-                        <small  class="form-text text-danger">
-                        {{ $errors->first('salaryGrade') }} </small>
-                        @endif
+                        <input value="{{ old('salaryGrade') ?? $plantilla->sg_no}}" class="form-control {{ $errors->has('')  ? 'is-invalid' : ''}}" name="salaryGrade" id="currentSalarygrade" type="text" readonly>
                     </div>
 
-                    <div class="form-group col-12 col-lg-2">
+                    <div class="form-group col-12 col-lg-3">
                         <label>Steps<span class="text-danger">*</span></label>
                         <select name="stepNo" id="currentStepno" value="{{ old('stepNo') }}" class="select floating {{ $errors->has('stepNo')  ? 'is-invalid' : ''}}">
                             <option>Please Select</option>
