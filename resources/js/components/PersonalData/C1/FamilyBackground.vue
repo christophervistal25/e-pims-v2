@@ -41,6 +41,14 @@
                     </label>
                 </div>
                 <section v-if="hasSpouse">
+                    <div class="pl-3 pr-3">
+                    <div
+                        class="alert alert-secondary text-center font-weight-bold "
+                        role="alert"
+                    >
+                        SPOUSE INFORMATION
+                    </div>
+                </div>
                     <div class="row pr-3 pl-3">
                         <div class="form-group col-lg-3">
                             <label for="ssurname">SPOUSE'S SURNAME</label
@@ -165,9 +173,17 @@
                             />
                         </div>
                     </div>
-                    <hr />
+                    
                 </section>
-                <hr />
+                
+                <div class="pl-3 pr-3">
+                    <div
+                        class="alert alert-secondary text-center font-weight-bold "
+                        role="alert"
+                    >
+                        CHILDREN INFORMATION
+                    </div>
+                </div>
                 <div class="p-2">
                     <table class="table table-bordered">
                         <thead>
@@ -237,7 +253,14 @@
                         </tbody>
                     </table>
                 </div>
-
+                <div class="pl-3 pr-3">
+                    <div
+                        class="alert alert-secondary text-center font-weight-bold "
+                        role="alert"
+                    >
+                        FATHER'S INFORMATION
+                    </div>
+                </div>
                 <div class="row pr-3 pl-3">
                     <div class="form-group col-lg-3">
                         <label for="fsurname">FATHER'S SURNAME</label>
@@ -311,7 +334,15 @@
                         />
                     </div>
                 </div>
-                <hr />
+                
+                <div class="pl-3 pr-3">
+                    <div
+                        class="alert alert-secondary text-center font-weight-bold "
+                        role="alert"
+                    >
+                        MOTHER'S INFORMATION
+                    </div>
+                </div>
                 <div class="row pr-3 pl-3">
                     <div class="form-group col-lg-3">
                         <label for="msurname">MOTHER'S MAIDEN SURNAME</label>

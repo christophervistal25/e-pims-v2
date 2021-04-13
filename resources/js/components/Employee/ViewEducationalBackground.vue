@@ -1,7 +1,17 @@
 <template>
     <div>
         <div v-if="employee.hasOwnProperty('educational_background')">
-            <div class="form-group">
+            <div class="pl-3 pr-3">
+                    <div
+                        class="alert alert-secondary text-center font-weight-bold "
+                        role="alert"
+                    >
+                        ELEMENTARY
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="form-group">
                 <label class="text-capitalize">elementary name : </label>
                 <input
                     type="text"
@@ -9,8 +19,9 @@
                     :value="employee.educational_background.elementary_name"
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
                 <label class="text-capitalize">elementary education : </label>
                 <input
                     type="text"
@@ -20,8 +31,9 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
                 <label class="text-capitalize">elementary period from : </label>
                 <input
                     type="text"
@@ -31,8 +43,9 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
                 <label class="text-capitalize">elementary period to : </label>
                 <input
                     type="text"
@@ -42,8 +55,11 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
                 <label class="text-capitalize"
                     >elementary highest level units earned :
                 </label>
@@ -56,8 +72,9 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
                 <label class="text-capitalize"
                     >elementary year graduated :
                 </label>
@@ -70,8 +87,9 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
                 <label class="text-capitalize">elementary scholarship : </label>
                 <input
                     type="text"
@@ -81,8 +99,19 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                </div>
+                <div class="pl-3 pr-3">
+                    <div
+                        class="alert alert-secondary text-center font-weight-bold "
+                        role="alert"
+                    >
+                        SECONDARY
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="form-group">
                 <label class="text-capitalize">secondary name : </label>
                 <input
                     type="text"
@@ -90,8 +119,9 @@
                     :value="employee.educational_background.secondary_name"
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
                 <label class="text-capitalize">secondary education : </label>
                 <input
                     type="text"
@@ -99,8 +129,9 @@
                     :value="employee.educational_background.secondary_education"
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
                 <label class="text-capitalize">secondary period from : </label>
                 <input
                     type="text"
@@ -110,8 +141,9 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
                 <label class="text-capitalize">secondary period to : </label>
                 <input
                     type="text"
@@ -119,8 +151,11 @@
                     :value="employee.educational_background.secondary_period_to"
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
                 <label class="text-capitalize"
                     >secondary highest level units earned :
                 </label>
@@ -133,8 +168,9 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
                 <label class="text-capitalize"
                     >secondary year graduated :
                 </label>
@@ -146,8 +182,9 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
                 <label class="text-capitalize">secondary scholarship : </label>
                 <input
                     type="text"
@@ -157,8 +194,19 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                </div>
+                <div class="pl-3 pr-3">
+                    <div
+                        class="alert alert-secondary text-center font-weight-bold "
+                        role="alert"
+                    >
+                        VOCATIONAL/TRADE COURSE
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="form-group">
                 <label class="text-capitalize"
                     >vocational trade course name :
                 </label>
@@ -171,8 +219,9 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
                 <label class="text-capitalize">vocational education : </label>
                 <input
                     type="text"
@@ -182,8 +231,9 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
                 <label class="text-capitalize"
                     >vocational trade course period from :
                 </label>
@@ -196,8 +246,9 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
                 <label class="text-capitalize"
                     >vocational trade course period to :
                 </label>
@@ -210,8 +261,11 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
                 <label>
                     vocational trade course highest level units earned :</label
                 >
@@ -224,8 +278,9 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
                 <label class="text-capitalize"
                     >vocational trade course year graduated :
                 </label>
@@ -238,8 +293,9 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
                 <label class="text-capitalize"
                     >vocational trade course scholarship :
                 </label>
@@ -252,8 +308,19 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                </div>
+                <div class="pl-3 pr-3">
+                    <div
+                        class="alert alert-secondary text-center font-weight-bold "
+                        role="alert"
+                    >
+                        COLLEGE
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="form-group">
                 <label class="text-capitalize">college name : </label>
                 <input
                     type="text"
@@ -261,8 +328,9 @@
                     :value="employee.educational_background.college_name"
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
                 <label class="text-capitalize">college education : </label>
                 <input
                     type="text"
@@ -270,8 +338,9 @@
                     :value="employee.educational_background.college_education"
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
                 <label class="text-capitalize">college period from : </label>
                 <input
                     type="text"
@@ -279,8 +348,9 @@
                     :value="employee.educational_background.college_period_from"
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
                 <label class="text-capitalize">college period to : </label>
                 <input
                     type="text"
@@ -288,8 +358,11 @@
                     :value="employee.educational_background.college_period_to"
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
                 <label class="text-capitalize"
                     >college highest level units earned :
                 </label>
@@ -302,8 +375,9 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
                 <label class="text-capitalize">college year graduated : </label>
                 <input
                     type="text"
@@ -313,8 +387,9 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
                 <label class="text-capitalize">college scholarship : </label>
                 <input
                     type="text"
@@ -322,8 +397,19 @@
                     :value="employee.educational_background.college_scholarship"
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                </div>
+                <div class="pl-3 pr-3">
+                    <div
+                        class="alert alert-secondary text-center font-weight-bold "
+                        role="alert"
+                    >
+                        GRADUATE STUDIES
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3">  
+                        <div class="form-group">
                 <label class="text-capitalize">graduate studies name : </label>
                 <input
                     type="text"
@@ -333,8 +419,9 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
                 <label class="text-capitalize"
                     >graduate studies education :
                 </label>
@@ -347,8 +434,9 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
                 <label class="text-capitalize"
                     >graduate studies period from :
                 </label>
@@ -361,8 +449,9 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
                 <label class="text-capitalize"
                     >graduate studies period to :
                 </label>
@@ -375,8 +464,11 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
                 <label class="text-capitalize"
                     >graduate studies highest level units earned :
                 </label>
@@ -389,8 +481,9 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
                 <label class="text-capitalize"
                     >graduate studies year graduated :
                 </label>
@@ -403,8 +496,9 @@
                     "
                 />
             </div>
-
-            <div class="form-group">
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
                 <label class="text-capitalize"
                     >graduate studies scholarship :
                 </label>
@@ -417,6 +511,8 @@
                     "
                 />
             </div>
+                    </div>
+                </div>
         </div>
     </div>
 </template>

@@ -1,13 +1,23 @@
 <template>
     <div>
         <div v-if="employee.hasOwnProperty('civil_service')">
+            <div class="pl-3 pr-3">
+                    <div
+                        class="alert alert-secondary text-center font-weight-bold "
+                        role="alert"
+                    >
+                        CIVIL SERVICE ELIGIBILITY
+                    </div>
+                </div>
             <div class="card">
                 <div
                     class="card-body"
                     v-for="(civil_service, index) in employee.civil_service"
                     :key="index"
                 >
-                    <div class="form-group">
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="form-group">
                         <label class="text-capitalize">career service</label>
                         <input
                             type="text"
@@ -15,8 +25,9 @@
                             :value="civil_service.career_service"
                         />
                     </div>
-
-                    <div class="form-group">
+                    </div>
+                    <div class="col-lg">
+                        <div class="form-group">
                         <label class="text-capitalize">rating</label>
                         <input
                             type="text"
@@ -24,8 +35,9 @@
                             :value="civil_service.rating"
                         />
                     </div>
-
-                    <div class="form-group">
+                    </div>
+                    <div class="col-lg">
+                        <div class="form-group">
                         <label class="text-capitalize"
                             >date of examination</label
                         >
@@ -35,8 +47,9 @@
                             :value="civil_service.date_of_examination"
                         />
                     </div>
-
-                    <div class="form-group">
+                    </div>
+                    <div class="col-lg">
+                        <div class="form-group">
                         <label class="text-capitalize"
                             >place of examination</label
                         >
@@ -46,8 +59,9 @@
                             :value="civil_service.place_of_examination"
                         />
                     </div>
-
-                    <div class="form-group">
+                    </div>
+                    <div class="col-lg">
+                        <div class="form-group">
                         <label class="text-capitalize">license number</label>
                         <input
                             type="text"
@@ -55,8 +69,9 @@
                             :value="civil_service.license_number"
                         />
                     </div>
-
-                    <div class="form-group">
+                    </div>
+                    <div class="col-lg">
+                        <div class="form-group">
                         <label class="text-capitalize">date of validitiy</label>
                         <input
                             type="text"
@@ -64,6 +79,8 @@
                             :value="civil_service.date_of_validitiy"
                         />
                     </div>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>

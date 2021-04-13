@@ -1,13 +1,23 @@
 <template>
     <div>
         <div v-if="employee.hasOwnProperty('references')">
+            <div class="pl-3 pr-3">
+                    <div
+                        class="alert alert-secondary text-center font-weight-bold "
+                        role="alert"
+                    >
+                        REFERENCES
+                    </div>
+                </div>
             <div class="card">
                 <div
                     class="card-body"
                     v-for="(reference, index) in employee.references"
                     :key="index"
                 >
-                    <div class="form-group">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
                         <label class="text-capitalize">Name : </label>
                         <input
                             type="text"
@@ -15,8 +25,9 @@
                             :value="reference.name"
                         />
                     </div>
-
-                    <div class="form-group">
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
                         <label class="text-capitalize"
                             >Telephone Number :
                         </label>
@@ -26,8 +37,9 @@
                             :value="reference.telephone_number"
                         />
                     </div>
-
-                    <div class="form-group">
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
                         <label class="text-capitalize">Address : </label>
                         <input
                             type="text"
@@ -35,6 +47,8 @@
                             :value="reference.address"
                         />
                     </div>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>

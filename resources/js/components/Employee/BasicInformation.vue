@@ -18,7 +18,7 @@
             <label for="firstname" class="col-sm-2 col-form-label"
                 >FIRSTNAME</label
             >
-            <div class="col-lg-auto">
+            <div class="col-lg-3">
                 <input
                     type="text"
                     id="firstname"
