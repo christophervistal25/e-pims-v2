@@ -161,6 +161,33 @@
                     :value="employee.family_background.mother_extension"
                 />
             </div>
+            <div class="card p-2">
+                <div
+                    v-for="(child, index) in employee.spouse_child"
+                    :key="index"
+                >
+                    {{ index }}
+                    <div class="form-group">
+                        <label class="text-capialize">child name</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            :value="child.name"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-capialize"
+                            >child date of birth</label
+                        >
+                        <input
+                            type="text"
+                            class="form-control"
+                            :value="child.date_of_birth"
+                        />
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
