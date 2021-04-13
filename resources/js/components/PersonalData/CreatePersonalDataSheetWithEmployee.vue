@@ -1,22 +1,5 @@
 <template>
     <div>
-        <!-- <div>
-            <div class="container dash-border p-4">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates labore alias quasi facere, ipsa porro ipsam culpa voluptate voluptatibus quas. Id minus, veniam facilis eum commodi nemo unde laudantium eos?</p>
-
-                <div class="text-center align-middle">
-                    <button class='btn btn-primary p-2 mr-3' @click="hasSelecType = true">
-                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                        NEW EMPLOYEE
-                    </button>
-
-                    <button class="btn btn-success p-2" @click="hasSelecType = true">
-                        <i class="fa fa-address-card" aria-hidden="true"></i>
-                        OLD EMPLOYEE
-                    </button>
-                </div>
-            </div>
-        </div> -->
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3" v-for="(tab, key) in tabs" :key="key">
@@ -31,6 +14,7 @@
             </div>
 
             <personal-information
+                :data="employeeData"
                 v-on:next-panel-family-background="displayFamilyBackgroundPanel"
                 v-if="selectedTab.name === 'C1'"
             ></personal-information>
@@ -119,6 +103,12 @@ import Reference from "./C4/Reference.vue";
 import GovernmentIssuedID from "./C4/GovernmentIssuedID.vue";
 
 export default {
+    props : {
+        employee: {
+            type: Object,
+            required: true
+        },
+    },
     components: {
         FamilyBackground,
         PersonalInformation,
@@ -135,6 +125,7 @@ export default {
     data() {
         return {
             hasSelecType: false,
+            employeeData : '',
             tabs: [
                 {
                     name: "C1",
@@ -210,13 +201,11 @@ export default {
     created() {
         // set the default tab display to C1
         this.selectedTab = this.tabs[0];
+        window.axios.get(`/api/employee/show/${this.employee.employee_id}`).then((response) => {
+                this.employeeData = response.data;
+        })
     }
 };
 </script>
 <style scoped>
-.dash-border {
-    border-color: #007bff;
-    border-width: 4px;
-    border-style: dashed;
-}
 </style>

@@ -8,8 +8,14 @@ Vue.component("sample", require("./components/Sample.vue").default);
 // Personal Information Components
 Vue.component(
     "personal-data-sheet",
-    require("./components/PersonalData/Sheet.vue").default
+    require("./components/PersonalData/CreatePersonalDataSheet.vue").default
 );
+
+Vue.component(
+    "personal-data-sheet-with-employee",
+    require("./components/PersonalData/CreatePersonalDataSheetWithEmployee.vue").default
+);
+
 Vue.component(
     "personal-information",
     require("./components/PersonalData/C1/Information.vue").default

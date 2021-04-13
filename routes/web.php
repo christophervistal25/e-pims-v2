@@ -38,7 +38,10 @@ Route::Resource('/salary-adjustment', 'SalaryAdjustmentController');
 
 Route::group(['prefix' => 'employee'], function () {
     Route::get('/record', 'EmployeeController@index')->name('employee.index');
-    Route::resource('data', 'PersonalDataSheetController');
+    Route::get('/generate/personal/data/sheet', 'PersonalDataSheetController@index')->name('data.index');
+    Route::get('/create/personal/data/sheet', 'PersonalDataSheetController@create')->name('data.create');
+    Route::get('/create/{idNumber}/personal/data/sheet', 'PersonalDataSheetController@createWithEmployee');
+    // Route::resource('data', 'PersonalDataSheetController');
     Route::post('/personal/information/store', 'PersonalDataSheetController@storePersonInformation');
     Route::post('/personal/family/background/store', 'PersonalDataSheetController@storePersonFamilyBackground');
     Route::post('/personal/educational/background/store', 'PersonalDataSheetController@storeEducationalBackground');

@@ -1,22 +1,28 @@
 <template>
     <div>
-        <div>
-            <label class="switch">
-                <input
-                    type="checkbox"
-                    v-model="tableView"
-                    @click="changeView"
-                />
-                <span class="slider round"></span>
-                View more information
-            </label>
+        <div class='row'>
+            <div class="col-lg-6">
+                <label class="switch">
+                    <input
+                        type="checkbox"
+                        v-model="tableView"
+                        @click="changeView"
+                    />
+                    <span class="slider round"></span>
+                    View more information
+                </label>
+            </div>
+            <div class="col-lg-6 mb-2">
+                <a href="/employee/create/personal/data/sheet" class='btn btn-primary float-right'>PDS for new employee</a>
+            </div>
         </div>
+
         <div>
-            <table class="table table-hover table-bordered" v-if="!tableView">
+            <table class="table table-hover table-bordered" v-if="!tableView">  
                 <thead>
                     <tr>
                         <th scope="col">Employee ID</th>
-                        <th scope="col">Name</th>
+                        <th scope="col">Fullname</th>
                         <th scope="col" class="text-center">Position</th>
                         <th scope="col" class="text-center">Options</th>
                     </tr>
@@ -31,10 +37,18 @@
                         <td>&nbsp;</td>
                         <td class="text-center">
                             <a
-                                :href="`/employee/data/${employee.employee_id}`"
-                                class="btn btn-primary btn-sm rounded-circle shadow text-white"
+                                :href="`/employee/create/${employee.employee_id}/personal/data/sheet`"
+                                class="btn btn-primary btn-sm rounded-circle shadow text-white mr-2"
+                                :title="`Generate PDS for  ${employee.lastname} , ${employee.firstname} ${employee.middlename} ${employee.extension}`"
                             >
                                 <i class="la la-plus font-weight-bold"></i>
+                            </a>
+
+                            <a
+                                :href="`#`"
+                                class="btn btn-success btn-sm rounded-circle shadow text-white"
+                            >
+                                <i class="la la-edit font-weight-bold"></i>
                             </a>
                         </td>
                     </tr>

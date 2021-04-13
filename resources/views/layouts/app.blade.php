@@ -26,7 +26,7 @@
 		<![endif]-->
 </head>
 
-<body   >
+<body class='mini-sidebar'>
 	<!-- Main Wrapper -->
 	<div class="main-wrapper" id="app">
 		<!-- Header -->
