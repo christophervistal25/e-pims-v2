@@ -22,7 +22,7 @@ class CreateEmployeesTable extends Migration
             $table->string('extension')->nullable();
             $table->date('date_birth');
             $table->string('place_birth');
-            $table->enum('sex', ['male', 'female'])->default('male');
+            $table->enum('sex', ['male', 'female', ''])->default('male');
             $table->string('civil_status');
             $table->integer('height');
             $table->integer('weight');
@@ -51,7 +51,7 @@ class CreateEmployeesTable extends Migration
             $table->string('permanent_province');
             $table->string('permanent_zip_code');
             $table->string('telephone_no')->nullable();
-            $table->string('mobile_no')->unique();
+            $table->string('mobile_no')->nullable();
             $table->string('email_address')->nullable();
             $table->integer('status')->nullable();
             $table->timestamps();

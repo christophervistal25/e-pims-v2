@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Position extends Model
 {
-    protected $fillable = ['position_name'];
+    protected $fillable = ['position_name', 'position_id', 'position_code' ,'position_name', 'sg_no' ,'position_short_name'];
 
     protected $primaryKey = 'position_id';
 
@@ -19,7 +19,6 @@ class Position extends Model
     {
         return $this->hasOne(SalaryGrade::class, 'sg_no', 'salary_grade');
     }
-   
 }
 
 
