@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
             EmployeeSeeder::class,
             OfficeSeeder::class,
             SalaryGradeSeeder::class,
-            RefStatusSeeder::class,
+            PositionSeeder::class,
             // PlantillaSeeder::class,
 
 
