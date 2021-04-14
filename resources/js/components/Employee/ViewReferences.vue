@@ -57,7 +57,7 @@
             </div>
         </div>
         <div v-else class="card-body">
-            <h1>No references</h1>
+            <h1>No References</h1>
         </div>
     </div>
 </template>

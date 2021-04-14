@@ -22,15 +22,8 @@
                 :class="show_panel && !isComplete ? 'show' : ''"
                 :id="isComplete ? 'familyBackground' : ''"
             >
-                <div class="p-3">
-                    <div
-                        class="alert alert-secondary text-center font-weight-bold"
-                        role="alert"
-                    >
-                        FAMILY BACKGROUND
-                    </div>
-                </div>
-                <div class="form-check">
+                
+                <div class="form-check mt-3">
                     <label for="#spouse">
                         <input
                             id="spouse"

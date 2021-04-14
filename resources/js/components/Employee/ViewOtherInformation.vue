@@ -7,12 +7,7 @@
             "
             class="card-body"
         >
-            <div>
-                <div
-                    v-for="(information, index) in employee.other_information"
-                    :key="index"
-                >
-                    <div class="pl-3 pr-3">
+        <div class="pl-3 pr-3">
                         <div
                             class="alert alert-secondary text-center font-weight-bold "
                             role="alert"
@@ -20,6 +15,11 @@
                             OTHER INFORMATION
                         </div>
                     </div>
+            <div>
+                <div
+                    v-for="(information, index) in employee.other_information"
+                    :key="index"
+                >
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="form-group">

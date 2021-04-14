@@ -1,6 +1,14 @@
 <template>
     <div class="card">
         <div v-if="employee.employee_id" class="card-body">
+            <div class="pl-3 pr-3">
+                <div
+                    class="alert alert-secondary text-center font-weight-bold"
+                    role="alert"
+                >
+                    PERSONAL INFORMATION
+                </div>
+            </div>
             <div class="row">
                 <div class="col-lg-3">
                     <div class="form-group">

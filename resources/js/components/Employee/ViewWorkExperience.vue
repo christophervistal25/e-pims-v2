@@ -1,14 +1,24 @@
 <template>
-    <div>
+    <div class="card">
         <div
             v-if="employee.civil_service && employee.civil_service.length != 0"
+            class="card-body"
         >
+        <div class="mt-3 pl-3 pr-3">
+                <div
+                    class="alert alert-secondary text-center font-weight-bold"
+                    role="alert"
+                >
+                    WORK EXPERIENCE
+                </div>
+            </div>
             <div class="card">
                 <div
                     class="card-body"
                     v-for="(work, index) in employee.work_experience"
                     :key="index"
                 >
+                <hr>
                     <div class="row">
                         <div class="col-lg">
                             <div class="form-group">
