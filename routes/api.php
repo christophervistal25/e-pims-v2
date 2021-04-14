@@ -7,6 +7,11 @@ Route::get('/cscPrevious/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaControlle
 
 Route::get('/positionSalaryGrade/{positionTitle}' , 'Api\PlantillaController@positionSalaryGrade');
 
+Route::get('/salaryAdjustment/{employeeName}' , 'Api\SalaryAdjustmentController@salaryAdjustment');
+
+// Route::get('/salaryAdjustmentnew/{salaryGrade}/{stepNo}/{currentSgyear}' , 'Api\SalaryAdjustmentController@salaryAdjustmentNew');
+
+
 Route::post('/addPosition' , 'Api\PlantillaController@addPosition');
 
 

@@ -33,6 +33,7 @@ Route::Resource('/plantilla', 'PlantillaController');
 Route::resource('/step-increment', 'StepIncrementController');
 
 //salary adjustment
+
 Route::Resource('/salary-adjustment', 'SalaryAdjustmentController');
 
 
