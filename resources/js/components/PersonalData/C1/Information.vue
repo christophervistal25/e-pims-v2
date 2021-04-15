@@ -1,6 +1,7 @@
 <template>
     <div>
         <div class="card">
+            <!-- <h1>haaha</h1> -->
             <div
                 class="card-header"
                 :data-target="isComplete ? '#information' : ''"
@@ -565,15 +566,15 @@
                             v-model="personal_data.residentialZipCode"
                             class="form-control"
                             @input="
-                                    if (
-                                        personal_data.residentialZipCode.length >
+                                if (
+                                    personal_data.residentialZipCode.length >
+                                    zipCodeMaxLength
+                                )
+                                    personal_data.residentialZipCode = personal_data.residentialZipCode.slice(
+                                        0,
                                         zipCodeMaxLength
-                                    )
-                                        personal_data.residentialZipCode = personal_data.residentialZipCode.slice(
-                                            0,
-                                            zipCodeMaxLength
-                                        );
-                                "
+                                    );
+                            "
                             :class="
                                 !errors.hasOwnProperty('residentialZipCode')
                                     ? ''
@@ -753,15 +754,15 @@
                             type="number"
                             v-model="personal_data.permanentZipCode"
                             @input="
-                                    if (
-                                        personal_data.permanentZipCode.length >
+                                if (
+                                    personal_data.permanentZipCode.length >
+                                    zipCodeMaxLength
+                                )
+                                    personal_data.permanentZipCode = personal_data.permanentZipCode.slice(
+                                        0,
                                         zipCodeMaxLength
-                                    )
-                                        personal_data.permanentZipCode = personal_data.permanentZipCode.slice(
-                                            0,
-                                            zipCodeMaxLength
-                                        );
-                                "
+                                    );
+                            "
                             :class="
                                 !errors.hasOwnProperty('permanentZipCode')
                                     ? ''
@@ -807,13 +808,13 @@
 
 <script>
 export default {
-    props : ['data'],
+    props: ["data"],
     data() {
         return {
             isLoading: false,
             isComplete: false,
             isSameAsAbove: false,
-            zipCodeMaxLength : 4,
+            zipCodeMaxLength: 4,
             personal_data: {
                 surname: "",
                 firstname: "",
@@ -1168,9 +1169,9 @@ export default {
         }
     },
     watch: {
-        data : function (currentDataPassed) {
+        data: function(currentDataPassed) {
             // If employee is present then the user want to generate a pds with selected employee.
-            if(currentDataPassed) {
+            if (currentDataPassed) {
                 this.personal_data.surname = currentDataPassed.lastname;
                 this.personal_data.firstname = currentDataPassed.firstname;
                 this.personal_data.middlename = currentDataPassed.middlename;
@@ -1184,16 +1185,20 @@ export default {
                 this.personal_data.bloodType = currentDataPassed.blood_type;
                 this.personal_data.gsisIdNo = currentDataPassed.gsis_id_no;
                 this.personal_data.pagibigIdNo = currentDataPassed.pag_ibig_no;
-                this.personal_data.philHealthIdNo = currentDataPassed.philhealth_no;
+                this.personal_data.philHealthIdNo =
+                    currentDataPassed.philhealth_no;
                 this.personal_data.sssIdNo = currentDataPassed.sss_no;
                 this.personal_data.tinIdNo = currentDataPassed.tin_no;
-                this.personal_data.agencyEmpIdNo = currentDataPassed.agency_employee_no;
+                this.personal_data.agencyEmpIdNo =
+                    currentDataPassed.agency_employee_no;
                 this.personal_data.citizenship = currentDataPassed.citizenship.toUpperCase();
-                this.personal_data.telephoneNumber = currentDataPassed.telephone_no;
+                this.personal_data.telephoneNumber =
+                    currentDataPassed.telephone_no;
                 this.personal_data.mobileNumber = currentDataPassed.mobile_no;
-                this.personal_data.emailAddress = currentDataPassed.email_address;
+                this.personal_data.emailAddress =
+                    currentDataPassed.email_address;
             }
-        },
+        }
     },
     created() {
         window.axios

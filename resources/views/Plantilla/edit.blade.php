@@ -5,16 +5,7 @@
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 @endprepend
 @section('content')
-
-<div class="kanban-board mb-0">
-<div class="col-12">
-    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-      @if(Session::has('alert-' . $msg))
-      <div class="alert bg-success  text-white p-3 mb-2 text-center"><b>{{ Session::get('alert-' . $msg) }}</b></div>
-      @endif
-    @endforeach
-  </div>
-</div>
+@include('Plantilla.add-ons.success')
 <div class="content container-fluid">
     <div class="kanban-board card mb-0">   
         <div class="card-body">
