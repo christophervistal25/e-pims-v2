@@ -1,4 +1,6 @@
 <?php
+use App\SalaryGrade;
+
 // Route::get('/salaryList/{sg_no}' , 'Api\PlantillaController@salaryList');
 Route::get('/salarySteplist/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@salarySteplist');
 Route::get('/dbmPrevious/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@dbmPrevious');
@@ -8,6 +10,11 @@ Route::get('/cscPrevious/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaControlle
 Route::get('/positionSalaryGrade/{positionTitle}' , 'Api\PlantillaController@positionSalaryGrade');
 
 Route::get('/salaryAdjustment/{employeeName}' , 'Api\SalaryAdjustmentController@salaryAdjustment');
+
+Route::get('step/{sg_no}/{step}' , function ($sgNo, $step) {
+    $salaryGrade = SalaryGrade::where('sg_no', $sgNo)->first(['sg_step' . $step]);
+    return $salaryGrade;
+});
 
 // Route::get('/salaryAdjustmentnew/{salaryGrade}/{stepNo}/{currentSgyear}' , 'Api\SalaryAdjustmentController@salaryAdjustmentNew');
 

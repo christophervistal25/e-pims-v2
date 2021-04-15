@@ -42,9 +42,7 @@ class StepIncrementController extends Controller
         $this->validate($request, [
                 'employeeName'      => 'required',
                 'dateStepIncrement' => 'required',
-                'sgNo2'             => 'required',
                 'stepNo2'           => 'required',
-                'amount2'           => 'required',
         
         ]);
             $step_increments = new StepIncrement;
