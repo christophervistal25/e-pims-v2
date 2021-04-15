@@ -187,13 +187,13 @@ $(document).ready(function () {
                     $.each(errorMessage, function(index , value) {
                         $(`${value}`).html('');
                         });
+                        $('#plantilla').DataTable().ajax.reload();
                     swal("Sucessfully Added!", "", "success");
                 }
         },
             error: function (response) {
                     if( response.status === 422 ) {
                         let errors = response.responseJSON.errors;
-                        console.log(errors)
                         if(errors.hasOwnProperty('itemNo')) {
                             $('#itemNo').addClass('is-invalid');
                             $('#item-no-error-message').html('');
@@ -314,7 +314,20 @@ $(document).ready(function () {
                             $('#divisionId').removeClass('is-invalid');
                             $('#division-error-message').html('');
                         }
-                        swal("Error saving", '', "error");
+                         // Create an parent element
+                         let parentElement = document.createElement('ul');
+                         let errorss = response.responseJSON.errors;
+                        $.each( errorss, function( key, value ) {
+                            let errorMessage = document.createElement('li');
+                            let [error] = value;
+                            errorMessage.innerHTML = error;
+                            parentElement.appendChild(errorMessage);
+                        });
+                        swal({
+                            title: "The given data was invalid!",
+                            icon: "error",
+                            content: parentElement,
+                        });
                     }
             }
         });

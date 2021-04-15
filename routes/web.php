@@ -33,8 +33,8 @@ Route::Resource('/plantilla', 'PlantillaController');
 Route::resource('/step-increment', 'StepIncrementController');
 
 //salary adjustment
-
 Route::Resource('/salary-adjustment', 'SalaryAdjustmentController');
+Route::get('/salary-adjustment-list', 'SalaryAdjustmentController@list');
 
 
 Route::group(['prefix' => 'employee'], function () {
