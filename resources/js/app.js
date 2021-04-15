@@ -91,6 +91,11 @@ Vue.component(
 );
 
 Vue.component(
+    "account-number",
+    require("./components/Employee/AccountNumber.vue").default
+);
+
+Vue.component(
     "view-personal-information",
     require("./components/Employee/ViewPersonalInformation.vue").default
 );

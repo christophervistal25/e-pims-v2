@@ -46,32 +46,7 @@
                             <basic-information></basic-information>
                         </div>
                         <div class="tab-pane" id="basictab2">
-                                <form>
-                                    <div class="form-group">
-                                <label for="" class="col-form-label">PAG-IBIG MID NO.</label>
-                                <input type="text" class="form-control col-lg-8" id="">
-                            </div>
-                                <div class="form-group">
-                                    <label for="" class="col-form-label">REGISTRATION TRACKING NO.</label>
-                                    <input type="text" class="form-control col-lg-8" id="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="" class="col-form-label">PHILHEALTH NO.</label>
-                                    <input type="text" class="form-control col-lg-8" id="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="" class="col-form-label">SSS NO.</label>
-                                        <input type="text" class="form-control col-lg-8" id="">
-                                </div>
-                                <div class="form-group">
-                                        <label for="" class="col-form-label">TIN NO.</label>
-                                        <input type="text" class="form-control col-lg-8" id="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="" class="col-form-label">LBP ACCOUNT NO.</label>
-                                    <input type="text" class="form-control col-lg-8" id="">
-                                </div>
-                                </form>
+                            <account-number></account-number>
                         </div>
                     </div>
                 </div>
@@ -82,6 +57,7 @@
 
 <script>
 import BasicInformation from "./BasicInformation.vue";
+import AccountNumber from "./AccountNumber.vue";
 
 export default {
     data() {
@@ -90,8 +66,9 @@ export default {
         };
     },
     components: {
-        BasicInformation
+        BasicInformation, AccountNumber
     },
+
     created() {
         window.axios.get(`/api/employee/employees`).then(response => {
             if (response.status === 200) {
