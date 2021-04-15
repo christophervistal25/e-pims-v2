@@ -4340,6 +4340,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     employee: {
@@ -4442,6 +4450,16 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5352,13 +5370,6 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -10444,7 +10455,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.cursor-pointer[data-v-69bce302] {\r\n    cursor: pointer;\n}\r\n", ""]);
+exports.push([module.i, "\n.cursor-pointer[data-v-69bce302] {\n    cursor: pointer;\n}\n", ""]);
 
 // exports
 
@@ -10463,7 +10474,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\ntd[data-v-295e1eb5] {\r\n    cursor: pointer;\r\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-295e1eb5]:hover {\r\n    background: #f1f2f3;\n}\r\n", ""]);
+exports.push([module.i, "\ntd[data-v-295e1eb5] {\n    cursor: pointer;\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-295e1eb5]:hover {\n    background: #f1f2f3;\n}\n", ""]);
 
 // exports
 
@@ -31497,6 +31508,8 @@ var render = function() {
   return _c("div", { staticClass: "card" }, [
     _vm.employee.other_information && _vm.employee.other_information.length != 0
       ? _c("div", { staticClass: "card-body" }, [
+          _vm._m(0),
+          _vm._v(" "),
           _c(
             "div",
             _vm._l(_vm.employee.other_information, function(
@@ -31504,8 +31517,6 @@ var render = function() {
               index
             ) {
               return _c("div", { key: index }, [
-                _vm._m(0, true),
-                _vm._v(" "),
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-lg-4" }, [
                     _c("div", { staticClass: "form-group" }, [
@@ -31601,6 +31612,8 @@ var render = function() {
   return _c("div", { staticClass: "card" }, [
     _vm.employee.employee_id
       ? _c("div", { staticClass: "card-body" }, [
+          _vm._m(0),
+          _vm._v(" "),
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-lg-3" }, [
               _c("div", { staticClass: "form-group" }, [
@@ -31828,7 +31841,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4" }, [
               _c("div", { staticClass: "form-group" }, [
-                _vm._m(0),
+                _vm._m(1),
                 _vm._v(" "),
                 _c("input", {
                   staticClass: "form-control",
@@ -31941,7 +31954,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(1),
+          _vm._m(2),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-lg-4" }, [
@@ -32045,7 +32058,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(2),
+          _vm._m(3),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-lg-4" }, [
@@ -32155,6 +32168,21 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "pl-3 pr-3" }, [
+      _c(
+        "div",
+        {
+          staticClass: "alert alert-secondary text-center font-weight-bold",
+          attrs: { role: "alert" }
+        },
+        [_vm._v("\n                PERSONAL INFORMATION\n            ")]
+      )
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -32276,7 +32304,7 @@ var render = function() {
           )
         ])
       : _c("div", { staticClass: "card-body" }, [
-          _c("h1", [_vm._v("No references")])
+          _c("h1", [_vm._v("No References")])
         ])
   ])
 }
@@ -32318,14 +32346,18 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "card" }, [
     _vm.employee.civil_service && _vm.employee.civil_service.length != 0
-      ? _c("div", [
+      ? _c("div", { staticClass: "card-body" }, [
+          _vm._m(0),
+          _vm._v(" "),
           _c(
             "div",
             { staticClass: "card" },
             _vm._l(_vm.employee.work_experience, function(work, index) {
               return _c("div", { key: index, staticClass: "card-body" }, [
+                _c("hr"),
+                _vm._v(" "),
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-lg" }, [
                     _c("div", { staticClass: "form-group" }, [
@@ -32449,7 +32481,23 @@ var render = function() {
         ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mt-3 pl-3 pr-3" }, [
+      _c(
+        "div",
+        {
+          staticClass: "alert alert-secondary text-center font-weight-bold",
+          attrs: { role: "alert" }
+        },
+        [_vm._v("\n                WORK EXPERIENCE\n            ")]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -34020,9 +34068,7 @@ var render = function() {
           attrs: { id: _vm.isComplete ? "familyBackground" : "" }
         },
         [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-check" }, [
+          _c("div", { staticClass: "form-check mt-3" }, [
             _c("label", { attrs: { for: "#spouse" } }, [
               _c("input", {
                 attrs: { id: "spouse", type: "checkbox" },
@@ -34040,7 +34086,7 @@ var render = function() {
           _vm._v(" "),
           _vm.hasSpouse
             ? _c("section", [
-                _vm._m(1),
+                _vm._m(0),
                 _vm._v(" "),
                 _c("div", { staticClass: "row pr-3 pl-3" }, [
                   _c("div", { staticClass: "form-group col-lg-3" }, [
@@ -34374,11 +34420,11 @@ var render = function() {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _vm._m(2),
+          _vm._m(1),
           _vm._v(" "),
           _c("div", { staticClass: "p-2" }, [
             _c("table", { staticClass: "table table-bordered" }, [
-              _vm._m(3),
+              _vm._m(2),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -34511,7 +34557,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(4),
+          _vm._m(3),
           _vm._v(" "),
           _c("div", { staticClass: "row pr-3 pl-3" }, [
             _c("div", { staticClass: "form-group col-lg-3" }, [
@@ -34697,7 +34743,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(5),
+          _vm._m(4),
           _vm._v(" "),
           _c("div", { staticClass: "row pr-3 pl-3" }, [
             _c("div", { staticClass: "form-group col-lg-3" }, [
@@ -34885,21 +34931,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "p-3" }, [
-      _c(
-        "div",
-        {
-          staticClass: "alert alert-secondary text-center font-weight-bold",
-          attrs: { role: "alert" }
-        },
-        [_vm._v("\n                    FAMILY BACKGROUND\n                ")]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
