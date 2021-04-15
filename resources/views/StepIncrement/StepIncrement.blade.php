@@ -42,12 +42,12 @@
             </div>
 
             <div class="form-group col-12 col-lg-11">
-                <input class="form-control d-none" value="" id="position_id" name="positionID" type="text" readonly>
+                <input class="form-control d-none" value="" id="positionId" name="positionID" type="text" readonly>
             </div>
 
             <div class="form-group col-12 col-lg-11">
                 <label>Position:</label>
-                <input class="form-control" value="" id="position" name="positionName" type="text" readonly>
+                <input class="form-control" value="" id="positionName" name="positionName" type="text" readonly>
             </div>
 
             <div class="form-group col-12 col-lg-11">
@@ -59,9 +59,6 @@
                 <label>Date of Last Appointment:</label>
                 <input class="form-control" value="" id="lastAppointment" name="datePromotion" type="text" readonly>
             </div>
-            <!-- <div class="form-group col-12 col-lg-11">
-                <input class="form-control d-none" value="" id="salaryGrade" name="sgNo" type="text" readonly>
-            </div> -->
             
             <div class="form-row col-12">
                 <div class="form-group col-6 col-lg-6">
@@ -158,19 +155,21 @@
         $('#employeeName').change(function (e) {
             let employeeID = e.target.value;
             let plantilla = $($( "#employeeName option:selected" )[0]).attr('data-plantilla');
+            
             if(plantilla) {
                 plantilla = JSON.parse(plantilla);
                 $('#employeeId').val(plantilla.employee_id);
                 $('#plantillaId').val(plantilla.plantilla_id);
-                $('#position').val(plantilla.position.position_name);
-                $('#position_id').val(plantilla.position_id);                
+                $('#positionName').val(plantilla.position.position_name);
+                $('#positionId').val(plantilla.position.position_id);                
                 $('#itemNo').val(plantilla.item_no);
                 $('#lastAppointment').val(plantilla.date_last_promotion);
                 $('#salaryGrade').val(plantilla.sg_no);
                 $('#stepNo').val(plantilla.step_no);
                 $('#amount').val(plantilla.salary_amount);
-            } else {                
-                $('#position').val('');
+            } else {
+                console.log("Hello World");                
+                $('#positionName').val('');
                 $('#itemNo').val('');
                 $('#lastAppointment').val('');
                 $('#salaryGrade').val('');
@@ -197,7 +196,7 @@
         $(document).ready(function() {
             $('#btnSave').click(function (e) {
                 e.preventDefault()
-
+                
                 let employeeName = $('#employeeName').val(); 
                 let sgNo = $('#sgNo2').val();
                 let stepNo = $('#stepNo2').val();
