@@ -21,7 +21,33 @@
                 </table>
             </div>
             <div class="col-lg-8">
-                <basic-information></basic-information>
+                <div class="card-body p-0">
+                    <h4 class="card-title"></h4>
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a
+                                class="nav-link active"
+                                href="#basictab1"
+                                data-toggle="tab"
+                                >Basic Information</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a
+                                class="nav-link"
+                                href="#basictab2"
+                                data-toggle="tab"
+                                >Profile</a
+                            >
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane show active" id="basictab1">
+                            <basic-information></basic-information>
+                        </div>
+                        <div class="tab-pane" id="basictab2"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

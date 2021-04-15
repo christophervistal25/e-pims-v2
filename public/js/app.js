@@ -2061,41 +2061,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2123,6 +2088,32 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _BasicInformation_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BasicInformation.vue */ "./resources/js/components/Employee/BasicInformation.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -6722,7 +6713,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['data'],
+  props: ["data"],
   data: function data() {
     return {
       isLoading: false,
@@ -10455,7 +10446,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.cursor-pointer[data-v-69bce302] {\r\n    cursor: pointer;\n}\r\n", ""]);
+exports.push([module.i, "\n.cursor-pointer[data-v-69bce302] {\n    cursor: pointer;\n}\n", ""]);
 
 // exports
 
@@ -10474,7 +10465,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\ntd[data-v-295e1eb5] {\r\n    cursor: pointer;\r\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-295e1eb5]:hover {\r\n    background: #f1f2f3;\n}\r\n", ""]);
+exports.push([module.i, "\ntd[data-v-295e1eb5] {\n    cursor: pointer;\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-295e1eb5]:hover {\n    background: #f1f2f3;\n}\n", ""]);
 
 // exports
 
@@ -29218,72 +29209,10 @@ var render = function() {
           }
         })
       ])
-    ]),
-    _vm._v(" "),
-    _vm._m(0)
+    ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-body" }, [
-      _c("h4", { staticClass: "card-title" }, [_vm._v("Basic tabs")]),
-      _vm._v(" "),
-      _c("ul", { staticClass: "nav nav-tabs" }, [
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link active",
-              attrs: { href: "#basictab1", "data-toggle": "tab" }
-            },
-            [_vm._v("Home")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link",
-              attrs: { href: "#basictab2", "data-toggle": "tab" }
-            },
-            [_vm._v("Profile")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "nav-link",
-              attrs: { href: "#basictab3", "data-toggle": "tab" }
-            },
-            [_vm._v("Messages")]
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "tab-content" }, [
-        _c(
-          "div",
-          { staticClass: "tab-pane show active", attrs: { id: "basictab1" } },
-          [_vm._v("\n                Tab content 1\n            ")]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "tab-pane", attrs: { id: "basictab2" } }, [
-          _vm._v("\n                Tab content 2\n            ")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "tab-pane", attrs: { id: "basictab3" } }, [
-          _vm._v("\n                Tab content 3\n            ")
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -29339,7 +29268,27 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-lg-8" }, [_c("basic-information")], 1)
+      _c("div", { staticClass: "col-lg-8" }, [
+        _c("div", { staticClass: "card-body p-0" }, [
+          _c("h4", { staticClass: "card-title" }),
+          _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
+          _c("div", { staticClass: "tab-content" }, [
+            _c(
+              "div",
+              {
+                staticClass: "tab-pane show active",
+                attrs: { id: "basictab1" }
+              },
+              [_c("basic-information")],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "tab-pane", attrs: { id: "basictab2" } })
+          ])
+        ])
+      ])
     ])
   ])
 }
@@ -29352,6 +29301,34 @@ var staticRenderFns = [
       _c("th", { staticClass: "text-sm" }, [_vm._v("ID Number")]),
       _vm._v(" "),
       _c("th", { staticClass: "text-sm" }, [_vm._v("Fullname")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", { staticClass: "nav nav-tabs" }, [
+      _c("li", { staticClass: "nav-item" }, [
+        _c(
+          "a",
+          {
+            staticClass: "nav-link active",
+            attrs: { href: "#basictab1", "data-toggle": "tab" }
+          },
+          [_vm._v("Basic Information")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("li", { staticClass: "nav-item" }, [
+        _c(
+          "a",
+          {
+            staticClass: "nav-link",
+            attrs: { href: "#basictab2", "data-toggle": "tab" }
+          },
+          [_vm._v("Profile")]
+        )
+      ])
     ])
   }
 ]

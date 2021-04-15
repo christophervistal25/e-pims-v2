@@ -149,41 +149,6 @@
                 />
             </div>
         </div>
-
-        <div class="card-body">
-            <h4 class="card-title">Basic tabs</h4>
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a
-                        class="nav-link active"
-                        href="#basictab1"
-                        data-toggle="tab"
-                        >Home</a
-                    >
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#basictab2" data-toggle="tab"
-                        >Profile</a
-                    >
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#basictab3" data-toggle="tab"
-                        >Messages</a
-                    >
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane show active" id="basictab1">
-                    Tab content 1
-                </div>
-                <div class="tab-pane" id="basictab2">
-                    Tab content 2
-                </div>
-                <div class="tab-pane" id="basictab3">
-                    Tab content 3
-                </div>
-            </div>
-        </div>
     </div>
 </template>
 <script>
