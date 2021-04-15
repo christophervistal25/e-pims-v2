@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Repositories\EmployeeRepository;
 
 class EmployeeController extends Controller
 {
+    public function __construct(EmployeeRepository $employeeRepo)
+    {
+        $this->employeeRepository = $employeeRepo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -34,7 +40,7 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $this->employeeRepository->addEmployee($request->all());
     }
 
     /**
@@ -66,9 +72,9 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $employeeId)
     {
-        //
+        return $this->employeeRepository->updateEmployee($request->all(), $employeeId);
     }
 
     /**

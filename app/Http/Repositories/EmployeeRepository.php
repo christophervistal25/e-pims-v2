@@ -23,7 +23,6 @@ class EmployeeRepository
     {
 
         $employee =  Employee::create([
-
                 'employee_id'          => mt_rand(100000, 999999),
                 'lastname'             => $data['surname'],
                 'firstname'            => $data['firstname'],
@@ -222,7 +221,7 @@ class EmployeeRepository
     public function addVoluntary(array $voluntaryRecord = []) :array
     {
         $employee = Employee::find($voluntaryRecord[self::FIRST_INDEX]['employee_id']);
-        
+
         $records = [];
 
         foreach($voluntaryRecord as $record) {
@@ -352,5 +351,47 @@ class EmployeeRepository
         $employeeIssuedId->date = $data['dateOfIssuance'];
 
         return $employee->issued_id()->save($employeeIssuedId);
+    }
+
+    public function addEmployee(array $data = []) :Employee
+    {
+            //    '' => $data['controlNo'],
+                //    '' => $data['designation'],
+        //    '' => $data['employmentFrom'],
+        //    '' => $data['employmentTo'],
+        //    '' => $data['lbpAccountNo'],
+        //    '' => $data['officeAssignment'],
+            //    '' => $data['registrationTrackingNo'],
+        //    '' => $data['salaryGrade'],
+       $employee =  Employee::create([
+            'employee_id'   => mt_rand(100000, 999999),
+            'date_birth'    => $data['dateOfBirth'],
+            'firstname'     => $data['firstName'],
+            'lastname'      => $data['lastName'],
+            'middlename'    => $data['middleName'],
+            'extension'     => $data['extension'],
+            'pag_ibig_no'   => $data['pagibigMidNo'],
+            'philhealth_no' => $data['philhealthNo'],
+            'sss_no'        => $data['sssNo'],
+            'tin_no'        => $data['tinNo'],
+        ]);
+
+        return $employee;
+    }
+
+    public function updateEmployee(array $data = [], string $employeeId) :array
+    {
+        $employee = Employee::find($employeeId);
+        $employee->date_birth    = $data['dateOfBirth'];
+        $employee->firstname     = $data['firstName'];
+        $employee->lastname      = $data['lastName'];
+        $employee->middlename    = $data['middleName'];
+        $employee->extension     = $data['extension'];
+        $employee->pag_ibig_no   = $data['pagibigMidNo'];
+        $employee->philhealth_no = $data['philhealthNo'];
+        $employee->sss_no        = $data['sssNo'];
+        $employee->tin_no        = $data['tinNo'];
+        $employee->save();
+        return $data;
     }
 }

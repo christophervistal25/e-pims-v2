@@ -79,7 +79,7 @@ class Employee extends Model
 
     public function setSuffixAttribute($value)
     {
-        $this->attributes['suffix'] = strtoupper($value);
+        $this->attributes['extension'] = strtoupper($value);
     }
 
 
