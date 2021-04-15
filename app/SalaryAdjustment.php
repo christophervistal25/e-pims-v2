@@ -17,4 +17,9 @@ class SalaryAdjustment extends Model
         'salary_new',
         'salary_diff'
     ];
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
+    }
 }

@@ -170,5 +170,8 @@ class Employee extends Model
             'family_background', 'spouse_child', 'educational_background', 'civil_service', 'work_experience', 'voluntary_work', 'program_attained','other_information','references', 'relevant_queries', 'issued_id', 'status'])->find($employeeId);
     }
 
-
+    public function salary_adjustment()
+    {
+        return $this->belongsTo(SalaryAdjustment::class, 'office_code', 'office_code');
+    }
 }
