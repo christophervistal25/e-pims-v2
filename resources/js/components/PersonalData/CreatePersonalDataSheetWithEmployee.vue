@@ -13,101 +13,101 @@
                 </div>
             </div>
 
-            <personal-information
+            <exists-personal-information
                 :data="employeeData"
                 v-on:next-panel-family-background="displayFamilyBackgroundPanel"
                 v-if="selectedTab.name === 'C1'"
-            ></personal-information>
+            ></exists-personal-information>
 
-            <family-background
+            <exists-family-background
                 :show_panel="familyBackgroundPanel"
                 v-on:next-panel-educational-background="
                     displayEducationalBackgroundPanel
                 "
                 v-if="selectedTab.name === 'C1'"
-            ></family-background>
+            ></exists-family-background>
 
-            <educational-background
+            <exists-educational-background
                 :educational_background="educationalBackgroundPanel"
                 v-if="selectedTab.name === 'C1'"
                 @next_tab="openNextTab"
-            ></educational-background>
+            ></exists-educational-background>
 
             <!-- C2 -->
-            <civil-service
+            <exists-civil-service
                 @display-work-experience="workExperienceSection"
                 v-if="selectedTab.name === 'C2'"
-            ></civil-service>
+            ></exists-civil-service>
 
-            <work-experience
+            <exists-work-experience
                 :work_experience="isWorkExperienceShow"
                 v-if="selectedTab.name === 'C2'"
                 @next_tab="openNextTab"
-            ></work-experience>
+            ></exists-work-experience>
             <!-- END OF C2 -->
 
             <!-- C3 -->
-            <voluntary
+            <exists-voluntary
                 @display-learning-and-development="
                     displayLearningAndDevelopment
                 "
                 v-if="selectedTab.name === 'C3'"
-            ></voluntary>
+            ></exists-voluntary>
 
-            <learning-and-development
+            <exists-learning-and-development
                 v-if="selectedTab.name === 'C3'"
                 @display-other-information="displayOtherInformation"
                 :show_panel="needToShowLearningAndDevelopment"
-            ></learning-and-development>
+            ></exists-learning-and-development>
 
-            <other-information
+            <exists-other-information
                 v-if="selectedTab.name === 'C3'"
                 :show_panel="needToShowOtherInformation"
                 @next_tab="openNextTab"
-            ></other-information>
+            ></exists-other-information>
             <!-- END OF C3 -->
 
             <!-- C4 -->
-            <relevant-queries
+            <exists-relevant-queries
                 v-if="selectedTab.name === 'C4'"
                 @display-reference="displayReference"
-            ></relevant-queries>
+            ></exists-relevant-queries>
             <references
                 :show_panel="needToShowReference"
                 @display-issued-id="displayIssuedID"
                 v-if="selectedTab.name === 'C4'"
             ></references>
-            <goverment-issued-id
+            <exists-goverment-issued-id
                 :show_panel="needToShowIssuedID"
                 v-if="selectedTab.name === 'C4'"
-            ></goverment-issued-id>
+            ></exists-goverment-issued-id>
             <!-- END OF C4 -->
         </div>
     </div>
 </template>
 
 <script>
-import FamilyBackground from "./C1/FamilyBackground.vue";
-import PersonalInformation from "./C1/Information.vue";
-import EducationalBackground from "./C1/EducationalBackground.vue";
+import FamilyBackground from "./exists/C1/FamilyBackground.vue";
+import PersonalInformation from "./exists/C1/Information.vue";
+import EducationalBackground from "./exists/C1/EducationalBackground.vue";
 
-import CivilService from "./C2/CivilService.vue";
-import WorkExperience from "./C2/WorkExperience.vue";
+import CivilService from "./exists/C2/CivilService.vue";
+import WorkExperience from "./exists/C2/WorkExperience.vue";
 
-import Voluntary from "./C3/Voluntary.vue";
-import learningAndDevelopment from "./C3/Learning.vue";
-import OtherInformation from "./C3/OtherInformation.vue";
+import Voluntary from "./exists/C3/Voluntary.vue";
+import learningAndDevelopment from "./exists/C3/Learning.vue";
+import OtherInformation from "./exists/C3/OtherInformation.vue";
 
-import RelevantQueries from "./C4/RelevantQueries.vue";
-import Reference from "./C4/Reference.vue";
-import GovernmentIssuedID from "./C4/GovernmentIssuedID.vue";
+import RelevantQueries from "./exists/C4/RelevantQueries.vue";
+import Reference from "./exists/C4/Reference.vue";
+import GovernmentIssuedID from "./exists/C4/GovernmentIssuedID.vue";
 
 export default {
-    props : {
+    props: {
         employee: {
             type: Object,
             required: true
-        },
+        }
     },
     components: {
         FamilyBackground,
@@ -125,7 +125,7 @@ export default {
     data() {
         return {
             hasSelecType: false,
-            employeeData : '',
+            employeeData: "",
             tabs: [
                 {
                     name: "C1",
@@ -201,11 +201,12 @@ export default {
     created() {
         // set the default tab display to C1
         this.selectedTab = this.tabs[0];
-        window.axios.get(`/api/employee/show/${this.employee.employee_id}`).then((response) => {
+        window.axios
+            .get(`/api/employee/show/${this.employee.employee_id}`)
+            .then(response => {
                 this.employeeData = response.data;
-        })
+            });
     }
 };
 </script>
-<style scoped>
-</style>
+<style scoped></style>
