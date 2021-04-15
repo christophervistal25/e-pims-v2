@@ -9,71 +9,70 @@ Vue.component(
     "personal-data-sheet",
     require("./components/PersonalData/CreatePersonalDataSheet.vue").default
 );
-
 Vue.component(
-    "personal-data-sheet-with-employee",
-    require("./components/PersonalData/CreatePersonalDataSheetWithEmployee.vue")
-        .default
+    "exists-personal-information",
+    require("./components/PersonalData/exists/C1/Information.vue").default
 );
+
 
 // BEGIN OF PERSONAL DATA SHEET CREATE
 Vue.component(
-    "personal-information",
-    require("./components/PersonalData/C1/Information.vue").default
+    "create-personal-information",
+    require("./components/PersonalData/create/C1/Information.vue").default
 );
 
 Vue.component(
-    "family-background",
-    require("./components/PersonalData/C1/FamilyBackground.vue").default
+    "create-family-background",
+    require("./components/PersonalData/create/C1/FamilyBackground.vue").default
 );
 
 Vue.component(
-    "educational-background",
-    require("./components/PersonalData/C1/EducationalBackground.vue").default
+    "create-educational-background",
+    require("./components/PersonalData/create/C1/EducationalBackground.vue").default
 );
 
 Vue.component(
-    "civil-service",
-    require("./components/PersonalData/C2/CivilService.vue").default
+    "create-civil-service",
+    require("./components/PersonalData/create/C2/CivilService.vue").default
 );
 
 Vue.component(
-    "work-experience",
-    require("./components/PersonalData/C2/WorkExperience.vue").default
+    "create-work-experience",
+    require("./components/PersonalData/create/C2/WorkExperience.vue").default
 );
 
 Vue.component(
-    "voluntary",
-    require("./components/PersonalData/C3/Voluntary.vue").default
+    "create-voluntary",
+    require("./components/PersonalData/create/C3/Voluntary.vue").default
 );
 
 Vue.component(
-    "learning-and-development",
-    require("./components/PersonalData/C3/Learning.vue").default
+    "create-learning-and-development",
+    require("./components/PersonalData/create/C3/Learning.vue").default
 );
 
 Vue.component(
-    "other-information",
-    require("./components/PersonalData/C3/OtherInformation.vue").default
+    "create-other-information",
+    require("./components/PersonalData/create/C3/OtherInformation.vue").default
 );
 
 Vue.component(
-    "relevant-queries",
-    require("./components/PersonalData/C4/RelevantQueries.vue").default
+    "create-relevant-queries",
+    require("./components/PersonalData/create/C4/RelevantQueries.vue").default
 );
 
 Vue.component(
-    "references",
-    require("./components/PersonalData/C4/Reference.vue").default
+    "create-references",
+    require("./components/PersonalData/create/C4/Reference.vue").default
 );
 
 Vue.component(
-    "goverment-issued-id",
-    require("./components/PersonalData/C4/GovernmentIssuedID.vue").default
+    "create-goverment-issued-id",
+    require("./components/PersonalData/create/C4/GovernmentIssuedID.vue").default
 );
 // END OF PERSONAL DATA SHEET CREATE
 
-// BEGIN OF PERSONAL DATA SHEET EDIT
+// BEGIN OF PERSONAL DATA SHEET EXISTS
 Vue.component(
     "exists-personal-information",
     require("./components/PersonalData/exists/C1/Information.vue").default
@@ -87,7 +86,7 @@ Vue.component(
 Vue.component(
     "exists-educational-background",
     require("./components/PersonalData/exists/C1/EducationalBackground.vue")
-        .default
+    .default
 );
 
 Vue.component(
@@ -128,9 +127,9 @@ Vue.component(
 Vue.component(
     "exists-goverment-issued-id",
     require("./components/PersonalData/exists/C4/GovernmentIssuedID.vue")
-        .default
+    .default
 );
-// EDIT OF PERSONAL DATA SHEET EDIT
+// EDIT OF PERSONAL DATA SHEET EXISTS
 
 Vue.component(
     "employee-table",

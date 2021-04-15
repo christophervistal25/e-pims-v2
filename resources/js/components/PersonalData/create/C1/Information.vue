@@ -1,7 +1,6 @@
 <template>
     <div>
         <div class="card">
-            <!-- <h1>haaha</h1> -->
             <div
                 class="card-header"
                 :data-target="isComplete ? '#information' : ''"
