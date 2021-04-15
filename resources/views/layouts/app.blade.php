@@ -366,7 +366,7 @@
 	<script src="{{ asset('/assets/js/select2.min.js') }}"></script>
 	<script src="{{ asset('/assets/js/moment.min.js') }}"></script>
 	<script src="{{ asset('/assets/js/bootstrap-datetimepicker.min.js') }}"></script>
-	{{-- <script src="{{ asset('/assets/js/app.js') }}"></script> --}}
+	<script src="{{ asset('/assets/js/app.js') }}"></script>
 	{{-- <script src="{{ asset('/assets/js/searchable.js') }}"></script> --}}
     @stack('page-scripts')
 </body>
