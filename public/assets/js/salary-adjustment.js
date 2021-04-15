@@ -40,7 +40,7 @@
                     url: `/api/salaryAdjustment/${employeeName}`,
                     success:(response) => {
                             let position = response.plantilla.position_id;
-                            $('#position').val(position);;
+                            $('#position').val(position);
                             let salaryGrade = response.plantilla.sg_no;
                             $('#salaryGrade').val(salaryGrade);
                             let stepNo = response.plantilla.step_no;
@@ -73,7 +73,7 @@
             $('#salaryDifference').val(total.toFixed(2));
         });
 
-//// add salary grade
+//// add salary adjustment
 $(document).ready(function () {
     $('#salaryAdjustmentForm').submit(function (e) {
         e.preventDefault();

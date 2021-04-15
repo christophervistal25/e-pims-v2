@@ -4,6 +4,9 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+@prepend('page-css')
+<script src="{{ asset('/js/app.js') }}" defer></script>
+@endprepend
 <style>
     .swal-content ul{
     list-style-type: none;
