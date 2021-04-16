@@ -38,7 +38,7 @@ class FamilyBackgroundRequest extends FormRequest
             'fsurname'     => 'required|regex:/^[a-zA-Z ].+$/u',
             'ffirstname'   => 'required_with:fsurname|regex:/^[a-zA-Z ].+$/u',
             'fmiddlename'  => 'nullable|regex:/^[a-zA-Z ].+$/u',
-            'fnameexten'   => '',
+            'fnameexten'   => 'nullable', 'max:3' , 'regex:/^[a-zA-Z].+$/u',
             'msurname'     => 'required|regex:/^[a-zA-Z ].+$/u',
             'mfirstname'   => 'required_with:msurname|regex:/^[a-zA-Z ].+$/u',
             'mmiddlename'  => 'nullable|regex:/^[a-zA-Z ].+$/u',
