@@ -18,9 +18,8 @@ class SalaryAdjustmentController extends Controller
      */
     public function index()
     {
-        $employee = Employee::select('employee_id', 'firstname', 'lastname', 'middlename')->get();
-        $position = Position::select('position_id', 'position_name')->get();
-        return view('SalaryAdjustment.SalaryAdjustment', compact('employee', 'position'));
+        $employee = Employee::with(['plantilla', 'plantilla.position'])->get();
+        return view('SalaryAdjustment.SalaryAdjustment', compact('employee'));
     }
 
     public function list(Request $request)
@@ -64,7 +63,7 @@ class SalaryAdjustmentController extends Controller
         $this->validate($request, [
             'employeeName'                        => 'required',
             'itemNo'                              => 'required',
-            'position'                            => 'required',
+            'positionId'                          => 'required',
             'dateAdjustment'                      => 'required',
             'salaryGrade'                         => 'required',
             'stepNo'                              => 'required',
@@ -73,9 +72,9 @@ class SalaryAdjustmentController extends Controller
             'salaryDifference'                    => 'required|numeric',
         ]);
         $salaryAdjustment = new SalaryAdjustment;
-        $salaryAdjustment->employee_id                = $request['employeeName'];
+        $salaryAdjustment->employee_id                = $request['employeeId'];
         $salaryAdjustment->item_no                    = $request['itemNo'];
-        $salaryAdjustment->position_id                = $request['position'];  
+        $salaryAdjustment->position_id                = $request['positionId'];  
         $salaryAdjustment->date_adjustment            = $request['dateAdjustment'];
         $salaryAdjustment->sg_no                      = $request['salaryGrade'];
         $salaryAdjustment->step_no                    = $request['stepNo'];
