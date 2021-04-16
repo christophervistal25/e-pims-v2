@@ -34,7 +34,8 @@ class SalaryAdjustmentController extends Controller
                     })
                     ->addColumn('action', function($row){
                            $btn = "<a href='". route('salary-adjustment.edit', $row->id) . "' class='edit btn btn-primary btn-sm'>Edit</a>";
-                            return $btn;
+                           $btn = $btn."<a href='". route('salary-adjustment.destroy', $row->id) . "' class='edit btn btn-danger btn-sm'>Delete</a>";
+                            return $btn;    
                     })
                     ->rawColumns(['action'])
                     ->make(true);
@@ -154,6 +155,8 @@ class SalaryAdjustmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $salaryAdjustment                             =  SalaryAdjustment::find($id);
+        $salaryAdjustment                             ->delete();
+        return redirect()->route('SalaryAdjustment.SalaryAdjustment');
     }
 }
