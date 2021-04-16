@@ -3,6 +3,7 @@
 @prepend('page-css')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+<script src="{{ asset('/js/app.js') }}" defer></script>
 <style>
     .swal-content ul{
     list-style-type: none;
