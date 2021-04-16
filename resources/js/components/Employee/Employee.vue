@@ -2,74 +2,111 @@
     <div>
         <div class="row">
             <div class="col-lg-12">
-                <table class="table table-bordered table-hover">
-                    <thead>
-                        <th class="text-sm">ID Number</th>
-                        <th class="text-sm">Fullname</th>
-                    </thead>
-                    <tbody>
-                        <tr
-                            v-for="(employee, index) in employees"
-                            :key="index"
-                            class="cursor-pointer"
-                            @click="fetchEmployeeData(employee.employee_id)"
+                <div class="float-right">
+                    <button
+                        class="btn btn-primary shadow rounded mb-2"
+                        :class="
+                            !showAddEmployeeForm ? 'btn-success' : 'btn-primary'
+                        "
+                        @click="showAddEmployeeForm = !showAddEmployeeForm"
+                    >
+                        <i class="la la-plus" v-if="!showAddEmployeeForm"></i>
+                        <i class="la la-list" v-else></i>
+                        {{
+                            !showAddEmployeeForm
+                                ? "Show Add Employee Form"
+                                : "Show List of Employees"
+                        }}
+                    </button>
+                </div>
+                <div class="clearfix"></div>
+                <div class="card shadow" v-if="!showAddEmployeeForm">
+                    <!-- @click="fetchEmployeeData(employee.employee_id)" -->
+                    <div class="card-body">
+                        <table
+                            class="table table-bordered table-hover transition "
                         >
-                            <td class="text-sm">{{ employee.employee_id }}</td>
-                            <td class="text-sm">
-                                {{ employee.lastname }} ,
-                                {{ employee.firstname }}
-                                {{ employee.middlename }}
-                                {{ employee.extension.toUpperCase() }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-lg-8" v-if="false">
-                <div class="card-body p-0">
-                    <div>
-                        <button
-                            class="btn btn-primary mr-2 shadow"
-                            @click="addNewEmployee"
-                        >
-                            ADD
-                        </button>
-                        <button
-                            class="btn btn-success shadow"
-                            @click="updateEmployee"
-                        >
-                            UPDATE
-                        </button>
+                            <thead>
+                                <th class="text-sm">ID Number</th>
+                                <th class="text-sm">Fullname</th>
+                                <th class="text-sm">Position</th>
+                            </thead>
+                            <tbody v-if="isComplete">
+                                <tr
+                                    v-for="(employee, index) in employees"
+                                    :key="index"
+                                    class="cursor-pointer"
+                                >
+                                    <td class="text-sm">
+                                        {{ employee.employee_id }}
+                                    </td>
+                                    <td class="text-sm">
+                                        {{ employee.lastname }} ,
+                                        {{ employee.firstname }}
+                                        {{ employee.middlename }}
+                                        {{
+                                            employee.extension
+                                                ? employee.extension.toUpperCase()
+                                                : ""
+                                        }}
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                            <tbody v-else>
+                                <tr>
+                                    <td colspan="3" class="text-center">
+                                        <div
+                                            class="spinner-border text-primary"
+                                            role="status"
+                                        >
+                                            <span class="sr-only"
+                                                >Loading...</span
+                                            >
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <h4 class="card-title"></h4>
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                            <a
-                                class="nav-link active"
-                                href="#basictab1"
-                                data-toggle="tab"
-                                >Basic Information</a
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <a
-                                class="nav-link"
-                                href="#basictab2"
-                                data-toggle="tab"
-                                >Account Numbers</a
-                            >
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane show active" id="basictab1">
-                            <basic-information
-                                :employee="employee"
-                            ></basic-information>
-                        </div>
-                        <div class="tab-pane" id="basictab2">
-                            <account-number
-                                :employee="employee"
-                            ></account-number>
+                </div>
+            </div>
+            <div class="col-lg-12" v-if="showAddEmployeeForm">
+                <div class="card">
+                    <div class="card-body shadow">
+                        <h4 class="mb-2">
+                            Add new Employee
+                        </h4>
+                        <hr />
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a
+                                    class="nav-link active"
+                                    href="#basictab1"
+                                    data-toggle="tab"
+                                    >Basic Information</a
+                                >
+                            </li>
+                            <li class="nav-item">
+                                <a
+                                    class="nav-link"
+                                    href="#basictab2"
+                                    data-toggle="tab"
+                                    >Account Numbers</a
+                                >
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane show active" id="basictab1">
+                                <basic-information
+                                    :employee="employee"
+                                ></basic-information>
+                            </div>
+                            <div class="tab-pane" id="basictab2">
+                                <account-number
+                                    :employee="employee"
+                                ></account-number>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -86,6 +123,8 @@ import swal from "sweetalert";
 export default {
     data() {
         return {
+            isComplete: false,
+            showAddEmployeeForm: false,
             employees: [],
             employee: {
                 lastName: "",
@@ -93,7 +132,9 @@ export default {
                 middleName: "",
                 dateOfBirth: "",
                 age: "",
-                salaryGrade: "",
+                step: "",
+                basicRate: "",
+                employmentStatus: "",
                 officeAssignment: "",
                 designation: "",
                 employmentFrom: "",
@@ -147,7 +188,6 @@ export default {
                 .get(`/api/employee/find/${employee_id}`)
                 .then(response => {
                     if (response.status == 200) {
-                        console.log(response.data);
                         // let dateYear = new Date().getFullYear();
                         // let age =
                         //     dateYear -
@@ -164,13 +204,16 @@ export default {
                             response.data.philhealth_no;
                         this.employee.sssNo = response.data.sss_no;
                         this.employee.tinNo = response.data.tin_no;
+
+                        this.showAddEmployeeForm = true;
                     }
                 });
         },
         loadEmployees() {
             window.axios.get(`/api/employee/employees`).then(response => {
                 if (response.status === 200) {
-                    this.employees = response.data;
+                    this.employees = response.data.data;
+                    this.isComplete = true;
                 }
             });
         }
@@ -184,5 +227,15 @@ export default {
 <style>
 .cursor-pointer {
     cursor: pointer;
+}
+
+.status-item {
+    border-width: 3px;
+    border-style: dashed;
+}
+
+.status-item:hover {
+    background: #f2f3f4;
+    transition: 300ms ease-in-out;
 }
 </style>

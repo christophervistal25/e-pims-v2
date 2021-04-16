@@ -9,16 +9,6 @@
             />
         </div>
         <div class="form-group">
-            <label for="" class="col-form-label"
-                >REGISTRATION TRACKING NO.</label
-            >
-            <input
-                type="text"
-                v-model="employee.registrationTrackingNo"
-                class="form-control col-lg-12"
-            />
-        </div>
-        <div class="form-group">
             <label for="" class="col-form-label">PHILHEALTH NO.</label>
             <input
                 type="text"
@@ -47,6 +37,33 @@
             <input
                 type="text"
                 v-model="employee.lbpAccountNo"
+                class="form-control col-lg-12"
+            />
+        </div>
+
+        <div class="form-group">
+            <label for="" class="col-form-label">GSIS ID NO.</label>
+            <input
+                type="text"
+                v-model="employee.gsisIdNo"
+                class="form-control col-lg-12"
+            />
+        </div>
+
+        <div class="form-group">
+            <label for="" class="col-form-label">GSIS POLICY NO.</label>
+            <input
+                type="text"
+                v-model="employee.gsisPolicyNo"
+                class="form-control col-lg-12"
+            />
+        </div>
+
+        <div class="form-group">
+            <label for="" class="col-form-label">GSIS BP NO.</label>
+            <input
+                type="text"
+                v-model="employee.gsisBpNo"
                 class="form-control col-lg-12"
             />
         </div>

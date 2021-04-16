@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Employee;
+use App\RefStatus;
 class EmployeeSeeder extends Seeder
 {
     /**
@@ -54675,6 +54676,7 @@ class EmployeeSeeder extends Seeder
                 'telephone_no'         => $employee['tel_no'],
                 'mobile_no'            => $employee['tel_no'],
                 'email_address'        => '',
+                'status' => RefStatus::get()->random()->id,
             ]);
         }
         // factory('App\Employee', 100)->create();

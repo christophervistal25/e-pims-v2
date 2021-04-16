@@ -15,13 +15,11 @@ class CreateEmployeeInformationsTable extends Migration
     {
         Schema::create('employee_informations', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string('EmpIDNo');
             $table->string('old_office_code')->nullable();
             $table->integer('office_code');
             $table->string('division_code')->nullable();
             $table->decimal('item_number');
-            $table->string('suffix')->nullable();
             $table->integer('pos_code');
             $table->decimal('emp_status');
             $table->date('first_day_of_service');
@@ -44,6 +42,7 @@ class CreateEmployeeInformationsTable extends Migration
             $table->integer('zip_code')->nullable();
             $table->tinyInteger('shifting_employee');
             $table->string('PHW');
+            $table->timestamps();
         });
     }
 

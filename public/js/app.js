@@ -1963,6 +1963,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["employee"]
 });
@@ -2188,8 +2205,109 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["employee"],
+  data: function data() {
+    return {
+      employmentStatus: [],
+      offices: [],
+      positions: []
+    };
+  },
   watch: {
     dateOfBirth: function dateOfBirth(to, from) {
       console.log(to, from);
@@ -2206,6 +2324,23 @@ __webpack_require__.r(__webpack_exports__);
         this.employee.age = "";
       }
     }
+  },
+  created: function created() {
+    var _this = this;
+
+    window.axios.get("/api/employee/employment/status").then(function (response) {
+      if (response.status === 200) {
+        _this.employmentStatus = response.data;
+      }
+    })["catch"](function (err) {
+      return console.log(err);
+    });
+    window.axios.get("/api/offices").then(function (response) {
+      _this.offices = response.data;
+    });
+    window.axios.get("/api/positions").then(function (response) {
+      _this.positions = response.data;
+    });
   }
 });
 
@@ -2304,12 +2439,51 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      isComplete: false,
+      showAddEmployeeForm: false,
       employees: [],
       employee: {
         lastName: "",
@@ -2317,7 +2491,9 @@ __webpack_require__.r(__webpack_exports__);
         middleName: "",
         dateOfBirth: "",
         age: "",
-        salaryGrade: "",
+        step: "",
+        basicRate: "",
+        employmentStatus: "",
         officeAssignment: "",
         designation: "",
         employmentFrom: "",
@@ -2370,12 +2546,11 @@ __webpack_require__.r(__webpack_exports__);
 
       window.axios.get("/api/employee/find/".concat(employee_id)).then(function (response) {
         if (response.status == 200) {
-          console.log(response.data); // let dateYear = new Date().getFullYear();
+          // let dateYear = new Date().getFullYear();
           // let age =
           //     dateYear -
           //     new Date(response.data.date_birth).getFullYear();
           // this.employee.age = age >= 18 && age <= 100 ? age : "";
-
           _this3.employee.employee_id = response.data.employee_id;
           _this3.employee.lastName = response.data.lastname;
           _this3.employee.firstName = response.data.firstname;
@@ -2386,6 +2561,7 @@ __webpack_require__.r(__webpack_exports__);
           _this3.employee.philhealthNo = response.data.philhealth_no;
           _this3.employee.sssNo = response.data.sss_no;
           _this3.employee.tinNo = response.data.tin_no;
+          _this3.showAddEmployeeForm = true;
         }
       });
     },
@@ -2394,7 +2570,8 @@ __webpack_require__.r(__webpack_exports__);
 
       window.axios.get("/api/employee/employees").then(function (response) {
         if (response.status === 200) {
-          _this4.employees = response.data;
+          _this4.employees = response.data.data;
+          _this4.isComplete = true;
         }
       });
     }
@@ -15873,7 +16050,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.cursor-pointer {\r\n    cursor: pointer;\n}\r\n", ""]);
+exports.push([module.i, "\n.cursor-pointer {\n    cursor: pointer;\n}\n.status-item {\n    border-width: 3px;\n    border-style: dashed;\n}\n.status-item:hover {\n    background: #f2f3f4;\n    transition: 300ms ease-in-out;\n}\n", ""]);
 
 // exports
 
@@ -34392,38 +34569,6 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "form-group" }, [
       _c("label", { staticClass: "col-form-label", attrs: { for: "" } }, [
-        _vm._v("REGISTRATION TRACKING NO.")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.employee.registrationTrackingNo,
-            expression: "employee.registrationTrackingNo"
-          }
-        ],
-        staticClass: "form-control col-lg-12",
-        attrs: { type: "text" },
-        domProps: { value: _vm.employee.registrationTrackingNo },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.$set(
-              _vm.employee,
-              "registrationTrackingNo",
-              $event.target.value
-            )
-          }
-        }
-      })
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { staticClass: "col-form-label", attrs: { for: "" } }, [
         _vm._v("PHILHEALTH NO.")
       ]),
       _vm._v(" "),
@@ -34532,6 +34677,90 @@ var render = function() {
           }
         }
       })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { staticClass: "col-form-label", attrs: { for: "" } }, [
+        _vm._v("GSIS ID NO.")
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.employee.gsisIdNo,
+            expression: "employee.gsisIdNo"
+          }
+        ],
+        staticClass: "form-control col-lg-12",
+        attrs: { type: "text" },
+        domProps: { value: _vm.employee.gsisIdNo },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.employee, "gsisIdNo", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { staticClass: "col-form-label", attrs: { for: "" } }, [
+        _vm._v("GSIS POLICY NO.")
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.employee.gsisPolicyNo,
+            expression: "employee.gsisPolicyNo"
+          }
+        ],
+        staticClass: "form-control col-lg-12",
+        attrs: { type: "text" },
+        domProps: { value: _vm.employee.gsisPolicyNo },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.employee, "gsisPolicyNo", $event.target.value)
+          }
+        }
+      })
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group" }, [
+      _c("label", { staticClass: "col-form-label", attrs: { for: "" } }, [
+        _vm._v("GSIS BP NO.")
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.employee.gsisBpNo,
+            expression: "employee.gsisBpNo"
+          }
+        ],
+        staticClass: "form-control col-lg-12",
+        attrs: { type: "text" },
+        domProps: { value: _vm.employee.gsisBpNo },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.$set(_vm.employee, "gsisBpNo", $event.target.value)
+          }
+        }
+      })
     ])
   ])
 }
@@ -34558,180 +34787,231 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-sm-2 align-middle text-sm col-form-label",
-          attrs: { for: "lastname" }
-        },
-        [_vm._v("LAST NAME")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-7" }, [
-        _c("input", {
-          directives: [
+    _c("div", { staticClass: "row mb-1" }, [
+      _c("div", { staticClass: "col-lg-8" }, [
+        _c("div", { staticClass: "form-group row" }, [
+          _c(
+            "label",
             {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.employee.lastName,
-              expression: "employee.lastName"
-            }
-          ],
-          staticClass: "form-control text-uppercase",
-          attrs: { type: "text", id: "lastname" },
-          domProps: { value: _vm.employee.lastName },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+              staticClass: "col-sm-3 align-middle text-sm col-form-label",
+              attrs: { for: "lastname" }
+            },
+            [_vm._v("LAST NAME")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-lg-8" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.employee.lastName,
+                  expression: "employee.lastName"
+                }
+              ],
+              staticClass: "form-control text-uppercase",
+              attrs: { type: "text", id: "lastname" },
+              domProps: { value: _vm.employee.lastName },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.employee, "lastName", $event.target.value)
+                }
               }
-              _vm.$set(_vm.employee, "lastName", $event.target.value)
-            }
-          }
-        })
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-sm-2 text-sm align-middle col-form-label",
-          attrs: { for: "firstname" }
-        },
-        [_vm._v("FIRST NAME")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-7" }, [
-        _c("input", {
-          directives: [
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group row" }, [
+          _c(
+            "label",
             {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.employee.firstName,
-              expression: "employee.firstName"
-            }
-          ],
-          staticClass: "form-control text-uppercase",
-          attrs: { type: "text", id: "firstname" },
-          domProps: { value: _vm.employee.firstName },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+              staticClass: "col-sm-3 text-sm align-middle col-form-label",
+              attrs: { for: "firstname" }
+            },
+            [_vm._v("FIRST NAME")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-lg-8" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.employee.firstName,
+                  expression: "employee.firstName"
+                }
+              ],
+              staticClass: "form-control text-uppercase",
+              attrs: { type: "text", id: "firstname" },
+              domProps: { value: _vm.employee.firstName },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.employee, "firstName", $event.target.value)
+                }
               }
-              _vm.$set(_vm.employee, "firstName", $event.target.value)
-            }
-          }
-        })
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-sm-2 text-sm align-middle col-form-label",
-          attrs: { for: "middlename" }
-        },
-        [_vm._v("MIDDLE NAME")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-7" }, [
-        _c("input", {
-          directives: [
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group row" }, [
+          _c(
+            "label",
             {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.employee.middleName,
-              expression: "employee.middleName"
-            }
-          ],
-          staticClass: "form-control text-uppercase",
-          attrs: { type: "text", id: "middlename" },
-          domProps: { value: _vm.employee.middleName },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+              staticClass: "col-sm-3 text-sm align-middle col-form-label",
+              attrs: { for: "middlename" }
+            },
+            [_vm._v("MIDDLE NAME")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-lg-8" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.employee.middleName,
+                  expression: "employee.middleName"
+                }
+              ],
+              staticClass: "form-control text-uppercase",
+              attrs: { type: "text", id: "middlename" },
+              domProps: { value: _vm.employee.middleName },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.employee, "middleName", $event.target.value)
+                }
               }
-              _vm.$set(_vm.employee, "middleName", $event.target.value)
-            }
-          }
-        })
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-sm-2 text-sm align-middle col-form-label",
-          attrs: { for: "name_extension" }
-        },
-        [_vm._v("NAME EXTENSION")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-7" }, [
-        _c("input", {
-          directives: [
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group row" }, [
+          _c(
+            "label",
             {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.employee.extension,
-              expression: "employee.extension"
-            }
-          ],
-          staticClass: "form-control text-uppercase",
-          attrs: { type: "text", id: "name_extension" },
-          domProps: { value: _vm.employee.extension },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.employee, "extension", $event.target.value)
-            }
-          }
-        })
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-sm-2 text-sm align-middle col-form-label",
-          attrs: { for: "dateOfBirth" }
-        },
-        [_vm._v("DATE OF BIRTH")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-7" }, [
-        _c("input", {
-          directives: [
+              staticClass: "col-sm-3 text-sm align-middle col-form-label",
+              attrs: { for: "name_extension" }
+            },
+            [_vm._v("NAME EXTENSION")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-lg-8" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.employee.extension,
+                    expression: "employee.extension"
+                  }
+                ],
+                staticClass: "form-control text-uppercase",
+                attrs: { type: "text", id: "name_extension" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.employee,
+                      "extension",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              [
+                _c(
+                  "option",
+                  {
+                    attrs: {
+                      seleted: _vm.employee.extension === "JR",
+                      value: "JR"
+                    }
+                  },
+                  [_vm._v("JR")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "option",
+                  {
+                    attrs: {
+                      seleted: _vm.employee.extension === "SR",
+                      value: "SR"
+                    }
+                  },
+                  [_vm._v("SR")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "option",
+                  {
+                    attrs: {
+                      seleted: _vm.employee.extension === "III",
+                      value: "III"
+                    }
+                  },
+                  [_vm._v("III")]
+                )
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group row" }, [
+          _c(
+            "label",
             {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.employee.dateOfBirth,
-              expression: "employee.dateOfBirth"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "date", id: "dateOfBirth" },
-          domProps: { value: _vm.employee.dateOfBirth },
-          on: {
-            change: _vm.calculateAge,
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+              staticClass: "col-sm-3 text-sm align-middle col-form-label",
+              attrs: { for: "dateOfBirth" }
+            },
+            [_vm._v("DATE OF BIRTH")]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-lg-8" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.employee.dateOfBirth,
+                  expression: "employee.dateOfBirth"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "date", id: "dateOfBirth" },
+              domProps: { value: _vm.employee.dateOfBirth },
+              on: {
+                change: _vm.calculateAge,
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.employee, "dateOfBirth", $event.target.value)
+                }
               }
-              _vm.$set(_vm.employee, "dateOfBirth", $event.target.value)
-            }
-          }
-        })
-      ])
+            })
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._m(0)
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "form-group row" }, [
@@ -34771,10 +35051,10 @@ var render = function() {
       _c(
         "label",
         {
-          staticClass: "col-sm-2 text-sm align-middle col-form-label",
+          staticClass: "text-sm align-middle col-form-label",
           attrs: { for: "salaryRate" }
         },
-        [_vm._v("SALARY RATE")]
+        [_vm._v("STEP")]
       ),
       _vm._v(" "),
       _c("div", { staticClass: "col-lg-2" }, [
@@ -34783,19 +35063,19 @@ var render = function() {
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.employee.salaryGrade,
-              expression: "employee.salaryGrade"
+              value: _vm.employee.step,
+              expression: "employee.step"
             }
           ],
           staticClass: "form-control",
-          attrs: { type: "text", id: "salaryRate" },
-          domProps: { value: _vm.employee.salaryGrade },
+          attrs: { type: "text", id: "step" },
+          domProps: { value: _vm.employee.step },
           on: {
             input: function($event) {
               if ($event.target.composing) {
                 return
               }
-              _vm.$set(_vm.employee, "salaryGrade", $event.target.value)
+              _vm.$set(_vm.employee, "step", $event.target.value)
             }
           }
         })
@@ -34804,7 +35084,40 @@ var render = function() {
       _c(
         "label",
         {
-          staticClass: "col-sm-2 text-sm align-middle col-form-label",
+          staticClass: " text-sm align-middle col-form-label",
+          attrs: { for: "employeeId" }
+        },
+        [_vm._v("BASIC RATE")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-2" }, [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.employee.basicRate,
+              expression: "employee.basicRate"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text", id: "basicRate" },
+          domProps: { value: _vm.employee.basicRate },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.employee, "basicRate", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: " text-sm align-middle col-form-label",
           attrs: { for: "employeeId" }
         },
         [_vm._v("EMP. ID")]
@@ -34842,32 +35155,59 @@ var render = function() {
           staticClass: "col-sm-2 text-sm align-middle col-form-label",
           attrs: { for: "officeAssignment" }
         },
-        [_vm._v("OFFICE ASSIGNMENT")]
+        [_vm._v("EMPLOYMENT STATUS")]
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-lg-10" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.employee.officeAssignment,
-              expression: "employee.officeAssignment"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "text", id: "officeAssignment" },
-          domProps: { value: _vm.employee.officeAssignment },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+      _c("div", { staticClass: "col-lg-9" }, [
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.employee.employmentStatus,
+                expression: "employee.employmentStatus"
               }
-              _vm.$set(_vm.employee, "officeAssignment", $event.target.value)
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", id: "officeAssignment" },
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.$set(
+                  _vm.employee,
+                  "employmentStatus",
+                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                )
+              }
             }
-          }
-        })
-      ])
+          },
+          [
+            _c("option", { attrs: { value: "", readonly: "", selected: "" } }, [
+              _vm._v("Please select status")
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.employmentStatus, function(status, index) {
+              return _c(
+                "option",
+                { key: index, domProps: { value: status.stat_code } },
+                [_vm._v(_vm._s(status.status_name))]
+              )
+            })
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _vm._m(1)
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "form-group row" }, [
@@ -34880,29 +35220,129 @@ var render = function() {
         [_vm._v("DESIGNATION")]
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-lg-10" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.employee.designation,
-              expression: "employee.designation"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "text", id: "designation" },
-          domProps: { value: _vm.employee.designation },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+      _c("div", { staticClass: "col-lg-9" }, [
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.employee.designation,
+                expression: "employee.designation"
               }
-              _vm.$set(_vm.employee, "designation", $event.target.value)
+            ],
+            staticClass: "form-control selectpicker",
+            attrs: {
+              type: "text",
+              id: "designation",
+              "data-live-search": "true"
+            },
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.$set(
+                  _vm.employee,
+                  "designation",
+                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                )
+              }
             }
-          }
-        })
-      ])
+          },
+          [
+            _c("option", { attrs: { value: "", readonly: "" } }, [
+              _vm._v("Please select position")
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.positions, function(position, index) {
+              return _c(
+                "option",
+                { key: index, domProps: { value: position.id } },
+                [_vm._v(_vm._s(position.position_name) + "\n                ")]
+              )
+            })
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _vm._m(2)
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "form-group row" }, [
+      _c(
+        "label",
+        {
+          staticClass: "col-sm-2 text-sm align-middle col-form-label",
+          attrs: { for: "officeAssignment" }
+        },
+        [_vm._v("OFFICE ASSIGNMENT")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-9" }, [
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.employee.officeAssignment,
+                expression: "employee.officeAssignment"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", id: "officeAssignment" },
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.$set(
+                  _vm.employee,
+                  "officeAssignment",
+                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                )
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { value: "", readonly: "", selected: "" } }, [
+              _vm._v("Please select office")
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.offices, function(office, index) {
+              return _c(
+                "option",
+                { key: index, domProps: { value: office.office_code } },
+                [
+                  _vm._v(
+                    _vm._s(office.office_short_name) +
+                      " -\n                    " +
+                      _vm._s(office.office_name) +
+                      "\n                "
+                  )
+                ]
+              )
+            })
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _vm._m(3)
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "form-group row" }, [
@@ -34926,7 +35366,7 @@ var render = function() {
             }
           ],
           staticClass: "form-control",
-          attrs: { type: "text", id: "employmentFrom" },
+          attrs: { type: "date", id: "employmentFrom" },
           domProps: { value: _vm.employee.employmentFrom },
           on: {
             input: function($event) {
@@ -34961,7 +35401,7 @@ var render = function() {
             }
           ],
           staticClass: "form-control",
-          attrs: { type: "text", id: "employmentTo" },
+          attrs: { type: "date", id: "employmentTo" },
           domProps: { value: _vm.employee.employmentTo },
           on: {
             input: function($event) {
@@ -34973,45 +35413,64 @@ var render = function() {
           }
         })
       ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-sm-2 text-sm align-middle col-form-label",
-          attrs: { for: "controlNo" }
-        },
-        [_vm._v("CONTROL NO")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-10" }, [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.employee.controlNo,
-              expression: "employee.controlNo"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "text", id: "controlNo" },
-          domProps: { value: _vm.employee.controlNo },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.employee, "controlNo", $event.target.value)
-            }
-          }
-        })
-      ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-4 mb-3 mt-4" }, [
+      _c("div", {
+        staticClass: "p-5 w-50 rounded border mr-auto ml-auto",
+        staticStyle: { height: "172px" }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "text-center" }, [
+        _c("button", { staticClass: "btn btn-primary mt-2" }, [
+          _vm._v("\n                    Attach Photo\n                ")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-1" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary btn-sm rounded-circle shadow mt-1" },
+        [_c("i", { staticClass: "la la-plus" })]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-1" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary btn-sm rounded-circle shadow mt-1" },
+        [_c("i", { staticClass: "la la-plus" })]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-1" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary btn-sm rounded-circle shadow mt-1" },
+        [_c("i", { staticClass: "la la-plus" })]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -35036,51 +35495,139 @@ var render = function() {
   return _c("div", [
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-lg-12" }, [
-        _c("table", { staticClass: "table table-bordered table-hover" }, [
-          _vm._m(0),
-          _vm._v(" "),
+        _c("div", { staticClass: "float-right" }, [
           _c(
-            "tbody",
-            _vm._l(_vm.employees, function(employee, index) {
-              return _c(
-                "tr",
-                {
-                  key: index,
-                  staticClass: "cursor-pointer",
-                  on: {
-                    click: function($event) {
-                      return _vm.fetchEmployeeData(employee.employee_id)
-                    }
-                  }
-                },
-                [
-                  _c("td", { staticClass: "text-sm" }, [
-                    _vm._v(_vm._s(employee.employee_id))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "text-sm" }, [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(employee.lastname) +
-                        " ,\n                            " +
-                        _vm._s(employee.firstname) +
-                        "\n                            " +
-                        _vm._s(employee.middlename) +
-                        "\n                            " +
-                        _vm._s(employee.extension.toUpperCase()) +
-                        "\n                        "
-                    )
-                  ])
-                ]
+            "button",
+            {
+              staticClass: "btn btn-primary shadow rounded mb-2",
+              class: !_vm.showAddEmployeeForm ? "btn-success" : "btn-primary",
+              on: {
+                click: function($event) {
+                  _vm.showAddEmployeeForm = !_vm.showAddEmployeeForm
+                }
+              }
+            },
+            [
+              !_vm.showAddEmployeeForm
+                ? _c("i", { staticClass: "la la-plus" })
+                : _c("i", { staticClass: "la la-list" }),
+              _vm._v(
+                "\n                    " +
+                  _vm._s(
+                    !_vm.showAddEmployeeForm
+                      ? "Show Add Employee Form"
+                      : "Show List of Employees"
+                  ) +
+                  "\n                "
               )
-            }),
-            0
+            ]
           )
-        ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "clearfix" }),
+        _vm._v(" "),
+        !_vm.showAddEmployeeForm
+          ? _c("div", { staticClass: "card shadow" }, [
+              _c("div", { staticClass: "card-body" }, [
+                _c(
+                  "table",
+                  {
+                    staticClass: "table table-bordered table-hover transition "
+                  },
+                  [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _vm.isComplete
+                      ? _c(
+                          "tbody",
+                          _vm._l(_vm.employees, function(employee, index) {
+                            return _c(
+                              "tr",
+                              { key: index, staticClass: "cursor-pointer" },
+                              [
+                                _c("td", { staticClass: "text-sm" }, [
+                                  _vm._v(
+                                    "\n                                    " +
+                                      _vm._s(employee.employee_id) +
+                                      "\n                                "
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", { staticClass: "text-sm" }, [
+                                  _vm._v(
+                                    "\n                                    " +
+                                      _vm._s(employee.lastname) +
+                                      " ,\n                                    " +
+                                      _vm._s(employee.firstname) +
+                                      "\n                                    " +
+                                      _vm._s(employee.middlename) +
+                                      "\n                                    " +
+                                      _vm._s(
+                                        employee.extension
+                                          ? employee.extension.toUpperCase()
+                                          : ""
+                                      ) +
+                                      "\n                                "
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td")
+                              ]
+                            )
+                          }),
+                          0
+                        )
+                      : _c("tbody", [_vm._m(1)])
+                  ]
+                )
+              ])
+            ])
+          : _vm._e()
       ]),
       _vm._v(" "),
-      false
-        ? undefined
+      _vm.showAddEmployeeForm
+        ? _c("div", { staticClass: "col-lg-12" }, [
+            _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card-body shadow" }, [
+                _c("h4", { staticClass: "mb-2" }, [
+                  _vm._v(
+                    "\n                        Add new Employee\n                    "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _vm._m(2),
+                _vm._v(" "),
+                _c("div", { staticClass: "tab-content" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "tab-pane show active",
+                      attrs: { id: "basictab1" }
+                    },
+                    [
+                      _c("basic-information", {
+                        attrs: { employee: _vm.employee }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "tab-pane", attrs: { id: "basictab2" } },
+                    [
+                      _c("account-number", {
+                        attrs: { employee: _vm.employee }
+                      })
+                    ],
+                    1
+                  )
+                ])
+              ])
+            ])
+          ])
         : _vm._e()
     ])
   ])
@@ -35093,7 +35640,26 @@ var staticRenderFns = [
     return _c("thead", [
       _c("th", { staticClass: "text-sm" }, [_vm._v("ID Number")]),
       _vm._v(" "),
-      _c("th", { staticClass: "text-sm" }, [_vm._v("Fullname")])
+      _c("th", { staticClass: "text-sm" }, [_vm._v("Fullname")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-sm" }, [_vm._v("Position")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { staticClass: "text-center", attrs: { colspan: "3" } }, [
+        _c(
+          "div",
+          {
+            staticClass: "spinner-border text-primary",
+            attrs: { role: "status" }
+          },
+          [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+        )
+      ])
     ])
   },
   function() {

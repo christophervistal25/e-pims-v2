@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-
+            RefStatusSeeder::class,
             EmployeeSeeder::class,
             OfficeSeeder::class,
             SalaryGradeSeeder::class,

@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Employee;
+use App\RefStatus;
 
 class EmployeeController extends Controller
 {
     // Method to display all employee in PDS
     public function list()
     {
-        return Employee::select(['employee_id', 'lastname', 'firstname', 'middlename', 'extension'])->get();
+        return Employee::select(['employee_id', 'lastname', 'firstname', 'middlename', 'extension'])->paginate(10);
     }
 
 
@@ -29,6 +30,11 @@ class EmployeeController extends Controller
     public function records()
     {
         return Employee::select(['employee_id', 'lastname', 'firstname', 'middlename', 'extension'])->paginate(10);
+    }
+
+    public function status()
+    {
+        return RefStatus::get(['id', 'stat_code', 'status_name']);
     }
 
 }

@@ -24,7 +24,11 @@ Route::group(['prefix' => 'employee'], function () {
     Route::get('employees', 'Api\EmployeeController@list');
     Route::get('show/{employeeIdNumber}', 'Api\EmployeeController@show');
     Route::get('find/{employeeIdNumber}', 'Api\EmployeeController@find');
+    Route::get('/employment/status', 'Api\EmployeeController@status');
 });
+
+Route::get('offices', 'Api\OfficeController@list');
+Route::get('positions', 'Api\PositionController@list');
 
 Route::group(['prefix' => 'province'], function () {
     Route::get('/all/with/city', 'Api\ProvinceController@allWithCity');
