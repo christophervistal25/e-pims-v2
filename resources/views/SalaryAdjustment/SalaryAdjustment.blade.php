@@ -35,48 +35,56 @@
                         </div>
 
                         <div class="form-group col-12 col-lg-4">
-                            <label>Employee Name<span class="text-danger">*</span></label>
+                            <label>Employee Name</label>
                             <select value="" class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" 
                             name="employeeName" data-live-search="true" id="employeeName" data-size="5">
                             <option></option>
                             @foreach($employee as $employees)
-                            <option {{ old('employeeName') == $employees->employee_id ? 'selected' : '' }} value="{{ $employees->employee_id }}"> {{ $employees->firstname }} {{ $employees->middlename }} {{ $employees->lastname }}</option> --}}
+                            <option data-plantilla="{{ $employees->plantilla }}" value="{{ $employees->employee_id }}">{{ $employees->lastname }}, {{ $employees->firstname }} {{ $employees->middlename }}</option>
                             @endforeach
                             </select>
                             <div id='employee-error-message' class='text-danger'>
                             </div>
                         </div>
 
+                        <div class="form-group col-12 col-lg-4 d-none">
+                            <input class="form-control" value="" name="employeeId" id="employeeId" type="text" placeholder="Input item No.">
+                        </div>
+
                         <div class="form-group col-12 col-lg-4">
-                            <label>Item No<span class="text-danger">*</span></label>
-                            <input class="form-control" value="" name="itemNo" id="itemNo" type="text" placeholder="Input item No.">
+                            <label>Item No</label>
+                            <input class="form-control" value="" name="itemNo" id="itemNo" type="text" placeholder="Input item No." readonly>
                             <div id='item-no-error-message' class='text-danger'>
                             </div>
                         </div>
 
+                        <div class="form-group col-12 col-lg-11 d-none">
+                            <input class="form-control " value="" id="positionId" name="positionId" type="text" readonly>
+                        </div>
+
                         <div class="form-group col-12 col-lg-4">
-                            <label>Position<span class="text-danger">*</span></label>
-                            <input class="form-control" value="" name="position" id="position" type="text" readonly>
+                            <label>Position</label>
+                            <input class="form-control" value="" name="positionName" id="positionName" type="text" readonly>
                                 <div id='position-error-message' class='text-danger'>
                                 </div>
                         </div>
 
                         <div class="form-group col-12 col-lg-4">
-                            <label>Salary Grade<span class="text-danger">*</span></label>
+                            <label>Salary Grade</label>
                             <input class="form-control" value="" name="salaryGrade" id="salaryGrade" type="text" readonly>
                             <div id='salary-grade-error-message' class='text-danger'>
                             </div>
                         </div>
                         
                         <div class="form-group col-12 col-lg-4">
-                            <label>Step No<span class="text-danger">*</span></label>
+                            <label>Step No</label>
                             <input class="form-control" value="" name="stepNo" id="stepNo" type="text" readonly>
                             <div id='step-no-error-message' class='text-danger'>
                             </div>
                         </div>
 
                         <div class="form-group col-12 col-lg-3 d-none">
-                            <label>Current SG Year<span class="text-danger">*</span></label>
+                            <label>Current SG Year</label>
                             <select name="currentSgyear" id="currentSgyear" value="" class="select floating">
                                 {{ $year3 = date("Y",strtotime("-0 year")) }}
                                 <option value={{ $year3 }}>{{ $year3 }}</option>
@@ -112,7 +120,7 @@
                         </div>
 
                         <div class="form-group col-12 col-lg-4">
-                            <label>Salary Difference<span class="text-danger">*</span></label>
+                            <label>Salary Difference</label>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                 <span class="input-group-text">&#8369;</span>
