@@ -38,40 +38,40 @@
                         </div>
 
                         <div class="form-group col-12 col-lg-4">
-                            <label>Employee Name<span class="text-danger">*</span></label>
-                            <select value="{{ old('employeeName') }}" class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" 
-                            name="employeeName" data-live-search="true" id="employeeName" data-size="5">
-                            <option></option>
-                            @foreach($employee as $employees)
-                            <option {{ $salaryAdjustment->employee_id == $employees->employee_id ? 'selected' : '' }} value="{{ $employees->employee_id }}"> {{ $employees->firstname }} {{ $employees->middlename }} {{ $employees->lastname }}</option> --}}
-                            @endforeach
-                            </select>
+                            <label>Employee Name</label>
+                            <input class="form-control" value="{{ $salaryAdjustment->employee_id }}" name="positionName" id="employeeName" type="text" readonly>
                             @if($errors->has('employeeName'))
                             <small  class="form-text text-danger">
                             {{ $errors->first('employeeName') }} </small>
                             @endif
                         </div>
 
+                        <div class="form-group col-12 col-lg-4 d-none">
+                            <input class="form-control" value="" name="employeeId" id="employeeId" type="text" placeholder="Input item No.">
+                        </div>
+
                         <div class="form-group col-12 col-lg-4">
-                            <label>Item No<span class="text-danger">*</span></label>
-                            <input class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" value="{{ old('itemNo') ?? $salaryAdjustment->item_no }}" name="itemNo" id="itemNo" type="text" placeholder="Input item No.">
+                            <label>Item No</label>
+                            <input class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" value="{{ old('itemNo') ?? $salaryAdjustment->item_no }}" name="itemNo" id="itemNo" type="text" readonly>
                             @if($errors->has('itemNo'))
                             <small  class="form-text text-danger">
                             {{ $errors->first('itemNo') }} </small>
                             @endif
                         </div>
 
-                        <div class="form-group col-12 col-lg-4">
-                            <label>Position<span class="text-danger">*</span></label>
-                            <input class="form-control {{ $errors->has('position')  ? 'is-invalid' : ''}}" value="{{ old('position') ?? $salaryAdjustment->position_id }}" name="position" id="position" type="text" readonly>
-                                @if($errors->has('position'))
-                                <small  class="form-text text-danger">
-                                {{ $errors->first('position') }} </small>
-                                @endif
+                        <div class="form-group col-12 col-lg-11 d-none">
+                            <input class="form-control " value="" id="positionId" name="positionId" type="text" readonly>
                         </div>
 
                         <div class="form-group col-12 col-lg-4">
-                            <label>Salary Grade<span class="text-danger">*</span></label>
+                            <label>Position</label>
+                            <input class="form-control" value="{{ old('employeeName') ?? $salaryAdjustment->position_id }}" name="employeeName" id="positionName" type="text" readonly>
+                            <div id='position-error-message' class='text-danger'>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-12 col-lg-4">
+                            <label>Salary Grade</label>
                             <input class="form-control {{ $errors->has('salaryGrade')  ? 'is-invalid' : ''}}" value="{{ old('salaryGrade') ?? $salaryAdjustment->sg_no }}" name="salaryGrade" id="salaryGrade" type="text" readonly>
                             @if($errors->has('salaryGrade'))
                             <small  class="form-text text-danger">
@@ -80,7 +80,7 @@
                         </div>
                         
                         <div class="form-group col-12 col-lg-4">
-                            <label>Step No<span class="text-danger">*</span></label>
+                            <label>Step No</label>
                             <input class="form-control {{ $errors->has('stepNo')  ? 'is-invalid' : ''}}" value="{{ old('stepNo') ?? $salaryAdjustment->step_no }}" name="stepNo" id="stepNo" type="text" readonly>
                             <div id='step-no-error-message' class='text-danger'>
                             </div>
@@ -91,7 +91,7 @@
                         </div>
 
                         <div class="form-group col-12 col-lg-3 d-none">
-                            <label>Current SG Year<span class="text-danger">*</span></label>
+                            <label>Current SG Year</label>
                             <select name="currentSgyear" id="currentSgyear" value="" class="select floating">
                                 {{ $year3 = date("Y",strtotime("-0 year")) }}
                                 <option value={{ $year3 }}>{{ $year3 }}</option>
@@ -103,7 +103,7 @@
                         </div>
 
                         <div class="form-group col-12 col-lg-4">
-                            <label>Salary Previous<span class="text-danger">*</span></label>
+                            <label>Salary Previous</label>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">&#8369;</span>
@@ -131,7 +131,7 @@
                         </div>
 
                         <div class="form-group col-12 col-lg-4">
-                            <label>Salary Difference<span class="text-danger">*</span></label>
+                            <label>Salary Difference</label>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                 <span class="input-group-text">&#8369;</span>

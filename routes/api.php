@@ -9,8 +9,6 @@ Route::get('/cscPrevious/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaControlle
 
 Route::get('/positionSalaryGrade/{positionTitle}' , 'Api\PlantillaController@positionSalaryGrade');
 
-Route::get('/salaryAdjustment/{employeeName}' , 'Api\SalaryAdjustmentController@salaryAdjustment');
-
 Route::get('step/{sg_no}/{step}' , function ($sgNo, $step) {
     $salaryGrade = SalaryGrade::where('sg_no', $sgNo)->first(['sg_step' . $step]);
     return $salaryGrade;

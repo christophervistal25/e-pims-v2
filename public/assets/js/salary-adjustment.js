@@ -32,25 +32,30 @@
         });
     });
 // get value of employees sg, sn, sp
-    $(document).ready(function() {
-        $("#employeeName").change(function(){
-        let employeeName = $('#employeeName').val();
-        console.log(employeeName);
-                $.ajax({
-                    url: `/api/salaryAdjustment/${employeeName}`,
-                    success:(response) => {
-                            let position = response.plantilla.position_id;
-                            $('#position').val(position);
-                            let salaryGrade = response.plantilla.sg_no;
-                            $('#salaryGrade').val(salaryGrade);
-                            let stepNo = response.plantilla.step_no;
-                            $('#stepNo').val(stepNo);
-                            let salaryPrevious = response.plantilla.salary_amount;
-                            $('#salaryPrevious').val(salaryPrevious);
-                    }
-            });
+$(document).ready(function() {
+    $('#employeeName').change(function (e) {
+            let employeeID = e.target.value;
+            let plantilla = $($( "#employeeName option:selected" )[0]).attr('data-plantilla');
+            console.log(plantilla);
+            if(plantilla) {
+                plantilla = JSON.parse(plantilla);
+                $('#employeeId').val(plantilla.employee_id);
+                $('#positionName').val(plantilla.position.position_name);
+                $('#positionId').val(plantilla.position.position_id);                
+                $('#itemNo').val(plantilla.item_no);
+                $('#salaryGrade').val(plantilla.sg_no);     
+                $('#stepNo').val(plantilla.step_no);
+                $('#salaryPrevious').val(plantilla.salary_amount);
+            } else {
+                $('#positionName').val('');
+                $('#itemNo').val('');
+                $('#salaryGrade').val('');
+                $('#stepNo').val('');
+                $('#salaryPrevious').val('');
+            }
         });
     });
+
     // code for show add form
     $(document).ready(function(){
         $("#addbutton").click(function(){
@@ -130,10 +135,10 @@ $(document).ready(function () {
                             $('#itemNo').removeClass('is-invalid');
                             $('#item-no-error-message').html('');
                         }
-                        if(errors.hasOwnProperty('position')) {
-                            $('#position').addClass('is-invalid');
+                        if(errors.hasOwnProperty('positionId')) {
+                            $('#positionName').addClass('is-invalid');
                             $('#position-error-message').html('');
-                            $('#position-error-message').append(`<span>${errors.position[0]}</span>`);
+                            $('#position-error-message').append(`<span>${errors.positionId[0]}</span>`);
                         }else{
                             $('#position').removeClass('is-invalid');
                             $('#position-error-message').html('');
