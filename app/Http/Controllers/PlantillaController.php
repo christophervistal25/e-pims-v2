@@ -42,7 +42,7 @@ class PlantillaController extends Controller
     public function list(Request $request)
     {
         if ($request->ajax()) {
-            $data = Plantilla::select('plantilla_id', 'item_no', 'position_id', 'office_code', 'status', 'employee_id')->with('office:office_code,office_short_name','positions:position_id,position_name', 'employee:employee_id,firstname,middlename,lastname,extension');
+            $data = Plantilla::select('plantilla_id', 'item_no', 'position_id', 'office_code', 'status', 'employee_id')->with('office:office_code,office_short_name','positions:position_id,position_name', 'employee:employee_id,firstname,middlename,lastname,extension')->orderBy('plantilla_id', 'DESC');
             return (new Datatables)->eloquent($data)
                     ->addIndexColumn()
                     ->addColumn('employee', function ($row) {
@@ -55,7 +55,7 @@ class PlantillaController extends Controller
                         return $row->office->office_short_name;
                     })
                     ->addColumn('action', function($row){
-                        $btn = "<a href='". route('plantilla.edit', $row->plantilla_id) . "' class='text-white edit btn btn-primary btn-sm'>Edit</a>";
+                        $btn = "<a title='Edit Plantilla' href='". route('plantilla.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm'><i class='la la-edit'></i></a>";
                             return $btn;
                     })
                     ->rawColumns(['action'])

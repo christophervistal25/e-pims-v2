@@ -71,6 +71,13 @@ $(document).ready(function() {
             });
             });
 
+
+            function reset() {
+                $('#employeeName').val('Nothing Select').trigger('change');
+                $('input').val('');
+              }
+
+
             $(document).keyup(function() {
             var salaryPrevious = parseFloat($('#salaryPrevious').val());
             var salaryNew = parseFloat($('#salaryNew').val());
@@ -90,11 +97,7 @@ $(document).ready(function () {
             success: function (response) {
                 if(response.success){
                     $('input').val('');
-                    $(['#employeeName']).val('Please Select').trigger('change');
-                    const select = [ "#employeeName"]; 
-                    $.each(select, function(index , value) {
-                    $(`${value}`).val('Please Select').trigger('change');
-                    });
+                    $('#employeeName').val('Please Select').trigger('change');
                     const errorClass = ["#date-adjustment-error-message","employee-error-message","#item-no-error-message","#position-error-message","#salary-grade-error-message","#step-no-error-message","#salary-previous-error-message","#salary-new-error-message","#salary-difference-error-message"];
                     $.each(errorClass, function(index , value) {
                         $(`${value}`).removeClass('is-invalid');

@@ -133,7 +133,7 @@
 
                         <div class="form-group form-group submit-section col-12">
                             <button type="submit" id="save" class="btn btn-success submit-btn float-right">Save</button>
-                            <button style="margin-right:10px;" type="button" id="cancelbutton" class="text-white btn btn-warning submit-btn float-right">Cancel</button>
+                            <button style="margin-right:10px;" type="button" id="cancelbutton" class="text-white btn btn-warning submit-btn float-right" onclick="reset()">Cancel</button>
                         </div>
 
                 </div>
