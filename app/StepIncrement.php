@@ -20,4 +20,14 @@ class StepIncrement extends Model
         'salary_amount_to',
         'salary_diff'
     ];
+
+    public function employee()
+    {
+        return $this->belongsTo('App\Employee', 'employee_id', 'employee_id');
+    }
+
+    public function position()
+    {
+        return $this->belongsTo('App\Position', 'position_id', 'position_id');
+    }
 }

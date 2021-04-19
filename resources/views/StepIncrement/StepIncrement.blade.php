@@ -2,6 +2,7 @@
 @section('title', 'Step Increment')
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
  {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 @endprepend
 @section('content')
@@ -125,15 +126,16 @@
      
 
 {{-- LIST OR DATA TABLES --}}
-            <div id="stepIncrement" class="page-header">
-                <div style="padding-bottom:10px;" class="row align-items-right">
-                            <div class="col-auto float-right ml-auto">
-                                <button id="addBtn" type="button" class="btn btn-primary float-right"><i class="fa fa-plus"></i> Add Step Increment </button>
-                            </div>
-                        </div>
+            <div id="stepIncrementTable" class="page-header">
+                <div class="row align-items-right mb-2 mt-4">
+                    <div class="col-auto float-right ml-auto">
+                        <button id="addBtn" type="button" class="btn btn-primary float-right"><i class="fa fa-plus"></i> Add Step Increment </button>
+                    </div>
+                </div>
 
-                        <div class="table" style="overflow-x:auto;">
-                            <table class="table table-bordered">
+                        <div class="col-12" style="overflow-x:auto;">
+
+                            <table class="table table-bordered" id="step-increment-table">
                                 <thead>
                                 <tr>
                                     <th class="font-weight-bold align-middle text-center" rowspan="2">Date of Step Increment</th>
@@ -153,26 +155,9 @@
                                     </tr>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="align-middle text-center">02/03/2021</td>
-                                        <td class="align-middle text-center">Maria Cristina Falls Surigao</td>
-                                        <td class="align-middle text-center">Maria Cristina Falls Surigao</td>
-                                        <td class="align-middle text-center">6</td>
-                                        <td class="align-middle text-center">03/03/2019</td>
-                                        <td class="align-middle text-center">9,264</td>
-                                        <td class="align-middle text-center">13,503</td>
-                                        <td class="align-middle text-center">9,535</td>
-                                        <td class="align-middle text-center">16,689</td>
-                                        <td class="align-middle text-center">57,636</td>
-                                        <td class="align-middle text-center"><a href="increment-edit.blade.php" class="btn btn-primary btn-sm">EDIT</td>
-                                    </tr>
-                                </tbody>
                             </table>
                         </div>
 
-                        <div class="result">
-                        </div>
                     </div>
                 </div>
             </div>
@@ -183,53 +168,66 @@
 {{-- JQUERY VALIDATION,FUNCTIONS AND PARAMETERS--}}
 
 @push('page-scripts')
+{{-- <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script> --}}
+
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
-@endpush
-
 <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-{{-- <script src="{{ asset('/assets/js/plantilla.js') }}"></script> --}}
+<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
 <script>
 (function() {
     let isSuccess = "{{ Session::get('success') }}";
     if(isSuccess) {
-        swal("Good job!", "Successfully add new step increment.", "success");
+        swal("Good job!", "Successfully added!", "success");
     }
 })();
-</script>
 
-<script src="{{ asset('assets/js/jquery-3.5.1.min.js') }}"></script>
+    // SHOWS THE STEP-INCREMENT FORM
+    $(document).ready(function() {
 
-    <script>
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+        $('#step-increment-table').DataTable({
+            processing: true,
+            serverSide: true,
+            destroy: true,  
+            retrieve: true,
+            ajax: '/step-increment/list',
+            columns: [
+                    { data: 'date_step_increment', name: 'date_step_increment' },
+                    { data: 'employee', name: 'employee' },
+                    { data: 'position', name: 'position' },
+                    { data: 'item_no', name: 'item_no' },
+                    { data: 'date_latest_appointment', name: 'date_latest_appointment' },
+                    { data: 'sg_no_from', name: 'sg_no_from' },
+                    { data: 'salary_amount_from', name: 'salary_amount_from' },
+                     { data: 'sg_no_to', name: 'sg_no_to' },
+                    { data: 'salary_amount_to', name: 'salary_amount_to' },
+                    { data: 'salary_diff', name: 'salary_diff' },
+                    { data: 'action', name: 'action' },
+            ]
         });
-    </script>
-
-    {{-- SHOWS THE STEP-INCREMENT FORM --}}
-    <script>
-        $(document).ready(function() {
-            $('#addBtn').click(function() {
-                $('#addIncrement').attr("class", "page-header");
-                $('#stepIncrement').attr("class", "page-header d-none");
-            });
-        });
-    </script>
-
-    {{-- SHOWS THE TABLE FORM --}}
-
-
-	<script>
+        
         const MAX_NUMBER_OF_STEP_NO = 8;
+
+
+        $('#addBtn').click(function() {
+            $('#addIncrement').attr("class", "page-header");
+            $('#stepIncrementTable').attr("class", "page-header d-none");
+        });
+
+    // SHOWS THE TABLE FORM 
         $('#employeeName').change(function (e) {
             let employeeID = e.target.value;
             let plantilla = $($( "#employeeName option:selected" )[0]).attr('data-plantilla');
             
             if(plantilla) {
                 plantilla = JSON.parse(plantilla);
+
                 $('#employeeId').val(plantilla.employee_id);
                 $('#plantillaId').val(plantilla.plantilla_id);
                 $('#positionName').val(plantilla.position.position_name);
@@ -242,12 +240,13 @@
                 $('#amount').val(plantilla.salary_amount);
                 
                 $('#stepNo2').html('');
-                $('#stepNo2').append(`<option readonly>Please select</option>`)
+                $('#stepNo2').append(`<option readonly>Please select</option>`);
+
                 for(let step = plantilla.step_no + 1; step <= MAX_NUMBER_OF_STEP_NO; step++) {
                     $('#stepNo2').append(`<option value='${step}'>${step}</option>`);
                 }
+
             } else {
-             
                 $('#positionName').val('');
                 $('#itemNo').val('');
                 $('#lastAppointment').val('');
@@ -255,90 +254,70 @@
                 $('#stepNo').val('');
                 $('#amount').val('');
             }
-             
         });
+
         $('#stepNo2').change(function (e) {
-                $.ajax({
-                    url : `/api/step/${$('#sgNo2').val()}/${e.target.value}`,
-                    success : function (response) {
-                        $('#amount2').val(`${response['sg_step' + e.target.value]}`)
-                        var amount = parseFloat($('#amount').val());
-                        var amount2 = parseFloat($('#amount2').val());
-                        $('#monthlyDifference').val((( amount2 - amount) || ''));
-                    }
-                });
+            let selectedSetep = e.target.value;
+            $.ajax({
+                url : `/api/step/${$('#sgNo2').val()}/${selectedSetep}`,
+                success : function (response) {
+                    $('#amount2').val(`${response['sg_step' + selectedSetep]}`)
+                    var amount = parseFloat($('#amount').val());
+                    var amount2 = parseFloat($('#amount2').val());
+                    var amountDifference = parseFloat((( amount2 - amount) || ''));
+                    $('#monthlyDifference').val(amountDifference);
+                }
+            });
         });
-    </script>
+
+        $('#btnSave').click(function (e) {
+            e.preventDefault()
+            
+            let employeeName = $('#employeeName').val(); 
+            let sgNo = $('#sgNo2').val();
+            let stepNo = $('#stepNo2').val();
+            let amount = $('#amount2').val();
+            let errors = {};
+            let filteredError = "";
+            
+            if( employeeName == "" || employeeName.toLowerCase() == 'search name here' ){
+                $('#employeeName-error-message').html('');
+                $('#employeeName-error-message').append(`<span class="text-danger"> Employee name is required. </span>`);
+                errors.employee = true;
+            } else {
+                $('#employeeName-error-message').html('');
+                errors.employee = false;
+            }
 
 
-    <script>
-        $(document).ready(function() {
-            $('#btnSave').click(function (e) {
-                e.preventDefault()
-                
-                let employeeName = $('#employeeName').val(); 
-                let sgNo = $('#sgNo2').val();
-                let stepNo = $('#stepNo2').val();
-                let amount = $('#amount2').val();
-                let errors = {};
-                let filteredError = "";
-             
-                {{-- if( amount == "" ){
-                    $('#amount2-error-message').html('');
-                    $('#amount2-error-message').append(`<span class="text-danger"> The amount value is required. </span>`);
-                    errors.amount = true;
-                }else {
-                    $('#amount2-error-message').html('');
-                    errors.amount = false;
-                } --}}
+            if( stepNo == "" || stepNo.toLowerCase() == 'please select' ){
+                $('#stepNo2-error-message').html('');
+                $('#stepNo2-error-message').append(`<span> The step no. is required. </span>`);
+                errors.stepNo = true;
+            } else {
+                $('#stepNo2-error-message').html('');
+                errors.stepNo = false;
+            }
 
-                if( employeeName == "" || employeeName.toLowerCase() == 'search name here' ){
-                    $('#employeeName-error-message').html('');
-                    $('#employeeName-error-message').append(`<span class="text-danger"> Employee name is required. </span>`);
-                    errors.employee = true;
-                }else {
-                    $('#employeeName-error-message').html('');
-                    errors.employee = false;
-                }
+            
+            filteredError = Object.values(errors).filter((error) => error);
 
-                {{-- if( sgNo == "" || sgNo.toLowerCase() == 'please select' ){
-                    $('#sgNo2-error-message').html('');
-                    $('#sgNo2-error-message').append(`<span> The salary grade is required. </span>`);
-                    errors.sgNo = true;
-                }else {
-                    $('#sgNo2-error-message').html('');
-                    errors.sgNo = false;
-                } --}}
-
-                if( stepNo == "" || stepNo.toLowerCase() == 'please select' ){
-                    $('#stepNo2-error-message').html('');
-                    $('#stepNo2-error-message').append(`<span> The step no. is required. </span>`);
-                    errors.stepNo = true;
-                } else {
-                    $('#stepNo2-error-message').html('');
-                    errors.stepNo = false;
-                }
-
-                
-                filteredError = Object.values(errors).filter((error) => error);
-
-                // Check if the filtered error array variable has value or not.
-                // if the length of this array is 0 this means that there is no error
-                // or all fields that required is filled by the user.                
-                if(filteredError.length === 0) {
-                    $('#formStepIncrement').submit();
-                }
+            // Check if the filtered error array variable has value or not.
+            // if the length of this array is 0 this means that there is no error
+            // or all fields that required is filled by the user.                
+            if(filteredError.length === 0) {
+                $('#formStepIncrement').submit();
+            }
+        });
 
 
-            })  
-
-            $('#btnCancel').click(function (e) {
-                location.reload();
-            })
-        });         
+        $('#btnCancel').click(function (e) {
+            location.reload();
+        })
+    });
 
 
-    </script>
-    
+</script>
+@endpush
 
 @endsection
