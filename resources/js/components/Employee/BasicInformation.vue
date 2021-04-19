@@ -194,6 +194,7 @@
 
             <div class="col-lg-1">
                 <button
+                    @click="openStatusModal"
                     class="btn btn-primary btn-sm rounded-circle shadow mt-1"
                 >
                     <i class="la la-plus"></i>
@@ -227,6 +228,7 @@
 
             <div class="col-lg-1">
                 <button
+                    @click="openDestinationModal"
                     class="btn btn-primary btn-sm rounded-circle shadow mt-1"
                 >
                     <i class="la la-plus"></i>
@@ -262,6 +264,7 @@
 
             <div class="col-lg-1">
                 <button
+                    @click="openAssignmentModal"
                     class="btn btn-primary btn-sm rounded-circle shadow mt-1"
                 >
                     <i class="la la-plus"></i>
@@ -300,17 +303,34 @@
                 />
             </div>
         </div>
+    <statusmodal :show="isShow" @status-modal-dismiss="closeStatusModal"></statusmodal>
+    <designationmodal :showdesignation="isShowDesignation" @designation-modal-dismiss="closeDesignationModal"></designationmodal>
+    <assignmentmodal :showassignment="isShowAssignment" @assignment-modal-dismiss="closeAssignmentModal"></assignmentmodal>
+    <!-- <button>sample</button> -->
     </div>
 </template>
 <script>
+import StatusModal from './StatusModal.vue'
+import DesignationModal from './DesignationModal.vue'
+import AssignmentModal from './AssignmentModal.vue';
+// import AssignmentModal from './AssignmentModal.vue'
 export default {
     props: ["employee"],
     data() {
         return {
             employmentStatus: [],
             offices: [],
-            positions: []
+            positions: [],
+            isShow : false,
+            isShowDesignation : false,
+            isShowAssignment : false
         };
+    },
+    components : {
+        StatusModal,
+        DesignationModal,
+        StatusModal,
+        AssignmentModal
     },
     watch: {
         dateOfBirth: function(to, from) {
@@ -327,6 +347,24 @@ export default {
             } else {
                 this.employee.age = "";
             }
+        },
+        openStatusModal() {
+            this.isShow = true;
+        },
+        closeStatusModal() {
+            this.isShow = false;
+        },
+        openDestinationModal(){
+            this.isShowDesignation = true;
+        },
+        closeDesignationModal(){
+            this.isShowDesignation = false;
+        },
+        openAssignmentModal(){
+            this.isShowAssignment = true;
+        },
+        closeAssignmentModal(){
+            this.isShowAssignment = false;
         }
     },
     created() {
