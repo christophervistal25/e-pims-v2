@@ -33,6 +33,7 @@ Route::Resource('/plantilla', 'PlantillaController');
 Route::resource('/step-increment', 'StepIncrementController');
 
 //salary adjustment
+Route::get('/salary-adjustment/{id}', 'SalaryAdjustmentController@delete')->name('salary-adjustment.delete');
 Route::Resource('/salary-adjustment', 'SalaryAdjustmentController');
 Route::get('/salary-adjustment-list', 'SalaryAdjustmentController@list');
 
