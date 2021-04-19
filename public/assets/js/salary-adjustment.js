@@ -20,6 +20,12 @@
         });
     });
 
+    ////confirmation in delete
+    function myFunction() {
+        if(!confirm("Are You Sure to delete this"))
+        event.preventDefault();
+    }
+
 // number only
     $(function(){
         $("input[id='salaryNew']").on('input', function (e) {
@@ -98,11 +104,11 @@ $(document).ready(function () {
                 if(response.success){
                     $('input').val('');
                     $('#employeeName').val('Please Select').trigger('change');
-                    const errorClass = ["#date-adjustment-error-message","employee-error-message","#item-no-error-message","#position-error-message","#salary-grade-error-message","#step-no-error-message","#salary-previous-error-message","#salary-new-error-message","#salary-difference-error-message"];
+                    const errorClass = ["#dateAdjustment","#employeeName","#itemNo","#positionName","#salaryGrade","#stepNo","#salaryPrevious","#salaryNew","#salaryDifference"];
                     $.each(errorClass, function(index , value) {
                         $(`${value}`).removeClass('is-invalid');
                         });
-                    const errorMessage = ["#date-adjustment-error-message","employee-error-message","#item-no-error-message","#position-error-message","#salary-grade-error-message","#step-no-error-message","#salary-previous-error-message","#salary-new-error-message","#salary-difference-error-message"];
+                    const errorMessage = ["#date-adjustment-error-message","#employee-error-message","#item-no-error-message","#position-error-message","#salary-grade-error-message","#step-no-error-message","#salary-previous-error-message","#salary-new-error-message","#salary-difference-error-message"];
                     $.each(errorMessage, function(index , value) {
                         $(`${value}`).html('');
                         });
@@ -143,7 +149,7 @@ $(document).ready(function () {
                             $('#position-error-message').html('');
                             $('#position-error-message').append(`<span>${errors.positionId[0]}</span>`);
                         }else{
-                            $('#position').removeClass('is-invalid');
+                            $('#positionName').removeClass('is-invalid');
                             $('#position-error-message').html('');
                         }
                         if(errors.hasOwnProperty('salaryGrade')) {
