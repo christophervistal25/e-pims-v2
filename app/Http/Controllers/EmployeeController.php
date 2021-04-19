@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Repositories\EmployeeRepository;
+use App\Http\Requests\Employee\NewEmployeeStoreRequest;
 
 class EmployeeController extends Controller
 {
@@ -38,7 +39,7 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NewEmployeeStoreRequest $request)
     {
         return $this->employeeRepository->addEmployee($request->all());
     }

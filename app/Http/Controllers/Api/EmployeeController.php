@@ -12,7 +12,7 @@ class EmployeeController extends Controller
     // Method to display all employee in PDS
     public function list()
     {
-        return Employee::select(['employee_id', 'lastname', 'firstname', 'middlename', 'extension'])->paginate(10);
+        return Employee::with(['information:EmpIDNo,pos_code', 'information.position:position_code,position_name'])->select(['employee_id', 'lastname', 'firstname', 'middlename', 'extension'])->paginate(10);
     }
 
 
@@ -23,8 +23,10 @@ class EmployeeController extends Controller
 
     public function find(string $employeeIdNumber) :Employee
     {
-        return Employee::find($employeeIdNumber, ['lastname', 'firstname', 'middlename',
-        'extension', 'date_birth', 'employee_id', 'pag_ibig_no', 'philhealth_no', 'sss_no', 'tin_no']);
+        return Employee::with(['information:EmpIDNo,pos_code,office_code,photo',
+                                'information.position:position_id,position_code',
+                                'information.office:office_code'])
+                                    ->find($employeeIdNumber);
     }
 
     public function records()
@@ -36,5 +38,18 @@ class EmployeeController extends Controller
     {
         return RefStatus::get(['id', 'stat_code', 'status_name']);
     }
+
+    public function onUploadImage(Request $request)
+    {
+
+        if($request->has('image')) {
+            $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
+
+            $request->file('image')->storeAs('/public/employee_images', $imageName);
+
+            return $imageName;
+        }
+    }
+
 
 }

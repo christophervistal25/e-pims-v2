@@ -63,18 +63,21 @@
                             v-model="employee.extension"
                             class="form-control text-uppercase"
                         >
+                            <option value="" readonly selected
+                                >Please select status</option
+                            >
                             <option
-                                :seleted="employee.extension === 'JR'"
+                                :selected="employee.extension === 'JR'"
                                 value="JR"
                                 >JR</option
                             >
                             <option
-                                :seleted="employee.extension === 'SR'"
+                                :selected="employee.extension === 'SR'"
                                 value="SR"
                                 >SR</option
                             >
                             <option
-                                :seleted="employee.extension === 'III'"
+                                :selected="employee.extension === 'III'"
                                 value="III"
                                 >III</option
                             >
@@ -99,15 +102,28 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 mb-3 mt-4">
-                <div
-                    class="p-5 w-50 rounded border mr-auto ml-auto"
-                    style="height : 172px;"
-                ></div>
-                <div class="text-center">
-                    <button class="btn btn-primary mt-2">
-                        Attach Photo
-                    </button>
+            <div class="col-lg-4 mb-3 mt-4 text-center">
+                <img
+                    class="w-50 bg-danger shadow-sm rounded border mr-auto ml-auto img-fluid img-thumbnail"
+                    id="employee-image"
+                    :src="`/storage/employee_images/${employee.image}`"
+                    style="height : 220px;"
+                />
+                <div class="text-center mt-2">
+                    <div class="button-wrapper btn btn-info">
+                        <span class="label">
+                            Attach Photo
+                        </span>
+
+                        <input
+                            type="file"
+                            name="upload"
+                            id="upload"
+                            class="upload-box"
+                            @change="onUpload"
+                            placeholder="Attach Photo"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
@@ -133,7 +149,7 @@
 
             <div class="col-lg-2">
                 <input
-                    type="text"
+                    type="number"
                     id="step"
                     v-model="employee.step"
                     class="form-control"
@@ -146,7 +162,7 @@
 
             <div class="col-lg-2">
                 <input
-                    type="text"
+                    type="number"
                     id="basicRate"
                     v-model="employee.basicRate"
                     class="form-control"
@@ -181,7 +197,7 @@
                     class="form-control"
                 >
                     <option value="" readonly selected
-                        >Please select status</option
+                        >PLEASE SELECT STATUS</option
                     >
                     <option
                         v-for="(status, index) in employmentStatus"
@@ -193,9 +209,7 @@
             </div>
 
             <div class="col-lg-1">
-                <button
-                    class="btn btn-primary btn-sm rounded-circle shadow mt-1"
-                >
+                <button class="btn btn-info btn-sm rounded-circle shadow mt-1">
                     <i class="la la-plus"></i>
                 </button>
             </div>
@@ -215,20 +229,18 @@
                     class="form-control selectpicker"
                     data-live-search="true"
                 >
-                    <option value="" readonly>Please select position</option>
+                    <option value="" readonly>PLEASE SELECT POSITION</option>
                     <option
                         v-for="(position, index) in positions"
                         :key="index"
-                        :value="position.id"
+                        :value="position.position_code"
                         >{{ position.position_name }}
                     </option>
                 </select>
             </div>
 
             <div class="col-lg-1">
-                <button
-                    class="btn btn-primary btn-sm rounded-circle shadow mt-1"
-                >
+                <button class="btn btn-info btn-sm rounded-circle shadow mt-1">
                     <i class="la la-plus"></i>
                 </button>
             </div>
@@ -248,7 +260,7 @@
                     class="form-control"
                 >
                     <option value="" readonly selected
-                        >Please select office</option
+                        >PLEASE SELECT OFFICE</option
                     >
                     <option
                         v-for="(office, index) in offices"
@@ -261,9 +273,7 @@
             </div>
 
             <div class="col-lg-1">
-                <button
-                    class="btn btn-primary btn-sm rounded-circle shadow mt-1"
-                >
+                <button class="btn btn-info btn-sm rounded-circle shadow mt-1">
                     <i class="la la-plus"></i>
                 </button>
             </div>
@@ -318,6 +328,34 @@ export default {
         }
     },
     methods: {
+        onUpload(event) {
+            document
+                .querySelector("#employee-image")
+                .setAttribute(
+                    "src",
+                    URL.createObjectURL(event.target.files[0])
+                );
+
+            // Upload the image.
+            let bodyFormData = new FormData();
+
+            bodyFormData.append("image", event.target.files[0]);
+
+            window
+                .axios({
+                    method: "POST",
+                    url: "/api/employee/image/upload",
+                    data: bodyFormData,
+                    headers: { "Content-Type": "multipart/form-data" }
+                })
+                .then(response => {
+                    localStorage.setItem("new_employee_image", response.data);
+                    this.employee.image = response.data;
+                })
+                .catch(response => {
+                    console.log(response);
+                });
+        },
         calculateAge() {
             let dateYear = new Date().getFullYear();
             let age =
@@ -349,4 +387,26 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.button-wrapper {
+    position: relative;
+}
+
+.button-wrapper span.label {
+    position: relative;
+    z-index: 0;
+    display: inline-block;
+    cursor: pointer;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+#upload {
+    display: inline-block;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+</style>

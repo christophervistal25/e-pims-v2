@@ -3,7 +3,7 @@
         <div class="form-group">
             <label for="" class="col-form-label">PAG-IBIG MID NO.</label>
             <input
-                type="text"
+                type="number"
                 v-model="employee.pagibigMidNo"
                 class="form-control col-lg-12"
             />
@@ -11,7 +11,7 @@
         <div class="form-group">
             <label for="" class="col-form-label">PHILHEALTH NO.</label>
             <input
-                type="text"
+                type="number"
                 v-model="employee.philhealthNo"
                 class="form-control col-lg-12"
             />
@@ -19,7 +19,7 @@
         <div class="form-group">
             <label for="" class="col-form-label">SSS NO.</label>
             <input
-                type="text"
+                type="number"
                 v-model="employee.sssNo"
                 class="form-control col-lg-12"
             />
@@ -27,7 +27,7 @@
         <div class="form-group">
             <label for="" class="col-form-label">TIN NO.</label>
             <input
-                type="text"
+                type="number"
                 v-model="employee.tinNo"
                 class="form-control col-lg-12"
             />
@@ -35,7 +35,7 @@
         <div class="form-group">
             <label for="" class="col-form-label">LBP ACCOUNT NO.</label>
             <input
-                type="text"
+                type="number"
                 v-model="employee.lbpAccountNo"
                 class="form-control col-lg-12"
             />
@@ -44,7 +44,7 @@
         <div class="form-group">
             <label for="" class="col-form-label">GSIS ID NO.</label>
             <input
-                type="text"
+                type="number"
                 v-model="employee.gsisIdNo"
                 class="form-control col-lg-12"
             />
@@ -53,7 +53,7 @@
         <div class="form-group">
             <label for="" class="col-form-label">GSIS POLICY NO.</label>
             <input
-                type="text"
+                type="number"
                 v-model="employee.gsisPolicyNo"
                 class="form-control col-lg-12"
             />
@@ -62,7 +62,7 @@
         <div class="form-group">
             <label for="" class="col-form-label">GSIS BP NO.</label>
             <input
-                type="text"
+                type="number"
                 v-model="employee.gsisBpNo"
                 class="form-control col-lg-12"
             />

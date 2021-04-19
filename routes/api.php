@@ -25,6 +25,7 @@ Route::group(['prefix' => 'employee'], function () {
     Route::get('show/{employeeIdNumber}', 'Api\EmployeeController@show');
     Route::get('find/{employeeIdNumber}', 'Api\EmployeeController@find');
     Route::get('/employment/status', 'Api\EmployeeController@status');
+    Route::post('image/upload', 'Api\EmployeeController@onUploadImage');
 });
 
 Route::get('offices', 'Api\OfficeController@list');

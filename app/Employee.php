@@ -48,6 +48,7 @@ class Employee extends Model
         'telephone_no',
         'mobile_no',
         'email_address',
+        'status'
     ];
 
 
@@ -124,6 +125,11 @@ class Employee extends Model
     public function program_attained()
     {
         return $this->hasMany(EmployeeTrainingAttained::class, 'employee_id', 'employee_id');
+    }
+
+    public function information()
+    {
+        return $this->hasOne(EmployeeInformation::class, 'EmpIDNo', 'employee_id');
     }
 
     public function other_information()
