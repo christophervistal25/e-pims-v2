@@ -31,6 +31,7 @@
                                 <th class="text-sm">Employee ID</th>
                                 <th class="text-sm">Fullname</th>
                                 <th class="text-sm">Position</th>
+                                <th class="text-sm">Office</th>
                                 <th class="text-sm">Actions</th>
                             </thead>
                             <tbody v-if="isComplete">
@@ -59,6 +60,16 @@
                                         {{
                                             employee.information.position
                                                 .position_name
+                                        }}
+                                    </td>
+                                    <td v-else></td>
+                                    <td
+                                        class="text-center align-middle"
+                                        v-if="employee.information"
+                                    >
+                                        {{
+                                            employee.information.office
+                                                .office_name
                                         }}
                                     </td>
                                     <td v-else></td>
@@ -201,6 +212,8 @@ export default {
         newEmployeeForm() {
             this.showAddEmployeeForm = !this.showAddEmployeeForm;
             if (this.showAddEmployeeForm) {
+                // Delete the employee_id property in employee object.
+                delete this.employee.employee_id;
                 this.errors = {};
                 // Clearning all data
                 Object.keys(this.employee).map(key => {
@@ -213,8 +226,10 @@ export default {
             }
         },
         submitEmployee() {
-            if (this.employee.hasOwnProperty("employee_id")) {
-                // Update
+            if (
+                this.employee.hasOwnProperty("employee_id") &&
+                this.employee_id
+            ) {
                 this.updateEmployee();
             } else {
                 this.addNewEmployee();
@@ -303,18 +318,22 @@ export default {
                             response.data.philhealth_no;
                         this.employee.sssNo = response.data.sss_no;
                         this.employee.tinNo = response.data.tin_no;
-                        this.employee.designation =
-                            response.data.information.position.position_code;
                         this.employee.employmentStatus = response.data.status;
-                        this.employee.officeAssignment =
-                            response.data.information.office.office_code;
                         this.employee.gsisPolicyNo =
                             response.data.gsis_policy_no;
                         this.employee.gsisBpNo = response.data.gsis_bp_no;
                         this.employee.gsisIdNo = response.data.gsis_id_no;
-                        this.employee.image = response.data.information.photo;
 
-                        // this.lbpAccountNo
+                        // Checking if the user has position and office
+                        if (response.data.information) {
+                            this.employee.image =
+                                response.data.information.photo;
+                            this.employee.designation =
+                                response.data.information.position.position_code;
+                            this.employee.officeAssignment =
+                                response.data.information.office.office_code;
+                        }
+
                         this.showAddEmployeeForm = true;
                     }
                 });
