@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Repositories\EmployeeRepository;
 use App\Http\Requests\Employee\NewEmployeeStoreRequest;
+use App\Employee;
 
 class EmployeeController extends Controller
 {
@@ -41,7 +42,9 @@ class EmployeeController extends Controller
      */
     public function store(NewEmployeeStoreRequest $request)
     {
-        return $this->employeeRepository->addEmployee($request->all());
+        $employee = $this->employeeRepository->addEmployee($request->all());
+        $employee = Employee::with(['information:EmpIDNo,pos_code','information.position'])->find($employee->employee_id);
+        return response()->json($employee, 201);
     }
 
     /**

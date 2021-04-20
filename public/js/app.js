@@ -2716,6 +2716,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -36169,20 +36172,24 @@ var render = function() {
                                   ]
                                 ),
                                 _vm._v(" "),
-                                _c(
-                                  "td",
-                                  { staticClass: "text-center align-middle" },
-                                  [
-                                    _vm._v(
-                                      "\n                                    " +
-                                        _vm._s(
-                                          employee.information.position
-                                            .position_name
-                                        ) +
-                                        "\n                                "
+                                employee.information
+                                  ? _c(
+                                      "td",
+                                      {
+                                        staticClass: "text-center align-middle"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    " +
+                                            _vm._s(
+                                              employee.information.position
+                                                .position_name
+                                            ) +
+                                            "\n                                "
+                                        )
+                                      ]
                                     )
-                                  ]
-                                ),
+                                  : _c("td"),
                                 _vm._v(" "),
                                 _c("td", { staticClass: "text-center" }, [
                                   _c(

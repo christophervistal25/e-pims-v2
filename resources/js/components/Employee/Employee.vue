@@ -52,11 +52,14 @@
                                                 : ""
                                         }}
                                     </td>
-                                    <td class="text-center align-middle">
+                                    <td class="text-center align-middle" v-if="employee.information">
                                         {{
                                             employee.information.position
                                                 .position_name
                                         }}
+                                    </td>
+                                    <td v-else>
+                                        
                                     </td>
                                     <td class="text-center">
                                         <button
