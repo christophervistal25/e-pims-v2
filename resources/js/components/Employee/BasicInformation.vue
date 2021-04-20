@@ -209,7 +209,9 @@
             </div>
 
             <div class="col-lg-1">
-                <button class="btn btn-info btn-sm rounded-circle shadow mt-1">
+                <button 
+                @click="openStatusModal" 
+                class="btn btn-info btn-sm rounded-circle shadow mt-1">
                     <i class="la la-plus"></i>
                 </button>
             </div>
@@ -240,7 +242,8 @@
             </div>
 
             <div class="col-lg-1">
-                <button class="btn btn-info btn-sm rounded-circle shadow mt-1">
+                <button class="btn btn-info btn-sm rounded-circle shadow mt-1"
+                        @click="openDestinationModal">
                     <i class="la la-plus"></i>
                 </button>
             </div>
@@ -273,7 +276,7 @@
             </div>
 
             <div class="col-lg-1">
-                <button class="btn btn-info btn-sm rounded-circle shadow mt-1">
+                <button class="btn btn-info btn-sm rounded-circle shadow mt-1" @click="openAssignmentModal">
                     <i class="la la-plus"></i>
                 </button>
             </div>
@@ -320,7 +323,6 @@
 import StatusModal from './StatusModal.vue'
 import DesignationModal from './DesignationModal.vue'
 import AssignmentModal from './AssignmentModal.vue';
-// import AssignmentModal from './AssignmentModal.vue'
 export default {
     props: ["employee"],
     data() {
