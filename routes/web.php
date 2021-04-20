@@ -37,6 +37,8 @@ Route::get('/salary-adjustment/{id}', 'SalaryAdjustmentController@delete')->name
 Route::Resource('/salary-adjustment', 'SalaryAdjustmentController');
 Route::get('/salary-adjustment-list', 'SalaryAdjustmentController@list');
 
+// Service Records
+Route::Resource('/service-records', 'ServiceRecordsController');
 
 Route::group(['prefix' => 'employee'], function () {
     Route::get('/record', 'EmployeeController@index')->name('employee.index');
