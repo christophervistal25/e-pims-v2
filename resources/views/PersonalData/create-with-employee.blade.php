@@ -4,7 +4,7 @@
 <script src="{{ asset('/js/app.js') }}" defer></script>
 @endprepend
 @section('content')
-    <personal-data-sheet-with-employee :employee="{{ $employee }}"></personal-data-sheet-with-employee>
+    <exists-personal-information :employee="{{ $employee }}"></exists-personal-information>
 @push('page-scripts')
 @endpush
 @endsection

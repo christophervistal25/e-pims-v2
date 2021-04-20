@@ -10,6 +10,7 @@ Vue.component(
     "personal-data-sheet",
     require("./components/PersonalData/CreatePersonalDataSheet.vue").default
 );
+
 Vue.component(
     "exists-personal-information",
     require("./components/PersonalData/exists/C1/Information.vue").default

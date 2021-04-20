@@ -14,22 +14,24 @@
                         <i class="la la-list" v-else></i>
                         {{
                             !showAddEmployeeForm
-                                ? "Show Add Employee Form"
-                                : "Show List of Employees"
+                                ? "Add Employee"
+                                : "List of Employees"
                         }}
                     </button>
                 </div>
                 <div class="clearfix"></div>
                 <div class="card shadow" v-if="!showAddEmployeeForm">
-                    <!-- @click="fetchEmployeeData(employee.employee_id)" -->
                     <div class="card-body">
+                        <h4>Employees</h4>
+                        <hr />
                         <table
                             class="table table-bordered table-hover transition "
                         >
                             <thead>
-                                <th class="text-sm">ID Number</th>
+                                <th class="text-sm">Employee ID</th>
                                 <th class="text-sm">Fullname</th>
                                 <th class="text-sm">Position</th>
+                                <th class="text-sm">Actions</th>
                             </thead>
                             <tbody v-if="isComplete">
                                 <tr
@@ -37,10 +39,10 @@
                                     :key="index"
                                     class="cursor-pointer"
                                 >
-                                    <td class="text-sm">
+                                    <td class="text-sm align-middle">
                                         {{ employee.employee_id }}
                                     </td>
-                                    <td class="text-sm">
+                                    <td class="text-sm align-middle">
                                         {{ employee.lastname }} ,
                                         {{ employee.firstname }}
                                         {{ employee.middlename }}
@@ -50,12 +52,25 @@
                                                 : ""
                                         }}
                                     </td>
-                                    <td></td>
+                                    <td class="text-center align-middle">
+                                        {{
+                                            employee.information.position
+                                                .position_name
+                                        }}
+                                    </td>
+                                    <td class="text-center">
+                                        <button
+                                            @click="editEmployee(employee)"
+                                            class="btn btn-success rounded-circle shadow"
+                                        >
+                                            <i class="la la-edit"></i>
+                                        </button>
+                                    </td>
                                 </tr>
                             </tbody>
                             <tbody v-else>
                                 <tr>
-                                    <td colspan="3" class="text-center">
+                                    <td colspan="4" class="text-center">
                                         <div
                                             class="spinner-border text-primary"
                                             role="status"
@@ -75,7 +90,7 @@
                 <div class="card">
                     <div class="card-body shadow">
                         <h4 class="mb-2">
-                            Add new Employee
+                            Employee Information
                         </h4>
                         <hr />
                         <ul class="nav nav-tabs">
@@ -108,6 +123,23 @@
                                 ></account-number>
                             </div>
                         </div>
+                        <hr />
+                        <div class="text-right">
+                            <button
+                                class="btn btn-primary rounded shadow"
+                                @click="submitEmployee"
+                                :disabled="isLoading"
+                            >
+                                <div
+                                    v-if="isLoading"
+                                    class="spinner-border spinner-border-sm text-white"
+                                    role="status"
+                                >
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                Submit
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -124,12 +156,14 @@ export default {
     data() {
         return {
             isComplete: false,
+            isLoading: false,
             showAddEmployeeForm: false,
             employees: [],
             employee: {
                 lastName: "",
                 firstName: "",
                 middleName: "",
+                extension: "",
                 dateOfBirth: "",
                 age: "",
                 step: "",
@@ -141,11 +175,14 @@ export default {
                 employmentTo: "",
                 controlNo: "",
                 pagibigMidNo: "",
-                registrationTrackingNo: "",
                 philhealthNo: "",
                 sssNo: "",
                 tinNo: "",
-                lbpAccountNo: ""
+                lbpAccountNo: "",
+                image: "no_image.png",
+                gsisPolicyNo: "",
+                gsisBpNo: "",
+                gsisIdNo: ""
             }
         };
     },
@@ -154,18 +191,32 @@ export default {
         AccountNumber
     },
     methods: {
+        submitEmployee() {
+            if (this.employee.hasOwnProperty("employee_id")) {
+                // Update
+                this.updateEmployee();
+            } else {
+                this.addNewEmployee();
+            }
+        },
         addNewEmployee() {
+            this.isLoading = true;
             window.axios
                 .post("/employee/record/store", this.employee)
                 .then(response => {
                     if (response.status === 201) {
+                        this.isLoading = false;
                         swal({
                             text: "Successfully add new employee.",
                             icon: "success"
                         });
                         this.employees.push(response.data);
                     }
-                });
+                })
+                .catch(err => (this.isLoading = false));
+        },
+        editEmployee(employee) {
+            this.fetchEmployeeData(employee.employee_id);
         },
         updateEmployee() {
             window.axios
@@ -188,11 +239,12 @@ export default {
                 .get(`/api/employee/find/${employee_id}`)
                 .then(response => {
                     if (response.status == 200) {
-                        // let dateYear = new Date().getFullYear();
-                        // let age =
-                        //     dateYear -
-                        //     new Date(response.data.date_birth).getFullYear();
-                        // this.employee.age = age >= 18 && age <= 100 ? age : "";
+                        let dateYear = new Date().getFullYear();
+                        let age =
+                            dateYear -
+                            new Date(response.data.date_birth).getFullYear();
+
+                        this.employee.age = age <= 100 ? age : "";
                         this.employee.employee_id = response.data.employee_id;
                         this.employee.lastName = response.data.lastname;
                         this.employee.firstName = response.data.firstname;
@@ -204,7 +256,18 @@ export default {
                             response.data.philhealth_no;
                         this.employee.sssNo = response.data.sss_no;
                         this.employee.tinNo = response.data.tin_no;
+                        this.employee.designation =
+                            response.data.information.position.position_code;
+                        this.employee.employmentStatus = response.data.status;
+                        this.employee.officeAssignment =
+                            response.data.information.office.office_code;
+                        this.employee.gsisPolicyNo =
+                            response.data.gsis_policy_no;
+                        this.employee.gsisBpNo = response.data.gsis_bp_no;
+                        this.employee.gsisIdNo = response.data.gsis_id_no;
+                        this.employee.image = response.data.information.photo;
 
+                        // this.lbpAccountNo
                         this.showAddEmployeeForm = true;
                     }
                 });

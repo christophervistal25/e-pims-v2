@@ -32,7 +32,8 @@
     </style>
 </head>
 
-<body class='mini-sidebar'>
+{{-- mini-sidebar --}}
+<body>
 	<!-- Main Wrapper -->
 	<div class="main-wrapper" id="app">
 		<!-- Header -->
@@ -199,35 +200,16 @@
 						<li class="menu-title">
 							<span>Personal Information Module</span>
 						</li>
-						<li class="submenu">
-							<a href="#" class='text-decoration-none'><i class="la la-users"></i> <span> Employees </span> <span class="menu-arrow"></span></a>
-							<ul style="display: none;">
-								<li>
-                                    <a class='text-decoration-none' href="{{ route('employee.index') }}">
-                                        List of Employee
-                                    </a>
-                                </li>
-								<li>
-                                    <a class='text-decoration-none' href="#">
-                                        Print Employee
-                                    </a>
-                                </li>
-							</ul>
-						</li>
-
-                        <li class="submenu">
-							<a href="#" class='text-decoration-none'><i class="la la-file-text"></i> <span> Personal Data Sheet </span> <span class="menu-arrow"></span></a>
-							<ul style="display: none;">
-								<li>
-                                    <a class='text-decoration-none' href="{{ route('data.index') }}">
-                                        Generate PDS
-                                    </a>
-                                </li>
-								<li><a class='text-decoration-none' href="#">Update PDS</a></li>
-								<li><a class='text-decoration-none' href="#">Print PDS</a></li>
-							</ul>
-						</li>
-
+                        <li>
+                            <a class='text-decoration-none' href="{{ route('employee.index') }}">
+                                <i class="la la-users"></i> <span> Employees </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class='text-decoration-none' href="{{ route('data.index') }}">
+                                <i class="la la-file-text"></i> <span> Personal Data Sheet </span>
+                            </a>
+                        </li>
 						<li class="menu-title">
 							<span>Human Resource Module</span>
 						</li>

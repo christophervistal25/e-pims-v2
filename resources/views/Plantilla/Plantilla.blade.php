@@ -12,7 +12,6 @@
 </style>
 @endprepend
 @section('content')
-<div class="content container-fluid">
     <div class="kanban-board card mb-0">    
         <div class="card-body">
             <div id="add" class="page-header {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
@@ -252,7 +251,6 @@
         </div>
     </div>
         </div>
-    </div>
 </div>
 @include('Plantilla.add-ons.plantillamodal')
 @push('page-scripts')

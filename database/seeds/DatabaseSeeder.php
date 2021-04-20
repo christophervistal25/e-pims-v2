@@ -1,5 +1,6 @@
 <?php
 
+use App\City;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,6 +18,9 @@ class DatabaseSeeder extends Seeder
             OfficeSeeder::class,
             SalaryGradeSeeder::class,
             PositionSeeder::class,
+            ProvinceSeeder::class,
+            CitySeeder::class,
+            BarangaySeeder::class
             // PlantillaSeeder::class,
 
 

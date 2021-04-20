@@ -18,8 +18,9 @@ class SalaryAdjustmentController extends Controller
      */
     public function index()
     {
+        $position = Position::select('position_id', 'position_name')->get();
         $employee = Employee::with(['plantilla', 'plantilla.position'])->get();
-        return view('SalaryAdjustment.SalaryAdjustment', compact('employee'));
+        return view('SalaryAdjustment.SalaryAdjustment', compact('employee', 'position'));
     }
 
     public function list(Request $request)
@@ -34,7 +35,8 @@ class SalaryAdjustmentController extends Controller
                     })
                     ->addColumn('action', function($row){
                         $btn = "<a title='Edit Salary Adjustment' href='". route('salary-adjustment.edit', $row->id) . "' class='rounded-circle edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
-                        $btn = $btn."<a title='Delete Salary Adjustment' id='delete' href='". route('salary-adjustment.destroy', $row->id) . "' class='rounded-circle destroy btn btn-danger btn-sm'><i class='la la-trash'></i></a>";
+                        $btn = $btn."<a title='Delete Salary Adjustment' onclick='myFunction({$row->id})' href='". route('salary-adjustment.delete', $row->id) . "' class='rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                        ";
                             return $btn;    
                     })
                     ->rawColumns(['action'])
@@ -159,5 +161,11 @@ class SalaryAdjustmentController extends Controller
         // $salaryAdjustment->delete();
         // return back()->with('success,', 'sadsadsa');
         return 'edcel';
+    }
+
+    public function delete($id)
+    {
+        SalaryAdjustment::find($id)->delete();
+        return back()->with('success', 'Successfully delete a salary adjustment record.');
     }
 }
