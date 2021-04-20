@@ -8,7 +8,7 @@
                         :class="
                             !showAddEmployeeForm ? 'btn-success' : 'btn-primary'
                         "
-                        @click="showAddEmployeeForm = !showAddEmployeeForm"
+                        @click="newEmployeeForm"
                     >
                         <i class="la la-plus" v-if="!showAddEmployeeForm"></i>
                         <i class="la la-list" v-else></i>
@@ -52,15 +52,16 @@
                                                 : ""
                                         }}
                                     </td>
-                                    <td class="text-center align-middle" v-if="employee.information">
+                                    <td
+                                        class="text-center align-middle"
+                                        v-if="employee.information"
+                                    >
                                         {{
                                             employee.information.position
                                                 .position_name
                                         }}
                                     </td>
-                                    <td v-else>
-                                        
-                                    </td>
+                                    <td v-else></td>
                                     <td class="text-center">
                                         <button
                                             @click="editEmployee(employee)"
@@ -118,11 +119,13 @@
                             <div class="tab-pane show active" id="basictab1">
                                 <basic-information
                                     :employee="employee"
+                                    :errors="errors"
                                 ></basic-information>
                             </div>
                             <div class="tab-pane" id="basictab2">
                                 <account-number
                                     :employee="employee"
+                                    :errors="errors"
                                 ></account-number>
                             </div>
                         </div>
@@ -186,7 +189,8 @@ export default {
                 gsisPolicyNo: "",
                 gsisBpNo: "",
                 gsisIdNo: ""
-            }
+            },
+            errors: {}
         };
     },
     components: {
@@ -194,6 +198,20 @@ export default {
         AccountNumber
     },
     methods: {
+        newEmployeeForm() {
+            this.showAddEmployeeForm = !this.showAddEmployeeForm;
+            if (this.showAddEmployeeForm) {
+                this.errors = {};
+                // Clearning all data
+                Object.keys(this.employee).map(key => {
+                    if (key == "image") {
+                        this.employee[key] = "no_image.png";
+                    } else {
+                        this.employee[key] = "";
+                    }
+                });
+            }
+        },
         submitEmployee() {
             if (this.employee.hasOwnProperty("employee_id")) {
                 // Update
@@ -216,7 +234,19 @@ export default {
                         this.employees.push(response.data);
                     }
                 })
-                .catch(err => (this.isLoading = false));
+                .catch(error => {
+                    this.isLoading = false;
+                    this.errors = {};
+                    // Check the error status code.
+                    if (error.response.status === 422) {
+                        Object.keys(error.response.data.errors).map(field => {
+                            let [fieldMessage] = error.response.data.errors[
+                                field
+                            ];
+                            this.errors[field] = fieldMessage;
+                        });
+                    }
+                });
         },
         editEmployee(employee) {
             this.fetchEmployeeData(employee.employee_id);
@@ -235,6 +265,19 @@ export default {
                         });
                         this.loadEmployees();
                     }
+                })
+                .catch(error => {
+                    this.isLoading = false;
+                    this.errors = {};
+                    // Check the error status code.
+                    if (error.response.status === 422) {
+                        Object.keys(error.response.data.errors).map(field => {
+                            let [fieldMessage] = error.response.data.errors[
+                                field
+                            ];
+                            this.errors[field] = fieldMessage;
+                        });
+                    }
                 });
         },
         fetchEmployeeData(employee_id) {
@@ -242,6 +285,7 @@ export default {
                 .get(`/api/employee/find/${employee_id}`)
                 .then(response => {
                     if (response.status == 200) {
+                        this.errors = {};
                         let dateYear = new Date().getFullYear();
                         let age =
                             dateYear -

@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Office;
+
 class OfficeSeeder extends Seeder
 {
     /**

@@ -16,4 +16,30 @@ class OfficeController extends Controller
             return Office::get(['office_code', 'office_name','office_short_name']);
         });
     }
+
+    public function store(Request $request)
+    {
+        $validator = \Validator::make($request->all() , [
+            'name'          => 'required',
+            'short_name'    => 'required',
+            'address'       => 'required',
+            'head'          => 'required',
+            'short_address' => 'required',
+            'position_name' => 'required|exists:positions'
+        ]);
+
+        if($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $office = Office::create([
+            'office_name'          => $request->name,
+            'office_short_name'    => $request->short_name,
+            'office_address'       => $request->address,
+            'office_short_address' => $request->short_address,
+        ]);
+
+        return $office;
+
+    }
 }
