@@ -29,7 +29,7 @@ Route::get('/plantilla-list', 'Plantillacontroller@list');
 Route::post('/plantilla', 'PlantillaController@addPosition');
 Route::Resource('/plantilla', 'PlantillaController');
 
-//'plantilla'p Increment
+//Increment
 Route::get('/step-increment/list', 'StepIncrementController@list');
 Route::resource('/step-increment', 'StepIncrementController');
 
