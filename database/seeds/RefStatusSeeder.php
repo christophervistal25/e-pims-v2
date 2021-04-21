@@ -34,6 +34,26 @@ class RefStatusSeeder extends Seeder
                 'status_code' => 5,
                 'status_name' => 'Elected',
             ],
+            [
+                'status_code' => 6,
+                'status_name' => 'Casual',
+            ],
+            [
+                'status_code' => 8,
+                'status_name' => 'Provisional',
+            ],
+            [
+                'status_code' => 9,
+                'status_name' => 'Regular Permanent',
+            ],
+            [
+                'status_code' => 10,
+                'status_name' => 'Coterminous-Temporary',
+            ],
+            [
+                'status_code' => 11,
+                'status_name' => 'Substitute',
+            ],
         ];
 
         foreach($data as $status) {

@@ -12,7 +12,7 @@ class EmployeeController extends Controller
     // Method to display all employee in PDS
     public function list()
     {
-        return Employee::with(['information:EmpIDNo,pos_code', 'information.position:position_code,position_name'])->select(['employee_id', 'lastname', 'firstname', 'middlename', 'extension'])->paginate(10);
+        return Employee::with(['information:EmpIDNo,pos_code,office_code', 'information.office:office_code,office_name', 'information.position:position_code,position_name'])->select(['employee_id', 'lastname', 'firstname', 'middlename', 'extension'])->paginate(10);
     }
 
 

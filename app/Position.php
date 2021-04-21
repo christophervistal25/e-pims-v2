@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Cache;
 
 class Position extends Model
 {
-    protected $fillable = ['position_name', 'position_id', 'position_code' ,'position_name', 'sg_no' ,'position_short_name'];
+    protected $fillable = ['position_name', 'position_id', 'position_code' ,'position_name', 'salary_grade' ,'position_short_name'];
 
     protected $primaryKey = 'position_id';
 
@@ -41,6 +41,10 @@ class Position extends Model
     public function salary_grade()
     {
         return $this->hasOne(SalaryGrade::class, 'sg_no', 'salary_grade');
+    }
+    public function service_record()
+    {
+        return $this->belongsTo(service_record::class, 'position_id', 'position_id');
     }
 }
 

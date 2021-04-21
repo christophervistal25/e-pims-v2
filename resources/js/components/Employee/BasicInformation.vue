@@ -14,7 +14,13 @@
                             id="lastname"
                             v-model="employee.lastName"
                             class="form-control text-uppercase"
+                            :class="
+                                errors.hasOwnProperty('lastName')
+                                    ? 'is-invalid'
+                                    : ''
+                            "
                         />
+                        <p class="text-danger text-sm">{{ errors.lastName }}</p>
                     </div>
                 </div>
 
@@ -30,7 +36,15 @@
                             id="firstname"
                             v-model="employee.firstName"
                             class="form-control text-uppercase"
+                            :class="
+                                errors.hasOwnProperty('firstName')
+                                    ? 'is-invalid'
+                                    : ''
+                            "
                         />
+                        <p class="text-danger text-sm">
+                            {{ errors.firstName }}
+                        </p>
                     </div>
                 </div>
 
@@ -46,7 +60,15 @@
                             id="middlename"
                             v-model="employee.middleName"
                             class="form-control text-uppercase"
+                            :class="
+                                errors.hasOwnProperty('middleName')
+                                    ? 'is-invalid'
+                                    : ''
+                            "
                         />
+                        <p class="text-danger text-sm">
+                            {{ errors.middleName }}
+                        </p>
                     </div>
                 </div>
 
@@ -62,9 +84,14 @@
                             id="name_extension"
                             v-model="employee.extension"
                             class="form-control text-uppercase"
+                            :class="
+                                errors.hasOwnProperty('extension')
+                                    ? 'is-invalid'
+                                    : ''
+                            "
                         >
                             <option value="" readonly selected
-                                >Please select status</option
+                                >Please select name extension</option
                             >
                             <option
                                 :selected="employee.extension === 'JR'"
@@ -82,6 +109,9 @@
                                 >III</option
                             >
                         </select>
+                        <p class="text-danger text-sm">
+                            {{ errors.extension }}
+                        </p>
                     </div>
                 </div>
 
@@ -91,23 +121,42 @@
                         class="col-sm-3 text-sm align-middle col-form-label"
                         >DATE OF BIRTH</label
                     >
-                    <div class="col-lg-8">
+
+                    <div class="col-lg-4">
                         <input
                             type="date"
                             id="dateOfBirth"
                             @change="calculateAge"
                             v-model="employee.dateOfBirth"
                             class="form-control"
+                            :class="
+                                errors.hasOwnProperty('dateOfBirth')
+                                    ? 'is-invalid'
+                                    : ''
+                            "
+                        />
+                        <p class="text-danger text-sm">
+                            {{ errors.dateOfBirth }}
+                        </p>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <input
+                            type="text"
+                            id="dateOfBirth"
+                            readonly="true"
+                            v-model="employee.age"
+                            class="form-control"
                         />
                     </div>
                 </div>
             </div>
+
             <div class="col-lg-4 mb-3 mt-4 text-center">
                 <img
-                    class="w-50 bg-danger shadow-sm rounded border mr-auto ml-auto img-fluid img-thumbnail"
+                    class="w-50 shadow-sm rounded border mr-auto ml-auto img-fluid img-thumbnail"
                     id="employee-image"
                     :src="`/storage/employee_images/${employee.image}`"
-                    style="height : 220px;"
                 />
                 <div class="text-center mt-2">
                     <div class="button-wrapper btn btn-info">
@@ -127,52 +176,50 @@
                 </div>
             </div>
         </div>
+
         <div class="form-group row">
             <label
-                for="dateOfBirth"
+                for="officeAssignment"
                 class="col-sm-2 text-sm align-middle col-form-label"
-                >AGE</label
-            >
-            <div class="col-lg-2">
+                v-if="employee.employee_id"
+                >STEP
+            </label>
+
+            <div class="col-lg-3">
                 <input
-                    type="text"
-                    id="dateOfBirth"
-                    readonly="true"
-                    v-model="employee.age"
                     class="form-control"
-                />
-            </div>
-
-            <label for="salaryRate" class="text-sm align-middle col-form-label"
-                >STEP</label
-            >
-
-            <div class="col-lg-2">
-                <input
                     type="number"
                     id="step"
+                    v-if="employee.employee_id"
                     v-model="employee.step"
-                    class="form-control"
                 />
             </div>
 
-            <label for="employeeId" class=" text-sm align-middle col-form-label"
+            <label
+                for="basicRate"
+                class="text-sm align-middle col-form-label"
+                v-if="employee.employee_id"
                 >BASIC RATE</label
             >
 
-            <div class="col-lg-2">
+            <div class="col-lg-3">
                 <input
                     type="number"
                     id="basicRate"
                     v-model="employee.basicRate"
+                    v-if="employee.employee_id"
                     class="form-control"
                 />
             </div>
 
-            <label for="employeeId" class=" text-sm align-middle col-form-label"
+            <label
+                for="employeeId"
+                class="text-sm align-middle col-form-label"
+                v-if="employee.employee_id"
                 >EMP. ID</label
             >
-            <div class="col-lg-2">
+
+            <div class="col-lg-2" v-if="employee.employee_id">
                 <input
                     type="text"
                     id="employeeId"
@@ -195,6 +242,11 @@
                     id="officeAssignment"
                     v-model="employee.employmentStatus"
                     class="form-control"
+                    :class="
+                        errors.hasOwnProperty('employmentStatus')
+                            ? 'is-invalid'
+                            : ''
+                    "
                 >
                     <option value="" readonly selected
                         >PLEASE SELECT STATUS</option
@@ -206,10 +258,14 @@
                         >{{ status.status_name }}</option
                     >
                 </select>
+                <p class="text-danger text-sm">{{ errors.employmentStatus }}</p>
             </div>
 
             <div class="col-lg-1">
-                <button class="btn btn-info btn-sm rounded-circle shadow mt-1">
+                <button
+                    @click="openStatusModal"
+                    class="btn btn-info btn-sm rounded-circle shadow mt-1"
+                >
                     <i class="la la-plus"></i>
                 </button>
             </div>
@@ -226,8 +282,10 @@
                     type="text"
                     id="designation"
                     v-model="employee.designation"
-                    class="form-control selectpicker"
-                    data-live-search="true"
+                    class="form-control"
+                    :class="
+                        errors.hasOwnProperty('designation') ? 'is-invalid' : ''
+                    "
                 >
                     <option value="" readonly>PLEASE SELECT POSITION</option>
                     <option
@@ -237,10 +295,14 @@
                         >{{ position.position_name }}
                     </option>
                 </select>
+                <p class="text-danger text-sm">{{ errors.designation }}</p>
             </div>
 
             <div class="col-lg-1">
-                <button class="btn btn-info btn-sm rounded-circle shadow mt-1">
+                <button
+                    class="btn btn-info btn-sm rounded-circle shadow mt-1"
+                    @click="openDestinationModal"
+                >
                     <i class="la la-plus"></i>
                 </button>
             </div>
@@ -258,6 +320,11 @@
                     id="officeAssignment"
                     v-model="employee.officeAssignment"
                     class="form-control"
+                    :class="
+                        errors.hasOwnProperty('officeAssignment')
+                            ? 'is-invalid'
+                            : ''
+                    "
                 >
                     <option value="" readonly selected
                         >PLEASE SELECT OFFICE</option
@@ -270,57 +337,55 @@
                         {{ office.office_name }}
                     </option>
                 </select>
+                <p class="text-danger text-sm">{{ errors.officeAssignment }}</p>
             </div>
 
             <div class="col-lg-1">
-                <button class="btn btn-info btn-sm rounded-circle shadow mt-1">
+                <button
+                    class="btn btn-info btn-sm rounded-circle shadow mt-1"
+                    @click="openAssignmentModal"
+                >
                     <i class="la la-plus"></i>
                 </button>
             </div>
         </div>
 
-        <div class="form-group row">
-            <label
-                for="employmentFrom"
-                class="col-sm-2 text-sm align-middle col-form-label"
-                >EMPLOYMENT FROM</label
-            >
-            <div class="col-lg-10">
-                <input
-                    type="date"
-                    id="employmentFrom"
-                    v-model="employee.employmentFrom"
-                    class="form-control"
-                />
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label
-                for="employmentTo"
-                class="col-sm-2 text-sm align-middle col-form-label"
-                >EMPLOYMENT TO</label
-            >
-            <div class="col-lg-10">
-                <input
-                    type="date"
-                    id="employmentTo"
-                    v-model="employee.employmentTo"
-                    class="form-control"
-                />
-            </div>
-        </div>
+        <statusmodal
+            :show="isShow"
+            @status-modal-dismiss="closeStatusModal"
+        ></statusmodal>
+        <designationmodal
+            :showdesignation="isShowDesignation"
+            @designation-modal-dismiss="closeDesignationModal"
+        ></designationmodal>
+        <assignmentmodal
+            :showassignment="isShowAssignment"
+            @assignment-modal-dismiss="closeAssignmentModal"
+        ></assignmentmodal>
+        <!-- <button>sample</button> -->
     </div>
 </template>
 <script>
+import StatusModal from "./StatusModal.vue";
+import DesignationModal from "./DesignationModal.vue";
+import AssignmentModal from "./AssignmentModal.vue";
 export default {
-    props: ["employee"],
+    props: ["employee", "errors"],
     data() {
         return {
             employmentStatus: [],
             offices: [],
-            positions: []
+            positions: [],
+            isShow: false,
+            isShowDesignation: false,
+            isShowAssignment: false
         };
+    },
+    components: {
+        StatusModal,
+        DesignationModal,
+        StatusModal,
+        AssignmentModal
     },
     watch: {
         dateOfBirth: function(to, from) {
@@ -349,7 +414,6 @@ export default {
                     headers: { "Content-Type": "multipart/form-data" }
                 })
                 .then(response => {
-                    localStorage.setItem("new_employee_image", response.data);
                     this.employee.image = response.data;
                 })
                 .catch(response => {
@@ -365,6 +429,35 @@ export default {
             } else {
                 this.employee.age = "";
             }
+        },
+        openStatusModal() {
+            this.isShow = true;
+        },
+        closeStatusModal(statusData) {
+            if (statusData) {
+                // this.employmentStatus.push(statusData);
+                this.employmentStatus.unshift(statusData);
+            }
+            this.isShow = false;
+        },
+        openDestinationModal() {
+            this.isShowDesignation = true;
+        },
+        closeDesignationModal(designation) {
+            if (designation) {
+                this.positions.unshift(designation);
+            }
+
+            this.isShowDesignation = false;
+        },
+        openAssignmentModal() {
+            this.isShowAssignment = true;
+        },
+        closeAssignmentModal(assignment) {
+            if (assignment) {
+                this.offices.unshift(assignment);
+            }
+            this.isShowAssignment = false;
         }
     },
     created() {

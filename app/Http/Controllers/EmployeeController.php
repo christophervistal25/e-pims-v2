@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Repositories\EmployeeRepository;
 use App\Http\Requests\Employee\NewEmployeeStoreRequest;
+use App\Http\Requests\Employee\OldEmployeeUpdateRequest;
+use App\Employee;
 
 class EmployeeController extends Controller
 {
@@ -41,7 +43,9 @@ class EmployeeController extends Controller
      */
     public function store(NewEmployeeStoreRequest $request)
     {
-        return $this->employeeRepository->addEmployee($request->all());
+        $employee = $this->employeeRepository->addEmployee($request->all());
+        $employee = Employee::with(['information:EmpIDNo,pos_code','information.position'])->find($employee->employee_id);
+        return response()->json($employee, 201);
     }
 
     /**
@@ -73,7 +77,7 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $employeeId)
+    public function update(OldEmployeeUpdateRequest $request, $employeeId)
     {
         return $this->employeeRepository->updateEmployee($request->all(), $employeeId);
     }

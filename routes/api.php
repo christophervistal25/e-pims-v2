@@ -29,7 +29,10 @@ Route::group(['prefix' => 'employee'], function () {
 });
 
 Route::get('offices', 'Api\OfficeController@list');
+Route::post('office/store', 'Api\OfficeController@store');
+
 Route::get('positions', 'Api\PositionController@list');
+Route::post('position/store', 'Api\PositionController@store');
 
 Route::group(['prefix' => 'province'], function () {
     Route::get('/all/with/city', 'Api\ProvinceController@allWithCity');
@@ -44,3 +47,5 @@ Route::group(['prefix' => 'city'], function () {
     Route::get('/barangay/by/{code}', 'Api\CityController@barangaysByCode');
 });
 
+
+Route::post('/employment/status/store', 'Api\ReferenceStatusController@store');
