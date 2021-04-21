@@ -19,4 +19,12 @@ class service_record extends Model
         'separation_date',
         'separation_cause',
     ];
+     public function position()
+    {
+        return $this->belongsTo(Position::class, 'position_id', 'position_id');
+    }
+    public function office()
+    {
+        return $this->hasOne(Office::class, 'office_code', 'office_code');
+    }
 }
