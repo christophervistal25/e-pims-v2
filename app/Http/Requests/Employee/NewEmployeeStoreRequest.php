@@ -23,6 +23,7 @@ class NewEmployeeStoreRequest extends FormRequest
      */
     public function rules()
     {
+        dd(request());
         return [
             'lastName'         => 'required',
             'dateOfBirth'      => 'required|date',

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class='row'>
+        <div class="row">
             <div class="col-lg-6">
                 <label class="switch">
                     <input
@@ -13,12 +13,16 @@
                 </label>
             </div>
             <div class="col-lg-6 mb-2">
-                <a href="/employee/create/personal/data/sheet" class='btn btn-primary float-right'>PDS for new employee</a>
+                <a
+                    href="/employee/create/personal/data/sheet"
+                    class="btn btn-primary float-right"
+                    >PDS for new employee</a
+                >
             </div>
         </div>
 
         <div>
-            <table class="table table-hover table-bordered" v-if="!tableView">  
+            <table class="table table-hover table-bordered" v-if="!tableView">
                 <thead>
                     <tr>
                         <th scope="col">Employee ID</th>
@@ -37,18 +41,22 @@
                         <td>&nbsp;</td>
                         <td class="text-center">
                             <a
-                                :href="`/employee/create/${employee.employee_id}/personal/data/sheet`"
+                                :href="
+                                    `/employee/create/${employee.employee_id}/personal/data/sheet`
+                                "
                                 class="btn btn-primary btn-sm rounded-circle shadow text-white mr-2"
-                                :title="`Generate PDS for  ${employee.lastname} , ${employee.firstname} ${employee.middlename} ${employee.extension}`"
+                                :title="
+                                    `Generate PDS for  ${employee.lastname} , ${employee.firstname} ${employee.middlename} ${employee.extension}`
+                                "
                             >
-                                <i class="la la-plus font-weight-bold"></i>
+                                <i class="fas fa-plus font-weight-bold"></i>
                             </a>
 
                             <a
                                 :href="`#`"
                                 class="btn btn-success btn-sm rounded-circle shadow text-white"
                             >
-                                <i class="la la-edit font-weight-bold"></i>
+                                <i class="fas fa-edit font-weight-bold"></i>
                             </a>
                         </td>
                     </tr>

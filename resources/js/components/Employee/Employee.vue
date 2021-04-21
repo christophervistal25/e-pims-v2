@@ -10,8 +10,8 @@
                         "
                         @click="newEmployeeForm"
                     >
-                        <i class="la la-plus" v-if="!showAddEmployeeForm"></i>
-                        <i class="la la-list" v-else></i>
+                        <i class="fas fa-plus" v-if="!showAddEmployeeForm"></i>
+                        <i class="fas fa-list" v-else></i>
                         {{
                             !showAddEmployeeForm
                                 ? "Add Employee"
@@ -24,8 +24,32 @@
                     <div class="card-body">
                         <h4>Employees</h4>
                         <hr />
+
+                        <div class="row">
+                            <div class="col-lg-2 mb-2">
+                                Show Entries
+                                <select class="form-control ">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
+                            </div>
+
+                            <div class="col-lg-10 text-right mt-1 mb-1">
+                                <p></p>
+                                <div class="col-lg-5">
+                                    <input
+                                        type="text"
+                                        class="form-control"
+                                        placeholder="Search"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
                         <table
-                            class="table table-bordered table-hover transition "
+                            class="table table-bordered table-hover transition"
                         >
                             <thead>
                                 <th class="text-sm">Employee ID</th>
@@ -78,14 +102,14 @@
                                             @click="editEmployee(employee)"
                                             class="btn btn-success rounded-circle shadow"
                                         >
-                                            <i class="la la-edit"></i>
+                                            <i class="fas fa-edit text-sm"></i>
                                         </button>
                                     </td>
                                 </tr>
                             </tbody>
                             <tbody v-else>
                                 <tr>
-                                    <td colspan="4" class="text-center">
+                                    <td colspan="5" class="text-center">
                                         <div
                                             class="spinner-border text-primary"
                                             role="status"
@@ -98,6 +122,43 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-end">
+                                <li class="page-item">
+                                    <a
+                                        class="page-link cursor-pointer"
+                                        @click="prevPage"
+                                        tabindex="-1"
+                                        >Previous</a
+                                    >
+                                </li>
+                                <li
+                                    class="page-item"
+                                    v-for="page in data.last_page"
+                                    :key="page"
+                                >
+                                    <a
+                                        v-if="page <= 10"
+                                        class="page-link cursor-pointer"
+                                        :class="
+                                            page == data.current_page
+                                                ? 'bg-primary text-white'
+                                                : ''
+                                        "
+                                        @click="fetch(page)"
+                                    >
+                                        {{ page }}</a
+                                    >
+                                </li>
+                                <li class="page-item">
+                                    <a
+                                        class="page-link cursor-pointer"
+                                        @click="nextPage"
+                                        >Next</a
+                                    >
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -131,6 +192,9 @@
                                 <basic-information
                                     :employee="employee"
                                     :errors="errors"
+                                    :employmentStatus="employmentStatus"
+                                    :offices="offices"
+                                    :positions="positions"
                                 ></basic-information>
                             </div>
                             <div class="tab-pane" id="basictab2">
@@ -176,6 +240,7 @@ export default {
             isLoading: false,
             showAddEmployeeForm: false,
             employees: [],
+            data: [],
             employee: {
                 lastName: "",
                 firstName: "",
@@ -201,6 +266,9 @@ export default {
                 gsisBpNo: "",
                 gsisIdNo: ""
             },
+            employmentStatus: [],
+            offices: [],
+            positions: [],
             errors: {}
         };
     },
@@ -208,7 +276,37 @@ export default {
         BasicInformation,
         AccountNumber
     },
+    // watch: {
+    //     page: function(newPage, oldPage) {
+    //         console.log(newPage);
+    //     }
+    // },
     methods: {
+        fetch(page) {
+            this.isLoading = true;
+            window
+                .axios(`/api/employee/employees?page=${page}`)
+                .then(response => {
+                    this.employees = response.data.data;
+                    this.data = response.data;
+                    this.isLoading = false;
+                });
+            console.log(this.data);
+        },
+        nextPage() {
+            window.axios(`${this.data.next_page_url}`).then(response => {
+                this.employees = response.data.data;
+                this.data = response.data;
+                this.isLoading = false;
+            });
+        },
+        prevPage() {
+            window.axios(`${this.data.prev_page_url}`).then(response => {
+                this.employees = response.data.data;
+                this.data = response.data;
+                this.isLoading = false;
+            });
+        },
         newEmployeeForm() {
             this.showAddEmployeeForm = !this.showAddEmployeeForm;
             if (this.showAddEmployeeForm) {
@@ -342,6 +440,7 @@ export default {
             window.axios.get(`/api/employee/employees`).then(response => {
                 if (response.status === 200) {
                     this.employees = response.data.data;
+                    this.data = response.data;
                     this.isComplete = true;
                 }
             });
@@ -349,6 +448,21 @@ export default {
     },
     created() {
         this.loadEmployees();
+        window.axios
+            .get("/api/employee/employment/status")
+            .then(response => {
+                if (response.status === 200) {
+                    this.employmentStatus = response.data;
+                }
+            })
+            .catch(err => console.log(err));
+
+        window.axios.get("/api/offices").then(response => {
+            this.offices = response.data;
+        });
+        window.axios.get("/api/positions").then(response => {
+            this.positions = response.data;
+        });
     }
 };
 </script>

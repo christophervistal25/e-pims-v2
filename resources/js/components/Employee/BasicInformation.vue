@@ -156,8 +156,10 @@
                 <img
                     class="w-50 shadow-sm rounded border mr-auto ml-auto img-fluid img-thumbnail"
                     id="employee-image"
+                    loading="lazy"
                     :src="`/storage/employee_images/${employee.image}`"
                 />
+
                 <div class="text-center mt-2">
                     <div class="button-wrapper btn btn-info">
                         <span class="label">
@@ -190,6 +192,7 @@
                     class="form-control"
                     type="number"
                     id="step"
+                    readonly
                     v-if="employee.employee_id"
                     v-model="employee.step"
                 />
@@ -206,6 +209,7 @@
                 <input
                     type="number"
                     id="basicRate"
+                    readonly
                     v-model="employee.basicRate"
                     v-if="employee.employee_id"
                     class="form-control"
@@ -237,8 +241,23 @@
                 >EMPLOYMENT STATUS</label
             >
             <div class="col-lg-9">
-                <select
-                    type="text"
+                <!-- <input
+                    v-if="employee.employee_id"
+                    id="officeAssignment"
+                    v-model="employee.employmentStatus"
+                    class="form-control"
+                    :class="
+                        errors.hasOwnProperty('employmentStatus')
+                            ? 'is-invalid'
+                            : ''
+                    "
+                /> -->
+                <v-select
+                    label="status_name"
+                    @input="onSetSelectStatus"
+                    :options="employmentStatus"
+                ></v-select>
+                <!-- <select
                     id="officeAssignment"
                     v-model="employee.employmentStatus"
                     class="form-control"
@@ -257,7 +276,7 @@
                         :value="status.stat_code"
                         >{{ status.status_name }}</option
                     >
-                </select>
+                </select> -->
                 <p class="text-danger text-sm">{{ errors.employmentStatus }}</p>
             </div>
 
@@ -266,7 +285,7 @@
                     @click="openStatusModal"
                     class="btn btn-info btn-sm rounded-circle shadow mt-1"
                 >
-                    <i class="la la-plus"></i>
+                    <i class="fas fa-plus text-sm"></i>
                 </button>
             </div>
         </div>
@@ -278,7 +297,22 @@
                 >DESIGNATION</label
             >
             <div class="col-lg-9">
-                <select
+                <!-- <input
+                    v-if="employee.employee_id"
+                    v-model="employee.designation"
+                    class="form-control"
+                    :class="
+                        errors.hasOwnProperty('employmentStatus')
+                            ? 'is-invalid'
+                            : ''
+                    "
+                /> -->
+                <v-select
+                    label="position_name"
+                    @input="onSetSelectPosition"
+                    :options="positions"
+                ></v-select>
+                <!-- <select
                     type="text"
                     id="designation"
                     v-model="employee.designation"
@@ -294,7 +328,7 @@
                         :value="position.position_code"
                         >{{ position.position_name }}
                     </option>
-                </select>
+                </select> -->
                 <p class="text-danger text-sm">{{ errors.designation }}</p>
             </div>
 
@@ -303,7 +337,7 @@
                     class="btn btn-info btn-sm rounded-circle shadow mt-1"
                     @click="openDestinationModal"
                 >
-                    <i class="la la-plus"></i>
+                    <i class="fas fa-plus text-sm"></i>
                 </button>
             </div>
         </div>
@@ -315,7 +349,16 @@
                 >OFFICE ASSIGNMENT</label
             >
             <div class="col-lg-9">
-                <select
+                <!-- <input
+                    v-if="employee.employee_id"
+                    type="text"
+                    v-model="employee.officeAssignment"
+                    class="form-control"
+                    :class="
+                        errors.hasOwnProperty('designation') ? 'is-invalid' : ''
+                    "
+                /> -->
+                <!-- <select
                     type="text"
                     id="officeAssignment"
                     v-model="employee.officeAssignment"
@@ -336,7 +379,12 @@
                         >{{ office.office_short_name }} -
                         {{ office.office_name }}
                     </option>
-                </select>
+                </select> -->
+                <v-select
+                    label="office_name"
+                    @input="onSetSelectOffice"
+                    :options="offices"
+                ></v-select>
                 <p class="text-danger text-sm">{{ errors.officeAssignment }}</p>
             </div>
 
@@ -345,7 +393,7 @@
                     class="btn btn-info btn-sm rounded-circle shadow mt-1"
                     @click="openAssignmentModal"
                 >
-                    <i class="la la-plus"></i>
+                    <i class="fas fa-plus text-sm"></i>
                 </button>
             </div>
         </div>
@@ -360,6 +408,7 @@
         ></designationmodal>
         <assignmentmodal
             :showassignment="isShowAssignment"
+            :positions="positions"
             @assignment-modal-dismiss="closeAssignmentModal"
         ></assignmentmodal>
         <!-- <button>sample</button> -->
@@ -369,13 +418,11 @@
 import StatusModal from "./StatusModal.vue";
 import DesignationModal from "./DesignationModal.vue";
 import AssignmentModal from "./AssignmentModal.vue";
+import "vue-select/dist/vue-select.css";
 export default {
-    props: ["employee", "errors"],
+    props: ["employee", "errors", "employmentStatus", "offices", "positions"],
     data() {
         return {
-            employmentStatus: [],
-            offices: [],
-            positions: [],
             isShow: false,
             isShowDesignation: false,
             isShowAssignment: false
@@ -393,6 +440,15 @@ export default {
         }
     },
     methods: {
+        onSetSelectStatus(status) {
+            this.employee.employmentStatus = status.stat_code;
+        },
+        onSetSelectPosition(position) {
+            this.employee.designation = position.position_code;
+        },
+        onSetSelectOffice(office) {
+            this.employee.officeAssignment = office.office_code;
+        },
         onUpload(event) {
             document
                 .querySelector("#employee-image")
@@ -405,6 +461,7 @@ export default {
             let bodyFormData = new FormData();
 
             bodyFormData.append("image", event.target.files[0]);
+            bodyFormData.append("employee_id", this.employee.employee_id);
 
             window
                 .axios({
@@ -460,23 +517,7 @@ export default {
             this.isShowAssignment = false;
         }
     },
-    created() {
-        window.axios
-            .get("/api/employee/employment/status")
-            .then(response => {
-                if (response.status === 200) {
-                    this.employmentStatus = response.data;
-                }
-            })
-            .catch(err => console.log(err));
-
-        window.axios.get("/api/offices").then(response => {
-            this.offices = response.data;
-        });
-        window.axios.get("/api/positions").then(response => {
-            this.positions = response.data;
-        });
-    }
+    created() {}
 };
 </script>
 

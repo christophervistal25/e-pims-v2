@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Employee;
 use App\RefStatus;
+use App\EmployeeInformation;
 
 class EmployeeController extends Controller
 {
@@ -43,9 +44,14 @@ class EmployeeController extends Controller
     {
 
         if($request->has('image')) {
-            $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
+
+            $imageName = $request->employee_id . '_' . $request->file('image')->getClientOriginalName();
 
             $request->file('image')->storeAs('/public/employee_images', $imageName);
+
+            $info = EmployeeInformation::where('EmpIDNo', $request->employee_id)->first();
+            $info->photo = $imageName;
+            $info->save();
 
             return $imageName;
         }

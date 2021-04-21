@@ -139,8 +139,11 @@
                                         : ''
                                 "
                             >
-                                <option value="Provincial Governor"
-                                    >Provincial Governor</option
+                                <option
+                                    v-for="(position, index) in positions"
+                                    :key="index"
+                                    :value="position.position_code"
+                                    >{{ position.position_name }}</option
                                 >
                             </select>
                             <p
@@ -184,7 +187,7 @@
 <script>
 import swal from "sweetalert";
 export default {
-    props: ["showassignment"],
+    props: ["showassignment", "positions"],
     data() {
         return {
             isLoading: false,

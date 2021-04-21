@@ -378,7 +378,6 @@ class EmployeeRepository
         $employeeInformation              = new EmployeeInformation;
         $employeeInformation->office_code = $data['officeAssignment'];
         $employeeInformation->pos_code    = $data['designation'];
-        $employeeInformation->photo       = $data['image'];
 
         $employee->information()->save($employeeInformation);
 
@@ -408,7 +407,6 @@ class EmployeeRepository
         $employee->information->update([
             'office_code' => $data['officeAssignment'],
             'pos_code'    => $data['designation'],
-            'photo'       => $data['image'],
         ]);
 
         return $data;

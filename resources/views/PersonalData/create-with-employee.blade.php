@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app-vue')
 @section('title', 'Create PDS for ' . $employee->lastname . ', ' . $employee->firstname . ' ' . $employee->middlename . ' ' . $employee->extension)
 @prepend('page-css')
 <script src="{{ asset('/js/app.js') }}" defer></script>

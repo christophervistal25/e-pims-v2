@@ -4,7 +4,7 @@
             v-if="employee.civil_service && employee.civil_service.length != 0"
             class="card-body"
         >
-        <div class="mt-3 pl-3 pr-3">
+            <div class="mt-3 pl-3 pr-3">
                 <div
                     class="alert alert-secondary text-center font-weight-bold"
                     role="alert"
@@ -12,13 +12,12 @@
                     WORK EXPERIENCE
                 </div>
             </div>
-            <div class="card">
+            <div>
                 <div
-                    class="card-body"
                     v-for="(work, index) in employee.work_experience"
                     :key="index"
                 >
-                <hr>
+                    <hr />
                     <div class="row">
                         <div class="col-lg">
                             <div class="form-group">
@@ -120,7 +119,7 @@
                 </div>
             </div>
         </div>
-        <div v-else class="card card-body">
+        <div v-else class="card-body">
             <h1>No Work Experience</h1>
         </div>
     </div>

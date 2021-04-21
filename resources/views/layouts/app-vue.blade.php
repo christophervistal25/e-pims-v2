@@ -3,28 +3,19 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-	<meta name="description" content="SmarthrBootstrap Admin Template">
-	<meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
-	<meta name="author" content="DreamguysBootstrap Admin Template">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="author" content="">
 	<meta name="robots" content="noindex, nofollow">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<title>@yield('title') |  e-Pims</title>
-	{{-- <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/assets/img/favicon.png') }}"> --}}
-	{{-- <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}"> --}}
-	<link rel="stylesheet" href="{{ asset('/assets/css/font-awesome.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('/assets/css/line-awesome.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('/assets/css/select2.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('/assets/css/bootstrap-datetimepicker.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
 	<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     @stack('page-css')
-	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-			<script src="assets/js/html5shiv.min.js"></script>
-			<script src="assets/js/respond.min.js"></script>
-		<![endif]-->
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -32,15 +23,24 @@
     </style>
 </head>
 
-{{-- mini-sidebar --}}
 <body>
+    <div id="loader-wrapper">
+        <div id="loader">
+            <div class="loader-ellips">
+                <span class="loader-ellips__dot"></span>
+                <span class="loader-ellips__dot"></span>
+                <span class="loader-ellips__dot"></span>
+                <span class="loader-ellips__dot"></span>
+            </div>
+        </div>
+    </div>
 	<!-- Main Wrapper -->
-	<div class="main-wrapper">
+	<div class="main-wrapper" id="app">
 		<!-- Header -->
 		<div class="header">
 			<!-- Logo -->
 			<div class="header-left">
-				<a href="index.html" class="logo">
+				<a href="/" class="logo">
 					{{-- <img src=/assets/img/logo.png" width="40" height="40" alt=""> --}}
 				</a>
 			</div>
@@ -202,19 +202,19 @@
 						</li>
                         <li>
                             <a class='text-decoration-none' href="{{ route('employee.index') }}">
-                                <i class="la la-users"></i> <span> Employees </span>
+                                <i class="fa fa-user text-sm "></i> <span> Employees </span>
                             </a>
                         </li>
                         <li>
                             <a class='text-decoration-none' href="{{ route('data.index') }}">
-                                <i class="la la-file-text"></i> <span> Personal Data Sheet </span>
+                                <i class="fa fa-file-excel text-sm" aria-hidden="true"></i> <span> Personal Data Sheet </span>
                             </a>
                         </li>
 						<li class="menu-title">
 							<span>Human Resource Module</span>
 						</li>
 						<li class="submenu">
-							<a href="#" class='text-decoration-none'><i class="la la-home"></i> <span> Leave Management </span> <span class="menu-arrow"></span></a>
+							<a href="#" class='text-decoration-none'><i class="fas fa-house-user text-sm"></i> <span> Leave Management </span> <i class="ml-3 fas fa-caret-down text-sm text-right"></i></a>
 							<ul style="display: none;">
 								<li>
                                     <a class='text-decoration-none mr-2' href="#">
@@ -251,7 +251,7 @@
 
 
 						<li class="submenu">
-							<a href="#" class='text-decoration-none'><i class="la la-bars"></i> <span>Service Record</span> <span class="menu-arrow"></span></a>
+							<a href="#" class='text-decoration-none'><i class="fas fa-address-card text-sm"></i> <span>Service Record</span> <i class="ml-3 fas fa-caret-down text-sm text-right"></i></a>
 							<ul style="display: none;">
 								<li>
                                     <a class='text-decoration-none mr-2' href="#">
@@ -262,7 +262,7 @@
 						</li>
 
                         <li class="submenu">
-							<a href="#" class='text-decoration-none'><i class="la la-bookmark"></i> <span>Plantilla of Position</span> <span class="menu-arrow"></span></a>
+							<a href="#" class='text-decoration-none'><i class="fas fa-bookmark text-sm"></i> <span>Plantilla of Position</span> <i class="ml-3 fas fa-caret-down text-sm text-right"></i></a>
 							<ul style="display: none;">
 								<li>
                                     <a class='text-decoration-none mr-2' href="#">
@@ -280,7 +280,7 @@
                                     </a>
                                 </li>
                                 <li class="submenu">
-									<a  class='text-decoration-none' href="javascript:void(0);"> <span>Salary Adjustment Individual</span> <span class="menu-arrow"></span></a>
+									<a  class='text-decoration-none' href="javascript:void(0);"> <span>Salary Adjustment Individual</span> <i class="ml-3 fas fa-caret-down text-sm text-right"></i></a>
 									<ul style="display: none;">
 										<li>
                                             <a class='text-decoration-none' href="javascript:void(0);">
@@ -290,7 +290,7 @@
 									</ul>
 								</li>
                                 <li class="submenu">
-									<a  class='text-decoration-none' href="javascript:void(0);"> <span>Step Increment</span> <span class="menu-arrow"></span></a>
+									<a  class='text-decoration-none' href="javascript:void(0);"> <span>Step Increment</span> <i class="ml-3 fas fa-caret-down text-sm text-right"></i></a>
 									<ul style="display: none;">
 										<li>
                                             <a class='text-decoration-none' href="javascript:void(0);">
@@ -337,19 +337,11 @@
 		<!-- /Page Wrapper -->
 	</div>
 	<!-- /Main Wrapper -->
-	<script
+    <script
 	src="https://code.jquery.com/jquery-3.5.1.min.js"
 	integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
 	crossorigin="anonymous"></script>
-	{{-- <script src="{{asset('/assets/js/jquery-3.2.1.min.js')}}"></script> --}}
-	<script src="{{ asset('/assets/js/popper.min.js') }}"></script>
-	<script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
-	<script src="{{ asset('/assets/js/jquery.slimscroll.min.js') }}"></script>
-	<script src="{{ asset('/assets/js/select2.min.js') }}"></script>
-	<script src="{{ asset('/assets/js/moment.min.js') }}"></script>
-	<script src="{{ asset('/assets/js/bootstrap-datetimepicker.min.js') }}"></script>
 	<script src="{{ asset('/assets/js/app.js') }}"></script>
-	{{-- <script src="{{ asset('/assets/js/searchable.js') }}"></script> --}}
     @stack('page-scripts')
 </body>
 </html>
