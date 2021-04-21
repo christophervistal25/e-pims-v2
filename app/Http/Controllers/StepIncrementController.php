@@ -17,6 +17,12 @@ class StepIncrementController extends Controller
         
         return (new Datatables)->eloquent($data)
                     ->addIndexColumn()
+                    ->addColumn('sg_from_and_step_from', function ($data) {
+                        return $data->sg_no_from . '-' . $data->step_no_from;
+                    })
+                    ->addColumn('sg_to_and_step_to', function ($data) {
+                        return $data->sg_no_to . '-' . $data->step_no_to;
+                    })
                     ->addColumn('employee', function ($data) {
                         return $data->employee->firstname . ' ' . $data->employee->middlename  . ' ' . $data->employee->lastname;
                     })->addColumn('position', function ($data) {
@@ -101,8 +107,10 @@ class StepIncrementController extends Controller
      */
     public function edit($id)
     {
-        $employee = Employee::with(['plantilla', 'plantilla.position'])->get();
-        return view ('StepIncrement.edit', compact('employee'));
+        $stepIncrement = StepIncrement::with(['employee:employee_id,firstname,middlename,lastname,extension', 'position:position_id,position_name'])->find($id);
+        $employee = $stepIncrement->employee;
+        $position = $stepIncrement->position;
+        return view ('stepIncrement.edit', compact('stepIncrement', 'employee', 'position'));
     }
 
     /**
@@ -114,13 +122,13 @@ class StepIncrementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'employeeName' => 'required',
-            'dateStepIncrement' => 'required',
-            'stepNo2' => 'required',
-        ]);
-
-            $step_increments = new stepIncrement;
+            $this->validate($request, [
+                'employeeName'      => 'required',
+                'dateStepIncrement' => 'required',
+                'stepNo2'           => 'required',
+            ]);
+            
+            $step_increments                          = StepIncrement::find($id);
             $step_increments->employee_id             = $request['employeeID'];
             $step_increments->item_no                 = $request['itemNoFrom'];
             $step_increments->position_id             = $request['positionID'];
@@ -134,9 +142,8 @@ class StepIncrementController extends Controller
             $step_increments->salary_amount_to        = $request['amount2'];
             $step_increments->salary_diff             = $request['monthlyDifference'];
             $step_increments->save();
-        
-
-        return redirect('/step-increment')->with('success', true);
+            
+        return redirect()->back()->with('success', true);
     }
 
     /**

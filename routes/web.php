@@ -30,14 +30,14 @@ Route::post('/plantilla', 'PlantillaController@addPosition');
 Route::Resource('/plantilla', 'PlantillaController');
 
 //'plantilla'p Increment
+Route::get('/step-increment/list', 'StepIncrementController@list');
 Route::resource('/step-increment', 'StepIncrementController');
 
 //salary adjustment
-Route::get('/salary-adjustment/{id}', 'SalaryAdjustmentController@delete')->name('salary-adjustment.delete');
 Route::Resource('/salary-adjustment', 'SalaryAdjustmentController');
 Route::get('/salary-adjustment-list', 'SalaryAdjustmentController@list');
 
-
+//employee
 Route::group(['prefix' => 'employee'], function () {
     Route::get('/record', 'EmployeeController@index')->name('employee.index');
     Route::post('/record/store', 'EmployeeController@store')->name('employee.store');

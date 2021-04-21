@@ -3,7 +3,7 @@
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
- {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+ <script src="{{ asset('js/app.js') }}" defer></script>
 @endprepend
 @section('content')
 
@@ -32,7 +32,7 @@
                         
                         <div class="form-group col-12 col-lg-11">
                             <label>Employee Name:</label>
-                            <select class="form-control selectpicker" value="" data-live-search="true" name="employeeName" id="employeeName">
+                            <select class="form-control selectpicker" value="" data-live-search="true" name="employeeName" id="employeeName" data-size="6">
                                 <option>Search name here</option>
                                 @foreach($employee as $employees)
                                 <option data-plantilla="{{ $employees->plantilla }}" value="{{ $employees->employee_id }}">{{ $employees->lastname }}, {{ $employees->firstname }} {{ $employees->middlename }}</option>
@@ -67,7 +67,7 @@
                         
                         <div class="form-row col-12">
                             <div class="form-group col-6 col-lg-6">
-                                <label>Salary Grade:</label>
+                                    <label>Salary Grade:</label>
                                 <input class="form-control" value="" id="salaryGrade" name="sgNoFrom" type="text" readonly>                    
                             </div>
                             
@@ -95,8 +95,8 @@
 
                         <div class="form-group col-12 col-lg-12">
                             <label>Step:</label>
-                            <select name="stepNo2" id="stepNo2" value="{{ old('stepNo2') }}" class="form-control floating {{ $errors->has('stepNo2')  ? 'is-invalid' : ''}}">
-                                <option>Please select</option>
+                            <select name="stepNo2" id="stepNo2" value="" class="form-control floating {{ $errors->has('stepNo2')  ? 'is-invalid' : ''}}">
+                            <option value="">Please Select</option>
                             </select>
                             <div id="stepNo2-error-message" class="text-danger">
                             </div>
@@ -132,10 +132,8 @@
                         <button id="addBtn" type="button" class="btn btn-primary float-right"><i class="fa fa-plus"></i> Add Step Increment </button>
                     </div>
                 </div>
-
-                        <div class="col-12" style="overflow-x:auto;">
-
-                            <table class="table table-bordered" id="step-increment-table">
+                        <div class="table" style="overflow-x:auto;">
+                            <table class="table table-bordered text-center" id="step-increment-table" style="width:100%;">
                                 <thead>
                                 <tr>
                                     <th class="font-weight-bold align-middle text-center" rowspan="2">Date of Step Increment</th>
@@ -157,7 +155,6 @@
                                 </thead>
                             </table>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -181,14 +178,15 @@
 <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
-(function() {
-    let isSuccess = "{{ Session::get('success') }}";
-    if(isSuccess) {
-        swal("Good job!", "Successfully added!", "success");
-    }
-})();
+//SWEET ALERT
+    (function() {
+        let isSuccess = "{{ Session::get('success') }}";
+        if(isSuccess) {
+            swal("Good job!", "Successfully added!", "success");
+        }
+    })();
 
-    // SHOWS THE STEP-INCREMENT FORM
+    // SHOWS THE DATA ON THE TABLE
     $(document).ready(function() {
 
         $('#step-increment-table').DataTable({
@@ -203,9 +201,9 @@
                     { data: 'position', name: 'position' },
                     { data: 'item_no', name: 'item_no' },
                     { data: 'date_latest_appointment', name: 'date_latest_appointment' },
-                    { data: 'sg_no_from', name: 'sg_no_from' },
+                    { data: 'sg_from_and_step_from', name: 'sg_from_and_step_from' },
                     { data: 'salary_amount_from', name: 'salary_amount_from' },
-                     { data: 'sg_no_to', name: 'sg_no_to' },
+                     { data: 'sg_to_and_step_to', name: 'sg_to_and_step_to' },
                     { data: 'salary_amount_to', name: 'salary_amount_to' },
                     { data: 'salary_diff', name: 'salary_diff' },
                     { data: 'action', name: 'action' },
@@ -214,13 +212,13 @@
         
         const MAX_NUMBER_OF_STEP_NO = 8;
 
-
+    // TRANSITION OF FORM TO TABLE
         $('#addBtn').click(function() {
             $('#addIncrement').attr("class", "page-header");
             $('#stepIncrementTable').attr("class", "page-header d-none");
         });
 
-    // SHOWS THE TABLE FORM 
+    // SHOWS THE DATA VALUE IN INPUT
         $('#employeeName').change(function (e) {
             let employeeID = e.target.value;
             let plantilla = $($( "#employeeName option:selected" )[0]).attr('data-plantilla');
@@ -256,6 +254,7 @@
             }
         });
 
+        //STEP NUMBER CONDITION WITH ERRORS
         $('#stepNo2').change(function (e) {
             let selectedSetep = e.target.value;
             $.ajax({
@@ -315,7 +314,6 @@
             location.reload();
         })
     });
-
 
 </script>
 @endpush
