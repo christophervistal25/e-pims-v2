@@ -118,6 +118,12 @@
                                     Type to search Office Head
                                 </template>
                             </v-select>
+                            <p
+                                class="text-danger text-sm"
+                                v-if="errors.hasOwnProperty('head')"
+                            >
+                                {{ errors.head[0] }}
+                            </p>
                         </div>
 
                         <div class="form-group">
@@ -134,6 +140,12 @@
                                     Type to search Position
                                 </template>
                             </v-select>
+                            <p
+                                class="text-danger text-sm"
+                                v-if="errors.hasOwnProperty('position_name')"
+                            >
+                                {{ errors.position_name[0] }}
+                            </p>
                         </div>
                     </div>
                     <div class="modal-footer">

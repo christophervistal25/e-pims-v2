@@ -247,7 +247,9 @@
                     :value="employee.employmentStatus.status_name"
                     :options="employmentStatus"
                 ></v-select>
-                <p class="text-danger text-sm">{{ errors.employmentStatus }}</p>
+                <p class="text-danger text-sm">
+                    {{ errors["employmentStatus.stat_code"] }}
+                </p>
             </div>
 
             <div class="col-lg-1">

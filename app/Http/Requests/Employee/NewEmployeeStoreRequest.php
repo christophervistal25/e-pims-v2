@@ -41,7 +41,8 @@ class NewEmployeeStoreRequest extends FormRequest
     public function attributes()
     {
         return [
-            'designation.position_code' => 'designation',
+            'employmentStatus.stat_code'   => 'employment status',
+            'designation.position_code'    => 'designation',
             'officeAssignment.office_code' => 'office',
         ];
     }

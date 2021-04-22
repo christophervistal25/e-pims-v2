@@ -31,7 +31,7 @@ class OfficeController extends Controller
             'head'          => 'required',
             'short_address' => 'required',
             'position_name' => 'required|exists:positions'
-        ]);
+        ], [], ['head' => 'office head']);
 
         if($validator->fails()) {
             return response()->json($validator->errors(), 422);

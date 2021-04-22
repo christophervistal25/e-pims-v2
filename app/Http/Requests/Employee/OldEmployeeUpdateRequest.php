@@ -38,4 +38,13 @@ class OldEmployeeUpdateRequest extends FormRequest
             'tinNo'            => 'nullable|unique:employees,tin_no,'. request('employee_id') . ',employee_id',
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'employmentStatus.stat_code'   => 'employment status',
+            'designation.position_code'    => 'designation',
+            'officeAssignment.office_code' => 'office',
+        ];
+    }
 }

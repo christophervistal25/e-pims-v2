@@ -2236,6 +2236,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2345,6 +2357,8 @@ var _components;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
 //
 //
 //
@@ -36161,7 +36175,17 @@ var render = function() {
                         ])
                       ],
                       2
-                    )
+                    ),
+                    _vm._v(" "),
+                    _vm.errors.hasOwnProperty("head")
+                      ? _c("p", { staticClass: "text-danger text-sm" }, [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm.errors.head[0]) +
+                              "\n                        "
+                          )
+                        ])
+                      : _vm._e()
                   ],
                   1
                 ),
@@ -36194,7 +36218,17 @@ var render = function() {
                         ])
                       ],
                       2
-                    )
+                    ),
+                    _vm._v(" "),
+                    _vm.errors.hasOwnProperty("position_name")
+                      ? _c("p", { staticClass: "text-danger text-sm" }, [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm.errors.position_name[0]) +
+                              "\n                        "
+                          )
+                        ])
+                      : _vm._e()
                   ],
                   1
                 )
@@ -36748,7 +36782,11 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("p", { staticClass: "text-danger text-sm" }, [
-              _vm._v(_vm._s(_vm.errors.employmentStatus))
+              _vm._v(
+                "\n                " +
+                  _vm._s(_vm.errors["employmentStatus.stat_code"]) +
+                  "\n            "
+              )
             ])
           ],
           1
