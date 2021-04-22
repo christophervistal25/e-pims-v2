@@ -1,5 +1,7 @@
 <?php
 use App\SalaryGrade;
+use App\service_record;
+use Yajra\Datatables\Datatables;
 
 // Route::get('/salaryList/{sg_no}' , 'Api\PlantillaController@salaryList');
 Route::get('/salarySteplist/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@salarySteplist');
@@ -9,13 +11,28 @@ Route::get('/cscPrevious/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaControlle
 
 Route::get('/positionSalaryGrade/{positionTitle}' , 'Api\PlantillaController@positionSalaryGrade');
 
+Route::get('/employee/service/records/{employeeId}', function ($employeeId) {
+    $data = service_record::select('employee_id', 'service_from_date', 'service_to_date', 'position_id', 'status', 'salary', 'office_code', 'leave_without_pay', 'separation_date', 'separation_cause')->with('office:office_code,office_name,office_address','position:position_id,position_name')->where('employee_id', $employeeId)->get();
+    return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('position', function ($row) {
+                            return $row->position->position_name;
+                        })
+                        ->addColumn('office', function ($row) {
+                            return $row->office->office_name . '' . $row->office->office_address;
+                        })
+                    ->addColumn('action', function($row){
+                        $btn = "<a title='Edit Service Record' href='' class='rounded-circle text-white edit btn btn-primary btn-sm'><i class='la la-edit'></i></a>";
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+});
+
 Route::get('step/{sg_no}/{step}' , function ($sgNo, $step) {
     $salaryGrade = SalaryGrade::where('sg_no', $sgNo)->first(['sg_step' . $step]);
     return $salaryGrade;
 });
-
-// Route::get('/salaryAdjustmentnew/{salaryGrade}/{stepNo}/{currentSgyear}' , 'Api\SalaryAdjustmentController@salaryAdjustmentNew');
-
 
 Route::post('/addPosition' , 'Api\PlantillaController@addPosition');
 

@@ -39,7 +39,7 @@ class ServiceRecordsController extends Controller
     public function list(Request $request)
     {
         if ($request->ajax()) {
-            $data = service_record::select('employee_id', 'service_from_date', 'service_to_date', 'position_id', 'status', 'salary', 'office_code', 'leave_without_pay', 'separation_date', 'separation_cause')->with('office:office_code,office_name,office_address','position:position_id,position_name')->get();
+            $data = service_record::select('employee_id', 'service_from_date', 'service_to_date', 'position_id', 'status', 'salary', 'office_code', 'leave_without_pay', 'separation_date', 'separation_cause')->with('office:office_code,office_name,office_address','position:position_id,position_name');
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('position', function ($row) {
