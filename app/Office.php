@@ -54,10 +54,12 @@ class Office extends Model
         });
     }
 
-
-
     public function office()
     {
         return $this->belongsTo(Plantilla::class, 'office_code', 'office_code');
+    }
+    public function service_record()
+    {
+        return $this->belongsTo(service_record::class, 'office_code', 'office_code');
     }
 }

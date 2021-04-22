@@ -19,7 +19,8 @@ Route::get('/plantilla-list', 'Plantillacontroller@list');
 Route::post('/plantilla', 'PlantillaController@addPosition');
 Route::resource('/plantilla', 'PlantillaController');
 
-//'plantilla'p Increment
+//Increment
+Route::get('/step-increment/list', 'StepIncrementController@list');
 Route::resource('/step-increment', 'StepIncrementController');
 
 //salary adjustment
@@ -29,6 +30,7 @@ Route::get('/salary-adjustment-list', 'SalaryAdjustmentController@list');
 
 // Service Records
 Route::resource('/service-records', 'ServiceRecordsController');
+Route::get('/service-records-list', 'ServiceRecordsController@list');
 
 Route::group(['prefix' => 'employee'], function () {
     Route::get('/record', 'EmployeeController@index')->name('employee.index');

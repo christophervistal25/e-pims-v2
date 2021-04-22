@@ -180,4 +180,9 @@ class Employee extends Model
     {
         return $this->belongsTo(SalaryAdjustment::class, 'office_code', 'office_code');
     }
+
+    public function step()
+    {
+        return $this->hasOne(StepIncrement::class, 'employee_id', 'employee_id');
+    }
 }

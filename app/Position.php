@@ -42,6 +42,10 @@ class Position extends Model
     {
         return $this->hasOne(SalaryGrade::class, 'sg_no', 'salary_grade');
     }
+    public function service_record()
+    {
+        return $this->belongsTo(service_record::class, 'position_id', 'position_id');
+    }
 }
 
 
