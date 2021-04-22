@@ -31,10 +31,10 @@ class Office extends Model
         parent::boot();
 
         self::creating(function ($office) {
-            // $lastRecord          = self::get()->last();
-            // $lastOfficeCode      = str_replace(self::ID_PREFIX, '',  !is_null($lastRecord) ? $lastRecord->office_code : 0);
-            // $code                = self::ID_PREFIX . str_pad(($lastOfficeCode + 1), 4, '0', STR_PAD_LEFT);
-            // $office->office_code = $code;
+            $maxOfficeCode         = self::max('office_code');
+            $code                  = self::ID_PREFIX . str_pad(($maxOfficeCode + 1), 4, '0', STR_PAD_LEFT);
+            $office->office_code = $code;
+            Cache::forget('offices');
         });
 
         self::created(function() {

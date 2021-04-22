@@ -26,26 +26,6 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>Position code</label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                v-model="position.code"
-                                :class="
-                                    errors.hasOwnProperty('code')
-                                        ? 'is-invalid'
-                                        : ''
-                                "
-                            />
-                            <p
-                                class="text-danger"
-                                v-if="errors.hasOwnProperty('code')"
-                            >
-                                {{ errors.code[0] }}
-                            </p>
-                        </div>
-
-                        <div class="form-group">
                             <label>Position name</label>
                             <input
                                 type="text"

@@ -42,9 +42,10 @@ class OfficeController extends Controller
             'office_short_name'    => $request->short_name,
             'office_address'       => $request->address,
             'office_short_address' => $request->short_address,
+            'office_head'          => $request->head,
+            'position_name'        => $request->position_name,
         ]);
 
         return $office;
-
     }
 }

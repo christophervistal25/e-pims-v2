@@ -51,6 +51,8 @@ class Employee extends Model
         'status'
     ];
 
+    protected $appends = ['fullname'];
+
 
     public static function boot()
     {
@@ -58,6 +60,14 @@ class Employee extends Model
         self::creating(function($employee) {
             $employee->trans_no = str_pad((self::count() + 1), 3, 0, STR_PAD_LEFT);
         });
+    }
+                
+    /**
+     * Get the employee's full concatenated name.
+     */
+    public function getFullnameAttribute()
+    {
+        return "{$this->firstname} {$this->middlename} {$this->lastname} {$this->extension}";
     }
 
     /**

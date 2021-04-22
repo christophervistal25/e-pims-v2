@@ -10681,12 +10681,12 @@ class PositionSeeder extends Seeder
             "SalaryGrade"  => "9",
             "ShortName"    => "tempx"
             ],
-            [
-            "PosCode"      => "31809",
-            "PositionName" => "Computer Programmer III",
-            "SalaryGrade"  => "18",
-            "ShortName"    => "tempx"
-            ],
+            // [
+            // "PosCode"      => "31809",
+            // "PositionName" => "Computer Programmer III",
+            // "SalaryGrade"  => "18",
+            // "ShortName"    => "tempx"
+            // ],
             [
             "PosCode"      => "31810",
             "PositionName" => "Computer Services  Chief A",

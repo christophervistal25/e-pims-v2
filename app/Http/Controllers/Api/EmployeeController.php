@@ -14,14 +14,17 @@ class EmployeeController extends Controller
     // Method to display all employee in PDS
     public function list()
     {
-        // If request has query string page.
-        // if(request()->page) {
-            // return Cache::rememberForever('employees_' . request()->page, function () {
-                return Employee::with(['information:EmpIDNo,pos_code,office_code', 'information.office:office_code,office_name', 'information.position:position_code,position_name'])->orderBy('created_at', 'DESC')->select(['employee_id', 'lastname', 'firstname', 'middlename', 'extension'])->paginate(10);
-            // });
-        // } else {
-        //     return Employee::with(['information:EmpIDNo,pos_code,office_code', 'information.office:office_code,office_name', 'information.position:position_code,position_name'])->select(['employee_id', 'lastname', 'firstname', 'middlename', 'extension'])->paginate(10);
-        // }
+        return Employee::with(['information:EmpIDNo,pos_code,office_code', 'information.office:office_code,office_name', 'information.position:position_code,position_name'])->orderBy('created_at', 'DESC')->select(['employee_id', 'lastname', 'firstname', 'middlename', 'extension'])->paginate(10);
+       
+    }
+
+    public function search(string $key)
+    {
+        return Employee::where('firstname', 'like', "%$key%")
+                        ->orWhere('middlename', 'like', "%$key%")
+                        ->orWhere('lastname', 'like', "%$key%")
+                        ->orWhere('extension', 'like', "%$key%")
+                        ->get(['firstname', 'middlename', 'lastname', 'extension']);
     }
 
 
@@ -43,12 +46,6 @@ class EmployeeController extends Controller
         return Employee::select(['employee_id', 'lastname', 'firstname', 'middlename', 'extension'])->paginate(10);
     }
 
-    public function status()
-    {
-       return Cache::rememberForever('status', function () {
-            return RefStatus::get(['id', 'stat_code', 'status_name']);
-        });
-    }
 
     public function onUploadImage(Request $request)
     {

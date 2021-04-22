@@ -42,10 +42,12 @@ Route::post('/addPosition' , 'Api\PlantillaController@addPosition');
 
 Route::group(['prefix' => 'employee'], function () {
     Route::get('employees', 'Api\EmployeeController@list');
+    Route::get('/search/{key}', 'Api\EmployeeController@search');
     Route::get('show/{employeeIdNumber}', 'Api\EmployeeController@show');
     Route::get('find/{employeeIdNumber}', 'Api\EmployeeController@find');
-    Route::get('/employment/status', 'Api\EmployeeController@status');
     Route::post('image/upload', 'Api\EmployeeController@onUploadImage');
+    
+    Route::get('/employment/status', 'Api\ReferenceStatusController@status');
 });
 
 Route::get('offices', 'Api\OfficeController@list');

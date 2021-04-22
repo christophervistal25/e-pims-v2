@@ -334,7 +334,6 @@
         ></designationmodal>
         <assignmentmodal
             :showassignment="isShowAssignment"
-            :positions="designations"
             @assignment-modal-dismiss="closeAssignmentModal"
         ></assignmentmodal>
         <!-- <button>sample</button> -->
@@ -345,6 +344,7 @@ import StatusModal from "./StatusModal.vue";
 import DesignationModal from "./DesignationModal.vue";
 import AssignmentModal from "./AssignmentModal.vue";
 import "vue-select/dist/vue-select.css";
+import _ from "lodash";
 export default {
     props: ["employee", "errors", "employmentStatus"],
     data() {
@@ -369,31 +369,37 @@ export default {
     },
     methods: {
         onSearchOffice(search, loading) {
-            if (search.length >= 3) {
+            if (search.length) {
                 loading(true);
-                window.axios
-                    .get(`/api/office/search/${search}`)
-                    .then(response => {
-                        this.offices = response.data;
-                        loading(false);
-                    });
+                this.searchOffice(loading, search, this);
             } else {
                 this.offices = [];
             }
         },
         onSearchDesignation(search, loading) {
-            if (search.length >= 7) {
+            if (search.length) {
                 loading(true);
-                window.axios
-                    .get(`/api/position/search/${search}`)
-                    .then(response => {
-                        this.designations = response.data;
-                        loading(false);
-                    });
+                this.searchDesignation(loading, search, this);
             } else {
                 this.designations = [];
             }
         },
+        searchOffice: _.debounce((loading, search, vm) => {
+            loading(true);
+            window.axios.get(`/api/office/search/${search}`).then(response => {
+                vm.offices = response.data;
+                loading(false);
+            });
+        }, 500),
+        searchDesignation: _.debounce((loading, search, vm) => {
+            loading(true);
+            window.axios
+                .get(`/api/position/search/${search}`)
+                .then(response => {
+                    vm.designations = response.data;
+                    loading(false);
+                });
+        }, 500),
         onSetSelectStatus(status) {
             this.employee.employmentStatus = status;
         },
@@ -444,7 +450,10 @@ export default {
         openStatusModal() {
             this.isShow = true;
         },
-        closeStatusModal() {
+        closeStatusModal(status) {
+            if (status) {
+                this.employmentStatus.unshift(status);
+            }
             this.isShow = false;
         },
         openDestinationModal() {
