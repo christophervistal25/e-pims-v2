@@ -9,8 +9,11 @@
 <style>
     .swal-content ul{
     list-style-type: none;
-    padding: 0;
-}
+    }
+    #line {
+        border-bottom: 1px solid black;
+        padding-bottom:15px;
+    }
 </style>
 @endprepend
 @section('content')
@@ -117,7 +120,8 @@
 
                         <div class="form-group form-group submit-section col-12">
                             <button type="submit" id="save" class="btn btn-success submit-btn float-right">Add</button>
-                            <button style="margin-right:10px;" type="button" id="cancelbutton" class="text-white btn btn-warning submit-btn float-right" onclick="reset()">Cancel</button>
+                            <button style="margin-right:10px;" type="button" id="cancelbutton" class="text-white btn btn-warning submit-btn float-right" >Cancel</button>
+                            {{-- onclick="reset()" --}}
                         </div>
 
                 </div>
@@ -168,9 +172,9 @@
                         </tr>
                         </thead>
                         <tbody>
-                            
                         </tbody>
                 </table>
+                <p style="visibility: visible;" id="line" class="text-center">No data available in table</p>
             </div>
         </div>
 
