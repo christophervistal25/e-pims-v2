@@ -36,6 +36,7 @@
 <body>
 	<!-- Main Wrapper -->
 	<div id="app" class="main-wrapper">
+	<div id='app' class="main-wrapper">
 		<!-- Header -->
 		<div class="header">
 			<!-- Logo -->
