@@ -62,7 +62,7 @@ $(function() {
         } else {
             table.destroy();
             table = $('#serviceRecords').DataTable({
-                processing: true,
+                processing: false,
                 serverSide: true,
                 destroy: true,  
                 retrieve: true,
