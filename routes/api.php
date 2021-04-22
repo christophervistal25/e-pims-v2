@@ -29,10 +29,12 @@ Route::group(['prefix' => 'employee'], function () {
 });
 
 Route::get('offices', 'Api\OfficeController@list');
+Route::get('office/search/{key}', 'Api\OfficeController@search');
 Route::post('office/store', 'Api\OfficeController@store');
 
 Route::get('positions', 'Api\PositionController@list');
 Route::post('position/store', 'Api\PositionController@store');
+Route::get('position/search/{key}', 'Api\PositionController@search');
 
 Route::group(['prefix' => 'province'], function () {
     Route::get('/all/with/city', 'Api\ProvinceController@allWithCity');

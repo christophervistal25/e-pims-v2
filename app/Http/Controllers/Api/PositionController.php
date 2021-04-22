@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Cache;
 
 class PositionController extends Controller
 {
+
+    public function search(string $key)
+    {
+        return Position::where('position_name', 'like',  '%' . $key . '%')->get();
+    }
+
     public function list()
     {
         // return Cache::rememberForever('positions', function () {

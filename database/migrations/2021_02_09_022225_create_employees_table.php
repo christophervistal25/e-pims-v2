@@ -53,7 +53,7 @@ class CreateEmployeesTable extends Migration
             $table->string('telephone_no')->nullable();
             $table->string('mobile_no')->nullable();
             $table->string('email_address')->nullable();
-            $table->integer('status')->nullable();
+            $table->integer('status')->default(0)->nullable();
             $table->timestamps();
         });
     }

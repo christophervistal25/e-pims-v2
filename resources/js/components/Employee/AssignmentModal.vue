@@ -214,7 +214,7 @@ export default {
                             text: "Successfully create new office",
                             icon: "success"
                         });
-                        this.$emit("assignment-modal-dismiss", response.data);
+                        this.$emit("assignment-modal-dismiss");
                     }
                 })
                 .catch(error => {

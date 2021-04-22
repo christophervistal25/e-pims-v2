@@ -241,42 +241,12 @@
                 >EMPLOYMENT STATUS</label
             >
             <div class="col-lg-9">
-                <!-- <input
-                    v-if="employee.employee_id"
-                    id="officeAssignment"
-                    v-model="employee.employmentStatus"
-                    class="form-control"
-                    :class="
-                        errors.hasOwnProperty('employmentStatus')
-                            ? 'is-invalid'
-                            : ''
-                    "
-                /> -->
                 <v-select
                     label="status_name"
                     @input="onSetSelectStatus"
+                    :value="employee.employmentStatus.status_name"
                     :options="employmentStatus"
                 ></v-select>
-                <!-- <select
-                    id="officeAssignment"
-                    v-model="employee.employmentStatus"
-                    class="form-control"
-                    :class="
-                        errors.hasOwnProperty('employmentStatus')
-                            ? 'is-invalid'
-                            : ''
-                    "
-                >
-                    <option value="" readonly selected
-                        >PLEASE SELECT STATUS</option
-                    >
-                    <option
-                        v-for="(status, index) in employmentStatus"
-                        :key="index"
-                        :value="status.stat_code"
-                        >{{ status.status_name }}</option
-                    >
-                </select> -->
                 <p class="text-danger text-sm">{{ errors.employmentStatus }}</p>
             </div>
 
@@ -297,39 +267,21 @@
                 >DESIGNATION</label
             >
             <div class="col-lg-9">
-                <!-- <input
-                    v-if="employee.employee_id"
-                    v-model="employee.designation"
-                    class="form-control"
-                    :class="
-                        errors.hasOwnProperty('employmentStatus')
-                            ? 'is-invalid'
-                            : ''
-                    "
-                /> -->
                 <v-select
                     label="position_name"
+                    :filterable="false"
+                    :value="employee.designation.position_name"
                     @input="onSetSelectPosition"
-                    :options="positions"
-                ></v-select>
-                <!-- <select
-                    type="text"
-                    id="designation"
-                    v-model="employee.designation"
-                    class="form-control"
-                    :class="
-                        errors.hasOwnProperty('designation') ? 'is-invalid' : ''
-                    "
+                    :options="designations"
+                    @search="onSearchDesignation"
                 >
-                    <option value="" readonly>PLEASE SELECT POSITION</option>
-                    <option
-                        v-for="(position, index) in positions"
-                        :key="index"
-                        :value="position.position_code"
-                        >{{ position.position_name }}
-                    </option>
-                </select> -->
-                <p class="text-danger text-sm">{{ errors.designation }}</p>
+                    <template slot="no-options">
+                        Type atleast 1 word of designation to search.
+                    </template>
+                </v-select>
+                <p class="text-danger text-sm">
+                    {{ errors["designation.position_code"] }}
+                </p>
             </div>
 
             <div class="col-lg-1">
@@ -349,43 +301,17 @@
                 >OFFICE ASSIGNMENT</label
             >
             <div class="col-lg-9">
-                <!-- <input
-                    v-if="employee.employee_id"
-                    type="text"
-                    v-model="employee.officeAssignment"
-                    class="form-control"
-                    :class="
-                        errors.hasOwnProperty('designation') ? 'is-invalid' : ''
-                    "
-                /> -->
-                <!-- <select
-                    type="text"
-                    id="officeAssignment"
-                    v-model="employee.officeAssignment"
-                    class="form-control"
-                    :class="
-                        errors.hasOwnProperty('officeAssignment')
-                            ? 'is-invalid'
-                            : ''
-                    "
-                >
-                    <option value="" readonly selected
-                        >PLEASE SELECT OFFICE</option
-                    >
-                    <option
-                        v-for="(office, index) in offices"
-                        :key="index"
-                        :value="office.office_code"
-                        >{{ office.office_short_name }} -
-                        {{ office.office_name }}
-                    </option>
-                </select> -->
                 <v-select
                     label="office_name"
+                    :filterable="false"
+                    :value="employee.officeAssignment.office_name"
                     @input="onSetSelectOffice"
                     :options="offices"
+                    @search="onSearchOffice"
                 ></v-select>
-                <p class="text-danger text-sm">{{ errors.officeAssignment }}</p>
+                <p class="text-danger text-sm">
+                    {{ errors["officeAssignment.office_code"] }}
+                </p>
             </div>
 
             <div class="col-lg-1">
@@ -408,7 +334,7 @@
         ></designationmodal>
         <assignmentmodal
             :showassignment="isShowAssignment"
-            :positions="positions"
+            :positions="designations"
             @assignment-modal-dismiss="closeAssignmentModal"
         ></assignmentmodal>
         <!-- <button>sample</button> -->
@@ -420,12 +346,14 @@ import DesignationModal from "./DesignationModal.vue";
 import AssignmentModal from "./AssignmentModal.vue";
 import "vue-select/dist/vue-select.css";
 export default {
-    props: ["employee", "errors", "employmentStatus", "offices", "positions"],
+    props: ["employee", "errors", "employmentStatus"],
     data() {
         return {
             isShow: false,
             isShowDesignation: false,
-            isShowAssignment: false
+            isShowAssignment: false,
+            designations: [],
+            offices: []
         };
     },
     components: {
@@ -440,14 +368,40 @@ export default {
         }
     },
     methods: {
+        onSearchOffice(search, loading) {
+            if (search.length >= 3) {
+                loading(true);
+                window.axios
+                    .get(`/api/office/search/${search}`)
+                    .then(response => {
+                        this.offices = response.data;
+                        loading(false);
+                    });
+            } else {
+                this.offices = [];
+            }
+        },
+        onSearchDesignation(search, loading) {
+            if (search.length >= 7) {
+                loading(true);
+                window.axios
+                    .get(`/api/position/search/${search}`)
+                    .then(response => {
+                        this.designations = response.data;
+                        loading(false);
+                    });
+            } else {
+                this.designations = [];
+            }
+        },
         onSetSelectStatus(status) {
-            this.employee.employmentStatus = status.stat_code;
+            this.employee.employmentStatus = status;
         },
         onSetSelectPosition(position) {
-            this.employee.designation = position.position_code;
+            this.employee.designation = position;
         },
         onSetSelectOffice(office) {
-            this.employee.officeAssignment = office.office_code;
+            this.employee.officeAssignment = office;
         },
         onUpload(event) {
             document
@@ -490,30 +444,19 @@ export default {
         openStatusModal() {
             this.isShow = true;
         },
-        closeStatusModal(statusData) {
-            if (statusData) {
-                // this.employmentStatus.push(statusData);
-                this.employmentStatus.unshift(statusData);
-            }
+        closeStatusModal() {
             this.isShow = false;
         },
         openDestinationModal() {
             this.isShowDesignation = true;
         },
-        closeDesignationModal(designation) {
-            if (designation) {
-                this.positions.unshift(designation);
-            }
-
+        closeDesignationModal() {
             this.isShowDesignation = false;
         },
         openAssignmentModal() {
             this.isShowAssignment = true;
         },
-        closeAssignmentModal(assignment) {
-            if (assignment) {
-                this.offices.unshift(assignment);
-            }
+        closeAssignmentModal() {
             this.isShowAssignment = false;
         }
     },

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Cache;
 
 class Position extends Model
 {
-    protected $fillable = ['position_name', 'position_id', 'position_code' ,'position_name', 'salary_grade' ,'position_short_name'];
+    protected $fillable = ['position_id', 'position_code' ,'position_name', 'salary_grade' ,'position_short_name'];
 
     protected $primaryKey = 'position_id';
 

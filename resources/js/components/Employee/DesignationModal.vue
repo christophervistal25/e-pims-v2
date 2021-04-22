@@ -170,7 +170,7 @@ export default {
                             text: "Successfully create new designation",
                             icon: "success"
                         });
-                        this.$emit("designation-modal-dismiss", response.data);
+                        this.$emit("designation-modal-dismiss");
                     }
                 })
                 .catch(error => {

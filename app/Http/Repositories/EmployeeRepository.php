@@ -13,6 +13,7 @@ use App\EmployeeReference;
 use App\EmployeeRelevantQuery;
 use App\EmployeeSpouseChildren;
 use App\EmployeeIssuedID;
+use DB;
 
 class EmployeeRepository
 {
@@ -60,7 +61,6 @@ class EmployeeRepository
                 'telephone_no'         => $data['telephoneNumber'],
                 'mobile_no'            => $data['mobileNumber'],
                 'email_address'        => $data['emailAddress'],
-                'status'               => '',
             ]);
 
 
@@ -354,34 +354,51 @@ class EmployeeRepository
         return $employee->issued_id()->save($employeeIssuedId);
     }
 
-    public function addEmployee(array $data = []) :Employee
+    public function addEmployee(array $data = [])
     {
-       $employee =  Employee::create([
-            'employee_id'    => mt_rand(100000, 999999),
-            'date_birth'     => $data['dateOfBirth'],
-            'firstname'      => $data['firstName'],
-            'lastname'       => $data['lastName'],
-            'middlename'     => $data['middleName'],
-            'extension'      => $data['extension'],
-            'pag_ibig_no'    => $data['pagibigMidNo'],
-            'philhealth_no'  => $data['philhealthNo'],
-            'sss_no'         => $data['sssNo'],
-            'tin_no'         => $data['tinNo'],
-            'gsis_id_no'     => $data['gsisIdNo'],
-            'gsis_id_no'     => $data['gsisIdNo'],
-            'gsis_policy_no' => $data['gsisPolicyNo'],
-            'gsis_bp_no'     => $data['gsisBpNo'],
-            'status'         => $data['employmentStatus'],
-        ]);
+        DB::beginTransaction();
+        try {
+            $employee =  Employee::create([
+                'employee_id'    => mt_rand(100000, 999999),
+                'date_birth'     => $data['dateOfBirth'],
+                'firstname'      => $data['firstName'],
+                'lastname'       => $data['lastName'],
+                'middlename'     => $data['middleName'],
+                'extension'      => $data['extension'],
+                'pag_ibig_no'    => $data['pagibigMidNo'],
+                'philhealth_no'  => $data['philhealthNo'],
+                'sss_no'         => $data['sssNo'],
+                'tin_no'         => $data['tinNo'],
+                'gsis_id_no'     => $data['gsisIdNo'],
+                'gsis_id_no'     => $data['gsisIdNo'],
+                'gsis_policy_no' => $data['gsisPolicyNo'],
+                'gsis_bp_no'     => $data['gsisBpNo'],
+                'status'         => $data['employmentStatus']['stat_code'],
+            ]);
 
+            $employeeInformation              = new EmployeeInformation;
+            $employeeInformation->office_code = $data['officeAssignment']['office_code'];
+            $employeeInformation->pos_code    = $data['designation']['position_code'];
 
-        $employeeInformation              = new EmployeeInformation;
-        $employeeInformation->office_code = $data['officeAssignment'];
-        $employeeInformation->pos_code    = $data['designation'];
+            $employee->information()->save($employeeInformation);
 
-        $employee->information()->save($employeeInformation);
+            DB::commit();
+            return [
+                'employee_id' => $employee->employee_id,
+                'firstname'   => $employee->firstname,
+                'middlename'  => $employee->middlename,
+                'lastname'    => $employee->lastname,
+                'extension'   => $employee->extension,
+                'information' => [
+                    'office'   => $data['officeAssignment'],
+                    'position' => $data['designation'],
+                ],
+            ];
 
-        return $employee;
+        } catch (\Exception $e) {
+            DB::rollback();
+            dd($e->getMessage());
+        }
     }
 
     public function updateEmployee(array $data = [], string $employeeId) :array
@@ -401,12 +418,12 @@ class EmployeeRepository
         $employee->gsis_id_no     = $data['gsisIdNo'];
         $employee->gsis_policy_no = $data['gsisPolicyNo'];
         $employee->gsis_bp_no     = $data['gsisBpNo'];
-        $employee->status         = $data['employmentStatus'];
+        $employee->status         = $data['employmentStatus']['stat_code'];
         $employee->save();
 
         $employee->information->update([
-            'office_code' => $data['officeAssignment'],
-            'pos_code'    => $data['designation'],
+            'office_code' => $data['officeAssignment']['office_code'],
+            'pos_code'    => $data['designation']['position_code'],
         ]);
 
         return $data;

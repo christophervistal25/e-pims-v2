@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Cache;
 
 class OfficeController extends Controller
 {
+    public function search(string $key)
+    {
+        return Office::where('office_name', 'like',  '%' . $key . '%')->get();
+    }
+
     public function list()
     {
         return Cache::rememberForever('offices', function () {

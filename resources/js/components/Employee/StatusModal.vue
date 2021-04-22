@@ -119,7 +119,7 @@ export default {
                             text: "Successfully create new employment status",
                             icon: "success"
                         });
-                        this.$emit("status-modal-dismiss", response.data);
+                        this.$emit("status-modal-dismiss");
                     }
                 })
                 .catch(error => {

@@ -7,13 +7,21 @@ use Illuminate\Http\Request;
 use App\Employee;
 use App\RefStatus;
 use App\EmployeeInformation;
+use Illuminate\Support\Facades\Cache;
 
 class EmployeeController extends Controller
 {
     // Method to display all employee in PDS
     public function list()
     {
-        return Employee::with(['information:EmpIDNo,pos_code,office_code', 'information.office:office_code,office_name', 'information.position:position_code,position_name'])->select(['employee_id', 'lastname', 'firstname', 'middlename', 'extension'])->paginate(10);
+        // If request has query string page.
+        // if(request()->page) {
+            // return Cache::rememberForever('employees_' . request()->page, function () {
+                return Employee::with(['information:EmpIDNo,pos_code,office_code', 'information.office:office_code,office_name', 'information.position:position_code,position_name'])->orderBy('created_at', 'DESC')->select(['employee_id', 'lastname', 'firstname', 'middlename', 'extension'])->paginate(10);
+            // });
+        // } else {
+        //     return Employee::with(['information:EmpIDNo,pos_code,office_code', 'information.office:office_code,office_name', 'information.position:position_code,position_name'])->select(['employee_id', 'lastname', 'firstname', 'middlename', 'extension'])->paginate(10);
+        // }
     }
 
 
@@ -25,8 +33,8 @@ class EmployeeController extends Controller
     public function find(string $employeeIdNumber) :Employee
     {
         return Employee::with(['information:EmpIDNo,pos_code,office_code,photo',
-                                'information.position:position_id,position_code',
-                                'information.office:office_code'])
+                                'information.position:position_id,position_code,position_name',
+                                'information.office:office_code,office_name', 'status', 'step:employee_id,step_no_to,salary_amount_to'])
                                     ->find($employeeIdNumber);
     }
 
@@ -37,7 +45,9 @@ class EmployeeController extends Controller
 
     public function status()
     {
-        return RefStatus::get(['id', 'stat_code', 'status_name']);
+       return Cache::rememberForever('status', function () {
+            return RefStatus::get(['id', 'stat_code', 'status_name']);
+        });
     }
 
     public function onUploadImage(Request $request)
@@ -45,13 +55,9 @@ class EmployeeController extends Controller
 
         if($request->has('image')) {
 
-            $imageName = $request->employee_id . '_' . $request->file('image')->getClientOriginalName();
+            $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
 
             $request->file('image')->storeAs('/public/employee_images', $imageName);
-
-            $info = EmployeeInformation::where('EmpIDNo', $request->employee_id)->first();
-            $info->photo = $imageName;
-            $info->save();
 
             return $imageName;
         }

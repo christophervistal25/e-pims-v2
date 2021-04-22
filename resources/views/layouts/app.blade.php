@@ -35,7 +35,7 @@
 {{-- mini-sidebar --}}
 <body>
 	<!-- Main Wrapper -->
-	<div class="main-wrapper">
+	<div id="app" class="main-wrapper">
 		<!-- Header -->
 		<div class="header">
 			<!-- Logo -->

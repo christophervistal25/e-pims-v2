@@ -2280,7 +2280,7 @@ __webpack_require__.r(__webpack_exports__);
             icon: "success"
           });
 
-          _this.$emit("assignment-modal-dismiss", response.data);
+          _this.$emit("assignment-modal-dismiss");
         }
       })["catch"](function (error) {
         _this.isLoading = false;
@@ -2658,91 +2658,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["employee", "errors", "employmentStatus", "offices", "positions"],
+  props: ["employee", "errors", "employmentStatus"],
   data: function data() {
     return {
       isShow: false,
       isShowDesignation: false,
-      isShowAssignment: false
+      isShowAssignment: false,
+      designations: [],
+      offices: []
     };
   },
   components: (_components = {
@@ -2755,17 +2683,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   methods: {
+    onSearchOffice: function onSearchOffice(search, loading) {
+      var _this = this;
+
+      if (search.length >= 3) {
+        loading(true);
+        window.axios.get("/api/office/search/".concat(search)).then(function (response) {
+          _this.offices = response.data;
+          loading(false);
+        });
+      } else {
+        this.offices = [];
+      }
+    },
+    onSearchDesignation: function onSearchDesignation(search, loading) {
+      var _this2 = this;
+
+      if (search.length >= 7) {
+        loading(true);
+        window.axios.get("/api/position/search/".concat(search)).then(function (response) {
+          _this2.designations = response.data;
+          loading(false);
+        });
+      } else {
+        this.designations = [];
+      }
+    },
     onSetSelectStatus: function onSetSelectStatus(status) {
-      this.employee.employmentStatus = status.stat_code;
+      this.employee.employmentStatus = status;
     },
     onSetSelectPosition: function onSetSelectPosition(position) {
-      this.employee.designation = position.position_code;
+      this.employee.designation = position;
     },
     onSetSelectOffice: function onSetSelectOffice(office) {
-      this.employee.officeAssignment = office.office_code;
+      this.employee.officeAssignment = office;
     },
     onUpload: function onUpload(event) {
-      var _this = this;
+      var _this3 = this;
 
       document.querySelector("#employee-image").setAttribute("src", URL.createObjectURL(event.target.files[0])); // Upload the image.
 
@@ -2780,7 +2734,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           "Content-Type": "multipart/form-data"
         }
       }).then(function (response) {
-        _this.employee.image = response.data;
+        _this3.employee.image = response.data;
       })["catch"](function (response) {
         console.log(response);
       });
@@ -2798,32 +2752,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     openStatusModal: function openStatusModal() {
       this.isShow = true;
     },
-    closeStatusModal: function closeStatusModal(statusData) {
-      if (statusData) {
-        // this.employmentStatus.push(statusData);
-        this.employmentStatus.unshift(statusData);
-      }
-
+    closeStatusModal: function closeStatusModal() {
       this.isShow = false;
     },
     openDestinationModal: function openDestinationModal() {
       this.isShowDesignation = true;
     },
-    closeDesignationModal: function closeDesignationModal(designation) {
-      if (designation) {
-        this.positions.unshift(designation);
-      }
-
+    closeDesignationModal: function closeDesignationModal() {
       this.isShowDesignation = false;
     },
     openAssignmentModal: function openAssignmentModal() {
       this.isShowAssignment = true;
     },
-    closeAssignmentModal: function closeAssignmentModal(assignment) {
-      if (assignment) {
-        this.offices.unshift(assignment);
-      }
-
+    closeAssignmentModal: function closeAssignmentModal() {
       this.isShowAssignment = false;
     }
   },
@@ -3015,7 +2956,7 @@ __webpack_require__.r(__webpack_exports__);
             icon: "success"
           });
 
-          _this.$emit("designation-modal-dismiss", response.data);
+          _this.$emit("designation-modal-dismiss");
         }
       })["catch"](function (error) {
         _this.isLoading = false;
@@ -3059,8 +3000,6 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-//
-//
 //
 //
 //
@@ -3350,7 +3289,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         _this.data = response.data;
         _this.isLoading = false;
       });
-      console.log(this.data);
     },
     nextPage: function nextPage() {
       var _this2 = this;
@@ -3390,7 +3328,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       }
     },
     submitEmployee: function submitEmployee() {
-      if (this.employee.hasOwnProperty("employee_id") && this.employee_id) {
+      if (this.employee.hasOwnProperty("employee_id")) {
         this.updateEmployee();
       } else {
         this.addNewEmployee();
@@ -3408,11 +3346,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
             icon: "success"
           });
 
-          _this5.employees.push(response.data);
+          _this5.employees.unshift(response.data);
         }
       })["catch"](function (error) {
         _this5.isLoading = false;
-        _this5.errors = {}; // Check the error status code.
+        _this5.errors = {};
 
         if (error.response.status === 422) {
           Object.keys(error.response.data.errors).map(function (field) {
@@ -3430,8 +3368,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
     updateEmployee: function updateEmployee() {
       var _this6 = this;
 
+      this.isLoading = true;
       window.axios.put("/employee/record/".concat(this.employee.employee_id, "/update"), this.employee).then(function (response) {
         if (response.status === 200) {
+          _this6.isLoading = false;
           sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
             text: "Successfully update employee.",
             icon: "success"
@@ -3444,6 +3384,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         _this6.errors = {}; // Check the error status code.
 
         if (error.response.status === 422) {
+          _this6.isLoading = false;
           Object.keys(error.response.data.errors).map(function (field) {
             var _error$response$data$2 = _slicedToArray(error.response.data.errors[field], 1),
                 fieldMessage = _error$response$data$2[0];
@@ -3479,8 +3420,22 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
           if (response.data.information) {
             _this7.employee.image = response.data.information.photo;
-            _this7.employee.designation = response.data.information.position.position_code;
             _this7.employee.officeAssignment = response.data.information.office.office_code;
+            var hasPosition = response.data.information.hasOwnProperty("position");
+            var hasOffice = response.data.information.hasOwnProperty("office");
+
+            if (hasPosition) {
+              _this7.employee.designation = response.data.information.position;
+            }
+
+            if (hasOffice) {
+              _this7.employee.officeAssignment = response.data.information.office;
+            }
+
+            if (response.data.step) {
+              _this7.employee.basicRate = response.data.step.salary_amount_to;
+              _this7.employee.step = response.data.step.step_no_to;
+            }
           }
 
           _this7.showAddEmployeeForm = true;
@@ -3509,12 +3464,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       }
     })["catch"](function (err) {
       return console.log(err);
-    });
-    window.axios.get("/api/offices").then(function (response) {
-      _this9.offices = response.data;
-    });
-    window.axios.get("/api/positions").then(function (response) {
-      _this9.positions = response.data;
     });
   }
 });
@@ -3684,7 +3633,7 @@ __webpack_require__.r(__webpack_exports__);
             icon: "success"
           });
 
-          _this.$emit("status-modal-dismiss", response.data);
+          _this.$emit("status-modal-dismiss");
         }
       })["catch"](function (error) {
         _this.isLoading = false;
@@ -36848,7 +36797,11 @@ var render = function() {
           { staticClass: "col-lg-9" },
           [
             _c("v-select", {
-              attrs: { label: "status_name", options: _vm.employmentStatus },
+              attrs: {
+                label: "status_name",
+                value: _vm.employee.employmentStatus.status_name,
+                options: _vm.employmentStatus
+              },
               on: { input: _vm.onSetSelectStatus }
             }),
             _vm._v(" "),
@@ -36885,13 +36838,36 @@ var render = function() {
           "div",
           { staticClass: "col-lg-9" },
           [
-            _c("v-select", {
-              attrs: { label: "position_name", options: _vm.positions },
-              on: { input: _vm.onSetSelectPosition }
-            }),
+            _c(
+              "v-select",
+              {
+                attrs: {
+                  label: "position_name",
+                  filterable: false,
+                  value: _vm.employee.designation.position_name,
+                  options: _vm.designations
+                },
+                on: {
+                  input: _vm.onSetSelectPosition,
+                  search: _vm.onSearchDesignation
+                }
+              },
+              [
+                _c("template", { slot: "no-options" }, [
+                  _vm._v(
+                    "\n                    Type atleast 1 word of designation to search.\n                "
+                  )
+                ])
+              ],
+              2
+            ),
             _vm._v(" "),
             _c("p", { staticClass: "text-danger text-sm" }, [
-              _vm._v(_vm._s(_vm.errors.designation))
+              _vm._v(
+                "\n                " +
+                  _vm._s(_vm.errors["designation.position_code"]) +
+                  "\n            "
+              )
             ])
           ],
           1
@@ -36924,12 +36900,21 @@ var render = function() {
           { staticClass: "col-lg-9" },
           [
             _c("v-select", {
-              attrs: { label: "office_name", options: _vm.offices },
-              on: { input: _vm.onSetSelectOffice }
+              attrs: {
+                label: "office_name",
+                filterable: false,
+                value: _vm.employee.officeAssignment.office_name,
+                options: _vm.offices
+              },
+              on: { input: _vm.onSetSelectOffice, search: _vm.onSearchOffice }
             }),
             _vm._v(" "),
             _c("p", { staticClass: "text-danger text-sm" }, [
-              _vm._v(_vm._s(_vm.errors.officeAssignment))
+              _vm._v(
+                "\n                " +
+                  _vm._s(_vm.errors["officeAssignment.office_code"]) +
+                  "\n            "
+              )
             ])
           ],
           1
@@ -36960,7 +36945,7 @@ var render = function() {
       _c("assignmentmodal", {
         attrs: {
           showassignment: _vm.isShowAssignment,
-          positions: _vm.positions
+          positions: _vm.designations
         },
         on: { "assignment-modal-dismiss": _vm.closeAssignmentModal }
       })
@@ -37368,7 +37353,7 @@ var render = function() {
                                         _vm._s(employee.lastname) +
                                         " ,\n                                    " +
                                         _vm._s(employee.firstname) +
-                                        "\n                                    " +
+                                        ".\n                                    " +
                                         _vm._s(employee.middlename) +
                                         "\n                                    " +
                                         _vm._s(
@@ -37545,9 +37530,7 @@ var render = function() {
                         attrs: {
                           employee: _vm.employee,
                           errors: _vm.errors,
-                          employmentStatus: _vm.employmentStatus,
-                          offices: _vm.offices,
-                          positions: _vm.positions
+                          employmentStatus: _vm.employmentStatus
                         }
                       })
                     ],

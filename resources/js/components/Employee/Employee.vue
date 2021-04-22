@@ -69,7 +69,7 @@
                                     </td>
                                     <td class="text-sm align-middle">
                                         {{ employee.lastname }} ,
-                                        {{ employee.firstname }}
+                                        {{ employee.firstname }}.
                                         {{ employee.middlename }}
                                         {{
                                             employee.extension
@@ -193,8 +193,6 @@
                                     :employee="employee"
                                     :errors="errors"
                                     :employmentStatus="employmentStatus"
-                                    :offices="offices"
-                                    :positions="positions"
                                 ></basic-information>
                             </div>
                             <div class="tab-pane" id="basictab2">
@@ -291,7 +289,6 @@ export default {
                     this.data = response.data;
                     this.isLoading = false;
                 });
-            console.log(this.data);
         },
         nextPage() {
             window.axios(`${this.data.next_page_url}`).then(response => {
@@ -324,10 +321,7 @@ export default {
             }
         },
         submitEmployee() {
-            if (
-                this.employee.hasOwnProperty("employee_id") &&
-                this.employee_id
-            ) {
+            if (this.employee.hasOwnProperty("employee_id")) {
                 this.updateEmployee();
             } else {
                 this.addNewEmployee();
@@ -344,13 +338,13 @@ export default {
                             text: "Successfully add new employee.",
                             icon: "success"
                         });
-                        this.employees.push(response.data);
+
+                        this.employees.unshift(response.data);
                     }
                 })
                 .catch(error => {
                     this.isLoading = false;
                     this.errors = {};
-                    // Check the error status code.
                     if (error.response.status === 422) {
                         Object.keys(error.response.data.errors).map(field => {
                             let [fieldMessage] = error.response.data.errors[
@@ -365,6 +359,7 @@ export default {
             this.fetchEmployeeData(employee.employee_id);
         },
         updateEmployee() {
+            this.isLoading = true;
             window.axios
                 .put(
                     `/employee/record/${this.employee.employee_id}/update`,
@@ -372,6 +367,7 @@ export default {
                 )
                 .then(response => {
                     if (response.status === 200) {
+                        this.isLoading = false;
                         swal({
                             text: "Successfully update employee.",
                             icon: "success"
@@ -384,6 +380,7 @@ export default {
                     this.errors = {};
                     // Check the error status code.
                     if (error.response.status === 422) {
+                        this.isLoading = false;
                         Object.keys(error.response.data.errors).map(field => {
                             let [fieldMessage] = error.response.data.errors[
                                 field
@@ -426,10 +423,34 @@ export default {
                         if (response.data.information) {
                             this.employee.image =
                                 response.data.information.photo;
-                            this.employee.designation =
-                                response.data.information.position.position_code;
+
                             this.employee.officeAssignment =
                                 response.data.information.office.office_code;
+
+                            let hasPosition = response.data.information.hasOwnProperty(
+                                "position"
+                            );
+
+                            let hasOffice = response.data.information.hasOwnProperty(
+                                "office"
+                            );
+
+                            if (hasPosition) {
+                                this.employee.designation =
+                                    response.data.information.position;
+                            }
+
+                            if (hasOffice) {
+                                this.employee.officeAssignment =
+                                    response.data.information.office;
+                            }
+
+                            if (response.data.step) {
+                                this.employee.basicRate =
+                                    response.data.step.salary_amount_to;
+                                this.employee.step =
+                                    response.data.step.step_no_to;
+                            }
                         }
 
                         this.showAddEmployeeForm = true;
@@ -456,13 +477,6 @@ export default {
                 }
             })
             .catch(err => console.log(err));
-
-        window.axios.get("/api/offices").then(response => {
-            this.offices = response.data;
-        });
-        window.axios.get("/api/positions").then(response => {
-            this.positions = response.data;
-        });
     }
 };
 </script>

@@ -44,7 +44,6 @@ class EmployeeController extends Controller
     public function store(NewEmployeeStoreRequest $request)
     {
         $employee = $this->employeeRepository->addEmployee($request->all());
-        $employee = Employee::with(['information:EmpIDNo,pos_code','information.position'])->find($employee->employee_id);
         return response()->json($employee, 201);
     }
 
