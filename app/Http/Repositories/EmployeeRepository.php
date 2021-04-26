@@ -13,6 +13,7 @@ use App\EmployeeReference;
 use App\EmployeeRelevantQuery;
 use App\EmployeeSpouseChildren;
 use App\EmployeeIssuedID;
+use App\RefStatus;
 use DB;
 
 class EmployeeRepository
@@ -356,9 +357,11 @@ class EmployeeRepository
 
     public function addEmployee(array $data = [])
     {
+        $status = RefStatus::find($data['employmentStatus']['id']);
+
         DB::beginTransaction();
         try {
-            $employee =  Employee::create([
+            $fields = [
                 'employee_id'    => mt_rand(100000, 999999),
                 'date_birth'     => $data['dateOfBirth'],
                 'firstname'      => $data['firstName'],
@@ -374,11 +377,20 @@ class EmployeeRepository
                 'gsis_policy_no' => $data['gsisPolicyNo'],
                 'gsis_bp_no'     => $data['gsisBpNo'],
                 'status'         => $data['employmentStatus']['stat_code'],
-            ]);
+            ];
+
+            if($status->id === 1 && strtoupper($status->status_name) === 'PERMANENT') {
+                $fields['dbp_account_no'] = $data['lbpAccountNo'];
+            } else {
+                $fields['lbp_account_no'] = $data['lbpAccountNo'];
+            }
+
+            $employee =  Employee::create($fields);
 
             $employeeInformation              = new EmployeeInformation;
             $employeeInformation->office_code = $data['officeAssignment']['office_code'];
             $employeeInformation->pos_code    = $data['designation']['position_code'];
+            $employeeInformation->photo       = $data['image'];
 
             $employee->information()->save($employeeInformation);
 
@@ -403,6 +415,8 @@ class EmployeeRepository
 
     public function updateEmployee(array $data = [], string $employeeId) :array
     {
+        $status = RefStatus::find($data['employmentStatus']['id']);
+
         $employee = Employee::find($employeeId);
 
         $employee->date_birth     = $data['dateOfBirth'];
@@ -418,12 +432,20 @@ class EmployeeRepository
         $employee->gsis_id_no     = $data['gsisIdNo'];
         $employee->gsis_policy_no = $data['gsisPolicyNo'];
         $employee->gsis_bp_no     = $data['gsisBpNo'];
+        if($status->id === 1 && strtoupper($status->status_name) === 'PERMANENT') {
+            $employee->dbp_account_no = $data['lbpAccountNo'];
+            $employee->lbp_account_no = '';
+        } else {
+            $employee->lbp_account_no = $data['lbpAccountNo'];
+            $employee->dbp_account_no = '';
+        }
         $employee->status         = $data['employmentStatus']['stat_code'];
         $employee->save();
 
         $employee->information->update([
             'office_code' => $data['officeAssignment']['office_code'],
             'pos_code'    => $data['designation']['position_code'],
+            'photo' => $data['image'],
         ]);
 
         return $data;

@@ -15,7 +15,7 @@ class EmployeeController extends Controller
     public function list()
     {
         return Employee::with(['information:EmpIDNo,pos_code,office_code', 'information.office:office_code,office_name', 'information.position:position_code,position_name'])->orderBy('created_at', 'DESC')->select(['employee_id', 'lastname', 'firstname', 'middlename', 'extension'])->paginate(10);
-       
+
     }
 
     public function search(string $key)

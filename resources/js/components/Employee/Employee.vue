@@ -413,6 +413,9 @@ export default {
                             response.data.philhealth_no;
                         this.employee.sssNo = response.data.sss_no;
                         this.employee.tinNo = response.data.tin_no;
+                        this.employee.lbpAccountNo =
+                            response.data.lbp_account_no ||
+                            response.data.dbp_account_no;
                         this.employee.employmentStatus = response.data.status;
                         this.employee.gsisPolicyNo =
                             response.data.gsis_policy_no;

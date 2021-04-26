@@ -45,7 +45,16 @@
             <p class="text-danger text-sm">{{ errors.tinNo }}</p>
         </div>
         <div class="form-group">
-            <label for="" class="col-form-label">LBP ACCOUNT NO.</label>
+            <label
+                for=""
+                class="col-form-label"
+                v-html="
+                    employee.employmentStatus.status_name !== 'PERMANENT'
+                        ? 'LBP ACCOUNT NO.'
+                        : 'DBP ACCOUNT NO.'
+                "
+            >
+            </label>
             <input
                 type="number"
                 v-model="employee.lbpAccountNo"

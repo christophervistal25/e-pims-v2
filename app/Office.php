@@ -31,9 +31,9 @@ class Office extends Model
         parent::boot();
 
         self::creating(function ($office) {
-            $maxOfficeCode         = self::max('office_code');
-            $code                  = self::ID_PREFIX . str_pad(($maxOfficeCode + 1), 4, '0', STR_PAD_LEFT);
-            $office->office_code = $code;
+            // $maxOfficeCode         = self::max('office_code');
+            // $code                  = self::ID_PREFIX . str_pad(($maxOfficeCode + 1), 4, '0', STR_PAD_LEFT);
+            // $office->office_code = $code;
             Cache::forget('offices');
         });
 

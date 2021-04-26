@@ -29,6 +29,8 @@ class Employee extends Model
         'philhealth_no',
         'sss_no',
         'tin_no',
+        'lbp_account_no',
+        'dbp_account_no',
         'agency_employee_no',
         'citizenship',
         'residential_house_no',
@@ -61,7 +63,7 @@ class Employee extends Model
             $employee->trans_no = str_pad((self::count() + 1), 3, 0, STR_PAD_LEFT);
         });
     }
-                
+
     /**
      * Get the employee's full concatenated name.
      */
@@ -164,7 +166,7 @@ class Employee extends Model
 
     public function status()
     {
-        return $this->hasOne(RefStatus::class, 'stat_code', 'status');
+        return $this->hasOne(RefStatus::class, 'id', 'status');
     }
 
     /**

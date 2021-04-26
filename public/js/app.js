@@ -2047,6 +2047,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["employee", "errors"]
 });
@@ -3444,6 +3453,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           _this7.employee.philhealthNo = response.data.philhealth_no;
           _this7.employee.sssNo = response.data.sss_no;
           _this7.employee.tinNo = response.data.tin_no;
+          _this7.employee.lbpAccountNo = response.data.lbp_account_no || response.data.dbp_account_no;
           _this7.employee.employmentStatus = response.data.status;
           _this7.employee.gsisPolicyNo = response.data.gsis_policy_no;
           _this7.employee.gsisBpNo = response.data.gsis_bp_no;
@@ -17125,7 +17135,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.button-wrapper[data-v-b141abb8] {\r\n    position: relative;\n}\n.button-wrapper span.label[data-v-b141abb8] {\r\n    position: relative;\r\n    z-index: 0;\r\n    display: inline-block;\r\n    cursor: pointer;\r\n    color: #fff;\r\n    text-transform: uppercase;\n}\n#upload[data-v-b141abb8] {\r\n    display: inline-block;\r\n    position: absolute;\r\n    z-index: 1;\r\n    top: 0;\r\n    left: 0;\r\n    opacity: 0;\n}\r\n", ""]);
+exports.push([module.i, "\n.button-wrapper[data-v-b141abb8] {\n    position: relative;\n}\n.button-wrapper span.label[data-v-b141abb8] {\n    position: relative;\n    z-index: 0;\n    display: inline-block;\n    cursor: pointer;\n    color: #fff;\n    text-transform: uppercase;\n}\n#upload[data-v-b141abb8] {\n    display: inline-block;\n    position: absolute;\n    z-index: 1;\n    top: 0;\n    left: 0;\n    opacity: 0;\n}\n", ""]);
 
 // exports
 
@@ -17144,7 +17154,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.cursor-pointer {\r\n    cursor: pointer;\n}\n.status-item {\r\n    border-width: 3px;\r\n    border-style: dashed;\n}\n.status-item:hover {\r\n    background: #f2f3f4;\r\n    transition: 300ms ease-in-out;\n}\r\n", ""]);
+exports.push([module.i, "\n.cursor-pointer {\n    cursor: pointer;\n}\n.status-item {\n    border-width: 3px;\n    border-style: dashed;\n}\n.status-item:hover {\n    background: #f2f3f4;\n    transition: 300ms ease-in-out;\n}\n", ""]);
 
 // exports
 
@@ -17163,7 +17173,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.cursor-pointer[data-v-69bce302] {\r\n    cursor: pointer;\n}\r\n", ""]);
+exports.push([module.i, "\n.cursor-pointer[data-v-69bce302] {\n    cursor: pointer;\n}\n", ""]);
 
 // exports
 
@@ -17201,7 +17211,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, "\ntd[data-v-71d926a4] {\r\n    cursor: pointer;\r\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-71d926a4]:hover {\r\n    background: #f1f2f3;\n}\r\n", ""]);
+exports.push([module.i, "\ntd[data-v-71d926a4] {\n    cursor: pointer;\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-71d926a4]:hover {\n    background: #f1f2f3;\n}\n", ""]);
 
 // exports
 
@@ -35796,9 +35806,17 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "form-group" }, [
-      _c("label", { staticClass: "col-form-label", attrs: { for: "" } }, [
-        _vm._v("LBP ACCOUNT NO.")
-      ]),
+      _c("label", {
+        staticClass: "col-form-label",
+        attrs: { for: "" },
+        domProps: {
+          innerHTML: _vm._s(
+            _vm.employee.employmentStatus.status_name !== "PERMANENT"
+              ? "LBP ACCOUNT NO."
+              : "DBP ACCOUNT NO."
+          )
+        }
+      }),
       _vm._v(" "),
       _c("input", {
         directives: [
