@@ -27,6 +27,7 @@ class OldEmployeeUpdateRequest extends FormRequest
             'employee_id'      => 'required|exists:employees',
             'lastName'         => 'required',
             'dateOfBirth'      => 'required|date',
+            'lbpAccountNo'      => 'required|unique:employees,lbp_account_no,' . request()->employee_id . ',employee_id|unique:employees,dbp_account_no,' . request()->employee_id . ',employee_id',
             'designation.position_code'      => 'required|exists:positions,position_code',
             'officeAssignment.office_code' => 'required|exists:offices,office_code',
             'employmentStatus.stat_code' => 'required|exists:ref_statuses,stat_code',
@@ -45,6 +46,7 @@ class OldEmployeeUpdateRequest extends FormRequest
             'employmentStatus.stat_code'   => 'employment status',
             'designation.position_code'    => 'designation',
             'officeAssignment.office_code' => 'office',
+            'lbpAccountNo' => 'account no.'
         ];
     }
 }

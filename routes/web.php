@@ -51,5 +51,7 @@ Route::group(['prefix' => 'employee'], function () {
     Route::post('/personal/relevant/queries/', 'PersonalDataSheetController@storeRelevantQueries');
     Route::post('/personal/references', 'PersonalDataSheetController@storeReferences');
     Route::post('/personal/issued/id', 'PersonalDataSheetController@storeIssuedID');
+
+    Route::resource('leave', 'EmployeeLeave\LeaveController');
 });
 Route::resource('/print-increment', 'PrintIncrementController');

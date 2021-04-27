@@ -1,34 +1,20 @@
 <template>
     <div>
-        <div class="row">
-            <div class="col-lg-6">
-                <label class="switch">
-                    <input
-                        type="checkbox"
-                        v-model="tableView"
-                        @click="changeView"
-                    />
-                    <span class="slider round"></span>
-                    View more information
-                </label>
-            </div>
-            <div class="col-lg-6 mb-2">
-                <a
-                    href="/employee/create/personal/data/sheet"
-                    class="btn btn-primary float-right"
-                    >PDS for new employee</a
-                >
-            </div>
+        <div class="float-right mb-2">
+            <a
+                href="/employee/create/personal/data/sheet"
+                class="btn btn-primary float-right"
+                >PDS for new employee</a
+            >
         </div>
-
         <div>
-            <table class="table table-hover table-bordered" v-if="!tableView">
+            <table class="table table-hover table-bordered">
                 <thead>
                     <tr>
                         <th scope="col">Employee ID</th>
                         <th scope="col">Fullname</th>
                         <th scope="col" class="text-center">Position</th>
-                        <th scope="col" class="text-center">Options</th>
+                        <th scope="col" class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,6 +26,18 @@
                         </td>
                         <td>&nbsp;</td>
                         <td class="text-center">
+                            <button
+                                @click="
+                                    showFullInformation(employee.employee_id)
+                                "
+                                class="btn btn-info btn-sm rounded-circle shadow text-white mr-2"
+                                :title="
+                                    `View Information of ${employee.lastname} , ${employee.firstname} ${employee.middlename} ${employee.extension}`
+                                "
+                            >
+                                <i class="fas fa-eye font-weight-bold"></i>
+                            </button>
+
                             <a
                                 :href="
                                     `/employee/create/${employee.employee_id}/personal/data/sheet`
@@ -50,13 +48,6 @@
                                 "
                             >
                                 <i class="fas fa-plus font-weight-bold"></i>
-                            </a>
-
-                            <a
-                                :href="`#`"
-                                class="btn btn-success btn-sm rounded-circle shadow text-white"
-                            >
-                                <i class="fas fa-edit font-weight-bold"></i>
                             </a>
                         </td>
                     </tr>
@@ -70,13 +61,19 @@
 export default {
     data() {
         return {
-            tableView: false,
-            employees: []
+            employees: [],
+            employee: {}
         };
     },
     methods: {
-        changeView() {
-            this.$emit("table_view", this.tableView);
+        showFullInformation(employee_id) {
+            window.axios
+                .get(`/api/employee/show/${employee_id}`)
+                .then(response => {
+                    if (response.status === 200) {
+                        this.employee = response.data;
+                    }
+                });
         }
     },
     created() {
@@ -88,5 +85,3 @@ export default {
     }
 };
 </script>
-
-<style></style>
