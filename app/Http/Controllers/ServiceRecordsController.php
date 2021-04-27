@@ -154,7 +154,7 @@ class ServiceRecordsController extends Controller
         $service_record->separation_date        = $request['date'];
         $service_record->separation_cause       = $request['cause'];
         $service_record->save();
-        Session::flash('alert-success', 'Update Salary Adjustment Successfully');
+        Session::flash('alert-success', 'Update Service Records Successfully');
         return back()->with('success','Updated Successfully');
     }
 
