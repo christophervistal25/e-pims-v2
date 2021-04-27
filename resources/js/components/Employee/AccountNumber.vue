@@ -56,10 +56,16 @@
             >
             </label>
             <input
-                type="number"
+                type="text"
                 v-model="employee.lbpAccountNo"
                 class="form-control col-lg-12"
+                :class="
+                    errors.hasOwnProperty('lbpAccountNo') ? 'is-invalid' : ''
+                "
             />
+            <p class="text-danger text-sm" v-if="errors.lbpAccountNo">
+                {{ errors.lbpAccountNo }}
+            </p>
         </div>
 
         <div class="form-group">

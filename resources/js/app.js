@@ -1,12 +1,10 @@
 require("./bootstrap");
 window.Vue = require("vue");
 
-
 import vSelect from "vue-select";
 
 Vue.component("v-select", vSelect);
 
-Vue.component("sample", require("./components/Sample.vue").default);
 Vue.component(
     "statusmodal",
     require("./components/Employee/StatusModal.vue").default
@@ -23,6 +21,19 @@ Vue.component(
 Vue.component(
     "personal-data-sheet",
     require("./components/PersonalData/CreatePersonalDataSheet.vue").default
+);
+
+// Vue.component(
+//     "personal-data-with-employee",
+//     require("./components/PersonalData/CreatePersonalDataSheetWithEmployee.vue")
+//         .default
+// );
+
+//  Leave Components
+Vue.component("leave-search", require("./components/Leave/Search.vue").default);
+Vue.component(
+    "leave-content",
+    require("./components/Leave/Content.vue").default
 );
 
 Vue.component(
@@ -149,16 +160,6 @@ Vue.component(
 // EDIT OF PERSONAL DATA SHEET EXISTS
 
 Vue.component(
-    "employee-table",
-    require("./components/Employee/Table.vue").default
-);
-
-Vue.component("tab-view", require("./components/Employee/Tab.vue").default);
-Vue.component(
-    "employee-records",
-    require("./components/Employee/Records.vue").default
-);
-Vue.component(
     "employee",
     require("./components/Employee/Employee.vue").default
 );
@@ -174,48 +175,11 @@ Vue.component(
 );
 
 Vue.component(
-    "view-personal-information",
-    require("./components/Employee/ViewPersonalInformation.vue").default
+    "employee-pds-table",
+    require("./components/PersonalData/EmployeePDSTable.vue").default
 );
 
-Vue.component(
-    "view-family-background",
-    require("./components/Employee/ViewFamilyBackground.vue").default
-);
 
-Vue.component(
-    "view-educational-background",
-    require("./components/Employee/ViewEducationalBackground.vue").default
-);
-
-Vue.component(
-    "view-work-experience",
-    require("./components/Employee/ViewWorkExperience.vue").default
-);
-
-Vue.component(
-    "view-civil-service",
-    require("./components/Employee/ViewCivilService.vue").default
-);
-
-Vue.component(
-    "view-learning-and-development",
-    require("./components/Employee/ViewLearningAndDevelopment.vue").default
-);
-Vue.component(
-    "view-other-information",
-    require("./components/Employee/ViewOtherInformation.vue").default
-);
-
-Vue.component(
-    "view-references",
-    require("./components/Employee/ViewReferences.vue").default
-);
-
-Vue.component(
-    "view-government-issued-id",
-    require("./components/Employee/ViewGovernmentIssuedID.vue").default
-);
 
 const app = new Vue({
     el: "#app"

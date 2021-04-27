@@ -17,12 +17,12 @@
 </style>
 @endprepend
 @section('content')
-@include('Plantilla.add-ons.success')
+@include('ServiceRecords.add-ons.success')
 <div class="kanban-board card mb-0">
     <div class="card-body">
         <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  'd-none' : '' }}">
            
-            <form action="{{ route('service-records.update', $service_record->id) }}" method="post" id="serviceRecordForm">
+            <form action="{{ route('service-records.update', $service_record->id) }}" method="post" id="serviceRecordUpdateForm">
                 @csrf
                 @method('PUT')
                     <div class="row">
@@ -36,6 +36,19 @@
                             <label>Employee_id<span class="text-danger">*</span></label>
                             <input class="form-control" value="{{ $service_record->employee_id }}" name="employeeId" id="employeeId" type="text" readonly>
                         </div>
+
+                        <div class="form-group col-12 col-lg-12 ">
+                            <label>Employee Name</label>
+                            <select class="form-control form-control-xs selectpicker {{ $errors->has('')  ? 'is-invalid' : ''}}" 
+                                name="" data-live-search="true" id="" data-size="5" disabled>
+                                <option></option>
+                                @foreach($plantilla as $plantillas)
+                                <option {{ $service_record->employee_id == $plantillas->employee_id ? 'selected' : '' }} value="{{ $plantillas->employee_id }}">{{ $plantillas->employee->lastname }}, {{ $plantillas->employee->firstname }} {{ $plantillas->employee->middlename }}</option>
+                                @endforeach
+                                </select>
+                           
+                        </div>
+
 
                         <div class="form-group col-12 col-lg-3">
                             <label>From<span class="text-danger">*</span></label>
@@ -112,7 +125,7 @@
                         </div>
 
                         <div class="form-group form-group submit-section col-12">
-                            <button type="submit" class="btn btn-success submit-btn float-right">Add</button>
+                            <button type="submit" class="btn btn-success submit-btn float-right">Update</button>
                             <a href="/service-records"><button style="margin-right:10px;" type="button" class="text-white btn btn-warning submit-btn float-right"><i class="la la-arrow-left"></i>Back</button></a>
                         </div>
 

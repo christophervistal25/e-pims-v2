@@ -26,6 +26,7 @@ class NewEmployeeStoreRequest extends FormRequest
         return [
             'lastName'         => 'required',
             'dateOfBirth'      => 'required|date',
+            'lbpAccountNo'      => 'required|unique:employees,lbp_account_no|unique:employees,dbp_account_no',
             'designation.position_code'      => 'required|exists:positions,position_code',
             'officeAssignment.office_code' => 'required|exists:offices,office_code',
             'employmentStatus.stat_code' => 'required|exists:ref_statuses,stat_code',
@@ -44,6 +45,7 @@ class NewEmployeeStoreRequest extends FormRequest
             'employmentStatus.stat_code'   => 'employment status',
             'designation.position_code'    => 'designation',
             'officeAssignment.office_code' => 'office',
+            'lbpAccountNo' => 'account no.'
         ];
     }
 }
