@@ -25,6 +25,11 @@ class EmployeeController extends Controller
         return view('employee.index');
     }
 
+    public function profile()
+    {
+        return view('PersonalData.employee-profile');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
