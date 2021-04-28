@@ -27,9 +27,7 @@
                         <td>&nbsp;</td>
                         <td class="text-center">
                             <button
-                                @click="
-                                    showFullInformation(employee.employee_id)
-                                "
+                                @click="fetchInformation(employee.employee_id)"
                                 class="btn btn-info btn-sm rounded-circle shadow text-white mr-2"
                                 :title="
                                     `View Information of ${employee.lastname} , ${employee.firstname} ${employee.middlename} ${employee.extension}`
@@ -57,134 +55,9 @@
 
         <div id="emp_profile" class="pro-overview tab-pane fade show active">
             <div class="card mb-0 rounded-0 shadow-none">
-                <div class="card-body rounded-0">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="profile-view">
-                                <div class="profile-img-wrap">
-                                    <div class="profile-img">
-                                        <a href="#"
-                                            ><img
-                                                alt=""
-                                                src="assets/img/profiles/avatar-02.jpg"
-                                        /></a>
-                                    </div>
-                                </div>
-                                <div class="profile-basic">
-                                    <div class="row">
-                                        <div class="col-md-5">
-                                            <div class="profile-info-left">
-                                                <h3
-                                                    class="user-name m-t-0 mb-0"
-                                                >
-                                                    {{ employee.fullname }}
-                                                </h3>
-                                                <h6 class="text-muted">
-                                                    UI/UX Design Team
-                                                </h6>
-                                                <small class="text-muted"
-                                                    >Web Designer</small
-                                                >
-                                                <div class="staff-id">
-                                                    Employee ID : FT-0001
-                                                </div>
-                                                <div
-                                                    class="small doj text-muted"
-                                                >
-                                                    Date of Join : 1st Jan 2013
-                                                </div>
-                                                <div class="staff-msg">
-                                                    <a
-                                                        class="btn btn-custom"
-                                                        href="chat.html"
-                                                        >Send Message</a
-                                                    >
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-7">
-                                            <ul class="personal-info">
-                                                <li>
-                                                    <div class="title">
-                                                        Phone:
-                                                    </div>
-                                                    <div class="text">
-                                                        <a href=""
-                                                            >9876543210</a
-                                                        >
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="title">
-                                                        Email:
-                                                    </div>
-                                                    <div class="text">
-                                                        <a href=""
-                                                            >johndoe@example.com</a
-                                                        >
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="title">
-                                                        Birthday:
-                                                    </div>
-                                                    <div class="text">
-                                                        24th July
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="title">
-                                                        Address:
-                                                    </div>
-                                                    <div class="text">
-                                                        1861 Bayonne Ave,
-                                                        Manchester Township, NJ,
-                                                        08759
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="title">
-                                                        Gender:
-                                                    </div>
-                                                    <div class="text">Male</div>
-                                                </li>
-                                                <li>
-                                                    <div class="title">
-                                                        Reports to:
-                                                    </div>
-                                                    <div class="text">
-                                                        <div class="avatar-box">
-                                                            <div
-                                                                class="avatar avatar-xs"
-                                                            >
-                                                                <img
-                                                                    src="assets/img/profiles/avatar-16.jpg"
-                                                                    alt=""
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                        <a href="profile.html">
-                                                            Jeffery Lalor
-                                                        </a>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="pro-edit">
-                                    <a
-                                        data-target="#profile_info"
-                                        data-toggle="modal"
-                                        class="edit-icon"
-                                        href="#"
-                                        ><i class="fa fa-pencil"></i
-                                    ></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <view-information-summary
+                    :employee="employee"
+                ></view-information-summary>
             </div>
             <div class="row">
                 <div class="col-md-6 d-flex">
@@ -232,72 +105,60 @@
                 </div>
                 <div class="col-md-6 d-flex">
                     <div class="card profile-box flex-fill">
-                        <div class="card-body">
-                            <h3 class="card-title">
-                                Work Experience
-                                <a
-                                    href="#"
-                                    class="edit-icon"
-                                    data-toggle="modal"
-                                    data-target="#experience_info"
-                                    ><i class="fa fa-pencil"></i
-                                ></a>
-                            </h3>
-                            <div class="experience-box">
-                                <ul class="experience-list">
-                                    <li>
-                                        <div class="experience-user">
-                                            <div class="before-circle"></div>
-                                        </div>
-                                        <div class="experience-content">
-                                            <div class="timeline-content">
-                                                <a href="#/" class="name"
-                                                    >Web Designer at Zen
-                                                    Corporation</a
-                                                >
-                                                <span class="time"
-                                                    >Jan 2013 - Present (5 years
-                                                    2 months)</span
-                                                >
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="experience-user">
-                                            <div class="before-circle"></div>
-                                        </div>
-                                        <div class="experience-content">
-                                            <div class="timeline-content">
-                                                <a href="#/" class="name"
-                                                    >Web Designer at Ron-tech</a
-                                                >
-                                                <span class="time"
-                                                    >Jan 2013 - Present (5 years
-                                                    2 months)</span
-                                                >
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="experience-user">
-                                            <div class="before-circle"></div>
-                                        </div>
-                                        <div class="experience-content">
-                                            <div class="timeline-content">
-                                                <a href="#/" class="name"
-                                                    >Web Designer at Dalt
-                                                    Technology</a
-                                                >
-                                                <span class="time"
-                                                    >Jan 2013 - Present (5 years
-                                                    2 months)</span
-                                                >
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        <view-work-experience
+                            :employee="employee"
+                        ></view-work-experience>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill">
+                        <view-civil-service
+                            :employee="employee"
+                        ></view-civil-service>
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill">
+                        <view-voluntary-work
+                            :employee="employee"
+                        ></view-voluntary-work>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill">
+                        <view-learning-and-development
+                            :employee="employee"
+                        ></view-learning-and-development>
+                    </div>
+                </div>
+
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill">
+                        <view-other-information
+                            :employee="employee"
+                        ></view-other-information>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill">
+                        <view-references :employee="employee"></view-references>
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex">
+                    <div class="card profile-box flex-fill">
+                        <view-government-issued-id
+                            :employee="employee"
+                        ></view-government-issued-id>
                     </div>
                 </div>
             </div>
@@ -306,11 +167,18 @@
 </template>
 
 <script>
+import ViewInformationSummary from "./Information/ViewInformationSummary.vue";
 import ViewPersonalInformation from "./Information/ViewPersonalInformation.vue";
 import ViewPersonAddress from "./Information/ViewAddresses.vue";
 import ViewGovernmentAccounts from "./Information/ViewGovernmentIDNumbers.vue";
 import ViewFamilyBackground from "./Information/ViewFamilyBackground.vue";
 import ViewEducationalBackground from "./Information/ViewEducationalBackground.vue";
+import ViewWorkExperience from "./Information/ViewWorkExperience.vue";
+import ViewCivilService from "./Information/ViewCivilService.vue";
+import ViewVoluntaryWork from "./Information/ViewVoluntaryWork.vue";
+import ViewLearningAndDevelopment from "./Information/ViewLearningAndDevelopment.vue";
+import ViewOtherInformation from "./Information/ViewOtherInformation.vue";
+import ViewReferences from "./Information/ViewReferences.vue";
 
 export default {
     data() {
@@ -320,14 +188,21 @@ export default {
         };
     },
     components: {
+        ViewInformationSummary,
         ViewPersonalInformation,
         ViewPersonAddress,
         ViewGovernmentAccounts,
         ViewFamilyBackground,
-        ViewEducationalBackground
+        ViewEducationalBackground,
+        ViewWorkExperience,
+        ViewCivilService,
+        ViewVoluntaryWork,
+        ViewLearningAndDevelopment,
+        ViewOtherInformation,
+        ViewReferences
     },
     methods: {
-        showFullInformation(employee_id) {
+        fetchInformation(employee_id) {
             window.axios
                 .get(`/api/employee/show/${employee_id}`)
                 .then(response => {

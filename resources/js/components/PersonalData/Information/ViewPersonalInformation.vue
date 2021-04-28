@@ -42,7 +42,9 @@
                 </li>
                 <li>
                     <div class="title">Sex</div>
-                    <div class="text">{{ employee.sex || "N/A" }}</div>
+                    <div class="text text-uppercase">
+                        {{ employee.sex || "N/A" }}
+                    </div>
                 </li>
                 <li>
                     <div class="title">Height</div>

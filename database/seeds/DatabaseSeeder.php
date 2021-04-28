@@ -19,9 +19,9 @@ class DatabaseSeeder extends Seeder
             OfficeSeeder::class,
             // SalaryGradeSeeder::class,
             PositionSeeder::class,
-            ProvinceSeeder::class,
-            CitySeeder::class,
-            BarangaySeeder::class
+            // ProvinceSeeder::class,
+            // CitySeeder::class,
+            // BarangaySeeder::class
             // PlantillaSeeder::class,
             ]);
         // $this->call(UsersTable\Seeder::class);

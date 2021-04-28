@@ -2,7 +2,7 @@
     <div>
         <div class="card-body">
             <h3 class="card-title">
-                GOVERNMENT ISSUED ID
+                Voluntary Work
                 <a
                     href="#"
                     class="edit-icon"
@@ -16,21 +16,27 @@
                     <thead>
                         <tr>
                             <th class="text-sm">
-                                Government Issued ID
+                                NAME OF ORGANIZATION
                             </th>
+                            <th class="text-sm">FROM</th>
+                            <th class="text-sm">TO</th>
                             <th class="text-sm">
-                                ID/License/Passport No.
+                                NUMBER OF HOURS
                             </th>
-                            <th class="text-sm">
-                                Date/Place of Issuance
-                            </th>
+                            <th class="text-sm">POSITION</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-if="employee.issued_id">
-                            <td>{{ employee.issued_id.id_type }}</td>
-                            <td>{{ employee.issued_id.id_no }}</td>
-                            <td>{{ employee.issued_id.date }}</td>
+                        <tr
+                            v-for="(voluntaryWork,
+                            index) in employee.voluntary_work"
+                            :key="index"
+                        >
+                            <td>{{ voluntaryWork.name_and_address }}</td>
+                            <td>{{ voluntaryWork.inclusive_date_from }}</td>
+                            <td>{{ voluntaryWork.inclusive_date_to }}</td>
+                            <td>{{ voluntaryWork.no_of_hours }}</td>
+                            <td>{{ voluntaryWork.position }}</td>
                         </tr>
                     </tbody>
                 </table>

@@ -413,11 +413,11 @@ class EmployeeRepository
         }
     }
 
-    public function updateEmployee(array $data = [], string $employeeId) :array
+    public function updateEmployee(array $data = []) :array
     {
         $status = RefStatus::find($data['employmentStatus']['id']);
 
-        $employee = Employee::find($employeeId);
+        $employee = Employee::find($data['employee_id']);
 
         $employee->date_birth     = $data['dateOfBirth'];
         $employee->firstname      = $data['firstName'];
@@ -442,13 +442,14 @@ class EmployeeRepository
         }
 
         $employee->status         = $data['employmentStatus']['stat_code'];
-        $employee->save();
 
-        $employee->information->update([
-            'office_code' => $data['officeAssignment']['office_code'],
-            'pos_code'    => $data['designation']['position_code'],
-            'photo' => $data['image'],
-        ]);
+        $information = new EmployeeInformation();
+        $information->office_code = $data['officeAssignment']['office_code'];
+        $information->pos_code = $data['designation']['position_code'];
+        $information->photo = $data['image'];
+
+        $employee->save();
+        $employee->information()->save($information);
 
         return $data;
     }
