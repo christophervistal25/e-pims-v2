@@ -1,5 +1,4 @@
 // display salary grade
-
     $(function() {
         $('#salaryAdjustment').DataTable({
             processing: true,
@@ -19,48 +18,46 @@
             ]
         });
     });
-
-    ////confirmation in delete
-    function myFunction() {
-        if(!confirm("Are You Sure to delete this"))
-        event.preventDefault();
-    }
-
-// number only
-    $(function(){
-        $("input[id='salaryNew']").on('input', function (e) {
-        $(this).val($(this).val().replace(/[^0-9.]/g, ''));
+        ////confirmation in delete
+        function myFunction() {
+            if(!confirm("Are You Sure to delete this"))
+            event.preventDefault();
+        }
+    // number only
+        $(function(){
+            $("input[id='salaryNew']").on('input', function (e) {
+            $(this).val($(this).val().replace(/[^0-9.]/g, ''));
+            });
         });
-    });
-    $(function(){
-        $("input[id='itemNo']").on('input', function (e) {
-        $(this).val($(this).val().replace(/[^0-9.]/g, ''));
+        $(function(){
+            $("input[id='itemNo']").on('input', function (e) {
+            $(this).val($(this).val().replace(/[^0-9.]/g, ''));
+            });
         });
-    });
-// get value of employees sg, sn, sp
-$(document).ready(function() {
-    $('#employeeName').change(function (e) {
-            let employeeID = e.target.value;
-            let plantilla = $($( "#employeeName option:selected" )[0]).attr('data-plantilla');
-            console.log(plantilla);
-            if(plantilla) {
-                plantilla = JSON.parse(plantilla);
-                $('#employeeId').val(plantilla.employee_id);
-                $('#positionName').val(plantilla.position.position_name);
-                $('#positionId').val(plantilla.position.position_id);                
-                $('#itemNo').val(plantilla.item_no);
-                $('#salaryGrade').val(plantilla.sg_no);     
-                $('#stepNo').val(plantilla.step_no);
-                $('#salaryPrevious').val(plantilla.salary_amount);
-            } else {
-                $('#positionName').val('');
-                $('#itemNo').val('');
-                $('#salaryGrade').val('');
-                $('#stepNo').val('');
-                $('#salaryPrevious').val('');
-            }
-        });
-    });
+        // get value of employees sg, sn, sp
+        $(document).ready(function() {
+            $('#employeeName').change(function (e) {
+                    let employeeID = e.target.value;
+                    let plantilla = $($( "#employeeName option:selected" )[0]).attr('data-plantilla');
+                    console.log(plantilla);
+                    if(plantilla) {
+                        plantilla = JSON.parse(plantilla);
+                        $('#employeeId').val(plantilla.employee_id);
+                        $('#positionName').val(plantilla.position.position_name);
+                        $('#positionId').val(plantilla.position.position_id);                
+                        $('#itemNo').val(plantilla.item_no);
+                        $('#salaryGrade').val(plantilla.sg_no);     
+                        $('#stepNo').val(plantilla.step_no);
+                        $('#salaryPrevious').val(plantilla.salary_amount);
+                    } else {
+                        $('#positionName').val('No Data Available');
+                        $('#itemNo').val('No Data Available');
+                        $('#salaryGrade').val('No Data Available');
+                        $('#stepNo').val('No Data Available');
+                        $('#salaryPrevious').val('No Data Available');
+                    }
+                });
+            });
 
     // code for show add form
     $(document).ready(function(){
@@ -77,9 +74,8 @@ $(document).ready(function() {
             });
             });
 
-
             function reset() {
-                $('#employeeName').val('Nothing Select').trigger('change');
+                $('#employeeName').val('Please Select').trigger('change');
                 $('input').val('');
               }
 

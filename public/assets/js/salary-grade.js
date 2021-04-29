@@ -1,3 +1,9 @@
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
 let date = new Date();
 let year = date.getFullYear();
 let myTable = $('#myTable').DataTable({

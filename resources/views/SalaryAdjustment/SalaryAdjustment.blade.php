@@ -52,7 +52,7 @@
 
                         <div class="form-group col-12 col-lg-4">
                             <label>Item No</label>
-                            <input class="form-control" value="" name="itemNo" id="itemNo" type="text" placeholder="Input item No." readonly>
+                            <input class="form-control" value="" name="itemNo" id="itemNo" type="text" placeholder="" readonly>
                             <div id='item-no-error-message' class='text-danger'>
                             </div>
                         </div>
