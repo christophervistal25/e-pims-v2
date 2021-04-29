@@ -2,13 +2,7 @@
     <div>
         <div class="card-body">
             <h3 class="card-title">
-                Educational Background<a
-                    href="#"
-                    class="edit-icon"
-                    data-toggle="modal"
-                    data-target="#education_info"
-                    ><i class="fa fa-pencil"></i
-                ></a>
+                Educational Background
             </h3>
             <div class="experience-box">
                 <ul class="experience-list">

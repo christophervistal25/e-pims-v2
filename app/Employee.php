@@ -185,7 +185,7 @@ class Employee extends Model
     public static function fetchWithFullInformation(string $employeeId) :Employee
     {
         return self::with([
-            'family_background', 'spouse_child', 'educational_background', 'civil_service', 'work_experience', 'voluntary_work', 'program_attained','other_information','references', 'relevant_queries', 'issued_id', 'status'])->find($employeeId);
+            'family_background', 'spouse_child', 'educational_background', 'civil_service', 'work_experience', 'voluntary_work', 'program_attained','other_information','references', 'relevant_queries', 'issued_id', 'status', 'information.position'])->find($employeeId);
     }
 
     public function salary_adjustment()

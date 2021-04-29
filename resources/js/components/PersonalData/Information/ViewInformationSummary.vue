@@ -6,32 +6,42 @@
                     <div class="profile-view">
                         <div class="profile-img-wrap">
                             <div class="profile-img">
-                                <a href="#"
-                                    ><img
-                                        alt="No Image"
-                                        src="/storage/employee_images/no_image.png"
-                                /></a>
+                                <img
+                                    :src="
+                                        `/storage/employee_images/${
+                                            employee.information
+                                                ? employee.information.photo
+                                                : 'no_image.png'
+                                        }`
+                                    "
+                                />
                             </div>
                         </div>
                         <div class="profile-basic">
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="profile-info-left">
-                                        <h3 class="user-name m-t-0 mb-0">
+                                        <h5 class="user-name m-t-0 mb-0">
                                             {{ employee.fullname }}
-                                        </h3>
-                                        <h6 class="text-muted">
-                                            {{ employee.information }}
-                                        </h6>
-                                        <small class="text-muted"
-                                            >Web Designer</small
-                                        >
+                                        </h5>
+                                        <div class="staff-id">
+                                            Position :
+                                            {{
+                                                employee.information &&
+                                                employee.information.position
+                                                    ? employee.information
+                                                          .position
+                                                          .position_name
+                                                    : "N/A"
+                                            }}
+                                        </div>
                                         <div class="staff-id">
                                             Employee ID :
                                             {{ employee.employee_id }}
                                         </div>
-                                        <div class="small doj text-muted">
-                                            Date of Join :
+
+                                        <div class="staff-id">
+                                            Join :
                                             {{ employee.created_at }}
                                         </div>
                                     </div>
@@ -43,7 +53,9 @@
                                                 Phone:
                                             </div>
                                             <div class="text">
-                                                <a href="">9876543210</a>
+                                                <a href="">{{
+                                                    employee.mobile_no || "-"
+                                                }}</a>
                                             </div>
                                         </li>
                                         <li>
@@ -51,9 +63,9 @@
                                                 Email:
                                             </div>
                                             <div class="text">
-                                                <a href=""
-                                                    >johndoe@example.com</a
-                                                >
+                                                <a href="">{{
+                                                    employee.email || "-"
+                                                }}</a>
                                             </div>
                                         </li>
                                         <li>
@@ -61,7 +73,7 @@
                                                 Birthday:
                                             </div>
                                             <div class="text">
-                                                24th July
+                                                {{ employee.date_birth || "-" }}
                                             </div>
                                         </li>
                                         <li>
@@ -69,45 +81,41 @@
                                                 Address:
                                             </div>
                                             <div class="text">
-                                                1861 Bayonne Ave, Manchester
-                                                Township, NJ, 08759
+                                                {{
+                                                    `
+                                                    ${employee.permanent_house_no ||
+                                                        "-"}
+                                                        ${employee.permanent_street ||
+                                                            "-"}
+                                                        ${employee.permanent_village ||
+                                                            "-"}
+
+                                                        ${employee.permanent_province ||
+                                                            "-"}
+
+                                                         ${employee.permanent_city ||
+                                                             "-"}
+
+                                                         ${employee.permanent_barangay ||
+                                                             "-"}
+
+                                                         ${employee.permanent_zip_code ||
+                                                             "-"}
+                                                        `
+                                                }}
                                             </div>
                                         </li>
                                         <li>
                                             <div class="title">
                                                 Gender:
                                             </div>
-                                            <div class="text">Male</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">
-                                                Reports to:
-                                            </div>
-                                            <div class="text">
-                                                <div class="avatar-box">
-                                                    <div
-                                                        class="avatar avatar-xs"
-                                                    >
-                                                        <img alt="" />
-                                                    </div>
-                                                </div>
-                                                <a href="profile.html">
-                                                    Jeffery Lalor
-                                                </a>
+                                            <div class="text text-uppercase">
+                                                {{ employee.sex || "-" }}
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
-                        </div>
-                        <div class="pro-edit">
-                            <a
-                                data-target="#profile_info"
-                                data-toggle="modal"
-                                class="edit-icon"
-                                href="#"
-                                ><i class="fa fa-pencil"></i
-                            ></a>
                         </div>
                     </div>
                 </div>

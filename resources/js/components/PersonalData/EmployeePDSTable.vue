@@ -1,5 +1,14 @@
 <template>
     <div>
+        <div class="float-left mb-2">
+            <button
+                class="btn btn-warning rounded-circle shadow"
+                v-if="showProfile"
+                @click="showProfile = false"
+            >
+                <i class="fas fa-arrow-circle-left"></i>
+            </button>
+        </div>
         <div class="float-right mb-2">
             <a
                 href="/employee/create/personal/data/sheet"
@@ -7,8 +16,10 @@
                 >PDS for new employee</a
             >
         </div>
+        <div class="clearfix"></div>
+        <br />
         <div>
-            <table class="table table-hover table-bordered">
+            <table class="table table-hover table-bordered" v-if="!showProfile">
                 <thead>
                     <tr>
                         <th scope="col">Employee ID</th>
@@ -53,7 +64,7 @@
             </table>
         </div>
 
-        <div id="emp_profile" class="pro-overview tab-pane fade show active">
+        <div id="emp__profile" v-if="showProfile">
             <div class="card mb-0 rounded-0 shadow-none">
                 <view-information-summary
                     :employee="employee"
@@ -184,7 +195,8 @@ export default {
     data() {
         return {
             employees: [],
-            employee: {}
+            employee: {},
+            showProfile: false
         };
     },
     components: {
@@ -207,6 +219,7 @@ export default {
                 .get(`/api/employee/show/${employee_id}`)
                 .then(response => {
                     if (response.status === 200) {
+                        this.showProfile = true;
                         this.employee = response.data;
                     }
                 });

@@ -4,13 +4,6 @@
             <h3 class="card-title">
                 LEARNING AND DEVELOPMENT (L&amp;D) INTERVENTIONS/TRAINING
                 PROGRAMS ATTENDED
-                <a
-                    href="#"
-                    class="edit-icon"
-                    data-toggle="modal"
-                    data-target="#family_info_modal"
-                    ><i class="fa fa-pencil"></i
-                ></a>
             </h3>
             <div class="table-responsive">
                 <table class="table table-nowrap">

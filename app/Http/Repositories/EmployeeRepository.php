@@ -443,13 +443,14 @@ class EmployeeRepository
 
         $employee->status         = $data['employmentStatus']['stat_code'];
 
-        $information = new EmployeeInformation();
+        $information = EmployeeInformation::where('EmpIDNo', $data['employee_id'])->first() ?? new EmployeeInformation();
+        $information->EmpIDNo = $data['employee_id'];
         $information->office_code = $data['officeAssignment']['office_code'];
         $information->pos_code = $data['designation']['position_code'];
         $information->photo = $data['image'];
 
         $employee->save();
-        $employee->information()->save($information);
+        $information->save();
 
         return $data;
     }

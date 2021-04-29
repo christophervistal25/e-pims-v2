@@ -3,13 +3,6 @@
         <div class="card-body">
             <h3 class="card-title">
                 Work Experience
-                <a
-                    href="#"
-                    class="edit-icon"
-                    data-toggle="modal"
-                    data-target="#experience_info"
-                    ><i class="fa fa-pencil"></i
-                ></a>
             </h3>
             <div class="experience-box">
                 <ul class="experience-list">

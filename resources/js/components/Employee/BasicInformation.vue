@@ -244,7 +244,11 @@
                 <v-select
                     label="status_name"
                     @input="onSetSelectStatus"
-                    :value="employee.employmentStatus.status_name"
+                    :value="
+                        employee.employmentStatus
+                            ? employee.employmentStatus.status_name
+                            : ''
+                    "
                     :options="employmentStatus"
                 ></v-select>
                 <p class="text-danger text-sm">
