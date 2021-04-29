@@ -39689,7 +39689,8 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: {
-                    "text-transform": "uppercase outline: none",
+                    "text-transform": "uppercase",
+                    outline: "none",
                     "box-shadow": "0px 0px 0px transparent"
                   },
                   attrs: { type: "text", placeholder: "Name of School" },
@@ -39725,7 +39726,8 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: {
-                    "text-transform": "uppercase outline: none",
+                    "text-transform": "uppercase",
+                    outline: "none",
                     "box-shadow": "0px 0px 0px transparent"
                   },
                   attrs: { type: "text" },
@@ -39951,7 +39953,7 @@ var render = function() {
                     ],
                     staticClass: "form-control",
                     staticStyle: {
-                      "text-transform": "uppercase outline",
+                      "text-transform": "uppercase",
                       "box-shadow": "0px 0px 0px transparent"
                     },
                     attrs: { type: "text" },
@@ -39996,7 +39998,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: {
-                    "text-transform": "uppercase outline",
+                    "text-transform": "uppercase",
                     "box-shadow": "0px 0px 0px transparent"
                   },
                   attrs: { type: "text", placeholder: "Name of School" },
@@ -40032,7 +40034,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: {
-                    "text-transform": "uppercase outline",
+                    "text-transform": "uppercase",
                     "box-shadow": "0px 0px 0px transparent"
                   },
                   attrs: { type: "text", placeholder: "" },
@@ -40256,7 +40258,7 @@ var render = function() {
                     ],
                     staticClass: "form-control",
                     staticStyle: {
-                      "text-transform": "uppercase outline",
+                      "text-transform": "uppercase",
                       "box-shadow": "0px 0px 0px transparent"
                     },
                     attrs: { type: "text" },
@@ -40301,7 +40303,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: {
-                    "text-transform": "uppercase outline",
+                    "text-transform": "uppercase",
                     "box-shadow": "0px 0px 0px transparent"
                   },
                   attrs: { type: "text", placeholder: "Name of School" },
@@ -40339,7 +40341,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: {
-                    "text-transform": "uppercase outline",
+                    "text-transform": "uppercase",
                     "box-shadow": "0px 0px 0px transparent"
                   },
                   attrs: { type: "text", placeholder: "" },
@@ -40561,7 +40563,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: {
-                    "text-transform": "uppercase outline",
+                    "text-transform": "uppercase",
                     "box-shadow": "0px 0px 0px transparent"
                   },
                   attrs: { type: "text" },
@@ -40605,7 +40607,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: {
-                    "text-transform": "uppercase outline",
+                    "text-transform": "uppercase",
                     "box-shadow": "0px 0px 0px transparent"
                   },
                   attrs: { type: "text", placeholder: "Name of School" },
@@ -40641,7 +40643,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: {
-                    "text-transform": "uppercase outline",
+                    "text-transform": "uppercase",
                     "box-shadow": "0px 0px 0px transparent"
                   },
                   attrs: { type: "text", placeholder: "" },
@@ -40896,8 +40898,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: {
-                    "text-transform": "uppercase",
-                    outline: "none",
+                    "text-transform": "uppercase outline: none",
                     "box-shadow": "0px 0px 0px transparent"
                   },
                   attrs: { type: "text", placeholder: "Name of School" },
@@ -40933,8 +40934,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: {
-                    "text-transform": "uppercase",
-                    outline: "none",
+                    "text-transform": "uppercase outline: none",
                     "box-shadow": "0px 0px 0px transparent"
                   },
                   attrs: { type: "text", placeholder: "" },

@@ -38,7 +38,7 @@
                             class="form-control"
                             placeholder="Name of School"
                             v-model="educationalBackground.elementary"
-                            style="text-transform:uppercase outline: none; box-shadow: 0px 0px 0px transparent;"
+                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
                         <span>Elementary</span>
                         </label>
@@ -51,7 +51,7 @@
                             class="form-control"
                             
                             v-model="educationalBackground.ebasicEduc"
-                            style="text-transform:uppercase outline: none; box-shadow: 0px 0px 0px transparent;"
+                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
                         <span>Basic Education/Degree/Course</span>
                         </label>
@@ -150,7 +150,7 @@
                                 type="text"
                                 class="form-control"
                                 v-model="educationalBackground.escholarship"
-                                style="text-transform:uppercase outline; none; box-shadow: 0px 0px 0px transparent;"
+                                style="text-transform:uppercase; outline; none; box-shadow: 0px 0px 0px transparent;"
                             />
                             <span>Scholarship/Academic Honors Received</span>
                             </label>
@@ -178,7 +178,7 @@
                             class="form-control"
                             placeholder="Name of School"
                             v-model="educationalBackground.snameOfSchool"
-                            style="text-transform:uppercase outline; none; box-shadow: 0px 0px 0px transparent;"
+                            style="text-transform:uppercase; outline; none; box-shadow: 0px 0px 0px transparent;"
                         />
                         <span>Secondary</span>
                         </label>
@@ -191,7 +191,7 @@
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.sbasicEduc"
-                            style="text-transform:uppercase outline; none; box-shadow: 0px 0px 0px transparent;"
+                            style="text-transform:uppercase; outline; none; box-shadow: 0px 0px 0px transparent;"
                         />
                         <span>Basic Education/Degree/Course</span>
                         </label>
@@ -290,7 +290,7 @@
                                 type="text"
                                 class="form-control"
                                 v-model="educationalBackground.sscholarship"
-                                style="text-transform:uppercase outline; none; box-shadow: 0px 0px 0px transparent;"
+                                style="text-transform:uppercase; outline; none; box-shadow: 0px 0px 0px transparent;"
                             />
                             <span>Scholarship/Academic Honors Received</span>
                             </label>
@@ -318,7 +318,7 @@
                             class="form-control"
                             placeholder="Name of School"
                             v-model="educationalBackground.vnameOfVoc"
-                            style="text-transform:uppercase outline; none; box-shadow: 0px 0px 0px transparent;"
+                            style="text-transform:uppercase; outline; none; box-shadow: 0px 0px 0px transparent;"
                         />
                         <span class="text-sm">Vocational/Trade Course</span>
                         </label>
@@ -331,7 +331,7 @@
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.vbasicEduc"
-                            style="text-transform:uppercase outline; none; box-shadow: 0px 0px 0px transparent;"
+                            style="text-transform:uppercase; outline; none; box-shadow: 0px 0px 0px transparent;"
                         />
                         <span>Basic Education/Degree/Course</span>
                         </label>
@@ -429,7 +429,7 @@
                             type="text"
                             class="form-control"
                             v-model="educationalBackground.vscholarship"
-                            style="text-transform:uppercase outline; none; box-shadow: 0px 0px 0px transparent;"
+                            style="text-transform:uppercase; outline; none; box-shadow: 0px 0px 0px transparent;"
                         />
                         <span>Scholarship/Academic Honors Received</span>
                         </label>
@@ -456,7 +456,7 @@
                             class="form-control"
                             placeholder="Name of School"
                             v-model="educationalBackground.cnameOfSchool"
-                            style="text-transform:uppercase outline; none; box-shadow: 0px 0px 0px transparent;"
+                            style="text-transform:uppercase; outline; none; box-shadow: 0px 0px 0px transparent;"
                         />
                         <span>College</span>
                         </label>
@@ -469,7 +469,7 @@
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.cbasicEduc"
-                            style="text-transform:uppercase outline; none; box-shadow: 0px 0px 0px transparent;"
+                            style="text-transform:uppercase; outline; none; box-shadow: 0px 0px 0px transparent;"
                         />
                         <span>Basic Education//Degree/Course</span>
                         </label>
@@ -566,7 +566,7 @@
                             type="text"
                             class="form-control"
                             v-model="educationalBackground.cscholarship"
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase;"
                         />
                         <span>Scholarship/Academic Honors Received</span>
                         </label>
@@ -593,7 +593,7 @@
                             class="form-control"
                             placeholder="Name of School"
                             v-model="educationalBackground.gnameOfSchool"
-                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent;"
+                            style="text-transform:uppercase outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
                         <span>Graduate Studies</span>
                         </label>
@@ -606,7 +606,7 @@
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.gbasicEduc"
-                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent;"
+                            style="text-transform:uppercase outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
                         <span>Basic Education/Degree/Course</span>
                         </label>
