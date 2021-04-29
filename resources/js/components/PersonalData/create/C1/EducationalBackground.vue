@@ -32,29 +32,33 @@
             <div class="pl-3 pr-3 pb-3">
                 <div class="row">
                     <div class="col-lg-3">
-                        <label>ELEMENTARY</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="text"
                             class="form-control"
                             placeholder="Name of School"
                             v-model="educationalBackground.elementary"
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Elementary</span>
+                        </label>
                     </div>
 
                     <div class="col-lg-3">
-                        <label>BASIC EDUCATION/DEGREE/COURSE</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="text"
                             class="form-control"
-                            placeholder=""
+                            
                             v-model="educationalBackground.ebasicEduc"
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Basic Education/Degree/Course</span>
+                        </label>
                     </div>
 
                     <div class="col-lg-3">
-                        <label>PERIOD OF ATTENDANCE (FROM)</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="month"
                             class="form-control"
@@ -69,10 +73,13 @@
                         <p class="text-danger text-sm">
                             {{ errors.eperiodFrom }}
                         </p>
+                        <span>Period of Attendance(From)</span>
+                        </label>
+
                     </div>
 
                     <div class="col-lg-3">
-                        <label>PERIOD OF ATTENDANCE (TO)</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="month"
                             class="form-control"
@@ -84,6 +91,8 @@
                                     : 'is-invalid'
                             "
                         />
+                        <span>Period of Attendance(To)</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.eperiodTo }}
                         </p>
@@ -92,17 +101,20 @@
                 <div class="pr-3 pb-3 py-3">
                     <div class="row">
                         <div class="col-lg-3">
-                            <label>HIGHEST LEVEL/ UNIT EARNED</label>
+                            <label class="form-group has-float-label">
                             <input
                                 type="number"
                                 class="form-control"
                                 placeholder="(if not graduated)"
                                 v-model="educationalBackground.eunitEarned"
+                                style="outline: none; box-shadow: 0px 0px 0px transparent;"
                             />
+                            <span class="text-sm">Highest Level/Unit Earned</span>
+                            </label>
                         </div>
 
                         <div class="col-lg-3">
-                            <label>YEAR GRADUATED</label>
+                            <label class="form-group has-float-label">
                             <input
                                 type="number"
                                 class="form-control"
@@ -123,20 +135,25 @@
                                         ? ''
                                         : 'is-invalid'
                                 "
+                                style="outline: none; box-shadow: 0px 0px 0px transparent;"
                             />
+                            <span>Year Graduated</span>
+                            </label>
                             <p class="text-danger text-sm">
                                 {{ errors.eyrGrad }}
                             </p>
                         </div>
 
                         <div class="col-lg-6">
-                            <label>SCHOLARSHIP/ ACADEMIC HONORS RECEIVED</label>
+                            <label class="form-group has-float-label">
                             <input
                                 type="text"
                                 class="form-control"
                                 v-model="educationalBackground.escholarship"
-                                style="text-transform:uppercase"
+                                style="text-transform:uppercase outline; none; box-shadow: 0px 0px 0px transparent;"
                             />
+                            <span>Scholarship/Academic Honors Received</span>
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -155,29 +172,33 @@
             <div class="pl-3 pr-3 pb-3">
                 <div class="row">
                     <div class="col-lg-3">
-                        <label>SECONDARY</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="text"
                             class="form-control"
                             placeholder="Name of School"
                             v-model="educationalBackground.snameOfSchool"
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase outline; none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Secondary</span>
+                        </label>
                     </div>
 
                     <div class="col-lg-3">
-                        <label>BASIC EDUCATION/DEGREE/COURSE</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="text"
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.sbasicEduc"
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase outline; none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Basic Education/Degree/Course</span>
+                        </label>
                     </div>
 
                     <div class="col-lg-3">
-                        <label>PERIOD OF ATTENDANCE (FROM)</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="month"
                             class="form-control"
@@ -188,14 +209,17 @@
                                     ? ''
                                     : 'is-invalid'
                             "
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Period Of Attendanec(From)</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.speriodFrom }}
                         </p>
                     </div>
 
                     <div class="col-lg-3">
-                        <label>PERIOD OF ATTENDANCE (TO)</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="month"
                             class="form-control"
@@ -207,6 +231,8 @@
                                     : 'is-invalid'
                             "
                         />
+                        <span>Period Of Attendance(To)</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.speriodTo }}
                         </p>
@@ -215,17 +241,20 @@
                 <div class="pr-3 pb-3 py-3">
                     <div class="row">
                         <div class="col-lg-3">
-                            <label>HIGHEST LEVEL/ UNIT EARNED</label>
+                            <label class="form-group has-float-label">
                             <input
                                 type="number"
                                 class="form-control"
                                 placeholder="(if not graduated)"
                                 v-model="educationalBackground.sunitEarned"
+                                style="outline; none; box-shadow: 0px 0px 0px transparent;"
                             />
+                            <span class="text-sm">Highest Level/Unit Earned</span>
+                            </label>
                         </div>
 
                         <div class="col-lg-3">
-                            <label>YEAR GRADUATED</label>
+                            <label class="form-group has-float-label">
                             <input
                                 type="number"
                                 class="form-control"
@@ -246,20 +275,25 @@
                                         ? ''
                                         : 'is-invalid'
                                 "
+                                style="outline; none; box-shadow: 0px 0px 0px transparent;"
                             />
+                            <span>Year Graduated</span>
+                            </label>
                             <p class="text-danger text-sm">
                                 {{ errors.syrGrad }}
                             </p>
                         </div>
 
                         <div class="col-lg-6">
-                            <label>SCHOLARSHIP/ ACADEMIC HONORS RECEIVED</label>
+                            <label class="form-group has-float-label">
                             <input
                                 type="text"
                                 class="form-control"
                                 v-model="educationalBackground.sscholarship"
-                                style="text-transform:uppercase"
+                                style="text-transform:uppercase outline; none; box-shadow: 0px 0px 0px transparent;"
                             />
+                            <span>Scholarship/Academic Honors Received</span>
+                            </label>
                         </div>
                     </div>
                 </div>
@@ -278,29 +312,33 @@
             <div class="pl-3 pr-3 pb-3">
                 <div class="row">
                     <div class="col-lg-3">
-                        <label>VOCATIONAL / TRADE COURSE</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="text"
                             class="form-control"
                             placeholder="Name of School"
                             v-model="educationalBackground.vnameOfVoc"
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase outline; none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span class="text-sm">Vocational/Trade Course</span>
+                        </label>
                     </div>
 
                     <div class="col-lg-3">
-                        <label>BASIC EDUCATION/DEGREE/COURSE</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="text"
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.vbasicEduc"
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase outline; none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Basic Education/Degree/Course</span>
+                        </label>
                     </div>
 
                     <div class="col-lg-3">
-                        <label>PERIOD OF ATTENDANCE (FROM)</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="month"
                             class="form-control"
@@ -311,13 +349,16 @@
                                     ? ''
                                     : 'is-invalid'
                             "
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Period of Attendance(From)</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.vperiodFrom }}
                         </p>
                     </div>
                     <div class="col-lg-3">
-                        <label>PERIOD OF ATTENDANCE (TO)</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="month"
                             class="form-control"
@@ -328,7 +369,10 @@
                                     ? ''
                                     : 'is-invalid'
                             "
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Period of Attendance(To)</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.vperiodTo }}
                         </p>
@@ -338,17 +382,20 @@
             <div class="pl-3 pr-3 pb-3">
                 <div class="row">
                     <div class="col-lg-3">
-                        <label>HIGHEST LEVEL/ UNIT EARNED</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="number"
                             class="form-control"
                             placeholder="(if not graduated)"
                             v-model="educationalBackground.vunitEarned"
+                            style="outline; none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span class="text-sm">Highest Level/Unit Earned</span>
+                        </label>
                     </div>
 
                     <div class="col-lg-3">
-                        <label>YEAR GRADUATED</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="number"
                             class="form-control"
@@ -369,18 +416,23 @@
                                     ? ''
                                     : 'is-invalid'
                             "
+                            style="outline; none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Year Graduated</span>
+                        </label>
                         <p class="text-danger text-sm">{{ errors.vyrGrad }}</p>
                     </div>
 
                     <div class="col-lg-6">
-                        <label>SCHOLARSHIP/ ACADEMIC HONORS RECEIVED</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="text"
                             class="form-control"
                             v-model="educationalBackground.vscholarship"
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase outline; none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Scholarship/Academic Honors Received</span>
+                        </label>
                     </div>
                 </div>
             </div>
@@ -398,29 +450,33 @@
             <div class="pl-3 pr-3 pb-3">
                 <div class="row">
                     <div class="col-lg-3">
-                        <label>COLLEGE</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="text"
                             class="form-control"
                             placeholder="Name of School"
                             v-model="educationalBackground.cnameOfSchool"
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase outline; none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>College</span>
+                        </label>
                     </div>
 
                     <div class="col-lg-3">
-                        <label>BASIC EDUCATION/DEGREE/COURSE</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="text"
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.cbasicEduc"
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase outline; none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Basic Education//Degree/Course</span>
+                        </label>
                     </div>
 
                     <div class="col-lg-3">
-                        <label>PERIOD OF ATTENDANCE (FROM)</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="month"
                             class="form-control"
@@ -431,11 +487,14 @@
                                     ? ''
                                     : 'is-invalid'
                             "
+                            style="outline; none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Period Of Attendance(From)</span>
+                        </label>
                         <p class="text-danger">{{ errors.cperiodFrom }}</p>
                     </div>
                     <div class="col-lg-3">
-                        <label>PERIOD OF ATTENDANCE (TO)</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="month"
                             class="form-control"
@@ -446,7 +505,10 @@
                                     : 'is-invalid'
                             "
                             placeholder=""
+                            style="outline; none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Period Of Attendance(To)</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.cperiodTo }}
                         </p>
@@ -457,17 +519,19 @@
             <div class="pl-3 pr-3 pb-3">
                 <div class="row">
                     <div class="col-lg-3">
-                        <label>HIGHEST LEVEL/ UNIT EARNED</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="number"
                             class="form-control"
                             placeholder="(if not graduated)"
                             v-model="educationalBackground.cunitEarned"
                         />
+                        <span class="text-sm">Highest Level/Unit Earned</span>
+                        </label>
                     </div>
 
                     <div class="col-lg-3">
-                        <label>YEAR GRADUATED</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="number"
                             class="form-control"
@@ -489,19 +553,23 @@
                                     : 'is-invalid'
                             "
                         />
+                        <span>Year Graduated</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.cyrGrad }}
                         </p>
                     </div>
 
                     <div class="col-lg-6">
-                        <label>SCHOLARSHIP/ ACADEMIC HONORS RECEIVED</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="text"
                             class="form-control"
                             v-model="educationalBackground.cscholarship"
                             style="text-transform:uppercase"
                         />
+                        <span>Scholarship/Academic Honors Received</span>
+                        </label>
                     </div>
                 </div>
             </div>
@@ -519,29 +587,33 @@
             <div class="pl-3 pr-3 pb-3">
                 <div class="row">
                     <div class="col-lg-3">
-                        <label>GRADUATE STUDIES</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="text"
                             class="form-control"
                             placeholder="Name of School"
                             v-model="educationalBackground.gnameOfSchool"
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Graduate Studies</span>
+                        </label>
                     </div>
 
                     <div class="col-lg-3">
-                        <label>BASIC EDUCATION/DEGREE/COURSE</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="text"
                             class="form-control"
                             placeholder=""
                             v-model="educationalBackground.gbasicEduc"
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Basic Education/Degree/Course</span>
+                        </label>
                     </div>
 
                     <div class="col-lg-3">
-                        <label>PERIOD OF ATTENDANCE (FROM)</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="month"
                             class="form-control"
@@ -552,13 +624,16 @@
                                     ? ''
                                     : 'is-invalid'
                             "
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Period of Attendance(From)</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.gperiodFrom }}
                         </p>
                     </div>
                     <div class="col-lg-3">
-                        <label>PERIOD OF ATTENDANCE (TO)</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="month"
                             class="form-control"
@@ -569,7 +644,10 @@
                                     ? ''
                                     : 'is-invalid'
                             "
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Period Of Attendance(To)</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.gperiodTo }}
                         </p>
@@ -580,17 +658,20 @@
             <div class="pl-3 pr-3 pb-3">
                 <div class="row">
                     <div class="col-lg-3">
-                        <label>HIGHEST LEVEL/ UNIT EARNED</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="number"
                             class="form-control"
                             placeholder="(if not graduated)"
                             v-model="educationalBackground.gunitEarned"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span class="text-sm">Highest Level/Unit Earned</span>
+                        </label>
                     </div>
 
                     <div class="col-lg-3">
-                        <label>YEAR GRADUATED</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="number"
                             class="form-control"
@@ -611,18 +692,23 @@
                                     ? ''
                                     : 'is-invalid'
                             "
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Year Graduated</span>
+                        </label>
                         <p class="text-danger text-sm">{{ errors.gyrGrad }}</p>
                     </div>
 
                     <div class="col-lg-6">
-                        <label>SCHOLARSHIP/ ACADEMIC HONORS RECEIVED</label>
+                        <label class="form-group has-float-label">
                         <input
                             type="text"
                             class="form-control"
                             v-model="educationalBackground.gscholarship"
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Scholarship/Academic Honors Received</span>
+                        </label>
                     </div>
                 </div>
             </div>

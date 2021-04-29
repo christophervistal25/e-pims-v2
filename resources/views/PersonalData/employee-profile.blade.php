@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('content')
+<link rel="stylesheet"
+    href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 <div class="tab-content">
 
     <!-- Profile Info Tab -->
@@ -578,5 +580,26 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6 flex">
+            <div class="card profile-box flex-fill">
+                <div class="card-body">
+                    <h3 class="card-title"></h3>
+                    <div class="col-md-4">
+                        <div class="form-group form-focus">
+								<input type="text" class="form-control floating">
+								<label class="focus-label">Employee Name</label>
+							</div>
+							<div class="form-group form-focus">
+								<input type="text" class="form-control floating">
+								<label class="focus-label">Employee ID</label>
+							</div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>
 @endsection

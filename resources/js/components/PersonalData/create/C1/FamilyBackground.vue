@@ -43,9 +43,8 @@
                     </div>
                 </div>
                     <div class="row pr-3 pl-3">
-                        <div class="form-group col-lg-3">
-                            <label for="ssurname">SPOUSE'S SURNAME</label
-                            ><span class="text-danger">*</span>
+                        <div class="col-lg-3">
+                            <label for="ssurname" class="form-group has-float-label mb-0">
                             <input
                                 type="text"
                                 class="form-control"
@@ -58,15 +57,17 @@
                                 v-model="familyBackground.ssurname"
                                 placeholder="Enter Spouse's Surname"
                                 value=""
-                                style="text-transform:uppercase"
+                                style="text-transform:uppercase; outline:none; box-shadow: 0px 0px 0px transparent;"
                             />
+                            <span>Surname</span>
+                            </label>
                             <p class="text-danger text-sm">
                                 {{ errors.ssurname }}
                             </p>
+                            
                         </div>
-                        <div class="form-group col-lg-3 ">
-                            <label for="sfirstname">SPOUSE'S FIRST NAME</label
-                            ><span class="text-danger">*</span>
+                        <div class="col-lg-3 ">
+                            <label for="sfirstname" class="form-group has-float-label mb-0">
                             <input
                                 type="text"
                                 class="form-control"
@@ -79,14 +80,16 @@
                                 v-model="familyBackground.sfirstname"
                                 placeholder="Enter Spouse's First Name"
                                 value=""
-                                style="text-transform:uppercase"
+                                style="text-transform:uppercase; outline:none; box-shadow: 0px 0px 0px transparent;"
                             />
+                            <span>First Name</span>
+                            </label>
                             <p class="text-danger text-sm">
                                 {{ errors.sfirstname }}
                             </p>
                         </div>
-                        <div class="form-group col-lg-3">
-                            <label for="smiddleame">SPOUSE'S MIDDLE NAME</label>
+                        <div class="col-lg-3">
+                            <label for="smiddleame" class="form-group has-float-label">
                             <input
                                 type="text"
                                 class="form-control "
@@ -94,13 +97,13 @@
                                 v-model="familyBackground.smiddleame"
                                 placeholder="Enter Spouse's Middle Name"
                                 value=""
-                                style="text-transform:uppercase"
+                                style="text-transform:uppercase; outline:none; box-shadow: 0px 0px 0px transparent;"
                             />
+                            <span>Middle Name</span>
+                            </label>
                         </div>
-                        <div class="form-group col-lg-3">
-                            <label for="snameexten"
-                                >SPOUSE'S NAME EXTENSION</label
-                            >
+                        <div class="col-lg-3">
+                            <label for="snameexten" class="form-group has-float-label">
                             <input
                                 type="text"
                                 maxlength="3"
@@ -109,61 +112,67 @@
                                 v-model="familyBackground.snameexten"
                                 placeholder="(JR., SR.)"
                                 value=""
-                                style="text-transform:uppercase"
+                                style="text-transform:uppercase; outline:none; box-shadow: 0px 0px 0px transparent;"
                             />
+                            <span>Name Extension</span>
+                            </label>
                         </div>
                     </div>
                     <div class="row pl-3 pr-3">
-                        <div class="form-group col-lg-6">
-                            <label for="soccupation">SPOUSE'S OCCUPATION</label>
+                        <div class="col-lg-6">
+                            <label for="soccupation" class="form-group has-float-label">
                             <input
                                 type="text"
                                 class="form-control"
                                 id="soccupation"
                                 placeholder="Enter Spouse's Occupation"
                                 v-model="familyBackground.soccupation"
-                                style="text-transform:uppercase"
+                                style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent"
                             />
+                            <span>Occupation</span>
+                            </label>
                         </div>
-                        <div class="form-group col-lg-6">
-                            <label for="sempname"
-                                >SPOUSE'S EMPLOYER/BUSINESS NAME</label
-                            >
+                        <div class="col-lg-6">
+                            <label for="sempname" class="form-group has-float-label">
                             <input
                                 type="text"
                                 class="form-control"
                                 id="sempname"
                                 placeholder="Enter Spouse's Employer/Business Name"
                                 v-model="familyBackground.sempname"
-                                style="text-transform:uppercase"
+                                style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent"
                             />
+                            <span>Employer/Business Name</span>
+                            </label>
                         </div>
                     </div>
                     <div class="row pl-3 pr-3">
-                        <div class="form-group col-sm-6">
-                            <label for="sbusadd"
-                                >SPOUSE'S BUSINESS ADDRESS</label
-                            >
+                        <div class="col-sm-6">
+                            <label for="sbusadd" class="form-group  has-float-label">
                             <input
                                 type="text"
                                 class="form-control"
                                 id="sbusadd"
                                 placeholder="Enter Spouse's Business Address"
                                 v-model="familyBackground.sbusadd"
-                                style="text-transform:uppercase"
+                                style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent"
                             />
+                            <span>Business Address</span>
+                            </label>
                         </div>
-                        <div class="form-group col-sm-6">
-                            <label for="stelno"
-                                >SPOUSE'S TELEPHONE NUMBER</label
-                            >
+                        <div class="col-sm-6">
+                            <label for="stelno" class="form-group has-float-label"
+                                >
                             <input
                                 type="text"
                                 class="form-control"
                                 id="stelno"
                                 placeholder="Enter Spouse's Telephone Number"
                                 v-model="familyBackground.stelno"
+                                style="outline: none; box-shadow: 0px 0px 0px transparent"
                             />
+                            <span>Telephone Number</span>
+                            </label>
                         </div>
                     </div>
                     
@@ -198,7 +207,7 @@
                                         id="cname"
                                         placeholder="Enter Full Name of Children"
                                         v-model="spouse.cname"
-                                        style="text-transform:uppercase"
+                                        style="text-transform:uppercase;"
                                     />
                                 </td>
                                 <td class="align-middle">
@@ -255,8 +264,8 @@
                     </div>
                 </div>
                 <div class="row pr-3 pl-3">
-                    <div class="form-group col-lg-3">
-                        <label for="fsurname">FATHER'S SURNAME</label>
+                    <div class="col-lg-3">
+                        <label for="fsurname" class="form-group has-float-label mb-0">
                         <input
                             type="text"
                             class="form-control"
@@ -269,12 +278,14 @@
                             v-model="familyBackground.fsurname"
                             placeholder="Enter Father's Surname"
                             value=""
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent"
                         />
+                        <span>Surname</span>
+                        </label>
                         <p class="text-danger text-sm">{{ errors.fsurname }}</p>
                     </div>
-                    <div class="form-group col-lg-3">
-                        <label for="ffirstname">FATHER'S FIRST NAME</label>
+                    <div class="col-lg-3">
+                        <label for="ffirstname" class="form-group has-float-label mb-0">
                         <input
                             type="text"
                             class="form-control"
@@ -287,14 +298,16 @@
                             v-model="familyBackground.ffirstname"
                             placeholder="Enter Father's First Name"
                             value=""
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent"
                         />
+                        <span>First Name</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.ffirstname }}
                         </p>
                     </div>
-                    <div class="form-group col-lg-3">
-                        <label for="fmiddlename">FATHER'S MIDDLE NAME</label>
+                    <div class="col-lg-3">
+                        <label for="fmiddlename" class="form-group has-float-label">
                         <input
                             type="text"
                             class="form-control"
@@ -307,14 +320,16 @@
                             v-model="familyBackground.fmiddlename"
                             placeholder="Enter Father's Middle Name"
                             value=""
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent"
                         />
+                        <span>Middle Name</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.fmiddlename }}
                         </p>
                     </div>
-                    <div class="form-group col-lg-3">
-                        <label for="fnameexten">FATHER'S NAME EXTENSION</label>
+                    <div class="col-lg-3">
+                        <label for="fnameexten" class="form-group has-float-label">
                         <input
                             type="text"
                             maxlength="3"
@@ -323,8 +338,10 @@
                             v-model="familyBackground.fnameexten"
                             placeholder="(JR., SR.)"
                             value=""
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent"
                         />
+                        <span>Extension</span>
+                        </label>
                     </div>
                 </div>
                 
@@ -337,8 +354,8 @@
                     </div>
                 </div>
                 <div class="row pr-3 pl-3">
-                    <div class="form-group col-lg-3">
-                        <label for="msurname">MOTHER'S MAIDEN SURNAME</label>
+                    <div class="col-lg-3">
+                        <label for="msurname" class="form-group has-float-label mb-0">
                         <input
                             type="text"
                             class="form-control"
@@ -351,12 +368,14 @@
                             v-model="familyBackground.msurname"
                             placeholder="Enter Mother's Maiden Surname"
                             value=""
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Maiden Surname</span>
+                        </label>
                         <p class="text-danger text-sm">{{ errors.msurname }}</p>
                     </div>
-                    <div class="form-group col-lg-3 ">
-                        <label for="mfirstname">MOTHER'S FIRST NAME</label>
+                    <div class="col-lg-3 ">
+                        <label for="mfirstname" class="form-group has-float-label">
                         <input
                             type="text"
                             :class="
@@ -369,16 +388,16 @@
                             v-model="familyBackground.mfirstname"
                             placeholder="Enter Mother's First Name"
                             value=""
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>First Name</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.mfirstname }}
                         </p>
                     </div>
-                    <div class="form-group col-lg-3">
-                        <label for="mmiddlename"
-                            >MOTHER'S MAIDEN MIDDLE NAME</label
-                        >
+                    <div class="col-lg-3">
+                        <label for="mmiddlename" class="form-group has-float-label mb-30">
                         <input
                             type="text"
                             class="form-control "
@@ -391,8 +410,10 @@
                             v-model="familyBackground.mmiddlename"
                             placeholder="Enter Mother's Maiden Middle Name"
                             value=""
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Maiden</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.mmiddlename }}
                         </p>
