@@ -5,8 +5,9 @@
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 @endprepend
 @section('content')
+<div class="content">   
 @include('Plantilla.add-ons.success')
-<div class="content container-fluid">
+
     <div class="kanban-board card mb-0">   
         <div class="card-body">
             <div id="add" class="page-header {{  count($errors->all())  !== 0 }}">

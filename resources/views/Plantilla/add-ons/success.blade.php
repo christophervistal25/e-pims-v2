@@ -1,5 +1,4 @@
 <div class="kanban-board mb-0">
-    <div class="col-12">
     @foreach (['danger', 'warning', 'success', 'info'] as $msg)
         @if(Session::has('alert-' . $msg))
         <div class="alert bg-success alert-dismissible fade show text-center text-white" role="alert">
@@ -10,5 +9,4 @@
           </div>
         @endif
     @endforeach
-    </div>
 </div>

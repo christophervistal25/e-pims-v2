@@ -10,7 +10,7 @@ Route::get('/', function () {
 
 
 //salary grade
-Route::get('/salary-grade-list', 'SalaryGradecontroller@list');
+Route::get('/salary-grade-list', 'SalaryGradecontroller@list')->name('salary-grade-list');
 Route::resource('/salary-grade', 'SalaryGradeController');
 
 

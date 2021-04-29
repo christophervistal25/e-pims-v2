@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\SalaryGrade;
 use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\Session;
 
 class SalaryGradeController extends Controller
 {
@@ -15,19 +16,17 @@ class SalaryGradeController extends Controller
      */
     public function index()
     {
-        $salary_grade = SalaryGrade::get();
+        // $salary_grade = SalaryGrade::get();
         return view('SalaryGrade.SalaryGrade');
     }
     public function list(Request $request)
     {
-    //   return Datatables::of(SalaryGrade::query())->make(true);
-
       if ($request->ajax()) {
         $data = SalaryGrade::select('*');
         return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                       $btn = "<a href='". route('salary-grade.edit', $row->id) . "' class='edit btn btn-primary btn-sm'>Edit</a>";
+                    $btn = "<a title='Edit Salar Grade' href='". route('salary-grade.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm'><i class='la la-edit'></i></a>";
                         return $btn;
                 })
                 ->rawColumns(['action'])
@@ -55,7 +54,8 @@ class SalaryGradeController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'sgNo'    => 'required|unique:salary_grades,sg_no|in:' . implode(',',range(1, 33)),
+            'sgNo'    => 'required|in:' . implode(',',range(1, 33)),
+            // unique:salary_grades,sg_no
             'sgStep1' => 'required',
             'sgStep2' => 'required',
             'sgStep3' => 'required',
@@ -79,7 +79,8 @@ class SalaryGradeController extends Controller
         $salarygrade->sg_step8 = $request['sgStep8'];
         $salarygrade->sg_year  = $request['sgYear' ];
         $salarygrade->save();
-        return back()->with('success','Added Successfully');
+        // return back()->with('success','Added Successfully');
+        return response()->json(['success'=>true]);
     }
 
     /**
@@ -139,6 +140,7 @@ class SalaryGradeController extends Controller
         $salarygrade->sg_step8 = $request['sgStep8'];
         $salarygrade->sg_year  = $request['sgYear' ];
         $salarygrade->save();
+        Session::flash('alert-success', 'Update Salary Grade Successfully');
         return back()->with('success','Updated Successfully');
     }
 
