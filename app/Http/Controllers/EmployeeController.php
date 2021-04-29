@@ -83,7 +83,7 @@ class EmployeeController extends Controller
      */
     public function update(OldEmployeeUpdateRequest $request, $employeeId)
     {
-        return $this->employeeRepository->updateEmployee($request->all(), $employeeId);
+        return $this->employeeRepository->updateEmployee($request->all());
     }
 
     /**

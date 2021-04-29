@@ -180,6 +180,11 @@ Vue.component(
 );
 
 
+Vue.component(
+    "view-government-issued-id",
+    require("./components/PersonalData/Information/ViewGovernmentIssuedID.vue").default
+);
+
 
 const app = new Vue({
     el: "#app"

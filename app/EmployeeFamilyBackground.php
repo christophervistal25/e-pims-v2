@@ -26,8 +26,27 @@ class EmployeeFamilyBackground extends Model
         'mother_middlename',
         'mother_extension',
     ];
+
+    // protected $appends = ['mother_fullname', 'father_fullname', 'spouse_fullname'];
+
     public function employee()
     {
         return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
     }
+
+    // public function getSpouseFullnameAttribute()
+    // {
+    //     return strtoupper("{$this->spouse_firstname} {$this->spouse_middlename} {$this->spouse_lastname} {$this->spouse_extension}");
+    // }
+
+    // public function getMotherFullnameAttribute()
+    // {
+    //     return strtoupper("{$this->mother_firstname} {$this->mother_middlename} {$this->mother_lastname} {$this->mother_extension}");
+    // }
+
+    // public function getFatherFullnameAttribute()
+    // {
+    //     return strtoupper("{$this->father_firstname} {$this->father_middlename} {$this->father_lastname} {$this->father_extension}");
+    // }
+
 }

@@ -49,6 +49,7 @@
                 for=""
                 class="col-form-label"
                 v-html="
+                    employee.employmentStatus &&
                     employee.employmentStatus.status_name !== 'PERMANENT'
                         ? 'LBP ACCOUNT NO.'
                         : 'DBP ACCOUNT NO.'

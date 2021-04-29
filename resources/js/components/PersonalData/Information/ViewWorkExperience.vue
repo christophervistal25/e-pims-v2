@@ -1,126 +1,33 @@
 <template>
-    <div class="card">
-        <div
-            v-if="employee.civil_service && employee.civil_service.length != 0"
-            class="card-body"
-        >
-            <div class="mt-3 pl-3 pr-3">
-                <div
-                    class="alert alert-secondary text-center font-weight-bold"
-                    role="alert"
-                >
-                    WORK EXPERIENCE
-                </div>
+    <div>
+        <div class="card-body">
+            <h3 class="card-title">
+                Work Experience
+            </h3>
+            <div class="experience-box">
+                <ul class="experience-list">
+                    <li
+                        v-for="(experience, index) in employee.work_experience"
+                        :key="index"
+                    >
+                        <div class="experience-user">
+                            <div class="before-circle"></div>
+                        </div>
+                        <div class="experience-content">
+                            <div class="timeline-content">
+                                <a href="#" class="name"
+                                    >{{ experience.position_title }} at
+                                    {{ experience.office }}</a
+                                >
+                                <span class="time"
+                                    >{{ experience.from }} -
+                                    {{ experience.to }}</span
+                                >
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div>
-                <div
-                    v-for="(work, index) in employee.work_experience"
-                    :key="index"
-                >
-                    <hr />
-                    <div class="row">
-                        <div class="col-lg">
-                            <div class="form-group">
-                                <label class="text-capitalize text-sm"
-                                    >from</label
-                                >
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    :value="work.from"
-                                />
-                            </div>
-                        </div>
-                        <div class="col-lg">
-                            <div class="form-group">
-                                <label class="text-capitalize text-sm"
-                                    >to</label
-                                >
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    :value="work.to"
-                                />
-                            </div>
-                        </div>
-                        <div class="col-lg">
-                            <div class="form-group">
-                                <label class="text-capitalize text-sm"
-                                    >position title</label
-                                >
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    :value="work.position_title"
-                                />
-                            </div>
-                        </div>
-                        <div class="col-lg">
-                            <div class="form-group">
-                                <label class="text-capitalize text-sm"
-                                    >office</label
-                                >
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    :value="work.office"
-                                />
-                            </div>
-                        </div>
-                        <div class="col-lg">
-                            <div class="form-group">
-                                <label class="text-capitalize text-sm"
-                                    >monthly salary</label
-                                >
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    :value="work.monthly_salary"
-                                />
-                            </div>
-                        </div>
-                        <div class="col-lg">
-                            <div class="form-group">
-                                <label class="text-capitalize text-sm"
-                                    >salary job pay grade</label
-                                >
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    :value="work.salary_job_pay_grade"
-                                />
-                            </div>
-                        </div>
-                        <div class="col-lg">
-                            <div class="form-group">
-                                <label class="text-capitalize text-sm"
-                                    >status of appointment</label
-                                >
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    :value="work.status_of_appointment"
-                                />
-                            </div>
-                        </div>
-                        <div class="col-lg-1">
-                            <div class="form-group">
-                                <label class="text-capitalize text-sm"
-                                    >government service</label
-                                >
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    :value="work.government_service"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div v-else class="card-body">
-            <h1>No Work Experience</h1>
         </div>
     </div>
 </template>
@@ -129,7 +36,8 @@
 export default {
     props: {
         employee: {
-            required: true
+            required: true,
+            type: Object
         }
     }
 };

@@ -1,4 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.app-vue')
+@prepend('page-css')
+<link rel="stylesheet" href="{{ asset('/assets/css/font-awesome.min.css') }}">
+@endprepend
 @section('content')
 <link rel="stylesheet"
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
@@ -6,9 +9,78 @@
 
     <!-- Profile Info Tab -->
     <div id="emp_profile" class="pro-overview tab-pane fade show active">
+        <div class="card mb-0 rounded-0 shadow-none">
+            <div class="card-body rounded-0">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="profile-view">
+                            <div class="profile-img-wrap">
+                                <div class="profile-img">
+                                    <a href="#"><img alt="" src="assets/img/profiles/avatar-02.jpg"></a>
+                                </div>
+                            </div>
+                            <div class="profile-basic">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="profile-info-left">
+                                            <h3 class="user-name m-t-0 mb-0">John Doe</h3>
+                                            <h6 class="text-muted">UI/UX Design Team</h6>
+                                            <small class="text-muted">Web Designer</small>
+                                            <div class="staff-id">Employee ID : FT-0001</div>
+                                            <div class="small doj text-muted">Date of Join : 1st Jan 2013</div>
+                                            <div class="staff-msg"><a class="btn btn-custom" href="chat.html">Send Message</a></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <ul class="personal-info">
+                                            <li>
+                                                <div class="title">Phone:</div>
+                                                <div class="text"><a href="">9876543210</a></div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Email:</div>
+                                                <div class="text"><a href="">johndoe@example.com</a></div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Birthday:</div>
+                                                <div class="text">24th July</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Address:</div>
+                                                <div class="text">1861 Bayonne Ave, Manchester Township, NJ, 08759</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Gender:</div>
+                                                <div class="text">Male</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Reports to:</div>
+                                                <div class="text">
+                                                   <div class="avatar-box">
+                                                      <div class="avatar avatar-xs">
+                                                         <img src="assets/img/profiles/avatar-16.jpg" alt="">
+                                                      </div>
+                                                   </div>
+                                                   <a href="profile.html">
+                                                        Jeffery Lalor
+                                                    </a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pro-edit"><a data-target="#profile_info" data-toggle="modal" class="edit-icon" href="#"><i class="fa fa-pencil"></i></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
+
             <div class="col-md-6 d-flex">
-                <div class="card profile-box flex-fill">
+
+                <div class="card profile-box flex-fill rounded-0 rounded-bottom border-top-0">
                     <div class="card-body">
                         <h3 class="card-title">Personal Informations <a href="#" class="edit-icon" data-toggle="modal"
                                 data-target="#personal_info_modal"><i class="fa fa-pencil"></i></a></h3>
@@ -86,7 +158,7 @@
                 </div>
             </div>
             <div class="col-md-6 d-flex">
-                <div class="card profile-box flex-fill">
+                <div class="card profile-box flex-fill rounded-0 rounded-bottom border-top-0">
                     <div class="card-body">
                         <h3 class="card-title">Address<a href="#" class="edit-icon" data-toggle="modal"
                                 data-target="#emergency_contact_modal"><i class="fa fa-pencil"></i></a></h3>

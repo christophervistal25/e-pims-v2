@@ -2,31 +2,34 @@
     <div>
         <div class="card-body">
             <h3 class="card-title">
-                Civil Service Eligibility
+                Voluntary Work
             </h3>
             <div class="table-responsive">
                 <table class="table table-nowrap">
                     <thead>
                         <tr>
                             <th class="text-sm">
-                                CAREER SERVICE
+                                NAME OF ORGANIZATION
                             </th>
+                            <th class="text-sm">FROM</th>
+                            <th class="text-sm">TO</th>
                             <th class="text-sm">
-                                DATE OF EXAMINATION
+                                NUMBER OF HOURS
                             </th>
-                            <th class="text-sm">
-                                PLACE OF EXAMINATION
-                            </th>
+                            <th class="text-sm">POSITION</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr
-                            v-for="(exam, index) in employee.civil_service"
+                            v-for="(voluntaryWork,
+                            index) in employee.voluntary_work"
                             :key="index"
                         >
-                            <td>{{ exam.career_service }}</td>
-                            <td>{{ exam.date_of_examination }}</td>
-                            <td>{{ exam.place_of_examination }}</td>
+                            <td>{{ voluntaryWork.name_and_address }}</td>
+                            <td>{{ voluntaryWork.inclusive_date_from }}</td>
+                            <td>{{ voluntaryWork.inclusive_date_to }}</td>
+                            <td>{{ voluntaryWork.no_of_hours }}</td>
+                            <td>{{ voluntaryWork.position }}</td>
                         </tr>
                     </tbody>
                 </table>

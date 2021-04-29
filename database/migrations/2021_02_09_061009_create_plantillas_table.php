@@ -31,6 +31,7 @@ class CreatePlantillasTable extends Migration
 
             $table->date('date_original_appointment');
             $table->date('date_last_promotion');
+            $table->date('date_last_increment')->nullable();
             $table->string('office_code');
             $table->bigInteger('division_id');            
 

@@ -155,13 +155,6 @@ class SalaryAdjustmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        // $salaryAdjustment = find($id);
-        // $salaryAdjustment->delete();
-        // return back()->with('success,', 'sadsadsa');
-        return 'edcel';
-    }
 
     public function delete($id)
     {
