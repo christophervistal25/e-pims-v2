@@ -3039,6 +3039,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AccountNumber_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AccountNumber.vue */ "./resources/js/components/Employee/AccountNumber.vue");
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_3__);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -3279,12 +3281,33 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      sectionError: {
+        basicInformation: false,
+        accountNumbers: false
+      },
+      accountNumberFields: ["pagibigMidNo", "philhealthNo", "sssNo", "tinNo", "lbpAccountNo", "gsisPolicyNo", "gsisBpNo", "gsisIdNo"],
+      basicInformationFields: ["lastName", "firstName", "middleName", "extension", "dateOfBirth", "age", "step", "basicRate", "employmentStatus.stat_code", "officeAssignment.office_code", "designation.position_code"],
       isComplete: false,
       isLoading: false,
       showAddEmployeeForm: false,
@@ -3302,15 +3325,12 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         employmentStatus: "",
         officeAssignment: "",
         designation: "",
-        employmentFrom: "",
-        employmentTo: "",
-        controlNo: "",
+        image: "no_image.png",
         pagibigMidNo: "",
         philhealthNo: "",
         sssNo: "",
         tinNo: "",
         lbpAccountNo: "",
-        image: "no_image.png",
         gsisPolicyNo: "",
         gsisBpNo: "",
         gsisIdNo: ""
@@ -3331,36 +3351,54 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
   //     }
   // },
   methods: {
-    fetch: function fetch(page) {
+    sectionValidatorChecker: function sectionValidatorChecker(errorFields) {
       var _this = this;
+
+      // check for basic information
+      errorFields.some(function (field) {
+        if (_this.basicInformationFields.includes(field)) {
+          _this.sectionError.basicInformation = true;
+          return true;
+        }
+      }); // check for account numbers
+
+      errorFields.some(function (field) {
+        if (_this.accountNumberFields.includes(field)) {
+          _this.sectionError.accountNumbers = true;
+          return true;
+        }
+      });
+    },
+    fetch: function fetch(page) {
+      var _this2 = this;
 
       this.isLoading = true;
       window.axios("/api/employee/employees?page=".concat(page)).then(function (response) {
-        _this.employees = response.data.data;
-        _this.data = response.data;
-        _this.isLoading = false;
-      });
-    },
-    nextPage: function nextPage() {
-      var _this2 = this;
-
-      window.axios("".concat(this.data.next_page_url)).then(function (response) {
         _this2.employees = response.data.data;
         _this2.data = response.data;
         _this2.isLoading = false;
       });
     },
-    prevPage: function prevPage() {
+    nextPage: function nextPage() {
       var _this3 = this;
 
-      window.axios("".concat(this.data.prev_page_url)).then(function (response) {
+      window.axios("".concat(this.data.next_page_url)).then(function (response) {
         _this3.employees = response.data.data;
         _this3.data = response.data;
         _this3.isLoading = false;
       });
     },
-    newEmployeeForm: function newEmployeeForm() {
+    prevPage: function prevPage() {
       var _this4 = this;
+
+      window.axios("".concat(this.data.prev_page_url)).then(function (response) {
+        _this4.employees = response.data.data;
+        _this4.data = response.data;
+        _this4.isLoading = false;
+      });
+    },
+    newEmployeeForm: function newEmployeeForm() {
+      var _this5 = this;
 
       this.showAddEmployeeForm = !this.showAddEmployeeForm;
 
@@ -3371,9 +3409,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
         Object.keys(this.employee).map(function (key) {
           if (key == "image") {
-            _this4.employee[key] = "no_image.png";
+            _this5.employee[key] = "no_image.png";
           } else {
-            _this4.employee[key] = "";
+            _this5.employee[key] = "";
           }
         });
       }
@@ -3386,29 +3424,34 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       }
     },
     addNewEmployee: function addNewEmployee() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.isLoading = true;
+      this.sectionError.basicInformation = false;
+      this.sectionError.accountNumbers = false;
       window.axios.post("/employee/record/store", this.employee).then(function (response) {
         if (response.status === 201) {
-          _this5.isLoading = false;
+          _this6.isLoading = false;
+          _this6.errors = {};
           sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
             text: "Successfully add new employee.",
             icon: "success"
           });
 
-          _this5.employees.unshift(response.data);
+          _this6.employees.unshift(response.data);
         }
       })["catch"](function (error) {
-        _this5.isLoading = false;
-        _this5.errors = {};
+        _this6.isLoading = false;
+        _this6.errors = {};
+
+        _this6.sectionValidatorChecker(Object.keys(error.response.data.errors));
 
         if (error.response.status === 422) {
           Object.keys(error.response.data.errors).map(function (field) {
             var _error$response$data$ = _slicedToArray(error.response.data.errors[field], 1),
                 fieldMessage = _error$response$data$[0];
 
-            _this5.errors[field] = fieldMessage;
+            _this6.errors[field] = fieldMessage;
           });
         }
       });
@@ -3417,102 +3460,107 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       this.fetchEmployeeData(employee.employee_id);
     },
     updateEmployee: function updateEmployee() {
-      var _this6 = this;
+      var _this7 = this;
 
       this.isLoading = true;
+      this.sectionError.basicInformation = false;
+      this.sectionError.accountNumbers = false;
       window.axios.put("/employee/record/".concat(this.employee.employee_id, "/update"), this.employee).then(function (response) {
         if (response.status === 200) {
-          _this6.isLoading = false;
+          _this7.isLoading = false;
           sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
             text: "Successfully update employee.",
             icon: "success"
           });
 
-          _this6.loadEmployees();
+          _this7.loadEmployees();
         }
       })["catch"](function (error) {
-        _this6.isLoading = false;
-        _this6.errors = {}; // Check the error status code.
+        _this7.isLoading = false;
+        _this7.errors = {};
+
+        _this7.sectionValidatorChecker(Object.keys(error.response.data.errors)); // Check the error status code.
+
 
         if (error.response.status === 422) {
-          _this6.isLoading = false;
+          _this7.isLoading = false;
           Object.keys(error.response.data.errors).map(function (field) {
             var _error$response$data$2 = _slicedToArray(error.response.data.errors[field], 1),
                 fieldMessage = _error$response$data$2[0];
 
-            _this6.errors[field] = fieldMessage;
+            _this7.errors[field] = fieldMessage;
           });
         }
       });
     },
     fetchEmployeeData: function fetchEmployeeData(employee_id) {
-      var _this7 = this;
+      var _this8 = this;
 
       window.axios.get("/api/employee/find/".concat(employee_id)).then(function (response) {
         if (response.status == 200) {
-          _this7.errors = {};
+          _this8.errors = {};
           var dateYear = new Date().getFullYear();
           var age = dateYear - new Date(response.data.date_birth).getFullYear();
-          _this7.employee.age = age <= 100 ? age : "";
-          _this7.employee.employee_id = response.data.employee_id;
-          _this7.employee.lastName = response.data.lastname;
-          _this7.employee.firstName = response.data.firstname;
-          _this7.employee.middleName = response.data.middlename;
-          _this7.employee.extension = response.data.extension;
-          _this7.employee.pagibigMidNo = response.data.pag_ibig_no;
-          _this7.employee.dateOfBirth = response.data.date_birth;
-          _this7.employee.philhealthNo = response.data.philhealth_no;
-          _this7.employee.sssNo = response.data.sss_no;
-          _this7.employee.tinNo = response.data.tin_no;
-          _this7.employee.lbpAccountNo = response.data.lbp_account_no || response.data.dbp_account_no;
-          _this7.employee.employmentStatus = response.data.status;
-          _this7.employee.gsisPolicyNo = response.data.gsis_policy_no;
-          _this7.employee.gsisBpNo = response.data.gsis_bp_no;
-          _this7.employee.gsisIdNo = response.data.gsis_id_no; // Checking if the user has position and office
+          _this8.employee.age = age <= 100 ? age : "";
+          _this8.employee.employee_id = response.data.employee_id;
+          _this8.employee.lastName = response.data.lastname;
+          _this8.employee.firstName = response.data.firstname;
+          _this8.employee.middleName = response.data.middlename;
+          _this8.employee.extension = response.data.extension;
+          _this8.employee.pagibigMidNo = response.data.pag_ibig_no;
+          _this8.employee.dateOfBirth = response.data.date_birth;
+          _this8.employee.philhealthNo = response.data.philhealth_no;
+          _this8.employee.sssNo = response.data.sss_no;
+          _this8.employee.tinNo = response.data.tin_no;
+          _this8.employee.lbpAccountNo = response.data.lbp_account_no || response.data.dbp_account_no;
+          _this8.employee.employmentStatus = response.data.status;
+          _this8.employee.gsisPolicyNo = response.data.gsis_policy_no;
+          _this8.employee.gsisBpNo = response.data.gsis_bp_no;
+          _this8.employee.gsisIdNo = response.data.gsis_id_no; // Checking if the user has position and office
 
           if (response.data.information) {
-            _this7.employee.image = response.data.information.photo;
-            _this7.employee.officeAssignment = response.data.information.office.office_code;
+            _this8.employee.image = response.data.information.photo;
+            _this8.employee.officeAssignment = response.data.information.office.office_code;
             var hasPosition = response.data.information.hasOwnProperty("position");
             var hasOffice = response.data.information.hasOwnProperty("office");
 
             if (hasPosition) {
-              _this7.employee.designation = response.data.information.position;
+              _this8.employee.designation = response.data.information.position;
             }
 
             if (hasOffice) {
-              _this7.employee.officeAssignment = response.data.information.office;
+              _this8.employee.officeAssignment = response.data.information.office;
             }
 
             if (response.data.step) {
-              _this7.employee.basicRate = response.data.step.salary_amount_to;
-              _this7.employee.step = response.data.step.step_no_to;
+              _this8.employee.basicRate = response.data.step.salary_amount_to;
+              _this8.employee.step = response.data.step.step_no_to;
             }
           }
 
-          _this7.showAddEmployeeForm = true;
+          _this8.showAddEmployeeForm = true;
         }
       });
     },
     loadEmployees: function loadEmployees() {
-      var _this8 = this;
+      var _this9 = this;
 
       window.axios.get("/api/employee/employees").then(function (response) {
         if (response.status === 200) {
-          _this8.employees = response.data.data;
-          _this8.data = response.data;
-          _this8.isComplete = true;
+          _this9.employees = response.data.data;
+          _this9.data = response.data;
+          _this9.isComplete = true;
         }
       });
     }
   },
   created: function created() {
-    var _this9 = this;
+    var _this10 = this;
 
     this.loadEmployees();
     window.axios.get("/api/employee/employment/status").then(function (response) {
       if (response.status === 200) {
-        _this9.employmentStatus = response.data;
+        _this10.employmentStatus = response.data;
       }
     })["catch"](function (err) {
       return console.log(err);
@@ -3936,6 +3984,34 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     // set the default tab display to C1
     this.selectedTab = this.tabs[0];
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/CreateWithExistingEmployee.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PersonalData/CreateWithExistingEmployee.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    employee: {
+      required: true,
+      type: Object
+    }
   }
 });
 
@@ -6929,6 +7005,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -7771,58 +7849,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["data"],
   data: function data() {
@@ -7880,34 +7907,42 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
     };
   },
   methods: {
-    provinceChange: function provinceChange() {
+    provinceChange: function provinceChange(province) {
       var _this = this;
 
       // Since the province value change we need to fetch cities by selected province code.
-      window.axios("/api/province/cities/by/".concat(this.personal_data.residentialProvince)).then(function (response) {
-        return _this.cities = response.data;
-      });
+      if (!lodash__WEBPACK_IMPORTED_MODULE_0___default.a.isEmpty(province)) {
+        window.axios("/api/province/cities/by/".concat(province.code)).then(function (response) {
+          return _this.cities = response.data;
+        });
+      }
     },
-    municipalChange: function municipalChange() {
+    municipalChange: function municipalChange(municipal) {
       var _this2 = this;
 
-      window.axios("/api/city/barangay/by/".concat(this.personal_data.residentialCity)).then(function (response) {
-        return _this2.barangays = response.data;
-      });
+      if (!lodash__WEBPACK_IMPORTED_MODULE_0___default.a.isEmpty(municipal)) {
+        window.axios("/api/city/barangay/by/".concat(municipal.code)).then(function (response) {
+          return _this2.barangays = response.data;
+        });
+      }
     },
-    permanentProvinceChange: function permanentProvinceChange() {
+    permanentProvinceChange: function permanentProvinceChange(province) {
       var _this3 = this;
 
-      window.axios("/api/province/cities/by/".concat(this.personal_data.permanentProvince)).then(function (response) {
-        return _this3.permanentCities = response.data;
-      });
+      if (!lodash__WEBPACK_IMPORTED_MODULE_0___default.a.isEmpty(province)) {
+        window.axios("/api/province/cities/by/".concat(province.code)).then(function (response) {
+          return _this3.permanentCities = response.data;
+        });
+      }
     },
-    permanentMunicipalChange: function permanentMunicipalChange() {
+    permanentMunicipalChange: function permanentMunicipalChange(municipal) {
       var _this4 = this;
 
-      window.axios("/api/city/barangay/by/".concat(this.personal_data.permanentCity)).then(function (response) {
-        return _this4.permanentBarangays = response.data;
-      });
+      if (!lodash__WEBPACK_IMPORTED_MODULE_0___default.a.isEmpty(municipal)) {
+        window.axios("/api/city/barangay/by/".concat(municipal.code)).then(function (response) {
+          return _this4.permanentBarangays = response.data;
+        });
+      }
     },
     sameAsAboveAddress: function sameAsAboveAddress() {
       this.isSameAsAbove = !this.isSameAsAbove;
@@ -7936,7 +7971,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       var _this5 = this;
 
       e.preventDefault();
-      this.isLoading = true;
+      this.isLoading = true; // this.personal_data.permanentProvince = this.personal_data.permanentProvince.code;
+      // this.personal_data.permanentCity = this.personal_data.permanentCity.code;
+      // this.personal_data.permanentBarangay = this.personal_data.permanentBarangay.code;
+
       window.axios.post("/employee/personal/information/store", this.personal_data).then(function (response) {
         if (response.status === 200) {
           _this5.errors = {};
@@ -7952,7 +7990,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         _this5.errors = {}; // Check the error status code.
 
         if (error.response.status === 422) {
-          Object.keys(error.response.data.errors).map(function (field, index) {
+          Object.keys(error.response.data.errors).map(function (field) {
             var _error$response$data$ = _slicedToArray(error.response.data.errors[field], 1),
                 fieldMessage = _error$response$data$[0];
 
@@ -12418,21 +12456,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-//
-//
-//
 //
 //
 //
@@ -13238,52 +13261,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["data"],
+  props: ["employee"],
   data: function data() {
     return {
       isLoading: false,
       isComplete: false,
       isSameAsAbove: false,
       zipCodeMaxLength: 4,
-      personal_data: {
-        surname: "",
-        firstname: "",
-        middlename: "",
-        nameExtension: "",
-        dateOfBirth: "",
-        placeOfBirth: "",
-        sex: "",
-        status: "",
-        height: "",
-        weight: "",
-        bloodType: "",
-        gsisIdNo: "",
-        pagibigIdNo: "",
-        philHealthIdNo: "",
-        sssIdNo: "",
-        tinIdNo: "",
-        agencyEmpIdNo: "",
-        citizenship: "",
-        citizenshipBy: "",
-        country: "",
-        telephoneNumber: "",
-        mobileNumber: "",
-        emailAddress: "",
-        residentialLotNo: "",
-        residentialStreet: "",
-        residentialSubdivision: "",
-        residentialBarangay: "",
-        residentialCity: "",
-        residentialProvince: "",
-        residentialZipCode: "",
-        permanentLotNo: "",
-        permanentStreet: "",
-        permanentSubdivision: "",
-        permanentBarangay: "",
-        permanentCity: "",
-        permanentProvince: "",
-        permanentZipCode: ""
-      },
       countries: ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Côte d'Ivoire", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo (Congo-Brazzaville)", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czechia (Czech Republic)", "Democratic Republic of the Congo", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", 'Eswatini (fmr. "Swaziland")', "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Holy See", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar (formerly Burma)", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Palestine State", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"],
       provinces: [],
       cities: [],
@@ -13294,90 +13278,50 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
     };
   },
   methods: {
-    provinceChange: function provinceChange() {
+    provinceChange: function provinceChange(province) {
       var _this = this;
 
       // Since the province value change we need to fetch cities by selected province code.
-      window.axios("/api/province/cities/by/".concat(this.personal_data.residentialProvince)).then(function (response) {
+      window.axios("/api/province/cities/by/".concat(province.code)).then(function (response) {
         return _this.cities = response.data;
       });
     },
     municipalChange: function municipalChange() {
       var _this2 = this;
 
-      window.axios("/api/city/barangay/by/".concat(this.personal_data.residentialCity)).then(function (response) {
+      window.axios("/api/city/barangay/by/".concat(this.employee.residentialCity)).then(function (response) {
         return _this2.barangays = response.data;
       });
     },
     permanentProvinceChange: function permanentProvinceChange() {
       var _this3 = this;
 
-      window.axios("/api/province/cities/by/".concat(this.personal_data.permanentProvince)).then(function (response) {
+      window.axios("/api/province/cities/by/".concat(this.employee.permanentProvince)).then(function (response) {
         return _this3.permanentCities = response.data;
       });
     },
     permanentMunicipalChange: function permanentMunicipalChange() {
       var _this4 = this;
 
-      window.axios("/api/city/barangay/by/".concat(this.personal_data.permanentCity)).then(function (response) {
+      window.axios("/api/city/barangay/by/".concat(this.employee.permanentCity)).then(function (response) {
         return _this4.permanentBarangays = response.data;
       });
     },
-    sameAsAboveAddress: function sameAsAboveAddress() {
-      this.isSameAsAbove = !this.isSameAsAbove;
-
-      if (!this.isSameAsAbove) {
-        this.personal_data.permanentLotNo = "";
-        this.personal_data.permanentStreet = "";
-        this.personal_data.permanentSubdivision = "";
-        this.personal_data.permanentBarangay = "";
-        this.personal_data.permanentCity = "";
-        this.personal_data.permanentProvince = "";
-        this.personal_data.permanentZipCode = "";
-      } else {
-        this.permanentCities = this.cities;
-        this.permanentBarangays = this.barangays;
-        this.personal_data.permanentLotNo = this.personal_data.residentialLotNo;
-        this.personal_data.permanentStreet = this.personal_data.residentialStreet;
-        this.personal_data.permanentSubdivision = this.personal_data.residentialSubdivision;
-        this.personal_data.permanentBarangay = this.personal_data.residentialBarangay;
-        this.personal_data.permanentCity = this.personal_data.residentialCity;
-        this.personal_data.permanentProvince = this.personal_data.residentialProvince;
-        this.personal_data.permanentZipCode = this.personal_data.residentialZipCode;
-      }
-    },
+    sameAsAboveAddress: function sameAsAboveAddress() {},
     submitPersonalInformation: function submitPersonalInformation(e) {
-      var _this5 = this;
-
       e.preventDefault();
       this.isLoading = true;
-      window.axios.post("/employee/personal/information/store", this.personal_data).then(function (response) {
-        if (response.status === 200) {
-          _this5.errors = {};
-          _this5.isLoading = false;
-          _this5.isComplete = true;
-          localStorage.setItem("employee_id", response.data.employee_id);
-          localStorage.setItem("personal_information", JSON.stringify(response.data));
-
-          _this5.$emit("next-panel-family-background");
-        }
-      })["catch"](function (error) {
-        _this5.isLoading = false;
-        _this5.errors = {}; // Check the error status code.
-
-        if (error.response.status === 422) {
-          Object.keys(error.response.data.errors).map(function (field, index) {
-            var _error$response$data$ = _slicedToArray(error.response.data.errors[field], 1),
-                fieldMessage = _error$response$data$[0];
-
-            _this5.errors[field] = fieldMessage;
-          });
-        }
-      });
+      window.axios.post("/employee/personal/information/store", this.employee).then(function (response) {})["catch"](function (error) {});
     }
   },
   mounted: function mounted() {},
-  created: function created() {}
+  created: function created() {
+    var _this5 = this;
+
+    window.axios.get("/api/province/all").then(function (response) {
+      _this5.provinces = response.data;
+    });
+  }
 });
 
 /***/ }),
@@ -16546,7 +16490,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, "\ntd[data-v-a89d73f8] {\n    cursor: pointer;\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-a89d73f8]:hover {\n    background: #f1f2f3;\n}\n", ""]);
+exports.push([module.i, "\ntd[data-v-a89d73f8] {\r\n    cursor: pointer;\r\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-a89d73f8]:hover {\r\n    background: #f1f2f3;\n}\r\n", ""]);
 
 // exports
 
@@ -36577,7 +36521,7 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-primary shadow rounded mb-2",
-              class: !_vm.showAddEmployeeForm ? "btn-success" : "btn-primary",
+              class: !_vm.showAddEmployeeForm ? "btn-primary" : "btn-info",
               on: { click: _vm.newEmployeeForm }
             },
             [
@@ -36808,7 +36752,49 @@ var render = function() {
                 _vm._v(" "),
                 _c("hr"),
                 _vm._v(" "),
-                _vm._m(3),
+                _c("ul", { staticClass: "nav nav-tabs" }, [
+                  _c("li", { staticClass: "nav-item" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "nav-link active",
+                        attrs: { href: "#basictab1", "data-toggle": "tab" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                                Basic Information\n                                "
+                        ),
+                        _vm.sectionError.basicInformation
+                          ? _c("i", {
+                              staticClass:
+                                "fas fa-exclamation-triangle text-danger"
+                            })
+                          : _vm._e()
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "nav-item" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "nav-link",
+                        attrs: { href: "#basictab2", "data-toggle": "tab" }
+                      },
+                      [
+                        _vm._v(
+                          "Account Numbers\n                                "
+                        ),
+                        _vm.sectionError.accountNumbers
+                          ? _c("i", {
+                              staticClass:
+                                "fas fa-exclamation-triangle text-danger"
+                            })
+                          : _vm._e()
+                      ]
+                    )
+                  ])
+                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "tab-content" }, [
                   _c(
@@ -36846,11 +36832,17 @@ var render = function() {
                 _c("div", { staticClass: "text-right" }, [
                   _c(
                     "button",
-                    {
-                      staticClass: "btn btn-primary rounded shadow",
-                      attrs: { disabled: _vm.isLoading },
-                      on: { click: _vm.submitEmployee }
-                    },
+                    _vm._g(
+                      {
+                        staticClass: "btn btn-primary rounded shadow",
+                        class:
+                          _vm.showAddEmployeeForm && _vm.employee.employee_id
+                            ? "btn-success"
+                            : "btn-primary",
+                        attrs: { disabled: _vm.isLoading }
+                      },
+                      true ? { click: _vm.submitEmployee } : undefined
+                    ),
                     [
                       _vm.isLoading
                         ? _c(
@@ -36942,34 +36934,6 @@ var staticRenderFns = [
             attrs: { role: "status" }
           },
           [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("ul", { staticClass: "nav nav-tabs" }, [
-      _c("li", { staticClass: "nav-item" }, [
-        _c(
-          "a",
-          {
-            staticClass: "nav-link active",
-            attrs: { href: "#basictab1", "data-toggle": "tab" }
-          },
-          [_vm._v("Basic Information")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("li", { staticClass: "nav-item" }, [
-        _c(
-          "a",
-          {
-            staticClass: "nav-link",
-            attrs: { href: "#basictab2", "data-toggle": "tab" }
-          },
-          [_vm._v("Account Numbers")]
         )
       ])
     ])
@@ -37407,6 +37371,34 @@ var render = function() {
       1
     )
   ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/CreateWithExistingEmployee.vue?vue&type=template&id=dd32bbf6&":
+/*!******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PersonalData/CreateWithExistingEmployee.vue?vue&type=template&id=dd32bbf6& ***!
+  \******************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [_c("exists-personal-information", { attrs: { employee: _vm.employee } })],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -42711,45 +42703,62 @@ var render = function() {
                   attrs: { for: "nameextension" }
                 },
                 [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.personal_data.nameExtension,
-                        expression: "personal_data.nameExtension"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    class: !_vm.errors.hasOwnProperty("nameExtension")
-                      ? ""
-                      : "is-invalid",
-                    staticStyle: {
-                      "text-transform": "uppercase",
-                      outline: "none",
-                      "box-shadow": "0px 0px 0px transparent"
-                    },
-                    attrs: {
-                      type: "text",
-                      maxlength: "3",
-                      max: "3",
-                      id: "nameextension",
-                      placeholder: "(JR.,SR.)"
-                    },
-                    domProps: { value: _vm.personal_data.nameExtension },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.personal_data.nameExtension,
+                          expression: "personal_data.nameExtension"
                         }
-                        _vm.$set(
-                          _vm.personal_data,
-                          "nameExtension",
-                          $event.target.value
-                        )
+                      ],
+                      staticClass: "form-control",
+                      class: !_vm.errors.hasOwnProperty("nameExtension")
+                        ? ""
+                        : "is-invalid",
+                      staticStyle: {
+                        "text-transform": "uppercase",
+                        outline: "none",
+                        "box-shadow": "0px 0px 0px transparent"
+                      },
+                      attrs: {
+                        type: "text",
+                        maxlength: "3",
+                        max: "3",
+                        id: "nameextension"
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.personal_data,
+                            "nameExtension",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
                       }
-                    }
-                  }),
+                    },
+                    [
+                      _c("option", { attrs: { value: "sr" } }, [_vm._v("SR")]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "sr" } }, [_vm._v("SR")]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "jr" } }, [_vm._v("JR")]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "iii" } }, [_vm._v("III")])
+                    ]
+                  ),
                   _vm._v(" "),
                   _c("span", [_vm._v("Extension Name")])
                 ]
@@ -42809,9 +42818,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("p", { staticClass: "text-danger text-sm" }, [
                     _vm._v(
-                      "\n                        " +
+                      "\n                            " +
                         _vm._s(_vm.errors.dateOfBirth) +
-                        "\n                    "
+                        "\n                        "
                     )
                   ]),
                   _vm._v(" "),
@@ -44012,234 +44021,85 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row pl-3 pr-3" }, [
-            _c("div", { staticClass: "col-lg-3" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "form-group has-float-label mb-0",
-                  attrs: { for: "province" }
-                },
-                [
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.personal_data.residentialProvince,
-                          expression: "personal_data.residentialProvince"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      class: !_vm.errors.hasOwnProperty("residentialProvince")
-                        ? ""
-                        : "is-invalid",
-                      staticStyle: {
-                        outline: "none",
-                        "box-shadow": "0px 0px 0px transparent"
-                      },
-                      attrs: { type: "text" },
-                      on: {
-                        change: [
-                          function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              _vm.personal_data,
-                              "residentialProvince",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
-                          },
-                          _vm.provinceChange
-                        ]
-                      }
+            _c(
+              "div",
+              { staticClass: "col-lg-3" },
+              [
+                _c("v-select", {
+                  attrs: { label: "name", options: _vm.provinces },
+                  on: { input: _vm.provinceChange },
+                  model: {
+                    value: _vm.personal_data.residentialProvince,
+                    callback: function($$v) {
+                      _vm.$set(_vm.personal_data, "residentialProvince", $$v)
                     },
-                    _vm._l(_vm.provinces, function(province, index) {
-                      return _c(
-                        "option",
-                        { key: index, domProps: { value: province.code } },
-                        [_vm._v(_vm._s(province.name))]
-                      )
-                    }),
-                    0
-                  ),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("Province")])
-                ]
-              ),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-danger text-sm" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.errors.residentialProvince) +
-                    "\n                    "
-                )
-              ])
-            ]),
+                    expression: "personal_data.residentialProvince"
+                  }
+                }),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-danger text-sm" }, [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(_vm.errors["residentialProvince.code"]) +
+                      "\n                    "
+                  )
+                ])
+              ],
+              1
+            ),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "form-group has-float-label mb-0",
-                  attrs: { for: "city" }
-                },
-                [
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.personal_data.residentialCity,
-                          expression: "personal_data.residentialCity"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      class: !_vm.errors.hasOwnProperty("residentialCity")
-                        ? ""
-                        : "is-invalid",
-                      staticStyle: {
-                        outline: "none",
-                        "box-shadow": "0px 0px 0px transparent"
-                      },
-                      attrs: {
-                        type: "text",
-                        disabled: _vm.personal_data.residentialProvince
-                          ? false
-                          : true,
-                        placeholder: "Enter City or Municipality"
-                      },
-                      on: {
-                        change: [
-                          function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              _vm.personal_data,
-                              "residentialCity",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
-                          },
-                          _vm.municipalChange
-                        ]
-                      }
+            _c(
+              "div",
+              { staticClass: "col-lg-3" },
+              [
+                _c("v-select", {
+                  attrs: { label: "name", options: _vm.cities },
+                  on: { input: _vm.municipalChange },
+                  model: {
+                    value: _vm.personal_data.residentialCity,
+                    callback: function($$v) {
+                      _vm.$set(_vm.personal_data, "residentialCity", $$v)
                     },
-                    _vm._l(_vm.cities, function(city, index) {
-                      return _c(
-                        "option",
-                        { key: index, domProps: { value: city.code } },
-                        [_vm._v(_vm._s(city.name))]
-                      )
-                    }),
-                    0
-                  ),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("City/Municipality")])
-                ]
-              ),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-danger text-sm" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.errors.residentialCity) +
-                    "\n                    "
-                )
-              ])
-            ]),
+                    expression: "personal_data.residentialCity"
+                  }
+                }),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-danger text-sm" }, [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(_vm.errors["residentialCity.code"]) +
+                      "\n                    "
+                  )
+                ])
+              ],
+              1
+            ),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "form-group has-float-label mb-0",
-                  attrs: { for: "barangay" }
-                },
-                [
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.personal_data.residentialBarangay,
-                          expression: "personal_data.residentialBarangay"
-                        }
-                      ],
-                      staticClass: "form-control custom-select",
-                      class: !_vm.errors.hasOwnProperty("residentialBarangay")
-                        ? ""
-                        : "is-invalid",
-                      staticStyle: {
-                        outline: "none",
-                        "box-shadow": "0px 0px 0px transparent"
-                      },
-                      attrs: {
-                        disabled: _vm.personal_data.residentialCity
-                          ? false
-                          : true
-                      },
-                      on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.$set(
-                            _vm.personal_data,
-                            "residentialBarangay",
-                            $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          )
-                        }
-                      }
+            _c(
+              "div",
+              { staticClass: "col-lg-3" },
+              [
+                _c("v-select", {
+                  attrs: { label: "name", options: _vm.barangays },
+                  model: {
+                    value: _vm.personal_data.residentialBarangay,
+                    callback: function($$v) {
+                      _vm.$set(_vm.personal_data, "residentialBarangay", $$v)
                     },
-                    _vm._l(_vm.barangays, function(barangay, index) {
-                      return _c(
-                        "option",
-                        { key: index, domProps: { value: barangay.code } },
-                        [_vm._v(_vm._s(barangay.name))]
-                      )
-                    }),
-                    0
-                  ),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("Barangay")])
-                ]
-              ),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-danger text-sm" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.errors.residentialBarangay) +
-                    "\n                    "
-                )
-              ])
-            ]),
+                    expression: "personal_data.residentialBarangay"
+                  }
+                }),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-danger text-sm" }, [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(_vm.errors["residentialBarangay.code"]) +
+                      "\n                    "
+                  )
+                ])
+              ],
+              1
+            ),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3" }, [
               _c(
@@ -44266,7 +44126,11 @@ var render = function() {
                       outline: "none",
                       "box-shadow": "0px 0px 0px transparent"
                     },
-                    attrs: { type: "number", placeholder: "Enter Zipcode" },
+                    attrs: {
+                      id: "zipcode",
+                      type: "number",
+                      placeholder: "Enter Zipcode"
+                    },
                     domProps: { value: _vm.personal_data.residentialZipCode },
                     on: {
                       input: [
@@ -44436,7 +44300,7 @@ var render = function() {
                 "label",
                 {
                   staticClass: "form-group has-float-label",
-                  attrs: { for: "subdivision" }
+                  attrs: { for: "permanentSubDivision" }
                 },
                 [
                   _c("input", {
@@ -44455,6 +44319,7 @@ var render = function() {
                       "box-shadow": "0px 0px 0px transparent"
                     },
                     attrs: {
+                      id: "permanentSubDivision",
                       type: "text",
                       readonly: _vm.isSameAsAbove ? true : false,
                       placeholder: "Enter Subdivision or Village"
@@ -44481,275 +44346,92 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row pl-3 pr-3" }, [
-            _c("div", { staticClass: "col-lg-3" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "form-group has-float-label mb-0",
-                  attrs: { for: "province" }
-                },
-                [
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.personal_data.permanentProvince,
-                          expression: "personal_data.permanentProvince"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      class: !_vm.errors.hasOwnProperty("permanentProvince")
-                        ? ""
-                        : "is-invalid",
-                      staticStyle: {
-                        outline: "none",
-                        "box-shadow": "0px 0px 0px transparent"
-                      },
-                      attrs: {
-                        type: "text",
-                        disabled: _vm.isSameAsAbove ? true : false
-                      },
-                      on: {
-                        change: [
-                          function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              _vm.personal_data,
-                              "permanentProvince",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
-                          },
-                          _vm.permanentProvinceChange
-                        ]
-                      }
+            _c(
+              "div",
+              { staticClass: "col-lg-3" },
+              [
+                _c("v-select", {
+                  attrs: { label: "name", options: _vm.provinces },
+                  on: { input: _vm.permanentProvinceChange },
+                  model: {
+                    value: _vm.personal_data.permanentProvince,
+                    callback: function($$v) {
+                      _vm.$set(_vm.personal_data, "permanentProvince", $$v)
                     },
-                    _vm._l(_vm.provinces, function(province, index) {
-                      return _c(
-                        "option",
-                        {
-                          key: index,
-                          domProps: {
-                            value: province.code,
-                            selected:
-                              province.code ==
-                              _vm.personal_data.residentialProvince
-                                ? true
-                                : false
-                          }
-                        },
-                        [_vm._v(_vm._s(province.name))]
-                      )
-                    }),
-                    0
-                  ),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("Province")])
-                ]
-              ),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-danger text-sm" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.errors.permanentProvince) +
-                    "\n                    "
-                )
-              ])
-            ]),
+                    expression: "personal_data.permanentProvince"
+                  }
+                }),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-danger text-sm" }, [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(_vm.errors["permanentProvince.code"]) +
+                      "\n                    "
+                  )
+                ])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-lg-3" },
+              [
+                _c("v-select", {
+                  attrs: { label: "name", options: _vm.permanentCities },
+                  on: { input: _vm.permanentMunicipalChange },
+                  model: {
+                    value: _vm.personal_data.permanentCity,
+                    callback: function($$v) {
+                      _vm.$set(_vm.personal_data, "permanentCity", $$v)
+                    },
+                    expression: "personal_data.permanentCity"
+                  }
+                }),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-danger text-sm" }, [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(_vm.errors["permanentCity.code"]) +
+                      "\n                    "
+                  )
+                ])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-lg-3" },
+              [
+                _c("v-select", {
+                  attrs: { label: "name", options: _vm.permanentBarangays },
+                  model: {
+                    value: _vm.personal_data.permanentBarangay,
+                    callback: function($$v) {
+                      _vm.$set(_vm.personal_data, "permanentBarangay", $$v)
+                    },
+                    expression: "personal_data.permanentBarangay"
+                  }
+                }),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-danger text-sm" }, [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(_vm.errors["permanentBarangay.code"]) +
+                      "\n                    "
+                  )
+                ])
+              ],
+              1
+            ),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3" }, [
               _c(
                 "label",
                 {
                   staticClass: "form-group has-float-label mb-0",
-                  attrs: { for: "city" }
-                },
-                [
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.personal_data.permanentCity,
-                          expression: "personal_data.permanentCity"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      class: !_vm.errors.hasOwnProperty("permanentCity")
-                        ? ""
-                        : "is-invalid",
-                      staticStyle: {
-                        outline: "none",
-                        "box-shadow": "0px 0px 0px transparent"
-                      },
-                      attrs: {
-                        disabled:
-                          (_vm.isSameAsAbove ? true : false) ||
-                          (_vm.personal_data.permanentProvince == ""
-                            ? true
-                            : false)
-                      },
-                      on: {
-                        change: [
-                          function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              _vm.personal_data,
-                              "permanentCity",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
-                          },
-                          _vm.permanentMunicipalChange
-                        ]
-                      }
-                    },
-                    _vm._l(_vm.permanentCities, function(city, index) {
-                      return _c(
-                        "option",
-                        {
-                          key: index,
-                          domProps: {
-                            value: city.code,
-                            selected:
-                              city.code == _vm.personal_data.residentialCity
-                                ? true
-                                : false
-                          }
-                        },
-                        [_vm._v(_vm._s(city.name))]
-                      )
-                    }),
-                    0
-                  ),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("City/Municipality")])
-                ]
-              ),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-danger text-sm" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.errors.permanentCity) +
-                    "\n                    "
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "form-group has-float-label mb-0",
-                  attrs: { for: "barangay" }
-                },
-                [
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.personal_data.permanentBarangay,
-                          expression: "personal_data.permanentBarangay"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      class: !_vm.errors.hasOwnProperty("permanentBarangay")
-                        ? ""
-                        : "is-invalid",
-                      staticStyle: {
-                        outline: "none",
-                        "box-shadow": "0px 0px 0px transparent"
-                      },
-                      attrs: {
-                        disabled:
-                          (_vm.isSameAsAbove ? true : false) ||
-                          (_vm.personal_data.permanentProvince == ""
-                            ? true
-                            : false)
-                      },
-                      on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.$set(
-                            _vm.personal_data,
-                            "permanentBarangay",
-                            $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          )
-                        }
-                      }
-                    },
-                    _vm._l(_vm.permanentBarangays, function(barangay, index) {
-                      return _c(
-                        "option",
-                        {
-                          key: index,
-                          domProps: {
-                            value: barangay.code,
-                            selected:
-                              barangay.code ==
-                              _vm.personal_data.residentialBarangay
-                                ? true
-                                : false
-                          }
-                        },
-                        [_vm._v(_vm._s(barangay.name))]
-                      )
-                    }),
-                    0
-                  ),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("Barangay")])
-                ]
-              ),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-danger text-sm" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.errors.permanentBarangay) +
-                    "\n                    "
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "form-group has-float-label mb-0",
-                  attrs: { for: "zipcode" }
+                  attrs: { for: "permanentZipCode" }
                 },
                 [
                   _c("input", {
@@ -44770,6 +44452,7 @@ var render = function() {
                       "box-shadow": "0px 0px 0px transparent"
                     },
                     attrs: {
+                      id: "permanentZipCode",
                       type: "number",
                       disabled: _vm.isSameAsAbove ? true : false,
                       placeholder: "Enter Zipcode"
@@ -52282,12 +51965,12 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.surname,
-                    expression: "personal_data.surname"
+                    value: _vm.employee.lastname,
+                    expression: "employee.lastname"
                   }
                 ],
                 staticClass: "form-control",
-                class: !_vm.errors.hasOwnProperty("surname")
+                class: !_vm.errors.hasOwnProperty("lastname")
                   ? ""
                   : "is-invalid",
                 staticStyle: { "text-transform": "uppercase" },
@@ -52296,13 +51979,13 @@ var render = function() {
                   id: "surname",
                   placeholder: "Enter Surname"
                 },
-                domProps: { value: _vm.personal_data.surname },
+                domProps: { value: _vm.employee.lastname },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.personal_data, "surname", $event.target.value)
+                    _vm.$set(_vm.employee, "lastname", $event.target.value)
                   }
                 }
               }),
@@ -52310,7 +51993,7 @@ var render = function() {
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
                   "\n                        " +
-                    _vm._s(_vm.errors.surname) +
+                    _vm._s(_vm.errors.lastname) +
                     "\n                    "
                 )
               ])
@@ -52328,8 +52011,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.firstname,
-                    expression: "personal_data.firstname"
+                    value: _vm.employee.firstname,
+                    expression: "employee.firstname"
                   }
                 ],
                 staticClass: "form-control",
@@ -52340,17 +52023,13 @@ var render = function() {
                   id: "firstname",
                   placeholder: "Enter First Name"
                 },
-                domProps: { value: _vm.personal_data.firstname },
+                domProps: { value: _vm.employee.firstname },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(
-                      _vm.personal_data,
-                      "firstname",
-                      $event.target.value
-                    )
+                    _vm.$set(_vm.employee, "firstname", $event.target.value)
                   }
                 }
               }),
@@ -52374,8 +52053,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.middlename,
-                    expression: "personal_data.middlename"
+                    value: _vm.employee.middlename,
+                    expression: "employee.middlename"
                   }
                 ],
                 staticClass: "form-control",
@@ -52388,17 +52067,13 @@ var render = function() {
                   id: "middlename",
                   placeholder: "Enter Middle Name"
                 },
-                domProps: { value: _vm.personal_data.middlename },
+                domProps: { value: _vm.employee.middlename },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(
-                      _vm.personal_data,
-                      "middlename",
-                      $event.target.value
-                    )
+                    _vm.$set(_vm.employee, "middlename", $event.target.value)
                   }
                 }
               }),
@@ -52414,49 +52089,75 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "form-group col-lg-3" }, [
               _c("label", { attrs: { for: "nameextension" } }, [
-                _vm._v("NAME EXTENSION")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
+                _vm._v("NAME EXTENSION\n                        "),
+                _c(
+                  "select",
                   {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.personal_data.nameExtension,
-                    expression: "personal_data.nameExtension"
-                  }
-                ],
-                staticClass: "form-control",
-                class: !_vm.errors.hasOwnProperty("nameExtension")
-                  ? ""
-                  : "is-invalid",
-                staticStyle: { "text-transform": "uppercase" },
-                attrs: {
-                  type: "text",
-                  maxlength: "3",
-                  max: "3",
-                  id: "nameextension",
-                  placeholder: "(JR.,SR.)"
-                },
-                domProps: { value: _vm.personal_data.nameExtension },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.employee.extension,
+                        expression: "employee.extension"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class: !_vm.errors.hasOwnProperty("extension")
+                      ? ""
+                      : "is-invalid",
+                    staticStyle: {
+                      "text-transform": "uppercase",
+                      outline: "none",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: {
+                      type: "text",
+                      maxlength: "3",
+                      max: "3",
+                      id: "nameextension"
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.employee,
+                          "extension",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
                     }
-                    _vm.$set(
-                      _vm.personal_data,
-                      "nameExtension",
-                      $event.target.value
-                    )
-                  }
-                }
-              }),
+                  },
+                  [
+                    _c("option", { attrs: { value: "", disabled: "" } }, [
+                      _vm._v("Select Extension")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "sr" } }, [_vm._v("SR")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "sr" } }, [_vm._v("SR")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "jr" } }, [_vm._v("JR")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "iii" } }, [_vm._v("III")])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("span", [_vm._v("Extension Name")])
+              ]),
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
                   "\n                        " +
-                    _vm._s(_vm.errors.nameExtension) +
+                    _vm._s(_vm.errors.extension) +
                     "\n                    "
                 )
               ])
@@ -52475,26 +52176,22 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.dateOfBirth,
-                    expression: "personal_data.dateOfBirth"
+                    value: _vm.employee.date_birth,
+                    expression: "employee.date_birth"
                   }
                 ],
                 staticClass: "form-control",
-                class: !_vm.errors.hasOwnProperty("dateOfBirth")
+                class: !_vm.errors.hasOwnProperty("date_birth")
                   ? ""
                   : "is-invalid",
                 attrs: { type: "date" },
-                domProps: { value: _vm.personal_data.dateOfBirth },
+                domProps: { value: _vm.employee.date_birth },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(
-                      _vm.personal_data,
-                      "dateOfBirth",
-                      $event.target.value
-                    )
+                    _vm.$set(_vm.employee, "date_birth", $event.target.value)
                   }
                 }
               }),
@@ -52502,7 +52199,7 @@ var render = function() {
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
                   "\n                        " +
-                    _vm._s(_vm.errors.dateOfBirth) +
+                    _vm._s(_vm.errors.date_birth) +
                     "\n                    "
                 )
               ])
@@ -52519,12 +52216,12 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.placeOfBirth,
-                    expression: "personal_data.placeOfBirth"
+                    value: _vm.employee.place_birth,
+                    expression: "employee.place_birth"
                   }
                 ],
                 staticClass: "form-control",
-                class: !_vm.errors.hasOwnProperty("placeOfBirth")
+                class: !_vm.errors.hasOwnProperty("place_birth")
                   ? ""
                   : "is-invalid",
                 staticStyle: { "text-transform": "uppercase" },
@@ -52533,17 +52230,13 @@ var render = function() {
                   id: "placeofbirth",
                   placeholder: "Enter Place of Birth"
                 },
-                domProps: { value: _vm.personal_data.placeOfBirth },
+                domProps: { value: _vm.employee.place_birth },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(
-                      _vm.personal_data,
-                      "placeOfBirth",
-                      $event.target.value
-                    )
+                    _vm.$set(_vm.employee, "place_birth", $event.target.value)
                   }
                 }
               }),
@@ -52551,7 +52244,7 @@ var render = function() {
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
                   "\n                        " +
-                    _vm._s(_vm.errors.placeOfBirth) +
+                    _vm._s(_vm.errors.place_birth) +
                     "\n                    "
                 )
               ])
@@ -52568,8 +52261,8 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.personal_data.sex,
-                      expression: "personal_data.sex"
+                      value: _vm.employee.sex,
+                      expression: "employee.sex"
                     }
                   ],
                   staticClass: "form-control",
@@ -52586,7 +52279,7 @@ var render = function() {
                           return val
                         })
                       _vm.$set(
-                        _vm.personal_data,
+                        _vm.employee,
                         "sex",
                         $event.target.multiple
                           ? $$selectedVal
@@ -52596,9 +52289,9 @@ var render = function() {
                   }
                 },
                 [
-                  _c("option", { attrs: { value: "MALE" } }, [_vm._v("MALE")]),
+                  _c("option", { attrs: { value: "male" } }, [_vm._v("MALE")]),
                   _vm._v(" "),
-                  _c("option", { attrs: { value: "FEMALE" } }, [
+                  _c("option", { attrs: { value: "female" } }, [
                     _vm._v("FEMALE")
                   ])
                 ]
@@ -52624,12 +52317,12 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.personal_data.status,
-                      expression: "personal_data.status"
+                      value: _vm.employee.civil_status,
+                      expression: "employee.civil_status"
                     }
                   ],
                   staticClass: "form-control",
-                  class: !_vm.errors.hasOwnProperty("status")
+                  class: !_vm.errors.hasOwnProperty("civil_status")
                     ? ""
                     : "is-invalid",
                   attrs: { id: "status" },
@@ -52644,8 +52337,8 @@ var render = function() {
                           return val
                         })
                       _vm.$set(
-                        _vm.personal_data,
-                        "status",
+                        _vm.employee,
+                        "civil_status",
                         $event.target.multiple
                           ? $$selectedVal
                           : $$selectedVal[0]
@@ -52679,7 +52372,7 @@ var render = function() {
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
                   "\n                        " +
-                    _vm._s(_vm.errors.status) +
+                    _vm._s(_vm.errors.civil_status) +
                     "\n                    "
                 )
               ])
@@ -52699,8 +52392,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.height,
-                    expression: "personal_data.height"
+                    value: _vm.employee.height,
+                    expression: "employee.height"
                   }
                 ],
                 staticClass: "form-control",
@@ -52710,13 +52403,13 @@ var render = function() {
                   id: "height",
                   placeholder: "Enter height in meter"
                 },
-                domProps: { value: _vm.personal_data.height },
+                domProps: { value: _vm.employee.height },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.personal_data, "height", $event.target.value)
+                    _vm.$set(_vm.employee, "height", $event.target.value)
                   }
                 }
               }),
@@ -52738,8 +52431,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.weight,
-                    expression: "personal_data.weight"
+                    value: _vm.employee.weight,
+                    expression: "employee.weight"
                   }
                 ],
                 staticClass: "form-control",
@@ -52749,13 +52442,13 @@ var render = function() {
                   id: "weight",
                   placeholder: "Enter weight in kilogram"
                 },
-                domProps: { value: _vm.personal_data.weight },
+                domProps: { value: _vm.employee.weight },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.personal_data, "weight", $event.target.value)
+                    _vm.$set(_vm.employee, "weight", $event.target.value)
                   }
                 }
               }),
@@ -52779,12 +52472,12 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.bloodType,
-                    expression: "personal_data.bloodType"
+                    value: _vm.employee.blood_type,
+                    expression: "employee.blood_type"
                   }
                 ],
                 staticClass: "form-control",
-                class: _vm.errors.hasOwnProperty("bloodType")
+                class: _vm.errors.hasOwnProperty("blood_type")
                   ? "is-invalid"
                   : "",
                 staticStyle: { "text-transform": "uppercase" },
@@ -52793,17 +52486,13 @@ var render = function() {
                   maxlength: "3",
                   placeholder: "Enter bloodtype"
                 },
-                domProps: { value: _vm.personal_data.bloodType },
+                domProps: { value: _vm.employee.blood_type },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(
-                      _vm.personal_data,
-                      "bloodType",
-                      $event.target.value
-                    )
+                    _vm.$set(_vm.employee, "blood_type", $event.target.value)
                   }
                 }
               }),
@@ -52811,7 +52500,7 @@ var render = function() {
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
                   "\n                        " +
-                    _vm._s(_vm.errors.bloodType) +
+                    _vm._s(_vm.errors.blood_type) +
                     "\n                    "
                 )
               ])
@@ -52829,8 +52518,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.gsisIdNo,
-                    expression: "personal_data.gsisIdNo"
+                    value: _vm.employee.gsis_id_no,
+                    expression: "employee.gsis_id_no"
                   }
                 ],
                 staticClass: "form-control",
@@ -52839,13 +52528,13 @@ var render = function() {
                   id: "gsisidno",
                   placeholder: "Enter GSIS ID No."
                 },
-                domProps: { value: _vm.personal_data.gsisIdNo },
+                domProps: { value: _vm.employee.gsis_id_no },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.personal_data, "gsisIdNo", $event.target.value)
+                    _vm.$set(_vm.employee, "gsis_id_no", $event.target.value)
                   }
                 }
               })
@@ -52861,8 +52550,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.pagibigIdNo,
-                    expression: "personal_data.pagibigIdNo"
+                    value: _vm.employee.pag_ibig_no,
+                    expression: "employee.pag_ibig_no"
                   }
                 ],
                 staticClass: "form-control",
@@ -52871,17 +52560,13 @@ var render = function() {
                   id: "pagibigidno",
                   placeholder: "Enter PAG-IBIG ID No."
                 },
-                domProps: { value: _vm.personal_data.pagibigIdNo },
+                domProps: { value: _vm.employee.pag_ibig_no },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(
-                      _vm.personal_data,
-                      "pagibigIdNo",
-                      $event.target.value
-                    )
+                    _vm.$set(_vm.employee, "pag_ibig_no", $event.target.value)
                   }
                 }
               })
@@ -52897,8 +52582,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.philHealthIdNo,
-                    expression: "personal_data.philHealthIdNo"
+                    value: _vm.employee.philhealth_no,
+                    expression: "employee.philhealth_no"
                   }
                 ],
                 staticClass: "form-control",
@@ -52907,17 +52592,13 @@ var render = function() {
                   id: "philhealthidno",
                   placeholder: "Enter PHILHEALTH ID No."
                 },
-                domProps: { value: _vm.personal_data.philHealthIdNo },
+                domProps: { value: _vm.employee.philhealth_no },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(
-                      _vm.personal_data,
-                      "philHealthIdNo",
-                      $event.target.value
-                    )
+                    _vm.$set(_vm.employee, "philhealth_no", $event.target.value)
                   }
                 }
               })
@@ -52935,8 +52616,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.sssIdNo,
-                    expression: "personal_data.sssIdNo"
+                    value: _vm.employee.sss_no,
+                    expression: "employee.sss_no"
                   }
                 ],
                 staticClass: "form-control",
@@ -52945,13 +52626,13 @@ var render = function() {
                   id: "sssidno",
                   placeholder: "Enter SSS ID No."
                 },
-                domProps: { value: _vm.personal_data.sssIdNo },
+                domProps: { value: _vm.employee.sss_no },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.personal_data, "sssIdNo", $event.target.value)
+                    _vm.$set(_vm.employee, "sss_no", $event.target.value)
                   }
                 }
               })
@@ -52967,8 +52648,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.tinIdNo,
-                    expression: "personal_data.tinIdNo"
+                    value: _vm.employee.tin_no,
+                    expression: "employee.tin_no"
                   }
                 ],
                 staticClass: "form-control",
@@ -52977,13 +52658,13 @@ var render = function() {
                   id: "tinidno",
                   placeholder: "Enter TIN ID No."
                 },
-                domProps: { value: _vm.personal_data.tinIdNo },
+                domProps: { value: _vm.employee.tin_no },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.personal_data, "tinIdNo", $event.target.value)
+                    _vm.$set(_vm.employee, "tin_no", $event.target.value)
                   }
                 }
               })
@@ -52999,8 +52680,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.agencyEmpIdNo,
-                    expression: "personal_data.agencyEmpIdNo"
+                    value: _vm.employee.agency_employee_no,
+                    expression: "employee.agency_employee_no"
                   }
                 ],
                 staticClass: "form-control",
@@ -53009,15 +52690,15 @@ var render = function() {
                   id: "agencyempidno",
                   placeholder: "Enter agency employee no."
                 },
-                domProps: { value: _vm.personal_data.agencyEmpIdNo },
+                domProps: { value: _vm.employee.agency_employee_no },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
                     _vm.$set(
-                      _vm.personal_data,
-                      "agencyEmpIdNo",
+                      _vm.employee,
+                      "agency_employee_no",
                       $event.target.value
                     )
                   }
@@ -53040,8 +52721,8 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.personal_data.citizenship,
-                      expression: "personal_data.citizenship"
+                      value: _vm.employee.citizenship,
+                      expression: "employee.citizenship"
                     }
                   ],
                   staticClass: "form-control",
@@ -53060,7 +52741,7 @@ var render = function() {
                           return val
                         })
                       _vm.$set(
-                        _vm.personal_data,
+                        _vm.employee,
                         "citizenship",
                         $event.target.multiple
                           ? $$selectedVal
@@ -53089,7 +52770,7 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _vm.personal_data.citizenship == "DUAL CITIZEN"
+            _vm.employee.citizenship == "DUAL CITIZEN"
               ? _c("div", { staticClass: "form-group col-lg-4" }, [
                   _c("label", { attrs: { for: "citizenshipby" } }, [
                     _vm._v("BY")
@@ -53103,8 +52784,8 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.personal_data.citizenshipBy,
-                          expression: "personal_data.citizenshipBy"
+                          value: _vm.employee.citizenshipBy,
+                          expression: "employee.citizenshipBy"
                         }
                       ],
                       staticClass: "form-control",
@@ -53123,7 +52804,7 @@ var render = function() {
                               return val
                             })
                           _vm.$set(
-                            _vm.personal_data,
+                            _vm.employee,
                             "citizenshipBy",
                             $event.target.multiple
                               ? $$selectedVal
@@ -53153,7 +52834,7 @@ var render = function() {
                 ])
               : _vm._e(),
             _vm._v(" "),
-            _vm.personal_data.citizenship == "DUAL CITIZEN"
+            _vm.employee.citizenship == "DUAL CITIZEN"
               ? _c("div", { staticClass: "form-group col-lg-4" }, [
                   _c("label", { attrs: { for: "countries" } }, [
                     _vm._v("INDICATE COUNTRY")
@@ -53167,8 +52848,8 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.personal_data.country,
-                          expression: "personal_data.country"
+                          value: _vm.employee.country,
+                          expression: "employee.country"
                         }
                       ],
                       staticClass: "form-control",
@@ -53187,7 +52868,7 @@ var render = function() {
                               return val
                             })
                           _vm.$set(
-                            _vm.personal_data,
+                            _vm.employee,
                             "country",
                             $event.target.multiple
                               ? $$selectedVal
@@ -53222,23 +52903,19 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.telephoneNumber,
-                    expression: "personal_data.telephoneNumber"
+                    value: _vm.employee.telephone_no,
+                    expression: "employee.telephone_no"
                   }
                 ],
                 staticClass: "form-control",
                 attrs: { type: "text", id: "telno", placeholder: "Optional" },
-                domProps: { value: _vm.personal_data.telephoneNumber },
+                domProps: { value: _vm.employee.telephone_no },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(
-                      _vm.personal_data,
-                      "telephoneNumber",
-                      $event.target.value
-                    )
+                    _vm.$set(_vm.employee, "telephone_no", $event.target.value)
                   }
                 }
               })
@@ -53255,12 +52932,12 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.mobileNumber,
-                    expression: "personal_data.mobileNumber"
+                    value: _vm.employee.mobile_no,
+                    expression: "employee.mobile_no"
                   }
                 ],
                 staticClass: "form-control",
-                class: !_vm.errors.hasOwnProperty("mobileNumber")
+                class: !_vm.errors.hasOwnProperty("mobile_no")
                   ? ""
                   : "is-invalid",
                 attrs: {
@@ -53268,17 +52945,13 @@ var render = function() {
                   id: "mobileno",
                   placeholder: "Enter Mobile Number"
                 },
-                domProps: { value: _vm.personal_data.mobileNumber },
+                domProps: { value: _vm.employee.mobile_no },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(
-                      _vm.personal_data,
-                      "mobileNumber",
-                      $event.target.value
-                    )
+                    _vm.$set(_vm.employee, "mobile_no", $event.target.value)
                   }
                 }
               }),
@@ -53286,7 +52959,7 @@ var render = function() {
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
                   "\n                        " +
-                    _vm._s(_vm.errors.mobileNumber) +
+                    _vm._s(_vm.errors.mobile_no) +
                     "\n                    "
                 )
               ])
@@ -53302,23 +52975,19 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.emailAddress,
-                    expression: "personal_data.emailAddress"
+                    value: _vm.employee.email_address,
+                    expression: "employee.email_address"
                   }
                 ],
                 staticClass: "form-control",
                 attrs: { type: "email", id: "email", placeholder: "Optional" },
-                domProps: { value: _vm.personal_data.emailAddress },
+                domProps: { value: _vm.employee.email_address },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(
-                      _vm.personal_data,
-                      "emailAddress",
-                      $event.target.value
-                    )
+                    _vm.$set(_vm.employee, "email_address", $event.target.value)
                   }
                 }
               })
@@ -53338,8 +53007,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.residentialLotNo,
-                    expression: "personal_data.residentialLotNo"
+                    value: _vm.employee.residential_house_no,
+                    expression: "employee.residential_house_no"
                   }
                 ],
                 staticClass: "form-control",
@@ -53349,15 +53018,15 @@ var render = function() {
                   id: "lotno",
                   placeholder: "Enter house/block/lot no."
                 },
-                domProps: { value: _vm.personal_data.residentialLotNo },
+                domProps: { value: _vm.employee.residential_house_no },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
                     _vm.$set(
-                      _vm.personal_data,
-                      "residentialLotNo",
+                      _vm.employee,
+                      "residential_house_no",
                       $event.target.value
                     )
                   }
@@ -53373,8 +53042,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.residentialStreet,
-                    expression: "personal_data.residentialStreet"
+                    value: _vm.employee.residential_street,
+                    expression: "employee.residential_street"
                   }
                 ],
                 staticClass: "form-control",
@@ -53384,15 +53053,15 @@ var render = function() {
                   id: "street",
                   placeholder: "Enter Street"
                 },
-                domProps: { value: _vm.personal_data.residentialStreet },
+                domProps: { value: _vm.employee.residential_street },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
                     _vm.$set(
-                      _vm.personal_data,
-                      "residentialStreet",
+                      _vm.employee,
+                      "residential_street",
                       $event.target.value
                     )
                   }
@@ -53410,8 +53079,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.residentialSubdivision,
-                    expression: "personal_data.residentialSubdivision"
+                    value: _vm.employee.residential_village,
+                    expression: "employee.residential_village"
                   }
                 ],
                 staticClass: "form-control",
@@ -53421,15 +53090,15 @@ var render = function() {
                   id: "subdivision",
                   placeholder: "Enter Subdivision or Village"
                 },
-                domProps: { value: _vm.personal_data.residentialSubdivision },
+                domProps: { value: _vm.employee.residential_village },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
                     _vm.$set(
-                      _vm.personal_data,
-                      "residentialSubdivision",
+                      _vm.employee,
+                      "residential_village",
                       $event.target.value
                     )
                   }
@@ -53439,137 +53108,56 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row pl-3 pr-3" }, [
-            _c("div", { staticClass: "form-group col-lg-3" }, [
-              _c("label", { attrs: { for: "province" } }, [_vm._v("PROVINCE")]),
-              _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.personal_data.residentialProvince,
-                      expression: "personal_data.residentialProvince"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  class: !_vm.errors.hasOwnProperty("residentialProvince")
-                    ? ""
-                    : "is-invalid",
-                  attrs: { type: "text" },
-                  on: {
-                    change: [
-                      function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.personal_data,
-                          "residentialProvince",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      },
-                      _vm.provinceChange
-                    ]
-                  }
-                },
-                _vm._l(_vm.provinces, function(province, index) {
-                  return _c(
-                    "option",
-                    { key: index, domProps: { value: province.code } },
-                    [_vm._v(_vm._s(province.name))]
-                  )
-                }),
-                0
-              ),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-danger text-sm" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.errors.residentialProvince) +
-                    "\n                    "
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group col-lg-3" }, [
-              _c("label", { attrs: { for: "city" } }, [
-                _vm._v("CITY/MUNICIPALITY")
-              ]),
-              _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.personal_data.residentialCity,
-                      expression: "personal_data.residentialCity"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  class: !_vm.errors.hasOwnProperty("residentialCity")
-                    ? ""
-                    : "is-invalid",
+            _c(
+              "div",
+              { staticClass: "form-group col-lg-3" },
+              [
+                _c("label", { attrs: { for: "province" } }, [
+                  _vm._v("PROVINCE")
+                ]),
+                _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+                _vm._v(" "),
+                _c("v-select", {
                   attrs: {
-                    type: "text",
-                    disabled: _vm.personal_data.residentialProvince
-                      ? false
-                      : true,
-                    placeholder: "Enter City or Municipality"
+                    label: "name",
+                    options: _vm.provinces,
+                    value: _vm.employee.residential_province
                   },
-                  on: {
-                    change: [
-                      function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.personal_data,
-                          "residentialCity",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      },
-                      _vm.municipalChange
-                    ]
-                  }
-                },
-                _vm._l(_vm.cities, function(city, index) {
-                  return _c(
-                    "option",
-                    { key: index, domProps: { value: city.code } },
-                    [_vm._v(_vm._s(city.name))]
-                  )
+                  on: { input: _vm.provinceChange }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group col-lg-3" },
+              [
+                _c("label", { attrs: { for: "city" } }, [
+                  _vm._v("CITY/MUNICIPALITY")
+                ]),
+                _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+                _vm._v(" "),
+                _c("v-select", {
+                  attrs: {
+                    label: "name",
+                    value: _vm.employee.residential_city,
+                    options: _vm.cities,
+                    disabled: _vm.employee.residential_province ? false : true
+                  },
+                  on: { change: _vm.municipalChange }
                 }),
-                0
-              ),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-danger text-sm" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.errors.residentialCity) +
-                    "\n                    "
-                )
-              ])
-            ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-danger text-sm" }, [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(_vm.errors.residential_city) +
+                      "\n                    "
+                  )
+                ])
+              ],
+              1
+            ),
             _vm._v(" "),
             _c("div", { staticClass: "form-group col-lg-3" }, [
               _c("label", { attrs: { for: "barangay" } }, [_vm._v("BARANGAY")]),
@@ -53582,16 +53170,16 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.personal_data.residentialBarangay,
-                      expression: "personal_data.residentialBarangay"
+                      value: _vm.employee.residential_barangay,
+                      expression: "employee.residential_barangay"
                     }
                   ],
                   staticClass: "form-control",
-                  class: !_vm.errors.hasOwnProperty("residentialBarangay")
+                  class: !_vm.errors.hasOwnProperty("residential_barangay")
                     ? ""
                     : "is-invalid",
                   attrs: {
-                    disabled: _vm.personal_data.residentialCity ? false : true
+                    disabled: _vm.employee.residential_city ? false : true
                   },
                   on: {
                     change: function($event) {
@@ -53604,8 +53192,8 @@ var render = function() {
                           return val
                         })
                       _vm.$set(
-                        _vm.personal_data,
-                        "residentialBarangay",
+                        _vm.employee,
+                        "residential_barangay",
                         $event.target.multiple
                           ? $$selectedVal
                           : $$selectedVal[0]
@@ -53626,7 +53214,7 @@ var render = function() {
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
                   "\n                        " +
-                    _vm._s(_vm.errors.residentialBarangay) +
+                    _vm._s(_vm.errors.residential_barangay) +
                     "\n                    "
                 )
               ])
@@ -53641,16 +53229,16 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.residentialZipCode,
-                    expression: "personal_data.residentialZipCode"
+                    value: _vm.employee.residential_zip_code,
+                    expression: "employee.residential_zip_code"
                   }
                 ],
                 staticClass: "form-control",
-                class: !_vm.errors.hasOwnProperty("residentialZipCode")
+                class: !_vm.errors.hasOwnProperty("residential_zip_code")
                   ? ""
                   : "is-invalid",
                 attrs: { type: "number", placeholder: "Enter Zipcode" },
-                domProps: { value: _vm.personal_data.residentialZipCode },
+                domProps: { value: _vm.employee.residential_zip_code },
                 on: {
                   input: [
                     function($event) {
@@ -53658,17 +53246,17 @@ var render = function() {
                         return
                       }
                       _vm.$set(
-                        _vm.personal_data,
-                        "residentialZipCode",
+                        _vm.employee,
+                        "residential_zip_code",
                         $event.target.value
                       )
                     },
                     function($event) {
                       if (
-                        _vm.personal_data.residentialZipCode.length >
+                        _vm.employee.residential_zip_code.length >
                         _vm.zipCodeMaxLength
                       ) {
-                        _vm.personal_data.residentialZipCode = _vm.personal_data.residentialZipCode.slice(
+                        _vm.employee.residential_zip_code = _vm.employee.residential_zip_code.slice(
                           0,
                           _vm.zipCodeMaxLength
                         )
@@ -53681,7 +53269,7 @@ var render = function() {
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
                   "\n                        " +
-                    _vm._s(_vm.errors.residentialZipCode) +
+                    _vm._s(_vm.errors.residential_zip_code) +
                     "\n                    "
                 )
               ])
@@ -53728,8 +53316,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.permanentLotNo,
-                    expression: "personal_data.permanentLotNo"
+                    value: _vm.employee.permanent_house_no,
+                    expression: "employee.permanent_house_no"
                   }
                 ],
                 staticClass: "form-control",
@@ -53739,15 +53327,15 @@ var render = function() {
                   readonly: _vm.isSameAsAbove ? true : false,
                   placeholder: "Enter house/block/lot no."
                 },
-                domProps: { value: _vm.personal_data.permanentLotNo },
+                domProps: { value: _vm.employee.permanent_house_no },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
                     _vm.$set(
-                      _vm.personal_data,
-                      "permanentLotNo",
+                      _vm.employee,
+                      "permanent_house_no",
                       $event.target.value
                     )
                   }
@@ -53763,8 +53351,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.permanentStreet,
-                    expression: "personal_data.permanentStreet"
+                    value: _vm.employee.permanent_street,
+                    expression: "employee.permanent_street"
                   }
                 ],
                 staticClass: "form-control",
@@ -53774,15 +53362,15 @@ var render = function() {
                   readonly: _vm.isSameAsAbove ? true : false,
                   placeholder: "Enter Street"
                 },
-                domProps: { value: _vm.personal_data.permanentStreet },
+                domProps: { value: _vm.employee.permanent_street },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
                     _vm.$set(
-                      _vm.personal_data,
-                      "permanentStreet",
+                      _vm.employee,
+                      "permanent_street",
                       $event.target.value
                     )
                   }
@@ -53800,8 +53388,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.permanentSubdivision,
-                    expression: "personal_data.permanentSubdivision"
+                    value: _vm.employee.permanent_village,
+                    expression: "employee.permanent_village"
                   }
                 ],
                 staticClass: "form-control",
@@ -53811,15 +53399,15 @@ var render = function() {
                   readonly: _vm.isSameAsAbove ? true : false,
                   placeholder: "Enter Subdivision or Village"
                 },
-                domProps: { value: _vm.personal_data.permanentSubdivision },
+                domProps: { value: _vm.employee.permanent_village },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
                     _vm.$set(
-                      _vm.personal_data,
-                      "permanentSubdivision",
+                      _vm.employee,
+                      "permanent_village",
                       $event.target.value
                     )
                   }
@@ -53840,8 +53428,8 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.personal_data.permanentProvince,
-                      expression: "personal_data.permanentProvince"
+                      value: _vm.employee.permanentProvince,
+                      expression: "employee.permanentProvince"
                     }
                   ],
                   staticClass: "form-control",
@@ -53864,7 +53452,7 @@ var render = function() {
                             return val
                           })
                         _vm.$set(
-                          _vm.personal_data,
+                          _vm.employee,
                           "permanentProvince",
                           $event.target.multiple
                             ? $$selectedVal
@@ -53883,7 +53471,7 @@ var render = function() {
                       domProps: {
                         value: province.code,
                         selected:
-                          province.code == _vm.personal_data.residentialProvince
+                          province.code == _vm.employee.residentialProvince
                             ? true
                             : false
                       }
@@ -53916,8 +53504,8 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.personal_data.permanentCity,
-                      expression: "personal_data.permanentCity"
+                      value: _vm.employee.permanentCity,
+                      expression: "employee.permanentCity"
                     }
                   ],
                   staticClass: "form-control",
@@ -53927,7 +53515,7 @@ var render = function() {
                   attrs: {
                     disabled:
                       (_vm.isSameAsAbove ? true : false) ||
-                      (_vm.personal_data.permanentProvince == "" ? true : false)
+                      (_vm.employee.permanentProvince == "" ? true : false)
                   },
                   on: {
                     change: [
@@ -53941,7 +53529,7 @@ var render = function() {
                             return val
                           })
                         _vm.$set(
-                          _vm.personal_data,
+                          _vm.employee,
                           "permanentCity",
                           $event.target.multiple
                             ? $$selectedVal
@@ -53960,7 +53548,7 @@ var render = function() {
                       domProps: {
                         value: city.code,
                         selected:
-                          city.code == _vm.personal_data.residentialCity
+                          city.code == _vm.employee.residentialCity
                             ? true
                             : false
                       }
@@ -53991,8 +53579,8 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.personal_data.permanentBarangay,
-                      expression: "personal_data.permanentBarangay"
+                      value: _vm.employee.permanentBarangay,
+                      expression: "employee.permanentBarangay"
                     }
                   ],
                   staticClass: "form-control",
@@ -54002,7 +53590,7 @@ var render = function() {
                   attrs: {
                     disabled:
                       (_vm.isSameAsAbove ? true : false) ||
-                      (_vm.personal_data.permanentProvince == "" ? true : false)
+                      (_vm.employee.permanentProvince == "" ? true : false)
                   },
                   on: {
                     change: function($event) {
@@ -54015,7 +53603,7 @@ var render = function() {
                           return val
                         })
                       _vm.$set(
-                        _vm.personal_data,
+                        _vm.employee,
                         "permanentBarangay",
                         $event.target.multiple
                           ? $$selectedVal
@@ -54032,7 +53620,7 @@ var render = function() {
                       domProps: {
                         value: barangay.code,
                         selected:
-                          barangay.code == _vm.personal_data.residentialBarangay
+                          barangay.code == _vm.employee.residentialBarangay
                             ? true
                             : false
                       }
@@ -54061,8 +53649,8 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.personal_data.permanentZipCode,
-                    expression: "personal_data.permanentZipCode"
+                    value: _vm.employee.permanent_zip_code,
+                    expression: "employee.permanent_zip_code"
                   }
                 ],
                 staticClass: "form-control",
@@ -54074,7 +53662,7 @@ var render = function() {
                   disabled: _vm.isSameAsAbove ? true : false,
                   placeholder: "Enter Zipcode"
                 },
-                domProps: { value: _vm.personal_data.permanentZipCode },
+                domProps: { value: _vm.employee.permanent_zip_code },
                 on: {
                   input: [
                     function($event) {
@@ -54082,17 +53670,17 @@ var render = function() {
                         return
                       }
                       _vm.$set(
-                        _vm.personal_data,
-                        "permanentZipCode",
+                        _vm.employee,
+                        "permanent_zip_code",
                         $event.target.value
                       )
                     },
                     function($event) {
                       if (
-                        _vm.personal_data.permanentZipCode.length >
+                        _vm.employee.permanent_zip_code.length >
                         _vm.zipCodeMaxLength
                       ) {
-                        _vm.personal_data.permanentZipCode = _vm.personal_data.permanentZipCode.slice(
+                        _vm.employee.permanent_zip_code = _vm.employee.permanent_zip_code.slice(
                           0,
                           _vm.zipCodeMaxLength
                         )
@@ -71233,7 +70821,8 @@ Vue.component("personal-data-sheet", __webpack_require__(/*! ./components/Person
 
 Vue.component("leave-search", __webpack_require__(/*! ./components/Leave/Search.vue */ "./resources/js/components/Leave/Search.vue")["default"]);
 Vue.component("leave-content", __webpack_require__(/*! ./components/Leave/Content.vue */ "./resources/js/components/Leave/Content.vue")["default"]);
-Vue.component("exists-personal-information", __webpack_require__(/*! ./components/PersonalData/exists/C1/Information.vue */ "./resources/js/components/PersonalData/exists/C1/Information.vue")["default"]); // BEGIN OF PERSONAL DATA SHEET CREATE
+Vue.component("exists-personal-information", __webpack_require__(/*! ./components/PersonalData/exists/C1/Information.vue */ "./resources/js/components/PersonalData/exists/C1/Information.vue")["default"]);
+Vue.component("create-with-existing-employee", __webpack_require__(/*! ./components/PersonalData/CreateWithExistingEmployee.vue */ "./resources/js/components/PersonalData/CreateWithExistingEmployee.vue")["default"]); // BEGIN OF PERSONAL DATA SHEET CREATE
 
 Vue.component("create-personal-information", __webpack_require__(/*! ./components/PersonalData/create/C1/Information.vue */ "./resources/js/components/PersonalData/create/C1/Information.vue")["default"]);
 Vue.component("create-family-background", __webpack_require__(/*! ./components/PersonalData/create/C1/FamilyBackground.vue */ "./resources/js/components/PersonalData/create/C1/FamilyBackground.vue")["default"]);
@@ -71962,6 +71551,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreatePersonalDataSheet_vue_vue_type_template_id_4d985f9f_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreatePersonalDataSheet_vue_vue_type_template_id_4d985f9f_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/PersonalData/CreateWithExistingEmployee.vue":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/PersonalData/CreateWithExistingEmployee.vue ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CreateWithExistingEmployee_vue_vue_type_template_id_dd32bbf6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateWithExistingEmployee.vue?vue&type=template&id=dd32bbf6& */ "./resources/js/components/PersonalData/CreateWithExistingEmployee.vue?vue&type=template&id=dd32bbf6&");
+/* harmony import */ var _CreateWithExistingEmployee_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateWithExistingEmployee.vue?vue&type=script&lang=js& */ "./resources/js/components/PersonalData/CreateWithExistingEmployee.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CreateWithExistingEmployee_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CreateWithExistingEmployee_vue_vue_type_template_id_dd32bbf6___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CreateWithExistingEmployee_vue_vue_type_template_id_dd32bbf6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/PersonalData/CreateWithExistingEmployee.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/PersonalData/CreateWithExistingEmployee.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/components/PersonalData/CreateWithExistingEmployee.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateWithExistingEmployee_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateWithExistingEmployee.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/CreateWithExistingEmployee.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateWithExistingEmployee_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/PersonalData/CreateWithExistingEmployee.vue?vue&type=template&id=dd32bbf6&":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/components/PersonalData/CreateWithExistingEmployee.vue?vue&type=template&id=dd32bbf6& ***!
+  \************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateWithExistingEmployee_vue_vue_type_template_id_dd32bbf6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateWithExistingEmployee.vue?vue&type=template&id=dd32bbf6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/CreateWithExistingEmployee.vue?vue&type=template&id=dd32bbf6&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateWithExistingEmployee_vue_vue_type_template_id_dd32bbf6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateWithExistingEmployee_vue_vue_type_template_id_dd32bbf6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -74505,8 +74163,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/e-pims/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/e-pims/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\e-pims\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\e-pims\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

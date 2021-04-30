@@ -95,7 +95,6 @@ class Employee extends Model
         $this->attributes['extension'] = strtoupper($value);
     }
 
-
     public function plantilla()
     {
         return $this->hasOne(Plantilla::class, 'employee_id', 'employee_id');

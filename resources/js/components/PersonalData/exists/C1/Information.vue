@@ -38,17 +38,17 @@
                             type="text"
                             class="form-control"
                             :class="
-                                !errors.hasOwnProperty('surname')
+                                !errors.hasOwnProperty('lastname')
                                     ? ''
                                     : 'is-invalid'
                             "
                             id="surname"
                             placeholder="Enter Surname"
-                            v-model="personal_data.surname"
+                            v-model="employee.lastname"
                             style="text-transform:uppercase"
                         />
                         <p class="text-danger text-sm">
-                            {{ errors.surname }}
+                            {{ errors.lastname }}
                         </p>
                     </div>
                     <div class="form-group col-lg-3">
@@ -60,7 +60,7 @@
                             id="firstname"
                             placeholder="Enter First Name"
                             :class="errors.firstname ? 'is-invalid' : ''"
-                            v-model="personal_data.firstname"
+                            v-model="employee.firstname"
                             style="text-transform:uppercase"
                         />
                         <p class="text-danger text-sm">
@@ -79,7 +79,7 @@
                             "
                             id="middlename"
                             placeholder="Enter Middle Name"
-                            v-model="personal_data.middlename"
+                            v-model="employee.middlename"
                             style="text-transform:uppercase"
                         />
                         <p class="text-danger text-sm">
@@ -87,24 +87,34 @@
                         </p>
                     </div>
                     <div class="form-group col-lg-3">
-                        <label for="nameextension">NAME EXTENSION</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            :class="
-                                !errors.hasOwnProperty('nameExtension')
-                                    ? ''
-                                    : 'is-invalid'
-                            "
-                            maxlength="3"
-                            max="3"
-                            id="nameextension"
-                            placeholder="(JR.,SR.)"
-                            v-model="personal_data.nameExtension"
-                            style="text-transform:uppercase"
-                        />
+                        <label for="nameextension"
+                            >NAME EXTENSION
+                            <select
+                                type="text"
+                                class="form-control"
+                                :class="
+                                    !errors.hasOwnProperty('extension')
+                                        ? ''
+                                        : 'is-invalid'
+                                "
+                                maxlength="3"
+                                max="3"
+                                id="nameextension"
+                                v-model="employee.extension"
+                                style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent;"
+                            >
+                                <option value="" disabled
+                                    >Select Extension</option
+                                >
+                                <option value="sr">SR</option>
+                                <option value="sr">SR</option>
+                                <option value="jr">JR</option>
+                                <option value="iii">III</option>
+                            </select>
+                            <span>Extension Name</span>
+                        </label>
                         <p class="text-danger text-sm">
-                            {{ errors.nameExtension }}
+                            {{ errors.extension }}
                         </p>
                     </div>
                 </div>
@@ -115,15 +125,15 @@
                         <input
                             class="form-control"
                             :class="
-                                !errors.hasOwnProperty('dateOfBirth')
+                                !errors.hasOwnProperty('date_birth')
                                     ? ''
                                     : 'is-invalid'
                             "
                             type="date"
-                            v-model="personal_data.dateOfBirth"
+                            v-model="employee.date_birth"
                         />
                         <p class="text-danger text-sm">
-                            {{ errors.dateOfBirth }}
+                            {{ errors.date_birth }}
                         </p>
                     </div>
                     <div class="form-group col-lg-3">
@@ -134,16 +144,16 @@
                             class="form-control"
                             id="placeofbirth"
                             :class="
-                                !errors.hasOwnProperty('placeOfBirth')
+                                !errors.hasOwnProperty('place_birth')
                                     ? ''
                                     : 'is-invalid'
                             "
                             placeholder="Enter Place of Birth"
-                            v-model="personal_data.placeOfBirth"
+                            v-model="employee.place_birth"
                             style="text-transform:uppercase"
                         />
                         <p class="text-danger text-sm">
-                            {{ errors.placeOfBirth }}
+                            {{ errors.place_birth }}
                         </p>
                     </div>
 
@@ -152,16 +162,16 @@
                         ><span class="text-danger">*</span>
                         <select
                             class="form-control"
+                            v-model="employee.sex"
                             :class="
                                 !errors.hasOwnProperty('sex')
                                     ? ''
                                     : 'is-invalid'
                             "
                             id="sex"
-                            v-model="personal_data.sex"
                         >
-                            <option value="MALE">MALE</option>
-                            <option value="FEMALE">FEMALE</option>
+                            <option value="male">MALE</option>
+                            <option value="female">FEMALE</option>
                         </select>
                         <p class="text-danger text-sm">
                             {{ errors.sex }}
@@ -174,12 +184,12 @@
                         <select
                             class="form-control"
                             :class="
-                                !errors.hasOwnProperty('status')
+                                !errors.hasOwnProperty('civil_status')
                                     ? ''
                                     : 'is-invalid'
                             "
                             id="status"
-                            v-model="personal_data.status"
+                            v-model="employee.civil_status"
                         >
                             <option value="SINGLE">SINGLE</option>
                             <option value="MARRIED">MARRIED</option>
@@ -188,7 +198,7 @@
                             <option value="OTHERS">OTHERS</option>
                         </select>
                         <p class="text-danger text-sm">
-                            {{ errors.status }}
+                            {{ errors.civil_status }}
                         </p>
                     </div>
                 </div>
@@ -207,7 +217,7 @@
                             "
                             class="form-control"
                             placeholder="Enter height in meter"
-                            v-model="personal_data.height"
+                            v-model="employee.height"
                         />
                         <p class="text-danger text-sm">{{ errors.height }}</p>
                     </div>
@@ -225,7 +235,7 @@
                             id="weight"
                             class="form-control"
                             placeholder="Enter weight in kilogram"
-                            v-model="personal_data.weight"
+                            v-model="employee.weight"
                         />
                         <p class="text-danger text-sm">
                             {{ errors.weight }}
@@ -238,16 +248,16 @@
                             class="form-control"
                             maxlength="3"
                             :class="
-                                errors.hasOwnProperty('bloodType')
+                                errors.hasOwnProperty('blood_type')
                                     ? 'is-invalid'
                                     : ''
                             "
                             placeholder="Enter bloodtype"
-                            v-model="personal_data.bloodType"
+                            v-model="employee.blood_type"
                             style="text-transform:uppercase"
                         />
                         <p class="text-danger text-sm">
-                            {{ errors.bloodType }}
+                            {{ errors.blood_type }}
                         </p>
                     </div>
                 </div>
@@ -259,7 +269,7 @@
                             id="gsisidno"
                             class="form-control"
                             placeholder="Enter GSIS ID No."
-                            v-model="personal_data.gsisIdNo"
+                            v-model="employee.gsis_id_no"
                         />
                     </div>
                     <div class="form-group col-lg-4">
@@ -269,7 +279,7 @@
                             id="pagibigidno"
                             class="form-control"
                             placeholder="Enter PAG-IBIG ID No."
-                            v-model="personal_data.pagibigIdNo"
+                            v-model="employee.pag_ibig_no"
                         />
                     </div>
                     <div class="form-group col-lg-4">
@@ -279,7 +289,7 @@
                             id="philhealthidno"
                             class="form-control"
                             placeholder="Enter PHILHEALTH ID No."
-                            v-model="personal_data.philHealthIdNo"
+                            v-model="employee.philhealth_no"
                         />
                     </div>
                 </div>
@@ -291,7 +301,7 @@
                             id="sssidno"
                             class="form-control"
                             placeholder="Enter SSS ID No."
-                            v-model="personal_data.sssIdNo"
+                            v-model="employee.sss_no"
                         />
                     </div>
 
@@ -302,7 +312,7 @@
                             id="tinidno"
                             class="form-control"
                             placeholder="Enter TIN ID No."
-                            v-model="personal_data.tinIdNo"
+                            v-model="employee.tin_no"
                         />
                     </div>
 
@@ -315,7 +325,7 @@
                             id="agencyempidno"
                             class="form-control"
                             placeholder="Enter agency employee no."
-                            v-model="personal_data.agencyEmpIdNo"
+                            v-model="employee.agency_employee_no"
                         />
                     </div>
                 </div>
@@ -331,7 +341,7 @@
                                     : 'is-invalid'
                             "
                             id="citizenship"
-                            v-model="personal_data.citizenship"
+                            v-model="employee.citizenship"
                         >
                             <option value="FILIPINO">FILIPINO</option>
                             <option value="DUAL CITIZEN">DUAL CITIZEN</option>
@@ -342,7 +352,7 @@
                     </div>
                     <div
                         class="form-group col-lg-4"
-                        v-if="personal_data.citizenship == 'DUAL CITIZEN'"
+                        v-if="employee.citizenship == 'DUAL CITIZEN'"
                     >
                         <label for="citizenshipby">BY</label
                         ><span class="text-danger">*</span>
@@ -354,7 +364,7 @@
                                     ? ''
                                     : 'is-invalid'
                             "
-                            v-model="personal_data.citizenshipBy"
+                            v-model="employee.citizenshipBy"
                         >
                             <option value="BIRTH">BIRTH</option>
                             <option value="NATURALIZATION"
@@ -368,14 +378,14 @@
 
                     <div
                         class="form-group col-lg-4"
-                        v-if="personal_data.citizenship == 'DUAL CITIZEN'"
+                        v-if="employee.citizenship == 'DUAL CITIZEN'"
                     >
                         <label for="countries">INDICATE COUNTRY</label
                         ><span class="text-danger">*</span>
                         <select
                             class="form-control"
                             id="countries"
-                            v-model="personal_data.country"
+                            v-model="employee.country"
                             :class="
                                 !errors.hasOwnProperty('country')
                                     ? ''
@@ -399,7 +409,7 @@
                             id="telno"
                             class="form-control"
                             placeholder="Optional"
-                            v-model="personal_data.telephoneNumber"
+                            v-model="employee.telephone_no"
                         />
                     </div>
                     <div class="form-group col-lg-4">
@@ -408,17 +418,17 @@
                         <input
                             type="text"
                             :class="
-                                !errors.hasOwnProperty('mobileNumber')
+                                !errors.hasOwnProperty('mobile_no')
                                     ? ''
                                     : 'is-invalid'
                             "
                             id="mobileno"
                             class="form-control"
                             placeholder="Enter Mobile Number"
-                            v-model="personal_data.mobileNumber"
+                            v-model="employee.mobile_no"
                         />
                         <p class="text-danger text-sm">
-                            {{ errors.mobileNumber }}
+                            {{ errors.mobile_no }}
                         </p>
                     </div>
                     <div class="form-group col-lg-4">
@@ -428,7 +438,7 @@
                             id="email"
                             class="form-control"
                             placeholder="Optional"
-                            v-model="personal_data.emailAddress"
+                            v-model="employee.email_address"
                         />
                     </div>
                 </div>
@@ -446,7 +456,7 @@
                         <label for="lotno">HOUSE/BLOCK/LOT NO.</label>
                         <input
                             type="text"
-                            v-model="personal_data.residentialLotNo"
+                            v-model="employee.residential_house_no"
                             id="lotno"
                             class="form-control"
                             placeholder="Enter house/block/lot no."
@@ -457,7 +467,7 @@
                         <label for="street">STREET</label>
                         <input
                             type="text"
-                            v-model="personal_data.residentialStreet"
+                            v-model="employee.residential_street"
                             id="street"
                             class="form-control"
                             placeholder="Enter Street"
@@ -468,7 +478,7 @@
                         <label for="subdivision">SUBDIVISION/VILLAGE</label>
                         <input
                             type="text"
-                            v-model="personal_data.residentialSubdivision"
+                            v-model="employee.residential_village"
                             id="subdivision"
                             class="form-control"
                             placeholder="Enter Subdivision or Village"
@@ -480,71 +490,58 @@
                     <div class="form-group col-lg-3">
                         <label for="province">PROVINCE</label
                         ><span class="text-danger">*</span>
-                        <select
-                            type="text"
-                            v-model="personal_data.residentialProvince"
-                            @change="provinceChange"
-                            class="form-control"
-                            :class="
-                                !errors.hasOwnProperty('residentialProvince')
-                                    ? ''
-                                    : 'is-invalid'
-                            "
+                        <v-select
+                            label="name"
+                            :options="provinces"
+                            :value="employee.residential_province"
+                            @input="provinceChange"
                         >
-                            <option
+                            <!-- <option
                                 v-for="(province, index) in provinces"
                                 :key="index"
                                 :value="province.code"
                                 >{{ province.name }}</option
-                            >
-                        </select>
-                        <p class="text-danger text-sm">
-                            {{ errors.residentialProvince }}
-                        </p>
+                            > -->
+                        </v-select>
+                        <!-- <p class="text-danger text-sm">
+                            {{ errors.residential_province }}
+                        </p> -->
                     </div>
                     <div class="form-group col-lg-3">
                         <label for="city">CITY/MUNICIPALITY</label
                         ><span class="text-danger">*</span>
-                        <select
-                            type="text"
-                            v-model="personal_data.residentialCity"
+                        <v-select
+                            label="name"
+                            :value="employee.residential_city"
+                            :options="cities"
                             @change="municipalChange"
-                            class="form-control"
-                            :class="
-                                !errors.hasOwnProperty('residentialCity')
-                                    ? ''
-                                    : 'is-invalid'
-                            "
                             :disabled="
-                                personal_data.residentialProvince ? false : true
+                                employee.residential_province ? false : true
                             "
-                            placeholder="Enter City or Municipality"
                         >
-                            <option
+                            <!-- <option
                                 v-for="(city, index) in cities"
                                 :key="index"
                                 :value="city.code"
                                 >{{ city.name }}</option
-                            >
-                        </select>
+                            > -->
+                        </v-select>
                         <p class="text-danger text-sm">
-                            {{ errors.residentialCity }}
+                            {{ errors.residential_city }}
                         </p>
                     </div>
                     <div class="form-group col-lg-3">
                         <label for="barangay">BARANGAY</label
                         ><span class="text-danger">*</span>
                         <select
-                            v-model="personal_data.residentialBarangay"
+                            v-model="employee.residential_barangay"
                             class="form-control"
                             :class="
-                                !errors.hasOwnProperty('residentialBarangay')
+                                !errors.hasOwnProperty('residential_barangay')
                                     ? ''
                                     : 'is-invalid'
                             "
-                            :disabled="
-                                personal_data.residentialCity ? false : true
-                            "
+                            :disabled="employee.residential_city ? false : true"
                         >
                             <option
                                 v-for="(barangay, index) in barangays"
@@ -554,7 +551,7 @@
                             >
                         </select>
                         <p class="text-danger text-sm">
-                            {{ errors.residentialBarangay }}
+                            {{ errors.residential_barangay }}
                         </p>
                     </div>
                     <div class="form-group col-lg-3">
@@ -562,27 +559,27 @@
                         ><span class="text-danger">*</span>
                         <input
                             type="number"
-                            v-model="personal_data.residentialZipCode"
+                            v-model="employee.residential_zip_code"
                             class="form-control"
                             @input="
                                 if (
-                                    personal_data.residentialZipCode.length >
+                                    employee.residential_zip_code.length >
                                     zipCodeMaxLength
                                 )
-                                    personal_data.residentialZipCode = personal_data.residentialZipCode.slice(
+                                    employee.residential_zip_code = employee.residential_zip_code.slice(
                                         0,
                                         zipCodeMaxLength
                                     );
                             "
                             :class="
-                                !errors.hasOwnProperty('residentialZipCode')
+                                !errors.hasOwnProperty('residential_zip_code')
                                     ? ''
                                     : 'is-invalid'
                             "
                             placeholder="Enter Zipcode"
                         />
                         <p class="text-danger text-sm">
-                            {{ errors.residentialZipCode }}
+                            {{ errors.residential_zip_code }}
                         </p>
                     </div>
                 </div>
@@ -609,7 +606,7 @@
                         <label for="lotno">HOUSE/BLOCK/LOT NO.</label>
                         <input
                             type="text"
-                            v-model="personal_data.permanentLotNo"
+                            v-model="employee.permanent_house_no"
                             :readonly="isSameAsAbove ? true : false"
                             class="form-control"
                             placeholder="Enter house/block/lot no."
@@ -620,7 +617,7 @@
                         <label for="street">STREET</label>
                         <input
                             type="text"
-                            v-model="personal_data.permanentStreet"
+                            v-model="employee.permanent_street"
                             :readonly="isSameAsAbove ? true : false"
                             class="form-control"
                             placeholder="Enter Street"
@@ -631,7 +628,7 @@
                         <label for="subdivision">SUBDIVISION/VILLAGE</label>
                         <input
                             type="text"
-                            v-model="personal_data.permanentSubdivision"
+                            v-model="employee.permanent_village"
                             :readonly="isSameAsAbove ? true : false"
                             class="form-control"
                             placeholder="Enter Subdivision or Village"
@@ -646,7 +643,7 @@
                         ><span class="text-danger">*</span>
                         <select
                             type="text"
-                            v-model="personal_data.permanentProvince"
+                            v-model="employee.permanentProvince"
                             @change="permanentProvinceChange"
                             :class="
                                 !errors.hasOwnProperty('permanentProvince')
@@ -662,7 +659,7 @@
                                 :value="province.code"
                                 :selected="
                                     province.code ==
-                                    personal_data.residentialProvince
+                                    employee.residentialProvince
                                         ? true
                                         : false
                                 "
@@ -678,7 +675,7 @@
                         <label for="city">CITY/MUNICIPALITY</label
                         ><span class="text-danger">*</span>
                         <select
-                            v-model="personal_data.permanentCity"
+                            v-model="employee.permanentCity"
                             @change="permanentMunicipalChange"
                             :class="
                                 !errors.hasOwnProperty('permanentCity')
@@ -687,7 +684,7 @@
                             "
                             :disabled="
                                 (isSameAsAbove ? true : false) ||
-                                    (personal_data.permanentProvince == ''
+                                    (employee.permanentProvince == ''
                                         ? true
                                         : false)
                             "
@@ -698,7 +695,7 @@
                                 :key="index"
                                 :value="city.code"
                                 :selected="
-                                    city.code == personal_data.residentialCity
+                                    city.code == employee.residentialCity
                                         ? true
                                         : false
                                 "
@@ -714,10 +711,10 @@
                         <label for="barangay">BARANGAY</label
                         ><span class="text-danger">*</span>
                         <select
-                            v-model="personal_data.permanentBarangay"
+                            v-model="employee.permanentBarangay"
                             :disabled="
                                 (isSameAsAbove ? true : false) ||
-                                    (personal_data.permanentProvince == ''
+                                    (employee.permanentProvince == ''
                                         ? true
                                         : false)
                             "
@@ -734,7 +731,7 @@
                                 :value="barangay.code"
                                 :selected="
                                     barangay.code ==
-                                    personal_data.residentialBarangay
+                                    employee.residentialBarangay
                                         ? true
                                         : false
                                 "
@@ -751,13 +748,13 @@
                         ><span class="text-danger">*</span>
                         <input
                             type="number"
-                            v-model="personal_data.permanentZipCode"
+                            v-model="employee.permanent_zip_code"
                             @input="
                                 if (
-                                    personal_data.permanentZipCode.length >
+                                    employee.permanent_zip_code.length >
                                     zipCodeMaxLength
                                 )
-                                    personal_data.permanentZipCode = personal_data.permanentZipCode.slice(
+                                    employee.permanent_zip_code = employee.permanent_zip_code.slice(
                                         0,
                                         zipCodeMaxLength
                                     );
@@ -807,52 +804,13 @@
 
 <script>
 export default {
-    props: ["data"],
+    props: ["employee"],
     data() {
         return {
             isLoading: false,
             isComplete: false,
             isSameAsAbove: false,
             zipCodeMaxLength: 4,
-            personal_data: {
-                surname: "",
-                firstname: "",
-                middlename: "",
-                nameExtension: "",
-                dateOfBirth: "",
-                placeOfBirth: "",
-                sex: "",
-                status: "",
-                height: "",
-                weight: "",
-                bloodType: "",
-                gsisIdNo: "",
-                pagibigIdNo: "",
-                philHealthIdNo: "",
-                sssIdNo: "",
-                tinIdNo: "",
-                agencyEmpIdNo: "",
-                citizenship: "",
-                citizenshipBy: "",
-                country: "",
-                telephoneNumber: "",
-                mobileNumber: "",
-                emailAddress: "",
-                residentialLotNo: "",
-                residentialStreet: "",
-                residentialSubdivision: "",
-                residentialBarangay: "",
-                residentialCity: "",
-                residentialProvince: "",
-                residentialZipCode: "",
-                permanentLotNo: "",
-                permanentStreet: "",
-                permanentSubdivision: "",
-                permanentBarangay: "",
-                permanentCity: "",
-                permanentProvince: "",
-                permanentZipCode: ""
-            },
             countries: [
                 "Afghanistan",
                 "Albania",
@@ -1059,103 +1017,45 @@ export default {
         };
     },
     methods: {
-        provinceChange() {
+        provinceChange(province) {
             // Since the province value change we need to fetch cities by selected province code.
             window
-                .axios(
-                    `/api/province/cities/by/${this.personal_data.residentialProvince}`
-                )
+                .axios(`/api/province/cities/by/${province.code}`)
                 .then(response => (this.cities = response.data));
         },
         municipalChange() {
             window
-                .axios(
-                    `/api/city/barangay/by/${this.personal_data.residentialCity}`
-                )
+                .axios(`/api/city/barangay/by/${this.employee.residentialCity}`)
                 .then(response => (this.barangays = response.data));
         },
         permanentProvinceChange() {
             window
                 .axios(
-                    `/api/province/cities/by/${this.personal_data.permanentProvince}`
+                    `/api/province/cities/by/${this.employee.permanentProvince}`
                 )
                 .then(response => (this.permanentCities = response.data));
         },
         permanentMunicipalChange() {
             window
-                .axios(
-                    `/api/city/barangay/by/${this.personal_data.permanentCity}`
-                )
+                .axios(`/api/city/barangay/by/${this.employee.permanentCity}`)
                 .then(response => (this.permanentBarangays = response.data));
         },
-        sameAsAboveAddress() {
-            this.isSameAsAbove = !this.isSameAsAbove;
-
-            if (!this.isSameAsAbove) {
-                this.personal_data.permanentLotNo = "";
-                this.personal_data.permanentStreet = "";
-                this.personal_data.permanentSubdivision = "";
-                this.personal_data.permanentBarangay = "";
-                this.personal_data.permanentCity = "";
-                this.personal_data.permanentProvince = "";
-                this.personal_data.permanentZipCode = "";
-            } else {
-                this.permanentCities = this.cities;
-                this.permanentBarangays = this.barangays;
-                this.personal_data.permanentLotNo = this.personal_data.residentialLotNo;
-                this.personal_data.permanentStreet = this.personal_data.residentialStreet;
-                this.personal_data.permanentSubdivision = this.personal_data.residentialSubdivision;
-                this.personal_data.permanentBarangay = this.personal_data.residentialBarangay;
-                this.personal_data.permanentCity = this.personal_data.residentialCity;
-                this.personal_data.permanentProvince = this.personal_data.residentialProvince;
-                this.personal_data.permanentZipCode = this.personal_data.residentialZipCode;
-            }
-        },
+        sameAsAboveAddress() {},
         submitPersonalInformation(e) {
             e.preventDefault();
             this.isLoading = true;
 
             window.axios
-                .post(
-                    "/employee/personal/information/store",
-                    this.personal_data
-                )
-                .then(response => {
-                    if (response.status === 200) {
-                        this.errors = {};
-                        this.isLoading = false;
-                        this.isComplete = true;
-                        localStorage.setItem(
-                            "employee_id",
-                            response.data.employee_id
-                        );
-
-                        localStorage.setItem(
-                            "personal_information",
-                            JSON.stringify(response.data)
-                        );
-
-                        this.$emit("next-panel-family-background");
-                    }
-                })
-                .catch(error => {
-                    this.isLoading = false;
-                    this.errors = {};
-                    // Check the error status code.
-                    if (error.response.status === 422) {
-                        Object.keys(error.response.data.errors).map(
-                            (field, index) => {
-                                let [fieldMessage] = error.response.data.errors[
-                                    field
-                                ];
-                                this.errors[field] = fieldMessage;
-                            }
-                        );
-                    }
-                });
+                .post("/employee/personal/information/store", this.employee)
+                .then(response => {})
+                .catch(error => {});
         }
     },
     mounted() {},
-    created() {}
+    created() {
+        window.axios.get("/api/province/all").then(response => {
+            this.provinces = response.data;
+        });
+    }
 };
 </script>

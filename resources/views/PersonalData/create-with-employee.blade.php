@@ -6,7 +6,7 @@
 
 @endprepend
 @section('content')
-    <exists-personal-information :employee="{{ $employee }}"></exists-personal-information>
+    <create-with-existing-employee :employee="{{  $employee }}"></create-with-existing-employee>
 @push('page-scripts')
 @endpush
 @endsection

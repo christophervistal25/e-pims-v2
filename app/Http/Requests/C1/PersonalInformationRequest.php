@@ -54,17 +54,29 @@ class PersonalInformationRequest extends FormRequest
             'residentialLotNo'       => [],
             'residentialStreet'      => [],
             'residentialSubdivision' => [],
-            'residentialBarangay'    => ['required', 'exists:barangays,code'],
-            'residentialCity'        => ['required', 'exists:cities,code'],
-            'residentialProvince'    => ['required', 'exists:provinces,code'],
-            'residentialZipCode'     => ['required', 'max:4'],
+            'residentialBarangay.code'    => ['required', 'exists:barangays,code'],
+            'residentialCity.code'        => ['required', 'exists:cities,code'],
+            'residentialProvince.code'    => ['required', 'exists:provinces,code'],
+            'residentialZipCode'     => ['required', 'min:4', 'max:4'],
             'permanentLotNo'         => [],
             'permanentStreet'        => [],
             'permanentSubdivision'   => [],
-            'permanentBarangay'      => ['required', 'exists:barangays,code'],
-            'permanentCity'          => ['required', 'exists:cities,code'],
-            'permanentProvince'      => ['required', 'exists:provinces,code'],
-            'permanentZipCode'       => ['required', 'max:4']
+            'permanentBarangay.code'      => ['required', 'exists:barangays,code'],
+            'permanentCity.code'          => ['required', 'exists:cities,code'],
+            'permanentProvince.code'      => ['required', 'exists:provinces,code'],
+            'permanentZipCode'       => ['required', 'min:4', 'max:4']
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'residentialProvince.code' => 'residential province',
+            'residentialCity.code'     => 'residential city',
+            'residentialBarangay.code' => 'residential barangay',
+            'permanentProvince.code'   => 'permanent province',
+            'permanentCity.code'       => 'permanent city',
+            'permanentBarangay.code'   => 'permanent barangay',
         ];
     }
 }

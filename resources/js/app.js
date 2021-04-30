@@ -41,6 +41,11 @@ Vue.component(
     require("./components/PersonalData/exists/C1/Information.vue").default
 );
 
+Vue.component(
+    "create-with-existing-employee",
+    require("./components/PersonalData/CreateWithExistingEmployee.vue").default
+);
+
 // BEGIN OF PERSONAL DATA SHEET CREATE
 Vue.component(
     "create-personal-information",
@@ -179,12 +184,11 @@ Vue.component(
     require("./components/PersonalData/EmployeePDSTable.vue").default
 );
 
-
 Vue.component(
     "view-government-issued-id",
-    require("./components/PersonalData/Information/ViewGovernmentIssuedID.vue").default
+    require("./components/PersonalData/Information/ViewGovernmentIssuedID.vue")
+        .default
 );
-
 
 const app = new Vue({
     el: "#app"

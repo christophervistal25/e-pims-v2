@@ -46,7 +46,7 @@ Route::group(['prefix' => 'employee'], function () {
     Route::get('show/{employeeIdNumber}', 'Api\EmployeeController@show');
     Route::get('find/{employeeIdNumber}', 'Api\EmployeeController@find');
     Route::post('image/upload', 'Api\EmployeeController@onUploadImage');
-    
+
     Route::get('/employment/status', 'Api\ReferenceStatusController@status');
 });
 

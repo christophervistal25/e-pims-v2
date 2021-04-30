@@ -40,6 +40,11 @@ class EmployeeController extends Controller
         //
     }
 
+
+    public function validateData(NewEmployeeStoreRequest $request)
+    {
+        return response()->json(['success' => true], 201);
+    }
     /**
      * Store a newly created resource in storage.
      *

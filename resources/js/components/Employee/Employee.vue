@@ -6,7 +6,7 @@
                     <button
                         class="btn btn-primary shadow rounded mb-2"
                         :class="
-                            !showAddEmployeeForm ? 'btn-success' : 'btn-primary'
+                            !showAddEmployeeForm ? 'btn-primary' : 'btn-info'
                         "
                         @click="newEmployeeForm"
                     >
@@ -175,16 +175,25 @@
                                     class="nav-link active"
                                     href="#basictab1"
                                     data-toggle="tab"
-                                    >Basic Information</a
                                 >
+                                    Basic Information
+                                    <i
+                                        class="fas fa-exclamation-triangle text-danger"
+                                        v-if="sectionError.basicInformation"
+                                    ></i>
+                                </a>
                             </li>
                             <li class="nav-item">
                                 <a
                                     class="nav-link"
                                     href="#basictab2"
                                     data-toggle="tab"
-                                    >Account Numbers</a
-                                >
+                                    >Account Numbers
+                                    <i
+                                        v-if="sectionError.accountNumbers"
+                                        class="fas fa-exclamation-triangle text-danger"
+                                    ></i>
+                                </a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -206,7 +215,12 @@
                         <div class="text-right">
                             <button
                                 class="btn btn-primary rounded shadow"
-                                @click="submitEmployee"
+                                :class="
+                                    showAddEmployeeForm && employee.employee_id
+                                        ? 'btn-success'
+                                        : 'btn-primary'
+                                "
+                                v-on="true ? { click: submitEmployee } : {}"
                                 :disabled="isLoading"
                             >
                                 <div
@@ -230,10 +244,38 @@
 import BasicInformation from "./BasicInformation.vue";
 import AccountNumber from "./AccountNumber.vue";
 import swal from "sweetalert";
+import _ from "lodash";
 
 export default {
     data() {
         return {
+            sectionError: {
+                basicInformation: false,
+                accountNumbers: false
+            },
+            accountNumberFields: [
+                "pagibigMidNo",
+                "philhealthNo",
+                "sssNo",
+                "tinNo",
+                "lbpAccountNo",
+                "gsisPolicyNo",
+                "gsisBpNo",
+                "gsisIdNo"
+            ],
+            basicInformationFields: [
+                "lastName",
+                "firstName",
+                "middleName",
+                "extension",
+                "dateOfBirth",
+                "age",
+                "step",
+                "basicRate",
+                "employmentStatus.stat_code",
+                "officeAssignment.office_code",
+                "designation.position_code"
+            ],
             isComplete: false,
             isLoading: false,
             showAddEmployeeForm: false,
@@ -251,15 +293,12 @@ export default {
                 employmentStatus: "",
                 officeAssignment: "",
                 designation: "",
-                employmentFrom: "",
-                employmentTo: "",
-                controlNo: "",
+                image: "no_image.png",
                 pagibigMidNo: "",
                 philhealthNo: "",
                 sssNo: "",
                 tinNo: "",
                 lbpAccountNo: "",
-                image: "no_image.png",
                 gsisPolicyNo: "",
                 gsisBpNo: "",
                 gsisIdNo: ""
@@ -280,6 +319,23 @@ export default {
     //     }
     // },
     methods: {
+        sectionValidatorChecker(errorFields) {
+            // check for basic information
+            errorFields.some(field => {
+                if (this.basicInformationFields.includes(field)) {
+                    this.sectionError.basicInformation = true;
+                    return true;
+                }
+            });
+
+            // check for account numbers
+            errorFields.some(field => {
+                if (this.accountNumberFields.includes(field)) {
+                    this.sectionError.accountNumbers = true;
+                    return true;
+                }
+            });
+        },
         fetch(page) {
             this.isLoading = true;
             window
@@ -329,11 +385,14 @@ export default {
         },
         addNewEmployee() {
             this.isLoading = true;
+            this.sectionError.basicInformation = false;
+            this.sectionError.accountNumbers = false;
             window.axios
                 .post("/employee/record/store", this.employee)
                 .then(response => {
                     if (response.status === 201) {
                         this.isLoading = false;
+                        this.errors = {};
                         swal({
                             text: "Successfully add new employee.",
                             icon: "success"
@@ -345,6 +404,11 @@ export default {
                 .catch(error => {
                     this.isLoading = false;
                     this.errors = {};
+
+                    this.sectionValidatorChecker(
+                        Object.keys(error.response.data.errors)
+                    );
+
                     if (error.response.status === 422) {
                         Object.keys(error.response.data.errors).map(field => {
                             let [fieldMessage] = error.response.data.errors[
@@ -360,6 +424,8 @@ export default {
         },
         updateEmployee() {
             this.isLoading = true;
+            this.sectionError.basicInformation = false;
+            this.sectionError.accountNumbers = false;
             window.axios
                 .put(
                     `/employee/record/${this.employee.employee_id}/update`,
@@ -378,6 +444,11 @@ export default {
                 .catch(error => {
                     this.isLoading = false;
                     this.errors = {};
+
+                    this.sectionValidatorChecker(
+                        Object.keys(error.response.data.errors)
+                    );
+
                     // Check the error status code.
                     if (error.response.status === 422) {
                         this.isLoading = false;
