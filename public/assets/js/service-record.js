@@ -1,3 +1,4 @@
+
 // display records
 $(function() {
     let table = $('#serviceRecords').DataTable({
@@ -167,8 +168,9 @@ $('#serviceRecordForm').submit(function (e) {
                     $(`${value}`).html('');
                     });
                     $('#serviceRecords').DataTable().ajax.reload();
-                // $('#serviceRecordForm').dataTable().ajax.reloads();
-                swal("Sucessfully Added!", "", "success");
+                    swal("Sucessfully Added!", "", "success");
+                    $('#saveBtn').removeClass('disabled');
+                    $('#loading').addClass('d-none');
             }
     },
         error: function (response) {
@@ -260,8 +262,15 @@ $('#serviceRecordForm').submit(function (e) {
                         icon: "error",
                         content: parentElement,
                     });
+                    $('#saveBtn').removeClass('disabled');
+                        $('#loading').addClass('d-none');
                 }
         }
     });
 });
 });
+ //disable button
+ function myFunction() {
+    $('#saveBtn').addClass('disabled');
+    $('#loading').removeClass('d-none');
+  }

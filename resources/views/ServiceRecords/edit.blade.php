@@ -126,7 +126,7 @@
 
                         <div class="form-group form-group submit-section col-12">
                             <button type="submit" class="btn btn-success submit-btn float-right">Update</button>
-                            <a href="/service-records"><button style="margin-right:10px;" type="button" class="text-white btn btn-warning submit-btn float-right"><i class="la la-arrow-left"></i>Back</button></a>
+                            <a href="{{ route('service-records.index') }}"><button style="margin-right:10px;" type="button" class="text-white btn btn-warning submit-btn float-right"><i class="la la-arrow-left"></i>Back</button></a>
                         </div>
 
                 </div>

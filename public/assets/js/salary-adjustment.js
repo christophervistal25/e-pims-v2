@@ -109,6 +109,8 @@ $(document).ready(function () {
                         });
                     $('#salaryAdjustment').DataTable().ajax.reload();
                     swal("Sucessfully Added!", "", "success");
+                    $('#saveBtn').removeClass('disabled');
+                    $('#loading').addClass('d-none');
                 }
         },
             error: function (response) {
@@ -200,8 +202,15 @@ $(document).ready(function () {
                             icon: "error",
                             content: parentElement,
                         });
+                        $('#saveBtn').removeClass('disabled');
+                        $('#loading').addClass('d-none');
                     }
             }
         });
     });
 });
+ //disable button
+ function myFunction() {
+   $('#saveBtn').addClass('disabled');
+   $('#loading').removeClass('d-none');
+ }
