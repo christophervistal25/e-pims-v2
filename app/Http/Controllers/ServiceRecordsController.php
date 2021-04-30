@@ -166,6 +166,13 @@ class ServiceRecordsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        service_record::find($id)->delete();
+        return json_encode(array('statusCode'=>200));
+    }
+    public function delete($id)
+    {
+        service_record::find($id)->delete();
+        // return back()->with('success', 'Successfully delete a salary adjustment record.');
+        return json_encode(array('statusCode'=>200));
     }
 }

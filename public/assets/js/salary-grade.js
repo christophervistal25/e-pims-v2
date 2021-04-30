@@ -89,6 +89,8 @@ $(function(){
                         });
                         $('#myTable').DataTable().ajax.reload();
                     swal("Sucessfully Added!", "", "success");
+                    $('#saveBtn').removeClass('disabled');
+                    $('#loading').addClass('d-none');
                 }
         },
             error: function (response) {
@@ -188,12 +190,19 @@ $(function(){
                             type: "error",
                             confirmButtonClass: "btn-primary",
                             confirmButtonText: "Ok",
-                          });
+                        });
+                        $('#saveBtn').removeClass('disabled');
+                        $('#loading').addClass('d-none');
                     }
             }
         });
     });
     });
-
+    //disable button
+    document.getElementById("saveBtn").addEventListener("click", myFunction);
+    function myFunction() {
+      $('#saveBtn').addClass('disabled');
+      $('#loading').removeClass('d-none');
+    }
 
 

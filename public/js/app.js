@@ -6895,6 +6895,21 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     show_panel: {
@@ -7849,7 +7864,73 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+<<<<<<< HEAD
 
+=======
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+>>>>>>> 1c686f581bb12c7df020e95ac55f5b70b86827a3
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["data"],
   data: function data() {
@@ -39681,7 +39762,8 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: {
-                    "text-transform": "uppercase outline: none",
+                    "text-transform": "uppercase",
+                    outline: "none",
                     "box-shadow": "0px 0px 0px transparent"
                   },
                   attrs: { type: "text", placeholder: "Name of School" },
@@ -39717,7 +39799,8 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: {
-                    "text-transform": "uppercase outline: none",
+                    "text-transform": "uppercase",
+                    outline: "none",
                     "box-shadow": "0px 0px 0px transparent"
                   },
                   attrs: { type: "text" },
@@ -39943,7 +40026,7 @@ var render = function() {
                     ],
                     staticClass: "form-control",
                     staticStyle: {
-                      "text-transform": "uppercase outline",
+                      "text-transform": "uppercase",
                       "box-shadow": "0px 0px 0px transparent"
                     },
                     attrs: { type: "text" },
@@ -39988,7 +40071,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: {
-                    "text-transform": "uppercase outline",
+                    "text-transform": "uppercase",
                     "box-shadow": "0px 0px 0px transparent"
                   },
                   attrs: { type: "text", placeholder: "Name of School" },
@@ -40024,7 +40107,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: {
-                    "text-transform": "uppercase outline",
+                    "text-transform": "uppercase",
                     "box-shadow": "0px 0px 0px transparent"
                   },
                   attrs: { type: "text", placeholder: "" },
@@ -40248,7 +40331,7 @@ var render = function() {
                     ],
                     staticClass: "form-control",
                     staticStyle: {
-                      "text-transform": "uppercase outline",
+                      "text-transform": "uppercase",
                       "box-shadow": "0px 0px 0px transparent"
                     },
                     attrs: { type: "text" },
@@ -40293,7 +40376,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: {
-                    "text-transform": "uppercase outline",
+                    "text-transform": "uppercase",
                     "box-shadow": "0px 0px 0px transparent"
                   },
                   attrs: { type: "text", placeholder: "Name of School" },
@@ -40331,7 +40414,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: {
-                    "text-transform": "uppercase outline",
+                    "text-transform": "uppercase",
                     "box-shadow": "0px 0px 0px transparent"
                   },
                   attrs: { type: "text", placeholder: "" },
@@ -40553,7 +40636,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: {
-                    "text-transform": "uppercase outline",
+                    "text-transform": "uppercase",
                     "box-shadow": "0px 0px 0px transparent"
                   },
                   attrs: { type: "text" },
@@ -40597,7 +40680,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: {
-                    "text-transform": "uppercase outline",
+                    "text-transform": "uppercase",
                     "box-shadow": "0px 0px 0px transparent"
                   },
                   attrs: { type: "text", placeholder: "Name of School" },
@@ -40633,7 +40716,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: {
-                    "text-transform": "uppercase outline",
+                    "text-transform": "uppercase",
                     "box-shadow": "0px 0px 0px transparent"
                   },
                   attrs: { type: "text", placeholder: "" },
@@ -40888,8 +40971,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: {
-                    "text-transform": "uppercase",
-                    outline: "none",
+                    "text-transform": "uppercase outline: none",
                     "box-shadow": "0px 0px 0px transparent"
                   },
                   attrs: { type: "text", placeholder: "Name of School" },
@@ -40925,8 +41007,7 @@ var render = function() {
                   ],
                   staticClass: "form-control",
                   staticStyle: {
-                    "text-transform": "uppercase",
-                    outline: "none",
+                    "text-transform": "uppercase outline: none",
                     "box-shadow": "0px 0px 0px transparent"
                   },
                   attrs: { type: "text", placeholder: "" },
@@ -42111,48 +42192,94 @@ var render = function() {
               _c(
                 "label",
                 {
-                  staticClass: "form-group has-float-label",
+                  staticClass: "form-group has-float-label mb-0",
                   attrs: { for: "fnameexten" }
                 },
                 [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.familyBackground.fnameexten,
-                        expression: "familyBackground.fnameexten"
-                      }
-                    ],
-                    staticClass: "form-control ",
-                    staticStyle: {
-                      "text-transform": "uppercase",
-                      outline: "none",
-                      "box-shadow": "0px 0px 0px transparent"
-                    },
-                    attrs: {
-                      type: "text",
-                      maxlength: "3",
-                      id: "fnameexten",
-                      placeholder: "(JR., SR.)",
-                      value: ""
-                    },
-                    domProps: { value: _vm.familyBackground.fnameexten },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.familyBackground.fnameexten,
+                          expression: "familyBackground.fnameexten"
                         }
-                        _vm.$set(
-                          _vm.familyBackground,
-                          "fnameexten",
-                          $event.target.value
-                        )
+                      ],
+                      staticClass: "form-control custom-select",
+                      class: !_vm.errors.hasOwnProperty("fnameexten")
+                        ? ""
+                        : "is-invalid",
+                      staticStyle: {
+                        outline: "none",
+                        "box-shadow": "0px 0px 0px transparent"
+                      },
+                      attrs: { type: "text", id: "fnameexten" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.familyBackground,
+                            "fnameexten",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
                       }
-                    }
-                  }),
+                    },
+                    [
+                      _c(
+                        "option",
+                        { attrs: { value: "", readonly: "", selected: "" } },
+                        [_vm._v("Please Select Extension Name")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "option",
+                        {
+                          attrs: { value: "JR" },
+                          domProps: {
+                            selected: _vm.familyBackground.fnameexten === "JR"
+                          }
+                        },
+                        [_vm._v("JR")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "option",
+                        {
+                          attrs: { value: "SR" },
+                          domProps: {
+                            selected: _vm.familyBackground.fnameexten === "SR"
+                          }
+                        },
+                        [_vm._v("SR")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "option",
+                        {
+                          attrs: { value: "III" },
+                          domProps: {
+                            selected:
+                              _vm.familyBackground.nameExtension === "III"
+                          }
+                        },
+                        [_vm._v("III")]
+                      )
+                    ]
+                  ),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Extension")])
+                  _c("span", [_vm._v("Name Extension")])
                 ]
               )
             ])
@@ -42699,7 +42826,7 @@ var render = function() {
               _c(
                 "label",
                 {
-                  staticClass: "form-group has-float-label",
+                  staticClass: "form-group has-float-label mb-0",
                   attrs: { for: "nameextension" }
                 },
                 [
@@ -42714,11 +42841,16 @@ var render = function() {
                           expression: "personal_data.nameExtension"
                         }
                       ],
+<<<<<<< HEAD
                       staticClass: "form-control",
+=======
+                      staticClass: "form-control custom-select",
+>>>>>>> 1c686f581bb12c7df020e95ac55f5b70b86827a3
                       class: !_vm.errors.hasOwnProperty("nameExtension")
                         ? ""
                         : "is-invalid",
                       staticStyle: {
+<<<<<<< HEAD
                         "text-transform": "uppercase",
                         outline: "none",
                         "box-shadow": "0px 0px 0px transparent"
@@ -42729,6 +42861,12 @@ var render = function() {
                         max: "3",
                         id: "nameextension"
                       },
+=======
+                        outline: "none",
+                        "box-shadow": "0px 0px 0px transparent"
+                      },
+                      attrs: { type: "text", id: "nameextension" },
+>>>>>>> 1c686f581bb12c7df020e95ac55f5b70b86827a3
                       on: {
                         change: function($event) {
                           var $$selectedVal = Array.prototype.filter
@@ -42750,6 +42888,7 @@ var render = function() {
                       }
                     },
                     [
+<<<<<<< HEAD
                       _c("option", { attrs: { value: "sr" } }, [_vm._v("SR")]),
                       _vm._v(" "),
                       _c("option", { attrs: { value: "sr" } }, [_vm._v("SR")]),
@@ -42757,10 +42896,50 @@ var render = function() {
                       _c("option", { attrs: { value: "jr" } }, [_vm._v("JR")]),
                       _vm._v(" "),
                       _c("option", { attrs: { value: "iii" } }, [_vm._v("III")])
+=======
+                      _c(
+                        "option",
+                        { attrs: { value: "", readonly: "", selected: "" } },
+                        [_vm._v("Please Select Extension Name")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "option",
+                        {
+                          attrs: { value: "JR" },
+                          domProps: {
+                            selected: _vm.personal_data.nameExtension === "JR"
+                          }
+                        },
+                        [_vm._v("JR")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "option",
+                        {
+                          attrs: { value: "SR" },
+                          domProps: {
+                            selected: _vm.personal_data.nameExtension === "SR"
+                          }
+                        },
+                        [_vm._v("SR")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "option",
+                        {
+                          attrs: { value: "III" },
+                          domProps: {
+                            selected: _vm.personal_data.nameExtension === "III"
+                          }
+                        },
+                        [_vm._v("III")]
+                      )
+>>>>>>> 1c686f581bb12c7df020e95ac55f5b70b86827a3
                     ]
                   ),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Extension Name")])
+                  _c("span", [_vm._v("Name Extension")])
                 ]
               ),
               _vm._v(" "),

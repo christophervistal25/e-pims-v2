@@ -329,19 +329,34 @@
                         </p>
                     </div>
                     <div class="col-lg-3">
-                        <label for="fnameexten" class="form-group has-float-label">
-                        <input
-                            type="text"
-                            maxlength="3"
-                            class="form-control "
-                            id="fnameexten"
-                            v-model="familyBackground.fnameexten"
-                            placeholder="(JR., SR.)"
-                            value=""
-                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent"
-                        />
-                        <span>Extension</span>
-                        </label>
+                        <label for="fnameexten" class="form-group has-float-label mb-0">
+                        <select type="text" 
+                                id="fnameexten"
+                                v-model="familyBackground.fnameexten"
+                                class="form-control custom-select"
+                                :class="!errors.hasOwnProperty('fnameexten')
+                                    ? ''
+                                    : 'is-invalid'"
+                                    style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                        <option value="" readonly selected>Please Select Extension Name</option>
+                        <option
+                                :selected="familyBackground.fnameexten === 'JR'"
+                                value="JR"
+                                >JR</option
+                            >
+                            <option
+                                :selected="familyBackground.fnameexten === 'SR'"
+                                value="SR"
+                                >SR</option
+                            >
+                            <option
+                                :selected="familyBackground.nameExtension === 'III'"
+                                value="III"
+                                >III</option
+                            >
+                        </select>
+                            <span>Name Extension</span>
+                            </label>
                     </div>
                 </div>
                 

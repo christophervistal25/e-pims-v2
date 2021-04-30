@@ -1,3 +1,4 @@
+
 // display records
 $(function() {
     let table = $('#serviceRecords').DataTable({
@@ -62,7 +63,7 @@ $(function() {
         } else {
             table.destroy();
             table = $('#serviceRecords').DataTable({
-                processing: false,
+                processing: true,
                 serverSide: true,
                 destroy: true,  
                 retrieve: true,
@@ -86,9 +87,9 @@ $(function() {
                         { data: 'action', name: 'action' }
                 ]
             });
-            setInterval( function () {
-                table.ajax.reload();
-            }, 5000 );
+            // setInterval( function () {
+            //     table.ajax.reload();
+            // }, 5000 );
         }
         
     });
@@ -100,6 +101,11 @@ $("#addbutton").click(function(){
     $("#table").attr("class", "page-header d-none");
 });
 });
+////confirmation in delete
+function myFunction() {
+    if(!confirm("Are You Sure to delete this"))
+    event.preventDefault();
+}
 // {{-- code for show table --}}
     $(document).ready(function(){
     $("#cancelbutton").click(function(){
@@ -161,8 +167,10 @@ $('#serviceRecordForm').submit(function (e) {
                 $.each(errorMessage, function(index , value) {
                     $(`${value}`).html('');
                     });
-                // $('#serviceRecordForm').dataTable().ajax.reloads();
-                swal("Sucessfully Added!", "", "success");
+                    $('#serviceRecords').DataTable().ajax.reload();
+                    swal("Sucessfully Added!", "", "success");
+                    $('#saveBtn').removeClass('disabled');
+                    $('#loading').addClass('d-none');
             }
     },
         error: function (response) {
@@ -254,8 +262,15 @@ $('#serviceRecordForm').submit(function (e) {
                         icon: "error",
                         content: parentElement,
                     });
+                    $('#saveBtn').removeClass('disabled');
+                        $('#loading').addClass('d-none');
                 }
         }
     });
 });
 });
+ //disable button
+ function myFunction() {
+    $('#saveBtn').addClass('disabled');
+    $('#loading').removeClass('d-none');
+  }

@@ -144,7 +144,10 @@
                             </div>
 
                             <div class="form-group submit-section col-12">
-                                <button type="submit" class="btn btn-success submit-btn float-right">Save</button>
+                                <button id="saveBtn" class="btn btn-success submit-btn float-right" type="submit">
+                                    <span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>
+                                    Save
+                                  </button>
                                 <button style="margin-right:10px;" type="button" id="cancelbutton" class="btn text-white btn-warning submit-btn float-right">Cancel</button>
                             </div>
 

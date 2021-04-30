@@ -39,7 +39,6 @@
             $('#employeeName').change(function (e) {
                     let employeeID = e.target.value;
                     let plantilla = $($( "#employeeName option:selected" )[0]).attr('data-plantilla');
-                    console.log(plantilla);
                     if(plantilla) {
                         plantilla = JSON.parse(plantilla);
                         $('#employeeId').val(plantilla.employee_id);
@@ -110,12 +109,13 @@ $(document).ready(function () {
                         });
                     $('#salaryAdjustment').DataTable().ajax.reload();
                     swal("Sucessfully Added!", "", "success");
+                    $('#saveBtn').removeClass('disabled');
+                    $('#loading').addClass('d-none');
                 }
         },
             error: function (response) {
                     if( response.status === 422 ) {
                         let errors = response.responseJSON.errors;
-                        console.log(errors)
                         if(errors.hasOwnProperty('dateAdjustment')) {
                             $('#dateAdjustment').addClass('is-invalid');
                             $('#date-adjustment-error-message').html('');
@@ -202,8 +202,15 @@ $(document).ready(function () {
                             icon: "error",
                             content: parentElement,
                         });
+                        $('#saveBtn').removeClass('disabled');
+                        $('#loading').addClass('d-none');
                     }
             }
         });
     });
 });
+ //disable button
+ function myFunction() {
+   $('#saveBtn').addClass('disabled');
+   $('#loading').removeClass('d-none');
+ }

@@ -131,7 +131,10 @@
                         </div>
 
                         <div class="form-group form-group submit-section col-12">
-                            <button type="submit" id="save" class="btn btn-success submit-btn float-right">Save</button>
+                            <button onclick="myFunction()" id="saveBtn" class="btn btn-success submit-btn float-right" type="submit">
+                                <span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>
+                                Save
+                              </button>
                             <button style="margin-right:10px;" type="button" id="cancelbutton" class="text-white btn btn-warning submit-btn float-right" onclick="reset()">Cancel</button>
                         </div>
 
@@ -176,6 +179,40 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    $(document).on("click", ".delete", function() { 
+        let $ele = $(this).parent().parent();
+        let id= $(this).attr("value");;
+        let url = /salary-adjustment/;
+        let dltUrl = url + id;
+            swal({
+                title: "Are you sure you want to delete?",
+                text: "Once deleted, you will not be able to recover this record!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: dltUrl,
+                    type: "DELETE",
+                    cache: false,
+                    data:{
+                        _token:'{{ csrf_token() }}'
+			},
+			success: function(dataResult){
+				var dataResult = JSON.parse(dataResult);
+				if(dataResult.statusCode==200){
+                    $('#salaryAdjustment').DataTable().ajax.reload();
+                    swal("Successfully Deleted!", "", "success");
+				}
+			}
+		});
+            } else {
+                swal("Cancel!", "", "error");
+            }
+            });
+	});
 </script>
 @endpush
 @endsection

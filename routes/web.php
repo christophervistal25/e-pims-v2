@@ -24,11 +24,12 @@ Route::get('/step-increment/list', 'StepIncrementController@list');
 Route::resource('/step-increment', 'StepIncrementController');
 
 //salary adjustment
-Route::get('/salary-adjustment/{id}', 'SalaryAdjustmentController@delete')->name('salary-adjustment.delete');
+Route::get('/salary-adjustment/{id}', 'SalaryAdjustmentController@destroy')->name('salary-adjustment.delete');
 Route::resource('/salary-adjustment', 'SalaryAdjustmentController');
 Route::get('/salary-adjustment-list', 'SalaryAdjustmentController@list');
 
 // Service Records
+Route::get('/service-records/{id}', 'ServiceRecordsController@destroy')->name('service-records.delete');
 Route::resource('/service-records', 'ServiceRecordsController');
 Route::get('/service-records-list', 'ServiceRecordsController@list');
 
