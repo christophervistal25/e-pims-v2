@@ -24,7 +24,7 @@ Route::get('/employee/service/records/{employeeId}', function ($employeeId) {
                         })
                     ->addColumn('action', function($row){
                         $btn = "<a title='Edit Service Record' href='". route('service-records.edit', $row->id) . "' class='rounded-circle edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
-                        $btn = $btn."<a title='Delete Service Adjustment' onclick='myFunction({$row->id})' href='". route('service-records.delete', $row->id) . "' class='rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                        $btn = $btn."<a title='Delete Service Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
                         ";
                             return $btn;
                     })
