@@ -14,7 +14,7 @@
 @include('SalaryAdjustment.add-ons.success')
 <div class="kanban-board card mb-0">
     <div class="card-body">
-            <form action="{{ route('salary-adjustment.update', $salaryAdjustment->id) }}" method="POST">
+            <form action="{{ route('salary-adjustment.update', $salaryAdjustment->id) }}" method="post">
                 @csrf
                 @method('PUT')
                     <div class="row">
@@ -46,8 +46,8 @@
                         </div>
 
                         <div class="form-group col-12 col-lg-4 d-none">
-                            <label>Employee Name</label>
-                            <input class="form-control" value="{{ $salaryAdjustment->employee_id }}" name="positionName" id="employeeName" type="text" readonly>
+                            <label>Employee Id</label>
+                            <input class="form-control" value="{{ $salaryAdjustment->employee_id }}" name="employeeName" id="employeeName" type="text" readonly>
                             @if($errors->has('employeeName'))
                             <small  class="form-text text-danger">
                             {{ $errors->first('employeeName') }} </small>
@@ -65,16 +65,25 @@
 
                         <div class="form-group col-12 col-lg-4">
                             <label>Position</label>
-                            <select value="{{ old('') }}"  class="form-control form-control-xs selectpicker  {{ $errors->has('')  ? 'is-invalid' : ''}}" 
+                            <select value="{{ old('position') }}"  class="form-control form-control-xs selectpicker  {{ $errors->has('position')  ? 'is-invalid' : ''}}" 
                             name="" data-live-search="true" data-width="100%" disabled>
                             <option></option>
                             @foreach($position as $positions)
                                 <option style="width:350px;"  {{ $salaryAdjustment->position_id == $positions->position_id ? 'selected' : '' }} value="{{ $positions->position_id}}">{{ $positions->position_name }}</option>
                             @endforeach
                             </select>
-                            @if($errors->has(''))
+                            @if($errors->has('position'))
                             <small  class="form-text text-danger">
-                            {{ $errors->first('') }} </small>
+                            {{ $errors->first('position') }} </small>
+                            @endif
+                        </div>
+
+                        <div class="form-group col-12 col-lg-4 d-none">
+                            <label>Position Id</label>
+                            <input class="form-control" value="{{ $salaryAdjustment->position_id }}" name="position" id="position" type="text" readonly>
+                            @if($errors->has('position'))
+                            <small  class="form-text text-danger">
+                            {{ $errors->first('position') }} </small>
                             @endif
                         </div>
 
