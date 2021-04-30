@@ -91,24 +91,35 @@
                         </p>
                     </div>
                     <div class="col-lg-3">
-                        <label for="nameextension" class="form-group has-float-label">
-                        <input
-                            type="text"
-                            class="form-control"
-                            :class="
-                                !errors.hasOwnProperty('nameExtension')
+                        <label for="nameextension" class="form-group has-float-label mb-0">
+                        <select type="text" 
+                                id="nameextension"
+                                v-model="personal_data.nameExtension"
+                                class="form-control custom-select"
+                                :class="!errors.hasOwnProperty('nameExtension')
                                     ? ''
-                                    : 'is-invalid'
-                            "
-                            maxlength="3"
-                            max="3"
-                            id="nameextension"
-                            placeholder="(JR.,SR.)"
-                            v-model="personal_data.nameExtension"
-                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent;"
-                        />
-                        <span>Extension Name</span>
-                        </label>
+                                    : 'is-invalid'"
+                                    style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                        <option value="" readonly selected>Please Select Extension Name</option>
+                        <option
+                                :selected="personal_data.nameExtension === 'JR'"
+                                value="JR"
+                                >JR</option
+                            >
+                            <option
+                                :selected="personal_data.nameExtension === 'SR'"
+                                value="SR"
+                                >SR</option
+                            >
+                            <option
+                                :selected="personal_data.nameExtension === 'III'"
+                                value="III"
+                                >III</option
+                            >
+                        </select>
+                            <span>Name Extension</span>
+                            </label>
+                        
                         <p class="text-danger text-sm">
                             {{ errors.nameExtension }}
                         </p>
