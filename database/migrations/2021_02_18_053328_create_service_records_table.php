@@ -26,6 +26,7 @@ class CreateServiceRecordsTable extends Migration
             $table->date('separation_date');
             $table->string('separation_cause');
             $table->timestamps();
+            $table->softDeletes()->nullable();  
         });
     }
 

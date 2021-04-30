@@ -29,6 +29,7 @@ Route::resource('/salary-adjustment', 'SalaryAdjustmentController');
 Route::get('/salary-adjustment-list', 'SalaryAdjustmentController@list');
 
 // Service Records
+Route::get('/service-records/{id}', 'ServiceRecordsController@delete')->name('service-records.delete');
 Route::resource('/service-records', 'ServiceRecordsController');
 Route::get('/service-records-list', 'ServiceRecordsController@list');
 

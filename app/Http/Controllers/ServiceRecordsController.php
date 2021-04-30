@@ -168,4 +168,9 @@ class ServiceRecordsController extends Controller
     {
         //
     }
+    public function delete($id)
+    {
+        service_record::find($id)->delete();
+        return back()->with('success', 'Successfully delete a salary adjustment record.');
+    }
 }

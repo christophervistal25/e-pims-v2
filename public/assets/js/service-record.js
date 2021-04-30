@@ -100,6 +100,11 @@ $("#addbutton").click(function(){
     $("#table").attr("class", "page-header d-none");
 });
 });
+////confirmation in delete
+function myFunction() {
+    if(!confirm("Are You Sure to delete this"))
+    event.preventDefault();
+}
 // {{-- code for show table --}}
     $(document).ready(function(){
     $("#cancelbutton").click(function(){
