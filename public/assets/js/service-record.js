@@ -62,7 +62,7 @@ $(function() {
         } else {
             table.destroy();
             table = $('#serviceRecords').DataTable({
-                processing: false,
+                processing: true,
                 serverSide: true,
                 destroy: true,  
                 retrieve: true,
@@ -86,9 +86,9 @@ $(function() {
                         { data: 'action', name: 'action' }
                 ]
             });
-            setInterval( function () {
-                table.ajax.reload();
-            }, 5000 );
+            // setInterval( function () {
+            //     table.ajax.reload();
+            // }, 5000 );
         }
         
     });
@@ -166,6 +166,7 @@ $('#serviceRecordForm').submit(function (e) {
                 $.each(errorMessage, function(index , value) {
                     $(`${value}`).html('');
                     });
+                    $('#serviceRecords').DataTable().ajax.reload();
                 // $('#serviceRecordForm').dataTable().ajax.reloads();
                 swal("Sucessfully Added!", "", "success");
             }

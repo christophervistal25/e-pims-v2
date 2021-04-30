@@ -22,7 +22,7 @@ class service_record extends Model
         'separation_date',
         'separation_cause',
     ];
-     public function position()
+    public function position()
     {
         return $this->belongsTo(Position::class, 'position_id', 'position_id');
     }

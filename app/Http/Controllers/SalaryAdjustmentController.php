@@ -35,7 +35,7 @@ class SalaryAdjustmentController extends Controller
                     })
                     ->addColumn('action', function($row){
                         $btn = "<a title='Edit Salary Adjustment' href='". route('salary-adjustment.edit', $row->id) . "' class='rounded-circle edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
-                        $btn = $btn."<a title='Delete Salary Adjustment' onclick='myFunction({$row->id})' href='". route('salary-adjustment.delete', $row->id) . "' class='rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                        $btn = $btn."<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
                         ";
                             return $btn;    
                     })
@@ -156,9 +156,9 @@ class SalaryAdjustmentController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function delete($id)
+    public function destroy($id)
     {
         SalaryAdjustment::find($id)->delete();
-        return back()->with('success', 'Successfully delete a salary adjustment record.');
+        return json_encode(array('statusCode'=>200));
     }
 }
