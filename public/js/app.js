@@ -2063,6 +2063,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["employee", "errors"]
 });
@@ -5605,6 +5628,11 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -16560,7 +16588,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.button-wrapper[data-v-b141abb8] {\r\n    position: relative;\n}\n.button-wrapper span.label[data-v-b141abb8] {\r\n    position: relative;\r\n    z-index: 0;\r\n    display: inline-block;\r\n    cursor: pointer;\r\n    color: #fff;\r\n    text-transform: uppercase;\n}\n#upload[data-v-b141abb8] {\r\n    display: inline-block;\r\n    position: absolute;\r\n    z-index: 1;\r\n    top: 0;\r\n    left: 0;\r\n    opacity: 0;\n}\r\n", ""]);
+exports.push([module.i, "\n.button-wrapper[data-v-b141abb8] {\n    position: relative;\n}\n.button-wrapper span.label[data-v-b141abb8] {\n    position: relative;\n    z-index: 0;\n    display: inline-block;\n    cursor: pointer;\n    color: #fff;\n    text-transform: uppercase;\n}\n#upload[data-v-b141abb8] {\n    display: inline-block;\n    position: absolute;\n    z-index: 1;\n    top: 0;\n    left: 0;\n    opacity: 0;\n}\n", ""]);
 
 // exports
 
@@ -16579,7 +16607,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.cursor-pointer {\r\n    cursor: pointer;\n}\n.status-item {\r\n    border-width: 3px;\r\n    border-style: dashed;\n}\n.status-item:hover {\r\n    background: #f2f3f4;\r\n    transition: 300ms ease-in-out;\n}\r\n", ""]);
+exports.push([module.i, "\n.cursor-pointer {\n    cursor: pointer;\n}\n.status-item {\n    border-width: 3px;\n    border-style: dashed;\n}\n.status-item:hover {\n    background: #f2f3f4;\n    transition: 300ms ease-in-out;\n}\n", ""]);
 
 // exports
 
@@ -16617,7 +16645,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, "\ntd[data-v-71d926a4] {\r\n    cursor: pointer;\r\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-71d926a4]:hover {\r\n    background: #f1f2f3;\n}\r\n", ""]);
+exports.push([module.i, "\ntd[data-v-71d926a4] {\n    cursor: pointer;\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-71d926a4]:hover {\n    background: #f1f2f3;\n}\n", ""]);
 
 // exports
 
@@ -35049,132 +35077,168 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { staticClass: "col-form-label", attrs: { for: "" } }, [
-        _vm._v("PAG-IBIG MID NO.")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.employee.pagibigMidNo,
-            expression: "employee.pagibigMidNo"
-          }
-        ],
-        staticClass: "form-control col-lg-12",
-        class: _vm.errors.hasOwnProperty("pagibigMidNo") ? "is-invalid" : "",
-        attrs: { type: "number" },
-        domProps: { value: _vm.employee.pagibigMidNo },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
+    _c("div", {}, [
+      _c(
+        "label",
+        { staticClass: "form-group has-float-label", attrs: { for: "" } },
+        [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.employee.pagibigMidNo,
+                expression: "employee.pagibigMidNo"
+              }
+            ],
+            staticClass: "form-control col-lg-12",
+            class: _vm.errors.hasOwnProperty("pagibigMidNo")
+              ? "is-invalid"
+              : "",
+            staticStyle: {
+              outline: "none",
+              "box-shadow": "0px 0px 0px transparent"
+            },
+            attrs: { type: "number" },
+            domProps: { value: _vm.employee.pagibigMidNo },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.employee, "pagibigMidNo", $event.target.value)
+              }
             }
-            _vm.$set(_vm.employee, "pagibigMidNo", $event.target.value)
-          }
-        }
-      }),
+          }),
+          _vm._v(" "),
+          _c("span", [_vm._v("PAG-IBIG MID NO.")])
+        ]
+      ),
       _vm._v(" "),
       _c("p", { staticClass: "text-danger text-sm" }, [
         _vm._v(_vm._s(_vm.errors.pagibigMidNo))
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { staticClass: "col-form-label", attrs: { for: "" } }, [
-        _vm._v("PHILHEALTH NO.")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.employee.philhealthNo,
-            expression: "employee.philhealthNo"
-          }
-        ],
-        staticClass: "form-control col-lg-12",
-        class: _vm.errors.hasOwnProperty("philhealthNo") ? "is-invalid" : "",
-        attrs: { type: "number" },
-        domProps: { value: _vm.employee.philhealthNo },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
+    _c("div", {}, [
+      _c(
+        "label",
+        { staticClass: "form-group has-float-label", attrs: { for: "" } },
+        [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.employee.philhealthNo,
+                expression: "employee.philhealthNo"
+              }
+            ],
+            staticClass: "form-control col-lg-12",
+            class: _vm.errors.hasOwnProperty("philhealthNo")
+              ? "is-invalid"
+              : "",
+            staticStyle: {
+              outline: "none",
+              "box-shadow": "0px 0px 0px transparent"
+            },
+            attrs: { type: "number" },
+            domProps: { value: _vm.employee.philhealthNo },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.employee, "philhealthNo", $event.target.value)
+              }
             }
-            _vm.$set(_vm.employee, "philhealthNo", $event.target.value)
-          }
-        }
-      }),
+          }),
+          _vm._v(" "),
+          _c("span", [_vm._v("PHILHEALTH NO.")])
+        ]
+      ),
       _vm._v(" "),
       _c("p", { staticClass: "text-danger text-sm" }, [
         _vm._v(_vm._s(_vm.errors.philhealthNo))
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { staticClass: "col-form-label", attrs: { for: "" } }, [
-        _vm._v("SSS NO.")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.employee.sssNo,
-            expression: "employee.sssNo"
-          }
-        ],
-        staticClass: "form-control col-lg-12",
-        class: _vm.errors.hasOwnProperty("sssNo") ? "is-invalid" : "",
-        attrs: { type: "number" },
-        domProps: { value: _vm.employee.sssNo },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
+    _c("div", {}, [
+      _c(
+        "label",
+        { staticClass: "form-group has-float-label", attrs: { for: "" } },
+        [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.employee.sssNo,
+                expression: "employee.sssNo"
+              }
+            ],
+            staticClass: "form-control col-lg-12",
+            class: _vm.errors.hasOwnProperty("sssNo") ? "is-invalid" : "",
+            staticStyle: {
+              outline: "none",
+              "box-shadow": "0px 0px 0px transparent"
+            },
+            attrs: { type: "number" },
+            domProps: { value: _vm.employee.sssNo },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.employee, "sssNo", $event.target.value)
+              }
             }
-            _vm.$set(_vm.employee, "sssNo", $event.target.value)
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c("p", { staticClass: "text-danger text-sm" }, [
-        _vm._v(_vm._s(_vm.errors.sssNo))
-      ])
+          }),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-danger text-sm" }, [
+            _vm._v(_vm._s(_vm.errors.sssNo))
+          ]),
+          _vm._v(" "),
+          _c("span", [_vm._v("SSS NO.")])
+        ]
+      )
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { staticClass: "col-form-label", attrs: { for: "" } }, [
-        _vm._v("TIN NO.")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.employee.tinNo,
-            expression: "employee.tinNo"
-          }
-        ],
-        staticClass: "form-control col-lg-12",
-        class: _vm.errors.hasOwnProperty("tinNo") ? "is-invalid" : "",
-        attrs: { type: "number" },
-        domProps: { value: _vm.employee.tinNo },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
+    _c("div", {}, [
+      _c(
+        "label",
+        { staticClass: "form-group has-float-label", attrs: { for: "" } },
+        [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.employee.tinNo,
+                expression: "employee.tinNo"
+              }
+            ],
+            staticClass: "form-control col-lg-12",
+            class: _vm.errors.hasOwnProperty("tinNo") ? "is-invalid" : "",
+            staticStyle: {
+              outline: "none",
+              "box-shadow": "0px 0px 0px transparent"
+            },
+            attrs: { type: "number" },
+            domProps: { value: _vm.employee.tinNo },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.employee, "tinNo", $event.target.value)
+              }
             }
-            _vm.$set(_vm.employee, "tinNo", $event.target.value)
-          }
-        }
-      }),
+          }),
+          _vm._v(" "),
+          _c("span", [_vm._v("TIN NO.")])
+        ]
+      ),
       _vm._v(" "),
       _c("p", { staticClass: "text-danger text-sm" }, [
         _vm._v(_vm._s(_vm.errors.tinNo))
@@ -35182,41 +35246,51 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "form-group" }, [
-      _c("label", {
-        staticClass: "col-form-label",
-        attrs: { for: "" },
-        domProps: {
-          innerHTML: _vm._s(
-            _vm.employee.employmentStatus &&
-              _vm.employee.employmentStatus.status_name !== "PERMANENT"
-              ? "LBP ACCOUNT NO."
-              : "DBP ACCOUNT NO."
-          )
-        }
-      }),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.employee.lbpAccountNo,
-            expression: "employee.lbpAccountNo"
-          }
-        ],
-        staticClass: "form-control col-lg-12",
-        class: _vm.errors.hasOwnProperty("lbpAccountNo") ? "is-invalid" : "",
-        attrs: { type: "text" },
-        domProps: { value: _vm.employee.lbpAccountNo },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
+      _c(
+        "label",
+        { staticClass: "form-group has-float-label", attrs: { for: "" } },
+        [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.employee.lbpAccountNo,
+                expression: "employee.lbpAccountNo"
+              }
+            ],
+            staticClass: "form-control col-lg-12",
+            class: _vm.errors.hasOwnProperty("lbpAccountNo")
+              ? "is-invalid"
+              : "",
+            staticStyle: {
+              outline: "none",
+              "box-shadow": "0px 0px 0px transparent"
+            },
+            attrs: { type: "text" },
+            domProps: { value: _vm.employee.lbpAccountNo },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.employee, "lbpAccountNo", $event.target.value)
+              }
             }
-            _vm.$set(_vm.employee, "lbpAccountNo", $event.target.value)
-          }
-        }
-      }),
+          }),
+          _vm._v(" "),
+          _c("span", {
+            domProps: {
+              innerHTML: _vm._s(
+                _vm.employee.employmentStatus &&
+                  _vm.employee.employmentStatus.status_name !== "PERMANENT"
+                  ? "LBP ACCOUNT NO."
+                  : "DBP ACCOUNT NO."
+              )
+            }
+          })
+        ]
+      ),
       _vm._v(" "),
       _vm.errors.lbpAccountNo
         ? _c("p", { staticClass: "text-danger text-sm" }, [
@@ -35227,99 +35301,125 @@ var render = function() {
         : _vm._e()
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { staticClass: "col-form-label", attrs: { for: "" } }, [
-        _vm._v("GSIS ID NO.")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.employee.gsisIdNo,
-            expression: "employee.gsisIdNo"
-          }
-        ],
-        staticClass: "form-control col-lg-12",
-        class: _vm.errors.hasOwnProperty("gsisIdNo") ? "is-invalid" : "",
-        attrs: { type: "number" },
-        domProps: { value: _vm.employee.gsisIdNo },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
+    _c("div", {}, [
+      _c(
+        "label",
+        { staticClass: "form-group has-float-label", attrs: { for: "" } },
+        [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.employee.gsisIdNo,
+                expression: "employee.gsisIdNo"
+              }
+            ],
+            staticClass: "form-control col-lg-12",
+            class: _vm.errors.hasOwnProperty("gsisIdNo") ? "is-invalid" : "",
+            staticStyle: {
+              outline: "none",
+              "box-shadow": "0px 0px 0px transparent"
+            },
+            attrs: { type: "number" },
+            domProps: { value: _vm.employee.gsisIdNo },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.employee, "gsisIdNo", $event.target.value)
+              }
             }
-            _vm.$set(_vm.employee, "gsisIdNo", $event.target.value)
-          }
-        }
-      }),
+          }),
+          _vm._v(" "),
+          _c("span", [_vm._v("GSIS ID NO.")])
+        ]
+      ),
       _vm._v(" "),
       _c("p", { staticClass: "text-danger text-sm" }, [
         _vm._v(_vm._s(_vm.errors.gsisIdNo))
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { staticClass: "col-form-label", attrs: { for: "" } }, [
-        _vm._v("GSIS POLICY NO.")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.employee.gsisPolicyNo,
-            expression: "employee.gsisPolicyNo"
-          }
-        ],
-        staticClass: "form-control col-lg-12",
-        class: _vm.errors.hasOwnProperty("gsisPolicyNo") ? "is-invalid" : "",
-        attrs: { type: "number" },
-        domProps: { value: _vm.employee.gsisPolicyNo },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
+    _c("div", {}, [
+      _c(
+        "label",
+        { staticClass: "form-group has-float-label", attrs: { for: "" } },
+        [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.employee.gsisPolicyNo,
+                expression: "employee.gsisPolicyNo"
+              }
+            ],
+            staticClass: "form-control col-lg-12",
+            class: _vm.errors.hasOwnProperty("gsisPolicyNo")
+              ? "is-invalid"
+              : "",
+            staticStyle: {
+              outline: "none",
+              "box-shadow": "0px 0px 0px transparent"
+            },
+            attrs: { type: "number" },
+            domProps: { value: _vm.employee.gsisPolicyNo },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.employee, "gsisPolicyNo", $event.target.value)
+              }
             }
-            _vm.$set(_vm.employee, "gsisPolicyNo", $event.target.value)
-          }
-        }
-      }),
+          }),
+          _vm._v(" "),
+          _c("span", [_vm._v("GSIS POLICY NO.")])
+        ]
+      ),
       _vm._v(" "),
       _c("p", { staticClass: "text-danger text-sm" }, [
         _vm._v(_vm._s(_vm.errors.gsisPolicyNo))
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c("label", { staticClass: "col-form-label", attrs: { for: "" } }, [
-        _vm._v("GSIS BP NO.")
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.employee.gsisBpNo,
-            expression: "employee.gsisBpNo"
-          }
-        ],
-        staticClass: "form-control col-lg-12",
-        class: _vm.errors.hasOwnProperty("gsisBpNo") ? "is-invalid" : "",
-        attrs: { type: "number" },
-        domProps: { value: _vm.employee.gsisBpNo },
-        on: {
-          input: function($event) {
-            if ($event.target.composing) {
-              return
+    _c("div", {}, [
+      _c(
+        "label",
+        { staticClass: "form-group has-float-label", attrs: { for: "" } },
+        [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.employee.gsisBpNo,
+                expression: "employee.gsisBpNo"
+              }
+            ],
+            staticClass: "form-control col-lg-12",
+            class: _vm.errors.hasOwnProperty("gsisBpNo") ? "is-invalid" : "",
+            staticStyle: {
+              outline: "none",
+              "box-shadow": "0px 0px 0px transparent"
+            },
+            attrs: { type: "number" },
+            domProps: { value: _vm.employee.gsisBpNo },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.employee, "gsisBpNo", $event.target.value)
+              }
             }
-            _vm.$set(_vm.employee, "gsisBpNo", $event.target.value)
-          }
-        }
-      }),
+          }),
+          _vm._v(" "),
+          _c("span", [_vm._v("GSIS BP NO.")])
+        ]
+      ),
       _vm._v(" "),
       _c("p", { staticClass: "text-danger text-sm" }, [
         _vm._v(_vm._s(_vm.errors.gsisBpNo))
@@ -39865,6 +39965,10 @@ var render = function() {
                   class: !_vm.errors.hasOwnProperty("eperiodFrom")
                     ? ""
                     : "is-invalid",
+                  staticStyle: {
+                    outline: "none",
+                    "box-shadow": "0px 0px 0px transparent"
+                  },
                   attrs: { type: "month", placeholder: "" },
                   domProps: { value: _vm.educationalBackground.eperiodFrom },
                   on: {
@@ -39908,6 +40012,10 @@ var render = function() {
                   class: !_vm.errors.hasOwnProperty("eperiodTo")
                     ? ""
                     : "is-invalid",
+                  staticStyle: {
+                    outline: "none",
+                    "box-shadow": "0px 0px 0px transparent"
+                  },
                   attrs: { type: "month", placeholder: "" },
                   domProps: { value: _vm.educationalBackground.eperiodTo },
                   on: {
@@ -40219,6 +40327,10 @@ var render = function() {
                   class: !_vm.errors.hasOwnProperty("speriodTo")
                     ? ""
                     : "is-invalid",
+                  staticStyle: {
+                    outline: "none",
+                    "box-shadow": "0px 0px 0px transparent"
+                  },
                   attrs: { type: "month", placeholder: "" },
                   domProps: { value: _vm.educationalBackground.speriodTo },
                   on: {
@@ -40866,6 +40978,10 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
+                  staticStyle: {
+                    outline: "none",
+                    "box-shadow": "0px 0px 0px transparent"
+                  },
                   attrs: { type: "number", placeholder: "(if not graduated)" },
                   domProps: { value: _vm.educationalBackground.cunitEarned },
                   on: {
@@ -40903,6 +41019,10 @@ var render = function() {
                   class: !_vm.errors.hasOwnProperty("cyrGrad")
                     ? ""
                     : "is-invalid",
+                  staticStyle: {
+                    outline: "none",
+                    "box-shadow": "0px 0px 0px transparent"
+                  },
                   attrs: { type: "number", placeholder: "" },
                   domProps: { value: _vm.educationalBackground.cyrGrad },
                   on: {
@@ -40956,7 +41076,11 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  staticStyle: { "text-transform": "uppercase" },
+                  staticStyle: {
+                    "text-transform": "uppercase",
+                    outline: "none",
+                    "box-shadow": "0px 0px 0px transparent"
+                  },
                   attrs: { type: "text" },
                   domProps: { value: _vm.educationalBackground.cscholarship },
                   on: {
@@ -74833,13 +74957,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
 __webpack_require__(/*! /Applications/MAMP/htdocs/e-pims/resources/js/app.js */"./resources/js/app.js");
 module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/e-pims/resources/sass/app.scss */"./resources/sass/app.scss");
-=======
-__webpack_require__(/*! C:\xampp\htdocs\template\e-pims\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\template\e-pims\resources\sass\app.scss */"./resources/sass/app.scss");
->>>>>>> adds
 
 
 /***/ })

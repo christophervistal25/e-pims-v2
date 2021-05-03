@@ -69,6 +69,7 @@
                                     ? ''
                                     : 'is-invalid'
                             "
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
                         <p class="text-danger text-sm">
                             {{ errors.eperiodFrom }}
@@ -90,6 +91,7 @@
                                     ? ''
                                     : 'is-invalid'
                             "
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
                         <span>Period of Attendance(To)</span>
                         </label>
@@ -230,6 +232,7 @@
                                     ? ''
                                     : 'is-invalid'
                             "
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
                         <span>Period Of Attendance(To)</span>
                         </label>
@@ -525,6 +528,7 @@
                             class="form-control"
                             placeholder="(if not graduated)"
                             v-model="educationalBackground.cunitEarned"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
                         <span class="text-sm">Highest Level/Unit Earned</span>
                         </label>
@@ -552,6 +556,7 @@
                                     ? ''
                                     : 'is-invalid'
                             "
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
                         <span>Year Graduated</span>
                         </label>
@@ -566,7 +571,7 @@
                             type="text"
                             class="form-control"
                             v-model="educationalBackground.cscholarship"
-                            style="text-transform:uppercase;"
+                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
                         <span>Scholarship/Academic Honors Received</span>
                         </label>

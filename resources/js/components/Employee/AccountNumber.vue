@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="form-group">
-            <label for="" class="col-form-label">PAG-IBIG MID NO.</label>
+        <div class="">
+            <label for="" class="form-group has-float-label">
             <input
                 type="number"
                 v-model="employee.pagibigMidNo"
@@ -9,11 +9,14 @@
                 :class="
                     errors.hasOwnProperty('pagibigMidNo') ? 'is-invalid' : ''
                 "
+                style="outline: none; box-shadow: 0px 0px 0px transparent;"
             />
+            <span>PAG-IBIG MID NO.</span>
+            </label>
             <p class="text-danger text-sm">{{ errors.pagibigMidNo }}</p>
         </div>
-        <div class="form-group">
-            <label for="" class="col-form-label">PHILHEALTH NO.</label>
+        <div class="">
+            <label for="" class="form-group has-float-label">
             <input
                 type="number"
                 v-model="employee.philhealthNo"
@@ -21,41 +24,43 @@
                 :class="
                     errors.hasOwnProperty('philhealthNo') ? 'is-invalid' : ''
                 "
+                style="outline: none; box-shadow: 0px 0px 0px transparent;"
             />
+            <span>PHILHEALTH NO.</span>
+            </label>
             <p class="text-danger text-sm">{{ errors.philhealthNo }}</p>
         </div>
-        <div class="form-group">
-            <label for="" class="col-form-label">SSS NO.</label>
+        <div class="">
+            <label for="" class="form-group has-float-label">
             <input
                 type="number"
                 v-model="employee.sssNo"
                 class="form-control col-lg-12"
                 :class="errors.hasOwnProperty('sssNo') ? 'is-invalid' : ''"
+                style="outline: none; box-shadow: 0px 0px 0px transparent;"
             />
             <p class="text-danger text-sm">{{ errors.sssNo }}</p>
+            <span>SSS NO.</span>
+            </label>
         </div>
-        <div class="form-group">
-            <label for="" class="col-form-label">TIN NO.</label>
+        <div class="">
+            <label for="" class="form-group has-float-label">
             <input
                 type="number"
                 v-model="employee.tinNo"
                 class="form-control col-lg-12"
                 :class="errors.hasOwnProperty('tinNo') ? 'is-invalid' : ''"
+                style="outline: none; box-shadow: 0px 0px 0px transparent;"
             />
+            <span>TIN NO.</span>
+            </label>
             <p class="text-danger text-sm">{{ errors.tinNo }}</p>
         </div>
         <div class="form-group">
             <label
                 for=""
-                class="col-form-label"
-                v-html="
-                    employee.employmentStatus &&
-                    employee.employmentStatus.status_name !== 'PERMANENT'
-                        ? 'LBP ACCOUNT NO.'
-                        : 'DBP ACCOUNT NO.'
-                "
+                class="form-group has-float-label"
             >
-            </label>
             <input
                 type="text"
                 v-model="employee.lbpAccountNo"
@@ -63,25 +68,37 @@
                 :class="
                     errors.hasOwnProperty('lbpAccountNo') ? 'is-invalid' : ''
                 "
+                style="outline: none; box-shadow: 0px 0px 0px transparent;"
             />
+            <span 
+                v-html="
+                    employee.employmentStatus &&
+                    employee.employmentStatus.status_name !== 'PERMANENT'
+                        ? 'LBP ACCOUNT NO.'
+                        : 'DBP ACCOUNT NO.'
+                "></span>
+            </label>
             <p class="text-danger text-sm" v-if="errors.lbpAccountNo">
                 {{ errors.lbpAccountNo }}
             </p>
         </div>
 
-        <div class="form-group">
-            <label for="" class="col-form-label">GSIS ID NO.</label>
+        <div class="">
+            <label for="" class="form-group has-float-label">
             <input
                 type="number"
                 v-model="employee.gsisIdNo"
                 class="form-control col-lg-12"
                 :class="errors.hasOwnProperty('gsisIdNo') ? 'is-invalid' : ''"
+                style="outline: none; box-shadow: 0px 0px 0px transparent;"
             />
+            <span>GSIS ID NO.</span>
+            </label>
             <p class="text-danger text-sm">{{ errors.gsisIdNo }}</p>
         </div>
 
-        <div class="form-group">
-            <label for="" class="col-form-label">GSIS POLICY NO.</label>
+        <div class="">
+            <label for="" class="form-group has-float-label">
             <input
                 type="number"
                 v-model="employee.gsisPolicyNo"
@@ -89,18 +106,24 @@
                 :class="
                     errors.hasOwnProperty('gsisPolicyNo') ? 'is-invalid' : ''
                 "
+                style="outline: none; box-shadow: 0px 0px 0px transparent;"
             />
+            <span>GSIS POLICY NO.</span>
+            </label>
             <p class="text-danger text-sm">{{ errors.gsisPolicyNo }}</p>
         </div>
 
-        <div class="form-group">
-            <label for="" class="col-form-label">GSIS BP NO.</label>
+        <div class="">
+            <label for="" class="form-group has-float-label">
             <input
                 type="number"
                 v-model="employee.gsisBpNo"
                 class="form-control col-lg-12"
                 :class="errors.hasOwnProperty('gsisBpNo') ? 'is-invalid' : ''"
+                style="outline: none; box-shadow: 0px 0px 0px transparent;"
             />
+            <span>GSIS BP NO.</span>
+            </label>
             <p class="text-danger text-sm">{{ errors.gsisBpNo }}</p>
         </div>
     </div>
