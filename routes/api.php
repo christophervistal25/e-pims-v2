@@ -75,3 +75,7 @@ Route::group(['prefix' => 'city'], function () {
 
 
 Route::post('/employment/status/store', 'Api\ReferenceStatusController@store');
+
+
+/////// salary adjustment
+Route::get('/salaryAdjustment/{sg_no}/{sg_step?}/{sg_year}' , 'Api\SalaryAdjustmentController@salaryAdjustment');

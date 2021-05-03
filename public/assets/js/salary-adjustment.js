@@ -18,11 +18,6 @@
             ]
         });
     });
-        ////confirmation in delete
-        function myFunction() {
-            if(!confirm("Are You Sure to delete this"))
-            event.preventDefault();
-        }
     // number only
         $(function(){
             $("input[id='salaryNew']").on('input', function (e) {
@@ -42,18 +37,18 @@
                     if(plantilla) {
                         plantilla = JSON.parse(plantilla);
                         $('#employeeId').val(plantilla.employee_id);
-                        $('#positionName').val(plantilla.position.position_name);
-                        $('#positionId').val(plantilla.position.position_id);                
+                        $('#positionName').val(plantilla.positions.position_name);
+                        $('#positionId').val(plantilla.positions.position_id);                
                         $('#itemNo').val(plantilla.item_no);
                         $('#salaryGrade').val(plantilla.sg_no);     
                         $('#stepNo').val(plantilla.step_no);
                         $('#salaryPrevious').val(plantilla.salary_amount);
                     } else {
-                        $('#positionName').val('No Data Available');
-                        $('#itemNo').val('No Data Available');
-                        $('#salaryGrade').val('No Data Available');
-                        $('#stepNo').val('No Data Available');
-                        $('#salaryPrevious').val('No Data Available');
+                        $('#positionName').val('');
+                        $('#itemNo').val('');
+                        $('#salaryGrade').val('');
+                        $('#stepNo').val('');
+                        $('#salaryPrevious').val('');
                     }
                 });
             });
@@ -79,12 +74,7 @@
               }
 
 
-            $(document).keyup(function() {
-            var salaryPrevious = parseFloat($('#salaryPrevious').val());
-            var salaryNew = parseFloat($('#salaryNew').val());
-            let total = salaryNew - salaryPrevious;
-            $('#salaryDifference').val(total.toFixed(2));
-        });
+       
 
 //// add salary adjustment
 $(document).ready(function () {
@@ -211,3 +201,38 @@ $(document).ready(function () {
         });
     });
 });
+
+//  position display salary grade
+$(document).ready(function() {
+    $("#employeeName").change(function(){
+        let salaryGrade = $('#salaryGrade').val();
+        let stepNo = $('#stepNo').val();
+        let currentSgyear = $('#currentSgyear').val();
+        console.log(salaryGrade);
+        console.log(stepNo);
+        console.log(currentSgyear);
+        $.ajax({
+            url: `/api/salaryAdjustment/${salaryGrade}/${stepNo}/${currentSgyear}`,
+                success:(response) => {
+                    if(response == ''){
+                        $('#salaryNew').val('');
+                    }else{
+                        let currentSalaryAmount = response['sg_step' + stepNo];
+                        $('#salaryNew').val(currentSalaryAmount);
+
+                        var amount = parseFloat($('#salaryPrevious').val());
+                        var amount2 = parseFloat($('#salaryNew').val());
+                        var amountDifference =  amount2 - amount;
+                        console.log(amountDifference);
+                        $('#salaryDifference').val(amountDifference.toFixed(2));
+                    }
+                }
+        });
+    });
+});
+        $(document).keyup(function() {
+            var salaryPrevious = parseFloat($('#salaryPrevious').val());
+            var salaryNew = parseFloat($('#salaryNew').val());
+            let total = salaryNew - salaryPrevious;
+            $('#salaryDifference').val(total.toFixed(2));
+        });

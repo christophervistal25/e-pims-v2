@@ -28,7 +28,7 @@
 
                         <div class="form-group col-12 col-lg-4">
                             <label>Date Adjustment<span class="text-danger">*</span></label>
-                            <input class="form-control" value="" name="dateAdjustment" id="dateAdjustment" type="date">
+                            <input class="form-control" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" name="dateAdjustment" id="dateAdjustment" type="date">
                             <div id='date-adjustment-error-message' class='text-danger'>
                             </div>
                         </div>
@@ -39,7 +39,7 @@
                             name="employeeName" data-live-search="true" id="employeeName" data-size="5">
                             <option></option>
                             @foreach($employee as $employees)
-                            <option data-plantilla="{{ $employees->plantilla }}" value="{{ $employees->employee_id }}">{{ $employees->lastname }}, {{ $employees->firstname }} {{ $employees->middlename }}</option>
+                            <option data-plantilla="{{ $employees }}" value="{{ $employees->employee->employee_id }}">{{ $employees->employee->lastname }}, {{ $employees->employee->firstname }} {{ $employees->employee->middlename }}</option>
                             @endforeach
                             </select>
                             <div id='employee-error-message' class='text-danger'>
@@ -112,7 +112,7 @@
                             <div class="input-group-prepend">
                             <span class="input-group-text">&#8369;</span>
                             </div>
-                            <input class="form-control" value="" name="salaryNew" id="salaryNew" type="text" placeholder="Input New Salary">
+                            <input class="form-control" value="" name="salaryNew" id="salaryNew" type="text" placeholder="">
                             </div>
                             <div id='salary-new-error-message' class='text-danger'>
                             </div>
