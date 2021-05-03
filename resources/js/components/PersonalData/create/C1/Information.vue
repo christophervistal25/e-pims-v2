@@ -657,7 +657,7 @@
                                         ? ''
                                         : 'is-invalid'
                                 "
-                                placeholder="Enter Zipcode"
+                                placeholder="Enter Zip Code"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent"
                             />
                             <span>Zip Code</span>
@@ -793,7 +793,7 @@
                                 "
                                 :disabled="isSameAsAbove ? true : false"
                                 class="form-control"
-                                placeholder="Enter Zipcode"
+                                placeholder="Enter Zip Code"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;"
                             />
                             <span>Zip Code</span>

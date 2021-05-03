@@ -31,9 +31,8 @@
                     </div>
                 </div>
                 <div class="row pr-3 pl-3">
-                    <div class="form-group col-lg-3">
-                        <label for="surname">SURNAME</label>
-                        <span class="text-danger">*</span>
+                    <div class="col-lg-3">
+                        <label for="surname" class="form-group has-float-label">
                         <input
                             type="text"
                             class="form-control"
@@ -45,15 +44,16 @@
                             id="surname"
                             placeholder="Enter Surname"
                             v-model="employee.lastname"
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase; outline:none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Surname</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.lastname }}
                         </p>
                     </div>
-                    <div class="form-group col-lg-3">
-                        <label for="firstname">FIRST NAME</label>
-                        <span class="text-danger">*</span>
+                    <div class="col-lg-3">
+                        <label for="firstname" class="form-group has-float-label">
                         <input
                             type="text"
                             class="form-control"
@@ -61,14 +61,16 @@
                             placeholder="Enter First Name"
                             :class="errors.firstname ? 'is-invalid' : ''"
                             v-model="employee.firstname"
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase; outline:none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>First Name</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.firstname }}
                         </p>
                     </div>
-                    <div class="form-group col-lg-3">
-                        <label for="middlename">MIDDLE NAME</label>
+                    <div class="col-lg-3">
+                        <label for="middlename" class="form-group has-float-label">
                         <input
                             type="text"
                             class="form-control"
@@ -80,18 +82,20 @@
                             id="middlename"
                             placeholder="Enter Middle Name"
                             v-model="employee.middlename"
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase; outline:none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Middle Name</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.middlename }}
                         </p>
                     </div>
-                    <div class="form-group col-lg-3">
-                        <label for="nameextension"
-                            >NAME EXTENSION
+                    <div class="col-lg-3">
+                        <label for="nameextension" class="form-group has-float-label"
+                            >
                             <select
                                 type="text"
-                                class="form-control"
+                                class="form-control custom-select"
                                 :class="
                                     !errors.hasOwnProperty('extension')
                                         ? ''
@@ -119,9 +123,8 @@
                     </div>
                 </div>
                 <div class="row pl-3 pr-3">
-                    <div class="form-group col-lg-3">
-                        <label for="dateofbirth">DATE OF BIRTH</label
-                        ><span class="text-danger">*</span>
+                    <div class="col-lg-3">
+                        <label for="dateofbirth" class="form-group has-float-label"> 
                         <input
                             class="form-control"
                             :class="
@@ -131,14 +134,16 @@
                             "
                             type="date"
                             v-model="employee.date_birth"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Date of Birth</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.date_birth }}
                         </p>
                     </div>
-                    <div class="form-group col-lg-3">
-                        <label for="placeofbirth">PLACE OF BIRTH</label
-                        ><span class="text-danger">*</span>
+                    <div class="col-lg-3">
+                        <label for="placeofbirth" class="form-group has-float-label">
                         <input
                             type="text"
                             class="form-control"
@@ -150,16 +155,17 @@
                             "
                             placeholder="Enter Place of Birth"
                             v-model="employee.place_birth"
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Place of Birth</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.place_birth }}
                         </p>
                     </div>
 
-                    <div class="form-group col-lg-3">
-                        <label for="sex">SEX</label
-                        ><span class="text-danger">*</span>
+                    <div class="col-lg-3">
+                        <label for="sex" class="form-group has-float-label">
                         <select
                             class="form-control"
                             v-model="employee.sex"
@@ -169,18 +175,20 @@
                                     : 'is-invalid'
                             "
                             id="sex"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         >
                             <option value="male">MALE</option>
                             <option value="female">FEMALE</option>
                         </select>
+                        <span>Sex</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.sex }}
                         </p>
                     </div>
 
-                    <div class="form-group col-lg-3">
-                        <label for="status">STATUS</label
-                        ><span class="text-danger">*</span>
+                    <div class="col-lg-3">
+                        <label for="status" class="form-group has-float-label">
                         <select
                             class="form-control"
                             :class="
@@ -190,6 +198,7 @@
                             "
                             id="status"
                             v-model="employee.civil_status"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         >
                             <option value="SINGLE">SINGLE</option>
                             <option value="MARRIED">MARRIED</option>
@@ -197,16 +206,17 @@
                             <option value="SEPARATED">SEPARATED</option>
                             <option value="OTHERS">OTHERS</option>
                         </select>
+                        <span>Status</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.civil_status }}
                         </p>
                     </div>
                 </div>
                 <div class="row pl-3 pr-3">
-                    <div class="form group col-lg-4">
-                        <label for="height">HEIGHT</label
-                        ><span class="text-danger">*</span
-                        ><span class="text-sm text-secondary">(m)</span>
+                    <div class="col-lg-4">
+                        <label for="height" class="form group has-float-label">
+                        
                         <input
                             type="number"
                             id="height"
@@ -218,13 +228,14 @@
                             class="form-control"
                             placeholder="Enter height in meter"
                             v-model="employee.height"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Height(m)</span>
+                        </label>
                         <p class="text-danger text-sm">{{ errors.height }}</p>
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label for="weight">WEIGHT</label
-                        ><span class="text-danger">*</span
-                        ><span class="text-sm text-secondary">(kg)</span>
+                    <div class="col-lg-4">
+                        <label for="weight" class="form-group has-float-label">
                         <input
                             type="number"
                             :class="
@@ -236,13 +247,16 @@
                             class="form-control"
                             placeholder="Enter weight in kilogram"
                             v-model="employee.weight"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Weight(kg)</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.weight }}
                         </p>
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label for="bloodtype">BLOODTYPE</label>
+                    <div class="col-lg-4">
+                        <label for="bloodtype" class="form-group has-float-label">
                         <input
                             type="text"
                             class="form-control"
@@ -254,87 +268,104 @@
                             "
                             placeholder="Enter bloodtype"
                             v-model="employee.blood_type"
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Bloodtype</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.blood_type }}
                         </p>
                     </div>
                 </div>
                 <div class="row pl-3 pr-3">
-                    <div class="form-group col-lg-4">
-                        <label for="gsisidno">GSIS ID NUMBER</label>
+                    <div class="col-lg-4">
+                        <label for="gsisidno" class="form-group has-float-label">
                         <input
                             type="text"
                             id="gsisidno"
                             class="form-control"
                             placeholder="Enter GSIS ID No."
                             v-model="employee.gsis_id_no"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>GSIS ID Number</span>
+                        </label>
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label for="pagibigidno">PAG-IBIG ID NUMBER</label>
+                    <div class="col-lg-4">
+                        <label for="pagibigidno" class="form-group has-float-label">
                         <input
                             type="text"
                             id="pagibigidno"
                             class="form-control"
                             placeholder="Enter PAG-IBIG ID No."
                             v-model="employee.pag_ibig_no"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>PAG-IBIG ID Number</span>
+                        </label>
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label for="philhealthidno">PHILHEALTH ID NUMBER</label>
+                    <div class="col-lg-4">
+                        <label for="philhealthidno" class="form-group has-float-label">
                         <input
                             type="text"
                             id="philhealthidno"
                             class="form-control"
                             placeholder="Enter PHILHEALTH ID No."
                             v-model="employee.philhealth_no"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Philhealth ID Number</span>
+                        </label>
                     </div>
                 </div>
                 <div class="row pl-3 pr-3">
-                    <div class="form-group col-lg-4">
-                        <label for="sssidno">SSS ID NUMBER</label>
+                    <div class="col-lg-4">
+                        <label for="sssidno" class="form-group has-float-label">
                         <input
                             type="text"
                             id="sssidno"
                             class="form-control"
                             placeholder="Enter SSS ID No."
                             v-model="employee.sss_no"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>SSS ID Number</span>
+                        </label>
                     </div>
 
-                    <div class="form-group col-lg-4">
-                        <label for="tinidno">TIN ID NUMBER</label>
+                    <div class="col-lg-4">
+                        <label for="tinidno" class="form-group has-float-label">
                         <input
                             type="text"
                             id="tinidno"
                             class="form-control"
                             placeholder="Enter TIN ID No."
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                             v-model="employee.tin_no"
                         />
+                        <span>TIN ID Number</span>
+                        </label>
                     </div>
 
-                    <div class="form-group col-lg-4">
-                        <label for="agencyempidno"
-                            >AGENCY EMPLOYEE NUMBER</label
-                        >
+                    <div class="col-lg-4">
+                        <label for="agencyempidno" class="form-group has-float-label">
                         <input
                             type="text"
                             id="agencyempidno"
                             class="form-control"
                             placeholder="Enter agency employee no."
                             v-model="employee.agency_employee_no"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Agency Employee Number</span>
+                        </label>
                     </div>
                 </div>
                 <div class="row pl-3 pr-3">
-                    <div class="form-group col-lg-4">
-                        <label for="citizenship">CITIZENSHIP</label
-                        ><span class="text-danger">*</span>
+                    <div class="col-lg-4">
+                        <label for="citizenship" class="form-group has-float-label">
                         <select
-                            class="form-control"
+                            class="form-control custom-select"
                             :class="
                                 !errors.hasOwnProperty('citizenship')
                                     ? ''
@@ -342,20 +373,22 @@
                             "
                             id="citizenship"
                             v-model="employee.citizenship"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         >
                             <option value="FILIPINO">FILIPINO</option>
                             <option value="DUAL CITIZEN">DUAL CITIZEN</option>
                         </select>
+                        <span>Citizenship</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.citizenship }}
                         </p>
                     </div>
                     <div
-                        class="form-group col-lg-4"
+                        class="col-lg-4"
                         v-if="employee.citizenship == 'DUAL CITIZEN'"
                     >
-                        <label for="citizenshipby">BY</label
-                        ><span class="text-danger">*</span>
+                        <label for="citizenshipby" class="form-group has-float-label">
                         <select
                             class="form-control"
                             id="citizenshipby"
@@ -365,23 +398,25 @@
                                     : 'is-invalid'
                             "
                             v-model="employee.citizenshipBy"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         >
                             <option value="BIRTH">BIRTH</option>
                             <option value="NATURALIZATION"
                                 >NATURALIZATION</option
                             >
                         </select>
+                        <span>By</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.citizenshipBy }}
                         </p>
                     </div>
 
                     <div
-                        class="form-group col-lg-4"
+                        class="col-lg-4"
                         v-if="employee.citizenship == 'DUAL CITIZEN'"
                     >
-                        <label for="countries">INDICATE COUNTRY</label
-                        ><span class="text-danger">*</span>
+                        <label for="countries" class="form-group has-float-label">
                         <select
                             class="form-control"
                             id="countries"
@@ -391,6 +426,7 @@
                                     ? ''
                                     : 'is-invalid'
                             "
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         >
                             <option
                                 v-for="(country, index) in countries"
@@ -399,22 +435,26 @@
                                 >{{ country }}</option
                             >
                         </select>
+                        <span>Indicate Country</span>
+                        </label>
                         <p class="text-danger text-sm">{{ errors.country }}</p>
                     </div>
 
-                    <div class="form-group col-lg-4">
-                        <label for="telno">TELEPHONE NUMBER</label>
+                    <div class="col-lg-4">
+                        <label for="telno" class="form-group has-float-label">
                         <input
                             type="text"
                             id="telno"
                             class="form-control"
                             placeholder="Optional"
                             v-model="employee.telephone_no"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Telephone Number</span>
+                        </label>
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label for="mobileno">MOBILE NUMBER</label
-                        ><span class="text-danger">*</span>
+                    <div class="col-lg-4">
+                        <label for="mobileno" class="form-group has-float-label">
                         <input
                             type="text"
                             :class="
@@ -426,20 +466,26 @@
                             class="form-control"
                             placeholder="Enter Mobile Number"
                             v-model="employee.mobile_no"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Mobile Number</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.mobile_no }}
                         </p>
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label for="email">EMAIL ADDRESS</label>
+                    <div class="col-lg-4">
+                        <label for="email" class="form-group has-float-label">
                         <input
                             type="email"
                             id="email"
                             class="form-control"
                             placeholder="Optional"
                             v-model="employee.email_address"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Email Address</span>
+                        </label>
                     </div>
                 </div>
 
@@ -452,49 +498,55 @@
                     </div>
                 </div>
                 <div class="row pl-3 pr-3">
-                    <div class="form-group col-lg-4">
-                        <label for="lotno">HOUSE/BLOCK/LOT NO.</label>
+                    <div class="col-lg-4">
+                        <label for="lotno" class="form-group has-float-label">
                         <input
                             type="text"
                             v-model="employee.residential_house_no"
                             id="lotno"
                             class="form-control"
                             placeholder="Enter house/block/lot no."
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>House/Block/Lot No.</span>
+                        </label>
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label for="street">STREET</label>
+                    <div class="col-lg-4">
+                        <label for="street" class="form-group has-float-label">
                         <input
                             type="text"
                             v-model="employee.residential_street"
                             id="street"
                             class="form-control"
                             placeholder="Enter Street"
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Street</span>
+                        </label>
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label for="subdivision">SUBDIVISION/VILLAGE</label>
+                    <div class="col-lg-4">
+                        <label for="subdivision" class="form-group has-float-label">
                         <input
                             type="text"
                             v-model="employee.residential_village"
                             id="subdivision"
                             class="form-control"
                             placeholder="Enter Subdivision or Village"
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Subdivision/Village</span>
+                        </label>
                     </div>
                 </div>
                 <div class="row pl-3 pr-3">
-                    <div class="form-group col-lg-3">
-                        <label for="province">PROVINCE</label
-                        ><span class="text-danger">*</span>
+                    <div class="col-lg-3">
+                        <label for="province" class="form-group has-float-label">
                         <v-select
                             label="name"
                             :options="provinces"
                             :value="employee.residential_province"
                             @input="provinceChange"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         >
                             <!-- <option
                                 v-for="(province, index) in provinces"
@@ -506,10 +558,11 @@
                         <!-- <p class="text-danger text-sm">
                             {{ errors.residential_province }}
                         </p> -->
+                        <span>Province</span>
+                        </label>
                     </div>
-                    <div class="form-group col-lg-3">
-                        <label for="city">CITY/MUNICIPALITY</label
-                        ><span class="text-danger">*</span>
+                    <div class="col-lg-3">
+                        <label for="city" class="form-group has-float-label">
                         <v-select
                             label="name"
                             :value="employee.residential_city"
@@ -518,6 +571,7 @@
                             :disabled="
                                 employee.residential_province ? false : true
                             "
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         >
                             <!-- <option
                                 v-for="(city, index) in cities"
@@ -526,13 +580,14 @@
                                 >{{ city.name }}</option
                             > -->
                         </v-select>
+                        <span>City/Municipality</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.residential_city }}
                         </p>
                     </div>
-                    <div class="form-group col-lg-3">
-                        <label for="barangay">BARANGAY</label
-                        ><span class="text-danger">*</span>
+                    <div class="col-lg-3">
+                        <label for="barangay" class="form-group has-float-label">
                         <select
                             v-model="employee.residential_barangay"
                             class="form-control"
@@ -542,6 +597,7 @@
                                     : 'is-invalid'
                             "
                             :disabled="employee.residential_city ? false : true"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         >
                             <option
                                 v-for="(barangay, index) in barangays"
@@ -550,13 +606,14 @@
                                 >{{ barangay.name }}</option
                             >
                         </select>
+                        <span>Barangay</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.residential_barangay }}
                         </p>
                     </div>
-                    <div class="form-group col-lg-3">
-                        <label for="zipcode">ZIP CODE</label
-                        ><span class="text-danger">*</span>
+                    <div class="col-lg-3">
+                        <label for="zipcode" class="form-group has-float-label">
                         <input
                             type="number"
                             v-model="employee.residential_zip_code"
@@ -576,8 +633,11 @@
                                     ? ''
                                     : 'is-invalid'
                             "
-                            placeholder="Enter Zipcode"
+                            placeholder="Enter Zip Code"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Zip Code</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.residential_zip_code }}
                         </p>
@@ -602,45 +662,50 @@
                     </div>
                 </div>
                 <div class="row pl-3 pr-3">
-                    <div class="form-group col-lg-4">
-                        <label for="lotno">HOUSE/BLOCK/LOT NO.</label>
+                    <div class="col-lg-4">
+                        <label for="lotno" class="form-group has-float-label">
                         <input
                             type="text"
                             v-model="employee.permanent_house_no"
                             :readonly="isSameAsAbove ? true : false"
                             class="form-control"
                             placeholder="Enter house/block/lot no."
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>House/Block/Lot No.</span>
+                        </label>
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label for="street">STREET</label>
+                    <div class="col-lg-4">
+                        <label for="street" class="form-group has-float-label">
                         <input
                             type="text"
                             v-model="employee.permanent_street"
                             :readonly="isSameAsAbove ? true : false"
                             class="form-control"
                             placeholder="Enter Street"
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Street</span>
+                        </label>
                     </div>
-                    <div class="form-group col-lg-4">
-                        <label for="subdivision">SUBDIVISION/VILLAGE</label>
+                    <div class="col-lg-4">
+                        <label for="subdivision" class="form-group has-float-label">
                         <input
                             type="text"
                             v-model="employee.permanent_village"
                             :readonly="isSameAsAbove ? true : false"
                             class="form-control"
                             placeholder="Enter Subdivision or Village"
-                            style="text-transform:uppercase"
+                            style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Subdivision/Village</span>
+                        </label>
                     </div>
                 </div>
 
                 <div class="row pl-3 pr-3">
-                    <div class="form-group col-lg-3">
-                        <label for="province">PROVINCE</label
-                        ><span class="text-danger">*</span>
+                    <div class="col-lg-3">
+                        <label for="province" class="form-group has-float-label">
                         <select
                             type="text"
                             v-model="employee.permanentProvince"
@@ -652,6 +717,7 @@
                             "
                             :disabled="isSameAsAbove ? true : false"
                             class="form-control"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         >
                             <option
                                 v-for="(province, index) in provinces"
@@ -666,14 +732,15 @@
                                 >{{ province.name }}</option
                             >
                         </select>
+                        <span>Province</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.permanentProvince }}
                         </p>
                     </div>
 
-                    <div class="form-group col-lg-3">
-                        <label for="city">CITY/MUNICIPALITY</label
-                        ><span class="text-danger">*</span>
+                    <div class="col-lg-3">
+                        <label for="city" class="form-group has-float-label">
                         <select
                             v-model="employee.permanentCity"
                             @change="permanentMunicipalChange"
@@ -689,6 +756,7 @@
                                         : false)
                             "
                             class="form-control"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         >
                             <option
                                 v-for="(city, index) in permanentCities"
@@ -702,14 +770,15 @@
                                 >{{ city.name }}</option
                             >
                         </select>
+                        <span>City/Municipality</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.permanentCity }}
                         </p>
                     </div>
 
-                    <div class="form-group col-lg-3">
-                        <label for="barangay">BARANGAY</label
-                        ><span class="text-danger">*</span>
+                    <div class="col-lg-3">
+                        <label for="barangay" class="form-group has-float-label">
                         <select
                             v-model="employee.permanentBarangay"
                             :disabled="
@@ -724,6 +793,7 @@
                                     : 'is-invalid'
                             "
                             class="form-control"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         >
                             <option
                                 v-for="(barangay, index) in permanentBarangays"
@@ -738,14 +808,15 @@
                                 >{{ barangay.name }}</option
                             >
                         </select>
+                        <span>Barangay</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.permanentBarangay }}
                         </p>
                     </div>
 
-                    <div class="form-group col-lg-3">
-                        <label for="zipcode">ZIP CODE</label
-                        ><span class="text-danger">*</span>
+                    <div class="col-lg-3">
+                        <label for="zipcode" class="form-group has-float-label">
                         <input
                             type="number"
                             v-model="employee.permanent_zip_code"
@@ -766,8 +837,11 @@
                             "
                             :disabled="isSameAsAbove ? true : false"
                             class="form-control"
-                            placeholder="Enter Zipcode"
+                            placeholder="Enter Zip Code"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
+                        <span>Zip Code</span>
+                        </label>
                         <p class="text-danger text-sm">
                             {{ errors.permanentZipCode }}
                         </p>
