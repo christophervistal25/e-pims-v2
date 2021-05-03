@@ -68,6 +68,8 @@ $(function(){
     $('#salaryGradeForm').submit(function (e) {
         e.preventDefault();
         let data = $(this).serialize();
+        $('#saveBtn').attr("disabled", true);
+        $('#loading').removeClass('d-none');
         $.ajax({
             type: "POST",
             url: '/salary-grade',
@@ -89,7 +91,7 @@ $(function(){
                         });
                         $('#myTable').DataTable().ajax.reload();
                     swal("Sucessfully Added!", "", "success");
-                    $('#saveBtn').removeClass('disabled');
+                    $('#saveBtn').attr("disabled", false);
                     $('#loading').addClass('d-none');
                 }
         },
@@ -191,18 +193,12 @@ $(function(){
                             confirmButtonClass: "btn-primary",
                             confirmButtonText: "Ok",
                         });
-                        $('#saveBtn').removeClass('disabled');
+                        $('#saveBtn').attr("disabled", false);
                         $('#loading').addClass('d-none');
                     }
             }
         });
     });
     });
-    //disable button
-    document.getElementById("saveBtn").addEventListener("click", myFunction);
-    function myFunction() {
-      $('#saveBtn').addClass('disabled');
-      $('#loading').removeClass('d-none');
-    }
 
 

@@ -131,10 +131,10 @@
                         </div>
 
                         <div class="form-group form-group submit-section col-12">
-                            <button onclick="myFunction()" id="saveBtn" class="btn btn-success submit-btn float-right" type="submit">
+                            <button id="saveBtn" class="btn btn-success submit-btn float-right" type="submit">
                                 <span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>
                                 Save
-                              </button>
+                            </button>
                             <button style="margin-right:10px;" type="button" id="cancelbutton" class="text-white btn btn-warning submit-btn float-right" onclick="reset()">Cancel</button>
                         </div>
 
