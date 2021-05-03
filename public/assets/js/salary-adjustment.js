@@ -91,6 +91,8 @@ $(document).ready(function () {
     $('#salaryAdjustmentForm').submit(function (e) {
         e.preventDefault();
         let data = $(this).serialize();
+        $('#saveBtn').attr("disabled", true);
+        $('#loading').removeClass('d-none');
         $.ajax({
             type: "POST",
             url: '/salary-adjustment',
@@ -109,7 +111,7 @@ $(document).ready(function () {
                         });
                     $('#salaryAdjustment').DataTable().ajax.reload();
                     swal("Sucessfully Added!", "", "success");
-                    $('#saveBtn').removeClass('disabled');
+                    $('#saveBtn').attr("disabled", false);
                     $('#loading').addClass('d-none');
                 }
         },
@@ -202,15 +204,10 @@ $(document).ready(function () {
                             icon: "error",
                             content: parentElement,
                         });
-                        $('#saveBtn').removeClass('disabled');
+                        $('#saveBtn').attr("disabled", false);
                         $('#loading').addClass('d-none');
                     }
             }
         });
     });
 });
- //disable button
- function myFunction() {
-   $('#saveBtn').addClass('disabled');
-   $('#loading').removeClass('d-none');
- }
