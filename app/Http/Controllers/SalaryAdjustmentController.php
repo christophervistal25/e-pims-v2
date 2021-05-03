@@ -19,7 +19,8 @@ class SalaryAdjustmentController extends Controller
     public function index()
     {
         $position = Position::select('position_id', 'position_name')->get();
-        $employee = Employee::with(['plantilla', 'plantilla.position'])->get();
+        // $employee = Employee::with(['plantilla', 'plantilla.position'])->get();
+        $employee = Plantilla::select('item_no', 'position_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id')->with('employee:employee_id,firstname,middlename,lastname,extension','positions:position_id,position_name')->get();
         return view('SalaryAdjustment.SalaryAdjustment', compact('employee', 'position'));
     }
 
