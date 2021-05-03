@@ -126,7 +126,7 @@
                                 >III</option
                             >
                         </select>
-                            <span>Name Extension</span>
+                            <span>Extension Name</span>
                             </label>
                         
                         <p class="text-danger text-sm">

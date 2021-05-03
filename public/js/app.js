@@ -6910,6 +6910,21 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     show_panel: {
@@ -7864,73 +7879,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
-<<<<<<< HEAD
+//
+//
+//
+//
 
-=======
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
->>>>>>> 1c686f581bb12c7df020e95ac55f5b70b86827a3
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["data"],
   data: function data() {
@@ -16571,7 +16524,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, "\ntd[data-v-a89d73f8] {\r\n    cursor: pointer;\r\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-a89d73f8]:hover {\r\n    background: #f1f2f3;\n}\r\n", ""]);
+exports.push([module.i, "\ntd[data-v-a89d73f8] {\n    cursor: pointer;\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-a89d73f8]:hover {\n    background: #f1f2f3;\n}\n", ""]);
 
 // exports
 
@@ -41628,48 +41581,98 @@ var render = function() {
                     _c(
                       "label",
                       {
-                        staticClass: "form-group has-float-label",
+                        staticClass: "form-group has-float-label mb-0",
                         attrs: { for: "snameexten" }
                       },
                       [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.familyBackground.snameexten,
-                              expression: "familyBackground.snameexten"
-                            }
-                          ],
-                          staticClass: "form-control ",
-                          staticStyle: {
-                            "text-transform": "uppercase",
-                            outline: "none",
-                            "box-shadow": "0px 0px 0px transparent"
-                          },
-                          attrs: {
-                            type: "text",
-                            maxlength: "3",
-                            id: "snameexten",
-                            placeholder: "(JR., SR.)",
-                            value: ""
-                          },
-                          domProps: { value: _vm.familyBackground.snameexten },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.familyBackground.snameexten,
+                                expression: "familyBackground.snameexten"
                               }
-                              _vm.$set(
-                                _vm.familyBackground,
-                                "snameexten",
-                                $event.target.value
-                              )
+                            ],
+                            staticClass: "form-control custom-select",
+                            class: !_vm.errors.hasOwnProperty("snameexten")
+                              ? ""
+                              : "is-invalid",
+                            staticStyle: {
+                              outline: "none",
+                              "box-shadow": "0px 0px 0px transparent"
+                            },
+                            attrs: { type: "text", id: "snameexten" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.familyBackground,
+                                  "snameexten",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
                             }
-                          }
-                        }),
+                          },
+                          [
+                            _c(
+                              "option",
+                              {
+                                attrs: { value: "", readonly: "", selected: "" }
+                              },
+                              [_vm._v("Please Select Extension Name")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "option",
+                              {
+                                attrs: { value: "JR" },
+                                domProps: {
+                                  selected:
+                                    _vm.familyBackground.snameexten === "JR"
+                                }
+                              },
+                              [_vm._v("JR")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "option",
+                              {
+                                attrs: { value: "SR" },
+                                domProps: {
+                                  selected:
+                                    _vm.familyBackground.snameexten === "SR"
+                                }
+                              },
+                              [_vm._v("SR")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "option",
+                              {
+                                attrs: { value: "III" },
+                                domProps: {
+                                  selected:
+                                    _vm.familyBackground.nameExtension === "III"
+                                }
+                              },
+                              [_vm._v("III")]
+                            )
+                          ]
+                        ),
                         _vm._v(" "),
-                        _c("span", [_vm._v("Name Extension")])
+                        _c("span", [_vm._v("Extension Name")])
                       ]
                     )
                   ])
@@ -42193,7 +42196,7 @@ var render = function() {
                 "label",
                 {
                   staticClass: "form-group has-float-label mb-0",
-                  attrs: { for: "fnameexten" }
+                  attrs: { for: "snameexten" }
                 },
                 [
                   _c(
@@ -42203,19 +42206,19 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.familyBackground.fnameexten,
-                          expression: "familyBackground.fnameexten"
+                          value: _vm.familyBackground.snameexten,
+                          expression: "familyBackground.snameexten"
                         }
                       ],
                       staticClass: "form-control custom-select",
-                      class: !_vm.errors.hasOwnProperty("fnameexten")
+                      class: !_vm.errors.hasOwnProperty("snameexten")
                         ? ""
                         : "is-invalid",
                       staticStyle: {
                         outline: "none",
                         "box-shadow": "0px 0px 0px transparent"
                       },
-                      attrs: { type: "text", id: "fnameexten" },
+                      attrs: { type: "text", id: "snameexten" },
                       on: {
                         change: function($event) {
                           var $$selectedVal = Array.prototype.filter
@@ -42228,7 +42231,7 @@ var render = function() {
                             })
                           _vm.$set(
                             _vm.familyBackground,
-                            "fnameexten",
+                            "snameexten",
                             $event.target.multiple
                               ? $$selectedVal
                               : $$selectedVal[0]
@@ -42248,7 +42251,7 @@ var render = function() {
                         {
                           attrs: { value: "JR" },
                           domProps: {
-                            selected: _vm.familyBackground.fnameexten === "JR"
+                            selected: _vm.familyBackground.snameexten === "JR"
                           }
                         },
                         [_vm._v("JR")]
@@ -42259,7 +42262,7 @@ var render = function() {
                         {
                           attrs: { value: "SR" },
                           domProps: {
-                            selected: _vm.familyBackground.fnameexten === "SR"
+                            selected: _vm.familyBackground.snameexten === "SR"
                           }
                         },
                         [_vm._v("SR")]
@@ -42279,7 +42282,7 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Name Extension")])
+                  _c("span", [_vm._v("Extension Name")])
                 ]
               )
             ])
@@ -42404,7 +42407,7 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3" }, [
+            _c("div", { staticClass: "col-lg-4" }, [
               _c(
                 "label",
                 {
@@ -42451,7 +42454,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Maiden")])
+                  _c("span", [_vm._v("Maiden Middle Name")])
                 ]
               ),
               _vm._v(" "),
@@ -42567,7 +42570,7 @@ var staticRenderFns = [
           staticClass: "alert alert-secondary text-center font-weight-bold ",
           attrs: { role: "alert" }
         },
-        [_vm._v("\n                    FATHER'S INFORMATION\n                ")]
+        [_vm._v("\n                    FATHER'S NAME\n                ")]
       )
     ])
   },
@@ -42582,7 +42585,7 @@ var staticRenderFns = [
           staticClass: "alert alert-secondary text-center font-weight-bold ",
           attrs: { role: "alert" }
         },
-        [_vm._v("\n                    MOTHER'S INFORMATION\n                ")]
+        [_vm._v("\n                    MOTHER'S MAIDEN NAME\n                ")]
       )
     ])
   }
@@ -42841,32 +42844,15 @@ var render = function() {
                           expression: "personal_data.nameExtension"
                         }
                       ],
-<<<<<<< HEAD
-                      staticClass: "form-control",
-=======
                       staticClass: "form-control custom-select",
->>>>>>> 1c686f581bb12c7df020e95ac55f5b70b86827a3
                       class: !_vm.errors.hasOwnProperty("nameExtension")
                         ? ""
                         : "is-invalid",
                       staticStyle: {
-<<<<<<< HEAD
-                        "text-transform": "uppercase",
-                        outline: "none",
-                        "box-shadow": "0px 0px 0px transparent"
-                      },
-                      attrs: {
-                        type: "text",
-                        maxlength: "3",
-                        max: "3",
-                        id: "nameextension"
-                      },
-=======
                         outline: "none",
                         "box-shadow": "0px 0px 0px transparent"
                       },
                       attrs: { type: "text", id: "nameextension" },
->>>>>>> 1c686f581bb12c7df020e95ac55f5b70b86827a3
                       on: {
                         change: function($event) {
                           var $$selectedVal = Array.prototype.filter
@@ -42888,15 +42874,6 @@ var render = function() {
                       }
                     },
                     [
-<<<<<<< HEAD
-                      _c("option", { attrs: { value: "sr" } }, [_vm._v("SR")]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "sr" } }, [_vm._v("SR")]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "jr" } }, [_vm._v("JR")]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "iii" } }, [_vm._v("III")])
-=======
                       _c(
                         "option",
                         { attrs: { value: "", readonly: "", selected: "" } },
@@ -42935,11 +42912,10 @@ var render = function() {
                         },
                         [_vm._v("III")]
                       )
->>>>>>> 1c686f581bb12c7df020e95ac55f5b70b86827a3
                     ]
                   ),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Name Extension")])
+                  _c("span", [_vm._v("Extension Name")])
                 ]
               ),
               _vm._v(" "),
@@ -74342,8 +74318,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\e-pims\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\e-pims\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/e-pims/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/e-pims/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

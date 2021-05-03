@@ -103,18 +103,33 @@
                             </label>
                         </div>
                         <div class="col-lg-3">
-                            <label for="snameexten" class="form-group has-float-label">
-                            <input
-                                type="text"
-                                maxlength="3"
-                                class="form-control "
+                            <label for="snameexten" class="form-group has-float-label mb-0">
+                        <select type="text" 
                                 id="snameexten"
                                 v-model="familyBackground.snameexten"
-                                placeholder="(JR., SR.)"
-                                value=""
-                                style="text-transform:uppercase; outline:none; box-shadow: 0px 0px 0px transparent;"
-                            />
-                            <span>Name Extension</span>
+                                class="form-control custom-select"
+                                :class="!errors.hasOwnProperty('snameexten')
+                                    ? ''
+                                    : 'is-invalid'"
+                                    style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                        <option value="" readonly selected>Please Select Extension Name</option>
+                        <option
+                                :selected="familyBackground.snameexten === 'JR'"
+                                value="JR"
+                                >JR</option
+                            >
+                            <option
+                                :selected="familyBackground.snameexten === 'SR'"
+                                value="SR"
+                                >SR</option
+                            >
+                            <option
+                                :selected="familyBackground.nameExtension === 'III'"
+                                value="III"
+                                >III</option
+                            >
+                        </select>
+                            <span>Extension Name</span>
                             </label>
                         </div>
                     </div>
@@ -260,7 +275,7 @@
                         class="alert alert-secondary text-center font-weight-bold "
                         role="alert"
                     >
-                        FATHER'S INFORMATION
+                        FATHER'S NAME
                     </div>
                 </div>
                 <div class="row pr-3 pl-3">
@@ -329,23 +344,23 @@
                         </p>
                     </div>
                     <div class="col-lg-3">
-                        <label for="fnameexten" class="form-group has-float-label mb-0">
+                        <label for="snameexten" class="form-group has-float-label mb-0">
                         <select type="text" 
-                                id="fnameexten"
-                                v-model="familyBackground.fnameexten"
+                                id="snameexten"
+                                v-model="familyBackground.snameexten"
                                 class="form-control custom-select"
-                                :class="!errors.hasOwnProperty('fnameexten')
+                                :class="!errors.hasOwnProperty('snameexten')
                                     ? ''
                                     : 'is-invalid'"
                                     style="outline: none; box-shadow: 0px 0px 0px transparent;">
                         <option value="" readonly selected>Please Select Extension Name</option>
                         <option
-                                :selected="familyBackground.fnameexten === 'JR'"
+                                :selected="familyBackground.snameexten === 'JR'"
                                 value="JR"
                                 >JR</option
                             >
                             <option
-                                :selected="familyBackground.fnameexten === 'SR'"
+                                :selected="familyBackground.snameexten === 'SR'"
                                 value="SR"
                                 >SR</option
                             >
@@ -355,7 +370,7 @@
                                 >III</option
                             >
                         </select>
-                            <span>Name Extension</span>
+                            <span>Extension Name</span>
                             </label>
                     </div>
                 </div>
@@ -365,7 +380,7 @@
                         class="alert alert-secondary text-center font-weight-bold "
                         role="alert"
                     >
-                        MOTHER'S INFORMATION
+                        MOTHER'S MAIDEN NAME
                     </div>
                 </div>
                 <div class="row pr-3 pl-3">
@@ -411,7 +426,7 @@
                             {{ errors.mfirstname }}
                         </p>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                         <label for="mmiddlename" class="form-group has-float-label mb-30">
                         <input
                             type="text"
@@ -427,7 +442,7 @@
                             value=""
                             style="text-transform:uppercase; outline: none; box-shadow: 0px 0px 0px transparent;"
                         />
-                        <span>Maiden</span>
+                        <span>Maiden Middle Name</span>
                         </label>
                         <p class="text-danger text-sm">
                             {{ errors.mmiddlename }}
