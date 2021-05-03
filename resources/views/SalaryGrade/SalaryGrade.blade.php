@@ -108,7 +108,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">&#8369;</span>
                                     </div>
-                                    <input class="form-control text-right}" value="{{ old('sgStep7') }}" id="sgStep7" name="sgStep7" type="text" maxlength="12">
+                                    <input class="form-control text-right" value="{{ old('sgStep7') }}" id="sgStep7" name="sgStep7" type="text" maxlength="12">
                                 </div>
                                 <div id='salary-grade7-error-message' class='text-danger'>
                                 </div>

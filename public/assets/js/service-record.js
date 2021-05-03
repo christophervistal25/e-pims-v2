@@ -144,6 +144,8 @@ $(document).ready(function () {
 $('#serviceRecordForm').submit(function (e) {
     e.preventDefault();
     let data = $(this).serialize();
+    $('#saveBtn').attr("disabled", true);
+    $('#loading').removeClass('d-none');
     $.ajax({
         type: "POST",
         url: '/service-records',
@@ -169,7 +171,7 @@ $('#serviceRecordForm').submit(function (e) {
                     });
                     $('#serviceRecords').DataTable().ajax.reload();
                     swal("Sucessfully Added!", "", "success");
-                    $('#saveBtn').removeClass('disabled');
+                    $('#saveBtn').attr("disabled", false);
                     $('#loading').addClass('d-none');
             }
     },
@@ -262,15 +264,10 @@ $('#serviceRecordForm').submit(function (e) {
                         icon: "error",
                         content: parentElement,
                     });
-                    $('#saveBtn').removeClass('disabled');
-                        $('#loading').addClass('d-none');
+                    $('#saveBtn').attr("disabled", false);
+                    $('#loading').addClass('d-none');
                 }
         }
     });
 });
 });
- //disable button
- function myFunction() {
-    $('#saveBtn').addClass('disabled');
-    $('#loading').removeClass('d-none');
-  }

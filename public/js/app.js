@@ -7864,73 +7864,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
-<<<<<<< HEAD
+//
+//
+//
+//
 
-=======
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
->>>>>>> 1c686f581bb12c7df020e95ac55f5b70b86827a3
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["data"],
   data: function data() {
@@ -16533,7 +16471,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.button-wrapper[data-v-b141abb8] {\n    position: relative;\n}\n.button-wrapper span.label[data-v-b141abb8] {\n    position: relative;\n    z-index: 0;\n    display: inline-block;\n    cursor: pointer;\n    color: #fff;\n    text-transform: uppercase;\n}\n#upload[data-v-b141abb8] {\n    display: inline-block;\n    position: absolute;\n    z-index: 1;\n    top: 0;\n    left: 0;\n    opacity: 0;\n}\n", ""]);
+exports.push([module.i, "\n.button-wrapper[data-v-b141abb8] {\r\n    position: relative;\n}\n.button-wrapper span.label[data-v-b141abb8] {\r\n    position: relative;\r\n    z-index: 0;\r\n    display: inline-block;\r\n    cursor: pointer;\r\n    color: #fff;\r\n    text-transform: uppercase;\n}\n#upload[data-v-b141abb8] {\r\n    display: inline-block;\r\n    position: absolute;\r\n    z-index: 1;\r\n    top: 0;\r\n    left: 0;\r\n    opacity: 0;\n}\r\n", ""]);
 
 // exports
 
@@ -16552,7 +16490,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.cursor-pointer {\n    cursor: pointer;\n}\n.status-item {\n    border-width: 3px;\n    border-style: dashed;\n}\n.status-item:hover {\n    background: #f2f3f4;\n    transition: 300ms ease-in-out;\n}\n", ""]);
+exports.push([module.i, "\n.cursor-pointer {\r\n    cursor: pointer;\n}\n.status-item {\r\n    border-width: 3px;\r\n    border-style: dashed;\n}\n.status-item:hover {\r\n    background: #f2f3f4;\r\n    transition: 300ms ease-in-out;\n}\r\n", ""]);
 
 // exports
 
@@ -16590,7 +16528,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, "\ntd[data-v-71d926a4] {\n    cursor: pointer;\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-71d926a4]:hover {\n    background: #f1f2f3;\n}\n", ""]);
+exports.push([module.i, "\ntd[data-v-71d926a4] {\r\n    cursor: pointer;\r\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-71d926a4]:hover {\r\n    background: #f1f2f3;\n}\r\n", ""]);
 
 // exports
 
@@ -42841,32 +42779,15 @@ var render = function() {
                           expression: "personal_data.nameExtension"
                         }
                       ],
-<<<<<<< HEAD
-                      staticClass: "form-control",
-=======
                       staticClass: "form-control custom-select",
->>>>>>> 1c686f581bb12c7df020e95ac55f5b70b86827a3
                       class: !_vm.errors.hasOwnProperty("nameExtension")
                         ? ""
                         : "is-invalid",
                       staticStyle: {
-<<<<<<< HEAD
-                        "text-transform": "uppercase",
-                        outline: "none",
-                        "box-shadow": "0px 0px 0px transparent"
-                      },
-                      attrs: {
-                        type: "text",
-                        maxlength: "3",
-                        max: "3",
-                        id: "nameextension"
-                      },
-=======
                         outline: "none",
                         "box-shadow": "0px 0px 0px transparent"
                       },
                       attrs: { type: "text", id: "nameextension" },
->>>>>>> 1c686f581bb12c7df020e95ac55f5b70b86827a3
                       on: {
                         change: function($event) {
                           var $$selectedVal = Array.prototype.filter
@@ -42888,15 +42809,6 @@ var render = function() {
                       }
                     },
                     [
-<<<<<<< HEAD
-                      _c("option", { attrs: { value: "sr" } }, [_vm._v("SR")]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "sr" } }, [_vm._v("SR")]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "jr" } }, [_vm._v("JR")]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "iii" } }, [_vm._v("III")])
-=======
                       _c(
                         "option",
                         { attrs: { value: "", readonly: "", selected: "" } },
@@ -42935,7 +42847,6 @@ var render = function() {
                         },
                         [_vm._v("III")]
                       )
->>>>>>> 1c686f581bb12c7df020e95ac55f5b70b86827a3
                     ]
                   ),
                   _vm._v(" "),
@@ -74342,8 +74253,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\e-pims\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\e-pims\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\template\e-pims\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\template\e-pims\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
