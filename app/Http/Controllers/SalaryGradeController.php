@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\SalaryGrade;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\Rule;
 
 class SalaryGradeController extends Controller
 {
@@ -54,8 +55,14 @@ class SalaryGradeController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'sgNo'    => 'required|in:' . implode(',',range(1, 33)),
-            // unique:salary_grades,sg_no
+            'sgNo'  => [
+                'required',
+                    Rule::unique('salary_grades','sg_no')->where(function ($query) use ($request) {
+                    return $query
+                    ->where('sg_no', $request->sgNo)
+                    ->where('sg_year', $request->sgYear);
+                }),
+            ],
             'sgStep1' => 'required',
             'sgStep2' => 'required',
             'sgStep3' => 'required',
@@ -64,7 +71,14 @@ class SalaryGradeController extends Controller
             'sgStep6' => 'required',
             'sgStep7' => 'required',
             'sgStep8' => 'required',
-            'sgYear'  => 'required|date_format:Y',
+            'sgYear'  =>  [
+                'required',
+                    Rule::unique('salary_grades','sg_year')->where(function ($query) use ($request) {
+                    return $query
+                    ->where('sg_year', $request->sgYear)
+                    ->where('sg_no', $request->sgNo);
+                }),
+            ],
         ]);
 
         $salarygrade           = new SalaryGrade;
@@ -79,7 +93,6 @@ class SalaryGradeController extends Controller
         $salarygrade->sg_step8 = $request['sgStep8'];
         $salarygrade->sg_year  = $request['sgYear' ];
         $salarygrade->save();
-        // return back()->with('success','Added Successfully');
         return response()->json(['success'=>true]);
     }
 
