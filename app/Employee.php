@@ -107,7 +107,7 @@ class Employee extends Model
         return $this->hasOne(EmployeeFamilyBackground::class, 'employee_id', 'employee_id');
     }
 
-
+ 
     public function spouse_child()
     {
         return $this->hasMany(EmployeeSpouseChildren::class, 'employee_id', 'employee_id');
@@ -196,4 +196,5 @@ class Employee extends Model
     {
         return $this->hasOne(StepIncrement::class, 'employee_id', 'employee_id');
     }
+
 }

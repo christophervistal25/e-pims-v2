@@ -7,6 +7,7 @@
     <div class="card">
         <div class="card-header" id="headingOne">
         <div class="body-container">
+            <img src="/img/logo.jpg" alt="">
             <h4>Republic of the Philippines</h4>
             <h3>PROVINCE OF SURIGAO DEL SUR</h3>
             <div class="">

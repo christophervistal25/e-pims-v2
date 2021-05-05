@@ -94,10 +94,10 @@ class PlantillaController extends Controller
             'originalAppointment'           => 'required',
             'lastPromotion'                 => 'required',
             'status'                        => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
-            'areaCode'                      => 'required|in:Region 1,Region2,Region 3,Region 4,Region 5,Region 6,Region 7,  Region 8,Region 9,Region 10,Region 11,Region 12,NCR,CAR,CARAGA,ARMM',
+            'areaCode'                      => 'required|in:' . implode(',', Plantilla::REGIONS),
             'areaType'                      => 'required|in:Region,Province,District,Municipality,Foreign Post',
             'areaLevel'                     => 'required|in:K,T,S,A',
-            
+
         ]);
         $plantilla = new Plantilla;
         $plantilla->item_no                = $request['itemNo'];
@@ -177,7 +177,7 @@ class PlantillaController extends Controller
             'originalAppointment'           => 'required',
             'lastPromotion'                 => 'required',
             'status'                        => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
-            'areaCode'                      => 'required|in:Region 1,Region2,Region 3,Region 4,Region 5,Region 6,Region 7,  Region 8,Region 9,Region 10,Region 11,Region 12,NCR,CAR,CARAGA,ARMM',
+            'areaCode'                      => 'required|in:' . implode(',', Plantilla::REGIONS),
             'areaType'                      => 'required|in:Region,Province,District,Municipality,Foreign Post',
             'areaLevel'                     => 'required|in:K,T,S,A',
         ]);

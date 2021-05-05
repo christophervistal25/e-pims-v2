@@ -14,7 +14,7 @@ class PrintIncrementController extends Controller
      */
     public function index()
     {
-        return view('PrintIncrement.PrintIncrement');
+        return view('stepIncrement.print.printIncrement');
     }
 
     /**
