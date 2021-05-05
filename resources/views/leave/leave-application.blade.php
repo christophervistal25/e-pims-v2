@@ -13,15 +13,15 @@
                 <h3 class="card-title text-center text-sm">Search Option</h3>
                 <div class="checkbox">
                     <label class="checkbox-inline no_indent text-sm" for="individual">
-                        <input type="checkbox" name="individual" id="individual">Individual
+                        <input type="checkbox" name="individual" id="individual" style="transform: scale(1.2)">Individual
                     </label>
                 </div> 
                 <div class="checkbox">
                     <label class="checkbox-inline no_indent text-sm" for="officename">
-                        <input type="checkbox" name="officename" id="officename">Office / Department
+                        <input type="checkbox" name="officename" id="officename" style="transform: scale(1.2)">Office / Department
                     </label>
                 </div>
-                <hr>
+                <hr class="mt-1">
                 <label for="officelist" class="form-group has-float-label mb-0">
                     <select name="officelist" type="text" id="officelist" class="form-control form-control-sm"
                         style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -46,10 +46,10 @@
                 <div class="card-title text-center text-sm">Search Employee</div>
                 <div class="row">
                     <div class="col-lg">
-                        <label for="" class="form-group has-float-label">
-                            <input class="form-control form-control-sm" type="text" placeholder="Search Employee"
+                        <label for="empName" class="form-group has-float-label">
+                            <input class="form-control" type="text" placeholder="Search Employee" id="empName"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span class="text-sm">Name of Employee</span>
+                            <span>Name of Employee</span>
                         </label>
                     </div>
                 </div>
@@ -149,18 +149,18 @@
                         <h6 class="text-center">Inclusive Dates</h6>
                         <div class="checkbox">
                             <label class="checkbox-inline no_indent text-sm" for="incWeekends">
-                                <input type="checkbox" name="incWeekends" id="incWeekends">Include Weekends
+                                <input type="checkbox" name="incWeekends" id="incWeekends" style="transform: scale(1.2)">Include Weekends
                             </label>
                         </div>
                         <div class="checkbox">
                             <label class="checkbox-inline no_indent text-sm" for="incHolidays">
-                                <input type="checkbox" name="incHolidays" id="incHolidays">Include Holidays
+                                <input type="checkbox" name="incHolidays" id="incHolidays" style="transform: scale(1.2)">Include Holidays
                             </label>
                         </div>
-                        <hr>
+                        <hr class="mt-1 mb-1">
                         <div class="checkbox">
                             <label class="checkbox-inline no_indent text-sm" for="incHolidays">
-                                <input type="checkbox" name="incHolidays" id="incHolidays" disabled>Populate Dates
+                                <input type="checkbox" name="incHolidays" id="incHolidays" disabled style="transform: scale(1.2)">Populate Dates
                             </label>
                         </div>
                         <h6 class="text-sm text-center">Date to Apply</h6>
@@ -205,7 +205,7 @@
                         <span>Application Status</span>
                     </label>
                 </div>
-                <button type="button" class="btn btn-outline-primary ml-3"><i class="fas fa-calendar-plus"></i> New
+                <button type="button" class="btn btn-outline-primary ml-3"><i class="fas fa-plus-circle"></i> New
                     Application</button>
                 <button type="button" class="btn btn-outline-success"><i class="fas fa-save"></i> Save
                     Changes</button>

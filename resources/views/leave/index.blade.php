@@ -14,15 +14,15 @@
                 <h3 class="card-title text-center text-sm">Search Option</h3>
                 <div class="checkbox">
                     <label class="checkbox-inline no_indent text-sm">
-                        <input type="checkbox" name="individual" id="individual">Individual
+                        <input type="checkbox" name="individual" id="individual" style="transform: scale(1.2)">Individual
                     </label>
                 </div>
                 <div class="checkbox">
                     <label class="checkbox-inline no_indent text-sm">
-                        <input type="checkbox" name="officename" id="officename">Office / Department
+                        <input type="checkbox" name="officename" id="officename" style="transform: scale(1.2)">Office / Department
                     </label>
                 </div>
-                <hr>
+                <hr class="mt-1">
                 <label for="officelist" class="form-group has-float-label mb-0">
                     <select name="officelist" type="text" id="officelist" class="form-control form-control-sm"
                         style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -47,10 +47,10 @@
                 <div class="card-title text-center text-sm">Search Employee</div>
                 <div class="row">
                     <div class="col-lg">
-                        <label for="" class="form-group has-float-label">
-                            <input class="form-control form-control-sm" type="text" placeholder="Search Employee"
+                        <label for="empName" class="form-group has-float-label">
+                            <input class="form-control" type="text" placeholder="Search Employee" id="empName"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span class="text-sm">Name of Employee</span>
+                            <span>Name of Employee</span>
                         </label>
                     </div>
                 </div>
