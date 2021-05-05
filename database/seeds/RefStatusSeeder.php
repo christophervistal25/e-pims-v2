@@ -59,7 +59,7 @@ class RefStatusSeeder extends Seeder
         foreach($data as $status) {
             RefStatus::create([
                 'stat_code'   => $status['status_code'],
-                'status_name' => $status['status_name'],
+                'status_name' => strtoupper($status['status_name']),
             ]);
         }
     }

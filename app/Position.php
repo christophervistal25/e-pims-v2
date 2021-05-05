@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Cache;
 
 class Position extends Model
 {
-    protected $fillable = ['position_name', 'position_id', 'position_code' ,'position_name', 'salary_grade' ,'position_short_name'];
+    protected $fillable = ['position_id', 'position_code' ,'position_name', 'salary_grade' ,'position_short_name'];
 
     protected $primaryKey = 'position_id';
 
@@ -15,6 +15,13 @@ class Position extends Model
     public static function boot()
     {
         parent::boot();
+        self::creating(function ($position) {
+            $maxPositionCode       = self::max('position_code');
+            $code                  = str_pad(($maxPositionCode + 1), 4, '0', STR_PAD_LEFT);
+            $position->position_code = $code;
+            Cache::forget('positions');
+        });
+
         self::created(function() {
             Cache::forget('positions');
         });

@@ -10,7 +10,7 @@ Route::get('/', function () {
 
 
 //salary grade
-Route::get('/salary-grade-list', 'SalaryGradecontroller@list');
+Route::get('/salary-grade-list', 'SalaryGradecontroller@list')->name('salary-grade-list');
 Route::resource('/salary-grade', 'SalaryGradeController');
 
 
@@ -25,11 +25,12 @@ Route::resource('/step-increment', 'StepIncrementController');
 Route::resource('/print-increment', 'PrintIncrementController');
 
 //salary adjustment
-Route::get('/salary-adjustment/{id}', 'SalaryAdjustmentController@delete')->name('salary-adjustment.delete');
+Route::get('/salary-adjustment/{id}', 'SalaryAdjustmentController@destroy')->name('salary-adjustment.delete');
 Route::resource('/salary-adjustment', 'SalaryAdjustmentController');
 Route::get('/salary-adjustment-list', 'SalaryAdjustmentController@list');
 
 // Service Records
+Route::get('/service-records/{id}', 'ServiceRecordsController@destroy')->name('service-records.delete');
 Route::resource('/service-records', 'ServiceRecordsController');
 Route::get('/service-records-list', 'ServiceRecordsController@list');
 
@@ -37,6 +38,7 @@ Route::group(['prefix' => 'employee'], function () {
     Route::get('/record', 'EmployeeController@index')->name('employee.index');
     Route::post('/record/store', 'EmployeeController@store')->name('employee.store');
     Route::put('/record/{employeeId}/update', 'EmployeeController@update')->name('employee.update');
+
     Route::get('/generate/personal/data/sheet', 'PersonalDataSheetController@index')->name('data.index');
     Route::get('/create/personal/data/sheet', 'PersonalDataSheetController@create')->name('data.create');
     Route::get('/create/{idNumber}/personal/data/sheet', 'PersonalDataSheetController@createWithEmployee');
@@ -52,4 +54,8 @@ Route::group(['prefix' => 'employee'], function () {
     Route::post('/personal/relevant/queries/', 'PersonalDataSheetController@storeRelevantQueries');
     Route::post('/personal/references', 'PersonalDataSheetController@storeReferences');
     Route::post('/personal/issued/id', 'PersonalDataSheetController@storeIssuedID');
+
+    Route::resource('leave', 'EmployeeLeave\LeaveController');
 });
+Route::resource('/print-increment', 'PrintIncrementController');
+Route::get('/profile', 'EmployeeController@profile');

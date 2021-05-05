@@ -1,27 +1,99 @@
+
 // display records
 $(function() {
-        $('#serviceRecords').DataTable({
-        processing: true,
+    let table = $('#serviceRecords').DataTable({
+        // processing: true,
         serverSide: true,
         destroy: true,  
         retrieve: true,
-        ajax: '/service-records-list',
+        paging:   false,
+        info:     false,
+        bFilter: false,
+        ajax:{
+            "url": '/service-records-list',
+            "data": function (d) {
+                d.employeeName = $('#employeeName').val()
+            }
+        },
         columns: [
-                { data: 'employee_id', name: 'employee_id'},
-                { data: 'service_from_date', name: 'service_from_date'},
-                { data: 'service_to_date', name: 'service_to_date'},
-                { data: 'position', name: 'position'},
-                { data: 'status', name: 'status' },
-                { data: 'salary', name: 'salary' },
-                { data: 'office', name: 'office' },
-                { data: 'leave_without_pay', name: 'leave_without_pay' },
-                { data: 'separation_date', name: 'separation_date' },
-                { data: 'separation_cause', name: 'separation_cause' },
-                { data: 'action', name: 'action' }
+                { data: 'employee_id', name: 'employee_id', visible: false},
+                { data: 'service_from_date', name: 'service_from_date', visible: false},
+                { data: 'service_to_date', name: 'service_to_date', visible: false},
+                { data: 'position', name: 'position', visible: false},
+                { data: 'status', name: 'status' , visible: false},
+                { data: 'salary', name: 'salary' , visible: false},
+                { data: 'office', name: 'office' , visible: false},
+                { data: 'leave_without_pay', name: 'leave_without_pay' , visible: false},
+                { data: 'separation_date', name: 'separation_date' , visible: false},
+                { data: 'separation_cause', name: 'separation_cause' , visible: false},
+                { data: 'action', name: 'action' , visible: false}
         ]
     });
+    $('#employeeName').change(function(e) {
+        if(e.target.value == '' || e.target.value == ' ') {
+            table.destroy();
+            table = $('#serviceRecords').DataTable({
+                processing: true,
+                serverSide: true,
+                destroy: true,  
+                retrieve: true,
+                paging:   false,
+                info:     false,
+                bFilter: false,
+                ajax:{
+                    "url": '/service-records-list',
+                    "data": function (d) {
+                        d.employeeName = $('#employeeName').val()
+                    }
+                },
+                columns: [
+                        { data: 'employee_id', name: 'employee_id', visible: false},
+                        { data: 'service_from_date', name: 'service_from_date', visible: false},
+                        { data: 'service_to_date', name: 'service_to_date', visible: false},
+                        { data: 'position', name: 'position', visible: false},
+                        { data: 'status', name: 'status' , visible: false},
+                        { data: 'salary', name: 'salary' , visible: false},
+                        { data: 'office', name: 'office' , visible: false},
+                        { data: 'leave_without_pay', name: 'leave_without_pay' , visible: false},
+                        { data: 'separation_date', name: 'separation_date' , visible: false},
+                        { data: 'separation_cause', name: 'separation_cause' , visible: false},
+                        { data: 'action', name: 'action' , visible: false}
+                ]
+            });
+        } else {
+            table.destroy();
+            table = $('#serviceRecords').DataTable({
+                processing: true,
+                serverSide: true,
+                destroy: true,  
+                retrieve: true,
+                ajax:{
+                    "url": `/api/employee/service/records/${e.target.value}`,
+                    "data": function (d) {
+                        d.employeeName = $('#employeeName').val()
+                    }
+                },
+                columns: [
+                        { data: 'employee_id', name: 'employee_id', visible: false},
+                        { data: 'service_from_date', name: 'service_from_date'},
+                        { data: 'service_to_date', name: 'service_to_date'},
+                        { data: 'position', name: 'position'},
+                        { data: 'status', name: 'status' },
+                        { data: 'salary', name: 'salary' },
+                        { data: 'office', name: 'office' },
+                        { data: 'leave_without_pay', name: 'leave_without_pay' },
+                        { data: 'separation_date', name: 'separation_date' },
+                        { data: 'separation_cause', name: 'separation_cause' },
+                        { data: 'action', name: 'action' }
+                ]
+            });
+            // setInterval( function () {
+            //     table.ajax.reload();
+            // }, 5000 );
+        }
+        
+    });
 });
-
 // code for show add form
 $(document).ready(function(){
 $("#addbutton").click(function(){
@@ -29,6 +101,11 @@ $("#addbutton").click(function(){
     $("#table").attr("class", "page-header d-none");
 });
 });
+////confirmation in delete
+function myFunction() {
+    if(!confirm("Are You Sure to delete this"))
+    event.preventDefault();
+}
 // {{-- code for show table --}}
     $(document).ready(function(){
     $("#cancelbutton").click(function(){
@@ -40,7 +117,13 @@ $("#addbutton").click(function(){
     function ValidateDropDown(dd){
         var input = document.getElementById('addbutton')
         if(dd.value == '') input.disabled = true; else input.disabled = false;
+        if(dd.value == ''){
+            document.getElementById("line").style.visibility  = "visible";
+        }else{
+            document.getElementById("line").style.visibility = "hidden";
+        }
 }
+
 // get value namesss
 $(document).ready(function() {
     $('#employeeName').change(function (e) {
@@ -61,13 +144,20 @@ $(document).ready(function () {
 $('#serviceRecordForm').submit(function (e) {
     e.preventDefault();
     let data = $(this).serialize();
+    $('#saveBtn').attr("disabled", true);
+    $('#loading').removeClass('d-none');
     $.ajax({
         type: "POST",
         url: '/service-records',
         data : data,
         success: function (response) {
             if(response.success){
-                $('input').val('');
+                $('#fromDate').val('');
+                $('#toDate').val('');
+                $('#salary').val('');
+                $('#leavePay').val('');
+                $('#cause').val('');
+                $('#date').val('');
                 $('#positionTitle').val('Please Select').trigger('change');
                 $('#officeCode').val('Please Select').trigger('change');
                 $('#status').val('Please Select').trigger('change');
@@ -79,8 +169,10 @@ $('#serviceRecordForm').submit(function (e) {
                 $.each(errorMessage, function(index , value) {
                     $(`${value}`).html('');
                     });
-                // $('#serviceRecordForm').DataTable().ajax.reload();
-                swal("Sucessfully Added!", "", "success");
+                    $('#serviceRecords').DataTable().ajax.reload();
+                    swal("Sucessfully Added!", "", "success");
+                    $('#saveBtn').attr("disabled", false);
+                    $('#loading').addClass('d-none');
             }
     },
         error: function (response) {
@@ -172,6 +264,8 @@ $('#serviceRecordForm').submit(function (e) {
                         icon: "error",
                         content: parentElement,
                     });
+                    $('#saveBtn').attr("disabled", false);
+                    $('#loading').addClass('d-none');
                 }
         }
     });

@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Cache;
 
 class PositionController extends Controller
 {
+
+    public function search(string $key)
+    {
+        return Position::where('position_name', 'like',  '%' . $key . '%')->get();
+    }
+
     public function list()
     {
         // return Cache::rememberForever('positions', function () {
@@ -19,10 +25,9 @@ class PositionController extends Controller
     public function store(Request $request)
     {
         $validator = \Validator::make($request->all(), [
-            'code'         => 'required|numeric|unique:positions,position_code',
-            'name'         => 'required',
+            'name'         => 'required|unique:positions,position_name|regex:/^[a-zA-Z ].+$/u',
             'salary_grade' => 'required|numeric|between:1,33',
-            'short_name'   => 'required|string',
+            'short_name'   => 'required|unique:positions,position_short_name|regex:/^[a-zA-Z ].+$/u',
         ]);
 
         if($validator->fails()) {
@@ -30,7 +35,6 @@ class PositionController extends Controller
         }
 
         $position = Position::create([
-            'position_code'       => $request->code,
             'position_name'       => $request->name,
             'salary_grade'        => $request->salary_grade,
             'position_short_name' => $request->short_name,

@@ -28,7 +28,7 @@
 
                         <div class="form-group col-12 col-lg-4">
                             <label>Date Adjustment<span class="text-danger">*</span></label>
-                            <input class="form-control" value="" name="dateAdjustment" id="dateAdjustment" type="date">
+                            <input class="form-control" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" name="dateAdjustment" id="dateAdjustment" type="date">
                             <div id='date-adjustment-error-message' class='text-danger'>
                             </div>
                         </div>
@@ -39,7 +39,7 @@
                             name="employeeName" data-live-search="true" id="employeeName" data-size="5">
                             <option></option>
                             @foreach($employee as $employees)
-                            <option data-plantilla="{{ $employees->plantilla }}" value="{{ $employees->employee_id }}">{{ $employees->lastname }}, {{ $employees->firstname }} {{ $employees->middlename }}</option>
+                            <option data-plantilla="{{ $employees }}" value="{{ $employees->employee->employee_id }}">{{ $employees->employee->lastname }}, {{ $employees->employee->firstname }} {{ $employees->employee->middlename }}</option>
                             @endforeach
                             </select>
                             <div id='employee-error-message' class='text-danger'>
@@ -52,7 +52,7 @@
 
                         <div class="form-group col-12 col-lg-4">
                             <label>Item No</label>
-                            <input class="form-control" value="" name="itemNo" id="itemNo" type="text" placeholder="Input item No." readonly>
+                            <input class="form-control" value="" name="itemNo" id="itemNo" type="text" placeholder="" readonly>
                             <div id='item-no-error-message' class='text-danger'>
                             </div>
                         </div>
@@ -112,7 +112,7 @@
                             <div class="input-group-prepend">
                             <span class="input-group-text">&#8369;</span>
                             </div>
-                            <input class="form-control" value="" name="salaryNew" id="salaryNew" type="text" placeholder="Input New Salary">
+                            <input class="form-control" value="" name="salaryNew" id="salaryNew" type="text" placeholder="">
                             </div>
                             <div id='salary-new-error-message' class='text-danger'>
                             </div>
@@ -131,7 +131,10 @@
                         </div>
 
                         <div class="form-group form-group submit-section col-12">
-                            <button type="submit" id="save" class="btn btn-success submit-btn float-right">Save</button>
+                            <button id="saveBtn" class="btn btn-success submit-btn float-right" type="submit">
+                                <span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>
+                                Save
+                            </button>
                             <button style="margin-right:10px;" type="button" id="cancelbutton" class="text-white btn btn-warning submit-btn float-right" onclick="reset()">Cancel</button>
                         </div>
 
@@ -176,6 +179,40 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    $(document).on("click", ".delete", function() { 
+        let $ele = $(this).parent().parent();
+        let id= $(this).attr("value");;
+        let url = /salary-adjustment/;
+        let dltUrl = url + id;
+            swal({
+                title: "Are you sure you want to delete?",
+                text: "Once deleted, you will not be able to recover this record!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: dltUrl,
+                    type: "DELETE",
+                    cache: false,
+                    data:{
+                        _token:'{{ csrf_token() }}'
+			},
+			success: function(dataResult){
+				var dataResult = JSON.parse(dataResult);
+				if(dataResult.statusCode==200){
+                    $('#salaryAdjustment').DataTable().ajax.reload();
+                    swal("Successfully Deleted!", "", "success");
+				}
+			}
+		});
+            } else {
+                swal("Cancel!", "", "error");
+            }
+            });
+	});
 </script>
 @endpush
 @endsection

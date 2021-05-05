@@ -168,6 +168,8 @@ $(document).ready(function () {
     $('#plantillaForm').submit(function (e) {
         e.preventDefault();
         let data = $(this).serialize();
+        $('#saveBtn').attr("disabled", true);
+        $('#loading').removeClass('d-none');
         $.ajax({
             type: "POST",
             url: '/plantilla',
@@ -189,6 +191,8 @@ $(document).ready(function () {
                         });
                         $('#plantilla').DataTable().ajax.reload();
                     swal("Sucessfully Added!", "", "success");
+                    $('#saveBtn').attr("disabled", false);
+                    $('#loading').addClass('d-none');
                 }
         },
             error: function (response) {
@@ -328,6 +332,8 @@ $(document).ready(function () {
                             icon: "error",
                             content: parentElement,
                         });
+                        $('#saveBtn').attr("disabled", false);
+                        $('#loading').addClass('d-none');
                     }
             }
         });

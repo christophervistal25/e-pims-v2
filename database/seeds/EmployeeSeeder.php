@@ -55684,17 +55684,18 @@ class EmployeeSeeder extends Seeder
                 'email_address'        => '',
                 'status' => $employee['emp_status'],
             ]);
-            
+
             if(isset($dataPosCode[$employee['employee_id']])) {
                 list($position, $office) = explode(',', $dataPosCode[$employee['employee_id']]);
                 EmployeeInformation::create([
                     'EmpIDNo' => $employee['employee_id'],
                     'pos_code' => $position,
                     'office_code' => $office,
+                    'photo' => $employee['employee_id'] . '_' . $employee['last_name'] . '.jpg'
                 ]);
             }
 
-            
+
         }
         // factory('App\Employee', 100)->create();
     }

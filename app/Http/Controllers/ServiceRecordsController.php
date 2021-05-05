@@ -9,6 +9,7 @@ use App\Office;
 use App\Plantilla;
 use App\service_record;
 use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\Session;
 class ServiceRecordsController extends Controller
 {
     /**
@@ -39,7 +40,7 @@ class ServiceRecordsController extends Controller
     public function list(Request $request)
     {
         if ($request->ajax()) {
-            $data = service_record::select('employee_id', 'service_from_date', 'service_to_date', 'position_id', 'status', 'salary', 'office_code', 'leave_without_pay', 'separation_date', 'separation_cause')->with('office:office_code,office_name,office_address','position:position_id,position_name')->get();
+            $data = service_record::select('employee_id', 'service_from_date', 'service_to_date', 'position_id', 'status', 'salary', 'office_code', 'leave_without_pay', 'separation_date', 'separation_cause')->with('office:office_code,office_name,office_address','position:position_id,position_name');
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('position', function ($row) {
@@ -111,7 +112,14 @@ class ServiceRecordsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $office = Office::select('office_code', 'office_name')->get();
+        $status = ['Please Select', 'Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
+        count($status) - 1;
+        $position = Position::select('position_id', 'position_name')->get();
+        $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->get();
+        $plantilla = Plantilla::select('plantilla_id','employee_id')->with('employee:employee_id,firstname,middlename,lastname,extension')->get();
+        $service_record = service_record::find($id);
+       return view('ServiceRecords.edit', compact('service_record', 'employee', 'position', 'status', 'office', 'plantilla'));
     }
 
     /**
@@ -123,7 +131,31 @@ class ServiceRecordsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'fromDate'                    => 'required',
+            'toDate'                      => 'required',
+            'positionTitle'               => 'required',
+            'status'                      => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
+            'salary'                      => 'required',
+            'officeCode'                  => 'required|in:' . implode(',',range(10001, 10056)),
+            'leavePay'                    => 'required',
+            'date'                        => 'required',
+            'cause'                       => 'required',
+        ]);
+        $service_record                         =  service_record::find($id);
+        $service_record->employee_id            = $request['employeeId'];
+        $service_record->service_from_date      = $request['fromDate'];
+        $service_record->service_to_date        = $request['toDate'];  
+        $service_record->position_id            = $request['positionTitle'];
+        $service_record->status                 = $request['status'];
+        $service_record->salary                 = $request['salary'];
+        $service_record->office_code            = $request['officeCode'];
+        $service_record->leave_without_pay      = $request['leavePay'];
+        $service_record->separation_date        = $request['date'];
+        $service_record->separation_cause       = $request['cause'];
+        $service_record->save();
+        Session::flash('alert-success', 'Update Service Records Successfully');
+        return back()->with('success','Updated Successfully');
     }
 
     /**
@@ -134,6 +166,13 @@ class ServiceRecordsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        service_record::find($id)->delete();
+        return json_encode(array('statusCode'=>200));
+    }
+    public function delete($id)
+    {
+        service_record::find($id)->delete();
+        // return back()->with('success', 'Successfully delete a salary adjustment record.');
+        return json_encode(array('statusCode'=>200));
     }
 }

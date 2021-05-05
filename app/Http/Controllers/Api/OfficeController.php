@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Cache;
 
 class OfficeController extends Controller
 {
+    public function search(string $key)
+    {
+        return Office::where('office_name', 'like',  '%' . $key . '%')->get();
+    }
+
     public function list()
     {
         return Cache::rememberForever('offices', function () {
@@ -26,7 +31,7 @@ class OfficeController extends Controller
             'head'          => 'required',
             'short_address' => 'required',
             'position_name' => 'required|exists:positions'
-        ]);
+        ], [], ['head' => 'office head']);
 
         if($validator->fails()) {
             return response()->json($validator->errors(), 422);
@@ -37,9 +42,10 @@ class OfficeController extends Controller
             'office_short_name'    => $request->short_name,
             'office_address'       => $request->address,
             'office_short_address' => $request->short_address,
+            'office_head'          => $request->head,
+            'position_name'        => $request->position_name,
         ]);
 
         return $office;
-
     }
 }

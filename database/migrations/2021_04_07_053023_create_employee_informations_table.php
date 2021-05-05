@@ -20,7 +20,7 @@ class CreateEmployeeInformationsTable extends Migration
             $table->integer('office_code');
             $table->string('division_code')->nullable();
             $table->decimal('item_number')->nullable();
-            $table->integer('pos_code');
+            $table->string('pos_code', 11);
             $table->date('first_day_of_service')->nullable();
             $table->decimal('basic_rate')->nullable();
             $table->decimal('salary_grade')->nullable();

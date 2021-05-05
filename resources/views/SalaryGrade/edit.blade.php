@@ -5,20 +5,20 @@
 @endprepend
 @section('content')
 <div class="content">
-    <div id="message" class="page-header {{  count($errors->all())  !== 0 ?  'd-none' : '' }}">
         @include('SalaryGrade.add-ons.success')
-    </div>
     <div class="kanban-board card mb-0">
         <div class="card-body">
-    <div id="" class="page-header {{  count($errors->all())}}">
-        <h2 class="card-title">Edit Salary Grade</h2>
+    <div id="" class="page-header {{  count($errors->all())}}"> 
+        
+            <div class="alert alert-secondary text-center font-weight-bold" role="alert" >Edit Salary Grade</div>
+
         <form action="{{ route('salary-grade.update', $salaryGrade->id) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="row">
             <div class="form-group col-12 col-lg-4">
                 <label>Salary Grade <span class="text-danger">*</span></label>
-                <select name="sgNo" value="{{ old('sgNo')}}" class="select floating {{ $errors->has('sgNo')  ? 'is-invalid' : ''}}" id="sgNo">
+                <select name="sgNo" value="{{ old('sgNo')}}" class="select floating {{ $errors->has('sgNo')  ? 'is-invalid' : ''}}" id="sgNo" disabled>
                     <option selected>Please Select</option>
                    @foreach (range(1, 33) as $salarygrade)
                      <option {{ $salaryGrade->sg_no == $salarygrade ? 'selected' : '' }} value="{{ $salarygrade }}">{{ $salarygrade }}</option>
@@ -136,7 +136,7 @@
             </div>
             <div class="form-group col-12 col-lg-4">
                 <label>Salary Grade Year <span class="text-danger">*</span></label>
-                <select name="sgYear" value="{{ old('sgYear') }}" class="select floating">
+                <select name="sgYear" value="{{ old('sgYear') }}" class="select floating" disabled>
                     <option>Please Select</option>
                     {{ $year2 = date("Y",strtotime("-1 year")) }}
                     <option {{ $salaryGrade->sg_year == $year2 ? 'selected' : '' }} value={{ $year2 }}>{{ $year2 }}</option>

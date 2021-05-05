@@ -8,7 +8,6 @@ use Faker\Generator as Faker;
 
 $factory->define(Plantilla::class, function (Faker $faker) {
     return [
-        'plantilla_id' => $faker->randomNumber,
         'old_item_no' => $faker->randomNumber,
         'item_no' => $faker->randomNumber,
         'position_id' => $faker->randomNumber,

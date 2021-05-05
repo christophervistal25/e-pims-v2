@@ -43,7 +43,7 @@ class PersonalDataSheetController extends Controller
 
     public function createWithEmployee(string $employeeIdNumber)
     {
-        $employee = Employee::find($employeeIdNumber, ['employee_id', 'lastname', 'firstname', 'middlename', 'extension']);
+        $employee = Employee::fetchWithFullInformation($employeeIdNumber);
         return view('PersonalData.create-with-employee', compact('employee'));
     }
 

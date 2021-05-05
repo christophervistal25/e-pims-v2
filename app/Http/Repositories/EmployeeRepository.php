@@ -13,6 +13,8 @@ use App\EmployeeReference;
 use App\EmployeeRelevantQuery;
 use App\EmployeeSpouseChildren;
 use App\EmployeeIssuedID;
+use App\RefStatus;
+use DB;
 
 class EmployeeRepository
 {
@@ -46,21 +48,20 @@ class EmployeeRepository
                 'residential_house_no' => $data['residentialLotNo'],
                 'residential_street'   => $data['residentialStreet'],
                 'residential_village'  => $data['residentialSubdivision'],
-                'residential_barangay' => $data['residentialBarangay'],
-                'residential_city'     => $data['residentialCity'],
-                'residential_province' => $data['residentialProvince'],
+                'residential_barangay' => $data['residentialBarangay']['code'],
+                'residential_city'     => $data['residentialCity']['code'],
+                'residential_province' => $data['residentialProvince']['code'],
                 'residential_zip_code' => $data['residentialZipCode'],
                 'permanent_house_no'   => $data['permanentLotNo'],
                 'permanent_street'     => $data['permanentStreet'],
                 'permanent_village'    => $data['permanentSubdivision'],
-                'permanent_barangay'   => $data['permanentBarangay'],
-                'permanent_city'       => $data['permanentCity'],
-                'permanent_province'   => $data['permanentProvince'],
+                'permanent_barangay'   => $data['permanentBarangay']['code'],
+                'permanent_city'       => $data['permanentCity']['code'],
+                'permanent_province'   => $data['permanentProvince']['code'],
                 'permanent_zip_code'   => $data['permanentZipCode'],
                 'telephone_no'         => $data['telephoneNumber'],
                 'mobile_no'            => $data['mobileNumber'],
                 'email_address'        => $data['emailAddress'],
-                'status'               => '',
             ]);
 
 
@@ -354,40 +355,69 @@ class EmployeeRepository
         return $employee->issued_id()->save($employeeIssuedId);
     }
 
-    public function addEmployee(array $data = []) :Employee
+    public function addEmployee(array $data = [])
     {
-       $employee =  Employee::create([
-            'employee_id'    => mt_rand(100000, 999999),
-            'date_birth'     => $data['dateOfBirth'],
-            'firstname'      => $data['firstName'],
-            'lastname'       => $data['lastName'],
-            'middlename'     => $data['middleName'],
-            'extension'      => $data['extension'],
-            'pag_ibig_no'    => $data['pagibigMidNo'],
-            'philhealth_no'  => $data['philhealthNo'],
-            'sss_no'         => $data['sssNo'],
-            'tin_no'         => $data['tinNo'],
-            'gsis_id_no'     => $data['gsisIdNo'],
-            'gsis_id_no'     => $data['gsisIdNo'],
-            'gsis_policy_no' => $data['gsisPolicyNo'],
-            'gsis_bp_no'     => $data['gsisBpNo'],
-            'status'         => $data['employmentStatus'],
-        ]);
+        $status = RefStatus::find($data['employmentStatus']['id']);
 
+        DB::beginTransaction();
+        try {
+            $fields = [
+                'employee_id'    => mt_rand(100000, 999999),
+                'date_birth'     => $data['dateOfBirth'],
+                'firstname'      => $data['firstName'],
+                'lastname'       => $data['lastName'],
+                'middlename'     => $data['middleName'],
+                'extension'      => $data['extension'],
+                'pag_ibig_no'    => $data['pagibigMidNo'],
+                'philhealth_no'  => $data['philhealthNo'],
+                'sss_no'         => $data['sssNo'],
+                'tin_no'         => $data['tinNo'],
+                'gsis_id_no'     => $data['gsisIdNo'],
+                'gsis_id_no'     => $data['gsisIdNo'],
+                'gsis_policy_no' => $data['gsisPolicyNo'],
+                'gsis_bp_no'     => $data['gsisBpNo'],
+                'status'         => $data['employmentStatus']['stat_code'],
+            ];
 
-        $employeeInformation              = new EmployeeInformation;
-        $employeeInformation->office_code = $data['officeAssignment'];
-        $employeeInformation->pos_code    = $data['designation'];
-        $employeeInformation->photo       = $data['image'];
+            if($status->id === 1 && strtoupper($status->status_name) === 'PERMANENT') {
+                $fields['dbp_account_no'] = $data['lbpAccountNo'];
+            } else {
+                $fields['lbp_account_no'] = $data['lbpAccountNo'];
+            }
 
-        $employee->information()->save($employeeInformation);
+            $employee =  Employee::create($fields);
 
-        return $employee;
+            $employeeInformation              = new EmployeeInformation;
+            $employeeInformation->office_code = $data['officeAssignment']['office_code'];
+            $employeeInformation->pos_code    = $data['designation']['position_code'];
+            $employeeInformation->photo       = $data['image'];
+
+            $employee->information()->save($employeeInformation);
+
+            DB::commit();
+            return [
+                'employee_id' => $employee->employee_id,
+                'firstname'   => $employee->firstname,
+                'middlename'  => $employee->middlename,
+                'lastname'    => $employee->lastname,
+                'extension'   => $employee->extension,
+                'information' => [
+                    'office'   => $data['officeAssignment'],
+                    'position' => $data['designation'],
+                ],
+            ];
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            dd($e->getMessage());
+        }
     }
 
-    public function updateEmployee(array $data = [], string $employeeId) :array
+    public function updateEmployee(array $data = []) :array
     {
-        $employee = Employee::find($employeeId);
+        $status = RefStatus::find($data['employmentStatus']['id']);
+
+        $employee = Employee::find($data['employee_id']);
 
         $employee->date_birth     = $data['dateOfBirth'];
         $employee->firstname      = $data['firstName'];
@@ -402,14 +432,25 @@ class EmployeeRepository
         $employee->gsis_id_no     = $data['gsisIdNo'];
         $employee->gsis_policy_no = $data['gsisPolicyNo'];
         $employee->gsis_bp_no     = $data['gsisBpNo'];
-        $employee->status         = $data['employmentStatus'];
-        $employee->save();
 
-        $employee->information->update([
-            'office_code' => $data['officeAssignment'],
-            'pos_code'    => $data['designation'],
-            'photo'       => $data['image'],
-        ]);
+        if($status->id === 1 && strtoupper($status->status_name) === 'PERMANENT') {
+            $employee->dbp_account_no = $data['lbpAccountNo'];
+            $employee->lbp_account_no = '';
+        } else {
+            $employee->lbp_account_no = $data['lbpAccountNo'];
+            $employee->dbp_account_no = '';
+        }
+
+        $employee->status         = $data['employmentStatus']['stat_code'];
+
+        $information = EmployeeInformation::where('EmpIDNo', $data['employee_id'])->first() ?? new EmployeeInformation();
+        $information->EmpIDNo = $data['employee_id'];
+        $information->office_code = $data['officeAssignment']['office_code'];
+        $information->pos_code = $data['designation']['position_code'];
+        $information->photo = $data['image'];
+
+        $employee->save();
+        $information->save();
 
         return $data;
     }

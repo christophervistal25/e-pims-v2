@@ -23,26 +23,6 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label>Status Code</label>
-                            <input
-                                type="text"
-                                class="form-control"
-                                v-model="status.stat_code"
-                                :class="
-                                    errors.hasOwnProperty('stat_code')
-                                        ? 'is-invalid'
-                                        : ''
-                                "
-                            />
-                            <p
-                                class="text-danger text-sm"
-                                v-if="errors.hasOwnProperty('stat_code')"
-                            >
-                                {{ errors.stat_code[0] }}
-                            </p>
-                        </div>
-
-                        <div class="form-group">
                             <label>Status Name</label>
                             <input
                                 type="text"

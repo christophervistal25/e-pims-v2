@@ -25,6 +25,11 @@ class EmployeeController extends Controller
         return view('employee.index');
     }
 
+    public function profile()
+    {
+        return view('PersonalData.employee-profile');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -35,6 +40,11 @@ class EmployeeController extends Controller
         //
     }
 
+
+    public function validateData(NewEmployeeStoreRequest $request)
+    {
+        return response()->json(['success' => true], 201);
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -44,7 +54,6 @@ class EmployeeController extends Controller
     public function store(NewEmployeeStoreRequest $request)
     {
         $employee = $this->employeeRepository->addEmployee($request->all());
-        $employee = Employee::with(['information:EmpIDNo,pos_code','information.position'])->find($employee->employee_id);
         return response()->json($employee, 201);
     }
 
@@ -79,7 +88,7 @@ class EmployeeController extends Controller
      */
     public function update(OldEmployeeUpdateRequest $request, $employeeId)
     {
-        return $this->employeeRepository->updateEmployee($request->all(), $employeeId);
+        return $this->employeeRepository->updateEmployee($request->all());
     }
 
     /**

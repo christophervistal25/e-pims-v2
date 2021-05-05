@@ -29,6 +29,8 @@ class Employee extends Model
         'philhealth_no',
         'sss_no',
         'tin_no',
+        'lbp_account_no',
+        'dbp_account_no',
         'agency_employee_no',
         'citizenship',
         'residential_house_no',
@@ -63,6 +65,14 @@ class Employee extends Model
     }
 
     /**
+     * Get the employee's full concatenated name.
+     */
+    public function getFullnameAttribute()
+    {
+        return "{$this->firstname} {$this->middlename} {$this->lastname} {$this->extension}";
+    }
+
+    /**
      * Set the firstname of employee to uppercase
      */
     public function setFirstNameAttribute($value)
@@ -84,18 +94,6 @@ class Employee extends Model
     {
         $this->attributes['extension'] = strtoupper($value);
     }
-
-    /**
-     * Get the user's full name.
-     *
-     * @return string
-     */
-    public function getFullNameAttribute()
-    {
-        return "{$this->firstname} {$this->middlename} {$this->lastname} {$this->extension}";
-    }
-
-
 
     public function plantilla()
     {
@@ -167,7 +165,7 @@ class Employee extends Model
 
     public function status()
     {
-        return $this->hasOne(RefStatus::class, 'stat_code', 'status');
+        return $this->hasOne(RefStatus::class, 'id', 'status');
     }
 
     /**
@@ -186,7 +184,7 @@ class Employee extends Model
     public static function fetchWithFullInformation(string $employeeId) :Employee
     {
         return self::with([
-            'family_background', 'spouse_child', 'educational_background', 'civil_service', 'work_experience', 'voluntary_work', 'program_attained','other_information','references', 'relevant_queries', 'issued_id', 'status'])->find($employeeId);
+            'family_background', 'spouse_child', 'educational_background', 'civil_service', 'work_experience', 'voluntary_work', 'program_attained','other_information','references', 'relevant_queries', 'issued_id', 'status', 'information.position'])->find($employeeId);
     }
 
     public function salary_adjustment()

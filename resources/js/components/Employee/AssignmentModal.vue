@@ -107,19 +107,17 @@
 
                         <div class="form-group">
                             <label>Office Head</label>
-                            <select
-                                class="form-control"
-                                v-model="office.head"
-                                :class="
-                                    errors.hasOwnProperty('head')
-                                        ? 'is-invalid'
-                                        : ''
-                                "
+                            <v-select
+                                label="fullname"
+                                @input="onSelectOfficeHead"
+                                @search="onSearchEmployee"
+                                :value="office.head"
+                                :options="offices"
                             >
-                                <option value="ALEXANDER T. PIMENTEL"
-                                    >ALEXANDER T. PIMENTEL</option
-                                >
-                            </select>
+                                <template slot="no-options">
+                                    Type to search Office Head
+                                </template>
+                            </v-select>
                             <p
                                 class="text-danger text-sm"
                                 v-if="errors.hasOwnProperty('head')"
@@ -130,19 +128,18 @@
 
                         <div class="form-group">
                             <label>Position name</label>
-                            <select
-                                class="form-control"
-                                v-model="office.position_name"
-                                :class="
-                                    errors.hasOwnProperty('position_name')
-                                        ? 'is-invalid'
-                                        : ''
-                                "
+                            <v-select
+                                :filterable="false"
+                                label="position_name"
+                                @input="onSelectPosition"
+                                @search="onSearchPosition"
+                                :value="office.position_name"
+                                :options="positions"
                             >
-                                <option value="Provincial Governor"
-                                    >Provincial Governor</option
-                                >
-                            </select>
+                                <template slot="no-options">
+                                    Type to search Position
+                                </template>
+                            </v-select>
                             <p
                                 class="text-danger text-sm"
                                 v-if="errors.hasOwnProperty('position_name')"
@@ -183,6 +180,8 @@
 
 <script>
 import swal from "sweetalert";
+import "vue-select/dist/vue-select.css";
+import _ from "lodash";
 export default {
     props: ["showassignment"],
     data() {
@@ -196,10 +195,53 @@ export default {
                 short_address: "",
                 position_name: ""
             },
+            offices: [],
+            headOfoffice: "",
+            positions: [],
             errors: {}
         };
     },
     methods: {
+        onSelectOfficeHead(employee) {
+            this.office.head = employee.fullname;
+        },
+        onSelectPosition(position) {
+            this.office.position_name = position.position_name;
+        },
+        onSearchEmployee(search, loading) {
+            if (search.length) {
+                loading(true);
+                this.searchOfficeHead(loading, search, this);
+            } else {
+                this.offices = [];
+            }
+        },
+        onSearchPosition(search, loading) {
+            if (search.length) {
+                loading(true);
+                this.searchPosition(loading, search, this);
+            } else {
+                this.positions = [];
+            }
+        },
+        searchOfficeHead: _.debounce((loading, search, vm) => {
+            loading(true);
+            window.axios
+                .get(`/api/employee/search/${search}`)
+                .then(response => {
+                    vm.offices = response.data;
+                    loading(false);
+                });
+        }, 500),
+        searchPosition: _.debounce((loading, search, vm) => {
+            loading(true);
+            window.axios
+                .get(`/api/position/search/${search}`)
+                .then(response => {
+                    vm.positions = response.data;
+                    loading(false);
+                });
+        }, 500),
         submitNewOffice() {
             this.isLoading = true;
             window.axios
@@ -211,7 +253,7 @@ export default {
                             text: "Successfully create new office",
                             icon: "success"
                         });
-                        this.$emit("assignment-modal-dismiss", response.data);
+                        this.$emit("assignment-modal-dismiss");
                     }
                 })
                 .catch(error => {
