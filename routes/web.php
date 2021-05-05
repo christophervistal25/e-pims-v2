@@ -28,6 +28,10 @@ Route::get('/salary-adjustment/{id}', 'SalaryAdjustmentController@destroy')->nam
 Route::resource('/salary-adjustment', 'SalaryAdjustmentController');
 Route::get('/salary-adjustment-list', 'SalaryAdjustmentController@list');
 
+//salary adjustment per office
+Route::resource('/salary-adjustment-per-office', 'SalaryAdjustmentPerOfficeController');
+Route::get('/salary-adjustment-per-office-list', 'SalaryAdjustmentPerOfficeController@list');
+
 // Service Records
 Route::get('/service-records/{id}', 'ServiceRecordsController@destroy')->name('service-records.delete');
 Route::resource('/service-records', 'ServiceRecordsController');

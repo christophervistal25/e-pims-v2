@@ -25,4 +25,8 @@ class SalaryAdjustment extends Model
     {
         return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
     }
+    public function position()
+    {
+        return $this->belongsTo(Position::class, 'position_id', 'position_id');
+    }
 }
