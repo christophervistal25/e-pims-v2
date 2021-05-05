@@ -13,12 +13,20 @@
 @endprepend
 @section('content')
 
+<div class="float-right mr-3 mb-2 d-none" id='btn__view__table__container'>
+    <button class="btn btn-info">
+        <i class='la la-list'></i>
+        View table
+    </button>
+</div>
+<div class="clearfix"></div>
 <div class="content container-fluid">
     <div class="kanban-board card mb-0">
         <div class="card-body">
             <div id="addIncrement" class="page-header d-none">
                 <form action="" method="POST" id="formStepIncrement">
                     @csrf
+
                     <div class="row">
 
                         <div class="col-12">
@@ -208,7 +216,6 @@
 
     // SHOWS THE DATA ON THE TABLE
     $(document).ready(function () {
-
         let table = $('#step-increment-table').DataTable({
             processing: true,
             serverSide: true,
@@ -316,6 +323,15 @@
         $('#addBtn').click(function () {
             $('#addIncrement').attr("class", "page-header");
             $('#stepIncrementTable').attr("class", "page-header d-none");
+            $('#btn__view__table__container').removeClass('d-none');
+            $('#formStepIncrement').removeClass('d-none');
+        });
+
+        // DISPLAY TABLE
+        $('#btn__view__table__container').click(function () {
+            $('#stepIncrementTable').removeClass('d-none');
+            $(this).addClass('d-none');
+            $('#formStepIncrement').addClass('d-none');
         });
 
         // SHOWS THE DATA VALUE IN INPUT
@@ -404,7 +420,7 @@
 
             // Check if the filtered error array variable has value or not.
             // if the length of this array is 0 this means that there is no error
-            // or all fields that required is filled by the user.                
+            // or all fields that required is filled by the user.
             if (filteredError.length === 0) {
                 $('#formStepIncrement').submit();
             }
