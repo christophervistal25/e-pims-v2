@@ -51,6 +51,8 @@ class Employee extends Model
         'status'
     ];
 
+    protected $appends = ['fullname'];
+
 
     public static function boot()
     {
@@ -83,6 +85,17 @@ class Employee extends Model
         $this->attributes['extension'] = strtoupper($value);
     }
 
+    /**
+     * Get the user's full name.
+     *
+     * @return string
+     */
+    public function getFullNameAttribute()
+    {
+        return "{$this->firstname} {$this->middlename} {$this->lastname} {$this->extension}";
+    }
+
+
 
     public function plantilla()
     {
@@ -96,7 +109,7 @@ class Employee extends Model
         return $this->hasOne(EmployeeFamilyBackground::class, 'employee_id', 'employee_id');
     }
 
-
+ 
     public function spouse_child()
     {
         return $this->hasMany(EmployeeSpouseChildren::class, 'employee_id', 'employee_id');
@@ -185,4 +198,5 @@ class Employee extends Model
     {
         return $this->hasOne(StepIncrement::class, 'employee_id', 'employee_id');
     }
+
 }

@@ -7,30 +7,41 @@ use App\Employee;
 use App\StepIncrement;
 use App\Plantilla;
 use Yajra\Datatables\Datatables;
+use DB;
 
 class StepIncrementController extends Controller
 {
 
     public function list()
     {
-        $data = StepIncrement::with(['employee:employee_id,firstname,middlename,lastname,extension', 'position:position_id,position_name']); 
+        $data = DB::table('step_increments')
+            ->leftJoin('employees', 'step_increments.employee_id', '=', 'employees.employee_id')
+            ->leftJoin('positions', 'step_increments.position_id', '=', 'positions.position_id')
+            ->select('id', 'date_step_increment', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'position_name', 'item_no', 'date_latest_appointment',
+            DB::raw('CONCAT(sg_no_from, "-" , step_no_from) AS sg_from_and_step_from'), 'salary_amount_from', DB::raw('CONCAT(sg_no_to, "-" , step_no_to) AS sg_to_and_step_to'), 'salary_amount_to', 'salary_diff')
+            ->where('deleted_at', null)
+            ->get();
+
+            return Datatables::of($data)->addColumn('action', function($row) {
+                $btnEdit = "<a href='". route('step-increment.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-info btn-sm'><i class='la la-edit'></i></a>"; 
+                $btnDelete = "<button type='submit' class='rounded-circle text-white delete btn btn-danger btn-sm btn__remove__record' data-id=" .$row->id . "><i class='la la-trash'></i></button>";
+                return $btnEdit . "&nbsp" . $btnDelete;
+            })->make(true);
+            // $data = StepIncrement::with(['employee:employee_id,firstname,middlename,lastname,extension', 'position:position_id,position_name']); 
         
-        return (new Datatables)->eloquent($data)
-                    ->addIndexColumn()
-                    ->addColumn('sg_from_and_step_from', function ($data) {
-                        return $data->sg_no_from . '-' . $data->step_no_from;
-                    })
-                    ->addColumn('sg_to_and_step_to', function ($data) {
-                        return $data->sg_no_to . '-' . $data->step_no_to;
-                    })
-                    ->addColumn('employee', function ($data) {
-                        return $data->employee->firstname . ' ' . $data->employee->middlename  . ' ' . $data->employee->lastname;
-                    })->addColumn('position', function ($data) {
-                        return $data->position->position_name;
-                    })->addColumn('action', function($row){
-                        $btn = "<a href='". route('step-increment.edit', $row->id) . "' class='edit btn btn-primary'>Edit</a>";
-                         return $btn;
-                    })->make(true);
+        // return (new Datatables)->eloquent($data)
+        //             ->addColumn('sg_from_and_step_from', function ($data) {
+        //                 return $data->sg_no_from . '-' . $data->step_no_from;
+        //             })
+        //             ->addColumn('sg_to_and_step_to', function ($data) {
+        //                 return $data->sg_no_to . '-' . $data->step_no_to;
+        //             })
+        //             ->addColumn('employee', function ($data) {
+        //                 return "{$data->employee->firstname} {$data->employee->middlename} {$data->employee->lastname}";
+        //             })->addColumn('position', function ($data) {
+        //                 return $data->position->position_name;
+        //             })->make(true);
+                    
     }
     /**
      * Display a listing of the resource.
@@ -152,8 +163,9 @@ class StepIncrementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(StepIncrement $step_increment)
     {
-        //
+        $step_increment->delete();
+        return response()->json(['success' => true]);
     }
 }

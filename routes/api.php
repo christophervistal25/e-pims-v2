@@ -14,6 +14,7 @@ Route::get('step/{sg_no}/{step}' , function ($sgNo, $step) {
     return $salaryGrade;
 });
 
+
 // Route::get('/salaryAdjustmentnew/{salaryGrade}/{stepNo}/{currentSgyear}' , 'Api\SalaryAdjustmentController@salaryAdjustmentNew');
 
 

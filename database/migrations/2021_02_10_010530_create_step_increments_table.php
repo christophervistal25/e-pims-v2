@@ -27,6 +27,7 @@ class CreateStepIncrementsTable extends Migration
             $table->integer('step_no_to');
             $table->decimal('salary_amount_to',11,2);
             $table->decimal('salary_diff',11,2);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -39,5 +40,6 @@ class CreateStepIncrementsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('step_increments');
+        // $table->dropSoftDeletes();
     }
 }
