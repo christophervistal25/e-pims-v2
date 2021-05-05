@@ -53,6 +53,10 @@ class Position extends Model
     {
         return $this->belongsTo(service_record::class, 'position_id', 'position_id');
     }
+    public function salary_adjustment()
+    {
+        return $this->hasOne(SalaryAdjustment::class, 'position_id', 'position_id');
+    }
 }
 
 

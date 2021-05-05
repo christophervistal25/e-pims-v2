@@ -208,9 +208,6 @@ $(document).ready(function() {
         let salaryGrade = $('#salaryGrade').val();
         let stepNo = $('#stepNo').val();
         let currentSgyear = $('#currentSgyear').val();
-        console.log(salaryGrade);
-        console.log(stepNo);
-        console.log(currentSgyear);
         $.ajax({
             url: `/api/salaryAdjustment/${salaryGrade}/${stepNo}/${currentSgyear}`,
                 success:(response) => {
