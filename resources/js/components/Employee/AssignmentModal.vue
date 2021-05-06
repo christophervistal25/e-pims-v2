@@ -13,7 +13,7 @@
             <div class="modal-dialog modal-dialog-scrollable" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Assignment Modal</h5>
+                        <h5 class="modal-title">Add Office Assignment</h5>
                         <button
                             @click="dismissModal"
                             type="button"

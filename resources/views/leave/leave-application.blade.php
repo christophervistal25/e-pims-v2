@@ -10,15 +10,17 @@
     <div class="col-lg-3">
         <div class="card">
             <div class="card-body">
-                <h3 class="card-title text-center text-sm">Search Option</h3>
+                <h3 class="card-title text-center text-sm">Search Options</h3>
                 <div class="checkbox">
                     <label class="checkbox-inline no_indent text-sm" for="individual">
-                        <input type="checkbox" name="individual" id="individual" style="transform: scale(1.2)">Individual
+                        <input type="checkbox" name="individual" id="individual"
+                            style="transform: scale(1.2)">Individual
                     </label>
-                </div> 
+                </div>
                 <div class="checkbox">
                     <label class="checkbox-inline no_indent text-sm" for="officename">
-                        <input type="checkbox" name="officename" id="officename" style="transform: scale(1.2)">Office / Department
+                        <input type="checkbox" name="officename" id="officename" style="transform: scale(1.2)">Office /
+                        Department
                     </label>
                 </div>
                 <hr class="mt-1">
@@ -37,7 +39,7 @@
                         <option readonly selected>Active</option>
                         <option>Active</option>
                     </select>
-                    <span>Filter Option</span>
+                    <span>Filter Options</span>
                 </label>
             </div>
         </div>
@@ -149,18 +151,21 @@
                         <h6 class="text-center">Inclusive Dates</h6>
                         <div class="checkbox">
                             <label class="checkbox-inline no_indent text-sm" for="incWeekends">
-                                <input type="checkbox" name="incWeekends" id="incWeekends" style="transform: scale(1.2)">Include Weekends
+                                <input type="checkbox" name="incWeekends" id="incWeekends"
+                                    style="transform: scale(1.2)">Include Weekends
                             </label>
                         </div>
                         <div class="checkbox">
                             <label class="checkbox-inline no_indent text-sm" for="incHolidays">
-                                <input type="checkbox" name="incHolidays" id="incHolidays" style="transform: scale(1.2)">Include Holidays
+                                <input type="checkbox" name="incHolidays" id="incHolidays"
+                                    style="transform: scale(1.2)">Include Holidays
                             </label>
                         </div>
                         <hr class="mt-1 mb-1">
                         <div class="checkbox">
                             <label class="checkbox-inline no_indent text-sm" for="incHolidays">
-                                <input type="checkbox" name="incHolidays" id="incHolidays" disabled style="transform: scale(1.2)">Populate Dates
+                                <input type="checkbox" name="incHolidays" id="incHolidays" disabled
+                                    style="transform: scale(1.2)">Populate Dates
                             </label>
                         </div>
                         <h6 class="text-sm text-center">Date to Apply</h6>
@@ -194,7 +199,7 @@
                             style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <option value="">-----</option>
                         </select>
-                        <span>Approve By</span>
+                        <span>Approved By</span>
                     </label>
                     <label for="appStatus" class="form-group has-float-label">
                         <select name="appStatus" class="custom-select" id="appStatus"
