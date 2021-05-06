@@ -13,7 +13,7 @@ class ReferenceStatusController extends Controller
     public function status()
     {
        return Cache::rememberForever('status', function () {
-            return RefStatus::get(['id', 'stat_code', 'status_name']);
+            return RefStatus::orderBy('status_name')->get(['id', 'stat_code', 'status_name']);
         });
     }
 
