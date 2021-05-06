@@ -40,6 +40,11 @@ class Position extends Model
     }
 
 
+    public function getPositionNameAttribute($value)
+    {
+        return strtoupper($value);
+    }
+
     public function plantillas()
     {
         return $this->belongsTo(Plantilla::class, 'position_id', 'position_id');
