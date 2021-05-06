@@ -119,7 +119,7 @@
                         Record</button>
                     <button type="button" class="btn btn-outline-success ml-2"><i class="far fa-save"></i> Save
                         Changes</button>
-                    <button type="button" class="btn btn-outline-secondary ml-2"><i class="far fa-save"></i> Cancel
+                    <button type="button" class="btn btn-outline-secondary ml-2"><i class="fas fa-ban"></i> Cancel
                         Record</button>
 
                 </div>

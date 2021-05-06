@@ -36317,7 +36317,7 @@ var render = function() {
             staticClass: "col-sm-2 text-sm align-middle col-form-label",
             attrs: { for: "designation" }
           },
-          [_vm._v("DESIGNATION")]
+          [_vm._v("POSITION")]
         ),
         _vm._v(" "),
         _c(

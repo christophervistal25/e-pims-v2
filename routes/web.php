@@ -61,6 +61,7 @@ Route::group(['prefix' => 'employee'], function () {
 
     Route::resource('leave', 'EmployeeLeave\LeaveController');
     Route::resource('/leave/application', 'EmployeeLeave\LeaveController@show');
+    Route::get('/leave-monitoring', 'EmployeeLeave\LeaveController@create');
 });
 Route::resource('/print-increment', 'PrintIncrementController');
 Route::get('/profile', 'EmployeeController@profile');

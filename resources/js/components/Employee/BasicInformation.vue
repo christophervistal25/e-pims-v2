@@ -270,7 +270,7 @@
             <label
                 for="designation"
                 class="col-sm-2 text-sm align-middle col-form-label"
-                >DESIGNATION</label
+                >POSITION</label
             >
             <div class="col-lg-9">
                 <v-select
