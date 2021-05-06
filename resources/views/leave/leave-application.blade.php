@@ -65,6 +65,7 @@
                 <hr>
                 <div class="row">
                     <div class="col-lg-4">
+                        <h6 class="text-sm text-center">&nbsp;</h6>
                         <label for="dateApply" class="form-group has-float-label">
                             <input type="date" name="dateApply" id="dateApply" class="form-control form-control-sm"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
