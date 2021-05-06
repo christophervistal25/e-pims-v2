@@ -64,8 +64,6 @@
             <div class="card-body">
                 <h3 class="card-title">Leave Monitoring Index</h3>
                 <hr>
-                {{-- <button class="btn btn-outline-primary" type="button"><i class="fas fa-plus"></i> New Record</button> --}}
-                {{-- <button class="btn btn-outline-secondary" type="buttin"><i class="fas fa-ban"></i> Cancel Record</button> --}}
                 <h6 class="text-sm">Leave Index Information</h6>
                 <div class="row">
                     <div class="col-lg-3">
@@ -108,7 +106,7 @@
                                         </label>
                                         <label for="vlEnjoyedWP" class="form-group has-float-label">
                                             <input type="text" class="form-control"
-                                                style="outline: none; box-shadow: 0px 0px 0px transaction;"
+                                                style="outline: none; box-shadow: 0px 0px 0px transparent;"
                                                 id="vlEnjoyedWP">
                                             <span>VL Enjoyed (WP)</span>
                                         </label>
@@ -125,31 +123,95 @@
                                         </label>
                                     </div>
                                     <div class="col-lg-6">
-                                    <label for="slEarned" class="form-group has-float-label">
-                                    <input type="text" class="form-control" id="slEarned" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                    <span>SL Earned</span>
-                                    </label>
-                                    <label for="slEnjoyedWP" class="form-group has-float-label">
-                                    <input type="text" id="slEnjoyedWP" class="form-control" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                    <span>SL Enjoyed (WP)</span>
-                                    </label>
-                                    <label for="slEnjoyedWOP" class="form-group has-float-label">
-                                    <input type="text" id="slEnjoyed" style="">
-                                    <span>SL Enjoyed (WOP)</span>
-                                    </label>
+                                        <label for="slEarned" class="form-group has-float-label">
+                                            <input type="text" class="form-control" id="slEarned"
+                                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                            <span>SL Earned</span>
+                                        </label>
+                                        <label for="slEnjoyedWP" class="form-group has-float-label">
+                                            <input type="text" id="slEnjoyedWP" class="form-control"
+                                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                            <span>SL Enjoyed (WP)</span>
+                                        </label>
+                                        <label for="slEnjoyedWOP" class="form-group has-float-label">
+                                            <input type="text" id="slEnjoyed"
+                                                style="outline: none; box-shadow: 0px 0px 0px transparent;"
+                                                class="form-control">
+                                            <span>SL Enjoyed (WOP)</span>
+                                        </label>
+                                        <label for="slBal" class="form-group has-float-label">
+                                            <input type="text" id="slBal" class="form-control"
+                                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                            <span>SL Balance</span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                        <div class="col lg-12">
+                        <button class="btn btn-outline-primary mr-3" type="button"><i class="fas fa-plus"></i> New
+                            Record</button>
+                        <button class="btn btn-outline-secondary mr-3" type="buttin"><i class="fas fa-ban"></i>
+                            Cancel Record</button>
+                        <button class="btn btn-outline-success mr-3" type="button"><i class="fas fa-save"></i> Save
+                            Changes</button>
+                        </div>
+                            <div class="col-lg-3">
+                            <label for="leaveOpt" class="form-group has-float-label mr-3">
+                            <select name="" id="" class="custom-select" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <option value="">-----</option>
+                            </select>
+                            <span>Leave Index Options</span>
+                            </label>
+                            </div>
+                        
+                        </div>
+                        
+                            
+                        
                     </div>
                 </div>
             </div>
         </div>
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Particular</th>
+                            <th class="text-center">Period</th>
+                            <th class="text-center">VL Earned</th>
+                            <th class="text-center">VL WP</th>
+                            <th class="text-center">VL WOP</th>
+                            <th class="text-center">VL Bal</th>
+                            <th class="text-center">SL Earned</th>
+                            <th class="text-center">Order</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th class="text-center">1</th>
+                            <th class="text-center">1</th>
+                            <th class="text-center">1</th>
+                            <th class="text-center">1</th>
+                            <th class="text-center">1</th>
+                            <th class="text-center">1</th>
+                            <th class="text-center">1</th>
+                            <th class="text-center">1</th>
+                            <th>
+                                <button class="btn btn-sm rounded-circle shadow btn-success"><i
+                                        class="fa fa-edit"></i></button>
+                                &nbsp;
+                                <button class="btn btn-danger btn-sm rounded-circle shadow"><i
+                                        class="fa fa-trash"></i></button></th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-
-
-
-
 </div>
 @push('page-scripts')
 <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>

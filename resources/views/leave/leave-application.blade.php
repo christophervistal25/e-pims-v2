@@ -171,10 +171,10 @@
                         </div>
                         <h6 class="text-sm text-center">Date to Apply</h6>
                         <label for="dateApply" class="form-group has-float-label">
-                            <input type="date" name="dateApply" id="dateApply" class="form-control form-control-sm">
+                            <input type="date" name="dateApply" id="dateApply" class="form-control" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <span>Select Date</span>
                         </label>
-                        <select name="" id="" class="form-control form-control-sm">
+                        <select name="" id="" class="form-control">
                             <option value="">Whole Day</option>
                             <option value="">Half Day</option>
                         </select>
