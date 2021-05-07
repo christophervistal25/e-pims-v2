@@ -113,6 +113,11 @@
                             {{ errors.extension }}
                         </p>
                     </div>
+                    <div class="col-lg-1">
+                        <button class="btn btn-info btn-sm rounded-circle shadow mt-1" @click="openNameExtensionModal">
+                            <i class="fas fa-plus text-sm"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="form-group row">
@@ -293,7 +298,7 @@
             <div class="col-lg-1">
                 <button
                     class="btn btn-info btn-sm rounded-circle shadow mt-1"
-                    @click="openDestinationModal"
+                    @click="openNameExtensionModal"
                 >
                     <i class="fas fa-plus text-sm"></i>
                 </button>
@@ -313,6 +318,7 @@
                     :value="employee.officeAssignment.office_name"
                     @input="onSetSelectOffice"
                     :options="offices"
+
                     @search="onSearchOffice"
                 ></v-select>
                 <p class="text-danger text-sm">
@@ -342,6 +348,10 @@
             :showassignment="isShowAssignment"
             @assignment-modal-dismiss="closeAssignmentModal"
         ></assignmentmodal>
+        <name-extension-modal 
+        :shownameextension="isShowNameExtension"
+            @nameext-modal-dismiss="closeNameExtensionModal">
+        </name-extension-modal>
         <!-- <button>sample</button> -->
     </div>
 </template>
@@ -349,6 +359,8 @@
 import StatusModal from "./StatusModal.vue";
 import DesignationModal from "./DesignationModal.vue";
 import AssignmentModal from "./AssignmentModal.vue";
+import NameExtensionModal from "./NameExtensionModal.vue";
+
 import "vue-select/dist/vue-select.css";
 import _ from "lodash";
 export default {
@@ -358,6 +370,7 @@ export default {
             isShow: false,
             isShowDesignation: false,
             isShowAssignment: false,
+            isShowNameExtension: false,
             designations: [],
             offices: []
         };
@@ -366,7 +379,8 @@ export default {
         StatusModal,
         DesignationModal,
         StatusModal,
-        AssignmentModal
+        AssignmentModal,
+        NameExtensionModal
     },
     watch: {
         dateOfBirth: function(to, from) {
@@ -473,7 +487,13 @@ export default {
         },
         closeAssignmentModal() {
             this.isShowAssignment = false;
-        }
+        },
+        openNameExtensionModal() {
+            this.isShowNameExtension = true;
+        },
+        closeNameExtensionModal() {
+            this.isShowNameExtension = false;
+        },
     },
     created() {}
 };
