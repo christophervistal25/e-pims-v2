@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Employee;
 
+use App\Rules\StoreTrapfullname;
 use Illuminate\Foundation\Http\FormRequest;
 
 class NewEmployeeStoreRequest extends FormRequest
@@ -24,14 +25,15 @@ class NewEmployeeStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'lastName'         => 'required',
-            'dateOfBirth'      => 'required|date',
+            'firstName'        => ['required', new StoreTrapfullname()],
+            'middleName'       => ['required', new StoreTrapfullname()],
+            'lastName'         => ['required', new StoreTrapfullname()],
+            'extension'        => ['nullable', new StoreTrapfullname()],
+            'dateOfBirth'      => ['required', 'date', new StoreTrapfullname()],
             'lbpAccountNo'      => 'required|unique:employees,lbp_account_no|unique:employees,dbp_account_no',
             'designation.position_code'      => 'required|exists:positions,position_code',
             'officeAssignment.office_code' => 'required|exists:offices,office_code',
             'employmentStatus.stat_code' => 'required|exists:ref_statuses,stat_code',
-            'firstName'        => 'required',
-            'middleName'       => 'required',
             'pagibigMidNo'     => 'nullable',
             'philhealthNo'     => 'nullable',
             'sssNo'            => 'nullable|unique:employees,sss_no',

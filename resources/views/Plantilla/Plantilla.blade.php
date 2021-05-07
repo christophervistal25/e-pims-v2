@@ -3,7 +3,7 @@
 @prepend('page-css')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-<script src="{{ asset('/js/app.js') }}" defer></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
     .swal-content ul{
     list-style-type: none;
@@ -12,7 +12,7 @@
 </style>
 @endprepend
 @section('content')
-    <div class="kanban-board card mb-0">    
+    <div class="kanban-board card mb-0">
         <div class="card-body">
             <div id="add" class="page-header {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
                 <form action="/plantilla" method="post" id="plantillaForm">
@@ -22,7 +22,7 @@
                     <div class="col-12">
                         <div class="alert alert-secondary text-center font-weight-bold" role="alert" >Add New Plantilla</div>
                     </div>
-                
+
                     <div class="form-group col-12 col-lg-2">
                         <label>Item No<span class="text-danger">*</span></label>
                         <input value="{{ old('itemNo') }}" class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" name="itemNo" id="itemNo" type="text" placeholder="Item No.">
@@ -39,7 +39,7 @@
 
                     <div class="form-group col-12 col-lg-4">
                         <label>Employee Name<span class="text-danger">*</span></label>
-                        <select value="" class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" 
+                        <select value="" class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}"
                         name="employeeName" data-live-search="true" id="employeeName" data-size="5">
                         <option></option>
                         @foreach($employee as $employees)
@@ -52,7 +52,7 @@
 
                     <div class="form-group col-12 col-lg-3">
                         <label>Position<span class="text-danger">*</span></label>
-                        <select value=""  class="form-control selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}" 
+                        <select value=""  class="form-control selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
                         name="positionTitle" data-live-search="true" id="positionTitle" data-size="5" data-width="100%">
                         <option></option>
                         @foreach($position as $positions)
@@ -158,7 +158,7 @@
                         <div id='last-promotion-error-message' class='text-danger'>
                         </div>
                     </div>
-                
+
                     <div class="form-group col-12 col-lg-4">
                         <label>Status <span class="text-danger">*</span></label>
                         <select value="" name="status" class="select {{ $errors->has('status')  ? 'is-invalid' : ''}}" id="status">
@@ -188,7 +188,7 @@
                         <div id='area-code-error-message' class='text-danger'>
                         </div>
                     </div>
-                    
+
                     <div class="form-group form-group col-12 col-lg-3">
                         <label>Area Type<span class="text-danger">*</span></label>
                         <select name="areaType" value="" class="select floating {{ $errors->has('areaType')  ? 'is-invalid' : ''}}" id="areaType">

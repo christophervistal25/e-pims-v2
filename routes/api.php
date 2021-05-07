@@ -74,7 +74,10 @@ Route::group(['prefix' => 'city'], function () {
 });
 
 
+// Reference Routes.
 Route::post('/employment/status/store', 'Api\ReferenceStatusController@store');
+Route::get('name/extensions', 'Api\ReferenceNameExtensionController@index');
+Route::post('name/extensions/store', 'Api\ReferenceNameExtensionController@store');
 
 
 /////// salary adjustment
