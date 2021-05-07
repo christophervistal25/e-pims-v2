@@ -2755,28 +2755,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -16818,7 +16796,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, "\ntd[data-v-a89d73f8] {\r\n    cursor: pointer;\r\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-a89d73f8]:hover {\r\n    background: #f1f2f3;\n}\r\n", ""]);
+exports.push([module.i, "\ntd[data-v-a89d73f8] {\n    cursor: pointer;\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-a89d73f8]:hover {\n    background: #f1f2f3;\n}\n", ""]);
 
 // exports
 
@@ -36049,19 +36027,15 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("div", { staticClass: "row mb-1" }, [
-        _c("div", { staticClass: "col-lg-8" }, [
-          _c("div", { staticClass: "form-group row" }, [
-            _c(
-              "label",
-              {
-                staticClass: "col-sm-3 align-middle text-sm col-form-label",
-                attrs: { for: "lastname" }
-              },
-              [_vm._v("LAST NAME")]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-8" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-lg-7 ml-4" }, [
+          _c(
+            "label",
+            {
+              staticClass: "form-group has-float-label",
+              attrs: { for: "lastname" }
+            },
+            [
               _c("input", {
                 directives: [
                   {
@@ -36075,7 +36049,11 @@ var render = function() {
                 class: _vm.errors.hasOwnProperty("lastName")
                   ? "is-invalid"
                   : "",
-                attrs: { type: "text", id: "lastname" },
+                staticStyle: {
+                  outline: "none",
+                  "box-shadow": "0px 0px 0px transparent"
+                },
+                attrs: { type: "text", name: "lastname", id: "lastname" },
                 domProps: { value: _vm.employee.lastName },
                 on: {
                   input: function($event) {
@@ -36089,21 +36067,19 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(_vm._s(_vm.errors.lastName))
-              ])
-            ])
-          ]),
+              ]),
+              _vm._v(" "),
+              _c("span", [_vm._v("LAST NAME")])
+            ]
+          ),
           _vm._v(" "),
-          _c("div", { staticClass: "form-group row" }, [
-            _c(
-              "label",
-              {
-                staticClass: "col-sm-3 text-sm align-middle col-form-label",
-                attrs: { for: "firstname" }
-              },
-              [_vm._v("FIRST NAME")]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-8" }, [
+          _c(
+            "label",
+            {
+              staticClass: "form-group has-float-label",
+              attrs: { for: "firstname" }
+            },
+            [
               _c("input", {
                 directives: [
                   {
@@ -36117,6 +36093,10 @@ var render = function() {
                 class: _vm.errors.hasOwnProperty("firstName")
                   ? "is-invalid"
                   : "",
+                staticStyle: {
+                  outline: "none",
+                  "box-shadow": "0px 0px 0px transparent"
+                },
                 attrs: { type: "text", id: "firstname" },
                 domProps: { value: _vm.employee.firstName },
                 on: {
@@ -36131,25 +36111,23 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n                            " +
                     _vm._s(_vm.errors.firstName) +
-                    "\n                    "
+                    "\n                        "
                 )
-              ])
-            ])
-          ]),
+              ]),
+              _vm._v(" "),
+              _c("span", [_vm._v("FIRST NAME")])
+            ]
+          ),
           _vm._v(" "),
-          _c("div", { staticClass: "form-group row" }, [
-            _c(
-              "label",
-              {
-                staticClass: "col-sm-3 text-sm align-middle col-form-label",
-                attrs: { for: "middlename" }
-              },
-              [_vm._v("MIDDLE NAME")]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-8" }, [
+          _c(
+            "label",
+            {
+              staticClass: "form-group has-float-label",
+              attrs: { for: "middlename" }
+            },
+            [
               _c("input", {
                 directives: [
                   {
@@ -36163,6 +36141,10 @@ var render = function() {
                 class: _vm.errors.hasOwnProperty("middleName")
                   ? "is-invalid"
                   : "",
+                staticStyle: {
+                  outline: "none",
+                  "box-shadow": "0px 0px 0px transparent"
+                },
                 attrs: { type: "text", id: "middlename" },
                 domProps: { value: _vm.employee.middleName },
                 on: {
@@ -36175,94 +36157,96 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("p", { staticClass: "text-danger text-sm" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.errors.middleName) +
-                    "\n                    "
-                )
-              ])
-            ])
-          ]),
+              _c("span", [_vm._v("MIDDLE NAME")])
+            ]
+          ),
           _vm._v(" "),
-          _c("div", { staticClass: "form-group row" }, [
-            _c(
-              "label",
-              {
-                staticClass: "col-sm-3 text-sm align-middle col-form-label",
-                attrs: { for: "name_extension" }
-              },
-              [_vm._v("NAME EXTENSION")]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-8" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-11" }, [
               _c(
-                "select",
+                "label",
                 {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.employee.extension,
-                      expression: "employee.extension"
-                    }
-                  ],
-                  staticClass: "form-control text-uppercase",
-                  class: _vm.errors.hasOwnProperty("extension")
-                    ? "is-invalid"
-                    : "",
-                  attrs: { type: "text", id: "name_extension" },
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.$set(
-                        _vm.employee,
-                        "extension",
-                        $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      )
-                    }
-                  }
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "name_extension" }
                 },
                 [
                   _c(
-                    "option",
-                    { attrs: { value: "", readonly: "", selected: "" } },
-                    [_vm._v("Please select name extension")]
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.employee.extension,
+                          expression: "employee.extension"
+                        }
+                      ],
+                      staticClass: "form-control text-uppercase",
+                      class: _vm.errors.hasOwnProperty("extension")
+                        ? "is-invalid"
+                        : "",
+                      staticStyle: {
+                        outline: "none",
+                        "box-shadow": "0px 0px 0px transparent"
+                      },
+                      attrs: {
+                        type: "text",
+                        name: "name_extension",
+                        id: "name_extension"
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.employee,
+                            "extension",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "option",
+                        { attrs: { value: "", readonly: "", selected: "" } },
+                        [_vm._v("Please select name extension")]
+                      ),
+                      _vm._v(" "),
+                      _vm._l(_vm.nameExtensions, function(extension, index) {
+                        return _c(
+                          "option",
+                          {
+                            key: index,
+                            domProps: {
+                              selected: _vm.employee.extension === "JR",
+                              value: extension
+                            }
+                          },
+                          [_vm._v(_vm._s(extension))]
+                        )
+                      })
+                    ],
+                    2
                   ),
                   _vm._v(" "),
-                  _vm._l(_vm.nameExtensions, function(extension, index) {
-                    return _c(
-                      "option",
-                      {
-                        key: index,
-                        domProps: {
-                          selected: _vm.employee.extension === "JR",
-                          value: extension
-                        }
-                      },
-                      [_vm._v(_vm._s(extension))]
+                  _c("p", { staticClass: "text-danger text-sm" }, [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(_vm.errors.extension) +
+                        "\n                        "
                     )
-                  })
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-danger text-sm" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.errors.extension) +
-                    "\n                    "
-                )
-              ])
+                  ])
+                ]
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-1" }, [
@@ -36277,53 +36261,63 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "form-group row" }, [
-            _c(
-              "label",
-              {
-                staticClass: "col-sm-3 text-sm align-middle col-form-label",
-                attrs: { for: "dateOfBirth" }
-              },
-              [_vm._v("DATE OF BIRTH")]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-4" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.employee.dateOfBirth,
-                    expression: "employee.dateOfBirth"
-                  }
-                ],
-                staticClass: "form-control",
-                class: _vm.errors.hasOwnProperty("dateOfBirth")
-                  ? "is-invalid"
-                  : "",
-                attrs: { type: "date", id: "dateOfBirth" },
-                domProps: { value: _vm.employee.dateOfBirth },
-                on: {
-                  change: _vm.calculateAge,
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-6" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "dateOfBirth" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.employee.dateOfBirth,
+                        expression: "employee.dateOfBirth"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class: _vm.errors.hasOwnProperty("dateOfBirth")
+                      ? "is-invalid"
+                      : "",
+                    staticStyle: {
+                      outline: "none",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: { type: "date", id: "dateOfBirth" },
+                    domProps: { value: _vm.employee.dateOfBirth },
+                    on: {
+                      change: _vm.calculateAge,
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.employee,
+                          "dateOfBirth",
+                          $event.target.value
+                        )
+                      }
                     }
-                    _vm.$set(_vm.employee, "dateOfBirth", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-danger text-sm" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.errors.dateOfBirth) +
-                    "\n                    "
-                )
-              ])
+                  }),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-danger text-sm" }, [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(_vm.errors.dateOfBirth) +
+                        "\n                                "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("DATE OF BIRTH")])
+                ]
+              )
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-4" }, [
+            _c("div", { staticClass: "col-lg-6" }, [
               _c("input", {
                 directives: [
                   {
@@ -36334,6 +36328,10 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control",
+                staticStyle: {
+                  outline: "none",
+                  "box-shadow": "0px 0px 0px transparent"
+                },
                 attrs: { type: "text", id: "dateOfBirth", readonly: "true" },
                 domProps: { value: _vm.employee.age },
                 on: {
@@ -36345,6 +36343,157 @@ var render = function() {
                   }
                 }
               })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-4" }, [
+              _vm.employee.employee_id
+                ? _c(
+                    "label",
+                    {
+                      staticClass: "form-group has-float-label",
+                      attrs: { for: "officeAssignment" }
+                    },
+                    [
+                      _vm.employee.employee_id
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.employee.step,
+                                expression: "employee.step"
+                              }
+                            ],
+                            staticClass: "form-control text-uppercase",
+                            staticStyle: {
+                              outline: "none",
+                              "box-shadow": "0px 0px 0px transparent"
+                            },
+                            attrs: {
+                              type: "number",
+                              id: "officeAssignment",
+                              readonly: ""
+                            },
+                            domProps: { value: _vm.employee.step },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.employee,
+                                  "step",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("span", [_vm._v("STEP")])
+                    ]
+                  )
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4" }, [
+              _vm.employee.employee_id
+                ? _c(
+                    "label",
+                    {
+                      staticClass: "form-group has-float-label",
+                      attrs: { for: "basicRate" }
+                    },
+                    [
+                      _vm.employee.employee_id
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.employee.basicRate,
+                                expression: "employee.basicRate"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            staticStyle: {
+                              outline: "none",
+                              "box-shadow": "0px 0px 0px transparent"
+                            },
+                            attrs: { type: "number", readonly: "" },
+                            domProps: { value: _vm.employee.basicRate },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.employee,
+                                  "basicRate",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("span", [_vm._v("BASIC RATE")])
+                    ]
+                  )
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4" }, [
+              _vm.employee.employee_id
+                ? _c(
+                    "label",
+                    {
+                      staticClass: "form-group has-float-label",
+                      attrs: { for: "employeeID" }
+                    },
+                    [
+                      _vm.employee.employee_id
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.employee.employee_id,
+                                expression: "employee.employee_id"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            staticStyle: {
+                              outline: "none",
+                              "box-shadow": "0px 0px 0px transparent"
+                            },
+                            attrs: {
+                              type: "text",
+                              id: "employeeID",
+                              readonly: ""
+                            },
+                            domProps: { value: _vm.employee.employee_id },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.employee,
+                                  "employee_id",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("span", [_vm._v("EMP ID")])
+                    ]
+                  )
+                : _vm._e()
             ])
           ])
         ]),
@@ -36364,7 +36513,7 @@ var render = function() {
             _c("div", { staticClass: "button-wrapper btn btn-info" }, [
               _c("span", { staticClass: "label" }, [
                 _vm._v(
-                  "\n                        Attach Photo\n                    "
+                  "\n                            Attach Photo\n                        "
                 )
               ]),
               _vm._v(" "),
@@ -36383,154 +36532,39 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group row" }, [
-        _vm.employee.employee_id
-          ? _c(
-              "label",
-              {
-                staticClass: "col-sm-2 text-sm align-middle col-form-label",
-                attrs: { for: "officeAssignment" }
-              },
-              [_vm._v("STEP\n        ")]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3" }, [
-          _vm.employee.employee_id
-            ? _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.employee.step,
-                    expression: "employee.step"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "number", id: "step", readonly: "" },
-                domProps: { value: _vm.employee.step },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.employee, "step", $event.target.value)
-                  }
-                }
-              })
-            : _vm._e()
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-lg-10 ml-4" }, [
+          _c(
+            "label",
+            {
+              staticClass: "form-group has-float-label",
+              attrs: { for: "officeAssignment" }
+            },
+            [
+              _c("v-select", {
+                attrs: {
+                  label: "status_name",
+                  value: _vm.employee.employmentStatus
+                    ? _vm.employee.employmentStatus.status_name
+                    : "",
+                  options: _vm.employmentStatus
+                },
+                on: { input: _vm.onSetSelectStatus }
+              }),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-danger text-sm" }, [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.errors["employmentStatus.stat_code"]) +
+                    "\n                "
+                )
+              ]),
+              _vm._v(" "),
+              _c("span", [_vm._v("EMPLOYMENT STATUS")])
+            ],
+            1
+          )
         ]),
-        _vm._v(" "),
-        _vm.employee.employee_id
-          ? _c(
-              "label",
-              {
-                staticClass: "text-sm align-middle col-form-label",
-                attrs: { for: "basicRate" }
-              },
-              [_vm._v("BASIC RATE")]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-3" }, [
-          _vm.employee.employee_id
-            ? _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.employee.basicRate,
-                    expression: "employee.basicRate"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "number", id: "basicRate", readonly: "" },
-                domProps: { value: _vm.employee.basicRate },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.employee, "basicRate", $event.target.value)
-                  }
-                }
-              })
-            : _vm._e()
-        ]),
-        _vm._v(" "),
-        _vm.employee.employee_id
-          ? _c(
-              "label",
-              {
-                staticClass: "text-sm align-middle col-form-label",
-                attrs: { for: "employeeId" }
-              },
-              [_vm._v("EMP. ID")]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.employee.employee_id
-          ? _c("div", { staticClass: "col-lg-2" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.employee.employee_id,
-                    expression: "employee.employee_id"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text", id: "employeeId", readonly: "" },
-                domProps: { value: _vm.employee.employee_id },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.employee, "employee_id", $event.target.value)
-                  }
-                }
-              })
-            ])
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group row" }, [
-        _c(
-          "label",
-          {
-            staticClass: "col-sm-2 text-sm align-middle col-form-label",
-            attrs: { for: "officeAssignment" }
-          },
-          [_vm._v("EMPLOYMENT STATUS")]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-lg-9" },
-          [
-            _c("v-select", {
-              attrs: {
-                label: "status_name",
-                value: _vm.employee.employmentStatus
-                  ? _vm.employee.employmentStatus.status_name
-                  : "",
-                options: _vm.employmentStatus
-              },
-              on: { input: _vm.onSetSelectStatus }
-            }),
-            _vm._v(" "),
-            _c("p", { staticClass: "text-danger text-sm" }, [
-              _vm._v(
-                "\n                " +
-                  _vm._s(_vm.errors["employmentStatus.stat_code"]) +
-                  "\n            "
-              )
-            ])
-          ],
-          1
-        ),
         _vm._v(" "),
         _c("div", { staticClass: "col-lg-1" }, [
           _c(
@@ -36544,54 +36578,52 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group row" }, [
-        _c(
-          "label",
-          {
-            staticClass: "col-sm-2 text-sm align-middle col-form-label",
-            attrs: { for: "designation" }
-          },
-          [_vm._v("POSITION")]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-lg-9" },
-          [
-            _c(
-              "v-select",
-              {
-                attrs: {
-                  label: "position_name",
-                  filterable: false,
-                  value: _vm.employee.designation.position_name,
-                  options: _vm.designations
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-lg-10 ml-4" }, [
+          _c(
+            "label",
+            {
+              staticClass: "form-group has-float-label",
+              attrs: { for: "designation" }
+            },
+            [
+              _c(
+                "v-select",
+                {
+                  attrs: {
+                    label: "position_name",
+                    filterable: false,
+                    value: _vm.employee.designation.position_name,
+                    options: _vm.designations
+                  },
+                  on: {
+                    input: _vm.onSetSelectPosition,
+                    search: _vm.onSearchDesignation
+                  }
                 },
-                on: {
-                  input: _vm.onSetSelectPosition,
-                  search: _vm.onSearchDesignation
-                }
-              },
-              [
-                _c("template", { slot: "no-options" }, [
-                  _vm._v(
-                    "\n                    Type atleast 1 word of designation to search.\n                "
-                  )
-                ])
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _c("p", { staticClass: "text-danger text-sm" }, [
-              _vm._v(
-                "\n                " +
-                  _vm._s(_vm.errors["designation.position_code"]) +
-                  "\n            "
-              )
-            ])
-          ],
-          1
-        ),
+                [
+                  _c("template", { slot: "no-options" }, [
+                    _vm._v(
+                      "\n                        Type atleast 1 word of designation to search.\n                    "
+                    )
+                  ])
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-danger text-sm" }, [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.errors["designation.position_code"]) +
+                    "\n                "
+                )
+              ]),
+              _vm._v(" "),
+              _c("span", [_vm._v("POSITION")])
+            ],
+            1
+          )
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-lg-1" }, [
           _c(
@@ -36605,40 +36637,38 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group row" }, [
-        _c(
-          "label",
-          {
-            staticClass: "col-sm-2 text-sm align-middle col-form-label",
-            attrs: { for: "officeAssignment" }
-          },
-          [_vm._v("OFFICE ASSIGNMENT")]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-lg-9" },
-          [
-            _c("v-select", {
-              attrs: {
-                label: "office_name",
-                filterable: false,
-                value: _vm.employee.officeAssignment.office_name,
-                options: _vm.offices
-              },
-              on: { input: _vm.onSetSelectOffice, search: _vm.onSearchOffice }
-            }),
-            _vm._v(" "),
-            _c("p", { staticClass: "text-danger text-sm" }, [
-              _vm._v(
-                "\n                " +
-                  _vm._s(_vm.errors["officeAssignment.office_code"]) +
-                  "\n            "
-              )
-            ])
-          ],
-          1
-        ),
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-lg-10 ml-4" }, [
+          _c(
+            "label",
+            {
+              staticClass: "form-group  has-float-label",
+              attrs: { for: "officeAssignment" }
+            },
+            [
+              _c("v-select", {
+                attrs: {
+                  label: "office_name",
+                  filterable: false,
+                  value: _vm.employee.officeAssignment.office_name,
+                  options: _vm.offices
+                },
+                on: { input: _vm.onSetSelectOffice, search: _vm.onSearchOffice }
+              }),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-danger text-sm" }, [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.errors["officeAssignment.office_code"]) +
+                    "\n                "
+                )
+              ]),
+              _vm._v(" "),
+              _c("span", [_vm._v("OFFICE ASSIGNMENT")])
+            ],
+            1
+          )
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-lg-1" }, [
           _c(
@@ -75425,8 +75455,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\e-pims\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\e-pims\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Applications/MAMP/htdocs/e-pims/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/e-pims/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

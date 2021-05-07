@@ -1,96 +1,78 @@
 <template>
     <div>
-        <div class="row mb-1">
-            <div class="col-lg-8">
-                <div class="form-group row">
-                    <label
-                        for="lastname"
-                        class="col-sm-3 align-middle text-sm col-form-label"
-                        >LAST NAME</label
-                    >
-                    <div class="col-lg-8">
-                        <input
-                            type="text"
-                            id="lastname"
-                            v-model="employee.lastName"
-                            class="form-control text-uppercase"
-                            :class="
-                                errors.hasOwnProperty('lastName')
-                                    ? 'is-invalid'
-                                    : ''
-                            "
-                        />
+        <div class="row">
+            <div class="col-lg-7 ml-4">
+                <label for="lastname" 
+                        class="form-group has-float-label">
+                    <input 
+                        type="text" 
+                        name="lastname" 
+                        id="lastname" 
+                        style="outline: none; box-shadow: 0px 0px 0px transparent;" 
+                        class="form-control text-uppercase"
+                        v-model="employee.lastName"
+                        :class="
+                            errors.hasOwnProperty('lastName')
+                                ? 'is-invalid'
+                                : ''
+                            ">
                         <p class="text-danger text-sm">{{ errors.lastName }}</p>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label
-                        for="firstname"
-                        class="col-sm-3 text-sm align-middle col-form-label"
-                        >FIRST NAME</label
-                    >
-                    <div class="col-lg-8">
-                        <input
-                            type="text"
-                            id="firstname"
-                            v-model="employee.firstName"
-                            class="form-control text-uppercase"
-                            :class="
+                    <span>LAST NAME</span>
+                </label>
+                <label 
+                    for="firstname" 
+                    class="form-group has-float-label">
+                    <input 
+                        type="text" 
+                        id="firstname" 
+                        class="form-control text-uppercase" 
+                        style="outline: none; box-shadow: 0px 0px 0px transparent;"
+                        v-model="employee.firstName"
+                        :class="
                                 errors.hasOwnProperty('firstName')
                                     ? 'is-invalid'
                                     : ''
                             "
-                        />
+                        >
                         <p class="text-danger text-sm">
                             {{ errors.firstName }}
                         </p>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label
-                        for="middlename"
-                        class="col-sm-3 text-sm align-middle col-form-label"
-                        >MIDDLE NAME</label
-                    >
-                    <div class="col-lg-8">
-                        <input
-                            type="text"
-                            id="middlename"
-                            v-model="employee.middleName"
-                            class="form-control text-uppercase"
-                            :class="
+                    <span>FIRST NAME</span>
+                </label>
+                <label 
+                    for="middlename" 
+                    class="form-group has-float-label">
+                    <input 
+                        type="text" 
+                        id="middlename" 
+                        v-model="employee.middleName"
+                        class="form-control text-uppercase"
+                        style="outline: none; box-shadow: 0px 0px 0px transparent;"
+                        :class="
                                 errors.hasOwnProperty('middleName')
                                     ? 'is-invalid'
                                     : ''
-                            "
-                        />
-                        <p class="text-danger text-sm">
-                            {{ errors.middleName }}
-                        </p>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label
-                        for="name_extension"
-                        class="col-sm-3 text-sm align-middle col-form-label"
-                        >NAME EXTENSION</label
-                    >
-                    <div class="col-lg-8">
-                        <select
-                            type="text"
-                            id="name_extension"
-                            v-model="employee.extension"
-                            class="form-control text-uppercase"
-                            :class="
+                            ">
+                    <span>MIDDLE NAME</span>
+                </label>
+                <div class="row">
+                <div class="col-lg-11">
+                    <label 
+                    for="name_extension" 
+                    class="form-group has-float-label">
+                    <select 
+                        type="text" 
+                        name="name_extension" 
+                        id="name_extension"
+                        v-model="employee.extension"
+                        class="form-control text-uppercase"
+                        :class="
                                 errors.hasOwnProperty('extension')
                                     ? 'is-invalid'
                                     : ''
                             "
-                        >
-                            <option value="" readonly selected
+                        style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                        <option value="" readonly selected
                                 >Please select name extension</option
                             >
                             <option
@@ -104,6 +86,7 @@
                         <p class="text-danger text-sm">
                             {{ errors.extension }}
                         </p>
+                    </label>
                     </div>
                     <div class="col-lg-1">
                         <button
@@ -112,46 +95,96 @@
                         >
                             <i class="fas fa-plus text-sm"></i>
                         </button>
-                    </div>
                 </div>
-
-                <div class="form-group row">
-                    <label
-                        for="dateOfBirth"
-                        class="col-sm-3 text-sm align-middle col-form-label"
-                        >DATE OF BIRTH</label
-                    >
-
-                    <div class="col-lg-4">
-                        <input
-                            type="date"
-                            id="dateOfBirth"
-                            @change="calculateAge"
-                            v-model="employee.dateOfBirth"
-                            class="form-control"
-                            :class="
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <label 
+                            for="dateOfBirth" 
+                            class="form-group has-float-label">
+                            <input 
+                                type="date"
+                                id="dateOfBirth"
+                                @change="calculateAge"
+                                v-model="employee.dateOfBirth"
+                                :class="
                                 errors.hasOwnProperty('dateOfBirth')
                                     ? 'is-invalid'
                                     : ''
-                            "
-                        />
-                        <p class="text-danger text-sm">
+                                "          
+                                class="form-control"
+                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <p class="text-danger text-sm">
                             {{ errors.dateOfBirth }}
-                        </p>
+                                </p>
+                            <span>DATE OF BIRTH</span>
+                        </label>
                     </div>
-
-                    <div class="col-lg-4">
-                        <input
+                        <div class="col-lg-6">
+                        <input 
                             type="text"
                             id="dateOfBirth"
-                            readonly="true"
                             v-model="employee.age"
-                            class="form-control"
-                        />
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
+                            readonly="true"
+                            class="form-control">
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label 
+                            for="officeAssignment"
+                            v-if="employee.employee_id"
+                            class="form-group has-float-label"
+                            >
+                        <input 
+                            type="number" 
+                            id="officeAssignment"
+                            class="form-control text-uppercase"
+                            style="outline: none; box-shadow: 0px 0px 0px transparent;"
+                            v-if="employee.employee_id"
+                            v-model="employee.step"
+                            readonly>
+                            <span>STEP</span>
+                        </label>
                     </div>
+                    <div class="col-lg-4">
+<label 
+                            for="basicRate"
+                            v-if="employee.employee_id"
+                            class="form-group has-float-label">
+                            <input 
+                                type="number" 
+                                class="form-control"
+                                style="outline: none; box-shadow: 0px 0px 0px transparent;"
+                                readonly
+                                v-model="employee.basicRate"
+                                v-if="employee.employee_id"
+                                >
+                            <span>BASIC RATE</span>
+                            </label>
+                    </div>
+                        <div class="col-lg-4">
+                            <label  
+                                for="employeeID" 
+                                class="form-group has-float-label"
+                                v-if="employee.employee_id"
+                                >
+                                    <input 
+                                        type="text" 
+                                        id="employeeID" 
+                                        class="form-control"
+                                        style="outline: none; box-shadow: 0px 0px 0px transparent;"
+                                        v-if="employee.employee_id"
+                                        readonly
+                                        v-model="employee.employee_id"
+                                        >
+                                <span>EMP ID</span>
+                            </label>
+                        </div>
+                        
                 </div>
             </div>
-
             <div class="col-lg-4 mb-3 mt-4 text-center">
                 <img
                     class="w-50 shadow-sm rounded border mr-auto ml-auto img-fluid img-thumbnail"
@@ -178,69 +211,11 @@
                 </div>
             </div>
         </div>
-
-        <div class="form-group row">
-            <label
-                for="officeAssignment"
-                class="col-sm-2 text-sm align-middle col-form-label"
-                v-if="employee.employee_id"
-                >STEP
-            </label>
-
-            <div class="col-lg-3">
-                <input
-                    class="form-control"
-                    type="number"
-                    id="step"
-                    readonly
-                    v-if="employee.employee_id"
-                    v-model="employee.step"
-                />
-            </div>
-
-            <label
-                for="basicRate"
-                class="text-sm align-middle col-form-label"
-                v-if="employee.employee_id"
-                >BASIC RATE</label
-            >
-
-            <div class="col-lg-3">
-                <input
-                    type="number"
-                    id="basicRate"
-                    readonly
-                    v-model="employee.basicRate"
-                    v-if="employee.employee_id"
-                    class="form-control"
-                />
-            </div>
-
-            <label
-                for="employeeId"
-                class="text-sm align-middle col-form-label"
-                v-if="employee.employee_id"
-                >EMP. ID</label
-            >
-
-            <div class="col-lg-2" v-if="employee.employee_id">
-                <input
-                    type="text"
-                    id="employeeId"
-                    readonly
-                    v-model="employee.employee_id"
-                    class="form-control"
-                />
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label
-                for="officeAssignment"
-                class="col-sm-2 text-sm align-middle col-form-label"
-                >EMPLOYMENT STATUS</label
-            >
-            <div class="col-lg-9">
+            <div class="row">
+                <div class="col-lg-10 ml-4">
+            <label 
+                for="officeAssignment" 
+                class="form-group has-float-label">
                 <v-select
                     label="status_name"
                     @input="onSetSelectStatus"
@@ -254,8 +229,9 @@
                 <p class="text-danger text-sm">
                     {{ errors["employmentStatus.stat_code"] }}
                 </p>
+                <span>EMPLOYMENT STATUS</span>
+                </label>
             </div>
-
             <div class="col-lg-1">
                 <button
                     @click="openStatusModal"
@@ -264,15 +240,14 @@
                     <i class="fas fa-plus text-sm"></i>
                 </button>
             </div>
-        </div>
+            </div>
 
-        <div class="form-group row">
+        <div class="row">
+            <div class="col-lg-10 ml-4">
             <label
                 for="designation"
-                class="col-sm-2 text-sm align-middle col-form-label"
-                >POSITION</label
-            >
-            <div class="col-lg-9">
+                class="form-group has-float-label"
+                >
                 <v-select
                     label="position_name"
                     :filterable="false"
@@ -288,6 +263,8 @@
                 <p class="text-danger text-sm">
                     {{ errors["designation.position_code"] }}
                 </p>
+                <span>POSITION</span>
+                </label>
             </div>
 
             <div class="col-lg-1">
@@ -300,13 +277,12 @@
             </div>
         </div>
 
-        <div class="form-group row">
+        <div class="row">
+            <div class="col-lg-10 ml-4">
             <label
                 for="officeAssignment"
-                class="col-sm-2 text-sm align-middle col-form-label"
-                >OFFICE ASSIGNMENT</label
-            >
-            <div class="col-lg-9">
+                class="form-group  has-float-label"
+                >
                 <v-select
                     label="office_name"
                     :filterable="false"
@@ -318,6 +294,8 @@
                 <p class="text-danger text-sm">
                     {{ errors["officeAssignment.office_code"] }}
                 </p>
+                <span>OFFICE ASSIGNMENT</span>
+                </label>
             </div>
 
             <div class="col-lg-1">
