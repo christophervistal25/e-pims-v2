@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            RefNameExtensionSeeder::class,
             TypeSeeder::class,
             RefStatusSeeder::class,
             // EmployeeSeeder::class,
@@ -22,7 +23,6 @@ class DatabaseSeeder extends Seeder
             // CitySeeder::class,
             // BarangaySeeder::class
             // PlantillaSeeder::class,
-            RefNameExtensionSeeder::class,
             ]);
         // $this->call(UsersTable\Seeder::class);
     }

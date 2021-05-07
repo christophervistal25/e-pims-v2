@@ -2759,11 +2759,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -2771,7 +2766,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["employee", "errors", "employmentStatus"],
+  props: ["employee", "errors", "employmentStatus", "nameExtensions"],
   data: function data() {
     return {
       isShow: false,
@@ -2887,7 +2882,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     openNameExtensionModal: function openNameExtensionModal() {
       this.isShowNameExtension = true;
     },
-    closeNameExtensionModal: function closeNameExtensionModal() {
+    closeNameExtensionModal: function closeNameExtensionModal(newExtension) {
+      if (newExtension) {
+        // Push the new data in select option
+        this.nameExtensions.push(newExtension.extension);
+      }
+
       this.isShowNameExtension = false;
     }
   },
@@ -3347,6 +3347,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
 
 
 
@@ -3388,6 +3389,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         gsisIdNo: ""
       },
       employmentStatus: [],
+      nameExtensions: [],
       offices: [],
       positions: [],
       errors: {}
@@ -3617,6 +3619,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
     })["catch"](function (err) {
       return console.log(err);
     });
+    window.axios("/api/name/extensions").then(function (response) {
+      if (response.status === 200) {
+        _this10.nameExtensions = response.data;
+      }
+    })["catch"](function (err) {
+      return console.log(err);
+    });
   }
 });
 
@@ -3695,15 +3704,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["shownameextension"],
   data: function data() {
     return {
       isLoading: false,
-      status: {
-        stat_code: "",
-        status_name: ""
+      data: {
+        extension: ""
       },
       errors: {}
     };
@@ -3713,8 +3738,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.isLoading = true;
-      window.axios.post("/api/employment/nameext/store", this.nameext).then(function (response) {
-        if (response.nameext === 201) {
+      window.axios.post("/api/name/extensions/store", this.data).then(function (response) {
+        if (response.status === 201) {
           _this.isLoading = false;
           sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
             text: "Successfully create new name extension",
@@ -3727,7 +3752,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.isLoading = false;
         _this.errors = {};
 
-        if (error.response.nameext === 422) {
+        if (error.response.status === 422) {
           _this.errors = error.response.data;
         }
       });
@@ -16735,7 +16760,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.button-wrapper[data-v-b141abb8] {\r\n    position: relative;\n}\n.button-wrapper span.label[data-v-b141abb8] {\r\n    position: relative;\r\n    z-index: 0;\r\n    display: inline-block;\r\n    cursor: pointer;\r\n    color: #fff;\r\n    text-transform: uppercase;\n}\n#upload[data-v-b141abb8] {\r\n    display: inline-block;\r\n    position: absolute;\r\n    z-index: 1;\r\n    top: 0;\r\n    left: 0;\r\n    opacity: 0;\n}\r\n", ""]);
+exports.push([module.i, "\n.button-wrapper[data-v-b141abb8] {\n    position: relative;\n}\n.button-wrapper span.label[data-v-b141abb8] {\n    position: relative;\n    z-index: 0;\n    display: inline-block;\n    cursor: pointer;\n    color: #fff;\n    text-transform: uppercase;\n}\n#upload[data-v-b141abb8] {\n    display: inline-block;\n    position: absolute;\n    z-index: 1;\n    top: 0;\n    left: 0;\n    opacity: 0;\n}\n", ""]);
 
 // exports
 
@@ -16754,7 +16779,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.cursor-pointer {\r\n    cursor: pointer;\n}\n.status-item {\r\n    border-width: 3px;\r\n    border-style: dashed;\n}\n.status-item:hover {\r\n    background: #f2f3f4;\r\n    transition: 300ms ease-in-out;\n}\r\n", ""]);
+exports.push([module.i, "\n.cursor-pointer {\n    cursor: pointer;\n}\n.status-item {\n    border-width: 3px;\n    border-style: dashed;\n}\n.status-item:hover {\n    background: #f2f3f4;\n    transition: 300ms ease-in-out;\n}\n", ""]);
 
 // exports
 
@@ -36151,33 +36176,21 @@ var render = function() {
                     [_vm._v("Please select name extension")]
                   ),
                   _vm._v(" "),
-                  _c(
-                    "option",
-                    {
-                      attrs: { value: "JR" },
-                      domProps: { selected: _vm.employee.extension === "JR" }
-                    },
-                    [_vm._v("JR")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "option",
-                    {
-                      attrs: { value: "SR" },
-                      domProps: { selected: _vm.employee.extension === "SR" }
-                    },
-                    [_vm._v("SR")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "option",
-                    {
-                      attrs: { value: "III" },
-                      domProps: { selected: _vm.employee.extension === "III" }
-                    },
-                    [_vm._v("III")]
-                  )
-                ]
+                  _vm._l(_vm.nameExtensions, function(extension, index) {
+                    return _c(
+                      "option",
+                      {
+                        key: index,
+                        domProps: {
+                          selected: _vm.employee.extension === "JR",
+                          value: extension
+                        }
+                      },
+                      [_vm._v(_vm._s(extension))]
+                    )
+                  })
+                ],
+                2
               ),
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
@@ -37179,6 +37192,7 @@ var render = function() {
                         attrs: {
                           employee: _vm.employee,
                           errors: _vm.errors,
+                          nameExtensions: _vm.nameExtensions,
                           employmentStatus: _vm.employmentStatus
                         }
                       })
@@ -37372,7 +37386,50 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _vm._m(0),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", [_vm._v("Name Extension")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.data.extension,
+                        expression: "data.extension"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class:
+                      _vm.errors.hasOwnProperty("errors") &&
+                      _vm.errors.errors.hasOwnProperty("extension")
+                        ? "is-invalid"
+                        : "",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.data.extension },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.data, "extension", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-danger text-sm" }, [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(
+                          _vm.errors.hasOwnProperty("errors")
+                            ? _vm.errors.errors.extension[0]
+                            : ""
+                        ) +
+                        "\n                        "
+                    )
+                  ])
+                ])
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-footer" }, [
                 _c(
@@ -37425,20 +37482,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-body" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", [_vm._v("Name Extension")]),
-        _vm._v(" "),
-        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

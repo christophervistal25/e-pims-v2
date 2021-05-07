@@ -14,7 +14,7 @@ class RefNameExtensionSeeder extends Seeder
     {
         $extensions = ['JR', 'SR', 'III'];
         foreach($extensions as $extension) {
-            RefNameExtension::create(['extesion' => $extension]);
+            RefNameExtension::create(['extension' => $extension]);
         }
     }
 }

@@ -10,7 +10,7 @@
                 shownameextension ? 'padding-right: 15px; display: block;' : ''
             "
         >
-        <div class="modal-dialog" role="document">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Add Name Extension</h5>
@@ -27,7 +27,24 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Name Extension</label>
-                            <input type="text" class="form-control">
+                            <input
+                                type="text"
+                                class="form-control"
+                                v-model="data.extension"
+                                :class="
+                                    errors.hasOwnProperty('errors') &&
+                                    errors.errors.hasOwnProperty('extension')
+                                        ? 'is-invalid'
+                                        : ''
+                                "
+                            />
+                            <p class="text-danger text-sm">
+                                {{
+                                    errors.hasOwnProperty("errors")
+                                        ? errors.errors.extension[0]
+                                        : ""
+                                }}
+                            </p>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -62,14 +79,13 @@
 </template>
 <script>
 import swal from "sweetalert";
-export default{
+export default {
     props: ["shownameextension"],
     data() {
         return {
             isLoading: false,
-            status: {
-                stat_code: "",
-                status_name: ""
+            data: {
+                extension: ""
             },
             errors: {}
         };
@@ -78,9 +94,9 @@ export default{
         submitNewNameExt() {
             this.isLoading = true;
             window.axios
-                .post("/api/employment/nameext/store", this.nameext)
+                .post("/api/name/extensions/store", this.data)
                 .then(response => {
-                    if (response.nameext === 201) {
+                    if (response.status === 201) {
                         this.isLoading = false;
                         swal({
                             text: "Successfully create new name extension",
@@ -92,7 +108,7 @@ export default{
                 .catch(error => {
                     this.isLoading = false;
                     this.errors = {};
-                    if (error.response.nameext === 422) {
+                    if (error.response.status === 422) {
                         this.errors = error.response.data;
                     }
                 });
@@ -101,5 +117,5 @@ export default{
             this.$emit("nameext-modal-dismiss");
         }
     }
-}
+};
 </script>

@@ -94,19 +94,11 @@
                                 >Please select name extension</option
                             >
                             <option
+                                v-for="(extension, index) in nameExtensions"
+                                :key="index"
                                 :selected="employee.extension === 'JR'"
-                                value="JR"
-                                >JR</option
-                            >
-                            <option
-                                :selected="employee.extension === 'SR'"
-                                value="SR"
-                                >SR</option
-                            >
-                            <option
-                                :selected="employee.extension === 'III'"
-                                value="III"
-                                >III</option
+                                :value="extension"
+                                >{{ extension }}</option
                             >
                         </select>
                         <p class="text-danger text-sm">
@@ -114,7 +106,10 @@
                         </p>
                     </div>
                     <div class="col-lg-1">
-                        <button class="btn btn-info btn-sm rounded-circle shadow mt-1" @click="openNameExtensionModal">
+                        <button
+                            class="btn btn-info btn-sm rounded-circle shadow mt-1"
+                            @click="openNameExtensionModal"
+                        >
                             <i class="fas fa-plus text-sm"></i>
                         </button>
                     </div>
@@ -318,7 +313,6 @@
                     :value="employee.officeAssignment.office_name"
                     @input="onSetSelectOffice"
                     :options="offices"
-
                     @search="onSearchOffice"
                 ></v-select>
                 <p class="text-danger text-sm">
@@ -348,9 +342,10 @@
             :showassignment="isShowAssignment"
             @assignment-modal-dismiss="closeAssignmentModal"
         ></assignmentmodal>
-        <name-extension-modal 
-        :shownameextension="isShowNameExtension"
-            @nameext-modal-dismiss="closeNameExtensionModal">
+        <name-extension-modal
+            :shownameextension="isShowNameExtension"
+            @nameext-modal-dismiss="closeNameExtensionModal"
+        >
         </name-extension-modal>
         <!-- <button>sample</button> -->
     </div>
@@ -364,7 +359,7 @@ import NameExtensionModal from "./NameExtensionModal.vue";
 import "vue-select/dist/vue-select.css";
 import _ from "lodash";
 export default {
-    props: ["employee", "errors", "employmentStatus"],
+    props: ["employee", "errors", "employmentStatus", "nameExtensions"],
     data() {
         return {
             isShow: false,
@@ -491,9 +486,14 @@ export default {
         openNameExtensionModal() {
             this.isShowNameExtension = true;
         },
-        closeNameExtensionModal() {
+        closeNameExtensionModal(newExtension) {
+            if (newExtension) {
+                // Push the new data in select option
+                this.nameExtensions.push(newExtension.extension);
+            }
+
             this.isShowNameExtension = false;
-        },
+        }
     },
     created() {}
 };

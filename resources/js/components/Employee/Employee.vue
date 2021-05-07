@@ -201,6 +201,7 @@
                                 <basic-information
                                     :employee="employee"
                                     :errors="errors"
+                                    :nameExtensions="nameExtensions"
                                     :employmentStatus="employmentStatus"
                                 ></basic-information>
                             </div>
@@ -304,6 +305,7 @@ export default {
                 gsisIdNo: ""
             },
             employmentStatus: [],
+            nameExtensions: [],
             offices: [],
             positions: [],
             errors: {}
@@ -548,6 +550,15 @@ export default {
             .then(response => {
                 if (response.status === 200) {
                     this.employmentStatus = response.data;
+                }
+            })
+            .catch(err => console.log(err));
+
+        window
+            .axios("/api/name/extensions")
+            .then(response => {
+                if (response.status === 200) {
+                    this.nameExtensions = response.data;
                 }
             })
             .catch(err => console.log(err));
