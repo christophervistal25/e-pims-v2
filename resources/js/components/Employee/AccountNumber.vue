@@ -60,7 +60,13 @@
             </label>
             <p class="text-danger text-sm">{{ errors.tinNo }}</p>
         </div>
-        <div class="form-group">
+        <div
+            class="form-group"
+            v-if="
+                employee.employmentStatus &&
+                    employee.employmentStatus.status_name !== 'PERMANENT'
+            "
+        >
             <label for="" class="form-group has-float-label">
                 <input
                     type="text"
@@ -73,17 +79,29 @@
                     "
                     style="outline: none; box-shadow: 0px 0px 0px transparent;"
                 />
-                <span
-                    v-html="
-                        employee.employmentStatus &&
-                        employee.employmentStatus.status_name !== 'PERMANENT'
-                            ? 'LBP ACCOUNT NO.'
-                            : 'DBP ACCOUNT NO.'
-                    "
-                ></span>
+                <span>LBP ACCOUNT NO.</span>
             </label>
             <p class="text-danger text-sm" v-if="errors.lbpAccountNo">
                 {{ errors.lbpAccountNo }}
+            </p>
+        </div>
+        <div v-else>
+            <label for="" class="form-group has-float-label">
+                <input
+                    type="text"
+                    v-model="employee.dbpAccountNo"
+                    class="form-control col-lg-12"
+                    :class="
+                        errors.hasOwnProperty('dbpAccountNo')
+                            ? 'is-invalid'
+                            : ''
+                    "
+                    style="outline: none; box-shadow: 0px 0px 0px transparent;"
+                />
+                <span>DBP ACCOUNT NO.</span>
+            </label>
+            <p class="text-danger text-sm" v-if="errors.dbpAccountNo">
+                {{ errors.dbpAccountNo }}
             </p>
         </div>
 

@@ -432,15 +432,8 @@ class EmployeeRepository
         $employee->gsis_id_no     = $data['gsisIdNo'];
         $employee->gsis_policy_no = $data['gsisPolicyNo'];
         $employee->gsis_bp_no     = $data['gsisBpNo'];
-
-        if($status->id === 1 && strtoupper($status->status_name) === 'PERMANENT') {
-            $employee->dbp_account_no = $data['lbpAccountNo'];
-            $employee->lbp_account_no = '';
-        } else {
-            $employee->lbp_account_no = $data['lbpAccountNo'];
-            $employee->dbp_account_no = '';
-        }
-
+        $employee->dbp_account_no = $data['dbpAccountNo'];
+        $employee->lbp_account_no = $data['lbpAccountNo'];
         $employee->status         = $data['employmentStatus']['stat_code'];
 
         $information = EmployeeInformation::where('EmpIDNo', $data['employee_id'])->first() ?? new EmployeeInformation();

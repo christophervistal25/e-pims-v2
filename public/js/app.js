@@ -2096,6 +2096,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["employee", "errors"]
 });
@@ -3526,6 +3544,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
             text: "Successfully update employee.",
             icon: "success"
           });
+          _this7.errors = {};
 
           _this7.loadEmployees();
         }
@@ -3566,7 +3585,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           _this8.employee.philhealthNo = response.data.philhealth_no;
           _this8.employee.sssNo = response.data.sss_no;
           _this8.employee.tinNo = response.data.tin_no;
-          _this8.employee.lbpAccountNo = response.data.lbp_account_no || response.data.dbp_account_no;
+          _this8.employee.lbpAccountNo = response.data.lbp_account_no;
+          _this8.employee.dbpAccountNo = response.data.dbp_account_no;
           _this8.employee.employmentStatus = response.data.status;
           _this8.employee.gsisPolicyNo = response.data.gsis_policy_no;
           _this8.employee.gsisBpNo = response.data.gsis_bp_no;
@@ -35417,61 +35437,104 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c(
-        "label",
-        { staticClass: "form-group has-float-label", attrs: { for: "" } },
-        [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.employee.lbpAccountNo,
-                expression: "employee.lbpAccountNo"
-              }
-            ],
-            staticClass: "form-control col-lg-12",
-            class: _vm.errors.hasOwnProperty("lbpAccountNo")
-              ? "is-invalid"
-              : "",
-            staticStyle: {
-              outline: "none",
-              "box-shadow": "0px 0px 0px transparent"
-            },
-            attrs: { type: "text" },
-            domProps: { value: _vm.employee.lbpAccountNo },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+    _vm.employee.employmentStatus &&
+    _vm.employee.employmentStatus.status_name !== "PERMANENT"
+      ? _c("div", { staticClass: "form-group" }, [
+          _c(
+            "label",
+            { staticClass: "form-group has-float-label", attrs: { for: "" } },
+            [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.employee.lbpAccountNo,
+                    expression: "employee.lbpAccountNo"
+                  }
+                ],
+                staticClass: "form-control col-lg-12",
+                class: _vm.errors.hasOwnProperty("lbpAccountNo")
+                  ? "is-invalid"
+                  : "",
+                staticStyle: {
+                  outline: "none",
+                  "box-shadow": "0px 0px 0px transparent"
+                },
+                attrs: { type: "text" },
+                domProps: { value: _vm.employee.lbpAccountNo },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.employee, "lbpAccountNo", $event.target.value)
+                  }
                 }
-                _vm.$set(_vm.employee, "lbpAccountNo", $event.target.value)
-              }
-            }
-          }),
+              }),
+              _vm._v(" "),
+              _c("span", [_vm._v("LBP ACCOUNT NO.")])
+            ]
+          ),
           _vm._v(" "),
-          _c("span", {
-            domProps: {
-              innerHTML: _vm._s(
-                _vm.employee.employmentStatus &&
-                  _vm.employee.employmentStatus.status_name !== "PERMANENT"
-                  ? "LBP ACCOUNT NO."
-                  : "DBP ACCOUNT NO."
-              )
-            }
-          })
-        ]
-      ),
-      _vm._v(" "),
-      _vm.errors.lbpAccountNo
-        ? _c("p", { staticClass: "text-danger text-sm" }, [
-            _vm._v(
-              "\n            " + _vm._s(_vm.errors.lbpAccountNo) + "\n        "
-            )
-          ])
-        : _vm._e()
-    ]),
+          _vm.errors.lbpAccountNo
+            ? _c("p", { staticClass: "text-danger text-sm" }, [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm.errors.lbpAccountNo) +
+                    "\n        "
+                )
+              ])
+            : _vm._e()
+        ])
+      : _c("div", [
+          _c(
+            "label",
+            { staticClass: "form-group has-float-label", attrs: { for: "" } },
+            [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.employee.dbpAccountNo,
+                    expression: "employee.dbpAccountNo"
+                  }
+                ],
+                staticClass: "form-control col-lg-12",
+                class: _vm.errors.hasOwnProperty("dbpAccountNo")
+                  ? "is-invalid"
+                  : "",
+                staticStyle: {
+                  outline: "none",
+                  "box-shadow": "0px 0px 0px transparent"
+                },
+                attrs: { type: "text" },
+                domProps: { value: _vm.employee.dbpAccountNo },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.employee, "dbpAccountNo", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("span", [_vm._v("DBP ACCOUNT NO.")])
+            ]
+          ),
+          _vm._v(" "),
+          _vm.errors.dbpAccountNo
+            ? _c("p", { staticClass: "text-danger text-sm" }, [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm.errors.dbpAccountNo) +
+                    "\n        "
+                )
+              ])
+            : _vm._e()
+        ]),
     _vm._v(" "),
     _c("div", {}, [
       _c(
