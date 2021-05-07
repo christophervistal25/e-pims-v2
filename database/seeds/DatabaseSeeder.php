@@ -1,6 +1,5 @@
 <?php
 
-use App\City;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,6 +22,7 @@ class DatabaseSeeder extends Seeder
             // CitySeeder::class,
             // BarangaySeeder::class
             // PlantillaSeeder::class,
+            RefNameExtensionSeeder::class,
             ]);
         // $this->call(UsersTable\Seeder::class);
     }
