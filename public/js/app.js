@@ -2086,6 +2086,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["employee", "errors"]
 });
@@ -16588,7 +16598,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.button-wrapper[data-v-b141abb8] {\n    position: relative;\n}\n.button-wrapper span.label[data-v-b141abb8] {\n    position: relative;\n    z-index: 0;\n    display: inline-block;\n    cursor: pointer;\n    color: #fff;\n    text-transform: uppercase;\n}\n#upload[data-v-b141abb8] {\n    display: inline-block;\n    position: absolute;\n    z-index: 1;\n    top: 0;\n    left: 0;\n    opacity: 0;\n}\n", ""]);
+exports.push([module.i, "\n.button-wrapper[data-v-b141abb8] {\r\n    position: relative;\n}\n.button-wrapper span.label[data-v-b141abb8] {\r\n    position: relative;\r\n    z-index: 0;\r\n    display: inline-block;\r\n    cursor: pointer;\r\n    color: #fff;\r\n    text-transform: uppercase;\n}\n#upload[data-v-b141abb8] {\r\n    display: inline-block;\r\n    position: absolute;\r\n    z-index: 1;\r\n    top: 0;\r\n    left: 0;\r\n    opacity: 0;\n}\r\n", ""]);
 
 // exports
 
@@ -16607,7 +16617,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.cursor-pointer {\n    cursor: pointer;\n}\n.status-item {\n    border-width: 3px;\n    border-style: dashed;\n}\n.status-item:hover {\n    background: #f2f3f4;\n    transition: 300ms ease-in-out;\n}\n", ""]);
+exports.push([module.i, "\n.cursor-pointer {\r\n    cursor: pointer;\n}\n.status-item {\r\n    border-width: 3px;\r\n    border-style: dashed;\n}\n.status-item:hover {\r\n    background: #f2f3f4;\r\n    transition: 300ms ease-in-out;\n}\r\n", ""]);
 
 // exports
 
@@ -16626,7 +16636,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, "\ntd[data-v-a89d73f8] {\n    cursor: pointer;\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-a89d73f8]:hover {\n    background: #f1f2f3;\n}\n", ""]);
+exports.push([module.i, "\ntd[data-v-a89d73f8] {\r\n    cursor: pointer;\r\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-a89d73f8]:hover {\r\n    background: #f1f2f3;\n}\r\n", ""]);
 
 // exports
 
@@ -35099,7 +35109,7 @@ var render = function() {
               outline: "none",
               "box-shadow": "0px 0px 0px transparent"
             },
-            attrs: { type: "number" },
+            attrs: { type: "text" },
             domProps: { value: _vm.employee.pagibigMidNo },
             on: {
               input: function($event) {
@@ -35142,7 +35152,7 @@ var render = function() {
               outline: "none",
               "box-shadow": "0px 0px 0px transparent"
             },
-            attrs: { type: "number" },
+            attrs: { type: "text" },
             domProps: { value: _vm.employee.philhealthNo },
             on: {
               input: function($event) {
@@ -35183,7 +35193,7 @@ var render = function() {
               outline: "none",
               "box-shadow": "0px 0px 0px transparent"
             },
-            attrs: { type: "number" },
+            attrs: { type: "text" },
             domProps: { value: _vm.employee.sssNo },
             on: {
               input: function($event) {
@@ -35224,7 +35234,7 @@ var render = function() {
               outline: "none",
               "box-shadow": "0px 0px 0px transparent"
             },
-            attrs: { type: "number" },
+            attrs: { type: "text" },
             domProps: { value: _vm.employee.tinNo },
             on: {
               input: function($event) {
@@ -35321,7 +35331,7 @@ var render = function() {
               outline: "none",
               "box-shadow": "0px 0px 0px transparent"
             },
-            attrs: { type: "number" },
+            attrs: { type: "text" },
             domProps: { value: _vm.employee.gsisIdNo },
             on: {
               input: function($event) {
@@ -35364,7 +35374,7 @@ var render = function() {
               outline: "none",
               "box-shadow": "0px 0px 0px transparent"
             },
-            attrs: { type: "number" },
+            attrs: { type: "text" },
             domProps: { value: _vm.employee.gsisPolicyNo },
             on: {
               input: function($event) {
@@ -35405,7 +35415,7 @@ var render = function() {
               outline: "none",
               "box-shadow": "0px 0px 0px transparent"
             },
-            attrs: { type: "number" },
+            attrs: { type: "text" },
             domProps: { value: _vm.employee.gsisBpNo },
             on: {
               input: function($event) {
@@ -74957,8 +74967,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/e-pims/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/e-pims/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\e-pims\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\e-pims\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

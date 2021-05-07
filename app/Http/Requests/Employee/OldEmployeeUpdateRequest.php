@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Employee;
 
+use App\Rules\UpdateTrapfullname;
 use Illuminate\Foundation\Http\FormRequest;
 
 class OldEmployeeUpdateRequest extends FormRequest
@@ -25,14 +26,15 @@ class OldEmployeeUpdateRequest extends FormRequest
     {
         return [
             'employee_id'      => 'required|exists:employees',
-            'lastName'         => 'required',
-            'dateOfBirth'      => 'required|date',
+            'firstName'        => ['required', new UpdateTrapfullname()],
+            'middleName'       => ['required', new UpdateTrapfullname()],
+            'lastName'         => ['required', new UpdateTrapfullname()],
+            'extension' => ['nullable', new UpdateTrapfullname()],
+            'dateOfBirth'      => ['required', 'date', new UpdateTrapfullname()],
             'lbpAccountNo'      => 'required|unique:employees,lbp_account_no,' . request()->employee_id . ',employee_id|unique:employees,dbp_account_no,' . request()->employee_id . ',employee_id',
             'designation.position_code'      => 'required|exists:positions,position_code',
             'officeAssignment.office_code' => 'required|exists:offices,office_code',
             'employmentStatus.stat_code' => 'required|exists:ref_statuses,stat_code',
-            'firstName'        => 'required',
-            'middleName'       => 'required',
             'pagibigMidNo'     => 'nullable',
             'philhealthNo'     => 'nullable',
             'sssNo'            => 'nullable|unique:employees,sss_no,'. request('employee_id') . ',employee_id',
