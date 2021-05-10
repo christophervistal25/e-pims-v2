@@ -260,6 +260,7 @@ export default {
                 "sssNo",
                 "tinNo",
                 "lbpAccountNo",
+                "dbpAccountNo",
                 "gsisPolicyNo",
                 "gsisBpNo",
                 "gsisIdNo"
@@ -300,6 +301,7 @@ export default {
                 sssNo: "",
                 tinNo: "",
                 lbpAccountNo: "",
+                dbpAccountNo: "",
                 gsisPolicyNo: "",
                 gsisBpNo: "",
                 gsisIdNo: ""
@@ -330,7 +332,7 @@ export default {
                 }
             });
 
-            // check for account numbers
+            // Check for account numbers
             errorFields.some(field => {
                 if (this.accountNumberFields.includes(field)) {
                     this.sectionError.accountNumbers = true;

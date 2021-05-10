@@ -64,28 +64,9 @@
             class="form-group"
             v-if="
                 employee.employmentStatus &&
-                    employee.employmentStatus.status_name !== 'PERMANENT'
+                    employee.employmentStatus.status_name === 'PERMANENT'
             "
         >
-            <label for="" class="form-group has-float-label">
-                <input
-                    type="text"
-                    v-model="employee.lbpAccountNo"
-                    class="form-control col-lg-12"
-                    :class="
-                        errors.hasOwnProperty('lbpAccountNo')
-                            ? 'is-invalid'
-                            : ''
-                    "
-                    style="outline: none; box-shadow: 0px 0px 0px transparent;"
-                />
-                <span>LBP ACCOUNT NO.</span>
-            </label>
-            <p class="text-danger text-sm" v-if="errors.lbpAccountNo">
-                {{ errors.lbpAccountNo }}
-            </p>
-        </div>
-        <div v-else>
             <label for="" class="form-group has-float-label">
                 <input
                     type="text"
@@ -102,6 +83,25 @@
             </label>
             <p class="text-danger text-sm" v-if="errors.dbpAccountNo">
                 {{ errors.dbpAccountNo }}
+            </p>
+        </div>
+        <div v-else>
+            <label for="" class="form-group has-float-label">
+                <input
+                    type="text"
+                    v-model="employee.lbpAccountNo"
+                    class="form-control col-lg-12"
+                    :class="
+                        errors.hasOwnProperty('lbpAccountNo')
+                            ? 'is-invalid'
+                            : ''
+                    "
+                    style="outline: none; box-shadow: 0px 0px 0px transparent;"
+                />
+                <span>LBP ACCOUNT NO.</span>
+            </label>
+            <p class="text-danger text-sm" v-if="errors.lbpAccountNo">
+                {{ errors.lbpAccountNo }}
             </p>
         </div>
 
