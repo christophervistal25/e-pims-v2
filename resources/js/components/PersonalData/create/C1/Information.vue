@@ -601,17 +601,22 @@
                 </div>
                 <div class="row pl-3 pr-3">
                     <div class="col-lg-3">
+                    <label class="form-group has-float-label">
                         <v-select
                             label="name"
                             v-model="personal_data.residentialProvince"
                             :options="provinces"
                             @input="provinceChange"
+                            id="resProvince"
                         ></v-select>
                         <p class="text-danger text-sm">
                             {{ errors["residentialProvince.code"] }}
                         </p>
+                        <span>Province</span>
+                        </label>
                     </div>
                     <div class="col-lg-3">
+                    <label class="form-group has-float-label">
                         <v-select
                             label="name"
                             v-model="personal_data.residentialCity"
@@ -621,8 +626,12 @@
                         <p class="text-danger text-sm">
                             {{ errors["residentialCity.code"] }}
                         </p>
+                        <span>City</span>
+                    </label>
+
                     </div>
                     <div class="col-lg-3">
+                    <label class="form-group has-float-label">
                         <v-select
                             label="name"
                             v-model="personal_data.residentialBarangay"
@@ -631,6 +640,8 @@
                         <p class="text-danger text-sm">
                             {{ errors["residentialBarangay.code"] }}
                         </p>
+                        <span>Barangay</span>
+                    </label>
                     </div>
                     <div class="col-lg-3">
                         <label
@@ -733,6 +744,7 @@
 
                 <div class="row pl-3 pr-3">
                     <div class="col-lg-3">
+                    <label class="form-group has-float-label">
                         <v-select
                             label="name"
                             v-model="personal_data.permanentProvince"
@@ -742,9 +754,12 @@
                         <p class="text-danger text-sm">
                             {{ errors["permanentProvince.code"] }}
                         </p>
+                        <span>Province</span>
+                    </label>
                     </div>
 
                     <div class="col-lg-3">
+                    <label class="form-group has-float-label">
                         <v-select
                             label="name"
                             v-model="personal_data.permanentCity"
@@ -754,9 +769,12 @@
                         <p class="text-danger text-sm">
                             {{ errors["permanentCity.code"] }}
                         </p>
+                        <span>City</span>
+                    </label>
                     </div>
 
                     <div class="col-lg-3">
+                    <label class="form-group has-float-label">
                         <v-select
                             label="name"
                             v-model="personal_data.permanentBarangay"
@@ -765,6 +783,8 @@
                         <p class="text-danger text-sm">
                             {{ errors["permanentBarangay.code"] }}
                         </p>
+                        <span>Barangay</span>
+                    </label>
                     </div>
 
                     <div class="col-lg-3">

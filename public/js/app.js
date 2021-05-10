@@ -8082,6 +8082,26 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["data"],
@@ -16778,7 +16798,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.cursor-pointer {\n    cursor: pointer;\n}\n.status-item {\n    border-width: 3px;\n    border-style: dashed;\n}\n.status-item:hover {\n    background: #f2f3f4;\n    transition: 300ms ease-in-out;\n}\n", ""]);
+exports.push([module.i, "\n.cursor-pointer {\r\n    cursor: pointer;\n}\n.status-item {\r\n    border-width: 3px;\r\n    border-style: dashed;\n}\n.status-item:hover {\r\n    background: #f2f3f4;\r\n    transition: 300ms ease-in-out;\n}\r\n", ""]);
 
 // exports
 
@@ -44804,85 +44824,101 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row pl-3 pr-3" }, [
-            _c(
-              "div",
-              { staticClass: "col-lg-3" },
-              [
-                _c("v-select", {
-                  attrs: { label: "name", options: _vm.provinces },
-                  on: { input: _vm.provinceChange },
-                  model: {
-                    value: _vm.personal_data.residentialProvince,
-                    callback: function($$v) {
-                      _vm.$set(_vm.personal_data, "residentialProvince", $$v)
+            _c("div", { staticClass: "col-lg-3" }, [
+              _c(
+                "label",
+                { staticClass: "form-group has-float-label" },
+                [
+                  _c("v-select", {
+                    attrs: {
+                      label: "name",
+                      options: _vm.provinces,
+                      id: "resProvince"
                     },
-                    expression: "personal_data.residentialProvince"
-                  }
-                }),
-                _vm._v(" "),
-                _c("p", { staticClass: "text-danger text-sm" }, [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm.errors["residentialProvince.code"]) +
-                      "\n                    "
-                  )
-                ])
-              ],
-              1
-            ),
+                    on: { input: _vm.provinceChange },
+                    model: {
+                      value: _vm.personal_data.residentialProvince,
+                      callback: function($$v) {
+                        _vm.$set(_vm.personal_data, "residentialProvince", $$v)
+                      },
+                      expression: "personal_data.residentialProvince"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-danger text-sm" }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(_vm.errors["residentialProvince.code"]) +
+                        "\n                    "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Province")])
+                ],
+                1
+              )
+            ]),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-lg-3" },
-              [
-                _c("v-select", {
-                  attrs: { label: "name", options: _vm.cities },
-                  on: { input: _vm.municipalChange },
-                  model: {
-                    value: _vm.personal_data.residentialCity,
-                    callback: function($$v) {
-                      _vm.$set(_vm.personal_data, "residentialCity", $$v)
-                    },
-                    expression: "personal_data.residentialCity"
-                  }
-                }),
-                _vm._v(" "),
-                _c("p", { staticClass: "text-danger text-sm" }, [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm.errors["residentialCity.code"]) +
-                      "\n                    "
-                  )
-                ])
-              ],
-              1
-            ),
+            _c("div", { staticClass: "col-lg-3" }, [
+              _c(
+                "label",
+                { staticClass: "form-group has-float-label" },
+                [
+                  _c("v-select", {
+                    attrs: { label: "name", options: _vm.cities },
+                    on: { input: _vm.municipalChange },
+                    model: {
+                      value: _vm.personal_data.residentialCity,
+                      callback: function($$v) {
+                        _vm.$set(_vm.personal_data, "residentialCity", $$v)
+                      },
+                      expression: "personal_data.residentialCity"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-danger text-sm" }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(_vm.errors["residentialCity.code"]) +
+                        "\n                    "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("City")])
+                ],
+                1
+              )
+            ]),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-lg-3" },
-              [
-                _c("v-select", {
-                  attrs: { label: "name", options: _vm.barangays },
-                  model: {
-                    value: _vm.personal_data.residentialBarangay,
-                    callback: function($$v) {
-                      _vm.$set(_vm.personal_data, "residentialBarangay", $$v)
-                    },
-                    expression: "personal_data.residentialBarangay"
-                  }
-                }),
-                _vm._v(" "),
-                _c("p", { staticClass: "text-danger text-sm" }, [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm.errors["residentialBarangay.code"]) +
-                      "\n                    "
-                  )
-                ])
-              ],
-              1
-            ),
+            _c("div", { staticClass: "col-lg-3" }, [
+              _c(
+                "label",
+                { staticClass: "form-group has-float-label" },
+                [
+                  _c("v-select", {
+                    attrs: { label: "name", options: _vm.barangays },
+                    model: {
+                      value: _vm.personal_data.residentialBarangay,
+                      callback: function($$v) {
+                        _vm.$set(_vm.personal_data, "residentialBarangay", $$v)
+                      },
+                      expression: "personal_data.residentialBarangay"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-danger text-sm" }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(_vm.errors["residentialBarangay.code"]) +
+                        "\n                    "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Barangay")])
+                ],
+                1
+              )
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3" }, [
               _c(
@@ -45129,85 +45165,97 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row pl-3 pr-3" }, [
-            _c(
-              "div",
-              { staticClass: "col-lg-3" },
-              [
-                _c("v-select", {
-                  attrs: { label: "name", options: _vm.provinces },
-                  on: { input: _vm.permanentProvinceChange },
-                  model: {
-                    value: _vm.personal_data.permanentProvince,
-                    callback: function($$v) {
-                      _vm.$set(_vm.personal_data, "permanentProvince", $$v)
-                    },
-                    expression: "personal_data.permanentProvince"
-                  }
-                }),
-                _vm._v(" "),
-                _c("p", { staticClass: "text-danger text-sm" }, [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm.errors["permanentProvince.code"]) +
-                      "\n                    "
-                  )
-                ])
-              ],
-              1
-            ),
+            _c("div", { staticClass: "col-lg-3" }, [
+              _c(
+                "label",
+                { staticClass: "form-group has-float-label" },
+                [
+                  _c("v-select", {
+                    attrs: { label: "name", options: _vm.provinces },
+                    on: { input: _vm.permanentProvinceChange },
+                    model: {
+                      value: _vm.personal_data.permanentProvince,
+                      callback: function($$v) {
+                        _vm.$set(_vm.personal_data, "permanentProvince", $$v)
+                      },
+                      expression: "personal_data.permanentProvince"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-danger text-sm" }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(_vm.errors["permanentProvince.code"]) +
+                        "\n                    "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Province")])
+                ],
+                1
+              )
+            ]),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-lg-3" },
-              [
-                _c("v-select", {
-                  attrs: { label: "name", options: _vm.permanentCities },
-                  on: { input: _vm.permanentMunicipalChange },
-                  model: {
-                    value: _vm.personal_data.permanentCity,
-                    callback: function($$v) {
-                      _vm.$set(_vm.personal_data, "permanentCity", $$v)
-                    },
-                    expression: "personal_data.permanentCity"
-                  }
-                }),
-                _vm._v(" "),
-                _c("p", { staticClass: "text-danger text-sm" }, [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm.errors["permanentCity.code"]) +
-                      "\n                    "
-                  )
-                ])
-              ],
-              1
-            ),
+            _c("div", { staticClass: "col-lg-3" }, [
+              _c(
+                "label",
+                { staticClass: "form-group has-float-label" },
+                [
+                  _c("v-select", {
+                    attrs: { label: "name", options: _vm.permanentCities },
+                    on: { input: _vm.permanentMunicipalChange },
+                    model: {
+                      value: _vm.personal_data.permanentCity,
+                      callback: function($$v) {
+                        _vm.$set(_vm.personal_data, "permanentCity", $$v)
+                      },
+                      expression: "personal_data.permanentCity"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-danger text-sm" }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(_vm.errors["permanentCity.code"]) +
+                        "\n                    "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("City")])
+                ],
+                1
+              )
+            ]),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-lg-3" },
-              [
-                _c("v-select", {
-                  attrs: { label: "name", options: _vm.permanentBarangays },
-                  model: {
-                    value: _vm.personal_data.permanentBarangay,
-                    callback: function($$v) {
-                      _vm.$set(_vm.personal_data, "permanentBarangay", $$v)
-                    },
-                    expression: "personal_data.permanentBarangay"
-                  }
-                }),
-                _vm._v(" "),
-                _c("p", { staticClass: "text-danger text-sm" }, [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm.errors["permanentBarangay.code"]) +
-                      "\n                    "
-                  )
-                ])
-              ],
-              1
-            ),
+            _c("div", { staticClass: "col-lg-3" }, [
+              _c(
+                "label",
+                { staticClass: "form-group has-float-label" },
+                [
+                  _c("v-select", {
+                    attrs: { label: "name", options: _vm.permanentBarangays },
+                    model: {
+                      value: _vm.personal_data.permanentBarangay,
+                      callback: function($$v) {
+                        _vm.$set(_vm.personal_data, "permanentBarangay", $$v)
+                      },
+                      expression: "personal_data.permanentBarangay"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-danger text-sm" }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(_vm.errors["permanentBarangay.code"]) +
+                        "\n                    "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Barangay")])
+                ],
+                1
+              )
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3" }, [
               _c(
