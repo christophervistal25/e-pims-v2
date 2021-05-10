@@ -55,6 +55,7 @@
                   v-for="(employee, index) in employees"
                   :key="index"
                   class="cursor-pointer"
+                  @click="editEmployee(employee)"
                 >
                   <td class="text-sm align-middle">
                     {{ employee.employee_id }}
