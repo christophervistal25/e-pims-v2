@@ -3355,7 +3355,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         basicInformation: false,
         accountNumbers: false
       },
-      accountNumberFields: ["pagibigMidNo", "philhealthNo", "sssNo", "tinNo", "lbpAccountNo", "gsisPolicyNo", "gsisBpNo", "gsisIdNo"],
+      accountNumberFields: ["pagibigMidNo", "philhealthNo", "sssNo", "tinNo", "lbpAccountNo", "dbpAccountNo", "gsisPolicyNo", "gsisBpNo", "gsisIdNo"],
       basicInformationFields: ["lastName", "firstName", "middleName", "extension", "dateOfBirth", "age", "step", "basicRate", "employmentStatus.stat_code", "officeAssignment.office_code", "designation.position_code"],
       isComplete: false,
       isLoading: false,
@@ -3380,6 +3380,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         sssNo: "",
         tinNo: "",
         lbpAccountNo: "",
+        dbpAccountNo: "",
         gsisPolicyNo: "",
         gsisBpNo: "",
         gsisIdNo: ""
@@ -3410,7 +3411,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           _this.sectionError.basicInformation = true;
           return true;
         }
-      }); // check for account numbers
+      }); // Check for account numbers
 
       errorFields.some(function (field) {
         if (_this.accountNumberFields.includes(field)) {
@@ -16758,7 +16759,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.button-wrapper[data-v-b141abb8] {\n    position: relative;\n}\n.button-wrapper span.label[data-v-b141abb8] {\n    position: relative;\n    z-index: 0;\n    display: inline-block;\n    cursor: pointer;\n    color: #fff;\n    text-transform: uppercase;\n}\n#upload[data-v-b141abb8] {\n    display: inline-block;\n    position: absolute;\n    z-index: 1;\n    top: 0;\n    left: 0;\n    opacity: 0;\n}\n", ""]);
+exports.push([module.i, "\n.button-wrapper[data-v-b141abb8] {\r\n    position: relative;\n}\n.button-wrapper span.label[data-v-b141abb8] {\r\n    position: relative;\r\n    z-index: 0;\r\n    display: inline-block;\r\n    cursor: pointer;\r\n    color: #fff;\r\n    text-transform: uppercase;\n}\n#upload[data-v-b141abb8] {\r\n    display: inline-block;\r\n    position: absolute;\r\n    z-index: 1;\r\n    top: 0;\r\n    left: 0;\r\n    opacity: 0;\n}\r\n", ""]);
 
 // exports
 
@@ -16796,7 +16797,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, "\ntd[data-v-a89d73f8] {\n    cursor: pointer;\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-a89d73f8]:hover {\n    background: #f1f2f3;\n}\n", ""]);
+exports.push([module.i, "\ntd[data-v-a89d73f8] {\r\n    cursor: pointer;\r\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-a89d73f8]:hover {\r\n    background: #f1f2f3;\n}\r\n", ""]);
 
 // exports
 
@@ -16815,7 +16816,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, "\ntd[data-v-71d926a4] {\n    cursor: pointer;\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-71d926a4]:hover {\n    background: #f1f2f3;\n}\n", ""]);
+exports.push([module.i, "\ntd[data-v-71d926a4] {\r\n    cursor: pointer;\r\n    transition: all 300ms ease-in-out;\n}\ntd[data-v-71d926a4]:hover {\r\n    background: #f1f2f3;\n}\r\n", ""]);
 
 // exports
 
@@ -35416,56 +35417,8 @@ var render = function() {
     ]),
     _vm._v(" "),
     _vm.employee.employmentStatus &&
-    _vm.employee.employmentStatus.status_name !== "PERMANENT"
+    _vm.employee.employmentStatus.status_name === "PERMANENT"
       ? _c("div", { staticClass: "form-group" }, [
-          _c(
-            "label",
-            { staticClass: "form-group has-float-label", attrs: { for: "" } },
-            [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.employee.lbpAccountNo,
-                    expression: "employee.lbpAccountNo"
-                  }
-                ],
-                staticClass: "form-control col-lg-12",
-                class: _vm.errors.hasOwnProperty("lbpAccountNo")
-                  ? "is-invalid"
-                  : "",
-                staticStyle: {
-                  outline: "none",
-                  "box-shadow": "0px 0px 0px transparent"
-                },
-                attrs: { type: "text" },
-                domProps: { value: _vm.employee.lbpAccountNo },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.employee, "lbpAccountNo", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("span", [_vm._v("LBP ACCOUNT NO.")])
-            ]
-          ),
-          _vm._v(" "),
-          _vm.errors.lbpAccountNo
-            ? _c("p", { staticClass: "text-danger text-sm" }, [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.errors.lbpAccountNo) +
-                    "\n        "
-                )
-              ])
-            : _vm._e()
-        ])
-      : _c("div", [
           _c(
             "label",
             { staticClass: "form-group has-float-label", attrs: { for: "" } },
@@ -35508,6 +35461,54 @@ var render = function() {
                 _vm._v(
                   "\n            " +
                     _vm._s(_vm.errors.dbpAccountNo) +
+                    "\n        "
+                )
+              ])
+            : _vm._e()
+        ])
+      : _c("div", [
+          _c(
+            "label",
+            { staticClass: "form-group has-float-label", attrs: { for: "" } },
+            [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.employee.lbpAccountNo,
+                    expression: "employee.lbpAccountNo"
+                  }
+                ],
+                staticClass: "form-control col-lg-12",
+                class: _vm.errors.hasOwnProperty("lbpAccountNo")
+                  ? "is-invalid"
+                  : "",
+                staticStyle: {
+                  outline: "none",
+                  "box-shadow": "0px 0px 0px transparent"
+                },
+                attrs: { type: "text" },
+                domProps: { value: _vm.employee.lbpAccountNo },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.employee, "lbpAccountNo", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("span", [_vm._v("LBP ACCOUNT NO.")])
+            ]
+          ),
+          _vm._v(" "),
+          _vm.errors.lbpAccountNo
+            ? _c("p", { staticClass: "text-danger text-sm" }, [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm.errors.lbpAccountNo) +
                     "\n        "
                 )
               ])
@@ -75455,8 +75456,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Applications/MAMP/htdocs/e-pims/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Applications/MAMP/htdocs/e-pims/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\e-pims\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\e-pims\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
