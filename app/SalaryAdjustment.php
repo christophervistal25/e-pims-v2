@@ -29,4 +29,8 @@ class SalaryAdjustment extends Model
     {
         return $this->belongsTo(Position::class, 'position_id', 'position_id');
     }
+    public function plantilla()
+    {
+        return $this->hasOne(Plantilla::class, 'employee_id', 'employee_id');
+    }
 }

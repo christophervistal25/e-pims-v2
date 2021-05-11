@@ -21,30 +21,38 @@ $(function() {
                 { data: 'salary_previous', name: 'salary_previous' },
                 { data: 'salary_new', name: 'salary_new' },
                 { data: 'salary_diff', name: 'salary_diff' },
+                { data: 'plantilla', name: 'plantilla.office_code'},
                 { data: 'action', name: 'action' }
         ]
     });
-
-    $('#selectAll').click(function(){
-        // Get all rows with search applied
-        var rows = table.rows({ 'search': 'applied' }).nodes();
-        // Check/uncheck checkboxes for all rows in the table
-        $('input[type="checkbox"]', rows).prop('checked', this.checked);
-     });
-
-     // Handle click on checkbox to set state of "Select all" control
-    $('#salaryAdjustmentPerOffice tbody').on('change', 'input[type="checkbox"]', function(){
-        // If checkbox is not checked
-        if(!this.checked){
-        var el = $('#selectAll').get(0);
-        // If "Select all" control is checked and has 'indeterminate' property
-        if(el && el.checked && ('indeterminate' in el)){
-            // Set visual state of "Select all" control
-            // as 'indeterminate'
-            el.indeterminate = true;
-        }
-        }
+    table.draw();
+    $("#employeeOffice").change(function() {
+        let val = $.fn.dataTable.util.escapeRegex(
+            $(this).val()
+        );
+        table.search( val ? ''+val+'' : '', true, false ).draw();
     });
+
+    // $('#selectAll').click(function(){
+    //     // Get all rows with search applied
+    //     var rows = table.rows({ 'search': 'applied' }).nodes();
+    //     // Check/uncheck checkboxes for all rows in the table
+    //     $('input[type="checkbox"]', rows).prop('checked', this.checked);
+    // });
+
+    //  // Handle click on checkbox to set state of "Select all" control
+    // $('#salaryAdjustmentPerOffice tbody').on('change', 'input[type="checkbox"]', function(){
+    //     // If checkbox is not checked
+    //     if(!this.checked){
+    //     var el = $('#selectAll').get(0);
+    //     // If "Select all" control is checked and has 'indeterminate' property
+    //     if(el && el.checked && ('indeterminate' in el)){
+    //         // Set visual state of "Select all" control
+    //         // as 'indeterminate'
+    //         el.indeterminate = true;
+    //     }
+    //     }
+    // });
 
 
 });

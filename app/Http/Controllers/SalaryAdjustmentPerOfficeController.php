@@ -27,11 +27,14 @@ class SalaryAdjustmentPerOfficeController extends Controller
     {
         if ($request->ajax()) {
 
-            $data = SalaryAdjustment::select('id','employee_id','item_no','position_id', 'date_adjustment', 'sg_no', 'step_no', 'salary_previous','salary_new','salary_diff')->with('position:position_id,position_name','employee:employee_id,firstname,middlename,lastname,extension');
+            $data = SalaryAdjustment::select('id','employee_id','item_no','position_id', 'date_adjustment', 'sg_no', 'step_no', 'salary_previous','salary_new','salary_diff')->with('position:position_id,position_name','employee:employee_id,firstname,middlename,lastname,extension', 'plantilla:employee_id,office_code');
             return (new Datatables)->eloquent($data)
                     ->addIndexColumn()
                     ->addColumn('employee', function ($row) {
                         return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
+                    })
+                    ->addColumn('plantilla', function ($row) {
+                        return $row->plantilla->office_code;
                     })
                     ->addColumn('action', function($row){
                         $btn = "<a title='Edit Salary Adjustment' href='$row->id' class='rounded-circle edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";

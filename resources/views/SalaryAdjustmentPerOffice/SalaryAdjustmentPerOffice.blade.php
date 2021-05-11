@@ -17,7 +17,7 @@
 <div class="kanban-board card mb-0">
     <div class="card-body">
         {{-- <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
-           
+
             <form action="/salary-adjustment" method="post" id="salaryAdjustmentForm">
                 @csrf
                     <div class="row">
@@ -35,7 +35,7 @@
 
                         <div class="form-group col-12 col-lg-4">
                             <label>Employee Name</label>
-                            <select value="" class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" 
+                            <select value="" class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}"
                             name="employeeName" data-live-search="true" id="employeeName" data-size="5">
                             <option></option>
                             @foreach($employee as $employees)
@@ -74,7 +74,7 @@
                             <div id='salary-grade-error-message' class='text-danger'>
                             </div>
                         </div>
-                        
+
                         <div class="form-group col-12 col-lg-4">
                             <label>Step No</label>
                             <input class="form-control" value="" name="stepNo" id="stepNo" type="text" readonly>
@@ -105,7 +105,7 @@
                             <div id='salary-previous-error-message' class='text-danger'>
                             </div>
                         </div>
-                        
+
                         <div class="form-group col-12 col-lg-4">
                         <label>Salary New<span class="text-danger">*</span></label>
                         <div class="input-group mb-3">
@@ -139,7 +139,7 @@
                         </div>
 
                 </div>
-                
+
             <form>
         </div> --}}
 
@@ -147,11 +147,11 @@
             {{-- {{  count($errors->all()) == 0 ? '' : 'd-none' }} --}}
             <div class="row">
                 <div class="col-6 mb-2">
-                    <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" 
-                        name="employeeName" data-live-search="true" id="employeeName" data-size="5" onchange="ValidateDropDown(this)">
+                    <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}"
+                        name="employeeOffice" data-live-search="true" id="employeeOffice" data-size="5">
                         <option></option>
                         @foreach($plantilla as $plantillas)
-                        <option data-plantilla="{{ $plantillas }}" value="{{ $plantillas->office->office_code }}">{{ $plantillas->office->office_name }}</option>
+                        <option value="{{ $plantillas->office->office_code }}">{{ $plantillas->office->office_name }}</option>
                         @endforeach
                         </select>
             </div>
@@ -167,6 +167,7 @@
                     <tr>
                         <td style="margin-top:10px;" scope="col" class="text-center font-weight-bold"><input style='transform:scale(1.3); margin-top:18px;' name="selectAll" value="selectAll" id="selectAll" type="checkbox" /></td>
                         <td scope="col" class="text-center font-weight-bold">Employee Name</td>
+                        <td scope="col" class="text-center font-weight-bold">Office</td>
                         <td scope="col" class="text-center font-weight-bold">Salary Grade</td>
                         <td scope="col" class="text-center font-weight-bold">Step Number</td>
                         <td scope="col" class="text-center font-weight-bold">Salary Previous</td>
