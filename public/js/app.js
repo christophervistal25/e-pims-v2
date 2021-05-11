@@ -3308,42 +3308,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -16798,7 +16762,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.cursor-pointer {\r\n    cursor: pointer;\n}\n.status-item {\r\n    border-width: 3px;\r\n    border-style: dashed;\n}\n.status-item:hover {\r\n    background: #f2f3f4;\r\n    transition: 300ms ease-in-out;\n}\r\n", ""]);
+exports.push([module.i, "\n.cursor-pointer {\r\n  cursor: pointer;\n}\n.status-item {\r\n  border-width: 3px;\r\n  border-style: dashed;\n}\n.status-item:hover {\r\n  background: #f2f3f4;\r\n  transition: 300ms ease-in-out;\n}\r\n", ""]);
 
 // exports
 
@@ -37027,13 +36991,13 @@ var render = function() {
                 ? _c("i", { staticClass: "fas fa-plus" })
                 : _c("i", { staticClass: "fas fa-list" }),
               _vm._v(
-                "\n                    " +
+                "\n          " +
                   _vm._s(
                     !_vm.showAddEmployeeForm
                       ? "Add Employee"
                       : "List of Employees"
                   ) +
-                  "\n                "
+                  "\n        "
               )
             ]
           )
@@ -37064,16 +37028,24 @@ var render = function() {
                           _vm._l(_vm.employees, function(employee, index) {
                             return _c(
                               "tr",
-                              { key: index, staticClass: "cursor-pointer" },
+                              {
+                                key: index,
+                                staticClass: "cursor-pointer",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.editEmployee(employee)
+                                  }
+                                }
+                              },
                               [
                                 _c(
                                   "td",
                                   { staticClass: "text-sm align-middle" },
                                   [
                                     _vm._v(
-                                      "\n                                    " +
+                                      "\n                  " +
                                         _vm._s(employee.employee_id) +
-                                        "\n                                "
+                                        "\n                "
                                     )
                                   ]
                                 ),
@@ -37083,19 +37055,19 @@ var render = function() {
                                   { staticClass: "text-sm align-middle" },
                                   [
                                     _vm._v(
-                                      "\n                                    " +
+                                      "\n                  " +
                                         _vm._s(employee.lastname) +
-                                        " ,\n                                    " +
+                                        " , " +
                                         _vm._s(employee.firstname) +
-                                        ".\n                                    " +
+                                        ".\n                  " +
                                         _vm._s(employee.middlename) +
-                                        "\n                                    " +
+                                        "\n                  " +
                                         _vm._s(
                                           employee.extension
                                             ? employee.extension.toUpperCase()
                                             : ""
                                         ) +
-                                        "\n                                "
+                                        "\n                "
                                     )
                                   ]
                                 ),
@@ -37108,12 +37080,12 @@ var render = function() {
                                       },
                                       [
                                         _vm._v(
-                                          "\n                                    " +
+                                          "\n                  " +
                                             _vm._s(
                                               employee.information.position
                                                 .position_name
                                             ) +
-                                            "\n                                "
+                                            "\n                "
                                         )
                                       ]
                                     )
@@ -37127,12 +37099,12 @@ var render = function() {
                                       },
                                       [
                                         _vm._v(
-                                          "\n                                    " +
+                                          "\n                  " +
                                             _vm._s(
                                               employee.information.office
                                                 .office_name
                                             ) +
-                                            "\n                                "
+                                            "\n                "
                                         )
                                       ]
                                     )
@@ -37208,8 +37180,7 @@ var render = function() {
                                     },
                                     [
                                       _vm._v(
-                                        "\n                                    " +
-                                          _vm._s(page)
+                                        "\n                  " + _vm._s(page)
                                       )
                                     ]
                                   )
@@ -37243,9 +37214,7 @@ var render = function() {
             _c("div", { staticClass: "card" }, [
               _c("div", { staticClass: "card-body shadow" }, [
                 _c("h4", { staticClass: "mb-2" }, [
-                  _vm._v(
-                    "\n                        Employee Information\n                    "
-                  )
+                  _vm._v("Employee Information")
                 ]),
                 _vm._v(" "),
                 _c("hr"),
@@ -37260,7 +37229,7 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\n                                Basic Information\n                                "
+                          "\n                Basic Information\n                "
                         ),
                         _vm.sectionError.basicInformation
                           ? _c("i", {
@@ -37280,9 +37249,7 @@ var render = function() {
                         attrs: { href: "#basictab2", "data-toggle": "tab" }
                       },
                       [
-                        _vm._v(
-                          "Account Numbers\n                                "
-                        ),
+                        _vm._v("Account Numbers\n                "),
                         _vm.sectionError.accountNumbers
                           ? _c("i", {
                               staticClass:
@@ -37358,9 +37325,7 @@ var render = function() {
                             ]
                           )
                         : _vm._e(),
-                      _vm._v(
-                        "\n                            Submit\n                        "
-                      )
+                      _vm._v("\n              Submit\n            ")
                     ]
                   )
                 ])
@@ -37378,10 +37343,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-lg-2 mb-2" }, [
-        _vm._v(
-          "\n                            Show Entries\n                            "
-        ),
-        _c("select", { staticClass: "form-control " }, [
+        _vm._v("\n              Show Entries\n              "),
+        _c("select", { staticClass: "form-control" }, [
           _c("option", { attrs: { value: "10" } }, [_vm._v("10")]),
           _vm._v(" "),
           _c("option", { attrs: { value: "25" } }, [_vm._v("25")]),
@@ -37392,10 +37355,10 @@ var staticRenderFns = [
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-lg-10 text-right mt-1 mb-1" }, [
+      _c("div", { staticClass: "col-lg-10 mt-1 mb-1" }, [
         _c("p"),
         _vm._v(" "),
-        _c("div", { staticClass: "col-lg-5" }, [
+        _c("div", { staticClass: "col-lg-3 float-right pr-0" }, [
           _c("input", {
             staticClass: "form-control",
             attrs: { type: "text", placeholder: "Search" }
@@ -75504,13 +75467,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
-__webpack_require__(/*! C:\laragon\www\e-pims\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\e-pims\resources\sass\app.scss */"./resources/sass/app.scss");
-=======
 __webpack_require__(/*! C:\xampp\htdocs\template\e-pims\resources\js\app.js */"./resources/js/app.js");
 module.exports = __webpack_require__(/*! C:\xampp\htdocs\template\e-pims\resources\sass\app.scss */"./resources/sass/app.scss");
->>>>>>> adds
 
 
 /***/ })
