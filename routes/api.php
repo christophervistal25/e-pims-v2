@@ -73,6 +73,10 @@ Route::group(['prefix' => 'city'], function () {
     Route::get('/barangay/by/{code}', 'Api\CityController@barangaysByCode');
 });
 
+Route::get('countries', function () {
+    return config('countries.all');
+});
+
 
 // Reference Routes.
 Route::post('/employment/status/store', 'Api\ReferenceStatusController@store');

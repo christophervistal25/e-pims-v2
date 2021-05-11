@@ -3308,42 +3308,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -4192,6 +4156,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5148,46 +5118,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -8037,71 +7967,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["data"],
@@ -8150,7 +8015,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         permanentProvince: "",
         permanentZipCode: ""
       },
-      countries: ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Côte d'Ivoire", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo (Congo-Brazzaville)", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czechia (Czech Republic)", "Democratic Republic of the Congo", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", 'Eswatini (fmr. "Swaziland")', "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Holy See", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar (formerly Burma)", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Palestine State", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"],
+      countries: [],
       provinces: [],
       cities: [],
       barangays: [],
@@ -8294,6 +8159,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
     window.axios.get("/api/province/all").then(function (response) {
       return _this6.provinces = response.data;
+    });
+    window.axios.get("/api/countries").then(function (response) {
+      return _this6.countries = response.data;
     });
   }
 });
@@ -13554,39 +13422,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["employee"],
   data: function data() {
@@ -13636,17 +13471,22 @@ __webpack_require__.r(__webpack_exports__);
     },
     sameAsAboveAddress: function sameAsAboveAddress() {},
     submitPersonalInformation: function submitPersonalInformation(e) {
+      var _this5 = this;
+
       e.preventDefault();
       this.isLoading = true;
-      window.axios.post("/employee/personal/information/store", this.employee).then(function (response) {})["catch"](function (error) {});
+      window.axios.post("/employee/personal/information/store", this.employee).then(function (response) {
+        _this5.isLoading = false;
+        _this5.isComplete = false;
+      })["catch"](function (error) {});
     }
   },
   mounted: function mounted() {},
   created: function created() {
-    var _this5 = this;
+    var _this6 = this;
 
     window.axios.get("/api/province/all").then(function (response) {
-      _this5.provinces = response.data;
+      _this6.provinces = response.data;
     });
   }
 });
@@ -16798,7 +16638,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.cursor-pointer {\r\n    cursor: pointer;\n}\n.status-item {\r\n    border-width: 3px;\r\n    border-style: dashed;\n}\n.status-item:hover {\r\n    background: #f2f3f4;\r\n    transition: 300ms ease-in-out;\n}\r\n", ""]);
+exports.push([module.i, "\n.cursor-pointer {\r\n  cursor: pointer;\n}\n.status-item {\r\n  border-width: 3px;\r\n  border-style: dashed;\n}\n.status-item:hover {\r\n  background: #f2f3f4;\r\n  transition: 300ms ease-in-out;\n}\r\n", ""]);
 
 // exports
 
@@ -37027,13 +36867,13 @@ var render = function() {
                 ? _c("i", { staticClass: "fas fa-plus" })
                 : _c("i", { staticClass: "fas fa-list" }),
               _vm._v(
-                "\n                    " +
+                "\n          " +
                   _vm._s(
                     !_vm.showAddEmployeeForm
                       ? "Add Employee"
                       : "List of Employees"
                   ) +
-                  "\n                "
+                  "\n        "
               )
             ]
           )
@@ -37064,16 +36904,24 @@ var render = function() {
                           _vm._l(_vm.employees, function(employee, index) {
                             return _c(
                               "tr",
-                              { key: index, staticClass: "cursor-pointer" },
+                              {
+                                key: index,
+                                staticClass: "cursor-pointer",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.editEmployee(employee)
+                                  }
+                                }
+                              },
                               [
                                 _c(
                                   "td",
                                   { staticClass: "text-sm align-middle" },
                                   [
                                     _vm._v(
-                                      "\n                                    " +
+                                      "\n                  " +
                                         _vm._s(employee.employee_id) +
-                                        "\n                                "
+                                        "\n                "
                                     )
                                   ]
                                 ),
@@ -37083,19 +36931,19 @@ var render = function() {
                                   { staticClass: "text-sm align-middle" },
                                   [
                                     _vm._v(
-                                      "\n                                    " +
+                                      "\n                  " +
                                         _vm._s(employee.lastname) +
-                                        " ,\n                                    " +
+                                        " , " +
                                         _vm._s(employee.firstname) +
-                                        ".\n                                    " +
+                                        ".\n                  " +
                                         _vm._s(employee.middlename) +
-                                        "\n                                    " +
+                                        "\n                  " +
                                         _vm._s(
                                           employee.extension
                                             ? employee.extension.toUpperCase()
                                             : ""
                                         ) +
-                                        "\n                                "
+                                        "\n                "
                                     )
                                   ]
                                 ),
@@ -37108,12 +36956,12 @@ var render = function() {
                                       },
                                       [
                                         _vm._v(
-                                          "\n                                    " +
+                                          "\n                  " +
                                             _vm._s(
                                               employee.information.position
                                                 .position_name
                                             ) +
-                                            "\n                                "
+                                            "\n                "
                                         )
                                       ]
                                     )
@@ -37127,12 +36975,12 @@ var render = function() {
                                       },
                                       [
                                         _vm._v(
-                                          "\n                                    " +
+                                          "\n                  " +
                                             _vm._s(
                                               employee.information.office
                                                 .office_name
                                             ) +
-                                            "\n                                "
+                                            "\n                "
                                         )
                                       ]
                                     )
@@ -37208,8 +37056,7 @@ var render = function() {
                                     },
                                     [
                                       _vm._v(
-                                        "\n                                    " +
-                                          _vm._s(page)
+                                        "\n                  " + _vm._s(page)
                                       )
                                     ]
                                   )
@@ -37243,9 +37090,7 @@ var render = function() {
             _c("div", { staticClass: "card" }, [
               _c("div", { staticClass: "card-body shadow" }, [
                 _c("h4", { staticClass: "mb-2" }, [
-                  _vm._v(
-                    "\n                        Employee Information\n                    "
-                  )
+                  _vm._v("Employee Information")
                 ]),
                 _vm._v(" "),
                 _c("hr"),
@@ -37260,7 +37105,7 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\n                                Basic Information\n                                "
+                          "\n                Basic Information\n                "
                         ),
                         _vm.sectionError.basicInformation
                           ? _c("i", {
@@ -37280,9 +37125,7 @@ var render = function() {
                         attrs: { href: "#basictab2", "data-toggle": "tab" }
                       },
                       [
-                        _vm._v(
-                          "Account Numbers\n                                "
-                        ),
+                        _vm._v("Account Numbers\n                "),
                         _vm.sectionError.accountNumbers
                           ? _c("i", {
                               staticClass:
@@ -37358,9 +37201,7 @@ var render = function() {
                             ]
                           )
                         : _vm._e(),
-                      _vm._v(
-                        "\n                            Submit\n                        "
-                      )
+                      _vm._v("\n              Submit\n            ")
                     ]
                   )
                 ])
@@ -37378,10 +37219,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-lg-2 mb-2" }, [
-        _vm._v(
-          "\n                            Show Entries\n                            "
-        ),
-        _c("select", { staticClass: "form-control " }, [
+        _vm._v("\n              Show Entries\n              "),
+        _c("select", { staticClass: "form-control" }, [
           _c("option", { attrs: { value: "10" } }, [_vm._v("10")]),
           _vm._v(" "),
           _c("option", { attrs: { value: "25" } }, [_vm._v("25")]),
@@ -37392,10 +37231,10 @@ var staticRenderFns = [
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-lg-10 text-right mt-1 mb-1" }, [
+      _c("div", { staticClass: "col-lg-10 mt-1 mb-1" }, [
         _c("p"),
         _vm._v(" "),
-        _c("div", { staticClass: "col-lg-5" }, [
+        _c("div", { staticClass: "col-lg-3 float-right pr-0" }, [
           _c("input", {
             staticClass: "form-control",
             attrs: { type: "text", placeholder: "Search" }
@@ -38054,7 +37893,13 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    [_c("exists-personal-information", { attrs: { employee: _vm.employee } })],
+    [
+      _c("exists-personal-information", { attrs: { employee: _vm.employee } }),
+      _vm._v(" "),
+      _c("exists-family-background", { attrs: { employee: _vm.employee } }),
+      _vm._v(" "),
+      _c("exists-educational-background", { attrs: { employee: _vm.employee } })
+    ],
     1
   )
 }
@@ -39405,38 +39250,38 @@ var render = function() {
                   _c("div", { staticClass: "profile-info-left" }, [
                     _c("h5", { staticClass: "user-name m-t-0 mb-0" }, [
                       _vm._v(
-                        "\n                                        " +
+                        "\n                    " +
                           _vm._s(_vm.employee.fullname) +
-                          "\n                                    "
+                          "\n                  "
                       )
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "staff-id" }, [
                       _vm._v(
-                        "\n                                        Position :\n                                        " +
+                        "\n                    Position :\n                    " +
                           _vm._s(
                             _vm.employee.information &&
                               _vm.employee.information.position
                               ? _vm.employee.information.position.position_name
                               : "N/A"
                           ) +
-                          "\n                                    "
+                          "\n                  "
                       )
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "staff-id" }, [
                       _vm._v(
-                        "\n                                        Employee ID :\n                                        " +
+                        "\n                    Employee ID :\n                    " +
                           _vm._s(_vm.employee.employee_id) +
-                          "\n                                    "
+                          "\n                  "
                       )
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "staff-id" }, [
                       _vm._v(
-                        "\n                                        Join :\n                                        " +
+                        "\n                    Join :\n                    " +
                           _vm._s(_vm.employee.created_at) +
-                          "\n                                    "
+                          "\n                  "
                       )
                     ])
                   ])
@@ -39445,11 +39290,7 @@ var render = function() {
                 _c("div", { staticClass: "col-md-7" }, [
                   _c("ul", { staticClass: "personal-info" }, [
                     _c("li", [
-                      _c("div", { staticClass: "title" }, [
-                        _vm._v(
-                          "\n                                            Phone:\n                                        "
-                        )
-                      ]),
+                      _c("div", { staticClass: "title" }, [_vm._v("Phone:")]),
                       _vm._v(" "),
                       _c("div", { staticClass: "text" }, [
                         _c("a", { attrs: { href: "" } }, [
@@ -39459,11 +39300,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("li", [
-                      _c("div", { staticClass: "title" }, [
-                        _vm._v(
-                          "\n                                            Email:\n                                        "
-                        )
-                      ]),
+                      _c("div", { staticClass: "title" }, [_vm._v("Email:")]),
                       _vm._v(" "),
                       _c("div", { staticClass: "text" }, [
                         _c("a", { attrs: { href: "" } }, [
@@ -39474,64 +39311,40 @@ var render = function() {
                     _vm._v(" "),
                     _c("li", [
                       _c("div", { staticClass: "title" }, [
-                        _vm._v(
-                          "\n                                            Birthday:\n                                        "
-                        )
+                        _vm._v("Birthday:")
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "text" }, [
                         _vm._v(
-                          "\n                                            " +
+                          "\n                      " +
                             _vm._s(_vm.employee.date_birth || "-") +
-                            "\n                                        "
+                            "\n                    "
                         )
                       ])
                     ]),
                     _vm._v(" "),
                     _c("li", [
                       _c("div", { staticClass: "title" }, [
-                        _vm._v(
-                          "\n                                            Address:\n                                        "
-                        )
+                        _vm._v("Permanent Address:")
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "text" }, [
                         _vm._v(
-                          "\n                                            " +
-                            _vm._s(
-                              "\n                                                " +
-                                (_vm.employee.permanent_house_no || "-") +
-                                "\n                                                    " +
-                                (_vm.employee.permanent_street || "-") +
-                                "\n                                                    " +
-                                (_vm.employee.permanent_village || "-") +
-                                "\n\n                                                    " +
-                                (_vm.employee.permanent_province || "-") +
-                                "\n\n                                                     " +
-                                (_vm.employee.permanent_city || "-") +
-                                "\n\n                                                     " +
-                                (_vm.employee.permanent_barangay || "-") +
-                                "\n\n                                                     " +
-                                (_vm.employee.permanent_zip_code || "-") +
-                                "\n                                                    "
-                            ) +
-                            "\n                                        "
+                          "\n                      " +
+                            _vm._s("" + _vm.employee.permanent_full_address) +
+                            "\n                    "
                         )
                       ])
                     ]),
                     _vm._v(" "),
                     _c("li", [
-                      _c("div", { staticClass: "title" }, [
-                        _vm._v(
-                          "\n                                            Gender:\n                                        "
-                        )
-                      ]),
+                      _c("div", { staticClass: "title" }, [_vm._v("Gender:")]),
                       _vm._v(" "),
                       _c("div", { staticClass: "text text-uppercase" }, [
                         _vm._v(
-                          "\n                                            " +
+                          "\n                      " +
                             _vm._s(_vm.employee.sex || "-") +
-                            "\n                                        "
+                            "\n                    "
                         )
                       ])
                     ])
@@ -43276,7 +43089,7 @@ var render = function() {
             _vm.isComplete
               ? _c("i", { staticClass: "fa fa-check text-success" })
               : _vm._e(),
-            _vm._v("\n                PERSONAL INFORMATION\n                "),
+            _vm._v("\n        PERSONAL INFORMATION\n        "),
             _vm.isComplete
               ? _c("i", {
                   staticClass: "text-success float-right fa fa-caret-down",
@@ -43350,9 +43163,7 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.errors.surname) +
-                    "\n                    "
+                  "\n            " + _vm._s(_vm.errors.surname) + "\n          "
                 )
               ])
             ]),
@@ -43407,9 +43218,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.firstname) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ]),
@@ -43466,9 +43277,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.middlename) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ]),
@@ -43525,7 +43336,11 @@ var render = function() {
                       _c(
                         "option",
                         { attrs: { value: "", readonly: "", selected: "" } },
-                        [_vm._v("Please Select Extension Name")]
+                        [
+                          _vm._v(
+                            "\n                Please Select Extension Name\n              "
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c(
@@ -43536,7 +43351,7 @@ var render = function() {
                             selected: _vm.personal_data.nameExtension === "JR"
                           }
                         },
-                        [_vm._v("JR")]
+                        [_vm._v("\n                JR\n              ")]
                       ),
                       _vm._v(" "),
                       _c(
@@ -43547,7 +43362,7 @@ var render = function() {
                             selected: _vm.personal_data.nameExtension === "SR"
                           }
                         },
-                        [_vm._v("SR")]
+                        [_vm._v("\n                SR\n              ")]
                       ),
                       _vm._v(" "),
                       _c(
@@ -43558,7 +43373,7 @@ var render = function() {
                             selected: _vm.personal_data.nameExtension === "III"
                           }
                         },
-                        [_vm._v("III")]
+                        [_vm._v("\n                III\n              ")]
                       )
                     ]
                   ),
@@ -43569,9 +43384,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.nameExtension) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ])
@@ -43621,9 +43436,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("p", { staticClass: "text-danger text-sm" }, [
                     _vm._v(
-                      "\n                            " +
+                      "\n              " +
                         _vm._s(_vm.errors.dateOfBirth) +
-                        "\n                        "
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
@@ -43684,9 +43499,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.placeOfBirth) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ]),
@@ -43756,9 +43571,7 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.errors.sex) +
-                    "\n                    "
+                  "\n            " + _vm._s(_vm.errors.sex) + "\n          "
                 )
               ])
             ]),
@@ -43840,9 +43653,7 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.errors.status) +
-                    "\n                    "
+                  "\n            " + _vm._s(_vm.errors.status) + "\n          "
                 )
               ])
             ])
@@ -43954,9 +43765,7 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.errors.weight) +
-                    "\n                    "
+                  "\n            " + _vm._s(_vm.errors.weight) + "\n          "
                 )
               ])
             ]),
@@ -44013,9 +43822,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.bloodType) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ])
@@ -44373,9 +44182,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.citizenship) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ]),
@@ -44446,9 +44255,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("p", { staticClass: "text-danger text-sm" }, [
                     _vm._v(
-                      "\n                        " +
+                      "\n            " +
                         _vm._s(_vm.errors.citizenshipBy) +
-                        "\n                    "
+                        "\n          "
                     )
                   ])
                 ])
@@ -44507,7 +44316,13 @@ var render = function() {
                           return _c(
                             "option",
                             { key: index, domProps: { value: country } },
-                            [_vm._v(_vm._s(country))]
+                            [
+                              _vm._v(
+                                "\n                " +
+                                  _vm._s(country) +
+                                  "\n              "
+                              )
+                            ]
                           )
                         }),
                         0
@@ -44621,9 +44436,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.mobileNumber) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ]),
@@ -44847,9 +44662,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("p", { staticClass: "text-danger text-sm" }, [
                     _vm._v(
-                      "\n                        " +
+                      "\n              " +
                         _vm._s(_vm.errors["residentialProvince.code"]) +
-                        "\n                    "
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
@@ -44878,9 +44693,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("p", { staticClass: "text-danger text-sm" }, [
                     _vm._v(
-                      "\n                        " +
+                      "\n              " +
                         _vm._s(_vm.errors["residentialCity.code"]) +
-                        "\n                    "
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
@@ -44908,9 +44723,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("p", { staticClass: "text-danger text-sm" }, [
                     _vm._v(
-                      "\n                        " +
+                      "\n              " +
                         _vm._s(_vm.errors["residentialBarangay.code"]) +
-                        "\n                    "
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
@@ -44984,9 +44799,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.residentialZipCode) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ])
@@ -45000,11 +44815,7 @@ var render = function() {
                   "alert alert-secondary text-center font-weight-bold",
                 attrs: { role: "alert" }
               },
-              [
-                _vm._v(
-                  "\n                    PERMANENT ADDRESS\n                "
-                )
-              ]
+              [_vm._v("\n          PERMANENT ADDRESS\n        ")]
             ),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
@@ -45014,9 +44825,7 @@ var render = function() {
                   domProps: { checked: _vm.isSameAsAbove },
                   on: { click: _vm.sameAsAboveAddress }
                 }),
-                _vm._v(
-                  "\n                        SAME AS ABOVE\n                    "
-                )
+                _vm._v("\n            SAME AS ABOVE\n          ")
               ])
             ])
           ]),
@@ -45184,9 +44993,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("p", { staticClass: "text-danger text-sm" }, [
                     _vm._v(
-                      "\n                        " +
+                      "\n              " +
                         _vm._s(_vm.errors["permanentProvince.code"]) +
-                        "\n                    "
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
@@ -45215,9 +45024,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("p", { staticClass: "text-danger text-sm" }, [
                     _vm._v(
-                      "\n                        " +
+                      "\n              " +
                         _vm._s(_vm.errors["permanentCity.code"]) +
-                        "\n                    "
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
@@ -45245,9 +45054,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("p", { staticClass: "text-danger text-sm" }, [
                     _vm._v(
-                      "\n                        " +
+                      "\n              " +
                         _vm._s(_vm.errors["permanentBarangay.code"]) +
-                        "\n                    "
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
@@ -45322,9 +45131,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.permanentZipCode) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ])
@@ -45344,9 +45153,7 @@ var render = function() {
                     on: { click: _vm.submitPersonalInformation }
                   },
                   [
-                    _vm._v(
-                      "\n                    NEXT\n\n                    "
-                    ),
+                    _vm._v("\n          NEXT\n\n          "),
                     _c(
                       "div",
                       {
@@ -45390,7 +45197,7 @@ var staticRenderFns = [
           staticClass: "alert alert-secondary text-center font-weight-bold",
           attrs: { role: "alert" }
         },
-        [_vm._v("\n                    PERSONAL INFORMATION\n                ")]
+        [_vm._v("\n          PERSONAL INFORMATION\n        ")]
       )
     ])
   },
@@ -45405,7 +45212,7 @@ var staticRenderFns = [
           staticClass: "alert alert-secondary text-center font-weight-bold",
           attrs: { role: "alert" }
         },
-        [_vm._v("\n                    RESIDENTIAL ADDRESS\n                ")]
+        [_vm._v("\n          RESIDENTIAL ADDRESS\n        ")]
       )
     ])
   }
@@ -52764,7 +52571,7 @@ var render = function() {
             _vm.isComplete
               ? _c("i", { staticClass: "fa fa-check text-success" })
               : _vm._e(),
-            _vm._v("\n                PERSONAL INFORMATION\n                "),
+            _vm._v("\n        PERSONAL INFORMATION\n        "),
             _vm.isComplete
               ? _c("i", {
                   staticClass: "text-success float-right fa fa-caret-down",
@@ -52834,9 +52641,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.lastname) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ]),
@@ -52887,9 +52694,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.firstname) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ]),
@@ -52946,9 +52753,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.middlename) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ]),
@@ -53028,9 +52835,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.extension) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ])
@@ -53084,9 +52891,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.date_birth) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ]),
@@ -53143,9 +52950,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.place_birth) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ]),
@@ -53215,9 +53022,7 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.errors.sex) +
-                    "\n                    "
+                  "\n            " + _vm._s(_vm.errors.sex) + "\n          "
                 )
               ])
             ]),
@@ -53299,9 +53104,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.civil_status) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ])
@@ -53405,9 +53210,7 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.errors.weight) +
-                    "\n                    "
+                  "\n            " + _vm._s(_vm.errors.weight) + "\n          "
                 )
               ])
             ]),
@@ -53463,9 +53266,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.blood_type) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ])
@@ -53815,9 +53618,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.citizenship) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ]),
@@ -53888,9 +53691,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("p", { staticClass: "text-danger text-sm" }, [
                     _vm._v(
-                      "\n                        " +
+                      "\n            " +
                         _vm._s(_vm.errors.citizenshipBy) +
-                        "\n                    "
+                        "\n          "
                     )
                   ])
                 ])
@@ -53949,7 +53752,13 @@ var render = function() {
                           return _c(
                             "option",
                             { key: index, domProps: { value: country } },
-                            [_vm._v(_vm._s(country))]
+                            [
+                              _vm._v(
+                                "\n                " +
+                                  _vm._s(country) +
+                                  "\n              "
+                              )
+                            ]
                           )
                         }),
                         0
@@ -54059,9 +53868,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.mobile_no) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ]),
@@ -54319,9 +54128,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.residential_city) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ]),
@@ -54380,7 +54189,13 @@ var render = function() {
                       return _c(
                         "option",
                         { key: index, domProps: { value: barangay.code } },
-                        [_vm._v(_vm._s(barangay.name))]
+                        [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(barangay.name) +
+                              "\n              "
+                          )
+                        ]
                       )
                     }),
                     0
@@ -54392,9 +54207,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.residential_barangay) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ]),
@@ -54459,9 +54274,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.residential_zip_code) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ])
@@ -54475,11 +54290,7 @@ var render = function() {
                   "alert alert-secondary text-center font-weight-bold",
                 attrs: { role: "alert" }
               },
-              [
-                _vm._v(
-                  "\n                    PERMANENT ADDRESS\n                "
-                )
-              ]
+              [_vm._v("\n          PERMANENT ADDRESS\n        ")]
             ),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
@@ -54489,9 +54300,7 @@ var render = function() {
                   domProps: { checked: _vm.isSameAsAbove },
                   on: { click: _vm.sameAsAboveAddress }
                 }),
-                _vm._v(
-                  "\n                        SAME AS ABOVE\n                    "
-                )
+                _vm._v("\n            SAME AS ABOVE\n          ")
               ])
             ])
           ]),
@@ -54710,7 +54519,13 @@ var render = function() {
                                 : false
                           }
                         },
-                        [_vm._v(_vm._s(province.name))]
+                        [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(province.name) +
+                              "\n              "
+                          )
+                        ]
                       )
                     }),
                     0
@@ -54722,9 +54537,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.permanentProvince) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ]),
@@ -54797,7 +54612,13 @@ var render = function() {
                                 : false
                           }
                         },
-                        [_vm._v(_vm._s(city.name))]
+                        [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(city.name) +
+                              "\n              "
+                          )
+                        ]
                       )
                     }),
                     0
@@ -54809,9 +54630,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.permanentCity) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ]),
@@ -54881,7 +54702,13 @@ var render = function() {
                                 : false
                           }
                         },
-                        [_vm._v(_vm._s(barangay.name))]
+                        [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(barangay.name) +
+                              "\n              "
+                          )
+                        ]
                       )
                     }),
                     0
@@ -54893,9 +54720,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.permanentBarangay) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ]),
@@ -54964,9 +54791,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.permanentZipCode) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ])
@@ -54986,9 +54813,7 @@ var render = function() {
                     on: { click: _vm.submitPersonalInformation }
                   },
                   [
-                    _vm._v(
-                      "\n                    NEXT\n\n                    "
-                    ),
+                    _vm._v("\n          NEXT\n\n          "),
                     _c(
                       "div",
                       {
@@ -55032,7 +54857,7 @@ var staticRenderFns = [
           staticClass: "alert alert-secondary text-center font-weight-bold",
           attrs: { role: "alert" }
         },
-        [_vm._v("\n                    PERSONAL INFORMATION\n                ")]
+        [_vm._v("\n          PERSONAL INFORMATION\n        ")]
       )
     ])
   },
@@ -55047,7 +54872,7 @@ var staticRenderFns = [
           staticClass: "alert alert-secondary text-center font-weight-bold",
           attrs: { role: "alert" }
         },
-        [_vm._v("\n                    RESIDENTIAL ADDRESS\n                ")]
+        [_vm._v("\n          RESIDENTIAL ADDRESS\n        ")]
       )
     ])
   }
@@ -75504,13 +75329,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
 __webpack_require__(/*! C:\laragon\www\e-pims\resources\js\app.js */"./resources/js/app.js");
 module.exports = __webpack_require__(/*! C:\laragon\www\e-pims\resources\sass\app.scss */"./resources/sass/app.scss");
-=======
-__webpack_require__(/*! C:\xampp\htdocs\template\e-pims\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\template\e-pims\resources\sass\app.scss */"./resources/sass/app.scss");
->>>>>>> adds
 
 
 /***/ })
