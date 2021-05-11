@@ -153,7 +153,7 @@
                                     <span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>
                                     Save
                                   </button>
-                                <button style="margin-right:10px;" type="button" id="cancelbutton" class="btn text-white btn-warning submit-btn float-right">Cancel</button>
+                                <button style="margin-right:10px;" type="button" id="cancelbutton1" class="btn text-white btn-warning submit-btn float-right">Cancel</button>
                             </div>
 
                     </div>
