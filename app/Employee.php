@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Province;
 
 class Employee extends Model
 {
@@ -53,7 +54,7 @@ class Employee extends Model
         'status'
     ];
 
-    protected $appends = ['fullname'];
+    protected $appends = ['fullname', 'permanent_full_address'];
 
 
     public static function boot()
@@ -69,7 +70,36 @@ class Employee extends Model
      */
     public function getFullnameAttribute()
     {
-        return "{$this->firstname} {$this->middlename} {$this->lastname} {$this->extension}";
+        return mb_strtoupper("{$this->firstname} {$this->middlename} {$this->lastname} {$this->extension}", 'UTF-8');
+    }
+    
+    public function getPermanentFullAddressAttribute()
+    {
+        $provinceName = Province::find($this->permanent_province, 'name')->name ?? 'N/A';
+        $cityName = City::find($this->permanent_city, 'name')->name ?? 'N/A';
+        $barangayName = Barangay::find($this->permanent_barangay, 'name')->name ?? 'N/A';
+
+        return "{$this->permanent_house_no} {$this->permanent_stress} {$this->permanent_village} {$barangayName} {$cityName} {$provinceName} {$this->permanent_zip_code}";
+    }
+
+    public function getFirstnameAttribute($value)
+    {
+        return mb_strtoupper($value, "UTF-8");
+    }
+
+    public function getMiddlenameAttribute($value)
+    {
+        return mb_strtoupper($value, "UTF-8");
+    }
+
+    public function getLastnameAttribute($value)
+    {
+        return mb_strtoupper($value, "UTF-8");
+    }
+
+    public function getExtensionAttribute($value)
+    {
+        return mb_strtoupper($value, "UTF-8");
     }
 
     /**
@@ -77,22 +107,22 @@ class Employee extends Model
      */
     public function setFirstNameAttribute($value)
     {
-        $this->attributes['firstname'] = strtoupper($value);
+        $this->attributes['firstname'] = mb_strtoupper($value, 'UTF-8');
     }
 
     public function setMiddleNameAttribute($value)
     {
-        $this->attributes['middlename'] = strtoupper($value);
+        $this->attributes['middlename'] = mb_strtoupper($value, 'UTF-8');
     }
 
     public function setLastNameAttribute($value)
     {
-        $this->attributes['lastname'] = strtoupper($value);
+        $this->attributes['lastname'] = mb_strtoupper($value, 'UTF-8');
     }
 
     public function setSuffixAttribute($value)
     {
-        $this->attributes['extension'] = strtoupper($value);
+        $this->attributes['extension'] = mb_strtoupper($value, 'UTF-8');
     }
 
     public function plantilla()
@@ -107,7 +137,7 @@ class Employee extends Model
         return $this->hasOne(EmployeeFamilyBackground::class, 'employee_id', 'employee_id');
     }
 
- 
+
     public function spouse_child()
     {
         return $this->hasMany(EmployeeSpouseChildren::class, 'employee_id', 'employee_id');

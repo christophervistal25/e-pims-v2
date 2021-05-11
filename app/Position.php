@@ -40,6 +40,11 @@ class Position extends Model
     }
 
 
+    public function getPositionNameAttribute($value)
+    {
+        return strtoupper($value);
+    }
+
     public function plantillas()
     {
         return $this->belongsTo(Plantilla::class, 'position_id', 'position_id');
@@ -52,6 +57,10 @@ class Position extends Model
     public function service_record()
     {
         return $this->belongsTo(service_record::class, 'position_id', 'position_id');
+    }
+    public function salary_adjustment()
+    {
+        return $this->hasOne(SalaryAdjustment::class, 'position_id', 'position_id');
     }
 }
 

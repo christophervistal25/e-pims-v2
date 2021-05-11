@@ -11,4 +11,14 @@ class LeaveController extends Controller
     {
         return view('leave.index');
     }
+    
+    public function show()
+    {
+        return view('leave.leave-application');
+    }
+
+    public function create()
+    {
+        return view('leave.leave-monitoring');
+    }
 }

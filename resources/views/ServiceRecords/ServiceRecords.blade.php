@@ -20,7 +20,7 @@
 <div class="kanban-board card mb-0">
     <div class="card-body">
         <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
-           
+
             <form action="/service-records" method="post" id="serviceRecordForm">
                 @csrf
                     <div class="row">
@@ -52,7 +52,7 @@
 
                         <div class="form-group col-12 col-lg-3">
                             <label>Position<span class="text-danger">*</span></label>
-                            <select value=""  class="form-control selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}" 
+                            <select value=""  class="form-control selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
                             name="positionTitle" data-live-search="true" id="positionTitle" data-size="5" data-width="100%">
                             <option></option>
                             @foreach($position as $positions)
@@ -128,14 +128,14 @@
                         </div>
 
                 </div>
-                
+
             <form>
         </div>
 
         <div id="table" class="page-header {{  count($errors->all()) == 0 ? '' : 'd-none' }}">
             <div class="row">
                 <div class="col-6 mb-2">
-                    <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" 
+                    <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}"
                         name="employeeName" data-live-search="true" id="employeeName" data-size="5" onchange="ValidateDropDown(this)">
                         <option></option>
                         @foreach($plantilla as $plantillas)
@@ -149,7 +149,7 @@
                     </div>
                 </div>
             </div>
-        
+
             <div class="table" style="overflow-x:auto;">
                 <table class="table table-bordered text-center" id="serviceRecords"  style="width:100%;">
                     <thead>
@@ -160,7 +160,7 @@
                             <th class="font-weight-bold align-middle text-center" rowspan="1 "colspan="2">From</th>
                             <th class="font-weight-bold align-middle text-center" rowspan="1" colspan="2">To</th>
                             <th class="font-weight-bold align-middle text-center" rowspan="2">Option</th>
-                            
+
                             <tr>
                             <td class="font-weight-bold align-middle text-center">From</td>
                             <td class="font-weight-bold align-middle text-center">To</td>
@@ -193,7 +193,7 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    $(document).on("click", ".delete", function() { 
+    $(document).on("click", ".delete", function() {
         let $ele = $(this).parent().parent();
         let id= $(this).attr("value");;
         let url = /service-records/;

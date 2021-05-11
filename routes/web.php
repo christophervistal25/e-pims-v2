@@ -31,6 +31,10 @@ Route::get('/salary-adjustment/{id}', 'SalaryAdjustmentController@destroy')->nam
 Route::resource('/salary-adjustment', 'SalaryAdjustmentController');
 Route::get('/salary-adjustment-list', 'SalaryAdjustmentController@list');
 
+//salary adjustment per office
+Route::resource('/salary-adjustment-per-office', 'SalaryAdjustmentPerOfficeController');
+Route::get('/salary-adjustment-per-office-list', 'SalaryAdjustmentPerOfficeController@list');
+
 // Service Records
 Route::get('/service-records/{id}', 'ServiceRecordsController@destroy')->name('service-records.delete');
 Route::resource('/service-records', 'ServiceRecordsController');
@@ -58,6 +62,8 @@ Route::group(['prefix' => 'employee'], function () {
     Route::post('/personal/issued/id', 'PersonalDataSheetController@storeIssuedID');
 
     Route::resource('leave', 'EmployeeLeave\LeaveController');
+    Route::resource('/leave/application', 'EmployeeLeave\LeaveController@show');
+    Route::get('/leave-monitoring', 'EmployeeLeave\LeaveController@create');
 });
 // Route::resource('/print-increment', 'PrintIncrementController');
 Route::get('/profile', 'EmployeeController@profile');

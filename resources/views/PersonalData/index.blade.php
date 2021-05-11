@@ -1,5 +1,5 @@
 @extends('layouts.app-vue')
-@section('title', 'Generate PDS')
+@section('title', 'PERSONAL DATA SHEET')
 @prepend('page-css')
 <script src="{{ asset('/js/app.js') }}" defer></script>
 @endprepend

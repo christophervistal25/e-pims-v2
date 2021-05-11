@@ -14,15 +14,15 @@
                 <h3 class="card-title text-center text-sm">Search Option</h3>
                 <div class="checkbox">
                     <label class="checkbox-inline no_indent text-sm">
-                        <input type="checkbox" name="individual" id="individual">Individual
+                        <input type="checkbox" name="individual" id="individual" style="transform: scale(1.2)">Individual
                     </label>
                 </div>
                 <div class="checkbox">
                     <label class="checkbox-inline no_indent text-sm">
-                        <input type="checkbox" name="officename" id="officename">Office / Department
+                        <input type="checkbox" name="officename" id="officename" style="transform: scale(1.2)">Office / Department
                     </label>
                 </div>
-                <hr>
+                <hr class="mt-1">
                 <label for="officelist" class="form-group has-float-label mb-0">
                     <select name="officelist" type="text" id="officelist" class="form-control form-control-sm"
                         style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -47,10 +47,10 @@
                 <div class="card-title text-center text-sm">Search Employee</div>
                 <div class="row">
                     <div class="col-lg">
-                        <label for="" class="form-group has-float-label">
-                            <input class="form-control form-control-sm" type="text" placeholder="Search Employee"
+                        <label for="empName" class="form-group has-float-label">
+                            <input class="form-control" type="text" placeholder="Search Employee" id="empName"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span class="text-sm">Name of Employee</span>
+                            <span>Name of Employee</span>
                         </label>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
         </div>
     </div>
     <div class="col-lg-9">
-        <div class="card">
+        <div class="card shadow">
             <div class="card-body">
                 <h3 class="card-title">Starting Leave Balance Detail</h3>
                 <hr>
@@ -69,7 +69,6 @@
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <span>Name</span>
                         </label>
-
 
                         <label for="office" class="form-group has-float-label">
                             <input type="text" name="office" id="office" class="form-control form-control-sm"
@@ -82,12 +81,12 @@
                                 placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <span>Position</span>
                         </label>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class='bg-danger w-75 h-100 mx-auto shadow '></div>
+                    </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class='bg-danger w-75 h-100 mx-auto shadow '></div>
-                </div>
-            </div>
-            
+
 
                 <div class="row">
                     <div class="col-lg-3">
@@ -120,43 +119,44 @@
                         Record</button>
                     <button type="button" class="btn btn-outline-success ml-2"><i class="far fa-save"></i> Save
                         Changes</button>
-                    <button type="button" class="btn btn-outline-secondary ml-2"><i class="far fa-save"></i> Cancel
+                    <button type="button" class="btn btn-outline-secondary ml-2"><i class="fas fa-ban"></i> Cancel
                         Record</button>
 
                 </div>
+            </div>
+            
         </div>
         <div class="card">
-            <div class="card-body">
-                <div class="col-lg-12">
-                    <table class="table table-hover">
-                        <tr>
-                            <th>Date Started</th>
-                            <th>Name of Employee</th>
-                            <th>Vacation Leave</th>
-                            <th>Sick Leave</th>
-                            <th>Options</th>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>
-                                <button class=' btn btn-sm rounded-circle shadow btn-success'>
-                                <i class='fa fa-edit'></i>
-                                </button>
-                                &nbsp;
-                                <button class=' btn btn-sm rounded-circle shadow btn-danger'>
-                                <i class='fa fa-trash'></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
+                <div class="card-body">
+                    <div class="col-lg-12">
+                        <table class="table table-striped table-hover">
+                            <tr>
+                                <th>Date Started</th>
+                                <th>Name of Employee</th>
+                                <th>Vacation Leave</th>
+                                <th>Sick Leave</th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>
+                                    <button class=' btn btn-sm rounded-circle shadow btn-success'>
+                                        <i class='fa fa-edit'></i>
+                                    </button>
+                                    &nbsp;
+                                    <button class=' btn btn-sm rounded-circle shadow btn-danger'>
+                                        <i class='fa fa-trash'></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
     </div>
-</div>
 </div>
 
 

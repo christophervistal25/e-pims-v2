@@ -13,7 +13,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Designation Modal</h5>
+                        <h5 class="modal-title">Add Designation</h5>
                         <button
                             @click="dismissModal"
                             type="button"

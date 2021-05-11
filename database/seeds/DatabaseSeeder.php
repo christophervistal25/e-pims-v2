@@ -1,6 +1,5 @@
 <?php
 
-use App\City;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,17 +12,17 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            RefNameExtensionSeeder::class,
             TypeSeeder::class,
             RefStatusSeeder::class,
             // EmployeeSeeder::class,
             OfficeSeeder::class,
-            // SalaryGradeSeeder::class,
+            SalaryGradeSeeder::class,
             PositionSeeder::class,
             // ProvinceSeeder::class,
             // CitySeeder::class,
             // BarangaySeeder::class
             // PlantillaSeeder::class,
             ]);
-        // $this->call(UsersTable\Seeder::class);
     }
 }
