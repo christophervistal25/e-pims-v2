@@ -4164,12 +4164,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     employee: {
@@ -13422,6 +13416,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["employee"],
   data: function data() {
@@ -13471,22 +13498,17 @@ __webpack_require__.r(__webpack_exports__);
     },
     sameAsAboveAddress: function sameAsAboveAddress() {},
     submitPersonalInformation: function submitPersonalInformation(e) {
-      var _this5 = this;
-
       e.preventDefault();
       this.isLoading = true;
-      window.axios.post("/employee/personal/information/store", this.employee).then(function (response) {
-        _this5.isLoading = false;
-        _this5.isComplete = false;
-      })["catch"](function (error) {});
+      window.axios.post("/employee/personal/information/store", this.employee).then(function (response) {})["catch"](function (error) {});
     }
   },
   mounted: function mounted() {},
   created: function created() {
-    var _this6 = this;
+    var _this5 = this;
 
     window.axios.get("/api/province/all").then(function (response) {
-      _this6.provinces = response.data;
+      _this5.provinces = response.data;
     });
   }
 });
@@ -37893,13 +37915,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    [
-      _c("exists-personal-information", { attrs: { employee: _vm.employee } }),
-      _vm._v(" "),
-      _c("exists-family-background", { attrs: { employee: _vm.employee } }),
-      _vm._v(" "),
-      _c("exists-educational-background", { attrs: { employee: _vm.employee } })
-    ],
+    [_c("exists-personal-information", { attrs: { employee: _vm.employee } })],
     1
   )
 }
@@ -52571,7 +52587,7 @@ var render = function() {
             _vm.isComplete
               ? _c("i", { staticClass: "fa fa-check text-success" })
               : _vm._e(),
-            _vm._v("\n        PERSONAL INFORMATION\n        "),
+            _vm._v("\n                PERSONAL INFORMATION\n                "),
             _vm.isComplete
               ? _c("i", {
                   staticClass: "text-success float-right fa fa-caret-down",
@@ -52641,9 +52657,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n            " +
+                  "\n                        " +
                     _vm._s(_vm.errors.lastname) +
-                    "\n          "
+                    "\n                    "
                 )
               ])
             ]),
@@ -52694,9 +52710,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n            " +
+                  "\n                        " +
                     _vm._s(_vm.errors.firstname) +
-                    "\n          "
+                    "\n                    "
                 )
               ])
             ]),
@@ -52753,9 +52769,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n            " +
+                  "\n                        " +
                     _vm._s(_vm.errors.middlename) +
-                    "\n          "
+                    "\n                    "
                 )
               ])
             ]),
@@ -52835,9 +52851,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n            " +
+                  "\n                        " +
                     _vm._s(_vm.errors.extension) +
-                    "\n          "
+                    "\n                    "
                 )
               ])
             ])
@@ -52891,9 +52907,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n            " +
+                  "\n                        " +
                     _vm._s(_vm.errors.date_birth) +
-                    "\n          "
+                    "\n                    "
                 )
               ])
             ]),
@@ -52950,9 +52966,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n            " +
+                  "\n                        " +
                     _vm._s(_vm.errors.place_birth) +
-                    "\n          "
+                    "\n                    "
                 )
               ])
             ]),
@@ -53022,7 +53038,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n            " + _vm._s(_vm.errors.sex) + "\n          "
+                  "\n                        " +
+                    _vm._s(_vm.errors.sex) +
+                    "\n                    "
                 )
               ])
             ]),
@@ -53104,9 +53122,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n            " +
+                  "\n                        " +
                     _vm._s(_vm.errors.civil_status) +
-                    "\n          "
+                    "\n                    "
                 )
               ])
             ])
@@ -53210,7 +53228,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n            " + _vm._s(_vm.errors.weight) + "\n          "
+                  "\n                        " +
+                    _vm._s(_vm.errors.weight) +
+                    "\n                    "
                 )
               ])
             ]),
@@ -53266,9 +53286,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n            " +
+                  "\n                        " +
                     _vm._s(_vm.errors.blood_type) +
-                    "\n          "
+                    "\n                    "
                 )
               ])
             ])
@@ -53618,9 +53638,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n            " +
+                  "\n                        " +
                     _vm._s(_vm.errors.citizenship) +
-                    "\n          "
+                    "\n                    "
                 )
               ])
             ]),
@@ -53691,9 +53711,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("p", { staticClass: "text-danger text-sm" }, [
                     _vm._v(
-                      "\n            " +
+                      "\n                        " +
                         _vm._s(_vm.errors.citizenshipBy) +
-                        "\n          "
+                        "\n                    "
                     )
                   ])
                 ])
@@ -53752,13 +53772,7 @@ var render = function() {
                           return _c(
                             "option",
                             { key: index, domProps: { value: country } },
-                            [
-                              _vm._v(
-                                "\n                " +
-                                  _vm._s(country) +
-                                  "\n              "
-                              )
-                            ]
+                            [_vm._v(_vm._s(country))]
                           )
                         }),
                         0
@@ -53868,9 +53882,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n            " +
+                  "\n                        " +
                     _vm._s(_vm.errors.mobile_no) +
-                    "\n          "
+                    "\n                    "
                 )
               ])
             ]),
@@ -54128,9 +54142,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n            " +
+                  "\n                        " +
                     _vm._s(_vm.errors.residential_city) +
-                    "\n          "
+                    "\n                    "
                 )
               ])
             ]),
@@ -54189,13 +54203,7 @@ var render = function() {
                       return _c(
                         "option",
                         { key: index, domProps: { value: barangay.code } },
-                        [
-                          _vm._v(
-                            "\n                " +
-                              _vm._s(barangay.name) +
-                              "\n              "
-                          )
-                        ]
+                        [_vm._v(_vm._s(barangay.name))]
                       )
                     }),
                     0
@@ -54207,9 +54215,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n            " +
+                  "\n                        " +
                     _vm._s(_vm.errors.residential_barangay) +
-                    "\n          "
+                    "\n                    "
                 )
               ])
             ]),
@@ -54274,9 +54282,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n            " +
+                  "\n                        " +
                     _vm._s(_vm.errors.residential_zip_code) +
-                    "\n          "
+                    "\n                    "
                 )
               ])
             ])
@@ -54290,7 +54298,11 @@ var render = function() {
                   "alert alert-secondary text-center font-weight-bold",
                 attrs: { role: "alert" }
               },
-              [_vm._v("\n          PERMANENT ADDRESS\n        ")]
+              [
+                _vm._v(
+                  "\n                    PERMANENT ADDRESS\n                "
+                )
+              ]
             ),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
@@ -54300,7 +54312,9 @@ var render = function() {
                   domProps: { checked: _vm.isSameAsAbove },
                   on: { click: _vm.sameAsAboveAddress }
                 }),
-                _vm._v("\n            SAME AS ABOVE\n          ")
+                _vm._v(
+                  "\n                        SAME AS ABOVE\n                    "
+                )
               ])
             ])
           ]),
@@ -54519,13 +54533,7 @@ var render = function() {
                                 : false
                           }
                         },
-                        [
-                          _vm._v(
-                            "\n                " +
-                              _vm._s(province.name) +
-                              "\n              "
-                          )
-                        ]
+                        [_vm._v(_vm._s(province.name))]
                       )
                     }),
                     0
@@ -54537,9 +54545,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n            " +
+                  "\n                        " +
                     _vm._s(_vm.errors.permanentProvince) +
-                    "\n          "
+                    "\n                    "
                 )
               ])
             ]),
@@ -54612,13 +54620,7 @@ var render = function() {
                                 : false
                           }
                         },
-                        [
-                          _vm._v(
-                            "\n                " +
-                              _vm._s(city.name) +
-                              "\n              "
-                          )
-                        ]
+                        [_vm._v(_vm._s(city.name))]
                       )
                     }),
                     0
@@ -54630,9 +54632,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n            " +
+                  "\n                        " +
                     _vm._s(_vm.errors.permanentCity) +
-                    "\n          "
+                    "\n                    "
                 )
               ])
             ]),
@@ -54702,13 +54704,7 @@ var render = function() {
                                 : false
                           }
                         },
-                        [
-                          _vm._v(
-                            "\n                " +
-                              _vm._s(barangay.name) +
-                              "\n              "
-                          )
-                        ]
+                        [_vm._v(_vm._s(barangay.name))]
                       )
                     }),
                     0
@@ -54720,9 +54716,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n            " +
+                  "\n                        " +
                     _vm._s(_vm.errors.permanentBarangay) +
-                    "\n          "
+                    "\n                    "
                 )
               ])
             ]),
@@ -54791,9 +54787,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n            " +
+                  "\n                        " +
                     _vm._s(_vm.errors.permanentZipCode) +
-                    "\n          "
+                    "\n                    "
                 )
               ])
             ])
@@ -54813,7 +54809,9 @@ var render = function() {
                     on: { click: _vm.submitPersonalInformation }
                   },
                   [
-                    _vm._v("\n          NEXT\n\n          "),
+                    _vm._v(
+                      "\n                    NEXT\n\n                    "
+                    ),
                     _c(
                       "div",
                       {
@@ -54857,7 +54855,7 @@ var staticRenderFns = [
           staticClass: "alert alert-secondary text-center font-weight-bold",
           attrs: { role: "alert" }
         },
-        [_vm._v("\n          PERSONAL INFORMATION\n        ")]
+        [_vm._v("\n                    PERSONAL INFORMATION\n                ")]
       )
     ])
   },
@@ -54872,7 +54870,7 @@ var staticRenderFns = [
           staticClass: "alert alert-secondary text-center font-weight-bold",
           attrs: { role: "alert" }
         },
-        [_vm._v("\n          RESIDENTIAL ADDRESS\n        ")]
+        [_vm._v("\n                    RESIDENTIAL ADDRESS\n                ")]
       )
     ])
   }
@@ -75329,8 +75327,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\e-pims\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\e-pims\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\template\e-pims\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\template\e-pims\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
