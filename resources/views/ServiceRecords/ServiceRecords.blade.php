@@ -177,7 +177,7 @@
                         <tbody>
                         </tbody>
                 </table>
-                {{-- <p style="visibility: visible;" id="line" class="text-center">No data available in table</p> --}}
+                <p style="visibility: visible;" id="line" class="text-center">No data available in table</p>
             </div>
         </div>
 

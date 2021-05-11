@@ -1,6 +1,7 @@
 <?php
 use App\SalaryGrade;
 use App\service_record;
+use App\SalaryAdjustment;
 use Yajra\Datatables\Datatables;
 
 // Route::get('/salaryList/{sg_no}' , 'Api\PlantillaController@salaryList');
@@ -86,3 +87,28 @@ Route::post('name/extensions/store', 'Api\ReferenceNameExtensionController@store
 
 /////// salary adjustment
 Route::get('/salaryAdjustment/{sg_no}/{sg_step?}/{sg_year}' , 'Api\SalaryAdjustmentController@salaryAdjustment');
+
+
+Route::get('/office/salary/adjustment/{officeCode}', function ($officeCode) {
+    $data = SalaryAdjustment::select('id','employee_id','item_no','position_id', 'date_adjustment', 'sg_no', 'step_no', 'salary_previous','salary_new','salary_diff')->with('position:position_id,position_name','employee:employee_id,firstname,middlename,lastname,extension', 'plantilla:employee_id,office_code')->where('office_code', $officeCode)->get();
+    return (new Datatables)->eloquent($data)
+            ->addIndexColumn()
+            ->addColumn('employee', function ($row) {
+                return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
+            })
+            ->addColumn('plantilla', function ($row) {
+                return $row->plantilla->office_code;
+            })
+            ->addColumn('action', function($row){
+                $btn = "<a title='Edit Salary Adjustment' href='$row->id' class='rounded-circle edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
+                $btn = $btn."<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                ";
+                    return $btn;
+            })
+            ->editColumn('checkbox', function ($row) {
+                $checkbox = "<input style='transform:scale(1.3)' name='id[$row->id]' value='$row->id' type='checkbox' />";
+                return $checkbox;
+            })->rawColumns(['checkbox'])
+            ->rawColumns(['action'])
+            ->make(true);
+});

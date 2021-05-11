@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/1.10.24/sorting/currency.js">
 @endprepend
 @section('content')
 <div class="content">
@@ -12,7 +13,11 @@
         </div>
     <div class="kanban-board card mb-0">
         <div class="card-body">
+
             <div id="add" class="page-header {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
+                <div style='padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
+                    <button id="cancelbutton" class="btn btn-primary submit-btn float-right"><i class="fa fa-list"></i> Salary Grade List</button>
+                </div>
                 <div class="alert alert-secondary text-center font-weight-bold" role="alert" >Add New Salary Grade</div>
                     <form action="" method="POST" id="salaryGradeForm">
                         @csrf
@@ -192,7 +197,7 @@
                 <td scope="col" class="text-center font-weight-bold">Step 6</td>
                 <td scope="col" class="text-center font-weight-bold">Step 7</td>
                 <td scope="col" class="text-center font-weight-bold">Step 8</td>
-                <td scope="col" class="text-center font-weight-bold">Salary Grade Base Year</td>
+                <td scope="col" class="text-center font-weight-bold">Base Year</td>
                 <td scope="col" class="text-center font-weight-bold">Action</td>
               </tr>
             </thead>
