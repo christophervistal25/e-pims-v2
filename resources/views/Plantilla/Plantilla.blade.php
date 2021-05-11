@@ -43,8 +43,8 @@
                         name="employeeName" data-live-search="true" id="employeeName" data-size="5">
                         <option></option>
                         @foreach($employee as $employees)
-                        <option {{ old('employeeName') == $employees->employee_id ? 'selected' : '' }} value="{{ $employees->employee_id }}"> {{ $employees->firstname }} {{ $employees->middlename }} {{ $employees->lastname }}</option>
-                    @endforeach
+                            <option data-plantilla="{{ $employees->employee_id }}" {{ old('employeeName') == $employees->employee_id ? 'selected' : '' }} value="{{ $employees->employee_id }}"> {{ $employees->firstname }} {{ $employees->middlename }} {{ $employees->lastname }}</option>
+                        @endforeach
                         </select>
                         <div id='employee-name-error-message' class='text-danger'>
                         </div>
@@ -83,14 +83,14 @@
                         </div>
                     </div> --}}
 
-                    <div class="form-group col-12 col-lg-3">
+                    <div class="form-group col-12 col-lg-2">
                         <label>Salary Grade<span class="text-danger">*</span></label>
                         <input value="{{ old('') }}" class="form-control {{ $errors->has('')  ? 'is-invalid' : ''}}" name="salaryGrade" id="currentSalarygrade" type="text" readonly>
                         <div id='salary-grade-error-message' class='text-danger'>
                         </div>
                     </div>
 
-                    <div class="form-group col-12 col-lg-3">
+                    <div class="form-group col-12 col-lg-2">
                         <label>Steps<span class="text-danger">*</span></label>
                         <select name="stepNo" value="" class="select floating {{ $errors->has('stepNo')  ? 'is-invalid' : ''}}"  id="currentStepno">
                             <option>Please Select</option>
@@ -102,9 +102,9 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-12 col-lg-3 d-none">
+                    <div class="form-group col-12 col-lg-2">
                         <label>Current SG Year<span class="text-danger">*</span></label>
-                        <select name="currentSgyear" id="currentSgyear" value="" class="select floating">
+                        <select name="currentSgyear" id="currentSgyear" value="" class="select floating" disabled>
                             {{ $year3 = date("Y",strtotime("-0 year")) }}
                             <option value={{ $year3 }}>{{ $year3 }}</option>
                          </select>
@@ -178,7 +178,7 @@
                         <label>Area Code<span class="text-danger">*</span></label>
                         <select name="areaCode" value="" class="select floating {{ $errors->has('areaCode')  ? 'is-invalid' : ''}}" id="areaCode">
                             @foreach(range(0, 16) as $areacodes)
-                                @if($areacode[$areacodes] == old('areaCode'))
+                                @if($areacode[$areacodes] == 'CARAGA')
                                     <option value="{{ $areacode[$areacodes]}}" selected>{{ $areacode[$areacodes] }}</option>
                                 @else
                                     <option value="{{ $areacode[$areacodes]}}">{{ $areacode[$areacodes] }}</option>
@@ -193,7 +193,7 @@
                         <label>Area Type<span class="text-danger">*</span></label>
                         <select name="areaType" value="" class="select floating {{ $errors->has('areaType')  ? 'is-invalid' : ''}}" id="areaType">
                             @foreach(range(0, 5) as $areatypes)
-                            @if($areatype[$areatypes] == old('areaType'))
+                            @if($areatype[$areatypes] == 'Province')
                                 <option value="{{ $areatype[$areatypes]}}" selected>{{ $areatype[$areatypes] }}</option>
                             @else
                                 <option value="{{ $areatype[$areatypes]}}">{{ $areatype[$areatypes] }}</option>
@@ -208,7 +208,7 @@
                         <label>Area Level<span class="text-danger">*</span></label>
                         <select name="areaLevel" value="" class="select floating {{ $errors->has('areaLevel')  ? 'is-invalid' : ''}}" id="areaLevel">
                         @foreach(range(0, 4) as $arealevels)
-                                @if($arealevel[$arealevels] == old('areaLevel'))
+                                @if($arealevel[$arealevels] == 'A')
                                     <option value="{{ $arealevel[$arealevels]}}" selected>{{ $arealevel[$arealevels] }}</option>
                                 @else
                                     <option value="{{ $arealevel[$arealevels]}}">{{ $arealevel[$arealevels] }}</option>
@@ -217,6 +217,11 @@
                         </select>
                         <div id='area-level-error-message' class='text-danger'>
                         </div>
+                    </div>
+
+                    <div class="form-group col-12 col-lg-2">
+                        <label>Employee ID</label>
+                        <input value="{{ old('employeeID') }}" class="form-control {{ $errors->has('employeeID')  ? 'is-invalid' : ''}}" name="employeeID" id="employeeID" type="text" readonly>
                     </div>
 
                     <div class="form-group form-group submit-section col-12">

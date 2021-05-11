@@ -15,7 +15,7 @@ class PlantillaController extends Controller
 
     public function employee()
     {
-        return Employe::get();
+        return Employee::get();
     }
     /**
      * Display a listing of the resource.

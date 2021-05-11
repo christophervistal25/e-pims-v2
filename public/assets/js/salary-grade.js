@@ -104,6 +104,13 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
+    $("#cancelbutton1").click(function() {
+        $("#add").attr("class", "page-header d-none");
+        $("#table").attr("class", "page-header");
+    });
+});
+
+$(document).ready(function() {
     $("#addbutton").click(function() {
         $("#message").attr("class", "page-header d-none");
     });
