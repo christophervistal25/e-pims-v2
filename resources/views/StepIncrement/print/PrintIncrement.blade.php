@@ -1,60 +1,129 @@
+
 @extends('layouts.app')
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}"> --}}
+<style>
+   @media print{
+    .header,.sidebar, #action-buttons,.breadcrumb {
+        display: none !important;
+    }
+    body { 
+        width : 100vw;
+        background :red !important;
+        
+    }
+
+    #main-container {
+        width: 150%;
+        height:auto;
+    }
+}
+</style>
 @endprepend
 @section('content')
 
-    <div class="card">
-        <div class="card-header" id="headingOne">
-        <div class="body-container">
-            <img src="/img/logo.jpg" alt="">
-            <h4>Republic of the Philippines</h4>
-            <h3>PROVINCE OF SURIGAO DEL SUR</h3>
-            <div class="">
-                <h1>Office of the Governor</h1>
-                <hr size="8" width="80%" color="black">  
-                <br>
-                <h4>NOTICE OF STEP INCREMENT</h4>
-            </div>
-        </div>
-    <div>
+{{-- BUTTONS --}}
+<div id='action-buttons' class="float-right mb-2">
+    <a class="btn btn-outline-dark" href="{{ route('step-increment.previewed.print', $id) }}" id="printBtn"><i class="la la-print"></i>&nbsp Print Preview</a>
+    <a href="/step-increment" class="btn btn-info"><i class="la la-list"></i>&nbsp View Table</a>
+</div>
+<div class="clearfix"></div>
 
-    <div class="card-body-p">
-        <p class="date">January 4, 2021</p>
-        <br>
-        <h4>Silva F. Dime, M.D.</h4>
-        <p>San Miguel Surigao del Sur</p>
-        <br>
-        <br>
-        <p>Sir/Madam:</p>
-        <div class=""></div>
-        <span style="padding-left: 58px">Pursuant to Joint Civil Service Commission (CSC) and Department of Budget and Management (DBM) Circular No. 1 series</span><p style="text-align: justify">1990, implementing Section 13 (c) of RA 6758, your salary as Chief of Hospital I, SG-24, in the Office of San Miguel Community Hospital is hereby adjusted effective January 5, 2021 as shown below:</p>
-        <br>
-        <span style="padding-left: 60px">Basic Salary as of January 4, 2021</span><span style="padding: 120px">&#8369 88,158.00</span>
-        <p style="padding-left: 60px">Salary Adjustment:</p>
-        <span style="padding-left: 100px">a) Merit</span><span class="boxing"> &nbsp &nbsp &nbsp &nbsp</span><span>Step/s)</span>
-        <div>
-        <span style="padding-left: 100px">b) Length of Service 24 /3 Step/s</span><span style="padding: 120px">1,439.00</span>
-        <br>
-        <br>
-        <span style="padding-left: 60px">Adjusted Salary effective January 5, 2021</span><span class="amount">89,597.00</span>
-        <br>
-        <br>
-        <p style="text-align: justify">This Step Increment is subject for review and post-audit by the Department of Budget and Management and to re-adjustment and refund if not in order</p>
-        <br>
-        <br>
-        <br>
-        <p class="respectfully">Very truly yours,</p>
-        <br>
-        <br>
-        <h4 class="gov"><b>ALEXANDER T. PIMENTEL</b></h4>
-        <h5 class="signatory">Provincial Governor</h5>
-        <br>
-        <br>
-        <br>
-        <br>
-        <h6>Copy Furnished: GSIS-Tandag, Surigao del Sur</h6>
-        <h6>CSC-Field Office, Tandag City</h6>
-    </div>  
+<div class="card" id='main-container'>
+    <div class="card-header pl-5 pr-5" id="headingOne">
+        {{-- HEADING --}}
+        <div class="body-container row">
+            {{-- LOGO --}}
+            <div class="w-25">
+                <img src="/assets/img/sdslogo.jpg" width="165px" style="margin-right: 100px">
+            </div>
+            <div class="offset-1 ml-4">
+                <span class="h4">Republic of the Philippines</span>
+                <h3>PROVINCE OF SURIGAO DEL SUR</h3>
+                <h4>TANDAG</h4>
+                <br>
+                <h1>Office of the Governor</h1>
+            </div>
+            <hr size="8" width="88%" color="black">
+            <br>
+        </div>
+        <div class="text-center">
+            <h4>NOTICE OF STEP INCREMENT</h4>
+        </div>
+        
+        {{-- DATE --}}
+        <div class="card-body-p">
+            <p class="date">{{ Carbon\Carbon::parse($stepIncrement->date_step_increment)->format('F d, Y') }}</p>
+            <br>
+            {{-- NAME --}}
+            <h4>{{ $stepIncrement->employee->firstname }} {{ $stepIncrement->employee->middlename }}.
+                {{ $stepIncrement->employee->lastname }}</h4>
+            <p>{{ $stepIncrement->employee->information->office->office_name }}</p>
+            <br>
+            <br>
+
+            {{-- SALUTATION OR GREETING --}}
+            <p class="text text-md mb-4">Sir/Madam:</p>
+
+            {{-- BODY --}}
+            <span class="text text-md ml-4 pl-5">&nbsp Pursuant to Joint Civil Service Commission (CSC) and Department
+                of Budget and Management (DBM) Circular No. 1 series 1990, implementing Section 13 (c) of RA 6758, your
+                salary as {{ $stepIncrement->employee->information->position->position_name }},
+                SG-{{ $stepIncrement->sg_no_to }}, in the Office of
+                {{ $stepIncrement->employee->information->office->office_name }} is hereby adjusted effective
+                {{ Carbon\Carbon::parse($stepIncrement->date_step_increment)->format( 'F d, Y') }} as shown
+                below:</span>
+            <br>
+            <br>
+            <span class="text text-md mt-3 pl-5">Basic Salary as of
+                {{ Carbon\Carbon::parse($stepIncrement->date_step_increment)->format( 'F d, Y' ) }}</span><span
+                class="text text-md" style="padding: 120px">P {{ $stepIncrement->salary_amount_from }}</span>
+            <p class="text text-md pl-5">Salary Adjustment:</p>
+            <span style="padding-left: 100px">a) Merit &nbsp &nbsp &nbsp &nbsp( &nbsp</span><span class="boxing">&nbsp
+                &nbsp &nbsp &nbsp</span><span>Step/s)</span>
+            <br>
+            <span style="padding-left: 100px">b) Length of Service {{ $stepIncrement->sg_no_to }} /
+                {{ $stepIncrement->step_no_to }} Step/s</span><span style="padding: 120px">P
+                {{ $stepIncrement->salary_diff }}</span>
+            <br>
+            <br>
+            <span class="text text-md pl-5">Adjusted Salary effective
+                {{ Carbon\Carbon::parse($stepIncrement->date_step_increment)->format( 'F d, Y' ) }}</span><span
+                class="amount">P {{ $stepIncrement->salary_amount_to }}</span>
+            <br>
+            <br>
+            <span class="text text-md pl-5">This Step Increment is subject for review and post-audit by the Department
+                of Budget and Management and to re-adjustment and refund if not in order.</span>
+
+            {{-- CLOSING, SIGNATURE --}}
+            <br><br><br><br>
+            <div class="mr-5 float-right">
+                <p class="mb-5">Very truly yours,</p>
+                <h4 class="mt-2"><b>ALEXANDER T. PIMENTEL</b></h4>
+                <h5 class="ml-5">&nbsp Provincial Governor</h5>
+            </div>
+
+            {{-- FOOTER --}}
+            <br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <div class="float-left">
+                <h6>Copy Furnished: GSIS-Tandag, Surigao del Sur</h6>
+                <h6 class="mb-5">CSC-Field Office, Tandag City</h6>
+            </div>
+
+        </div>
     </div>
+</div>
+
+@push('page-scripts')
+<script src="{{ asset('/assets/js/custom.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            $(document).click(function () {
+                console.log("Hello World");
+            });
+        });
+    </script>
+
+    @endpush
 @endsection

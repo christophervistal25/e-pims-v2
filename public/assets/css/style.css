@@ -9681,3 +9681,12 @@ input[type="checkbox"]{
         margin-top: 30px;
     }
 }
+
+@media print{
+    #header {
+        display: none !important;
+    }
+    .html_header_left #main {
+        margin-left: 0px !important;
+    }
+}

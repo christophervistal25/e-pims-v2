@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\PrintIncrement;
+use App\StepIncrement;
+use App\Office;
+use App\Employee;
 
 class PrintIncrementController extends Controller
 {
@@ -15,6 +18,23 @@ class PrintIncrementController extends Controller
     public function index()
     {
         return view('stepIncrement.print.printIncrement');
+    }
+
+    public function print($id)
+    {
+        $stepIncrement = StepIncrement::with(['employee:employee_id,firstname,middlename,lastname,extension', 'employee.information:EmpIDNo,office_code,pos_code', 'employee.information.office', 'employee.information.position'])->find($id);
+
+        return view('stepIncrement.print.previewed', compact('stepIncrement'));
+        // return view('stepIncrement.print.printIncrement', compact('stepIncrement'));
+    }
+
+    public function printList($id)
+    {
+        $stepIncrement = StepIncrement::with(['employee:employee_id,firstname,middlename,lastname,extension', 'employee.information:EmpIDNo,office_code,pos_code', 'employee.information.office', 'employee.information.position'])->find($id);
+        // dd($stepIncrement->employee);
+        // dd($stepIncrement->employee->information->position->position_name);
+        // $data = PrintIncrement::with('step-increment')->find($id);
+        return view('stepIncrement.print.printIncrement', compact('stepIncrement', 'id'));
     }
 
     /**

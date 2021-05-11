@@ -23,24 +23,11 @@ class StepIncrementController extends Controller
             ->get();
 
             return Datatables::of($data)->addColumn('action', function($row) {
-                $btnEdit = "<a href='". route('step-increment.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-info btn-sm'><i class='la la-edit'></i></a>"; 
-                $btnDelete = "<button type='submit' class='rounded-circle text-white delete btn btn-danger btn-sm btn__remove__record' data-id=" .$row->id . "><i class='la la-trash'></i></button>";
-                return $btnEdit . "&nbsp" . $btnDelete;
+                $btnEdit = "<a href='". route('step-increment.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-info btn-sm'><i class='la la-edit' title='Edit'></i></a>"; 
+                $btnDelete = "<button type='submit' class='rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord' title='Delete' data-id=" .$row->id . "><i class='la la-trash'></i></button>";
+                $btnPrint = "<a href='". url('print-increment', $row->id) . "' class='text-white print btn btn-dark btn-sm mt-2' title='Print Preview'>Preview<i class='la la-print'></i></a>";
+                return $btnEdit . "&nbsp" . $btnDelete . "&nbsp" . $btnPrint;
             })->make(true);
-            // $data = StepIncrement::with(['employee:employee_id,firstname,middlename,lastname,extension', 'position:position_id,position_name']); 
-        
-        // return (new Datatables)->eloquent($data)
-        //             ->addColumn('sg_from_and_step_from', function ($data) {
-        //                 return $data->sg_no_from . '-' . $data->step_no_from;
-        //             })
-        //             ->addColumn('sg_to_and_step_to', function ($data) {
-        //                 return $data->sg_no_to . '-' . $data->step_no_to;
-        //             })
-        //             ->addColumn('employee', function ($data) {
-        //                 return "{$data->employee->firstname} {$data->employee->middlename} {$data->employee->lastname}";
-        //             })->addColumn('position', function ($data) {
-        //                 return $data->position->position_name;
-        //             })->make(true);
                     
     }
     /**

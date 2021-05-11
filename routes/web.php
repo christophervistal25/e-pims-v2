@@ -22,6 +22,8 @@ Route::resource('/plantilla', 'PlantillaController');
 //Increment
 Route::get('/step-increment/list', 'StepIncrementController@list');
 Route::resource('/step-increment', 'StepIncrementController');
+Route::get('/print-increment/{id}/previewed', 'PrintIncrementController@print')->name('step-increment.previewed.print');
+Route::get('/print-increment/{id}', 'PrintIncrementController@printList')->name('print-increment');
 Route::resource('/print-increment', 'PrintIncrementController');
 
 //salary adjustment
@@ -57,5 +59,5 @@ Route::group(['prefix' => 'employee'], function () {
 
     Route::resource('leave', 'EmployeeLeave\LeaveController');
 });
-Route::resource('/print-increment', 'PrintIncrementController');
+// Route::resource('/print-increment', 'PrintIncrementController');
 Route::get('/profile', 'EmployeeController@profile');

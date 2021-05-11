@@ -9,6 +9,13 @@
     @foreach($errors->all() as $error)
         {{ $error }}
     @endforeach
+    {{-- VIEW TABLE BUTTON IN FORM --}}
+    <div class="float-right mr-3 mb-2" id='btnViewTableContainer'>
+        <a href="/step-increment" class="btn btn-info"><i class="la la-list"></i>&nbsp View Table </a>
+    </div>
+    <div class="clearfix"></div>
+
+    {{-- FORM AND TABLE --}}
     <div class="content container-fluid">
         <div class="kanban-board card mb-0">
             <div class="card-body">
@@ -115,8 +122,8 @@
                             </div>
 
                             <div class="form-group col-12 col-lg-12" id="buttons">
-                                <a href="/step-increment" type="button" id="btnCancel" class="form-control col-5 btn btn-warning float-right">Back</a>
-                                <button type="submit" style="margin-right:10px" id="btnUpdate"  class="form-control col-5 float-right btn btn-success mb-5">Update</button>
+                                {{-- <a href="/step-increment" type="button" id="btnCancel" class="form-control col-5 btn btn-warning float-right">Back</a> --}}
+                                <button type="submit" id="btnUpdate" class="form-control col-12 float-right btn btn-success mb-3">Update</button>
                             </div>
                         </div>
                     </div>
