@@ -25,8 +25,7 @@ class StepIncrementController extends Controller
             return Datatables::of($data)->addColumn('action', function($row) {
                 $btnEdit = "<a href='". route('step-increment.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-info btn-sm'><i class='la la-edit' title='Edit'></i></a>"; 
                 $btnDelete = "<button type='submit' class='rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord' title='Delete' data-id=" .$row->id . "><i class='la la-trash'></i></button>";
-                $btnPrint = "<a href='". url('print-increment', $row->id) . "' class='text-white print btn btn-dark btn-sm mt-2' title='Print Preview'>Preview<i class='la la-print'></i></a>";
-                return $btnEdit . "&nbsp" . $btnDelete . "&nbsp" . $btnPrint;
+                return $btnEdit . "&nbsp" . $btnDelete;
             })->make(true);
                     
     }

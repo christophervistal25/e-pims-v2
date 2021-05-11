@@ -11,7 +11,8 @@
     @endforeach
     {{-- VIEW TABLE BUTTON IN FORM --}}
     <div class="float-right mr-3 mb-2" id='btnViewTableContainer'>
-        <a href="/step-increment" class="btn btn-info"><i class="la la-list"></i>&nbsp View Table </a>
+        <a href="{{ route('print-increment', $stepIncrement->id) }}" class="btn btn-secondary"><i class="la la-print"></i>&nbsp; Print Preview</a>
+        <a href="/step-increment" class="btn btn-info"><i class="la la-list"></i>&nbsp; View List </a>
     </div>
     <div class="clearfix"></div>
 
