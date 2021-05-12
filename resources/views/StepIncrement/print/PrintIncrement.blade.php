@@ -59,7 +59,7 @@
             {{-- NAME --}}
             <h4>{{ $stepIncrement->employee->firstname }} {{ $stepIncrement->employee->middlename }}.
                 {{ $stepIncrement->employee->lastname }}</h4>
-            <p>{{ $stepIncrement->employee->information->office->office_name }}</p>
+            <p>{{ $stepIncrement->employee->plantilla->office->office_name }}</p>
             <br>
             <br>
 
@@ -69,9 +69,9 @@
             {{-- BODY --}}
             <span class="text text-md ml-4 pl-5">&nbsp Pursuant to Joint Civil Service Commission (CSC) and Department
                 of Budget and Management (DBM) Circular No. 1 series 1990, implementing Section 13 (c) of RA 6758, your
-                salary as {{ $stepIncrement->employee->information->position->position_name }},
+                salary as {{ $stepIncrement->employee->plantilla->position->position_name }},
                 SG-{{ $stepIncrement->sg_no_to }}, in the Office of
-                {{ $stepIncrement->employee->information->office->office_name }} is hereby adjusted effective
+                {{ $stepIncrement->employee->plantilla->office->office_name }} is hereby adjusted effective
                 {{ Carbon\Carbon::parse($stepIncrement->date_step_increment)->format( 'F d, Y') }} as shown
                 below:</span>
             <br>

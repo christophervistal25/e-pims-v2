@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -23,8 +24,33 @@ class StepIncrement extends Model
         'step_no_to',
         'salary_amount_to',
         'salary_diff',
+        'office_code',
         'deleted_at'
     ];
+
+     public static function boot()
+    {
+        parent::boot();
+        self::creating(function ($position) {
+            Cache::forget('step_increment_records');
+        });
+
+        self::created(function() {
+            Cache::forget('step_increment_records');
+        });
+
+        self::updated(function() {
+            Cache::forget('step_increment_records');
+        });
+
+        self::saved(function() {
+            Cache::forget('step_increment_records');
+        });
+
+        self::deleted(function() {
+            Cache::forget('step_increment_records');
+        });
+    }
 
     public function employee()
     {
@@ -34,6 +60,11 @@ class StepIncrement extends Model
     public function position()
     {
         return $this->belongsTo('App\Position', 'position_id', 'position_id');
+    }
+
+    public function plantilla()
+    {
+        return $this->hasOne('App\Plantilla', 'employee_id', 'employee_id');
     }
 
 }

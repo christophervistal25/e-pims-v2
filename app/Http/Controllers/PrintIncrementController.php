@@ -30,7 +30,7 @@ class PrintIncrementController extends Controller
 
     public function printList($id)
     {
-        $stepIncrement = StepIncrement::with(['employee:employee_id,firstname,middlename,lastname,extension', 'employee.information:EmpIDNo,office_code,pos_code', 'employee.information.office', 'employee.information.position'])->find($id);
+        $stepIncrement = StepIncrement::with(['plantilla', 'plantilla.position', 'plantilla.office'])->find($id);
         // dd($stepIncrement->employee);
         // dd($stepIncrement->employee->information->position->position_name);
         // $data = PrintIncrement::with('step-increment')->find($id);
