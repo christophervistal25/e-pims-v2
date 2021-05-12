@@ -5,21 +5,21 @@
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 @endprepend
 @section('content')
-<div class="content">   
+<div class="content">
 @include('Plantilla.add-ons.success')
 
-    <div class="kanban-board card mb-0">   
+    <div class="kanban-board card mb-0">
         <div class="card-body">
             <div id="add" class="page-header {{  count($errors->all())  !== 0 }}">
                 <form action="{{ route('plantilla.update', $plantilla->plantilla_id) }}" method="post" id="plantillaEditForm">
                     @csrf
                     @method('PUT')
                     <div class="row">
-                       
+
                     <div class="col-12">
                         <div class="alert alert-secondary text-center font-weight-bold" role="alert" >Edit Plantilla</div>
                     </div>
-                
+
                     <div class="form-group col-12 col-lg-2">
                         <label>Item No<span class="text-danger">*</span></label>
                         <input  value="{{ old('itemNo') ?? $plantilla->item_no }}" class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" name="itemNo" id="num-only" type="text" placeholder="Item No.">
@@ -40,8 +40,8 @@
 
                     <div class="form-group col-12 col-lg-4">
                         <label>Employee Name<span class="text-danger">*</span></label>
-                        <select value="{{ old('employeeName') }}" class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" 
-                        name="employeeName" data-live-search="true" id="employeeName" data-size="5">
+                        <select value="{{ old('employeeName') }}" class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}"
+                        name="employeeName" data-live-search="true" id="employeeName" data-size="5" disabled>
                         <option></option>
                         @foreach($employee as $employees)
                         <option {{ $plantilla->employee_id == $employees->employee_id ? 'selected' : '' }} value="{{ $employees->employee_id }}"> {{ $employees->lastname }}, {{ $employees->firstname }} {{ $employees->middlename }}</option>
@@ -55,7 +55,7 @@
 
                     <div class="form-group col-12 col-lg-4">
                         <label>Position<span class="text-danger">*</span></label>
-                        <select value="{{ old('positionTitle') }}"  class="form-control form-control-xs selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}" 
+                        <select value="{{ old('positionTitle') }}"  class="form-control form-control-xs selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
                         name="positionTitle" data-live-search="true" id="positionTitle" data-width="100%">
                         <option></option>
                         @foreach($position as $positions)
@@ -163,7 +163,7 @@
                         {{ $errors->first('lastPromotion') }} </small>
                         @endif
                     </div>
-                
+
                     <div class="form-group col-12 col-lg-4">
                         <label>Status <span class="text-danger">*</span></label>
                         <select value="{{ old('status') }}" name="status" class="select {{ $errors->has('status')  ? 'is-invalid' : ''}}">
@@ -197,7 +197,7 @@
                         {{ $errors->first('areaCode') }} </small>
                         @endif
                     </div>
-                    
+
                     <div class="form-group form-group col-12 col-lg-3">
                         <label>Area Type<span class="text-danger">*</span></label>
                         <select name="areaType" value="{{ old('areaType') }}" class="select floating {{ $errors->has('areaType')  ? 'is-invalid' : ''}}">

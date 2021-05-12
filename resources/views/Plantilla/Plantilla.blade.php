@@ -39,7 +39,7 @@
 
                     <div class="form-group col-12 col-lg-4">
                         <label>Employee Name<span class="text-danger">*</span></label>
-                        <select value="" class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}"
+                        <select value="" class="form-control selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}"
                         name="employeeName" data-live-search="true" id="employeeName" data-size="5">
                         <option></option>
                         @foreach($employee as $employees)
