@@ -209,6 +209,7 @@ $(document).ready(function() {
 $(document).ready(function() {
     $("#plantillaForm").submit(function(e) {
         e.preventDefault();
+        let empIds = $("#employeeName").val();
         let data = $(this).serialize();
         $("#saveBtn").attr("disabled", true);
         $("#loading").removeClass("d-none");
@@ -218,6 +219,11 @@ $(document).ready(function() {
             data: data,
             success: function(response) {
                 if (response.success) {
+                    console.log(e);
+                    $("#employeeName")
+                        .find('[value="' + empIds + '"]')
+                        .remove();
+                    $("#employeeName").selectpicker("refresh");
                     $("input").val("");
                     const select = [
                         "#salaryGrade",
@@ -226,10 +232,7 @@ $(document).ready(function() {
                         "#employeeName",
                         "#officeCode",
                         "#divisionId",
-                        "#status",
-                        "#areaCode",
-                        "#areaType",
-                        "#areaLevel"
+                        "#status"
                     ];
                     $.each(select, function(index, value) {
                         $(`${value}`)

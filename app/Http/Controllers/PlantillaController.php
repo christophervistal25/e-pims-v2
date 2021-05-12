@@ -24,7 +24,8 @@ class PlantillaController extends Controller
      */
     public function index(Request $req)
     {
-        $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->get();
+        $plantillaEmp = Plantilla::get()->pluck('employee_id')->toArray();
+        $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->whereNotIn('employee_id', $plantillaEmp )->get();
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('position_id', 'position_name')->get();
         $salarygrade = SalaryGrade::get(['sg_no']);
@@ -92,7 +93,7 @@ class PlantillaController extends Controller
             'officeCode'                    => 'required|in:' . implode(',',range(10001, 10056)),
             'divisionId'                    => 'required|in:' . implode(',',range(10001, 10056)),
             'originalAppointment'           => 'required',
-            'lastPromotion'                 => 'required',
+            'lastPromotion'                 => 'required|after:originalAppointment',
             'status'                        => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
             'areaCode'                      => 'required|in:' . implode(',', Plantilla::REGIONS),
             'areaType'                      => 'required|in:Region,Province,District,Municipality,Foreign Post',
@@ -139,9 +140,9 @@ class PlantillaController extends Controller
      */
     public function edit($plantilla_id)
     {
-        $employee = Employee::get();
-        $office = Office::get();
-        $position = Position::get();
+        $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->get();
+        $office = Office::select('office_code', 'office_name')->get();
+        $position = Position::select('position_id', 'position_name')->get();
         $salarygrade = SalaryGrade::get(['sg_no']);
         $status = ['Please Select', 'Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
         count($status) - 1;
@@ -175,7 +176,7 @@ class PlantillaController extends Controller
             'officeCode'                    => 'required|in:' . implode(',',range(10001, 10056)),
             'divisionId'                    => 'required|in:' . implode(',',range(10001, 10056)),
             'originalAppointment'           => 'required',
-            'lastPromotion'                 => 'required',
+            'lastPromotion'                 => 'required|after:originalAppointment',
             'status'                        => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
             'areaCode'                      => 'required|in:' . implode(',', Plantilla::REGIONS),
             'areaType'                      => 'required|in:Region,Province,District,Municipality,Foreign Post',
