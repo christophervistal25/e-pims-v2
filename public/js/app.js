@@ -4374,7 +4374,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -37978,19 +37977,35 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [
                     _vm._v(
-                      "\n                        " +
-                        _vm._s(employee.lastname) +
-                        " , " +
-                        _vm._s(employee.firstname) +
-                        "\n                        " +
-                        _vm._s(employee.middlename) +
-                        " " +
-                        _vm._s(employee.extension) +
-                        "\n                    "
+                      "\n            " +
+                        _vm._s(employee.fullname) +
+                        "\n          "
                     )
                   ]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(" ")]),
+                  _c("td", { staticClass: "text-center" }, [
+                    _vm._v(
+                      "\n            " +
+                        _vm._s(
+                          employee.information && employee.information.position
+                            ? employee.information.position.position_name
+                            : "N/A"
+                        ) +
+                        "\n          "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center" }, [
+                    _vm._v(
+                      "\n            " +
+                        _vm._s(
+                          employee.information && employee.information.office
+                            ? employee.information.office.office_name
+                            : "N/A"
+                        ) +
+                        "\n          "
+                    )
+                  ]),
                   _vm._v(" "),
                   _c("td", { staticClass: "text-center" }, [
                     _c(
@@ -38264,6 +38279,10 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
           _vm._v("Position")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
+          _vm._v("Office")
         ]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
@@ -41864,20 +41883,28 @@ var render = function() {
           attrs: { id: _vm.isComplete ? "familyBackground" : "" }
         },
         [
-          _c("div", { staticClass: "form-check mt-3" }, [
-            _c("label", { attrs: { for: "#spouse" } }, [
-              _c("input", {
-                attrs: { id: "spouse", type: "checkbox" },
-                on: {
-                  click: function($event) {
-                    _vm.hasSpouse = !_vm.hasSpouse
+          _c("div", { staticClass: "form-group mt-3" }, [
+            _c(
+              "label",
+              {
+                staticClass: "text-lg",
+                staticStyle: { transform: "scale(.8)" },
+                attrs: { for: "spouse" }
+              },
+              [
+                _c("input", {
+                  attrs: { id: "spouse", type: "checkbox" },
+                  on: {
+                    click: function($event) {
+                      _vm.hasSpouse = !_vm.hasSpouse
+                    }
                   }
-                }
-              }),
-              _vm._v(
-                "\n                    Do you have spouse? If YES, kindly tick the checkbox.\n                "
-              )
-            ])
+                }),
+                _vm._v(
+                  "\n                    Do you have spouse? If YES, kindly tick the checkbox.\n                "
+                )
+              ]
+            )
           ]),
           _vm._v(" "),
           _vm.hasSpouse
@@ -44835,14 +44862,21 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
-              _c("label", { staticClass: "checkbox-inline" }, [
-                _c("input", {
-                  attrs: { type: "checkbox" },
-                  domProps: { checked: _vm.isSameAsAbove },
-                  on: { click: _vm.sameAsAboveAddress }
-                }),
-                _vm._v("\n            SAME AS ABOVE\n          ")
-              ])
+              _c(
+                "label",
+                {
+                  staticClass: "checkbox-inline",
+                  staticStyle: { transform: "scale(.8)" }
+                },
+                [
+                  _c("input", {
+                    attrs: { type: "checkbox" },
+                    domProps: { checked: _vm.isSameAsAbove },
+                    on: { click: _vm.sameAsAboveAddress }
+                  }),
+                  _vm._v("\n            SAME AS ABOVE\n          ")
+                ]
+              )
             ])
           ]),
           _vm._v(" "),
@@ -75327,8 +75361,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\template\e-pims\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\template\e-pims\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\laragon\www\e-pims\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\e-pims\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
