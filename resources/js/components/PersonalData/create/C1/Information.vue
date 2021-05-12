@@ -46,7 +46,7 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Surname</span>
+              <span>Surname<span class="text-danger">*</span> </span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.surname }}
@@ -67,7 +67,7 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>First Name</span>
+              <span>First Name<span class="text-danger">*</span></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.firstname }}
@@ -153,7 +153,7 @@
               <p class="text-danger text-sm">
                 {{ errors.dateOfBirth }}
               </p>
-              <span>DATE OF BIRTH</span>
+              <span>DATE OF BIRTH<span class="text-danger">*</span></span>
             </label>
           </div>
           <div class="col-lg-3">
@@ -173,7 +173,7 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Place of Birth</span>
+              <span>Place of Birth<span class="text-danger">*</span></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.placeOfBirth }}
@@ -192,7 +192,7 @@
                 <option value="MALE">MALE</option>
                 <option value="FEMALE">FEMALE</option>
               </select>
-              <span>SEX</span>
+              <span>SEX<span class="text-danger">*</span></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.sex }}
@@ -214,7 +214,7 @@
                 <option value="SEPARATED">SEPARATED</option>
                 <option value="OTHERS">OTHERS</option>
               </select>
-              <span>STATUS</span>
+              <span>STATUS<span class="text-danger">*</span></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.status }}
@@ -233,7 +233,7 @@
                 v-model="personal_data.height"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Height</span>
+              <span>Height(m)<span class="text-danger">*</span></span>
             </label>
             <p class="text-danger text-sm">{{ errors.height }}</p>
           </div>
@@ -248,7 +248,7 @@
                 v-model="personal_data.weight"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Weight</span>
+              <span>Weight(kg)<span class="text-danger">*</span></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.weight }}
@@ -259,6 +259,7 @@
               <input
                 type="text"
                 class="form-control"
+                id="bloodtype"
                 maxlength="3"
                 :class="errors.hasOwnProperty('bloodType') ? 'is-invalid' : ''"
                 placeholder="Enter bloodtype"
@@ -269,7 +270,7 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Bloodtype</span>
+              <span>Bloodtype<span class="text-danger">*</span></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.bloodType }}
@@ -375,7 +376,7 @@
                 <option value="FILIPINO">FILIPINO</option>
                 <option value="DUAL CITIZEN">DUAL CITIZEN</option>
               </select>
-              <span>Citizenship</span>
+              <span>Citizenship<span class="text-danger">*</span></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.citizenship }}
@@ -456,7 +457,7 @@
                 v-model="personal_data.mobileNumber"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Mobile Number</span>
+              <span>Mobile Number<span class="text-danger">*</span></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.mobileNumber }}
@@ -551,7 +552,7 @@
               <p class="text-danger text-sm">
                 {{ errors["residentialProvince.code"] }}
               </p>
-              <span>Province</span>
+              <span>Province<span class="text-danger">*</span></span>
             </label>
           </div>
           <div class="col-lg-3">
@@ -565,7 +566,7 @@
               <p class="text-danger text-sm">
                 {{ errors["residentialCity.code"] }}
               </p>
-              <span>City</span>
+              <span>City<span class="text-danger">*</span></span>
             </label>
           </div>
           <div class="col-lg-3">
@@ -578,7 +579,7 @@
               <p class="text-danger text-sm">
                 {{ errors["residentialBarangay.code"] }}
               </p>
-              <span>Barangay</span>
+              <span>Barangay<span class="text-danger">*</span></span>
             </label>
           </div>
           <div class="col-lg-3">
@@ -605,7 +606,7 @@
                 placeholder="Enter Zip Code"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Zip Code</span>
+              <span>Zip Code<span class="text-danger">*</span></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.residentialZipCode }}
@@ -696,7 +697,7 @@
               <p class="text-danger text-sm">
                 {{ errors["permanentProvince.code"] }}
               </p>
-              <span>Province</span>
+              <span>Province<span class="text-danger">*</span></span>
             </label>
           </div>
 
@@ -711,7 +712,7 @@
               <p class="text-danger text-sm">
                 {{ errors["permanentCity.code"] }}
               </p>
-              <span>City</span>
+              <span>City<span class="text-danger">*</span></span>
             </label>
           </div>
 
@@ -725,7 +726,7 @@
               <p class="text-danger text-sm">
                 {{ errors["permanentBarangay.code"] }}
               </p>
-              <span>Barangay</span>
+              <span>Barangay<span class="text-danger">*</span></span>
             </label>
           </div>
 
@@ -753,7 +754,7 @@
                 placeholder="Enter Zip Code"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Zip Code</span>
+              <span>Zip Code<span class="text-danger">*</span></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.permanentZipCode }}
