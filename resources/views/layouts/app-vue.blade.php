@@ -9,31 +9,33 @@
     <meta name="author" content="">
     <meta name="robots" content="noindex, nofollow">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="apple-touch-icon" sizes="57x57" href="/assets/img/icons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/assets/img/icons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/assets/img/icons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/assets/img/icons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/assets/img/icons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/assets/img/icons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/assets/img/icons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/assets/img/icons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/icons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="/assets/img/icons/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" sizes="57x57" href="{{  asset('/assets/img/icons/apple-icon-57x57.png') }}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{{  asset('/assets/img/icons/apple-icon-60x60.png') }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{  asset('/assets/img/icons/apple-icon-72x72.png') }}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('/assets/img/icons/apple-icon-76x76.png') }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{  asset('/assets/img/icons/apple-icon-114x114.png') }}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{  asset('/assets/img/icons/apple-icon-120x120.png') }}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{  asset('/assets/img/icons/apple-icon-144x144.png') }}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{  asset('/assets/img/icons/apple-icon-152x152.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/assets/img/icons/apple-icon-180x180.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192"  href="{{  asset('/assets/img/icons/android-icon-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{  asset('/assets/img/icons/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{  asset('/assets/img/icons/favicon-96x96.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/assets/img/icons/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('/assets/img/icons/manifest.json') }}">
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/assets/img/icons/ms-icon-144x144.png">
+    <meta name="msapplication-TileImage" content="{{ asset('/assets/img/icons/ms-icon-144x144.png') }}">
     <meta name="theme-color" content="#ffffff">
-    <title>@yield('title') | e-Pims</title>
+    <title>@yield('title') | {{  config('app.name') }}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
         crossorigin="anonymous" />
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/css/line-awesome.min.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
     <style>
@@ -46,8 +48,8 @@
 
 
 </head>
-
-<body class="mini-sidebar">
+{{-- mini-sidebar --}}
+<body class="">
     <div id="loader-wrapper">
         <div id="loader">
             <div class="loader-ellips">
@@ -65,7 +67,7 @@
             <!-- Logo -->
             <div class="header-left">
                 <a href="/" class="logo">
-                    {{-- <img src=/assets/img/logo.png" width="40" height="40" alt=""> --}}
+                    <img src="{{ asset('/assets/img/logo.png') }}" alt="">
                 </a>
             </div>
             <!-- /Logo -->
@@ -78,7 +80,7 @@
             </a>
             <!-- Header Title -->
             <div class="page-title-box">
-                <h3>e-PIMS</h3>
+                <a href="/" class='text-decoration-none'><h3>{{ config('app.name') }}</h3></a>
             </div>
             <!-- /Header Title -->
             <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
@@ -232,12 +234,12 @@
                         </li>
                         <li>
                             <a class='text-decoration-none' href="{{ route('employee.index') }}">
-                                <i class="fa fa-user text-sm "></i> <span> Employees </span>
+                                <i class="la la-users"></i> <span> Employees </span>
                             </a>
                         </li>
                         <li>
                             <a class='text-decoration-none' href="{{ route('data.index') }}">
-                                <i class="fa fa-file-excel text-sm" aria-hidden="true"></i> <span> Personal Data Sheet
+                                <i class="la la-file-text"></i>  <span> Personal Data Sheet
                                 </span>
                             </a>
                         </li>
@@ -245,12 +247,12 @@
                             <span>Human Resource Module</span>
                         </li>
                         <li class="submenu">
-                            <a href="#" class='text-decoration-none'><i class="fas fa-house-user text-sm"></i> <span>
+                            <a href="#" class='text-decoration-none'><i class="la la-home"></i> <span> <span>
                                     Leave Management </span> <i
                                     class="ml-3 fas fa-caret-down text-sm text-right"></i></a>
                             <ul style="display: none;">
                                 <li>
-                                    <a class='text-decoration-none mr-2' href="#">
+                                    <a class='text-decoration-none mr-2' href="{{ route('leave.application.filling') }}">
                                         Leave Application Filling</a>
                                 </li>
                                 <li>
@@ -284,12 +286,12 @@
 
 
                         <li class="submenu">
-                            <a href="#" class='text-decoration-none'><i class="fas fa-address-card text-sm"></i>
+                            <a href="{{  route('service-records.index') }}" class='text-decoration-none'><i class="la la-bars"></i> 
                                 <span>Service Record</span> <i
                                     class="ml-3 fas fa-caret-down text-sm text-right"></i></a>
                             <ul style="display: none;">
                                 <li>
-                                    <a class='text-decoration-none mr-2' href="#">
+                                    <a class='text-decoration-none mr-2' href="{{  route('service-records.index') }}">
                                         Maintenance & Monitoring
                                     </a>
                                 </li>
@@ -297,17 +299,17 @@
                         </li>
 
                         <li class="submenu">
-                            <a href="#" class='text-decoration-none'><i class="fas fa-bookmark text-sm"></i>
+                            <a href="#" class='text-decoration-none'><i class="la la-bookmark"></i>
                                 <span>Plantilla of Position</span> <i
                                     class="ml-3 fas fa-caret-down text-sm text-right"></i></a>
                             <ul style="display: none;">
                                 <li>
-                                    <a class='text-decoration-none mr-2' href="#">
+                                    <a class='text-decoration-none mr-2' href="{{  route('plantilla.index') }}">
                                         Plantilla of Position
                                     </a>
                                 </li>
                                 <li>
-                                    <a class='text-decoration-none mr-2' href="#">
+                                    <a class='text-decoration-none mr-2' href="{{  route('plantilla.index') }}">
                                         Plantilla of Personnel
                                     </a>
                                 </li>
@@ -328,22 +330,8 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="submenu">
-                                    <a class='text-decoration-none' href="javascript:void(0);"> <span>Step
-                                            Increment</span> <i
-                                            class="ml-3 fas fa-caret-down text-sm text-right"></i></a>
-                                    <ul style="display: none;">
-                                        <li>
-                                            <a class='text-decoration-none' href="javascript:void(0);">
-                                                <span>Add Increment</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class='text-decoration-none' href="javascript:void(0);">
-                                                <span>Print Increment</span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                                <li>
+                                    <a class='text-decoration-none' href="{{  route('step-increment.index') }}"> <span>Step Increment</span> </a>
                                 </li>
                             </ul>
                         </li>

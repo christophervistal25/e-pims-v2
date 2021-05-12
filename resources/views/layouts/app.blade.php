@@ -8,7 +8,7 @@
 	<meta name="author" content="DreamguysBootstrap Admin Template">
 	<meta name="robots" content="noindex, nofollow">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<title>@yield('title') |  e-Pims</title>
+	<title>@yield('title') |  {{  config('app.name') }}</title>
 	{{-- <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/assets/img/favicon.png') }}"> --}}
 	{{-- <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}"> --}}
 	<link rel="stylesheet" href="{{ asset('/assets/css/font-awesome.min.css') }}">
@@ -40,8 +40,8 @@
 		<div class="header">
 			<!-- Logo -->
 			<div class="header-left">
-				<a href="index.html" class="logo">
-					{{-- <img src=/assets/img/logo.png" width="40" height="40" alt=""> --}}
+				<a href="/" class="logo">
+					<img src="/assets/img/logo.png">
 				</a>
 			</div>
 			<!-- /Logo -->
@@ -54,7 +54,11 @@
 			</a>
 			<!-- Header Title -->
 			<div class="page-title-box">
-				<h3>e-PIMS</h3>
+				<a class='text-decoration-none' href="/">
+					<h3>
+						{{ config('app.name') }}
+					</h3>
+				</a>
 			</div>
 			<!-- /Header Title -->
 			<a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
@@ -217,7 +221,7 @@
 							<a href="#" class='text-decoration-none'><i class="la la-home"></i> <span> Leave Management </span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
 								<li>
-                                    <a class='text-decoration-none mr-2' href="#">
+                                    <a class='text-decoration-none mr-2' href="{{ route('leave.application.filling') }}">
                                         Leave Application Filling</a>
                                     </li>
 								<li>
@@ -265,12 +269,12 @@
 							<a href="#" class='text-decoration-none'><i class="la la-bookmark"></i> <span>Plantilla of Position</span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
 								<li>
-                                    <a class='text-decoration-none mr-2' href="#">
+                                    <a class='text-decoration-none mr-2' href="{{  route('plantilla.index') }}">
                                         Plantilla of Position
                                     </a>
                                 </li>
                                 <li>
-                                    <a class='text-decoration-none mr-2' href="#">
+                                    <a class='text-decoration-none mr-2' href="{{  route('plantilla.index') }}">
                                         Plantilla of Personnel
                                     </a>
                                 </li>
@@ -289,20 +293,8 @@
                                         </li>
 									</ul>
 								</li>
-                                <li class="submenu">
-									<a  class='text-decoration-none' href="javascript:void(0);"> <span>Step Increment</span> <span class="menu-arrow"></span></a>
-									<ul style="display: none;">
-										<li>
-                                            <a class='text-decoration-none' href="javascript:void(0);">
-                                                <span>Add Increment</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class='text-decoration-none' href="javascript:void(0);">
-                                                <span>Print Increment</span>
-                                            </a>
-                                        </li>
-									</ul>
+                                <li class="">
+									  <a class='text-decoration-none' href="{{  route('step-increment.index') }}"> <span>Step Increment</span> </a>
 								</li>
 							</ul>
 						</li>
