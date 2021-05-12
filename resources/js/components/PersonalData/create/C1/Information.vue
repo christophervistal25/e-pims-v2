@@ -96,7 +96,7 @@
               {{ errors.middlename }}
             </p>
           </div>
-          <div class="col-lg-3">
+          <div class="col-lg-2">
             <label for="nameextension" class="form-group has-float-label mb-0">
               <select
                 type="text"
@@ -136,6 +136,14 @@
             <p class="text-danger text-sm">
               {{ errors.nameExtension }}
             </p>
+          </div>
+          <div class="col-lg-1">
+            <button
+              class="btn btn-sm btn-info rounded-circle shadow mt-1"
+              @click="openNameExtensionModal"
+            >
+              <i class="fas fa-plus text-sm"></i>
+            </button>
           </div>
         </div>
         <div class="row pl-3 pr-3">
@@ -621,7 +629,7 @@
             PERMANENT ADDRESS
           </div>
           <div class="form-group">
-            <label class="checkbox-inline" style="transform: scale(.8)">
+            <label class="checkbox-inline" style="transform: scale(0.8)">
               <input
                 :checked="isSameAsAbove"
                 type="checkbox"
@@ -785,15 +793,24 @@
         <div class="clearfix"></div>
       </div>
     </div>
+    <name-extension-modal
+      :shownameextension="isShowNameExtension"
+      @nameext-modal-dismiss="closeNameExtensionModal"
+    ></name-extension-modal>
   </div>
 </template>
-
 <script>
+import NameExtensionModal from "./NameExtensionModal";
+
+import "vue-select/dist/vue-select.css";
 import _ from "lodash";
 export default {
-  props: ["data"],
+  components: { NameExtensionModal },
+  props: ["data", "nameExtensions"],
   data() {
     return {
+      isShow: false,
+      isShowNameExtension: false,
       isLoading: false,
       isComplete: false,
       isSameAsAbove: false,
@@ -935,6 +952,15 @@ export default {
             });
           }
         });
+    },
+    openNameExtensionModal() {
+      this.isShowNameExtension = true;
+    },
+    closeNameExtensionModal(newExtension) {
+      if (newExtension) {
+        this.nameExtensions.push(newExtension.extension);
+      }
+      this.isShowNameExtension = false;
     },
   },
   mounted() {
