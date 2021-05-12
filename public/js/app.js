@@ -2090,30 +2090,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["employee", "errors"]
 });
@@ -2425,35 +2401,6 @@ var _components;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -7047,6 +6994,34 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     show_panel: {
@@ -7171,6 +7146,7 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+//
 //
 //
 //
@@ -16640,7 +16616,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.button-wrapper[data-v-b141abb8] {\r\n    position: relative;\n}\n.button-wrapper span.label[data-v-b141abb8] {\r\n    position: relative;\r\n    z-index: 0;\r\n    display: inline-block;\r\n    cursor: pointer;\r\n    color: #fff;\r\n    text-transform: uppercase;\n}\n#upload[data-v-b141abb8] {\r\n    display: inline-block;\r\n    position: absolute;\r\n    z-index: 1;\r\n    top: 0;\r\n    left: 0;\r\n    opacity: 0;\n}\r\n", ""]);
+exports.push([module.i, "\n.button-wrapper[data-v-b141abb8] {\r\n  position: relative;\n}\n.button-wrapper span.label[data-v-b141abb8] {\r\n  position: relative;\r\n  z-index: 0;\r\n  display: inline-block;\r\n  cursor: pointer;\r\n  color: #fff;\r\n  text-transform: uppercase;\n}\n#upload[data-v-b141abb8] {\r\n  display: inline-block;\r\n  position: absolute;\r\n  z-index: 1;\r\n  top: 0;\r\n  left: 0;\r\n  opacity: 0;\n}\r\n", ""]);
 
 // exports
 
@@ -35302,7 +35278,10 @@ var render = function() {
       ? _c("div", { staticClass: "form-group" }, [
           _c(
             "label",
-            { staticClass: "form-group has-float-label", attrs: { for: "" } },
+            {
+              staticClass: "form-group has-float-label mb-0",
+              attrs: { for: "" }
+            },
             [
               _c("input", {
                 directives: [
@@ -35339,18 +35318,17 @@ var render = function() {
           _vm._v(" "),
           _vm.errors.dbpAccountNo
             ? _c("p", { staticClass: "text-danger text-sm" }, [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.errors.dbpAccountNo) +
-                    "\n        "
-                )
+                _vm._v("\n      " + _vm._s(_vm.errors.dbpAccountNo) + "\n    ")
               ])
             : _vm._e()
         ])
       : _c("div", [
           _c(
             "label",
-            { staticClass: "form-group has-float-label", attrs: { for: "" } },
+            {
+              staticClass: "form-group has-float-label mb-0",
+              attrs: { for: "" }
+            },
             [
               _c("input", {
                 directives: [
@@ -35387,11 +35365,7 @@ var render = function() {
           _vm._v(" "),
           _vm.errors.lbpAccountNo
             ? _c("p", { staticClass: "text-danger text-sm" }, [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.errors.lbpAccountNo) +
-                    "\n        "
-                )
+                _vm._v("\n      " + _vm._s(_vm.errors.lbpAccountNo) + "\n    ")
               ])
             : _vm._e()
         ]),
@@ -35935,7 +35909,12 @@ var render = function() {
                   outline: "none",
                   "box-shadow": "0px 0px 0px transparent"
                 },
-                attrs: { type: "text", name: "lastname", id: "lastname" },
+                attrs: {
+                  type: "text",
+                  name: "lastname",
+                  id: "lastname",
+                  placeholder: "Enter Last Name"
+                },
                 domProps: { value: _vm.employee.lastName },
                 on: {
                   input: function($event) {
@@ -35947,11 +35926,11 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
+              _vm._m(0),
+              _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(_vm._s(_vm.errors.lastName))
-              ]),
-              _vm._v(" "),
-              _c("span", [_vm._v("LAST NAME")])
+              ])
             ]
           ),
           _vm._v(" "),
@@ -35979,7 +35958,11 @@ var render = function() {
                   outline: "none",
                   "box-shadow": "0px 0px 0px transparent"
                 },
-                attrs: { type: "text", id: "firstname" },
+                attrs: {
+                  type: "text",
+                  id: "firstname",
+                  placeholder: "Enter First Name"
+                },
                 domProps: { value: _vm.employee.firstName },
                 on: {
                   input: function($event) {
@@ -35991,15 +35974,13 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                            " +
-                    _vm._s(_vm.errors.firstName) +
-                    "\n                        "
+                  "\n          " + _vm._s(_vm.errors.firstName) + "\n        "
                 )
-              ]),
-              _vm._v(" "),
-              _c("span", [_vm._v("FIRST NAME")])
+              ])
             ]
           ),
           _vm._v(" "),
@@ -36020,9 +36001,6 @@ var render = function() {
                   }
                 ],
                 staticClass: "form-control text-uppercase",
-                class: _vm.errors.hasOwnProperty("middleName")
-                  ? "is-invalid"
-                  : "",
                 staticStyle: {
                   outline: "none",
                   "box-shadow": "0px 0px 0px transparent"
@@ -36100,7 +36078,11 @@ var render = function() {
                       _c(
                         "option",
                         { attrs: { value: "", readonly: "", selected: "" } },
-                        [_vm._v("Please select name extension")]
+                        [
+                          _vm._v(
+                            "\n                Please select name extension\n              "
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _vm._l(_vm.nameExtensions, function(extension, index) {
@@ -36113,7 +36095,13 @@ var render = function() {
                               value: extension
                             }
                           },
-                          [_vm._v(_vm._s(extension))]
+                          [
+                            _vm._v(
+                              "\n                " +
+                                _vm._s(extension) +
+                                "\n              "
+                            )
+                          ]
                         )
                       })
                     ],
@@ -36122,9 +36110,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("p", { staticClass: "text-danger text-sm" }, [
                     _vm._v(
-                      "\n                            " +
+                      "\n              " +
                         _vm._s(_vm.errors.extension) +
-                        "\n                        "
+                        "\n            "
                     )
                   ])
                 ]
@@ -36188,13 +36176,13 @@ var render = function() {
                   _vm._v(" "),
                   _c("p", { staticClass: "text-danger text-sm" }, [
                     _vm._v(
-                      "\n                            " +
+                      "\n              " +
                         _vm._s(_vm.errors.dateOfBirth) +
-                        "\n                                "
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
-                  _c("span", [_vm._v("DATE OF BIRTH")])
+                  _vm._m(2)
                 ]
               )
             ]),
@@ -36393,11 +36381,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "text-center mt-2" }, [
             _c("div", { staticClass: "button-wrapper btn btn-info" }, [
-              _c("span", { staticClass: "label" }, [
-                _vm._v(
-                  "\n                            Attach Photo\n                        "
-                )
-              ]),
+              _c("span", { staticClass: "label" }, [_vm._v(" Attach Photo ")]),
               _vm._v(" "),
               _c("input", {
                 staticClass: "upload-box",
@@ -36436,13 +36420,13 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                    " +
+                  "\n          " +
                     _vm._s(_vm.errors["employmentStatus.stat_code"]) +
-                    "\n                "
+                    "\n        "
                 )
               ]),
               _vm._v(" "),
-              _c("span", [_vm._v("EMPLOYMENT STATUS")])
+              _vm._m(3)
             ],
             1
           )
@@ -36486,7 +36470,7 @@ var render = function() {
                 [
                   _c("template", { slot: "no-options" }, [
                     _vm._v(
-                      "\n                        Type atleast 1 word of designation to search.\n                    "
+                      "\n            Type atleast 1 word of designation to search.\n          "
                     )
                   ])
                 ],
@@ -36495,13 +36479,13 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                    " +
+                  "\n          " +
                     _vm._s(_vm.errors["designation.position_code"]) +
-                    "\n                "
+                    "\n        "
                 )
               ]),
               _vm._v(" "),
-              _c("span", [_vm._v("POSITION")])
+              _vm._m(4)
             ],
             1
           )
@@ -36524,7 +36508,7 @@ var render = function() {
           _c(
             "label",
             {
-              staticClass: "form-group  has-float-label",
+              staticClass: "form-group has-float-label",
               attrs: { for: "officeAssignment" }
             },
             [
@@ -36540,13 +36524,13 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                    " +
+                  "\n          " +
                     _vm._s(_vm.errors["officeAssignment.office_code"]) +
-                    "\n                "
+                    "\n        "
                 )
               ]),
               _vm._v(" "),
-              _c("span", [_vm._v("OFFICE ASSIGNMENT")])
+              _vm._m(5)
             ],
             1
           )
@@ -36587,7 +36571,62 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("LAST NAME"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("FIRST NAME"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("DATE OF BIRTH"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("EMPLOYMENT STATUS"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("POSITION"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("OFFICE ASSIGNMENT"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -41864,7 +41903,7 @@ var render = function() {
             _vm.isComplete
               ? _c("i", { staticClass: "fa fa-check text-success" })
               : _vm._e(),
-            _vm._v("\n                FAMILY BACKGROUND\n                "),
+            _vm._v("\n        FAMILY BACKGROUND\n        "),
             _vm.isComplete
               ? _c("i", {
                   staticClass: "text-success float-right fa fa-caret-down",
@@ -41888,7 +41927,7 @@ var render = function() {
               "label",
               {
                 staticClass: "text-lg",
-                staticStyle: { transform: "scale(.8)" },
+                staticStyle: { transform: "scale(0.8)" },
                 attrs: { for: "spouse" }
               },
               [
@@ -41901,7 +41940,7 @@ var render = function() {
                   }
                 }),
                 _vm._v(
-                  "\n                    Do you have spouse? If YES, kindly tick the checkbox.\n                "
+                  "\n          Do you have spouse? If YES, kindly tick the checkbox.\n        "
                 )
               ]
             )
@@ -41959,20 +41998,20 @@ var render = function() {
                           }
                         }),
                         _vm._v(" "),
-                        _c("span", [_vm._v("Surname")])
+                        _vm._m(1)
                       ]
                     ),
                     _vm._v(" "),
                     _c("p", { staticClass: "text-danger text-sm" }, [
                       _vm._v(
-                        "\n                            " +
+                        "\n              " +
                           _vm._s(_vm.errors.ssurname) +
-                          "\n                        "
+                          "\n            "
                       )
                     ])
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-lg-3 " }, [
+                  _c("div", { staticClass: "col-lg-3" }, [
                     _c(
                       "label",
                       {
@@ -42019,15 +42058,15 @@ var render = function() {
                           }
                         }),
                         _vm._v(" "),
-                        _c("span", [_vm._v("First Name")])
+                        _vm._m(2)
                       ]
                     ),
                     _vm._v(" "),
                     _c("p", { staticClass: "text-danger text-sm" }, [
                       _vm._v(
-                        "\n                            " +
+                        "\n              " +
                           _vm._s(_vm.errors.sfirstname) +
-                          "\n                        "
+                          "\n            "
                       )
                     ])
                   ]),
@@ -42049,7 +42088,7 @@ var render = function() {
                               expression: "familyBackground.smiddleame"
                             }
                           ],
-                          staticClass: "form-control ",
+                          staticClass: "form-control",
                           staticStyle: {
                             "text-transform": "uppercase",
                             outline: "none",
@@ -42135,7 +42174,11 @@ var render = function() {
                               {
                                 attrs: { value: "", readonly: "", selected: "" }
                               },
-                              [_vm._v("Please Select Extension Name")]
+                              [
+                                _vm._v(
+                                  "\n                  Please Select Extension Name\n                "
+                                )
+                              ]
                             ),
                             _vm._v(" "),
                             _c(
@@ -42147,7 +42190,11 @@ var render = function() {
                                     _vm.familyBackground.snameexten === "JR"
                                 }
                               },
-                              [_vm._v("JR")]
+                              [
+                                _vm._v(
+                                  "\n                  JR\n                "
+                                )
+                              ]
                             ),
                             _vm._v(" "),
                             _c(
@@ -42159,7 +42206,11 @@ var render = function() {
                                     _vm.familyBackground.snameexten === "SR"
                                 }
                               },
-                              [_vm._v("SR")]
+                              [
+                                _vm._v(
+                                  "\n                  SR\n                "
+                                )
+                              ]
                             ),
                             _vm._v(" "),
                             _c(
@@ -42171,7 +42222,11 @@ var render = function() {
                                     _vm.familyBackground.nameExtension === "III"
                                 }
                               },
-                              [_vm._v("III")]
+                              [
+                                _vm._v(
+                                  "\n                  III\n                "
+                                )
+                              ]
                             )
                           ]
                         ),
@@ -42285,7 +42340,7 @@ var render = function() {
                     _c(
                       "label",
                       {
-                        staticClass: "form-group  has-float-label",
+                        staticClass: "form-group has-float-label",
                         attrs: { for: "sbusadd" }
                       },
                       [
@@ -42379,11 +42434,11 @@ var render = function() {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _vm._m(1),
+          _vm._m(3),
           _vm._v(" "),
           _c("div", { staticClass: "p-2" }, [
             _c("table", { staticClass: "table table-bordered" }, [
-              _vm._m(2),
+              _vm._m(4),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -42485,11 +42540,7 @@ var render = function() {
                             }
                           }
                         },
-                        [
-                          _vm._v(
-                            "\n                                    X\n                                "
-                          )
-                        ]
+                        [_vm._v("\n                  X\n                ")]
                       )
                     ]),
                     _vm._v(" "),
@@ -42501,11 +42552,7 @@ var render = function() {
                               staticClass: "btn btn-primary rounded-circle",
                               on: { click: _vm.generateNewSpuseField }
                             },
-                            [
-                              _vm._v(
-                                "\n                                    +\n                                "
-                              )
-                            ]
+                            [_vm._v("\n                  +\n                ")]
                           )
                         : _vm._e()
                     ])
@@ -42516,7 +42563,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(3),
+          _vm._m(5),
           _vm._v(" "),
           _c("div", { staticClass: "row pr-3 pl-3" }, [
             _c("div", { staticClass: "col-lg-3" }, [
@@ -42566,7 +42613,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Surname")])
+                  _vm._m(6)
                 ]
               ),
               _vm._v(" "),
@@ -42622,15 +42669,15 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("First Name")])
+                  _vm._m(7)
                 ]
               ),
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.ffirstname) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ]),
@@ -42688,9 +42735,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.fmiddlename) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ]),
@@ -42747,7 +42794,11 @@ var render = function() {
                       _c(
                         "option",
                         { attrs: { value: "", readonly: "", selected: "" } },
-                        [_vm._v("Please Select Extension Name")]
+                        [
+                          _vm._v(
+                            "\n                Please Select Extension Name\n              "
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c(
@@ -42758,7 +42809,7 @@ var render = function() {
                             selected: _vm.familyBackground.snameexten === "JR"
                           }
                         },
-                        [_vm._v("JR")]
+                        [_vm._v("\n                JR\n              ")]
                       ),
                       _vm._v(" "),
                       _c(
@@ -42769,7 +42820,7 @@ var render = function() {
                             selected: _vm.familyBackground.snameexten === "SR"
                           }
                         },
-                        [_vm._v("SR")]
+                        [_vm._v("\n                SR\n              ")]
                       ),
                       _vm._v(" "),
                       _c(
@@ -42781,7 +42832,7 @@ var render = function() {
                               _vm.familyBackground.nameExtension === "III"
                           }
                         },
-                        [_vm._v("III")]
+                        [_vm._v("\n                III\n              ")]
                       )
                     ]
                   ),
@@ -42792,7 +42843,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(4),
+          _vm._m(8),
           _vm._v(" "),
           _c("div", { staticClass: "row pr-3 pl-3" }, [
             _c("div", { staticClass: "col-lg-3" }, [
@@ -42842,7 +42893,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Maiden Surname")])
+                  _vm._m(9)
                 ]
               ),
               _vm._v(" "),
@@ -42851,7 +42902,7 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3 " }, [
+            _c("div", { staticClass: "col-lg-3" }, [
               _c(
                 "label",
                 {
@@ -42898,15 +42949,15 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("First Name")])
+                  _vm._m(10)
                 ]
               ),
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.mfirstname) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ]),
@@ -42928,7 +42979,7 @@ var render = function() {
                         expression: "familyBackground.mmiddlename"
                       }
                     ],
-                    staticClass: "form-control ",
+                    staticClass: "form-control",
                     class: !_vm.errors.hasOwnProperty("mmiddlename")
                       ? ""
                       : "is-invalid",
@@ -42964,9 +43015,9 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.mmiddlename) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ])
@@ -42982,7 +43033,7 @@ var render = function() {
                     on: { click: _vm.submitPersonFamilyBackground }
                   },
                   [
-                    _vm._v("\n                    NEXT\n                    "),
+                    _vm._v("\n          NEXT\n          "),
                     _c(
                       "div",
                       {
@@ -43021,11 +43072,29 @@ var staticRenderFns = [
       _c(
         "div",
         {
-          staticClass: "alert alert-secondary text-center font-weight-bold ",
+          staticClass: "alert alert-secondary text-center font-weight-bold",
           attrs: { role: "alert" }
         },
-        [_vm._v("\n                    SPOUSE INFORMATION\n                ")]
+        [_vm._v("\n            SPOUSE INFORMATION\n          ")]
       )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("Surname"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("First Name"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
   },
   function() {
@@ -43036,10 +43105,10 @@ var staticRenderFns = [
       _c(
         "div",
         {
-          staticClass: "alert alert-secondary text-center font-weight-bold ",
+          staticClass: "alert alert-secondary text-center font-weight-bold",
           attrs: { role: "alert" }
         },
-        [_vm._v("\n                    CHILDREN INFORMATION\n                ")]
+        [_vm._v("\n          CHILDREN INFORMATION\n        ")]
       )
     ])
   },
@@ -43050,16 +43119,10 @@ var staticRenderFns = [
     return _c("thead", [
       _c("tr", [
         _c("th", { staticClass: "font-weight-bold" }, [
-          _vm._v(
-            "\n                                NAME OF CHILDREN\n                            "
-          )
+          _vm._v("NAME OF CHILDREN")
         ]),
         _vm._v(" "),
-        _c("th", { staticClass: "font-weight-bold" }, [
-          _vm._v(
-            "\n                                DATE OF BIRTH\n                            "
-          )
-        ])
+        _c("th", { staticClass: "font-weight-bold" }, [_vm._v("DATE OF BIRTH")])
       ])
     ])
   },
@@ -43071,11 +43134,29 @@ var staticRenderFns = [
       _c(
         "div",
         {
-          staticClass: "alert alert-secondary text-center font-weight-bold ",
+          staticClass: "alert alert-secondary text-center font-weight-bold",
           attrs: { role: "alert" }
         },
-        [_vm._v("\n                    FATHER'S NAME\n                ")]
+        [_vm._v("\n          FATHER'S NAME\n        ")]
       )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("Surname"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("First Name"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
   },
   function() {
@@ -43086,11 +43167,29 @@ var staticRenderFns = [
       _c(
         "div",
         {
-          staticClass: "alert alert-secondary text-center font-weight-bold ",
+          staticClass: "alert alert-secondary text-center font-weight-bold",
           attrs: { role: "alert" }
         },
-        [_vm._v("\n                    MOTHER'S MAIDEN NAME\n                ")]
+        [_vm._v("\n          MOTHER'S MAIDEN NAME\n        ")]
       )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("Maiden Surname"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("First Name"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
   }
 ]
@@ -43200,7 +43299,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Surname")])
+                  _vm._m(1)
                 ]
               ),
               _vm._v(" "),
@@ -43255,7 +43354,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("First Name")])
+                  _vm._m(2)
                 ]
               ),
               _vm._v(" "),
@@ -43485,7 +43584,7 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("span", [_vm._v("DATE OF BIRTH")])
+                  _vm._m(3)
                 ]
               )
             ]),
@@ -43536,7 +43635,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Place of Birth")])
+                  _vm._m(4)
                 ]
               ),
               _vm._v(" "),
@@ -43608,7 +43707,7 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  _c("span", [_vm._v("SEX")])
+                  _vm._m(5)
                 ]
               ),
               _vm._v(" "),
@@ -43690,7 +43789,7 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  _c("span", [_vm._v("STATUS")])
+                  _vm._m(6)
                 ]
               ),
               _vm._v(" "),
@@ -43748,7 +43847,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Height")])
+                  _vm._m(7)
                 ]
               ),
               _vm._v(" "),
@@ -43802,7 +43901,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Weight")])
+                  _vm._m(8)
                 ]
               ),
               _vm._v(" "),
@@ -43841,6 +43940,7 @@ var render = function() {
                     },
                     attrs: {
                       type: "text",
+                      id: "bloodtype",
                       maxlength: "3",
                       placeholder: "Enter bloodtype"
                     },
@@ -43859,7 +43959,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Bloodtype")])
+                  _vm._m(9)
                 ]
               ),
               _vm._v(" "),
@@ -44219,7 +44319,7 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Citizenship")])
+                  _vm._m(10)
                 ]
               ),
               _vm._v(" "),
@@ -44473,7 +44573,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Mobile Number")])
+                  _vm._m(11)
                 ]
               ),
               _vm._v(" "),
@@ -44531,7 +44631,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(1),
+          _vm._m(12),
           _vm._v(" "),
           _c("div", { staticClass: "row pl-3 pr-3" }, [
             _c("div", { staticClass: "col-lg-4" }, [
@@ -44711,7 +44811,7 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Province")])
+                  _vm._m(13)
                 ],
                 1
               )
@@ -44742,7 +44842,7 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("span", [_vm._v("City")])
+                  _vm._m(14)
                 ],
                 1
               )
@@ -44772,7 +44872,7 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Barangay")])
+                  _vm._m(15)
                 ],
                 1
               )
@@ -44836,7 +44936,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Zip Code")])
+                  _vm._m(16)
                 ]
               ),
               _vm._v(" "),
@@ -45049,7 +45149,7 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Province")])
+                  _vm._m(17)
                 ],
                 1
               )
@@ -45080,7 +45180,7 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("span", [_vm._v("City")])
+                  _vm._m(18)
                 ],
                 1
               )
@@ -45110,7 +45210,7 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Barangay")])
+                  _vm._m(19)
                 ],
                 1
               )
@@ -45175,7 +45275,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Zip Code")])
+                  _vm._m(20)
                 ]
               ),
               _vm._v(" "),
@@ -45255,6 +45355,105 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("Surname"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("First Name"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("DATE OF BIRTH"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("Place of Birth"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("SEX"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("STATUS"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("Height(m)"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("Weight(kg)"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("Bloodtype"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("Citizenship"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("Mobile Number"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "pl-3 pr-3" }, [
       _c(
         "div",
@@ -45264,6 +45463,78 @@ var staticRenderFns = [
         },
         [_vm._v("\n          RESIDENTIAL ADDRESS\n        ")]
       )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("Province"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("City"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("Barangay"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("Zip Code"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("Province"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("City"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("Barangay"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("Zip Code"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
   }
 ]
