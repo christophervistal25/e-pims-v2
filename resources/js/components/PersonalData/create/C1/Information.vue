@@ -641,9 +641,10 @@
         </div>
         <div class="row pl-3 pr-3">
           <div class="col-lg-4">
-            <label for="lotno" class="form-group has-float-label">
+            <label for="permanentLotno" class="form-group has-float-label">
               <input
                 type="text"
+                id="permanentLotno"
                 v-model="personal_data.permanentLotNo"
                 :readonly="isSameAsAbove ? true : false"
                 class="form-control"
@@ -658,14 +659,15 @@
             </label>
           </div>
           <div class="col-lg-4">
-            <label for="street" class="form-group has-float-label">
+            <label for="permanentStreet" class="form-group has-float-label">
               <input
                 type="text"
+                id="permanentStreet"
                 v-model="personal_data.permanentStreet"
                 :readonly="isSameAsAbove ? true : false"
                 class="form-control"
                 placeholder="Enter Street"
-                style="text-transform: uppercase"
+                style="text-transform: uppercase outline: none; box-shadow: 0px 0px 0px transparent;"
               />
               <span>Street</span>
             </label>
