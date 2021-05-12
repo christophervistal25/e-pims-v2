@@ -23,8 +23,8 @@
                 :id="isComplete ? 'familyBackground' : ''"
             >
                 
-                <div class="form-check mt-3">
-                    <label for="#spouse">
+                <div class="form-group mt-3">
+                    <label for="spouse" style="transform: scale(.8)" class="text-lg">
                         <input
                             id="spouse"
                             type="checkbox"

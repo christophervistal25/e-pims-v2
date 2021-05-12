@@ -620,7 +620,7 @@
             PERMANENT ADDRESS
           </div>
           <div class="form-group">
-            <label class="checkbox-inline">
+            <label class="checkbox-inline" style="transform: scale(.8)">
               <input
                 :checked="isSameAsAbove"
                 type="checkbox"
