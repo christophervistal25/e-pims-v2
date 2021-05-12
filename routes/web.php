@@ -61,8 +61,8 @@ Route::group(['prefix' => 'employee'], function () {
     Route::post('/personal/references', 'PersonalDataSheetController@storeReferences');
     Route::post('/personal/issued/id', 'PersonalDataSheetController@storeIssuedID');
 
+    Route::get('/leave/application', 'EmployeeLeave\LeaveController@show')->name('leave.application.filling');
     Route::resource('leave', 'EmployeeLeave\LeaveController');
-    Route::resource('/leave/application', 'EmployeeLeave\LeaveController@show');
     Route::get('/leave-monitoring', 'EmployeeLeave\LeaveController@create');
 });
 // Route::resource('/print-increment', 'PrintIncrementController');
