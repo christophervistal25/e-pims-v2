@@ -28,6 +28,8 @@
 
           <div class="mt-1"></div>
           <v-data-table
+            loading
+            loading-text="Processing..."
             :headers="headers"
             :items="employees"
             :search="search"
@@ -151,6 +153,13 @@ export default {
       pageCount: 10,
       itemsPerPage: 10,
       search: "",
+      employee_id: "",
+      firstname: "",
+      middlename: "",
+      lastname: "",
+      name_extension: "",
+      position: "",
+      office: "",
       headers: [
         {
           text: "Employee ID",

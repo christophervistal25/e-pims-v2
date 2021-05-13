@@ -3200,6 +3200,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
 
 
 
@@ -3211,6 +3213,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       pageCount: 10,
       itemsPerPage: 10,
       search: "",
+      employee_id: "",
+      firstname: "",
+      middlename: "",
+      lastname: "",
+      name_extension: "",
+      position: "",
+      office: "",
       headers: [{
         text: "Employee ID",
         value: "employee_id"
@@ -37095,6 +37104,8 @@ var render = function() {
                   _vm._v(" "),
                   _c("v-data-table", {
                     attrs: {
+                      loading: "",
+                      "loading-text": "Processing...",
                       headers: _vm.headers,
                       items: _vm.employees,
                       search: _vm.search,
