@@ -18,7 +18,7 @@
     <link rel="apple-touch-icon" sizes="144x144" href="{{  asset('/assets/img/icons/apple-icon-144x144.png') }}">
     <link rel="apple-touch-icon" sizes="152x152" href="{{  asset('/assets/img/icons/apple-icon-152x152.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/assets/img/icons/apple-icon-180x180.png') }}">
-    <link rel="icon" type="image/png" sizes="192x192"  href="{{  asset('/assets/img/icons/android-icon-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{  asset('/assets/img/icons/android-icon-192x192.png') }}">
     <link rel="icon" type="image/png" sizes="32x32" href="{{  asset('/assets/img/icons/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="96x96" href="{{  asset('/assets/img/icons/favicon-96x96.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/assets/img/icons/favicon-16x16.png') }}">
@@ -32,23 +32,24 @@
         crossorigin="anonymous" />
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/css/line-awesome.min.css') }}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
 
     </style>
-	@stack('page-css')
+    @stack('page-css')
 
 
 </head>
 {{-- mini-sidebar --}}
+
 <body class="">
     <div id="loader-wrapper">
         <div id="loader">
@@ -80,7 +81,9 @@
             </a>
             <!-- Header Title -->
             <div class="page-title-box">
-                <a href="/" class='text-decoration-none'><h3>{{ config('app.name') }}</h3></a>
+                <a href="/" class='text-decoration-none'>
+                    <h3>{{ config('app.name') }}</h3>
+                </a>
             </div>
             <!-- /Header Title -->
             <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
@@ -239,7 +242,7 @@
                         </li>
                         <li>
                             <a class='text-decoration-none' href="{{ route('data.index') }}">
-                                <i class="la la-file-text"></i>  <span> Personal Data Sheet
+                                <i class="la la-file-text"></i> <span> Personal Data Sheet
                                 </span>
                             </a>
                         </li>
@@ -247,12 +250,13 @@
                             <span>Human Resource Module</span>
                         </li>
                         <li class="submenu">
-                            <a href="#" class='text-decoration-none'><i class="la la-home"></i> <span> <span>
-                                    Leave Management </span> <i
-                                    class="ml-3 fas fa-caret-down text-sm text-right"></i></a>
+                            <a href="#" class='text-decoration-none'><i class="la la-home"> </i> <span>
+                                    Leave Management </span>
+                                <i class="ml-3 fas fa-caret-down text-sm text-right"></i></a>
                             <ul style="display: none;">
                                 <li>
-                                    <a class='text-decoration-none mr-2' href="{{ route('leave.application.filling') }}">
+                                    <a class='text-decoration-none mr-2'
+                                        href="{{ route('leave.application.filling') }}">
                                         Leave Application Filling</a>
                                 </li>
                                 <li>
@@ -286,7 +290,8 @@
 
 
                         <li class="submenu">
-                            <a href="{{  route('service-records.index') }}" class='text-decoration-none'><i class="la la-bars"></i> 
+                            <a href="{{  route('service-records.index') }}" class='text-decoration-none'><i
+                                    class="la la-bars"></i>
                                 <span>Service Record</span> <i
                                     class="ml-3 fas fa-caret-down text-sm text-right"></i></a>
                             <ul style="display: none;">
@@ -331,7 +336,8 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a class='text-decoration-none' href="{{  route('step-increment.index') }}"> <span>Step Increment</span> </a>
+                                    <a class='text-decoration-none' href="{{  route('step-increment.index') }}">
+                                        <span>Step Increment</span> </a>
                                 </li>
                             </ul>
                         </li>

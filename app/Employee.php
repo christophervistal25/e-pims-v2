@@ -2,8 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Province;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
@@ -62,6 +63,23 @@ class Employee extends Model
         parent::boot();
         self::creating(function($employee) {
             $employee->trans_no = str_pad((self::count() + 1), 3, 0, STR_PAD_LEFT);
+            Cache::forget('employees');
+        });
+        
+        self::created(function() {
+            Cache::forget('employees');
+        });
+
+        self::updated(function() {
+            Cache::forget('employees');
+        });
+
+        self::saved(function() {
+            Cache::forget('employees');
+        });
+
+        self::deleted(function() {
+            Cache::forget('employees');
         });
     }
 

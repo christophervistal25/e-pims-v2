@@ -15,13 +15,13 @@ class DatabaseSeeder extends Seeder
             RefNameExtensionSeeder::class,
             TypeSeeder::class,
             RefStatusSeeder::class,
-            // EmployeeSeeder::class,
+            EmployeeSeeder::class,
             OfficeSeeder::class,
             SalaryGradeSeeder::class,
             PositionSeeder::class,
-            // ProvinceSeeder::class,
-            // CitySeeder::class,
-            // BarangaySeeder::class
+            ProvinceSeeder::class,
+            CitySeeder::class,
+            BarangaySeeder::class,
             // PlantillaSeeder::class,
             ]);
     }

@@ -1,9 +1,7 @@
 <?php
-
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Employee;
-use App\Plantilla;
 use Faker\Generator as Faker;
 
 /**

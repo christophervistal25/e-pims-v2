@@ -13,127 +13,60 @@
             {{ !showAddEmployeeForm ? "Add Employee" : "List of Employees" }}
           </button>
         </div>
-        <div class="clearfix"></div>
-        <div class="card shadow" v-if="!showAddEmployeeForm">
-          <div class="card-body">
-            <h4>Employees</h4>
-            <hr />
+      </div>
+      <div class="clearfix"></div>
+      <div class="col-lg-12">
+        <v-main v-if="!showAddEmployeeForm">
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+          >
+          </v-text-field>
 
-            <div class="row">
-              <div class="col-lg-2 mb-2">
-                Show Entries
-                <select class="form-control">
-                  <option value="10">10</option>
-                  <option value="25">25</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-                </select>
-              </div>
-
-              <div class="col-lg-10 mt-1 mb-1">
-                <p></p>
-                <div class="col-lg-3 float-right pr-0">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Search"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <table class="table table-bordered table-hover transition">
-              <thead>
-                <th class="text-sm">Employee ID</th>
-                <th class="text-sm">Fullname</th>
-                <th class="text-sm">Position</th>
-                <th class="text-sm">Office</th>
-                <th class="text-sm">Actions</th>
-              </thead>
-              <tbody v-if="isComplete">
-                <tr
-                  v-for="(employee, index) in employees"
-                  :key="index"
-                  class="cursor-pointer"
-                  @click="editEmployee(employee)"
-                >
-                  <td class="text-sm align-middle">
-                    {{ employee.employee_id }}
-                  </td>
-                  <td class="text-sm align-middle">
-                    {{ employee.lastname }} , {{ employee.firstname }}.
-                    {{ employee.middlename }}
-                    {{
-                      employee.extension ? employee.extension.toUpperCase() : ""
-                    }}
-                  </td>
-                  <td
-                    class="text-center align-middle"
-                    v-if="employee.information"
-                  >
-                    {{ employee.information.position.position_name }}
-                  </td>
-                  <td v-else></td>
-                  <td
-                    class="text-center align-middle"
-                    v-if="employee.information"
-                  >
-                    {{ employee.information.office.office_name }}
-                  </td>
-                  <td v-else></td>
-                  <td class="text-center">
-                    <button
-                      @click="editEmployee(employee)"
-                      class="btn btn-success rounded-circle shadow"
-                    >
-                      <i class="fas fa-edit text-sm"></i>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-              <tbody v-else>
-                <tr>
-                  <td colspan="5" class="text-center">
-                    <div class="spinner-border text-primary" role="status">
-                      <span class="sr-only">Loading...</span>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <nav aria-label="Page navigation example">
-              <ul class="pagination justify-content-end">
-                <li class="page-item">
-                  <a
-                    class="page-link cursor-pointer"
-                    @click="prevPage"
-                    tabindex="-1"
-                    >Previous</a
-                  >
-                </li>
-                <li
-                  class="page-item"
-                  v-for="page in data.last_page"
-                  :key="page"
-                >
-                  <a
-                    v-if="page <= 10"
-                    class="page-link cursor-pointer"
-                    :class="
-                      page == data.current_page ? 'bg-primary text-white' : ''
-                    "
-                    @click="fetch(page)"
-                  >
-                    {{ page }}</a
-                  >
-                </li>
-                <li class="page-item">
-                  <a class="page-link cursor-pointer" @click="nextPage">Next</a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
+          <div class="mt-1"></div>
+          <v-data-table
+            :headers="headers"
+            :items="employees"
+            :search="search"
+            multi-sort
+            :page.sync="page"
+            :items-per-page="itemsPerPage"
+            @page-count="pageCount = $event"
+            hide-default-footer
+          >
+            <template v-slot:item.actions="{ item }">
+              <v-icon small class="mr-2" @click="editEmployee(item)">
+                mdi-pencil
+              </v-icon>
+            </template>
+          </v-data-table>
+          <v-container>
+            <v-row class="mb-6" no-gutters>
+              <v-col>
+                <v-text-field
+                  v-if="employees.length !== 0"
+                  :value="itemsPerPage"
+                  label="Items per page"
+                  type="number"
+                  min="-1"
+                  max="15"
+                  @input="itemsPerPage = parseInt($event, 10)"
+                ></v-text-field>
+              </v-col>
+              <v-col>
+                <v-pagination
+                  v-if="employees.length !== 0"
+                  v-model="page"
+                  :length="pageCount ? pageCount : 10"
+                  :total-visible="7"
+                ></v-pagination>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-main>
       </div>
       <div class="col-lg-12" v-if="showAddEmployeeForm">
         <div class="card">
@@ -167,7 +100,8 @@
                   :errors="errors"
                   :nameExtensions="nameExtensions"
                   :employmentStatus="employmentStatus"
-                ></basic-information>
+                >
+                </basic-information>
               </div>
               <div class="tab-pane" id="basictab2">
                 <account-number
@@ -204,7 +138,6 @@
     </div>
   </div>
 </template>
-
 <script>
 import BasicInformation from "./BasicInformation.vue";
 import AccountNumber from "./AccountNumber.vue";
@@ -214,6 +147,45 @@ import _ from "lodash";
 export default {
   data() {
     return {
+      page: 1,
+      pageCount: 10,
+      itemsPerPage: 10,
+      search: "",
+      headers: [
+        {
+          text: "Employee ID",
+          value: "employee_id",
+        },
+        {
+          text: "Firstname",
+          value: "firstname",
+        },
+        {
+          text: "Lastname",
+          value: "lastname",
+        },
+        {
+          text: "Middlename",
+          value: "middlename",
+        },
+        {
+          text: "Extension",
+          value: "name_extension",
+        },
+        {
+          text: "Position",
+          value: "information.position.position_name",
+        },
+        {
+          text: "Office",
+          value: "information.office.office_name",
+        },
+        {
+          text: "Actions",
+          value: "actions",
+          sortable: false,
+        },
+      ],
       sectionError: {
         basicInformation: false,
         accountNumbers: false,
@@ -246,7 +218,6 @@ export default {
       isLoading: false,
       showAddEmployeeForm: false,
       employees: [],
-      data: [],
       employee: {
         lastName: "",
         firstName: "",
@@ -479,15 +450,13 @@ export default {
     loadEmployees() {
       window.axios.get(`/api/employee/employees`).then((response) => {
         if (response.status === 200) {
-          this.employees = response.data.data;
-          this.data = response.data;
+          this.employees = response.data;
           this.isComplete = true;
         }
       });
     },
   },
   created() {
-    this.loadEmployees();
     window.axios
       .get("/api/employee/employment/status")
       .then((response) => {
@@ -505,22 +474,10 @@ export default {
         }
       })
       .catch((err) => console.log(err));
+
+    this.loadEmployees();
   },
 };
 </script>
-
-<style>
-.cursor-pointer {
-  cursor: pointer;
-}
-
-.status-item {
-  border-width: 3px;
-  border-style: dashed;
-}
-
-.status-item:hover {
-  background: #f2f3f4;
-  transition: 300ms ease-in-out;
-}
+<style scoped>
 </style>

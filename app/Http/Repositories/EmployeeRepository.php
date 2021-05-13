@@ -14,7 +14,7 @@ use App\EmployeeRelevantQuery;
 use App\EmployeeSpouseChildren;
 use App\EmployeeIssuedID;
 use App\RefStatus;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeRepository
 {
@@ -437,6 +437,7 @@ class EmployeeRepository
         $employee->status         = $data['employmentStatus']['stat_code'];
 
         $information = EmployeeInformation::where('EmpIDNo', $data['employee_id'])->first() ?? new EmployeeInformation();
+        
         $information->EmpIDNo = $data['employee_id'];
         $information->office_code = $data['officeAssignment']['office_code'];
         $information->pos_code = $data['designation']['position_code'];
@@ -446,6 +447,16 @@ class EmployeeRepository
         $information->save();
 
         return $data;
+    }
+
+    public function findEmployee(string $employee_id)
+    {
+        return Employee::find($employee_id);
+    }
+
+    public function getAllEmployees()
+    {
+        return Employee::get();
     }
 
 }

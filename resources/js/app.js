@@ -1,8 +1,9 @@
 require("./bootstrap");
 window.Vue = require("vue");
-
+import Vuetify from 'vuetify';
 import vSelect from "vue-select";
 
+Vue.use(Vuetify); 
 Vue.component("v-select", vSelect);
 
 Vue.component(
@@ -191,5 +192,6 @@ Vue.component(
 );
 
 const app = new Vue({
-    el: "#app"
+    el: "#app",
+    vuetify: new Vuetify(),
 });

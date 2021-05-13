@@ -226,7 +226,9 @@
           <v-select
             label="position_name"
             :filterable="false"
-            :value="employee.designation.position_name"
+            :value="
+              employee.designation ? employee.designation.position_name : ''
+            "
             @input="onSetSelectPosition"
             :options="designations"
             @search="onSearchDesignation"
