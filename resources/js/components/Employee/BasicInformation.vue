@@ -38,7 +38,7 @@
             v-model="employee.middleName"
             class="form-control text-uppercase"
             style="outline: none; box-shadow: 0px 0px 0px transparent"
-            placeholder="Middle Name"
+            placeholder="Enter Middle Name"
           />
           <span>MIDDLE NAME</span>
         </label>

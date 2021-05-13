@@ -2090,6 +2090,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["employee", "errors"]
 });
@@ -6396,20 +6405,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     educational_background: {
@@ -7150,6 +7145,8 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+//
+//
 //
 //
 //
@@ -35273,7 +35270,10 @@ var render = function() {
     _c("div", {}, [
       _c(
         "label",
-        { staticClass: "form-group has-float-label", attrs: { for: "" } },
+        {
+          staticClass: "form-group has-float-label",
+          attrs: { for: "pagibigMidNo" }
+        },
         [
           _c("input", {
             directives: [
@@ -35292,7 +35292,7 @@ var render = function() {
               outline: "none",
               "box-shadow": "0px 0px 0px transparent"
             },
-            attrs: { type: "text" },
+            attrs: { type: "text", id: "pagibigMidNo" },
             domProps: { value: _vm.employee.pagibigMidNo },
             on: {
               input: function($event) {
@@ -35316,7 +35316,10 @@ var render = function() {
     _c("div", {}, [
       _c(
         "label",
-        { staticClass: "form-group has-float-label", attrs: { for: "" } },
+        {
+          staticClass: "form-group has-float-label",
+          attrs: { for: "philhealthNo" }
+        },
         [
           _c("input", {
             directives: [
@@ -35335,7 +35338,7 @@ var render = function() {
               outline: "none",
               "box-shadow": "0px 0px 0px transparent"
             },
-            attrs: { type: "text" },
+            attrs: { type: "text", id: "philhealthNo" },
             domProps: { value: _vm.employee.philhealthNo },
             on: {
               input: function($event) {
@@ -35359,7 +35362,7 @@ var render = function() {
     _c("div", {}, [
       _c(
         "label",
-        { staticClass: "form-group has-float-label", attrs: { for: "" } },
+        { staticClass: "form-group has-float-label", attrs: { for: "sssNo" } },
         [
           _c("input", {
             directives: [
@@ -35376,7 +35379,7 @@ var render = function() {
               outline: "none",
               "box-shadow": "0px 0px 0px transparent"
             },
-            attrs: { type: "text" },
+            attrs: { type: "text", id: "sssNo" },
             domProps: { value: _vm.employee.sssNo },
             on: {
               input: function($event) {
@@ -35400,7 +35403,7 @@ var render = function() {
     _c("div", {}, [
       _c(
         "label",
-        { staticClass: "form-group has-float-label", attrs: { for: "" } },
+        { staticClass: "form-group has-float-label", attrs: { for: "tinNo" } },
         [
           _c("input", {
             directives: [
@@ -35417,7 +35420,7 @@ var render = function() {
               outline: "none",
               "box-shadow": "0px 0px 0px transparent"
             },
-            attrs: { type: "text" },
+            attrs: { type: "text", id: "tinNo" },
             domProps: { value: _vm.employee.tinNo },
             on: {
               input: function($event) {
@@ -35445,7 +35448,7 @@ var render = function() {
             "label",
             {
               staticClass: "form-group has-float-label mb-0",
-              attrs: { for: "" }
+              attrs: { for: "dbpAccountNo" }
             },
             [
               _c("input", {
@@ -35465,7 +35468,7 @@ var render = function() {
                   outline: "none",
                   "box-shadow": "0px 0px 0px transparent"
                 },
-                attrs: { type: "text" },
+                attrs: { type: "text", id: "dbpAccountNo" },
                 domProps: { value: _vm.employee.dbpAccountNo },
                 on: {
                   input: function($event) {
@@ -35477,7 +35480,7 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("span", [_vm._v("DBP ACCOUNT NO.")])
+              _vm._m(0)
             ]
           ),
           _vm._v(" "),
@@ -35492,7 +35495,7 @@ var render = function() {
             "label",
             {
               staticClass: "form-group has-float-label mb-0",
-              attrs: { for: "" }
+              attrs: { for: "lbpAccountNo" }
             },
             [
               _c("input", {
@@ -35512,7 +35515,7 @@ var render = function() {
                   outline: "none",
                   "box-shadow": "0px 0px 0px transparent"
                 },
-                attrs: { type: "text" },
+                attrs: { type: "text", id: "lbpAccountNo" },
                 domProps: { value: _vm.employee.lbpAccountNo },
                 on: {
                   input: function($event) {
@@ -35524,7 +35527,7 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("span", [_vm._v("LBP ACCOUNT NO.")])
+              _vm._m(1)
             ]
           ),
           _vm._v(" "),
@@ -35538,7 +35541,10 @@ var render = function() {
     _c("div", {}, [
       _c(
         "label",
-        { staticClass: "form-group has-float-label", attrs: { for: "" } },
+        {
+          staticClass: "form-group has-float-label mt-3",
+          attrs: { for: "gsisIdNo" }
+        },
         [
           _c("input", {
             directives: [
@@ -35555,7 +35561,7 @@ var render = function() {
               outline: "none",
               "box-shadow": "0px 0px 0px transparent"
             },
-            attrs: { type: "text" },
+            attrs: { type: "text", id: "gsisIdNo" },
             domProps: { value: _vm.employee.gsisIdNo },
             on: {
               input: function($event) {
@@ -35579,7 +35585,10 @@ var render = function() {
     _c("div", {}, [
       _c(
         "label",
-        { staticClass: "form-group has-float-label", attrs: { for: "" } },
+        {
+          staticClass: "form-group has-float-label",
+          attrs: { for: "gsisPolicyNo" }
+        },
         [
           _c("input", {
             directives: [
@@ -35598,7 +35607,7 @@ var render = function() {
               outline: "none",
               "box-shadow": "0px 0px 0px transparent"
             },
-            attrs: { type: "text" },
+            attrs: { type: "text", id: "gsisPolicyNo" },
             domProps: { value: _vm.employee.gsisPolicyNo },
             on: {
               input: function($event) {
@@ -35619,7 +35628,7 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("div", {}, [
+    _c("div", { staticClass: "gsisBpNo" }, [
       _c(
         "label",
         { staticClass: "form-group has-float-label", attrs: { for: "" } },
@@ -35639,7 +35648,7 @@ var render = function() {
               outline: "none",
               "box-shadow": "0px 0px 0px transparent"
             },
-            attrs: { type: "text" },
+            attrs: { type: "text", id: "gsisBpNo" },
             domProps: { value: _vm.employee.gsisBpNo },
             on: {
               input: function($event) {
@@ -35661,7 +35670,26 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("DBP ACCOUNT NO."),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _vm._v("LBP ACCOUNT NO."),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -36173,7 +36201,7 @@ var render = function() {
                 attrs: {
                   type: "text",
                   id: "middlename",
-                  placeholder: "Middle Name"
+                  placeholder: "Enter Middle Name"
                 },
                 domProps: { value: _vm.employee.middleName },
                 on: {
@@ -40359,7 +40387,7 @@ var render = function() {
           _vm.isComplete
             ? _c("i", { staticClass: "fa fa-check text-success" })
             : _vm._e(),
-          _vm._v("\n            EDUCATIONAL BACKGROUND\n            "),
+          _vm._v("\n      EDUCATIONAL BACKGROUND\n      "),
           _vm.isComplete
             ? _c("i", {
                 staticClass: "text-success float-right fa fa-caret-down",
@@ -40383,169 +40411,205 @@ var render = function() {
         _c("div", { staticClass: "pl-3 pr-3 pb-3" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.elementary,
-                      expression: "educationalBackground.elementary"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  staticStyle: {
-                    "text-transform": "uppercase",
-                    outline: "none",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "text", placeholder: "Name of School" },
-                  domProps: { value: _vm.educationalBackground.elementary },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "elemNameSchool" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.elementary,
+                        expression: "educationalBackground.elementary"
                       }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "elementary",
-                        $event.target.value
-                      )
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: {
+                      "text-transform": "uppercase",
+                      outline: "none",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: {
+                      type: "text",
+                      id: "elemNameSchool",
+                      placeholder: "Enter Name of School"
+                    },
+                    domProps: { value: _vm.educationalBackground.elementary },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.educationalBackground,
+                          "elementary",
+                          $event.target.value
+                        )
+                      }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Elementary")])
-              ])
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Name of School")])
+                ]
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.ebasicEduc,
-                      expression: "educationalBackground.ebasicEduc"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  staticStyle: {
-                    "text-transform": "uppercase",
-                    outline: "none",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.educationalBackground.ebasicEduc },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "ebasicEduc" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.ebasicEduc,
+                        expression: "educationalBackground.ebasicEduc"
                       }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "ebasicEduc",
-                        $event.target.value
-                      )
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: {
+                      "text-transform": "uppercase",
+                      outline: "none",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: { type: "text", id: "ebasicEduc" },
+                    domProps: { value: _vm.educationalBackground.ebasicEduc },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.educationalBackground,
+                          "ebasicEduc",
+                          $event.target.value
+                        )
+                      }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Basic Education/Degree/Course")])
-              ])
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Basic Education/Degree/Course")])
+                ]
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.eperiodFrom,
-                      expression: "educationalBackground.eperiodFrom"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  class: !_vm.errors.hasOwnProperty("eperiodFrom")
-                    ? ""
-                    : "is-invalid",
-                  staticStyle: {
-                    outline: "none",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "month", placeholder: "" },
-                  domProps: { value: _vm.educationalBackground.eperiodFrom },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "eperiodFrom" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.eperiodFrom,
+                        expression: "educationalBackground.eperiodFrom"
                       }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "eperiodFrom",
-                        $event.target.value
-                      )
+                    ],
+                    staticClass: "form-control",
+                    class: !_vm.errors.hasOwnProperty("eperiodFrom")
+                      ? ""
+                      : "is-invalid",
+                    staticStyle: {
+                      outline: "none",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: {
+                      type: "month",
+                      id: "eperiodFrom",
+                      placeholder: ""
+                    },
+                    domProps: { value: _vm.educationalBackground.eperiodFrom },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.educationalBackground,
+                          "eperiodFrom",
+                          $event.target.value
+                        )
+                      }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c("p", { staticClass: "text-danger text-sm" }, [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm.errors.eperiodFrom) +
-                      "\n                    "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("span", [_vm._v("Period of Attendance(From)")])
-              ])
+                  }),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-danger text-sm" }, [
+                    _vm._v(
+                      "\n              " +
+                        _vm._s(_vm.errors.eperiodFrom) +
+                        "\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Period of Attendance(From)")])
+                ]
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.eperiodTo,
-                      expression: "educationalBackground.eperiodTo"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  class: !_vm.errors.hasOwnProperty("eperiodTo")
-                    ? ""
-                    : "is-invalid",
-                  staticStyle: {
-                    outline: "none",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "month", placeholder: "" },
-                  domProps: { value: _vm.educationalBackground.eperiodTo },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "eperiodTo" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.eperiodTo,
+                        expression: "educationalBackground.eperiodTo"
                       }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "eperiodTo",
-                        $event.target.value
-                      )
+                    ],
+                    staticClass: "form-control",
+                    class: !_vm.errors.hasOwnProperty("eperiodTo")
+                      ? ""
+                      : "is-invalid",
+                    staticStyle: {
+                      outline: "none",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: { type: "month", id: "eperiodTo", placeholder: "" },
+                    domProps: { value: _vm.educationalBackground.eperiodTo },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.educationalBackground,
+                          "eperiodTo",
+                          $event.target.value
+                        )
+                      }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Period of Attendance(To)")])
-              ]),
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Period of Attendance(To)")])
+                ]
+              ),
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.eperiodTo) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ])
@@ -40553,141 +40617,170 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "pr-3 pb-3 py-3" }, [
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-lg-3" }, [
-                _c("label", { staticClass: "form-group has-float-label" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.educationalBackground.eunitEarned,
-                        expression: "educationalBackground.eunitEarned"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    staticStyle: {
-                      outline: "none",
-                      "box-shadow": "0px 0px 0px transparent"
-                    },
-                    attrs: {
-                      type: "number",
-                      placeholder: "(if not graduated)"
-                    },
-                    domProps: { value: _vm.educationalBackground.eunitEarned },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+              _c("div", { staticClass: "col-lg-4" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "form-group has-float-label",
+                    attrs: { for: "eunitEarned" }
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.educationalBackground.eunitEarned,
+                          expression: "educationalBackground.eunitEarned"
                         }
-                        _vm.$set(
-                          _vm.educationalBackground,
-                          "eunitEarned",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "text-sm" }, [
-                    _vm._v("Highest Level/Unit Earned")
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-lg-3" }, [
-                _c("label", { staticClass: "form-group has-float-label" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.educationalBackground.eyrGrad,
-                        expression: "educationalBackground.eyrGrad"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    class: !_vm.errors.hasOwnProperty("eyrGrad")
-                      ? ""
-                      : "is-invalid",
-                    staticStyle: {
-                      outline: "none",
-                      "box-shadow": "0px 0px 0px transparent"
-                    },
-                    attrs: { type: "number", placeholder: "" },
-                    domProps: { value: _vm.educationalBackground.eyrGrad },
-                    on: {
-                      input: [
-                        function($event) {
+                      ],
+                      staticClass: "form-control",
+                      staticStyle: {
+                        outline: "none",
+                        "box-shadow": "0px 0px 0px transparent"
+                      },
+                      attrs: {
+                        type: "number",
+                        id: "eunitEarned",
+                        placeholder: "(if not graduated)"
+                      },
+                      domProps: {
+                        value: _vm.educationalBackground.eunitEarned
+                      },
+                      on: {
+                        input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
                           _vm.$set(
                             _vm.educationalBackground,
-                            "eyrGrad",
+                            "eunitEarned",
                             $event.target.value
                           )
-                        },
-                        function($event) {
-                          if (
-                            _vm.educationalBackground.eyrGrad.length >
-                            _vm.yearMaxLength
-                          ) {
-                            _vm.educationalBackground.eyrGrad = _vm.educationalBackground.eyrGrad.slice(
-                              0,
-                              _vm.yearMaxLength
-                            )
-                          }
                         }
-                      ]
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("Year Graduated")])
-                ]),
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", [_vm._v("Highest Level/Unit Earned")])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-2" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "form-group has-float-label",
+                    attrs: { for: "eyrGrad" }
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.educationalBackground.eyrGrad,
+                          expression: "educationalBackground.eyrGrad"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: !_vm.errors.hasOwnProperty("eyrGrad")
+                        ? ""
+                        : "is-invalid",
+                      staticStyle: {
+                        outline: "none",
+                        "box-shadow": "0px 0px 0px transparent"
+                      },
+                      attrs: { type: "number", id: "eyrGrad" },
+                      domProps: { value: _vm.educationalBackground.eyrGrad },
+                      on: {
+                        input: [
+                          function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.educationalBackground,
+                              "eyrGrad",
+                              $event.target.value
+                            )
+                          },
+                          function($event) {
+                            if (
+                              _vm.educationalBackground.eyrGrad.length >
+                              _vm.yearMaxLength
+                            ) {
+                              _vm.educationalBackground.eyrGrad = _vm.educationalBackground.eyrGrad.slice(
+                                0,
+                                _vm.yearMaxLength
+                              )
+                            }
+                          }
+                        ]
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", [_vm._v("Year Graduated")])
+                  ]
+                ),
                 _vm._v(" "),
                 _c("p", { staticClass: "text-danger text-sm" }, [
                   _vm._v(
-                    "\n                            " +
+                    "\n              " +
                       _vm._s(_vm.errors.eyrGrad) +
-                      "\n                        "
+                      "\n            "
                   )
                 ])
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-lg-6" }, [
-                _c("label", { staticClass: "form-group has-float-label" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.educationalBackground.escholarship,
-                        expression: "educationalBackground.escholarship"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    staticStyle: {
-                      "text-transform": "uppercase",
-                      "box-shadow": "0px 0px 0px transparent"
-                    },
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.educationalBackground.escholarship },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+                _c(
+                  "label",
+                  {
+                    staticClass: "form-group has-float-label",
+                    attrs: { for: "escholarship" }
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.educationalBackground.escholarship,
+                          expression: "educationalBackground.escholarship"
                         }
-                        _vm.$set(
-                          _vm.educationalBackground,
-                          "escholarship",
-                          $event.target.value
-                        )
+                      ],
+                      staticClass: "form-control",
+                      staticStyle: {
+                        "text-transform": "uppercase",
+                        "box-shadow": "0px 0px 0px transparent"
+                      },
+                      attrs: {
+                        type: "text",
+                        id: "escholarship",
+                        placeholder:
+                          "Enter Scholarship/Academic Honors Received"
+                      },
+                      domProps: {
+                        value: _vm.educationalBackground.escholarship
+                      },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.educationalBackground,
+                            "escholarship",
+                            $event.target.value
+                          )
+                        }
                       }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("Scholarship/Academic Honors Received")])
-                ])
+                    }),
+                    _vm._v(" "),
+                    _c("span", [_vm._v("Scholarship/Academic Honors Received")])
+                  ]
+                )
               ])
             ])
           ])
@@ -40700,278 +40793,20 @@ var render = function() {
         _c("div", { staticClass: "pl-3 pr-3 pb-3" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.snameOfSchool,
-                      expression: "educationalBackground.snameOfSchool"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  staticStyle: {
-                    "text-transform": "uppercase",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "text", placeholder: "Name of School" },
-                  domProps: { value: _vm.educationalBackground.snameOfSchool },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "snameOfSchool",
-                        $event.target.value
-                      )
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Secondary")])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.sbasicEduc,
-                      expression: "educationalBackground.sbasicEduc"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  staticStyle: {
-                    "text-transform": "uppercase",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "text", placeholder: "" },
-                  domProps: { value: _vm.educationalBackground.sbasicEduc },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "sbasicEduc",
-                        $event.target.value
-                      )
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Basic Education/Degree/Course")])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.speriodFrom,
-                      expression: "educationalBackground.speriodFrom"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  class: !_vm.errors.hasOwnProperty("speriodFrom")
-                    ? ""
-                    : "is-invalid",
-                  staticStyle: {
-                    outline: "none",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "month", placeholder: "" },
-                  domProps: { value: _vm.educationalBackground.speriodFrom },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "speriodFrom",
-                        $event.target.value
-                      )
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Period Of Attendanec(From)")])
-              ]),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-danger text-sm" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.errors.speriodFrom) +
-                    "\n                    "
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.speriodTo,
-                      expression: "educationalBackground.speriodTo"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  class: !_vm.errors.hasOwnProperty("speriodTo")
-                    ? ""
-                    : "is-invalid",
-                  staticStyle: {
-                    outline: "none",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "month", placeholder: "" },
-                  domProps: { value: _vm.educationalBackground.speriodTo },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "speriodTo",
-                        $event.target.value
-                      )
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Period Of Attendance(To)")])
-              ]),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-danger text-sm" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.errors.speriodTo) +
-                    "\n                    "
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "pr-3 pb-3 py-3" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-lg-3" }, [
-                _c("label", { staticClass: "form-group has-float-label" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "snameOfSchool" }
+                },
+                [
                   _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.educationalBackground.sunitEarned,
-                        expression: "educationalBackground.sunitEarned"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    staticStyle: { "box-shadow": "0px 0px 0px transparent" },
-                    attrs: {
-                      type: "number",
-                      placeholder: "(if not graduated)"
-                    },
-                    domProps: { value: _vm.educationalBackground.sunitEarned },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.educationalBackground,
-                          "sunitEarned",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "text-sm" }, [
-                    _vm._v("Highest Level/Unit Earned")
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-lg-3" }, [
-                _c("label", { staticClass: "form-group has-float-label" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.educationalBackground.syrGrad,
-                        expression: "educationalBackground.syrGrad"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    class: !_vm.errors.hasOwnProperty("syrGrad")
-                      ? ""
-                      : "is-invalid",
-                    staticStyle: { "box-shadow": "0px 0px 0px transparent" },
-                    attrs: { type: "number", placeholder: "" },
-                    domProps: { value: _vm.educationalBackground.syrGrad },
-                    on: {
-                      input: [
-                        function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.educationalBackground,
-                            "syrGrad",
-                            $event.target.value
-                          )
-                        },
-                        function($event) {
-                          if (
-                            _vm.educationalBackground.syrGrad.length >
-                            _vm.yearMaxLength
-                          ) {
-                            _vm.educationalBackground.syrGrad = _vm.educationalBackground.syrGrad.slice(
-                              0,
-                              _vm.yearMaxLength
-                            )
-                          }
-                        }
-                      ]
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("Year Graduated")])
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "text-danger text-sm" }, [
-                  _vm._v(
-                    "\n                            " +
-                      _vm._s(_vm.errors.syrGrad) +
-                      "\n                        "
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-lg-6" }, [
-                _c("label", { staticClass: "form-group has-float-label" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.educationalBackground.sscholarship,
-                        expression: "educationalBackground.sscholarship"
+                        value: _vm.educationalBackground.snameOfSchool,
+                        expression: "educationalBackground.snameOfSchool"
                       }
                     ],
                     staticClass: "form-control",
@@ -40979,8 +40814,14 @@ var render = function() {
                       "text-transform": "uppercase",
                       "box-shadow": "0px 0px 0px transparent"
                     },
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.educationalBackground.sscholarship },
+                    attrs: {
+                      type: "text",
+                      id: "snameOfSchool",
+                      placeholder: "Enter Name of School"
+                    },
+                    domProps: {
+                      value: _vm.educationalBackground.snameOfSchool
+                    },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
@@ -40988,15 +40829,334 @@ var render = function() {
                         }
                         _vm.$set(
                           _vm.educationalBackground,
-                          "sscholarship",
+                          "snameOfSchool",
                           $event.target.value
                         )
                       }
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Scholarship/Academic Honors Received")])
+                  _c("span", [_vm._v("Name of School")])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-3" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "sbasicEduc" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.sbasicEduc,
+                        expression: "educationalBackground.sbasicEduc"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: {
+                      "text-transform": "uppercase",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: { type: "text", id: "sbasicEduc", placeholder: "" },
+                    domProps: { value: _vm.educationalBackground.sbasicEduc },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.educationalBackground,
+                          "sbasicEduc",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Basic Education/Degree/Course")])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-3" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "speriodFrom" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.speriodFrom,
+                        expression: "educationalBackground.speriodFrom"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class: !_vm.errors.hasOwnProperty("speriodFrom")
+                      ? ""
+                      : "is-invalid",
+                    staticStyle: {
+                      outline: "none",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: {
+                      type: "month",
+                      id: "speriodFrom",
+                      placeholder: ""
+                    },
+                    domProps: { value: _vm.educationalBackground.speriodFrom },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.educationalBackground,
+                          "speriodFrom",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Period Of Attendanec(From)")])
+                ]
+              ),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-danger text-sm" }, [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm.errors.speriodFrom) +
+                    "\n          "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-3" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "speriodTo" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.speriodTo,
+                        expression: "educationalBackground.speriodTo"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class: !_vm.errors.hasOwnProperty("speriodTo")
+                      ? ""
+                      : "is-invalid",
+                    staticStyle: {
+                      outline: "none",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: { type: "month", id: "speriodTo", placeholder: "" },
+                    domProps: { value: _vm.educationalBackground.speriodTo },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.educationalBackground,
+                          "speriodTo",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Period Of Attendance(To)")])
+                ]
+              ),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-danger text-sm" }, [
+                _vm._v(
+                  "\n            " +
+                    _vm._s(_vm.errors.speriodTo) +
+                    "\n          "
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "pr-3 pb-3 py-3" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-4" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "form-group has-float-label",
+                    attrs: { for: "sunitEarned" }
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.educationalBackground.sunitEarned,
+                          expression: "educationalBackground.sunitEarned"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      staticStyle: { "box-shadow": "0px 0px 0px transparent" },
+                      attrs: {
+                        type: "number",
+                        id: "sunitEarned",
+                        placeholder: "(if not graduated)"
+                      },
+                      domProps: {
+                        value: _vm.educationalBackground.sunitEarned
+                      },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.educationalBackground,
+                            "sunitEarned",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", [_vm._v("Highest Level/Unit Earned")])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-2" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "form-group has-float-label",
+                    attrs: { for: "syrGrad" }
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.educationalBackground.syrGrad,
+                          expression: "educationalBackground.syrGrad"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: !_vm.errors.hasOwnProperty("syrGrad")
+                        ? ""
+                        : "is-invalid",
+                      staticStyle: { "box-shadow": "0px 0px 0px transparent" },
+                      attrs: { type: "number", id: "syrGrad", placeholder: "" },
+                      domProps: { value: _vm.educationalBackground.syrGrad },
+                      on: {
+                        input: [
+                          function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.educationalBackground,
+                              "syrGrad",
+                              $event.target.value
+                            )
+                          },
+                          function($event) {
+                            if (
+                              _vm.educationalBackground.syrGrad.length >
+                              _vm.yearMaxLength
+                            ) {
+                              _vm.educationalBackground.syrGrad = _vm.educationalBackground.syrGrad.slice(
+                                0,
+                                _vm.yearMaxLength
+                              )
+                            }
+                          }
+                        ]
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", [_vm._v("Year Graduated")])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-danger text-sm" }, [
+                  _vm._v(
+                    "\n              " +
+                      _vm._s(_vm.errors.syrGrad) +
+                      "\n            "
+                  )
                 ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-6" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "form-group has-float-label",
+                    attrs: { for: "sscholarship" }
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.educationalBackground.sscholarship,
+                          expression: "educationalBackground.sscholarship"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      staticStyle: {
+                        "text-transform": "uppercase",
+                        "box-shadow": "0px 0px 0px transparent"
+                      },
+                      attrs: {
+                        type: "text",
+                        id: "sscholarship",
+                        placeholder:
+                          "Enter Scholarship/Academic Honors Received"
+                      },
+                      domProps: {
+                        value: _vm.educationalBackground.sscholarship
+                      },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.educationalBackground,
+                            "sscholarship",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", [_vm._v("Scholarship/Academic Honors Received")])
+                  ]
+                )
               ])
             ])
           ])
@@ -41009,169 +41169,203 @@ var render = function() {
         _c("div", { staticClass: "pl-3 pr-3 pb-3" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.vnameOfVoc,
-                      expression: "educationalBackground.vnameOfVoc"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  staticStyle: {
-                    "text-transform": "uppercase",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "text", placeholder: "Name of School" },
-                  domProps: { value: _vm.educationalBackground.vnameOfVoc },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "vnameOfVoc" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.vnameOfVoc,
+                        expression: "educationalBackground.vnameOfVoc"
                       }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "vnameOfVoc",
-                        $event.target.value
-                      )
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: {
+                      "text-transform": "uppercase",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: {
+                      type: "text",
+                      id: "vnameOfVoc",
+                      placeholder: "enter Name of School"
+                    },
+                    domProps: { value: _vm.educationalBackground.vnameOfVoc },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.educationalBackground,
+                          "vnameOfVoc",
+                          $event.target.value
+                        )
+                      }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", { staticClass: "text-sm" }, [
-                  _vm._v("Vocational/Trade Course")
-                ])
-              ])
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Name of School")])
+                ]
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.vbasicEduc,
-                      expression: "educationalBackground.vbasicEduc"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  staticStyle: {
-                    "text-transform": "uppercase",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "text", placeholder: "" },
-                  domProps: { value: _vm.educationalBackground.vbasicEduc },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "vbasicEduc" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.vbasicEduc,
+                        expression: "educationalBackground.vbasicEduc"
                       }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "vbasicEduc",
-                        $event.target.value
-                      )
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: {
+                      "text-transform": "uppercase",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: { type: "text", id: "vbasicEduc", placeholder: "" },
+                    domProps: { value: _vm.educationalBackground.vbasicEduc },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.educationalBackground,
+                          "vbasicEduc",
+                          $event.target.value
+                        )
+                      }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Basic Education/Degree/Course")])
-              ])
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Basic Education/Degree/Course")])
+                ]
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.vperiodFrom,
-                      expression: "educationalBackground.vperiodFrom"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  class: !_vm.errors.hasOwnProperty("vperiodFrom")
-                    ? ""
-                    : "is-invalid",
-                  staticStyle: {
-                    outline: "none",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "month", placeholder: "" },
-                  domProps: { value: _vm.educationalBackground.vperiodFrom },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "vperiodFrom" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.vperiodFrom,
+                        expression: "educationalBackground.vperiodFrom"
                       }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "vperiodFrom",
-                        $event.target.value
-                      )
+                    ],
+                    staticClass: "form-control",
+                    class: !_vm.errors.hasOwnProperty("vperiodFrom")
+                      ? ""
+                      : "is-invalid",
+                    staticStyle: {
+                      outline: "none",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: {
+                      type: "month",
+                      id: "vperiodFrom",
+                      placeholder: ""
+                    },
+                    domProps: { value: _vm.educationalBackground.vperiodFrom },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.educationalBackground,
+                          "vperiodFrom",
+                          $event.target.value
+                        )
+                      }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Period of Attendance(From)")])
-              ]),
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Period of Attendance(From)")])
+                ]
+              ),
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.vperiodFrom) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.vperiodTo,
-                      expression: "educationalBackground.vperiodTo"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  class: !_vm.errors.hasOwnProperty("vperiodTo")
-                    ? ""
-                    : "is-invalid",
-                  staticStyle: {
-                    outline: "none",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "month", placeholder: "" },
-                  domProps: { value: _vm.educationalBackground.vperiodTo },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "vperiodTo" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.vperiodTo,
+                        expression: "educationalBackground.vperiodTo"
                       }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "vperiodTo",
-                        $event.target.value
-                      )
+                    ],
+                    staticClass: "form-control",
+                    class: !_vm.errors.hasOwnProperty("vperiodTo")
+                      ? ""
+                      : "is-invalid",
+                    staticStyle: {
+                      outline: "none",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: { type: "month", id: "vperiodTo", placeholder: "" },
+                    domProps: { value: _vm.educationalBackground.vperiodTo },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.educationalBackground,
+                          "vperiodTo",
+                          $event.target.value
+                        )
+                      }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Period of Attendance(To)")])
-              ]),
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Period of Attendance(To)")])
+                ]
+              ),
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.vperiodTo) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ])
@@ -41180,88 +41374,104 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "pl-3 pr-3 pb-3" }, [
           _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.vunitEarned,
-                      expression: "educationalBackground.vunitEarned"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  staticStyle: { "box-shadow": "0px 0px 0px transparent" },
-                  attrs: { type: "number", placeholder: "(if not graduated)" },
-                  domProps: { value: _vm.educationalBackground.vunitEarned },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+            _c("div", { staticClass: "col-lg-4" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "vunitEarned" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.vunitEarned,
+                        expression: "educationalBackground.vunitEarned"
                       }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "vunitEarned",
-                        $event.target.value
-                      )
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", { staticClass: "text-sm" }, [
-                  _vm._v("Highest Level/Unit Earned")
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.vyrGrad,
-                      expression: "educationalBackground.vyrGrad"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  class: !_vm.errors.hasOwnProperty("vyrGrad")
-                    ? ""
-                    : "is-invalid",
-                  staticStyle: { "box-shadow": "0px 0px 0px transparent" },
-                  attrs: { type: "number", placeholder: "" },
-                  domProps: { value: _vm.educationalBackground.vyrGrad },
-                  on: {
-                    input: [
-                      function($event) {
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: { "box-shadow": "0px 0px 0px transparent" },
+                    attrs: {
+                      type: "number",
+                      id: "vunitEarned",
+                      placeholder: "(if not graduated)"
+                    },
+                    domProps: { value: _vm.educationalBackground.vunitEarned },
+                    on: {
+                      input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
                         _vm.$set(
                           _vm.educationalBackground,
-                          "vyrGrad",
+                          "vunitEarned",
                           $event.target.value
                         )
-                      },
-                      function($event) {
-                        if (
-                          _vm.educationalBackground.vyrGrad.length >
-                          _vm.yearMaxLength
-                        ) {
-                          _vm.educationalBackground.vyrGrad = _vm.educationalBackground.vyrGrad.slice(
-                            0,
-                            _vm.yearMaxLength
-                          )
-                        }
                       }
-                    ]
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Year Graduated")])
-              ]),
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Highest Level/Unit Earned")])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-2" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "vyrGrad" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.vyrGrad,
+                        expression: "educationalBackground.vyrGrad"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class: !_vm.errors.hasOwnProperty("vyrGrad")
+                      ? ""
+                      : "is-invalid",
+                    staticStyle: { "box-shadow": "0px 0px 0px transparent" },
+                    attrs: { type: "number", id: "vyrGrad", placeholder: "" },
+                    domProps: { value: _vm.educationalBackground.vyrGrad },
+                    on: {
+                      input: [
+                        function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.educationalBackground,
+                            "vyrGrad",
+                            $event.target.value
+                          )
+                        },
+                        function($event) {
+                          if (
+                            _vm.educationalBackground.vyrGrad.length >
+                            _vm.yearMaxLength
+                          ) {
+                            _vm.educationalBackground.vyrGrad = _vm.educationalBackground.vyrGrad.slice(
+                              0,
+                              _vm.yearMaxLength
+                            )
+                          }
+                        }
+                      ]
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Year Graduated")])
+                ]
+              ),
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(_vm._s(_vm.errors.vyrGrad))
@@ -41269,39 +41479,50 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-6" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.vscholarship,
-                      expression: "educationalBackground.vscholarship"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  staticStyle: {
-                    "text-transform": "uppercase",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.educationalBackground.vscholarship },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "vscholarship" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.vscholarship,
+                        expression: "educationalBackground.vscholarship"
                       }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "vscholarship",
-                        $event.target.value
-                      )
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: {
+                      "text-transform": "uppercase",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: {
+                      type: "text",
+                      id: "vscholarship",
+                      placeholder: "Enter Scholarship/Academic Honors Received"
+                    },
+                    domProps: { value: _vm.educationalBackground.vscholarship },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.educationalBackground,
+                          "vscholarship",
+                          $event.target.value
+                        )
+                      }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Scholarship/Academic Honors Received")])
-              ])
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Scholarship/Academic Honors Received")])
+                ]
+              )
             ])
           ])
         ]),
@@ -41313,111 +41534,142 @@ var render = function() {
         _c("div", { staticClass: "pl-3 pr-3 pb-3" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.cnameOfSchool,
-                      expression: "educationalBackground.cnameOfSchool"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  staticStyle: {
-                    "text-transform": "uppercase",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "text", placeholder: "Name of School" },
-                  domProps: { value: _vm.educationalBackground.cnameOfSchool },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "cnameOfSchool" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.cnameOfSchool,
+                        expression: "educationalBackground.cnameOfSchool"
                       }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "cnameOfSchool",
-                        $event.target.value
-                      )
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: {
+                      "text-transform": "uppercase",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: {
+                      type: "text",
+                      id: "cnameOfSchool",
+                      placeholder: "Enter Name of School"
+                    },
+                    domProps: {
+                      value: _vm.educationalBackground.cnameOfSchool
+                    },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.educationalBackground,
+                          "cnameOfSchool",
+                          $event.target.value
+                        )
+                      }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("College")])
-              ])
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Name of School")])
+                ]
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.cbasicEduc,
-                      expression: "educationalBackground.cbasicEduc"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  staticStyle: {
-                    "text-transform": "uppercase",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "text", placeholder: "" },
-                  domProps: { value: _vm.educationalBackground.cbasicEduc },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "cbasicEduc" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.cbasicEduc,
+                        expression: "educationalBackground.cbasicEduc"
                       }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "cbasicEduc",
-                        $event.target.value
-                      )
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: {
+                      "text-transform": "uppercase",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: { type: "text", id: "cbasicEduc", placeholder: "" },
+                    domProps: { value: _vm.educationalBackground.cbasicEduc },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.educationalBackground,
+                          "cbasicEduc",
+                          $event.target.value
+                        )
+                      }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Basic Education//Degree/Course")])
-              ])
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Basic Education//Degree/Course")])
+                ]
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.cperiodFrom,
-                      expression: "educationalBackground.cperiodFrom"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  class: !_vm.errors.hasOwnProperty("cperiodFrom")
-                    ? ""
-                    : "is-invalid",
-                  staticStyle: { "box-shadow": "0px 0px 0px transparent" },
-                  attrs: { type: "month", placeholder: "" },
-                  domProps: { value: _vm.educationalBackground.cperiodFrom },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "cperiodFrom" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.cperiodFrom,
+                        expression: "educationalBackground.cperiodFrom"
                       }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "cperiodFrom",
-                        $event.target.value
-                      )
+                    ],
+                    staticClass: "form-control",
+                    class: !_vm.errors.hasOwnProperty("cperiodFrom")
+                      ? ""
+                      : "is-invalid",
+                    staticStyle: { "box-shadow": "0px 0px 0px transparent" },
+                    attrs: {
+                      type: "month",
+                      id: "cperiodFrom",
+                      placeholder: ""
+                    },
+                    domProps: { value: _vm.educationalBackground.cperiodFrom },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.educationalBackground,
+                          "cperiodFrom",
+                          $event.target.value
+                        )
+                      }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Period Of Attendance(From)")])
-              ]),
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Period Of Attendance(From)")])
+                ]
+              ),
               _vm._v(" "),
               _c("p", { staticClass: "text-danger" }, [
                 _vm._v(_vm._s(_vm.errors.cperiodFrom))
@@ -41425,45 +41677,52 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.cperiodTo,
-                      expression: "educationalBackground.cperiodTo"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  class: !_vm.errors.hasOwnProperty("cperiodTo")
-                    ? ""
-                    : "is-invalid",
-                  staticStyle: { "box-shadow": "0px 0px 0px transparent" },
-                  attrs: { type: "month", placeholder: "" },
-                  domProps: { value: _vm.educationalBackground.cperiodTo },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "cperiodTo" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.cperiodTo,
+                        expression: "educationalBackground.cperiodTo"
                       }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "cperiodTo",
-                        $event.target.value
-                      )
+                    ],
+                    staticClass: "form-control",
+                    class: !_vm.errors.hasOwnProperty("cperiodTo")
+                      ? ""
+                      : "is-invalid",
+                    staticStyle: { "box-shadow": "0px 0px 0px transparent" },
+                    attrs: { type: "month", id: "cperiodTo", placeholder: "" },
+                    domProps: { value: _vm.educationalBackground.cperiodTo },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.educationalBackground,
+                          "cperiodTo",
+                          $event.target.value
+                        )
+                      }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Period Of Attendance(To)")])
-              ]),
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Period Of Attendance(To)")])
+                ]
+              ),
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.cperiodTo) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ])
@@ -41472,139 +41731,164 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "pl-3 pr-3 pb-3" }, [
           _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.cunitEarned,
-                      expression: "educationalBackground.cunitEarned"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  staticStyle: {
-                    outline: "none",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "number", placeholder: "(if not graduated)" },
-                  domProps: { value: _vm.educationalBackground.cunitEarned },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+            _c("div", { staticClass: "col-lg-4" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "cunitEarned" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.cunitEarned,
+                        expression: "educationalBackground.cunitEarned"
                       }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "cunitEarned",
-                        $event.target.value
-                      )
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", { staticClass: "text-sm" }, [
-                  _vm._v("Highest Level/Unit Earned")
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.cyrGrad,
-                      expression: "educationalBackground.cyrGrad"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  class: !_vm.errors.hasOwnProperty("cyrGrad")
-                    ? ""
-                    : "is-invalid",
-                  staticStyle: {
-                    outline: "none",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "number", placeholder: "" },
-                  domProps: { value: _vm.educationalBackground.cyrGrad },
-                  on: {
-                    input: [
-                      function($event) {
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: {
+                      outline: "none",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: {
+                      type: "number",
+                      id: "cunitEarned",
+                      placeholder: "(if not graduated)"
+                    },
+                    domProps: { value: _vm.educationalBackground.cunitEarned },
+                    on: {
+                      input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
                         _vm.$set(
                           _vm.educationalBackground,
-                          "cyrGrad",
+                          "cunitEarned",
                           $event.target.value
                         )
-                      },
-                      function($event) {
-                        if (
-                          _vm.educationalBackground.cyrGrad.length >
-                          _vm.yearMaxLength
-                        ) {
-                          _vm.educationalBackground.cyrGrad = _vm.educationalBackground.cyrGrad.slice(
-                            0,
-                            _vm.yearMaxLength
-                          )
-                        }
                       }
-                    ]
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Year Graduated")])
-              ]),
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Highest Level/Unit Earned")])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-2" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "cyrGrad" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.cyrGrad,
+                        expression: "educationalBackground.cyrGrad"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class: !_vm.errors.hasOwnProperty("cyrGrad")
+                      ? ""
+                      : "is-invalid",
+                    staticStyle: {
+                      outline: "none",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: { type: "number", id: "cyrGrad", placeholder: "" },
+                    domProps: { value: _vm.educationalBackground.cyrGrad },
+                    on: {
+                      input: [
+                        function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.educationalBackground,
+                            "cyrGrad",
+                            $event.target.value
+                          )
+                        },
+                        function($event) {
+                          if (
+                            _vm.educationalBackground.cyrGrad.length >
+                            _vm.yearMaxLength
+                          ) {
+                            _vm.educationalBackground.cyrGrad = _vm.educationalBackground.cyrGrad.slice(
+                              0,
+                              _vm.yearMaxLength
+                            )
+                          }
+                        }
+                      ]
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Year Graduated")])
+                ]
+              ),
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.errors.cyrGrad) +
-                    "\n                    "
+                  "\n            " + _vm._s(_vm.errors.cyrGrad) + "\n          "
                 )
               ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-6" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.cscholarship,
-                      expression: "educationalBackground.cscholarship"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  staticStyle: {
-                    "text-transform": "uppercase",
-                    outline: "none",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.educationalBackground.cscholarship },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "cscholarship" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.cscholarship,
+                        expression: "educationalBackground.cscholarship"
                       }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "cscholarship",
-                        $event.target.value
-                      )
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: {
+                      "text-transform": "uppercase",
+                      outline: "none",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: {
+                      type: "text",
+                      id: "cscholarship",
+                      placeholder: "Enter Scholarship/Academic Honors Received"
+                    },
+                    domProps: { value: _vm.educationalBackground.cscholarship },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.educationalBackground,
+                          "cscholarship",
+                          $event.target.value
+                        )
+                      }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Scholarship/Academic Honors Received")])
-              ])
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Scholarship/Academic Honors Received")])
+                ]
+              )
             ])
           ])
         ]),
@@ -41616,167 +41900,205 @@ var render = function() {
         _c("div", { staticClass: "pl-3 pr-3 pb-3" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.gnameOfSchool,
-                      expression: "educationalBackground.gnameOfSchool"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  staticStyle: {
-                    "text-transform": "uppercase outline: none",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "text", placeholder: "Name of School" },
-                  domProps: { value: _vm.educationalBackground.gnameOfSchool },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "gnameOfSchool" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.gnameOfSchool,
+                        expression: "educationalBackground.gnameOfSchool"
                       }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "gnameOfSchool",
-                        $event.target.value
-                      )
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: {
+                      "text-transform": "uppercase outline: none",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: {
+                      type: "text",
+                      id: "gnameOfSchool",
+                      placeholder: "Enter Name of School"
+                    },
+                    domProps: {
+                      value: _vm.educationalBackground.gnameOfSchool
+                    },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.educationalBackground,
+                          "gnameOfSchool",
+                          $event.target.value
+                        )
+                      }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Graduate Studies")])
-              ])
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Name Of School")])
+                ]
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.gbasicEduc,
-                      expression: "educationalBackground.gbasicEduc"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  staticStyle: {
-                    "text-transform": "uppercase outline: none",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "text", placeholder: "" },
-                  domProps: { value: _vm.educationalBackground.gbasicEduc },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "gbasicEduc" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.gbasicEduc,
+                        expression: "educationalBackground.gbasicEduc"
                       }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "gbasicEduc",
-                        $event.target.value
-                      )
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: {
+                      "text-transform": "uppercase outline: none",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: { type: "text", id: "gbasicEduc", placeholder: "" },
+                    domProps: { value: _vm.educationalBackground.gbasicEduc },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.educationalBackground,
+                          "gbasicEduc",
+                          $event.target.value
+                        )
+                      }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Basic Education/Degree/Course")])
-              ])
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Basic Education/Degree/Course")])
+                ]
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.gperiodFrom,
-                      expression: "educationalBackground.gperiodFrom"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  class: !_vm.errors.hasOwnProperty("gperiodFrom")
-                    ? ""
-                    : "is-invalid",
-                  staticStyle: {
-                    outline: "none",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "month", placeholder: "" },
-                  domProps: { value: _vm.educationalBackground.gperiodFrom },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "gperiodFrom" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.gperiodFrom,
+                        expression: "educationalBackground.gperiodFrom"
                       }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "gperiodFrom",
-                        $event.target.value
-                      )
+                    ],
+                    staticClass: "form-control",
+                    class: !_vm.errors.hasOwnProperty("gperiodFrom")
+                      ? ""
+                      : "is-invalid",
+                    staticStyle: {
+                      outline: "none",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: {
+                      type: "month",
+                      id: "gperiodFrom",
+                      placeholder: ""
+                    },
+                    domProps: { value: _vm.educationalBackground.gperiodFrom },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.educationalBackground,
+                          "gperiodFrom",
+                          $event.target.value
+                        )
+                      }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Period of Attendance(From)")])
-              ]),
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Period of Attendance(From)")])
+                ]
+              ),
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.gperiodFrom) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.gperiodTo,
-                      expression: "educationalBackground.gperiodTo"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  class: !_vm.errors.hasOwnProperty("gperiodTo")
-                    ? ""
-                    : "is-invalid",
-                  staticStyle: {
-                    outline: "none",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "month", placeholder: "" },
-                  domProps: { value: _vm.educationalBackground.gperiodTo },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "gperiodTo" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.gperiodTo,
+                        expression: "educationalBackground.gperiodTo"
                       }
-                      _vm.$set(
-                        _vm.educationalBackground,
-                        "gperiodTo",
-                        $event.target.value
-                      )
+                    ],
+                    staticClass: "form-control",
+                    class: !_vm.errors.hasOwnProperty("gperiodTo")
+                      ? ""
+                      : "is-invalid",
+                    staticStyle: {
+                      outline: "none",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: { type: "month", id: "gperiodTo", placeholder: "" },
+                    domProps: { value: _vm.educationalBackground.gperiodTo },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.educationalBackground,
+                          "gperiodTo",
+                          $event.target.value
+                        )
+                      }
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Period Of Attendance(To)")])
-              ]),
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Period Of Attendance(To)")])
+                ]
+              ),
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(
-                  "\n                        " +
+                  "\n            " +
                     _vm._s(_vm.errors.gperiodTo) +
-                    "\n                    "
+                    "\n          "
                 )
               ])
             ])
@@ -41785,7 +42107,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "pl-3 pr-3 pb-3" }, [
           _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-lg-3" }, [
+            _c("div", { staticClass: "col-lg-4" }, [
               _c("label", { staticClass: "form-group has-float-label" }, [
                 _c("input", {
                   directives: [
@@ -41817,62 +42139,67 @@ var render = function() {
                   }
                 }),
                 _vm._v(" "),
-                _c("span", { staticClass: "text-sm" }, [
-                  _vm._v("Highest Level/Unit Earned")
-                ])
+                _c("span", [_vm._v("Highest Level/Unit Earned")])
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3" }, [
-              _c("label", { staticClass: "form-group has-float-label" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.educationalBackground.gyrGrad,
-                      expression: "educationalBackground.gyrGrad"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  class: !_vm.errors.hasOwnProperty("gyrGrad")
-                    ? ""
-                    : "is-invalid",
-                  staticStyle: {
-                    outline: "none",
-                    "box-shadow": "0px 0px 0px transparent"
-                  },
-                  attrs: { type: "number", placeholder: "" },
-                  domProps: { value: _vm.educationalBackground.gyrGrad },
-                  on: {
-                    input: [
-                      function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.educationalBackground,
-                          "gyrGrad",
-                          $event.target.value
-                        )
-                      },
-                      function($event) {
-                        if (
-                          _vm.educationalBackground.gyrGrad.length >
-                          _vm.yearMaxLength
-                        ) {
-                          _vm.educationalBackground.gyrGrad = _vm.educationalBackground.gyrGrad.slice(
-                            0,
-                            _vm.yearMaxLength
-                          )
-                        }
+            _c("div", { staticClass: "col-lg-2" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "form-group has-float-label",
+                  attrs: { for: "gyrGrad" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.educationalBackground.gyrGrad,
+                        expression: "educationalBackground.gyrGrad"
                       }
-                    ]
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Year Graduated")])
-              ]),
+                    ],
+                    staticClass: "form-control",
+                    class: !_vm.errors.hasOwnProperty("gyrGrad")
+                      ? ""
+                      : "is-invalid",
+                    staticStyle: {
+                      outline: "none",
+                      "box-shadow": "0px 0px 0px transparent"
+                    },
+                    attrs: { type: "number", id: "gyrGrad", placeholder: "" },
+                    domProps: { value: _vm.educationalBackground.gyrGrad },
+                    on: {
+                      input: [
+                        function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.educationalBackground,
+                            "gyrGrad",
+                            $event.target.value
+                          )
+                        },
+                        function($event) {
+                          if (
+                            _vm.educationalBackground.gyrGrad.length >
+                            _vm.yearMaxLength
+                          ) {
+                            _vm.educationalBackground.gyrGrad = _vm.educationalBackground.gyrGrad.slice(
+                              0,
+                              _vm.yearMaxLength
+                            )
+                          }
+                        }
+                      ]
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Year Graduated")])
+                ]
+              ),
               _vm._v(" "),
               _c("p", { staticClass: "text-danger text-sm" }, [
                 _vm._v(_vm._s(_vm.errors.gyrGrad))
@@ -41896,7 +42223,10 @@ var render = function() {
                     outline: "none",
                     "box-shadow": "0px 0px 0px transparent"
                   },
-                  attrs: { type: "text" },
+                  attrs: {
+                    type: "text",
+                    placeholder: "Enter Scholarship/Academic Honors Received"
+                  },
                   domProps: { value: _vm.educationalBackground.gscholarship },
                   on: {
                     input: function($event) {
@@ -41928,7 +42258,7 @@ var render = function() {
                   on: { click: _vm.submitEducationalBackground }
                 },
                 [
-                  _vm._v("\n                NEXT\n                "),
+                  _vm._v("\n        NEXT\n        "),
                   _c(
                     "div",
                     {
@@ -41969,7 +42299,7 @@ var staticRenderFns = [
           staticClass: "alert alert-secondary text-center font-weight-bold",
           attrs: { role: "alert" }
         },
-        [_vm._v("\n                ELEMENTARY\n            ")]
+        [_vm._v("\n        ELEMENTARY\n      ")]
       )
     ])
   },
@@ -41984,7 +42314,7 @@ var staticRenderFns = [
           staticClass: "alert alert-secondary text-center font-weight-bold",
           attrs: { role: "alert" }
         },
-        [_vm._v("\n                SECONDARY\n            ")]
+        [_vm._v("\n        SECONDARY\n      ")]
       )
     ])
   },
@@ -41999,7 +42329,7 @@ var staticRenderFns = [
           staticClass: "alert alert-secondary text-center font-weight-bold",
           attrs: { role: "alert" }
         },
-        [_vm._v("\n                VOCATIONAL / TRADE COURSE\n            ")]
+        [_vm._v("\n        VOCATIONAL / TRADE COURSE\n      ")]
       )
     ])
   },
@@ -42014,7 +42344,7 @@ var staticRenderFns = [
           staticClass: "alert alert-secondary text-center font-weight-bold",
           attrs: { role: "alert" }
         },
-        [_vm._v("\n                COLLEGE\n            ")]
+        [_vm._v("\n        COLLEGE\n      ")]
       )
     ])
   },
@@ -42029,7 +42359,7 @@ var staticRenderFns = [
           staticClass: "alert alert-secondary text-center font-weight-bold",
           attrs: { role: "alert" }
         },
-        [_vm._v("\n                GRADUATE STUDIES\n            ")]
+        [_vm._v("\n        GRADUATE STUDIES\n      ")]
       )
     ])
   }
@@ -45186,7 +45516,7 @@ var render = function() {
                   "label",
                   {
                     staticClass: "form-group has-float-label",
-                    attrs: { for: "lotno" }
+                    attrs: { for: "permanentLotno" }
                   },
                   [
                     _c("input", {
@@ -45206,6 +45536,7 @@ var render = function() {
                       },
                       attrs: {
                         type: "text",
+                        id: "permanentLotno",
                         readonly: _vm.isSameAsAbove ? true : false,
                         placeholder: "Enter house/block/lot no."
                       },
@@ -45234,7 +45565,7 @@ var render = function() {
                   "label",
                   {
                     staticClass: "form-group has-float-label",
-                    attrs: { for: "street" }
+                    attrs: { for: "permanentStreet" }
                   },
                   [
                     _c("input", {
@@ -45247,9 +45578,13 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      staticStyle: { "text-transform": "uppercase" },
+                      staticStyle: {
+                        "text-transform": "uppercase outline: none",
+                        "box-shadow": "0px 0px 0px transparent"
+                      },
                       attrs: {
                         type: "text",
+                        id: "permanentStreet",
                         readonly: _vm.isSameAsAbove ? true : false,
                         placeholder: "Enter Street"
                       },
