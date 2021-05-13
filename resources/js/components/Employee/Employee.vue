@@ -40,9 +40,12 @@
             hide-default-footer
           >
             <template v-slot:item.actions="{ item }">
-              <v-icon small class="mr-2" @click="editEmployee(item)">
-                mdi-pencil
-              </v-icon>
+              <button
+                class="btn btn-success rounded-circle shadow"
+                v-on:click="editEmployee(item)"
+              >
+                <i class="la la-pencil"></i>
+              </button>
             </template>
           </v-data-table>
           <v-container>

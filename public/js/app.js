@@ -3202,6 +3202,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
 
 
 
@@ -37130,21 +37133,17 @@ var render = function() {
                             var item = ref.item
                             return [
                               _c(
-                                "v-icon",
+                                "button",
                                 {
-                                  staticClass: "mr-2",
-                                  attrs: { small: "" },
+                                  staticClass:
+                                    "btn btn-success rounded-circle shadow",
                                   on: {
                                     click: function($event) {
                                       return _vm.editEmployee(item)
                                     }
                                   }
                                 },
-                                [
-                                  _vm._v(
-                                    "\n              mdi-pencil\n            "
-                                  )
-                                ]
+                                [_c("i", { staticClass: "la la-pencil" })]
                               )
                             ]
                           }
@@ -37152,7 +37151,7 @@ var render = function() {
                       ],
                       null,
                       false,
-                      3853180248
+                      2424941765
                     )
                   }),
                   _vm._v(" "),
