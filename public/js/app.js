@@ -3217,12 +3217,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       itemsPerPage: 10,
       search: "",
       employee_id: "",
-      firstname: "",
-      middlename: "",
-      lastname: "",
-      name_extension: "",
-      position: "",
-      office: "",
       headers: [{
         text: "Employee ID",
         value: "employee_id"
@@ -3317,36 +3311,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         }
       });
     },
-    fetch: function fetch(page) {
-      var _this2 = this;
-
-      this.isLoading = true;
-      window.axios("/api/employee/employees?page=".concat(page)).then(function (response) {
-        _this2.employees = response.data.data;
-        _this2.data = response.data;
-        _this2.isLoading = false;
-      });
-    },
-    nextPage: function nextPage() {
-      var _this3 = this;
-
-      window.axios("".concat(this.data.next_page_url)).then(function (response) {
-        _this3.employees = response.data.data;
-        _this3.data = response.data;
-        _this3.isLoading = false;
-      });
-    },
-    prevPage: function prevPage() {
-      var _this4 = this;
-
-      window.axios("".concat(this.data.prev_page_url)).then(function (response) {
-        _this4.employees = response.data.data;
-        _this4.data = response.data;
-        _this4.isLoading = false;
-      });
-    },
     newEmployeeForm: function newEmployeeForm() {
-      var _this5 = this;
+      var _this2 = this;
 
       this.showAddEmployeeForm = !this.showAddEmployeeForm;
 
@@ -3357,9 +3323,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
         Object.keys(this.employee).map(function (key) {
           if (key == "image") {
-            _this5.employee[key] = "no_image.png";
+            _this2.employee[key] = "no_image.png";
           } else {
-            _this5.employee[key] = "";
+            _this2.employee[key] = "";
           }
         });
       }
@@ -3372,34 +3338,34 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       }
     },
     addNewEmployee: function addNewEmployee() {
-      var _this6 = this;
+      var _this3 = this;
 
       this.isLoading = true;
       this.sectionError.basicInformation = false;
       this.sectionError.accountNumbers = false;
       window.axios.post("/employee/record/store", this.employee).then(function (response) {
         if (response.status === 201) {
-          _this6.isLoading = false;
-          _this6.errors = {};
+          _this3.isLoading = false;
+          _this3.errors = {};
           sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
             text: "Successfully add new employee.",
             icon: "success"
           });
 
-          _this6.employees.unshift(response.data);
+          _this3.employees.unshift(response.data);
         }
       })["catch"](function (error) {
-        _this6.isLoading = false;
-        _this6.errors = {};
+        _this3.isLoading = false;
+        _this3.errors = {};
 
-        _this6.sectionValidatorChecker(Object.keys(error.response.data.errors));
+        _this3.sectionValidatorChecker(Object.keys(error.response.data.errors));
 
         if (error.response.status === 422) {
           Object.keys(error.response.data.errors).map(function (field) {
             var _error$response$data$ = _slicedToArray(error.response.data.errors[field], 1),
                 fieldMessage = _error$response$data$[0];
 
-            _this6.errors[field] = fieldMessage;
+            _this3.errors[field] = fieldMessage;
           });
         }
       });
@@ -3408,114 +3374,114 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       this.fetchEmployeeData(employee.employee_id);
     },
     updateEmployee: function updateEmployee() {
-      var _this7 = this;
+      var _this4 = this;
 
       this.isLoading = true;
       this.sectionError.basicInformation = false;
       this.sectionError.accountNumbers = false;
       window.axios.put("/employee/record/".concat(this.employee.employee_id, "/update"), this.employee).then(function (response) {
         if (response.status === 200) {
-          _this7.isLoading = false;
+          _this4.isLoading = false;
           sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
             text: "Successfully update employee.",
             icon: "success"
           });
-          _this7.errors = {};
+          _this4.errors = {};
 
-          _this7.loadEmployees();
+          _this4.loadEmployees();
         }
       })["catch"](function (error) {
-        _this7.isLoading = false;
-        _this7.errors = {};
+        _this4.isLoading = false;
+        _this4.errors = {};
 
-        _this7.sectionValidatorChecker(Object.keys(error.response.data.errors)); // Check the error status code.
+        _this4.sectionValidatorChecker(Object.keys(error.response.data.errors)); // Check the error status code.
 
 
         if (error.response.status === 422) {
-          _this7.isLoading = false;
+          _this4.isLoading = false;
           Object.keys(error.response.data.errors).map(function (field) {
             var _error$response$data$2 = _slicedToArray(error.response.data.errors[field], 1),
                 fieldMessage = _error$response$data$2[0];
 
-            _this7.errors[field] = fieldMessage;
+            _this4.errors[field] = fieldMessage;
           });
         }
       });
     },
     fetchEmployeeData: function fetchEmployeeData(employee_id) {
-      var _this8 = this;
+      var _this5 = this;
 
       window.axios.get("/api/employee/find/".concat(employee_id)).then(function (response) {
         if (response.status == 200) {
-          _this8.errors = {};
+          _this5.errors = {};
           var dateYear = new Date().getFullYear();
           var age = dateYear - new Date(response.data.date_birth).getFullYear();
-          _this8.employee.age = age <= 100 ? age : "";
-          _this8.employee.employee_id = response.data.employee_id;
-          _this8.employee.lastName = response.data.lastname;
-          _this8.employee.firstName = response.data.firstname;
-          _this8.employee.middleName = response.data.middlename;
-          _this8.employee.extension = response.data.extension;
-          _this8.employee.pagibigMidNo = response.data.pag_ibig_no;
-          _this8.employee.dateOfBirth = response.data.date_birth;
-          _this8.employee.philhealthNo = response.data.philhealth_no;
-          _this8.employee.sssNo = response.data.sss_no;
-          _this8.employee.tinNo = response.data.tin_no;
-          _this8.employee.lbpAccountNo = response.data.lbp_account_no;
-          _this8.employee.dbpAccountNo = response.data.dbp_account_no;
-          _this8.employee.employmentStatus = response.data.status;
-          _this8.employee.gsisPolicyNo = response.data.gsis_policy_no;
-          _this8.employee.gsisBpNo = response.data.gsis_bp_no;
-          _this8.employee.gsisIdNo = response.data.gsis_id_no; // Checking if the user has position and office
+          _this5.employee.age = age <= 100 ? age : "";
+          _this5.employee.employee_id = response.data.employee_id;
+          _this5.employee.lastName = response.data.lastname;
+          _this5.employee.firstName = response.data.firstname;
+          _this5.employee.middleName = response.data.middlename;
+          _this5.employee.extension = response.data.extension;
+          _this5.employee.pagibigMidNo = response.data.pag_ibig_no;
+          _this5.employee.dateOfBirth = response.data.date_birth;
+          _this5.employee.philhealthNo = response.data.philhealth_no;
+          _this5.employee.sssNo = response.data.sss_no;
+          _this5.employee.tinNo = response.data.tin_no;
+          _this5.employee.lbpAccountNo = response.data.lbp_account_no;
+          _this5.employee.dbpAccountNo = response.data.dbp_account_no;
+          _this5.employee.employmentStatus = response.data.status;
+          _this5.employee.gsisPolicyNo = response.data.gsis_policy_no;
+          _this5.employee.gsisBpNo = response.data.gsis_bp_no;
+          _this5.employee.gsisIdNo = response.data.gsis_id_no; // Checking if the user has position and office
 
           if (response.data.information) {
-            _this8.employee.image = response.data.information.photo;
-            _this8.employee.officeAssignment = response.data.information.office.office_code;
+            _this5.employee.image = response.data.information.photo;
+            _this5.employee.officeAssignment = response.data.information.office.office_code;
             var hasPosition = response.data.information.hasOwnProperty("position");
             var hasOffice = response.data.information.hasOwnProperty("office");
 
             if (hasPosition) {
-              _this8.employee.designation = response.data.information.position;
+              _this5.employee.designation = response.data.information.position;
             }
 
             if (hasOffice) {
-              _this8.employee.officeAssignment = response.data.information.office;
+              _this5.employee.officeAssignment = response.data.information.office;
             }
 
             if (response.data.step) {
-              _this8.employee.basicRate = response.data.step.salary_amount_to;
-              _this8.employee.step = response.data.step.step_no_to;
+              _this5.employee.basicRate = response.data.step.salary_amount_to;
+              _this5.employee.step = response.data.step.step_no_to;
             }
           }
 
-          _this8.showAddEmployeeForm = true;
+          _this5.showAddEmployeeForm = true;
         }
       });
     },
     loadEmployees: function loadEmployees() {
-      var _this9 = this;
+      var _this6 = this;
 
       window.axios.get("/api/employee/employees").then(function (response) {
         if (response.status === 200) {
-          _this9.employees = response.data;
-          _this9.isComplete = true;
+          _this6.employees = response.data;
+          _this6.isComplete = true;
         }
       });
     }
   },
   created: function created() {
-    var _this10 = this;
+    var _this7 = this;
 
     window.axios.get("/api/employee/employment/status").then(function (response) {
       if (response.status === 200) {
-        _this10.employmentStatus = response.data;
+        _this7.employmentStatus = response.data;
       }
     })["catch"](function (err) {
       return console.log(err);
     });
     window.axios("/api/name/extensions").then(function (response) {
       if (response.status === 200) {
-        _this10.nameExtensions = response.data;
+        _this7.nameExtensions = response.data;
       }
     })["catch"](function (err) {
       return console.log(err);
@@ -4310,6 +4276,69 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4327,7 +4356,29 @@ __webpack_require__.r(__webpack_exports__);
     return {
       employees: [],
       employee: {},
-      showProfile: false
+      showProfile: false,
+      page: 1,
+      pageCount: 10,
+      itemsPerPage: 10,
+      search: "",
+      employee_id: "",
+      headers: [{
+        text: "Employee ID",
+        value: "employee_id"
+      }, {
+        text: "Fullname",
+        value: "fullname"
+      }, {
+        text: "Position",
+        value: "information.position.position_name"
+      }, {
+        text: "Office",
+        value: "information.office.office_name"
+      }, {
+        text: "Actions",
+        value: "actions",
+        sortable: false
+      }]
     };
   },
   components: {
@@ -4361,7 +4412,7 @@ __webpack_require__.r(__webpack_exports__);
 
     window.axios.get("/api/employee/employees").then(function (response) {
       if (response.status === 200) {
-        _this2.employees = response.data.data;
+        _this2.employees = response.data;
       }
     });
   }
@@ -38016,106 +38067,170 @@ var render = function() {
     _vm._v(" "),
     _c("br"),
     _vm._v(" "),
-    _c("div", [
-      !_vm.showProfile
-        ? _c("table", { staticClass: "table table-hover table-bordered" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.employees, function(employee, index) {
-                return _c("tr", { key: index }, [
-                  _c("td", [_vm._v(_vm._s(employee.employee_id))]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _vm._v(
-                      "\n            " +
-                        _vm._s(employee.fullname) +
-                        "\n          "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "text-center" }, [
-                    _vm._v(
-                      "\n            " +
-                        _vm._s(
-                          employee.information && employee.information.position
-                            ? employee.information.position.position_name
-                            : "N/A"
-                        ) +
-                        "\n          "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "text-center" }, [
-                    _vm._v(
-                      "\n            " +
-                        _vm._s(
-                          employee.information && employee.information.office
-                            ? employee.information.office.office_name
-                            : "N/A"
-                        ) +
-                        "\n          "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "text-center" }, [
-                    _c(
-                      "button",
+    _c(
+      "div",
+      [
+        !_vm.showProfile
+          ? _c(
+              "v-main",
+              [
+                _c("v-text-field", {
+                  attrs: {
+                    "append-icon": "mdi-magnify",
+                    label: "Search",
+                    "single-line": "",
+                    "hide-details": ""
+                  },
+                  model: {
+                    value: _vm.search,
+                    callback: function($$v) {
+                      _vm.search = $$v
+                    },
+                    expression: "search"
+                  }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-1" }),
+                _vm._v(" "),
+                _c("v-data-table", {
+                  attrs: {
+                    loading: "",
+                    "loading-text": "Processing...",
+                    headers: _vm.headers,
+                    items: _vm.employees,
+                    search: _vm.search,
+                    "multi-sort": "",
+                    page: _vm.page,
+                    "items-per-page": _vm.itemsPerPage,
+                    "hide-default-footer": ""
+                  },
+                  on: {
+                    "update:page": function($event) {
+                      _vm.page = $event
+                    },
+                    "page-count": function($event) {
+                      _vm.pageCount = $event
+                    }
+                  },
+                  scopedSlots: _vm._u(
+                    [
                       {
-                        staticClass:
-                          "btn btn-info btn-sm rounded-circle shadow text-white mr-2",
-                        attrs: {
-                          title:
-                            "View Information of " +
-                            employee.lastname +
-                            " , " +
-                            employee.firstname +
-                            " " +
-                            employee.middlename +
-                            " " +
-                            employee.extension
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.fetchInformation(employee.employee_id)
-                          }
+                        key: "item.actions",
+                        fn: function(ref) {
+                          var item = ref.item
+                          return [
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "btn btn-info btn-sm rounded-circle shadow text-white mr-2",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.fetchInformation(
+                                      item.employee_id
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fas fa-eye font-weight-bold"
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "a",
+                              {
+                                staticClass:
+                                  "btn btn-primary btn-sm rounded-circle shadow text-white mr-2",
+                                attrs: {
+                                  href:
+                                    "/employee/create/" +
+                                    item.employee_id +
+                                    "/personal/data/sheet"
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fas fa-plus font-weight-bold"
+                                })
+                              ]
+                            )
+                          ]
                         }
-                      },
-                      [_c("i", { staticClass: "fas fa-eye font-weight-bold" })]
-                    ),
-                    _vm._v(" "),
+                      }
+                    ],
+                    null,
+                    false,
+                    3210582753
+                  )
+                }),
+                _vm._v(" "),
+                _c(
+                  "v-container",
+                  [
                     _c(
-                      "a",
-                      {
-                        staticClass:
-                          "btn btn-primary btn-sm rounded-circle shadow text-white mr-2",
-                        attrs: {
-                          href:
-                            "/employee/create/" +
-                            employee.employee_id +
-                            "/personal/data/sheet",
-                          title:
-                            "Generate PDS for  " +
-                            employee.lastname +
-                            " , " +
-                            employee.firstname +
-                            " " +
-                            employee.middlename +
-                            " " +
-                            employee.extension
-                        }
-                      },
-                      [_c("i", { staticClass: "fas fa-plus font-weight-bold" })]
+                      "v-row",
+                      { staticClass: "mb-6", attrs: { "no-gutters": "" } },
+                      [
+                        _c(
+                          "v-col",
+                          [
+                            _vm.employees.length !== 0
+                              ? _c("v-text-field", {
+                                  attrs: {
+                                    value: _vm.itemsPerPage,
+                                    label: "Items per page",
+                                    type: "number",
+                                    min: "-1",
+                                    max: "15"
+                                  },
+                                  on: {
+                                    input: function($event) {
+                                      _vm.itemsPerPage = parseInt($event, 10)
+                                    }
+                                  }
+                                })
+                              : _vm._e()
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "v-col",
+                          [
+                            _vm.employees.length !== 0
+                              ? _c("v-pagination", {
+                                  attrs: {
+                                    length: _vm.pageCount ? _vm.pageCount : 10,
+                                    "total-visible": 7
+                                  },
+                                  model: {
+                                    value: _vm.page,
+                                    callback: function($$v) {
+                                      _vm.page = $$v
+                                    },
+                                    expression: "page"
+                                  }
+                                })
+                              : _vm._e()
+                          ],
+                          1
+                        )
+                      ],
+                      1
                     )
-                  ])
-                ])
-              }),
-              0
+                  ],
+                  1
+                )
+              ],
+              1
             )
-          ])
-        : _vm._e()
-    ]),
+          : _vm._e()
+      ],
+      1
+    ),
     _vm._v(" "),
     _vm.showProfile
       ? _c("div", { attrs: { id: "emp__profile" } }, [
@@ -38317,30 +38432,6 @@ var staticRenderFns = [
         },
         [_vm._v("PDS for new employee")]
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Employee ID")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Fullname")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
-          _vm._v("Position")
-        ]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
-          _vm._v("Office")
-        ]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
-          _vm._v("Actions")
-        ])
-      ])
     ])
   }
 ]

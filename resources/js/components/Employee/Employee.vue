@@ -157,12 +157,6 @@ export default {
       itemsPerPage: 10,
       search: "",
       employee_id: "",
-      firstname: "",
-      middlename: "",
-      lastname: "",
-      name_extension: "",
-      position: "",
-      office: "",
       headers: [
         {
           text: "Employee ID",
@@ -285,28 +279,6 @@ export default {
           this.sectionError.accountNumbers = true;
           return true;
         }
-      });
-    },
-    fetch(page) {
-      this.isLoading = true;
-      window.axios(`/api/employee/employees?page=${page}`).then((response) => {
-        this.employees = response.data.data;
-        this.data = response.data;
-        this.isLoading = false;
-      });
-    },
-    nextPage() {
-      window.axios(`${this.data.next_page_url}`).then((response) => {
-        this.employees = response.data.data;
-        this.data = response.data;
-        this.isLoading = false;
-      });
-    },
-    prevPage() {
-      window.axios(`${this.data.prev_page_url}`).then((response) => {
-        this.employees = response.data.data;
-        this.data = response.data;
-        this.isLoading = false;
       });
     },
     newEmployeeForm() {

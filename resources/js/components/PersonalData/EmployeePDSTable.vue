@@ -19,7 +19,7 @@
     <div class="clearfix"></div>
     <br />
     <div>
-      <table class="table table-hover table-bordered" v-if="!showProfile">
+      <!-- <table class="table table-hover table-bordered" v-if="!showProfile">
         <thead>
           <tr>
             <th scope="col">Employee ID</th>
@@ -68,7 +68,70 @@
             </td>
           </tr>
         </tbody>
-      </table>
+      </table> -->
+      <v-main v-if="!showProfile">
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+        >
+        </v-text-field>
+
+        <div class="mt-1"></div>
+        <v-data-table
+          loading
+          loading-text="Processing..."
+          :headers="headers"
+          :items="employees"
+          :search="search"
+          multi-sort
+          :page.sync="page"
+          :items-per-page="itemsPerPage"
+          @page-count="pageCount = $event"
+          hide-default-footer
+        >
+          <template v-slot:item.actions="{ item }">
+            <button
+              @click="fetchInformation(item.employee_id)"
+              class="btn btn-info btn-sm rounded-circle shadow text-white mr-2"
+            >
+              <i class="fas fa-eye font-weight-bold"></i>
+            </button>
+
+            <a
+              :href="`/employee/create/${item.employee_id}/personal/data/sheet`"
+              class="btn btn-primary btn-sm rounded-circle shadow text-white mr-2"
+            >
+              <i class="fas fa-plus font-weight-bold"></i>
+            </a>
+          </template>
+        </v-data-table>
+        <v-container>
+          <v-row class="mb-6" no-gutters>
+            <v-col>
+              <v-text-field
+                v-if="employees.length !== 0"
+                :value="itemsPerPage"
+                label="Items per page"
+                type="number"
+                min="-1"
+                max="15"
+                @input="itemsPerPage = parseInt($event, 10)"
+              ></v-text-field>
+            </v-col>
+            <v-col>
+              <v-pagination
+                v-if="employees.length !== 0"
+                v-model="page"
+                :length="pageCount ? pageCount : 10"
+                :total-visible="7"
+              ></v-pagination>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-main>
     </div>
 
     <div id="emp__profile" v-if="showProfile">
@@ -196,6 +259,34 @@ export default {
       employees: [],
       employee: {},
       showProfile: false,
+      page: 1,
+      pageCount: 10,
+      itemsPerPage: 10,
+      search: "",
+      employee_id: "",
+      headers: [
+        {
+          text: "Employee ID",
+          value: "employee_id",
+        },
+        {
+          text: "Fullname",
+          value: "fullname",
+        },
+        {
+          text: "Position",
+          value: "information.position.position_name",
+        },
+        {
+          text: "Office",
+          value: "information.office.office_name",
+        },
+        {
+          text: "Actions",
+          value: "actions",
+          sortable: false,
+        },
+      ],
     };
   },
   components: {
@@ -225,7 +316,7 @@ export default {
   created() {
     window.axios.get(`/api/employee/employees`).then((response) => {
       if (response.status === 200) {
-        this.employees = response.data.data;
+        this.employees = response.data;
       }
     });
   },

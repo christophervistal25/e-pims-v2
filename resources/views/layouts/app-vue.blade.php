@@ -50,7 +50,7 @@
 </head>
 {{-- mini-sidebar --}}
 
-<body class="">
+<body class="mini-sidebar">
     <div id="loader-wrapper">
         <div id="loader">
             <div class="loader-ellips">
