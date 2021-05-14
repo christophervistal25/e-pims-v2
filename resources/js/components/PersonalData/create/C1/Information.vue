@@ -809,7 +809,7 @@
   </div>
 </template>
 <script>
-import NameExtensionModal from "./NameExtensionModal";
+import NameExtensionModal from "./NameExtensionModal.vue";
 
 import "vue-select/dist/vue-select.css";
 import _ from "lodash";

@@ -6408,6 +6408,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SpouseNameExtensionModal_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SpouseNameExtensionModal.vue */ "./resources/js/components/PersonalData/create/C1/SpouseNameExtensionModal.vue");
+/* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-select/dist/vue-select.css */ "./node_modules/vue-select/dist/vue-select.css");
+/* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _FatherNameExtensionModal_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./FatherNameExtensionModal.vue */ "./resources/js/components/PersonalData/create/C1/FatherNameExtensionModal.vue");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -6928,14 +6932,59 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    SpouseNameExtensionModal: _SpouseNameExtensionModal_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    FatherNameExtensionModal: _FatherNameExtensionModal_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
   props: {
     show_panel: {
+      required: true
+    },
+    showspousenameextension: {
+      required: true
+    },
+    showfathernameextension: {
+      required: true
+    },
+    data: {
       required: true
     }
   },
   data: function data() {
     return {
+      isShow: false,
+      isShowSpouseNameExtension: false,
+      isShowFatherNameExtension: false,
       isLoading: false,
       isComplete: false,
       hasSpouse: false,
@@ -7011,6 +7060,26 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           });
         }
       });
+    },
+    openSpouseNameExtensionModal: function openSpouseNameExtensionModal() {
+      this.isShowSpouseNameExtension = true;
+    },
+    closeSpouseNameExtensionModal: function closeSpouseNameExtensionModal(newExtension) {
+      if (newExtension) {
+        this.nameExtensions.push(newExtension.extension);
+      }
+
+      this.isShowSpouseNameExtension = false;
+    },
+    openFatherNameExtensionModal: function openFatherNameExtensionModal() {
+      this.isShowFatherNameExtension = true;
+    },
+    closeFatherNameExtensionModal: function closeFatherNameExtensionModal(newExtension) {
+      if (newExtension) {
+        this.nameExtensions.push(newExtension.extension);
+      }
+
+      this.isShowFatherNameExtension = false;
     }
   },
   created: function created() {
@@ -7029,6 +7098,141 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/create/C1/FatherNameExtensionModal.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PersonalData/create/C1/FatherNameExtensionModal.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["showfathernameextension"],
+  data: function data() {
+    return {
+      isLoading: false,
+      data: {
+        extension: ""
+      },
+      errors: {}
+    };
+  },
+  methods: {
+    submitNewNameExt: function submitNewNameExt() {
+      var _this = this;
+
+      this.isLoading = true;
+      window.axios.post("/api/name/extensions/store", this.data).then(function (response) {
+        if (response.staus === 201) {
+          _this.isLoading = false;
+          sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
+            text: "Successfully create a new name extension",
+            icon: "success"
+          });
+
+          _this.$emit("fatherext-modal-dismiss", response.data);
+        }
+      })["catch"](function (error) {
+        _this.isLoading = false;
+        _this.errors = {};
+
+        if (error.response.status === 422) {
+          _this.erros = error.response.data;
+        }
+      });
+    },
+    dismissModal: function dismissModal() {
+      this.$emit("fatherext-modal-dismiss");
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/create/C1/Information.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PersonalData/create/C1/Information.vue?vue&type=script&lang=js& ***!
@@ -7038,7 +7242,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _NameExtensionModal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NameExtensionModal */ "./resources/js/components/PersonalData/create/C1/NameExtensionModal.vue");
+/* harmony import */ var _NameExtensionModal_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NameExtensionModal.vue */ "./resources/js/components/PersonalData/create/C1/NameExtensionModal.vue");
 /* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-select/dist/vue-select.css */ "./node_modules/vue-select/dist/vue-select.css");
 /* harmony import */ var vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_select_dist_vue_select_css__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
@@ -7870,7 +8074,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    NameExtensionModal: _NameExtensionModal__WEBPACK_IMPORTED_MODULE_0__["default"]
+    NameExtensionModal: _NameExtensionModal_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: ["data", "nameExtensions"],
   data: function data() {
@@ -8210,6 +8414,141 @@ __webpack_require__.r(__webpack_exports__);
     },
     dismissModal: function dismissModal() {
       this.$emit("nameext-modal-dismiss");
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/create/C1/SpouseNameExtensionModal.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PersonalData/create/C1/SpouseNameExtensionModal.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["showspousenameextension"],
+  data: function data() {
+    return {
+      isLoading: false,
+      data: {
+        extension: ""
+      },
+      errors: {}
+    };
+  },
+  methods: {
+    submitNewNameExt: function submitNewNameExt() {
+      var _this = this;
+
+      this.isLoading = true;
+      window.axios.post("/api/name/extensions/store", this.data).then(function (response) {
+        if (response.staus === 201) {
+          _this.isLoading = false;
+          sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
+            text: "Successfully create a new name extension",
+            icon: "success"
+          });
+
+          _this.$emit("spousenameext-modal-dismiss", response.data);
+        }
+      })["catch"](function (error) {
+        _this.isLoading = false;
+        _this.errors = {};
+
+        if (error.response.status === 422) {
+          _this.erros = error.response.data;
+        }
+      });
+    },
+    dismissModal: function dismissModal() {
+      this.$emit("spousenameext-modal-dismiss");
     }
   }
 });
@@ -42131,1182 +42470,1237 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "card" }, [
-      _c(
-        "div",
-        {
-          staticClass: "card-header",
-          style: _vm.isComplete ? "cursor : pointer;" : "",
-          attrs: {
-            "data-target": _vm.isComplete ? "#familyBackground" : "",
-            "data-toggle": _vm.isComplete ? "collapse" : ""
-          }
-        },
-        [
-          _c("h5", { staticClass: "mb-0 p-3" }, [
-            _vm.isComplete
-              ? _c("i", { staticClass: "fa fa-check text-success" })
-              : _vm._e(),
-            _vm._v("\n        FAMILY BACKGROUND\n        "),
-            _vm.isComplete
-              ? _c("i", {
-                  staticClass: "text-success float-right fa fa-caret-down",
-                  attrs: { "aria-hidden": "true" }
-                })
-              : _vm._e()
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "collapse",
-          class: _vm.show_panel && !_vm.isComplete ? "show" : "",
-          attrs: { id: _vm.isComplete ? "familyBackground" : "" }
-        },
-        [
-          _c("div", { staticClass: "form-group mt-4" }, [
-            _c(
-              "label",
-              {
-                staticClass: "text-lg",
-                staticStyle: { transform: "scale(0.8)" },
-                attrs: { for: "spouse" }
-              },
-              [
-                _c("input", {
-                  attrs: { id: "spouse", type: "checkbox" },
-                  on: {
-                    click: function($event) {
-                      _vm.hasSpouse = !_vm.hasSpouse
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "card" }, [
+        _c(
+          "div",
+          {
+            staticClass: "card-header",
+            style: _vm.isComplete ? "cursor : pointer;" : "",
+            attrs: {
+              "data-target": _vm.isComplete ? "#familyBackground" : "",
+              "data-toggle": _vm.isComplete ? "collapse" : ""
+            }
+          },
+          [
+            _c("h5", { staticClass: "mb-0 p-3" }, [
+              _vm.isComplete
+                ? _c("i", { staticClass: "fa fa-check text-success" })
+                : _vm._e(),
+              _vm._v("\n        FAMILY BACKGROUND\n        "),
+              _vm.isComplete
+                ? _c("i", {
+                    staticClass: "text-success float-right fa fa-caret-down",
+                    attrs: { "aria-hidden": "true" }
+                  })
+                : _vm._e()
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "collapse",
+            class: _vm.show_panel && !_vm.isComplete ? "show" : "",
+            attrs: { id: _vm.isComplete ? "familyBackground" : "" }
+          },
+          [
+            _c("div", { staticClass: "form-group mt-4" }, [
+              _c(
+                "label",
+                {
+                  staticClass: "text-lg",
+                  staticStyle: { transform: "scale(0.8)" },
+                  attrs: { for: "spouse" }
+                },
+                [
+                  _c("input", {
+                    attrs: { id: "spouse", type: "checkbox" },
+                    on: {
+                      click: function($event) {
+                        _vm.hasSpouse = !_vm.hasSpouse
+                      }
                     }
-                  }
-                }),
-                _vm._v(
-                  "\n          Do you have spouse? If YES, kindly tick the checkbox.\n        "
-                )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _vm.hasSpouse
-            ? _c("section", [
-                _vm._m(0),
-                _vm._v(" "),
-                _c("div", { staticClass: "row pr-3 pl-3" }, [
-                  _c("div", { staticClass: "col-lg-3" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-group has-float-label mb-0",
-                        attrs: { for: "ssurname" }
-                      },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.familyBackground.ssurname,
-                              expression: "familyBackground.ssurname"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          class: _vm.errors.hasOwnProperty("ssurname")
-                            ? "is-invalid"
-                            : "",
-                          staticStyle: {
-                            "text-transform": "uppercase",
-                            outline: "none",
-                            "box-shadow": "0px 0px 0px transparent"
-                          },
-                          attrs: {
-                            type: "text",
-                            id: "ssurname",
-                            placeholder: "Enter Spouse's Surname",
-                            value: ""
-                          },
-                          domProps: { value: _vm.familyBackground.ssurname },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.familyBackground,
-                                "ssurname",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm._m(1)
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "text-danger text-sm" }, [
-                      _vm._v(
-                        "\n              " +
-                          _vm._s(_vm.errors.ssurname) +
-                          "\n            "
-                      )
-                    ])
-                  ]),
+                  }),
+                  _vm._v(
+                    "\n          Do you have spouse? If YES, kindly tick the checkbox.\n        "
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _vm.hasSpouse
+              ? _c("section", [
+                  _vm._m(0),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-lg-3" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-group has-float-label mb-0",
-                        attrs: { for: "sfirstname" }
-                      },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.familyBackground.sfirstname,
-                              expression: "familyBackground.sfirstname"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          class: _vm.errors.hasOwnProperty("sfirstname")
-                            ? "is-invalid"
-                            : "",
-                          staticStyle: {
-                            "text-transform": "uppercase",
-                            outline: "none",
-                            "box-shadow": "0px 0px 0px transparent"
-                          },
-                          attrs: {
-                            type: "text",
-                            id: "sfirstname",
-                            placeholder: "Enter Spouse's First Name",
-                            value: ""
-                          },
-                          domProps: { value: _vm.familyBackground.sfirstname },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.familyBackground,
-                                "sfirstname",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm._m(2)
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "text-danger text-sm" }, [
-                      _vm._v(
-                        "\n              " +
-                          _vm._s(_vm.errors.sfirstname) +
-                          "\n            "
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-lg-3" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-group has-float-label",
-                        attrs: { for: "smiddleame" }
-                      },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.familyBackground.smiddleame,
-                              expression: "familyBackground.smiddleame"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          staticStyle: {
-                            "text-transform": "uppercase",
-                            outline: "none",
-                            "box-shadow": "0px 0px 0px transparent"
-                          },
-                          attrs: {
-                            type: "text",
-                            id: "smiddleame",
-                            placeholder: "Enter Spouse's Middle Name",
-                            value: ""
-                          },
-                          domProps: { value: _vm.familyBackground.smiddleame },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.familyBackground,
-                                "smiddleame",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("span", [_vm._v("Middle Name")])
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-lg-3" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-group has-float-label mb-0",
-                        attrs: { for: "snameexten" }
-                      },
-                      [
-                        _c(
-                          "select",
-                          {
+                  _c("div", { staticClass: "row pr-3 pl-3" }, [
+                    _c("div", { staticClass: "col-lg-3" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-group has-float-label mb-0",
+                          attrs: { for: "ssurname" }
+                        },
+                        [
+                          _c("input", {
                             directives: [
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.familyBackground.snameexten,
-                                expression: "familyBackground.snameexten"
+                                value: _vm.familyBackground.ssurname,
+                                expression: "familyBackground.ssurname"
                               }
                             ],
-                            staticClass: "form-control custom-select",
-                            class: !_vm.errors.hasOwnProperty("snameexten")
-                              ? ""
-                              : "is-invalid",
+                            staticClass: "form-control",
+                            class: _vm.errors.hasOwnProperty("ssurname")
+                              ? "is-invalid"
+                              : "",
+                            staticStyle: {
+                              "text-transform": "uppercase",
+                              outline: "none",
+                              "box-shadow": "0px 0px 0px transparent"
+                            },
+                            attrs: {
+                              type: "text",
+                              id: "ssurname",
+                              placeholder: "Enter Spouse's Surname",
+                              value: ""
+                            },
+                            domProps: { value: _vm.familyBackground.ssurname },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.familyBackground,
+                                  "ssurname",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm._m(1)
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "text-danger text-sm" }, [
+                        _vm._v(
+                          "\n              " +
+                            _vm._s(_vm.errors.ssurname) +
+                            "\n            "
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-3" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-group has-float-label mb-0",
+                          attrs: { for: "sfirstname" }
+                        },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.familyBackground.sfirstname,
+                                expression: "familyBackground.sfirstname"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: _vm.errors.hasOwnProperty("sfirstname")
+                              ? "is-invalid"
+                              : "",
+                            staticStyle: {
+                              "text-transform": "uppercase",
+                              outline: "none",
+                              "box-shadow": "0px 0px 0px transparent"
+                            },
+                            attrs: {
+                              type: "text",
+                              id: "sfirstname",
+                              placeholder: "Enter Spouse's First Name",
+                              value: ""
+                            },
+                            domProps: {
+                              value: _vm.familyBackground.sfirstname
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.familyBackground,
+                                  "sfirstname",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm._m(2)
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "text-danger text-sm" }, [
+                        _vm._v(
+                          "\n              " +
+                            _vm._s(_vm.errors.sfirstname) +
+                            "\n            "
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-3" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-group has-float-label",
+                          attrs: { for: "smiddleame" }
+                        },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.familyBackground.smiddleame,
+                                expression: "familyBackground.smiddleame"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            staticStyle: {
+                              "text-transform": "uppercase",
+                              outline: "none",
+                              "box-shadow": "0px 0px 0px transparent"
+                            },
+                            attrs: {
+                              type: "text",
+                              id: "smiddleame",
+                              placeholder: "Enter Spouse's Middle Name",
+                              value: ""
+                            },
+                            domProps: {
+                              value: _vm.familyBackground.smiddleame
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.familyBackground,
+                                  "smiddleame",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("span", [_vm._v("Middle Name")])
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-2" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-group has-float-label mb-0",
+                          attrs: { for: "snameexten" }
+                        },
+                        [
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.familyBackground.snameexten,
+                                  expression: "familyBackground.snameexten"
+                                }
+                              ],
+                              staticClass: "form-control custom-select",
+                              class: !_vm.errors.hasOwnProperty("snameexten")
+                                ? ""
+                                : "is-invalid",
+                              staticStyle: {
+                                outline: "none",
+                                "box-shadow": "0px 0px 0px transparent"
+                              },
+                              attrs: { type: "text", id: "snameexten" },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.familyBackground,
+                                    "snameexten",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c(
+                                "option",
+                                {
+                                  attrs: {
+                                    value: "",
+                                    readonly: "",
+                                    selected: ""
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                  Please Select Extension Name\n                "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "option",
+                                {
+                                  attrs: { value: "JR" },
+                                  domProps: {
+                                    selected:
+                                      _vm.familyBackground.snameexten === "JR"
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                  JR\n                "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "option",
+                                {
+                                  attrs: { value: "SR" },
+                                  domProps: {
+                                    selected:
+                                      _vm.familyBackground.snameexten === "SR"
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                  SR\n                "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "option",
+                                {
+                                  attrs: { value: "III" },
+                                  domProps: {
+                                    selected:
+                                      _vm.familyBackground.nameExtension ===
+                                      "III"
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                  III\n                "
+                                  )
+                                ]
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("span", [_vm._v("EXTENSION NAME")])
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-1" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass:
+                            "btn btn-info rounded-circle btn-sm shadow mt-1",
+                          on: { click: _vm.openSpouseNameExtensionModal }
+                        },
+                        [_c("i", { staticClass: "fas fa-plus text-sm" })]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row pl-3 pr-3" }, [
+                    _c("div", { staticClass: "col-lg-6" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-group has-float-label",
+                          attrs: { for: "soccupation" }
+                        },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.familyBackground.soccupation,
+                                expression: "familyBackground.soccupation"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            staticStyle: {
+                              "text-transform": "uppercase",
+                              outline: "none",
+                              "box-shadow": "0px 0px 0px transparent"
+                            },
+                            attrs: {
+                              type: "text",
+                              id: "soccupation",
+                              placeholder: "Enter Spouse's Occupation"
+                            },
+                            domProps: {
+                              value: _vm.familyBackground.soccupation
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.familyBackground,
+                                  "soccupation",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("span", [_vm._v("Occupation")])
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-6" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-group has-float-label",
+                          attrs: { for: "sempname" }
+                        },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.familyBackground.sempname,
+                                expression: "familyBackground.sempname"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            staticStyle: {
+                              "text-transform": "uppercase",
+                              outline: "none",
+                              "box-shadow": "0px 0px 0px transparent"
+                            },
+                            attrs: {
+                              type: "text",
+                              id: "sempname",
+                              placeholder:
+                                "Enter Spouse's Employer/Business Name"
+                            },
+                            domProps: { value: _vm.familyBackground.sempname },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.familyBackground,
+                                  "sempname",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("span", [_vm._v("Employer/Business Name")])
+                        ]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row pl-3 pr-3" }, [
+                    _c("div", { staticClass: "col-sm-6" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-group has-float-label",
+                          attrs: { for: "sbusadd" }
+                        },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.familyBackground.sbusadd,
+                                expression: "familyBackground.sbusadd"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            staticStyle: {
+                              "text-transform": "uppercase",
+                              outline: "none",
+                              "box-shadow": "0px 0px 0px transparent"
+                            },
+                            attrs: {
+                              type: "text",
+                              id: "sbusadd",
+                              placeholder: "Enter Spouse's Business Address"
+                            },
+                            domProps: { value: _vm.familyBackground.sbusadd },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.familyBackground,
+                                  "sbusadd",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("span", [_vm._v("Business Address")])
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm-6" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "form-group has-float-label",
+                          attrs: { for: "stelno" }
+                        },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.familyBackground.stelno,
+                                expression: "familyBackground.stelno"
+                              }
+                            ],
+                            staticClass: "form-control",
                             staticStyle: {
                               outline: "none",
                               "box-shadow": "0px 0px 0px transparent"
                             },
-                            attrs: { type: "text", id: "snameexten" },
+                            attrs: {
+                              type: "text",
+                              id: "stelno",
+                              placeholder: "Enter Spouse's Telephone Number"
+                            },
+                            domProps: { value: _vm.familyBackground.stelno },
                             on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
                                 _vm.$set(
                                   _vm.familyBackground,
-                                  "snameexten",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
+                                  "stelno",
+                                  $event.target.value
                                 )
                               }
                             }
+                          }),
+                          _vm._v(" "),
+                          _c("span", [_vm._v("Telephone Number")])
+                        ]
+                      )
+                    ])
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm._m(3),
+            _vm._v(" "),
+            _c("div", { staticClass: "p-2" }, [
+              _c("table", { staticClass: "table table-bordered" }, [
+                _vm._m(4),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.spouse, function(spouse, index) {
+                    return _c("tr", { key: index }, [
+                      _c("td", [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: spouse.cname,
+                              expression: "spouse.cname"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          staticStyle: { "text-transform": "uppercase" },
+                          attrs: {
+                            type: "text",
+                            id: "cname",
+                            placeholder: "Enter Full Name of Children"
                           },
+                          domProps: { value: spouse.cname },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(spouse, "cname", $event.target.value)
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "align-middle" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: spouse.cdateOfBirth,
+                              expression: "spouse.cdateOfBirth"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: _vm.errors.hasOwnProperty(
+                            "spouse." + index + ".cdateOfBirth"
+                          )
+                            ? "is-invalid"
+                            : "",
+                          attrs: {
+                            type: "date",
+                            id: "cdateOfBirth",
+                            placeholder: "Enter Spouse's Business Address"
+                          },
+                          domProps: { value: spouse.cdateOfBirth },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                spouse,
+                                "cdateOfBirth",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "text-right" }, [
+                          _c("span", { staticClass: "text-danger text-xs" }, [
+                            _vm._v(
+                              _vm._s(
+                                _vm.errors["spouse." + index + ".cdateOfBirth"]
+                              )
+                            )
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-center" }, [
+                        _c(
+                          "button",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: index != 0,
+                                expression: "index != 0"
+                              }
+                            ],
+                            staticClass:
+                              "btn btn-danger font-weight-bold rounded-circle",
+                            on: {
+                              click: function($event) {
+                                return _vm.removeField(index)
+                              }
+                            }
+                          },
+                          [_vm._v("\n                  X\n                ")]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-center" }, [
+                        index == _vm.noOfSpouseFields - 1
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-primary rounded-circle",
+                                on: { click: _vm.generateNewSpuseField }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                  +\n                "
+                                )
+                              ]
+                            )
+                          : _vm._e()
+                      ])
+                    ])
+                  }),
+                  0
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(5),
+            _vm._v(" "),
+            _c("div", { staticClass: "row pr-3 pl-3" }, [
+              _c("div", { staticClass: "col-lg-3" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "form-group has-float-label mb-0",
+                    attrs: { for: "fsurname" }
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.familyBackground.fsurname,
+                          expression: "familyBackground.fsurname"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: !_vm.errors.hasOwnProperty("fsurname")
+                        ? ""
+                        : "is-invalid",
+                      staticStyle: {
+                        "text-transform": "uppercase",
+                        outline: "none",
+                        "box-shadow": "0px 0px 0px transparent"
+                      },
+                      attrs: {
+                        type: "text",
+                        id: "fsurname",
+                        placeholder: "Enter Father's Surname",
+                        value: ""
+                      },
+                      domProps: { value: _vm.familyBackground.fsurname },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.familyBackground,
+                            "fsurname",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm._m(6)
+                  ]
+                ),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-danger text-sm" }, [
+                  _vm._v(_vm._s(_vm.errors.fsurname))
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-3" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "form-group has-float-label mb-0",
+                    attrs: { for: "ffirstname" }
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.familyBackground.ffirstname,
+                          expression: "familyBackground.ffirstname"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: !_vm.errors.hasOwnProperty("ffirstname")
+                        ? ""
+                        : "is-invalid",
+                      staticStyle: {
+                        "text-transform": "uppercase",
+                        outline: "none",
+                        "box-shadow": "0px 0px 0px transparent"
+                      },
+                      attrs: {
+                        type: "text",
+                        id: "ffirstname",
+                        placeholder: "Enter Father's First Name",
+                        value: ""
+                      },
+                      domProps: { value: _vm.familyBackground.ffirstname },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.familyBackground,
+                            "ffirstname",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm._m(7)
+                  ]
+                ),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-danger text-sm" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.errors.ffirstname) +
+                      "\n          "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-3" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "form-group has-float-label",
+                    attrs: { for: "fmiddlename" }
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.familyBackground.fmiddlename,
+                          expression: "familyBackground.fmiddlename"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: !_vm.errors.hasOwnProperty("fmiddlename")
+                        ? ""
+                        : "is-invalid",
+                      staticStyle: {
+                        "text-transform": "uppercase",
+                        outline: "none",
+                        "box-shadow": "0px 0px 0px transparent"
+                      },
+                      attrs: {
+                        type: "text",
+                        id: "fmiddlename",
+                        placeholder: "Enter Father's Middle Name",
+                        value: ""
+                      },
+                      domProps: { value: _vm.familyBackground.fmiddlename },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.familyBackground,
+                            "fmiddlename",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", [_vm._v("Middle Name")])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-danger text-sm" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.errors.fmiddlename) +
+                      "\n          "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-2" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "form-group has-float-label mb-0",
+                    attrs: { for: "snameexten" }
+                  },
+                  [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.familyBackground.snameexten,
+                            expression: "familyBackground.snameexten"
+                          }
+                        ],
+                        staticClass: "form-control custom-select",
+                        class: !_vm.errors.hasOwnProperty("snameexten")
+                          ? ""
+                          : "is-invalid",
+                        staticStyle: {
+                          outline: "none",
+                          "box-shadow": "0px 0px 0px transparent"
+                        },
+                        attrs: { type: "text", id: "snameexten" },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.familyBackground,
+                              "snameexten",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "option",
+                          { attrs: { value: "", readonly: "", selected: "" } },
                           [
-                            _c(
-                              "option",
-                              {
-                                attrs: { value: "", readonly: "", selected: "" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                  Please Select Extension Name\n                "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "option",
-                              {
-                                attrs: { value: "JR" },
-                                domProps: {
-                                  selected:
-                                    _vm.familyBackground.snameexten === "JR"
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                  JR\n                "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "option",
-                              {
-                                attrs: { value: "SR" },
-                                domProps: {
-                                  selected:
-                                    _vm.familyBackground.snameexten === "SR"
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                  SR\n                "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "option",
-                              {
-                                attrs: { value: "III" },
-                                domProps: {
-                                  selected:
-                                    _vm.familyBackground.nameExtension === "III"
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                  III\n                "
-                                )
-                              ]
+                            _vm._v(
+                              "\n                Please Select Extension Name\n              "
                             )
                           ]
                         ),
                         _vm._v(" "),
-                        _c("span", [_vm._v("EXTENSION NAME")])
+                        _c(
+                          "option",
+                          {
+                            attrs: { value: "JR" },
+                            domProps: {
+                              selected: _vm.familyBackground.snameexten === "JR"
+                            }
+                          },
+                          [_vm._v("\n                JR\n              ")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "option",
+                          {
+                            attrs: { value: "SR" },
+                            domProps: {
+                              selected: _vm.familyBackground.snameexten === "SR"
+                            }
+                          },
+                          [_vm._v("\n                SR\n              ")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "option",
+                          {
+                            attrs: { value: "III" },
+                            domProps: {
+                              selected:
+                                _vm.familyBackground.nameExtension === "III"
+                            }
+                          },
+                          [_vm._v("\n                III\n              ")]
+                        )
                       ]
-                    )
-                  ])
-                ]),
+                    ),
+                    _vm._v(" "),
+                    _c("span", [_vm._v("EXTENSION NAME")])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-1" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn btn-info rounded-circle btn-sm shadow mt-1",
+                    on: { click: _vm.openFatherNameExtensionModal }
+                  },
+                  [_c("i", { staticClass: "fas fa-plus text-sm" })]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(8),
+            _vm._v(" "),
+            _c("div", { staticClass: "row pr-3 pl-3" }, [
+              _c("div", { staticClass: "col-lg-3" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "form-group has-float-label mb-0",
+                    attrs: { for: "msurname" }
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.familyBackground.msurname,
+                          expression: "familyBackground.msurname"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: !_vm.errors.hasOwnProperty("msurname")
+                        ? ""
+                        : "is-invalid",
+                      staticStyle: {
+                        "text-transform": "uppercase",
+                        outline: "none",
+                        "box-shadow": "0px 0px 0px transparent"
+                      },
+                      attrs: {
+                        type: "text",
+                        id: "msurname",
+                        placeholder: "Enter Mother's Maiden Surname",
+                        value: ""
+                      },
+                      domProps: { value: _vm.familyBackground.msurname },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.familyBackground,
+                            "msurname",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm._m(9)
+                  ]
+                ),
                 _vm._v(" "),
-                _c("div", { staticClass: "row pl-3 pr-3" }, [
-                  _c("div", { staticClass: "col-lg-6" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-group has-float-label",
-                        attrs: { for: "soccupation" }
+                _c("p", { staticClass: "text-danger text-sm" }, [
+                  _vm._v(_vm._s(_vm.errors.msurname))
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-3" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "form-group has-float-label",
+                    attrs: { for: "mfirstname" }
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.familyBackground.mfirstname,
+                          expression: "familyBackground.mfirstname"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: !_vm.errors.hasOwnProperty("mfirstname")
+                        ? ""
+                        : "is-invalid",
+                      staticStyle: {
+                        "text-transform": "uppercase",
+                        outline: "none",
+                        "box-shadow": "0px 0px 0px transparent"
                       },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.familyBackground.soccupation,
-                              expression: "familyBackground.soccupation"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          staticStyle: {
-                            "text-transform": "uppercase",
-                            outline: "none",
-                            "box-shadow": "0px 0px 0px transparent"
-                          },
-                          attrs: {
-                            type: "text",
-                            id: "soccupation",
-                            placeholder: "Enter Spouse's Occupation"
-                          },
-                          domProps: { value: _vm.familyBackground.soccupation },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.familyBackground,
-                                "soccupation",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("span", [_vm._v("Occupation")])
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-lg-6" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-group has-float-label",
-                        attrs: { for: "sempname" }
+                      attrs: {
+                        type: "text",
+                        id: "mfirstname",
+                        placeholder: "Enter Mother's First Name",
+                        value: ""
                       },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.familyBackground.sempname,
-                              expression: "familyBackground.sempname"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          staticStyle: {
-                            "text-transform": "uppercase",
-                            outline: "none",
-                            "box-shadow": "0px 0px 0px transparent"
-                          },
-                          attrs: {
-                            type: "text",
-                            id: "sempname",
-                            placeholder: "Enter Spouse's Employer/Business Name"
-                          },
-                          domProps: { value: _vm.familyBackground.sempname },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.familyBackground,
-                                "sempname",
-                                $event.target.value
-                              )
-                            }
+                      domProps: { value: _vm.familyBackground.mfirstname },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
                           }
-                        }),
-                        _vm._v(" "),
-                        _c("span", [_vm._v("Employer/Business Name")])
-                      ]
-                    )
-                  ])
-                ]),
+                          _vm.$set(
+                            _vm.familyBackground,
+                            "mfirstname",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm._m(10)
+                  ]
+                ),
                 _vm._v(" "),
-                _c("div", { staticClass: "row pl-3 pr-3" }, [
-                  _c("div", { staticClass: "col-sm-6" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-group has-float-label",
-                        attrs: { for: "sbusadd" }
+                _c("p", { staticClass: "text-danger text-sm" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.errors.mfirstname) +
+                      "\n          "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-4" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "form-group has-float-label mb-30",
+                    attrs: { for: "mmiddlename" }
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.familyBackground.mmiddlename,
+                          expression: "familyBackground.mmiddlename"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: !_vm.errors.hasOwnProperty("mmiddlename")
+                        ? ""
+                        : "is-invalid",
+                      staticStyle: {
+                        "text-transform": "uppercase",
+                        outline: "none",
+                        "box-shadow": "0px 0px 0px transparent"
                       },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.familyBackground.sbusadd,
-                              expression: "familyBackground.sbusadd"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          staticStyle: {
-                            "text-transform": "uppercase",
-                            outline: "none",
-                            "box-shadow": "0px 0px 0px transparent"
-                          },
-                          attrs: {
-                            type: "text",
-                            id: "sbusadd",
-                            placeholder: "Enter Spouse's Business Address"
-                          },
-                          domProps: { value: _vm.familyBackground.sbusadd },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.familyBackground,
-                                "sbusadd",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("span", [_vm._v("Business Address")])
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-sm-6" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "form-group has-float-label",
-                        attrs: { for: "stelno" }
+                      attrs: {
+                        type: "text",
+                        id: "mmiddlename",
+                        placeholder: "Enter Mother's Maiden Middle Name",
+                        value: ""
                       },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.familyBackground.stelno,
-                              expression: "familyBackground.stelno"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          staticStyle: {
-                            outline: "none",
-                            "box-shadow": "0px 0px 0px transparent"
-                          },
-                          attrs: {
-                            type: "text",
-                            id: "stelno",
-                            placeholder: "Enter Spouse's Telephone Number"
-                          },
-                          domProps: { value: _vm.familyBackground.stelno },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.familyBackground,
-                                "stelno",
-                                $event.target.value
-                              )
-                            }
+                      domProps: { value: _vm.familyBackground.mmiddlename },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
                           }
-                        }),
-                        _vm._v(" "),
-                        _c("span", [_vm._v("Telephone Number")])
-                      ]
-                    )
-                  ])
+                          _vm.$set(
+                            _vm.familyBackground,
+                            "mmiddlename",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("span", [_vm._v("Maiden Middle Name")])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-danger text-sm" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.errors.mmiddlename) +
+                      "\n          "
+                  )
                 ])
               ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm._m(3),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-2" }, [
-            _c("table", { staticClass: "table table-bordered" }, [
-              _vm._m(4),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.spouse, function(spouse, index) {
-                  return _c("tr", { key: index }, [
-                    _c("td", [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: spouse.cname,
-                            expression: "spouse.cname"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        staticStyle: { "text-transform": "uppercase" },
-                        attrs: {
-                          type: "text",
-                          id: "cname",
-                          placeholder: "Enter Full Name of Children"
-                        },
-                        domProps: { value: spouse.cname },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(spouse, "cname", $event.target.value)
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "align-middle" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: spouse.cdateOfBirth,
-                            expression: "spouse.cdateOfBirth"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        class: _vm.errors.hasOwnProperty(
-                          "spouse." + index + ".cdateOfBirth"
-                        )
-                          ? "is-invalid"
-                          : "",
-                        attrs: {
-                          type: "date",
-                          id: "cdateOfBirth",
-                          placeholder: "Enter Spouse's Business Address"
-                        },
-                        domProps: { value: spouse.cdateOfBirth },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              spouse,
-                              "cdateOfBirth",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "text-right" }, [
-                        _c("span", { staticClass: "text-danger text-xs" }, [
-                          _vm._v(
-                            _vm._s(
-                              _vm.errors["spouse." + index + ".cdateOfBirth"]
-                            )
-                          )
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "float-right" }, [
+              !_vm.isComplete
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary font-weight-bold mr-3 mb-2",
+                      attrs: { disabled: _vm.isLoading },
+                      on: { click: _vm.submitPersonFamilyBackground }
+                    },
+                    [
+                      _vm._v("\n          NEXT\n          "),
                       _c(
-                        "button",
+                        "div",
                         {
                           directives: [
                             {
                               name: "show",
                               rawName: "v-show",
-                              value: index != 0,
-                              expression: "index != 0"
+                              value: _vm.isLoading,
+                              expression: "isLoading"
                             }
                           ],
-                          staticClass:
-                            "btn btn-danger font-weight-bold rounded-circle",
-                          on: {
-                            click: function($event) {
-                              return _vm.removeField(index)
-                            }
-                          }
+                          staticClass: "spinner-border spinner-border-sm mb-1",
+                          attrs: { role: "status" }
                         },
-                        [_vm._v("\n                  X\n                ")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
-                      index == _vm.noOfSpouseFields - 1
-                        ? _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-primary rounded-circle",
-                              on: { click: _vm.generateNewSpuseField }
-                            },
-                            [_vm._v("\n                  +\n                ")]
-                          )
-                        : _vm._e()
-                    ])
-                  ])
-                }),
-                0
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _vm._m(5),
-          _vm._v(" "),
-          _c("div", { staticClass: "row pr-3 pl-3" }, [
-            _c("div", { staticClass: "col-lg-3" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "form-group has-float-label mb-0",
-                  attrs: { for: "fsurname" }
-                },
-                [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.familyBackground.fsurname,
-                        expression: "familyBackground.fsurname"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    class: !_vm.errors.hasOwnProperty("fsurname")
-                      ? ""
-                      : "is-invalid",
-                    staticStyle: {
-                      "text-transform": "uppercase",
-                      outline: "none",
-                      "box-shadow": "0px 0px 0px transparent"
-                    },
-                    attrs: {
-                      type: "text",
-                      id: "fsurname",
-                      placeholder: "Enter Father's Surname",
-                      value: ""
-                    },
-                    domProps: { value: _vm.familyBackground.fsurname },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.familyBackground,
-                          "fsurname",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm._m(6)
-                ]
-              ),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-danger text-sm" }, [
-                _vm._v(_vm._s(_vm.errors.fsurname))
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "form-group has-float-label mb-0",
-                  attrs: { for: "ffirstname" }
-                },
-                [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.familyBackground.ffirstname,
-                        expression: "familyBackground.ffirstname"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    class: !_vm.errors.hasOwnProperty("ffirstname")
-                      ? ""
-                      : "is-invalid",
-                    staticStyle: {
-                      "text-transform": "uppercase",
-                      outline: "none",
-                      "box-shadow": "0px 0px 0px transparent"
-                    },
-                    attrs: {
-                      type: "text",
-                      id: "ffirstname",
-                      placeholder: "Enter Father's First Name",
-                      value: ""
-                    },
-                    domProps: { value: _vm.familyBackground.ffirstname },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.familyBackground,
-                          "ffirstname",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm._m(7)
-                ]
-              ),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-danger text-sm" }, [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.errors.ffirstname) +
-                    "\n          "
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "form-group has-float-label",
-                  attrs: { for: "fmiddlename" }
-                },
-                [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.familyBackground.fmiddlename,
-                        expression: "familyBackground.fmiddlename"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    class: !_vm.errors.hasOwnProperty("fmiddlename")
-                      ? ""
-                      : "is-invalid",
-                    staticStyle: {
-                      "text-transform": "uppercase",
-                      outline: "none",
-                      "box-shadow": "0px 0px 0px transparent"
-                    },
-                    attrs: {
-                      type: "text",
-                      id: "fmiddlename",
-                      placeholder: "Enter Father's Middle Name",
-                      value: ""
-                    },
-                    domProps: { value: _vm.familyBackground.fmiddlename },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.familyBackground,
-                          "fmiddlename",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("Middle Name")])
-                ]
-              ),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-danger text-sm" }, [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.errors.fmiddlename) +
-                    "\n          "
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "form-group has-float-label mb-0",
-                  attrs: { for: "snameexten" }
-                },
-                [
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.familyBackground.snameexten,
-                          expression: "familyBackground.snameexten"
-                        }
-                      ],
-                      staticClass: "form-control custom-select",
-                      class: !_vm.errors.hasOwnProperty("snameexten")
-                        ? ""
-                        : "is-invalid",
-                      staticStyle: {
-                        outline: "none",
-                        "box-shadow": "0px 0px 0px transparent"
-                      },
-                      attrs: { type: "text", id: "snameexten" },
-                      on: {
-                        change: function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.$set(
-                            _vm.familyBackground,
-                            "snameexten",
-                            $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          )
-                        }
-                      }
-                    },
-                    [
-                      _c(
-                        "option",
-                        { attrs: { value: "", readonly: "", selected: "" } },
                         [
-                          _vm._v(
-                            "\n                Please Select Extension Name\n              "
-                          )
+                          _c("span", { staticClass: "sr-only" }, [
+                            _vm._v("Loading...")
+                          ])
                         ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "option",
-                        {
-                          attrs: { value: "JR" },
-                          domProps: {
-                            selected: _vm.familyBackground.snameexten === "JR"
-                          }
-                        },
-                        [_vm._v("\n                JR\n              ")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "option",
-                        {
-                          attrs: { value: "SR" },
-                          domProps: {
-                            selected: _vm.familyBackground.snameexten === "SR"
-                          }
-                        },
-                        [_vm._v("\n                SR\n              ")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "option",
-                        {
-                          attrs: { value: "III" },
-                          domProps: {
-                            selected:
-                              _vm.familyBackground.nameExtension === "III"
-                          }
-                        },
-                        [_vm._v("\n                III\n              ")]
                       )
                     ]
-                  ),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("EXTENSION NAME")])
-                ]
-              )
+                  )
+                : _vm._e()
             ])
-          ]),
-          _vm._v(" "),
-          _vm._m(8),
-          _vm._v(" "),
-          _c("div", { staticClass: "row pr-3 pl-3" }, [
-            _c("div", { staticClass: "col-lg-3" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "form-group has-float-label mb-0",
-                  attrs: { for: "msurname" }
-                },
-                [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.familyBackground.msurname,
-                        expression: "familyBackground.msurname"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    class: !_vm.errors.hasOwnProperty("msurname")
-                      ? ""
-                      : "is-invalid",
-                    staticStyle: {
-                      "text-transform": "uppercase",
-                      outline: "none",
-                      "box-shadow": "0px 0px 0px transparent"
-                    },
-                    attrs: {
-                      type: "text",
-                      id: "msurname",
-                      placeholder: "Enter Mother's Maiden Surname",
-                      value: ""
-                    },
-                    domProps: { value: _vm.familyBackground.msurname },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.familyBackground,
-                          "msurname",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm._m(9)
-                ]
-              ),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-danger text-sm" }, [
-                _vm._v(_vm._s(_vm.errors.msurname))
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "form-group has-float-label",
-                  attrs: { for: "mfirstname" }
-                },
-                [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.familyBackground.mfirstname,
-                        expression: "familyBackground.mfirstname"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    class: !_vm.errors.hasOwnProperty("mfirstname")
-                      ? ""
-                      : "is-invalid",
-                    staticStyle: {
-                      "text-transform": "uppercase",
-                      outline: "none",
-                      "box-shadow": "0px 0px 0px transparent"
-                    },
-                    attrs: {
-                      type: "text",
-                      id: "mfirstname",
-                      placeholder: "Enter Mother's First Name",
-                      value: ""
-                    },
-                    domProps: { value: _vm.familyBackground.mfirstname },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.familyBackground,
-                          "mfirstname",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm._m(10)
-                ]
-              ),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-danger text-sm" }, [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.errors.mfirstname) +
-                    "\n          "
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-4" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "form-group has-float-label mb-30",
-                  attrs: { for: "mmiddlename" }
-                },
-                [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.familyBackground.mmiddlename,
-                        expression: "familyBackground.mmiddlename"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    class: !_vm.errors.hasOwnProperty("mmiddlename")
-                      ? ""
-                      : "is-invalid",
-                    staticStyle: {
-                      "text-transform": "uppercase",
-                      outline: "none",
-                      "box-shadow": "0px 0px 0px transparent"
-                    },
-                    attrs: {
-                      type: "text",
-                      id: "mmiddlename",
-                      placeholder: "Enter Mother's Maiden Middle Name",
-                      value: ""
-                    },
-                    domProps: { value: _vm.familyBackground.mmiddlename },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.familyBackground,
-                          "mmiddlename",
-                          $event.target.value
-                        )
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("Maiden Middle Name")])
-                ]
-              ),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-danger text-sm" }, [
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.errors.mmiddlename) +
-                    "\n          "
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "float-right" }, [
-            !_vm.isComplete
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary font-weight-bold mr-3 mb-2",
-                    attrs: { disabled: _vm.isLoading },
-                    on: { click: _vm.submitPersonFamilyBackground }
-                  },
-                  [
-                    _vm._v("\n          NEXT\n          "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.isLoading,
-                            expression: "isLoading"
-                          }
-                        ],
-                        staticClass: "spinner-border spinner-border-sm mb-1",
-                        attrs: { role: "status" }
-                      },
-                      [
-                        _c("span", { staticClass: "sr-only" }, [
-                          _vm._v("Loading...")
-                        ])
-                      ]
-                    )
-                  ]
-                )
-              : _vm._e()
-          ])
-        ]
-      )
-    ])
-  ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("spouse-name-extension-modal", {
+        attrs: { showspousenameextension: _vm.isShowSpouseNameExtension },
+        on: { "spousenameext-modal-dismiss": _vm.closeSpouseNameExtensionModal }
+      }),
+      _vm._v(" "),
+      _c("father-name-extension-modal", {
+        attrs: { showfathernameextension: _vm.isShowFatherNameExtension },
+        on: { "fatherext-modal-dismiss": _vm.closeFatherNameExtensionModal }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -43449,6 +43843,163 @@ var staticRenderFns = [
     return _c("span", [
       _vm._v("First Name"),
       _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/create/C1/FatherNameExtensionModal.vue?vue&type=template&id=8e461366&":
+/*!**************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PersonalData/create/C1/FatherNameExtensionModal.vue?vue&type=template&id=8e461366& ***!
+  \**************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        class: _vm.showfathernameextension ? "show" : "",
+        style: _vm.showfathernameextension
+          ? "padding-right: 15px; display: block;"
+          : "",
+        attrs: { id: "nameextensionModal", tabindex: "-1", role: "dialog" }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", [_vm._v("Name Extension")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.data.extension,
+                        expression: "data.extension"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class:
+                      _vm.errors.hasOwnProperty("errors") &&
+                      _vm.errors.errors.hasOwnProperty("extension")
+                        ? "is-invalid"
+                        : "",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.data.extension },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.data, "extension", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-danger text-sm" }, [
+                    _vm._v(
+                      "\n              " +
+                        _vm._s(
+                          _vm.errors.hasOwnProperty("errors")
+                            ? _vm.errors.errors.extension[0]
+                            : ""
+                        ) +
+                        "\n            "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: { click: _vm.submitNewNameExt }
+                  },
+                  [
+                    _vm.isLoading
+                      ? _c(
+                          "div",
+                          {
+                            staticClass:
+                              "spinner-border spinner-border-sm text-white",
+                            attrs: { role: "status" }
+                          },
+                          [
+                            _c("span", { staticClass: "sr-only" }, [
+                              _vm._v("Loading...")
+                            ])
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v("\n            Save Changes\n          ")
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" },
+                    on: { click: _vm.dismissModal }
+                  },
+                  [_vm._v("\n            Close\n          ")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("\n            Add New Extension Name\n          ")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
     ])
   }
 ]
@@ -45878,6 +46429,163 @@ var render = function() {
         staticClass: "modal fade",
         class: _vm.shownameextension ? "show" : "",
         style: _vm.shownameextension
+          ? "padding-right: 15px; display: block;"
+          : "",
+        attrs: { id: "nameextensionModal", tabindex: "-1", role: "dialog" }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", [_vm._v("Name Extension")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.data.extension,
+                        expression: "data.extension"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class:
+                      _vm.errors.hasOwnProperty("errors") &&
+                      _vm.errors.errors.hasOwnProperty("extension")
+                        ? "is-invalid"
+                        : "",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.data.extension },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.data, "extension", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-danger text-sm" }, [
+                    _vm._v(
+                      "\n              " +
+                        _vm._s(
+                          _vm.errors.hasOwnProperty("errors")
+                            ? _vm.errors.errors.extension[0]
+                            : ""
+                        ) +
+                        "\n            "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: { click: _vm.submitNewNameExt }
+                  },
+                  [
+                    _vm.isLoading
+                      ? _c(
+                          "div",
+                          {
+                            staticClass:
+                              "spinner-border spinner-border-sm text-white",
+                            attrs: { role: "status" }
+                          },
+                          [
+                            _c("span", { staticClass: "sr-only" }, [
+                              _vm._v("Loading...")
+                            ])
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v("\n            Save Changes\n          ")
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" },
+                    on: { click: _vm.dismissModal }
+                  },
+                  [_vm._v("\n            Close\n          ")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("\n            Add New Extension Name\n          ")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/create/C1/SpouseNameExtensionModal.vue?vue&type=template&id=0000a2c6&":
+/*!**************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/PersonalData/create/C1/SpouseNameExtensionModal.vue?vue&type=template&id=0000a2c6& ***!
+  \**************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        class: _vm.showspousenameextension ? "show" : "",
+        style: _vm.showspousenameextension
           ? "padding-right: 15px; display: block;"
           : "",
         attrs: { id: "nameextensionModal", tabindex: "-1", role: "dialog" }
@@ -119923,6 +120631,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/PersonalData/create/C1/FatherNameExtensionModal.vue":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/PersonalData/create/C1/FatherNameExtensionModal.vue ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FatherNameExtensionModal_vue_vue_type_template_id_8e461366___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FatherNameExtensionModal.vue?vue&type=template&id=8e461366& */ "./resources/js/components/PersonalData/create/C1/FatherNameExtensionModal.vue?vue&type=template&id=8e461366&");
+/* harmony import */ var _FatherNameExtensionModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FatherNameExtensionModal.vue?vue&type=script&lang=js& */ "./resources/js/components/PersonalData/create/C1/FatherNameExtensionModal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _FatherNameExtensionModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FatherNameExtensionModal_vue_vue_type_template_id_8e461366___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _FatherNameExtensionModal_vue_vue_type_template_id_8e461366___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/PersonalData/create/C1/FatherNameExtensionModal.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/PersonalData/create/C1/FatherNameExtensionModal.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/components/PersonalData/create/C1/FatherNameExtensionModal.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FatherNameExtensionModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./FatherNameExtensionModal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/create/C1/FatherNameExtensionModal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FatherNameExtensionModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/PersonalData/create/C1/FatherNameExtensionModal.vue?vue&type=template&id=8e461366&":
+/*!********************************************************************************************************************!*\
+  !*** ./resources/js/components/PersonalData/create/C1/FatherNameExtensionModal.vue?vue&type=template&id=8e461366& ***!
+  \********************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FatherNameExtensionModal_vue_vue_type_template_id_8e461366___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./FatherNameExtensionModal.vue?vue&type=template&id=8e461366& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/create/C1/FatherNameExtensionModal.vue?vue&type=template&id=8e461366&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FatherNameExtensionModal_vue_vue_type_template_id_8e461366___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FatherNameExtensionModal_vue_vue_type_template_id_8e461366___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/PersonalData/create/C1/Information.vue":
 /*!************************************************************************!*\
   !*** ./resources/js/components/PersonalData/create/C1/Information.vue ***!
@@ -120056,6 +120833,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NameExtensionModal_vue_vue_type_template_id_993a2c5e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NameExtensionModal_vue_vue_type_template_id_993a2c5e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/PersonalData/create/C1/SpouseNameExtensionModal.vue":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/PersonalData/create/C1/SpouseNameExtensionModal.vue ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SpouseNameExtensionModal_vue_vue_type_template_id_0000a2c6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SpouseNameExtensionModal.vue?vue&type=template&id=0000a2c6& */ "./resources/js/components/PersonalData/create/C1/SpouseNameExtensionModal.vue?vue&type=template&id=0000a2c6&");
+/* harmony import */ var _SpouseNameExtensionModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SpouseNameExtensionModal.vue?vue&type=script&lang=js& */ "./resources/js/components/PersonalData/create/C1/SpouseNameExtensionModal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SpouseNameExtensionModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SpouseNameExtensionModal_vue_vue_type_template_id_0000a2c6___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SpouseNameExtensionModal_vue_vue_type_template_id_0000a2c6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/PersonalData/create/C1/SpouseNameExtensionModal.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/PersonalData/create/C1/SpouseNameExtensionModal.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/components/PersonalData/create/C1/SpouseNameExtensionModal.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SpouseNameExtensionModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./SpouseNameExtensionModal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/create/C1/SpouseNameExtensionModal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SpouseNameExtensionModal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/PersonalData/create/C1/SpouseNameExtensionModal.vue?vue&type=template&id=0000a2c6&":
+/*!********************************************************************************************************************!*\
+  !*** ./resources/js/components/PersonalData/create/C1/SpouseNameExtensionModal.vue?vue&type=template&id=0000a2c6& ***!
+  \********************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpouseNameExtensionModal_vue_vue_type_template_id_0000a2c6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./SpouseNameExtensionModal.vue?vue&type=template&id=0000a2c6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/PersonalData/create/C1/SpouseNameExtensionModal.vue?vue&type=template&id=0000a2c6&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpouseNameExtensionModal_vue_vue_type_template_id_0000a2c6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpouseNameExtensionModal_vue_vue_type_template_id_0000a2c6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -110,7 +110,7 @@
                 <span>Middle Name</span>
               </label>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-2">
               <label for="snameexten" class="form-group has-float-label mb-0">
                 <select
                   type="text"
@@ -146,6 +146,14 @@
                 </select>
                 <span>EXTENSION NAME</span>
               </label>
+            </div>
+            <div class="col-lg-1">
+              <button
+                class="btn btn-info rounded-circle btn-sm shadow mt-1"
+                @click="openSpouseNameExtensionModal"
+              >
+                <i class="fas fa-plus text-sm"></i>
+              </button>
             </div>
           </div>
           <div class="row pl-3 pr-3">
@@ -367,7 +375,7 @@
               {{ errors.fmiddlename }}
             </p>
           </div>
-          <div class="col-lg-3">
+          <div class="col-lg-2">
             <label for="snameexten" class="form-group has-float-label mb-0">
               <select
                 type="text"
@@ -403,6 +411,14 @@
               </select>
               <span>EXTENSION NAME</span>
             </label>
+          </div>
+          <div class="col-lg-1">
+            <button
+              class="btn btn-info rounded-circle btn-sm shadow mt-1"
+              @click="openFatherNameExtensionModal"
+            >
+              <i class="fas fa-plus text-sm"></i>
+            </button>
           </div>
         </div>
 
@@ -503,18 +519,45 @@
         </div>
       </div>
     </div>
+    <spouse-name-extension-modal
+      :showspousenameextension="isShowSpouseNameExtension"
+      @spousenameext-modal-dismiss="closeSpouseNameExtensionModal"
+    >
+    </spouse-name-extension-modal>
+    <father-name-extension-modal
+      :showfathernameextension="isShowFatherNameExtension"
+      @fatherext-modal-dismiss="closeFatherNameExtensionModal"
+    >
+    </father-name-extension-modal>
   </div>
 </template>
 
 <script>
+import SpouseNameExtensionModal from "./SpouseNameExtensionModal.vue";
+import "vue-select/dist/vue-select.css";
+import FatherNameExtensionModal from "./FatherNameExtensionModal.vue";
+
 export default {
+  components: { SpouseNameExtensionModal, FatherNameExtensionModal },
   props: {
     show_panel: {
+      required: true,
+    },
+    showspousenameextension: {
+      required: true,
+    },
+    showfathernameextension: {
+      required: true,
+    },
+    data: {
       required: true,
     },
   },
   data() {
     return {
+      isShow: false,
+      isShowSpouseNameExtension: false,
+      isShowFatherNameExtension: false,
       isLoading: false,
       isComplete: false,
       hasSpouse: false,
@@ -598,6 +641,25 @@ export default {
             });
           }
         });
+    },
+    openSpouseNameExtensionModal() {
+      this.isShowSpouseNameExtension = true;
+    },
+
+    closeSpouseNameExtensionModal(newExtension) {
+      if (newExtension) {
+        this.nameExtensions.push(newExtension.extension);
+      }
+      this.isShowSpouseNameExtension = false;
+    },
+    openFatherNameExtensionModal() {
+      this.isShowFatherNameExtension = true;
+    },
+    closeFatherNameExtensionModal(newExtension) {
+      if (newExtension) {
+        this.nameExtensions.push(newExtension.extension);
+      }
+      this.isShowFatherNameExtension = false;
     },
   },
   created() {
