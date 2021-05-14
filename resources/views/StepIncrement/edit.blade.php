@@ -95,11 +95,11 @@
                                 <label>Step:</label>
                                 <select name="stepNo2" id="stepNo2" value="" class="form-control floating">
                                 @if(old('stepNo2'))
-                                    @foreach(range(2, 8) as $step)
+                                    @foreach(range($stepIncrement->step_no_from + 1, 8) as $step)
                                         <option {{ old('stepNo2') == $stepIncrement->step_no_to ? 'selected' : '' }} value="{{ $step }}">{{ $step }}</option>
                                     @endforeach
                                     @else
-                                    @foreach(range(2, 8) as $step)
+                                    @foreach(range($stepIncrement->step_no_from + 1, 8) as $step)
                                         <option {{ $step == $stepIncrement->step_no_to ? 'selected' : '' }} value="{{ $step }}">{{ $step }}</option>
                                     @endforeach
                                 @endif
