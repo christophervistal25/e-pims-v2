@@ -15,7 +15,7 @@ class CreatePlantillasTable extends Migration
     {
         Schema::create('plantillas', function (Blueprint $table) {
             $table->id('plantilla_id');
-            $table->integer('old_item_no');
+            $table->integer('old_item_no')->nullable();
             $table->integer('item_no');
             $table->bigInteger('position_id');
             $table->string('position_ext')->nullable();
@@ -24,7 +24,7 @@ class CreatePlantillasTable extends Migration
             $table->decimal('salary_amount',11,2);
 
 
-            $table->string('employee_id'); 
+            $table->string('employee_id');
             $table->string('area_code');
             $table->string('area_type');
             $table->string('area_level');
@@ -33,9 +33,9 @@ class CreatePlantillasTable extends Migration
             $table->date('date_last_promotion');
             $table->date('date_last_increment')->nullable();
             $table->string('office_code');
-            $table->bigInteger('division_id');            
+            $table->bigInteger('division_id');
 
-            $table->string('status');            
+            $table->string('status');
             $table->timestamps();
         });
     }

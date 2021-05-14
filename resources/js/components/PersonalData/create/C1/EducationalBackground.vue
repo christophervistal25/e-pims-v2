@@ -62,7 +62,7 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Basic Education/Degree/Course</span>
+              <span>BASIC EDUCATION/DEGREE/COURSE</span>
             </label>
           </div>
 
@@ -82,7 +82,7 @@
               <p class="text-danger text-sm">
                 {{ errors.eperiodFrom }}
               </p>
-              <span>Period of Attendance(From)</span>
+              <span>PERIOD OF ATTENDANCE(FROM)</span>
             </label>
           </div>
 
@@ -97,7 +97,7 @@
                 :class="!errors.hasOwnProperty('eperiodTo') ? '' : 'is-invalid'"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Period of Attendance(To)</span>
+              <span>PERIOD OF ATTENDANCE(TO)</span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.eperiodTo }}
@@ -137,7 +137,7 @@
                   :class="!errors.hasOwnProperty('eyrGrad') ? '' : 'is-invalid'"
                   style="outline: none; box-shadow: 0px 0px 0px transparent"
                 />
-                <span>Year Graduated</span>
+                <span>YEAR GRADUATED</span>
               </label>
               <p class="text-danger text-sm">
                 {{ errors.eyrGrad }}
@@ -197,7 +197,7 @@
                 v-model="educationalBackground.sbasicEduc"
                 style="text-transform:uppercase; outline; none; box-shadow: 0px 0px 0px transparent;"
               />
-              <span>Basic Education/Degree/Course</span>
+              <span>BASIC EDUCATION/DEGREE/COURSE</span>
             </label>
           </div>
 
@@ -214,7 +214,7 @@
                 "
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Period Of Attendanec(From)</span>
+              <span>PERIOD OF ATTENDANCE(FROM)</span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.speriodFrom }}
@@ -232,7 +232,7 @@
                 :class="!errors.hasOwnProperty('speriodTo') ? '' : 'is-invalid'"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Period Of Attendance(To)</span>
+              <span>PERIOD OF ATTENDANCE(TO)</span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.speriodTo }}
@@ -273,7 +273,7 @@
                   :class="!errors.hasOwnProperty('syrGrad') ? '' : 'is-invalid'"
                   style="outline; none; box-shadow: 0px 0px 0px transparent;"
                 />
-                <span>Year Graduated</span>
+                <span>YEAR GRADUATED</span>
               </label>
               <p class="text-danger text-sm">
                 {{ errors.syrGrad }}
@@ -333,7 +333,7 @@
                 v-model="educationalBackground.vbasicEduc"
                 style="text-transform:uppercase; outline; none; box-shadow: 0px 0px 0px transparent;"
               />
-              <span>Basic Education/Degree/Course</span>
+              <span>BASIC EDUCATION/DEGREE/COURSE</span>
             </label>
           </div>
 
@@ -350,7 +350,7 @@
                 "
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Period of Attendance(From)</span>
+              <span>PERIOD OF ATTENDANCE(FROM)</span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.vperiodFrom }}
@@ -367,7 +367,7 @@
                 :class="!errors.hasOwnProperty('vperiodTo') ? '' : 'is-invalid'"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Period of Attendance(To)</span>
+              <span>PERIOD OF ATTENDANCE(TO)</span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.vperiodTo }}
@@ -409,7 +409,7 @@
                 :class="!errors.hasOwnProperty('vyrGrad') ? '' : 'is-invalid'"
                 style="outline; none; box-shadow: 0px 0px 0px transparent;"
               />
-              <span>Year Graduated</span>
+              <span>YEAR GRADUATED</span>
             </label>
             <p class="text-danger text-sm">{{ errors.vyrGrad }}</p>
           </div>
@@ -466,7 +466,7 @@
                 v-model="educationalBackground.cbasicEduc"
                 style="text-transform:uppercase; outline; none; box-shadow: 0px 0px 0px transparent;"
               />
-              <span>Basic Education//Degree/Course</span>
+              <span>BASIC EDUCATION/DEGREE/COURSE</span>
             </label>
           </div>
 
@@ -483,7 +483,7 @@
                 "
                 style="outline; none; box-shadow: 0px 0px 0px transparent;"
               />
-              <span>Period Of Attendance(From)</span>
+              <span>PERIOD OF ATTENDANCE(FROM)</span>
             </label>
             <p class="text-danger">{{ errors.cperiodFrom }}</p>
           </div>
@@ -498,7 +498,7 @@
                 placeholder=""
                 style="outline; none; box-shadow: 0px 0px 0px transparent;"
               />
-              <span>Period Of Attendance(To)</span>
+              <span>PERIOD OF ATTENDANCE(TO)</span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.cperiodTo }}
@@ -541,7 +541,7 @@
                 :class="!errors.hasOwnProperty('cyrGrad') ? '' : 'is-invalid'"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Year Graduated</span>
+              <span>YEAR GRADUATED</span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.cyrGrad }}
@@ -604,7 +604,7 @@
                 v-model="educationalBackground.gbasicEduc"
                 style="text-transform:uppercase outline: none; box-shadow: 0px 0px 0px transparent;"
               />
-              <span>Basic Education/Degree/Course</span>
+              <span>BASIC EDUCATION/DEGREE/COURSE</span>
             </label>
           </div>
 
@@ -621,7 +621,7 @@
                 "
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Period of Attendance(From)</span>
+              <span>PERIOD OF ATTENDANCE(FROM)</span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.gperiodFrom }}
@@ -638,7 +638,7 @@
                 :class="!errors.hasOwnProperty('gperiodTo') ? '' : 'is-invalid'"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Period Of Attendance(To)</span>
+              <span>PERIOD OF ATTENDANCE(TO)</span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.gperiodTo }}
@@ -680,7 +680,7 @@
                 :class="!errors.hasOwnProperty('gyrGrad') ? '' : 'is-invalid'"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Year Graduated</span>
+              <span>YEAR GRADUATED</span>
             </label>
             <p class="text-danger text-sm">{{ errors.gyrGrad }}</p>
           </div>

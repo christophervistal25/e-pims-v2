@@ -29,6 +29,9 @@
           >
             PERSONAL INFORMATION
           </div>
+          <p class="text-danger">
+            * <span class="text-dark text-bold"> indicates required field</span>
+          </p>
         </div>
         <div class="row pr-3 pl-3">
           <div class="col-lg-3">
@@ -130,7 +133,7 @@
                   III
                 </option>
               </select>
-              <span>Extension Name</span>
+              <span>EXTENSION NAME</span>
             </label>
 
             <p class="text-danger text-sm">
@@ -384,7 +387,7 @@
                 <option value="FILIPINO">FILIPINO</option>
                 <option value="DUAL CITIZEN">DUAL CITIZEN</option>
               </select>
-              <span>Citizenship<span class="text-danger">*</span></span>
+              <span>CITIZENSHIP<span class="text-danger">*</span></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.citizenship }}
@@ -560,7 +563,7 @@
               <p class="text-danger text-sm">
                 {{ errors["residentialProvince.code"] }}
               </p>
-              <span>Province<span class="text-danger">*</span></span>
+              <span>PROVINCE<span class="text-danger">*</span></span>
             </label>
           </div>
           <div class="col-lg-3">
@@ -574,7 +577,7 @@
               <p class="text-danger text-sm">
                 {{ errors["residentialCity.code"] }}
               </p>
-              <span>City<span class="text-danger">*</span></span>
+              <span>CITY<span class="text-danger">*</span></span>
             </label>
           </div>
           <div class="col-lg-3">
@@ -587,7 +590,7 @@
               <p class="text-danger text-sm">
                 {{ errors["residentialBarangay.code"] }}
               </p>
-              <span>Barangay<span class="text-danger">*</span></span>
+              <span>BARANGAY<span class="text-danger">*</span></span>
             </label>
           </div>
           <div class="col-lg-3">
@@ -667,7 +670,11 @@
                 :readonly="isSameAsAbove ? true : false"
                 class="form-control"
                 placeholder="Enter Street"
-                style="text-transform: uppercase outline: none; box-shadow: 0px 0px 0px transparent;"
+                style="
+                  text-transform: uppercase;
+                  outline: none;
+                  box-shadow: 0px 0px 0px transparent;
+                "
               />
               <span>Street</span>
             </label>
@@ -707,7 +714,7 @@
               <p class="text-danger text-sm">
                 {{ errors["permanentProvince.code"] }}
               </p>
-              <span>Province<span class="text-danger">*</span></span>
+              <span>PROVINCE<span class="text-danger">*</span></span>
             </label>
           </div>
 
@@ -722,7 +729,7 @@
               <p class="text-danger text-sm">
                 {{ errors["permanentCity.code"] }}
               </p>
-              <span>City<span class="text-danger">*</span></span>
+              <span>CITY<span class="text-danger">*</span></span>
             </label>
           </div>
 
@@ -736,7 +743,7 @@
               <p class="text-danger text-sm">
                 {{ errors["permanentBarangay.code"] }}
               </p>
-              <span>Barangay<span class="text-danger">*</span></span>
+              <span>BARANGAY<span class="text-danger">*</span></span>
             </label>
           </div>
 

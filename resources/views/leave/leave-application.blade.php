@@ -69,7 +69,7 @@
                         <label for="dateApply" class="form-group has-float-label">
                             <input type="date" name="dateApply" id="dateApply" class="form-control form-control-sm"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>Date Apply</span>
+                            <span>Date Apply<span class="text-danger">*</span></span>
                         </label>
                         <label for="controlNo" class="form-group has-float-label">
                             <input type="text" name="controlNo" id="controlNo" class="form-control form-control-sm"
@@ -85,12 +85,12 @@
                                 <option value="">Sick Leave</option>
                                 <option value="">Others</option>
                             </select>
-                            <span>Leave Option</span>
+                            <span>Leave Option<span class="text-danger">*</span></span>
                         </label>
                         <label for="noOfDays" class="form-group has-float-label">
                             <input type="text" class="form-control form-control-sm" id="noOfDays"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>Number of Days</span>
+                            <span>Number of Days<span class="text-danger">*</span></span>
                         </label>
                         <label for="caseOfVl" class="form-group has-float-label">
                             <select class="form-control form-control-sm" id="caseOfVl"
@@ -106,7 +106,7 @@
                                 <option readonly selected value="">Requested</option>
                                 <option value="">----</option>
                             </select>
-                            <span>Commutation</span>
+                            <span>Commutation<span class="text-danger">*</span></span>
                         </label>
                     </div>
                     <div class="col-lg-4">
@@ -172,7 +172,7 @@
                         <h6 class="text-sm text-center">Date to Apply</h6>
                         <label for="dateApply" class="form-group has-float-label">
                             <input type="date" name="dateApply" id="dateApply" class="form-control" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>Select Date</span>
+                            <span>Select Date<span class="text-danger">*</span></span>
                         </label>
                         <select name="" id="" class="form-control">
                             <option value="">Whole Day</option>
@@ -193,14 +193,14 @@
                             style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <option value="">-----</option>
                         </select>
-                        <span>Recommending Approval</span>
+                        <span>Recommending Approval<span class="text-danger">*</span></span>
                     </label>
                     <label for="approveBy" class="form-group has-float-label">
                         <select class="custom-select" name="approveBy" id="approveBy"
                             style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <option value="">-----</option>
                         </select>
-                        <span>Approved By</span>
+                        <span>Approved By<span class="text-danger">*</span></span>
                     </label>
                     <label for="appStatus" class="form-group has-float-label">
                         <select name="appStatus" class="custom-select" id="appStatus"
@@ -208,7 +208,7 @@
                             <option value="">Approved</option>
                             <option value="">Pending</option>
                         </select>
-                        <span>Application Status</span>
+                        <span>Application Status<span class="text-danger">*</span></span>
                     </label>
                 </div>
                 <button type="button" class="btn btn-outline-primary ml-3"><i class="fas fa-plus-circle"></i> New

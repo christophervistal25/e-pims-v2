@@ -84,7 +84,6 @@ class PlantillaController extends Controller
     {
         $this->validate($request, [
             'itemNo'                        => 'required',
-            'oldItemNo'                     => 'required',
             'positionTitle'                 => 'required',
             'employeeName'                  => 'required',
             'salaryGrade'                   => 'required|in:' . implode(',',range(1, 33)),
@@ -167,7 +166,6 @@ class PlantillaController extends Controller
     {
         $this->validate($request, [
             'itemNo'                        => 'required',
-            'oldItemNo'                     => 'required',
             'positionTitle'                 => 'required',
             'employeeName'                  => 'required',
             'salaryGrade'                   => 'required|in:' . implode(',',range(1, 33)),
