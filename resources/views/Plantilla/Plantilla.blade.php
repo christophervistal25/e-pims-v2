@@ -31,8 +31,8 @@
                     </div>
 
                     <div class="form-group col-12 col-lg-2">
-                        <label>Old Item No<span class="text-danger">*</span></label>
-                        <input value="{{ old('oldItemNo') }}" class="form-control {{ $errors->has('oldItemNo')  ? 'is-invalid' : ''}}" name="oldItemNo" id="oldItemNo" type="text" placeholder="Old Item No">
+                        <label>Old Item No</label>
+                        <input value="{{ old('oldItemNo') }}" class="form-control {{ $errors->has('oldItemNo')  ? 'is-invalid' : ''}}" name="oldItemNo" id="oldItemNo" type="text" placeholder="Old Item No(optional)">
                         <div id='old_item-no-error-message' class='text-danger'>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
 
                     <div class="form-group col-12 col-lg-3">
                         <label>Position Ext</label>
-                        <input value="{{ old('positionTitleExt') }}" class="form-control {{ $errors->has('positionTitleExt')  ? 'is-invalid' : ''}}" name="positionTitleExt" type="text">
+                        <input value="{{ old('positionTitleExt') }}" placeholder="Position Ext(optional)" class="form-control {{ $errors->has('positionTitleExt')  ? 'is-invalid' : ''}}" name="positionTitleExt" type="text">
                     </div>
 
                     {{-- <div class="form-group col-12 col-lg-3">
