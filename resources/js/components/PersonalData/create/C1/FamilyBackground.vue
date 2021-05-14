@@ -22,7 +22,7 @@
         :class="show_panel && !isComplete ? 'show' : ''"
         :id="isComplete ? 'familyBackground' : ''"
       >
-        <div class="form-group mt-3">
+        <div class="form-group mt-4">
           <label for="spouse" style="transform: scale(0.8)" class="text-lg">
             <input
               id="spouse"
@@ -40,6 +40,10 @@
             >
               SPOUSE INFORMATION
             </div>
+            <p class="text-danger">
+              *
+              <span class="text-dark text-bold"> indicates required field</span>
+            </p>
           </div>
           <div class="row pr-3 pl-3">
             <div class="col-lg-3">
@@ -140,7 +144,7 @@
                     III
                   </option>
                 </select>
-                <span>Extension Name</span>
+                <span>EXTENSION NAME</span>
               </label>
             </div>
           </div>
@@ -221,6 +225,9 @@
           >
             CHILDREN INFORMATION
           </div>
+          <p class="text-danger">
+            * <span class="text-dark text-bold"> indicates required field</span>
+          </p>
         </div>
         <div class="p-2">
           <table class="table table-bordered">
@@ -394,7 +401,7 @@
                   III
                 </option>
               </select>
-              <span>Extension Name</span>
+              <span>EXTENSION NAME</span>
             </label>
           </div>
         </div>

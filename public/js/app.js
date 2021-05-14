@@ -2711,9 +2711,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
 
 
 
@@ -3503,8 +3500,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
 //
 //
 //
@@ -4599,9 +4594,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     employee: {
@@ -4650,15 +4642,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     employee: {
@@ -4679,39 +4662,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -4926,40 +4876,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     employee: {
@@ -5044,12 +4960,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -5245,10 +5155,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     employee: {
@@ -5269,15 +5175,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -5509,12 +5406,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["employee"]
 });
@@ -5530,13 +5421,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -5616,13 +5500,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     employee: {
@@ -5643,10 +5520,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
 //
 //
 //
@@ -7048,6 +6921,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     show_panel: {
@@ -7175,6 +7055,13 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -36091,12 +35978,7 @@ var render = function() {
                   outline: "none",
                   "box-shadow": "0px 0px 0px transparent"
                 },
-                attrs: {
-                  type: "text",
-                  name: "lastname",
-                  id: "lastname",
-                  placeholder: "Enter Last Name"
-                },
+                attrs: { type: "text", name: "lastname", id: "lastname" },
                 domProps: { value: _vm.employee.lastName },
                 on: {
                   input: function($event) {
@@ -36140,11 +36022,7 @@ var render = function() {
                   outline: "none",
                   "box-shadow": "0px 0px 0px transparent"
                 },
-                attrs: {
-                  type: "text",
-                  id: "firstname",
-                  placeholder: "Enter First Name"
-                },
+                attrs: { type: "text", id: "firstname" },
                 domProps: { value: _vm.employee.firstName },
                 on: {
                   input: function($event) {
@@ -36187,11 +36065,7 @@ var render = function() {
                   outline: "none",
                   "box-shadow": "0px 0px 0px transparent"
                 },
-                attrs: {
-                  type: "text",
-                  id: "middlename",
-                  placeholder: "Enter Middle Name"
-                },
+                attrs: { type: "text", id: "middlename" },
                 domProps: { value: _vm.employee.middleName },
                 on: {
                   input: function($event) {
@@ -37496,13 +37370,13 @@ var render = function() {
                   _vm._v(" "),
                   _c("p", { staticClass: "text-danger text-sm" }, [
                     _vm._v(
-                      "\n                            " +
+                      "\n              " +
                         _vm._s(
                           _vm.errors.hasOwnProperty("errors")
                             ? _vm.errors.errors.extension[0]
                             : ""
                         ) +
-                        "\n                        "
+                        "\n            "
                     )
                   ])
                 ])
@@ -37532,9 +37406,7 @@ var render = function() {
                           ]
                         )
                       : _vm._e(),
-                    _vm._v(
-                      "\n\n                        Save changes\n                    "
-                    )
+                    _vm._v("\n\n            Save changes\n          ")
                   ]
                 ),
                 _vm._v(" "),
@@ -37545,11 +37417,7 @@ var render = function() {
                     attrs: { type: "button", "data-dismiss": "modal" },
                     on: { click: _vm.dismissModal }
                   },
-                  [
-                    _vm._v(
-                      "\n                        Close\n                    "
-                    )
-                  ]
+                  [_vm._v("\n            Close\n          ")]
                 )
               ])
             ])
@@ -38458,29 +38326,36 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card-body" }, [
-      _c("h3", { staticClass: "card-title" }, [
-        _vm._v("\n            Address\n        ")
+      _c(
+        "div",
+        {
+          staticClass: "alert alert-warning text-center",
+          attrs: { role: "alert" }
+        },
+        [_vm._v("ADDRESS")]
+      ),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c("h5", { staticClass: "section-title text-center text-sm" }, [
+        _vm._v("RESIDENTIAL ADDRESS")
       ]),
       _vm._v(" "),
-      _c("h5", { staticClass: "section-title" }, [
-        _vm._v("Residential Address")
-      ]),
+      _c("hr"),
       _vm._v(" "),
       _c("ul", { staticClass: "personal-info" }, [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-lg-6 title" }, [
-            _vm._v(
-              "\n                    Residential House No\n                "
-            )
+            _vm._v("Residential House No")
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-lg-auto" }, [
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.residential_no || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -38496,9 +38371,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.residential_street || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -38514,9 +38389,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.residential_village || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -38532,9 +38407,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.residential_province || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -38550,9 +38425,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.residential_city || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -38568,9 +38443,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.residential_barangay || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -38586,9 +38461,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.residential_zip_code || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -38598,21 +38473,25 @@ var render = function() {
       _vm._v(" "),
       _c("hr"),
       _vm._v(" "),
-      _c("h5", { staticClass: "section-title" }, [_vm._v("Permanent Address")]),
+      _c("h5", { staticClass: "section-title text-center text-sm" }, [
+        _vm._v("PERMANENT ADDRESS")
+      ]),
+      _vm._v(" "),
+      _c("hr"),
       _vm._v(" "),
       _c("ul", { staticClass: "personal-info" }, [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-lg-6 title" }, [
-            _vm._v("\n                    Permanent House No\n                ")
+            _vm._v("Permanent House No")
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-lg-auto" }, [
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.permanent_no || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -38628,9 +38507,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.permanent_street || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -38646,9 +38525,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.permanent_village || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -38664,9 +38543,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.permanent_province || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -38682,9 +38561,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.permanent_city || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -38700,9 +38579,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.permanent_barangay || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -38718,9 +38597,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.permanent_zip_code || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -38754,8 +38633,8 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card-body" }, [
-      _c("h3", { staticClass: "card-title" }, [
-        _vm._v("\n            Civil Service Eligibility\n        ")
+      _c("div", { staticClass: "alert alert-warning text-center" }, [
+        _vm._v("\n      CIVIL SERVICE ELIGIBILITY\n    ")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "table-responsive" }, [
@@ -38787,23 +38666,11 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", { staticClass: "text-sm" }, [
-          _vm._v(
-            "\n                            CAREER SERVICE\n                        "
-          )
-        ]),
+        _c("th", { staticClass: "text-sm" }, [_vm._v("CAREER SERVICE")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-sm" }, [
-          _vm._v(
-            "\n                            DATE OF EXAMINATION\n                        "
-          )
-        ]),
+        _c("th", { staticClass: "text-sm" }, [_vm._v("DATE OF EXAMINATION")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-sm" }, [
-          _vm._v(
-            "\n                            PLACE OF EXAMINATION\n                        "
-          )
-        ])
+        _c("th", { staticClass: "text-sm" }, [_vm._v("PLACE OF EXAMINATION")])
       ])
     ])
   }
@@ -38831,8 +38698,8 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card-body" }, [
-      _c("h3", { staticClass: "card-title" }, [
-        _vm._v("\n            Educational Background\n        ")
+      _c("div", { staticClass: "alert alert-warning text-center" }, [
+        _vm._v("EDUCATIONAL BACKGROUND")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "experience-box" }, [
@@ -38851,11 +38718,11 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", [
                       _vm._v(
-                        "\n                                " +
+                        "\n                " +
                           _vm._s(
                             _vm.employee.educational_background.elementary_name
                           ) +
-                          "\n                            "
+                          "\n              "
                       )
                     ]),
                     _vm._v(" "),
@@ -38865,7 +38732,7 @@ var render = function() {
                           _vm.employee.educational_background
                             .elementary_period_from
                         ) +
-                          "\n                                -\n                                " +
+                          "\n                -\n                " +
                           _vm._s(
                             _vm.employee.educational_background
                               .elementary_period_to
@@ -38891,11 +38758,11 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", [
                       _vm._v(
-                        "\n                                " +
+                        "\n                " +
                           _vm._s(
                             _vm.employee.educational_background.secondary_name
                           ) +
-                          "\n                            "
+                          "\n              "
                       )
                     ]),
                     _vm._v(" "),
@@ -38905,7 +38772,7 @@ var render = function() {
                           _vm.employee.educational_background
                             .secondary_period_from
                         ) +
-                          "\n                                -\n                                " +
+                          "\n                -\n                " +
                           _vm._s(
                             _vm.employee.educational_background
                               .secondary_period_to
@@ -38927,7 +38794,7 @@ var render = function() {
                   _c("div", { staticClass: "timeline-content" }, [
                     _c("a", { staticClass: "name", attrs: { href: "#/" } }, [
                       _vm._v(
-                        "Vocational :\n                                " +
+                        "Vocational :\n                " +
                           _vm._s(
                             _vm.employee.educational_background
                               .vocational_trade_course_name
@@ -38937,12 +38804,12 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", [
                       _vm._v(
-                        "\n                                " +
+                        "\n                " +
                           _vm._s(
                             _vm.employee.educational_background
                               .vocational_education
                           ) +
-                          "\n                            "
+                          "\n              "
                       )
                     ]),
                     _vm._v(" "),
@@ -38952,7 +38819,7 @@ var render = function() {
                           _vm.employee.educational_background
                             .vocational_trade_course_period_from
                         ) +
-                          "\n                                -\n                                " +
+                          "\n                -\n                " +
                           _vm._s(
                             _vm.employee.educational_background
                               .vocational_trade_course_period_to
@@ -38972,7 +38839,7 @@ var render = function() {
                   _c("div", { staticClass: "timeline-content" }, [
                     _c("a", { staticClass: "name", attrs: { href: "#/" } }, [
                       _vm._v(
-                        "College :\n                                " +
+                        "College :\n                " +
                           _vm._s(
                             _vm.employee.educational_background.college_name
                           )
@@ -38981,12 +38848,12 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", [
                       _vm._v(
-                        "\n                                " +
+                        "\n                " +
                           _vm._s(
                             _vm.employee.educational_background
                               .college_education
                           ) +
-                          "\n                            "
+                          "\n              "
                       )
                     ]),
                     _vm._v(" "),
@@ -38996,7 +38863,7 @@ var render = function() {
                           _vm.employee.educational_background
                             .college_period_from
                         ) +
-                          "\n                                -\n                                " +
+                          "\n                -\n                " +
                           _vm._s(
                             _vm.employee.educational_background
                               .college_period_to
@@ -39069,8 +38936,8 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card-body" }, [
-      _c("h3", { staticClass: "card-title" }, [
-        _vm._v("\n            Family Background\n        ")
+      _c("div", { staticClass: "alert alert-warning text-center" }, [
+        _vm._v("FAMILY BACKGROUND")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "table-responsive" }, [
@@ -39082,37 +38949,37 @@ var render = function() {
               ? _c("tr", [
                   _c("td", { staticClass: "text-capitalize" }, [
                     _vm._v(
-                      "\n                            " +
+                      "\n              " +
                         _vm._s(
                           _vm.employee.family_background.mother_firstname
                         ) +
-                        "\n                            " +
+                        "\n              " +
                         _vm._s(
                           _vm.employee.family_background.mother_maidenname
                         ) +
-                        "\n                            " +
+                        "\n              " +
                         _vm._s(
                           _vm.employee.family_background.mother_middlename
                         ) +
-                        "\n                            " +
+                        "\n              " +
                         _vm._s(_vm.employee.family_background.mother_lastname) +
-                        "\n                            " +
+                        "\n              " +
                         _vm._s(
                           _vm.employee.family_background.mother_extension
                         ) +
-                        "\n                        "
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
                   _c("td", [
                     _vm._v(
-                      "\n                            " +
+                      "\n              " +
                         _vm._s(
                           _vm.employee.family_background.mother_lastname
                             ? "Mother"
                             : ""
                         ) +
-                        "\n                        "
+                        "\n            "
                     )
                   ])
                 ])
@@ -39122,33 +38989,33 @@ var render = function() {
               ? _c("tr", [
                   _c("td", { staticClass: "text-capitalize" }, [
                     _vm._v(
-                      "\n                            " +
+                      "\n              " +
                         _vm._s(
                           _vm.employee.family_background.father_firstname
                         ) +
-                        "\n                            " +
+                        "\n              " +
                         _vm._s(
                           _vm.employee.family_background.father_middlename
                         ) +
-                        "\n                            " +
+                        "\n              " +
                         _vm._s(_vm.employee.family_background.father_lastname) +
-                        "\n                            " +
+                        "\n              " +
                         _vm._s(
                           _vm.employee.family_background.father_extension
                         ) +
-                        "\n                        "
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
                   _c("td", [
                     _vm._v(
-                      "\n                            " +
+                      "\n              " +
                         _vm._s(
                           _vm.employee.family_background.father_lastname
                             ? "Father"
                             : ""
                         ) +
-                        "\n                        "
+                        "\n            "
                     )
                   ])
                 ])
@@ -39158,34 +39025,34 @@ var render = function() {
               ? _c("tr", [
                   _c("td", { staticClass: "text-capitalize" }, [
                     _vm._v(
-                      "\n                            " +
+                      "\n              " +
                         _vm._s(
                           _vm.employee.family_background.spouse_firstname
                         ) +
-                        "\n                            " +
+                        "\n              " +
                         _vm._s(
                           _vm.employee.family_background.spouse_middlename
                         ) +
-                        "\n                            " +
+                        "\n              " +
                         _vm._s(_vm.employee.family_background.spouse_lastname) +
-                        "\n                            " +
+                        "\n              " +
                         _vm._s(
                           _vm.employee.family_background.spouse_extension
                         ) +
-                        "\n                        "
+                        "\n            "
                     )
                   ]),
                   _vm._v(" "),
                   _vm.employee.family_background.spouse_lastname
                     ? _c("td", [
                         _vm._v(
-                          "\n                            " +
+                          "\n              " +
                             _vm._s(
                               _vm.employee.family_background.spouse_lastname
                                 ? "Spouse"
                                 : ""
                             ) +
-                            "\n                        "
+                            "\n            "
                         )
                       ])
                     : _vm._e()
@@ -39234,8 +39101,8 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card-body" }, [
-      _c("h3", { staticClass: "card-title" }, [
-        _vm._v("\n            Government Issued Numbers\n        ")
+      _c("div", { staticClass: "alert alert-warning text-center" }, [
+        _vm._v("\n      GOVERNMENT ISSUED NUMBERS\n    ")
       ]),
       _vm._v(" "),
       _c("ul", { staticClass: "personal-info" }, [
@@ -39260,9 +39127,9 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "text" }, [
             _vm._v(
-              "\n                    " +
+              "\n          " +
                 _vm._s(_vm.employee.gsis_policy_no || "N/A") +
-                "\n                "
+                "\n        "
             )
           ])
         ]),
@@ -39280,9 +39147,9 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "text" }, [
             _vm._v(
-              "\n                    " +
+              "\n          " +
                 _vm._s(_vm.employee.philhealth_no || "N/A") +
-                "\n                "
+                "\n        "
             )
           ])
         ]),
@@ -39330,9 +39197,14 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card-body" }, [
-      _c("h3", { staticClass: "card-title" }, [
-        _vm._v("\n            GOVERNMENT ISSUED ID\n        ")
-      ]),
+      _c(
+        "div",
+        {
+          staticClass: "alert alert-warning text-center",
+          attrs: { role: "alert" }
+        },
+        [_vm._v("\n      GOVERNMENT ISSUED ID\n    ")]
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "table-responsive" }, [
         _c("table", { staticClass: "table table-nowrap" }, [
@@ -39361,23 +39233,13 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", { staticClass: "text-sm" }, [
-          _vm._v(
-            "\n                            Government Issued ID\n                        "
-          )
-        ]),
+        _c("th", { staticClass: "text-sm" }, [_vm._v("Government Issued ID")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-sm" }, [
-          _vm._v(
-            "\n                            ID/License/Passport No.\n                        "
-          )
+          _vm._v("ID/License/Passport No.")
         ]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-sm" }, [
-          _vm._v(
-            "\n                            Date/Place of Issuance\n                        "
-          )
-        ])
+        _c("th", { staticClass: "text-sm" }, [_vm._v("Date/Place of Issuance")])
       ])
     ])
   }
@@ -39560,9 +39422,9 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card-body" }, [
-      _c("h3", { staticClass: "card-title" }, [
+      _c("div", { staticClass: "alert alert-warning text-center" }, [
         _vm._v(
-          "\n            LEARNING AND DEVELOPMENT (L&D) INTERVENTIONS/TRAINING\n            PROGRAMS ATTENDED\n        "
+          "\n      LEARNING AND DEVELOPMENT (L&D) INTERVENTIONS/TRAINING PROGRAMS\n      ATTENDED\n    "
         )
       ]),
       _vm._v(" "),
@@ -39581,9 +39443,9 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [
                   _vm._v(
-                    "\n                            " +
+                    "\n              " +
                       _vm._s(programAttained.date_of_attendance_from) +
-                      "\n                        "
+                      "\n            "
                   )
                 ]),
                 _vm._v(" "),
@@ -39612,21 +39474,13 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", { staticClass: "text-sm" }, [
-          _vm._v(
-            "\n                            TRAINING PROGRAMS\n                        "
-          )
-        ]),
+        _c("th", { staticClass: "text-sm" }, [_vm._v("TRAINING PROGRAMS")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-sm" }, [_vm._v("FROM")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-sm" }, [_vm._v("TO")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-sm" }, [
-          _vm._v(
-            "\n                            NUMBES OF HOURS\n                        "
-          )
-        ]),
+        _c("th", { staticClass: "text-sm" }, [_vm._v("NUMBES OF HOURS")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-sm" }, [_vm._v("TYPE OF LD")]),
         _vm._v(" "),
@@ -39658,8 +39512,8 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card-body" }, [
-      _c("h3", { staticClass: "card-title" }, [
-        _vm._v("\n            OTHER INFORMATION\n        ")
+      _c("div", { staticClass: "alert alert-warning text-center" }, [
+        _vm._v("OTHER INFORMATION")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "table-responsive" }, [
@@ -39695,21 +39549,15 @@ var staticRenderFns = [
     return _c("thead", [
       _c("tr", [
         _c("th", { staticClass: "text-sm" }, [
-          _vm._v(
-            "\n                            SPECIAL SKILLS and HOBBIES\n                        "
-          )
+          _vm._v("SPECIAL SKILLS and HOBBIES")
         ]),
         _vm._v(" "),
         _c("th", { staticClass: "text-sm" }, [
-          _vm._v(
-            "\n                            NON-ACADEMIC DISTINCTIONS/RECOGNITION\n                        "
-          )
+          _vm._v("NON-ACADEMIC DISTINCTIONS/RECOGNITION")
         ]),
         _vm._v(" "),
         _c("th", { staticClass: "text-sm" }, [
-          _vm._v(
-            "\n                            MEMBERSHIP IN ASSOCIATION/ORGANIZATION\n                        "
-          )
+          _vm._v("MEMBERSHIP IN ASSOCIATION/ORGANIZATION")
         ])
       ])
     ])
@@ -39738,9 +39586,14 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card-body" }, [
-      _c("h3", { staticClass: "card-title" }, [
-        _vm._v("\n            Personal Informations\n        ")
-      ]),
+      _c(
+        "div",
+        {
+          staticClass: "alert alert-warning text-bold text-center",
+          attrs: { role: "alert" }
+        },
+        [_vm._v("\n      PERSONAL INFORMATION\n    ")]
+      ),
       _vm._v(" "),
       _c("ul", { staticClass: "personal-info" }, [
         _c("div", { staticClass: "row" }, [
@@ -39750,9 +39603,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.lastname || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -39764,11 +39617,11 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "text col-auto" }, [
             _c("li", [
-              _c("div", { staticClass: "\n                            text" }, [
+              _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.firstname || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -39782,9 +39635,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.middlename || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -39798,11 +39651,11 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "text col-auto" }, [
             _c("li", [
-              _c("div", { staticClass: "\n                            text" }, [
+              _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.extension || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -39818,9 +39671,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.date_birth || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -39836,9 +39689,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.place_birth || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -39848,13 +39701,13 @@ var render = function() {
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-lg-6 title" }, [_vm._v("Citizenship")]),
           _vm._v(" "),
-          _c("div", { staticClass: " col-auto" }, [
+          _c("div", { staticClass: "col-auto" }, [
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.citizenship || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -39868,9 +39721,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.sex || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -39884,9 +39737,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.height || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -39900,9 +39753,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.weight || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -39916,9 +39769,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.blood_type || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -39934,9 +39787,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.civil_status || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -39952,9 +39805,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.telephone_no || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -39970,9 +39823,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.mobile_no || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -39988,9 +39841,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.email || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -40004,9 +39857,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.trans_no || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -40022,9 +39875,9 @@ var render = function() {
             _c("li", [
               _c("div", { staticClass: "text" }, [
                 _vm._v(
-                  "\n                            " +
+                  "\n              " +
                     _vm._s(_vm.employee.agency_employee_no || "N/A") +
-                    "\n                        "
+                    "\n            "
                 )
               ])
             ])
@@ -40058,8 +39911,8 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card-body" }, [
-      _c("h3", { staticClass: "card-title" }, [
-        _vm._v("\n            REFERENCES\n        ")
+      _c("div", { staticClass: "alert alert-warning text-center" }, [
+        _vm._v("REFERENCES")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "table-responsive" }, [
@@ -40095,11 +39948,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "text-sm" }, [_vm._v("ADDRESS")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-sm" }, [
-          _vm._v(
-            "\n                            CONTACT NUMBER\n                        "
-          )
-        ])
+        _c("th", { staticClass: "text-sm" }, [_vm._v("CONTACT NUMBER")])
       ])
     ])
   }
@@ -40127,8 +39976,8 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card-body" }, [
-      _c("h3", { staticClass: "card-title" }, [
-        _vm._v("\n            Voluntary Work\n        ")
+      _c("div", { staticClass: "alert alert-warning text-center" }, [
+        _vm._v("VOLUTARY WORK")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "table-responsive" }, [
@@ -40164,21 +40013,13 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", { staticClass: "text-sm" }, [
-          _vm._v(
-            "\n                            NAME OF ORGANIZATION\n                        "
-          )
-        ]),
+        _c("th", { staticClass: "text-sm" }, [_vm._v("NAME OF ORGANIZATION")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-sm" }, [_vm._v("FROM")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-sm" }, [_vm._v("TO")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-sm" }, [
-          _vm._v(
-            "\n                            NUMBER OF HOURS\n                        "
-          )
-        ]),
+        _c("th", { staticClass: "text-sm" }, [_vm._v("NUMBER OF HOURS")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-sm" }, [_vm._v("POSITION")])
       ])
@@ -40208,8 +40049,8 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "card-body" }, [
-      _c("h3", { staticClass: "card-title" }, [
-        _vm._v("\n            Work Experience\n        ")
+      _c("div", { staticClass: "alert alert-warning text-center" }, [
+        _vm._v("WORK EXPERIENCE")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "experience-box" }, [
@@ -40225,16 +40066,14 @@ var render = function() {
                   _c("a", { staticClass: "name", attrs: { href: "#" } }, [
                     _vm._v(
                       _vm._s(experience.position_title) +
-                        " at\n                                " +
+                        " at " +
                         _vm._s(experience.office)
                     )
                   ]),
                   _vm._v(" "),
                   _c("span", { staticClass: "time" }, [
                     _vm._v(
-                      _vm._s(experience.from) +
-                        " -\n                                " +
-                        _vm._s(experience.to)
+                      _vm._s(experience.from) + " - " + _vm._s(experience.to)
                     )
                   ])
                 ])
@@ -40404,7 +40243,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Basic Education/Degree/Course")])
+                  _c("span", [_vm._v("BASIC EDUCATION/DEGREE/COURSE")])
                 ]
               )
             ]),
@@ -40462,7 +40301,7 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Period of Attendance(From)")])
+                  _c("span", [_vm._v("PERIOD OF ATTENDANCE(FROM)")])
                 ]
               )
             ]),
@@ -40508,7 +40347,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Period of Attendance(To)")])
+                  _c("span", [_vm._v("PERIOD OF ATTENDANCE(TO)")])
                 ]
               ),
               _vm._v(" "),
@@ -40627,7 +40466,7 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _c("span", [_vm._v("Year Graduated")])
+                    _c("span", [_vm._v("YEAR GRADUATED")])
                   ]
                 ),
                 _vm._v(" "),
@@ -40786,7 +40625,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Basic Education/Degree/Course")])
+                  _c("span", [_vm._v("BASIC EDUCATION/DEGREE/COURSE")])
                 ]
               )
             ]),
@@ -40836,7 +40675,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Period Of Attendanec(From)")])
+                  _c("span", [_vm._v("PERIOD OF ATTENDANCE(FROM)")])
                 ]
               ),
               _vm._v(" "),
@@ -40890,7 +40729,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Period Of Attendance(To)")])
+                  _c("span", [_vm._v("PERIOD OF ATTENDANCE(TO)")])
                 ]
               ),
               _vm._v(" "),
@@ -41003,7 +40842,7 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _c("span", [_vm._v("Year Graduated")])
+                    _c("span", [_vm._v("YEAR GRADUATED")])
                   ]
                 ),
                 _vm._v(" "),
@@ -41160,7 +40999,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Basic Education/Degree/Course")])
+                  _c("span", [_vm._v("BASIC EDUCATION/DEGREE/COURSE")])
                 ]
               )
             ]),
@@ -41210,7 +41049,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Period of Attendance(From)")])
+                  _c("span", [_vm._v("PERIOD OF ATTENDANCE(FROM)")])
                 ]
               ),
               _vm._v(" "),
@@ -41264,7 +41103,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Period of Attendance(To)")])
+                  _c("span", [_vm._v("PERIOD OF ATTENDANCE(TO)")])
                 ]
               ),
               _vm._v(" "),
@@ -41376,7 +41215,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Year Graduated")])
+                  _c("span", [_vm._v("YEAR GRADUATED")])
                 ]
               ),
               _vm._v(" "),
@@ -41527,7 +41366,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Basic Education//Degree/Course")])
+                  _c("span", [_vm._v("BASIC EDUCATION/DEGREE/COURSE")])
                 ]
               )
             ]),
@@ -41574,7 +41413,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Period Of Attendance(From)")])
+                  _c("span", [_vm._v("PERIOD OF ATTENDANCE(FROM)")])
                 ]
               ),
               _vm._v(" "),
@@ -41621,7 +41460,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Period Of Attendance(To)")])
+                  _c("span", [_vm._v("PERIOD OF ATTENDANCE(TO)")])
                 ]
               ),
               _vm._v(" "),
@@ -41739,7 +41578,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Year Graduated")])
+                  _c("span", [_vm._v("YEAR GRADUATED")])
                 ]
               ),
               _vm._v(" "),
@@ -41893,7 +41732,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Basic Education/Degree/Course")])
+                  _c("span", [_vm._v("BASIC EDUCATION/DEGREE/COURSE")])
                 ]
               )
             ]),
@@ -41943,7 +41782,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Period of Attendance(From)")])
+                  _c("span", [_vm._v("PERIOD OF ATTENDANCE(FROM)")])
                 ]
               ),
               _vm._v(" "),
@@ -41997,7 +41836,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Period Of Attendance(To)")])
+                  _c("span", [_vm._v("PERIOD OF ATTENDANCE(TO)")])
                 ]
               ),
               _vm._v(" "),
@@ -42104,7 +41943,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Year Graduated")])
+                  _c("span", [_vm._v("YEAR GRADUATED")])
                 ]
               ),
               _vm._v(" "),
@@ -42328,7 +42167,7 @@ var render = function() {
           attrs: { id: _vm.isComplete ? "familyBackground" : "" }
         },
         [
-          _c("div", { staticClass: "form-group mt-3" }, [
+          _c("div", { staticClass: "form-group mt-4" }, [
             _c(
               "label",
               {
@@ -42637,7 +42476,7 @@ var render = function() {
                           ]
                         ),
                         _vm._v(" "),
-                        _c("span", [_vm._v("Extension Name")])
+                        _c("span", [_vm._v("EXTENSION NAME")])
                       ]
                     )
                   ])
@@ -43243,7 +43082,7 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  _c("span", [_vm._v("Extension Name")])
+                  _c("span", [_vm._v("EXTENSION NAME")])
                 ]
               )
             ])
@@ -43482,7 +43321,14 @@ var staticRenderFns = [
           attrs: { role: "alert" }
         },
         [_vm._v("\n            SPOUSE INFORMATION\n          ")]
-      )
+      ),
+      _vm._v(" "),
+      _c("p", { staticClass: "text-danger" }, [
+        _vm._v("\n            *\n            "),
+        _c("span", { staticClass: "text-dark text-bold" }, [
+          _vm._v(" indicates required field")
+        ])
+      ])
     ])
   },
   function() {
@@ -43515,7 +43361,14 @@ var staticRenderFns = [
           attrs: { role: "alert" }
         },
         [_vm._v("\n          CHILDREN INFORMATION\n        ")]
-      )
+      ),
+      _vm._v(" "),
+      _c("p", { staticClass: "text-danger" }, [
+        _vm._v("\n          * "),
+        _c("span", { staticClass: "text-dark text-bold" }, [
+          _vm._v(" indicates required field")
+        ])
+      ])
     ])
   },
   function() {
@@ -43931,7 +43784,7 @@ var render = function() {
                       ]
                     ),
                     _vm._v(" "),
-                    _c("span", [_vm._v("Extension Name")])
+                    _c("span", [_vm._v("EXTENSION NAME")])
                   ]
                 ),
                 _vm._v(" "),
@@ -45486,7 +45339,8 @@ var render = function() {
                       ],
                       staticClass: "form-control",
                       staticStyle: {
-                        "text-transform": "uppercase outline: none",
+                        "text-transform": "uppercase",
+                        outline: "none",
                         "box-shadow": "0px 0px 0px transparent"
                       },
                       attrs: {
@@ -45799,7 +45653,14 @@ var staticRenderFns = [
           attrs: { role: "alert" }
         },
         [_vm._v("\n          PERSONAL INFORMATION\n        ")]
-      )
+      ),
+      _vm._v(" "),
+      _c("p", { staticClass: "text-danger" }, [
+        _vm._v("\n          * "),
+        _c("span", { staticClass: "text-dark text-bold" }, [
+          _vm._v(" indicates required field")
+        ])
+      ])
     ])
   },
   function() {
@@ -45888,7 +45749,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", [
-      _vm._v("Citizenship"),
+      _vm._v("CITIZENSHIP"),
       _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
   },
@@ -45921,7 +45782,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", [
-      _vm._v("Province"),
+      _vm._v("PROVINCE"),
       _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
   },
@@ -45930,7 +45791,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", [
-      _vm._v("City"),
+      _vm._v("CITY"),
       _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
   },
@@ -45939,7 +45800,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", [
-      _vm._v("Barangay"),
+      _vm._v("BARANGAY"),
       _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
   },
@@ -45957,7 +45818,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", [
-      _vm._v("Province"),
+      _vm._v("PROVINCE"),
       _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
   },
@@ -45966,7 +45827,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", [
-      _vm._v("City"),
+      _vm._v("CITY"),
       _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
   },
@@ -45975,7 +45836,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", [
-      _vm._v("Barangay"),
+      _vm._v("BARANGAY"),
       _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
   },

@@ -9,7 +9,6 @@
             id="lastname"
             style="outline: none; box-shadow: 0px 0px 0px transparent"
             class="form-control text-uppercase"
-            placeholder="Enter Last Name"
             v-model="employee.lastName"
             :class="errors.hasOwnProperty('lastName') ? 'is-invalid' : ''"
           />
@@ -23,7 +22,6 @@
             class="form-control text-uppercase"
             style="outline: none; box-shadow: 0px 0px 0px transparent"
             v-model="employee.firstName"
-            placeholder="Enter First Name"
             :class="errors.hasOwnProperty('firstName') ? 'is-invalid' : ''"
           />
           <span>FIRST NAME<span class="text-danger">*</span></span>
@@ -38,7 +36,6 @@
             v-model="employee.middleName"
             class="form-control text-uppercase"
             style="outline: none; box-shadow: 0px 0px 0px transparent"
-            placeholder="Enter Middle Name"
           />
           <span>MIDDLE NAME</span>
         </label>
