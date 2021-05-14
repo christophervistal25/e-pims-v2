@@ -36,10 +36,9 @@ class StepIncrementController extends Controller
      */
     public function index()
     {
-        $employee = Employee::with(['plantilla', 'plantilla.position'])->get();
-        return view('StepIncrement.StepIncrement', compact('employee'));
-        return $dataTable->render('StepIncrement');
         
+        $employee = Employee::whereDoesntHave('step')->with(['plantilla', 'plantilla.position'])->get();
+        return view('StepIncrement.StepIncrement', compact('employee'));
     }
 
     /**
