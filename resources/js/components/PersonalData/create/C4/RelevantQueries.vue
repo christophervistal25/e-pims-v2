@@ -20,6 +20,7 @@
                 :id="isComplete ? 'relevantQueries' : ''"
             >
                 <div class="card-body">
+                    <p>Indicate <strong>N/A </strong>if not applicable</p>
                     <!-- {{-- BEGIN CONTENT OF RELEVANT QUERIES --}} -->
                     <table class="table table-bordered">
                         <!-- {{-- BEGIN OF DATA --}} -->

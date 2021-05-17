@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="card-body">
-      <div class="alert alert-warning text-center">OTHER INFORMATION</div>
+      <div class="alert alert-warning text-center">
+        <strong>OTHER INFORMATION</strong>
+      </div>
       <div class="table-responsive">
         <table class="table table-nowrap">
           <thead>

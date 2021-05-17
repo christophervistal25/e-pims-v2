@@ -2,7 +2,7 @@
   <div>
     <div class="card-body">
       <div class="alert alert-warning text-center">
-        GOVERNMENT ISSUED NUMBERS
+        <strong>GOVERNMENT ISSUED NUMBERS</strong>
       </div>
       <ul class="personal-info">
         <li>

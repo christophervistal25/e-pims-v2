@@ -2,7 +2,7 @@
   <div>
     <div class="card-body">
       <div class="alert alert-warning text-center" role="alert">
-        GOVERNMENT ISSUED ID
+        <strong>GOVERNMENT ISSUED ID</strong>
       </div>
       <div class="table-responsive">
         <table class="table table-nowrap">

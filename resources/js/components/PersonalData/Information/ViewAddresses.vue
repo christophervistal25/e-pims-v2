@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="card-body">
-      <div class="alert alert-warning text-center" role="alert">ADDRESS</div>
+      <div class="alert alert-warning text-center" role="alert">
+        <strong>ADDRESS</strong>
+      </div>
       <hr />
       <h5 class="section-title text-center text-sm">RESIDENTIAL ADDRESS</h5>
       <hr />

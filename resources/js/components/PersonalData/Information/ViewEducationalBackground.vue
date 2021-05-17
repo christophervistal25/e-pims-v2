@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="card-body">
-      <div class="alert alert-warning text-center">EDUCATIONAL BACKGROUND</div>
+      <div class="alert alert-warning text-center">
+        <strong>EDUCATIONAL BACKGROUND</strong>
+      </div>
       <div class="experience-box">
         <ul class="experience-list">
           <li

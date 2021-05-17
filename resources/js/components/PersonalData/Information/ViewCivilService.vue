@@ -2,7 +2,7 @@
   <div>
     <div class="card-body">
       <div class="alert alert-warning text-center">
-        CIVIL SERVICE ELIGIBILITY
+        <strong>CIVIL SERVICE ELIGIBILITY</strong>
       </div>
       <div class="table-responsive">
         <table class="table table-nowrap">

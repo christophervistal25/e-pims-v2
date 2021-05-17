@@ -23,15 +23,13 @@
         :id="isComplete ? 'information' : ''"
       >
         <div class="p-3">
+          <p>Indicate <strong>N/A </strong>if not applicable</p>
           <div
             class="alert alert-secondary text-center font-weight-bold"
             role="alert"
           >
             PERSONAL INFORMATION
           </div>
-          <p class="text-danger">
-            * <span class="text-dark text-bold"> indicates required field</span>
-          </p>
         </div>
         <div class="row pr-3 pl-3">
           <div class="col-lg-3">
@@ -141,12 +139,7 @@
             </p>
           </div>
           <div class="col-lg-1">
-            <button
-              class="btn btn-sm btn-info rounded-circle shadow mt-1"
-              @click="openNameExtensionModal"
-            >
-              <i class="fas fa-plus text-sm"></i>
-            </button>
+            <name-extension-modal></name-extension-modal>
           </div>
         </div>
         <div class="row pl-3 pr-3">
@@ -802,15 +795,10 @@
         <div class="clearfix"></div>
       </div>
     </div>
-    <name-extension-modal
-      :shownameextension="isShowNameExtension"
-      @nameext-modal-dismiss="closeNameExtensionModal"
-    ></name-extension-modal>
   </div>
 </template>
 <script>
 import NameExtensionModal from "./NameExtensionModal.vue";
-
 import "vue-select/dist/vue-select.css";
 import _ from "lodash";
 export default {

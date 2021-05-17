@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="card-body">
-      <div class="alert alert-warning text-center">FAMILY BACKGROUND</div>
+      <div class="alert alert-warning text-center">
+        <strong>FAMILY BACKGROUND</strong>
+      </div>
       <div class="table-responsive">
         <table class="table table-nowrap">
           <thead>

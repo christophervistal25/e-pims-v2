@@ -23,6 +23,7 @@
         :id="isComplete ? 'familyBackground' : ''"
       >
         <div class="form-group mt-4">
+          <p class="ml-4">Indicate <strong>N/A </strong>if not applicable</p>
           <label for="spouse" style="transform: scale(0.8)" class="text-lg">
             <input
               id="spouse"
@@ -148,12 +149,13 @@
               </label>
             </div>
             <div class="col-lg-1">
-              <button
+              <!-- <button
                 class="btn btn-info rounded-circle btn-sm shadow mt-1"
                 @click="openSpouseNameExtensionModal"
               >
                 <i class="fas fa-plus text-sm"></i>
-              </button>
+              </button> -->
+              <name-extension-modal></name-extension-modal>
             </div>
           </div>
           <div class="row pl-3 pr-3">
@@ -233,9 +235,6 @@
           >
             CHILDREN INFORMATION
           </div>
-          <p class="text-danger">
-            * <span class="text-dark text-bold"> indicates required field</span>
-          </p>
         </div>
         <div class="p-2">
           <table class="table table-bordered">
@@ -413,12 +412,7 @@
             </label>
           </div>
           <div class="col-lg-1">
-            <button
-              class="btn btn-info rounded-circle btn-sm shadow mt-1"
-              @click="openFatherNameExtensionModal"
-            >
-              <i class="fas fa-plus text-sm"></i>
-            </button>
+            <name-extension-modal></name-extension-modal>
           </div>
         </div>
 
@@ -519,37 +513,18 @@
         </div>
       </div>
     </div>
-    <spouse-name-extension-modal
-      :showspousenameextension="isShowSpouseNameExtension"
-      @spousenameext-modal-dismiss="closeSpouseNameExtensionModal"
-    >
-    </spouse-name-extension-modal>
-    <father-name-extension-modal
-      :showfathernameextension="isShowFatherNameExtension"
-      @fatherext-modal-dismiss="closeFatherNameExtensionModal"
-    >
-    </father-name-extension-modal>
   </div>
 </template>
 
 <script>
-import SpouseNameExtensionModal from "./SpouseNameExtensionModal.vue";
 import "vue-select/dist/vue-select.css";
-import FatherNameExtensionModal from "./FatherNameExtensionModal.vue";
-
+import NameExtensionModal from "./NameExtensionModal.vue";
 export default {
-  components: { SpouseNameExtensionModal, FatherNameExtensionModal },
+  components: {
+    NameExtensionModal,
+  },
   props: {
     show_panel: {
-      required: true,
-    },
-    showspousenameextension: {
-      required: true,
-    },
-    showfathernameextension: {
-      required: true,
-    },
-    data: {
       required: true,
     },
   },

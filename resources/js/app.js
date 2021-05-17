@@ -14,10 +14,20 @@ Vue.component(
     "designationmodal",
     require("./components/Employee/DesignationModal.vue").default
 );
+
 Vue.component(
     "assignmentmodal",
     require("./components/Employee/AssignmentModal.vue").default
 );
+
+Vue.component(
+    "name-extension-modal",
+    require("./components/PersonalData/create/C1/NameExtensionModal.vue").default
+);
+
+
+
+
 // Personal Information Components
 Vue.component(
     "personal-data-sheet",

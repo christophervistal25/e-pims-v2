@@ -2,8 +2,10 @@
   <div>
     <div class="card-body">
       <div class="alert alert-warning text-center">
-        LEARNING AND DEVELOPMENT (L&amp;D) INTERVENTIONS/TRAINING PROGRAMS
-        ATTENDED
+        <strong
+          >LEARNING AND DEVELOPMENT (L&amp;D) INTERVENTIONS/TRAINING PROGRAMS
+          ATTENDED</strong
+        >
       </div>
 
       <div class="table-responsive">

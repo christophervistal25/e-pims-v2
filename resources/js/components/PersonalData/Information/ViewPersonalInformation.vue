@@ -2,7 +2,7 @@
   <div>
     <div class="card-body">
       <div class="alert alert-warning text-bold text-center" role="alert">
-        PERSONAL INFORMATION
+        <strong>PERSONAL INFORMATION</strong>
       </div>
       <ul class="personal-info">
         <div class="row">

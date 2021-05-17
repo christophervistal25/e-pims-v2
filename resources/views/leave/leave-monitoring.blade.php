@@ -62,7 +62,7 @@
     <div class="col-lg-9">
         <div class="card shadow">
             <div class="card-body">
-                <h3 class="card-title">Leave Monitoring Index</h3>
+                <div class="alert alert-secondary text-center"><strong>LEAVE MONITORING INDEX</strong></div>
                 <hr>
                 <h6 class="text-sm">Leave Index Information</h6>
                 <div class="row">

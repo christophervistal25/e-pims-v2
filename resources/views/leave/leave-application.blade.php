@@ -61,7 +61,8 @@
     <div class="col-lg-9">
         <div class="card shadow">
             <div class="card-body">
-                <h3 class="card-title">Leave Application Filing</h3>
+                <div class="alert alert-secondary text-center"><strong>LEAVE APPLICATION FILING</strong></div>
+                {{-- <h3 class="card-title">Leave Application Filing</h3> --}}
                 <hr>
                 <div class="row">
                     <div class="col-lg-4">

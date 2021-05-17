@@ -1,120 +1,58 @@
 <template>
   <div>
-    <!-- Modal -->
-    <div
-      class="modal fade"
-      :class="shownameextension ? 'show' : ''"
-      id="nameextensionModal"
-      tabindex="-1"
-      role="dialog"
-      :style="shownameextension ? 'padding-right: 15px; display: block;' : ''"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">
-              Add New Extension Name
-            </h5>
-            <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="Close"
+    <div>
+      <v-row justify="center" class="mt-1">
+        <v-dialog v-model="dialog" persistent max-width="600px">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              color="secondary"
+              elevation="10"
+              dark
+              v-bind="attrs"
+              v-on="on"
+              fab
+              x-small
             >
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label>Name Extension</label>
-              <input
-                type="text"
-                class="form-control"
-                v-model="data.extension"
-                :class="
-                  errors.hasOwnProperty('errors') &&
-                  errors.errors.hasOwnProperty('extension')
-                    ? 'is-invalid'
-                    : ''
-                "
-              />
-              <p class="text-danger text-sm">
-                {{
-                  errors.hasOwnProperty("errors")
-                    ? errors.errors.extension[0]
-                    : ""
-                }}
-              </p>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-primary"
-              @click="submitNewNameExt"
-            >
-              <div
-                class="spinner-border spinner-border-sm text-white"
-                v-if="isLoading"
-                role="status"
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </template>
+          <v-card>
+            <v-card-title>
+              <span class="headline"
+                ><strong>Add New Extension Name</strong></span
               >
-                <span class="sr-only">Loading...</span>
-              </div>
-              Save Changes
-            </button>
-            <button
-              @click="dismissModal"
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
+            </v-card-title>
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col cols="12">
+                    <v-text-field
+                      label="Extension Name"
+                      required
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="dialog = false">
+                Close
+              </v-btn>
+              <v-btn color="blue darken-1" text @click="dialog = false">
+                Save
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-row>
     </div>
   </div>
 </template>
 <script>
-import swal from "sweetalert";
 export default {
-  props: ["shownameextension"],
-  data() {
-    return {
-      isLoading: false,
-      data: {
-        extension: "",
-      },
-      errors: {},
-    };
-  },
-  methods: {
-    submitNewNameExt() {
-      this.isLoading = true;
-      window.axios
-        .post("/api/name/extensions/store", this.data)
-        .then((response) => {
-          if (response.staus === 201) {
-            this.isLoading = false;
-            swal({
-              text: "Successfully create a new name extension",
-              icon: "success",
-            });
-            this.$emit("nameext-modal-dismiss", response.data);
-          }
-        })
-        .catch((error) => {
-          this.isLoading = false;
-          this.errors = {};
-          if (error.response.status === 422) {
-            this.erros = error.response.data;
-          }
-        });
-    },
-    dismissModal() {
-      this.$emit("nameext-modal-dismiss");
-    },
-  },
+  data: () => ({
+    dialog: false,
+  }),
 };
 </script>
