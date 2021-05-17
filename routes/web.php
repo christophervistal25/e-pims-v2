@@ -1,5 +1,13 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
+
+Route::view('print-test', 'sample');
+
+Route::get('/print/pds/{employeeId}', 'EmployeePersonalDataSheetPrintController');
+
+
 Route::get('/employee-dashboard', function () {
     return view('employee-dashboard');
 });

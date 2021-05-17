@@ -41,7 +41,7 @@
           >
             <template v-slot:item.actions="{ item }">
               <button
-                class="btn btn-success rounded-circle shadow"
+                class="btn btn-success rounded-circle"
                 v-on:click="editEmployee(item)"
               >
                 <i class="la la-pencil"></i>
@@ -176,7 +176,7 @@ export default {
         },
         {
           text: "Extension",
-          value: "name_extension",
+          value: "extension",
         },
         {
           text: "Position",

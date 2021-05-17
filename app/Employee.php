@@ -55,7 +55,7 @@ class Employee extends Model
         'status'
     ];
 
-    protected $appends = ['fullname', 'permanent_full_address'];
+    protected $appends = ['fullname', 'permanent_full_address', 'residential_province_text', 'residential_city_text', 'residential_barangay_text', 'permanent_province_text', 'permanent_city_text', 'permanent_barangay_text'];
 
 
     public static function boot()
@@ -90,7 +90,41 @@ class Employee extends Model
     {
         return mb_strtoupper("{$this->firstname} {$this->middlename} {$this->lastname} {$this->extension}", 'UTF-8');
     }
+
+    public function getResidentialProvinceTextAttribute()
+    {
+       return Province::find($this->residential_province, 'name')->name ?? 'N/A';
+    }
     
+    public function getResidentialCityTextAttribute()
+    {
+       return City::find($this->residential_city, 'name')->name ?? 'N/A';
+    }
+
+    public function getResidentialBarangayTextAttribute()
+    {
+       return Barangay::find($this->residential_barangay, 'name')->name ?? 'N/A';
+    }
+
+
+    public function getPermanentProvinceTextAttribute()
+    {
+       return Province::find($this->permanent_province, 'name')->name ?? 'N/A';
+    }
+    
+    public function getPermanentCityTextAttribute()
+    {
+       return City::find($this->permanent_city, 'name')->name ?? 'N/A';
+    }
+
+    public function getPermanentBarangayTextAttribute()
+    {
+       return Barangay::find($this->permanent_barangay, 'name')->name ?? 'N/A';
+    }
+
+
+    
+
     public function getPermanentFullAddressAttribute()
     {
         $provinceName = Province::find($this->permanent_province, 'name')->name ?? 'N/A';

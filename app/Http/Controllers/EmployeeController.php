@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Employee;
 use Illuminate\Http\Request;
 use App\Http\Repositories\EmployeeRepository;
 use App\Http\Requests\Employee\NewEmployeeStoreRequest;
 use App\Http\Requests\Employee\OldEmployeeUpdateRequest;
-use App\Employee;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeController extends Controller
 {
@@ -22,6 +23,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
+
         return view('employee.index');
     }
 

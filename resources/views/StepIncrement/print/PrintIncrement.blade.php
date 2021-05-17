@@ -1,5 +1,6 @@
 
 @extends('layouts.app')
+@section('title', 'Print Increment of Employee')
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 {{-- <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}"> --}}

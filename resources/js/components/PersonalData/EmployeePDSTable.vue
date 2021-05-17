@@ -95,16 +95,24 @@
           <template v-slot:item.actions="{ item }">
             <button
               @click="fetchInformation(item.employee_id)"
-              class="btn btn-info btn-sm rounded-circle shadow text-white mr-2"
+              class="btn btn-info rounded-circle text-white mr-2"
             >
-              <i class="fas fa-eye font-weight-bold"></i>
+              <i class="la la-eye font-weight-bold"></i>
             </button>
 
             <a
               :href="`/employee/create/${item.employee_id}/personal/data/sheet`"
-              class="btn btn-primary btn-sm rounded-circle shadow text-white mr-2"
+              class="btn btn-primary rounded-circle text-white mr-2"
             >
-              <i class="fas fa-plus font-weight-bold"></i>
+              <i class="la la-plus font-weight-bold"></i>
+            </a>
+
+            <a
+              :href="`/print/pds/${item.employee_id}`"
+              class="btn btn-primary rounded-circle text-white mr-2"
+              :title="`Generate PDS for ${item.fullname}`"
+            >
+              <i class="la la-file font-weight-bold"></i>
             </a>
           </template>
         </v-data-table>
