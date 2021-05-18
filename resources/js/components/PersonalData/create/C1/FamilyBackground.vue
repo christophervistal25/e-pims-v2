@@ -375,14 +375,14 @@
             </p>
           </div>
           <div class="col-lg-2">
-            <label for="snameexten" class="form-group has-float-label mb-0">
+            <label for="fnameexten" class="form-group has-float-label mb-0">
               <select
                 type="text"
-                id="snameexten"
-                v-model="familyBackground.snameexten"
+                id="fnameexten"
+                v-model="familyBackground.fnameexten"
                 class="form-control custom-select"
                 :class="
-                  !errors.hasOwnProperty('snameexten') ? '' : 'is-invalid'
+                  !errors.hasOwnProperty('fnameexten') ? '' : 'is-invalid'
                 "
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               >
@@ -390,19 +390,19 @@
                   Please Select Extension Name
                 </option>
                 <option
-                  :selected="familyBackground.snameexten === 'JR'"
+                  :selected="familyBackground.fnameexten === 'JR'"
                   value="JR"
                 >
                   JR
                 </option>
                 <option
-                  :selected="familyBackground.snameexten === 'SR'"
+                  :selected="familyBackground.fnameexten === 'SR'"
                   value="SR"
                 >
                   SR
                 </option>
                 <option
-                  :selected="familyBackground.nameExtension === 'III'"
+                  :selected="familyBackground.fnameexten === 'III'"
                   value="III"
                 >
                   III
