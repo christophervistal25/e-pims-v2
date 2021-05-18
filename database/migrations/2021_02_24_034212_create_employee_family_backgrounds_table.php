@@ -32,7 +32,6 @@ class CreateEmployeeFamilyBackgroundsTable extends Migration
             $table->string('mother_lastname')->nullable();
             $table->string('mother_firstname')->nullable();
             $table->string('mother_middlename')->nullable();
-            $table->string('mother_extension')->nullable();
             $table->timestamps();
         });
     }
