@@ -20,7 +20,8 @@ class SalaryAdjustmentController extends Controller
     {
         $position = Position::select('position_id', 'position_name')->get();
         // $employee = Employee::with(['plantilla', 'plantilla.position'])->get();
-        $employee = Plantilla::select('item_no', 'position_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id')->with('employee:employee_id,firstname,middlename,lastname,extension','positions:position_id,position_name')->get();
+        $salaryAdjustment = SalaryAdjustment::get()->pluck('employee_id')->toArray();
+        $employee = Plantilla::select('item_no', 'position_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id')->with('employee:employee_id,firstname,middlename,lastname,extension','positions:position_id,position_name')->whereNotIn('employee_id', $salaryAdjustment )->get();
         return view('SalaryAdjustment.SalaryAdjustment', compact('employee', 'position'));
     }
 
@@ -38,7 +39,7 @@ class SalaryAdjustmentController extends Controller
                         $btn = "<a title='Edit Salary Adjustment' href='". route('salary-adjustment.edit', $row->id) . "' class='rounded-circle edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
                         $btn = $btn."<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
                         ";
-                            return $btn;    
+                            return $btn;
                     })
                     ->rawColumns(['action'])
                     ->make(true);
@@ -78,7 +79,7 @@ class SalaryAdjustmentController extends Controller
         $salaryAdjustment = new SalaryAdjustment;
         $salaryAdjustment->employee_id                = $request['employeeId'];
         $salaryAdjustment->item_no                    = $request['itemNo'];
-        $salaryAdjustment->position_id                = $request['positionId'];  
+        $salaryAdjustment->position_id                = $request['positionId'];
         $salaryAdjustment->date_adjustment            = $request['dateAdjustment'];
         $salaryAdjustment->sg_no                      = $request['salaryGrade'];
         $salaryAdjustment->step_no                    = $request['stepNo'];
@@ -108,7 +109,7 @@ class SalaryAdjustmentController extends Controller
      */
     public function edit($id)
     {
-        
+
         $employee = Employee::select('employee_id', 'firstname', 'lastname', 'middlename')->get();
         $position = Position::select('position_id', 'position_name')->get();
         $salaryAdjustment = SalaryAdjustment::find($id);
@@ -138,7 +139,7 @@ class SalaryAdjustmentController extends Controller
         $salaryAdjustment                             =  SalaryAdjustment::find($id);
         $salaryAdjustment->employee_id                = $request['employeeName'];
         $salaryAdjustment->item_no                    = $request['itemNo'];
-        $salaryAdjustment->position_id                = $request['position'];  
+        $salaryAdjustment->position_id                = $request['position'];
         $salaryAdjustment->date_adjustment            = $request['dateAdjustment'];
         $salaryAdjustment->sg_no                      = $request['salaryGrade'];
         $salaryAdjustment->step_no                    = $request['stepNo'];
