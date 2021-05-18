@@ -219,7 +219,6 @@ $(document).ready(function() {
             data: data,
             success: function(response) {
                 if (response.success) {
-                    console.log(e);
                     $("#employeeName")
                         .find('[value="' + empIds + '"]')
                         .remove();

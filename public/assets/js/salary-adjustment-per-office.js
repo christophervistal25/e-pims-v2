@@ -35,30 +35,30 @@
 //     ]
 // });
 
-//     $("#selectAll").click(function() {
-//         // Get all rows with search applied
-//         var rows = table.rows({ search: "applied" }).nodes();
-//         // Check/uncheck checkboxes for all rows in the table
-//         $('input[type="checkbox"]', rows).prop("checked", this.checked);
-//     });
+// $("#selectAll").click(function() {
+//     // Get all rows with search applied
+//     var rows = table.rows({ search: "applied" }).nodes();
+//     // Check/uncheck checkboxes for all rows in the table
+//     $('input[type="checkbox"]', rows).prop("checked", this.checked);
+// });
 
-//     // Handle click on checkbox to set state of "Select all" control
-//     $("#salaryAdjustmentPerOffice tbody").on(
-//         "change",
-//         'input[type="checkbox"]',
-//         function() {
-//             // If checkbox is not checked
-//             if (!this.checked) {
-//                 var el = $("#selectAll").get(0);
-//                 // If "Select all" control is checked and has 'indeterminate' property
-//                 if (el && el.checked && "indeterminate" in el) {
-//                     // Set visual state of "Select all" control
-//                     // as 'indeterminate'
-//                     el.indeterminate = true;
-//                 }
+// // Handle click on checkbox to set state of "Select all" control
+// $("#salaryAdjustmentPerOffice tbody").on(
+//     "change",
+//     'input[type="checkbox"]',
+//     function() {
+//         // If checkbox is not checked
+//         if (!this.checked) {
+//             var el = $("#selectAll").get(0);
+//             // If "Select all" control is checked and has 'indeterminate' property
+//             if (el && el.checked && "indeterminate" in el) {
+//                 // Set visual state of "Select all" control
+//                 // as 'indeterminate'
+//                 el.indeterminate = true;
 //             }
 //         }
-//     );
+//     }
+// );
 // });
 
 $(function() {
@@ -70,6 +70,13 @@ $(function() {
         paging: false,
         info: false,
         bFilter: false,
+        aoColumnDefs: [
+            {
+                orderable: false,
+                aTargets: [0]
+            }
+        ],
+        order: [[1, "asc"]],
         ajax: {
             url: "/salary-adjustment-per-office-list",
             data: function(d) {
@@ -82,21 +89,20 @@ $(function() {
                 name: "checkbox",
                 searchable: false,
                 orderable: false,
-                sortable: false,
-                visible: false
+                sortable: false
             },
-            { data: "employee", name: "employee", visible: false },
-            { data: "plantilla", name: "plantilla", visible: false },
-            { data: "sg_no", name: "sg_no", visible: false },
-            { data: "step_no", name: "step_no", visible: false },
+            { data: "employee", name: "employee", visible: true },
+            { data: "plantilla", name: "plantilla.office_code", visible: true },
+            { data: "sg_no", name: "sg_no", visible: true },
+            { data: "step_no", name: "step_no", visible: true },
             {
                 data: "salary_previous",
                 name: "salary_previous",
-                visible: false
+                visible: true
             },
-            { data: "salary_new", name: "salary_new", visible: false },
-            { data: "salary_diff", name: "salary_diff", visible: false },
-            { data: "action", name: "action", visible: false }
+            { data: "salary_new", name: "salary_new", visible: true },
+            { data: "salary_diff", name: "salary_diff", visible: true },
+            { data: "action", name: "action", visible: true }
         ]
     });
     $("#employeeOffice").change(function(e) {
@@ -110,6 +116,12 @@ $(function() {
                 paging: false,
                 info: false,
                 bFilter: false,
+                aoColumnDefs: [
+                    {
+                        orderable: false,
+                        aTargets: [0]
+                    }
+                ],
                 ajax: {
                     url: "/salary-adjustment-per-office-list",
                     data: function(d) {
@@ -124,14 +136,22 @@ $(function() {
                         orderable: false,
                         sortable: false
                     },
-                    { data: "employee", name: "employee" },
-                    { data: "sg_no", name: "sg_no" },
-                    { data: "step_no", name: "step_no" },
-                    { data: "salary_previous", name: "salary_previous" },
-                    { data: "salary_new", name: "salary_new" },
-                    { data: "salary_diff", name: "salary_diff" },
-                    { data: "plantilla", name: "plantilla.office_code" },
-                    { data: "action", name: "action" }
+                    { data: "employee", name: "employee", visible: true },
+                    {
+                        data: "plantilla",
+                        name: "plantilla.office_code",
+                        visible: true
+                    },
+                    { data: "sg_no", name: "sg_no", visible: true },
+                    { data: "step_no", name: "step_no", visible: true },
+                    {
+                        data: "salary_previous",
+                        name: "salary_previous",
+                        visible: true
+                    },
+                    { data: "salary_new", name: "salary_new", visible: true },
+                    { data: "salary_diff", name: "salary_diff", visible: true },
+                    { data: "action", name: "action", visible: true }
                 ]
             });
         } else {
@@ -142,29 +162,61 @@ $(function() {
                 destroy: true,
                 retrieve: true,
                 ajax: {
-                    url: `/api/office/salary/adjustment/${e.target.value}`,
+                    url: `/api/office/salary/adjustment/peroffice/${e.target.value}`,
                     data: function(d) {
-                        d.employeeName = $("#employeeName").val();
+                        d.employeeName = $("#employeeOffice").val();
                     }
                 },
                 columns: [
                     {
-                        data: "employee_id",
-                        name: "employee_id",
-                        visible: false
+                        data: "checkbox",
+                        name: "checkbox",
+                        searchable: false,
+                        orderable: false,
+                        sortable: false
                     },
-                    { data: "service_from_date", name: "service_from_date" },
-                    { data: "service_to_date", name: "service_to_date" },
-                    { data: "position", name: "position" },
-                    { data: "status", name: "status" },
-                    { data: "salary", name: "salary" },
-                    { data: "office", name: "office" },
-                    { data: "leave_without_pay", name: "leave_without_pay" },
-                    { data: "separation_date", name: "separation_date" },
-                    { data: "separation_cause", name: "separation_cause" },
-                    { data: "action", name: "action" }
+                    { data: "employee", name: "employee", visible: true },
+                    {
+                        data: "plantilla",
+                        name: "plantilla.office_code",
+                        visible: true
+                    },
+                    { data: "sg_no", name: "sg_no", visible: true },
+                    { data: "step_no", name: "step_no", visible: true },
+                    {
+                        data: "salary_previous",
+                        name: "salary_previous",
+                        visible: true
+                    },
+                    { data: "salary_new", name: "salary_new", visible: true },
+                    { data: "salary_diff", name: "salary_diff", visible: true },
+                    { data: "action", name: "action", visible: true }
                 ]
             });
         }
     });
+    $("#selectAll").click(function() {
+        // Get all rows with search applied
+        var rows = table.rows({ search: "applied" }).nodes();
+        // Check/uncheck checkboxes for all rows in the table
+        $('input[type="checkbox"]', rows).prop("checked", this.checked);
+    });
+
+    // Handle click on checkbox to set state of "Select all" control
+    $("#salaryAdjustmentPerOffice tbody").on(
+        "change",
+        'input[type="checkbox"]',
+        function() {
+            // If checkbox is not checked
+            if (!this.checked) {
+                var el = $("#selectAll").get(0);
+                // If "Select all" control is checked and has 'indeterminate' property
+                if (el && el.checked && "indeterminate" in el) {
+                    // Set visual state of "Select all" control
+                    // as 'indeterminate'
+                    el.indeterminate = true;
+                }
+            }
+        }
+    );
 });
