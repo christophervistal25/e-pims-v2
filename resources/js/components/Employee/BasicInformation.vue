@@ -72,6 +72,8 @@
             <button
               class="btn btn-info btn-sm rounded-circle shadow mt-1"
               @click="openNameExtensionModal"
+              data-toggle="modal"
+              data-target="#nameextensionModal"
             >
               <i class="fas fa-plus text-sm"></i>
             </button>
@@ -211,6 +213,8 @@
         <button
           @click="openStatusModal"
           class="btn btn-info btn-sm rounded-circle shadow mt-1"
+          data-toggle="modal"
+          data-target="#statusModal"
         >
           <i class="fas fa-plus text-sm"></i>
         </button>
@@ -244,7 +248,9 @@
       <div class="col-lg-1">
         <button
           class="btn btn-info btn-sm rounded-circle shadow mt-1"
-          @click="openNameExtensionModal"
+          @click="openDestinationModal"
+          data-toggle="modal"
+          data-target="#designationModal"
         >
           <i class="fas fa-plus text-sm"></i>
         </button>
@@ -273,6 +279,8 @@
         <button
           class="btn btn-info btn-sm rounded-circle shadow mt-1"
           @click="openAssignmentModal"
+          data-target="#assignmentModal"
+          data-toggle="modal"
         >
           <i class="fas fa-plus text-sm"></i>
         </button>

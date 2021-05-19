@@ -2711,6 +2711,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2859,21 +2867,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -3632,6 +3625,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
+//
 //
 //
 //
@@ -36032,6 +36026,10 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-info btn-sm rounded-circle shadow mt-1",
+                  attrs: {
+                    "data-toggle": "modal",
+                    "data-target": "#nameextensionModal"
+                  },
                   on: { click: _vm.openNameExtensionModal }
                 },
                 [_c("i", { staticClass: "fas fa-plus text-sm" })]
@@ -36345,6 +36343,7 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-info btn-sm rounded-circle shadow mt-1",
+              attrs: { "data-toggle": "modal", "data-target": "#statusModal" },
               on: { click: _vm.openStatusModal }
             },
             [_c("i", { staticClass: "fas fa-plus text-sm" })]
@@ -36406,7 +36405,11 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-info btn-sm rounded-circle shadow mt-1",
-              on: { click: _vm.openNameExtensionModal }
+              attrs: {
+                "data-toggle": "modal",
+                "data-target": "#designationModal"
+              },
+              on: { click: _vm.openDestinationModal }
             },
             [_c("i", { staticClass: "fas fa-plus text-sm" })]
           )
@@ -36451,6 +36454,10 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-info btn-sm rounded-circle shadow mt-1",
+              attrs: {
+                "data-target": "#assignmentModal",
+                "data-toggle": "modal"
+              },
               on: { click: _vm.openAssignmentModal }
             },
             [_c("i", { staticClass: "fas fa-plus text-sm" })]
@@ -36572,7 +36579,10 @@ var render = function() {
       [
         _c(
           "div",
-          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
           [
             _c("div", { staticClass: "modal-content" }, [
               _c("div", { staticClass: "modal-header" }, [
@@ -36631,9 +36641,9 @@ var render = function() {
                   _vm.errors.hasOwnProperty("name")
                     ? _c("p", { staticClass: "text-danger" }, [
                         _vm._v(
-                          "\n                            " +
+                          "\n              " +
                             _vm._s(_vm.errors.name[0]) +
-                            "\n                        "
+                            "\n            "
                         )
                       ])
                     : _vm._e()
@@ -36683,9 +36693,9 @@ var render = function() {
                         { key: index, domProps: { value: salary_grade } },
                         [
                           _vm._v(
-                            "\n                                " +
+                            "\n                " +
                               _vm._s(salary_grade) +
-                              "\n                            "
+                              "\n              "
                           )
                         ]
                       )
@@ -36696,9 +36706,9 @@ var render = function() {
                   _vm.errors.hasOwnProperty("salary_grade")
                     ? _c("p", { staticClass: "text-danger text-sm" }, [
                         _vm._v(
-                          "\n                            " +
+                          "\n              " +
                             _vm._s(_vm.errors.salary_grade[0]) +
-                            "\n                        "
+                            "\n            "
                         )
                       ])
                     : _vm._e()
@@ -36739,9 +36749,9 @@ var render = function() {
                   _vm.errors.hasOwnProperty("short_name")
                     ? _c("p", { staticClass: "text-danger text-sm" }, [
                         _vm._v(
-                          "\n                            " +
+                          "\n              " +
                             _vm._s(_vm.errors.short_name[0]) +
-                            "\n                        "
+                            "\n            "
                         )
                       ])
                     : _vm._e()
@@ -36772,9 +36782,7 @@ var render = function() {
                           ]
                         )
                       : _vm._e(),
-                    _vm._v(
-                      "\n                        Save changes\n                    "
-                    )
+                    _vm._v("\n            Save changes\n          ")
                   ]
                 ),
                 _vm._v(" "),
@@ -36785,11 +36793,7 @@ var render = function() {
                     attrs: { type: "button", "data-dismiss": "modal" },
                     on: { click: _vm.dismissModal }
                   },
-                  [
-                    _vm._v(
-                      "\n                        Close\n                    "
-                    )
-                  ]
+                  [_vm._v("\n            Close\n          ")]
                 )
               ])
             ])
@@ -37157,7 +37161,10 @@ var render = function() {
       [
         _c(
           "div",
-          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
           [
             _c("div", { staticClass: "modal-content" }, [
               _c("div", { staticClass: "modal-header" }, [
@@ -37303,12 +37310,15 @@ var render = function() {
         staticClass: "modal fade",
         class: _vm.show ? "show" : "",
         style: _vm.show ? "padding-right: 15px; display: block;" : "",
-        attrs: { id: "statusModal", role: "dialog" }
+        attrs: { id: "statusModal", role: "dialog", tabindex: "-1" }
       },
       [
         _c(
           "div",
-          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
           [
             _c("div", { staticClass: "modal-content" }, [
               _c("div", { staticClass: "modal-header" }, [
