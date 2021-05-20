@@ -49,7 +49,7 @@ $(function() {
         ]
     });
     $("#employeeName").change(function(e) {
-        if (e.target.value == "" || e.target.value == " ") {
+        if (e.target.value == "" || e.target.value == "") {
             table.destroy();
             table = $("#serviceRecords").DataTable({
                 processing: true,

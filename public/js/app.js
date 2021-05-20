@@ -2711,6 +2711,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2859,21 +2867,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -3228,7 +3221,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         value: "middlename"
       }, {
         text: "Extension",
-        value: "name_extension"
+        value: "extension"
       }, {
         text: "Position",
         value: "information.position.position_name"
@@ -3705,6 +3698,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["show"],
@@ -4092,6 +4086,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Information_ViewLearningAndDevelopment_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Information/ViewLearningAndDevelopment.vue */ "./resources/js/components/PersonalData/Information/ViewLearningAndDevelopment.vue");
 /* harmony import */ var _Information_ViewOtherInformation_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Information/ViewOtherInformation.vue */ "./resources/js/components/PersonalData/Information/ViewOtherInformation.vue");
 /* harmony import */ var _Information_ViewReferences_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Information/ViewReferences.vue */ "./resources/js/components/PersonalData/Information/ViewReferences.vue");
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -36024,6 +36026,10 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-info btn-sm rounded-circle shadow mt-1",
+                  attrs: {
+                    "data-toggle": "modal",
+                    "data-target": "#nameextensionModal"
+                  },
                   on: { click: _vm.openNameExtensionModal }
                 },
                 [_c("i", { staticClass: "fas fa-plus text-sm" })]
@@ -36337,6 +36343,7 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-info btn-sm rounded-circle shadow mt-1",
+              attrs: { "data-toggle": "modal", "data-target": "#statusModal" },
               on: { click: _vm.openStatusModal }
             },
             [_c("i", { staticClass: "fas fa-plus text-sm" })]
@@ -36398,7 +36405,11 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-info btn-sm rounded-circle shadow mt-1",
-              on: { click: _vm.openNameExtensionModal }
+              attrs: {
+                "data-toggle": "modal",
+                "data-target": "#designationModal"
+              },
+              on: { click: _vm.openDestinationModal }
             },
             [_c("i", { staticClass: "fas fa-plus text-sm" })]
           )
@@ -36443,6 +36454,10 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-info btn-sm rounded-circle shadow mt-1",
+              attrs: {
+                "data-target": "#assignmentModal",
+                "data-toggle": "modal"
+              },
               on: { click: _vm.openAssignmentModal }
             },
             [_c("i", { staticClass: "fas fa-plus text-sm" })]
@@ -36564,7 +36579,10 @@ var render = function() {
       [
         _c(
           "div",
-          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
           [
             _c("div", { staticClass: "modal-content" }, [
               _c("div", { staticClass: "modal-header" }, [
@@ -36623,9 +36641,9 @@ var render = function() {
                   _vm.errors.hasOwnProperty("name")
                     ? _c("p", { staticClass: "text-danger" }, [
                         _vm._v(
-                          "\n                            " +
+                          "\n              " +
                             _vm._s(_vm.errors.name[0]) +
-                            "\n                        "
+                            "\n            "
                         )
                       ])
                     : _vm._e()
@@ -36675,9 +36693,9 @@ var render = function() {
                         { key: index, domProps: { value: salary_grade } },
                         [
                           _vm._v(
-                            "\n                                " +
+                            "\n                " +
                               _vm._s(salary_grade) +
-                              "\n                            "
+                              "\n              "
                           )
                         ]
                       )
@@ -36688,9 +36706,9 @@ var render = function() {
                   _vm.errors.hasOwnProperty("salary_grade")
                     ? _c("p", { staticClass: "text-danger text-sm" }, [
                         _vm._v(
-                          "\n                            " +
+                          "\n              " +
                             _vm._s(_vm.errors.salary_grade[0]) +
-                            "\n                        "
+                            "\n            "
                         )
                       ])
                     : _vm._e()
@@ -36731,9 +36749,9 @@ var render = function() {
                   _vm.errors.hasOwnProperty("short_name")
                     ? _c("p", { staticClass: "text-danger text-sm" }, [
                         _vm._v(
-                          "\n                            " +
+                          "\n              " +
                             _vm._s(_vm.errors.short_name[0]) +
-                            "\n                        "
+                            "\n            "
                         )
                       ])
                     : _vm._e()
@@ -36764,9 +36782,7 @@ var render = function() {
                           ]
                         )
                       : _vm._e(),
-                    _vm._v(
-                      "\n                        Save changes\n                    "
-                    )
+                    _vm._v("\n            Save changes\n          ")
                   ]
                 ),
                 _vm._v(" "),
@@ -36777,11 +36793,7 @@ var render = function() {
                     attrs: { type: "button", "data-dismiss": "modal" },
                     on: { click: _vm.dismissModal }
                   },
-                  [
-                    _vm._v(
-                      "\n                        Close\n                    "
-                    )
-                  ]
+                  [_vm._v("\n            Close\n          ")]
                 )
               ])
             ])
@@ -36900,8 +36912,7 @@ var render = function() {
                               _c(
                                 "button",
                                 {
-                                  staticClass:
-                                    "btn btn-success rounded-circle shadow",
+                                  staticClass: "btn btn-success rounded-circle",
                                   on: {
                                     click: function($event) {
                                       return _vm.editEmployee(item)
@@ -36916,7 +36927,7 @@ var render = function() {
                       ],
                       null,
                       false,
-                      2424941765
+                      297409027
                     )
                   }),
                   _vm._v(" "),
@@ -37150,7 +37161,10 @@ var render = function() {
       [
         _c(
           "div",
-          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
           [
             _c("div", { staticClass: "modal-content" }, [
               _c("div", { staticClass: "modal-header" }, [
@@ -37296,12 +37310,15 @@ var render = function() {
         staticClass: "modal fade",
         class: _vm.show ? "show" : "",
         style: _vm.show ? "padding-right: 15px; display: block;" : "",
-        attrs: { id: "statusModal", role: "dialog" }
+        attrs: { id: "statusModal", role: "dialog", tabindex: "-1" }
       },
       [
         _c(
           "div",
-          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
           [
             _c("div", { staticClass: "modal-content" }, [
               _c("div", { staticClass: "modal-header" }, [
@@ -37825,7 +37842,7 @@ var render = function() {
                               "button",
                               {
                                 staticClass:
-                                  "btn btn-info btn-sm rounded-circle shadow text-white mr-2",
+                                  "btn btn-info rounded-circle text-white mr-2",
                                 on: {
                                   click: function($event) {
                                     return _vm.fetchInformation(
@@ -37836,7 +37853,7 @@ var render = function() {
                               },
                               [
                                 _c("i", {
-                                  staticClass: "fas fa-eye font-weight-bold"
+                                  staticClass: "la la-eye font-weight-bold"
                                 })
                               ]
                             ),
@@ -37845,7 +37862,7 @@ var render = function() {
                               "a",
                               {
                                 staticClass:
-                                  "btn btn-primary btn-sm rounded-circle shadow text-white mr-2",
+                                  "btn btn-primary rounded-circle text-white mr-2",
                                 attrs: {
                                   href:
                                     "/employee/create/" +
@@ -37855,7 +37872,24 @@ var render = function() {
                               },
                               [
                                 _c("i", {
-                                  staticClass: "fas fa-plus font-weight-bold"
+                                  staticClass: "la la-plus font-weight-bold"
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "a",
+                              {
+                                staticClass:
+                                  "btn btn-primary rounded-circle text-white mr-2",
+                                attrs: {
+                                  href: "/print/pds/" + item.employee_id,
+                                  title: "Generate PDS for " + item.fullname
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "la la-file font-weight-bold"
                                 })
                               ]
                             )
@@ -37865,7 +37899,7 @@ var render = function() {
                     ],
                     null,
                     false,
-                    3210582753
+                    1430757235
                   )
                 }),
                 _vm._v(" "),
@@ -42918,7 +42952,7 @@ var render = function() {
                 "label",
                 {
                   staticClass: "form-group has-float-label mb-0",
-                  attrs: { for: "snameexten" }
+                  attrs: { for: "fnameexten" }
                 },
                 [
                   _c(
@@ -42928,19 +42962,19 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.familyBackground.snameexten,
-                          expression: "familyBackground.snameexten"
+                          value: _vm.familyBackground.fnameexten,
+                          expression: "familyBackground.fnameexten"
                         }
                       ],
                       staticClass: "form-control custom-select",
-                      class: !_vm.errors.hasOwnProperty("snameexten")
+                      class: !_vm.errors.hasOwnProperty("fnameexten")
                         ? ""
                         : "is-invalid",
                       staticStyle: {
                         outline: "none",
                         "box-shadow": "0px 0px 0px transparent"
                       },
-                      attrs: { type: "text", id: "snameexten" },
+                      attrs: { type: "text", id: "fnameexten" },
                       on: {
                         change: function($event) {
                           var $$selectedVal = Array.prototype.filter
@@ -42953,7 +42987,7 @@ var render = function() {
                             })
                           _vm.$set(
                             _vm.familyBackground,
-                            "snameexten",
+                            "fnameexten",
                             $event.target.multiple
                               ? $$selectedVal
                               : $$selectedVal[0]
@@ -42977,7 +43011,7 @@ var render = function() {
                         {
                           attrs: { value: "JR" },
                           domProps: {
-                            selected: _vm.familyBackground.snameexten === "JR"
+                            selected: _vm.familyBackground.fnameexten === "JR"
                           }
                         },
                         [_vm._v("\n                JR\n              ")]
@@ -42988,7 +43022,7 @@ var render = function() {
                         {
                           attrs: { value: "SR" },
                           domProps: {
-                            selected: _vm.familyBackground.snameexten === "SR"
+                            selected: _vm.familyBackground.fnameexten === "SR"
                           }
                         },
                         [_vm._v("\n                SR\n              ")]
@@ -42999,8 +43033,7 @@ var render = function() {
                         {
                           attrs: { value: "III" },
                           domProps: {
-                            selected:
-                              _vm.familyBackground.nameExtension === "III"
+                            selected: _vm.familyBackground.fnameexten === "III"
                           }
                         },
                         [_vm._v("\n                III\n              ")]

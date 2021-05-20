@@ -39,7 +39,7 @@
             <div class="w-25">
                 <img src="/assets/img/sdslogo.jpg" width="165px" style="margin-right: 100px">
             </div>
-            <div class="offset-1 ml-4">
+            <div class="offset-1 ml-5 pl-4">
                 <span class="h4">Republic of the Philippines</span>
                 <h3>PROVINCE OF SURIGAO DEL SUR</h3>
                 <h4>TANDAG</h4>
@@ -79,19 +79,18 @@
             <br>
             <span class="text text-md mt-3 pl-5">Basic Salary as of
                 {{ Carbon\Carbon::parse($stepIncrement->date_step_increment)->format( 'F d, Y' ) }}</span><span
-                class="text text-md" style="padding: 120px">P {{ $stepIncrement->salary_amount_from }}</span>
+                class="col-12 offset-2 text text-md">&#8369; {{ number_format($stepIncrement->salary_amount_from, 2, ".", ",") }}</span>
             <p class="text text-md pl-5">Salary Adjustment:</p>
-            <span style="padding-left: 100px">a) Merit &nbsp &nbsp &nbsp &nbsp( &nbsp</span><span class="boxing">&nbsp
-                &nbsp &nbsp &nbsp</span><span>Step/s)</span>
+            <span style="padding-left: 100px">a) Merit &nbsp &nbsp &nbsp &nbsp( &nbsp</span><span class="boxing">&nbsp &nbsp &nbsp &nbsp</span><span>Step/s)</span>
             <br>
             <span style="padding-left: 100px">b) Length of Service {{ $stepIncrement->sg_no_to }} /
-                {{ $stepIncrement->step_no_to }} Step/s</span><span style="padding: 120px">P
-                {{ $stepIncrement->salary_diff }}</span>
+                {{ $stepIncrement->step_no_to }} Step/s</span><span class="col-12 offset-1">&nbsp; &#8369;
+                {{ number_format($stepIncrement->salary_diff, 2, ".", ",") }}</span>
             <br>
             <br>
             <span class="text text-md pl-5">Adjusted Salary effective
                 {{ Carbon\Carbon::parse($stepIncrement->date_step_increment)->format( 'F d, Y' ) }}</span><span
-                class="amount">P {{ $stepIncrement->salary_amount_to }}</span>
+                style="padding-left: 122px; text-decoration: underline">&#8369; {{ number_format($stepIncrement->salary_amount_to, 2, ".", ",") }}</span>
             <br>
             <br>
             <span class="text text-md pl-5">This Step Increment is subject for review and post-audit by the Department

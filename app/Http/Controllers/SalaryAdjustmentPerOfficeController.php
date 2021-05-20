@@ -26,8 +26,8 @@ class SalaryAdjustmentPerOfficeController extends Controller
     public function list(Request $request)
     {
         if ($request->ajax()) {
-
             $data = SalaryAdjustment::select('id','employee_id','item_no','position_id', 'date_adjustment', 'sg_no', 'step_no', 'salary_previous','salary_new','salary_diff')->with('position:position_id,position_name','employee:employee_id,firstname,middlename,lastname,extension', 'plantilla:employee_id,office_code');
+
             return (new Datatables)->eloquent($data)
                     ->addIndexColumn()
                     ->addColumn('employee', function ($row) {

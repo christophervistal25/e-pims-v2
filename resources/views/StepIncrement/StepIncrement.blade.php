@@ -340,6 +340,8 @@
         $('#employeeName').change(function (e) {
             let employeeID = e.target.value;
             let plantilla = $($("#employeeName option:selected")[0]).attr('data-plantilla');
+            /*let moneyFormat = toLocalString("ph", {maximumFractionDigits:2}) + '.00';*/
+            
 
             if (plantilla) {
                 plantilla = JSON.parse(plantilla);
@@ -354,6 +356,7 @@
                 $("#sgNo2").val(plantilla.sg_no);
                 $('#stepNo').val(plantilla.step_no);
                 $('#amount').val(plantilla.salary_amount);
+                /*$('#amount').val(plantilla.salary_amount)toLocalString('ph', {maximumFractionDigits:2}) + '.00';*/
 
                 $('#stepNo2').html('');
                 $('#stepNo2').append(`<option readonly>Please select</option>`);
