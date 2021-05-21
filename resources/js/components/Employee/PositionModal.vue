@@ -1,0 +1,168 @@
+<template>
+  <div>
+    <div>
+      <v-row justify="center" class="mt-1">
+        <v-dialog
+          persistent
+          v-model="dialog"
+          max-width="600px"
+          :class="showdesignation ? 'show' : ''"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              color="secondary"
+              elevation="10"
+              dark
+              v-bind="attrs"
+              v-on="on"
+              fab
+              x-small
+            >
+              <v-icon>mdi-plus</v-icon>
+            </v-btn>
+          </template>
+          <v-card>
+            <v-card-title>
+              <span class="headline"><strong>Add Position</strong></span>
+            </v-card-title>
+            <v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col cols="12">
+                    <p
+                      class="text-danger text-sm mb-0"
+                      v-if="errors.hasOwnProperty('name')"
+                    >
+                      {{ errors.name[0] }}
+                    </p>
+                    <v-text-field
+                      label="Position Name"
+                      required
+                      v-model="position.name"
+                      :class="errors.hasOwnProperty('name') ? 'is-invalid' : ''"
+                      class="mt-0"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <p
+                      class="text-danger text-sm mb-0"
+                      v-if="errors.hasOwnProperty('short_name')"
+                    >
+                      {{ errors.short_name[0] }}
+                    </p>
+                    <v-text-field
+                      class="mt-0"
+                      label="Position Short Name"
+                      required
+                      v-model="position.short_name"
+                      :class="
+                        errors.hasOwnProperty('short_name') ? 'is-invalid' : ''
+                      "
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <label>Salary Grade</label>
+                    <v-select
+                      label="Salary Grade"
+                      required
+                      v-model="position.salary_grade"
+                      :class="
+                        errors.hasOwnProperty('salary_grade')
+                          ? 'is-invalid'
+                          : ''
+                      "
+                    >
+                      <option
+                        :value="salary_grade"
+                        v-for="(salary_grade, index) in 33"
+                        :key="index"
+                      >
+                        {{ salary_grade }}
+                      </option>
+                    </v-select>
+                    <p
+                      class="text-danger text-sm"
+                      v-if="errors.hasOwnProperty('salary_grade')"
+                    >
+                      {{ errors.salary_grade[0] }}
+                    </p>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn
+                color="blue darken-1"
+                text
+                @click="dialog = false"
+                data-dismiss="Close"
+              >
+                Close
+              </v-btn>
+              <v-btn color="blue darken-1" text @click="submitNewDesignation">
+                <div
+                  v-if="isLoading"
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                >
+                  <span class="sr-only">Loading...</span>
+                </div>
+                Save Changes
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-row>
+    </div>
+  </div>
+</template>
+<script>
+import swal from "sweetalert";
+export default {
+  props: ["showdesignation"],
+  data() {
+    return {
+      isLoading: false,
+      dialog: false,
+      position: {
+        code: "",
+        name: "",
+        salary_grade: "",
+        short_name: "",
+      },
+      errors: {},
+    };
+  },
+
+  methods: {
+    submitNewDesignation() {
+      this.isLoading = true;
+      window.axios
+        .post("/api/position/store", this.position)
+        .then((response) => {
+          if (response.status === 201) {
+            this.isLoading = false;
+            swal({
+              text: "Successfully create new employment status",
+              icon: "success",
+            });
+            this.position = {};
+            this.$emit("designation-modal-dismiss");
+            this.dialog = false;
+          }
+        })
+        .catch((error) => {
+          this.isLoading = false;
+          this.errors = {};
+          if (error.response.status === 422) {
+            this.errors = error.response.data;
+          }
+        });
+    },
+    dismissModal() {
+      this.$emit("designation-modal-dismiss");
+    },
+  },
+};
+</script>

@@ -139,7 +139,9 @@
             </p>
           </div>
           <div class="col-lg-1">
-            <name-extension-modal></name-extension-modal>
+            <name-extension-modal
+              @nameext-modal-dismiss="closeNameExtensionModal"
+            ></name-extension-modal>
           </div>
         </div>
         <div class="row pl-3 pr-3">
@@ -798,7 +800,7 @@
   </div>
 </template>
 <script>
-import NameExtensionModal from "./NameExtensionModal.vue";
+import NameExtensionModal from "./NameExtensionModal";
 import "vue-select/dist/vue-select.css";
 import _ from "lodash";
 export default {
@@ -954,6 +956,7 @@ export default {
       this.isShowNameExtension = true;
     },
     closeNameExtensionModal(newExtension) {
+      // console.log(newExtension);
       if (newExtension) {
         this.nameExtensions.push(newExtension.extension);
       }

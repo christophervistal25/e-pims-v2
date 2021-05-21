@@ -2,6 +2,7 @@ require("./bootstrap");
 window.Vue = require("vue");
 import Vuetify from 'vuetify';
 import vSelect from "vue-select";
+import Vue from 'vue';
 
 Vue.use(Vuetify); 
 Vue.component("v-select", vSelect);
@@ -11,9 +12,15 @@ Vue.component(
     require("./components/Employee/StatusModal.vue").default
 );
 Vue.component(
+    "statmodal",
+    require("./components/Employee/StatModal.vue").default
+);
+Vue.component("positionmodal", require("./components/Employee/PositionModal.vue").default);
+Vue.component(
     "designationmodal",
     require("./components/Employee/DesignationModal.vue").default
 );
+Vue.component("assignmodal", require("./components/Employee/AssignModal.vue").default);
 
 Vue.component(
     "assignmentmodal",
@@ -24,6 +31,7 @@ Vue.component(
     "name-extension-modal",
     require("./components/PersonalData/create/C1/NameExtensionModal.vue").default
 );
+Vue.component("nameextmodal", require("./components/Employee/NameExtModal.vue").default);
 
 
 

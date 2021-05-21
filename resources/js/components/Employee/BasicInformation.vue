@@ -40,7 +40,7 @@
           <span>MIDDLE NAME</span>
         </label>
         <div class="row">
-          <div class="col-lg-11">
+          <div class="col-lg-10">
             <label for="name_extension" class="form-group has-float-label">
               <select
                 type="text"
@@ -69,14 +69,9 @@
             </label>
           </div>
           <div class="col-lg-1">
-            <button
-              class="btn btn-info btn-sm rounded-circle shadow mt-1"
-              @click="openNameExtensionModal"
-              data-toggle="modal"
-              data-target="#nameextensionModal"
-            >
-              <i class="fas fa-plus text-sm"></i>
-            </button>
+            <nameextmodal
+              @nameext-modal-dismiss="closeNameExtensionModal"
+            ></nameextmodal>
           </div>
         </div>
         <div class="row">
@@ -191,7 +186,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-10 ml-4">
+      <div class="col-lg-9 ml-4">
         <label for="officeAssignment" class="form-group has-float-label">
           <v-select
             label="status_name"
@@ -209,7 +204,7 @@
           <span>EMPLOYMENT STATUS<span class="text-danger">*</span></span>
         </label>
       </div>
-      <div class="col-lg-1">
+      <!-- <div class="col-lg-1">
         <button
           @click="openStatusModal"
           class="btn btn-info btn-sm rounded-circle shadow mt-1"
@@ -218,11 +213,14 @@
         >
           <i class="fas fa-plus text-sm"></i>
         </button>
+      </div> -->
+      <div class="col-lg-1">
+        <statmodal @status-modal-dismiss="closeStatusModal"></statmodal>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-10 ml-4">
+      <div class="col-lg-9 ml-4">
         <label for="designation" class="form-group has-float-label">
           <v-select
             label="position_name"
@@ -245,7 +243,7 @@
         </label>
       </div>
 
-      <div class="col-lg-1">
+      <!-- <div class="col-lg-1">
         <button
           class="btn btn-info btn-sm rounded-circle shadow mt-1"
           @click="openDestinationModal"
@@ -254,11 +252,16 @@
         >
           <i class="fas fa-plus text-sm"></i>
         </button>
+      </div> -->
+      <div class="col-lg-1">
+        <positionmodal
+          @designation-modal-dismiss="closeDesignationModal"
+        ></positionmodal>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-lg-10 ml-4">
+      <div class="col-lg-9 ml-4">
         <label for="officeAssignment" class="form-group has-float-label">
           <v-select
             label="office_name"
@@ -275,7 +278,7 @@
         </label>
       </div>
 
-      <div class="col-lg-1">
+      <!-- <div class="col-lg-1">
         <button
           class="btn btn-info btn-sm rounded-circle shadow mt-1"
           @click="openAssignmentModal"
@@ -284,6 +287,11 @@
         >
           <i class="fas fa-plus text-sm"></i>
         </button>
+      </div> -->
+      <div class="col-lg-1">
+        <assignmodal
+          @assignment-modal-dismiss="closeAssignmentModal"
+        ></assignmodal>
       </div>
     </div>
 
@@ -291,19 +299,11 @@
       :show="isShow"
       @status-modal-dismiss="closeStatusModal"
     ></statusmodal>
-    <designationmodal
-      :showdesignation="isShowDesignation"
-      @designation-modal-dismiss="closeDesignationModal"
-    ></designationmodal>
-    <assignmentmodal
-      :showassignment="isShowAssignment"
-      @assignment-modal-dismiss="closeAssignmentModal"
-    ></assignmentmodal>
-    <name-extension-modal
-      :shownameextension="isShowNameExtension"
-      @nameext-modal-dismiss="closeNameExtensionModal"
-    >
-    </name-extension-modal>
+    <designationmodal :showdesignation="isShowDesignation"></designationmodal>
+    <assignmentmodal :showassignment="isShowAssignment"></assignmentmodal>
+    <!-- <name-extension-modal :shownameextension="isShowNameExtension">
+    </name-extension-modal> -->
+
     <!-- <button>sample</button> -->
   </div>
 </template>
@@ -312,6 +312,9 @@ import StatusModal from "./StatusModal.vue";
 import DesignationModal from "./DesignationModal.vue";
 import AssignmentModal from "./AssignmentModal.vue";
 import NameExtensionModal from "./NameExtensionModal.vue";
+import NameExtModal from "./NameExtModal.vue";
+import StatModal from "./StatModal.vue";
+import PositionModal from "./PositionModal.vue";
 
 import "vue-select/dist/vue-select.css";
 import _ from "lodash";
@@ -333,6 +336,9 @@ export default {
     StatusModal,
     AssignmentModal,
     NameExtensionModal,
+    NameExtModal,
+    StatModal,
+    PositionModal,
   },
   watch: {
     dateOfBirth: function (to, from) {
