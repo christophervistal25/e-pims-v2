@@ -41,10 +41,6 @@
             >
               SPOUSE INFORMATION
             </div>
-            <p class="text-danger">
-              *
-              <span class="text-dark text-bold"> indicates required field</span>
-            </p>
           </div>
           <div class="row pr-3 pl-3">
             <div class="col-lg-3">
@@ -55,7 +51,6 @@
                   :class="errors.hasOwnProperty('ssurname') ? 'is-invalid' : ''"
                   id="ssurname"
                   v-model="familyBackground.ssurname"
-                  placeholder="Enter Spouse's Surname"
                   value=""
                   style="
                     text-transform: uppercase;
@@ -63,7 +58,10 @@
                     box-shadow: 0px 0px 0px transparent;
                   "
                 />
-                <span>Surname<span class="text-danger">*</span></span>
+                <span
+                  ><strong>SURNAME</strong
+                  ><span class="text-danger"><strong>*</strong></span></span
+                >
               </label>
               <p class="text-danger text-sm">
                 {{ errors.ssurname }}
@@ -79,7 +77,6 @@
                   "
                   id="sfirstname"
                   v-model="familyBackground.sfirstname"
-                  placeholder="Enter Spouse's First Name"
                   value=""
                   style="
                     text-transform: uppercase;
@@ -87,7 +84,10 @@
                     box-shadow: 0px 0px 0px transparent;
                   "
                 />
-                <span>First Name<span class="text-danger">*</span></span>
+                <span
+                  ><strong>FIRST NAME</strong
+                  ><span class="text-danger"><strong>*</strong></span></span
+                >
               </label>
               <p class="text-danger text-sm">
                 {{ errors.sfirstname }}
@@ -100,7 +100,6 @@
                   class="form-control"
                   id="smiddleame"
                   v-model="familyBackground.smiddleame"
-                  placeholder="Enter Spouse's Middle Name"
                   value=""
                   style="
                     text-transform: uppercase;
@@ -108,7 +107,7 @@
                     box-shadow: 0px 0px 0px transparent;
                   "
                 />
-                <span>Middle Name</span>
+                <span><strong>MIDDLE NAME</strong></span>
               </label>
             </div>
             <div class="col-lg-2">
@@ -145,7 +144,7 @@
                     III
                   </option>
                 </select>
-                <span>EXTENSION NAME</span>
+                <span><strong>EXTENSION NAME</strong></span>
               </label>
             </div>
             <div class="col-lg-1">
@@ -165,7 +164,6 @@
                   type="text"
                   class="form-control"
                   id="soccupation"
-                  placeholder="Enter Spouse's Occupation"
                   v-model="familyBackground.soccupation"
                   style="
                     text-transform: uppercase;
@@ -173,7 +171,7 @@
                     box-shadow: 0px 0px 0px transparent;
                   "
                 />
-                <span>Occupation</span>
+                <span><strong>OCCUPATION</strong></span>
               </label>
             </div>
             <div class="col-lg-6">
@@ -182,7 +180,6 @@
                   type="text"
                   class="form-control"
                   id="sempname"
-                  placeholder="Enter Spouse's Employer/Business Name"
                   v-model="familyBackground.sempname"
                   style="
                     text-transform: uppercase;
@@ -190,7 +187,7 @@
                     box-shadow: 0px 0px 0px transparent;
                   "
                 />
-                <span>Employer/Business Name</span>
+                <span><strong>EMPLOYER/BUSSINESS NAME</strong></span>
               </label>
             </div>
           </div>
@@ -201,7 +198,6 @@
                   type="text"
                   class="form-control"
                   id="sbusadd"
-                  placeholder="Enter Spouse's Business Address"
                   v-model="familyBackground.sbusadd"
                   style="
                     text-transform: uppercase;
@@ -209,7 +205,7 @@
                     box-shadow: 0px 0px 0px transparent;
                   "
                 />
-                <span>Business Address</span>
+                <span><strong>BUSSINESS ADDRESS</strong></span>
               </label>
             </div>
             <div class="col-sm-6">
@@ -218,11 +214,10 @@
                   type="text"
                   class="form-control"
                   id="stelno"
-                  placeholder="Enter Spouse's Telephone Number"
                   v-model="familyBackground.stelno"
                   style="outline: none; box-shadow: 0px 0px 0px transparent"
                 />
-                <span>Telephone Number</span>
+                <span><strong>TELEPHONE NUMBER</strong></span>
               </label>
             </div>
           </div>
@@ -314,7 +309,6 @@
                 id="fsurname"
                 :class="!errors.hasOwnProperty('fsurname') ? '' : 'is-invalid'"
                 v-model="familyBackground.fsurname"
-                placeholder="Enter Father's Surname"
                 value=""
                 style="
                   text-transform: uppercase;
@@ -322,7 +316,10 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Surname<span class="text-danger">*</span></span>
+              <span
+                ><strong>SURNAME</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">{{ errors.fsurname }}</p>
           </div>
@@ -336,7 +333,6 @@
                   !errors.hasOwnProperty('ffirstname') ? '' : 'is-invalid'
                 "
                 v-model="familyBackground.ffirstname"
-                placeholder="Enter Father's First Name"
                 value=""
                 style="
                   text-transform: uppercase;
@@ -344,7 +340,10 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>First Name<span class="text-danger">*</span></span>
+              <span
+                ><strong>FIRST NAME</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.ffirstname }}
@@ -360,7 +359,6 @@
                 "
                 id="fmiddlename"
                 v-model="familyBackground.fmiddlename"
-                placeholder="Enter Father's Middle Name"
                 value=""
                 style="
                   text-transform: uppercase;
@@ -368,7 +366,7 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Middle Name</span>
+              <span><strong>MIDDLE NAME</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.fmiddlename }}
@@ -408,7 +406,7 @@
                   III
                 </option>
               </select>
-              <span>EXTENSION NAME</span>
+              <span><strong>EXTENSION NAME</strong></span>
             </label>
           </div>
           <div class="col-lg-1">
@@ -433,7 +431,6 @@
                 :class="!errors.hasOwnProperty('msurname') ? '' : 'is-invalid'"
                 id="msurname"
                 v-model="familyBackground.msurname"
-                placeholder="Enter Mother's Maiden Surname"
                 value=""
                 style="
                   text-transform: uppercase;
@@ -441,7 +438,10 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Maiden Surname<span class="text-danger">*</span></span>
+              <span
+                ><strong>MAIDEN SURNAME</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">{{ errors.msurname }}</p>
           </div>
@@ -455,7 +455,6 @@
                 class="form-control"
                 id="mfirstname"
                 v-model="familyBackground.mfirstname"
-                placeholder="Enter Mother's First Name"
                 value=""
                 style="
                   text-transform: uppercase;
@@ -463,7 +462,10 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>First Name<span class="text-danger">*</span></span>
+              <span
+                ><strong>FIRST NAME</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.mfirstname }}
@@ -479,7 +481,6 @@
                   !errors.hasOwnProperty('mmiddlename') ? '' : 'is-invalid'
                 "
                 v-model="familyBackground.mmiddlename"
-                placeholder="Enter Mother's Maiden Middle Name"
                 value=""
                 style="
                   text-transform: uppercase;
@@ -487,7 +488,7 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Maiden Middle Name</span>
+              <span><strong>MAIDEN MIDDLE NAME</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.mmiddlename }}

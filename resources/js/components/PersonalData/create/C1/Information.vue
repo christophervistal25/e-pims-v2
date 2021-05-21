@@ -39,7 +39,6 @@
                 class="form-control"
                 :class="!errors.hasOwnProperty('surname') ? '' : 'is-invalid'"
                 id="surname"
-                placeholder="Enter Surname"
                 v-model="personal_data.surname"
                 style="
                   text-transform: uppercase;
@@ -47,7 +46,10 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Surname<span class="text-danger">*</span> </span>
+              <span
+                ><strong>SURNAME</strong
+                ><span class="text-danger"><strong>*</strong></span>
+              </span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.surname }}
@@ -59,7 +61,6 @@
                 type="text"
                 class="form-control"
                 id="firstname"
-                placeholder="Enter First Name"
                 :class="errors.firstname ? 'is-invalid' : ''"
                 v-model="personal_data.firstname"
                 style="
@@ -68,7 +69,10 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>First Name<span class="text-danger">*</span></span>
+              <span
+                ><strong>FIRST NAME</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.firstname }}
@@ -83,7 +87,6 @@
                   !errors.hasOwnProperty('middlename') ? '' : 'is-invalid'
                 "
                 id="middlename"
-                placeholder="Enter Middle Name"
                 v-model="personal_data.middlename"
                 style="
                   text-transform: uppercase;
@@ -91,7 +94,7 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Middle Name</span>
+              <span><strong>MIDDLE NAME</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.middlename }}
@@ -131,7 +134,7 @@
                   III
                 </option>
               </select>
-              <span>EXTENSION NAME</span>
+              <span><strong>EXTENSION NAME</strong></span>
             </label>
 
             <p class="text-danger text-sm">
@@ -159,7 +162,10 @@
               <p class="text-danger text-sm">
                 {{ errors.dateOfBirth }}
               </p>
-              <span>DATE OF BIRTH<span class="text-danger">*</span></span>
+              <span
+                ><strong>DATE OF BIRTH</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
           </div>
           <div class="col-lg-3">
@@ -171,7 +177,6 @@
                 :class="
                   !errors.hasOwnProperty('placeOfBirth') ? '' : 'is-invalid'
                 "
-                placeholder="Enter Place of Birth"
                 v-model="personal_data.placeOfBirth"
                 style="
                   text-transform: uppercase;
@@ -179,7 +184,10 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Place of Birth<span class="text-danger">*</span></span>
+              <span
+                ><strong>PLACE OF BIRTH</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.placeOfBirth }}
@@ -198,7 +206,10 @@
                 <option value="MALE">MALE</option>
                 <option value="FEMALE">FEMALE</option>
               </select>
-              <span>SEX<span class="text-danger">*</span></span>
+              <span
+                ><strong>SEX</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.sex }}
@@ -220,7 +231,10 @@
                 <option value="SEPARATED">SEPARATED</option>
                 <option value="OTHERS">OTHERS</option>
               </select>
-              <span>STATUS<span class="text-danger">*</span></span>
+              <span
+                ><strong>STATUS</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.status }}
@@ -235,11 +249,13 @@
                 id="height"
                 :class="!errors.hasOwnProperty('height') ? '' : 'is-invalid'"
                 class="form-control"
-                placeholder="Enter height in meter"
                 v-model="personal_data.height"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Height(m)<span class="text-danger">*</span></span>
+              <span
+                ><strong>HEIGHT(m)</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">{{ errors.height }}</p>
           </div>
@@ -250,11 +266,13 @@
                 :class="!errors.hasOwnProperty('weight') ? '' : 'is-invalid'"
                 id="weight"
                 class="form-control"
-                placeholder="Enter weight in kilogram"
                 v-model="personal_data.weight"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Weight(kg)<span class="text-danger">*</span></span>
+              <span
+                ><strong>WEIGHT(kg)</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.weight }}
@@ -268,7 +286,6 @@
                 id="bloodtype"
                 maxlength="3"
                 :class="errors.hasOwnProperty('bloodType') ? 'is-invalid' : ''"
-                placeholder="Enter bloodtype"
                 v-model="personal_data.bloodType"
                 style="
                   text-transform: uppercase;
@@ -276,7 +293,10 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Bloodtype<span class="text-danger">*</span></span>
+              <span
+                ><strong>BLOODTYPE</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.bloodType }}
@@ -290,11 +310,10 @@
                 type="text"
                 id="gsisidno"
                 class="form-control"
-                placeholder="Enter GSIS ID No."
                 v-model="personal_data.gsisIdNo"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>GSIS ID Number</span>
+              <span><strong>GSIS ID NUMBER</strong></span>
             </label>
           </div>
           <div class="col-lg-4">
@@ -303,11 +322,10 @@
                 type="text"
                 id="pagibigidno"
                 class="form-control"
-                placeholder="Enter PAG-IBIG ID No."
                 v-model="personal_data.pagibigIdNo"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>PAG-IBIG ID Number</span>
+              <span><strong>PAG-IBIG ID NUMBER</strong></span>
             </label>
           </div>
           <div class="col-lg-4">
@@ -316,11 +334,10 @@
                 type="text"
                 id="philhealthidno"
                 class="form-control"
-                placeholder="Enter PHILHEALTH ID No."
                 v-model="personal_data.philHealthIdNo"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>PHILHEALTH ID Number</span>
+              <span><strong>PHILHEALTH ID NUMBER</strong></span>
             </label>
           </div>
         </div>
@@ -331,11 +348,10 @@
                 type="text"
                 id="sssidno"
                 class="form-control"
-                placeholder="Enter SSS ID No."
                 v-model="personal_data.sssIdNo"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>SSS ID Number</span>
+              <span><strong>SSS ID NUMBER</strong></span>
             </label>
           </div>
 
@@ -345,11 +361,10 @@
                 type="text"
                 id="tinidno"
                 class="form-control"
-                placeholder="Enter TIN ID No."
                 v-model="personal_data.tinIdNo"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>TIN ID Number</span>
+              <span><strong>TIN ID NUMBER</strong></span>
             </label>
           </div>
 
@@ -359,11 +374,10 @@
                 type="text"
                 id="agencyempidno"
                 class="form-control"
-                placeholder="Enter agency employee no."
                 v-model="personal_data.agencyEmpIdNo"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Agency Employee Number</span>
+              <span><strong>AGENCY EMPLOYEE NUMBER</strong></span>
             </label>
           </div>
         </div>
@@ -382,7 +396,10 @@
                 <option value="FILIPINO">FILIPINO</option>
                 <option value="DUAL CITIZEN">DUAL CITIZEN</option>
               </select>
-              <span>CITIZENSHIP<span class="text-danger">*</span></span>
+              <span
+                ><strong>CITIZENSHIP</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.citizenship }}
@@ -405,7 +422,10 @@
                 <option value="BIRTH">BIRTH</option>
                 <option value="NATURALIZATION">NATURALIZATION</option>
               </select>
-              <span>By</span>
+              <span
+                ><strong>BY</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.citizenshipBy }}
@@ -432,7 +452,10 @@
                   {{ country }}
                 </option>
               </select>
-              <span>Indicate Country</span>
+              <span
+                ><strong>INDICATE COUNTRY</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">{{ errors.country }}</p>
           </div>
@@ -443,11 +466,10 @@
                 type="text"
                 id="telno"
                 class="form-control"
-                placeholder="Optional"
                 v-model="personal_data.telephoneNumber"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Telephone Number</span>
+              <span><strong>TELEPHONE NUMBER</strong></span>
             </label>
           </div>
           <div class="col-lg-4">
@@ -459,11 +481,13 @@
                 "
                 id="mobileno"
                 class="form-control"
-                placeholder="Enter Mobile Number"
                 v-model="personal_data.mobileNumber"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Mobile Number<span class="text-danger">*</span></span>
+              <span
+                ><strong>MOBILE NUMBER</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.mobileNumber }}
@@ -475,11 +499,10 @@
                 type="email"
                 id="email"
                 class="form-control"
-                placeholder="Optional"
                 v-model="personal_data.emailAddress"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Email Address</span>
+              <span><strong>EMAIL ADDRESS</strong></span>
             </label>
           </div>
         </div>
@@ -500,14 +523,13 @@
                 v-model="personal_data.residentialLotNo"
                 id="lotno"
                 class="form-control"
-                placeholder="Enter house/block/lot no."
                 style="
                   text-transform: uppercase;
                   outline: none;
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>House/Block/Lot No.</span>
+              <span><strong>HOUSE/BLOCK/LOT NO.</strong></span>
             </label>
           </div>
           <div class="col-lg-4">
@@ -517,14 +539,13 @@
                 v-model="personal_data.residentialStreet"
                 id="street"
                 class="form-control"
-                placeholder="Enter Street"
                 style="
                   text-transform: uppercase;
                   outline: none;
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Street</span>
+              <span><strong>STREET</strong></span>
             </label>
           </div>
           <div class="col-lg-4">
@@ -534,14 +555,13 @@
                 v-model="personal_data.residentialSubdivision"
                 id="subdivision"
                 class="form-control"
-                placeholder="Enter Subdivision or Village"
                 style="
                   text-transform: uppercase;
                   outline: none;
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Subdivision/Village</span>
+              <span><strong>SUBDIVISION/VILLAGE</strong></span>
             </label>
           </div>
         </div>
@@ -558,7 +578,10 @@
               <p class="text-danger text-sm">
                 {{ errors["residentialProvince.code"] }}
               </p>
-              <span>PROVINCE<span class="text-danger">*</span></span>
+              <span
+                ><strong>PROVINCE</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
           </div>
           <div class="col-lg-3">
@@ -572,7 +595,10 @@
               <p class="text-danger text-sm">
                 {{ errors["residentialCity.code"] }}
               </p>
-              <span>CITY<span class="text-danger">*</span></span>
+              <span
+                ><strong>CITY</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
           </div>
           <div class="col-lg-3">
@@ -585,7 +611,10 @@
               <p class="text-danger text-sm">
                 {{ errors["residentialBarangay.code"] }}
               </p>
-              <span>BARANGAY<span class="text-danger">*</span></span>
+              <span
+                ><strong>BARANGAY</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
           </div>
           <div class="col-lg-3">
@@ -609,10 +638,12 @@
                     ? ''
                     : 'is-invalid'
                 "
-                placeholder="Enter Zip Code"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Zip Code<span class="text-danger">*</span></span>
+              <span
+                ><strong>ZIP CODE</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.residentialZipCode }}
@@ -646,14 +677,13 @@
                 v-model="personal_data.permanentLotNo"
                 :readonly="isSameAsAbove ? true : false"
                 class="form-control"
-                placeholder="Enter house/block/lot no."
                 style="
                   text-transform: uppercase;
                   outline: none;
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>House/Block/Lot No.</span>
+              <span><strong>HOUSE/BLOCK/LOT NO</strong></span>
             </label>
           </div>
           <div class="col-lg-4">
@@ -664,14 +694,13 @@
                 v-model="personal_data.permanentStreet"
                 :readonly="isSameAsAbove ? true : false"
                 class="form-control"
-                placeholder="Enter Street"
                 style="
                   text-transform: uppercase;
                   outline: none;
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Street</span>
+              <span><strong>STREET</strong></span>
             </label>
           </div>
           <div class="col-lg-4">
@@ -685,14 +714,13 @@
                 v-model="personal_data.permanentSubdivision"
                 :readonly="isSameAsAbove ? true : false"
                 class="form-control"
-                placeholder="Enter Subdivision or Village"
                 style="
                   text-transform: uppercase;
                   outline: none;
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Subdivision/Village</span>
+              <span><strong>SUBDIVISION/VILLAGE</strong></span>
             </label>
           </div>
         </div>
@@ -709,7 +737,10 @@
               <p class="text-danger text-sm">
                 {{ errors["permanentProvince.code"] }}
               </p>
-              <span>PROVINCE<span class="text-danger">*</span></span>
+              <span
+                ><strong>PROVINCE</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
           </div>
 
@@ -724,7 +755,10 @@
               <p class="text-danger text-sm">
                 {{ errors["permanentCity.code"] }}
               </p>
-              <span>CITY<span class="text-danger">*</span></span>
+              <span
+                ><strong>CITY</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
           </div>
 
@@ -738,7 +772,10 @@
               <p class="text-danger text-sm">
                 {{ errors["permanentBarangay.code"] }}
               </p>
-              <span>BARANGAY<span class="text-danger">*</span></span>
+              <span
+                ><strong>BARANGAY</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
           </div>
 
@@ -763,10 +800,12 @@
                 "
                 :disabled="isSameAsAbove ? true : false"
                 class="form-control"
-                placeholder="Enter Zip Code"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Zip Code<span class="text-danger">*</span></span>
+              <span
+                ><strong>ZIP CODE</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.permanentZipCode }}
