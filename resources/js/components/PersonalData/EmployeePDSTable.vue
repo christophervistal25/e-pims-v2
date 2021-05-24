@@ -108,7 +108,7 @@
             </a>
 
             <a
-              :href="`/print/pds/${item.employee_id}`"
+              @click="printPersonalDataSheet(item.employee_id)"
               class="btn btn-primary rounded-circle text-white mr-2"
               :title="`Generate PDS for ${item.fullname}`"
             >
@@ -319,6 +319,9 @@ export default {
           this.employee = response.data;
         }
       });
+    },
+    printPersonalDataSheet(employee_id) {
+      window.axios.get(`/print/pds/${employee_id}`).then(_);
     },
   },
   created() {
