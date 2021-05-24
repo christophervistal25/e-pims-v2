@@ -83,7 +83,12 @@ $(function() {
                     },
                     { data: "position", name: "position", visible: false },
                     { data: "status", name: "status", visible: false },
-                    { data: "salary", name: "salary", visible: false },
+                    {
+                        data: "salary",
+                        name: "salary",
+                        visible: false,
+                        render: $.fn.dataTable.render.number(",", ".", 2)
+                    },
                     { data: "office", name: "office", visible: false },
                     {
                         data: "leave_without_pay",
@@ -126,7 +131,11 @@ $(function() {
                     { data: "service_to_date", name: "service_to_date" },
                     { data: "position", name: "position" },
                     { data: "status", name: "status" },
-                    { data: "salary", name: "salary" },
+                    {
+                        data: "salary",
+                        name: "salary",
+                        render: $.fn.dataTable.render.number(",", ".", 2)
+                    },
                     { data: "office", name: "office" },
                     { data: "leave_without_pay", name: "leave_without_pay" },
                     { data: "separation_date", name: "separation_date" },
