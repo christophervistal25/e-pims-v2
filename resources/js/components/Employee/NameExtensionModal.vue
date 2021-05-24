@@ -66,6 +66,7 @@
               type="button"
               class="btn btn-secondary"
               data-dismiss="modal"
+              aria-label="Close"
             >
               Close
             </button>

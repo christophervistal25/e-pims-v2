@@ -38,7 +38,6 @@
                 type="text"
                 id="elemNameSchool"
                 class="form-control"
-                placeholder="Enter Name of School"
                 v-model="educationalBackground.elementary"
                 style="
                   text-transform: uppercase;
@@ -46,7 +45,7 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Name of School</span>
+              <span><strong>NAME OF SCHOOL</strong></span>
             </label>
           </div>
 
@@ -63,7 +62,7 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>BASIC EDUCATION/DEGREE/COURSE</span>
+              <span><strong>BASIC EDUCATION/DEGREE/COURSE</strong></span>
             </label>
           </div>
 
@@ -73,7 +72,6 @@
                 type="month"
                 id="eperiodFrom"
                 class="form-control"
-                placeholder=""
                 v-model="educationalBackground.eperiodFrom"
                 :class="
                   !errors.hasOwnProperty('eperiodFrom') ? '' : 'is-invalid'
@@ -83,7 +81,7 @@
               <p class="text-danger text-sm">
                 {{ errors.eperiodFrom }}
               </p>
-              <span>PERIOD OF ATTENDANCE(FROM)</span>
+              <span><strong>PERIOD OF ATTENDANCE (FROM)</strong></span>
             </label>
           </div>
 
@@ -93,12 +91,11 @@
                 type="month"
                 id="eperiodTo"
                 class="form-control"
-                placeholder=""
                 v-model="educationalBackground.eperiodTo"
                 :class="!errors.hasOwnProperty('eperiodTo') ? '' : 'is-invalid'"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>PERIOD OF ATTENDANCE(TO)</span>
+              <span><strong>PERIOD OF ATTENDANCE (TO)</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.eperiodTo }}
@@ -113,11 +110,14 @@
                   type="number"
                   id="eunitEarned"
                   class="form-control"
-                  placeholder="(if not graduated)"
                   v-model="educationalBackground.eunitEarned"
                   style="outline: none; box-shadow: 0px 0px 0px transparent"
                 />
-                <span>Highest Level/Unit Earned</span>
+                <span
+                  ><strong
+                    >HIGHEST LEVEL/UNIT EARNED (if not graduated)</strong
+                  ></span
+                >
               </label>
             </div>
 
@@ -138,7 +138,7 @@
                   :class="!errors.hasOwnProperty('eyrGrad') ? '' : 'is-invalid'"
                   style="outline: none; box-shadow: 0px 0px 0px transparent"
                 />
-                <span>YEAR GRADUATED</span>
+                <span><strong>YEAR GRADUATED</strong></span>
               </label>
               <p class="text-danger text-sm">
                 {{ errors.eyrGrad }}
@@ -151,11 +151,12 @@
                   type="text"
                   id="escholarship"
                   class="form-control"
-                  placeholder="Enter Scholarship/Academic Honors Received"
                   v-model="educationalBackground.escholarship"
                   style="text-transform:uppercase; outline; none; box-shadow: 0px 0px 0px transparent;"
                 />
-                <span>Scholarship/Academic Honors Received</span>
+                <span
+                  ><strong>SCHOLARSHIP/ACADEMIC HONORS RECEIVED</strong></span
+                >
               </label>
             </div>
           </div>
@@ -180,11 +181,10 @@
                 type="text"
                 id="snameOfSchool"
                 class="form-control"
-                placeholder="Enter Name of School"
                 v-model="educationalBackground.snameOfSchool"
                 style="text-transform:uppercase; outline; none; box-shadow: 0px 0px 0px transparent;"
               />
-              <span>Name of School</span>
+              <span><strong>NAME OF SCHOOL</strong></span>
             </label>
           </div>
 
@@ -194,11 +194,10 @@
                 type="text"
                 id="sbasicEduc"
                 class="form-control"
-                placeholder=""
                 v-model="educationalBackground.sbasicEduc"
                 style="text-transform:uppercase; outline; none; box-shadow: 0px 0px 0px transparent;"
               />
-              <span>BASIC EDUCATION/DEGREE/COURSE</span>
+              <span><strong>BASIC EDUCATION/DEGREE/COURSE</strong></span>
             </label>
           </div>
 
@@ -208,14 +207,13 @@
                 type="month"
                 id="speriodFrom"
                 class="form-control"
-                placeholder=""
                 v-model="educationalBackground.speriodFrom"
                 :class="
                   !errors.hasOwnProperty('speriodFrom') ? '' : 'is-invalid'
                 "
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>PERIOD OF ATTENDANCE(FROM)</span>
+              <span><strong>PERIOD OF ATTENDANCE (FROM)</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.speriodFrom }}
@@ -228,12 +226,11 @@
                 type="month"
                 id="speriodTo"
                 class="form-control"
-                placeholder=""
                 v-model="educationalBackground.speriodTo"
                 :class="!errors.hasOwnProperty('speriodTo') ? '' : 'is-invalid'"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>PERIOD OF ATTENDANCE(TO)</span>
+              <span><strong>PERIOD OF ATTENDANCE (TO)</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.speriodTo }}
@@ -248,11 +245,14 @@
                   type="number"
                   id="sunitEarned"
                   class="form-control"
-                  placeholder="(if not graduated)"
                   v-model="educationalBackground.sunitEarned"
                   style="outline; none; box-shadow: 0px 0px 0px transparent;"
                 />
-                <span>Highest Level/Unit Earned</span>
+                <span
+                  ><strong
+                    >HIGHEST LEVEL/UNIT EARNED (if not graduated)</strong
+                  ></span
+                >
               </label>
             </div>
 
@@ -262,7 +262,6 @@
                   type="number"
                   id="syrGrad"
                   class="form-control"
-                  placeholder=""
                   v-model="educationalBackground.syrGrad"
                   @input="
                     if (educationalBackground.syrGrad.length > yearMaxLength)
@@ -274,7 +273,7 @@
                   :class="!errors.hasOwnProperty('syrGrad') ? '' : 'is-invalid'"
                   style="outline; none; box-shadow: 0px 0px 0px transparent;"
                 />
-                <span>YEAR GRADUATED</span>
+                <span><strong>YEAR GRADUATED</strong></span>
               </label>
               <p class="text-danger text-sm">
                 {{ errors.syrGrad }}
@@ -289,9 +288,10 @@
                   class="form-control"
                   v-model="educationalBackground.sscholarship"
                   style="text-transform:uppercase; outline; none; box-shadow: 0px 0px 0px transparent;"
-                  placeholder="Enter Scholarship/Academic Honors Received"
                 />
-                <span>Scholarship/Academic Honors Received</span>
+                <span
+                  ><strong>SCHOLARSHIP/ACADEMIC HONORS RECEIVED</strong></span
+                >
               </label>
             </div>
           </div>
@@ -316,11 +316,10 @@
                 type="text"
                 id="vnameOfVoc"
                 class="form-control"
-                placeholder="enter Name of School"
                 v-model="educationalBackground.vnameOfVoc"
                 style="text-transform:uppercase; outline; none; box-shadow: 0px 0px 0px transparent;"
               />
-              <span>Name of School</span>
+              <span><strong>NAME OF SCHOOL</strong></span>
             </label>
           </div>
 
@@ -330,11 +329,10 @@
                 type="text"
                 id="vbasicEduc"
                 class="form-control"
-                placeholder=""
                 v-model="educationalBackground.vbasicEduc"
                 style="text-transform:uppercase; outline; none; box-shadow: 0px 0px 0px transparent;"
               />
-              <span>BASIC EDUCATION/DEGREE/COURSE</span>
+              <span><strong>BASIC EDUCATION/DEGREE/COURSE</strong></span>
             </label>
           </div>
 
@@ -344,14 +342,13 @@
                 type="month"
                 id="vperiodFrom"
                 class="form-control"
-                placeholder=""
                 v-model="educationalBackground.vperiodFrom"
                 :class="
                   !errors.hasOwnProperty('vperiodFrom') ? '' : 'is-invalid'
                 "
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>PERIOD OF ATTENDANCE(FROM)</span>
+              <span><strong>PERIOD OF ATTENDANCE (FROM)</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.vperiodFrom }}
@@ -363,12 +360,11 @@
                 type="month"
                 id="vperiodTo"
                 class="form-control"
-                placeholder=""
                 v-model="educationalBackground.vperiodTo"
                 :class="!errors.hasOwnProperty('vperiodTo') ? '' : 'is-invalid'"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>PERIOD OF ATTENDANCE(TO)</span>
+              <span><strong>PERIOD OF ATTENDANCE (TO)</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.vperiodTo }}
@@ -384,11 +380,14 @@
                 type="number"
                 id="vunitEarned"
                 class="form-control"
-                placeholder="(if not graduated)"
                 v-model="educationalBackground.vunitEarned"
                 style="outline; none; box-shadow: 0px 0px 0px transparent;"
               />
-              <span>Highest Level/Unit Earned</span>
+              <span
+                ><strong
+                  >HIGHEST LEVEL/UNIT EARNED (if not graduated)</strong
+                ></span
+              >
             </label>
           </div>
 
@@ -398,7 +397,6 @@
                 type="number"
                 id="vyrGrad"
                 class="form-control"
-                placeholder=""
                 v-model="educationalBackground.vyrGrad"
                 @input="
                   if (educationalBackground.vyrGrad.length > yearMaxLength)
@@ -410,7 +408,7 @@
                 :class="!errors.hasOwnProperty('vyrGrad') ? '' : 'is-invalid'"
                 style="outline; none; box-shadow: 0px 0px 0px transparent;"
               />
-              <span>YEAR GRADUATED</span>
+              <span><strong>YEAR GRADUATED</strong></span>
             </label>
             <p class="text-danger text-sm">{{ errors.vyrGrad }}</p>
           </div>
@@ -423,9 +421,8 @@
                 class="form-control"
                 v-model="educationalBackground.vscholarship"
                 style="text-transform:uppercase; outline; none; box-shadow: 0px 0px 0px transparent;"
-                placeholder="Enter Scholarship/Academic Honors Received"
               />
-              <span>Scholarship/Academic Honors Received</span>
+              <span><strong>SCHOLARSHIP/ACADEMIC HONORS RECEIVED</strong></span>
             </label>
           </div>
         </div>
@@ -449,11 +446,10 @@
                 type="text"
                 id="cnameOfSchool"
                 class="form-control"
-                placeholder="Enter Name of School"
                 v-model="educationalBackground.cnameOfSchool"
                 style="text-transform:uppercase; outline; none; box-shadow: 0px 0px 0px transparent;"
               />
-              <span>Name of School</span>
+              <span><strong>NAME OF SCHOOL</strong></span>
             </label>
           </div>
 
@@ -463,11 +459,10 @@
                 type="text"
                 id="cbasicEduc"
                 class="form-control"
-                placeholder=""
                 v-model="educationalBackground.cbasicEduc"
                 style="text-transform:uppercase; outline; none; box-shadow: 0px 0px 0px transparent;"
               />
-              <span>BASIC EDUCATION/DEGREE/COURSE</span>
+              <span><strong>BASIC EDUCATION/DEGREE/COURSE</strong></span>
             </label>
           </div>
 
@@ -477,14 +472,13 @@
                 type="month"
                 id="cperiodFrom"
                 class="form-control"
-                placeholder=""
                 v-model="educationalBackground.cperiodFrom"
                 :class="
                   !errors.hasOwnProperty('cperiodFrom') ? '' : 'is-invalid'
                 "
                 style="outline; none; box-shadow: 0px 0px 0px transparent;"
               />
-              <span>PERIOD OF ATTENDANCE(FROM)</span>
+              <span><strong>PERIOD OF ATTENDANCE (FROM)</strong></span>
             </label>
             <p class="text-danger">{{ errors.cperiodFrom }}</p>
           </div>
@@ -496,10 +490,9 @@
                 class="form-control"
                 v-model="educationalBackground.cperiodTo"
                 :class="!errors.hasOwnProperty('cperiodTo') ? '' : 'is-invalid'"
-                placeholder=""
                 style="outline; none; box-shadow: 0px 0px 0px transparent;"
               />
-              <span>PERIOD OF ATTENDANCE(TO)</span>
+              <span><strong>PERIOD OF ATTENDANCE (TO)</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.cperiodTo }}
@@ -516,11 +509,14 @@
                 type="number"
                 id="cunitEarned"
                 class="form-control"
-                placeholder="(if not graduated)"
                 v-model="educationalBackground.cunitEarned"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Highest Level/Unit Earned</span>
+              <span
+                ><strong
+                  >HIGHEST LEVEL/UNIT EARNED (if not graduated)</strong
+                ></span
+              >
             </label>
           </div>
 
@@ -530,7 +526,6 @@
                 type="number"
                 id="cyrGrad"
                 class="form-control"
-                placeholder=""
                 v-model="educationalBackground.cyrGrad"
                 @input="
                   if (educationalBackground.cyrGrad.length > yearMaxLength)
@@ -542,7 +537,7 @@
                 :class="!errors.hasOwnProperty('cyrGrad') ? '' : 'is-invalid'"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>YEAR GRADUATED</span>
+              <span><strong>YEAR GRADUATED</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.cyrGrad }}
@@ -561,9 +556,8 @@
                   outline: none;
                   box-shadow: 0px 0px 0px transparent;
                 "
-                placeholder="Enter Scholarship/Academic Honors Received"
               />
-              <span>Scholarship/Academic Honors Received</span>
+              <span><strong>SCHOLARSHIP/ACADEMIC HONORS RECEIVED</strong></span>
             </label>
           </div>
         </div>
@@ -587,11 +581,10 @@
                 type="text"
                 id="gnameOfSchool"
                 class="form-control"
-                placeholder="Enter Name of School"
                 v-model="educationalBackground.gnameOfSchool"
                 style="text-transform:uppercase outline: none; box-shadow: 0px 0px 0px transparent;"
               />
-              <span>Name Of School</span>
+              <span><strong>NAME OF SCHOOL</strong></span>
             </label>
           </div>
 
@@ -605,7 +598,7 @@
                 v-model="educationalBackground.gbasicEduc"
                 style="text-transform:uppercase outline: none; box-shadow: 0px 0px 0px transparent;"
               />
-              <span>BASIC EDUCATION/DEGREE/COURSE</span>
+              <span><strong>BASIC EDUCATION/DEGREE/COURSE</strong></span>
             </label>
           </div>
 
@@ -615,14 +608,13 @@
                 type="month"
                 id="gperiodFrom"
                 class="form-control"
-                placeholder=""
                 v-model="educationalBackground.gperiodFrom"
                 :class="
                   !errors.hasOwnProperty('gperiodFrom') ? '' : 'is-invalid'
                 "
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>PERIOD OF ATTENDANCE(FROM)</span>
+              <span><strong>PERIOD OF ATTENDANCE (FROM)</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.gperiodFrom }}
@@ -634,12 +626,11 @@
                 type="month"
                 id="gperiodTo"
                 class="form-control"
-                placeholder=""
                 v-model="educationalBackground.gperiodTo"
                 :class="!errors.hasOwnProperty('gperiodTo') ? '' : 'is-invalid'"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>PERIOD OF ATTENDANCE(TO)</span>
+              <span><strong>PERIOD OF ATTENDANCE (TO)</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.gperiodTo }}
@@ -655,11 +646,14 @@
               <input
                 type="number"
                 class="form-control"
-                placeholder="(if not graduated)"
                 v-model="educationalBackground.gunitEarned"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Highest Level/Unit Earned</span>
+              <span
+                ><strong
+                  >HIGHEST LEVEL/UNIT EARNED (if not graduated)</strong
+                ></span
+              >
             </label>
           </div>
 
@@ -669,7 +663,6 @@
                 type="number"
                 id="gyrGrad"
                 class="form-control"
-                placeholder=""
                 v-model="educationalBackground.gyrGrad"
                 @input="
                   if (educationalBackground.gyrGrad.length > yearMaxLength)
@@ -681,7 +674,7 @@
                 :class="!errors.hasOwnProperty('gyrGrad') ? '' : 'is-invalid'"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>YEAR GRADUATED</span>
+              <span><strong>YEAR GRADUATED</strong></span>
             </label>
             <p class="text-danger text-sm">{{ errors.gyrGrad }}</p>
           </div>
@@ -692,14 +685,13 @@
                 type="text"
                 class="form-control"
                 v-model="educationalBackground.gscholarship"
-                placeholder="Enter Scholarship/Academic Honors Received"
                 style="
                   text-transform: uppercase;
                   outline: none;
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Scholarship/Academic Honors Received</span>
+              <span><strong>SCHOLARSHIP/ACADEMIC HONORS RECEIVED</strong></span>
             </label>
           </div>
         </div>

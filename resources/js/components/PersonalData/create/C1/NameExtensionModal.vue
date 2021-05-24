@@ -2,7 +2,12 @@
   <div>
     <div>
       <v-row justify="center" class="mt-1">
-        <v-dialog v-model="dialog" persistent max-width="600px">
+        <v-dialog
+          v-model="dialog"
+          persistent
+          max-width="600px"
+          :class="shownameext ? 'show' : ''"
+        >
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               color="secondary"
@@ -26,9 +31,24 @@
               <v-container>
                 <v-row>
                   <v-col cols="12">
+                    <p class="text-danger text-sm mb-0">
+                      {{
+                        errors.hasOwnProperty("errors")
+                          ? errors.errors.extension[0]
+                          : ""
+                      }}
+                    </p>
                     <v-text-field
+                      class="mt-0"
                       label="Extension Name"
                       required
+                      v-model="info.extension"
+                      :class="
+                        errors.hasOwnProperty('errors') &&
+                        errors.errors.hasOwnProperty('extension')
+                          ? 'is-invalid'
+                          : ''
+                      "
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -39,8 +59,15 @@
               <v-btn color="blue darken-1" text @click="dialog = false">
                 Close
               </v-btn>
-              <v-btn color="blue darken-1" text @click="dialog = false">
-                Save
+              <v-btn color="blue darken-1" text @click="submitNewNameExtension">
+                <div
+                  v-if="isLoading"
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                >
+                  <span class="sr-only">Loading...</span>
+                </div>
+                Save Changes
               </v-btn>
             </v-card-actions>
           </v-card>
@@ -50,9 +77,47 @@
   </div>
 </template>
 <script>
+import swal from "sweetalert";
 export default {
-  data: () => ({
-    dialog: false,
-  }),
+  props: ["shownameext"],
+  data() {
+    return {
+      isLoading: false,
+      dialog: false,
+      info: {
+        extension: "",
+      },
+      errors: {},
+    };
+  },
+  methods: {
+    submitNewNameExtension() {
+      this.isLoading = true;
+      window.axios
+        .post("/api/name/extensions/store", this.info)
+        .then((response) => {
+          if (response.status === 201) {
+            this.isLoading = false;
+            swal({
+              text: "Successfully create new name extension",
+              icon: "success",
+            });
+            this.info = {};
+            this.$emit("nameext-modal-dismiss", response.data);
+            this.dialog = false;
+          }
+        })
+        .catch((error) => {
+          this.isLoading = false;
+          this.errors = {};
+          if (error.response.status === 422) {
+            this.errors = error.response.data;
+          }
+        });
+    },
+    dismissModal() {
+      this.$emit("nameext-modal-dismiss");
+    },
+  },
 };
 </script>
