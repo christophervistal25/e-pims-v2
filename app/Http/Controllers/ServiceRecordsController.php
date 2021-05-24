@@ -69,7 +69,7 @@ class ServiceRecordsController extends Controller
     {
         $this->validate($request, [
             'fromDate'                    => 'required',
-            'toDate'                      => 'required',
+            'toDate'                      => 'required|after:fromDate',
             'positionTitle'               => 'required',
             'status'                      => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
             'salary'                      => 'required',
@@ -81,7 +81,7 @@ class ServiceRecordsController extends Controller
         $service_record = new service_record;
         $service_record->employee_id            = $request['employeeId'];
         $service_record->service_from_date      = $request['fromDate'];
-        $service_record->service_to_date        = $request['toDate'];  
+        $service_record->service_to_date        = $request['toDate'];
         $service_record->position_id            = $request['positionTitle'];
         $service_record->status                 = $request['status'];
         $service_record->salary                 = $request['salary'];
@@ -145,7 +145,7 @@ class ServiceRecordsController extends Controller
         $service_record                         =  service_record::find($id);
         $service_record->employee_id            = $request['employeeId'];
         $service_record->service_from_date      = $request['fromDate'];
-        $service_record->service_to_date        = $request['toDate'];  
+        $service_record->service_to_date        = $request['toDate'];
         $service_record->position_id            = $request['positionTitle'];
         $service_record->status                 = $request['status'];
         $service_record->salary                 = $request['salary'];

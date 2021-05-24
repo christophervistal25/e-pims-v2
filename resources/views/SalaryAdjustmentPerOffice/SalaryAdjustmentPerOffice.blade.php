@@ -11,6 +11,10 @@
     list-style-type: none;
     padding: 0;
 }
+#line {
+        border-bottom: 1px solid black;
+        padding-bottom:15px;
+    }
 </style>
 @endprepend
 @section('content')
@@ -148,7 +152,7 @@
             <div class="row">
                 <div class="col-6 mb-2">
                     <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}"
-                        name="employeeOffice" data-live-search="true" id="employeeOffice" data-size="5">
+                        name="employeeOffice" data-live-search="true" id="employeeOffice" data-size="5" onchange="ValidateDropDown(this)">
                         <option></option>
                         @foreach($plantilla as $plantillas)
                         <option value="{{ $plantillas->office->office_code }}">{{ $plantillas->office->office_name }}</option>
@@ -167,7 +171,7 @@
                     <tr>
                         <td style="margin-top:10px;" scope="col" class="text-center font-weight-bold"><input style='transform:scale(1.3); margin-top:18px;' name="selectAll" value="selectAll" id="selectAll" type="checkbox" /></td>
                         <td scope="col" class="text-center font-weight-bold">Employee Name</td>
-                        <td scope="col" class="text-center font-weight-bold">Office</td>
+                        <td scope="col" class="text-center font-weight-bold d-none">Office</td>
                         <td scope="col" class="text-center font-weight-bold">Salary Grade</td>
                         <td scope="col" class="text-center font-weight-bold">Step Number</td>
                         <td scope="col" class="text-center font-weight-bold">Salary Previous</td>
@@ -177,6 +181,7 @@
                     </tr>
                     </thead>
                 </table>
+                <p style="visibility: visible;" id="line" class="text-center">No data available in table</p>
             </div>
         </div>
 
