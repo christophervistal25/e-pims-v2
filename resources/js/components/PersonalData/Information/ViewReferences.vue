@@ -15,9 +15,11 @@
           </thead>
           <tbody>
             <tr v-for="(reference, index) in employee.references" :key="index">
-              <td>{{ reference.name }}</td>
-              <td>{{ reference.address }}</td>
-              <td>{{ reference.telephone_number }}</td>
+              <td style="text-transform: uppercase">{{ reference.name }}</td>
+              <td style="text-transform: uppercase">{{ reference.address }}</td>
+              <td style="text-transform: uppercase">
+                {{ reference.telephone_number }}
+              </td>
             </tr>
           </tbody>
         </table>

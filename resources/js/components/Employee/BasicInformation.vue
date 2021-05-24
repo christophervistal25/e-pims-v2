@@ -12,7 +12,10 @@
             v-model="employee.lastName"
             :class="errors.hasOwnProperty('lastName') ? 'is-invalid' : ''"
           />
-          <span>LAST NAME<span class="text-danger">*</span></span>
+          <span
+            ><strong>LAST NAME</strong
+            ><span class="text-danger"><strong>*</strong></span></span
+          >
           <p class="text-danger text-sm">{{ errors.lastName }}</p>
         </label>
         <label for="firstname" class="form-group has-float-label">
@@ -24,7 +27,10 @@
             v-model="employee.firstName"
             :class="errors.hasOwnProperty('firstName') ? 'is-invalid' : ''"
           />
-          <span>FIRST NAME<span class="text-danger">*</span></span>
+          <span
+            ><strong>FIRST NAME</strong
+            ><span class="text-danger"><strong>*</strong></span></span
+          >
           <p class="text-danger text-sm">
             {{ errors.firstName }}
           </p>
@@ -37,7 +43,7 @@
             class="form-control text-uppercase"
             style="outline: none; box-shadow: 0px 0px 0px transparent"
           />
-          <span>MIDDLE NAME</span>
+          <span><strong>MIDDLE NAME</strong></span>
         </label>
         <div class="row">
           <div class="col-lg-10">
@@ -91,7 +97,10 @@
               <p class="text-danger text-sm">
                 {{ errors.dateOfBirth }}
               </p>
-              <span>DATE OF BIRTH<span class="text-danger">*</span></span>
+              <span
+                ><strong>DATE OF BIRTH</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
           </div>
           <div class="col-lg-6">
@@ -121,7 +130,7 @@
                 v-model="employee.step"
                 readonly
               />
-              <span>STEP</span>
+              <span><strong>STEP</strong></span>
             </label>
           </div>
           <div class="col-lg-4">
@@ -138,7 +147,7 @@
                 v-model="employee.basicRate"
                 v-if="employee.employee_id"
               />
-              <span>BASIC RATE</span>
+              <span><strong>BASIC RATE</strong></span>
             </label>
           </div>
           <div class="col-lg-4">
@@ -156,7 +165,7 @@
                 readonly
                 v-model="employee.employee_id"
               />
-              <span>EMP ID</span>
+              <span><strong>EMP ID</strong></span>
             </label>
           </div>
         </div>
@@ -201,7 +210,10 @@
           <p class="text-danger text-sm">
             {{ errors["employmentStatus.stat_code"] }}
           </p>
-          <span>EMPLOYMENT STATUS<span class="text-danger">*</span></span>
+          <span
+            ><strong>EMPLOYMENT STATUS</strong
+            ><span class="text-danger"><strong>*</strong></span></span
+          >
         </label>
       </div>
       <!-- <div class="col-lg-1">
@@ -239,7 +251,10 @@
           <p class="text-danger text-sm">
             {{ errors["designation.position_code"] }}
           </p>
-          <span>POSITION<span class="text-danger">*</span></span>
+          <span
+            ><strong>POSITION</strong
+            ><span class="text-danger"><strong>*</strong></span></span
+          >
         </label>
       </div>
 
@@ -274,7 +289,10 @@
           <p class="text-danger text-sm">
             {{ errors["officeAssignment.office_code"] }}
           </p>
-          <span>OFFICE ASSIGNMENT<span class="text-danger">*</span></span>
+          <span
+            ><strong>OFFICE ASSIGNMENT</strong
+            ><span class="text-danger"><strong>*</strong></span></span
+          >
         </label>
       </div>
 

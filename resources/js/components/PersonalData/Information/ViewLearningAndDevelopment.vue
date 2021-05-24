@@ -25,14 +25,24 @@
               v-for="(programAttained, index) in employee.program_attained"
               :key="index"
             >
-              <td>{{ programAttained.title }}</td>
-              <td>
+              <td style="text-transform: uppercase">
+                {{ programAttained.title }}
+              </td>
+              <td style="text-transform: uppercase">
                 {{ programAttained.date_of_attendance_from }}
               </td>
-              <td>{{ programAttained.date_of_attendance_to }}</td>
-              <td>{{ programAttained.number_of_hours }}</td>
-              <td>{{ programAttained.type_of_id }}</td>
-              <td>{{ programAttained.sponsored_by }}</td>
+              <td style="text-transform: uppercase">
+                {{ programAttained.date_of_attendance_to }}
+              </td>
+              <td style="text-transform: uppercase">
+                {{ programAttained.number_of_hours }}
+              </td>
+              <td style="text-transform: uppercase">
+                {{ programAttained.type_of_id }}
+              </td>
+              <td style="text-transform: uppercase">
+                {{ programAttained.sponsored_by }}
+              </td>
             </tr>
           </tbody>
         </table>

@@ -15,9 +15,15 @@
           </thead>
           <tbody>
             <tr v-if="employee.issued_id">
-              <td>{{ employee.issued_id.id_type }}</td>
-              <td>{{ employee.issued_id.id_no }}</td>
-              <td>{{ employee.issued_id.date }}</td>
+              <td style="text-transform: uppercase">
+                {{ employee.issued_id.id_type }}
+              </td>
+              <td style="text-transform: uppercase">
+                {{ employee.issued_id.id_no }}
+              </td>
+              <td style="text-transform: uppercase">
+                {{ employee.issued_id.date }}
+              </td>
             </tr>
           </tbody>
         </table>

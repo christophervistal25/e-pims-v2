@@ -18,9 +18,15 @@
               v-for="(otherInformation, index) in employee.other_information"
               :key="index"
             >
-              <td>{{ otherInformation.special_skill }}</td>
-              <td>{{ otherInformation.non_academic }}</td>
-              <td>{{ otherInformation.organization }}</td>
+              <td style="text-transform: uppercase">
+                {{ otherInformation.special_skill }}
+              </td>
+              <td style="text-transform: uppercase">
+                {{ otherInformation.non_academic }}
+              </td>
+              <td style="text-transform: uppercase">
+                {{ otherInformation.organization }}
+              </td>
             </tr>
           </tbody>
         </table>

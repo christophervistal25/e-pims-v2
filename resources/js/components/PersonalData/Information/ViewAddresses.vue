@@ -12,7 +12,7 @@
           <div class="col-lg-6 title">Residential House No</div>
           <div class="col-lg-auto">
             <li>
-              <div class="text">
+              <div class="text" style="text-transform: uppercase">
                 {{ employee.residential_no || "N/A" }}
               </div>
             </li>
@@ -23,7 +23,7 @@
           <div class="col-lg-6 title">Residential Street</div>
           <div class="col-lg-auto">
             <li>
-              <div class="text">
+              <div class="text" style="text-transform: uppercase">
                 {{ employee.residential_street || "N/A" }}
               </div>
             </li>
@@ -34,7 +34,7 @@
           <div class="col-lg-6 title">Residential Village</div>
           <div class="col-lg-auto">
             <li>
-              <div class="text">
+              <div class="text" style="text-transform: uppercase">
                 {{ employee.residential_village || "N/A" }}
               </div>
             </li>
@@ -94,7 +94,7 @@
           <div class="col-lg-6 title">Permanent House No</div>
           <div class="col-lg-auto">
             <li>
-              <div class="text">
+              <div class="text" style="text-transform: uppercase">
                 {{ employee.permanent_no || "N/A" }}
               </div>
             </li>
@@ -105,7 +105,7 @@
           <div class="col-lg-6 title">Permanent Street</div>
           <div class="col-lg-auto">
             <li>
-              <div class="text">
+              <div class="text" style="text-transform: uppercase">
                 {{ employee.permanent_street || "N/A" }}
               </div>
             </li>
@@ -116,7 +116,7 @@
           <div class="col-lg-6 title">Permanent Village</div>
           <div class="col-lg-auto">
             <li>
-              <div class="text">
+              <div class="text" style="text-transform: uppercase">
                 {{ employee.permanent_village || "N/A" }}
               </div>
             </li>

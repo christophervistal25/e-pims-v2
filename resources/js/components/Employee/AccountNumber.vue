@@ -10,7 +10,7 @@
           :class="errors.hasOwnProperty('pagibigMidNo') ? 'is-invalid' : ''"
           style="outline: none; box-shadow: 0px 0px 0px transparent"
         />
-        <span>PAG-IBIG MID NO.</span>
+        <span><strong>PAG-IBIG MID NO.</strong></span>
       </label>
       <p class="text-danger text-sm">{{ errors.pagibigMidNo }}</p>
     </div>
@@ -24,7 +24,7 @@
           :class="errors.hasOwnProperty('philhealthNo') ? 'is-invalid' : ''"
           style="outline: none; box-shadow: 0px 0px 0px transparent"
         />
-        <span>PHILHEALTH NO.</span>
+        <span><strong>PHILHEALTH NO.</strong></span>
       </label>
       <p class="text-danger text-sm">{{ errors.philhealthNo }}</p>
     </div>
@@ -39,7 +39,7 @@
           style="outline: none; box-shadow: 0px 0px 0px transparent"
         />
         <p class="text-danger text-sm">{{ errors.sssNo }}</p>
-        <span>SSS NO.</span>
+        <span><strong>SSS NO.</strong></span>
       </label>
     </div>
     <div class="">
@@ -52,7 +52,7 @@
           :class="errors.hasOwnProperty('tinNo') ? 'is-invalid' : ''"
           style="outline: none; box-shadow: 0px 0px 0px transparent"
         />
-        <span>TIN NO.</span>
+        <span><strong>TIN NO.</strong></span>
       </label>
       <p class="text-danger text-sm">{{ errors.tinNo }}</p>
     </div>
@@ -72,7 +72,10 @@
           :class="errors.hasOwnProperty('dbpAccountNo') ? 'is-invalid' : ''"
           style="outline: none; box-shadow: 0px 0px 0px transparent"
         />
-        <span>DBP ACCOUNT NO.<span class="text-danger">*</span></span>
+        <span
+          ><strong>DBP ACCOUNT NO.</strong
+          ><span class="text-danger"><strong>*</strong></span></span
+        >
       </label>
       <p class="text-danger text-sm" v-if="errors.dbpAccountNo">
         {{ errors.dbpAccountNo }}
@@ -88,7 +91,10 @@
           :class="errors.hasOwnProperty('lbpAccountNo') ? 'is-invalid' : ''"
           style="outline: none; box-shadow: 0px 0px 0px transparent"
         />
-        <span>LBP ACCOUNT NO.<span class="text-danger">*</span></span>
+        <span
+          ><strong>LBP ACCOUNT NO.</strong
+          ><span class="text-danger"><strong>*</strong></span></span
+        >
       </label>
       <p class="text-danger text-sm" v-if="errors.lbpAccountNo">
         {{ errors.lbpAccountNo }}
@@ -105,7 +111,7 @@
           :class="errors.hasOwnProperty('gsisIdNo') ? 'is-invalid' : ''"
           style="outline: none; box-shadow: 0px 0px 0px transparent"
         />
-        <span>GSIS ID NO.</span>
+        <span><strong>GSIS ID NO.</strong></span>
       </label>
       <p class="text-danger text-sm">{{ errors.gsisIdNo }}</p>
     </div>
@@ -120,7 +126,7 @@
           :class="errors.hasOwnProperty('gsisPolicyNo') ? 'is-invalid' : ''"
           style="outline: none; box-shadow: 0px 0px 0px transparent"
         />
-        <span>GSIS POLICY NO.</span>
+        <span><strong>GSIS POLICY NO.</strong></span>
       </label>
       <p class="text-danger text-sm">{{ errors.gsisPolicyNo }}</p>
     </div>
@@ -135,7 +141,7 @@
           :class="errors.hasOwnProperty('gsisBpNo') ? 'is-invalid' : ''"
           style="outline: none; box-shadow: 0px 0px 0px transparent"
         />
-        <span>GSIS BP NO.</span>
+        <span><strong>GSIS BP NO.</strong></span>
       </label>
       <p class="text-danger text-sm">{{ errors.gsisBpNo }}</p>
     </div>

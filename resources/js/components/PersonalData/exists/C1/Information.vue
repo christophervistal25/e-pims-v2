@@ -46,7 +46,7 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Surname</span>
+              <span><strong>SURNAME</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.surname }}
@@ -67,7 +67,7 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>First Name</span>
+              <span><strong>FIRST NAME</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.firstname }}
@@ -90,7 +90,7 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Middle Name</span>
+              <span><strong>MIDDLE NAME</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.middlename }}
@@ -118,7 +118,7 @@
                 <option value="jr">JR</option>
                 <option value="iii">III</option>
               </select>
-              <span>Extension Name</span>
+              <span><strong>EXTENSION NAME</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.extension }}
@@ -137,7 +137,7 @@
                 v-model="employee.date_birth"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Date of Birth</span>
+              <span><strong>DATE OF BIRTH</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.dateOfBirth }}
@@ -163,7 +163,7 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Place of Birth</span>
+              <span><strong>PLACE OF BIRTH</strong></span>
             </label>
             <span class="text-danger text-sm p-0">
               {{ errors.placeOfBirth }}
@@ -182,7 +182,7 @@
                 <option value="male">MALE</option>
                 <option value="female">FEMALE</option>
               </select>
-              <span>Sex</span>
+              <span><strong>SEX</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.sex }}
@@ -206,7 +206,7 @@
                 <option value="SEPARATED">SEPARATED</option>
                 <option value="OTHERS">OTHERS</option>
               </select>
-              <span>Status</span>
+              <span><strong>STATUS</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.civil_status }}
@@ -225,7 +225,7 @@
                 v-model="employee.height"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Height(m)</span>
+              <span><strong>HEIGHT(m)</strong></span>
             </label>
             <p class="text-danger text-sm">{{ errors.height }}</p>
           </div>
@@ -240,7 +240,7 @@
                 v-model="employee.weight"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Weight(kg)</span>
+              <span><strong>WEIGHT(kg)</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.weight }}
@@ -258,7 +258,7 @@
                 v-model="employee.blood_type"
                 style="text-transform:uppercase outline: none; box-shadow: 0px 0px 0px transparent;"
               />
-              <span>Bloodtype</span>
+              <span><strong>BLOODTYPE</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.blood_type }}
@@ -276,7 +276,7 @@
                 v-model="employee.gsis_id_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>GSIS ID Number</span>
+              <span><strong>GSIS ID NUMBER</strong></span>
             </label>
           </div>
           <div class="col-lg-4">
@@ -289,7 +289,7 @@
                 v-model="employee.pag_ibig_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>PAG-IBIG ID Number</span>
+              <span><strong>PAG-IBIG ID NUMBER</strong></span>
             </label>
           </div>
           <div class="col-lg-4">
@@ -302,7 +302,7 @@
                 v-model="employee.philhealth_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Philhealth ID Number</span>
+              <span><strong>PHILHEALTH ID NUMBER</strong></span>
             </label>
           </div>
         </div>
@@ -317,7 +317,7 @@
                 v-model="employee.sss_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>SSS ID Number</span>
+              <span><strong>SSS ID NUMBER</strong></span>
             </label>
           </div>
 
@@ -331,7 +331,7 @@
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
                 v-model="employee.tin_no"
               />
-              <span>TIN ID Number</span>
+              <span><strong>TIN ID NUMBER</strong></span>
             </label>
           </div>
 
@@ -345,7 +345,7 @@
                 v-model="employee.agency_employee_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Agency Employee Number</span>
+              <span><strong>AGENCY EMPLOYEE NUMBER</strong></span>
             </label>
           </div>
         </div>
@@ -364,7 +364,7 @@
                 <option value="FILIPINO">FILIPINO</option>
                 <option value="DUAL CITIZEN">DUAL CITIZEN</option>
               </select>
-              <span>Citizenship</span>
+              <span><strong>CITIZENSHIP</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.citizenship }}
@@ -408,7 +408,7 @@
                   {{ country }}
                 </option>
               </select>
-              <span>Indicate Country</span>
+              <span><strong>INDICATE COUNTRY</strong></span>
             </label>
             <p class="text-danger text-sm">{{ errors.country }}</p>
           </div>
@@ -423,7 +423,7 @@
                 v-model="employee.telephone_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Telephone Number</span>
+              <span><strong>TELEPHONE NUMBER</strong></span>
             </label>
           </div>
           <div class="col-lg-4">
@@ -437,7 +437,7 @@
                 v-model="employee.mobile_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Mobile Number</span>
+              <span><strong>MOBILE NUMBER</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.mobile_no }}
@@ -453,7 +453,7 @@
                 v-model="employee.email_address"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Email Address</span>
+              <span><strong>EMAIL ADDRESS</strong></span>
             </label>
           </div>
         </div>
@@ -481,7 +481,9 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>House/Block/Lot No.</span>
+              <span style="text-transform: uppercase"
+                ><strong>House/Block/Lot No.</strong></span
+              >
             </label>
           </div>
           <div class="col-lg-4">
@@ -498,7 +500,7 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Street</span>
+              <span><strong>STREET</strong></span>
             </label>
           </div>
           <div class="col-lg-4">
@@ -515,7 +517,9 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Subdivision/Village</span>
+              <span style="text-transform: uppercase"
+                ><strong>Subdivision/Village</strong></span
+              >
             </label>
           </div>
         </div>
@@ -539,7 +543,7 @@
               <!-- <p class="text-danger text-sm">
                             {{ errors.residential_province }}
                         </p> -->
-              <span>Province</span>
+              <span><strong>PROVINCE</strong></span>
             </label>
           </div>
           <div class="col-lg-3">
@@ -559,7 +563,9 @@
                                 >{{ city.name }}</option
                             > -->
               </v-select>
-              <span>City/Municipality</span>
+              <span style="text-transform: uppercase"
+                ><strong>City/Municipality</strong></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.residential_city }}
@@ -586,7 +592,7 @@
                   {{ barangay.name }}
                 </option>
               </select>
-              <span>Barangay</span>
+              <span><strong>BARANGAY</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.residential_barangay }}
@@ -613,7 +619,7 @@
                 placeholder="Enter Zip Code"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Zip Code</span>
+              <span><strong>ZIP CODE</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.residential_zip_code }}
@@ -634,7 +640,7 @@
                 type="checkbox"
                 @click="sameAsAboveAddress"
               />
-              SAME AS ABOVE
+              <strong>SAME AS ABOVE</strong>
             </label>
           </div>
         </div>
@@ -670,7 +676,7 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Street</span>
+              <span><strong>STREET</strong></span>
             </label>
           </div>
           <div class="col-lg-4">
@@ -687,7 +693,9 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Subdivision/Village</span>
+              <span style="text-transform: uppercase"
+                ><strong>Subdivision/Village</strong></span
+              >
             </label>
           </div>
         </div>
@@ -719,7 +727,7 @@
                   {{ province.name }}
                 </option>
               </select>
-              <span>Province</span>
+              <span><strong>PROVINCE</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.permanentProvince }}
@@ -752,7 +760,9 @@
                   {{ city.name }}
                 </option>
               </select>
-              <span>City/Municipality</span>
+              <span style="text-transform: uppercase"
+                ><strong>City/Municipality</strong></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.permanentCity }}
@@ -786,7 +796,7 @@
                   {{ barangay.name }}
                 </option>
               </select>
-              <span>Barangay</span>
+              <span><strong>BARANGAY</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.permanentBarangay }}
@@ -813,7 +823,7 @@
                 placeholder="Enter Zip Code"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Zip Code</span>
+              <span><strong>ZIP CODE</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.permanentZipCode }}
