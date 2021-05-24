@@ -23,6 +23,7 @@
         :id="isComplete ? 'information' : ''"
       >
         <div class="p-3">
+          <p>Indicate <strong>N/A </strong>if not applicable</p>
           <div
             class="alert alert-secondary text-center font-weight-bold"
             role="alert"
@@ -32,49 +33,57 @@
         </div>
         <div class="row pr-3 pl-3">
           <div class="col-lg-3">
-            <label for="surname" class="form-group has-float-label m-0">
+            <label class="form-group has-float-label mb-0" for="surname">
               <input
                 type="text"
                 class="form-control"
                 :class="!errors.hasOwnProperty('surname') ? '' : 'is-invalid'"
                 id="surname"
                 placeholder="Enter Surname"
-                v-model="employee.lastname"
+                v-model="personal_data.lastname"
                 style="
                   text-transform: uppercase;
                   outline: none;
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
+<<<<<<< HEAD
               <span><strong>SURNAME</strong></span>
+=======
+              <span>Surname<span class="text-danger">*</span> </span>
+>>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
             <p class="text-danger text-sm">
               {{ errors.surname }}
             </p>
           </div>
           <div class="col-lg-3">
-            <label for="firstname" class="form-group has-float-label m-0">
+            <label class="form-group has-float-label mb-0" for="firstname">
               <input
                 type="text"
                 class="form-control"
                 id="firstname"
                 placeholder="Enter First Name"
                 :class="errors.firstname ? 'is-invalid' : ''"
-                v-model="employee.firstname"
+                v-model="personal_data.firstname"
                 style="
                   text-transform: uppercase;
                   outline: none;
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
+<<<<<<< HEAD
               <span><strong>FIRST NAME</strong></span>
+=======
+              <span>First Name<span class="text-danger">*</span></span>
+>>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
             <p class="text-danger text-sm">
               {{ errors.firstname }}
             </p>
           </div>
           <div class="col-lg-3">
-            <label for="middlename" class="form-group has-float-label">
+            <label class="form-group has-float-label" for="middlename">
               <input
                 type="text"
                 class="form-control"
@@ -83,7 +92,7 @@
                 "
                 id="middlename"
                 placeholder="Enter Middle Name"
-                v-model="employee.middlename"
+                v-model="personal_data.middlename"
                 style="
                   text-transform: uppercase;
                   outline: none;
@@ -96,58 +105,68 @@
               {{ errors.middlename }}
             </p>
           </div>
-          <div class="col-lg-3">
-            <label for="nameextension" class="form-group has-float-label">
+          <div class="col-lg-2">
+            <label for="nameextension" class="form-group has-float-label mb-0">
               <select
                 type="text"
-                class="form-control custom-select"
-                :class="!errors.hasOwnProperty('extension') ? '' : 'is-invalid'"
-                maxlength="3"
-                max="3"
                 id="nameextension"
-                v-model="employee.extension"
-                style="
-                  text-transform: uppercase;
-                  outline: none;
-                  box-shadow: 0px 0px 0px transparent;
+                v-model="personal_data.extension"
+                class="form-control custom-select"
+                :class="
+                  !errors.hasOwnProperty('nameExtension') ? '' : 'is-invalid'
                 "
+                style="outline: none; box-shadow: 0px 0px 0px transparent"
               >
-                <option value="" disabled>Select Extension</option>
-                <option value="sr">SR</option>
-                <option value="sr">SR</option>
-                <option value="jr">JR</option>
-                <option value="iii">III</option>
+                <option value="" readonly selected>
+                  Please Select Extension Name
+                </option>
+                <option
+                  v-for="(extension, index) in nameExtensions"
+                  :select="personal_data.extension == extension"
+                  :key="index"
+                >
+                  {{ extension }}
+                </option>
               </select>
+<<<<<<< HEAD
               <span><strong>EXTENSION NAME</strong></span>
+=======
+              <span>EXTENSION NAME</span>
+>>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
+
             <p class="text-danger text-sm">
-              {{ errors.extension }}
+              {{ errors.nameExtension }}
             </p>
+          </div>
+          <div class="col-lg-1">
+            <name-extension-modal></name-extension-modal>
           </div>
         </div>
         <div class="row pl-3 pr-3">
           <div class="col-lg-3">
-            <label for="dateofbirth" class="form-group has-float-label m-0">
+            <label for="dateofbirth" class="form-group has-float-label">
               <input
                 class="form-control"
                 :class="
                   !errors.hasOwnProperty('dateOfBirth') ? '' : 'is-invalid'
                 "
                 type="date"
-                v-model="employee.date_birth"
+                v-model="personal_data.date_birth"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
+<<<<<<< HEAD
               <span><strong>DATE OF BIRTH</strong></span>
+=======
+              <p class="text-danger text-sm">
+                {{ errors.dateOfBirth }}
+              </p>
+              <span>DATE OF BIRTH<span class="text-danger">*</span></span>
+>>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
-            <p class="text-danger text-sm">
-              {{ errors.dateOfBirth }}
-            </p>
           </div>
           <div class="col-lg-3">
-            <label
-              for="placeofbirth"
-              class="form-group has-float-label p-0 m-0"
-            >
+            <label for="placeofbirth" class="form-group has-float-label mb-0">
               <input
                 type="text"
                 class="form-control"
@@ -156,33 +175,41 @@
                   !errors.hasOwnProperty('placeOfBirth') ? '' : 'is-invalid'
                 "
                 placeholder="Enter Place of Birth"
-                v-model="employee.place_birth"
+                v-model="personal_data.place_birth"
                 style="
                   text-transform: uppercase;
                   outline: none;
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
+<<<<<<< HEAD
               <span><strong>PLACE OF BIRTH</strong></span>
+=======
+              <span>Place of Birth<span class="text-danger">*</span></span>
+>>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
-            <span class="text-danger text-sm p-0">
+            <p class="text-danger text-sm">
               {{ errors.placeOfBirth }}
-            </span>
+            </p>
           </div>
 
           <div class="col-lg-3">
-            <label for="sex" class="form-group has-float-label m-0">
+            <label for="sex" class="form-group has-float-label mb-0">
               <select
-                class="form-control"
-                v-model="employee.sex"
+                class="form-control custom-select"
                 :class="!errors.hasOwnProperty('sex') ? '' : 'is-invalid'"
                 id="sex"
+                v-model="personal_data.sex"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               >
                 <option value="male">MALE</option>
                 <option value="female">FEMALE</option>
               </select>
+<<<<<<< HEAD
               <span><strong>SEX</strong></span>
+=======
+              <span>SEX<span class="text-danger">*</span></span>
+>>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
             <p class="text-danger text-sm">
               {{ errors.sex }}
@@ -190,14 +217,12 @@
           </div>
 
           <div class="col-lg-3">
-            <label for="status" class="form-group has-float-label">
+            <label for="status" class="form-group has-float-label mb-0">
               <select
                 class="form-control"
-                :class="
-                  !errors.hasOwnProperty('civil_status') ? '' : 'is-invalid'
-                "
+                :class="!errors.hasOwnProperty('status') ? '' : 'is-invalid'"
                 id="status"
-                v-model="employee.civil_status"
+                v-model="personal_data.civil_status"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               >
                 <option value="SINGLE">SINGLE</option>
@@ -206,62 +231,82 @@
                 <option value="SEPARATED">SEPARATED</option>
                 <option value="OTHERS">OTHERS</option>
               </select>
+<<<<<<< HEAD
               <span><strong>STATUS</strong></span>
+=======
+              <span>STATUS<span class="text-danger">*</span></span>
+>>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
             <p class="text-danger text-sm">
-              {{ errors.civil_status }}
+              {{ errors.status }}
             </p>
           </div>
         </div>
         <div class="row pl-3 pr-3">
           <div class="col-lg-4">
-            <label for="height" class="form group has-float-label m-0">
+            <label for="height" class="form group has-float-label mb-0">
               <input
                 type="number"
                 id="height"
                 :class="!errors.hasOwnProperty('height') ? '' : 'is-invalid'"
                 class="form-control"
                 placeholder="Enter height in meter"
-                v-model="employee.height"
+                v-model="personal_data.height"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
+<<<<<<< HEAD
               <span><strong>HEIGHT(m)</strong></span>
+=======
+              <span>Height(m)<span class="text-danger">*</span></span>
+>>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
             <p class="text-danger text-sm">{{ errors.height }}</p>
           </div>
           <div class="col-lg-4">
-            <label for="weight" class="form-group has-float-label m-0">
+            <label for="weight" class="form-group has-float-label mb-0">
               <input
                 type="number"
                 :class="!errors.hasOwnProperty('weight') ? '' : 'is-invalid'"
                 id="weight"
                 class="form-control"
                 placeholder="Enter weight in kilogram"
-                v-model="employee.weight"
+                v-model="personal_data.weight"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
+<<<<<<< HEAD
               <span><strong>WEIGHT(kg)</strong></span>
+=======
+              <span>Weight(kg)<span class="text-danger">*</span></span>
+>>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
             <p class="text-danger text-sm">
               {{ errors.weight }}
             </p>
           </div>
           <div class="col-lg-4">
-            <label for="bloodtype" class="form-group has-float-label">
+            <label for="bloodtype" class="form-group has-float-label mb-0">
               <input
-                id="bloodtype"
                 type="text"
                 class="form-control"
+                id="bloodtype"
                 maxlength="3"
-                :class="errors.hasOwnProperty('blood_type') ? 'is-invalid' : ''"
+                :class="errors.hasOwnProperty('bloodType') ? 'is-invalid' : ''"
                 placeholder="Enter bloodtype"
-                v-model="employee.blood_type"
-                style="text-transform:uppercase outline: none; box-shadow: 0px 0px 0px transparent;"
+                v-model="personal_data.blood_type"
+                style="
+                  text-transform: uppercase;
+                  outline: none;
+                  box-shadow: 0px 0px 0px transparent;
+                "
               />
+<<<<<<< HEAD
               <span><strong>BLOODTYPE</strong></span>
+=======
+              <span>Bloodtype<span class="text-danger">*</span></span>
+>>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
             <p class="text-danger text-sm">
-              {{ errors.blood_type }}
+              {{ errors.bloodType }}
             </p>
           </div>
         </div>
@@ -273,7 +318,7 @@
                 id="gsisidno"
                 class="form-control"
                 placeholder="Enter GSIS ID No."
-                v-model="employee.gsis_id_no"
+                v-model="personal_data.gsis_id_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
               <span><strong>GSIS ID NUMBER</strong></span>
@@ -286,7 +331,7 @@
                 id="pagibigidno"
                 class="form-control"
                 placeholder="Enter PAG-IBIG ID No."
-                v-model="employee.pag_ibig_no"
+                v-model="personal_data.pag_ibig_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
               <span><strong>PAG-IBIG ID NUMBER</strong></span>
@@ -299,10 +344,14 @@
                 id="philhealthidno"
                 class="form-control"
                 placeholder="Enter PHILHEALTH ID No."
-                v-model="employee.philhealth_no"
+                v-model="personal_data.philhealth_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
+<<<<<<< HEAD
               <span><strong>PHILHEALTH ID NUMBER</strong></span>
+=======
+              <span>PHILHEALTH ID Number</span>
+>>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
           </div>
         </div>
@@ -314,7 +363,7 @@
                 id="sssidno"
                 class="form-control"
                 placeholder="Enter SSS ID No."
-                v-model="employee.sss_no"
+                v-model="personal_data.sss_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
               <span><strong>SSS ID NUMBER</strong></span>
@@ -328,8 +377,8 @@
                 id="tinidno"
                 class="form-control"
                 placeholder="Enter TIN ID No."
+                v-model="personal_data.tin_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
-                v-model="employee.tin_no"
               />
               <span><strong>TIN ID NUMBER</strong></span>
             </label>
@@ -342,7 +391,7 @@
                 id="agencyempidno"
                 class="form-control"
                 placeholder="Enter agency employee no."
-                v-model="employee.agency_employee_no"
+                v-model="personal_data.agency_employee_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
               <span><strong>AGENCY EMPLOYEE NUMBER</strong></span>
@@ -351,34 +400,41 @@
         </div>
         <div class="row pl-3 pr-3">
           <div class="col-lg-4">
-            <label for="citizenship" class="form-group has-float-label">
+            <label for="citizenship" class="form-group has-float-label mb-0">
               <select
                 class="form-control custom-select"
                 :class="
                   !errors.hasOwnProperty('citizenship') ? '' : 'is-invalid'
                 "
                 id="citizenship"
-                v-model="employee.citizenship"
+                v-model="personal_data.citizenship"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               >
                 <option value="FILIPINO">FILIPINO</option>
                 <option value="DUAL CITIZEN">DUAL CITIZEN</option>
               </select>
+<<<<<<< HEAD
               <span><strong>CITIZENSHIP</strong></span>
+=======
+              <span>CITIZENSHIP<span class="text-danger">*</span></span>
+>>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
             <p class="text-danger text-sm">
               {{ errors.citizenship }}
             </p>
           </div>
-          <div class="col-lg-4" v-if="employee.citizenship == 'DUAL CITIZEN'">
-            <label for="citizenshipby" class="form-group has-float-label">
+          <div
+            class="col-lg-4"
+            v-if="personal_data.citizenship == 'DUAL CITIZEN'"
+          >
+            <label for="citizenshipby" class="form-group has-float-label mb-0">
               <select
-                class="form-control"
+                class="form-control custom-select"
                 id="citizenshipby"
                 :class="
                   !errors.hasOwnProperty('citizenshipBy') ? '' : 'is-invalid'
                 "
-                v-model="employee.citizenshipBy"
+                v-model="personal_data.citizenshipBy"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               >
                 <option value="BIRTH">BIRTH</option>
@@ -391,13 +447,16 @@
             </p>
           </div>
 
-          <div class="col-lg-4" v-if="employee.citizenship == 'DUAL CITIZEN'">
-            <label for="countries" class="form-group has-float-label">
+          <div
+            class="col-lg-4"
+            v-if="personal_data.citizenship == 'DUAL CITIZEN'"
+          >
+            <label for="countries" class="form-group has-float-label mb-0">
               <select
-                class="form-control"
+                class="form-control custom-select"
                 id="countries"
-                v-model="employee.country"
                 :class="!errors.hasOwnProperty('country') ? '' : 'is-invalid'"
+                v-model="personal_data.country"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               >
                 <option
@@ -420,37 +479,43 @@
                 id="telno"
                 class="form-control"
                 placeholder="Optional"
-                v-model="employee.telephone_no"
+                v-model="personal_data.telephone_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
               <span><strong>TELEPHONE NUMBER</strong></span>
             </label>
           </div>
           <div class="col-lg-4">
-            <label for="mobileno" class="form-group has-float-label">
+            <label for="mobileno" class="form-group has-float-label mb-0">
               <input
                 type="text"
-                :class="!errors.hasOwnProperty('mobile_no') ? '' : 'is-invalid'"
+                :class="
+                  !errors.hasOwnProperty('mobileNumber') ? '' : 'is-invalid'
+                "
                 id="mobileno"
                 class="form-control"
                 placeholder="Enter Mobile Number"
-                v-model="employee.mobile_no"
+                v-model="personal_data.mobile_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
+<<<<<<< HEAD
               <span><strong>MOBILE NUMBER</strong></span>
+=======
+              <span>Mobile Number<span class="text-danger">*</span></span>
+>>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
             <p class="text-danger text-sm">
-              {{ errors.mobile_no }}
+              {{ errors.mobileNumber }}
             </p>
           </div>
-          <div class="col-lg-4">
-            <label for="email" class="form-group has-float-label">
+          <div class="col-lg-4 form-group input-group">
+            <label for="email" class="has-float-label">
               <input
                 type="email"
                 id="email"
                 class="form-control"
                 placeholder="Optional"
-                v-model="employee.email_address"
+                v-model="personal_data.email_address"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
               <span><strong>EMAIL ADDRESS</strong></span>
@@ -471,7 +536,7 @@
             <label for="lotno" class="form-group has-float-label">
               <input
                 type="text"
-                v-model="employee.residential_house_no"
+                v-model="personal_data.residential_house_no"
                 id="lotno"
                 class="form-control"
                 placeholder="Enter house/block/lot no."
@@ -490,7 +555,7 @@
             <label for="street" class="form-group has-float-label">
               <input
                 type="text"
-                v-model="employee.residential_street"
+                v-model="personal_data.residential_street"
                 id="street"
                 class="form-control"
                 placeholder="Enter Street"
@@ -507,7 +572,7 @@
             <label for="subdivision" class="form-group has-float-label">
               <input
                 type="text"
-                v-model="employee.residential_village"
+                v-model="personal_data.residential_village"
                 id="subdivision"
                 class="form-control"
                 placeholder="Enter Subdivision or Village"
@@ -525,12 +590,13 @@
         </div>
         <div class="row pl-3 pr-3">
           <div class="col-lg-3">
-            <label for="province" class="form-group has-float-label">
+            <label class="form-group has-float-label">
               <v-select
                 label="name"
+                v-model="personal_data.residential_province_text"
                 :options="provinces"
-                :value="employee.residential_province"
                 @input="provinceChange"
+<<<<<<< HEAD
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               >
                 <!-- <option
@@ -544,14 +610,23 @@
                             {{ errors.residential_province }}
                         </p> -->
               <span><strong>PROVINCE</strong></span>
+=======
+                id="resProvince"
+              ></v-select>
+              <p class="text-danger text-sm">
+                {{ errors["residentialProvince.code"] }}
+              </p>
+              <span>PROVINCE<span class="text-danger">*</span></span>
+>>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
           </div>
           <div class="col-lg-3">
-            <label for="city" class="form-group has-float-label">
+            <label class="form-group has-float-label">
               <v-select
                 label="name"
-                :value="employee.residential_city"
+                v-model="personal_data.residential_city_text"
                 :options="cities"
+<<<<<<< HEAD
                 @change="municipalChange"
                 :disabled="employee.residential_province ? false : true"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
@@ -566,12 +641,18 @@
               <span style="text-transform: uppercase"
                 ><strong>City/Municipality</strong></span
               >
+=======
+                @input="municipalChange"
+              ></v-select>
+              <p class="text-danger text-sm">
+                {{ errors["residentialCity.code"] }}
+              </p>
+              <span>CITY<span class="text-danger">*</span></span>
+>>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
-            <p class="text-danger text-sm">
-              {{ errors.residential_city }}
-            </p>
           </div>
           <div class="col-lg-3">
+<<<<<<< HEAD
             <label for="barangay" class="form-group has-float-label">
               <select
                 v-model="employee.residential_barangay"
@@ -593,36 +674,52 @@
                 </option>
               </select>
               <span><strong>BARANGAY</strong></span>
+=======
+            <label class="form-group has-float-label">
+              <v-select
+                label="name"
+                v-model="personal_data.residential_barangay_text"
+                :options="barangays"
+              ></v-select>
+              <p class="text-danger text-sm">
+                {{ errors["residentialBarangay.code"] }}
+              </p>
+              <span>BARANGAY<span class="text-danger">*</span></span>
+>>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
-            <p class="text-danger text-sm">
-              {{ errors.residential_barangay }}
-            </p>
           </div>
           <div class="col-lg-3">
-            <label for="zipcode" class="form-group has-float-label m-0">
+            <label for="zipcode" class="form-group has-float-label mb-0">
               <input
+                id="zipcode"
                 type="number"
-                v-model="employee.residential_zip_code"
+                v-model="personal_data.residential_zip_code"
                 class="form-control"
                 @input="
-                  if (employee.residential_zip_code.length > zipCodeMaxLength)
-                    employee.residential_zip_code = employee.residential_zip_code.slice(
+                  if (
+                    personal_data.residentialZipCode.length > zipCodeMaxLength
+                  )
+                    personal_data.residentialZipCode = personal_data.residentialZipCode.slice(
                       0,
                       zipCodeMaxLength
                     );
                 "
                 :class="
-                  !errors.hasOwnProperty('residential_zip_code')
+                  !errors.hasOwnProperty('residentialZipCode')
                     ? ''
                     : 'is-invalid'
                 "
                 placeholder="Enter Zip Code"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
+<<<<<<< HEAD
               <span><strong>ZIP CODE</strong></span>
+=======
+              <span>Zip Code<span class="text-danger">*</span></span>
+>>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
             <p class="text-danger text-sm">
-              {{ errors.residential_zip_code }}
+              {{ errors.residentialZipCode }}
             </p>
           </div>
         </div>
@@ -634,7 +731,7 @@
             PERMANENT ADDRESS
           </div>
           <div class="form-group">
-            <label class="checkbox-inline">
+            <label class="checkbox-inline" style="transform: scale(0.8)">
               <input
                 :checked="isSameAsAbove"
                 type="checkbox"
@@ -646,10 +743,11 @@
         </div>
         <div class="row pl-3 pr-3">
           <div class="col-lg-4">
-            <label for="lotno" class="form-group has-float-label">
+            <label for="permanentLotno" class="form-group has-float-label">
               <input
                 type="text"
-                v-model="employee.permanent_house_no"
+                id="permanentLotno"
+                v-model="personal_data.permanent_house_no"
                 :readonly="isSameAsAbove ? true : false"
                 class="form-control"
                 placeholder="Enter house/block/lot no."
@@ -663,10 +761,11 @@
             </label>
           </div>
           <div class="col-lg-4">
-            <label for="street" class="form-group has-float-label">
+            <label for="permanentStreet" class="form-group has-float-label">
               <input
                 type="text"
-                v-model="employee.permanent_street"
+                id="permanentStreet"
+                v-model="personal_data.permanent_street"
                 :readonly="isSameAsAbove ? true : false"
                 class="form-control"
                 placeholder="Enter Street"
@@ -680,10 +779,14 @@
             </label>
           </div>
           <div class="col-lg-4">
-            <label for="subdivision" class="form-group has-float-label">
+            <label
+              for="permanentSubDivision"
+              class="form-group has-float-label"
+            >
               <input
+                id="permanentSubDivision"
                 type="text"
-                v-model="employee.permanent_village"
+                v-model="personal_data.permanent_village"
                 :readonly="isSameAsAbove ? true : false"
                 class="form-control"
                 placeholder="Enter Subdivision or Village"
@@ -702,6 +805,7 @@
 
         <div class="row pl-3 pr-3">
           <div class="col-lg-3">
+<<<<<<< HEAD
             <label for="province" class="form-group has-float-label">
               <select
                 type="text"
@@ -728,13 +832,24 @@
                 </option>
               </select>
               <span><strong>PROVINCE</strong></span>
+=======
+            <label class="form-group has-float-label">
+              <v-select
+                label="name"
+                v-model="personal_data.permanent_province_text"
+                :options="provinces"
+                @input="permanentProvinceChange"
+              ></v-select>
+              <p class="text-danger text-sm">
+                {{ errors["permanentProvince.code"] }}
+              </p>
+              <span>PROVINCE<span class="text-danger">*</span></span>
+>>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
-            <p class="text-danger text-sm">
-              {{ errors.permanentProvince }}
-            </p>
           </div>
 
           <div class="col-lg-3">
+<<<<<<< HEAD
             <label for="city" class="form-group has-float-label">
               <select
                 v-model="employee.permanentCity"
@@ -763,13 +878,24 @@
               <span style="text-transform: uppercase"
                 ><strong>City/Municipality</strong></span
               >
+=======
+            <label class="form-group has-float-label">
+              <v-select
+                label="name"
+                v-model="personal_data.permanent_city_text"
+                :options="permanentCities"
+                @input="permanentMunicipalChange"
+              ></v-select>
+              <p class="text-danger text-sm">
+                {{ errors["permanentCity.code"] }}
+              </p>
+              <span>CITY<span class="text-danger">*</span></span>
+>>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
-            <p class="text-danger text-sm">
-              {{ errors.permanentCity }}
-            </p>
           </div>
 
           <div class="col-lg-3">
+<<<<<<< HEAD
             <label for="barangay" class="form-group has-float-label">
               <select
                 v-model="employee.permanentBarangay"
@@ -797,20 +923,33 @@
                 </option>
               </select>
               <span><strong>BARANGAY</strong></span>
+=======
+            <label class="form-group has-float-label">
+              <v-select
+                label="name"
+                v-model="personal_data.permanent_barangay_text"
+                :options="permanentBarangays"
+              ></v-select>
+              <p class="text-danger text-sm">
+                {{ errors["permanentBarangay.code"] }}
+              </p>
+              <span>BARANGAY<span class="text-danger">*</span></span>
+>>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
-            <p class="text-danger text-sm">
-              {{ errors.permanentBarangay }}
-            </p>
           </div>
 
           <div class="col-lg-3">
-            <label for="zipcode" class="form-group has-float-label m-0">
+            <label
+              for="permanentZipCode"
+              class="form-group has-float-label mb-0"
+            >
               <input
+                id="permanentZipCode"
                 type="number"
-                v-model="employee.permanent_zip_code"
+                v-model="personal_data.permanent_zip_code"
                 @input="
-                  if (employee.permanent_zip_code.length > zipCodeMaxLength)
-                    employee.permanent_zip_code = employee.permanent_zip_code.slice(
+                  if (personal_data.permanentZipCode.length > zipCodeMaxLength)
+                    personal_data.permanentZipCode = personal_data.permanentZipCode.slice(
                       0,
                       zipCodeMaxLength
                     );
@@ -823,7 +962,11 @@
                 placeholder="Enter Zip Code"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
+<<<<<<< HEAD
               <span><strong>ZIP CODE</strong></span>
+=======
+              <span>Zip Code<span class="text-danger">*</span></span>
+>>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
             <p class="text-danger text-sm">
               {{ errors.permanentZipCode }}
@@ -856,16 +999,27 @@
     </div>
   </div>
 </template>
-
 <script>
+// import NameExtensionModal from "./NameExtensionModal.vue";
+import "vue-select/dist/vue-select.css";
+import _ from "lodash";
+import swal from "sweetalert";
 export default {
-  props: ["employee"],
+  // components: { NameExtensionModal },
+  props: {
+    personal_data: {
+      requried: true,
+    },
+  },
   data() {
     return {
+      isShow: false,
+      isShowNameExtension: false,
       isLoading: false,
       isComplete: false,
       isSameAsAbove: false,
       zipCodeMaxLength: 4,
+      nameExtensions: [],
       countries: [],
       provinces: [],
       cities: [],
@@ -878,70 +1032,71 @@ export default {
   methods: {
     provinceChange(province) {
       // Since the province value change we need to fetch cities by selected province code.
-      window
-        .axios(`/api/province/cities/by/${province.code}`)
-        .then((response) => (this.cities = response.data));
+      if (!_.isEmpty(province)) {
+        window
+          .axios(`/api/province/cities/by/${province.code}`)
+          .then((response) => (this.cities = response.data));
+      }
     },
-    municipalChange() {
-      window
-        .axios(`/api/city/barangay/by/${this.employee.residentialCity}`)
-        .then((response) => (this.barangays = response.data));
+    municipalChange(municipal) {
+      if (!_.isEmpty(municipal)) {
+        window
+          .axios(`/api/city/barangay/by/${municipal.code}`)
+          .then((response) => (this.barangays = response.data));
+      }
     },
-    permanentProvinceChange() {
-      window
-        .axios(`/api/province/cities/by/${this.employee.permanentProvince}`)
-        .then((response) => (this.permanentCities = response.data));
+    permanentProvinceChange(province) {
+      if (!_.isEmpty(province)) {
+        window
+          .axios(`/api/province/cities/by/${province.code}`)
+          .then((response) => (this.permanentCities = response.data));
+      }
     },
-    permanentMunicipalChange() {
-      window
-        .axios(`/api/city/barangay/by/${this.employee.permanentCity}`)
-        .then((response) => (this.permanentBarangays = response.data));
+    permanentMunicipalChange(municipal) {
+      if (!_.isEmpty(municipal)) {
+        window
+          .axios(`/api/city/barangay/by/${municipal.code}`)
+          .then((response) => (this.permanentBarangays = response.data));
+      }
     },
     sameAsAboveAddress() {},
     submitPersonalInformation(e) {
       e.preventDefault();
-      this.isLoading = true;
-
+      this.isLoading = false;
       window.axios
-        .post("/employee/personal/information/store", this.employee)
+        .post("/employee/exists/personal/information/store", this.personal_data)
         .then((response) => {
-          if (response.status === 200) {
-            this.errors = {};
-            this.isLoading = false;
-            this.isComplete = true;
-            localStorage.setItem("employee_id", response.data.employee_id);
-
-            localStorage.setItem(
-              "personal_information",
-              JSON.stringify(response.data)
-            );
-
-            // this.$emit("next-panel-family-background");
-          }
-        })
-        .catch((error) => {
-          this.isLoading = false;
           this.errors = {};
-          // Check the error status code.
-          if (error.response.status === 422) {
-            Object.keys(error.response.data.errors).map((field) => {
-              let [fieldMessage] = error.response.data.errors[field];
-              this.errors[field] = fieldMessage;
-            });
+          this.isLoading = false;
+          this.isComplete = true;
+          if (response.status === 200) {
+            this.$emit("next-panel-family-background");
           }
         });
     },
+    openNameExtensionModal() {
+      this.isShowNameExtension = true;
+    },
+    closeNameExtensionModal(newExtension) {
+      if (newExtension) {
+        this.nameExtensions.push(newExtension.extension);
+      }
+      this.isShowNameExtension = false;
+    },
   },
-  mounted() {},
+
   created() {
     window.axios
       .get("/api/province/all")
       .then((response) => (this.provinces = response.data));
 
-    window,
-      axios
-        .get("/api/countries")
-        .then((response) => (this.countries = response.data));
+    window.axios
+      .get("/api/name/extensions")
+      .then((response) => (this.nameExtensions = response.data));
+
+    window.axios
+      .get("/api/countries")
+      .then((response) => (this.countries = response.data));
   },
 };
 </script>
