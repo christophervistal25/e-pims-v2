@@ -15,7 +15,6 @@
       </div>
 
       <exists-personal-information
-        v-on:next-panel-family-background="displayFamilyBackgroundPanel"
         :personal_data="employee"
         v-if="selectedTab.name === 'C1'"
       ></exists-personal-information>
@@ -23,9 +22,6 @@
       <exists-family-background
         :show_panel="true"
         :personal_data="employee"
-        v-on:next-panel-educational-background="
-          displayEducationalBackgroundPanel
-        "
         v-if="selectedTab.name === 'C1'"
       ></exists-family-background>
 
@@ -33,55 +29,57 @@
         :show_panel="true"
         :personal_data="employee"
         v-if="selectedTab.name === 'C1'"
-        @next_tab="openNextTab"
       ></exists-educational-background>
 
       <!-- C2 -->
-      <create-civil-service
-        @display-work-experience="workExperienceSection"
+      <exists-civil-service
+        :personal_data="employee"
         v-if="selectedTab.name === 'C2'"
-      ></create-civil-service>
+      ></exists-civil-service>
 
-      <create-work-experience
-        :work_experience="isWorkExperienceShow"
+      <exists-work-experience
+        :personal_data="employee"
         v-if="selectedTab.name === 'C2'"
-        @next_tab="openNextTab"
-      ></create-work-experience>
+      ></exists-work-experience>
       <!-- END OF C2 -->
 
       <!-- C3 -->
-      <create-voluntary
-        @display-learning-and-development="displayLearningAndDevelopment"
+      <exists-voluntary
         v-if="selectedTab.name === 'C3'"
-      ></create-voluntary>
+        :personal_data="employee"
+      ></exists-voluntary>
 
-      <create-learning-and-development
+      <exists-learning-and-development
         v-if="selectedTab.name === 'C3'"
-        @display-other-information="displayOtherInformation"
-        :show_panel="needToShowLearningAndDevelopment"
-      ></create-learning-and-development>
+        :personal_data="employee"
+        :show_panel="true"
+      ></exists-learning-and-development>
 
-      <create-other-information
+      <exists-other-information
         v-if="selectedTab.name === 'C3'"
-        :show_panel="needToShowOtherInformation"
-        @next_tab="openNextTab"
-      ></create-other-information>
+        :personal_data="employee"
+        :show_panel="true"
+      ></exists-other-information>
       <!-- END OF C3 -->
 
       <!-- C4 -->
-      <create-relevant-queries
+      <exists-relevant-queries
+        :personal_data="employee"
         v-if="selectedTab.name === 'C4'"
-        @display-reference="displayReference"
-      ></create-relevant-queries>
-      <create-references
-        :show_panel="needToShowReference"
-        @display-issued-id="displayIssuedID"
+      ></exists-relevant-queries>
+
+      <exists-references
+        :show_panel="true"
+        :personal_data="employee"
         v-if="selectedTab.name === 'C4'"
-      ></create-references>
-      <create-goverment-issued-id
-        :show_panel="needToShowIssuedID"
+      ></exists-references>
+
+      <exists-goverment-issued-id
+        :show_panel="true"
+        :personal_data="employee"
         v-if="selectedTab.name === 'C4'"
-      ></create-goverment-issued-id>
+      ></exists-goverment-issued-id>
+
       <!-- END OF C4 -->
     </div>
   </div>

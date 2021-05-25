@@ -3,6 +3,8 @@
 namespace App;
 
 use App\Province;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +14,7 @@ class Employee extends Model
     protected $primaryKey = 'employee_id';
 
     protected $fillable = [
+        'trans_no',
         'employee_id',
         'lastname',
         'firstname',
@@ -55,7 +58,16 @@ class Employee extends Model
         'status'
     ];
 
-    protected $appends = ['fullname', 'permanent_full_address', 'residential_province_text', 'residential_city_text', 'residential_barangay_text', 'permanent_province_text', 'permanent_city_text', 'permanent_barangay_text'];
+    protected $appends = [
+        'fullname',
+        'permanent_full_address',
+        'residential_province_text',
+        'residential_city_text',
+        'residential_barangay_text',
+        'permanent_province_text',
+        'permanent_city_text',
+        'permanent_barangay_text',
+    ];
 
 
     public static function boot()
@@ -88,7 +100,7 @@ class Employee extends Model
      */
     public function getFullnameAttribute()
     {
-        return mb_strtoupper("{$this->firstname} {$this->middlename} {$this->lastname} {$this->extension}", 'UTF-8');
+        return Str::upper("{$this->firstname} {$this->middlename} {$this->lastname} {$this->extension}");
     }
 
     public function getResidentialProvinceTextAttribute()
@@ -122,36 +134,35 @@ class Employee extends Model
        return Barangay::find($this->permanent_barangay, 'name')->name ?? 'N/A';
     }
 
-
-    
-
     public function getPermanentFullAddressAttribute()
     {
         $provinceName = Province::find($this->permanent_province, 'name')->name ?? 'N/A';
         $cityName = City::find($this->permanent_city, 'name')->name ?? 'N/A';
         $barangayName = Barangay::find($this->permanent_barangay, 'name')->name ?? 'N/A';
 
-        return "{$this->permanent_house_no} {$this->permanent_stress} {$this->permanent_village} {$barangayName} {$cityName} {$provinceName} {$this->permanent_zip_code}";
+        $completeAddress = $this->permanent_house_no . ' ' .  $this->permanent_stress . ' ' .  $this->permanent_village . ' ' .   $barangayName . ' ' .  $cityName . ' ' . $provinceName . ' ' . $this->permanent_zip_code;
+
+        return Str::upper($completeAddress);
     }
 
     public function getFirstnameAttribute($value)
     {
-        return mb_strtoupper($value, "UTF-8");
+        return Str::upper($value);
     }
 
     public function getMiddlenameAttribute($value)
     {
-        return mb_strtoupper($value, "UTF-8");
+        return Str::upper($value);
     }
 
     public function getLastnameAttribute($value)
     {
-        return mb_strtoupper($value, "UTF-8");
+        return Str::upper($value);
     }
 
     public function getExtensionAttribute($value)
     {
-        return mb_strtoupper($value, "UTF-8");
+        return Str::upper($value);
     }
 
     /**
@@ -278,6 +289,4 @@ class Employee extends Model
     {
         return $this->hasOne(StepIncrement::class, 'employee_id', 'employee_id');
     }
-
-
 }

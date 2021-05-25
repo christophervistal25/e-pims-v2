@@ -54,10 +54,20 @@ class PersonalDataSheetController extends Controller
     {
         return $this->employeeRepository->addPersonInformation($request->all());
     }
+    
+    public function existingEmployeeStoreInformation(Request $request)
+    {
+        return $this->employeeRepository->existEmployeeAddInformation($request->all());
+    }
 
     public function storePersonFamilyBackground(FamilyBackgroundRequest $request)
     {
         return $this->employeeRepository->addPersonFamilybackground($request->all());
+    }
+
+    public function existingEmployeeStoreFamilyBackground(Request $request)
+    {
+        return $this->employeeRepository->existEmployeeAddFamilybackground($request->all());
     }
 
     public function storeEducationalBackground(EducationalBackgroundRequest $request)
@@ -65,9 +75,19 @@ class PersonalDataSheetController extends Controller
         return $this->employeeRepository->addEducationalBackground($request->all());
     }
 
+    public function existingEmployeeStoreEducationalBackground(Request $request)
+    {
+        $this->employeeRepository->existingEmployeeAddEducationalBackground($request->all());
+    }
+
     public function storeCivilService(CivilServiceRequest $request)
     {
         return $this->employeeRepository->addCivilService($request->all());
+    }
+
+    public function existingEmployeeStoreCivilService(Request $request)
+    {
+        $this->employeeRepository->existingEmployeeAddCivilService($request->all());
     }
 
     public function storeWorkExperience(WorkExperienceRequest $request)
@@ -75,9 +95,19 @@ class PersonalDataSheetController extends Controller
         return $this->employeeRepository->addWorkExperience($request->all());
     }
 
+    public function existingEmployeeStoreWorkExperience(Request $request)
+    {
+        return $this->employeeRepository->existingEmployeeAddWorkExperience($request->all());
+    }
+
     public function storeVoluntary(VoluntaryWorkRequest $request)
     {
         return $this->employeeRepository->addVoluntary($request->all());
+    }
+
+    public function existingEmployeeStoreVoluntary(Request $request)
+    {
+        return $this->employeeRepository->existingEmployeeAddVoluntaryWork($request->all());
     }
 
     public function storeLearning(LearningRequest $request)
@@ -85,9 +115,19 @@ class PersonalDataSheetController extends Controller
         return $this->employeeRepository->addLearning($request->all());
     }
 
+    public function existingEmployeeStoreLearning(Request $request)
+    {
+        return $this->employeeRepository->existingEmployeeAddLearning($request->all());
+    }
+
     public function storeOtherInformation(Request $request)
     {
         return $this->employeeRepository->addOtherInformation($request->all());
+    }
+
+    public function existingEmployeeStoreOtherInformation(Request $request)
+    {
+        return $this->employeeRepository->existingEmployeeAddOtherInformation($request->all());
     }
 
     public function storeRelevantQueries(RelevantQueriesRequest $request)
@@ -95,14 +135,29 @@ class PersonalDataSheetController extends Controller
         return $this->employeeRepository->addRelevantQueries($request->all());
     }
 
+    public function existingEmployeeStoreRelevantQueries(Request $request)
+    {
+        return $this->employeeRepository->existingEmployeeStoreRelevantQueries($request->all());
+    }
+
     public function storeReferences(Request $request)
     {
         return $this->employeeRepository->addReferences($request->all());
     }
 
+    public function existingEmployeeStoreReferences(Request $request)
+    {
+        return $this->employeeRepository->existingEmployeeAddReferences($request->all());
+    }
+
     public function storeIssuedID(GovernmentIssuedIDRequest $request)
     {
         return $this->employeeRepository->addIssuedID($request->all());
+    }
+
+    public function existingEmployeeStoreIssuedID(Request $request)
+    {
+        return $this->employeeRepository->existingEmployeeAddIssuedID($request->all());
     }
 
 

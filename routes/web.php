@@ -3,7 +3,12 @@
 use Illuminate\Support\Facades\Route;
 
 
-Route::view('print-test', 'sample');
+
+
+// Route::get('open-app/{employee_id}', function (string $employeeId) {
+  
+// });
+
 
 Route::get('/print/pds/{employeeId}', 'EmployeePersonalDataSheetPrintController');
 
@@ -68,6 +73,18 @@ Route::group(['prefix' => 'employee'], function () {
     Route::post('/personal/relevant/queries/', 'PersonalDataSheetController@storeRelevantQueries');
     Route::post('/personal/references', 'PersonalDataSheetController@storeReferences');
     Route::post('/personal/issued/id', 'PersonalDataSheetController@storeIssuedID');
+
+    Route::post('/exists/personal/information/store', 'PersonalDataSheetController@existingEmployeeStoreInformation');
+    Route::post('/exists/personal/family/background/store', 'PersonalDataSheetController@existingEmployeeStoreFamilyBackground');
+    Route::post('/exists/personal/educational/background/store', 'PersonalDataSheetController@existingEmployeeStoreEducationalBackground');
+    Route::post('/exists/personal/civil/service/store', 'PersonalDataSheetController@existingEmployeeStoreCivilService');
+    Route::post('/exists/personal/work/experience', 'PersonalDataSheetController@existingEmployeeStoreWorkExperience');
+    Route::post('/exists/personal/personal/voluntary', 'PersonalDataSheetController@existingEmployeeStoreVoluntary');
+    Route::post('/exists/personal/learning', 'PersonalDataSheetController@existingEmployeeStoreLearning');
+    Route::post('/exists/personal/other/information', 'PersonalDataSheetController@existingEmployeeStoreOtherInformation');
+    Route::post('/exists/personal/relevant/queries', 'PersonalDataSheetController@existingEmployeeStoreRelevantQueries');
+    Route::post('/exists/personal/references', 'PersonalDataSheetController@existingEmployeeStoreReferences');
+    Route::post('/exists/personal/issued/id', 'PersonalDataSheetController@existingEmployeeStoreIssuedID');
 
     Route::get('/leave/application', 'EmployeeLeave\LeaveController@show')->name('leave.application.filling');
     Route::resource('leave', 'EmployeeLeave\LeaveController');

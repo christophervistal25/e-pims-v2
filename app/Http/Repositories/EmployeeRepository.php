@@ -69,17 +69,74 @@ class EmployeeRepository
         return $data;
     }
 
+    public function existEmployeeAddInformation(array $data = [])
+    {
+        
+        $employee                       = Employee::find($data['employee_id']);
+        $employee->lastname             = $data['lastname'];
+        $employee->firstname            = $data['firstname'];
+        $employee->middlename           = $data['middlename'];
+        $employee->extension            = $data['extension'];
+        $employee->date_birth           = $data['date_birth'];
+        $employee->place_birth          = $data['place_birth'];
+        $employee->sex                  = $data['sex'];
+        $employee->civil_status         = $data['status'];
+        $employee->height               = $data['height'];
+        $employee->weight               = $data['weight'];
+        $employee->blood_type           = $data['blood_type'];
+        $employee->gsis_id_no           = $data['gsis_id_no'];
+        $employee->pag_ibig_no          = $data['pag_ibig_no'];
+        $employee->philhealth_no        = $data['philhealth_no'];
+        $employee->sss_no               = $data['sss_no'];
+        $employee->tin_no               = $data['tin_no'];
+        $employee->agency_employee_no   = $data['agency_employee_no'];
+        $employee->citizenship          = $data['citizenship'];
+        $employee->residential_house_no = $data['residential_house_no'];
+        $employee->residential_street   = $data['residential_street'];
+        $employee->residential_village  = $data['residential_village'];
+        $employee->residential_barangay = $data['residential_barangay'];
+        $employee->residential_city     = $data['residential_city'];
+        $employee->residential_province = $data['residential_province'];
+        $employee->residential_zip_code = $data['residential_zip_code'];
+        $employee->permanent_house_no   = $data['permanent_house_no'];
+        $employee->permanent_street     = $data['permanent_street'];
+        $employee->permanent_village    = $data['permanent_village'];
+        $employee->permanent_barangay   = $data['permanent_barangay'];
+        $employee->permanent_city       = $data['permanent_city'];
+        $employee->permanent_province   = $data['permanent_province'];
+        $employee->permanent_zip_code   = $data['permanent_zip_code'];
+        $employee->telephone_no         = $data['telephone_no'];
+        $employee->mobile_no            = $data['mobile_no'];
+        $employee->email_address        = $data['email_address'];
+        $employee->save();
+        return $employee;
+    }
+
     private function insertChilds(Employee $employee, array $childs = [])
     {
         $childrens = [];
-
+        $childs = array_filter($childs);
+        
         foreach($childs as $child) {
-            if(!is_null($child['cname'])) {
-                $childrens[] = new EmployeeSpouseChildren([
-                    'name'          => $child['cname'],
-                    'date_of_birth' => $child['cdateOfBirth'],
-                ]);
-            }
+            $childrens[] = new EmployeeSpouseChildren([
+                'name' => $child['cname'],
+                'date_of_birth' => $child['cdateOfBirth'],
+            ]);
+        }
+
+        $employee->spouse_child()->saveMany($childrens);
+    }
+
+    private function insertChildForExistingEmployee(Employee $employee , array $childs = [])
+    {
+        $childrens = [];
+        $childs = array_filter($childs);
+        
+        foreach($childs as $child) {
+            $childrens[] = EmployeeSpouseChildren::firstOrNew([
+                'name'          => $child['name'],
+                'date_of_birth' => $child['date_of_birth'],
+            ]);
         }
 
         $employee->spouse_child()->saveMany($childrens);
@@ -89,10 +146,10 @@ class EmployeeRepository
     {
 
         $employee = Employee::find($data['employee_id']);
+
         $this->insertChilds($employee, $data['spouse']);
 
         $employeeFamilyBackground = new EmployeeFamilyBackground();
-
         $employeeFamilyBackground->spouse_firstname              = $data['sfirstname'];
         $employeeFamilyBackground->spouse_lastname               = $data['ssurname'];
         $employeeFamilyBackground->spouse_middlename             = $data['smiddleame'];
@@ -114,7 +171,34 @@ class EmployeeRepository
         $employee->family_background()->save($employeeFamilyBackground);
 
         return $data;
+    }
 
+    public function existEmployeeAddFamilybackground(array $data = [])
+    {
+        $employee = Employee::find($data['employee_id']);
+        
+        $this->insertChildForExistingEmployee($employee, $data['spouse']);
+
+        $family_background = is_null($employee->family_background) ? new EmployeeFamilyBackground() : $employee->family_background;
+
+        $family_background->spouse_firstname              = $data['spouse_firstname'];
+        $family_background->spouse_lastname               = $data['spouse_lastname'];
+        $family_background->spouse_middlename             = $data['spouse_middlename'];
+        $family_background->spouse_extension              = $data['spouse_extension'];
+        $family_background->spouse_occupation             = $data['spouse_occupation'];
+        $family_background->spouse_employer_business_name = $data['spouse_employer_business_name'];
+        $family_background->spouse_business_address       = $data['spouse_business_address'];
+        $family_background->spouse_telephone_number       = $data['spouse_telephone_number'];
+        $family_background->father_firstname              = $data['father_firstname'];
+        $family_background->father_lastname               = $data['father_lastname'];
+        $family_background->father_middlename             = $data['father_middlename'];
+        $family_background->father_extension              = $data['father_extension'];
+        $family_background->mother_maidenname             = $data['mother_maidenname'];
+        $family_background->mother_lastname               = $data['mother_lastname'];
+        $family_background->mother_firstname              = $data['mother_firstname'];
+        $family_background->mother_middlename             = $data['mother_middlename'];
+        $family_background->save();
+        return $data;
     }
 
     public function addEducationalBackground(array $data = []) :array
@@ -163,6 +247,49 @@ class EmployeeRepository
         return $data;
     }
 
+    public function existingEmployeeAddEducationalBackground(array $data = []) :array
+    {
+        $employee = Employee::find($data['employee_id']);
+        $employeeEducationalBackground = is_null($employee->educational_background) ? new EmployeeEducationalBackground() : $employee->educational_background;
+        $employeeEducationalBackground->elementary_name                                    = $data['educational_background']['elementary_name'];
+        $employeeEducationalBackground->elementary_education                               = $data['educational_background']['elementary_education'];
+        $employeeEducationalBackground->elementary_period_from                             = $data['educational_background']['elementary_period_from'];
+        $employeeEducationalBackground->elementary_period_to                               = $data['educational_background']['elementary_period_to'];
+        $employeeEducationalBackground->elementary_highest_level_units_earned              = $data['educational_background']['elementary_highest_level_units_earned'];
+        $employeeEducationalBackground->elementary_year_graduated                          = $data['educational_background']['elementary_year_graduated'];
+        $employeeEducationalBackground->elementary_scholarship                             = $data['educational_background']['elementary_scholarship'];
+        $employeeEducationalBackground->secondary_name                                     = $data['educational_background']['secondary_name'];
+        $employeeEducationalBackground->secondary_education                                = $data['educational_background']['secondary_education'];
+        $employeeEducationalBackground->secondary_period_from                              = $data['educational_background']['secondary_period_from'];
+        $employeeEducationalBackground->secondary_period_to                                = $data['educational_background']['secondary_period_to'];
+        $employeeEducationalBackground->secondary_highest_level_units_earned               = $data['educational_background']['secondary_highest_level_units_earned'];
+        $employeeEducationalBackground->secondary_year_graduated                           = $data['educational_background']['secondary_year_graduated'];
+        $employeeEducationalBackground->secondary_scholarship                              = $data['educational_background']['secondary_scholarship'];
+        $employeeEducationalBackground->vocational_trade_course_name                       = $data['educational_background']['vocational_trade_course_name'];
+        $employeeEducationalBackground->vocational_education                               = $data['educational_background']['vocational_education'];
+        $employeeEducationalBackground->vocational_trade_course_period_from                = $data['educational_background']['vocational_trade_course_period_from'];
+        $employeeEducationalBackground->vocational_trade_course_period_to                  = $data['educational_background']['vocational_trade_course_period_to'];
+        $employeeEducationalBackground->vocational_trade_course_highest_level_units_earned = $data['educational_background']['vocational_trade_course_highest_level_units_earned'];
+        $employeeEducationalBackground->vocational_trade_course_year_graduated             = $data['educational_background']['vocational_trade_course_year_graduated'];
+        $employeeEducationalBackground->vocational_trade_course_scholarship                = $data['educational_background']['vocational_trade_course_scholarship'];
+        $employeeEducationalBackground->college_name                                       = $data['educational_background']['college_name'];
+        $employeeEducationalBackground->college_education                                  = $data['educational_background']['college_education'];
+        $employeeEducationalBackground->college_period_from                                = $data['educational_background']['college_period_from'];
+        $employeeEducationalBackground->college_period_to                                  = $data['educational_background']['college_period_to'];
+        $employeeEducationalBackground->college_highest_level_units_earned                 = $data['educational_background']['college_highest_level_units_earned'];
+        $employeeEducationalBackground->college_year_graduated                             = $data['educational_background']['college_year_graduated'];
+        $employeeEducationalBackground->college_scholarship                                = $data['educational_background']['college_scholarship'];
+        $employeeEducationalBackground->graduate_studies_name                              = $data['educational_background']['graduate_studies_name'];
+        $employeeEducationalBackground->graduate_studies_education                         = $data['educational_background']['graduate_studies_education'];
+        $employeeEducationalBackground->graduate_studies_period_from                       = $data['educational_background']['graduate_studies_period_from'];
+        $employeeEducationalBackground->graduate_studies_period_to                         = $data['educational_background']['graduate_studies_period_to'];
+        $employeeEducationalBackground->graduate_studies_highest_level_units_earned        = $data['educational_background']['graduate_studies_highest_level_units_earned'];
+        $employeeEducationalBackground->graduate_studies_year_graduated                    = $data['educational_background']['graduate_studies_year_graduated'];
+        $employeeEducationalBackground->graduate_studies_scholarship                       = $data['educational_background']['graduate_studies_scholarship'];
+        $employeeEducationalBackground->save();
+        return $data['educational_background'];
+    }
+
     public function addCivilService(array $civilRecords = []) :array
     {
         // Get the employee id of each record.
@@ -193,9 +320,38 @@ class EmployeeRepository
         return $civilRecords;
     }
 
+    public function existingEmployeeAddCivilService(array $data = []) :array
+    {
+        $employee = Employee::find($data[self::FIRST_INDEX]['employee_id']);
+        $records = [];
+
+        $employee->civil_service()->delete();
+
+        foreach($data as $record) {
+            if(!is_null($record['license_number'])) {
+                $records[] = EmployeeCivilService::firstOrNew(
+                    [
+                        'license_number' => $record['license_number'],
+                    ],
+                    [
+                        'career_service'       => $record['career_service'],
+                        'rating'               => $record['rating'],
+                        'date_of_examination'  => $record['date_of_examination'],
+                        'place_of_examination' => $record['place_of_examination'],
+                        'license_number'       => $record['license_number'],
+                        'date_of_validitiy'    => $record['date_of_validitiy'],
+                    ]
+                );
+            }
+        }
+        
+        $employee->civil_service()->saveMany($records);
+
+        return $data;
+    }
+
     public function addWorkExperience(array $workExperiences = []) :array
     {
-
         $employee = Employee::find($workExperiences[self::FIRST_INDEX]['employee_id']);
 
         foreach($workExperiences as $record) {
@@ -215,9 +371,39 @@ class EmployeeRepository
             }
         }
 
-        $employee->civil_service()->saveMany($records);
+        $employee->work_experience()->saveMany($records);
 
         return $workExperiences;
+    }
+
+    public function existingEmployeeAddWorkExperience(array $data = []) :array
+    {
+         $employee = Employee::find($data[self::FIRST_INDEX]['employee_id']);
+
+         $records = [];
+
+        $employee->work_experience()->delete();
+
+         foreach($data as $record) {
+            if(!is_null($record['from'])) {
+                $records[] = EmployeeWorkExperience::firstOrNew(
+                    [
+                        'from'                  => $record['from'],
+                        'to'                    => $record['to'],
+                        'position_title'        => $record['position_title'],
+                        'office'                => $record['office'],
+                        'monthly_salary'        => $record['monthly_salary'],
+                        'salary_job_pay_grade'  => $record['salary_job_pay_grade'],
+                        'status_of_appointment' => $record['status_of_appointment'],
+                        'government_service'    => $record['government_service'],
+                    ]
+                );
+            }
+        }
+
+        $employee->work_experience()->saveMany($records);
+
+        return $data;
     }
 
     public function addVoluntary(array $voluntaryRecord = []) :array
@@ -242,6 +428,35 @@ class EmployeeRepository
 
        $employee->voluntary_work()->saveMany($records);
        return $voluntaryRecord;
+    }
+
+    public function existingEmployeeAddVoluntaryWork(array $data = []) :array
+    {
+        $employeeId = $data[self::FIRST_INDEX]['employee_id'];
+
+        $employee = Employee::find($employeeId);
+
+        $records = [];
+        
+        $employee->voluntary_work()->delete();
+
+        foreach($data as $record) {
+            if(!is_null($record['name_and_address'])) {
+                $records[] =  EmployeeVoluntaryWork::firstOrNew(
+                    [
+                        'name_and_address'    => $record['name_and_address'],
+                        'inclusive_date_from' => $record['inclusive_date_from'],
+                        'inclusive_date_to'   => $record['inclusive_date_to'],
+                        'position'            => $record['position'],
+                        'no_of_hours'         => $record['no_of_hours']
+                    ]
+                );
+            }
+        }
+
+       $employee->voluntary_work()->saveMany($records);
+
+       return $records;
     }
 
     public function addLearning(array $trainings = []) :array
@@ -273,6 +488,38 @@ class EmployeeRepository
         return $trainings;
     }
 
+    public function existingEmployeeAddLearning(array $data = []) :array
+    {
+        $employeeId = $data[self::FIRST_INDEX]['employee_id'];
+        
+        $employee = Employee::find($employeeId);
+        
+        $employee->program_attained()->delete();
+
+        $records = [];
+
+        foreach($data as $training) {
+            if(!is_null($training['number_of_hours'])) {
+                $records[] = EmployeeTrainingAttained::firstOrNew([
+                    'title'                   => $training['title'],
+                    'date_of_attendance_from' => $training['date_of_attendance_from'],
+                    'date_of_attendance_to'   => $training['date_of_attendance_to'],
+                ],[
+                    'title'                   => $training['title'],
+                    'date_of_attendance_from' => $training['date_of_attendance_from'],
+                    'date_of_attendance_to'   => $training['date_of_attendance_to'],
+                    'number_of_hours'         => $training['number_of_hours'],
+                    'type_of_id'              => $training['type_of_id'],
+                    'sponsored_by'            => $training['sponsored_by'],
+                ]);
+            }
+        }
+
+        $employee->program_attained()->saveMany($records);
+
+        return $data;
+    }
+
     public function addOtherInformation(array $informations = [])  :array
     {
         $employeeId = $informations[self::FIRST_INDEX]['employee_id'];
@@ -289,6 +536,29 @@ class EmployeeRepository
 
         $employee->other_information()->saveMany($otherInformations);
         return $informations;
+    }
+
+    public function existingEmployeeAddOtherInformation(array $data = []) :array
+    {
+          $employeeId = $data[self::FIRST_INDEX]['employee_id'];
+
+        $employee = Employee::find($employeeId);
+        
+        $employee->other_information()->delete();
+
+        $records = [];
+        
+        foreach($data as $information) {
+            $records[] = EmployeeOtherInformation::firstOrNew([
+                'special_skill' => $information['special_skill'],
+                'non_academic'  => $information['non_academic'],
+                'organization'  => $information['organization'],
+            ]);
+        }
+
+        $employee->other_information()->saveMany($records);
+
+        return $data;
     }
 
     public function addRelevantQueries(array $queries = []) :array
@@ -325,6 +595,40 @@ class EmployeeRepository
         return $queries;
     }
 
+    public function existingEmployeeStoreRelevantQueries(array $data = []) :array
+    {
+        $employee = Employee::find($data['employee_id']);
+
+        $employee->relevant_queries->update([
+            'question_34_a_answer'  => $data['question_34_a_answer'],
+            'question_34_a_details' => $data['question_34_a_details'],
+            'question_34_b_answer'  => $data['question_34_b_answer'],
+            'question_34_b_details' => $data['question_34_b_details'],
+            'question_35_a_answer'  => $data['question_35_a_answer'],
+            'question_35_a_details' => $data['question_35_a_details'],
+            'question_35_b_answer'  => $data['question_35_b_answer'],
+            'question_35_b_details' => $data['question_35_b_details'],
+            'question_36_a_answer'  => $data['question_36_a_answer'],
+            'question_36_a_details' => $data['question_36_a_details'],
+            'question_37_a_answer'  => $data['question_37_a_answer'],
+            'question_37_a_details' => $data['question_37_a_details'],
+            'question_38_a_answer'  => $data['question_38_a_answer'],
+            'question_38_a_details' => $data['question_38_a_details'],
+            'question_38_b_answer'  => $data['question_38_b_answer'],
+            'question_38_b_details' => $data['question_38_b_details'],
+            'question_39_a_answer'  => $data['question_39_a_answer'],
+            'question_39_a_details' => $data['question_39_a_details'],
+            'question_40_a_answer'  => $data['question_40_a_answer'],
+            'question_40_a_details' => $data['question_40_a_details'],
+            'question_40_b_answer'  => $data['question_40_b_answer'],
+            'question_40_b_details' => $data['question_40_b_details'],
+            'question_40_c_answer'  => $data['question_40_c_answer'],
+            'question_40_c_details' => $data['question_40_c_details'],
+        ]);
+
+        return $data;
+    }
+
     public function addReferences(array $references = []) : array
     {
         $employeeId = $references[self::FIRST_INDEX]['employee_id'];
@@ -343,6 +647,27 @@ class EmployeeRepository
         return $references;
     }
 
+    public function existingEmployeeAddReferences(array $data = []) : array
+    {
+        $employeeId = $data[self::FIRST_INDEX]['employee_id'];
+
+        $employee = Employee::find($employeeId);
+
+        $employee->references()->delete();
+
+        foreach($data as $reference) {
+            $records[] = EmployeeReference::firstOrNew([
+                'name'             => $reference['name'],
+                'address'          => $reference['address'],
+                'telephone_number' => $reference['telephone_number']
+            ]);
+        }
+
+        $employee->references()->saveMany($records);
+        
+        return $data;
+    }
+
     public function addIssuedID(array $data = [])
     {
         $employee = Employee::find($data['employee_id']);
@@ -353,6 +678,19 @@ class EmployeeRepository
         $employeeIssuedId->date = $data['dateOfIssuance'];
 
         return $employee->issued_id()->save($employeeIssuedId);
+    }
+
+    public function existingEmployeeAddIssuedID(array $data = [])
+    {
+        $employee = Employee::find($data['employee_id']);
+
+        $employee->issued_id->update([
+            'id_type' => $data['id_type'],
+            'id_no'   => $data['id_no'],
+            'date'    => $data['date'],
+        ]);
+
+        return $data;
     }
 
     public function addEmployee(array $data = [])
