@@ -582,7 +582,11 @@
                 id="gnameOfSchool"
                 class="form-control"
                 v-model="educationalBackground.gnameOfSchool"
-                style="text-transform:uppercase outline: none; box-shadow: 0px 0px 0px transparent;"
+                style="
+                  text-transform: uppercase;
+                  outline: none;
+                  box-shadow: 0px 0px 0px transparent;
+                "
               />
               <span><strong>NAME OF SCHOOL</strong></span>
             </label>
@@ -596,7 +600,11 @@
                 class="form-control"
                 placeholder=""
                 v-model="educationalBackground.gbasicEduc"
-                style="text-transform:uppercase outline: none; box-shadow: 0px 0px 0px transparent;"
+                style="
+                  text-transform: uppercase;
+                  outline: none;
+                  box-shadow: 0px 0px 0px transparent;
+                "
               />
               <span><strong>BASIC EDUCATION/DEGREE/COURSE</strong></span>
             </label>

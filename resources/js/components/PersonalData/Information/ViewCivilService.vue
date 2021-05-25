@@ -15,9 +15,15 @@
           </thead>
           <tbody>
             <tr v-for="(exam, index) in employee.civil_service" :key="index">
-              <td>{{ exam.career_service }}</td>
-              <td>{{ exam.date_of_examination }}</td>
-              <td>{{ exam.place_of_examination }}</td>
+              <td style="text-transform: uppercase">
+                {{ exam.career_service }}
+              </td>
+              <td style="text-transform: uppercase">
+                {{ exam.date_of_examination }}
+              </td>
+              <td style="text-transform: uppercase">
+                {{ exam.place_of_examination }}
+              </td>
             </tr>
           </tbody>
         </table>

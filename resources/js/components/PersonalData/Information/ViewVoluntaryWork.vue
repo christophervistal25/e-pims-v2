@@ -20,11 +20,21 @@
               v-for="(voluntaryWork, index) in employee.voluntary_work"
               :key="index"
             >
-              <td>{{ voluntaryWork.name_and_address }}</td>
-              <td>{{ voluntaryWork.inclusive_date_from }}</td>
-              <td>{{ voluntaryWork.inclusive_date_to }}</td>
-              <td>{{ voluntaryWork.no_of_hours }}</td>
-              <td>{{ voluntaryWork.position }}</td>
+              <td style="text-transform: uppercase">
+                {{ voluntaryWork.name_and_address }}
+              </td>
+              <td style="text-transform: uppercase">
+                {{ voluntaryWork.inclusive_date_from }}
+              </td>
+              <td style="text-transform: uppercase">
+                {{ voluntaryWork.inclusive_date_to }}
+              </td>
+              <td style="text-transform: uppercase">
+                {{ voluntaryWork.no_of_hours }}
+              </td>
+              <td style="text-transform: uppercase">
+                {{ voluntaryWork.position }}
+              </td>
             </tr>
           </tbody>
         </table>

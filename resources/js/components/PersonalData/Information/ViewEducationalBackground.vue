@@ -18,8 +18,10 @@
             </div>
             <div class="experience-content">
               <div class="timeline-content">
-                <a href="#/" class="name">Elementary</a>
-                <div>
+                <a href="#/" class="name" style="text-transform: uppercase"
+                  >Elementary</a
+                >
+                <div style="text-transform: uppercase">
                   {{ employee.educational_background.elementary_name }}
                 </div>
                 <span class="time"
@@ -44,8 +46,10 @@
             </div>
             <div class="experience-content">
               <div class="timeline-content">
-                <a href="#/" class="name">Secondary</a>
-                <div>
+                <a href="#/" class="name" style="text-transform: uppercase"
+                  >Secondary</a
+                >
+                <div style="text-transform: uppercase">
                   {{ employee.educational_background.secondary_name }}
                 </div>
                 <span class="time"
@@ -71,13 +75,13 @@
             </div>
             <div class="experience-content">
               <div class="timeline-content">
-                <a href="#/" class="name"
+                <a href="#/" class="name" style="text-transform: uppercase"
                   >Vocational :
                   {{
                     employee.educational_background.vocational_trade_course_name
                   }}</a
                 >
-                <div>
+                <div style="text-transform: uppercase">
                   {{ employee.educational_background.vocational_education }}
                 </div>
                 <span class="time"
@@ -101,11 +105,11 @@
             </div>
             <div class="experience-content">
               <div class="timeline-content">
-                <a href="#/" class="name"
+                <a href="#/" class="name" style="text-transform: uppercase"
                   >College :
                   {{ employee.educational_background.college_name }}</a
                 >
-                <div>
+                <div style="text-transform: uppercase">
                   {{ employee.educational_background.college_education }}
                 </div>
                 <span class="time"

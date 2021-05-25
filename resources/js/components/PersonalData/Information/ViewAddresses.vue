@@ -5,14 +5,16 @@
         <strong>ADDRESS</strong>
       </div>
       <hr />
-      <h5 class="section-title text-center text-sm">RESIDENTIAL ADDRESS</h5>
+      <h5 class="section-title text-center text-sm">
+        <strong>RESIDENTIAL ADDRESS</strong>
+      </h5>
       <hr />
       <ul class="personal-info">
         <div class="row">
           <div class="col-lg-6 title">Residential House No</div>
           <div class="col-lg-auto">
             <li>
-              <div class="text">
+              <div class="text" style="text-transform: uppercase">
                 {{ employee.residential_no || "N/A" }}
               </div>
             </li>
@@ -23,7 +25,7 @@
           <div class="col-lg-6 title">Residential Street</div>
           <div class="col-lg-auto">
             <li>
-              <div class="text">
+              <div class="text" style="text-transform: uppercase">
                 {{ employee.residential_street || "N/A" }}
               </div>
             </li>
@@ -34,7 +36,7 @@
           <div class="col-lg-6 title">Residential Village</div>
           <div class="col-lg-auto">
             <li>
-              <div class="text">
+              <div class="text" style="text-transform: uppercase">
                 {{ employee.residential_village || "N/A" }}
               </div>
             </li>
@@ -86,7 +88,9 @@
       </ul>
 
       <hr />
-      <h5 class="section-title text-center text-sm">PERMANENT ADDRESS</h5>
+      <h5 class="section-title text-center text-sm">
+        <strong>PERMANENT ADDRESS</strong>
+      </h5>
       <hr />
 
       <ul class="personal-info">
@@ -94,7 +98,7 @@
           <div class="col-lg-6 title">Permanent House No</div>
           <div class="col-lg-auto">
             <li>
-              <div class="text">
+              <div class="text" style="text-transform: uppercase">
                 {{ employee.permanent_no || "N/A" }}
               </div>
             </li>
@@ -105,7 +109,7 @@
           <div class="col-lg-6 title">Permanent Street</div>
           <div class="col-lg-auto">
             <li>
-              <div class="text">
+              <div class="text" style="text-transform: uppercase">
                 {{ employee.permanent_street || "N/A" }}
               </div>
             </li>
@@ -116,7 +120,7 @@
           <div class="col-lg-6 title">Permanent Village</div>
           <div class="col-lg-auto">
             <li>
-              <div class="text">
+              <div class="text" style="text-transform: uppercase">
                 {{ employee.permanent_village || "N/A" }}
               </div>
             </li>

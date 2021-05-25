@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Plantilla')
+@section('title', 'Plantilla Of Personnel')
 @prepend('page-css')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
@@ -20,7 +20,7 @@
                     <div class="row">
 
                     <div class="col-12">
-                        <div class="alert alert-secondary text-center font-weight-bold" role="alert" >Add New Plantilla</div>
+                        <div class="alert alert-secondary text-center font-weight-bold" role="alert" >Add New Plantilla of Personnel</div>
                     </div>
 
                     <div class="form-group col-12 col-lg-2">
@@ -50,7 +50,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-12 col-lg-3">
+                    <div class="form-group col-12 col-lg-4">
                         <label>Position<span class="text-danger">*</span></label>
                         <select value=""  class="form-control selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
                         name="positionTitle" data-live-search="true" id="positionTitle" data-size="5" data-width="100%">
@@ -62,9 +62,9 @@
                         <div id='position-title-error-message' class='text-danger'>
                         </div>
                     </div>
-                    <div class="form-group col-12 col-lg-1">
+                    {{-- <div class="form-group col-12 col-lg-1">
                         <button id="addPosition" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addPositionBtn"><i class="la la-plus"></i></button>
-                    </div>
+                    </div> --}}
 
                     <div class="form-group col-12 col-lg-3">
                         <label>Position Ext</label>

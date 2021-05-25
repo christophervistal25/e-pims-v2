@@ -63,7 +63,7 @@
                     </li>
                     <li>
                       <div class="title">Permanent Address:</div>
-                      <div class="text">
+                      <div class="text" style="text-transform: uppercase">
                         {{ `${employee.permanent_full_address}` }}
                       </div>
                     </li>

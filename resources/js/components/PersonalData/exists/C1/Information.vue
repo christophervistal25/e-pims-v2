@@ -47,7 +47,10 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Surname<span class="text-danger">*</span> </span>
+              <span
+                ><strong>SURNAME</strong
+                ><span class="text-danger"><strong>*</strong></span>
+              </span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.surname }}
@@ -68,7 +71,10 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>First Name<span class="text-danger">*</span></span>
+              <span
+                ><strong>FIRST NAME</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.firstname }}
@@ -91,7 +97,7 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Middle Name</span>
+              <span><strong>MIDDLE NAME</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.middlename }}
@@ -120,7 +126,7 @@
                   {{ extension }}
                 </option>
               </select>
-              <span>EXTENSION NAME</span>
+              <span><strong>EXTENSION NAME</strong></span>
             </label>
 
             <p class="text-danger text-sm">
@@ -146,7 +152,10 @@
               <p class="text-danger text-sm">
                 {{ errors.dateOfBirth }}
               </p>
-              <span>DATE OF BIRTH<span class="text-danger">*</span></span>
+              <span
+                ><strong>DATE OF BIRTH</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
           </div>
           <div class="col-lg-3">
@@ -166,7 +175,10 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Place of Birth<span class="text-danger">*</span></span>
+              <span
+                ><strong>PLACE OF BIRTH</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.placeOfBirth }}
@@ -185,7 +197,10 @@
                 <option value="male">MALE</option>
                 <option value="female">FEMALE</option>
               </select>
-              <span>SEX<span class="text-danger">*</span></span>
+              <span
+                ><strong>SEX</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.sex }}
@@ -207,7 +222,10 @@
                 <option value="SEPARATED">SEPARATED</option>
                 <option value="OTHERS">OTHERS</option>
               </select>
-              <span>STATUS<span class="text-danger">*</span></span>
+              <span
+                ><strong>STATUS</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.status }}
@@ -226,7 +244,10 @@
                 v-model="personal_data.height"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Height(m)<span class="text-danger">*</span></span>
+              <span
+                ><strong>HEIGHT (m)</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">{{ errors.height }}</p>
           </div>
@@ -241,7 +262,10 @@
                 v-model="personal_data.weight"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Weight(kg)<span class="text-danger">*</span></span>
+              <span
+                ><strong>WEIGHT (kg)</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.weight }}
@@ -263,7 +287,10 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Bloodtype<span class="text-danger">*</span></span>
+              <span
+                ><strong>BLOODTYPE</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.bloodType }}
@@ -281,7 +308,7 @@
                 v-model="personal_data.gsis_id_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>GSIS ID Number</span>
+              <span><strong>GSIS ID NUMBER</strong></span>
             </label>
           </div>
           <div class="col-lg-4">
@@ -294,7 +321,7 @@
                 v-model="personal_data.pag_ibig_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>PAG-IBIG ID Number</span>
+              <span><strong>PAG-IBIG ID NUMBER</strong></span>
             </label>
           </div>
           <div class="col-lg-4">
@@ -307,7 +334,7 @@
                 v-model="personal_data.philhealth_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>PHILHEALTH ID Number</span>
+              <span><strong>PHILHEALTH ID NUMBER</strong></span>
             </label>
           </div>
         </div>
@@ -322,7 +349,7 @@
                 v-model="personal_data.sss_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>SSS ID Number</span>
+              <span><strong>SSS ID NUMBER</strong></span>
             </label>
           </div>
 
@@ -336,7 +363,7 @@
                 v-model="personal_data.tin_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>TIN ID Number</span>
+              <span><strong>TIN ID NUMBER</strong></span>
             </label>
           </div>
 
@@ -350,7 +377,7 @@
                 v-model="personal_data.agency_employee_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Agency Employee Number</span>
+              <span><strong>AGENCY EMPLOYEE NUMBER</strong></span>
             </label>
           </div>
         </div>
@@ -369,7 +396,10 @@
                 <option value="FILIPINO">FILIPINO</option>
                 <option value="DUAL CITIZEN">DUAL CITIZEN</option>
               </select>
-              <span>CITIZENSHIP<span class="text-danger">*</span></span>
+              <span
+                ><strong>CITIZENSHIP</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.citizenship }}
@@ -392,7 +422,7 @@
                 <option value="BIRTH">BIRTH</option>
                 <option value="NATURALIZATION">NATURALIZATION</option>
               </select>
-              <span>By</span>
+              <span><strong>By</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.citizenshipBy }}
@@ -419,7 +449,7 @@
                   {{ country }}
                 </option>
               </select>
-              <span>Indicate Country</span>
+              <span><strong>INDICATE COUNTRY</strong></span>
             </label>
             <p class="text-danger text-sm">{{ errors.country }}</p>
           </div>
@@ -434,7 +464,7 @@
                 v-model="personal_data.telephone_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Telephone Number</span>
+              <span><strong>TELEPHONE NUMBER</strong></span>
             </label>
           </div>
           <div class="col-lg-4">
@@ -450,7 +480,10 @@
                 v-model="personal_data.mobile_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Mobile Number<span class="text-danger">*</span></span>
+              <span
+                ><strong>MOBILE NUMBER</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.mobileNumber }}
@@ -466,7 +499,7 @@
                 v-model="personal_data.email_address"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Email Address</span>
+              <span><strong>EMAIL ADDRESS</strong></span>
             </label>
           </div>
         </div>
@@ -494,7 +527,9 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>House/Block/Lot No.</span>
+              <span style="text-transform: uppercase"
+                ><strong>House/Block/Lot No.</strong></span
+              >
             </label>
           </div>
           <div class="col-lg-4">
@@ -511,7 +546,7 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Street</span>
+              <span><strong>STREET</strong></span>
             </label>
           </div>
           <div class="col-lg-4">
@@ -528,7 +563,9 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Subdivision/Village</span>
+              <span style="text-transform: uppercase"
+                ><strong>Subdivision/Village</strong></span
+              >
             </label>
           </div>
         </div>
@@ -545,7 +582,10 @@
               <p class="text-danger text-sm">
                 {{ errors["residentialProvince.code"] }}
               </p>
-              <span>PROVINCE<span class="text-danger">*</span></span>
+              <span
+                ><strong>PROVINCE</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
           </div>
           <div class="col-lg-3">
@@ -559,7 +599,10 @@
               <p class="text-danger text-sm">
                 {{ errors["residentialCity.code"] }}
               </p>
-              <span>CITY<span class="text-danger">*</span></span>
+              <span
+                ><strong>CITY</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
           </div>
           <div class="col-lg-3">
@@ -572,7 +615,10 @@
               <p class="text-danger text-sm">
                 {{ errors["residentialBarangay.code"] }}
               </p>
-              <span>BARANGAY<span class="text-danger">*</span></span>
+              <span
+                ><strong>BARANGAY</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
           </div>
           <div class="col-lg-3">
@@ -599,7 +645,10 @@
                 placeholder="Enter Zip Code"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Zip Code<span class="text-danger">*</span></span>
+              <span
+                ><strong>ZIP CODE</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.residentialZipCode }}
@@ -620,7 +669,7 @@
                 type="checkbox"
                 @click="sameAsAboveAddress"
               />
-              SAME AS ABOVE
+              <strong>SAME AS ABOVE</strong>
             </label>
           </div>
         </div>
@@ -640,7 +689,9 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>House/Block/Lot No.</span>
+              <span style="text-transform: uppercase"
+                ><strong>House/Block/Lot No.</strong></span
+              >
             </label>
           </div>
           <div class="col-lg-4">
@@ -658,7 +709,7 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Street</span>
+              <span><strong>STREET</strong></span>
             </label>
           </div>
           <div class="col-lg-4">
@@ -679,7 +730,9 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>Subdivision/Village</span>
+              <span style="text-transform: uppercase"
+                ><strong>Subdivision/Village</strong></span
+              >
             </label>
           </div>
         </div>
@@ -696,7 +749,10 @@
               <p class="text-danger text-sm">
                 {{ errors["permanentProvince.code"] }}
               </p>
-              <span>PROVINCE<span class="text-danger">*</span></span>
+              <span
+                ><strong>PROVINCE</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
           </div>
 
@@ -711,7 +767,10 @@
               <p class="text-danger text-sm">
                 {{ errors["permanentCity.code"] }}
               </p>
-              <span>CITY<span class="text-danger">*</span></span>
+              <span
+                ><strong>CITY</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
           </div>
 
@@ -725,7 +784,10 @@
               <p class="text-danger text-sm">
                 {{ errors["permanentBarangay.code"] }}
               </p>
-              <span>BARANGAY<span class="text-danger">*</span></span>
+              <span
+                ><strong>BARANGAY</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
           </div>
 
@@ -753,7 +815,10 @@
                 placeholder="Enter Zip Code"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-              <span>Zip Code<span class="text-danger">*</span></span>
+              <span
+                ><strong>ZIP CODE</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.permanentZipCode }}

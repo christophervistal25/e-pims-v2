@@ -9,6 +9,7 @@ use App\Plantilla;
 use App\SalaryAdjustment;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\Rule;
 class SalaryAdjustmentController extends Controller
 {
     /**
@@ -66,7 +67,22 @@ class SalaryAdjustmentController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'employeeName'                        => 'required',
+            // 'employeeName'                        => 'required',
+            'employeeName'  => [
+                'required',
+                    Rule::unique('salary_adjustments','employee_id')->where(function ($query) use ($request) {
+                    return $query
+                    ->where('employee_id', $request->employeeId)
+                    ->where('item_no', $request->itemNo)
+                    ->where('position_id', $request->positionId)
+                    ->where('date_adjustment', $request->dateAdjustment)
+                    ->where('sg_no', $request->salaryGrade)
+                    ->where('step_no', $request->stepNo)
+                    ->where('salary_previous', $request->salaryPrevious)
+                    ->where('salary_new', $request->salaryNew)
+                    ->where('salary_diff', $request->salaryDifference);
+                }),
+            ],
             'itemNo'                              => 'required',
             'positionId'                          => 'required',
             'dateAdjustment'                      => 'required',

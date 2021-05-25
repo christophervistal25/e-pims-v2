@@ -15,7 +15,7 @@
             </div>
             <div class="experience-content">
               <div class="timeline-content">
-                <a href="#" class="name"
+                <a href="#" class="name" style="text-transform: uppercase"
                   >{{ experience.position_title }} at {{ experience.office }}</a
                 >
                 <span class="time"

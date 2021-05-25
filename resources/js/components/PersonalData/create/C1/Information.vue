@@ -311,7 +311,11 @@
                 id="gsisidno"
                 class="form-control"
                 v-model="personal_data.gsisIdNo"
-                style="outline: none; box-shadow: 0px 0px 0px transparent"
+                style="
+                  outline: none;
+                  box-shadow: 0px 0px 0px transparent;
+                  text-transform: uppercase;
+                "
               />
               <span><strong>GSIS ID NUMBER</strong></span>
             </label>
@@ -323,7 +327,11 @@
                 id="pagibigidno"
                 class="form-control"
                 v-model="personal_data.pagibigIdNo"
-                style="outline: none; box-shadow: 0px 0px 0px transparent"
+                style="
+                  outline: none;
+                  box-shadow: 0px 0px 0px transparent;
+                  text-transform: uppercase;
+                "
               />
               <span><strong>PAG-IBIG ID NUMBER</strong></span>
             </label>
@@ -335,7 +343,11 @@
                 id="philhealthidno"
                 class="form-control"
                 v-model="personal_data.philHealthIdNo"
-                style="outline: none; box-shadow: 0px 0px 0px transparent"
+                style="
+                  outline: none;
+                  box-shadow: 0px 0px 0px transparent;
+                  text-transform: uppercase;
+                "
               />
               <span><strong>PHILHEALTH ID NUMBER</strong></span>
             </label>
@@ -349,7 +361,11 @@
                 id="sssidno"
                 class="form-control"
                 v-model="personal_data.sssIdNo"
-                style="outline: none; box-shadow: 0px 0px 0px transparent"
+                style="
+                  outline: none;
+                  box-shadow: 0px 0px 0px transparent;
+                  text-transform: uppercase;
+                "
               />
               <span><strong>SSS ID NUMBER</strong></span>
             </label>
@@ -362,7 +378,11 @@
                 id="tinidno"
                 class="form-control"
                 v-model="personal_data.tinIdNo"
-                style="outline: none; box-shadow: 0px 0px 0px transparent"
+                style="
+                  outline: none;
+                  box-shadow: 0px 0px 0px transparent;
+                  text-transform: uppercase;
+                "
               />
               <span><strong>TIN ID NUMBER</strong></span>
             </label>
@@ -375,7 +395,11 @@
                 id="agencyempidno"
                 class="form-control"
                 v-model="personal_data.agencyEmpIdNo"
-                style="outline: none; box-shadow: 0px 0px 0px transparent"
+                style="
+                  outline: none;
+                  box-shadow: 0px 0px 0px transparent;
+                  text-transform: uppercase;
+                "
               />
               <span><strong>AGENCY EMPLOYEE NUMBER</strong></span>
             </label>
@@ -658,13 +682,16 @@
             PERMANENT ADDRESS
           </div>
           <div class="form-group">
-            <label class="checkbox-inline" style="transform: scale(0.8)">
+            <label
+              class="checkbox-inline text-lg"
+              style="transform: scale(0.8)"
+            >
               <input
                 :checked="isSameAsAbove"
                 type="checkbox"
                 @click="sameAsAboveAddress"
               />
-              SAME AS ABOVE
+              <strong>SAME AS ABOVE</strong>
             </label>
           </div>
         </div>

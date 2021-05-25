@@ -25,7 +25,7 @@
                 </div>
                 <hr class="mt-1">
                 <label for="officelist" class="form-group has-float-label mb-0">
-                    <select name="officelist" type="text" id="officelist" class="form-control form-control-sm"
+                    <select name="officelist" type="text" id="officelist" class="form-control"
                         style="outline: none; box-shadow: 0px 0px 0px transparent;">
                         <option readonly selected>Select Office Name</option>
                         <option>Office Name I</option>
@@ -34,7 +34,7 @@
                 </label>
                 <hr>
                 <label for="filteropt" class="form-group has-float-label mb-0">
-                    <select name="filteropt" type="text" id="filteropt" class="form-control form-control-sm"
+                    <select name="filteropt" type="text" id="filteropt" class="form-control"
                         style="outline: none; box-shadow: 0px 0px 0px transparent;">
                         <option readonly selected>Active</option>
                         <option>Active</option>
@@ -68,17 +68,17 @@
                     <div class="col-lg-4">
                         <h6 class="text-sm text-center">&nbsp;</h6>
                         <label for="dateApply" class="form-group has-float-label">
-                            <input type="date" name="dateApply" id="dateApply" class="form-control form-control-sm"
+                            <input type="date" name="dateApply" id="dateApply" class="form-control form-control"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>Date Apply<span class="text-danger">*</span></span>
+                            <span><strong>DATE APPLY</strong><span class="text-danger"><strong>*</strong></span></span>
                         </label>
                         <label for="controlNo" class="form-group has-float-label">
-                            <input type="text" name="controlNo" id="controlNo" class="form-control form-control-sm"
+                            <input type="text" name="controlNo" id="controlNo" class="form-control"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>Control No.</span>
+                            <span><strong>CONTROL NO.</strong></span>
                         </label>
                         <label for="typeOfLeave" class="form-group has-float-label">
-                            <select class="form-control form-control-sm" for="typeOfLeave"
+                            <select class="form-control" for="typeOfLeave"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <option readonly selected value="">Type of Leave</option>
                                 <option value="">Vacation Leave</option>
@@ -86,67 +86,67 @@
                                 <option value="">Sick Leave</option>
                                 <option value="">Others</option>
                             </select>
-                            <span>Leave Option<span class="text-danger">*</span></span>
+                            <span><strong>LEAVE OPTION</strong><span class="text-danger"><strong>*</strong></span></span>
                         </label>
                         <label for="noOfDays" class="form-group has-float-label">
-                            <input type="text" class="form-control form-control-sm" id="noOfDays"
+                            <input type="text" class="form-control" id="noOfDays"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>Number of Days<span class="text-danger">*</span></span>
+                            <span><strong>NUMBER OF DAYS</strong><span class="text-danger"><strong>*</strong></span></span>
                         </label>
                         <label for="caseOfVl" class="form-group has-float-label">
-                            <select class="form-control form-control-sm" id="caseOfVl"
+                            <select class="form-control" id="caseOfVl"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <option readonly selected value="">Out Patient</option>
                                 <option value="">----</option>
                             </select>
-                            <span>In Case of VL</span>
+                            <span><strong>IN CASE OF VL</strong></span>
                         </label>
                         <label for="commutation" class="form-group has-float-label">
-                            <select class="form-control form-control-sm" id="commutation"
+                            <select class="form-control" id="commutation"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <option readonly selected value="">Requested</option>
                                 <option value="">----</option>
                             </select>
-                            <span>Commutation<span class="text-danger">*</span></span>
+                            <span><strong>COMMUTATION</strong><span class="text-danger"><strong>*</strong></span></span>
                         </label>
                     </div>
                     <div class="col-lg-4">
                         <h6 class="text-sm text-center">Leave Balance</h6>
                         <label for="asOf" class="form-group has-float-label">
-                            <input type="text" id="asOf" class="form-control form-control-sm"
+                            <input type="text" id="asOf" class="form-control"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>As Of</span>
+                            <span><strong>AS OF</strong></span>
                         </label>
                         <label for="vlEarned" class="form-group has-float-label">
-                            <input type="text" class="form-control form-control-sm" id="vlEarned"
+                            <input type="text" class="form-control" id="vlEarned"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>VL Earned</span>
+                            <span><strong>VL EARNED</strong></span>
                         </label>
                         <label for="vlBalance" class="form-group has-float-label">
-                            <input type="text" class="form-control form-control-sm" id="vlBalance"
+                            <input type="text" class="form-control" id="vlBalance"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>VL Balance</span>
+                            <span><strong>VL BALANCE</strong></span>
                         </label>
                         <label for="slEarned" class="form-group has-float-label">
-                            <input type="text" id="slEarned" class="form-control form-control-sm"
+                            <input type="text" id="slEarned" class="form-control"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>SL Earned</span>
+                            <span><strong>SL EARNED</strong></span>
                         </label>
                         <label for="slEnjoyed" class="form-group has-float-label">
-                            <input type="text" class="form-control form-control-sm" id="slEnjoyed"
+                            <input type="text" class="form-control" id="slEnjoyed"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>SL Enjoyed</span>
+                            <span><strong>SL ENJOYED</strong></span>
                         </label>
                         <label for="slBalance" class="form-group has-float-label">
-                            <input type="text" class="form-control form-control-sm" id="slBalance"
+                            <input type="text" class="form-control" id="slBalance"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>SL Balance</span>
+                            <span><strong>SL BALANCE</strong></span>
                         </label>
                         <hr>
                         <label for="total" class="form-group has-float-label">
-                            <input type="text" name="total" id="total" class="form-control form-control-sm"
+                            <input type="text" name="total" id="total" class="form-control"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>Total VL - SL</span>
+                            <span><strong>Total VL - SL</strong></span>
                         </label>
                     </div>
                     <div class="col-lg-4">
@@ -173,7 +173,7 @@
                         <h6 class="text-sm text-center">Date to Apply</h6>
                         <label for="dateApply" class="form-group has-float-label">
                             <input type="date" name="dateApply" id="dateApply" class="form-control" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>Select Date<span class="text-danger">*</span></span>
+                            <span><strong>SELECT DATE</strong><span class="text-danger"><strong>*</strong></span></span>
                         </label>
                         <select name="" id="" class="form-control">
                             <option value="">Whole Day</option>
@@ -194,14 +194,14 @@
                             style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <option value="">-----</option>
                         </select>
-                        <span>Recommending Approval<span class="text-danger">*</span></span>
+                        <span><strong>RECOMMENDING APPROVAL</strong><span class="text-danger"><strong>*</strong></span></span>
                     </label>
                     <label for="approveBy" class="form-group has-float-label">
                         <select class="custom-select" name="approveBy" id="approveBy"
                             style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <option value="">-----</option>
                         </select>
-                        <span>Approved By<span class="text-danger">*</span></span>
+                        <span><strong>APPROVED BY</strong><span class="text-danger"><strong>*</strong></span></span>
                     </label>
                     <label for="appStatus" class="form-group has-float-label">
                         <select name="appStatus" class="custom-select" id="appStatus"
@@ -209,7 +209,7 @@
                             <option value="">Approved</option>
                             <option value="">Pending</option>
                         </select>
-                        <span>Application Status<span class="text-danger">*</span></span>
+                        <span><strong>APPLICATION STATUS</strong><span class="text-danger"><strong>*</strong></span></span>
                     </label>
                 </div>
                 <button type="button" class="btn btn-outline-primary ml-3"><i class="fas fa-plus-circle"></i> New

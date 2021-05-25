@@ -59,7 +59,7 @@
           <div class="col-lg-6 title">Place of Birth</div>
           <div class="text col-auto">
             <li>
-              <div class="text">
+              <div class="text" style="text-transform: uppercase">
                 {{ employee.place_birth || "N/A" }}
               </div>
             </li>
@@ -109,7 +109,7 @@
           <div class="col-lg-6 title">Bloodtype</div>
           <div class="text col-auto">
             <li>
-              <div class="text">
+              <div class="text" style="text-transform: uppercase">
                 {{ employee.blood_type || "N/A" }}
               </div>
             </li>

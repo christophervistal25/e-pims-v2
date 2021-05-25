@@ -103,7 +103,6 @@
                   <input
                     type="number"
                     class="form-control rounded-0 border-0"
-                    placeholder="e.g. 2015"
                     v-model="civil.number"
                   />
                 </td>
