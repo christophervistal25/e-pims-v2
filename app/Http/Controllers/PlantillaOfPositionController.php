@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Position;
 use Yajra\Datatables\Datatables;
-// use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Session;
 class PlantillaOfPositionController extends Controller
 {
     /**
@@ -19,9 +19,24 @@ class PlantillaOfPositionController extends Controller
         return view('PlantillaOfPosition.PlantillaOfPosition');
     }
 
-    public function list()
+    public function list(Request $request )
     {
-        return DataTables::of(Position::query())->make(true);
+        // return DataTables::of(Position::query())->make(true);
+        if ($request->ajax()) {
+            $data = Position::select('position_id', 'position_code', 'position_name', 'sg_no', 'position_short_name')->orderBy('position_code', 'DESC');
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row){
+
+                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-position.edit', $row->position_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm'><i class='la la-edit'></i></a>";
+
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+
+        return view('PlantillaOfPosition.PlantillaOfPosition');
     }
 
     /**
@@ -44,7 +59,7 @@ class PlantillaOfPositionController extends Controller
     {
         $this->validate($request, [
             'positionCode'                 => 'required',
-            'positionName'                 => 'required',
+            'positionName'                 => 'required|unique:positions,position_name',
             'salaryGrade'                  => 'required | in:' . implode(',',range(1, 33)),
             'positionNameShortname'        => 'required'
         ]);
@@ -74,9 +89,10 @@ class PlantillaOfPositionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($position_id)
     {
-        //
+        $plantillaofposition = Position::find($position_id);
+        return view('PlantillaOfPosition.edit', compact('plantillaofposition'));
     }
 
     /**
@@ -86,9 +102,22 @@ class PlantillaOfPositionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $position_id)
     {
-        //
+        $this->validate($request, [
+            'positionCode'                 => 'required',
+            'positionName'                 => 'required',
+            'salaryGrade'                  => 'required | in:' . implode(',',range(1, 33)),
+            'positionNameShortname'        => 'required'
+        ]);
+        $plantillaposition = Position::find($position_id);
+        $plantillaposition->position_code                       = $request['positionCode'];
+        $plantillaposition->position_name                       = $request['positionName'];
+        $plantillaposition->sg_no                               = $request['salaryGrade'];
+        $plantillaposition->position_short_name                 = $request['positionNameShortname'];
+        $plantillaposition->save();
+        Session::flash('alert-success', 'Position Updated Successfully');
+        return back()->with('success','Updated Successfully');
     }
 
     /**

@@ -198,7 +198,7 @@ class PlantillaController extends Controller
         $plantilla->area_type              = $request['areaType'];
         $plantilla->area_level             = $request['areaLevel'];
         $plantilla->save();
-        Session::flash('alert-success', 'Update Plantilla of Personnel Record Successfully');
+        Session::flash('alert-success', 'Plantilla of Personnel Record Updated Successfully');
         return back()->with('success','Updated Successfully');
     }
 

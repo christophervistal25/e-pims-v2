@@ -12,6 +12,12 @@ $(document).ready(function() {
         $("#table").attr("class", "page-header");
     });
 });
+$(document).ready(function() {
+    $("#cancelbutton1").click(function() {
+        $("#add").attr("class", "page-header d-none");
+        $("#table").attr("class", "page-header");
+    });
+});
 
 //// add new position
 $(document).ready(function() {
@@ -135,13 +141,13 @@ $(function() {
             { data: "position_code", name: "position_code" },
             { data: "position_name", name: "position_name" },
             { data: "sg_no", name: "sg_no" },
-            { data: "position_short_name", name: "position_short_name" }
-            // {
-            //     data: "action",
-            //     name: "action",
-            //     searchable: false,
-            //     sortable: false
-            // }
+            { data: "position_short_name", name: "position_short_name" },
+            {
+                data: "action",
+                name: "action",
+                searchable: false,
+                sortable: false
+            }
         ]
     });
 });
