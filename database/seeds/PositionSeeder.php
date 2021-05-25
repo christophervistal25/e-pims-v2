@@ -28562,7 +28562,7 @@ class PositionSeeder extends Seeder
                     'position_code'         => $position['PosCode'],
                     'position_name'         => $position['PositionName'],
                     'position_short_name'   => $position['ShortName'],
-                    'salary_grade'          => $position['SalaryGrade'],
+                    'sg_no'          => $position['SalaryGrade'],
                 ]);
             }
     }

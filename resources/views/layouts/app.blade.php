@@ -269,7 +269,7 @@
 							<a href="#" class='text-decoration-none'><i class="la la-bookmark"></i> <span>Plantilla of Position</span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
 								<li>
-                                    <a class='text-decoration-none mr-2' href="{{  route('plantilla-of-personnel.index') }}">
+                                    <a class='text-decoration-none mr-2' href="{{  route('plantilla-of-position.index') }}">
                                         Plantilla of Position
                                     </a>
                                 </li>
