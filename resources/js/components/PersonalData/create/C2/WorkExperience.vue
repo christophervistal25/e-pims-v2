@@ -138,8 +138,9 @@
 
               <td>
                 <input
-                  type="number"
+                  type="text"
                   class="form-control rounded-0 border-0"
+                  style="text-transform: uppercase"
                   placeholder=""
                   :class="
                     errors.hasOwnProperty(`${index}.monSalary`)
@@ -154,7 +155,7 @@
               </td>
               <td>
                 <input
-                  type="number"
+                  type="text"
                   class="form-control rounded-0 border-0"
                   placeholder=""
                   :class="

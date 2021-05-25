@@ -64,85 +64,85 @@
             <div class="card-body">
                 <div class="alert alert-secondary text-center"><strong>LEAVE MONITORING INDEX</strong></div>
                 <hr>
-                <h6 class="text-sm">Leave Index Information</h6>
+                <h6 class="text-sm ml-3">Leave Index Information</h6>
                 <div class="row">
                     <div class="col-lg-3">
                         <label for="transID" class="form-group has-float-label mt-3">
                             <input type="text" id="transID" class="form-control"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>Transaction ID</span>
+                            <span><strong>TRANSACTION ID</strong></span>
                         </label>
                         <label for="period" class="form-group has-float-label">
                             <input type="text" class="form-control"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>Period</span>
+                            <span><strong>PERIOD</strong></span>
                         </label>
                         <label for="particular" class="form-group has-float-label">
                             <input type="text" id="particular" class="form-control"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>Particular</span>
+                            <span><strong>PARTICULAR</strong></span>
                         </label>
                         <label for="leaveApp" class="form-group has-float-label">
                             <input type="text" id="leaveApp" style="outline:none; box-shadow: 0px 0px 0px transparent;"
                                 class="form-control">
-                            <span>Leave Application ID</span>
+                            <span><strong>LEAVE APPLICATION ID</strong></span>
                         </label>
                         <label for="ordering" class="form-group has-float-label">
                             <input type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;"
                                 class="form-control" disabled>
-                            <span>Ordering</span>
+                            <span><strong>ORDERING</strong></span>
                         </label>
                     </div>
                     <div class="col-lg-9">
                         <div class="card mt-3">
                             <div class="card-body">
-                                <h3 class="card-title">Balances</h3>
+                                <h3 class="card-title mb-4">Balances</h3>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <label for="vlEarned" class="form-group has-float-label">
                                             <input type="text" class="form-control" id="vlEarned"
                                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                            <span>VL Earned</span>
+                                            <span><strong>VL EARNED</strong></span>
                                         </label>
                                         <label for="vlEnjoyedWP" class="form-group has-float-label">
                                             <input type="text" class="form-control"
                                                 style="outline: none; box-shadow: 0px 0px 0px transparent;"
                                                 id="vlEnjoyedWP">
-                                            <span>VL Enjoyed (WP)</span>
+                                            <span><strong>VL ENJOYED (WP)</strong></span>
                                         </label>
                                         <label for="vlEnjoyedWOP" class="form-group has-float-label">
                                             <input type="text" class="form-control"
                                                 style="outline: none; box-shadow: 0px 0px 0px transparent;"
                                                 id="vlEnjoyedWOP">
-                                            <span>VL Enjoyed (WOP)</span>
+                                            <span><strong>VL ENJOYED (WOP)</strong></span>
                                         </label>
                                         <label for="vlBal" class="form-group has-float-label">
                                             <input type="text" class="form-control"
                                                 style="outline: none; box-shadow: 0px 0px 0px transparent;" id="vlBal">
-                                            <span>VL Balance</span>
+                                            <span><strong>VL BALANCE</strong></span>
                                         </label>
                                     </div>
                                     <div class="col-lg-6">
                                         <label for="slEarned" class="form-group has-float-label">
                                             <input type="text" class="form-control" id="slEarned"
                                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                            <span>SL Earned</span>
+                                            <span><strong>SL EARNED</strong></span>
                                         </label>
                                         <label for="slEnjoyedWP" class="form-group has-float-label">
                                             <input type="text" id="slEnjoyedWP" class="form-control"
                                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                            <span>SL Enjoyed (WP)</span>
+                                            <span><strong>SL ENJOYED (WP)</strong></span>
                                         </label>
                                         <label for="slEnjoyedWOP" class="form-group has-float-label">
                                             <input type="text" id="slEnjoyed"
                                                 style="outline: none; box-shadow: 0px 0px 0px transparent;"
                                                 class="form-control">
-                                            <span>SL Enjoyed (WOP)</span>
+                                            <span><strong>SL ENJOYED (WOP)</strong></span>
                                         </label>
                                         <label for="slBal" class="form-group has-float-label">
                                             <input type="text" id="slBal" class="form-control"
                                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                            <span>SL Balance</span>
+                                            <span><strong>SL BALANCE</strong></span>
                                         </label>
                                     </div>
                                 </div>
@@ -162,7 +162,7 @@
                             <select name="" id="" class="custom-select" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <option value="">-----</option>
                             </select>
-                            <span>Leave Index Options</span>
+                            <span><strong>Leave Index Options</strong></span>
                             </label>
                             </div>
                         

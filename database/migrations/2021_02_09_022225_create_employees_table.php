@@ -24,8 +24,8 @@ class CreateEmployeesTable extends Migration
             $table->string('place_birth')->nullable();
             $table->enum('sex', ['male', 'female', ''])->default('male');
             $table->string('civil_status')->nullable();
-            $table->integer('height')->nullable();
-            $table->integer('weight')->nullable();
+            $table->decimal('height', 11, 2)->nullable();
+            $table->decimal('weight', 11, 2)->nullable();
             $table->string('blood_type')->nullable();
             $table->string('gsis_id_no')->default('*')->nullable();
             $table->string('gsis_policy_no')->default('*')->nullable();

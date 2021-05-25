@@ -5,7 +5,9 @@
         <strong>ADDRESS</strong>
       </div>
       <hr />
-      <h5 class="section-title text-center text-sm">RESIDENTIAL ADDRESS</h5>
+      <h5 class="section-title text-center text-sm">
+        <strong>RESIDENTIAL ADDRESS</strong>
+      </h5>
       <hr />
       <ul class="personal-info">
         <div class="row">
@@ -86,7 +88,9 @@
       </ul>
 
       <hr />
-      <h5 class="section-title text-center text-sm">PERMANENT ADDRESS</h5>
+      <h5 class="section-title text-center text-sm">
+        <strong>PERMANENT ADDRESS</strong>
+      </h5>
       <hr />
 
       <ul class="personal-info">

@@ -47,11 +47,10 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-<<<<<<< HEAD
-              <span><strong>SURNAME</strong></span>
-=======
-              <span>Surname<span class="text-danger">*</span> </span>
->>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
+              <span
+                ><strong>SURNAME</strong
+                ><span class="text-danger"><strong>*</strong></span>
+              </span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.surname }}
@@ -72,11 +71,10 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-<<<<<<< HEAD
-              <span><strong>FIRST NAME</strong></span>
-=======
-              <span>First Name<span class="text-danger">*</span></span>
->>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
+              <span
+                ><strong>FIRST NAME</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.firstname }}
@@ -128,11 +126,7 @@
                   {{ extension }}
                 </option>
               </select>
-<<<<<<< HEAD
               <span><strong>EXTENSION NAME</strong></span>
-=======
-              <span>EXTENSION NAME</span>
->>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
 
             <p class="text-danger text-sm">
@@ -155,14 +149,13 @@
                 v-model="personal_data.date_birth"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-<<<<<<< HEAD
-              <span><strong>DATE OF BIRTH</strong></span>
-=======
               <p class="text-danger text-sm">
                 {{ errors.dateOfBirth }}
               </p>
-              <span>DATE OF BIRTH<span class="text-danger">*</span></span>
->>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
+              <span
+                ><strong>DATE OF BIRTH</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
           </div>
           <div class="col-lg-3">
@@ -182,11 +175,10 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-<<<<<<< HEAD
-              <span><strong>PLACE OF BIRTH</strong></span>
-=======
-              <span>Place of Birth<span class="text-danger">*</span></span>
->>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
+              <span
+                ><strong>PLACE OF BIRTH</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.placeOfBirth }}
@@ -205,11 +197,10 @@
                 <option value="male">MALE</option>
                 <option value="female">FEMALE</option>
               </select>
-<<<<<<< HEAD
-              <span><strong>SEX</strong></span>
-=======
-              <span>SEX<span class="text-danger">*</span></span>
->>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
+              <span
+                ><strong>SEX</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.sex }}
@@ -231,11 +222,10 @@
                 <option value="SEPARATED">SEPARATED</option>
                 <option value="OTHERS">OTHERS</option>
               </select>
-<<<<<<< HEAD
-              <span><strong>STATUS</strong></span>
-=======
-              <span>STATUS<span class="text-danger">*</span></span>
->>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
+              <span
+                ><strong>STATUS</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.status }}
@@ -254,11 +244,10 @@
                 v-model="personal_data.height"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-<<<<<<< HEAD
-              <span><strong>HEIGHT(m)</strong></span>
-=======
-              <span>Height(m)<span class="text-danger">*</span></span>
->>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
+              <span
+                ><strong>HEIGHT (m)</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">{{ errors.height }}</p>
           </div>
@@ -273,11 +262,10 @@
                 v-model="personal_data.weight"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-<<<<<<< HEAD
-              <span><strong>WEIGHT(kg)</strong></span>
-=======
-              <span>Weight(kg)<span class="text-danger">*</span></span>
->>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
+              <span
+                ><strong>WEIGHT (kg)</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.weight }}
@@ -299,11 +287,10 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-<<<<<<< HEAD
-              <span><strong>BLOODTYPE</strong></span>
-=======
-              <span>Bloodtype<span class="text-danger">*</span></span>
->>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
+              <span
+                ><strong>BLOODTYPE</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.bloodType }}
@@ -347,11 +334,7 @@
                 v-model="personal_data.philhealth_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-<<<<<<< HEAD
               <span><strong>PHILHEALTH ID NUMBER</strong></span>
-=======
-              <span>PHILHEALTH ID Number</span>
->>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
             </label>
           </div>
         </div>
@@ -413,11 +396,10 @@
                 <option value="FILIPINO">FILIPINO</option>
                 <option value="DUAL CITIZEN">DUAL CITIZEN</option>
               </select>
-<<<<<<< HEAD
-              <span><strong>CITIZENSHIP</strong></span>
-=======
-              <span>CITIZENSHIP<span class="text-danger">*</span></span>
->>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
+              <span
+                ><strong>CITIZENSHIP</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.citizenship }}
@@ -440,7 +422,7 @@
                 <option value="BIRTH">BIRTH</option>
                 <option value="NATURALIZATION">NATURALIZATION</option>
               </select>
-              <span>By</span>
+              <span><strong>By</strong></span>
             </label>
             <p class="text-danger text-sm">
               {{ errors.citizenshipBy }}
@@ -498,11 +480,10 @@
                 v-model="personal_data.mobile_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-<<<<<<< HEAD
-              <span><strong>MOBILE NUMBER</strong></span>
-=======
-              <span>Mobile Number<span class="text-danger">*</span></span>
->>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
+              <span
+                ><strong>MOBILE NUMBER</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.mobileNumber }}
@@ -596,28 +577,15 @@
                 v-model="personal_data.residential_province_text"
                 :options="provinces"
                 @input="provinceChange"
-<<<<<<< HEAD
-                style="outline: none; box-shadow: 0px 0px 0px transparent"
-              >
-                <!-- <option
-                                v-for="(province, index) in provinces"
-                                :key="index"
-                                :value="province.code"
-                                >{{ province.name }}</option
-                            > -->
-              </v-select>
-              <!-- <p class="text-danger text-sm">
-                            {{ errors.residential_province }}
-                        </p> -->
-              <span><strong>PROVINCE</strong></span>
-=======
                 id="resProvince"
               ></v-select>
               <p class="text-danger text-sm">
                 {{ errors["residentialProvince.code"] }}
               </p>
-              <span>PROVINCE<span class="text-danger">*</span></span>
->>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
+              <span
+                ><strong>PROVINCE</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
           </div>
           <div class="col-lg-3">
@@ -626,55 +594,18 @@
                 label="name"
                 v-model="personal_data.residential_city_text"
                 :options="cities"
-<<<<<<< HEAD
-                @change="municipalChange"
-                :disabled="employee.residential_province ? false : true"
-                style="outline: none; box-shadow: 0px 0px 0px transparent"
-              >
-                <!-- <option
-                                v-for="(city, index) in cities"
-                                :key="index"
-                                :value="city.code"
-                                >{{ city.name }}</option
-                            > -->
-              </v-select>
-              <span style="text-transform: uppercase"
-                ><strong>City/Municipality</strong></span
-              >
-=======
                 @input="municipalChange"
               ></v-select>
               <p class="text-danger text-sm">
                 {{ errors["residentialCity.code"] }}
               </p>
-              <span>CITY<span class="text-danger">*</span></span>
->>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
+              <span
+                ><strong>CITY</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
           </div>
           <div class="col-lg-3">
-<<<<<<< HEAD
-            <label for="barangay" class="form-group has-float-label">
-              <select
-                v-model="employee.residential_barangay"
-                class="form-control"
-                :class="
-                  !errors.hasOwnProperty('residential_barangay')
-                    ? ''
-                    : 'is-invalid'
-                "
-                :disabled="employee.residential_city ? false : true"
-                style="outline: none; box-shadow: 0px 0px 0px transparent"
-              >
-                <option
-                  v-for="(barangay, index) in barangays"
-                  :key="index"
-                  :value="barangay.code"
-                >
-                  {{ barangay.name }}
-                </option>
-              </select>
-              <span><strong>BARANGAY</strong></span>
-=======
             <label class="form-group has-float-label">
               <v-select
                 label="name"
@@ -684,8 +615,10 @@
               <p class="text-danger text-sm">
                 {{ errors["residentialBarangay.code"] }}
               </p>
-              <span>BARANGAY<span class="text-danger">*</span></span>
->>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
+              <span
+                ><strong>BARANGAY</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
           </div>
           <div class="col-lg-3">
@@ -712,11 +645,10 @@
                 placeholder="Enter Zip Code"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-<<<<<<< HEAD
-              <span><strong>ZIP CODE</strong></span>
-=======
-              <span>Zip Code<span class="text-danger">*</span></span>
->>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
+              <span
+                ><strong>ZIP CODE</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.residentialZipCode }}
@@ -757,7 +689,9 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span>House/Block/Lot No.</span>
+              <span style="text-transform: uppercase"
+                ><strong>House/Block/Lot No.</strong></span
+              >
             </label>
           </div>
           <div class="col-lg-4">
@@ -805,34 +739,6 @@
 
         <div class="row pl-3 pr-3">
           <div class="col-lg-3">
-<<<<<<< HEAD
-            <label for="province" class="form-group has-float-label">
-              <select
-                type="text"
-                v-model="employee.permanentProvince"
-                @change="permanentProvinceChange"
-                :class="
-                  !errors.hasOwnProperty('permanentProvince')
-                    ? ''
-                    : 'is-invalid'
-                "
-                :disabled="isSameAsAbove ? true : false"
-                class="form-control"
-                style="outline: none; box-shadow: 0px 0px 0px transparent"
-              >
-                <option
-                  v-for="(province, index) in provinces"
-                  :key="index"
-                  :value="province.code"
-                  :selected="
-                    province.code == employee.residentialProvince ? true : false
-                  "
-                >
-                  {{ province.name }}
-                </option>
-              </select>
-              <span><strong>PROVINCE</strong></span>
-=======
             <label class="form-group has-float-label">
               <v-select
                 label="name"
@@ -843,42 +749,14 @@
               <p class="text-danger text-sm">
                 {{ errors["permanentProvince.code"] }}
               </p>
-              <span>PROVINCE<span class="text-danger">*</span></span>
->>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
+              <span
+                ><strong>PROVINCE</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
           </div>
 
           <div class="col-lg-3">
-<<<<<<< HEAD
-            <label for="city" class="form-group has-float-label">
-              <select
-                v-model="employee.permanentCity"
-                @change="permanentMunicipalChange"
-                :class="
-                  !errors.hasOwnProperty('permanentCity') ? '' : 'is-invalid'
-                "
-                :disabled="
-                  (isSameAsAbove ? true : false) ||
-                  (employee.permanentProvince == '' ? true : false)
-                "
-                class="form-control"
-                style="outline: none; box-shadow: 0px 0px 0px transparent"
-              >
-                <option
-                  v-for="(city, index) in permanentCities"
-                  :key="index"
-                  :value="city.code"
-                  :selected="
-                    city.code == employee.residentialCity ? true : false
-                  "
-                >
-                  {{ city.name }}
-                </option>
-              </select>
-              <span style="text-transform: uppercase"
-                ><strong>City/Municipality</strong></span
-              >
-=======
             <label class="form-group has-float-label">
               <v-select
                 label="name"
@@ -889,41 +767,14 @@
               <p class="text-danger text-sm">
                 {{ errors["permanentCity.code"] }}
               </p>
-              <span>CITY<span class="text-danger">*</span></span>
->>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
+              <span
+                ><strong>CITY</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
           </div>
 
           <div class="col-lg-3">
-<<<<<<< HEAD
-            <label for="barangay" class="form-group has-float-label">
-              <select
-                v-model="employee.permanentBarangay"
-                :disabled="
-                  (isSameAsAbove ? true : false) ||
-                  (employee.permanentProvince == '' ? true : false)
-                "
-                :class="
-                  !errors.hasOwnProperty('permanentBarangay')
-                    ? ''
-                    : 'is-invalid'
-                "
-                class="form-control"
-                style="outline: none; box-shadow: 0px 0px 0px transparent"
-              >
-                <option
-                  v-for="(barangay, index) in permanentBarangays"
-                  :key="index"
-                  :value="barangay.code"
-                  :selected="
-                    barangay.code == employee.residentialBarangay ? true : false
-                  "
-                >
-                  {{ barangay.name }}
-                </option>
-              </select>
-              <span><strong>BARANGAY</strong></span>
-=======
             <label class="form-group has-float-label">
               <v-select
                 label="name"
@@ -933,8 +784,10 @@
               <p class="text-danger text-sm">
                 {{ errors["permanentBarangay.code"] }}
               </p>
-              <span>BARANGAY<span class="text-danger">*</span></span>
->>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
+              <span
+                ><strong>BARANGAY</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
           </div>
 
@@ -962,11 +815,10 @@
                 placeholder="Enter Zip Code"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
-<<<<<<< HEAD
-              <span><strong>ZIP CODE</strong></span>
-=======
-              <span>Zip Code<span class="text-danger">*</span></span>
->>>>>>> 78c11d4af2412b5d863d44af2e114c046a1f9883
+              <span
+                ><strong>ZIP CODE</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.permanentZipCode }}

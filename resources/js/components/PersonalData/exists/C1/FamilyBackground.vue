@@ -46,117 +46,165 @@
             </div>
           </div>
           <div class="row pr-3 pl-3">
-            <div class="form-group col-lg-3">
-              <label for="ssurname">SPOUSE'S SURNAME</label
-              ><span class="text-danger">*</span>
-              <input
-                type="text"
-                class="form-control"
-                :class="errors.hasOwnProperty('ssurname') ? 'is-invalid' : ''"
-                id="ssurname"
-                v-model="personal_data.family_background.spouse_lastname"
-                placeholder="Enter Spouse's Surname"
-                value=""
-                style="text-transform: uppercase"
-              />
+            <div class="col-lg-3">
+              <label for="ssurname" class="form-group has-float-label">
+                <input
+                  type="text"
+                  class="form-control"
+                  :class="errors.hasOwnProperty('ssurname') ? 'is-invalid' : ''"
+                  id="ssurname"
+                  v-model="personal_data.family_background.spouse_lastname"
+                  placeholder="Enter Spouse's Surname"
+                  value=""
+                  style="
+                    text-transform: uppercase;
+                    box-shadow: 0px 0px 0px transparent;
+                    outline: none;
+                  "
+                />
+                <span
+                  ><strong>SPOUSE'S SURNAME</strong
+                  ><span class="text-danger"><strong>*</strong></span></span
+                >
+              </label>
               <p class="text-danger text-sm">
                 {{ errors.ssurname }}
               </p>
             </div>
-            <div class="form-group col-lg-3">
-              <label for="sfirstname">SPOUSE'S FIRST NAME</label
-              ><span class="text-danger">*</span>
-              <input
-                type="text"
-                class="form-control"
-                :class="errors.hasOwnProperty('sfirstname') ? 'is-invalid' : ''"
-                id="sfirstname"
-                v-model="personal_data.family_background.spouse_firstname"
-                placeholder="Enter Spouse's First Name"
-                value=""
-                style="text-transform: uppercase"
-              />
+            <div class="col-lg-3">
+              <label for="sfirstname" class="form-group has-float-label mb-0">
+                <input
+                  type="text"
+                  class="form-control"
+                  :class="
+                    errors.hasOwnProperty('sfirstname') ? 'is-invalid' : ''
+                  "
+                  id="sfirstname"
+                  v-model="personal_data.family_background.spouse_firstname"
+                  placeholder="Enter Spouse's First Name"
+                  value=""
+                  style="
+                    text-transform: uppercase;
+                    box-shadow: 0px 0px 0px transparent;
+                    outline: none;
+                  "
+                />
+                <span
+                  ><strong>SPOUSE'S FIRST NAME</strong
+                  ><span class="text-danger"><strong>*</strong></span></span
+                >
+              </label>
               <p class="text-danger text-sm">
                 {{ errors.sfirstname }}
               </p>
             </div>
-            <div class="form-group col-lg-3">
-              <label for="smiddleame">SPOUSE'S MIDDLE NAME</label>
-              <input
-                type="text"
-                class="form-control"
-                id="smiddleame"
-                v-model="personal_data.family_background.spouse_middlename"
-                placeholder="Enter Spouse's Middle Name"
-                value=""
-                style="text-transform: uppercase"
-              />
+            <div class="col-lg-3">
+              <label for="smiddleame" class="form-group has-float-label">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="smiddleame"
+                  v-model="personal_data.family_background.spouse_middlename"
+                  placeholder="Enter Spouse's Middle Name"
+                  value=""
+                  style="
+                    text-transform: uppercase;
+                    outline: none;
+                    box-shadow: 0px 0px 0px transparent;
+                  "
+                />
+                <span><strong>SPOUSE'S MIDDLE NAME</strong></span>
+              </label>
             </div>
-            <div class="form-group col-lg-3">
-              <label for="snameexten">SPOUSE'S NAME EXTENSION</label>
-              <input
-                type="text"
-                maxlength="3"
-                class="form-control"
-                id="snameexten"
-                v-model="personal_data.family_background.spouse_extension"
-                placeholder="(JR., SR.)"
-                value=""
-                style="text-transform: uppercase"
-              />
-            </div>
-          </div>
-          <div class="row pl-3 pr-3">
-            <div class="form-group col-lg-6">
-              <label for="soccupation">SPOUSE'S OCCUPATION</label>
-              <input
-                type="text"
-                class="form-control"
-                id="soccupation"
-                placeholder="Enter Spouse's Occupation"
-                v-model="personal_data.family_background.spouse_occupation"
-                style="text-transform: uppercase"
-              />
-            </div>
-            <div class="form-group col-lg-6">
-              <label for="sempname">SPOUSE'S EMPLOYER/BUSINESS NAME</label>
-              <input
-                type="text"
-                class="form-control"
-                id="sempname"
-                placeholder="Enter Spouse's Employer/Business Name"
-                v-model="
-                  personal_data.family_background.spouse_employer_business_name
-                "
-                style="text-transform: uppercase"
-              />
+            <div class="col-lg-3">
+              <label for="snameexten" class="form-group has-float-label">
+                <input
+                  type="text"
+                  maxlength="3"
+                  class="form-control"
+                  id="snameexten"
+                  v-model="personal_data.family_background.spouse_extension"
+                  placeholder="(JR., SR.)"
+                  value=""
+                  style="
+                    text-transform: uppercase;
+                    outline: none;
+                    box-shadow: 0px 0px 0px transparent;
+                  "
+                />
+                <span><strong>SPOUSE'S NAME EXTENSION</strong></span>
+              </label>
             </div>
           </div>
           <div class="row pl-3 pr-3">
-            <div class="form-group col-sm-6">
-              <label for="sbusadd">SPOUSE'S BUSINESS ADDRESS</label>
-              <input
-                type="text"
-                class="form-control"
-                id="sbusadd"
-                placeholder="Enter Spouse's Business Address"
-                v-model="
-                  personal_data.family_background.spouse_business_address
-                "
-                style="text-transform: uppercase"
-              />
+            <div class="col-lg-6">
+              <label for="soccupation" class="form-group has-float-label">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="soccupation"
+                  placeholder="Enter Spouse's Occupation"
+                  v-model="personal_data.family_background.spouse_occupation"
+                  style="
+                    text-transform: uppercase;
+                    outline: none;
+                    box-shadow: 0px 0px 0px transparent;
+                  "
+                />
+                <span><strong>SPOUSE'S OCCUPATION</strong></span>
+              </label>
             </div>
-            <div class="form-group col-sm-6">
-              <label for="stelno">SPOUSE'S TELEPHONE NUMBER</label>
-              <input
-                type="text"
-                class="form-control"
-                id="stelno"
-                placeholder="Enter Spouse's Telephone Number"
-                v-model="
-                  personal_data.family_background.spouse_telephone_number
-                "
-              />
+            <div class="col-lg-6">
+              <label for="sempname" class="form-group has-float-label">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="sempname"
+                  placeholder="Enter Spouse's Employer/Business Name"
+                  v-model="
+                    personal_data.family_background
+                      .spouse_employer_business_name
+                  "
+                  style="
+                    text-transform: uppercase;
+                    outline: none;
+                    box-shadow: 0px 0px 0px transparent;
+                  "
+                />
+                <span><strong>SPOUSE'S EMPLOYER/BUSINESS NAME</strong></span>
+              </label>
+            </div>
+          </div>
+          <div class="row pl-3 pr-3">
+            <div class="col-sm-6">
+              <label for="sbusadd" class="form-group has-float-label">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="sbusadd"
+                  placeholder="Enter Spouse's Business Address"
+                  v-model="
+                    personal_data.family_background.spouse_business_address
+                  "
+                  style="text-transform: uppercase outline: none; box-shadow: 0px 0px 0px transparent"
+                />
+                <span><strong>SPOUSE'S BUSINESS ADDRESS</strong></span>
+              </label>
+            </div>
+            <div class="col-sm-6">
+              <label for="stelno" class="form-group has-float-label">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="stelno"
+                  placeholder="Enter Spouse's Telephone Number"
+                  v-model="
+                    personal_data.family_background.spouse_telephone_number
+                  "
+                  style="outline: none; box-shadow: 0px 0px 0px transparent"
+                />
+                <span><strong>SPOUSE'S TELEPHONE NUMBER</strong></span>
+              </label>
             </div>
           </div>
         </section>
@@ -237,64 +285,91 @@
           </div>
         </div>
         <div class="row pr-3 pl-3">
-          <div class="form-group col-lg-3">
-            <label for="fsurname">FATHER'S SURNAME</label>
-            <input
-              type="text"
-              class="form-control"
-              id="fsurname"
-              :class="!errors.hasOwnProperty('fsurname') ? '' : 'is-invalid'"
-              v-model="personal_data.family_background.father_lastname"
-              placeholder="Enter Father's Surname"
-              value=""
-              style="text-transform: uppercase"
-            />
+          <div class="col-lg-3">
+            <label for="fsurname" class="form-group has-float-label">
+              <input
+                type="text"
+                class="form-control"
+                id="fsurname"
+                :class="!errors.hasOwnProperty('fsurname') ? '' : 'is-invalid'"
+                v-model="personal_data.family_background.father_lastname"
+                placeholder="Enter Father's Surname"
+                value=""
+                style="
+                  text-transform: uppercase;
+                  outline: none;
+                  box-shadow: 0px 0px 0px transparent;
+                "
+              />
+              <span><strong>FATHER'S SURNAME</strong></span>
+            </label>
             <p class="text-danger text-sm">{{ errors.fsurname }}</p>
           </div>
-          <div class="form-group col-lg-3">
-            <label for="ffirstname">FATHER'S FIRST NAME</label>
-            <input
-              type="text"
-              class="form-control"
-              id="ffirstname"
-              :class="!errors.hasOwnProperty('ffirstname') ? '' : 'is-invalid'"
-              v-model="personal_data.family_background.father_firstname"
-              placeholder="Enter Father's First Name"
-              value=""
-              style="text-transform: uppercase"
-            />
+          <div class="col-lg-3">
+            <label for="ffirstname" class="form-group has-float-label">
+              <input
+                type="text"
+                class="form-control"
+                id="ffirstname"
+                :class="
+                  !errors.hasOwnProperty('ffirstname') ? '' : 'is-invalid'
+                "
+                v-model="personal_data.family_background.father_firstname"
+                placeholder="Enter Father's First Name"
+                value=""
+                style="
+                  text-transform: uppercase;
+                  outline: none;
+                  box-shadow: 0px 0px 0px transparent;
+                "
+              />
+              <span><strong>FATHER'S FIRST NAME</strong></span>
+            </label>
             <p class="text-danger text-sm">
               {{ errors.ffirstname }}
             </p>
           </div>
-          <div class="form-group col-lg-3">
-            <label for="fmiddlename">FATHER'S MIDDLE NAME</label>
-            <input
-              type="text"
-              class="form-control"
-              :class="!errors.hasOwnProperty('fmiddlename') ? '' : 'is-invalid'"
-              id="fmiddlename"
-              v-model="personal_data.family_background.father_middlename"
-              placeholder="Enter Father's Middle Name"
-              value=""
-              style="text-transform: uppercase"
-            />
+          <div class="col-lg-3">
+            <label for="fmiddlename" class="form-group has-float-label">
+              <input
+                type="text"
+                class="form-control"
+                :class="
+                  !errors.hasOwnProperty('fmiddlename') ? '' : 'is-invalid'
+                "
+                id="fmiddlename"
+                v-model="personal_data.family_background.father_middlename"
+                placeholder="Enter Father's Middle Name"
+                value=""
+                style="
+                  text-transform: uppercase;
+                  outline: none;
+                  box-shadow: 0px 0px 0px transparent;
+                "
+              />
+              <span><strong>FATHER'S MIDDLE NAME</strong></span>
+            </label>
             <p class="text-danger text-sm">
               {{ errors.fmiddlename }}
             </p>
           </div>
-          <div class="form-group col-lg-3">
-            <label for="fnameexten">FATHER'S NAME EXTENSION</label>
-            <input
-              type="text"
-              maxlength="3"
-              class="form-control"
-              id="fnameexten"
-              v-model="personal_data.family_background.extension"
-              placeholder="(JR., SR.)"
-              value=""
-              style="text-transform: uppercase"
-            />
+          <div class="col-lg-3">
+            <label for="fnameexten" class="form-group has-float-label">
+              <input
+                type="text"
+                maxlength="3"
+                class="form-control"
+                id="fnameexten"
+                v-model="personal_data.family_background.extension"
+                value=""
+                style="
+                  text-transform: uppercase;
+                  outline: none;
+                  box-shadow: 0px 0px 0px transparent;
+                "
+              />
+              <span><strong>FATHER'S NAME EXTENSION</strong></span>
+            </label>
           </div>
         </div>
 
@@ -307,48 +382,70 @@
           </div>
         </div>
         <div class="row pr-3 pl-3">
-          <div class="form-group col-lg-3">
-            <label for="msurname">MOTHER'S MAIDEN SURNAME</label>
-            <input
-              type="text"
-              class="form-control"
-              :class="!errors.hasOwnProperty('msurname') ? '' : 'is-invalid'"
-              id="msurname"
-              v-model="personal_data.family_background.mother_lastname"
-              placeholder="Enter Mother's Maiden Surname"
-              value=""
-              style="text-transform: uppercase"
-            />
+          <div class="col-lg-3">
+            <label for="msurname" class="form-group has-float-label">
+              <input
+                type="text"
+                class="form-control"
+                :class="!errors.hasOwnProperty('msurname') ? '' : 'is-invalid'"
+                id="msurname"
+                v-model="personal_data.family_background.mother_lastname"
+                placeholder="Enter Mother's Maiden Surname"
+                value=""
+                style="
+                  text-transform: uppercase;
+                  outline: none;
+                  box-shadow: 0px 0px 0px transparent;
+                "
+              />
+              <span><strong>MOTHER'S MAIDEN SURNAME</strong></span>
+            </label>
             <p class="text-danger text-sm">{{ errors.msurname }}</p>
           </div>
-          <div class="form-group col-lg-3">
-            <label for="mfirstname">MOTHER'S FIRST NAME</label>
-            <input
-              type="text"
-              :class="!errors.hasOwnProperty('mfirstname') ? '' : 'is-invalid'"
-              class="form-control"
-              id="mfirstname"
-              v-model="personal_data.family_background.mother_firstname"
-              placeholder="Enter Mother's First Name"
-              value=""
-              style="text-transform: uppercase"
-            />
+          <div class="col-lg-3">
+            <label for="mfirstname" class="form-group has-float-label">
+              <input
+                type="text"
+                :class="
+                  !errors.hasOwnProperty('mfirstname') ? '' : 'is-invalid'
+                "
+                class="form-control"
+                id="mfirstname"
+                v-model="personal_data.family_background.mother_firstname"
+                placeholder="Enter Mother's First Name"
+                value=""
+                style="
+                  text-transform: uppercase;
+                  outline: none;
+                  box-shadow: 0px 0px 0px transparent;
+                "
+              />
+              <span><strong>MOTHER'S FIRST NAME</strong></span>
+            </label>
             <p class="text-danger text-sm">
               {{ errors.mfirstname }}
             </p>
           </div>
-          <div class="form-group col-lg-3">
-            <label for="mmiddlename">MOTHER'S MAIDEN MIDDLE NAME</label>
-            <input
-              type="text"
-              class="form-control"
-              id="mmiddlename"
-              :class="!errors.hasOwnProperty('mmiddlename') ? '' : 'is-invalid'"
-              v-model="personal_data.family_background.mother_middlename"
-              placeholder="Enter Mother's Maiden Middle Name"
-              value=""
-              style="text-transform: uppercase"
-            />
+          <div class="col-lg-3">
+            <label for="mmiddlename" class="form-group has-float-label">
+              <input
+                type="text"
+                class="form-control"
+                id="mmiddlename"
+                :class="
+                  !errors.hasOwnProperty('mmiddlename') ? '' : 'is-invalid'
+                "
+                v-model="personal_data.family_background.mother_middlename"
+                placeholder="Enter Mother's Maiden Middle Name"
+                value=""
+                style="
+                  text-transform: uppercase;
+                  outline: none;
+                  box-shadow: 0px 0px 0px transparent;
+                "
+              />
+              <span><strong>MOTHER'S MAIDEN MIDDLE NAME</strong></span>
+            </label>
             <p class="text-danger text-sm">
               {{ errors.mmiddlename }}
             </p>

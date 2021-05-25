@@ -65,21 +65,21 @@
                 <div class="row">
                     <div class="col-lg-9">
                         <label for="name" class="form-group has-float-label">
-                            <input type="text" name="name" id="name" class="form-control form-control-sm" placeholder=""
+                            <input type="text" name="name" id="name" class="form-control" placeholder=""
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>Name</span>
+                            <span><strong>NAME</strong></span>
                         </label>
 
                         <label for="office" class="form-group has-float-label">
-                            <input type="text" name="office" id="office" class="form-control form-control-sm"
+                            <input type="text" name="office" id="office" class="form-control"
                                 placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>Office</span>
+                            <span><strong>OFFICE</strong></span>
                         </label>
 
                         <label for="position" class="form-group has-float-label">
-                            <input type="text" name="position" id="position" class="form-control form-control-sm"
+                            <input type="text" name="position" id="position" class="form-control"
                                 placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>Position</span>
+                            <span><strong>POSITION</strong></span>
                         </label>
                     </div>
                     <div class="col-lg-3">
@@ -91,23 +91,23 @@
                 <div class="row">
                     <div class="col-lg-3">
                         <label for="dateStart" class="form-group has-float-label">
-                            <input type="date" name="dateStart" id="dateStart" class="form-control form-control-sm"
+                            <input type="date" name="dateStart" id="dateStart" class="form-control"
                                 placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>Date Start</span>
+                            <span><strong>DATE START</strong></span>
                         </label>
                     </div>
                     <div class="col-lg-3">
                         <label for="vleave" class="form-group has-float-label">
-                            <input type="text" name="vleave" id="vleave" class="form-control form-control-sm"
+                            <input type="text" name="vleave" id="vleave" class="form-control"
                                 placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>Vacation Leave</span>
+                            <span><strong>VACATION LEAVE</strong></span>
                         </label>
                     </div>
                     <div class="col-lg-3">
                         <label for="sleave" class="form-group has-float-label">
-                            <input type="text" name="sleave" id="sleave" class="form-control form-control-sm"
+                            <input type="text" name="sleave" id="sleave" class="form-control"
                                 placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>Sick Leave</span>
+                            <span><strong>SICK LEAVE</strong></span>
                         </label>
                     </div>
                 </div>
