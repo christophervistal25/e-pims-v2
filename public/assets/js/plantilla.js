@@ -215,7 +215,7 @@ $(document).ready(function() {
         $("#loading").removeClass("d-none");
         $.ajax({
             type: "POST",
-            url: "/plantilla",
+            url: "/plantilla-of-personnel",
             data: data,
             success: function(response) {
                 if (response.success) {

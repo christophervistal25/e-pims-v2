@@ -11,7 +11,7 @@
     <div class="kanban-board card mb-0">
         <div class="card-body">
             <div id="add" class="page-header {{  count($errors->all())  !== 0 }}">
-                <form action="{{ route('plantilla.update', $plantilla->plantilla_id) }}" method="post" id="plantillaEditForm">
+                <form action="{{ route('plantilla-of-personnel.update', $plantilla->plantilla_id) }}" method="post" id="plantillaEditForm">
                     @csrf
                     @method('PUT')
                     <div class="row">
@@ -52,6 +52,12 @@
                         {{ $errors->first('employeeName') }} </small>
                         @endif
                     </div>
+
+                    <div class="form-group col-12 col-lg-2 d-none">
+                        <label>Employee Id<span class="text-danger">*</span></label>
+                        <input value="{{ old('employeeId') ?? $plantilla->employee_id }}" class="form-control {{ $errors->has ('employeeId')  ? 'is-invalid' : ''}}" name="employeeId" type="text">
+                    </div>
+
 
                     <div class="form-group col-12 col-lg-4">
                         <label>Position<span class="text-danger">*</span></label>
@@ -234,7 +240,7 @@
 
                     <div class="form-group form-group submit-section col-12">
                         <button type="submit" class="btn btn-success submit-btn float-right">Update</button>
-                        <a href="/plantilla"><button style="margin-right:10px;" type="button" class="text-white btn btn-warning submit-btn float-right"><i class="la la-arrow-left"></i>Back</button></a>
+                        <a href="/plantilla-of-personnel"><button style="margin-right:10px;" type="button" class="text-white btn btn-warning submit-btn float-right"><i class="la la-arrow-left"></i>Back</button></a>
                     </div>
                 </div>
                 </form>

@@ -56,7 +56,7 @@ class PlantillaController extends Controller
                         return $row->office->office_short_name;
                     })
                     ->addColumn('action', function($row){
-                        $btn = "<a title='Edit Plantilla' href='". route('plantilla.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm'><i class='la la-edit'></i></a>";
+                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm'><i class='la la-edit'></i></a>";
                             return $btn;
                     })
                     ->rawColumns(['action'])
@@ -167,7 +167,7 @@ class PlantillaController extends Controller
         $this->validate($request, [
             'itemNo'                        => 'required',
             'positionTitle'                 => 'required',
-            'employeeName'                  => 'required',
+            'employeeId'                  => 'required',
             'salaryGrade'                   => 'required|in:' . implode(',',range(1, 33)),
             'stepNo'                        => 'required|in:' . implode(',',range(1, 8)),
             'salaryAmount'                  => 'required|numeric',
@@ -185,7 +185,7 @@ class PlantillaController extends Controller
         $plantilla->old_item_no            = $request['oldItemNo'];
         $plantilla->position_id            = $request['positionTitle'];
         $plantilla->position_ext           = $request['positionTitleExt'];
-        $plantilla->employee_id            = $request['employeeName'];
+        $plantilla->employee_id            = $request['employeeId'];
         $plantilla->sg_no                  = $request['salaryGrade'];
         $plantilla->step_no                = $request['stepNo'];
         $plantilla->salary_amount          = $request['salaryAmount'];
@@ -198,7 +198,7 @@ class PlantillaController extends Controller
         $plantilla->area_type              = $request['areaType'];
         $plantilla->area_level             = $request['areaLevel'];
         $plantilla->save();
-        Session::flash('alert-success', 'Update Plantilla Record Successfully');
+        Session::flash('alert-success', 'Update Plantilla of Personnel Record Successfully');
         return back()->with('success','Updated Successfully');
     }
 
