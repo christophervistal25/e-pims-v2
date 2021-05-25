@@ -22,10 +22,13 @@ Route::get('/salary-grade-list', 'SalaryGradecontroller@list')->name('salary-gra
 Route::resource('/salary-grade', 'SalaryGradeController');
 
 
-//plantilla
+//plantilla of personnel
 Route::get('/plantilla-list', 'Plantillacontroller@list');
-Route::post('/plantilla', 'PlantillaController@addPosition');
+// Route::post('/plantilla', 'PlantillaController@addPosition');
 Route::resource('/plantilla-of-personnel', 'PlantillaController');
+//plantilla of position
+Route::resource('/plantilla-of-position', 'PlantillaOfPositionController');
+Route::get('/plantilla-of-position-list', 'PlantillaOfPositionController@list');
 
 //Increment
 Route::get('/step-increment/list', 'StepIncrementController@list');

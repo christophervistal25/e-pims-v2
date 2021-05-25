@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Edit Plantilla')
+@section('title', 'Edit Plantilla of Personnel')
 @prepend('page-css')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
@@ -17,7 +17,7 @@
                     <div class="row">
 
                     <div class="col-12">
-                        <div class="alert alert-secondary text-center font-weight-bold" role="alert" >Edit Plantilla</div>
+                        <div class="alert alert-secondary text-center font-weight-bold" role="alert" >Edit Plantilla of Personnel</div>
                     </div>
 
                     <div class="form-group col-12 col-lg-2">
