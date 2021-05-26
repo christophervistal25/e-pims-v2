@@ -266,7 +266,7 @@
 						</li>
 
                         <li class="submenu">
-							<a href="#" class='text-decoration-none'><i class="la la-bookmark"></i> <span>Plantilla of Position</span> <span class="menu-arrow"></span></a>
+							<a href="#" class='text-decoration-none'><i class="la la-bookmark"></i> <span>Plantilla</span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
 								<li>
                                     <a class='text-decoration-none mr-2' href="{{  route('plantilla-of-position.index') }}">
@@ -279,22 +279,22 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class='text-decoration-none mr-2' href="#">
+                                    <a class='text-decoration-none mr-2' href="{{  route('step-increment.index') }}">
                                         Notice of Step Increment
                                     </a>
                                 </li>
                                 <li class="submenu">
-									<a  class='text-decoration-none' href="javascript:void(0);"> <span>Salary Adjustment Individual</span> <span class="menu-arrow"></span></a>
+									<a  class='text-decoration-none' href="javascript:void(0);"> <span>Salary Adjustment</span> <span class="menu-arrow"></span></a>
 									<ul style="display: none;">
 										<li>
-                                            <a class='text-decoration-none' href="javascript:void(0);">
+                                            <a class='text-decoration-none' href="{{  route('salary-adjustment.index') }}">
+                                                <span>Individual</span>
+                                            </a>
+                                            <a class='text-decoration-none' href="{{  route('salary-adjustment-per-office.index') }}">
                                                 <span>Per Office</span>
                                             </a>
                                         </li>
 									</ul>
-								</li>
-                                <li class="">
-									  <a class='text-decoration-none' href="{{  route('step-increment.index') }}"> <span>Step Increment</span> </a>
 								</li>
 							</ul>
 						</li>
