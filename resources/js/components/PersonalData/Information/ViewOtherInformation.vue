@@ -8,9 +8,15 @@
         <table class="table table-nowrap">
           <thead>
             <tr>
-              <th class="text-sm">SPECIAL SKILLS and HOBBIES</th>
-              <th class="text-sm">NON-ACADEMIC DISTINCTIONS/RECOGNITION</th>
-              <th class="text-sm">MEMBERSHIP IN ASSOCIATION/ORGANIZATION</th>
+              <th class="text-sm text-center">
+                <strong>SPECIAL SKILLS and HOBBIES</strong>
+              </th>
+              <th class="text-sm text-center">
+                <strong>NON-ACADEMIC DISTINCTIONS/RECOGNITION</strong>
+              </th>
+              <th class="text-sm text-center">
+                <strong>MEMBERSHIP IN ASSOCIATION/ORGANIZATION</strong>
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -18,13 +24,13 @@
               v-for="(otherInformation, index) in employee.other_information"
               :key="index"
             >
-              <td style="text-transform: uppercase">
+              <td style="text-transform: uppercase" class="text-center">
                 {{ otherInformation.special_skill }}
               </td>
-              <td style="text-transform: uppercase">
+              <td style="text-transform: uppercase" class="text-center">
                 {{ otherInformation.non_academic }}
               </td>
-              <td style="text-transform: uppercase">
+              <td style="text-transform: uppercase" class="text-center">
                 {{ otherInformation.organization }}
               </td>
             </tr>

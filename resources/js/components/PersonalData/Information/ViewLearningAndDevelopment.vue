@@ -12,12 +12,14 @@
         <table class="table table-nowrap">
           <thead>
             <tr>
-              <th class="text-sm">TRAINING PROGRAMS</th>
-              <th class="text-sm">FROM</th>
-              <th class="text-sm">TO</th>
-              <th class="text-sm">NUMBES OF HOURS</th>
-              <th class="text-sm">TYPE OF LD</th>
-              <th class="text-sm">CONDUCTED</th>
+              <th class="text-sm text-center">
+                <strong>TRAINING PROGRAMS</strong>
+              </th>
+              <th class="text-sm text-center"><strong>FROM</strong></th>
+              <th class="text-sm text-center"><strong>TO</strong></th>
+              <th class="text-sm"><strong>NUMBES OF HOURS</strong></th>
+              <th class="text-sm text-center"><strong>TYPE OF LD</strong></th>
+              <th class="text-sm text-center"><strong>CONDUCTED</strong></th>
             </tr>
           </thead>
           <tbody>
@@ -25,22 +27,22 @@
               v-for="(programAttained, index) in employee.program_attained"
               :key="index"
             >
-              <td style="text-transform: uppercase">
+              <td style="text-transform: uppercase" class="text-center">
                 {{ programAttained.title }}
               </td>
-              <td style="text-transform: uppercase">
+              <td style="text-transform: uppercase" class="text-center">
                 {{ programAttained.date_of_attendance_from }}
               </td>
-              <td style="text-transform: uppercase">
+              <td style="text-transform: uppercase" class="text-center">
                 {{ programAttained.date_of_attendance_to }}
               </td>
-              <td style="text-transform: uppercase">
+              <td style="text-transform: uppercase" class="text-center">
                 {{ programAttained.number_of_hours }}
               </td>
-              <td style="text-transform: uppercase">
+              <td style="text-transform: uppercase" class="text-center">
                 {{ programAttained.type_of_id }}
               </td>
-              <td style="text-transform: uppercase">
+              <td style="text-transform: uppercase" class="text-center">
                 {{ programAttained.sponsored_by }}
               </td>
             </tr>

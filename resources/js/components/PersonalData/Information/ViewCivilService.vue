@@ -8,20 +8,26 @@
         <table class="table table-nowrap">
           <thead>
             <tr>
-              <th class="text-sm">CAREER SERVICE</th>
-              <th class="text-sm">DATE OF EXAMINATION</th>
-              <th class="text-sm">PLACE OF EXAMINATION</th>
+              <th class="text-sm text-center">
+                <strong>CAREER SERVICE</strong>
+              </th>
+              <th class="text-sm text-center">
+                <strong>DATE OF EXAMINATION</strong>
+              </th>
+              <th class="text-sm text-center">
+                <strong>PLACE OF EXAMINATION</strong>
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(exam, index) in employee.civil_service" :key="index">
-              <td style="text-transform: uppercase">
+              <td style="text-transform: uppercase" class="text-center">
                 {{ exam.career_service }}
               </td>
-              <td style="text-transform: uppercase">
+              <td style="text-transform: uppercase" class="text-center">
                 {{ exam.date_of_examination }}
               </td>
-              <td style="text-transform: uppercase">
+              <td style="text-transform: uppercase" class="text-center">
                 {{ exam.place_of_examination }}
               </td>
             </tr>
