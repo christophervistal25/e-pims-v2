@@ -82,7 +82,7 @@ class EmployeeRepository
         $employee->date_birth           = $data['date_birth'];
         $employee->place_birth          = $data['place_birth'];
         $employee->sex                  = $data['sex'];
-        $employee->civil_status         = $data['status'];
+        $employee->civil_status         = $data['civil_status'];
         $employee->height               = $data['height'];
         $employee->weight               = $data['weight'];
         $employee->blood_type           = $data['blood_type'];
@@ -93,6 +93,8 @@ class EmployeeRepository
         $employee->tin_no               = $data['tin_no'];
         $employee->agency_employee_no   = $data['agency_employee_no'];
         $employee->citizenship          = $data['citizenship'];
+        $employee->citizenship_by       = $data['citizenship_by'];
+        $employee->indicate_country     = $data['indicate_country'];
         $employee->residential_house_no = $data['residential_house_no'];
         $employee->residential_street   = $data['residential_street'];
         $employee->residential_village  = $data['residential_village'];

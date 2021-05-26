@@ -57,6 +57,49 @@ class PersonalDataSheetController extends Controller
     
     public function existingEmployeeStoreInformation(Request $request)
     {
+        $sex = ['male', 'female'];
+        $status = ['SINGLE', 'MARRIED', 'WIDOWED', 'SEPARATED', 'OTHERS'];
+
+        $this->validate($request, [
+            'lastname'             => 'required|regex:/^[a-zA-Z ].+$/u',
+            'firstname'            => 'required|regex:/^[a-zA-Z ].+$/u',
+            'middlename'           => ['nullable', 'regex:/^[a-zA-Z].+$/u', 'min:2'],
+            'extension'            => ['nullable', 'max:3' , 'regex:/^[a-zA-Z].+$/u'],
+            'date_birth'           => 'required',
+            'place_birth'          => 'required',
+            'sex'                  => 'required|in:' . implode(',', $sex),
+            'civil_status'         => 'required|in:'  . implode(',', $status),
+            'height'               => ['required','between:0,99.99'],
+            'weight'               => ['required', 'between:0,99.99'],
+            'blood_type'           => ['required', 'max:3'],
+            'gsis_id_no'           => ['nullable', 'unique:employees,gsis_id_no,'. $request->employee_id . ',employee_id'],
+            'pag_ibig_no'          => ['nullable', 'unique:employees,pag_ibig_no,'. $request->employee_id . ',employee_id'],
+            'philhealth_no'        => ['nullable', 'unique:employees,philhealth_no,'. $request->employee_id . ',employee_id'],
+            'sss_no'               => ['nullable', 'unique:employees,sss_no,'. $request->employee_id . ',employee_id'],
+            'tin_no'               => ['nullable', 'unique:employees,tin_no,'. $request->employee_id . ',employee_id'],
+            'agency_employee_no'   => 'nullable|unique:employees,agency_employee_no,'. $request->employee_id . ',employee_id',
+            'citizenship'          => ['required'],
+            'citizenship_by'       => ['required_if:citizenship,DUAL CITIZEN'],
+            'indicate_country'     => ['required_if:citizenship,DUAL CITIZEN'],
+            'telephone_no'         => [],
+            'mobile_no'            => ['required', 'max:13', 'min:11', 'unique:employees,mobile_no,'. $request->employee_id . ',employee_id'],
+            'email_address'        => ['nullable', 'email', 'unique:employees,email_address,' . $request->employee_id . ',employee_id'],
+            'residential_house_no' => ['nullable'],
+            'residential_street'   => ['nullable'],
+            'residential_village'  => ['nullable'],
+            'residential_barangay' => ['required', 'exists:barangays,code'],
+            'residential_city'     => ['required', 'exists:cities,code'],
+            'residential_province' => ['required', 'exists:provinces,code'],
+            'residential_zip_code' => ['required', 'min:4', 'max:4'],
+            'permanent_house_no'   => [],
+            'permanent_street'     => [],
+            'permanent_village'    => [],
+            'permanent_barangay'   => ['required', 'exists:barangays,code'],
+            'permanent_city'       => ['required', 'exists:cities,code'],
+            'permanent_province'   => ['required', 'exists:provinces,code'],
+            'permanent_zip_code'   => ['required', 'min:4', 'max:4']
+        ]);
+
         return $this->employeeRepository->existEmployeeAddInformation($request->all());
     }
 

@@ -37,7 +37,7 @@
               <input
                 type="text"
                 class="form-control"
-                :class="!errors.hasOwnProperty('surname') ? '' : 'is-invalid'"
+                :class="!errors.hasOwnProperty('lastname') ? '' : 'is-invalid'"
                 id="surname"
                 v-model="personal_data.lastname"
                 style="
@@ -52,7 +52,7 @@
               </span>
             </label>
             <p class="text-danger text-sm">
-              {{ errors.surname }}
+              {{ errors.lastname }}
             </p>
           </div>
           <div class="col-lg-3">
@@ -102,27 +102,17 @@
           </div>
           <div class="col-lg-2">
             <label for="nameextension" class="form-group has-float-label mb-0">
-              <select
+              <v-select
                 type="text"
                 id="nameextension"
-                v-model="personal_data.extension"
-                class="form-control custom-select"
+                v-model="personSelectedNameExtension"
+                :options="name_extensions"
                 :class="
                   !errors.hasOwnProperty('nameExtension') ? '' : 'is-invalid'
                 "
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               >
-                <option value="" readonly selected>
-                  Please Select Extension Name
-                </option>
-                <option
-                  v-for="(extension, index) in nameExtensions"
-                  :select="personal_data.extension == extension"
-                  :key="index"
-                >
-                  {{ extension }}
-                </option>
-              </select>
+              </v-select>
               <span><strong>EXTENSION NAME</strong></span>
             </label>
 
@@ -131,7 +121,9 @@
             </p>
           </div>
           <div class="col-lg-1">
-            <name-extension-modal></name-extension-modal>
+            <name-extension-modal
+              @nameext-modal-dismiss="closeNameExtensionModal"
+            ></name-extension-modal>
           </div>
         </div>
         <div class="row pl-3 pr-3">
@@ -140,14 +132,14 @@
               <input
                 class="form-control"
                 :class="
-                  !errors.hasOwnProperty('dateOfBirth') ? '' : 'is-invalid'
+                  !errors.hasOwnProperty('date_birth') ? '' : 'is-invalid'
                 "
                 type="date"
                 v-model="personal_data.date_birth"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
               <p class="text-danger text-sm">
-                {{ errors.dateOfBirth }}
+                {{ errors.date_birth }}
               </p>
               <span
                 ><strong>DATE OF BIRTH</strong
@@ -162,7 +154,7 @@
                 class="form-control"
                 id="placeofbirth"
                 :class="
-                  !errors.hasOwnProperty('placeOfBirth') ? '' : 'is-invalid'
+                  !errors.hasOwnProperty('place_birth') ? '' : 'is-invalid'
                 "
                 v-model="personal_data.place_birth"
                 style="
@@ -177,7 +169,7 @@
               >
             </label>
             <p class="text-danger text-sm">
-              {{ errors.placeOfBirth }}
+              {{ errors.place_birth }}
             </p>
           </div>
 
@@ -207,7 +199,9 @@
             <label for="status" class="form-group has-float-label mb-0">
               <select
                 class="form-control"
-                :class="!errors.hasOwnProperty('status') ? '' : 'is-invalid'"
+                :class="
+                  !errors.hasOwnProperty('civil_status') ? '' : 'is-invalid'
+                "
                 id="status"
                 v-model="personal_data.civil_status"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
@@ -272,7 +266,7 @@
                 class="form-control"
                 id="bloodtype"
                 maxlength="3"
-                :class="errors.hasOwnProperty('bloodType') ? 'is-invalid' : ''"
+                :class="errors.hasOwnProperty('blood_type') ? 'is-invalid' : ''"
                 v-model="personal_data.blood_type"
                 style="
                   text-transform: uppercase;
@@ -286,7 +280,7 @@
               >
             </label>
             <p class="text-danger text-sm">
-              {{ errors.bloodType }}
+              {{ errors.blood_type }}
             </p>
           </div>
         </div>
@@ -302,6 +296,9 @@
               />
               <span><strong>GSIS ID NUMBER</strong></span>
             </label>
+            <p class="text-danger text-sm">
+              {{ errors.gsis_id_no }}
+            </p>
           </div>
           <div class="col-lg-4">
             <label for="pagibigidno" class="form-group has-float-label">
@@ -314,6 +311,9 @@
               />
               <span><strong>PAG-IBIG ID NUMBER</strong></span>
             </label>
+            <p class="text-danger text-sm">
+              {{ errors.pag_ibig_no }}
+            </p>
           </div>
           <div class="col-lg-4">
             <label for="philhealthidno" class="form-group has-float-label">
@@ -326,6 +326,9 @@
               />
               <span><strong>PHILHEALTH ID NUMBER</strong></span>
             </label>
+            <p class="text-danger text-sm">
+              {{ errors.philhealth_no }}
+            </p>
           </div>
         </div>
         <div class="row pl-3 pr-3">
@@ -340,6 +343,9 @@
               />
               <span><strong>SSS ID NUMBER</strong></span>
             </label>
+            <p class="text-danger text-sm">
+              {{ errors.sss_no }}
+            </p>
           </div>
 
           <div class="col-lg-4">
@@ -353,6 +359,9 @@
               />
               <span><strong>TIN ID NUMBER</strong></span>
             </label>
+            <p class="text-danger text-sm">
+              {{ errors.tin_no }}
+            </p>
           </div>
 
           <div class="col-lg-4">
@@ -366,6 +375,9 @@
               />
               <span><strong>AGENCY EMPLOYEE NUMBER</strong></span>
             </label>
+            <p class="text-danger text-sm">
+              {{ errors.agency_employee_no }}
+            </p>
           </div>
         </div>
         <div class="row pl-3 pr-3">
@@ -399,9 +411,9 @@
                 class="form-control custom-select"
                 id="citizenshipby"
                 :class="
-                  !errors.hasOwnProperty('citizenshipBy') ? '' : 'is-invalid'
+                  !errors.hasOwnProperty('citizenship_by') ? '' : 'is-invalid'
                 "
-                v-model="personal_data.citizenshipBy"
+                v-model="personal_data.citizenship_by"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               >
                 <option value="BIRTH">BIRTH</option>
@@ -410,30 +422,22 @@
               <span><strong>By</strong></span>
             </label>
             <p class="text-danger text-sm">
-              {{ errors.citizenshipBy }}
+              {{ errors.citizenship_by }}
             </p>
           </div>
 
           <div class="col-lg-4" v-if="onCitizenDual">
             <label for="countries" class="form-group has-float-label mb-0">
               <v-select
-                id="countries"
-                v-model="personal_data.country"
+                label="name"
+                v-model="personCountry"
                 :options="countries"
-                :class="!errors.hasOwnProperty('country') ? '' : 'is-invalid'"
-                style="outline: none; box-shadow: 0px 0px 0px transparent"
+                @input="countryChange"
               >
-                <option
-                  v-for="(country, index) in countries"
-                  :key="index"
-                  :value="country"
-                >
-                  {{ country }}
-                </option>
               </v-select>
               <span><strong>INDICATE COUNTRY</strong></span>
             </label>
-            <p class="text-danger text-sm">{{ errors.country }}</p>
+            <p class="text-danger text-sm">{{ errors.indicate_country }}</p>
           </div>
 
           <div class="col-lg-4">
@@ -452,9 +456,7 @@
             <label for="mobileno" class="form-group has-float-label mb-0">
               <input
                 type="text"
-                :class="
-                  !errors.hasOwnProperty('mobileNumber') ? '' : 'is-invalid'
-                "
+                :class="!errors.hasOwnProperty('mobile_no') ? '' : 'is-invalid'"
                 id="mobileno"
                 class="form-control"
                 v-model="personal_data.mobile_no"
@@ -466,7 +468,7 @@
               >
             </label>
             <p class="text-danger text-sm">
-              {{ errors.mobileNumber }}
+              {{ errors.mobile_no }}
             </p>
           </div>
           <div class="col-lg-4 form-group input-group">
@@ -475,11 +477,17 @@
                 type="email"
                 id="email"
                 class="form-control"
+                :class="
+                  !errors.hasOwnProperty('email_address') ? '' : 'is-invalid'
+                "
                 v-model="personal_data.email_address"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
               <span><strong>EMAIL ADDRESS</strong></span>
             </label>
+            <p class="text-danger text-sm">
+              {{ errors.email_address }}
+            </p>
           </div>
         </div>
 
@@ -550,13 +558,13 @@
             <label class="form-group has-float-label">
               <v-select
                 label="name"
-                v-model="personal_data.residential_province_text"
+                v-model="personResidentialProvince"
                 :options="provinces"
                 @input="provinceChange"
                 id="resProvince"
               ></v-select>
               <p class="text-danger text-sm">
-                {{ errors["residentialProvince.code"] }}
+                {{ errors.residential_province }}
               </p>
               <span
                 ><strong>PROVINCE</strong
@@ -568,12 +576,12 @@
             <label class="form-group has-float-label">
               <v-select
                 label="name"
-                v-model="personal_data.residential_city_text"
+                v-model="personResidentialCity"
                 :options="cities"
                 @input="municipalChange"
               ></v-select>
               <p class="text-danger text-sm">
-                {{ errors["residentialCity.code"] }}
+                {{ errors.residential_city }}
               </p>
               <span
                 ><strong>CITY</strong
@@ -585,11 +593,12 @@
             <label class="form-group has-float-label">
               <v-select
                 label="name"
-                v-model="personal_data.residential_barangay_text"
+                v-model="personResidentialBarangay"
                 :options="barangays"
+                @input="barangayChange"
               ></v-select>
               <p class="text-danger text-sm">
-                {{ errors["residentialBarangay.code"] }}
+                {{ errors.residential_barangay }}
               </p>
               <span
                 ><strong>BARANGAY</strong
@@ -606,15 +615,15 @@
                 class="form-control"
                 @input="
                   if (
-                    personal_data.residentialZipCode.length > zipCodeMaxLength
+                    personal_data.residential_zip_code.length > zipCodeMaxLength
                   )
-                    personal_data.residentialZipCode = personal_data.residentialZipCode.slice(
+                    personal_data.residential_zip_code = personal_data.residential_zip_code.slice(
                       0,
                       zipCodeMaxLength
                     );
                 "
                 :class="
-                  !errors.hasOwnProperty('residentialZipCode')
+                  !errors.hasOwnProperty('residential_zip_code')
                     ? ''
                     : 'is-invalid'
                 "
@@ -626,7 +635,7 @@
               >
             </label>
             <p class="text-danger text-sm">
-              {{ errors.residentialZipCode }}
+              {{ errors.residential_zip_code }}
             </p>
           </div>
         </div>
@@ -714,12 +723,13 @@
             <label class="form-group has-float-label">
               <v-select
                 label="name"
-                v-model="personal_data.permanent_province_text"
+                v-model="personPermanentProvince"
                 :options="provinces"
                 @input="permanentProvinceChange"
+                :disabled="isSameAsAbove ? true : false"
               ></v-select>
               <p class="text-danger text-sm">
-                {{ errors["permanentProvince.code"] }}
+                {{ errors.permanent_province }}
               </p>
               <span
                 ><strong>PROVINCE</strong
@@ -732,12 +742,13 @@
             <label class="form-group has-float-label">
               <v-select
                 label="name"
-                v-model="personal_data.permanent_city_text"
+                v-model="personPermanentCity"
                 :options="permanentCities"
                 @input="permanentMunicipalChange"
+                :disabled="isSameAsAbove ? true : false"
               ></v-select>
               <p class="text-danger text-sm">
-                {{ errors["permanentCity.code"] }}
+                {{ errors.permanent_city }}
               </p>
               <span
                 ><strong>CITY</strong
@@ -750,11 +761,13 @@
             <label class="form-group has-float-label">
               <v-select
                 label="name"
-                v-model="personal_data.permanent_barangay_text"
+                v-model="personPermanentBarangay"
                 :options="permanentBarangays"
+                @input="permanentBarangayChange"
+                :disabled="isSameAsAbove ? true : false"
               ></v-select>
               <p class="text-danger text-sm">
-                {{ errors["permanentBarangay.code"] }}
+                {{ errors.permanent_barangay }}
               </p>
               <span
                 ><strong>BARANGAY</strong
@@ -773,16 +786,20 @@
                 type="number"
                 v-model="personal_data.permanent_zip_code"
                 @input="
-                  if (personal_data.permanentZipCode.length > zipCodeMaxLength)
-                    personal_data.permanentZipCode = personal_data.permanentZipCode.slice(
+                  if (
+                    personal_data.permanent_zip_code.length > zipCodeMaxLength
+                  )
+                    personal_data.permanent_zip_code = personal_data.permanent_zip_code.slice(
                       0,
                       zipCodeMaxLength
                     );
                 "
                 :class="
-                  !errors.hasOwnProperty('permanentZipCode') ? '' : 'is-invalid'
+                  !errors.hasOwnProperty('permanent_zip_code')
+                    ? ''
+                    : 'is-invalid'
                 "
-                :disabled="isSameAsAbove ? true : false"
+                :readonly="isSameAsAbove ? true : false"
                 class="form-control"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
@@ -792,7 +809,7 @@
               >
             </label>
             <p class="text-danger text-sm">
-              {{ errors.permanentZipCode }}
+              {{ errors.permanent_zip_code }}
             </p>
           </div>
         </div>
@@ -823,15 +840,16 @@
   </div>
 </template>
 <script>
-// import NameExtensionModal from "./NameExtensionModal.vue";
 import "vue-select/dist/vue-select.css";
 import _ from "lodash";
 import swal from "sweetalert";
 export default {
-  // components: { NameExtensionModal },
   props: {
     personal_data: {
       requried: true,
+    },
+    name_extensions: {
+      required: true,
     },
   },
   data() {
@@ -843,7 +861,7 @@ export default {
       isComplete: false,
       isSameAsAbove: false,
       zipCodeMaxLength: 4,
-      nameExtensions: [],
+      personSelectedNameExtension: "",
       countries: [],
       provinces: [],
       cities: [],
@@ -851,9 +869,28 @@ export default {
       permanentCities: [],
       permanentBarangays: [],
       errors: {},
+      personCountry: "",
+      personResidentialProvince: "",
+      personResidentialCity: "",
+      personResidentialBarangay: "",
+      personPermanentProvince: "",
+      personPermanentCity: "",
+      personPermanentBarangay: "",
+      tempPermanentAddress: {
+        province: "",
+        city: "",
+        barangay: "",
+        house_no: "",
+        street: "",
+        village: "",
+        zip_code: "",
+      },
     };
   },
   methods: {
+    countryChange() {
+      this.personal_data.indicate_country = this.personCountry;
+    },
     citizenChange(e) {
       let selectedCitizenShip = e.target.value;
 
@@ -862,12 +899,11 @@ export default {
       } else {
         this.onCitizenDual = false;
       }
-
       this.personal_data.citizenship = selectedCitizenShip;
     },
     provinceChange(province) {
-      // Since the province value change we need to fetch cities by selected province code.
       if (!_.isEmpty(province)) {
+        this.personal_data.residential_province = province.code;
         window
           .axios(`/api/province/cities/by/${province.code}`)
           .then((response) => (this.cities = response.data));
@@ -875,13 +911,20 @@ export default {
     },
     municipalChange(municipal) {
       if (!_.isEmpty(municipal)) {
+        this.personal_data.residential_city = municipal.code;
         window
           .axios(`/api/city/barangay/by/${municipal.code}`)
           .then((response) => (this.barangays = response.data));
       }
     },
+    barangayChange(barangay) {
+      if (!_.isEmpty(barangay)) {
+        this.personal_data.residential_barangay = barangay.code;
+      }
+    },
     permanentProvinceChange(province) {
       if (!_.isEmpty(province)) {
+        this.personal_data.permanent_province = province.code;
         window
           .axios(`/api/province/cities/by/${province.code}`)
           .then((response) => (this.permanentCities = response.data));
@@ -889,15 +932,56 @@ export default {
     },
     permanentMunicipalChange(municipal) {
       if (!_.isEmpty(municipal)) {
+        this.personal_data.permanent_city = municipal.code;
         window
           .axios(`/api/city/barangay/by/${municipal.code}`)
           .then((response) => (this.permanentBarangays = response.data));
       }
     },
-    sameAsAboveAddress() {},
+    permanentBarangayChange(barangay) {
+      if (!_.isEmpty(barangay)) {
+        this.personal_data.permanent_barangay = barangay.code;
+      }
+    },
+    sameAsAboveAddress() {
+      this.isSameAsAbove = !this.isSameAsAbove;
+      if (this.isSameAsAbove) {
+        this.tempPermanentAddress.province = this.personPermanentProvince;
+        this.tempPermanentAddress.city = this.personPermanentCity;
+        this.tempPermanentAddress.barangay = this.personPermanentBarangay;
+
+        this.tempPermanentAddress.house_no = this.personal_data.permanent_house_no;
+        this.tempPermanentAddress.street = this.personal_data.permanent_street;
+        this.tempPermanentAddress.village = this.personal_data.permanent_village;
+        this.tempPermanentAddress.zip_code = this.personal_data.permanent_zip_code;
+
+        this.personPermanentProvince = this.personResidentialProvince;
+        this.personPermanentCity = this.personResidentialCity;
+        this.personPermanentBarangay = this.personResidentialBarangay;
+
+        this.personal_data.permanent_house_no = this.personal_data.residential_house_no;
+        this.personal_data.permanent_street = this.personal_data.residential_street;
+        this.personal_data.permanent_village = this.personal_data.residential_village;
+        this.personal_data.permanent_zip_code = this.personal_data.residential_zip_code;
+
+        this.personal_data.permanent_province = this.personal_data.residential_province;
+        this.personal_data.permanent_city = this.personal_data.residential_city;
+        this.personal_data.permanent_barangay = this.personal_data.residential_barangay;
+      } else {
+        this.personal_data.permanent_house_no = this.tempPermanentAddress.house_no;
+        this.personal_data.permanent_street = this.tempPermanentAddress.street;
+        this.personal_data.permanent_village = this.tempPermanentAddress.village;
+        this.personal_data.permanent_zip_code = this.tempPermanentAddress.zip_code;
+
+        this.personPermanentProvince = this.tempPermanentAddress.province;
+        this.personPermanentCity = this.tempPermanentAddress.city;
+        this.personPermanentBarangay = this.tempPermanentAddress.barangay;
+      }
+    },
     submitPersonalInformation(e) {
       e.preventDefault();
-      this.isLoading = false;
+      this.isLoading = true;
+      this.personal_data.extension = this.personSelectedNameExtension;
       window.axios
         .post("/employee/exists/personal/information/store", this.personal_data)
         .then((response) => {
@@ -907,6 +991,16 @@ export default {
           if (response.status === 200) {
             this.$emit("next-panel-family-background");
           }
+        })
+        .catch((error) => {
+          this.errors = {};
+          this.isLoading = false;
+          if (error.response.status === 422) {
+            Object.keys(error.response.data.errors).map((field) => {
+              let [fieldMessage] = error.response.data.errors[field];
+              this.errors[field] = fieldMessage;
+            });
+          }
         });
     },
     openNameExtensionModal() {
@@ -914,7 +1008,7 @@ export default {
     },
     closeNameExtensionModal(newExtension) {
       if (newExtension) {
-        this.nameExtensions.push(newExtension.extension);
+        this.$emit("update-name-extensions", newExtension);
       }
       this.isShowNameExtension = false;
     },
@@ -926,16 +1020,50 @@ export default {
       .then((response) => (this.provinces = response.data));
 
     window.axios
-      .get("/api/name/extensions")
-      .then((response) => (this.nameExtensions = response.data));
-
-    window.axios
       .get("/api/countries")
       .then((response) => (this.countries = response.data));
   },
   mounted() {
     if (this.personal_data.citizenship === "DUAL CITIZEN") {
       this.onCitizenDual = true;
+    }
+
+    this.personSelectedNameExtension = this.personal_data.extension;
+    this.personCountry = this.personal_data.indicate_country;
+    this.personResidentialProvince = this.personal_data.residential_province_text;
+    this.personResidentialCity = this.personal_data.residential_city_text;
+    this.personResidentialBarangay = this.personal_data.residential_barangay_text;
+
+    this.personPermanentProvince = this.personal_data.permanent_province_text;
+    this.personPermanentCity = this.personal_data.permanent_city_text;
+    this.personPermanentBarangay = this.personal_data.permanent_barangay_text;
+
+    if (!_.isEmpty(this.personal_data.residential_province)) {
+      window
+        .axios(
+          `/api/province/cities/by/${this.personal_data.residential_province}`
+        )
+        .then((response) => (this.cities = response.data));
+    }
+
+    if (!_.isEmpty(this.personal_data.residential_city)) {
+      window
+        .axios(`/api/city/barangay/by/${this.personal_data.residential_city}`)
+        .then((response) => (this.barangays = response.data));
+    }
+
+    if (!_.isEmpty(this.personal_data.permanent_province)) {
+      window
+        .axios(
+          `/api/province/cities/by/${this.personal_data.permanent_province}`
+        )
+        .then((response) => (this.permanentCities = response.data));
+    }
+
+    if (!_.isEmpty(this.personal_data.permanent_city)) {
+      window
+        .axios(`/api/city/barangay/by/${this.personal_data.permanent_city}`)
+        .then((response) => (this.permanentBarangays = response.data));
     }
   },
 };
