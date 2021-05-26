@@ -172,28 +172,27 @@ class Employee extends Model
      */
     public function setFirstNameAttribute($value)
     {
-        $this->attributes['firstname'] = mb_strtoupper($value, 'UTF-8');
+        $this->attributes['firstname'] = Str::upper($value, 'UTF-8');
     }
 
     public function setMiddleNameAttribute($value)
     {
-        $this->attributes['middlename'] = mb_strtoupper($value, 'UTF-8');
+        $this->attributes['middlename'] = Str::upper($value, 'UTF-8');
     }
 
     public function setLastNameAttribute($value)
     {
-        $this->attributes['lastname'] = mb_strtoupper($value, 'UTF-8');
+        $this->attributes['lastname'] = Str::upper($value, 'UTF-8');
     }
 
-    public function setSuffixAttribute($value)
+    public function setExtensionAttribute($value)
     {
-        $this->attributes['extension'] = mb_strtoupper($value, 'UTF-8');
+        $this->attributes['extension'] = Str::upper($value, 'UTF-8');
     }
-
+    
     public function plantilla()
     {
         return $this->hasOne(Plantilla::class, 'employee_id', 'employee_id');
-        // return $this->hasMany(Plantilla::class, 'employee_id', 'employee_id');
     }
 
 

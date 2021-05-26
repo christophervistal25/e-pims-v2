@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\RefNameExtension;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
@@ -30,7 +31,7 @@ class ReferenceNameExtensionController extends Controller
             return response()->json(['errors' => $validator->messages()], 422);
         }
 
-        $record = RefNameExtension::create(['extension' => $request->extension]);
+        $record = RefNameExtension::create(['extension' => Str::upper($request->extension)]);
 
         return response()->json($record, 201);
     }

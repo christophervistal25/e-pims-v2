@@ -17,10 +17,14 @@
       <create-personal-information
         v-on:next-panel-family-background="displayFamilyBackgroundPanel"
         v-if="selectedTab.name === 'C1'"
+        :name_extensions="nameExtensions"
+        @update-name-extensions="updateNameExtensions"
       ></create-personal-information>
 
       <create-family-background
+        :name_extensions="nameExtensions"
         :show_panel="familyBackgroundPanel"
+        @update-name-extensions="updateNameExtensions"
         v-on:next-panel-educational-background="
           displayEducationalBackgroundPanel
         "
@@ -116,6 +120,7 @@ export default {
   },
   data() {
     return {
+      nameExtensions: [],
       hasSelecType: false,
       tabs: [
         {
@@ -150,6 +155,11 @@ export default {
     };
   },
   methods: {
+    updateNameExtensions(newExtension) {
+      if (newExtension) {
+        this.nameExtensions.push(newExtension.extension.toUpperCase());
+      }
+    },
     workExperienceSection() {
       this.isWorkExperienceShow = true;
     },
@@ -192,6 +202,9 @@ export default {
   created() {
     // set the default tab display to C1
     this.selectedTab = this.tabs[0];
+    window.axios
+      .get("/api/name/extensions")
+      .then((response) => (this.nameExtensions = response.data));
   },
 };
 </script>

@@ -114,7 +114,7 @@
               <label for="snameexten" class="form-group has-float-label mb-0">
                 <v-select
                   v-model="familyBackground.snameexten"
-                  :options="nameExtensions"
+                  :options="name_extensions"
                 ></v-select>
                 <!-- <select
                   type="text"
@@ -382,7 +382,7 @@
             <label for="fnameexten" class="form-group has-float-label mb-0">
               <v-select
                 v-model="familyBackground.fnameexten"
-                :options="nameExtensions"
+                :options="name_extensions"
               >
               </v-select>
               <span><strong>EXTENSION NAME</strong></span>
@@ -509,6 +509,9 @@ export default {
     show_panel: {
       required: true,
     },
+    name_extensions: {
+      required: true,
+    },
   },
   data() {
     return {
@@ -546,7 +549,6 @@ export default {
         mfirstname: "",
         mmiddlename: "",
       },
-      nameExtensions: [],
       errors: {},
     };
   },
@@ -606,7 +608,7 @@ export default {
 
     closeSpouseNameExtensionModal(newExtension) {
       if (newExtension) {
-        this.nameExtensions.push(newExtension.extension);
+        this.$emit("update-name-extensions", newExtension);
       }
       this.isShowSpouseNameExtension = false;
     },
@@ -615,16 +617,13 @@ export default {
     },
     closeFatherNameExtensionModal(newExtension) {
       if (newExtension) {
-        this.nameExtensions.push(newExtension.extension);
+        this.$emit("update-name-extensions", newExtension);
       }
       this.isShowFatherNameExtension = false;
     },
   },
   created() {
     this.noOfSpouseFields = this.spouse.length;
-    window.axios
-      .get("/api/name/extensions/")
-      .then((response) => (this.nameExtensions = response.data));
   },
   mounted() {
     if (localStorage.getItem("family_background")) {

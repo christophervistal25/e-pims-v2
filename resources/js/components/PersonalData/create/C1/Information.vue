@@ -104,7 +104,7 @@
             <label for="nameextension" class="form-group has-float-label mb-0">
               <v-select
                 v-model="personal_data.nameExtension"
-                :options="nameExtensions"
+                :options="name_extensions"
               >
               </v-select>
               <!-- <select
@@ -880,8 +880,14 @@
 import NameExtensionModal from "./NameExtensionModal";
 import "vue-select/dist/vue-select.css";
 import _ from "lodash";
+
 export default {
   components: { NameExtensionModal },
+  props: {
+    name_extensions: {
+      required: true,
+    },
+  },
   data() {
     return {
       isShow: false,
@@ -1033,9 +1039,8 @@ export default {
       this.isShowNameExtension = true;
     },
     closeNameExtensionModal(newExtension) {
-      // console.log(newExtension);
       if (newExtension) {
-        this.nameExtensions.push(newExtension.extension);
+        this.$emit("update-name-extensions", newExtension);
       }
       this.isShowNameExtension = false;
     },
