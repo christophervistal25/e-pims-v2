@@ -177,6 +177,13 @@ function ValidateDropDown(dd) {
     } else {
         document.getElementById("line").style.visibility = "hidden";
     }
+    $("input").val("");
+    const select = ["#positionTitle", "#status", "#officeCode"];
+    $.each(select, function(index, value) {
+        $(`${value}`)
+            .val("Please Select")
+            .trigger("change");
+    });
 }
 
 // get value namesss
@@ -379,3 +386,19 @@ $(document).ready(function() {
         });
     });
 });
+
+$(document).ready(function() {
+    $("#cancelbutton1").click(function() {
+        $("#add").attr("class", "page-header d-none");
+        $("#table").attr("class", "page-header");
+    });
+});
+function myFunction() {
+    $("input").val("");
+    const select = ["#positionTitle", "#status", "#officeCode"];
+    $.each(select, function(index, value) {
+        $(`${value}`)
+            .val("Please Select")
+            .trigger("change");
+    });
+}

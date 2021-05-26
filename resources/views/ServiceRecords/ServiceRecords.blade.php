@@ -21,14 +21,17 @@
     <div class="card-body">
         <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
 
+            <div style='padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
+                <button id="cancelbutton" class="btn btn-primary submit-btn float-right"><i class="fa fa-list"></i> Service Records List</button>
+            </div>
+
             <form action="/service-records" method="post" id="serviceRecordForm">
                 @csrf
                     <div class="row">
 
                         <div class="col-12">
                             <div class="alert alert-secondary text-center font-weight-bold" role="alert" >
-                                <p id="employeeTitleName"></p>
-                                Service Records
+                                <a id="employeeTitleName"></a>
                             </div>
                         </div>
                         <div class="form-group col-12 col-lg-12 d-none">
@@ -123,7 +126,7 @@
                                 <span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>
                                 Save
                             </button>
-                            <button style="margin-right:10px;" type="button" id="cancelbutton" class="text-white btn btn-warning submit-btn float-right" >Cancel</button>
+                            <button style="margin-right:10px;" type="button" onclick="myFunction()" id="cancelbutton1" class="text-white btn btn-warning submit-btn float-right" >Cancel</button>
                             {{-- onclick="reset()" --}}
                         </div>
 
