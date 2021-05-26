@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Employee;
-use App\StepIncrement;
-use App\Plantilla;
-use Yajra\Datatables\Datatables;
 use DB;
+use App\Employee;
+use App\Plantilla;
+use App\StepIncrement;
+use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\Session;
 
 class StepIncrementController extends Controller
 {
@@ -139,7 +140,9 @@ class StepIncrementController extends Controller
             $step_increments->salary_diff             = $request['monthlyDifference'];
             $step_increments->save();
             
-        return redirect()->back()->with('success', true);
+            Session::flash('success', true);
+
+            return redirect()->to(route('step-increment.edit', $step_increments->id));
     }
 
     /**

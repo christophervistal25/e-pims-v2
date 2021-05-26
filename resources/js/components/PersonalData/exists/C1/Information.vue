@@ -391,6 +391,7 @@
                 "
                 id="citizenship"
                 v-model="personal_data.citizenship"
+                @input="citizenChange"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               >
                 <option value="FILIPINO">FILIPINO</option>
@@ -405,10 +406,7 @@
               {{ errors.citizenship }}
             </p>
           </div>
-          <div
-            class="col-lg-4"
-            v-if="personal_data.citizenship == 'DUAL CITIZEN'"
-          >
+          <div class="col-lg-4" v-if="onCitizenDual">
             <label for="citizenshipby" class="form-group has-float-label mb-0">
               <select
                 class="form-control custom-select"
@@ -429,16 +427,13 @@
             </p>
           </div>
 
-          <div
-            class="col-lg-4"
-            v-if="personal_data.citizenship == 'DUAL CITIZEN'"
-          >
+          <div class="col-lg-4" v-if="onCitizenDual">
             <label for="countries" class="form-group has-float-label mb-0">
-              <select
-                class="form-control custom-select"
+              <v-select
                 id="countries"
-                :class="!errors.hasOwnProperty('country') ? '' : 'is-invalid'"
                 v-model="personal_data.country"
+                :options="countries"
+                :class="!errors.hasOwnProperty('country') ? '' : 'is-invalid'"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               >
                 <option
@@ -448,7 +443,7 @@
                 >
                   {{ country }}
                 </option>
-              </select>
+              </v-select>
               <span><strong>INDICATE COUNTRY</strong></span>
             </label>
             <p class="text-danger text-sm">{{ errors.country }}</p>
@@ -865,6 +860,7 @@ export default {
   },
   data() {
     return {
+      onCitizenDual: false,
       isShow: false,
       isShowNameExtension: false,
       isLoading: false,
@@ -882,6 +878,17 @@ export default {
     };
   },
   methods: {
+    citizenChange(e) {
+      let selectedCitizenShip = e.target.value;
+
+      if (selectedCitizenShip == "DUAL CITIZEN") {
+        this.onCitizenDual = true;
+      } else {
+        this.onCitizenDual = false;
+      }
+
+      this.personal_data.citizenship = selectedCitizenShip;
+    },
     provinceChange(province) {
       // Since the province value change we need to fetch cities by selected province code.
       if (!_.isEmpty(province)) {
@@ -949,6 +956,11 @@ export default {
     window.axios
       .get("/api/countries")
       .then((response) => (this.countries = response.data));
+  },
+  mounted() {
+    if (this.personal_data.citizenship === "DUAL CITIZEN") {
+      this.onCitizenDual = true;
+    }
   },
 };
 </script>

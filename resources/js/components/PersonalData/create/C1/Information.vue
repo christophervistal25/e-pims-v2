@@ -461,7 +461,13 @@
             v-if="personal_data.citizenship == 'DUAL CITIZEN'"
           >
             <label for="countries" class="form-group has-float-label mb-0">
-              <select
+              <v-select
+                label="name"
+                v-model="personal_data.country"
+                :options="countries"
+                id="resProvince"
+              ></v-select>
+              <!-- <select
                 class="form-control custom-select"
                 id="countries"
                 :class="!errors.hasOwnProperty('country') ? '' : 'is-invalid'"
@@ -475,7 +481,7 @@
                 >
                   {{ country }}
                 </option>
-              </select>
+              </select> -->
               <span
                 ><strong>INDICATE COUNTRY</strong
                 ><span class="text-danger"><strong>*</strong></span></span
@@ -1040,34 +1046,6 @@ export default {
 
       this.$emit("next-panel-family-background");
     }
-  },
-  watch: {
-    data: function (currentDataPassed) {
-      // If employee is present then the user want to generate a pds with selected employee.
-      if (currentDataPassed) {
-        this.personal_data.surname = currentDataPassed.lastname;
-        this.personal_data.firstname = currentDataPassed.firstname;
-        this.personal_data.middlename = currentDataPassed.middlename;
-        this.personal_data.nameExtension = currentDataPassed.extension;
-        this.personal_data.dateOfBirth = currentDataPassed.date_birth;
-        this.personal_data.placeOfBirth = currentDataPassed.place_birth;
-        this.personal_data.sex = currentDataPassed.sex.toUpperCase();
-        this.personal_data.status = currentDataPassed.civil_status.toUpperCase();
-        this.personal_data.height = currentDataPassed.height;
-        this.personal_data.weight = currentDataPassed.weight;
-        this.personal_data.bloodType = currentDataPassed.blood_type;
-        this.personal_data.gsisIdNo = currentDataPassed.gsis_id_no;
-        this.personal_data.pagibigIdNo = currentDataPassed.pag_ibig_no;
-        this.personal_data.philHealthIdNo = currentDataPassed.philhealth_no;
-        this.personal_data.sssIdNo = currentDataPassed.sss_no;
-        this.personal_data.tinIdNo = currentDataPassed.tin_no;
-        this.personal_data.agencyEmpIdNo = currentDataPassed.agency_employee_no;
-        this.personal_data.citizenship = currentDataPassed.citizenship.toUpperCase();
-        this.personal_data.telephoneNumber = currentDataPassed.telephone_no;
-        this.personal_data.mobileNumber = currentDataPassed.mobile_no;
-        this.personal_data.emailAddress = currentDataPassed.email_address;
-      }
-    },
   },
   created() {
     window.axios

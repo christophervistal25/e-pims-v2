@@ -309,12 +309,12 @@
                                     class="ml-3 fas fa-caret-down text-sm text-right"></i></a>
                             <ul style="display: none;">
                                 <li>
-                                    <a class='text-decoration-none mr-2' href="{{  route('plantilla.index') }}">
+                                    <a class='text-decoration-none mr-2' href="{{  route('plantilla-of-position.index') }}">
                                         Plantilla of Position
                                     </a>
                                 </li>
                                 <li>
-                                    <a class='text-decoration-none mr-2' href="{{  route('plantilla.index') }}">
+                                    <a class='text-decoration-none mr-2' href="{{  route('plantilla-of-position.index') }}">
                                         Plantilla of Personnel
                                     </a>
                                 </li>

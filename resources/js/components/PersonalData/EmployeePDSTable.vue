@@ -102,9 +102,9 @@
 
             <a
               :href="`/employee/create/${item.employee_id}/personal/data/sheet`"
-              class="btn btn-primary rounded-circle text-white mr-2"
+              class="btn btn-success rounded-circle text-white mr-2"
             >
-              <i class="la la-plus font-weight-bold"></i>
+              <i class="fas fa-edit"></i>
             </a>
 
             <a

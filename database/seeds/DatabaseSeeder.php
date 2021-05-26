@@ -12,16 +12,16 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            // RefNameExtensionSeeder::class,
-            // TypeSeeder::class,
-            // RefStatusSeeder::class,
+            RefNameExtensionSeeder::class,
+            TypeSeeder::class,
+            RefStatusSeeder::class,
             // EmployeeSeeder::class,
-            // OfficeSeeder::class,
-            // SalaryGradeSeeder::class,
+            OfficeSeeder::class,
+            SalaryGradeSeeder::class,
             PositionSeeder::class,
-            // ProvinceSeeder::class,
-            // CitySeeder::class,
-            // BarangaySeeder::class,
+            ProvinceSeeder::class,
+            CitySeeder::class,
+            BarangaySeeder::class,
             // PlantillaSeeder::class,
             ]);
     }
