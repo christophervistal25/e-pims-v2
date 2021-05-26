@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Salary Adjustment')
+@section('title', 'Salary Adjustment Individual')
 @prepend('page-css')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
@@ -17,7 +17,7 @@
 <div class="kanban-board card mb-0">
     <div class="card-body">
         <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
-           
+
             <form action="/salary-adjustment" method="post" id="salaryAdjustmentForm">
                 @csrf
                     <div class="row">
@@ -35,7 +35,7 @@
 
                         <div class="form-group col-12 col-lg-4">
                             <label>Employee Name</label>
-                            <select value="" class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" 
+                            <select value="" class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}"
                             name="employeeName" data-live-search="true" id="employeeName" data-size="5">
                             <option></option>
                             @foreach($employee as $employees)
@@ -74,7 +74,7 @@
                             <div id='salary-grade-error-message' class='text-danger'>
                             </div>
                         </div>
-                        
+
                         <div class="form-group col-12 col-lg-4">
                             <label>Step No</label>
                             <input class="form-control" value="" name="stepNo" id="stepNo" type="text" readonly>
@@ -105,7 +105,7 @@
                             <div id='salary-previous-error-message' class='text-danger'>
                             </div>
                         </div>
-                        
+
                         <div class="form-group col-12 col-lg-4">
                         <label>Salary New<span class="text-danger">*</span></label>
                         <div class="input-group mb-3">
@@ -139,7 +139,7 @@
                         </div>
 
                 </div>
-                
+
             <form>
         </div>
 
@@ -179,7 +179,7 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    $(document).on("click", ".delete", function() { 
+    $(document).on("click", ".delete", function() {
         let $ele = $(this).parent().parent();
         let id= $(this).attr("value");;
         let url = /salary-adjustment/;

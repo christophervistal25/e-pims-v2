@@ -37,16 +37,16 @@ class PlantillaController extends Controller
     //position display sg
     public function positionSalaryGrade($position_id)
     {
-        return Position::with('salary_grade')->find($position_id); 
+        return Position::with('salary_grade')->find($position_id);
     }
 
     // add position function
     public function addPosition(Request $request){
            $this->validate($request, [
-            'positionCode'  => 'required|unique:positions,position_code', 
-            'positionName'  => 'required|unique:positions,position_name', 
-            'salaryGrades'  => 'required|in:' . implode(',',range(1, 33)), 
-            'positionShortName'  => 'required', 
+            'positionCode'  => 'required|unique:positions,position_code',
+            'positionName'  => 'required|unique:positions,position_name',
+            'salaryGrades'  => 'required|in:' . implode(',',range(1, 33)),
+            'positionShortName'  => 'required',
         ]);
         $addPosition = new Position;
         $addPosition->position_code     = $request['positionCode'];
