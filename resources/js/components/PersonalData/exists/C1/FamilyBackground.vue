@@ -186,7 +186,11 @@
                   v-model="
                     personal_data.family_background.spouse_business_address
                   "
-                  style="text-transform: uppercase outline: none; box-shadow: 0px 0px 0px transparent"
+                  style="
+                    text-transform: uppercase;
+                    outline: none;
+                    box-shadow: 0px 0px 0px transparent;
+                  "
                 />
                 <span><strong>SPOUSE'S BUSINESS ADDRESS</strong></span>
               </label>
