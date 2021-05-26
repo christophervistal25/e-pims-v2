@@ -102,7 +102,12 @@
           </div>
           <div class="col-lg-2">
             <label for="nameextension" class="form-group has-float-label mb-0">
-              <select
+              <v-select
+                v-model="personal_data.nameExtension"
+                :options="nameExtensions"
+              >
+              </v-select>
+              <!-- <select
                 type="text"
                 id="nameextension"
                 v-model="personal_data.nameExtension"
@@ -133,7 +138,7 @@
                 >
                   III
                 </option>
-              </select>
+              </select> -->
               <span><strong>EXTENSION NAME</strong></span>
             </label>
 
@@ -877,7 +882,6 @@ import "vue-select/dist/vue-select.css";
 import _ from "lodash";
 export default {
   components: { NameExtensionModal },
-  props: ["data", "nameExtensions"],
   data() {
     return {
       isShow: false,
@@ -925,6 +929,7 @@ export default {
         permanentProvince: "",
         permanentZipCode: "",
       },
+      nameExtensions: [],
       countries: [],
       provinces: [],
       cities: [],
@@ -1055,6 +1060,10 @@ export default {
     window.axios
       .get("/api/countries")
       .then((response) => (this.countries = response.data));
+
+    window.axios.get("/api/name/extensions").then((response) => {
+      this.nameExtensions = response.data;
+    });
   },
 };
 </script>

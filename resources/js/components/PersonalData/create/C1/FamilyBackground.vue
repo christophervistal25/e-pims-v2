@@ -112,7 +112,11 @@
             </div>
             <div class="col-lg-2">
               <label for="snameexten" class="form-group has-float-label mb-0">
-                <select
+                <v-select
+                  v-model="familyBackground.snameexten"
+                  :options="nameExtensions"
+                ></v-select>
+                <!-- <select
                   type="text"
                   id="snameexten"
                   v-model="familyBackground.snameexten"
@@ -143,7 +147,7 @@
                   >
                     III
                   </option>
-                </select>
+                </select> -->
                 <span><strong>EXTENSION NAME</strong></span>
               </label>
             </div>
@@ -154,7 +158,9 @@
               >
                 <i class="fas fa-plus text-sm"></i>
               </button> -->
-              <name-extension-modal></name-extension-modal>
+              <name-extension-modal
+                @nameext-modal-dismiss="closeSpouseNameExtensionModal"
+              ></name-extension-modal>
             </div>
           </div>
           <div class="row pl-3 pr-3">
@@ -374,43 +380,18 @@
           </div>
           <div class="col-lg-2">
             <label for="fnameexten" class="form-group has-float-label mb-0">
-              <select
-                type="text"
-                id="fnameexten"
+              <v-select
                 v-model="familyBackground.fnameexten"
-                class="form-control custom-select"
-                :class="
-                  !errors.hasOwnProperty('fnameexten') ? '' : 'is-invalid'
-                "
-                style="outline: none; box-shadow: 0px 0px 0px transparent"
+                :options="nameExtensions"
               >
-                <option value="" readonly selected>
-                  Please Select Extension Name
-                </option>
-                <option
-                  :selected="familyBackground.fnameexten === 'JR'"
-                  value="JR"
-                >
-                  JR
-                </option>
-                <option
-                  :selected="familyBackground.fnameexten === 'SR'"
-                  value="SR"
-                >
-                  SR
-                </option>
-                <option
-                  :selected="familyBackground.fnameexten === 'III'"
-                  value="III"
-                >
-                  III
-                </option>
-              </select>
+              </v-select>
               <span><strong>EXTENSION NAME</strong></span>
             </label>
           </div>
           <div class="col-lg-1">
-            <name-extension-modal></name-extension-modal>
+            <name-extension-modal
+              @nameext-modal-dismiss="closeFatherNameExtensionModal"
+            ></name-extension-modal>
           </div>
         </div>
 
@@ -565,6 +546,7 @@ export default {
         mfirstname: "",
         mmiddlename: "",
       },
+      nameExtensions: [],
       errors: {},
     };
   },
@@ -640,6 +622,9 @@ export default {
   },
   created() {
     this.noOfSpouseFields = this.spouse.length;
+    window.axios
+      .get("/api/name/extensions/")
+      .then((response) => (this.nameExtensions = response.data));
   },
   mounted() {
     if (localStorage.getItem("family_background")) {
