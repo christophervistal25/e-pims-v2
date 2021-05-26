@@ -5,7 +5,7 @@
         <strong>FAMILY BACKGROUND</strong>
       </div>
       <div class="table-responsive">
-        <table class="table table-nowrap">
+        <table class="table table-nowrap" v-if="employee.family_background">
           <thead>
             <tr>
               <th>Name</th>
@@ -41,7 +41,7 @@
               </td>
             </tr>
 
-            <tr v-if="employee.family_background.spouse_firstname">
+            <tr v-if="employee.family_background">
               <td class="text-capitalize">
                 {{ employee.family_background.spouse_firstname }}
                 {{ employee.family_background.spouse_middlename }}

@@ -170,7 +170,7 @@
           <div class="text col-auto">
             <li>
               <div class="text">
-                {{ employee.email || "N/A" }}
+                {{ employee.email_address || "N/A" }}
               </div>
             </li>
           </div>

@@ -15,7 +15,7 @@
           <div class="col-lg-auto">
             <li>
               <div class="text" style="text-transform: uppercase">
-                {{ employee.residential_no || "N/A" }}
+                {{ employee.residential_house_no || "N/A" }}
               </div>
             </li>
           </div>
@@ -48,7 +48,7 @@
           <div class="col-lg-auto">
             <li>
               <div class="text">
-                {{ employee.residential_province || "N/A" }}
+                {{ employee.residential_province_text || "N/A" }}
               </div>
             </li>
           </div>
@@ -58,7 +58,7 @@
           <div class="col-lg-auto">
             <li>
               <div class="text">
-                {{ employee.residential_city || "N/A" }}
+                {{ employee.residential_city_text || "N/A" }}
               </div>
             </li>
           </div>
@@ -69,7 +69,7 @@
           <div class="col-lg-auto">
             <li>
               <div class="text">
-                {{ employee.residential_barangay || "N/A" }}
+                {{ employee.residential_barangay_text || "N/A" }}
               </div>
             </li>
           </div>
@@ -99,7 +99,7 @@
           <div class="col-lg-auto">
             <li>
               <div class="text" style="text-transform: uppercase">
-                {{ employee.permanent_no || "N/A" }}
+                {{ employee.permanent_house_no || "N/A" }}
               </div>
             </li>
           </div>
@@ -132,7 +132,7 @@
           <div class="col-lg-auto">
             <li>
               <div class="text">
-                {{ employee.permanent_province || "N/A" }}
+                {{ employee.permanent_province_text || "N/A" }}
               </div>
             </li>
           </div>
@@ -142,7 +142,7 @@
           <div class="col-lg-auto">
             <li>
               <div class="text">
-                {{ employee.permanent_city || "N/A" }}
+                {{ employee.permanent_city_text || "N/A" }}
               </div>
             </li>
           </div>
@@ -153,7 +153,7 @@
           <div class="col-lg-auto">
             <li>
               <div class="text">
-                {{ employee.permanent_barangay || "N/A" }}
+                {{ employee.permanent_barangay_text || "N/A" }}
               </div>
             </li>
           </div>

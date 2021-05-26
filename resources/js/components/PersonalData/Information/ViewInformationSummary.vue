@@ -52,7 +52,14 @@
                     <li>
                       <div class="title">Email:</div>
                       <div class="text">
-                        <a href="">{{ employee.email || "-" }}</a>
+                        <a
+                          :href="
+                            employee.email_address
+                              ? `mail:to` + employee.email_address
+                              : 'javascript::void(0)'
+                          "
+                          >{{ employee.email_address || "-" }}</a
+                        >
                       </div>
                     </li>
                     <li>
