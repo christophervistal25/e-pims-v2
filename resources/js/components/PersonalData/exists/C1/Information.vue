@@ -39,7 +39,6 @@
                 class="form-control"
                 :class="!errors.hasOwnProperty('surname') ? '' : 'is-invalid'"
                 id="surname"
-                placeholder="Enter Surname"
                 v-model="personal_data.lastname"
                 style="
                   text-transform: uppercase;
@@ -62,7 +61,6 @@
                 type="text"
                 class="form-control"
                 id="firstname"
-                placeholder="Enter First Name"
                 :class="errors.firstname ? 'is-invalid' : ''"
                 v-model="personal_data.firstname"
                 style="
@@ -89,7 +87,6 @@
                   !errors.hasOwnProperty('middlename') ? '' : 'is-invalid'
                 "
                 id="middlename"
-                placeholder="Enter Middle Name"
                 v-model="personal_data.middlename"
                 style="
                   text-transform: uppercase;
@@ -167,7 +164,6 @@
                 :class="
                   !errors.hasOwnProperty('placeOfBirth') ? '' : 'is-invalid'
                 "
-                placeholder="Enter Place of Birth"
                 v-model="personal_data.place_birth"
                 style="
                   text-transform: uppercase;
@@ -240,7 +236,6 @@
                 id="height"
                 :class="!errors.hasOwnProperty('height') ? '' : 'is-invalid'"
                 class="form-control"
-                placeholder="Enter height in meter"
                 v-model="personal_data.height"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
@@ -258,7 +253,6 @@
                 :class="!errors.hasOwnProperty('weight') ? '' : 'is-invalid'"
                 id="weight"
                 class="form-control"
-                placeholder="Enter weight in kilogram"
                 v-model="personal_data.weight"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
@@ -279,7 +273,6 @@
                 id="bloodtype"
                 maxlength="3"
                 :class="errors.hasOwnProperty('bloodType') ? 'is-invalid' : ''"
-                placeholder="Enter bloodtype"
                 v-model="personal_data.blood_type"
                 style="
                   text-transform: uppercase;
@@ -304,7 +297,6 @@
                 type="text"
                 id="gsisidno"
                 class="form-control"
-                placeholder="Enter GSIS ID No."
                 v-model="personal_data.gsis_id_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
@@ -317,7 +309,6 @@
                 type="text"
                 id="pagibigidno"
                 class="form-control"
-                placeholder="Enter PAG-IBIG ID No."
                 v-model="personal_data.pag_ibig_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
@@ -330,7 +321,6 @@
                 type="text"
                 id="philhealthidno"
                 class="form-control"
-                placeholder="Enter PHILHEALTH ID No."
                 v-model="personal_data.philhealth_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
@@ -345,7 +335,6 @@
                 type="text"
                 id="sssidno"
                 class="form-control"
-                placeholder="Enter SSS ID No."
                 v-model="personal_data.sss_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
@@ -359,7 +348,6 @@
                 type="text"
                 id="tinidno"
                 class="form-control"
-                placeholder="Enter TIN ID No."
                 v-model="personal_data.tin_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
@@ -373,7 +361,6 @@
                 type="text"
                 id="agencyempidno"
                 class="form-control"
-                placeholder="Enter agency employee no."
                 v-model="personal_data.agency_employee_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
@@ -455,7 +442,6 @@
                 type="text"
                 id="telno"
                 class="form-control"
-                placeholder="Optional"
                 v-model="personal_data.telephone_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
@@ -471,7 +457,6 @@
                 "
                 id="mobileno"
                 class="form-control"
-                placeholder="Enter Mobile Number"
                 v-model="personal_data.mobile_no"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
@@ -490,7 +475,6 @@
                 type="email"
                 id="email"
                 class="form-control"
-                placeholder="Optional"
                 v-model="personal_data.email_address"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
@@ -515,7 +499,6 @@
                 v-model="personal_data.residential_house_no"
                 id="lotno"
                 class="form-control"
-                placeholder="Enter house/block/lot no."
                 style="
                   text-transform: uppercase;
                   outline: none;
@@ -534,7 +517,6 @@
                 v-model="personal_data.residential_street"
                 id="street"
                 class="form-control"
-                placeholder="Enter Street"
                 style="
                   text-transform: uppercase;
                   outline: none;
@@ -551,7 +533,6 @@
                 v-model="personal_data.residential_village"
                 id="subdivision"
                 class="form-control"
-                placeholder="Enter Subdivision or Village"
                 style="
                   text-transform: uppercase;
                   outline: none;
@@ -637,7 +618,6 @@
                     ? ''
                     : 'is-invalid'
                 "
-                placeholder="Enter Zip Code"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
               <span
@@ -677,7 +657,6 @@
                 v-model="personal_data.permanent_house_no"
                 :readonly="isSameAsAbove ? true : false"
                 class="form-control"
-                placeholder="Enter house/block/lot no."
                 style="
                   text-transform: uppercase;
                   outline: none;
@@ -697,7 +676,6 @@
                 v-model="personal_data.permanent_street"
                 :readonly="isSameAsAbove ? true : false"
                 class="form-control"
-                placeholder="Enter Street"
                 style="
                   text-transform: uppercase;
                   outline: none;
@@ -718,7 +696,6 @@
                 v-model="personal_data.permanent_village"
                 :readonly="isSameAsAbove ? true : false"
                 class="form-control"
-                placeholder="Enter Subdivision or Village"
                 style="
                   text-transform: uppercase;
                   outline: none;
@@ -807,7 +784,6 @@
                 "
                 :disabled="isSameAsAbove ? true : false"
                 class="form-control"
-                placeholder="Enter Zip Code"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
               <span

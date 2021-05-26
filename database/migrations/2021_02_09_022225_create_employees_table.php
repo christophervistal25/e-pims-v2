@@ -38,6 +38,8 @@ class CreateEmployeesTable extends Migration
             $table->string('dbp_account_no')->default('*')->nullable();
             $table->string('agency_employee_no')->default('*')->nullable();
             $table->string('citizenship')->nullable();
+            $table->string('citizenship_by')->nullable();
+            $table->string('indicate_country')->nullable();
             $table->string('residential_house_no')->nullable();
             $table->string('residential_street')->nullable();
             $table->string('residential_village')->nullable();

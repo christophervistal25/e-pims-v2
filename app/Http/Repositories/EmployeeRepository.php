@@ -45,6 +45,8 @@ class EmployeeRepository
                 'tin_no'               => $data['tinIdNo'],
                 'agency_employee_no'   => $data['agencyEmpIdNo'],
                 'citizenship'          => $data['citizenship'],
+                'citizenship_by'       => $data['citizenshipBy'],
+                'indicate_country'     => $data['country'],
                 'residential_house_no' => $data['residentialLotNo'],
                 'residential_street'   => $data['residentialStreet'],
                 'residential_village'  => $data['residentialSubdivision'],

@@ -38,6 +38,8 @@ class Employee extends Model
         'dbp_account_no',
         'agency_employee_no',
         'citizenship',
+        'citizenship_by',
+        'indicate_country',
         'residential_house_no',
         'residential_street',
         'residential_village',
