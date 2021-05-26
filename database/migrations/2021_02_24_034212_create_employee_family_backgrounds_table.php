@@ -28,7 +28,7 @@ class CreateEmployeeFamilyBackgroundsTable extends Migration
             $table->string('father_lastname')->nullable();
             $table->string('father_middlename')->nullable();
             $table->string('father_extension')->nullable();
-            $table->string('mother_maidenname')->nullable();
+            // $table->string('mother_maidenname')->nullable();
             $table->string('mother_lastname')->nullable();
             $table->string('mother_firstname')->nullable();
             $table->string('mother_middlename')->nullable();

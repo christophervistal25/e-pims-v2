@@ -164,7 +164,7 @@ class EmployeeRepository
         $employeeFamilyBackground->father_lastname               = $data['fsurname'];
         $employeeFamilyBackground->father_middlename             = $data['fmiddlename'];
         $employeeFamilyBackground->father_extension              = $data['fnameexten'];
-        $employeeFamilyBackground->mother_maidenname             = $data['msurname'];
+        // $employeeFamilyBackground->mother_maidenname             = $data['msurname'];
         $employeeFamilyBackground->mother_lastname               = $data['msurname'];
         $employeeFamilyBackground->mother_firstname              = $data['mfirstname'];
         $employeeFamilyBackground->mother_middlename             = $data['mmiddlename'];
@@ -195,7 +195,7 @@ class EmployeeRepository
         $family_background->father_lastname               = $data['father_lastname'];
         $family_background->father_middlename             = $data['father_middlename'];
         $family_background->father_extension              = $data['father_extension'];
-        $family_background->mother_maidenname             = $data['mother_maidenname'];
+        // $family_background->mother_maidenname             = $data['mother_maidenname'];
         $family_background->mother_lastname               = $data['mother_lastname'];
         $family_background->mother_firstname              = $data['mother_firstname'];
         $family_background->mother_middlename             = $data['mother_middlename'];
