@@ -77,14 +77,16 @@
                   personal_data.educational_background.elementary_period_from
                 "
                 :class="
-                  !errors.hasOwnProperty('eperiodFrom') ? '' : 'is-invalid'
+                  !errors.hasOwnProperty('elementary_period_from')
+                    ? ''
+                    : 'is-invalid'
                 "
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
               <span><strong>PERIOD OF ATTENDANCE (FROM)</strong></span>
             </label>
             <p class="text-danger text-sm">
-              {{ errors.eperiodFrom }}
+              {{ errors.elementary_period_from }}
             </p>
           </div>
 
@@ -97,13 +99,17 @@
                 v-model="
                   personal_data.educational_background.elementary_period_to
                 "
-                :class="!errors.hasOwnProperty('eperiodTo') ? '' : 'is-invalid'"
+                :class="
+                  !errors.hasOwnProperty('elementary_period_to')
+                    ? ''
+                    : 'is-invalid'
+                "
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
               <span><strong>PERIOD OF ATTENDANCE (TO)</strong></span>
             </label>
             <p class="text-danger text-sm">
-              {{ errors.eperiodTo }}
+              {{ errors.elementary_period_to }}
             </p>
           </div>
         </div>
@@ -150,12 +156,16 @@
                         yearMaxLength
                       );
                   "
-                  :class="!errors.hasOwnProperty('eyrGrad') ? '' : 'is-invalid'"
+                  :class="
+                    !errors.hasOwnProperty('elementary_year_graduated')
+                      ? ''
+                      : 'is-invalid'
+                  "
                 />
                 <span><strong>YEAR GRADUATED</strong></span>
               </label>
               <p class="text-danger text-sm">
-                {{ errors.eyrGrad }}
+                {{ errors.elementary_year_graduated }}
               </p>
             </div>
 
@@ -242,13 +252,15 @@
                   personal_data.educational_background.secondary_period_from
                 "
                 :class="
-                  !errors.hasOwnProperty('speriodFrom') ? '' : 'is-invalid'
+                  !errors.hasOwnProperty('secondary_period_from')
+                    ? ''
+                    : 'is-invalid'
                 "
               />
               <span><strong>PERIOD OF ATTENDANCE (FROM)</strong></span>
             </label>
             <p class="text-danger text-sm">
-              {{ errors.speriodFrom }}
+              {{ errors.secondary_period_from }}
             </p>
           </div>
 
@@ -262,12 +274,16 @@
                 v-model="
                   personal_data.educational_background.secondary_period_to
                 "
-                :class="!errors.hasOwnProperty('speriodTo') ? '' : 'is-invalid'"
+                :class="
+                  !errors.hasOwnProperty('secondary_period_to')
+                    ? ''
+                    : 'is-invalid'
+                "
               />
               <span><strong>PERIOD OF ATTENDANCE (TO)</strong></span>
             </label>
             <p class="text-danger text-sm">
-              {{ errors.speriodTo }}
+              {{ errors.secondary_period_to }}
             </p>
           </div>
         </div>
@@ -302,25 +318,28 @@
                   style="outline: none; box-shadow: 0px 0px 0px transparent"
                   v-model="
                     personal_data.educational_background
-                      .secondary_highest_level_units_earned
+                      .secondary_year_graduated
                   "
                   @input="
                     if (
                       personal_data.educational_background
-                        .secondary_highest_level_units_earned.length >
-                      yearMaxLength
+                        .secondary_year_graduated.length > yearMaxLength
                     )
-                      personal_data.educational_background.secondary_highest_level_units_earned = personal_data.educational_background.secondary_highest_level_units_earned.slice(
+                      personal_data.educational_background.secondary_year_graduated = personal_data.educational_background.secondary_year_graduated.slice(
                         0,
                         yearMaxLength
                       );
                   "
-                  :class="!errors.hasOwnProperty('syrGrad') ? '' : 'is-invalid'"
+                  :class="
+                    !errors.hasOwnProperty('secondary_year_graduated')
+                      ? ''
+                      : 'is-invalid'
+                  "
                 />
                 <span><strong>YEAR GRADUATED</strong></span>
               </label>
               <p class="text-danger text-sm">
-                {{ errors.syrGrad }}
+                {{ errors.secondary_year_graduated }}
               </p>
             </div>
 
@@ -412,14 +431,16 @@
                     .vocational_trade_course_period_from
                 "
                 :class="
-                  !errors.hasOwnProperty('vperiodFrom') ? '' : 'is-invalid'
+                  !errors.hasOwnProperty('vocational_trade_course_period_from')
+                    ? ''
+                    : 'is-invalid'
                 "
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
               <span><strong>PERIOD OF ATTENDANCE (FROM)</strong></span>
             </label>
             <p class="text-danger text-sm">
-              {{ errors.vperiodFrom }}
+              {{ errors.vocational_trade_course_period_from }}
             </p>
           </div>
           <div class="col-lg-3">
@@ -433,12 +454,16 @@
                   personal_data.educational_background
                     .vocational_trade_course_period_to
                 "
-                :class="!errors.hasOwnProperty('vperiodTo') ? '' : 'is-invalid'"
+                :class="
+                  !errors.hasOwnProperty('vocational_trade_course_period_to')
+                    ? ''
+                    : 'is-invalid'
+                "
               />
               <span><strong>PERIOD OF ATTENDANCE (TO)</strong></span>
             </label>
             <p class="text-danger text-sm">
-              {{ errors.vperiodTo }}
+              {{ errors.vocational_trade_course_period_to }}
             </p>
           </div>
         </div>
@@ -487,11 +512,19 @@
                       yearMaxLength
                     );
                 "
-                :class="!errors.hasOwnProperty('vyrGrad') ? '' : 'is-invalid'"
+                :class="
+                  !errors.hasOwnProperty(
+                    'vocational_trade_course_year_graduated'
+                  )
+                    ? ''
+                    : 'is-invalid'
+                "
               />
               <span><strong>YEAR GRADUATED</strong></span>
             </label>
-            <p class="text-danger text-sm">{{ errors.vyrGrad }}</p>
+            <p class="text-danger text-sm">
+              {{ errors.vocational_trade_course_year_graduated }}
+            </p>
           </div>
 
           <div class="col-lg-6">
@@ -577,12 +610,14 @@
                   personal_data.educational_background.college_period_from
                 "
                 :class="
-                  !errors.hasOwnProperty('cperiodFrom') ? '' : 'is-invalid'
+                  !errors.hasOwnProperty('college_period_from')
+                    ? ''
+                    : 'is-invalid'
                 "
               />
               <span><strong>PERIOD OF ATTENDANCE (FROM)</strong></span>
             </label>
-            <p class="text-danger">{{ errors.cperiodFrom }}</p>
+            <p class="text-danger">{{ errors.college_period_from }}</p>
           </div>
           <div class="col-lg-3">
             <label for="cperiodTo" class="form-group has-float-label">
@@ -592,13 +627,17 @@
                 type="month"
                 class="form-control"
                 v-model="personal_data.educational_background.college_period_to"
-                :class="!errors.hasOwnProperty('cperiodTo') ? '' : 'is-invalid'"
+                :class="
+                  !errors.hasOwnProperty('college_period_to')
+                    ? ''
+                    : 'is-invalid'
+                "
                 placeholder=""
               />
               <span><strong>PERIOD OF ATTENDANCE (TO)</strong></span>
             </label>
             <p class="text-danger text-sm">
-              {{ errors.cperiodTo }}
+              {{ errors.college_period_to }}
             </p>
           </div>
         </div>
@@ -646,12 +685,16 @@
                       yearMaxLength
                     );
                 "
-                :class="!errors.hasOwnProperty('cyrGrad') ? '' : 'is-invalid'"
+                :class="
+                  !errors.hasOwnProperty('college_year_graduated')
+                    ? ''
+                    : 'is-invalid'
+                "
               />
               <span><strong>YEAR GRADUATED</strong></span>
             </label>
             <p class="text-danger text-sm">
-              {{ errors.cyrGrad }}
+              {{ errors.college_year_graduated }}
             </p>
           </div>
 
@@ -742,13 +785,15 @@
                     .graduate_studies_period_from
                 "
                 :class="
-                  !errors.hasOwnProperty('gperiodFrom') ? '' : 'is-invalid'
+                  !errors.hasOwnProperty('graduate_studies_period_from')
+                    ? ''
+                    : 'is-invalid'
                 "
               />
               <span><strong>PERIOD OF ATTENDANCE (FROM)</strong></span>
             </label>
             <p class="text-danger text-sm">
-              {{ errors.gperiodFrom }}
+              {{ errors.graduate_studies_period_from }}
             </p>
           </div>
           <div class="col-lg-3">
@@ -762,12 +807,16 @@
                   personal_data.educational_background
                     .graduate_studies_period_to
                 "
-                :class="!errors.hasOwnProperty('gperiodTo') ? '' : 'is-invalid'"
+                :class="
+                  !errors.hasOwnProperty('graduate_studies_period_to')
+                    ? ''
+                    : 'is-invalid'
+                "
               />
               <span><strong>PERIOD OF ATTENDANCE (TO)</strong></span>
             </label>
             <p class="text-danger text-sm">
-              {{ errors.gperiodTo }}
+              {{ errors.graduate_studies_period_to }}
             </p>
           </div>
         </div>
@@ -812,11 +861,17 @@
                       yearMaxLength
                     );
                 "
-                :class="!errors.hasOwnProperty('gyrGrad') ? '' : 'is-invalid'"
+                :class="
+                  !errors.hasOwnProperty('graduate_studies_year_graduated')
+                    ? ''
+                    : 'is-invalid'
+                "
               />
               <span><strong>YEAR GRADUATED</strong></span>
             </label>
-            <p class="text-danger text-sm">{{ errors.gyrGrad }}</p>
+            <p class="text-danger text-sm">
+              {{ errors.graduate_studies_year_graduated }}
+            </p>
           </div>
 
           <div class="col-lg-6">
@@ -887,11 +942,12 @@ export default {
       window.axios
         .post(
           "/employee/exists/personal/educational/background/store",
-          this.personal_data
+          this.personal_data.educational_background
         )
         .then((response) => {
           this.isLoading = false;
           this.isComplete = true;
+          this.errors = {};
           this.$emit("next_tab");
         })
         .catch((error) => {
@@ -905,6 +961,48 @@ export default {
           }
         });
     },
+  },
+  created() {
+    if (!this.personal_data.educational_background) {
+      this.personal_data.educational_background = {
+        employee_id: this.personal_data.employee_id,
+        elementary_name: "",
+        elementary_education: "",
+        elementary_period_from: "",
+        elementary_period_to: "",
+        elementary_highest_level_units_earned: "",
+        elementary_year_graduated: "",
+        elementary_scholarship: "",
+        secondary_name: "",
+        secondary_education: "",
+        secondary_period_from: "",
+        secondary_period_to: "",
+        secondary_highest_level_units_earned: "",
+        secondary_year_graduated: "",
+        secondary_scholarship: "",
+        vocational_trade_course_name: "",
+        vocational_education: "",
+        vocational_trade_course_period_from: "",
+        vocational_trade_course_period_to: "",
+        vocational_trade_course_highest_level_units_earned: "",
+        vocational_trade_course_year_graduated: "",
+        vocational_trade_course_scholarship: "",
+        college_name: "",
+        college_education: "",
+        college_period_from: "",
+        college_period_to: "",
+        college_highest_level_units_earned: "",
+        college_year_graduated: "",
+        college_scholarship: "",
+        graduate_studies_name: "",
+        graduate_studies_education: "",
+        graduate_studies_period_from: "",
+        graduate_studies_period_to: "",
+        graduate_studies_highest_level_units_earned: "",
+        graduate_studies_year_graduated: "",
+        graduate_studies_scholarship: "",
+      };
+    }
   },
 };
 </script>
