@@ -27,13 +27,13 @@
             <input
               id="spouse"
               type="checkbox"
-              :checked="true"
+              :checked="hasSpouse"
               @click="hasSpouse = !hasSpouse"
             />
             Do you have spouse? If YES, kindly tick the checkbox.
           </label>
         </div>
-        <section v-if="true" v-show="!hasSpouse">
+        <section v-if="hasSpouse" v-show="hasSpouse">
           <div class="pl-3 pr-3">
             <div
               class="alert alert-secondary text-center font-weight-bold"
@@ -48,7 +48,9 @@
                 <input
                   type="text"
                   class="form-control"
-                  :class="errors.hasOwnProperty('ssurname') ? 'is-invalid' : ''"
+                  :class="
+                    errors.hasOwnProperty('spouse_lastname') ? 'is-invalid' : ''
+                  "
                   id="ssurname"
                   v-model="personal_data.family_background.spouse_lastname"
                   value=""
@@ -64,7 +66,7 @@
                 >
               </label>
               <p class="text-danger text-sm">
-                {{ errors.ssurname }}
+                {{ errors.spouse_lastname }}
               </p>
             </div>
             <div class="col-lg-3">
@@ -73,7 +75,9 @@
                   type="text"
                   class="form-control"
                   :class="
-                    errors.hasOwnProperty('sfirstname') ? 'is-invalid' : ''
+                    errors.hasOwnProperty('spouse_firstname')
+                      ? 'is-invalid'
+                      : ''
                   "
                   id="sfirstname"
                   v-model="personal_data.family_background.spouse_firstname"
@@ -90,7 +94,7 @@
                 >
               </label>
               <p class="text-danger text-sm">
-                {{ errors.sfirstname }}
+                {{ errors.spouse_firstname }}
               </p>
             </div>
             <div class="col-lg-3">
@@ -98,6 +102,11 @@
                 <input
                   type="text"
                   class="form-control"
+                  :class="
+                    errors.hasOwnProperty('spouse_middlename')
+                      ? 'is-invalid'
+                      : ''
+                  "
                   id="smiddleame"
                   v-model="personal_data.family_background.spouse_middlename"
                   value=""
@@ -109,6 +118,9 @@
                 />
                 <span><strong>SPOUSE'S MIDDLE NAME</strong></span>
               </label>
+              <p class="text-danger text-sm">
+                {{ errors.spouse_middlename }}
+              </p>
             </div>
             <div class="col-lg-2">
               <label for="snameexten" class="form-group has-float-label">
@@ -233,7 +245,7 @@
                     type="date"
                     class="form-control"
                     :class="
-                      errors.hasOwnProperty(`spouse.${index}.cdateOfBirth`)
+                      errors.hasOwnProperty(`spouse.${index}.date_of_birth`)
                         ? 'is-invalid'
                         : ''
                     "
@@ -243,7 +255,7 @@
                   />
                   <div class="text-right">
                     <span class="text-danger text-xs">{{
-                      errors[`spouse.${index}.cdateOfBirth`]
+                      errors[`spouse.${index}.date_of_birth`]
                     }}</span>
                   </div>
                 </td>
@@ -284,7 +296,9 @@
                 type="text"
                 class="form-control"
                 id="fsurname"
-                :class="!errors.hasOwnProperty('fsurname') ? '' : 'is-invalid'"
+                :class="
+                  !errors.hasOwnProperty('father_lastname') ? '' : 'is-invalid'
+                "
                 v-model="personal_data.family_background.father_lastname"
                 value=""
                 style="
@@ -295,7 +309,7 @@
               />
               <span><strong>FATHER'S SURNAME</strong></span>
             </label>
-            <p class="text-danger text-sm">{{ errors.fsurname }}</p>
+            <p class="text-danger text-sm">{{ errors.father_lastname }}</p>
           </div>
           <div class="col-lg-3">
             <label for="ffirstname" class="form-group has-float-label">
@@ -304,7 +318,7 @@
                 class="form-control"
                 id="ffirstname"
                 :class="
-                  !errors.hasOwnProperty('ffirstname') ? '' : 'is-invalid'
+                  !errors.hasOwnProperty('father_firstname') ? '' : 'is-invalid'
                 "
                 v-model="personal_data.family_background.father_firstname"
                 value=""
@@ -317,7 +331,7 @@
               <span><strong>FATHER'S FIRST NAME</strong></span>
             </label>
             <p class="text-danger text-sm">
-              {{ errors.ffirstname }}
+              {{ errors.father_firstname }}
             </p>
           </div>
           <div class="col-lg-3">
@@ -326,7 +340,9 @@
                 type="text"
                 class="form-control"
                 :class="
-                  !errors.hasOwnProperty('fmiddlename') ? '' : 'is-invalid'
+                  !errors.hasOwnProperty('father_middlename')
+                    ? ''
+                    : 'is-invalid'
                 "
                 id="fmiddlename"
                 v-model="personal_data.family_background.father_middlename"
@@ -340,7 +356,7 @@
               <span><strong>FATHER'S MIDDLE NAME</strong></span>
             </label>
             <p class="text-danger text-sm">
-              {{ errors.fmiddlename }}
+              {{ errors.father_middlename }}
             </p>
           </div>
           <div class="col-lg-2">
@@ -379,7 +395,9 @@
               <input
                 type="text"
                 class="form-control"
-                :class="!errors.hasOwnProperty('msurname') ? '' : 'is-invalid'"
+                :class="
+                  !errors.hasOwnProperty('mother_lastname') ? '' : 'is-invalid'
+                "
                 id="msurname"
                 v-model="personal_data.family_background.mother_lastname"
                 value=""
@@ -391,14 +409,14 @@
               />
               <span><strong>MOTHER'S MAIDEN SURNAME</strong></span>
             </label>
-            <p class="text-danger text-sm">{{ errors.msurname }}</p>
+            <p class="text-danger text-sm">{{ errors.mother_lastname }}</p>
           </div>
           <div class="col-lg-3">
             <label for="mfirstname" class="form-group has-float-label">
               <input
                 type="text"
                 :class="
-                  !errors.hasOwnProperty('mfirstname') ? '' : 'is-invalid'
+                  !errors.hasOwnProperty('mother_firstname') ? '' : 'is-invalid'
                 "
                 class="form-control"
                 id="mfirstname"
@@ -413,7 +431,7 @@
               <span><strong>MOTHER'S FIRST NAME</strong></span>
             </label>
             <p class="text-danger text-sm">
-              {{ errors.mfirstname }}
+              {{ errors.mother_firstname }}
             </p>
           </div>
           <div class="col-lg-3">
@@ -423,7 +441,9 @@
                 class="form-control"
                 id="mmiddlename"
                 :class="
-                  !errors.hasOwnProperty('mmiddlename') ? '' : 'is-invalid'
+                  !errors.hasOwnProperty('mother_middlename')
+                    ? ''
+                    : 'is-invalid'
                 "
                 v-model="personal_data.family_background.mother_middlename"
                 value=""
@@ -436,7 +456,7 @@
               <span><strong>MOTHER'S MAIDEN MIDDLE NAME</strong></span>
             </label>
             <p class="text-danger text-sm">
-              {{ errors.mmiddlename }}
+              {{ errors.mother_middlename }}
             </p>
           </div>
         </div>
@@ -512,9 +532,11 @@ export default {
     },
     submitPersonFamilyBackground() {
       this.isLoading = true;
+      this.personal_data.family_background.has_spouse = this.hasSpouse;
       this.personal_data.family_background.spouse = this.spouse;
       this.personal_data.family_background.spouse_extension = this.spouseNameExtension;
       this.personal_data.family_background.father_extension = this.fatherNameExtension;
+
       window.axios
         .post(
           "/employee/exists/personal/family/background/store",
@@ -577,6 +599,7 @@ export default {
     } else {
       this.spouseNameExtension = this.personal_data.family_background.spouse_extension;
       this.fatherNameExtension = this.personal_data.family_background.father_extension;
+      this.hasSpouse = this.personal_data.spouse_child.length !== 0;
     }
   },
 };

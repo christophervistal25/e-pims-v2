@@ -110,6 +110,26 @@ class PersonalDataSheetController extends Controller
 
     public function existingEmployeeStoreFamilyBackground(Request $request)
     {
+        $this->validate($request, [
+            'has_spouse'                    => ['nullable'],
+            'spouse_lastname'               => ['required_if:has_spouse,true'],
+            'spouse_firstname'              => ['required_if:has_spouse,true'],
+            'spouse_middlename'             => [],
+            'spouse_extension'              => [],
+            'spouse_occupation'             => [],
+            'spouse_employer_business_name' => [],
+            'spouse_business_address'       => [],
+            'spouse_telephone_number'       => [],
+            'spouse.*.name'                 => ['nullable'],
+            'spouse.*.date_of_birth'        => ['required_with:spouse.*.name'],
+            'father_lastname'               => 'required|regex:/^[a-zA-Z ].+$/u',
+            'father_firstname'              => 'required_with:father_lastname|regex:/^[a-zA-Z ].+$/u',
+            'father_middlename'             => 'nullable|regex:/^[a-zA-Z ].+$/u',
+            'father_extension'              => '',
+            'mother_lastname'               => 'required|regex:/^[a-zA-Z ].+$/u',
+            'mother_firstname'              => 'required_with:mother_lastname|regex:/^[a-zA-Z ].+$/u',
+            'mother_middlename'             => 'nullable|regex:/^[a-zA-Z ].+$/u',
+        ], [], ['spouse.*.name' => 'child fullname', 'spouse.*.date_of_birth' => 'date of birth']);
         return $this->employeeRepository->existEmployeeAddFamilybackground($request->all());
     }
 

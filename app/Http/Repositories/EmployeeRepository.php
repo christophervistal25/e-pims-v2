@@ -134,7 +134,7 @@ class EmployeeRepository
     private function insertChildForExistingEmployee(Employee $employee , array $childs = [])
     {
         $childrens = [];
-        $childs = array_filter($childs);
+        $childs = array_filter($childs, 'array_filter');
         
         foreach($childs as $child) {
             $childrens[] = EmployeeSpouseChildren::firstOrNew([
@@ -201,7 +201,7 @@ class EmployeeRepository
         $family_background->mother_lastname               = $data['mother_lastname'];
         $family_background->mother_firstname              = $data['mother_firstname'];
         $family_background->mother_middlename             = $data['mother_middlename'];
-        $family_background->save();
+        $employee->family_background()->save($family_background);
         return $data;
     }
 
