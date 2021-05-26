@@ -76,6 +76,26 @@
           </div>
         </div>
         <div class="row">
+          <div class="col-lg-6 title">Citizenship By</div>
+          <div class="col-auto">
+            <li>
+              <div class="text">
+                {{ employee.citizenship_by || "N/A" }}
+              </div>
+            </li>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 title">Country</div>
+          <div class="col-auto">
+            <li>
+              <div class="text">
+                {{ employee.indicate_country || "N/A" }}
+              </div>
+            </li>
+          </div>
+        </div>
+        <div class="row">
           <div class="col-lg-6 title">Sex</div>
           <div class="text col-6 text-uppercase">
             <li>
