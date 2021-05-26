@@ -20,6 +20,7 @@ class CreatePositionsTable extends Migration
             $table->integer('sg_no');
             $table->string('position_short_name');
             $table->timestamps();
+            $table->softDeletes()->nullable();
         });
     }
 

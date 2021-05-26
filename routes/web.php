@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 
 // Route::get('open-app/{employee_id}', function (string $employeeId) {
-  
+
 // });
 
 
@@ -34,6 +34,7 @@ Route::resource('/plantilla-of-personnel', 'PlantillaController');
 //plantilla of position
 Route::resource('/plantilla-of-position', 'PlantillaOfPositionController');
 Route::get('/plantilla-of-position-list', 'PlantillaOfPositionController@list');
+Route::get('/plantilla-of-position/{id}', 'PlantillaOfPositionController@destroy')->name('plantilla-of-position.delete');
 
 //Increment
 Route::get('/step-increment/list', 'StepIncrementController@list');
