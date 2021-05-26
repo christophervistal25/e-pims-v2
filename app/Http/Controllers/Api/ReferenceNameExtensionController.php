@@ -23,7 +23,7 @@ class ReferenceNameExtensionController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'extension' => ['required', 'unique:ref_name_extensions,extension'],
+            'extension' => ['required', 'unique:ref_name_extensions,extension', 'max:3', 'regex:/^[a-zA-Z].+$/u'],
         ]);
 
         if($validator->fails()) {
