@@ -4,9 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Position extends Model
 {
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
     protected $fillable = ['position_id', 'position_code' ,'position_name', 'salary_grade' ,'position_short_name'];
 
     protected $primaryKey = 'position_id';

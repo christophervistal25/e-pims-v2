@@ -100,6 +100,41 @@ headers: {
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 }
 });
+
+$(document).on("click", ".delete", function() {
+        let $ele = $(this).parent().parent();
+        let id= $(this).attr("value");;
+        let url = /plantilla-of-position/;
+        let dltUrl = url + id;
+            swal({
+                title: "Are you sure you want to delete?",
+                text: "Once deleted, you will not be able to recover this record!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+            if (willDelete) {
+                $.ajax({
+                    url: dltUrl,
+                    type: "DELETE",
+                    cache: false,
+                    data:{
+                        _token:'{{ csrf_token() }}'
+			},
+			success: function(dataResult){
+				var dataResult = JSON.parse(dataResult);
+				if(dataResult.statusCode==200){
+                    $('#plantillaofposition').DataTable().ajax.reload();
+                    swal("Successfully Deleted!", "", "success");
+				}
+			}
+		});
+            } else {
+                swal("Cancel!", "", "error");
+            }
+            });
+	});
 </script>
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>

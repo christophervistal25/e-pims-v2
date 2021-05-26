@@ -136,6 +136,7 @@ $(function() {
     $("#plantillaofposition").DataTable({
         processing: true,
         serverSide: true,
+        columnDefs: [{ width: "10%", targets: 4 }],
         ajax: "/plantilla-of-position-list",
         columns: [
             { data: "position_code", name: "position_code" },
