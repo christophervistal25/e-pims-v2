@@ -258,7 +258,7 @@
 							<a href="#" class='text-decoration-none'><i class="la la-bars"></i> <span>Service Record</span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
 								<li>
-                                    <a class='text-decoration-none mr-2' href="#">
+                                    <a class='text-decoration-none mr-2' href="{{  route('service-records.index') }}">
                                         Maintenance & Monitoring
                                     </a>
                                 </li>

@@ -28,8 +28,9 @@ class PlantillaOfPositionController extends Controller
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
 
-                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-position.edit', $row->position_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm'><i class='la la-edit'></i></a>";
-
+                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-position.edit', $row->position_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
+                        $btn = $btn."<a title='Delete Position' id='delete' value='$row->position_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                        ";
                             return $btn;
                     })
                     ->rawColumns(['action'])
@@ -128,6 +129,13 @@ class PlantillaOfPositionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Position::find($id)->delete();
+        return json_encode(array('statusCode'=>200));
+    }
+
+    public function delete($id)
+    {
+        Position::find($id)->delete();
+        return json_encode(array('statusCode'=>200));
     }
 }
