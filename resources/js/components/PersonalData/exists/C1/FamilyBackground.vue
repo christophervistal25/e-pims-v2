@@ -110,23 +110,22 @@
                 <span><strong>SPOUSE'S MIDDLE NAME</strong></span>
               </label>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-2">
               <label for="snameexten" class="form-group has-float-label">
-                <input
+                <v-select
                   type="text"
-                  maxlength="3"
-                  class="form-control"
-                  id="snameexten"
-                  v-model="personal_data.family_background.spouse_extension"
-                  value=""
-                  style="
-                    text-transform: uppercase;
-                    outline: none;
-                    box-shadow: 0px 0px 0px transparent;
-                  "
-                />
+                  label="name"
+                  v-model="spouseNameExtension"
+                  :options="name_extensions"
+                >
+                </v-select>
                 <span><strong>SPOUSE'S NAME EXTENSION</strong></span>
               </label>
+            </div>
+            <div class="col-lg-1">
+              <name-extension-modal
+                @nameext-modal-dismiss="closeNameExtensionModal"
+              ></name-extension-modal>
             </div>
           </div>
           <div class="row pl-3 pr-3">
@@ -259,6 +258,7 @@
                 </td>
                 <td class="text-center">
                   <button
+                    v-if="index == noOfSpouseFields - 1"
                     class="btn btn-primary rounded-circle"
                     @click="generateNewSpouseField"
                   >
@@ -343,15 +343,12 @@
               {{ errors.fmiddlename }}
             </p>
           </div>
-          <div class="col-lg-3">
+          <div class="col-lg-2">
             <label for="fnameexten" class="form-group has-float-label">
-              <input
-                type="text"
-                maxlength="3"
-                class="form-control"
-                id="fnameexten"
-                v-model="personal_data.family_background.extension"
-                value=""
+              <v-select
+                v-model="fatherNameExtension"
+                label="name"
+                :options="name_extensions"
                 style="
                   text-transform: uppercase;
                   outline: none;
@@ -360,6 +357,11 @@
               />
               <span><strong>FATHER'S NAME EXTENSION</strong></span>
             </label>
+          </div>
+          <div class="col-lg-1">
+            <name-extension-modal
+              @nameext-modal-dismiss="closeNameExtensionModal"
+            ></name-extension-modal>
           </div>
         </div>
 
@@ -469,9 +471,14 @@ export default {
     personal_data: {
       required: true,
     },
+    name_extensions: {
+      required: true,
+    },
   },
   data() {
     return {
+      spouseNameExtension: "",
+      fatherNameExtension: "",
       isLoading: false,
       isComplete: false,
       hasSpouse: false,
@@ -485,6 +492,11 @@ export default {
       familyBackground: {},
       errors: {},
     };
+  },
+  watch: {
+    spouse(from, to) {
+      this.noOfSpouseFields = to.length;
+    },
   },
   methods: {
     generateNewSpouseField() {
@@ -501,6 +513,8 @@ export default {
     submitPersonFamilyBackground() {
       this.isLoading = true;
       this.personal_data.family_background.spouse = this.spouse;
+      this.personal_data.family_background.spouse_extension = this.spouseNameExtension;
+      this.personal_data.family_background.father_extension = this.fatherNameExtension;
       window.axios
         .post(
           "/employee/exists/personal/family/background/store",
@@ -509,11 +523,6 @@ export default {
         .then((response) => {
           this.isLoading = false;
           this.isComplete = true;
-
-          localStorage.setItem(
-            "family_background",
-            JSON.stringify(response.data)
-          );
         })
         .catch((error) => {
           this.isLoading = false;
@@ -526,18 +535,24 @@ export default {
           }
         });
     },
+    openNameExtensionModal() {
+      this.isShowNameExtension = true;
+    },
+    closeNameExtensionModal(newExtension) {
+      if (newExtension) {
+        this.$emit("update-name-extensions", newExtension);
+      }
+      this.isShowNameExtension = false;
+    },
   },
   created() {
     this.noOfSpouseFields =
       this.personal_data.spouse_child.length || this.noOfSpouseFields;
+
     if (this.personal_data.spouse_child.length !== 0) {
       this.spouse = this.personal_data.spouse_child;
-    } else {
-      this.spouse.push({
-        name: "",
-        date_of_birth: "",
-      });
     }
+
     if (!this.personal_data.family_background) {
       this.personal_data.family_background = {
         employee_id: this.personal_data.employee_id,
@@ -559,6 +574,9 @@ export default {
         mother_middlename: "",
         mother_extension: "",
       };
+    } else {
+      this.spouseNameExtension = this.personal_data.family_background.spouse_extension;
+      this.fatherNameExtension = this.personal_data.family_background.father_extension;
     }
   },
 };

@@ -24,6 +24,8 @@
       <exists-family-background
         :show_panel="true"
         :personal_data="employee"
+        @update-name-extensions="updateNameExtensions"
+        :name_extensions="nameExtensions"
         v-if="selectedTab.name === 'C1'"
       ></exists-family-background>
 
