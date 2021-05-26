@@ -62,7 +62,10 @@
           <tbody>
             <tr v-for="(workExperience, index) in workExperience" :key="index">
               <td
-                @click="displayRowErrorMessage(index)"
+                @click="
+                  rowErrors.includes(`${index}.`) &&
+                    displayRowErrorMessage(index)
+                "
                 class="align-middle text-center"
                 :style="rowErrors.includes(`${index}.`) ? 'cursor:pointer' : ''"
                 :class="
@@ -206,10 +209,10 @@
               <td class="jumbotron align-middle">
                 <button
                   v-show="index != 0"
-                  class="btn btn-sm btn-danger font-weight-bold rounded-circle"
+                  class="btn btn-danger rounded-circle"
                   @click="removeField(index)"
                 >
-                  X
+                  <i class="fas fa-times"></i>
                 </button>
               </td>
               <td class="align-middle">
@@ -318,6 +321,7 @@ export default {
         .then((response) => {
           this.isLoading = false;
           this.isComplete = true;
+          this.rowErrors = "";
           this.errors = {};
 
           localStorage.setItem(
@@ -329,6 +333,7 @@ export default {
         .catch((error) => {
           this.isLoading = false;
           this.errors = {};
+          this.rowErrors = "";
           // Check the error status code.
           if (error.response.status === 422) {
             Object.keys(error.response.data.errors).map((field, index) => {
@@ -350,9 +355,11 @@ export default {
 
       for (let [field, error] of Object.entries(this.errors)) {
         if (field.includes(`${index}.`)) {
-          let errorElement = document.createElement("li");
+          let errorElement = document.createElement("p");
+          let horizontalLine = document.createElement("hr");
           errorElement.innerHTML = error;
           parentElement.appendChild(errorElement);
+          parentElement.appendChild(horizontalLine);
         }
       }
 
