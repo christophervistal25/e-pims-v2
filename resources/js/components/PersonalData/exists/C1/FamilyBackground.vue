@@ -27,16 +27,13 @@
             <input
               id="spouse"
               type="checkbox"
-              :checked="personal_data.family_background.spouse_firstname"
+              :checked="true"
               @click="hasSpouse = !hasSpouse"
             />
             Do you have spouse? If YES, kindly tick the checkbox.
           </label>
         </div>
-        <section
-          v-if="personal_data.family_background.spouse_firstname"
-          v-show="!hasSpouse"
-        >
+        <section v-if="true" v-show="!hasSpouse">
           <div class="pl-3 pr-3">
             <div
               class="alert alert-secondary text-center font-weight-bold"
@@ -550,6 +547,28 @@ export default {
         name: "",
         date_of_birth: "",
       });
+    }
+    if (!this.personal_data.family_background) {
+      this.personal_data.family_background = {
+        employee_id: this.personal_data.employee_id,
+        spouse_firstname: "",
+        spouse_lastname: "",
+        spouse_middlename: "",
+        spouse_extension: "",
+        spouse_occupation: "",
+        spouse_employer_business_name: "",
+        spouse_business_address: "",
+        spouse_telephone_number: "",
+        father_firstname: "",
+        father_lastname: "",
+        father_middlename: "",
+        father_extension: "",
+        mother_maidenname: "",
+        mother_lastname: "",
+        mother_firstname: "",
+        mother_middlename: "",
+        mother_extension: "",
+      };
     }
   },
 };
