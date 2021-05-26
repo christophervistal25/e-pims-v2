@@ -8,11 +8,15 @@
         <table class="table table-nowrap">
           <thead>
             <tr>
-              <th class="text-sm">NAME OF ORGANIZATION</th>
-              <th class="text-sm">FROM</th>
-              <th class="text-sm">TO</th>
-              <th class="text-sm">NUMBER OF HOURS</th>
-              <th class="text-sm">POSITION</th>
+              <th class="text-sm text-center">
+                <strong>NAME OF ORGANIZATION</strong>
+              </th>
+              <th class="text-sm text-center"><strong>FROM</strong></th>
+              <th class="text-sm text-center"><strong>TO</strong></th>
+              <th class="text-sm text-center">
+                <strong>NUMBER OF HOURS</strong>
+              </th>
+              <th class="text-sm text-center"><strong>POSITION</strong></th>
             </tr>
           </thead>
           <tbody>
@@ -20,19 +24,19 @@
               v-for="(voluntaryWork, index) in employee.voluntary_work"
               :key="index"
             >
-              <td style="text-transform: uppercase">
+              <td style="text-transform: uppercase" class="text-center">
                 {{ voluntaryWork.name_and_address }}
               </td>
-              <td style="text-transform: uppercase">
+              <td style="text-transform: uppercase" class="text-center">
                 {{ voluntaryWork.inclusive_date_from }}
               </td>
-              <td style="text-transform: uppercase">
+              <td style="text-transform: uppercase" class="text-center">
                 {{ voluntaryWork.inclusive_date_to }}
               </td>
-              <td style="text-transform: uppercase">
+              <td style="text-transform: uppercase" class="text-center">
                 {{ voluntaryWork.no_of_hours }}
               </td>
-              <td style="text-transform: uppercase">
+              <td style="text-transform: uppercase" class="text-center">
                 {{ voluntaryWork.position }}
               </td>
             </tr>

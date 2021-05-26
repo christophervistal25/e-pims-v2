@@ -51,7 +51,6 @@
                   :class="errors.hasOwnProperty('ssurname') ? 'is-invalid' : ''"
                   id="ssurname"
                   v-model="personal_data.family_background.spouse_lastname"
-                  placeholder="Enter Spouse's Surname"
                   value=""
                   style="
                     text-transform: uppercase;
@@ -78,7 +77,6 @@
                   "
                   id="sfirstname"
                   v-model="personal_data.family_background.spouse_firstname"
-                  placeholder="Enter Spouse's First Name"
                   value=""
                   style="
                     text-transform: uppercase;
@@ -102,7 +100,6 @@
                   class="form-control"
                   id="smiddleame"
                   v-model="personal_data.family_background.spouse_middlename"
-                  placeholder="Enter Spouse's Middle Name"
                   value=""
                   style="
                     text-transform: uppercase;
@@ -121,7 +118,6 @@
                   class="form-control"
                   id="snameexten"
                   v-model="personal_data.family_background.spouse_extension"
-                  placeholder="(JR., SR.)"
                   value=""
                   style="
                     text-transform: uppercase;
@@ -140,7 +136,6 @@
                   type="text"
                   class="form-control"
                   id="soccupation"
-                  placeholder="Enter Spouse's Occupation"
                   v-model="personal_data.family_background.spouse_occupation"
                   style="
                     text-transform: uppercase;
@@ -157,7 +152,6 @@
                   type="text"
                   class="form-control"
                   id="sempname"
-                  placeholder="Enter Spouse's Employer/Business Name"
                   v-model="
                     personal_data.family_background
                       .spouse_employer_business_name
@@ -179,11 +173,14 @@
                   type="text"
                   class="form-control"
                   id="sbusadd"
-                  placeholder="Enter Spouse's Business Address"
                   v-model="
                     personal_data.family_background.spouse_business_address
                   "
-                  style="text-transform: uppercase outline: none; box-shadow: 0px 0px 0px transparent"
+                  style="
+                    text-transform: uppercase;
+                    outline: none;
+                    box-shadow: 0px 0px 0px transparent;
+                  "
                 />
                 <span><strong>SPOUSE'S BUSINESS ADDRESS</strong></span>
               </label>
@@ -194,7 +191,6 @@
                   type="text"
                   class="form-control"
                   id="stelno"
-                  placeholder="Enter Spouse's Telephone Number"
                   v-model="
                     personal_data.family_background.spouse_telephone_number
                   "
@@ -290,7 +286,6 @@
                 id="fsurname"
                 :class="!errors.hasOwnProperty('fsurname') ? '' : 'is-invalid'"
                 v-model="personal_data.family_background.father_lastname"
-                placeholder="Enter Father's Surname"
                 value=""
                 style="
                   text-transform: uppercase;
@@ -312,7 +307,6 @@
                   !errors.hasOwnProperty('ffirstname') ? '' : 'is-invalid'
                 "
                 v-model="personal_data.family_background.father_firstname"
-                placeholder="Enter Father's First Name"
                 value=""
                 style="
                   text-transform: uppercase;
@@ -336,7 +330,6 @@
                 "
                 id="fmiddlename"
                 v-model="personal_data.family_background.father_middlename"
-                placeholder="Enter Father's Middle Name"
                 value=""
                 style="
                   text-transform: uppercase;
@@ -387,7 +380,6 @@
                 :class="!errors.hasOwnProperty('msurname') ? '' : 'is-invalid'"
                 id="msurname"
                 v-model="personal_data.family_background.mother_lastname"
-                placeholder="Enter Mother's Maiden Surname"
                 value=""
                 style="
                   text-transform: uppercase;
@@ -409,7 +401,6 @@
                 class="form-control"
                 id="mfirstname"
                 v-model="personal_data.family_background.mother_firstname"
-                placeholder="Enter Mother's First Name"
                 value=""
                 style="
                   text-transform: uppercase;
@@ -433,7 +424,6 @@
                   !errors.hasOwnProperty('mmiddlename') ? '' : 'is-invalid'
                 "
                 v-model="personal_data.family_background.mother_middlename"
-                placeholder="Enter Mother's Maiden Middle Name"
                 value=""
                 style="
                   text-transform: uppercase;

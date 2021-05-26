@@ -15,6 +15,9 @@
     <div class="kanban-board card mb-0">
         <div class="card-body">
             <div id="add" class="page-header {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
+                <div style='padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
+                    <button id="cancelbutton" class="btn btn-primary submit-btn float-right"><i class="fa fa-list"></i> Personnel List</button>
+                </div>
                 <form action="/plantilla" method="post" id="plantillaForm">
                     @csrf
                     <div class="row">
@@ -25,14 +28,14 @@
 
                     <div class="form-group col-12 col-lg-2">
                         <label>Item No<span class="text-danger">*</span></label>
-                        <input value="{{ old('itemNo') }}" class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" name="itemNo" id="itemNo" type="text" placeholder="Item No.">
+                        <input value="{{ old('itemNo') }}" class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" name="itemNo" id="itemNo" type="text" placeholder="">
                         <div id='item-no-error-message' class='text-danger'>
                         </div>
                     </div>
 
                     <div class="form-group col-12 col-lg-2">
                         <label>Old Item No</label>
-                        <input value="{{ old('oldItemNo') }}" class="form-control {{ $errors->has('oldItemNo')  ? 'is-invalid' : ''}}" name="oldItemNo" id="oldItemNo" type="text" placeholder="Old Item No(optional)">
+                        <input value="{{ old('oldItemNo') }}" class="form-control {{ $errors->has('oldItemNo')  ? 'is-invalid' : ''}}" name="oldItemNo" id="oldItemNo" type="text" placeholder="(optional)">
                         <div id='old_item-no-error-message' class='text-danger'>
                         </div>
                     </div>
@@ -68,7 +71,7 @@
 
                     <div class="form-group col-12 col-lg-3">
                         <label>Position Ext</label>
-                        <input value="{{ old('positionTitleExt') }}" placeholder="Position Ext(optional)" class="form-control {{ $errors->has('positionTitleExt')  ? 'is-invalid' : ''}}" name="positionTitleExt" type="text">
+                        <input value="{{ old('positionTitleExt') }}" placeholder="(optional)" class="form-control {{ $errors->has('positionTitleExt')  ? 'is-invalid' : ''}}" name="positionTitleExt" type="text">
                     </div>
 
                     {{-- <div class="form-group col-12 col-lg-3">
@@ -229,7 +232,7 @@
                             <span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>
                             Save
                         </button>
-                        <button style="margin-right:10px;" type="button" id="cancelbutton" class="text-white btn btn-warning submit-btn float-right">Cancel</button>
+                        <button style="margin-right:10px;" type="button" id="cancelbutton1" onclick="myFunction()" class="text-white btn btn-warning submit-btn float-right">Cancel</button>
                     </div>
                 </div>
                 </form>

@@ -37,7 +37,6 @@
                 id="elemNameSchool"
                 type="text"
                 class="form-control"
-                placeholder="Name of School"
                 v-model="personal_data.educational_background.elementary_name"
                 style="
                   text-transform: uppercase;
@@ -55,7 +54,6 @@
                 id="ebasicEduc"
                 type="text"
                 class="form-control"
-                placeholder=""
                 v-model="
                   personal_data.educational_background.elementary_education
                 "
@@ -75,7 +73,6 @@
                 id="eperiodFrom"
                 type="month"
                 class="form-control"
-                placeholder=""
                 v-model="
                   personal_data.educational_background.elementary_period_from
                 "
@@ -97,7 +94,6 @@
                 id="eperiodTo"
                 type="month"
                 class="form-control"
-                placeholder=""
                 v-model="
                   personal_data.educational_background.elementary_period_to
                 "
@@ -119,14 +115,17 @@
                   id="eunitEarned"
                   type="number"
                   class="form-control"
-                  placeholder="(if not graduated)"
                   v-model="
                     personal_data.educational_background
                       .elementary_highest_level_units_earned
                   "
                   style="outline: none; box-shadow: 0px 0px 0px transparent"
                 />
-                <span><strong>HIGHEST LEVEL/ UNIT EARNED</strong></span>
+                <span
+                  ><strong
+                    >HIGHEST LEVEL/ UNIT EARNED (if not graduated)</strong
+                  ></span
+                >
               </label>
             </div>
 
@@ -136,7 +135,6 @@
                   id="eyrGrad"
                   type="number"
                   class="form-control"
-                  placeholder=""
                   style="outline: none; box-shadow: 0px 0px 0px transparent"
                   v-model="
                     personal_data.educational_background
@@ -203,7 +201,6 @@
                 id="snameOfSchool"
                 type="text"
                 class="form-control"
-                placeholder="Name of School"
                 v-model="personal_data.educational_background.secondary_name"
                 style="
                   text-transform: uppercase;
@@ -221,7 +218,6 @@
                 id="sbasicEduc"
                 type="text"
                 class="form-control"
-                placeholder=""
                 v-model="
                   personal_data.educational_background.secondary_education
                 "
@@ -241,7 +237,6 @@
                 id="speriodFrom"
                 type="month"
                 class="form-control"
-                placeholder=""
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
                 v-model="
                   personal_data.educational_background.secondary_period_from
@@ -264,7 +259,6 @@
                 type="month"
                 class="form-control"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
-                placeholder=""
                 v-model="
                   personal_data.educational_background.secondary_period_to
                 "
@@ -286,13 +280,16 @@
                   type="number"
                   style="outline: none; box-shadow: 0px 0px 0px transparent"
                   class="form-control"
-                  placeholder="(if not graduated)"
                   v-model="
                     personal_data.educational_background
                       .secondary_highest_level_units_earned
                   "
                 />
-                <span><strong>HIGHEST LEVEL/ UNIT EARNED</strong></span>
+                <span
+                  ><strong
+                    >HIGHEST LEVEL/ UNIT EARNED (if not graduated)</strong
+                  ></span
+                >
               </label>
             </div>
 
@@ -303,7 +300,6 @@
                   type="number"
                   class="form-control"
                   style="outline: none; box-shadow: 0px 0px 0px transparent"
-                  placeholder=""
                   v-model="
                     personal_data.educational_background
                       .secondary_highest_level_units_earned
@@ -370,7 +366,6 @@
                 id="vanameOfVoc"
                 type="text"
                 class="form-control"
-                placeholder="Name of School"
                 v-model="
                   personal_data.educational_background
                     .vocational_trade_course_name
@@ -434,7 +429,6 @@
                 type="month"
                 class="form-control"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
-                placeholder=""
                 v-model="
                   personal_data.educational_background
                     .vocational_trade_course_period_to
@@ -542,7 +536,6 @@
                 id="canmeOfSchool"
                 type="text"
                 class="form-control"
-                placeholder="Name of School"
                 v-model="personal_data.educational_background.college_name"
                 style="
                   text-transform: uppercase;
@@ -703,7 +696,6 @@
                 id="gnameOfSchool"
                 type="text"
                 class="form-control"
-                placeholder="Name of School"
                 v-model="
                   personal_data.educational_background.graduate_studies_name
                 "

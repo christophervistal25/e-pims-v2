@@ -19,6 +19,31 @@ $(document).ready(function() {
     });
 });
 
+function myFunction() {
+    $("input").val("");
+    $("#salaryGrade")
+        .val("Please Select")
+        .trigger("change");
+    const errorClass = [
+        "#positionCode",
+        "#positionName",
+        "#salaryGrade",
+        "#positionNameShortname"
+    ];
+    $.each(errorClass, function(index, value) {
+        $(`${value}`).removeClass("is-invalid");
+    });
+    const errorMessage = [
+        "#position-code-error-message",
+        "#position-name-no-error-message",
+        "#salary-grade-error-message",
+        "#position-short-name-no-error-message"
+    ];
+    $.each(errorMessage, function(index, value) {
+        $(`${value}`).html("");
+    });
+}
+
 //// add new position
 $(document).ready(function() {
     $("#plantillaOfPositionForm").submit(function(e) {

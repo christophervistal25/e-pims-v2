@@ -471,3 +471,68 @@ $(document).ready(function() {
         $("#employeeID").val(plantilla);
     });
 });
+$(document).ready(function() {
+    $("#cancelbutton1").click(function() {
+        $("#add").attr("class", "page-header d-none");
+        $("#table").attr("class", "page-header");
+    });
+});
+
+//reset
+function myFunction() {
+    $("input").val("");
+    const select = [
+        "#salaryGrade",
+        "#positionTitle",
+        "#currentStepno",
+        "#employeeName",
+        "#officeCode",
+        "#divisionId",
+        "#status"
+    ];
+    $.each(select, function(index, value) {
+        $(`${value}`)
+            .val("Please Select")
+            .trigger("change");
+    });
+    const errorClass = [
+        "#itemNo",
+        "#oldItemNo",
+        "#positionTitle",
+        "#originalAppointment",
+        "#lastPromotion",
+        "#status",
+        "#areaCode",
+        "#areaType",
+        "#areaLevel",
+        "#employeeName",
+        "#salaryGrade",
+        "#stepNo",
+        "#currentSalaryamount",
+        "#officeCode",
+        "#divisionId"
+    ];
+    $.each(errorClass, function(index, value) {
+        $(`${value}`).removeClass("is-invalid");
+    });
+    const errorMessage = [
+        "#item-no-error-message",
+        "#old_item-no-error-message",
+        "#position-title-error-message",
+        "#original-appointment-error-message",
+        "#last-promotion-error-message",
+        "#status-error-message",
+        "#area-code-error-message",
+        "#area-type-error-message",
+        "#area-level-error-message",
+        "#employee-name-error-message",
+        "#salary-grade-error-message",
+        "#steps-error-message",
+        "#salary-amount-error-message",
+        "#office-error-message",
+        "#division-error-message"
+    ];
+    $.each(errorMessage, function(index, value) {
+        $(`${value}`).html("");
+    });
+}

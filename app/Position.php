@@ -55,7 +55,7 @@ class Position extends Model
 
     public function salary_grade()
     {
-        return $this->hasOne(SalaryGrade::class, 'sg_no', 'salary_grade');
+        return $this->hasOne(SalaryGrade::class, 'sg_no', 'sg_no');
     }
     public function service_record()
     {

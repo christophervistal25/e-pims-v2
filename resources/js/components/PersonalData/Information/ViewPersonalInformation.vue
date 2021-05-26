@@ -106,7 +106,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-6 title">Height</div>
+          <div class="col-lg-6 title">Height (m)</div>
           <div class="text col-auto">
             <li>
               <div class="text">
@@ -116,7 +116,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-6 title">Weight</div>
+          <div class="col-lg-6 title">Weight (kg)</div>
           <div class="text col-auto">
             <li>
               <div class="text">

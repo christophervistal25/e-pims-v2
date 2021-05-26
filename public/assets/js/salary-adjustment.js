@@ -294,3 +294,29 @@ $(document).keyup(function() {
     let total = salaryNew - salaryPrevious;
     $("#salaryDifference").val(total.toFixed(2));
 });
+
+$(document).ready(function() {
+    $("#cancelbutton1").click(function() {
+        $("#add").attr("class", "page-header d-none");
+        $("#table").attr("class", "page-header");
+    });
+});
+
+///reset
+function myFunction() {
+    const select = [
+        "#itemNo",
+        "#positionName",
+        "#salaryGrade",
+        "#stepNo",
+        "#salaryPrevious",
+        "#salaryNew",
+        "#salaryDifference"
+    ];
+    $.each(select, function(index, value) {
+        $(`${value}`).val("");
+    });
+    $("#employeeName")
+        .val("Please Select")
+        .trigger("change");
+}

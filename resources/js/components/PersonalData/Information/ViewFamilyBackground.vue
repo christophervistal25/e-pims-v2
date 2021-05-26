@@ -8,8 +8,8 @@
         <table class="table table-nowrap" v-if="employee.family_background">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Relationship</th>
+              <th><strong>Name</strong></th>
+              <th><strong>Relationship</strong></th>
             </tr>
           </thead>
           <tbody>
