@@ -60,6 +60,11 @@
                     class="form-control rounded-0 border-0"
                     placeholder="Input here..."
                     v-model="civil.careerServ"
+                    :class="
+                      errors.hasOwnProperty(`${index}.careerServ`)
+                        ? 'border is-invalid'
+                        : ''
+                    "
                     style="text-transform: uppercase"
                   />
                 </td>
@@ -221,6 +226,7 @@ export default {
           this.errors = {};
           // Check the error status code.
           if (error.response.status === 422) {
+            console.log(error.response.data);
             Object.keys(error.response.data.errors).map((field, index) => {
               let [fieldMessage] = error.response.data.errors[field];
               this.errors[field] = fieldMessage;

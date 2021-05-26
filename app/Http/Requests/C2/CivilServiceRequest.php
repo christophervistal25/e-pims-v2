@@ -24,6 +24,7 @@ class CivilServiceRequest extends FormRequest
     public function rules()
     {
         return [
+            '*.careerServ'  => ['required'],
             '*.dateOfExam'  => ['required_with:*.careerServ'],
             '*.placeOfExam' => ['required_with:*.careerServ'],
             '*.rating'      => ['nullable', 'numeric', 'between:0,99.99'],

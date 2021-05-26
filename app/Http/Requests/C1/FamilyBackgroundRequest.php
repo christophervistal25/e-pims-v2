@@ -33,7 +33,7 @@ class FamilyBackgroundRequest extends FormRequest
             'sempname'     => [],
             'sbusadd'      => [],
             'stelno'       => [],
-            'cname'        => [],
+            'spouse.*.cname'        => ['nullable'],
             'spouse.*.cdateOfBirth' => ['required_with:spouse.*.cname'],
             'fsurname'     => 'required|regex:/^[a-zA-Z ].+$/u',
             'ffirstname'   => 'required_with:fsurname|regex:/^[a-zA-Z ].+$/u',

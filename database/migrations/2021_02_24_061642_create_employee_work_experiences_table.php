@@ -20,8 +20,8 @@ class CreateEmployeeWorkExperiencesTable extends Migration
             $table->date('to')->nullable();
             $table->string('position_title')->nullable();
             $table->string('office')->nullable();
-            $table->bigInteger('monthly_salary')->nullable();
-            $table->bigInteger('salary_job_pay_grade')->nullable();
+            $table->string('monthly_salary')->nullable();
+            $table->string('salary_job_pay_grade')->nullable();
             $table->string('status_of_appointment')->nullable();
             $table->enum('government_service', ['Y', 'N'])->default('Y');
             $table->timestamps();

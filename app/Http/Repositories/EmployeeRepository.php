@@ -117,11 +117,11 @@ class EmployeeRepository
     private function insertChilds(Employee $employee, array $childs = [])
     {
         $childrens = [];
-        $childs = array_filter($childs);
+        $childs = array_filter($childs, 'array_filter');
         
         foreach($childs as $child) {
             $childrens[] = new EmployeeSpouseChildren([
-                'name' => $child['cname'],
+                'name'          => $child['cname'],
                 'date_of_birth' => $child['cdateOfBirth'],
             ]);
         }
@@ -299,7 +299,7 @@ class EmployeeRepository
         $employee = Employee::find($employeeId);
         $records = [];
         foreach($civilRecords as $record) {
-            if(!is_null($record['rating'])) {
+            if(!is_null($record['careerServ'])) {
                 $records[] = EmployeeCivilService::firstOrNew(
                     [
 
