@@ -20,8 +20,12 @@ class StepIncrementController extends Controller
             ->leftJoin('positions', 'step_increments.position_id', '=', 'positions.position_id')
             ->select('id', 'date_step_increment', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'position_name', 'item_no', 'date_latest_appointment',
             DB::raw('CONCAT(sg_no_from, "-" , step_no_from) AS sg_from_and_step_from'), 'salary_amount_from', DB::raw('CONCAT(sg_no_to, "-" , step_no_to) AS sg_to_and_step_to'), 'salary_amount_to', 'salary_diff')
-            ->where('deleted_at', null)
+            // ->where('deleted_at', null)
             ->get();
+
+            if($data->count() === 0){
+                $data = $data->where('delete_at', null);
+            }
 
             return Datatables::of($data)->addColumn('action', function($row) {
                 $btnEdit = "<a href='". route('step-increment.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-info btn-sm'><i class='la la-edit' title='Edit'></i></a>"; 
