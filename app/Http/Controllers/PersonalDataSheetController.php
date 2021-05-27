@@ -64,7 +64,7 @@ class PersonalDataSheetController extends Controller
             'lastname'             => 'required|regex:/^[a-zA-Z ].+$/u',
             'firstname'            => 'required|regex:/^[a-zA-Z ].+$/u',
             'middlename'           => ['nullable', 'regex:/^[a-zA-Z].+$/u', 'min:2'],
-            'extension'            => ['nullable', 'max:3' , 'regex:/^[a-zA-Z].+$/u'],
+            'extension'            => ['nullable'],
             'date_birth'           => 'required',
             'place_birth'          => 'required',
             'sex'                  => 'required|in:' . implode(',', $sex),

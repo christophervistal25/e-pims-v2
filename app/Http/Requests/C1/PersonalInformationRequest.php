@@ -31,7 +31,7 @@ class PersonalInformationRequest extends FormRequest
             'surname'                => 'required|regex:/^[a-zA-Z ].+$/u',
             'firstname'              => 'required|regex:/^[a-zA-Z ].+$/u',
             'middlename'             => ['nullable', 'regex:/^[a-zA-Z].+$/u', 'min:2'],
-            'nameExtension'          => ['nullable', 'max:3' , 'regex:/^[a-zA-Z].+$/u'],
+            'nameExtension'          => ['nullable'],
             'dateOfBirth'            => 'required',
             'placeOfBirth'           => 'required',
             'sex'                    => 'required|in:' . implode(',', $sex),
