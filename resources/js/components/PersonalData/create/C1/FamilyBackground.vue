@@ -52,11 +52,7 @@
                   id="ssurname"
                   v-model="familyBackground.ssurname"
                   value=""
-                  style="
-                    text-transform: uppercase;
-                    outline: none;
-                    box-shadow: 0px 0px 0px transparent;
-                  "
+                  style="outline: none; box-shadow: 0px 0px 0px transparent"
                 />
                 <span
                   ><strong>SURNAME</strong
@@ -78,11 +74,7 @@
                   id="sfirstname"
                   v-model="familyBackground.sfirstname"
                   value=""
-                  style="
-                    text-transform: uppercase;
-                    outline: none;
-                    box-shadow: 0px 0px 0px transparent;
-                  "
+                  style="outline: none; box-shadow: 0px 0px 0px transparent"
                 />
                 <span
                   ><strong>FIRST NAME</strong
@@ -101,11 +93,7 @@
                   id="smiddleame"
                   v-model="familyBackground.smiddleame"
                   value=""
-                  style="
-                    text-transform: uppercase;
-                    outline: none;
-                    box-shadow: 0px 0px 0px transparent;
-                  "
+                  style="outline: none; box-shadow: 0px 0px 0px transparent"
                 />
                 <span><strong>MIDDLE NAME</strong></span>
               </label>

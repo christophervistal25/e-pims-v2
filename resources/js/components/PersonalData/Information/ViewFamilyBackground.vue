@@ -56,7 +56,7 @@
             </tr>
 
             <tr v-for="(child, index) in employee.spouse_child" :key="index">
-              <td>{{ child.name }}</td>
+              <td class="text-capitalize">{{ child.name }}</td>
               <td>Child</td>
             </tr>
           </tbody>

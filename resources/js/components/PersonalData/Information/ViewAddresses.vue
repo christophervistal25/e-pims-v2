@@ -68,7 +68,7 @@
           <div class="col-lg-6 title">Residential Barangay</div>
           <div class="col-lg-auto">
             <li>
-              <div class="text">
+              <div class="text" style="text-transform: uppercase">
                 {{ employee.residential_barangay_text || "N/A" }}
               </div>
             </li>
@@ -152,7 +152,7 @@
           <div class="col-lg-6 title">Permanent Barangay</div>
           <div class="col-lg-auto">
             <li>
-              <div class="text">
+              <div class="text" style="text-transform: uppercase">
                 {{ employee.permanent_barangay_text || "N/A" }}
               </div>
             </li>

@@ -23,7 +23,7 @@
         :id="isComplete ? 'familyBackground' : ''"
       >
         <div class="form-check mt-3">
-          <label for="#spouse">
+          <label for="spouse">
             <input
               id="spouse"
               type="checkbox"
@@ -286,7 +286,7 @@
             class="alert alert-secondary text-center font-weight-bold"
             role="alert"
           >
-            FATHER'S INFORMATION
+            FATHER'S NAME
           </div>
         </div>
         <div class="row pr-3 pl-3">
@@ -386,7 +386,7 @@
             class="alert alert-secondary text-center font-weight-bold"
             role="alert"
           >
-            MOTHER'S INFORMATION
+            MOTHER'S MAIDEN NAME
           </div>
         </div>
         <div class="row pr-3 pl-3">
