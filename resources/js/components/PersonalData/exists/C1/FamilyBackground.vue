@@ -307,7 +307,10 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span><strong>FATHER'S SURNAME</strong></span>
+              <span
+                ><strong>FATHER'S SURNAME</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">{{ errors.father_lastname }}</p>
           </div>
@@ -328,7 +331,10 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span><strong>FATHER'S FIRST NAME</strong></span>
+              <span
+                ><strong>FATHER'S FIRST NAME</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.father_firstname }}
@@ -407,7 +413,10 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span><strong>MOTHER'S MAIDEN SURNAME</strong></span>
+              <span
+                ><strong>MOTHER'S MAIDEN SURNAME</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">{{ errors.mother_lastname }}</p>
           </div>
@@ -428,7 +437,10 @@
                   box-shadow: 0px 0px 0px transparent;
                 "
               />
-              <span><strong>MOTHER'S FIRST NAME</strong></span>
+              <span
+                ><strong>MOTHER'S FIRST NAME</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.mother_firstname }}
