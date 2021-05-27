@@ -142,16 +142,10 @@
                   type="number"
                   class="form-control"
                   style="outline: none; box-shadow: 0px 0px 0px transparent"
-                  v-model="
-                    personal_data.educational_background
-                      .elementary_year_graduated
-                  "
+                  v-model="yearElementaryGraduated"
                   @input="
-                    if (
-                      personal_data.educational_background
-                        .elementary_year_graduated.length > yearMaxLength
-                    )
-                      personal_data.educational_background.elementary_year_graduated = personal_data.educational_background.elementary_year_graduated.slice(
+                    if (yearElementaryGraduated.length > yearMaxLength)
+                      yearElementaryGraduated = yearElementaryGraduated.slice(
                         0,
                         yearMaxLength
                       );
@@ -316,16 +310,10 @@
                   type="number"
                   class="form-control"
                   style="outline: none; box-shadow: 0px 0px 0px transparent"
-                  v-model="
-                    personal_data.educational_background
-                      .secondary_year_graduated
-                  "
+                  v-model="yearSecondaryGraduated"
                   @input="
-                    if (
-                      personal_data.educational_background
-                        .secondary_year_graduated.length > yearMaxLength
-                    )
-                      personal_data.educational_background.secondary_year_graduated = personal_data.educational_background.secondary_year_graduated.slice(
+                    if (yearSecondaryGraduated.length > yearMaxLength)
+                      yearSecondaryGraduated = yearSecondaryGraduated.slice(
                         0,
                         yearMaxLength
                       );
@@ -497,17 +485,10 @@
                 class="form-control"
                 placeholder=""
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
-                v-model="
-                  personal_data.educational_background
-                    .vocational_trade_course_year_graduated
-                "
+                v-model="yearVocationalGraduated"
                 @input="
-                  if (
-                    personal_data.educational_background
-                      .vocational_trade_course_year_graduated.length >
-                    yearMaxLength
-                  )
-                    personal_data.educational_background.vocational_trade_course_year_graduated = personal_data.educational_background.vocational_trade_course_year_graduated.slice(
+                  if (yearVocationalGraduated.length > yearMaxLength)
+                    yearVocationalGraduated = yearVocationalGraduated.slice(
                       0,
                       yearMaxLength
                     );
@@ -672,15 +653,10 @@
                 type="number"
                 class="form-control"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
-                v-model="
-                  personal_data.educational_background.college_year_graduated
-                "
+                v-model="yearCollegeGraduated"
                 @input="
-                  if (
-                    personal_data.educational_background.college_year_graduated
-                      .length > yearMaxLength
-                  )
-                    personal_data.educational_background.college_year_graduated = personal_data.educational_background.college_year_graduated.slice(
+                  if (yearCollegeGraduated.length > yearMaxLength)
+                    yearCollegeGraduated = yearCollegeGraduated.slice(
                       0,
                       yearMaxLength
                     );
@@ -847,19 +823,10 @@
                 type="number"
                 class="form-control"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
-                v-model="
-                  personal_data.educational_background
-                    .graduate_studies_year_graduated
-                "
+                v-model="yearGraduated"
                 @input="
-                  if (
-                    personal_data.educational_background
-                      .graduate_studies_year_graduated.length > yearMaxLength
-                  )
-                    personal_data.educational_background.graduate_studies_year_graduated = personal_data.educational_background.graduate_studies_year_graduated.slice(
-                      0,
-                      yearMaxLength
-                    );
+                  if (yearGraduated.length > yearMaxLength)
+                    yearGraduated = yearGraduated.slice(0, yearMaxLength);
                 "
                 :class="
                   !errors.hasOwnProperty('graduate_studies_year_graduated')
@@ -933,12 +900,24 @@ export default {
       isComplete: false,
       isLoading: false,
       yearMaxLength: 4,
+      yearGraduated: "",
+      yearCollegeGraduated: "",
+      yearVocationalGraduated: "",
+      yearSecondaryGraduated: "",
+      yearElementaryGraduated: "",
       errors: {},
     };
   },
   methods: {
     submitEducationalBackground() {
       this.isLoading = true;
+
+      this.personal_data.educational_background.graduate_studies_year_graduated = this.yearGraduated;
+      this.personal_data.educational_background.college_year_graduated = this.yearCollegeGraduated;
+      this.personal_data.educational_background.vocational_trade_course_year_graduated = this.yearVocationalGraduated;
+      this.personal_data.educational_background.secondary_year_graduated = this.yearSecondaryGraduated;
+      this.personal_data.educational_background.elementary_year_graduated = this.yearElementaryGraduated;
+
       window.axios
         .post(
           "/employee/exists/personal/educational/background/store",
@@ -1002,6 +981,12 @@ export default {
         graduate_studies_year_graduated: "",
         graduate_studies_scholarship: "",
       };
+    } else {
+      this.yearGraduated = this.personal_data.educational_background.graduate_studies_year_graduated;
+      this.yearCollegeGraduated = this.personal_data.educational_background.college_year_graduated;
+      this.yearVocationalGraduated = this.personal_data.educational_background.vocational_trade_course_year_graduated;
+      this.yearSecondaryGraduated = this.personal_data.educational_background.secondary_year_graduated;
+      this.yearElementaryGraduated = this.personal_data.educational_background.elementary_year_graduated;
     }
   },
 };
