@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\SalaryGrade;
+use App\Setting;
 
 class SalaryAdjustmentController extends Controller
 {
@@ -14,4 +15,11 @@ class SalaryAdjustmentController extends Controller
                             ->where('sg_year', $sg_year)
                             ->first(['sg_year' ,'sg_step' . $sg_step]);
     }
+    public function printEdit(Request $request){
+        $Setting = Setting::find($request['key_id']);
+        $Setting->key_value = $request['key_value'];
+        $Setting->save();
+        return response()->json(['success'=>true]);
+    }
 }
+
