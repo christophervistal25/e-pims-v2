@@ -61,7 +61,10 @@
           <tbody>
             <tr v-for="(workExperience, index) in workExperience" :key="index">
               <td
-                @click="displayRowErrorMessage(index)"
+                @click="
+                  rowErrors.includes(`${index}.`) &&
+                    displayRowErrorMessage(index)
+                "
                 class="align-middle text-center"
                 :style="rowErrors.includes(`${index}.`) ? 'cursor:pointer' : ''"
                 :class="
@@ -78,6 +81,9 @@
                 <input
                   type="date"
                   class="form-control rounded-0 border-0"
+                  :class="
+                    errors.hasOwnProperty(`${index}.from`) ? 'is-invalid' : ''
+                  "
                   placeholder="FROM"
                   v-model="workExperience.from"
                 />
@@ -86,6 +92,9 @@
                 <input
                   type="date"
                   class="form-control rounded-0 border-0"
+                  :class="
+                    errors.hasOwnProperty(`${index}.to`) ? 'is-invalid' : ''
+                  "
                   placeholder="TO"
                   v-model="workExperience.to"
                 />
@@ -94,6 +103,11 @@
                 <input
                   type="text"
                   class="form-control rounded-0 border-0 text-uppercase"
+                  :class="
+                    errors.hasOwnProperty(`${index}.position_title`)
+                      ? 'is-invalid'
+                      : ''
+                  "
                   placeholder="Input"
                   v-model="workExperience.position_title"
                 />
@@ -104,6 +118,9 @@
                   class="form-control rounded-0 border-0 text-uppercase"
                   placeholder="e.g Tandag"
                   v-model="workExperience.office"
+                  :class="
+                    errors.hasOwnProperty(`${index}.office`) ? 'is-invalid' : ''
+                  "
                 />
               </td>
 
@@ -113,12 +130,22 @@
                   class="form-control rounded-0 border-0"
                   placeholder=""
                   v-model="workExperience.monthly_salary"
+                  :class="
+                    errors.hasOwnProperty(`${index}.monthly_salary`)
+                      ? 'is-invalid'
+                      : ''
+                  "
                 />
               </td>
               <td>
                 <input
                   type="number"
                   class="form-control rounded-0 border-0"
+                  :class="
+                    errors.hasOwnProperty(`${index}.salary_job_pay_grade`)
+                      ? 'is-invalid'
+                      : ''
+                  "
                   placeholder=""
                   v-model="workExperience.salary_job_pay_grade"
                 />
@@ -127,12 +154,14 @@
                 <input
                   type="text"
                   class="form-control rounded-0 border-0 text-uppercase"
+                  :class="
+                    errors.hasOwnProperty(`${index}.status_of_appointment`)
+                      ? 'is-invalid'
+                      : ''
+                  "
                   placeholder="e.g J.O"
                   v-model="workExperience.status_of_appointment"
                 />
-                <!-- <p class="text-danger text-sm">
-                                    {{ errors[`${index}.statOfApp`] }}
-                                </p> -->
               </td>
               <td>
                 <input
@@ -141,6 +170,11 @@
                   maxlength="1"
                   placeholder=""
                   v-model="workExperience.government_service"
+                  :class="
+                    errors.hasOwnProperty(`${index}.government_service`)
+                      ? 'is-invalid'
+                      : ''
+                  "
                 />
               </td>
               <td class="jumbotron align-middle">
@@ -258,9 +292,7 @@ export default {
         .then((response) => {
           this.isLoading = false;
           this.isComplete = true;
-
           this.errors = {};
-
           this.$emit("next_tab");
         })
         .catch((error) => {
@@ -287,9 +319,11 @@ export default {
 
       for (let [field, error] of Object.entries(this.errors)) {
         if (field.includes(`${index}.`)) {
-          let errorElement = document.createElement("li");
+          let errorElement = document.createElement("p");
+          let horizontalLine = document.createElement("hr");
           errorElement.innerHTML = error;
           parentElement.appendChild(errorElement);
+          parentElement.appendChild(horizontalLine);
         }
       }
 
@@ -303,6 +337,20 @@ export default {
   },
   created() {
     this.workExperience = this.personal_data.work_experience;
+
+    // Default value for work experience
+    this.workExperience.push({
+      from: "",
+      to: "",
+      position: "",
+      department: "",
+      monthly_salary: "",
+      pay_grade: "",
+      status_of_appointment: "",
+      government_service: "",
+      employee_id: this.personal_data.employee_id,
+    });
+
     this.noOfFields = this.workExperience.length;
   },
 };

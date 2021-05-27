@@ -207,6 +207,27 @@ class PersonalDataSheetController extends Controller
 
     public function existingEmployeeStoreWorkExperience(Request $request)
     {
+        $this->validate($request, [
+            '*.from'                  => ['nullable', 'required_with:*.status_of_appointment', 'required_with:*.government_service', 'required_with:*.to', 'date', 'before:*.to'],
+            '*.to'                    => ['nullable', 'required_with:*.status_of_appointment', 'required_with:*.government_service', 'required_with:*.from', 'date', 'after:*.from'],
+            '*.position_title'        => ['nullable', 'required_with:*.status_of_appointment', 'required_with:*.government_service', 'required_with:*.from', 'required_with:*.to'],
+            '*.office'                => ['nullable', 'required_with:*.status_of_appointment', 'required_with:*.government_service', 'required_with:*.position_title', 'string'],
+            '*.monthly_salary'        => ['nullable', 'required_with:*.status_of_appointment', 'required_with:*.government_service'],
+            '*.salary_job_pay_grade'  => ['nullable', 'required_with:*.status_of_appointment', 'required_with:*.government_service'],
+            '*.status_of_appointment' => ['required'],
+            '*.government_service'    => ['required', 'in:Y,N,y,n'],
+        ],[
+            '*.government_service.in' => 'You can only type (Y,N) in goverment service.'
+        ], [
+             '*.from'      => 'Inclusive date from',
+             '*.to'        => 'Inclusive date to',
+             '*.status_of_appointment' => 'Status of appointment',
+             '*.government_service'   => 'Government Service',
+             '*.dept'      => 'Department',
+             '*.position_title'  => 'Position',
+             '*.monthly_salary' => 'Monthly Salary',
+             '*.salary_job_pay_grade'  => 'Pay Grade',
+        ]);
         return $this->employeeRepository->existingEmployeeAddWorkExperience($request->all());
     }
 
