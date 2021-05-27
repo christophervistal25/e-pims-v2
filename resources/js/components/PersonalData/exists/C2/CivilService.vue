@@ -59,6 +59,11 @@
                     class="form-control rounded-0 border-0"
                     placeholder="Input here..."
                     v-model="civil.career_service"
+                    :class="
+                      errors.hasOwnProperty(`${index}.career_service`)
+                        ? 'border is-invalid'
+                        : ''
+                    "
                     style="text-transform: uppercase"
                   />
                 </td>
@@ -66,6 +71,11 @@
                   <input
                     type="number"
                     class="form-control rounded-0 border-0"
+                    :class="
+                      errors.hasOwnProperty(`${index}.rating`)
+                        ? 'border is-invalid'
+                        : ''
+                    "
                     placeholder="e.g. 91.2%"
                     v-model="civil.rating"
                   />
@@ -76,6 +86,11 @@
                     class="form-control rounded-0 border-0"
                     placeholder="Input"
                     v-model="civil.date_of_examination"
+                    :class="
+                      errors.hasOwnProperty(`${index}.date_of_examination`)
+                        ? 'border is-invalid'
+                        : ''
+                    "
                   />
                 </td>
                 <td>
@@ -84,6 +99,11 @@
                     class="form-control rounded-0 border-0 text-uppercase"
                     placeholder="e.g Tandag"
                     v-model="civil.place_of_examination"
+                    :class="
+                      errors.hasOwnProperty(`${index}.place_of_examination`)
+                        ? 'border is-invalid'
+                        : ''
+                    "
                   />
                 </td>
 
@@ -93,6 +113,11 @@
                     class="form-control rounded-0 border-0"
                     placeholder="e.g. 2015"
                     v-model="civil.license_number"
+                    :class="
+                      errors.hasOwnProperty(`${index}.license_number`)
+                        ? 'border is-invalid'
+                        : ''
+                    "
                   />
                 </td>
                 <td>
@@ -101,6 +126,11 @@
                     class="form-control rounded-0 border-0"
                     placeholder="e.g. 2016"
                     v-model="civil.date_of_validitiy"
+                    :class="
+                      errors.hasOwnProperty(`${index}.date_of_validitiy`)
+                        ? 'border is-invalid'
+                        : ''
+                    "
                   />
                 </td>
                 <td class="jumbotron" v-if="!isComplete">
@@ -109,7 +139,7 @@
                     @click="removeField(index)"
                     class="btn btn-sm btn-danger font-weight-bold mt-1 rounded-circle"
                   >
-                    X
+                    <i class="fas fa-times"></i>
                   </button>
                 </td>
                 <td v-if="!isComplete">
@@ -125,8 +155,13 @@
             </tbody>
           </table>
           <div class="float-right mb-3">
+            <button class="btn btn-danger font-weight-bold">SKIP</button>
+
             <button
               class="btn btn-primary font-weight-bold"
+              :class="
+                Object.keys(errors).length === 0 ? 'btn-primary' : 'btn-danger'
+              "
               @click="submitCivilService"
               :disabled="isLoading || isComplete"
               v-if="!isComplete"
@@ -186,7 +221,6 @@ export default {
     },
     submitCivilService() {
       this.isLoading = true;
-      //   this.civilService.employee_id = this.personal_data.employee_id;
       window.axios
         .post(
           "/employee/exists/personal/civil/service/store",
@@ -217,6 +251,17 @@ export default {
   },
   created() {
     this.civilService = this.personal_data.civil_service;
+
+    // Set blank default
+    this.civilService.push({
+      career_service: "",
+      rating: "",
+      date_of_examination: "",
+      place_of_examination: "",
+      license_number: "",
+      date_of_validitiy: "",
+      employee_id: this.personal_data.employee_id,
+    });
   },
 };
 </script>

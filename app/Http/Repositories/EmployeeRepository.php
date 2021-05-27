@@ -304,10 +304,6 @@ class EmployeeRepository
             if(!is_null($record['careerServ'])) {
                 $records[] = EmployeeCivilService::firstOrNew(
                     [
-
-                        'license_number' => $record['number'],
-                    ],
-                    [
                         'career_service'       => $record['careerServ'],
                         'rating'               => $record['rating'],
                         'date_of_examination'  => $record['dateOfExam'],
@@ -332,11 +328,8 @@ class EmployeeRepository
         $employee->civil_service()->delete();
 
         foreach($data as $record) {
-            if(!is_null($record['license_number'])) {
+            if(!is_null($record['career_service'])) {
                 $records[] = EmployeeCivilService::firstOrNew(
-                    [
-                        'license_number' => $record['license_number'],
-                    ],
                     [
                         'career_service'       => $record['career_service'],
                         'rating'               => $record['rating'],

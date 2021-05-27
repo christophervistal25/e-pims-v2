@@ -188,7 +188,16 @@ class PersonalDataSheetController extends Controller
 
     public function existingEmployeeStoreCivilService(Request $request)
     {
-        $this->employeeRepository->existingEmployeeAddCivilService($request->all());
+        $this->validate($request, [
+            '*.career_service'       => ['required'],
+            '*.date_of_examination'  => ['nullable', 'required_with:*.career_service', 'date'],
+            '*.place_of_examination' => ['required_with:*.career_service'],
+            '*.rating'               => ['nullable', 'numeric', 'between:0,99.99'],
+            '*.license_number'       => ['nullable'],
+            '*.date_of_validitiy'    => ['nullable', 'date'],
+        ],[], ['*.career_service' => 'career service']);
+
+        return $this->employeeRepository->existingEmployeeAddCivilService($request->all());
     }
 
     public function storeWorkExperience(WorkExperienceRequest $request)
