@@ -12,6 +12,14 @@
 @endprepend
 @section('content')
 @include('SalaryAdjustment.add-ons.success')
+{{-- VIEW TABLE BUTTON IN FORM --}}
+    <div class="float-right mr-3 mb-2" id='btnViewTableContainer'>
+        <a href="{{ route('print-adjustment', $salaryAdjustment->id) }}" class="btn btn-secondary"><i class="la la-print"></i>&nbsp; Print Preview</a>
+        <a href="/salary-adjustment" class="btn btn-info"><i class="la la-list"></i>&nbsp; View List </a>
+    </div>
+    <div class="clearfix"></div>
+
+    {{-- FORM AND TABLE --}}
 <div class="kanban-board card mb-0">
     <div class="card-body">
             <form action="{{ route('salary-adjustment.update', $salaryAdjustment->id) }}" method="post">

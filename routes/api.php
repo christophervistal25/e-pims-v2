@@ -87,6 +87,7 @@ Route::post('name/extensions/store', 'Api\ReferenceNameExtensionController@store
 
 /////// salary adjustment
 Route::get('/salaryAdjustment/{sg_no}/{sg_step?}/{sg_year}' , 'Api\SalaryAdjustmentController@salaryAdjustment');
+Route::post('/printEditAdjustment' , 'Api\SalaryAdjustmentController@printEdit');
 
 
 Route::get('/office/salary/adjustment/peroffice/{officeCode}', function ($office_code) {

@@ -47,6 +47,8 @@ Route::resource('/print-increment', 'PrintIncrementController');
 Route::get('/salary-adjustment/{id}', 'SalaryAdjustmentController@destroy')->name('salary-adjustment.delete');
 Route::resource('/salary-adjustment', 'SalaryAdjustmentController');
 Route::get('/salary-adjustment-list', 'SalaryAdjustmentController@list');
+Route::get('/print-adjustment/{id}/previewed', 'PrintAdjustmentController@print')->name('salary-adjustment.previewed.print');
+Route::get('/print-adjustment/{id}', 'PrintAdjustmentController@printList')->name('print-adjustment');
 
 //salary adjustment per office
 Route::resource('/salary-adjustment-per-office', 'SalaryAdjustmentPerOfficeController');
