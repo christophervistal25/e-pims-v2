@@ -132,7 +132,7 @@
 
               <td>
                 <input
-                  type="number"
+                  type="text"
                   class="form-control rounded-0 border-0"
                   placeholder=""
                   v-model="workExperience.monthly_salary"
@@ -145,7 +145,7 @@
               </td>
               <td>
                 <input
-                  type="number"
+                  type="text"
                   class="form-control rounded-0 border-0"
                   :class="
                     errors.hasOwnProperty(`${index}.salary_job_pay_grade`)

@@ -143,36 +143,36 @@ class PersonalDataSheetController extends Controller
         $this->validate($request, [
             'elementary_name'                                    => [],
             'elementary_education'                               => [],
-            'elementary_period_from'                             => ['required_with:elementary_name', 'date', 'before:elementary_period_to'],
-            'elementary_period_to'                               => ['required_with:elementary_period_from', 'date', 'after:elementary_period_from'],
+            'elementary_period_from'                             => ['nullable', 'required_with:elementary_name', 'date', 'before:elementary_period_to'],
+            'elementary_period_to'                               => ['nullable', 'required_with:elementary_period_from', 'date', 'after:elementary_period_from'],
             'elementary_highest_level_units_earned'              => [],
             'elementary_year_graduated'                          => ['required_with:elementary_highest_level_units_earned'],
             'elementary_scholarship'                             => [],
             'secondary_name'                                     => [],
             'secondary_education'                                => [],
-            'secondary_period_from'                              => ['required_with:secondary_name', 'date', 'before:secondary_period_to'],
-            'secondary_period_to'                                => ['required_with:secondary_period_from', 'date', 'after:secondary_period_from'],
+            'secondary_period_from'                              => ['nullable','required_with:secondary_name', 'date', 'before:secondary_period_to'],
+            'secondary_period_to'                                => ['nullable','required_with:secondary_period_from', 'date', 'after:secondary_period_from'],
             'secondary_highest_level_units_earned'               => [],
             'secondary_year_graduated'                           => ['required_with:secondary_highest_level_units_earned'],
             'secondary_scholarship'                              => [],
             'vocational_trade_course_name'                       => [],
             'vocational_education'                               => [],
-            'vocational_trade_course_period_from'                => ['required_with:vocational_education', 'date', 'before:vocational_trade_course_period_to'],
-            'vocational_trade_course_period_to'                  => ['required_with:vocational_trade_course_period_from', 'date', 'after:vocational_trade_course_period_from'],
+            'vocational_trade_course_period_from'                => ['nullable','required_with:vocational_education', 'date', 'before:vocational_trade_course_period_to'],
+            'vocational_trade_course_period_to'                  => ['nullable','required_with:vocational_trade_course_period_from', 'date', 'after:vocational_trade_course_period_from'],
             'vocational_trade_course_highest_level_units_earned' => [],
             'vocational_trade_course_year_graduated'             => ['required_with:vocational_trade_course_highest_level_units_earned'],
             'vocational_trade_course_scholarship'                => [],
             'college_name'                                       => [],
             'college_education'                                  => [],
-            'college_period_from'                                => ['required_with:college_name', 'date',  'before:college_period_to'],
-            'college_period_to'                                  => ['required_with:college_period_from', 'date', 'after:college_period_from'],
+            'college_period_from'                                => ['nullable','required_with:college_name', 'date',  'before:college_period_to'],
+            'college_period_to'                                  => ['nullable','required_with:college_period_from', 'date', 'after:college_period_from'],
             'college_highest_level_units_earned'                 => [],
             'college_year_graduated'                             => ['required_with:college_highest_level_units_earned'],
             'college_scholarship'                                => [],
             'graduate_studies_name'                              => [],
             'graduate_studies_education'                         => [],
-            'graduate_studies_period_from'                       => ['required_with:graduate_studies_name', 'date', 'before:graduate_studies_period_to'],
-            'graduate_studies_period_to'                         => ['required_with:graduate_studies_period_from', 'date', 'after:graduate_studies_period_from'],
+            'graduate_studies_period_from'                       => ['nullable','required_with:graduate_studies_name', 'date', 'before:graduate_studies_period_to'],
+            'graduate_studies_period_to'                         => ['nullable','required_with:graduate_studies_period_from', 'date', 'after:graduate_studies_period_from'],
             'graduate_studies_highest_level_units_earned'        => [],
             'graduate_studies_year_graduated'                    => ['required_with:graduate_studies_highest_level_units_earned'],
             'graduate_studies_scholarship'                       => []
@@ -239,7 +239,7 @@ class PersonalDataSheetController extends Controller
     public function existingEmployeeStoreVoluntary(Request $request)
     {
         $this->validate($request, [
-               '*.name_and_address'    => ['nullable'],
+               '*.name_and_address'    => ['required'],
                '*.inclusive_date_from' => ['nullable', 'required_with:*.name_and_address', 'date', 'before:*.inclusive_date_to'],
                '*.inclusive_date_to'   => ['nullable', 'required_with:*.name_and_address', 'date', 'after:*.inclusive_date_from'],
                '*.no_of_hours'         => ['nullable', 'required_with:*.name_and_address'],
@@ -262,7 +262,7 @@ class PersonalDataSheetController extends Controller
     public function existingEmployeeStoreLearning(Request $request)
     {
         $this->validate($request, [
-             '*.title'                   => ['nullable'],
+             '*.title'                   => ['required'],
              '*.date_of_attendance_from' => ['nullable', 'required_with:*.title', 'date'],
              '*.date_of_attendance_to'   => ['nullable', 'required_with:*.title', 'date'],
              '*.number_of_hours'         => ['nullable', 'required_with:*.title', 'numeric'],
@@ -282,12 +282,16 @@ class PersonalDataSheetController extends Controller
 
     public function storeOtherInformation(Request $request)
     {
+        $this->validate($request, [
+            '*.skill'          => 'required',
+            '*.recog'          => 'required',
+            '*.memAssociation' => 'required',
+        ],[] , ['*.skill' => 'Special Skill', '*.recog' => 'Non-academic', '*.memAssociation' => 'Organization']);
         return $this->employeeRepository->addOtherInformation($request->all());
     }
 
     public function existingEmployeeStoreOtherInformation(Request $request)
     {
-        
         $this->validate($request, [
             '*.special_skill' => 'required',
             '*.non_academic'  => 'required',
