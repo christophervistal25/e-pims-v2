@@ -99,7 +99,13 @@
             </div>
           </li>
 
-          <li v-if="employee && employee.educational_background">
+          <li
+            v-if="
+              employee &&
+              employee.educational_background &&
+              employee.educational_background.college_name
+            "
+          >
             <div class="experience-user">
               <div class="before-circle"></div>
             </div>
