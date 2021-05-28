@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Employee;
-use App\Http\Repositories\EmployeeRepository;
-use App\Http\Requests\C1\PersonalInformationRequest;
-use App\Http\Requests\C1\FamilyBackgroundRequest;
-use App\Http\Requests\C1\EducationalBackgroundRequest;
-use App\Http\Requests\C2\CivilServiceRequest;
-use App\Http\Requests\C2\WorkExperienceRequest;
-use App\Http\Requests\C3\VoluntaryWorkRequest;
+use Illuminate\Http\Request;
 use App\Http\Requests\C3\LearningRequest;
+use App\Http\Repositories\EmployeeRepository;
+use App\Http\Requests\C2\CivilServiceRequest;
+use App\Http\Requests\C3\VoluntaryWorkRequest;
+use App\Http\Requests\C2\WorkExperienceRequest;
 use App\Http\Requests\C4\RelevantQueriesRequest;
+use App\Http\Requests\C1\FamilyBackgroundRequest;
 use App\Http\Requests\C4\GovernmentIssuedIDRequest;
+use App\Http\Requests\C1\PersonalInformationRequest;
+use App\Http\Requests\C1\EducationalBackgroundRequest;
 
 class PersonalDataSheetController extends Controller
 {
@@ -238,6 +238,19 @@ class PersonalDataSheetController extends Controller
 
     public function existingEmployeeStoreVoluntary(Request $request)
     {
+        $this->validate($request, [
+               '*.name_and_address'    => ['nullable'],
+               '*.inclusive_date_from' => ['nullable', 'required_with:*.name_and_address', 'date', 'before:*.inclusive_date_to'],
+               '*.inclusive_date_to'   => ['nullable', 'required_with:*.name_and_address', 'date', 'after:*.inclusive_date_from'],
+               '*.no_of_hours'         => ['nullable', 'required_with:*.name_and_address'],
+               '*.position'            => ['nullable', 'required_with:*.name_and_address'],
+        ], [], [
+            '*.name_and_address'    => 'Name & Address Organization',
+            '*.inclusive_date_from' => 'Inclusive Date FROM',
+            '*.inclusive_date_to'   => 'Inclusive Date TO',
+            '*.no_of_hours'         => 'Number of Hours',
+            '*.position'            => 'Position',
+        ]);
         return $this->employeeRepository->existingEmployeeAddVoluntaryWork($request->all());
     }
 
@@ -248,6 +261,22 @@ class PersonalDataSheetController extends Controller
 
     public function existingEmployeeStoreLearning(Request $request)
     {
+        $this->validate($request, [
+             '*.title'                   => ['nullable'],
+             '*.date_of_attendance_from' => ['nullable', 'required_with:*.title', 'date'],
+             '*.date_of_attendance_to'   => ['nullable', 'required_with:*.title', 'date'],
+             '*.number_of_hours'         => ['nullable', 'required_with:*.title', 'numeric'],
+             '*.type_of_id'              => ['nullable', 'required_with:*.title'],
+             '*.sponsored_by'            => ['nullable', 'required_with:*.title'],
+        ], [], [
+            '*.title'                   => 'Name of training',
+            '*.date_of_attendance_from' => 'Inclusive date FROM',
+            '*.date_of_attendance_to'   => 'Inclusive date TO',
+            '*.number_of_hours'         => 'No. of hours',
+            '*.type_of_id'              => 'type of LD',
+            '*.sponsored_by'            => 'Conducted/Sponsored',
+        ]);
+
         return $this->employeeRepository->existingEmployeeAddLearning($request->all());
     }
 
@@ -258,6 +287,13 @@ class PersonalDataSheetController extends Controller
 
     public function existingEmployeeStoreOtherInformation(Request $request)
     {
+        
+        $this->validate($request, [
+            '*.special_skill' => 'required',
+            '*.non_academic'  => 'required',
+            '*.organization'  => 'required',
+        ],[] , ['*.special_skill' => 'Special Skill', '*.non_academic' => 'Non-academic', '*.organization' => 'Organization']);
+
         return $this->employeeRepository->existingEmployeeAddOtherInformation($request->all());
     }
 
