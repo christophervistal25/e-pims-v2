@@ -67,6 +67,11 @@
                   <input
                     type="text"
                     class="form-control rounded-0 border-0 text-uppercase"
+                    :class="
+                      rowErrors.includes(`${index}.special_skill`)
+                        ? 'is-invalid'
+                        : ''
+                    "
                     placeholder="Enter special skill"
                     v-model="otherInfo.special_skill"
                   />
@@ -75,6 +80,11 @@
                   <input
                     type="text"
                     class="form-control rounded-0 border-0 text-uppercase"
+                    :class="
+                      rowErrors.includes(`${index}.non_academic`)
+                        ? 'is-invalid'
+                        : ''
+                    "
                     placeholder="Enter non-academic"
                     v-model="otherInfo.non_academic"
                   />
@@ -83,6 +93,11 @@
                   <input
                     type="text"
                     class="form-control rounded-0 border-0 text-uppercase"
+                    :class="
+                      rowErrors.includes(`${index}.organization`)
+                        ? 'is-invalid'
+                        : ''
+                    "
                     placeholder="Enter organization"
                     v-model="otherInfo.organization"
                   />

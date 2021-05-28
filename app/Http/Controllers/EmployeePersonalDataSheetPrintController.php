@@ -186,86 +186,86 @@ class EmployeePersonalDataSheetPrintController extends Controller
             'alias' => [],
         ]);
 
-         $this->oneToManyInsertion([
-            'model'    => $employee,
-            'relation' => 'civil_service',
-            'table'    => 'employee_civil_services',
-            'except'   => ['created_at', 'updated_at', 'id'],
-            'alias' => [],
-        ]);
+        //  $this->oneToManyInsertion([
+        //     'model'    => $employee,
+        //     'relation' => 'civil_service',
+        //     'table'    => 'employee_civil_services',
+        //     'except'   => ['created_at', 'updated_at', 'id'],
+        //     'alias' => [],
+        // ]);
 
-        $this->oneToManyInsertion([
-            'model'    => $employee,
-            'relation' => 'spouse_child',
-            'table'    => 'employee_spouse_childrens',
-            'except'   => ['employee_id', 'created_at', 'updated_at', 'id'],
-            'alias' => [],
-        ]);
+        // $this->oneToManyInsertion([
+        //     'model'    => $employee,
+        //     'relation' => 'spouse_child',
+        //     'table'    => 'employee_spouse_childrens',
+        //     'except'   => ['employee_id', 'created_at', 'updated_at', 'id'],
+        //     'alias' => [],
+        // ]);
 
-        $this->oneToOneInsertion([
-            'model'    => $employee,
-            'relation' => 'family_background',
-            'table'    => 'employee_family_backgrounds',
-            'except'   => ['created_at', 'updated_at', 'id'],
-            'alias' => [],
-        ]);
+        // $this->oneToOneInsertion([
+        //     'model'    => $employee,
+        //     'relation' => 'family_background',
+        //     'table'    => 'employee_family_backgrounds',
+        //     'except'   => ['created_at', 'updated_at', 'id'],
+        //     'alias' => [],
+        // ]);
         
-         $this->oneToOneInsertion([
-            'model'    => $employee,
-            'relation' => 'issued_id',
-            'table'    => 'employee_issued_i_d_s',
-            'except'   => ['created_at', 'updated_at', 'id'],
-            'alias'    => ['date' => '_date'],
-        ]);
+        //  $this->oneToOneInsertion([
+        //     'model'    => $employee,
+        //     'relation' => 'issued_id',
+        //     'table'    => 'employee_issued_i_d_s',
+        //     'except'   => ['created_at', 'updated_at', 'id'],
+        //     'alias'    => ['date' => '_date'],
+        // ]);
 
-        $this->oneToManyInsertion([
-            'model'    => $employee,
-            'relation' => 'other_information',
-            'table'    => 'employee_other_information',
-            'except'   => ['created_at', 'updated_at', 'id'],
-            'alias'    => [],
-        ]);
+        // $this->oneToManyInsertion([
+        //     'model'    => $employee,
+        //     'relation' => 'other_information',
+        //     'table'    => 'employee_other_information',
+        //     'except'   => ['created_at', 'updated_at', 'id'],
+        //     'alias'    => [],
+        // ]);
 
-        $this->oneToManyInsertion([
-            'model'    => $employee,
-            'relation' => 'references',
-            'table'    => 'employee_references',
-            'except'   => ['created_at', 'updated_at', 'id'],
-            'alias'    => [],
-        ]);
+        // $this->oneToManyInsertion([
+        //     'model'    => $employee,
+        //     'relation' => 'references',
+        //     'table'    => 'employee_references',
+        //     'except'   => ['created_at', 'updated_at', 'id'],
+        //     'alias'    => [],
+        // ]);
 
-        $this->oneToOneInsertion([
-            'model'    => $employee,
-            'relation' => 'relevant_queries',
-            'table'    => 'employee_relevant_queries',
-            'except'   => ['created_at', 'updated_at', 'id'],
-            'alias' => [],
-        ]);
+        // $this->oneToOneInsertion([
+        //     'model'    => $employee,
+        //     'relation' => 'relevant_queries',
+        //     'table'    => 'employee_relevant_queries',
+        //     'except'   => ['created_at', 'updated_at', 'id'],
+        //     'alias' => [],
+        // ]);
 
 
-        $this->oneToManyInsertion([
-            'model'    => $employee,
-            'relation' => 'program_attained',
-            'table'    => 'employee_training_attaineds',
-            'except'   => ['created_at', 'updated_at', 'id'],
-            'alias'    => [],
-        ]);
+        // $this->oneToManyInsertion([
+        //     'model'    => $employee,
+        //     'relation' => 'program_attained',
+        //     'table'    => 'employee_training_attaineds',
+        //     'except'   => ['created_at', 'updated_at', 'id'],
+        //     'alias'    => [],
+        // ]);
 
-        $this->oneToManyInsertion([
-            'model'    => $employee,
-            'relation' => 'voluntary_work',
-            'table'    => 'employee_voluntary_works',
-            'except'   => ['created_at', 'updated_at', 'id'],
-            'alias'    => [],
-        ]);
+        // $this->oneToManyInsertion([
+        //     'model'    => $employee,
+        //     'relation' => 'voluntary_work',
+        //     'table'    => 'employee_voluntary_works',
+        //     'except'   => ['created_at', 'updated_at', 'id'],
+        //     'alias'    => [],
+        // ]);
 
-         $this->oneToManyInsertion([
-            'model'    => $employee,
-            'relation' => 'work_experience',
-            'table'    => 'employee_work_experiences',
-            'except'   => ['created_at', 'updated_at', 'id'],
-            'alias' => ['from' => 'from_date', 'to' => 'to_date'],
-        ]);
+        //  $this->oneToManyInsertion([
+        //     'model'    => $employee,
+        //     'relation' => 'work_experience',
+        //     'table'    => 'employee_work_experiences',
+        //     'except'   => ['created_at', 'updated_at', 'id'],
+        //     'alias' => ['from' => 'from_date', 'to' => 'to_date'],
+        // ]);
 
         $windowExeLocation = config('window.base_path') . config('window.app_name');
 

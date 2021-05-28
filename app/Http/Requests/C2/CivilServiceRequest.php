@@ -25,11 +25,21 @@ class CivilServiceRequest extends FormRequest
     {
         return [
             '*.careerServ'  => ['required'],
-            '*.dateOfExam'  => ['required_with:*.careerServ'],
+            '*.dateOfExam'  => ['nullable', 'required_with:*.careerServ', 'date'],
             '*.placeOfExam' => ['required_with:*.careerServ'],
             '*.rating'      => ['nullable', 'numeric', 'between:0,99.99'],
             '*.number'      => ['nullable', 'numeric'],
             '*.dateOfValid' => ['nullable', 'date'],
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            '*.careerServ' => 'career service',
+            '*.dateOfExam' => 'Date of examination',
+            '*.placeOfExam' => 'Place of examination',
+            '*.dateOfValid' => 'Date of validity',
         ];
     }
 }

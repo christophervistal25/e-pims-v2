@@ -51,7 +51,10 @@
           <tbody>
             <tr v-for="(volunOrg, index) in volunOrg" :key="index">
               <td
-                @click="displayRowErrorMessage(index)"
+                @click="
+                  rowErrors.includes(`${index}.`) &&
+                    displayRowErrorMessage(index)
+                "
                 class="align-middle text-center"
                 :style="rowErrors.includes(`${index}.`) ? 'cursor:pointer' : ''"
                 :class="
@@ -257,9 +260,11 @@ export default {
 
       for (let [field, error] of Object.entries(this.errors)) {
         if (field.includes(`${index}.`)) {
-          let errorElement = document.createElement("li");
+          let errorElement = document.createElement("p");
+          let horizontalLine = document.createElement("hr");
           errorElement.innerHTML = error;
           parentElement.appendChild(errorElement);
+          parentElement.appendChild(horizontalLine);
         }
       }
 
