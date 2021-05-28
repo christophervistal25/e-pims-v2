@@ -145,9 +145,9 @@
                   <button
                     v-show="index != 0"
                     @click="removeField(index)"
-                    class="btn btn-sm btn-danger font-weight-bold mt-1 rounded-circle"
+                    class="btn btn-danger font-weight-bold mt-1 rounded-circle"
                   >
-                    X
+                    <i class="fas fa-times"></i>
                   </button>
                 </td>
                 <td v-if="!isComplete">

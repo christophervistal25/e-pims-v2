@@ -214,7 +214,7 @@
               <td class="jumbotron align-middle">
                 <button
                   v-show="index != 0"
-                  class="btn btn-danger rounded-circle"
+                  class="btn btn-danger mt-2 rounded-circle"
                   @click="removeField(index)"
                 >
                   <i class="fas fa-times"></i>

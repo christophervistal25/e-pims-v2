@@ -134,10 +134,10 @@
               <td class="text-center jumbotron">
                 <button
                   v-show="index != 0"
-                  class="btn btn-sm btn-danger font-weight-bold mt-1 rounded-circle"
+                  class="btn btn-danger font-weight-bold mt-1 rounded-circle"
                   @click="removeField(index)"
                 >
-                  X
+                  <i class="fas fa-times"></i>
                 </button>
               </td>
               <td class="text-center">
