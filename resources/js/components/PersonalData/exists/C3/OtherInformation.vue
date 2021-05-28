@@ -26,6 +26,7 @@
         <div class="card-body">
           <table class="table table-bordered">
             <tr class="text-center" style="background: #eaeaea">
+              <td>&nbsp;</td>
               <td rowspan="2" class="align-middle text-sm" scope="colgroup">
                 31. SPECIAL SKILLS and HOBBIES
               </td>
@@ -40,11 +41,32 @@
 
             <tbody>
               <tr v-for="(otherInfo, index) in otherInformation" :key="index">
+                <td
+                  @click="
+                    rowErrors.includes(`${index}.`) &&
+                      displayRowErrorMessage(index)
+                  "
+                  class="align-middle text-center"
+                  :style="
+                    rowErrors.includes(`${index}.`) ? 'cursor:pointer' : ''
+                  "
+                  :class="
+                    rowErrors.includes(`${index}.`)
+                      ? 'bg-danger text-white'
+                      : ''
+                  "
+                >
+                  <i
+                    v-if="rowErrors.includes(`${index}.`)"
+                    class="fa fa-exclamation-triangle"
+                    aria-hidden="true"
+                  ></i>
+                </td>
                 <td>
                   <input
                     type="text"
                     class="form-control rounded-0 border-0 text-uppercase"
-                    placeholder=""
+                    placeholder="Enter special skill"
                     v-model="otherInfo.special_skill"
                   />
                 </td>
@@ -52,28 +74,28 @@
                   <input
                     type="text"
                     class="form-control rounded-0 border-0 text-uppercase"
-                    placeholder=""
+                    placeholder="Enter non-academic"
                     v-model="otherInfo.non_academic"
                   />
                 </td>
                 <td>
                   <input
                     type="text"
-                    class="form-control rounded-0 border-0 text-uppercse"
-                    placeholder=""
+                    class="form-control rounded-0 border-0 text-uppercase"
+                    placeholder="Enter organization"
                     v-model="otherInfo.organization"
                   />
                 </td>
                 <td class="jumbotron text-center">
                   <button
                     v-show="index != 0"
-                    class="btn btn-sm btn-danger font-weight-bold mt-2 rounded-circle"
+                    class="btn btn-danger font-weight-bold mt-2 rounded-circle"
                     @click="removeField(index)"
                   >
-                    X
+                    <i class="fas fa-times"></i>
                   </button>
                 </td>
-                <td class="text-center">
+                <td class="text-center align-middle">
                   <button
                     v-if="index == noOfFields - 1"
                     class="btn btn-primary font-weight-bold rounded-circle"
@@ -116,6 +138,7 @@
 </template>
 
 <script>
+import swal from "sweetalert";
 export default {
   props: {
     show_panel: {
@@ -138,6 +161,8 @@ export default {
           employee_id: this.personal_data.employee_id,
         },
       ],
+      rowErrors: "",
+      errors: [],
     };
   },
   watch: {
@@ -170,7 +195,38 @@ export default {
           this.isLoading = false;
           this.$emit("next_tab");
         })
-        .catch((err) => (this.isLoading = false));
+        .catch((error) => {
+          this.isLoading = false;
+          // Check the error status code.
+          if (error.response.status === 422) {
+            Object.keys(error.response.data.errors).map((field) => {
+              let [fieldMessage] = error.response.data.errors[field];
+              this.errors[field] = fieldMessage;
+            });
+            /* Merge all errors with join method for easily checking if an index of dynamic row is present or has error.*/
+            this.rowErrors = Object.keys(this.errors).join(",");
+          }
+        });
+    },
+    displayRowErrorMessage(index) {
+      let parentElement = document.createElement("ul");
+
+      for (let [field, error] of Object.entries(this.errors)) {
+        if (field.includes(`${index}.`)) {
+          let errorElement = document.createElement("p");
+          let horizontalLine = document.createElement("hr");
+          errorElement.innerHTML = error;
+          parentElement.appendChild(errorElement);
+          parentElement.appendChild(horizontalLine);
+        }
+      }
+
+      swal({
+        content: parentElement,
+        title: "Opps!",
+        icon: "error",
+        dangerMode: true,
+      });
     },
     removeField(index) {
       if (index !== 0) {
@@ -180,6 +236,7 @@ export default {
   },
   created() {
     this.otherInformation = this.personal_data.other_information;
+    this.addNewOtherInformationField();
     this.noOfFields = this.otherInformation.length;
   },
 };

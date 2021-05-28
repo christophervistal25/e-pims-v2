@@ -55,7 +55,10 @@
             <tbody>
               <tr v-for="(learnDev, index) in learnDev" :key="index">
                 <td
-                  @click="displayRowErrorMessage(index)"
+                  @click="
+                    rowErrors.includes(`${index}.`) &&
+                      displayRowErrorMessage(index)
+                  "
                   class="align-middle text-center"
                   :style="
                     rowErrors.includes(`${index}.`) ? 'cursor:pointer' : ''
@@ -76,6 +79,9 @@
                   <input
                     type="text"
                     class="form-control rounded-0 border-0 text-uppercase"
+                    :class="
+                      rowErrors.includes(`${index}.title`) ? 'is-invalid' : ''
+                    "
                     placeholder="NAME"
                     v-model="learnDev.title"
                   />
@@ -84,6 +90,11 @@
                   <input
                     type="date"
                     class="form-control rounded-0 border-0"
+                    :class="
+                      rowErrors.includes(`${index}.date_of_attendance_from`)
+                        ? 'is-invalid'
+                        : ''
+                    "
                     placeholder="FROM"
                     v-model="learnDev.date_of_attendance_from"
                   />
@@ -92,6 +103,11 @@
                   <input
                     type="date"
                     class="form-control rounded-0 border-0"
+                    :class="
+                      rowErrors.includes(`${index}.date_of_attendance_to`)
+                        ? 'is-invalid'
+                        : ''
+                    "
                     placeholder="TO"
                     v-model="learnDev.date_of_attendance_to"
                   />
@@ -100,6 +116,11 @@
                   <input
                     type="number"
                     class="form-control rounded-0 border-0"
+                    :class="
+                      rowErrors.includes(`${index}.number_of_hours`)
+                        ? 'is-invalid'
+                        : ''
+                    "
                     placeholder="Hours"
                     v-model="learnDev.number_of_hours"
                   />
@@ -108,6 +129,11 @@
                   <input
                     type="text"
                     class="form-control rounded-0 border-0 text-uppercase"
+                    :class="
+                      rowErrors.includes(`${index}.type_of_id`)
+                        ? 'is-invalid'
+                        : ''
+                    "
                     placeholder=""
                     v-model="learnDev.type_of_id"
                   />
@@ -116,6 +142,11 @@
                   <input
                     type="text"
                     class="form-control rounded-0 border-0 text-uppercase"
+                    :class="
+                      rowErrors.includes(`${index}.sponsored_by`)
+                        ? 'is-invalid'
+                        : ''
+                    "
                     placeholder=""
                     v-model="learnDev.sponsored_by"
                   />
@@ -124,9 +155,9 @@
                   <button
                     v-show="index != 0"
                     @click="removeField(index)"
-                    class="btn btn-sm btn-danger font-weight-bold mt-2 rounded-circle"
+                    class="btn btn-danger font-weight-bold mt-2 rounded-circle"
                   >
-                    X
+                    <i class="fas fa-times"></i>
                   </button>
                 </td>
                 <td>
@@ -257,9 +288,11 @@ export default {
 
       for (let [field, error] of Object.entries(this.errors)) {
         if (field.includes(`${index}.`)) {
-          let errorElement = document.createElement("li");
+          let errorElement = document.createElement("p");
+          let horizontalLine = document.createElement("hr");
           errorElement.innerHTML = error;
           parentElement.appendChild(errorElement);
+          parentElement.appendChild(horizontalLine);
         }
       }
 
@@ -273,6 +306,7 @@ export default {
   },
   created() {
     this.learnDev = this.personal_data.program_attained;
+    this.addNewLearningAndDevelopmentField();
     this.noOfFields = this.learnDev.length;
   },
 };

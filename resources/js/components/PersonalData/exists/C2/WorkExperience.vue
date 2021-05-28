@@ -190,7 +190,7 @@
                 <button
                   v-if="index == noOfFields - 1"
                   class="btn btn-primary font-weight-bold rounded-circle"
-                  @click="btnAddNewWorkExperienceField"
+                  @click="addNewWorkExperienceField"
                 >
                   <i class="fa fa-plus"></i>
                 </button>
@@ -268,7 +268,7 @@ export default {
     },
   },
   methods: {
-    btnAddNewWorkExperienceField() {
+    addNewWorkExperienceField() {
       this.workExperience.push({
         from: "",
         to: "",
@@ -337,20 +337,7 @@ export default {
   },
   created() {
     this.workExperience = this.personal_data.work_experience;
-
-    // Default value for work experience
-    this.workExperience.push({
-      from: "",
-      to: "",
-      position: "",
-      department: "",
-      monthly_salary: "",
-      pay_grade: "",
-      status_of_appointment: "",
-      government_service: "",
-      employee_id: this.personal_data.employee_id,
-    });
-
+    this.addNewWorkExperienceField();
     this.noOfFields = this.workExperience.length;
   },
 };

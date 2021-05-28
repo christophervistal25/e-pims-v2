@@ -50,7 +50,10 @@
           <tbody>
             <tr v-for="(volunOrg, index) in volunOrg" :key="index">
               <td
-                @click="displayRowErrorMessage(index)"
+                @click="
+                  rowErrors.includes(`${index}.`) &&
+                    displayRowErrorMessage(index)
+                "
                 class="align-middle text-center"
                 :style="rowErrors.includes(`${index}.`) ? 'cursor:pointer' : ''"
                 :class="
@@ -68,6 +71,11 @@
                 <input
                   type="text"
                   class="form-control rounded-0 border-0 uppercase"
+                  :class="
+                    rowErrors.includes(`${index}.name_and_address`)
+                      ? 'is-invalid'
+                      : ''
+                  "
                   placeholder="NAME"
                   v-model="volunOrg.name_and_address"
                 />
@@ -76,6 +84,11 @@
                 <input
                   type="date"
                   class="form-control rounded-0 border-0"
+                  :class="
+                    rowErrors.includes(`${index}.inclusive_date_from`)
+                      ? 'is-invalid'
+                      : ''
+                  "
                   placeholder="FROM"
                   v-model="volunOrg.inclusive_date_from"
                 />
@@ -84,6 +97,11 @@
                 <input
                   type="date"
                   class="form-control rounded-0 border-0"
+                  :class="
+                    rowErrors.includes(`${index}.inclusive_date_to`)
+                      ? 'is-invalid'
+                      : ''
+                  "
                   placeholder="TO"
                   v-model="volunOrg.inclusive_date_to"
                 />
@@ -92,6 +110,11 @@
                 <input
                   type="number"
                   class="form-control rounded-0 border-0"
+                  :class="
+                    rowErrors.includes(`${index}.no_of_hours`)
+                      ? 'is-invalid'
+                      : ''
+                  "
                   placeholder="Hours"
                   v-model="volunOrg.no_of_hours"
                 />
@@ -100,6 +123,9 @@
                 <input
                   type="text"
                   class="form-control rounded-0 border-0 text-uppercase"
+                  :class="
+                    rowErrors.includes(`${index}.position`) ? 'is-invalid' : ''
+                  "
                   placeholder="Position"
                   v-model="volunOrg.position"
                 />
@@ -107,10 +133,10 @@
               <td class="text-center jumbotron">
                 <button
                   v-show="index != 0"
-                  class="btn btn-sm btn-danger font-weight-bold mt-1 rounded-circle"
+                  class="btn btn-danger font-weight-bold mt-1 rounded-circle"
                   @click="removeField(index)"
                 >
-                  X
+                  <i class="fas fa-times"></i>
                 </button>
               </td>
               <td class="text-center">
@@ -214,6 +240,7 @@ export default {
           this.isLoading = false;
           this.isComplete = true;
           this.errors = {};
+          this.rowErrors = "";
 
           localStorage.setItem("voluntary", JSON.stringify(response.data));
 
@@ -238,9 +265,11 @@ export default {
 
       for (let [field, error] of Object.entries(this.errors)) {
         if (field.includes(`${index}.`)) {
-          let errorElement = document.createElement("li");
+          let errorElement = document.createElement("p");
+          let horizontalLine = document.createElement("hr");
           errorElement.innerHTML = error;
           parentElement.appendChild(errorElement);
+          parentElement.appendChild(horizontalLine);
         }
       }
 
@@ -254,6 +283,8 @@ export default {
   },
   created() {
     this.volunOrg = this.personal_data.voluntary_work;
+    // Base default avlues
+    this.addNewFieldVoluntary();
     this.noOfFields = this.volunOrg.length;
   },
 };

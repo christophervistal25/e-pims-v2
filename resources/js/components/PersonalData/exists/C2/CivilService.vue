@@ -251,17 +251,7 @@ export default {
   },
   created() {
     this.civilService = this.personal_data.civil_service;
-
-    // Set blank default
-    this.civilService.push({
-      career_service: "",
-      rating: "",
-      date_of_examination: "",
-      place_of_examination: "",
-      license_number: "",
-      date_of_validitiy: "",
-      employee_id: this.personal_data.employee_id,
-    });
+    this.addNewFieldCivilServiceRow();
   },
 };
 </script>
