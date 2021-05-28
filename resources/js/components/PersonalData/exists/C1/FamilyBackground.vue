@@ -23,6 +23,7 @@
         :id="isComplete ? 'familyBackground' : ''"
       >
         <div class="form-check mt-3">
+          <p>Indicate <strong>N/A</strong> if not applicable</p>
           <label for="spouse">
             <input
               id="spouse"

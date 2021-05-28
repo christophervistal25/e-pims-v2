@@ -22,6 +22,7 @@
       :id="isComplete ? 'educationalBackground' : ''"
     >
       <div class="p-3">
+        <p>Indicate <strong>N/A</strong> if not applicable</p>
         <div
           class="alert alert-secondary text-center font-weight-bold"
           role="alert"
@@ -68,7 +69,7 @@
           </div>
 
           <div class="col-lg-3">
-            <label for="eperiodFrom" class="form-group has-float-label">
+            <label for="eperiodFrom" class="form-group has-float-label mb-0">
               <input
                 id="eperiodFrom"
                 type="month"
@@ -91,7 +92,7 @@
           </div>
 
           <div class="col-lg-3">
-            <label for="eperiodFrom" class="form-group has-float-label">
+            <label for="eperiodFrom" class="form-group has-float-label mb-0">
               <input
                 id="eperiodTo"
                 type="month"
@@ -236,7 +237,7 @@
           </div>
 
           <div class="col-lg-3">
-            <label for="speriodFrom" class="form-group has-float-label">
+            <label for="speriodFrom" class="form-group has-float-label mb-0">
               <input
                 id="speriodFrom"
                 type="month"
@@ -259,7 +260,7 @@
           </div>
 
           <div class="col-lg-3">
-            <label for="speriodTo" class="form-group has-float-label">
+            <label for="speriodTo" class="form-group has-float-label mb-0">
               <input
                 id="speriodTo"
                 type="month"
@@ -408,7 +409,7 @@
           </div>
 
           <div class="col-lg-3">
-            <label for="vperiodFrom" class="form-group has-float-label">
+            <label for="vperiodFrom" class="form-group has-float-label mb-0">
               <input
                 id="vperiodFrom"
                 type="month"
@@ -432,7 +433,7 @@
             </p>
           </div>
           <div class="col-lg-3">
-            <label for="vperiodTo" class="form-group has-float-label">
+            <label for="vperiodTo" class="form-group has-float-label mb-0">
               <input
                 id="vperiodTo"
                 type="month"
@@ -580,7 +581,7 @@
           </div>
 
           <div class="col-lg-3">
-            <label for="cperiodFrom" class="form-group has-float-label">
+            <label for="cperiodFrom" class="form-group has-float-label mb-0">
               <input
                 id="cperiodFrom"
                 type="month"
@@ -598,10 +599,10 @@
               />
               <span><strong>PERIOD OF ATTENDANCE (FROM)</strong></span>
             </label>
-            <p class="text-danger">{{ errors.college_period_from }}</p>
+            <p class="text-danger text-sm">{{ errors.college_period_from }}</p>
           </div>
           <div class="col-lg-3">
-            <label for="cperiodTo" class="form-group has-float-label">
+            <label for="cperiodTo" class="form-group has-float-label mb-0">
               <input
                 id="cperiodTo"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
@@ -750,7 +751,7 @@
           </div>
 
           <div class="col-lg-3">
-            <label for="gperiodFrom" class="form-group has-float-label">
+            <label for="gperiodFrom" class="form-group has-float-label mb-0">
               <input
                 id="gperiodFrom"
                 type="month"
@@ -773,7 +774,7 @@
             </p>
           </div>
           <div class="col-lg-3">
-            <label for="gperiodTo" class="form-group has-float-label">
+            <label for="gperiodTo" class="form-group has-float-label mb-0">
               <input
                 id="gperiodTo"
                 type="month"

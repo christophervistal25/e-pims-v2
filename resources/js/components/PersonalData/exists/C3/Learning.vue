@@ -25,6 +25,7 @@
         :id="isComplete ? 'learning' : ''"
       >
         <div class="card-body">
+          <p>Indicate <strong>N/A </strong>if not applicable</p>
           <table class="table table-bordered">
             <tr class="text-center text-sm" style="background: #eaeaea">
               <td></td>

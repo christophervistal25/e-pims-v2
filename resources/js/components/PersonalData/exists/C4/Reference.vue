@@ -28,6 +28,7 @@
         :id="isComplete ? 'reference' : ''"
       >
         <div class="card-body">
+          <p>Indicate <strong>N/A </strong>if not applicable</p>
           <table class="table table-bordered">
             <tr class="text-center jumbotron text-sm">
               <td>NAME</td>
