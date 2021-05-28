@@ -270,7 +270,7 @@
                     @click="removeField(index)"
                     class="btn btn-danger font-weight-bold rounded-circle"
                   >
-                    X
+                    <i class="fas fa-times"></i>
                   </button>
                 </td>
                 <td class="text-center">
