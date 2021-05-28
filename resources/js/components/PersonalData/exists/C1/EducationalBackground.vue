@@ -599,7 +599,7 @@
               />
               <span><strong>PERIOD OF ATTENDANCE (FROM)</strong></span>
             </label>
-            <p class="text-danger">{{ errors.college_period_from }}</p>
+            <p class="text-danger text-sm">{{ errors.college_period_from }}</p>
           </div>
           <div class="col-lg-3">
             <label for="cperiodTo" class="form-group has-float-label mb-0">
