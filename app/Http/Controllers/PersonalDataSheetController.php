@@ -304,6 +304,33 @@ class PersonalDataSheetController extends Controller
 
     public function existingEmployeeStoreRelevantQueries(Request $request)
     {
+        $this->validate($request, [
+            'question_34_a_answer'  => ['required'],
+            'question_34_a_details' => ['required_if:question_34_a_answer,yes'],
+            'question_34_b_answer'  => ['required'],
+            'question_34_b_details' => ['required_if:question_34_b_answer,yes'],
+            'question_35_a_answer'  => ['required'],
+            'no_35_a_details'       => ['required_if:question_35_a_answer,yes'],
+            'question_35_b_answer'  => ['required'],
+            'question_35_b_details' => ['required_if:question_35_b_answer,yes'],
+            'question_36_a_answer'  => ['required'],
+            'question_36_a_details' => ['required_if:question_36_a_answer,yes'],
+            'question_37_a_answer'  => ['required'],
+            'question_37_a_details' => ['required_if:question_37_a_answer,yes'],
+            'question_38_a_answer'  => ['required'],
+            'question_38_a_details' => ['required_if:question_38_a_answer,yes'],
+            'question_38_b_answer'  => ['required'],
+            'question_38_b_details' => ['required_if:question_38_b_answer,yes'],
+            'question_39_a_answer'  => ['required'],
+            'question_39_a_details' => ['required_if:question_39_a_answer,yes'],
+            'question_40_a_answer'  => ['required'],
+            'question_40_a_details' => ['required_if:question_40_a_answer,yes'],
+            'question_40_b_answer'  => ['required'],
+            'question_40_b_details' => ['required_if:question_40_b_answer,yes'],
+            'question_40_c_answer'  => ['required'],
+            'question_40_c_details' => ['required_if:question_40_c_answer,yes']
+        ]);
+
         return $this->employeeRepository->existingEmployeeStoreRelevantQueries($request->all());
     }
 
@@ -314,6 +341,10 @@ class PersonalDataSheetController extends Controller
 
     public function existingEmployeeStoreReferences(Request $request)
     {
+        $this->validate($request, [
+            '*.name' => 'required',
+        ],[], ['*.name' => 'name']);
+
         return $this->employeeRepository->existingEmployeeAddReferences($request->all());
     }
 
@@ -324,6 +355,16 @@ class PersonalDataSheetController extends Controller
 
     public function existingEmployeeStoreIssuedID(Request $request)
     {
+        $this->validate($request, [
+            "id_type" => 'required',
+            "id_no"   => ['required', 'unique:employee_issued_i_d_s,id_no'],
+            "date"    => 'required',
+        ], [], [
+            'id_type' => 'Government Issued ID',
+            'id_no' => 'ID/License/Passport No.',
+            'date' => 'Date/Place of Issuance'
+        ]);
+
         return $this->employeeRepository->existingEmployeeAddIssuedID($request->all());
     }
 

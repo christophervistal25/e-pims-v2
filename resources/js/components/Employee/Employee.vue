@@ -258,11 +258,6 @@ export default {
     BasicInformation,
     AccountNumber,
   },
-  // watch: {
-  //     page: function(newPage, oldPage) {
-  //         console.log(newPage);
-  //     }
-  // },
   methods: {
     sectionValidatorChecker(errorFields) {
       // check for basic information

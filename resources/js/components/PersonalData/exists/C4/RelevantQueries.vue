@@ -47,8 +47,8 @@
                 scope="row"
                 style="background: #eaeaea"
                 :class="
-                  errors.hasOwnProperty('no_34_a') ||
-                  errors.hasOwnProperty('no_34_a_details')
+                  errors.hasOwnProperty('question_34_a_answer') ||
+                  errors.hasOwnProperty('question_34_a_details')
                     ? 'bg-danger text-white'
                     : 'text-dark'
                 "
@@ -57,8 +57,8 @@
                 <span class="ml-4 text-sm">
                   <i
                     v-if="
-                      errors.hasOwnProperty('no_34_a') ||
-                      errors.hasOwnProperty('no_34_a_details')
+                      errors.hasOwnProperty('question_34_a_answer') ||
+                      errors.hasOwnProperty('question_34_a_details')
                     "
                     class="fa fa-times text-white"
                     aria-hidden="true"
@@ -103,7 +103,7 @@
                     type="text"
                     class="form-control"
                     :class="
-                      errors.hasOwnProperty('no_34_a_details')
+                      errors.hasOwnProperty('question_34_a_details')
                         ? 'is-invalid'
                         : ''
                     "
@@ -119,8 +119,8 @@
                 scope="row"
                 style="background: #eaeaea"
                 :class="
-                  errors.hasOwnProperty('no_34_b') ||
-                  errors.hasOwnProperty('no_34_b_details')
+                  errors.hasOwnProperty('question_34_b_answer') ||
+                  errors.hasOwnProperty('question_34_b_details')
                     ? 'bg-danger text-white'
                     : 'text-dark'
                 "
@@ -129,8 +129,8 @@
                 <span class="ml-4 text-sm">
                   <i
                     v-if="
-                      errors.hasOwnProperty('no_34_b') ||
-                      errors.hasOwnProperty('no_34_b_details')
+                      errors.hasOwnProperty('question_34_b_answer') ||
+                      errors.hasOwnProperty('question_34_b_details')
                     "
                     class="fa fa-times text-white"
                     aria-hidden="true"
@@ -179,7 +179,7 @@
                     type="text"
                     class="form-control"
                     :class="
-                      errors.hasOwnProperty('no_34_b_details')
+                      errors.hasOwnProperty('question_34_b_details')
                         ? 'is-invalid'
                         : ''
                     "
@@ -273,8 +273,8 @@
                 style="background: #eaeaea"
                 class="border-0"
                 :class="
-                  errors.hasOwnProperty('no_35_b') ||
-                  errors.hasOwnProperty('no_35_b_details')
+                  errors.hasOwnProperty('question_35_b_answer') ||
+                  errors.hasOwnProperty('question_35_b_details')
                     ? 'bg-danger text-white'
                     : 'text-dark'
                 "
@@ -282,8 +282,8 @@
                 <span class="ml-4 text-sm">
                   <i
                     v-if="
-                      errors.hasOwnProperty('no_35_b') ||
-                      errors.hasOwnProperty('no_35_b_details')
+                      errors.hasOwnProperty('question_35_b_answer') ||
+                      errors.hasOwnProperty('question_35_b_details')
                     "
                     class="fa fa-times text-white"
                     aria-hidden="true"
@@ -332,7 +332,7 @@
                     class="form-control"
                     placeholder="If YES, then give details"
                     :class="
-                      errors.hasOwnProperty('no_35_b_details')
+                      errors.hasOwnProperty('question_36_a_details')
                         ? 'is-invalid'
                         : ''
                     "
@@ -350,8 +350,8 @@
                 style="background: #eaeaea"
                 class="border-0 text-sm"
                 :class="
-                  errors.hasOwnProperty('no_36') ||
-                  errors.hasOwnProperty('no_36_details')
+                  errors.hasOwnProperty('question_36_a_answer') ||
+                  errors.hasOwnProperty('question_36_a_details')
                     ? 'bg-danger text-white'
                     : 'text-dark'
                 "
@@ -408,7 +408,9 @@
                     class="form-control"
                     placeholder="If YES, then give details"
                     :class="
-                      errors.hasOwnProperty('no_36_details') ? 'is-invalid' : ''
+                      errors.hasOwnProperty('question_36_a_details')
+                        ? 'is-invalid'
+                        : ''
                     "
                     :readonly="relevantQueries.question_36_a_answer !== 'yes'"
                     v-model="relevantQueries.question_36_a_details"
@@ -424,8 +426,8 @@
                 style="background: #eaeaea"
                 class="border-0"
                 :class="
-                  errors.hasOwnProperty('no_37') ||
-                  errors.hasOwnProperty('no_37_details')
+                  errors.hasOwnProperty('question_37_a_answer') ||
+                  errors.hasOwnProperty('question_37_a_details')
                     ? 'bg-danger text-white'
                     : 'text-dark'
                 "
@@ -433,8 +435,8 @@
                 <span class="text-sm">
                   <i
                     v-if="
-                      errors.hasOwnProperty('no_37') ||
-                      errors.hasOwnProperty('no_37_details')
+                      errors.hasOwnProperty('question_37_a_answer') ||
+                      errors.hasOwnProperty('question_37_a_details')
                     "
                     class="fa fa-times text-white"
                     aria-hidden="true"
@@ -484,7 +486,9 @@
                     type="text"
                     class="form-control"
                     :class="
-                      errors.hasOwnProperty('no_37_details') ? 'is-invalid' : ''
+                      errors.hasOwnProperty('question_37_a_details')
+                        ? 'is-invalid'
+                        : ''
                     "
                     placeholder="If YES, then give details"
                     :readonly="relevantQueries.question_37_a_answer !== 'yes'"
@@ -501,16 +505,16 @@
                 style="background: #eaeaea"
                 class="border-0 text-sm"
                 :class="
-                  errors.hasOwnProperty('no_38_a') ||
-                  errors.hasOwnProperty('no_38_a_details')
+                  errors.hasOwnProperty('question_38_a_answer') ||
+                  errors.hasOwnProperty('question_38_a_details')
                     ? 'bg-danger text-white'
                     : 'text-dark'
                 "
               >
                 <i
                   v-if="
-                    errors.hasOwnProperty('no_38_a') ||
-                    errors.hasOwnProperty('no_38_a_details')
+                    errors.hasOwnProperty('question_38_a_answer') ||
+                    errors.hasOwnProperty('question_38_a_details')
                   "
                   class="fa fa-times text-white"
                   aria-hidden="true"
@@ -558,7 +562,7 @@
                     type="text"
                     class="form-control"
                     :class="
-                      errors.hasOwnProperty('no_38_a_details')
+                      errors.hasOwnProperty('question_38_a_details')
                         ? 'is-invalid'
                         : ''
                     "
@@ -576,8 +580,8 @@
                 style="background: #eaeaea"
                 class="border-0"
                 :class="
-                  errors.hasOwnProperty('no_38_b') ||
-                  errors.hasOwnProperty('no_38_b_details')
+                  errors.hasOwnProperty('question_38_b_answer') ||
+                  errors.hasOwnProperty('question_38_b_details')
                     ? 'bg-danger text-white'
                     : 'text-dark'
                 "
@@ -585,8 +589,8 @@
                 <span class="ml-4 text-sm">
                   <i
                     v-if="
-                      errors.hasOwnProperty('no_38_b') ||
-                      errors.hasOwnProperty('no_38_b_details')
+                      errors.hasOwnProperty('question_38_b_answer') ||
+                      errors.hasOwnProperty('question_38_b_details')
                     "
                     class="fa fa-times text-white"
                     aria-hidden="true"
@@ -639,7 +643,7 @@
                     class="form-control"
                     placeholder="If YES, then give details"
                     :class="
-                      errors.hasOwnProperty('no_38_b_details')
+                      errors.hasOwnProperty('question_38_b_details')
                         ? 'is-invalid'
                         : ''
                     "
@@ -657,16 +661,16 @@
                 style="background: #eaeaea"
                 class="border-0 text-sm"
                 :class="
-                  errors.hasOwnProperty('no_39') ||
-                  errors.hasOwnProperty('no_39_details')
+                  errors.hasOwnProperty('question_39_a_answer') ||
+                  errors.hasOwnProperty('question_39_a_details')
                     ? 'bg-danger text-white'
                     : 'text-dark'
                 "
               >
                 <i
                   v-if="
-                    errors.hasOwnProperty('no_39') ||
-                    errors.hasOwnProperty('no_39_details')
+                    errors.hasOwnProperty('question_39_a_answer') ||
+                    errors.hasOwnProperty('question_39_a_details')
                   "
                   class="fa fa-times text-white"
                   aria-hidden="true"
@@ -714,7 +718,9 @@
                     type="text"
                     class="form-control"
                     :class="
-                      errors.hasOwnProperty('no_39_details') ? 'is-invalid' : ''
+                      errors.hasOwnProperty('question_39_a_details')
+                        ? 'is-invalid'
+                        : ''
                     "
                     placeholder="If YES, then give details"
                     :readonly="relevantQueries.question_39_a_answer !== 'yes'"
@@ -745,8 +751,8 @@
                 style="background: #eaeaea"
                 class="border-0"
                 :class="
-                  errors.hasOwnProperty('no_40_a') ||
-                  errors.hasOwnProperty('no_40_a_details')
+                  errors.hasOwnProperty('question_40_a_answer') ||
+                  errors.hasOwnProperty('question_40_a_details')
                     ? 'bg-danger text-white'
                     : 'text-dark'
                 "
@@ -754,8 +760,8 @@
                 <span class="ml-4 text-sm">
                   <i
                     v-if="
-                      errors.hasOwnProperty('no_40_a') ||
-                      errors.hasOwnProperty('no_40_a_details')
+                      errors.hasOwnProperty('question_40_a_answer') ||
+                      errors.hasOwnProperty('question_40_a_details')
                     "
                     class="fa fa-times text-white"
                     aria-hidden="true"
@@ -806,7 +812,7 @@
                     class="form-control"
                     placeholder="If YES, then give details"
                     :class="
-                      errors.hasOwnProperty('no_40_a_details')
+                      errors.hasOwnProperty('question_40_a_details')
                         ? 'is-invalid'
                         : ''
                     "
@@ -822,8 +828,8 @@
                 style="background: #eaeaea"
                 class="border-0"
                 :class="
-                  errors.hasOwnProperty('no_40_b') ||
-                  errors.hasOwnProperty('no_40_b_details')
+                  errors.hasOwnProperty('question_40_b_answer') ||
+                  errors.hasOwnProperty('question_40_b_details')
                     ? 'bg-danger text-white'
                     : 'text-dark'
                 "
@@ -831,8 +837,8 @@
                 <span class="ml-4 text-sm">
                   <i
                     v-if="
-                      errors.hasOwnProperty('no_40_b') ||
-                      errors.hasOwnProperty('no_40_b_details')
+                      errors.hasOwnProperty('question_40_b_answer') ||
+                      errors.hasOwnProperty('question_40_b_details')
                     "
                     class="fa fa-times text-white"
                     aria-hidden="true"
@@ -881,7 +887,7 @@
                     type="text"
                     class="form-control"
                     :class="
-                      errors.hasOwnProperty('no_40_b_details')
+                      errors.hasOwnProperty('question_40_b_details')
                         ? 'is-invalid'
                         : ''
                     "
@@ -899,8 +905,8 @@
                 style="background: #eaeaea"
                 class="border-0"
                 :class="
-                  errors.hasOwnProperty('no_40_c') ||
-                  errors.hasOwnProperty('no_40_c_details')
+                  errors.hasOwnProperty('question_40_c_answer') ||
+                  errors.hasOwnProperty('question_40_c_details')
                     ? 'bg-danger text-white'
                     : 'text-dark'
                 "
@@ -908,8 +914,8 @@
                 <span class="ml-4 text-sm">
                   <i
                     v-if="
-                      errors.hasOwnProperty('no_40_c') ||
-                      errors.hasOwnProperty('no_40_c_details')
+                      errors.hasOwnProperty('question_40_c_answer') ||
+                      errors.hasOwnProperty('question_40_c_details')
                     "
                     class="fa fa-times text-white"
                     aria-hidden="true"
@@ -946,7 +952,7 @@
                     type="radio"
                     class="form-check-input"
                     id="no_c_40"
-                    v-model="relevantQueries.question_40_c_details"
+                    v-model="relevantQueries.question_40_c_answer"
                     value="no"
                   />
                   <label class="form-check-label pr-2" for="no_c_40">NO</label>
@@ -959,7 +965,7 @@
                     class="form-control"
                     placeholder="If YES, then give details"
                     :class="
-                      errors.hasOwnProperty('no_40_c_details')
+                      errors.hasOwnProperty('question_40_c_details')
                         ? 'is-invalid'
                         : ''
                     "
@@ -1007,7 +1013,7 @@ export default {
       isComplete: false,
       isLoading: false,
       relevantQueries: {
-        employee_id: "",
+        employee_id: this.personal_data.employee_id,
         question_34_a_answer: "",
         question_34_a_details: "",
         question_34_b_answer: "",
@@ -1067,8 +1073,10 @@ export default {
     },
   },
   created() {
+    if (!this.personal_data.relevant_queries) {
+      this.personal_data.relevant_queries = this.relevantQueries;
+    }
     this.relevantQueries = this.personal_data.relevant_queries;
-    console.log(this.relevantQueries);
   },
 };
 </script>

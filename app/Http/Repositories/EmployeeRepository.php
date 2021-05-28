@@ -522,7 +522,9 @@ class EmployeeRepository
         $employeeId = $informations[self::FIRST_INDEX]['employee_id'];
 
         $employee = Employee::find($employeeId);
+
         $otherInformations = [];
+
         foreach($informations as $information) {
             $otherInformations[] = EmployeeOtherInformation::firstOrNew([
                 'special_skill' => $information['skill'],
@@ -596,32 +598,39 @@ class EmployeeRepository
     {
         $employee = Employee::find($data['employee_id']);
 
-        $employee->relevant_queries->update([
-            'question_34_a_answer'  => $data['question_34_a_answer'],
-            'question_34_a_details' => $data['question_34_a_details'],
-            'question_34_b_answer'  => $data['question_34_b_answer'],
-            'question_34_b_details' => $data['question_34_b_details'],
-            'question_35_a_answer'  => $data['question_35_a_answer'],
-            'question_35_a_details' => $data['question_35_a_details'],
-            'question_35_b_answer'  => $data['question_35_b_answer'],
-            'question_35_b_details' => $data['question_35_b_details'],
-            'question_36_a_answer'  => $data['question_36_a_answer'],
-            'question_36_a_details' => $data['question_36_a_details'],
-            'question_37_a_answer'  => $data['question_37_a_answer'],
-            'question_37_a_details' => $data['question_37_a_details'],
-            'question_38_a_answer'  => $data['question_38_a_answer'],
-            'question_38_a_details' => $data['question_38_a_details'],
-            'question_38_b_answer'  => $data['question_38_b_answer'],
-            'question_38_b_details' => $data['question_38_b_details'],
-            'question_39_a_answer'  => $data['question_39_a_answer'],
-            'question_39_a_details' => $data['question_39_a_details'],
-            'question_40_a_answer'  => $data['question_40_a_answer'],
-            'question_40_a_details' => $data['question_40_a_details'],
-            'question_40_b_answer'  => $data['question_40_b_answer'],
-            'question_40_b_details' => $data['question_40_b_details'],
-            'question_40_c_answer'  => $data['question_40_c_answer'],
-            'question_40_c_details' => $data['question_40_c_details'],
-        ]);
+        $relevantQuery = new EmployeeRelevantQuery();
+        
+        $relevantQuery->question_34_a_answer  = $data['question_34_a_answer'];
+        $relevantQuery->question_34_a_details = $data['question_34_a_details'];
+        $relevantQuery->question_34_b_answer  = $data['question_34_b_answer'];
+        $relevantQuery->question_34_b_details = $data['question_34_b_details'];
+        $relevantQuery->question_35_a_answer  = $data['question_35_a_answer'];
+        $relevantQuery->question_35_a_details = $data['question_35_a_details'];
+        $relevantQuery->question_35_b_answer  = $data['question_35_b_answer'];
+        $relevantQuery->question_35_b_details = $data['question_35_b_details'];
+        $relevantQuery->question_36_a_answer  = $data['question_36_a_answer'];
+        $relevantQuery->question_36_a_details = $data['question_36_a_details'];
+        $relevantQuery->question_37_a_answer  = $data['question_37_a_answer'];
+        $relevantQuery->question_37_a_details = $data['question_37_a_details'];
+        $relevantQuery->question_38_a_answer  = $data['question_38_a_answer'];
+        $relevantQuery->question_38_a_details = $data['question_38_a_details'];
+        $relevantQuery->question_38_b_answer  = $data['question_38_b_answer'];
+        $relevantQuery->question_38_b_details = $data['question_38_b_details'];
+        $relevantQuery->question_39_a_answer  = $data['question_39_a_answer'];
+        $relevantQuery->question_39_a_details = $data['question_39_a_details'];
+        $relevantQuery->question_40_a_answer  = $data['question_40_a_answer'];
+        $relevantQuery->question_40_a_details = $data['question_40_a_details'];
+        $relevantQuery->question_40_b_answer  = $data['question_40_b_answer'];
+        $relevantQuery->question_40_b_details = $data['question_40_b_details'];
+        $relevantQuery->question_40_c_answer  = $data['question_40_c_answer'];
+        $relevantQuery->question_40_c_details = $data['question_40_c_details'];
+
+        
+        if(!is_null($employee->relevant_queries)) {
+            $employee->relevant_queries()->delete();
+        }
+
+        $employee->relevant_queries()->save($relevantQuery);
 
         return $data;
     }
@@ -681,11 +690,17 @@ class EmployeeRepository
     {
         $employee = Employee::find($data['employee_id']);
 
-        $employee->issued_id->update([
-            'id_type' => $data['id_type'],
-            'id_no'   => $data['id_no'],
-            'date'    => $data['date'],
-        ]);
+        $issuedId = new EmployeeIssuedID();
+
+        $issuedId->id_type = $data['id_type'];
+        $issuedId->id_no   = $data['id_no'];
+        $issuedId->date    = $data['date'];
+        
+        if(!is_null($employee->issued_id)) {
+            $employee->issued_id()->delete();
+        }
+
+        $employee->issued_id()->save($issuedId);
 
         return $data;
     }

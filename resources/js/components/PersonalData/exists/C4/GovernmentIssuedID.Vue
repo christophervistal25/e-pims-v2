@@ -39,7 +39,7 @@
                     class="form-control rounded-0 border-0"
                     placeholder="e.g Philhealth"
                     :class="
-                      errors.hasOwnProperty('nameOfGovId') ? 'is-invalid' : ''
+                      errors.hasOwnProperty('id_type') ? 'is-invalid' : ''
                     "
                     v-model="governmentId.id_type"
                     style="text-transform: uppercase"
@@ -49,7 +49,7 @@
                   <input
                     type="text"
                     class="form-control rounded-0 border-0"
-                    :class="errors.hasOwnProperty('idNo') ? 'is-invalid' : ''"
+                    :class="errors.hasOwnProperty('id_no') ? 'is-invalid' : ''"
                     placeholder="Enter ID Number"
                     v-model="governmentId.id_no"
                   />
@@ -58,11 +58,7 @@
                   <input
                     type="text"
                     class="form-control rounded-0 border-0 text-uppercase"
-                    :class="
-                      errors.hasOwnProperty('dateOfIssuance')
-                        ? 'is-invalid'
-                        : ''
-                    "
+                    :class="errors.hasOwnProperty('date') ? 'is-invalid' : ''"
                     placeholder=""
                     v-model="governmentId.date"
                   />
@@ -93,8 +89,6 @@
 </template>
 
 <script>
-import GovernmentIssuedIDVue from "../../create/C4/GovernmentIssuedID.vue";
-
 export default {
   props: {
     show_panel: {
@@ -147,6 +141,14 @@ export default {
     },
   },
   created() {
+    if (!this.personal_data.issued_id) {
+      this.personal_data.issued_id = {
+        id_type: "",
+        id_no: "",
+        date: "",
+        employee_id: this.personal_data.employee_id,
+      };
+    }
     this.governmentId = this.personal_data.issued_id;
   },
 };
