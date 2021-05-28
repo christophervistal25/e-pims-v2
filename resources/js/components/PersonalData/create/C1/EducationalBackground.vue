@@ -122,7 +122,7 @@
             </div>
 
             <div class="col-lg-2">
-              <label class="form-group has-float-label" for="eyrGrad">
+              <label class="form-group has-float-label mb-0" for="eyrGrad">
                 <input
                   type="number"
                   id="eyrGrad"
@@ -257,7 +257,7 @@
             </div>
 
             <div class="col-lg-2">
-              <label class="form-group has-float-label" for="syrGrad">
+              <label class="form-group has-float-label mb-0" for="syrGrad">
                 <input
                   type="number"
                   id="syrGrad"
@@ -392,7 +392,7 @@
           </div>
 
           <div class="col-lg-2">
-            <label class="form-group has-float-label" for="vyrGrad">
+            <label class="form-group has-float-label mb-0" for="vyrGrad">
               <input
                 type="number"
                 id="vyrGrad"
@@ -521,7 +521,7 @@
           </div>
 
           <div class="col-lg-2">
-            <label class="form-group has-float-label" for="cyrGrad">
+            <label class="form-group has-float-label mb-0" for="cyrGrad">
               <input
                 type="number"
                 id="cyrGrad"
@@ -666,7 +666,7 @@
           </div>
 
           <div class="col-lg-2">
-            <label class="form-group has-float-label" for="gyrGrad">
+            <label class="form-group has-float-label mb-0" for="gyrGrad">
               <input
                 type="number"
                 id="gyrGrad"
