@@ -134,7 +134,7 @@
                 <input
                   type="text"
                   class="form-control rounded-0 border-0"
-                  placeholder=""
+                  style="text-transform: uppercase"
                   v-model="workExperience.monthly_salary"
                   :class="
                     errors.hasOwnProperty(`${index}.monthly_salary`)
@@ -147,12 +147,12 @@
                 <input
                   type="text"
                   class="form-control rounded-0 border-0"
+                  style="text-transform: uppercase"
                   :class="
                     errors.hasOwnProperty(`${index}.salary_job_pay_grade`)
                       ? 'is-invalid'
                       : ''
                   "
-                  placeholder=""
                   v-model="workExperience.salary_job_pay_grade"
                 />
               </td>
