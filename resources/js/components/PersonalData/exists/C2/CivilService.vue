@@ -160,7 +160,7 @@
                   <button
                     v-show="index != 0"
                     @click="removeField(index)"
-                    class="btn btn-sm btn-danger font-weight-bold mt-1 rounded-circle"
+                    class="btn btn-danger font-weight-bold mt-2 rounded-circle"
                   >
                     <i class="fas fa-times"></i>
                   </button>
@@ -178,7 +178,12 @@
             </tbody>
           </table>
           <div class="float-right mb-3">
-            <button class="btn btn-danger font-weight-bold">SKIP</button>
+            <button
+              @click="isComplete = true"
+              class="btn btn-danger font-weight-bold"
+            >
+              SKIP
+            </button>
 
             <button
               class="btn btn-primary font-weight-bold"

@@ -196,7 +196,7 @@ export default {
       });
     },
     skipSection() {
-      this.isComplete = false;
+      this.isComplete = true;
       this.$emit("next_tab");
     },
     submitOtherInformation() {
