@@ -22,6 +22,7 @@
       :id="isComplete ? 'educationalBackground' : ''"
     >
       <div class="p-3">
+        <p>Indicate <strong>N/A</strong> if not applicable</p>
         <div
           class="alert alert-secondary text-center font-weight-bold"
           role="alert"

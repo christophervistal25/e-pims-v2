@@ -23,6 +23,12 @@
       :id="isComplete ? 'workExperience' : ''"
     >
       <div class="card-body">
+        <div class="alert alert-info text-center" role="alert">
+          <strong
+            >Include private employment. Start from your recent work.</strong
+          >
+        </div>
+        <p>Indicate <strong>N/A </strong>if not applicable</p>
         <table class="table table-bordered">
           <tr class="text-center" style="background: #eaeaea">
             <td class="p-4"></td>
