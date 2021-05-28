@@ -24,7 +24,7 @@ class LearningRequest extends FormRequest
     public function rules()
     {
         return [
-            '*.nameOfTraining' => ['nullable'],
+            '*.nameOfTraining' => ['required'],
             '*.from'           => ['nullable', 'required_with:*.nameOfTraining', 'date'],
             '*.to'             => ['nullable', 'required_with:*.nameOfTraining', 'date'],
             '*.noOfHours'      => ['nullable', 'required_with:*.nameOfTraining', 'numeric'],

@@ -24,7 +24,7 @@ class VoluntaryWorkRequest extends FormRequest
     public function rules()
     {
         return [
-            '*.nameOfOrg' => ['nullable'],
+            '*.nameOfOrg' => ['required'],
             '*.from'      => ['nullable', 'required_with:*.nameOfOrg', 'date'],
             '*.to'        => ['nullable', 'required_with:*.nameOfOrg', 'date'],
             '*.noOfHrs'   => ['nullable', 'required_with:*.nameOfOrg'],

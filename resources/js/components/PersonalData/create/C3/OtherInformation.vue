@@ -27,6 +27,7 @@
           <p>Indicate <strong>N/A </strong>if not applicable</p>
           <table class="table table-bordered">
             <tr class="text-center" style="background: #eaeaea">
+              <td>&nbsp;</td>
               <td rowspan="2" class="align-middle text-sm" scope="colgroup">
                 31. SPECIAL SKILLS and HOBBIES
               </td>
@@ -41,10 +42,34 @@
 
             <tbody>
               <tr v-for="(otherInfo, index) in otherInformation" :key="index">
+                <td
+                  @click="
+                    rowErrors.includes(`${index}.`) &&
+                      displayRowErrorMessage(index)
+                  "
+                  class="align-middle text-center"
+                  :style="
+                    rowErrors.includes(`${index}.`) ? 'cursor:pointer' : ''
+                  "
+                  :class="
+                    rowErrors.includes(`${index}.`)
+                      ? 'bg-danger text-white'
+                      : ''
+                  "
+                >
+                  <i
+                    v-if="rowErrors.includes(`${index}.`)"
+                    class="fa fa-exclamation-triangle"
+                    aria-hidden="true"
+                  ></i>
+                </td>
                 <td>
                   <input
                     type="text"
                     class="form-control rounded-0 border-0"
+                    :class="
+                      rowErrors.includes(`${index}.skill`) ? 'is-invalid' : ''
+                    "
                     placeholder=""
                     v-model="otherInfo.skill"
                     style="text-transform: uppercase"
@@ -54,6 +79,9 @@
                   <input
                     type="text"
                     class="form-control rounded-0 border-0"
+                    :class="
+                      rowErrors.includes(`${index}.recog`) ? 'is-invalid' : ''
+                    "
                     placeholder=""
                     v-model="otherInfo.recog"
                     style="text-transform: uppercase"
@@ -63,18 +91,23 @@
                   <input
                     type="text"
                     class="form-control rounded-0 border-0"
+                    :class="
+                      rowErrors.includes(`${index}.memAssociation`)
+                        ? 'is-invalid'
+                        : ''
+                    "
                     placeholder=""
                     v-model="otherInfo.memAssociation"
                     style="text-transform: uppercase"
                   />
                 </td>
-                <td class="jumbotron text-center">
+                <td class="jumbotron text-center align-middle">
                   <button
                     v-show="index != 0"
-                    class="btn btn-sm btn-danger font-weight-bold mt-2 rounded-circle"
+                    class="btn btn-danger font-weight-bold rounded-circle"
                     @click="removeField(index)"
                   >
-                    X
+                    <i class="fas fa-times"></i>
                   </button>
                 </td>
                 <td class="text-center">
@@ -139,6 +172,8 @@ export default {
           employee_id: localStorage.getItem("employee_id"),
         },
       ],
+      errors: [],
+      rowErrors: "",
     };
   },
   watch: {
@@ -172,7 +207,39 @@ export default {
           );
           this.$emit("next_tab");
         })
-        .catch((err) => (this.isLoading = false));
+        .catch((error) => {
+          this.isLoading = false;
+          this.errors = {};
+          // Check the error status code.
+          if (error.response.status === 422) {
+            Object.keys(error.response.data.errors).map((field, index) => {
+              let [fieldMessage] = error.response.data.errors[field];
+              this.errors[field] = fieldMessage;
+            });
+            /* Merge all errors with join method for easily checking if an index of dynamic row is present or has error.*/
+            this.rowErrors = Object.keys(this.errors).join(",");
+          }
+        });
+    },
+    displayRowErrorMessage(index) {
+      let parentElement = document.createElement("ul");
+
+      for (let [field, error] of Object.entries(this.errors)) {
+        if (field.includes(`${index}.`)) {
+          let errorElement = document.createElement("p");
+          let horizontalLine = document.createElement("hr");
+          errorElement.innerHTML = error;
+          parentElement.appendChild(errorElement);
+          parentElement.appendChild(horizontalLine);
+        }
+      }
+
+      swal({
+        content: parentElement,
+        title: "Opps!",
+        icon: "error",
+        dangerMode: true,
+      });
     },
     removeField(index) {
       if (index !== 0) {

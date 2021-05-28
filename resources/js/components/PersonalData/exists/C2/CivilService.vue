@@ -27,6 +27,7 @@
           <p>Indicate <strong>N/A</strong> if not applicable</p>
           <table class="table table-bordered">
             <tr class="text-center" style="background: #eaeaea">
+              <td rowspan="2">&nbsp;</td>
               <td rowspan="2" class="align-middle text-sm">
                 27. CAREER SERVICE/ RA 1080 (BOARD/ BAR) UNDER SPECIAL LAWS/
                 CES/ CSEE BARANGAY ELIGIBILITY / DRIVER'S LICENSE
@@ -54,6 +55,27 @@
 
             <tbody>
               <tr v-for="(civil, index) in civilService" :key="index">
+                <td
+                  @click="
+                    rowErrors.includes(`${index}.`) &&
+                      displayRowErrorMessage(index)
+                  "
+                  class="align-middle text-center"
+                  :style="
+                    rowErrors.includes(`${index}.`) ? 'cursor:pointer' : ''
+                  "
+                  :class="
+                    rowErrors.includes(`${index}.`)
+                      ? 'bg-danger text-white'
+                      : ''
+                  "
+                >
+                  <i
+                    v-if="rowErrors.includes(`${index}.`)"
+                    class="fa fa-exclamation-triangle"
+                    aria-hidden="true"
+                  ></i>
+                </td>
                 <td scope="row">
                   <input
                     type="text"
@@ -206,6 +228,7 @@ export default {
         },
       ],
       errors: {},
+      rowErrors: "",
     };
   },
   methods: {
@@ -241,6 +264,8 @@ export default {
               let [fieldMessage] = error.response.data.errors[field];
               this.errors[field] = fieldMessage;
             });
+            /* Merge all errors with join method for easily checking if an index of dynamic row is present or has error.*/
+            this.rowErrors = Object.keys(this.errors).join(",");
           }
         });
     },
@@ -248,6 +273,26 @@ export default {
       if (index != 0) {
         this.civilService.splice(index, 1);
       }
+    },
+    displayRowErrorMessage(index) {
+      let parentElement = document.createElement("ul");
+
+      for (let [field, error] of Object.entries(this.errors)) {
+        if (field.includes(`${index}.`)) {
+          let errorElement = document.createElement("p");
+          let horizontalLine = document.createElement("hr");
+          errorElement.innerHTML = error;
+          parentElement.appendChild(errorElement);
+          parentElement.appendChild(horizontalLine);
+        }
+      }
+
+      swal({
+        content: parentElement,
+        title: "Opps!",
+        icon: "error",
+        dangerMode: true,
+      });
     },
   },
   created() {
