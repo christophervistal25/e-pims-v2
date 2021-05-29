@@ -5,7 +5,7 @@ import vSelect from "vue-select";
 import Vue from 'vue';
 
 Vue.use(Vuetify); 
-Vue.component("v-select", vSelect);
+Vue.component("v2-select", vSelect);
 
 Vue.component(
     "statusmodal",

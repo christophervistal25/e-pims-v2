@@ -40,10 +40,8 @@
                     <v-text-field
                       label="Office Name"
                       required
-                      v-model="office.short_name"
-                      :class="
-                        errors.hasOwnProperty('short_name') ? 'is-invalid' : ''
-                      "
+                      v-model="office.name"
+                      :class="errors.hasOwnProperty('name') ? 'is-invalid' : ''"
                       class="mt-0"
                     ></v-text-field>
                   </v-col>
@@ -103,8 +101,8 @@
                   </v-col>
                   <v-col cols="12">
                     <label>Office Head</label>
-                    <v-select
-                      label="Fullname"
+                    <v2-select
+                      label="fullname"
                       required
                       @input="onSelectOfficeHead"
                       @search="onSearchEmployee"
@@ -114,7 +112,7 @@
                       <template slot="no-options"
                         >Type to search office head</template
                       >
-                    </v-select>
+                    </v2-select>
                     <p
                       class="text-danger text-sm"
                       v-if="errors.hasOwnProperty('head')"
@@ -125,7 +123,7 @@
 
                   <v-col cols="12">
                     <label>Position Name</label>
-                    <v-select
+                    <v2-select
                       label="position_name"
                       :filterable="false"
                       @input="onSelectPosition"
@@ -136,7 +134,7 @@
                       <template slot="no-options"
                         >Type to search position</template
                       >
-                    </v-select>
+                    </v2-select>
                     <p
                       class="text-danger text-sm"
                       v-if="errors.hasOwnProperty('position_name')"
@@ -222,7 +220,7 @@ export default {
     },
     searchOfficeHead: _.debounce((loading, search, vm) => {
       loading(true);
-      window.axios.get(`/api/employee/search/${search}`).then((response) => {
+      window.axios.get(`/api/office/search/head/${search}`).then((response) => {
         vm.offices = response.data;
         loading(false);
       });
@@ -245,7 +243,8 @@ export default {
               text: "Successfully create new office",
               icon: "success",
             });
-            this.$emit("assignment-modal-dismiss");
+            this.$emit("assignment-modal-dismiss", response.data);
+            this.dialog = false;
           }
         })
         .catch((error) => {
@@ -254,9 +253,6 @@ export default {
             this.errors = error.response.data;
           }
         });
-    },
-    dismissModal() {
-      this.$emit("assignment-modal-dismiss");
     },
   },
 };

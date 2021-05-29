@@ -2,14 +2,26 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Office;
+use App\Employee;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 
 
 class OfficeController extends Controller
 {
+
+    public function searchOfficeHead(string $key)
+    {
+        return Employee::where('firstname', 'like', "%" . $key . "%")
+                        ->orWhere('middlename', 'like', "%" . $key . "%")
+                        ->orWhere('lastname', 'like', "%" . $key . "%")
+                        ->orWhere('extension', 'like', "%" . $key . "%")
+                        ->get(['firstname', 'middlename', 'lastname', 'extension']);
+        
+    }
+
     public function search(string $key)
     {
         return Office::where('office_name', 'like',  '%' . $key . '%')->get();
@@ -17,9 +29,7 @@ class OfficeController extends Controller
 
     public function list()
     {
-        return Cache::rememberForever('offices', function () {
-            return Office::get(['office_code', 'office_name','office_short_name']);
-        });
+        return Office::get(['office_code', 'office_name','office_short_name']);
     }
 
     public function store(Request $request)
@@ -28,10 +38,10 @@ class OfficeController extends Controller
             'name'          => 'required',
             'short_name'    => 'required',
             'address'       => 'required',
-            'head'          => 'required',
+            'head'          => 'required|unique:offices,office_head',
             'short_address' => 'required',
             'position_name' => 'required|exists:positions'
-        ], [], ['head' => 'office head']);
+        ], ['head.unique' => 'The office head is already belongs to an office.'], ['head' => 'office head']);
 
         if($validator->fails()) {
             return response()->json($validator->errors(), 422);

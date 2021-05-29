@@ -66,19 +66,8 @@
                       label="Salary Grade"
                       required
                       v-model="position.salary_grade"
-                      :class="
-                        errors.hasOwnProperty('salary_grade')
-                          ? 'is-invalid'
-                          : ''
-                      "
+                      :items="salary_grades"
                     >
-                      <option
-                        :value="salary_grade"
-                        v-for="(salary_grade, index) in 33"
-                        :key="index"
-                      >
-                        {{ salary_grade }}
-                      </option>
                     </v-select>
                     <p
                       class="text-danger text-sm"
@@ -125,6 +114,7 @@ export default {
     return {
       isLoading: false,
       dialog: false,
+      salary_grades: [],
       position: {
         code: "",
         name: "",
@@ -144,11 +134,11 @@ export default {
           if (response.status === 201) {
             this.isLoading = false;
             swal({
-              text: "Successfully create new employment status",
+              text: "Successfully create new position.",
               icon: "success",
             });
             this.position = {};
-            this.$emit("designation-modal-dismiss");
+            this.$emit("designation-modal-dismiss", response.data);
             this.dialog = false;
           }
         })
@@ -160,9 +150,9 @@ export default {
           }
         });
     },
-    dismissModal() {
-      this.$emit("designation-modal-dismiss");
-    },
+  },
+  mounted() {
+    this.salary_grades = Array.from({ length: 33 }, (_, i) => i + 1);
   },
 };
 </script>

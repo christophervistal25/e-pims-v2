@@ -197,7 +197,7 @@
     <div class="row">
       <div class="col-lg-9 ml-4">
         <label for="officeAssignment" class="form-group has-float-label">
-          <v-select
+          <v2-select
             label="status_name"
             @input="onSetSelectStatus"
             :value="
@@ -206,7 +206,7 @@
                 : ''
             "
             :options="employmentStatus"
-          ></v-select>
+          ></v2-select>
           <p class="text-danger text-sm">
             {{ errors["employmentStatus.stat_code"] }}
           </p>
@@ -234,7 +234,7 @@
     <div class="row">
       <div class="col-lg-9 ml-4">
         <label for="designation" class="form-group has-float-label">
-          <v-select
+          <v2-select
             label="position_name"
             :filterable="false"
             :value="
@@ -247,7 +247,7 @@
             <template slot="no-options">
               Type atleast 1 word of designation to search.
             </template>
-          </v-select>
+          </v2-select>
           <p class="text-danger text-sm">
             {{ errors["designation.position_code"] }}
           </p>
@@ -278,14 +278,14 @@
     <div class="row">
       <div class="col-lg-9 ml-4">
         <label for="officeAssignment" class="form-group has-float-label">
-          <v-select
+          <v2-select
             label="office_name"
             :filterable="false"
             :value="employee.officeAssignment.office_name"
             @input="onSetSelectOffice"
             :options="offices"
             @search="onSearchOffice"
-          ></v-select>
+          ></v2-select>
           <p class="text-danger text-sm">
             {{ errors["officeAssignment.office_code"] }}
           </p>
@@ -313,12 +313,12 @@
       </div>
     </div>
 
-    <statusmodal
+    <!-- <statusmodal
       :show="isShow"
       @status-modal-dismiss="closeStatusModal"
     ></statusmodal>
     <designationmodal :showdesignation="isShowDesignation"></designationmodal>
-    <assignmentmodal :showassignment="isShowAssignment"></assignmentmodal>
+    <assignmentmodal :showassignment="isShowAssignment"></assignmentmodal> -->
     <!-- <name-extension-modal :shownameextension="isShowNameExtension">
     </name-extension-modal> -->
 
@@ -449,14 +449,19 @@ export default {
     openDestinationModal() {
       this.isShowDesignation = true;
     },
-    closeDesignationModal() {
+    closeDesignationModal(designation) {
+      if (designation) {
+        this.designations.unshift(designation);
+      }
       this.isShowDesignation = false;
     },
     openAssignmentModal() {
       this.isShowAssignment = true;
     },
-    closeAssignmentModal() {
-      this.isShowAssignment = false;
+    closeAssignmentModal(assignment) {
+      if (assignment) {
+        this.offices.unshift(assignment);
+      }
     },
     openNameExtensionModal() {
       this.isShowNameExtension = true;

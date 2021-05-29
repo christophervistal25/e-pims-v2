@@ -28,7 +28,7 @@ class PositionController extends Controller
             'name'         => 'required|unique:positions,position_name|regex:/^[a-zA-Z ].+$/u',
             'salary_grade' => 'required|numeric|between:1,33',
             'short_name'   => 'required|unique:positions,position_short_name|regex:/^[a-zA-Z ].+$/u',
-        ]);
+        ], ['name.unique' => 'The position already exists.']);
 
         if($validator->fails()) {
             return response()->json($validator->errors(), 422);
@@ -36,7 +36,7 @@ class PositionController extends Controller
 
         $position = Position::create([
             'position_name'       => $request->name,
-            'salary_grade'        => $request->salary_grade,
+            'sg_no'               => $request->salary_grade,
             'position_short_name' => $request->short_name,
         ]);
 
