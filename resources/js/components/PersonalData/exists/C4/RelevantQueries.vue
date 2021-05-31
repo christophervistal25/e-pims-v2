@@ -722,7 +722,7 @@
                         ? 'is-invalid'
                         : ''
                     "
-                    placeholder="If YES, then give details"
+                    placeholder="If YES, then give details (country)"
                     :readonly="relevantQueries.question_39_a_answer !== 'yes'"
                     v-model="relevantQueries.question_39_a_details"
                   />
@@ -810,7 +810,7 @@
                   <input
                     type="text"
                     class="form-control"
-                    placeholder="If YES, then give details"
+                    placeholder="If YES, please specify"
                     :class="
                       errors.hasOwnProperty('question_40_a_details')
                         ? 'is-invalid'
@@ -891,7 +891,7 @@
                         ? 'is-invalid'
                         : ''
                     "
-                    placeholder="If YES, then give details"
+                    placeholder="If YES, please specify ID No"
                     :readonly="relevantQueries.question_40_b_answer !== 'yes'"
                     v-model="relevantQueries.question_40_b_details"
                   />
@@ -963,7 +963,7 @@
                   <input
                     type="text"
                     class="form-control"
-                    placeholder="If YES, then give details"
+                    placeholder="If YES, please specify ID No"
                     :class="
                       errors.hasOwnProperty('question_40_c_details')
                         ? 'is-invalid'

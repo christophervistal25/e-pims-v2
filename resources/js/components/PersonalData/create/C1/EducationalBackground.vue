@@ -22,7 +22,7 @@
       :id="isComplete ? 'educationalBackground' : ''"
     >
       <div class="p-3">
-        <p>Indicate <strong>N/A </strong>if not applicable</p>
+        <p><strong>Leave blank if not applicable</strong></p>
         <div
           class="alert alert-secondary text-center font-weight-bold"
           role="alert"
@@ -86,7 +86,7 @@
           </div>
 
           <div class="col-lg-3">
-            <label class="form-group has-float-label" for="eperiodTo">
+            <label class="form-group has-float-label mb-0" for="eperiodTo">
               <input
                 type="month"
                 id="eperiodTo"
@@ -337,7 +337,7 @@
           </div>
 
           <div class="col-lg-3">
-            <label class="form-group has-float-label" for="vperiodFrom">
+            <label class="form-group has-float-label mb-0" for="vperiodFrom">
               <input
                 type="month"
                 id="vperiodFrom"
@@ -355,7 +355,7 @@
             </p>
           </div>
           <div class="col-lg-3">
-            <label class="form-group has-float-label" for="vperiodTo">
+            <label class="form-group has-float-label mb-0" for="vperiodTo">
               <input
                 type="month"
                 id="vperiodTo"
@@ -467,7 +467,7 @@
           </div>
 
           <div class="col-lg-3">
-            <label class="form-group has-float-label" for="cperiodFrom">
+            <label class="form-group has-float-label mb-0" for="cperiodFrom">
               <input
                 type="month"
                 id="cperiodFrom"
@@ -483,7 +483,7 @@
             <p class="text-danger">{{ errors.cperiodFrom }}</p>
           </div>
           <div class="col-lg-3">
-            <label class="form-group has-float-label" for="cperiodTo">
+            <label class="form-group has-float-label mb-0" for="cperiodTo">
               <input
                 type="month"
                 id="cperiodTo"
@@ -611,7 +611,7 @@
           </div>
 
           <div class="col-lg-3">
-            <label class="form-group has-float-label" for="gperiodFrom">
+            <label class="form-group has-float-label mb-0" for="gperiodFrom">
               <input
                 type="month"
                 id="gperiodFrom"
@@ -629,7 +629,7 @@
             </p>
           </div>
           <div class="col-lg-3">
-            <label class="form-group has-float-label" for="gperiodTo">
+            <label class="form-group has-float-label mb-0" for="gperiodTo">
               <input
                 type="month"
                 id="gperiodTo"

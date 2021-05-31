@@ -25,6 +25,16 @@
         :id="isComplete ? 'learning' : ''"
       >
         <div class="card-body">
+          <div
+            class="alert alert-info text-center"
+            style="text-transform: uppercase"
+          >
+            <strong
+              >(Start from the most recent L&D/training program and include only
+              the relevant L&D/training taken for the last five (5) years for
+              Division Chief/Executive/Managerial positions)</strong
+            >
+          </div>
           <p>Indicate <strong>N/A </strong>if not applicable</p>
           <table class="table table-bordered">
             <tr class="text-center text-sm" style="background: #eaeaea">
