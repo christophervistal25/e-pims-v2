@@ -853,8 +853,6 @@
 </template>
 <script>
 import "vue-select/dist/vue-select.css";
-import _ from "lodash";
-import swal from "sweetalert";
 export default {
   props: {
     personal_data: {

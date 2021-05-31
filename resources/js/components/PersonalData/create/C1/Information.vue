@@ -890,7 +890,6 @@
 <script>
 import NameExtensionModal from "./NameExtensionModal";
 import "vue-select/dist/vue-select.css";
-import _ from "lodash";
 
 export default {
   components: { NameExtensionModal },
@@ -954,6 +953,15 @@ export default {
       permanentCities: [],
       permanentBarangays: [],
       errors: {},
+      tempPermanentAddress: {
+        province: "",
+        city: "",
+        barangay: "",
+        house_no: "",
+        street: "",
+        village: "",
+        zip_code: "",
+      },
     };
   },
   methods: {
@@ -989,15 +997,16 @@ export default {
     sameAsAboveAddress() {
       this.isSameAsAbove = !this.isSameAsAbove;
 
-      if (!this.isSameAsAbove) {
-        this.personal_data.permanentLotNo = "";
-        this.personal_data.permanentStreet = "";
-        this.personal_data.permanentSubdivision = "";
-        this.personal_data.permanentBarangay = "";
-        this.personal_data.permanentCity = "";
-        this.personal_data.permanentProvince = "";
-        this.personal_data.permanentZipCode = "";
-      } else {
+      if (this.isSameAsAbove) {
+        this.tempPermanentAddress.province = this.personal_data.permanentProvince;
+        this.tempPermanentAddress.city = this.personal_data.permanentCity;
+        this.tempPermanentAddress.barangay = this.personal_data.permanentBarangay;
+
+        this.tempPermanentAddress.house_no = this.personal_data.permanentLotNo;
+        this.tempPermanentAddress.street = this.personal_data.permanentStreet;
+        this.tempPermanentAddress.village = this.personal_data.permanentSubdivision;
+        this.tempPermanentAddress.zip_code = this.personal_data.permanentZipCode;
+
         this.permanentCities = this.cities;
         this.permanentBarangays = this.barangays;
         this.personal_data.permanentLotNo = this.personal_data.residentialLotNo;
@@ -1007,6 +1016,14 @@ export default {
         this.personal_data.permanentCity = this.personal_data.residentialCity;
         this.personal_data.permanentProvince = this.personal_data.residentialProvince;
         this.personal_data.permanentZipCode = this.personal_data.residentialZipCode;
+      } else {
+        this.personal_data.permanentLotNo = this.tempPermanentAddress.house_no;
+        this.personal_data.permanentStreet = this.tempPermanentAddress.street;
+        this.personal_data.permanentSubdivision = this.tempPermanentAddress.village;
+        this.personal_data.permanentBarangay = this.tempPermanentAddress.barangay;
+        this.personal_data.permanentCity = this.tempPermanentAddress.city;
+        this.personal_data.permanentProvince = this.tempPermanentAddress.province;
+        this.personal_data.permanentZipCode = this.tempPermanentAddress.zip_code;
       }
     },
     submitPersonalInformation(e) {
