@@ -302,7 +302,9 @@ export default {
   },
   created() {
     this.civilService = this.personal_data.civil_service;
-    this.addNewFieldCivilServiceRow();
+    if (this.civilService.length === 0) {
+      this.addNewFieldCivilServiceRow();
+    }
   },
 };
 </script>

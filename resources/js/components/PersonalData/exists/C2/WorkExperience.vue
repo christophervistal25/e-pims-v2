@@ -343,7 +343,9 @@ export default {
   },
   created() {
     this.workExperience = this.personal_data.work_experience;
-    this.addNewWorkExperienceField();
+    if (this.workExperience.length === 0) {
+      this.addNewWorkExperienceField();
+    }
     this.noOfFields = this.workExperience.length;
   },
 };

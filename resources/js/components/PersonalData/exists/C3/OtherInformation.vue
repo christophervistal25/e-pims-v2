@@ -252,7 +252,9 @@ export default {
   },
   created() {
     this.otherInformation = this.personal_data.other_information;
-    this.addNewOtherInformationField();
+    if (this.otherInformation.length === 0) {
+      this.addNewOtherInformationField();
+    }
     this.noOfFields = this.otherInformation.length;
   },
 };
