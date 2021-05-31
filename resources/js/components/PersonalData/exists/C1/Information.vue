@@ -23,6 +23,17 @@
         :id="isComplete ? 'information' : ''"
       >
         <div class="p-3">
+          <div
+            class="alert alert-danger text-center"
+            style="text-transform: uppercase"
+          >
+            <strong
+              >WARNING: Any misrepresentation made in the Personal Data Sheet
+              and the Work Experience Sheet shall cause the filing of
+              administrative/criminal case/s against the person
+              concerned.</strong
+            >
+          </div>
           <p>Indicate <strong>N/A </strong>if not applicable</p>
           <div
             class="alert alert-secondary text-center font-weight-bold"
