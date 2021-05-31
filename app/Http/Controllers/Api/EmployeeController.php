@@ -22,10 +22,10 @@ class EmployeeController extends Controller
 
     public function search(string $key)
     {
-        return Employee::where('firstname', 'like', "%$key%")
-                        ->orWhere('middlename', 'like', "%$key%")
-                        ->orWhere('lastname', 'like', "%$key%")
-                        ->orWhere('extension', 'like', "%$key%")
+        return Employee::where('firstname', 'like', "%" . $key . "%")
+                        ->orWhere('middlename', 'like', "%" . $key . "%")
+                        ->orWhere('lastname', 'like', "%" . $key . "%")
+                        ->orWhere('extension', 'like', "%" . $key . "%")
                         ->get(['firstname', 'middlename', 'lastname', 'extension']);
     }
 

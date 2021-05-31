@@ -54,6 +54,7 @@ Route::group(['prefix' => 'employee'], function () {
 });
 
 Route::get('offices', 'Api\OfficeController@list');
+Route::get('office/search/head/{key}', 'Api\OfficeController@searchOfficeHead');
 Route::get('office/search/{key}', 'Api\OfficeController@search');
 Route::post('office/store', 'Api\OfficeController@store');
 

@@ -10,7 +10,7 @@ class Position extends Model
 {
     use SoftDeletes;
     protected $dates = ['deleted_at'];
-    protected $fillable = ['position_id', 'position_code' ,'position_name', 'salary_grade' ,'position_short_name'];
+    protected $fillable = ['position_id', 'position_code' ,'position_name', 'sg_no' ,'position_short_name'];
 
     protected $primaryKey = 'position_id';
 
