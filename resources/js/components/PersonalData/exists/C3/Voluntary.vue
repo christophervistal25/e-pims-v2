@@ -285,7 +285,9 @@ export default {
   created() {
     this.volunOrg = this.personal_data.voluntary_work;
     // Base default avlues
-    this.addNewFieldVoluntary();
+    if (this.volunOrg.length === 0) {
+      this.addNewFieldVoluntary();
+    }
     this.noOfFields = this.volunOrg.length;
   },
 };

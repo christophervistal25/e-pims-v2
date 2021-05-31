@@ -307,7 +307,9 @@ export default {
   },
   created() {
     this.learnDev = this.personal_data.program_attained;
-    this.addNewLearningAndDevelopmentField();
+    if (this.learnDev.length === 0) {
+      this.addNewLearningAndDevelopmentField();
+    }
     this.noOfFields = this.learnDev.length;
   },
 };

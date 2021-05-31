@@ -237,7 +237,9 @@ export default {
   },
   created() {
     this.references = this.personal_data.references;
-    this.addNewReferenceField();
+    if (this.references.length === 0) {
+      this.addNewReferenceField();
+    }
     this.noOfFields = this.references.length;
   },
 };
