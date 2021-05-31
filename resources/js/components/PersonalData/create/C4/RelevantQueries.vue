@@ -268,7 +268,9 @@
                 class="border-0"
                 :class="
                   errors.hasOwnProperty('no_35_b') ||
-                  errors.hasOwnProperty('no_35_b_details')
+                  errors.hasOwnProperty('no_35_b_details') ||
+                  errors.hasOwnProperty('no_35_b_date_filled') ||
+                  errors.hasOwnProperty('no_35_b_status_of_cases')
                     ? 'bg-danger text-white'
                     : 'text-dark'
                 "
@@ -277,7 +279,9 @@
                   <i
                     v-if="
                       errors.hasOwnProperty('no_35_b') ||
-                      errors.hasOwnProperty('no_35_b_details')
+                      errors.hasOwnProperty('no_35_b_details') ||
+                      errors.hasOwnProperty('no_35_b_date_filled') ||
+                      errors.hasOwnProperty('no_35_b_status_of_cases')
                     "
                     class="fa fa-times text-white"
                     aria-hidden="true"
@@ -329,6 +333,33 @@
                     "
                     :readonly="relevantQueries.no_35_b !== 'yes'"
                     v-model="relevantQueries.no_35_b_details"
+                  />
+                  <label class="text-sm font-weight-bold mt-1"
+                    >Date Filled</label
+                  >
+                  <input
+                    type="date"
+                    class="form-control"
+                    placeholder="Date Filled"
+                    :class="
+                      errors.hasOwnProperty('no_35_b_date_filled')
+                        ? 'is-invalid'
+                        : ''
+                    "
+                    :readonly="relevantQueries.no_35_b !== 'yes'"
+                    v-model="relevantQueries.no_35_b_date_filled"
+                  />
+                  <input
+                    type="text"
+                    class="form-control mt-2"
+                    placeholder="Status of Case/s"
+                    :class="
+                      errors.hasOwnProperty('no_35_b_status_of_cases')
+                        ? 'is-invalid'
+                        : ''
+                    "
+                    :readonly="relevantQueries.no_35_b !== 'yes'"
+                    v-model="relevantQueries.no_35_b_status_of_cases"
                   />
                 </div>
               </td>
@@ -978,6 +1009,8 @@ export default {
         no_35_a_details: "",
         no_35_b: "",
         no_35_b_details: "",
+        no_35_b_date_filled: "",
+        no_35_b_status_of_cases: "",
 
         no_36: "",
         no_36_details: "",

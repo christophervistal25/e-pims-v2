@@ -38,6 +38,8 @@ class EmployeeRelevantQuery extends Model
         'question_35_a_details',
         'question_35_b_answer',
         'question_35_b_details',
+        'question_35_b_date_filled',
+        'question_35_b_status_of_cases',
         'question_36_a_answer',
         'question_36_a_details',
         'question_37_a_answer',
