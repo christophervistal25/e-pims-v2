@@ -102,7 +102,7 @@
           </div>
           <div class="col-lg-2">
             <label for="nameextension" class="form-group has-float-label mb-0">
-              <v-select
+              <v2-select
                 type="text"
                 id="nameextension"
                 v-model="personSelectedNameExtension"
@@ -112,7 +112,7 @@
                 "
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               >
-              </v-select>
+              </v2-select>
               <span><strong>EXTENSION NAME</strong></span>
             </label>
 
@@ -429,13 +429,13 @@
 
           <div class="col-lg-4" v-if="onCitizenDual">
             <label for="countries" class="form-group has-float-label mb-0">
-              <v-select
+              <v2-select
                 label="name"
                 v-model="personCountry"
                 :options="countries"
                 @input="countryChange"
               >
-              </v-select>
+              </v2-select>
               <span><strong>INDICATE COUNTRY</strong></span>
             </label>
             <p class="text-danger text-sm">{{ errors.indicate_country }}</p>
@@ -557,13 +557,13 @@
         <div class="row pl-3 pr-3">
           <div class="col-lg-3">
             <label class="form-group has-float-label">
-              <v-select
+              <v2-select
                 label="name"
                 v-model="personResidentialProvince"
                 :options="provinces"
                 @input="provinceChange"
                 id="resProvince"
-              ></v-select>
+              ></v2-select>
               <p class="text-danger text-sm">
                 {{ errors.residential_province }}
               </p>
@@ -575,12 +575,12 @@
           </div>
           <div class="col-lg-3">
             <label class="form-group has-float-label">
-              <v-select
+              <v2-select
                 label="name"
                 v-model="personResidentialCity"
                 :options="cities"
                 @input="municipalChange"
-              ></v-select>
+              ></v2-select>
               <p class="text-danger text-sm">
                 {{ errors.residential_city }}
               </p>
@@ -592,12 +592,12 @@
           </div>
           <div class="col-lg-3">
             <label class="form-group has-float-label">
-              <v-select
+              <v2-select
                 label="name"
                 v-model="personResidentialBarangay"
                 :options="barangays"
                 @input="barangayChange"
-              ></v-select>
+              ></v2-select>
               <p class="text-danger text-sm">
                 {{ errors.residential_barangay }}
               </p>
@@ -722,13 +722,13 @@
         <div class="row pl-3 pr-3">
           <div class="col-lg-3">
             <label class="form-group has-float-label">
-              <v-select
+              <v2-select
                 label="name"
                 v-model="personPermanentProvince"
                 :options="provinces"
                 @input="permanentProvinceChange"
                 :disabled="isSameAsAbove ? true : false"
-              ></v-select>
+              ></v2-select>
               <p class="text-danger text-sm">
                 {{ errors.permanent_province }}
               </p>
@@ -741,13 +741,13 @@
 
           <div class="col-lg-3">
             <label class="form-group has-float-label">
-              <v-select
+              <v2-select
                 label="name"
                 v-model="personPermanentCity"
                 :options="permanentCities"
                 @input="permanentMunicipalChange"
                 :disabled="isSameAsAbove ? true : false"
-              ></v-select>
+              ></v2-select>
               <p class="text-danger text-sm">
                 {{ errors.permanent_city }}
               </p>
@@ -760,13 +760,13 @@
 
           <div class="col-lg-3">
             <label class="form-group has-float-label">
-              <v-select
+              <v2-select
                 label="name"
                 v-model="personPermanentBarangay"
                 :options="permanentBarangays"
                 @input="permanentBarangayChange"
                 :disabled="isSameAsAbove ? true : false"
-              ></v-select>
+              ></v2-select>
               <p class="text-danger text-sm">
                 {{ errors.permanent_barangay }}
               </p>

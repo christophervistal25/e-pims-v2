@@ -100,10 +100,10 @@
             </div>
             <div class="col-lg-2">
               <label for="snameexten" class="form-group has-float-label mb-0">
-                <v-select
+                <v2-select
                   v-model="familyBackground.snameexten"
                   :options="name_extensions"
-                ></v-select>
+                ></v2-select>
                 <!-- <select
                   type="text"
                   id="snameexten"
@@ -368,11 +368,11 @@
           </div>
           <div class="col-lg-2">
             <label for="fnameexten" class="form-group has-float-label mb-0">
-              <v-select
+              <v2-select
                 v-model="familyBackground.fnameexten"
                 :options="name_extensions"
               >
-              </v-select>
+              </v2-select>
               <span><strong>EXTENSION NAME</strong></span>
             </label>
           </div>

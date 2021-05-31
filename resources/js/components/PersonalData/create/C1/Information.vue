@@ -102,11 +102,11 @@
           </div>
           <div class="col-lg-2">
             <label for="nameextension" class="form-group has-float-label mb-0">
-              <v-select
+              <v2-select
                 v-model="personal_data.nameExtension"
                 :options="name_extensions"
               >
-              </v-select>
+              </v2-select>
               <!-- <select
                 type="text"
                 id="nameextension"
@@ -466,12 +466,12 @@
             v-if="personal_data.citizenship == 'DUAL CITIZEN'"
           >
             <label for="countries" class="form-group has-float-label mb-0">
-              <v-select
+              <v2-select
                 label="name"
                 v-model="personal_data.country"
                 :options="countries"
                 id="resProvince"
-              ></v-select>
+              ></v2-select>
               <!-- <select
                 class="form-control custom-select"
                 id="countries"
@@ -603,13 +603,13 @@
         <div class="row pl-3 pr-3">
           <div class="col-lg-3">
             <label class="form-group has-float-label">
-              <v-select
+              <v2-select
                 label="name"
                 v-model="personal_data.residentialProvince"
                 :options="provinces"
                 @input="provinceChange"
                 id="resProvince"
-              ></v-select>
+              ></v2-select>
               <p class="text-danger text-sm">
                 {{ errors["residentialProvince.code"] }}
               </p>
@@ -621,12 +621,12 @@
           </div>
           <div class="col-lg-3">
             <label class="form-group has-float-label">
-              <v-select
+              <v2-select
                 label="name"
                 v-model="personal_data.residentialCity"
                 :options="cities"
                 @input="municipalChange"
-              ></v-select>
+              ></v2-select>
               <p class="text-danger text-sm">
                 {{ errors["residentialCity.code"] }}
               </p>
@@ -638,11 +638,11 @@
           </div>
           <div class="col-lg-3">
             <label class="form-group has-float-label">
-              <v-select
+              <v2-select
                 label="name"
                 v-model="personal_data.residentialBarangay"
                 :options="barangays"
-              ></v-select>
+              ></v2-select>
               <p class="text-danger text-sm">
                 {{ errors["residentialBarangay.code"] }}
               </p>
@@ -766,12 +766,12 @@
         <div class="row pl-3 pr-3">
           <div class="col-lg-3">
             <label class="form-group has-float-label">
-              <v-select
+              <v2-select
                 label="name"
                 v-model="personal_data.permanentProvince"
                 :options="provinces"
                 @input="permanentProvinceChange"
-              ></v-select>
+              ></v2-select>
               <p class="text-danger text-sm">
                 {{ errors["permanentProvince.code"] }}
               </p>
@@ -784,12 +784,12 @@
 
           <div class="col-lg-3">
             <label class="form-group has-float-label">
-              <v-select
+              <v2-select
                 label="name"
                 v-model="personal_data.permanentCity"
                 :options="permanentCities"
                 @input="permanentMunicipalChange"
-              ></v-select>
+              ></v2-select>
               <p class="text-danger text-sm">
                 {{ errors["permanentCity.code"] }}
               </p>
@@ -802,11 +802,11 @@
 
           <div class="col-lg-3">
             <label class="form-group has-float-label">
-              <v-select
+              <v2-select
                 label="name"
                 v-model="personal_data.permanentBarangay"
                 :options="permanentBarangays"
-              ></v-select>
+              ></v2-select>
               <p class="text-danger text-sm">
                 {{ errors["permanentBarangay.code"] }}
               </p>

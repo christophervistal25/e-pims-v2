@@ -125,13 +125,13 @@
             </div>
             <div class="col-lg-2">
               <label for="snameexten" class="form-group has-float-label">
-                <v-select
+                <v2-select
                   type="text"
                   label="name"
                   v-model="spouseNameExtension"
                   :options="name_extensions"
                 >
-                </v-select>
+                </v2-select>
                 <span><strong>SPOUSE'S NAME EXTENSION</strong></span>
               </label>
             </div>
@@ -368,7 +368,7 @@
           </div>
           <div class="col-lg-2">
             <label for="fnameexten" class="form-group has-float-label">
-              <v-select
+              <v2-select
                 v-model="fatherNameExtension"
                 label="name"
                 :options="name_extensions"
