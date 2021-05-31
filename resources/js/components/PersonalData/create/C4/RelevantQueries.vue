@@ -692,7 +692,7 @@
                     :class="
                       errors.hasOwnProperty('no_39_details') ? 'is-invalid' : ''
                     "
-                    placeholder="If YES, then give details"
+                    placeholder="If YES, then give details (country)"
                     :readonly="relevantQueries.no_39 !== 'yes'"
                     v-model="relevantQueries.no_39_details"
                   />

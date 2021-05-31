@@ -24,7 +24,7 @@
       >
         <div class="p-3">
           <div
-            class="alert alert-danger text-center"
+            class="alert alert-warning text-center"
             style="text-transform: uppercase"
           >
             <strong

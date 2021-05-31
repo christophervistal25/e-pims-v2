@@ -24,7 +24,7 @@
       >
         <div class="form-group mt-4">
           <p class="ml-4">
-            Indicate <strong>N/A </strong>or <strong> leave blank</strong> if
+            Indicate <strong>N/A </strong>or <strong> LEAVE BLANK</strong> if
             not applicable
           </p>
           <label for="spouse" style="transform: scale(0.8)" class="text-lg">
