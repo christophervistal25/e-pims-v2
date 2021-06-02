@@ -66,7 +66,7 @@
                   a. within the third degree?</span
                 >
               </td>
-              <td @click="relevantQueries.question_34_a_answer = 'yes'">
+              <td @click="markYes('question_34_a')">
                 <div class="form-check">
                   <input
                     id="yes_34_a"
@@ -80,12 +80,7 @@
                   </label>
                 </div>
               </td>
-              <td
-                @click="
-                  relevantQueries.question_34_a_answer = 'no';
-                  relevantQueries.question_34_a_details = '';
-                "
-              >
+              <td @click="markNo('question_34_a')">
                 <div class="form-check">
                   <input
                     type="radio"
@@ -139,10 +134,7 @@
                   Career Employees)?</span
                 >
               </td>
-              <td
-                class=""
-                @click="relevantQueries.question_34_b_answer = 'yes'"
-              >
+              <td class="" @click="markYes('question_34_b')">
                 <div class="form-check">
                   <input
                     id="yes_34_b"
@@ -156,12 +148,7 @@
                   >
                 </div>
               </td>
-              <td
-                @click="
-                  relevantQueries.question_34_b_answer = 'no';
-                  relevantQueries.question_34_b_details = '';
-                "
-              >
+              <td @click="markNo('question_34_b')">
                 <div class="form-check">
                   <input
                     type="radio"
@@ -215,10 +202,7 @@
                 35. a. Have you ever been found guilty of any administrative
                 offense?
               </td>
-              <td
-                class=""
-                @click="relevantQueries.question_35_a_answer = 'yes'"
-              >
+              <td v-on:click="markYes('question_35_a')">
                 <div class="form-check">
                   <input
                     type="radio"
@@ -232,12 +216,7 @@
                   </label>
                 </div>
               </td>
-              <td
-                @click="
-                  relevantQueries.question_35_a_answer = 'no';
-                  relevantQueries.question_35_a_details = '';
-                "
-              >
+              <td v-on:click="markNo('question_35_a')">
                 <div class="form-check">
                   <input
                     type="radio"
@@ -274,7 +253,9 @@
                 class="border-0"
                 :class="
                   errors.hasOwnProperty('question_35_b_answer') ||
-                  errors.hasOwnProperty('question_35_b_details')
+                  errors.hasOwnProperty('question_35_b_details') ||
+                  errors.hasOwnProperty('question_35_b_date_filled') ||
+                  errors.hasOwnProperty('question_35_b_status_of_cases')
                     ? 'bg-danger text-white'
                     : 'text-dark'
                 "
@@ -283,7 +264,9 @@
                   <i
                     v-if="
                       errors.hasOwnProperty('question_35_b_answer') ||
-                      errors.hasOwnProperty('question_35_b_details')
+                      errors.hasOwnProperty('question_35_b_details') ||
+                      errors.hasOwnProperty('question_35_b_date_filled') ||
+                      errors.hasOwnProperty('question_35_b_status_of_cases')
                     "
                     class="fa fa-times text-white"
                     aria-hidden="true"
@@ -293,7 +276,9 @@
               </td>
               <td
                 class=""
-                @click="relevantQueries.question_35_b_answer = 'yes'"
+                v-on:click="
+                  markYes('question_35_b', ['date_filled', 'status_of_cases'])
+                "
               >
                 <div class="form-check">
                   <input
@@ -309,9 +294,8 @@
                 </div>
               </td>
               <td
-                @click="
-                  relevantQueries.question_35_b_answer = 'no';
-                  relevantQueries.question_35_b_details = '';
+                v-on:click="
+                  markNo('question_35_b', ['date_filled', 'status_of_cases'])
                 "
               >
                 <div class="form-check">
@@ -338,6 +322,33 @@
                     "
                     :readonly="relevantQueries.question_35_b_answer !== 'yes'"
                     v-model="relevantQueries.question_35_b_details"
+                  />
+                  <label class="text-sm font-weight-bold mt-1"
+                    >Date Filled</label
+                  >
+                  <input
+                    type="date"
+                    class="form-control"
+                    placeholder="Date Filled"
+                    :class="
+                      errors.hasOwnProperty('question_35_b_date_filled')
+                        ? 'is-invalid'
+                        : ''
+                    "
+                    :readonly="relevantQueries.question_35_b_answer !== 'yes'"
+                    v-model="relevantQueries.question_35_b_date_filled"
+                  />
+                  <input
+                    type="text"
+                    class="form-control mt-2"
+                    placeholder="Status of Case/s"
+                    :class="
+                      errors.hasOwnProperty('question_35_b_status_of_cases')
+                        ? 'is-invalid'
+                        : ''
+                    "
+                    :readonly="relevantQueries.question_35_b_answer !== 'yes'"
+                    v-model="relevantQueries.question_35_b_status_of_cases"
                   />
                 </div>
               </td>
@@ -369,10 +380,7 @@
                 tribunal?
               </td>
 
-              <td
-                class=""
-                @click="relevantQueries.question_36_a_answer = 'yes'"
-              >
+              <td class="" v-on:click="markYes('question_36_a')">
                 <div class="form-check">
                   <input
                     id="yes_36"
@@ -384,12 +392,7 @@
                   <label class="form-check-label pr-2" for="yes_36">YES</label>
                 </div>
               </td>
-              <td
-                @click="
-                  relevantQueries.question_36_a_answer = 'no';
-                  relevantQueries.question_36_a_details = '';
-                "
-              >
+              <td v-on:click="markNo('question_36_a')">
                 <div class="form-check">
                   <input
                     type="radio"
@@ -448,10 +451,7 @@
                 </span>
               </td>
 
-              <td
-                class=""
-                @click="relevantQueries.question_37_a_answer = 'yes'"
-              >
+              <td class="" v-on:click="markYes('question_37_a')">
                 <div class="form-check">
                   <input
                     type="radio"
@@ -463,12 +463,7 @@
                   <label class="form-check-label pr-2" for="yes_37">YES</label>
                 </div>
               </td>
-              <td
-                @click="
-                  relevantQueries.question_37_a_answer = 'no';
-                  relevantQueries.question_37_a_details = '';
-                "
-              >
+              <td v-on:click="markNo('question_37_a')">
                 <div class="form-check">
                   <input
                     type="radio"
@@ -522,10 +517,7 @@
                 38. a. Have you ever been a candidate in a national or local
                 election held within the last year (except Barangay election)?
               </td>
-              <td
-                class=""
-                @click="relevantQueries.question_38_a_answer = 'yes'"
-              >
+              <td class="" v-on:click="markYes('question_38_a')">
                 <div class="form-check">
                   <input
                     type="radio"
@@ -539,12 +531,7 @@
                   >
                 </div>
               </td>
-              <td
-                @click="
-                  relevantQueries.question_38_a_answer = 'no';
-                  relevantQueries.question_38_a_details = '';
-                "
-              >
+              <td v-on:click="markNo('question_38_a')">
                 <div class="form-check">
                   <input
                     type="radio"
@@ -601,10 +588,7 @@
                   candidate?</span
                 >
               </td>
-              <td
-                class=""
-                @click="relevantQueries.question_38_b_answer = 'yes'"
-              >
+              <td class="" v-on:click="markYes('question_38_b')">
                 <div class="form-check">
                   <input
                     type="radio"
@@ -618,13 +602,7 @@
                   >
                 </div>
               </td>
-              <td
-                class=""
-                @click="
-                  relevantQueries.question_38_b_answer = 'no';
-                  relevantQueries.question_38_b_details = '';
-                "
-              >
+              <td class="" v-on:click="markNo('question_38_b')">
                 <div class="form-check">
                   <input
                     type="radio"
@@ -679,10 +657,7 @@
                 resident of another country?
               </td>
 
-              <td
-                class=""
-                @click="relevantQueries.question_39_a_answer = 'yes'"
-              >
+              <td v-on:click="markYes('question_39_a')">
                 <div class="form-check">
                   <input
                     type="radio"
@@ -694,13 +669,7 @@
                   <label class="form-check-label pr-2" for="yes_39">YES</label>
                 </div>
               </td>
-              <td
-                class=""
-                @click="
-                  relevantQueries.question_39_a_answer = 'no';
-                  relevantQueries.question_39_a_details = '';
-                "
-              >
+              <td class="" v-on:click="markNo('question_39_a')">
                 <div class="form-check">
                   <input
                     type="radio"
@@ -770,10 +739,7 @@
                   a. Are you a member of any indigenous group?</span
                 >
               </td>
-              <td
-                class=""
-                @click="relevantQueries.question_40_a_answer = 'yes'"
-              >
+              <td class="" v-on:click="markYes('question_40_a')">
                 <div class="form-check">
                   <input
                     type="radio"
@@ -787,13 +753,7 @@
                   >
                 </div>
               </td>
-              <td
-                class=""
-                @click="
-                  relevantQueries.question_40_a_answer = 'no';
-                  relevantQueries.question_40_a_details = '';
-                "
-              >
+              <td class="" v-on:click="markNo('question_40_a')">
                 <div class="form-check">
                   <input
                     type="radio"
@@ -846,10 +806,7 @@
                   b. Are you a person with disability?</span
                 >
               </td>
-              <td
-                class=""
-                @click="relevantQueries.question_40_b_answer = 'yes'"
-              >
+              <td class="" v-on:click="markYes('question_40_b')">
                 <div class="form-check">
                   <input
                     type="radio"
@@ -863,13 +820,7 @@
                   >
                 </div>
               </td>
-              <td
-                class=""
-                @click="
-                  relevantQueries.question_40_b_answer = 'no';
-                  relevantQueries.question_40_b_details = '';
-                "
-              >
+              <td class="" v-on:click="markNo('question_40_b')">
                 <div class="form-check">
                   <input
                     type="radio"
@@ -923,10 +874,7 @@
                   c. Are you a solo parent?</span
                 >
               </td>
-              <td
-                class=""
-                @click="relevantQueries.question_40_c_answer = 'yes'"
-              >
+              <td class="" v-on:click="markYes('question_40_c')">
                 <div class="form-check">
                   <input
                     type="radio"
@@ -940,13 +888,7 @@
                   >
                 </div>
               </td>
-              <td
-                class=""
-                @click="
-                  relevantQueries.question_40_c_answer = 'no';
-                  relevantQueries.question_40_c_details = '';
-                "
-              >
+              <td class="" v-on:click="markNo('question_40_c')">
                 <div class="form-check">
                   <input
                     type="radio"
@@ -1022,6 +964,8 @@ export default {
         question_35_a_details: "",
         question_35_b_answer: "",
         question_35_b_details: "",
+        question_35_b_date_filled: "",
+        question_35_b_status_of_cases: "",
         question_36_a_answer: "",
         question_36_a_details: "",
         question_37_a_answer: "",
@@ -1039,10 +983,46 @@ export default {
         question_40_c_answer: "",
         question_40_c_details: "",
       },
+      temporary: {},
       errors: {},
     };
   },
   methods: {
+    markYes(question, others = []) {
+      if (this.relevantQueries[`${question}_answer`] !== "yes") {
+        this.relevantQueries[`${question}_answer`] = "yes";
+        this.relevantQueries[`${question}_details`] = this.temporary[
+          `${question}_details`
+        ];
+
+        if (others.length !== 0) {
+          others.forEach(
+            (other) =>
+              (this.relevantQueries[`${question}_${other}`] = this.temporary[
+                `${question}_${other}`
+              ])
+          );
+        }
+      }
+    },
+    markNo(question, others = []) {
+      this.temporary[`${question}_details`] =
+        this.relevantQueries[`${question}_details`] ||
+        this.temporary[`${question}_details`];
+
+      this.relevantQueries[`${question}_answer`] = "no";
+      this.relevantQueries[`${question}_details`] = "";
+
+      if (others.length !== 0) {
+        others.forEach((other) => {
+          this.temporary[`${question}_${other}`] =
+            this.relevantQueries[`${question}_${other}`] ||
+            this.temporary[`${question}_${other}`];
+
+          this.relevantQueries[`${question}_${other}`] = "";
+        });
+      }
+    },
     submit() {
       this.isLoading = true;
       window.axios

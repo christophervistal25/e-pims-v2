@@ -562,32 +562,34 @@ class EmployeeRepository
 
     public function addRelevantQueries(array $queries = []) :array
     {
-        $employee = Employee::find($queries['employee_id']);
-        $relevantQuery = new EmployeeRelevantQuery();
-        $relevantQuery->question_34_a_answer =  $queries['no_34_a'];
-        $relevantQuery->question_34_a_details = $queries['no_34_a_details'];
-        $relevantQuery->question_34_b_answer =  $queries['no_34_b'];
-        $relevantQuery->question_34_b_details = $queries['no_34_b_details'];
-        $relevantQuery->question_35_a_answer =  $queries['no_35_a'];
-        $relevantQuery->question_35_a_details = $queries['no_35_a_details'];
-        $relevantQuery->question_35_b_answer =  $queries['no_35_b'];
-        $relevantQuery->question_35_b_details = $queries['no_35_b_details'];
-        $relevantQuery->question_36_a_answer =  $queries['no_36'];
-        $relevantQuery->question_36_a_details = $queries['no_36_details'];
-        $relevantQuery->question_37_a_answer =  $queries['no_37'];
-        $relevantQuery->question_37_a_details = $queries['no_37_details'];
-        $relevantQuery->question_38_a_answer =  $queries['no_38_a'];
-        $relevantQuery->question_38_a_details = $queries['no_38_a_details'];
-        $relevantQuery->question_38_b_answer =  $queries['no_38_b'];
-        $relevantQuery->question_38_b_details = $queries['no_38_b_details'];
-        $relevantQuery->question_39_a_answer =  $queries['no_39'];
-        $relevantQuery->question_39_a_details = $queries['no_39_details'];
-        $relevantQuery->question_40_a_answer =  $queries['no_40_a'];
-        $relevantQuery->question_40_a_details = $queries['no_40_a_details'];
-        $relevantQuery->question_40_b_answer =  $queries['no_40_b'];
-        $relevantQuery->question_40_b_details = $queries['no_40_b_details'];
-        $relevantQuery->question_40_c_answer =  $queries['no_40_c'];
-        $relevantQuery->question_40_c_details = $queries['no_40_c_details'];
+        $employee                                     = Employee::find($queries['employee_id']);
+        $relevantQuery                                = new EmployeeRelevantQuery();
+        $relevantQuery->question_34_a_answer          = $queries['no_34_a'];
+        $relevantQuery->question_34_a_details         = $queries['no_34_a_details'];
+        $relevantQuery->question_34_b_answer          = $queries['no_34_b'];
+        $relevantQuery->question_34_b_details         = $queries['no_34_b_details'];
+        $relevantQuery->question_35_a_answer          = $queries['no_35_a'];
+        $relevantQuery->question_35_a_details         = $queries['no_35_a_details'];
+        $relevantQuery->question_35_b_answer          = $queries['no_35_b'];
+        $relevantQuery->question_35_b_details         = $queries['no_35_b_details'];
+        $relevantQuery->question_35_b_date_filled     = $queries['no_35_b_date_filled'];
+        $relevantQuery->question_35_b_status_of_cases = $queries['no_35_b_status_of_cases'];
+        $relevantQuery->question_36_a_answer          = $queries['no_36'];
+        $relevantQuery->question_36_a_details         = $queries['no_36_details'];
+        $relevantQuery->question_37_a_answer          = $queries['no_37'];
+        $relevantQuery->question_37_a_details         = $queries['no_37_details'];
+        $relevantQuery->question_38_a_answer          = $queries['no_38_a'];
+        $relevantQuery->question_38_a_details         = $queries['no_38_a_details'];
+        $relevantQuery->question_38_b_answer          = $queries['no_38_b'];
+        $relevantQuery->question_38_b_details         = $queries['no_38_b_details'];
+        $relevantQuery->question_39_a_answer          = $queries['no_39'];
+        $relevantQuery->question_39_a_details         = $queries['no_39_details'];
+        $relevantQuery->question_40_a_answer          = $queries['no_40_a'];
+        $relevantQuery->question_40_a_details         = $queries['no_40_a_details'];
+        $relevantQuery->question_40_b_answer          = $queries['no_40_b'];
+        $relevantQuery->question_40_b_details         = $queries['no_40_b_details'];
+        $relevantQuery->question_40_c_answer          = $queries['no_40_c'];
+        $relevantQuery->question_40_c_details         = $queries['no_40_c_details'];
 
         $employee->relevant_queries()->save($relevantQuery);
 
@@ -600,30 +602,32 @@ class EmployeeRepository
 
         $relevantQuery = new EmployeeRelevantQuery();
         
-        $relevantQuery->question_34_a_answer  = $data['question_34_a_answer'];
-        $relevantQuery->question_34_a_details = $data['question_34_a_details'];
-        $relevantQuery->question_34_b_answer  = $data['question_34_b_answer'];
-        $relevantQuery->question_34_b_details = $data['question_34_b_details'];
-        $relevantQuery->question_35_a_answer  = $data['question_35_a_answer'];
-        $relevantQuery->question_35_a_details = $data['question_35_a_details'];
-        $relevantQuery->question_35_b_answer  = $data['question_35_b_answer'];
-        $relevantQuery->question_35_b_details = $data['question_35_b_details'];
-        $relevantQuery->question_36_a_answer  = $data['question_36_a_answer'];
-        $relevantQuery->question_36_a_details = $data['question_36_a_details'];
-        $relevantQuery->question_37_a_answer  = $data['question_37_a_answer'];
-        $relevantQuery->question_37_a_details = $data['question_37_a_details'];
-        $relevantQuery->question_38_a_answer  = $data['question_38_a_answer'];
-        $relevantQuery->question_38_a_details = $data['question_38_a_details'];
-        $relevantQuery->question_38_b_answer  = $data['question_38_b_answer'];
-        $relevantQuery->question_38_b_details = $data['question_38_b_details'];
-        $relevantQuery->question_39_a_answer  = $data['question_39_a_answer'];
-        $relevantQuery->question_39_a_details = $data['question_39_a_details'];
-        $relevantQuery->question_40_a_answer  = $data['question_40_a_answer'];
-        $relevantQuery->question_40_a_details = $data['question_40_a_details'];
-        $relevantQuery->question_40_b_answer  = $data['question_40_b_answer'];
-        $relevantQuery->question_40_b_details = $data['question_40_b_details'];
-        $relevantQuery->question_40_c_answer  = $data['question_40_c_answer'];
-        $relevantQuery->question_40_c_details = $data['question_40_c_details'];
+        $relevantQuery->question_34_a_answer          = $data['question_34_a_answer'];
+        $relevantQuery->question_34_a_details         = $data['question_34_a_details'];
+        $relevantQuery->question_34_b_answer          = $data['question_34_b_answer'];
+        $relevantQuery->question_34_b_details         = $data['question_34_b_details'];
+        $relevantQuery->question_35_a_answer          = $data['question_35_a_answer'];
+        $relevantQuery->question_35_a_details         = $data['question_35_a_details'];
+        $relevantQuery->question_35_b_answer          = $data['question_35_b_answer'];
+        $relevantQuery->question_35_b_details         = $data['question_35_b_details'];
+        $relevantQuery->question_35_b_date_filled     = $data['question_35_b_date_filled'];
+        $relevantQuery->question_35_b_status_of_cases = $data['question_35_b_status_of_cases'];
+        $relevantQuery->question_36_a_answer          = $data['question_36_a_answer'];
+        $relevantQuery->question_36_a_details         = $data['question_36_a_details'];
+        $relevantQuery->question_37_a_answer          = $data['question_37_a_answer'];
+        $relevantQuery->question_37_a_details         = $data['question_37_a_details'];
+        $relevantQuery->question_38_a_answer          = $data['question_38_a_answer'];
+        $relevantQuery->question_38_a_details         = $data['question_38_a_details'];
+        $relevantQuery->question_38_b_answer          = $data['question_38_b_answer'];
+        $relevantQuery->question_38_b_details         = $data['question_38_b_details'];
+        $relevantQuery->question_39_a_answer          = $data['question_39_a_answer'];
+        $relevantQuery->question_39_a_details         = $data['question_39_a_details'];
+        $relevantQuery->question_40_a_answer          = $data['question_40_a_answer'];
+        $relevantQuery->question_40_a_details         = $data['question_40_a_details'];
+        $relevantQuery->question_40_b_answer          = $data['question_40_b_answer'];
+        $relevantQuery->question_40_b_details         = $data['question_40_b_details'];
+        $relevantQuery->question_40_c_answer          = $data['question_40_c_answer'];
+        $relevantQuery->question_40_c_details         = $data['question_40_c_details'];
 
         
         if(!is_null($employee->relevant_queries)) {

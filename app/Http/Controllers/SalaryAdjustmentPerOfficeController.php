@@ -19,7 +19,7 @@ class SalaryAdjustmentPerOfficeController extends Controller
      */
     public function index()
     {
-        $plantilla =  Plantilla::select('office_code')->with('office:office_code,office_short_name,office_name')->get();
+        $plantilla =  Plantilla::select('office_code')->with('office:office_code,office_short_name,office_name')->groupBy('office_code')->get();
         return view('SalaryAdjustmentPerOffice.SalaryAdjustmentPerOffice', compact('plantilla'));
     }
 
@@ -43,7 +43,7 @@ class SalaryAdjustmentPerOfficeController extends Controller
                             return $btn;
                     })
                     ->editColumn('checkbox', function ($row) {
-                        $checkbox = "<input style='transform:scale(1.3)' name='id[$row->id]' value='$row->id' type='checkbox' />";
+                        $checkbox = "<input id='checkbox' id='checkbox' style='transform:scale(1.3)' name='id[$row->id]' value='$row->id' type='checkbox' />";
                         return $checkbox;
                     })->rawColumns(['checkbox'])
                     ->rawColumns(['action'])

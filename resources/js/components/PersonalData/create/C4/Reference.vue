@@ -169,7 +169,7 @@ export default {
           localStorage.setItem("references", JSON.stringify(response.data));
           this.$emit("display-issued-id");
         })
-        .catch((err) => (this.isLoading = false));
+        .catch((_) => (this.isLoading = false));
     },
     skipSection() {
       this.isComplete = true;

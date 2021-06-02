@@ -51,6 +51,8 @@ class CreateEmployeeRelevantQueriesTable extends Migration
             $table->string('question_35_a_details')->nullable();
             $table->string('question_35_b_answer');
             $table->string('question_35_b_details')->nullable();
+            $table->date('question_35_b_date_filled')->nullable();
+            $table->string('question_35_b_status_of_cases')->nullable();
             $table->string('question_36_a_answer');
             $table->string('question_36_a_details')->nullable();
             $table->string('question_37_a_answer');

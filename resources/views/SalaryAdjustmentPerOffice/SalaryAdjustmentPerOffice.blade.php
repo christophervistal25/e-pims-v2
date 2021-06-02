@@ -169,7 +169,7 @@
                 <table class="table table-bordered text-center" id="salaryAdjustmentPerOffice"  style="width:100%;">
                     <thead>
                     <tr>
-                        <td style="margin-top:10px;" scope="col" class="text-center font-weight-bold"><input style='transform:scale(1.3); margin-top:18px;' name="selectAll" value="selectAll" id="selectAll" type="checkbox" /></td>
+                        <td style="margin-top:10px;" scope="col" id="sample" class="text-center font-weight-bold d-none"><input style='transform:scale(1.3); margin-top:18px;' name="selectAll" value="selectAll" id="selectAll" type="checkbox" /></td>
                         <td scope="col" class="text-center font-weight-bold">Employee Name</td>
                         <td scope="col" class="text-center font-weight-bold d-none">Office</td>
                         <td scope="col" class="text-center font-weight-bold">Salary Grade</td>
