@@ -10,7 +10,10 @@ $(function() {
         aoColumnDefs: [
             {
                 orderable: false,
-                aTargets: [0]
+                className: "d-none",
+                aTargets: [0],
+                width: "5%",
+                targets: 0
             }
         ],
         order: [[1, "asc"]],
@@ -61,7 +64,10 @@ $(function() {
                 aoColumnDefs: [
                     {
                         orderable: false,
-                        aTargets: [0]
+                        className: "",
+                        aTargets: [0],
+                        width: "5%",
+                        targets: 0
                     }
                 ],
                 order: [[1, "asc"]],
@@ -109,6 +115,15 @@ $(function() {
                 serverSide: true,
                 destroy: true,
                 retrieve: true,
+                aoColumnDefs: [
+                    {
+                        orderable: false,
+                        className: "",
+                        aTargets: [0],
+                        width: "5%",
+                        targets: 0
+                    }
+                ],
                 ajax: {
                     url: `/api/office/salary/adjustment/peroffice/${e.target.value}`,
                     data: function(d) {
@@ -175,4 +190,8 @@ function ValidateDropDown(dd) {
     } else {
         document.getElementById("line").style.visibility = "hidden";
     }
+}
+
+function ValidateDropDown(dd) {
+    $("#sample").removeClass("d-none");
 }
