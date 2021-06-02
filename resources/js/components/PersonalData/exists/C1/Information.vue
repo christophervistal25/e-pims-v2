@@ -185,7 +185,7 @@
             </p>
           </div>
 
-          <div class="col-lg-3">
+          <div class="col-lg-2">
             <label for="sex" class="form-group has-float-label mb-0">
               <select
                 class="form-control custom-select"
@@ -207,7 +207,10 @@
             </p>
           </div>
 
-          <div class="col-lg-3">
+          <div
+            class="col-lg-3"
+            :class="civilEqualToOthers ? 'col-lg-1' : 'col-lg-2'"
+          >
             <label for="status" class="form-group has-float-label mb-0">
               <select
                 class="form-control"
@@ -216,6 +219,7 @@
                 "
                 id="status"
                 v-model="personal_data.civil_status"
+                @change="civilStatusChange()"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               >
                 <option value="SINGLE">SINGLE</option>
@@ -232,6 +236,25 @@
             <p class="text-danger text-sm">
               {{ errors.status }}
             </p>
+          </div>
+          <div class="col-lg-1" v-if="civilEqualToOthers">
+            <label for="statOthers" class="form-group has-float-label">
+              <input
+                type="text"
+                class="form-control"
+                name="statOthers"
+                id="statOthers"
+                style="
+                  outline: none;
+                  text-transform: uppercase;
+                  box-shadow: 0px 0px 0px transparent;
+                "
+              />
+              <span
+                ><strong>PLEASE SPECIFY</strong
+                ><span><strong class="text-danger">*</strong></span></span
+              >
+            </label>
           </div>
         </div>
         <div class="row pl-3 pr-3">
@@ -866,6 +889,7 @@ export default {
   },
   data() {
     return {
+      civilEqualToOthers: false,
       onCitizenDual: false,
       isShow: false,
       isShowNameExtension: false,
@@ -900,6 +924,13 @@ export default {
     };
   },
   methods: {
+    civilStatusChange() {
+      if (this.personal_data.civil_status === "OTHERS") {
+        this.civilEqualToOthers = true;
+      } else {
+        this.civilEqualToOthers = false;
+      }
+    },
     countryChange() {
       this.personal_data.indicate_country = this.personCountry;
     },
@@ -1027,6 +1058,7 @@ export default {
   },
 
   created() {
+    civilStatusChange();
     window.axios
       .get("/api/province/all")
       .then((response) => (this.provinces = response.data));

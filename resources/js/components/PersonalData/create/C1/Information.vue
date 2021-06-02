@@ -90,7 +90,7 @@
             </p>
           </div>
           <div class="col-lg-3">
-            <label class="form-group has-float-label" for="middlename">
+            <label class="form-group has-float-label mb-0" for="middlename">
               <input
                 type="text"
                 class="form-control"
@@ -210,7 +210,7 @@
             </p>
           </div>
 
-          <div class="col-lg-3">
+          <div class="col-lg-2">
             <label for="sex" class="form-group has-float-label mb-0">
               <select
                 class="form-control custom-select"
@@ -232,13 +232,14 @@
             </p>
           </div>
 
-          <div class="col-lg-3">
+          <div class="col-lg-3" :class="statOthers ? 'col-lg-1' : 'col-lg-2'">
             <label for="status" class="form-group has-float-label mb-0">
               <select
                 class="form-control"
                 :class="!errors.hasOwnProperty('status') ? '' : 'is-invalid'"
                 id="status"
                 v-model="personal_data.status"
+                @change="changeStatOthers()"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               >
                 <option value="SINGLE">SINGLE</option>
@@ -255,6 +256,25 @@
             <p class="text-danger text-sm">
               {{ errors.status }}
             </p>
+          </div>
+          <div class="col-lg-1" v-if="statOthers">
+            <label for="statOthers" class="form-group has-float-label">
+              <input
+                type="text"
+                name="statOthers"
+                class="form-control"
+                id="statOthers"
+                style="
+                  outline: none;
+                  box-shadow: 0px 0px 0px transparent;
+                  text-transform: uppercase;
+                "
+              />
+              <span
+                ><strong>PLEASE SPECIFY</strong
+                ><span class="text-danger"><strong>*</strong></span></span
+              >
+            </label>
           </div>
         </div>
         <div class="row pl-3 pr-3">
@@ -902,6 +922,7 @@ export default {
   data() {
     return {
       isShow: false,
+      statOthers: false,
       isShowNameExtension: false,
       isLoading: false,
       isComplete: false,
@@ -957,6 +978,13 @@ export default {
     };
   },
   methods: {
+    changeStatOthers() {
+      if (this.personal_data.status == "OTHERS") {
+        this.statOthers = true;
+      } else {
+        this.statOthers = false;
+      }
+    },
     provinceChange(province) {
       // Since the province value change we need to fetch cities by selected province code.
       if (!_.isEmpty(province)) {
