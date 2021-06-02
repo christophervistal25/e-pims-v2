@@ -4,12 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
+use DateTimeInterface;
 
 class SalaryAdjustment extends Model
 {
+
     use SoftDeletes;
-    protected $dates = ['deleted_at'];
-    protected $fillable = [        
+    protected $dates = ['deleted_at', 'date_adjustment'];
+    protected $fillable = [
         'employee_id',
         'item_no',
         'position_id',
@@ -33,4 +36,9 @@ class SalaryAdjustment extends Model
     {
         return $this->hasOne(Plantilla::class, 'employee_id', 'employee_id');
     }
+    public function serializeDate(DateTimeInterface  $date)
+    {
+        return $date->format('Y-m-d');
+    }
 }
+

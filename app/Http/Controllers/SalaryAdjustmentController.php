@@ -10,6 +10,7 @@ use App\SalaryAdjustment;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 class SalaryAdjustmentController extends Controller
 {
     /**
@@ -19,11 +20,16 @@ class SalaryAdjustmentController extends Controller
      */
     public function index()
     {
+
+        $dates = SalaryAdjustment::get('date_adjustment')->pluck('date_adjustment')->map(function ($date) {
+            return $date->format('Y');
+        })->toArray();
+        $dates = array_values(array_unique($dates));
         $position = Position::select('position_id', 'position_name')->get();
         // $employee = Employee::with(['plantilla', 'plantilla.position'])->get();
         $salaryAdjustment = SalaryAdjustment::get()->pluck('employee_id')->toArray();
         $employee = Plantilla::select('item_no', 'position_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id')->with('employee:employee_id,firstname,middlename,lastname,extension','positions:position_id,position_name')->whereNotIn('employee_id', $salaryAdjustment )->get();
-        return view('SalaryAdjustment.SalaryAdjustment', compact('employee', 'position'));
+        return view('SalaryAdjustment.SalaryAdjustment', compact('employee', 'position', 'dates'));
     }
 
     public function list(Request $request)
