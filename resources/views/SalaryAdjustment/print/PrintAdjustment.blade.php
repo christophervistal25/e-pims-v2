@@ -28,7 +28,7 @@
 
 {{-- BUTTONS --}}
 <div id='action-buttons' class="float-right mb-2">
-    <a class="btn btn-outline-dark" href="{{ route('salary-adjustment.previewed.print', $id) }}" id="printBtn"><i class="la la-print"></i>&nbsp Print Preview</a>
+    <a class="btn btn-outline-dark" href="{{ route('salary-adjustment.previewed.print', $id) }}" id="printBtn"><i class="la la-print"></i>&nbsp Print</a>
     <a href="/salary-adjustment" class="btn btn-info"><i class="la la-list"></i>&nbsp View Table</a>
 </div>
 <div class="clearfix"></div>
