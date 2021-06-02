@@ -148,6 +148,18 @@
 
         <div id="table" class="page-header {{  count($errors->all()) == 0 ? '' : 'd-none' }}">
                 <div style="padding-bottom:10px;" class="row align-items-right">
+                    <div class="col">
+                        <div class="row">
+                            <div class="form-group form-focus select-focus col-5">
+                                <select class="select floating" id="filter_year" onchange="filter_year();">
+                                    @foreach ($dates as $date)
+                                    <option value={{ $date }}>{{ $date }}</option>
+                                    @endforeach
+                                </select>
+                                <label style="padding-left:10px;" class="focus-label">Select Year</label>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-auto float-right ml-auto">
                         <button id="addbutton" class="btn btn-primary submit-btn float-right"><i class="fa fa-plus"></i> Add Salary Adjustment</button>
                     </div>
