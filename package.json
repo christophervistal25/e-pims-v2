@@ -19,11 +19,14 @@
         "sass-loader": "^8.0.0"
     },
     "dependencies": {
+        "@types/vuelidate": "^0.7.14",
         "gitmoji-cli": "^3.4.0",
         "sweetalert": "^2.1.2",
+        "vee-validate": "^3.4.8",
         "vue": "^2.6.12",
         "vue-select": "^3.11.2",
         "vue-template-compiler": "^2.6.12",
+        "vuelidate": "^0.7.6",
         "vuetify": "^2.5.0"
     }
 }
