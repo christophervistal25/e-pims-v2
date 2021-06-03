@@ -145,6 +145,16 @@
             </li>
           </div>
         </div>
+        <div class="row" v-if="employee.civil_status === 'OTHERS'">
+          <div class="col-lg-6 title">Specify Civil Status</div>
+          <div class="text col-auto">
+            <li>
+              <div class="text">
+                {{ employee.civil_status_others || "N/A" }}
+              </div>
+            </li>
+          </div>
+        </div>
         <div class="row">
           <div class="col-lg-6 title">Telephone Number</div>
           <div class="text col-auto">
