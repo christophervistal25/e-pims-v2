@@ -4,6 +4,7 @@
       <v-row justify="center" class="mt-1">
         <v-dialog
           persistent
+          scrollable
           v-model="dialog"
           max-width="600px"
           :class="showassignment ? 'show' : ''"

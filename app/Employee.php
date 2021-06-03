@@ -173,22 +173,22 @@ class Employee extends Model
      */
     public function setFirstNameAttribute($value)
     {
-        $this->attributes['firstname'] = Str::upper($value, 'UTF-8');
+        $this->attributes['firstname'] = Str::upper($value);
     }
 
     public function setMiddleNameAttribute($value)
     {
-        $this->attributes['middlename'] = Str::upper($value, 'UTF-8');
+        $this->attributes['middlename'] = Str::upper($value);
     }
 
     public function setLastNameAttribute($value)
     {
-        $this->attributes['lastname'] = Str::upper($value, 'UTF-8');
+        $this->attributes['lastname'] = Str::upper($value);
     }
 
     public function setExtensionAttribute($value)
     {
-        $this->attributes['extension'] = Str::upper($value, 'UTF-8');
+        $this->attributes['extension'] = Str::upper($value);
     }
     
     public function plantilla()

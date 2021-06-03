@@ -3,7 +3,7 @@
     <div data-app>
       <v-row justify="center" class="mt-1">
         <v-dialog
-          fpersistent
+          persistent
           v-model="dialog"
           max-width="600px"
           :class="shownameextension ? 'show' : ''"

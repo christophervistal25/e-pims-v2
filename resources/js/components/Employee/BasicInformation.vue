@@ -216,16 +216,7 @@
           >
         </label>
       </div>
-      <!-- <div class="col-lg-1">
-        <button
-          @click="openStatusModal"
-          class="btn btn-info btn-sm rounded-circle shadow mt-1"
-          data-toggle="modal"
-          data-target="#statusModal"
-        >
-          <i class="fas fa-plus text-sm"></i>
-        </button>
-      </div> -->
+
       <div class="col-lg-1">
         <statmodal @status-modal-dismiss="closeStatusModal"></statmodal>
       </div>
@@ -258,16 +249,6 @@
         </label>
       </div>
 
-      <!-- <div class="col-lg-1">
-        <button
-          class="btn btn-info btn-sm rounded-circle shadow mt-1"
-          @click="openDestinationModal"
-          data-toggle="modal"
-          data-target="#designationModal"
-        >
-          <i class="fas fa-plus text-sm"></i>
-        </button>
-      </div> -->
       <div class="col-lg-1">
         <positionmodal
           @designation-modal-dismiss="closeDesignationModal"
@@ -296,40 +277,15 @@
         </label>
       </div>
 
-      <!-- <div class="col-lg-1">
-        <button
-          class="btn btn-info btn-sm rounded-circle shadow mt-1"
-          @click="openAssignmentModal"
-          data-target="#assignmentModal"
-          data-toggle="modal"
-        >
-          <i class="fas fa-plus text-sm"></i>
-        </button>
-      </div> -->
       <div class="col-lg-1">
         <assignmodal
           @assignment-modal-dismiss="closeAssignmentModal"
         ></assignmodal>
       </div>
     </div>
-
-    <!-- <statusmodal
-      :show="isShow"
-      @status-modal-dismiss="closeStatusModal"
-    ></statusmodal>
-    <designationmodal :showdesignation="isShowDesignation"></designationmodal>
-    <assignmentmodal :showassignment="isShowAssignment"></assignmentmodal> -->
-    <!-- <name-extension-modal :shownameextension="isShowNameExtension">
-    </name-extension-modal> -->
-
-    <!-- <button>sample</button> -->
   </div>
 </template>
 <script>
-import StatusModal from "./StatusModal.vue";
-import DesignationModal from "./DesignationModal.vue";
-import AssignmentModal from "./AssignmentModal.vue";
-import NameExtensionModal from "./NameExtensionModal.vue";
 import NameExtModal from "./NameExtModal.vue";
 import StatModal from "./StatModal.vue";
 import PositionModal from "./PositionModal.vue";
@@ -349,11 +305,6 @@ export default {
     };
   },
   components: {
-    StatusModal,
-    DesignationModal,
-    StatusModal,
-    AssignmentModal,
-    NameExtensionModal,
     NameExtModal,
     StatModal,
     PositionModal,

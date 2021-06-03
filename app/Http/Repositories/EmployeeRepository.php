@@ -69,12 +69,12 @@ class EmployeeRepository
 
 
             $data['employee_id'] = $employee->employee_id;
+
         return $data;
     }
 
     public function existEmployeeAddInformation(array $data = [])
     {
-        
         $employee                       = Employee::find($data['employee_id']);
         $employee->lastname             = $data['lastname'];
         $employee->firstname            = $data['firstname'];

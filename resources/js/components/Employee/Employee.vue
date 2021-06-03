@@ -17,14 +17,20 @@
       <div class="clearfix"></div>
       <div class="col-lg-12">
         <v-main v-if="!showAddEmployeeForm">
-          <v-text-field
-            v-model="search"
-            append-icon="mdi-magnify"
-            label="Search"
-            single-line
-            hide-details
-          >
-          </v-text-field>
+          <v-row>
+            <v-col></v-col>
+            <v-col></v-col>
+            <v-col>
+              <v-text-field
+                v-model="search"
+                append-icon="mdi-magnify"
+                label="Search"
+                single-line
+                hide-details
+              >
+              </v-text-field>
+            </v-col>
+          </v-row>
 
           <div class="mt-1"></div>
           <v-data-table

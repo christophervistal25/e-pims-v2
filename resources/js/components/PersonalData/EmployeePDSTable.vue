@@ -70,14 +70,20 @@
         </tbody>
       </table> -->
       <v-main v-if="!showProfile">
-        <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          label="Search"
-          single-line
-          hide-details
-        >
-        </v-text-field>
+        <v-row>
+          <v-col></v-col>
+          <v-col></v-col>
+          <v-col>
+            <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Search"
+              single-line
+              hide-details
+            >
+            </v-text-field>
+          </v-col>
+        </v-row>
 
         <div class="mt-1"></div>
         <v-data-table

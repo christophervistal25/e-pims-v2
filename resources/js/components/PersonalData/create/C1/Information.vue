@@ -263,7 +263,9 @@
                 type="text"
                 name="statOthers"
                 class="form-control box-shadow-0"
-                :class="!errors.hasOwnProperty('status') ? '' : 'is-invalid'"
+                :class="
+                  !errors.hasOwnProperty('other_status') ? '' : 'is-invalid'
+                "
                 v-model="personal_data.other_status"
                 id="statOthers"
               />
@@ -1056,18 +1058,14 @@ export default {
       e.preventDefault();
       this.isLoading = true;
 
-      // this.personal_data.permanentProvince = this.personal_data.permanentProvince.code;
-      // this.personal_data.permanentCity = this.personal_data.permanentCity.code;
-      // this.personal_data.permanentBarangay = this.personal_data.permanentBarangay.code;
-
       window.axios
         .post("/employee/personal/information/store", this.personal_data)
         .then((response) => {
-          if (response.status === 200) {
+          if (response.status == 200) {
             this.errors = {};
             this.isLoading = false;
             this.isComplete = true;
-            localStorage.setItem("employee_id", reaonse.data.employee_id);
+            localStorage.setItem("employee_id", response.data.employee_id);
 
             localStorage.setItem(
               "personal_information",
@@ -1081,7 +1079,7 @@ export default {
           this.isLoading = false;
           this.errors = {};
           // Check the error status code.
-          if (error.response.status === 422) {
+          if (error.response.status == 422) {
             Object.keys(error.response.data.errors).map((field) => {
               let [fieldMessage] = error.response.data.errors[field];
               this.errors[field] = fieldMessage;

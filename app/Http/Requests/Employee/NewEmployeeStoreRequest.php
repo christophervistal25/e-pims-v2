@@ -38,20 +38,22 @@ class NewEmployeeStoreRequest extends FormRequest
             'sssNo'            => 'nullable|unique:employees,sss_no',
             'tinNo'            => 'nullable|unique:employees,tin_no',
         ];
-
-
-        if(!empty(request()->employmentStatus)) {
-            // Check
-            if(request()->employmentStatus['status_name'] === 'PERMANENT') {
+        
+        if(request()->employmentStatus['status_name'] === 'PERMANENT') {
+            // Ignore rules if the user enter an asterisk (*)
+            echo request()->dbpAccountNo;
+            if(request()->dbpAccountNo === '*') {
+                $rules['dbpAccountNo'] = 'required';
+            } else {
                 $rules['dbpAccountNo'] = 'required|unique:employees,dbp_account_no';
+            }
+        } else {
+            if(request()->lbpAccountNo === '*') {
+                $rules['lbpAccountNo'] = 'required';
             } else {
                 $rules['lbpAccountNo'] = 'required|unique:employees,lbp_account_no';
             }
-        } else {
-            $rules['lbpAccountNo'] = 'required|unique:employees,lbp_account_no';
-            $rules['dbpAccountNo'] = 'required|unique:employees,dbp_account_no';
         }
-
 
         return $rules;
     }

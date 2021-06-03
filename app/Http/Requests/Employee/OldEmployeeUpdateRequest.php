@@ -40,17 +40,20 @@ class OldEmployeeUpdateRequest extends FormRequest
             'tinNo'            => 'nullable|unique:employees,tin_no,'. request('employee_id') . ',employee_id',
         ];
 
-        if(!empty(request()->employmentStatus)) {
-            // Check
             if(request()->employmentStatus['status_name'] === 'PERMANENT') {
-                $rules['dbpAccountNo'] = 'unique:employees,dbp_account_no,' . request()->employee_id . ',employee_id';
+                if(request()->dbpAccountNo !== '*') {
+                    $rules['dbpAccountNo'] = 'unique:employees,dbp_account_no,' . request()->employee_id . ',employee_id';
+                } else {
+                    $rules['dbpAccountNo'] = 'required';
+                }
+                
             } else {
-                $rules['lbpAccountNo'] = 'required|unique:employees,lbp_account_no,' . request()->employee_id . ',employee_id';
+                if(request()->lbpAccountNo !== '*') {
+                    $rules['lbpAccountNo'] = 'required|unique:employees,lbp_account_no,' . request()->employee_id . ',employee_id';
+                } else {
+                    $rules['lbpAccountNo'] = 'required';
+                }
             }
-        } else {
-            $rules['lbpAccountNo'] = 'required|unique:employees,lbp_account_no,' . request()->employee_id . ',employee_id';
-            $rules['dbpAccountNo'] = 'unique:employees,dbp_account_no,' . request()->employee_id . ',employee_id';
-        }
 
         return $rules;
     }
