@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <v-form v-model="valid">
+      <v-form v-model="valid" ref="form">
         <v-row justify="center" class="mt-1">
           <v-dialog
             persistent
@@ -92,7 +92,7 @@
                 <v-btn
                   color="blue darken-1"
                   text
-                  @click="dialog = false"
+                  @click="dismissModal()"
                   data-dismiss="Close"
                 >
                   Close
@@ -161,6 +161,11 @@ export default {
             this.errors = error.response.data;
           }
         });
+    },
+    dismissModal() {
+      this.dialog = false;
+      this.errors = {};
+      this.$refs.form.resetValidation();
     },
   },
   mounted() {

@@ -149,7 +149,7 @@
           <div class="col-lg-6 title">Specify Civil Status</div>
           <div class="text col-auto">
             <li>
-              <div class="text">
+              <div class="text" style="text-transform: uppercase">
                 {{ employee.civil_status_others || "N/A" }}
               </div>
             </li>

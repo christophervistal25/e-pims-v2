@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <v-form v-model="valid">
+      <v-form v-model="valid" ref="form">
         <v-row justify="center" class="mt-1">
           <v-dialog
             v-model="dialog"
@@ -58,7 +58,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="dialog = false">
+                <v-btn color="blue darken-1" text @click="dismissModal()">
                   Close
                 </v-btn>
                 <v-btn
@@ -124,7 +124,9 @@ export default {
         });
     },
     dismissModal() {
-      this.$emit("nameext-modal-dismiss");
+      this.dialog = false;
+      this.errors = {};
+      this.$refs.form.resetValidation();
     },
   },
 };

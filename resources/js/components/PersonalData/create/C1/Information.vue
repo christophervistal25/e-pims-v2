@@ -268,6 +268,7 @@
                 "
                 v-model="personal_data.other_status"
                 id="statOthers"
+                style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
               <span
                 ><strong>PLEASE SPECIFY</strong
