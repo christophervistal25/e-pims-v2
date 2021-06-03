@@ -11,15 +11,15 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-btn
-                color="secondary"
                 elevation="10"
-                dark
+                color="rgba(255, 155, 68, 1)"
                 v-bind="attrs"
                 v-on="on"
                 fab
                 x-small
+                style="outline: none"
               >
-                <v-icon>mdi-plus</v-icon>
+                <v-icon class="text-white">mdi-plus</v-icon>
               </v-btn>
             </template>
             <v-card>
@@ -44,7 +44,7 @@
                         :class="
                           errors.hasOwnProperty('name') ? 'is-invalid' : ''
                         "
-                        class="pt-0"
+                        class="pt-0 form-input"
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12">
@@ -57,7 +57,7 @@
                       <v-text-field
                         label="Position Short Name"
                         :rules="nameRules"
-                        class="pt-0"
+                        class="pt-0 form-input"
                         required
                         v-model="position.short_name"
                         :class="
@@ -80,7 +80,7 @@
                         :rules="[(v) => !!v || 'Salary grade is required']"
                         v-model="position.salary_grade"
                         :items="salary_grades"
-                        class="pt-0"
+                        class="pt-0 form-input"
                       >
                       </v-select>
                     </v-col>
@@ -168,3 +168,13 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.form-input >>> .error--text {
+  color: red !important;
+}
+
+.form-input >>> input {
+  caret-color: black !important;
+}
+</style>

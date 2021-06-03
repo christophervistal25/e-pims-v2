@@ -881,6 +881,7 @@
   </div>
 </template>
 <script>
+import NameExtensionModal from "../../../PersonalData/create/C1/NameExtensionModal";
 import "vue-select/dist/vue-select.css";
 export default {
   props: {
@@ -890,6 +891,9 @@ export default {
     name_extensions: {
       required: true,
     },
+  },
+  components: {
+    NameExtensionModal,
   },
   data() {
     return {

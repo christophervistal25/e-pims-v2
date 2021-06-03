@@ -11,15 +11,15 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-btn
-                color="secondary"
                 elevation="10"
-                dark
+                color="rgba(255, 155, 68, 1)"
                 v-bind="attrs"
                 v-on="on"
                 fab
                 x-small
+                style="outline: none"
               >
-                <v-icon>mdi-plus</v-icon>
+                <v-icon class="text-white">mdi-plus</v-icon>
               </v-btn>
             </template>
             <v-card>
@@ -40,7 +40,7 @@
                         }}
                       </p>
                       <v-text-field
-                        class="mt-0"
+                        class="mt-0 form-input"
                         label="Extension Name"
                         :rules="[(v) => !!v || 'Extension name is required']"
                         required
@@ -133,3 +133,12 @@ export default {
   },
 };
 </script>
+<style scoped>
+.form-input >>> .error--text {
+  color: red !important;
+}
+
+.form-input >>> input {
+  caret-color: black !important;
+}
+</style>

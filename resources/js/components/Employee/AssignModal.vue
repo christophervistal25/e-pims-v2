@@ -9,15 +9,15 @@
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn
-            color="secondary"
             elevation="10"
-            dark
+            color="rgba(255, 155, 68, 1)"
             v-bind="attrs"
             v-on="on"
             fab
             x-small
+            style="outline: none"
           >
-            <v-icon>mdi-plus</v-icon>
+            <v-icon class="text-white">mdi-plus</v-icon>
           </v-btn>
         </template>
         <v-card>
@@ -40,7 +40,7 @@
                     required
                     v-model="office.name"
                     :class="errors.hasOwnProperty('name') ? 'is-invalid' : ''"
-                    class="pt-0"
+                    class="pt-0 form-input"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12">
@@ -58,7 +58,7 @@
                     :class="
                       errors.hasOwnProperty('short_name') ? 'is-invalid' : ''
                     "
-                    class="pt-0"
+                    class="pt-0 form-input"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12">
@@ -76,7 +76,7 @@
                     :class="
                       errors.hasOwnProperty('address') ? 'is-invalid' : ''
                     "
-                    class="pt-0"
+                    class="pt-0 form-input"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12">
@@ -87,7 +87,7 @@
                     {{ errors.short_address[0] }}
                   </p>
                   <v-text-field
-                    class="pt-0"
+                    class="pt-0 form-input"
                     label="Office Short Address"
                     :rules="nameRules"
                     required
@@ -107,7 +107,6 @@
                     @search="onSearchEmployee"
                     :value="office.head"
                     :options="offices"
-                    :rules="[(v) => !!v || 'Office head is required']"
                   >
                     <template slot="no-options"
                       >Type to search office head</template
@@ -258,3 +257,12 @@ export default {
   },
 };
 </script>
+<style scoped>
+.form-input >>> .error--text {
+  color: red !important;
+}
+
+.form-input >>> input {
+  caret-color: black !important;
+}
+</style>

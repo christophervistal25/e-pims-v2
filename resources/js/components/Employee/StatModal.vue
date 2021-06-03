@@ -11,15 +11,15 @@
           >
             <template v-slot:activator="{ on, attrs }">
               <v-btn
-                color="secondary"
                 elevation="10"
-                dark
+                color="rgba(255, 155, 68, 1)"
                 v-bind="attrs"
                 v-on="on"
                 fab
                 x-small
+                style="outline: none"
               >
-                <v-icon>mdi-plus</v-icon>
+                <v-icon class="text-white">mdi-plus</v-icon>
               </v-btn>
             </template>
             <v-card>
@@ -39,7 +39,7 @@
                         {{ errors.status_name[0] }}
                       </p>
                       <v-text-field
-                        class="pt-0"
+                        class="pt-0 form-input"
                         label="Status Name"
                         required
                         v-model="status.status_name"
@@ -132,3 +132,13 @@ export default {
   },
 };
 </script>
+<style scoped>
+.form-input >>> .error--text {
+  color: red !important;
+}
+
+.form-input >>> input {
+  caret-color: black !important;
+}
+</style>
+

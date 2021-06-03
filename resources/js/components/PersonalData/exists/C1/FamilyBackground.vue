@@ -496,6 +496,7 @@
 </template>
 
 <script>
+import NameExtensionModal from "../../../PersonalData/create/C1/NameExtensionModal";
 export default {
   props: {
     show_panel: {
@@ -507,6 +508,9 @@ export default {
     name_extensions: {
       required: true,
     },
+  },
+  components: {
+    NameExtensionModal,
   },
   data() {
     return {

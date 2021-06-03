@@ -137,6 +137,7 @@
             </v-col>
             <v-col>
               <v-pagination
+                color="rgba(255, 155, 68, 1)"
                 v-if="employees.length !== 0"
                 v-model="page"
                 :length="pageCount ? pageCount : 10"
