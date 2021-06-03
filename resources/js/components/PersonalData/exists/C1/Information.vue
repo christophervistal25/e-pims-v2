@@ -131,11 +131,11 @@
               {{ errors.nameExtension }}
             </p>
           </div>
-          <div class="col-lg-1">
+          <!-- <div class="col-lg-1">
             <name-extension-modal
               @nameext-modal-dismiss="closeNameExtensionModal"
             ></name-extension-modal>
-          </div>
+          </div> -->
         </div>
         <div class="row pl-3 pr-3">
           <div class="col-lg-3">
