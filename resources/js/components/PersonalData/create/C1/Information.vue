@@ -262,13 +262,10 @@
               <input
                 type="text"
                 name="statOthers"
-                class="form-control"
+                class="form-control box-shadow-0"
+                :class="!errors.hasOwnProperty('status') ? '' : 'is-invalid'"
+                v-model="personal_data.other_status"
                 id="statOthers"
-                style="
-                  outline: none;
-                  box-shadow: 0px 0px 0px transparent;
-                  text-transform: uppercase;
-                "
               />
               <span
                 ><strong>PLEASE SPECIFY</strong
@@ -936,6 +933,7 @@ export default {
         placeOfBirth: "",
         sex: "",
         status: "",
+        other_status: "",
         height: "",
         weight: "",
         bloodType: "",
@@ -1069,7 +1067,7 @@ export default {
             this.errors = {};
             this.isLoading = false;
             this.isComplete = true;
-            localStorage.setItem("employee_id", response.data.employee_id);
+            localStorage.setItem("employee_id", reaonse.data.employee_id);
 
             localStorage.setItem(
               "personal_information",
@@ -1128,3 +1126,10 @@ export default {
   },
 };
 </script>
+<style scoped>
+.box-shadow-0 {
+  outline: none;
+  box-shadow: 0px 0px 0px transparent;
+  text-transform: uppercase;
+}
+</style>

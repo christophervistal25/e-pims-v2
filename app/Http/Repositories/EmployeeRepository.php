@@ -25,7 +25,7 @@ class EmployeeRepository
     public function addPersonInformation(array $data = []) :array
     {
 
-        $employee =  Employee::create([
+        $employee = Employee::create([
                 'employee_id'          => mt_rand(100000, 999999),
                 'lastname'             => $data['surname'],
                 'firstname'            => $data['firstname'],
@@ -35,6 +35,7 @@ class EmployeeRepository
                 'place_birth'          => $data['placeOfBirth'],
                 'sex'                  => $data['sex'],
                 'civil_status'         => $data['status'],
+                'civil_status_others'  => $data['other_status'],
                 'height'               => $data['height'],
                 'weight'               => $data['weight'],
                 'blood_type'           => $data['bloodType'],
@@ -83,6 +84,7 @@ class EmployeeRepository
         $employee->place_birth          = $data['place_birth'];
         $employee->sex                  = $data['sex'];
         $employee->civil_status         = $data['civil_status'];
+        $employee->civil_status_others = $data['civil_status_others'];
         $employee->height               = $data['height'];
         $employee->weight               = $data['weight'];
         $employee->blood_type           = $data['blood_type'];

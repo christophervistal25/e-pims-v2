@@ -24,6 +24,7 @@ class Employee extends Model
         'place_birth',
         'sex',
         'civil_status',
+        'civil_status_others',
         'height',
         'weight',
         'blood_type',

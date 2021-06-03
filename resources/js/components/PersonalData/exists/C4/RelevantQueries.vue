@@ -193,8 +193,8 @@
               >
                 <i
                   v-if="
-                    errors.hasOwnProperty('no_35_a') ||
-                    errors.hasOwnProperty('no_35_a_details')
+                    errors.hasOwnProperty('question_35_a') ||
+                    errors.hasOwnProperty('question_35_a_details')
                   "
                   class="fa fa-times text-white"
                   aria-hidden="true"

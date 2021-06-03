@@ -242,6 +242,12 @@
               <input
                 type="text"
                 class="form-control"
+                :class="
+                  !errors.hasOwnProperty('civil_status_others')
+                    ? ''
+                    : 'is-invalid'
+                "
+                v-model="personal_data.civil_status_others"
                 name="statOthers"
                 id="statOthers"
                 style="
@@ -1056,7 +1062,6 @@ export default {
   },
 
   created() {
-    civilStatusChange();
     window.axios
       .get("/api/province/all")
       .then((response) => (this.provinces = response.data));
@@ -1066,6 +1071,7 @@ export default {
       .then((response) => (this.countries = response.data));
   },
   mounted() {
+    this.civilStatusChange();
     if (this.personal_data.citizenship === "DUAL CITIZEN") {
       this.onCitizenDual = true;
     }
