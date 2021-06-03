@@ -69,6 +69,7 @@ class PersonalDataSheetController extends Controller
             'place_birth'          => 'required',
             'sex'                  => 'required|in:' . implode(',', $sex),
             'civil_status'         => 'required|in:'  . implode(',', $status),
+            'civil_status_others' => ['nullable', 'required_if:civil_status,OTHERS'],
             'height'               => ['required','between:0,99.99'],
             'weight'               => ['required', 'between:0,99.99'],
             'blood_type'           => ['required', 'max:3'],
