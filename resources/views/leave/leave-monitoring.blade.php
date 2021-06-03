@@ -46,13 +46,13 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <div class="card-title text-center text-sm">Search Employee</div>
+                <div class="card-title text-center text-sm mb-4">Search Employee</div>
                 <div class="row">
                     <div class="col-lg">
                         <label for="empName" class="form-group has-float-label">
-                            <input class="form-control" type="text" placeholder="Search Employee" id="empName"
+                            <input class="form-control" type="text" id="empName"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>Name of Employee</span>
+                            <span><strong>Name of Employee</strong></span>
                         </label>
                     </div>
                 </div>

@@ -1,108 +1,117 @@
 <template>
   <div>
     <div>
-      <v-row justify="center" class="mt-1">
-        <v-dialog
-          persistent
-          v-model="dialog"
-          max-width="600px"
-          :class="showdesignation ? 'show' : ''"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              color="secondary"
-              elevation="10"
-              dark
-              v-bind="attrs"
-              v-on="on"
-              fab
-              x-small
-            >
-              <v-icon>mdi-plus</v-icon>
-            </v-btn>
-          </template>
-          <v-card>
-            <v-card-title>
-              <span class="headline"><strong>Add Position</strong></span>
-            </v-card-title>
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col cols="12">
-                    <p
-                      class="text-danger text-sm mb-0"
-                      v-if="errors.hasOwnProperty('name')"
-                    >
-                      {{ errors.name[0] }}
-                    </p>
-                    <v-text-field
-                      label="Position Name"
-                      required
-                      v-model="position.name"
-                      :class="errors.hasOwnProperty('name') ? 'is-invalid' : ''"
-                      class="mt-0"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <p
-                      class="text-danger text-sm mb-0"
-                      v-if="errors.hasOwnProperty('short_name')"
-                    >
-                      {{ errors.short_name[0] }}
-                    </p>
-                    <v-text-field
-                      class="mt-0"
-                      label="Position Short Name"
-                      required
-                      v-model="position.short_name"
-                      :class="
-                        errors.hasOwnProperty('short_name') ? 'is-invalid' : ''
-                      "
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <label>Salary Grade</label>
-                    <v-select
-                      label="Salary Grade"
-                      required
-                      v-model="position.salary_grade"
-                      :items="salary_grades"
-                    >
-                    </v-select>
-                    <p
-                      class="text-danger text-sm"
-                      v-if="errors.hasOwnProperty('salary_grade')"
-                    >
-                      {{ errors.salary_grade[0] }}
-                    </p>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
+      <v-form v-model="valid">
+        <v-row justify="center" class="mt-1">
+          <v-dialog
+            persistent
+            v-model="dialog"
+            max-width="600px"
+            :class="showdesignation ? 'show' : ''"
+          >
+            <template v-slot:activator="{ on, attrs }">
               <v-btn
-                color="blue darken-1"
-                text
-                @click="dialog = false"
-                data-dismiss="Close"
+                color="secondary"
+                elevation="10"
+                dark
+                v-bind="attrs"
+                v-on="on"
+                fab
+                x-small
               >
-                Close
+                <v-icon>mdi-plus</v-icon>
               </v-btn>
-              <v-btn color="blue darken-1" text @click="submitNewDesignation">
-                <div
-                  v-if="isLoading"
-                  class="spinner-border spinner-border-sm"
-                  role="status"
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="headline"><strong>Add Position</strong></span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12">
+                      <p
+                        class="text-danger text-sm mb-0"
+                        v-if="errors.hasOwnProperty('name')"
+                      >
+                        {{ errors.name[0] }}
+                      </p>
+                      <v-text-field
+                        :rules="nameRules"
+                        label="Position Name"
+                        required
+                        v-model="position.name"
+                        :class="
+                          errors.hasOwnProperty('name') ? 'is-invalid' : ''
+                        "
+                        class="pt-0"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                      <p
+                        class="text-danger text-sm mb-0"
+                        v-if="errors.hasOwnProperty('short_name')"
+                      >
+                        {{ errors.short_name[0] }}
+                      </p>
+                      <v-text-field
+                        label="Position Short Name"
+                        :rules="nameRules"
+                        class="pt-0"
+                        required
+                        v-model="position.short_name"
+                        :class="
+                          errors.hasOwnProperty('short_name')
+                            ? 'is-invalid'
+                            : ''
+                        "
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12">
+                      <p
+                        class="text-danger text-sm mb-0"
+                        v-if="errors.hasOwnProperty('salary_grade')"
+                      >
+                        {{ errors.salary_grade[0] }}
+                      </p>
+                      <v-select
+                        label="Salary Grade"
+                        required
+                        :rules="[(v) => !!v || 'Salary grade is required']"
+                        v-model="position.salary_grade"
+                        :items="salary_grades"
+                        class="pt-0"
+                      >
+                      </v-select>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="blue darken-1"
+                  text
+                  @click="dialog = false"
+                  data-dismiss="Close"
                 >
-                  <span class="sr-only">Loading...</span>
-                </div>
-                Save Changes
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-row>
+                  Close
+                </v-btn>
+                <v-btn color="blue darken-1" text @click="submitNewDesignation">
+                  <div
+                    v-if="isLoading"
+                    class="spinner-border spinner-border-sm"
+                    role="status"
+                  >
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  Save Changes
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-row>
+      </v-form>
     </div>
   </div>
 </template>
@@ -112,6 +121,7 @@ export default {
   props: ["showdesignation"],
   data() {
     return {
+      valid: false,
       isLoading: false,
       dialog: false,
       salary_grades: [],
@@ -122,6 +132,8 @@ export default {
         short_name: "",
       },
       errors: {},
+      nameRules: [(v) => !!v || "This field can not be empty"],
+      select: null,
     };
   },
 

@@ -89,8 +89,25 @@ Route::post('name/extensions/store', 'Api\ReferenceNameExtensionController@store
 /////// salary adjustment
 Route::get('/salaryAdjustment/{sg_no}/{sg_step?}/{sg_year}' , 'Api\SalaryAdjustmentController@salaryAdjustment');
 Route::post('/printEditAdjustment' , 'Api\SalaryAdjustmentController@printEdit');
+//individual
+Route::get('/salary/adjustment/{year}', function ($year) {
+    $data = SalaryAdjustment::select('id','employee_id', 'date_adjustment', 'sg_no', 'step_no', 'salary_previous', 'salary_new', 'salary_diff')->with('employee:employee_id,firstname,middlename,lastname,extension')->whereYear('date_adjustment', '=', $year)->get();
+    return Datatables::of($data)
+                        ->addIndexColumn()
+                        ->addColumn('employee', function ($row) {
+                            return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
+                        })
+                        ->addColumn('action', function($row){
+                            $btn = "<a title='Edit Salary Adjustment' href='". route('salary-adjustment.edit', $row->id) . "' class='rounded-circle edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
+                            $btn = $btn."<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                            ";
+                                return $btn;
+                        })
+                        ->rawColumns(['action'])
+                        ->make(true);
+});
 
-
+//per office
 Route::get('/office/salary/adjustment/peroffice/{officeCode}', function ($office_code) {
     $data = SalaryAdjustment::select('id','employee_id','item_no','position_id', 'date_adjustment', 'sg_no', 'step_no', 'salary_previous','salary_new','salary_diff')->with(['position:position_id,position_name','employee:employee_id,firstname,middlename,lastname,extension', 'plantilla:employee_id,office_code'])->whereHas('plantilla', function ($query) use ($office_code) {
         $query->where('office_code', $office_code);
