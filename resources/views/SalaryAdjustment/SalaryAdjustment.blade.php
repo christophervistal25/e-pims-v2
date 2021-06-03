@@ -147,23 +147,24 @@
         </div>
 
         <div id="table" class="page-header {{  count($errors->all()) == 0 ? '' : 'd-none' }}">
-                <div style="padding-bottom:10px;" class="row align-items-right">
-                    <div class="col">
-                        <div class="row">
-                            <div class="form-group form-focus select-focus col-5">
-                                <select class="select floating" id="filter_year" onchange="filter_year();">
-                                    @foreach ($dates as $date)
-                                    <option value={{ $date }}>{{ $date }}</option>
-                                    @endforeach
-                                </select>
-                                <label style="padding-left:10px;" class="focus-label">Select Year</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-auto float-right ml-auto">
+
+            <div class="row">
+                <div class="col-3 mb-2">
+                    <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}"
+                        name="yearAdjustment" data-live-search="true" id="yearAdjustment" data-size="5">
+                        <option value="">All</option>
+                        @foreach ($dates as $date)
+                        <option value={{ $date }}>{{ $date }}</option>
+                        @endforeach
+                        </select>
+            </div>
+            <div class="col-9 mb-2">
+                    <div class="float-right">
                         <button id="addbutton" class="btn btn-primary submit-btn float-right"><i class="fa fa-plus"></i> Add Salary Adjustment</button>
                     </div>
                 </div>
+            </div>
+
             <div class="table" style="overflow-x:auto;">
                 <table class="table table-bordered text-center" id="salaryAdjustment"  style="width:100%;">
                     <thead>

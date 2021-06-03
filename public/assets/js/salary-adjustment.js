@@ -1,6 +1,6 @@
 // display salary grade
 $(function() {
-    $("#salaryAdjustment").DataTable({
+    let table = $("#salaryAdjustment").DataTable({
         processing: true,
         serverSide: true,
         destroy: true,
@@ -22,7 +22,64 @@ $(function() {
             { data: "action", name: "action" }
         ]
     });
+    $("#yearAdjustment").change(function(e) {
+        console.log(e.target.value);
+        if (e.target.value == "" || e.target.value == "") {
+            table.destroy();
+            table = $("#salaryAdjustment").DataTable({
+                processing: true,
+                serverSide: true,
+                destroy: true,
+                retrieve: true,
+                ajax: {
+                    url: "/salary-adjustment-list"
+                },
+                columns: [
+                    { data: "date_adjustment", name: "date_adjustment" },
+                    {
+                        data: "employee",
+                        name: "employee.firstname",
+                        searchable: true,
+                        sortable: false
+                    },
+                    { data: "sg_no", name: "sg_no" },
+                    { data: "step_no", name: "step_no" },
+                    { data: "salary_previous", name: "salary_previous" },
+                    { data: "salary_new", name: "salary_new" },
+                    { data: "salary_diff", name: "salary_diff" },
+                    { data: "action", name: "action" }
+                ]
+            });
+        } else {
+            table.destroy();
+            table = $("#salaryAdjustment").DataTable({
+                processing: true,
+                serverSide: true,
+                destroy: true,
+                retrieve: true,
+                ajax: {
+                    url: `/api/salary/adjustment/${e.target.value}`
+                },
+                columns: [
+                    { data: "date_adjustment", name: "date_adjustment" },
+                    {
+                        data: "employee",
+                        name: "employee.firstname",
+                        searchable: true,
+                        sortable: false
+                    },
+                    { data: "sg_no", name: "sg_no" },
+                    { data: "step_no", name: "step_no" },
+                    { data: "salary_previous", name: "salary_previous" },
+                    { data: "salary_new", name: "salary_new" },
+                    { data: "salary_diff", name: "salary_diff" },
+                    { data: "action", name: "action" }
+                ]
+            });
+        }
+    });
 });
+
 // number only
 $(function() {
     $("input[id='salaryNew']").on("input", function(e) {
