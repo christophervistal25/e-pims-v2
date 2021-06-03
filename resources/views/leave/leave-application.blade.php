@@ -45,13 +45,13 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <div class="card-title text-center text-sm">Search Employee</div>
+                <div class="card-title text-center text-sm mb-4">Search Employee</div>
                 <div class="row">
                     <div class="col-lg">
                         <label for="empName" class="form-group has-float-label">
-                            <input class="form-control" type="text" placeholder="Search Employee" id="empName"
+                            <input class="form-control" type="text" id="empName"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span>Name of Employee</span>
+                            <span><strong>Name of Employee</strong></span>
                         </label>
                     </div>
                 </div>
@@ -86,12 +86,14 @@
                                 <option value="">Sick Leave</option>
                                 <option value="">Others</option>
                             </select>
-                            <span><strong>LEAVE OPTION</strong><span class="text-danger"><strong>*</strong></span></span>
+                            <span><strong>LEAVE OPTION</strong><span
+                                    class="text-danger"><strong>*</strong></span></span>
                         </label>
                         <label for="noOfDays" class="form-group has-float-label">
                             <input type="text" class="form-control" id="noOfDays"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>NUMBER OF DAYS</strong><span class="text-danger"><strong>*</strong></span></span>
+                            <span><strong>NUMBER OF DAYS</strong><span
+                                    class="text-danger"><strong>*</strong></span></span>
                         </label>
                         <label for="caseOfVl" class="form-group has-float-label">
                             <select class="form-control" id="caseOfVl"
@@ -172,7 +174,8 @@
                         </div>
                         <h6 class="text-sm text-center">Date to Apply</h6>
                         <label for="dateApply" class="form-group has-float-label">
-                            <input type="date" name="dateApply" id="dateApply" class="form-control" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                            <input type="date" name="dateApply" id="dateApply" class="form-control"
+                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <span><strong>SELECT DATE</strong><span class="text-danger"><strong>*</strong></span></span>
                         </label>
                         <select name="" id="" class="form-control">
@@ -194,7 +197,8 @@
                             style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <option value="">-----</option>
                         </select>
-                        <span><strong>RECOMMENDING APPROVAL</strong><span class="text-danger"><strong>*</strong></span></span>
+                        <span><strong>RECOMMENDING APPROVAL</strong><span
+                                class="text-danger"><strong>*</strong></span></span>
                     </label>
                     <label for="approveBy" class="form-group has-float-label">
                         <select class="custom-select" name="approveBy" id="approveBy"
@@ -209,7 +213,8 @@
                             <option value="">Approved</option>
                             <option value="">Pending</option>
                         </select>
-                        <span><strong>APPLICATION STATUS</strong><span class="text-danger"><strong>*</strong></span></span>
+                        <span><strong>APPLICATION STATUS</strong><span
+                                class="text-danger"><strong>*</strong></span></span>
                     </label>
                 </div>
                 <button type="button" class="btn btn-outline-primary ml-3"><i class="fas fa-plus-circle"></i> New

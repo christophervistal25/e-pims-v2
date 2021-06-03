@@ -202,7 +202,7 @@
           </div>
 
           <div class="col-lg-3">
-            <label class="form-group has-float-label" for="speriodFrom">
+            <label class="form-group has-float-label mb-0" for="speriodFrom">
               <input
                 type="month"
                 id="speriodFrom"
@@ -221,7 +221,7 @@
           </div>
 
           <div class="col-lg-3">
-            <label class="form-group has-float-label" for="speriodTo">
+            <label class="form-group has-float-label mb-0" for="speriodTo">
               <input
                 type="month"
                 id="speriodTo"
