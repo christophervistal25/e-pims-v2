@@ -185,6 +185,15 @@ $(function() {
 });
 
 function ValidateDropDown(dd) {
+    $("#sample").removeClass("d-none");
+    //disable button
+    var input = document.getElementById("addbutton");
+    if (dd.value == "") {
+        input.disabled = true;
+    } else {
+        input.disabled = false;
+    }
+    //hide line
     if (dd.value == "") {
         document.getElementById("line").style.visibility = "visible";
     } else {
@@ -192,6 +201,41 @@ function ValidateDropDown(dd) {
     }
 }
 
-function ValidateDropDown(dd) {
-    $("#sample").removeClass("d-none");
-}
+// code for show add form
+$(document).ready(function() {
+    $("#addbutton").click(function() {
+        $("#add").attr("class", "page-header");
+        $("#table").attr("class", "page-header d-none");
+    });
+});
+// {{-- code for show table --}}
+$(document).ready(function() {
+    $("#cancelbutton").click(function() {
+        $("#add").attr("class", "page-header d-none");
+        $("#table").attr("class", "page-header");
+    });
+});
+
+let selectElement = document.querySelector("#employeeOffice");
+
+selectElement.addEventListener("click", function() {
+    alert("sdasd");
+    const result = document.querySelector(".result");
+    result.textContent = `You like ${event.target.value}`;
+});
+
+// get value office
+$(document).ready(function() {
+    $("#employeeOffice").change(function(e) {
+        let office = e.target.value;
+        let plantilla = $($("#employeeOffice option:selected")[0]).attr(
+            "data-plantilla"
+        );
+        if (plantilla) {
+            console.log(plantilla);
+            document.getElementById("officeAdjustment").innerHTML = plantilla;
+        } else {
+            $("#officeAdjustment").text("");
+        }
+    });
+});
