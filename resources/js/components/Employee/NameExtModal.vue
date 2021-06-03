@@ -1,66 +1,10 @@
 <template>
   <div>
-    <div data-app>
-      <v-row justify="center" class="mt-1">
-        <v-dialog
-          persistent
-          v-model="dialog"
-          max-width="600px"
-          :class="shownameextension ? 'show' : ''"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              color="secondary"
-              elevation="10"
-              dark
-              v-bind="attrs"
-              v-on="on"
-              fab
-              x-small
-            >
-              <v-icon>mdi-plus</v-icon>
-            </v-btn>
-          </template>
-          <v-card>
-            <v-card-title>
-              <span class="headline"
-                ><strong>Add New Extension Name</strong></span
-              >
-            </v-card-title>
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col cols="12">
-                    <p class="text-danger text-sm mb-0">
-                      {{
-                        errors.hasOwnProperty("errors")
-                          ? errors.errors.extension[0]
-                          : ""
-                      }}
-                    </p>
-                    <v-text-field
-                      class="mt-0"
-                      label="Extension Name"
-                      required
-                      v-model="data.extension"
-                      :class="
-                        errors.hasOwnProperty('errors') &&
-                        errors.errors.hasOwnProperty('extension')
-                          ? 'is-invalid'
-                          : ''
-                      "
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-    <v-form v-model="valid">
+    <v-form v-model="valid" ref="form">
       <div data-app>
         <v-row justify="center" class="mt-1">
           <v-dialog
-            fpersistent
+            persistent
             v-model="dialog"
             max-width="600px"
             :class="shownameextension ? 'show' : ''"
@@ -117,7 +61,7 @@
                 <v-btn
                   color="blue darken-1"
                   text
-                  @click="dialog = false"
+                  v-on:click="dismissModal()"
                   data-dismiss="Close"
                 >
                   Close
@@ -182,7 +126,9 @@ export default {
         });
     },
     dismissModal() {
-      this.$emit("nameext-modal-dismiss");
+      this.errors = {};
+      this.$refs.form.resetValidation();
+      this.dialog = false;
     },
   },
 };
