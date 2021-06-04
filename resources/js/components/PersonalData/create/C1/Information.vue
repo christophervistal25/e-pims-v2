@@ -987,6 +987,17 @@ export default {
     };
   },
   methods: {
+    isKeyCombinationSave(event) {
+      if (
+        event.ctrlKey &&
+        event.code.toLowerCase() === "keys" &&
+        event.keyCode === 83
+      ) {
+        this.submitPersonalInformation(event);
+        event.preventDefault();
+        return true;
+      }
+    },
     changeStatOthers() {
       if (this.personal_data.status == "OTHERS") {
         this.statOthers = true;
@@ -1111,7 +1122,10 @@ export default {
     }
   },
   created() {
-    window.axios
+    // Event Listener for pressng Ctrl + S
+    window.addEventListener("keydown", this.isKeyCombinationSave);
+  
+  window.axios
       .get("/api/province/all")
       .then((response) => (this.provinces = response.data));
 
