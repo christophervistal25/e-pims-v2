@@ -14,5 +14,10 @@
         <create-with-existing-employee :employee="{{ $employee }}"></create-with-existing-employee>
     </div>
 @push('page-scripts')
+<script>
+        function exitConfirmation() {
+            return 'Are you sure to leave this page?';
+        }
+    </script>
 @endpush
 @endsection
