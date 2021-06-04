@@ -245,6 +245,7 @@ export default {
             });
             this.$emit("assignment-modal-dismiss", response.data);
             this.dialog = false;
+            this.$refs.form.resetValidation();
           }
         })
         .catch((error) => {

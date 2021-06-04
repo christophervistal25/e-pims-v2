@@ -116,6 +116,7 @@ export default {
             this.status = {};
             this.$emit("status-modal-dismiss", response.data);
             this.dialog = false;
+            this.$refs.form.resetValidation();
           }
         })
         .catch((error) => {
@@ -127,8 +128,9 @@ export default {
         });
     },
     dismissModal() {
-      (this.errors = {}), this.$refs.form.resetValidation();
       this.dialog = false;
+      this.$refs.form.resetValidation();
+      this.errors = {};
     },
   },
 };
