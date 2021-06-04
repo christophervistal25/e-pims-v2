@@ -187,26 +187,26 @@
 				</li>
 			</ul>
 			<!-- /Header Menu -->
-            <div class="dropdown mobile-user-menu">
-                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i
-                        class="fa fa-ellipsis-v"></i></a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="profile.html">My Profile</a>
-                    <a class="dropdown-item" href="settings.html">Settings</a>
-                    <a class="dropdown-item" href="login.html">Logout</a>
-                </div>
-            </div>
+            <!-- Mobile Menu -->
+			<div class="dropdown mobile-user-menu">
+				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+				<div class="dropdown-menu dropdown-menu-right">
+					<a class="dropdown-item" href="profile.html">My Profile</a>
+					<a class="dropdown-item" href="settings.html">Settings</a>
+					<a class="dropdown-item" href="login.html">Logout</a>
+				</div>
+			</div>
 			<!-- /Mobile Menu -->
 		</div>
 		<!-- /Header -->
 		<!-- Sidebar -->
-        <div class="sidebar" id="sidebar">
-            <div class="sidebar-inner slimscroll">
-                <div id="sidebar-menu" class="sidebar-menu">
-                    <ul>
-                        <li class="menu-title">
-                            <span>Personal Information Module</span>
-                        </li>
+		<div class="sidebar" id="sidebar">
+			<div class="sidebar-inner slimscroll">
+				<div id="sidebar-menu" class="sidebar-menu">
+					<ul>
+						<li class="menu-title">
+							<span>Personal Information Module</span>
+						</li>
                         <li>
                             <a class='text-decoration-none' href="{{ route('employee.index') }}">
                                 <i class="la la-users"></i> <span> Employees </span>
@@ -214,110 +214,98 @@
                         </li>
                         <li>
                             <a class='text-decoration-none' href="{{ route('data.index') }}">
-                                <i class="la la-file-text"></i> <span> Personal Data Sheet
-                                </span>
+                                <i class="la la-file-text"></i> <span> Personal Data Sheet </span>
                             </a>
                         </li>
-                        <li class="menu-title">
-                            <span>Human Resource Module</span>
-                        </li>
-                        <li class="submenu">
-                            <a href="#" class='text-decoration-none'><i class="la la-home"> </i> <span>
-                                    Leave Management </span>
-                                <i class="ml-3 fas fa-caret-down text-sm text-right"></i></a>
-                            <ul style="display: none;">
-                                <li>
-                                    <a class='text-decoration-none mr-2'
-                                        href="{{ route('leave.application.filling') }}">
+						<li class="menu-title">
+							<span>Human Resource Module</span>
+						</li>
+						<li class="submenu">
+							<a href="#" class='text-decoration-none'><i class="la la-home"></i> <span> Leave Management </span> <span class="menu-arrow"></span></a>
+							<ul style="display: none;">
+								<li>
+                                    <a class='text-decoration-none mr-2' href="{{ route('leave.application.filling') }}">
                                         Leave Application Filling</a>
-                                </li>
-                                <li>
+                                    </li>
+								<li>
                                     <a class='text-decoration-none mr-2' href="#">
                                         Leave Recall, Cancel or Transfer
                                     </a>
                                 </li>
-                                <li>
+								<li>
                                     <a class='text-decoration-none mr-2' href="#">
                                         Leave Index Monitoring
                                     </a>
                                 </li>
 
-                                <li>
+								<li>
                                     <a class='text-decoration-none mr-2' href="#">
                                         Leave Starting Balance
                                     </a>
                                 </li>
-                                <li>
+								<li>
                                     <a class='text-decoration-none mr-2' href="#">
                                         Leave Forwaded Balance
                                     </a>
                                 </li>
-                                <li>
+								<li>
                                     <a class='text-decoration-none mr-2' href="#">
                                         Compensatory Build-up
                                     </a>
                                 </li>
-                            </ul>
-                        </li>
+							</ul>
+						</li>
 
 
-                        <li class="submenu">
-                            <a href="{{  route('service-records.index') }}" class='text-decoration-none'><i
-                                    class="la la-bars"></i>
-                                <span>Service Record</span> <i
-                                    class="ml-3 fas fa-caret-down text-sm text-right"></i></a>
-                            <ul style="display: none;">
-                                <li>
+						<li class="submenu">
+							<a href="#" class='text-decoration-none'><i class="la la-bars"></i> <span>Service Record</span> <span class="menu-arrow"></span></a>
+							<ul style="display: none;">
+								<li>
                                     <a class='text-decoration-none mr-2' href="{{  route('service-records.index') }}">
                                         Maintenance & Monitoring
                                     </a>
                                 </li>
-                            </ul>
-                        </li>
+							</ul>
+						</li>
 
                         <li class="submenu">
-                            <a href="#" class='text-decoration-none'><i class="la la-bookmark"></i>
-                                <span>Plantilla of Position</span> <i
-                                    class="ml-3 fas fa-caret-down text-sm text-right"></i></a>
-                            <ul style="display: none;">
-                                <li>
+							<a href="#" class='text-decoration-none'><i class="la la-bookmark"></i> <span>Plantilla</span> <span class="menu-arrow"></span></a>
+							<ul style="display: none;">
+								<li>
                                     <a class='text-decoration-none mr-2' href="{{  route('plantilla-of-position.index') }}">
                                         Plantilla of Position
                                     </a>
                                 </li>
                                 <li>
-                                    <a class='text-decoration-none mr-2' href="{{  route('plantilla-of-position.index') }}">
+                                    <a class='text-decoration-none mr-2' href="{{  route('plantilla-of-personnel.index') }}">
                                         Plantilla of Personnel
                                     </a>
                                 </li>
                                 <li>
-                                    <a class='text-decoration-none mr-2' href="#">
+                                    <a class='text-decoration-none mr-2' href="{{  route('step-increment.index') }}">
                                         Notice of Step Increment
                                     </a>
                                 </li>
                                 <li class="submenu">
-                                    <a class='text-decoration-none' href="javascript:void(0);"> <span>Salary Adjustment
-                                            Individual</span> <i
-                                            class="ml-3 fas fa-caret-down text-sm text-right"></i></a>
-                                    <ul style="display: none;">
-                                        <li>
-                                            <a class='text-decoration-none' href="javascript:void(0);">
+									<a  class='text-decoration-none' href="javascript:void(0);"> <span>Salary Adjustment</span> <span class="menu-arrow"></span></a>
+									<ul style="display: none;">
+										<li>
+                                            <a class='text-decoration-none' href="{{  route('salary-adjustment.index') }}">
+                                                <span>Individual</span>
+                                            </a>
+                                            <a class='text-decoration-none' href="{{  route('salary-adjustment-per-office.index') }}">
                                                 <span>Per Office</span>
                                             </a>
                                         </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a class='text-decoration-none' href="{{  route('step-increment.index') }}">
-                                        <span>Step Increment</span> </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!-- /Sidebar -->
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- /Sidebar -->
 		<!-- Page Wrapper -->
 		<div class="page-wrapper">
 			<!-- Page Content -->
