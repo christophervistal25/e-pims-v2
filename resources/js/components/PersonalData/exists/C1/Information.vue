@@ -155,7 +155,7 @@
               <span
                 ><strong>DATE OF BIRTH</strong
                 ><span class="text-danger"><strong>*</strong></span>
-                (dd/mm/yyyy)</span
+                (date/month/year)</span
               >
             </label>
           </div>
