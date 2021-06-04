@@ -266,6 +266,17 @@ export default {
     AccountNumber,
   },
   methods: {
+    isKeyCombinationSave(event) {
+      if (
+        event.ctrlKey &&
+        event.code.toLowerCase() === "keys" &&
+        event.keyCode === 83
+      ) {
+        this.submitEmployee();
+        event.preventDefault();
+        return true;
+      }
+    },
     sectionValidatorChecker(errorFields) {
       // check for basic information
       errorFields.some((field) => {
@@ -443,6 +454,7 @@ export default {
     },
   },
   created() {
+    window.addEventListener("keydown", this.isKeyCombinationSave);
     window.axios
       .get("/api/employee/employment/status")
       .then((response) => {
