@@ -103,7 +103,8 @@
               </p>
               <span
                 ><strong>DATE OF BIRTH</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><span class="text-danger"><strong>*</strong></span>
+                (date/month/year)</span
               >
             </label>
           </div>

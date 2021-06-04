@@ -152,6 +152,7 @@ export default {
             this.position = {};
             this.$emit("designation-modal-dismiss", response.data);
             this.dialog = false;
+            this.$refs.form.resetValidation();
           }
         })
         .catch((error) => {

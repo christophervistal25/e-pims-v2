@@ -113,6 +113,7 @@ export default {
             this.info = {};
             this.$emit("nameext-modal-dismiss", response.data);
             this.dialog = false;
+            this.$refs.form.resetValidation();
           }
         })
         .catch((error) => {

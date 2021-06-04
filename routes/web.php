@@ -53,6 +53,7 @@ Route::get('/print-adjustment/{id}', 'PrintAdjustmentController@printList')->nam
 //salary adjustment per office
 Route::resource('/salary-adjustment-per-office', 'SalaryAdjustmentPerOfficeController');
 Route::get('/salary-adjustment-per-office-list', 'SalaryAdjustmentPerOfficeController@list');
+Route::get('/salary-adjustment-per-office-not-selected-list', 'SalaryAdjustmentPerOfficeController@NotSelectedlist');
 
 // Service Records
 Route::get('/service-records/{id}', 'ServiceRecordsController@destroy')->name('service-records.delete');
