@@ -151,6 +151,7 @@ function reset() {
 $(document).ready(function() {
     $("#salaryAdjustmentForm").submit(function(e) {
         let empIds = $("#employeeName").val();
+        let dateAdjustment = $("#dateAdjustment").val();
         e.preventDefault();
         let data = $(this).serialize();
         $("#saveBtn").attr("disabled", true);
@@ -161,6 +162,14 @@ $(document).ready(function() {
             data: data,
             success: function(response) {
                 if (response.success) {
+                    // $("#yearAdjustment").append(
+                    //     "<option value=" +
+                    //         dateAdjustment +
+                    //         ">" +
+                    //         dateAdjustment +
+                    //         "</option>"
+                    // );
+                    // $("#yearAdjustment").selectpicker("refresh");
                     $("#employeeName")
                         .find('[value="' + empIds + '"]')
                         .remove();
