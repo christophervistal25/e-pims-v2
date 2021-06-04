@@ -261,6 +261,13 @@ export default {
       this.$refs.form.resetValidation();
     },
   },
+  created() {
+    document.addEventListener("keydown", (e) => {
+      if (e.keyCode === 27 && e.key.toLowerCase() === "escape") {
+        this.dialog = false;
+      }
+    });
+  },
 };
 </script>
 <style scoped>
