@@ -169,6 +169,13 @@ export default {
       this.$refs.form.resetValidation();
     },
   },
+  created() {
+    document.addEventListener("keydown", (e) => {
+      if (e.keyCode === 27 && e.key.toLowerCase() === "escape") {
+        this.dialog = false;
+      }
+    });
+  },
   mounted() {
     this.salary_grades = Array.from({ length: 33 }, (_, i) => i + 1);
   },

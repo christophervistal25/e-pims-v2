@@ -132,6 +132,13 @@ export default {
       this.dialog = false;
     },
   },
+  created() {
+    document.addEventListener("keydown", (e) => {
+      if (e.keyCode === 27 && e.key.toLowerCase() === "escape") {
+        this.dialog = false;
+      }
+    });
+  },
 };
 </script>
 <style scoped>

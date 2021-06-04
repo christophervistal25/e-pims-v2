@@ -85,6 +85,7 @@
 </template>
 <script>
 import swal from "sweetalert";
+import FamilyBackgroundVue from "../PersonalData/create/C1/FamilyBackground.vue";
 export default {
   props: ["show"],
   data() {
@@ -132,6 +133,13 @@ export default {
       this.$refs.form.resetValidation();
       this.errors = {};
     },
+  },
+  created() {
+    document.addEventListener("keydown", (e) => {
+      if (e.keyCode === 27 && e.key.toLowerCase() === "escape") {
+        this.dialog = false;
+      }
+    });
   },
 };
 </script>
