@@ -982,6 +982,18 @@ export default {
     };
   },
   methods: {
+    isKeyCombinationSave() {
+      if (
+        !this.isComplete &&
+        event.ctrlKey &&
+        event.code.toLowerCase() === "keys" &&
+        event.keyCode === 83
+      ) {
+        this.submit();
+        event.preventDefault();
+        return true;
+      }
+    },
     markYes(question, others = []) {
       if (this.relevantQueries[question] !== "yes") {
         this.relevantQueries[question] = "yes";
@@ -1057,6 +1069,7 @@ export default {
       this.isComplete = true;
       this.$emit("display-reference");
     }
+    window.addEventListener("keydown", this.isKeyCombinationSave);
   },
 };
 </script>

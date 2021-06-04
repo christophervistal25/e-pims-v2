@@ -247,6 +247,18 @@ export default {
     },
   },
   methods: {
+    isKeyCombinationSave() {
+      if (
+        !this.isComplete &&
+        event.ctrlKey &&
+        event.code.toLowerCase() === "keys" &&
+        event.keyCode === 83
+      ) {
+        this.submitLearningAndDevelopment();
+        event.preventDefault();
+        return true;
+      }
+    },
     addNewLearningAndDevelopmentField() {
       this.learnDev.push({
         nameOfTraining: "",
@@ -321,6 +333,7 @@ export default {
       this.isComplete = true;
       this.$emit("display-other-information");
     }
+    window.addEventListener("keydown", this.isKeyCombinationSave);
   },
 };
 </script>

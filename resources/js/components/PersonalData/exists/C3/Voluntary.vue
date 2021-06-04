@@ -214,6 +214,18 @@ export default {
     },
   },
   methods: {
+    isKeyCombinationSave(event) {
+      if (
+        !this.isComplete &&
+        event.ctrlKey &&
+        event.code.toLowerCase() === "keys" &&
+        event.keyCode === 83
+      ) {
+        this.submitVoluntary();
+        event.preventDefault();
+        return true;
+      }
+    },
     addNewFieldVoluntary() {
       this.volunOrg.push({
         name_and_address: "",
@@ -283,6 +295,7 @@ export default {
     },
   },
   created() {
+    window.addEventListener("keydown", this.isKeyCombinationSave);
     this.volunOrg = this.personal_data.voluntary_work;
     // Base default avlues
     if (this.volunOrg.length === 0) {

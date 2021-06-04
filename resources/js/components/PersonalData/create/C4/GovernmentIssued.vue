@@ -39,9 +39,9 @@
                     class="form-control rounded-0 border-0"
                     placeholder="e.g Philhealth"
                     :class="
-                      errors.hasOwnProperty('id_type') ? 'is-invalid' : ''
+                      errors.hasOwnProperty('nameOfGovId') ? 'is-invalid' : ''
                     "
-                    v-model="governmentId.id_type"
+                    v-model="governmentId.nameOfGovId"
                     style="text-transform: uppercase"
                   />
                 </td>
@@ -49,18 +49,23 @@
                   <input
                     type="text"
                     class="form-control rounded-0 border-0"
-                    :class="errors.hasOwnProperty('id_no') ? 'is-invalid' : ''"
+                    :class="errors.hasOwnProperty('idNo') ? 'is-invalid' : ''"
                     placeholder="Enter ID Number"
-                    v-model="governmentId.id_no"
+                    v-model="governmentId.idNo"
                   />
                 </td>
                 <td>
                   <input
                     type="text"
-                    class="form-control rounded-0 border-0 text-uppercase"
-                    :class="errors.hasOwnProperty('date') ? 'is-invalid' : ''"
+                    class="form-control rounded-0 border-0"
+                    :class="
+                      errors.hasOwnProperty('dateOfIssuance')
+                        ? 'is-invalid'
+                        : ''
+                    "
                     placeholder=""
-                    v-model="governmentId.date"
+                    v-model="governmentId.dateOfIssuance"
+                    style="text-transform: uppercase"
                   />
                 </td>
               </tr>
@@ -94,19 +99,16 @@ export default {
     show_panel: {
       required: true,
     },
-    personal_data: {
-      required: true,
-    },
   },
   data() {
     return {
       isComplete: false,
       isLoading: false,
       governmentId: {
-        id_type: "",
-        id_no: "",
-        date: "",
-        employee_id: this.personal_data.employee_id,
+        nameOfGovId: "",
+        idNo: "",
+        dateOfIssuance: "",
+        employee_id: localStorage.getItem("employee_id"),
       },
       errors: {},
     };
@@ -124,15 +126,29 @@ export default {
         return true;
       }
     },
+    removeSavedItemsInStorage() {
+      localStorage.removeItem("learning");
+      localStorage.removeItem("voluntary");
+      localStorage.removeItem("family_background");
+      localStorage.removeItem("educational_background");
+      localStorage.removeItem("relevant_queries");
+      localStorage.removeItem("civil_service");
+      localStorage.removeItem("other_information");
+      localStorage.removeItem("employee_id");
+      localStorage.removeItem("work_experience");
+      localStorage.removeItem("personal_information");
+      localStorage.removeItem("references");
+    },
     submitIssuedID() {
       this.isLoading = true;
       window.axios
-        .post("/employee/exists/personal/issued/id", this.governmentId)
+        .post("/employee/personal/issued/id", this.governmentId)
         .then((response) => {
-          if (response.status === 200) {
+          if (response.status === 201) {
             this.errors = {};
             this.isComplete = true;
             this.isLoading = false;
+            this.removeSavedItemsInStorage();
             swal({
               text: "Successfully create new personal data sheet",
               icon: "success",
@@ -154,15 +170,6 @@ export default {
   },
   created() {
     window.addEventListener("keydown", this.isKeyCombinationSave);
-    if (!this.personal_data.issued_id) {
-      this.personal_data.issued_id = {
-        id_type: "",
-        id_no: "",
-        date: "",
-        employee_id: this.personal_data.employee_id,
-      };
-    }
-    this.governmentId = this.personal_data.issued_id;
   },
 };
 </script>

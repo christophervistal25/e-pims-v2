@@ -176,6 +176,18 @@ export default {
     },
   },
   methods: {
+    isKeyCombinationSave() {
+      if (
+        !this.isComplete &&
+        event.ctrlKey &&
+        event.code.toLowerCase() === "keys" &&
+        event.keyCode === 83
+      ) {
+        this.submitReferences();
+        event.preventDefault();
+        return true;
+      }
+    },
     addNewReferenceField() {
       this.references.push({
         name: "",
@@ -236,6 +248,7 @@ export default {
     },
   },
   created() {
+    window.addEventListener("keydown", this.isKeyCombinationSave);
     this.references = this.personal_data.references;
     if (this.references.length === 0) {
       this.addNewReferenceField();

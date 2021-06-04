@@ -249,6 +249,18 @@ export default {
     },
   },
   methods: {
+    isKeyCombinationSave(event) {
+      if (
+        !this.isComplete &&
+        event.ctrlKey &&
+        event.code.toLowerCase() === "keys" &&
+        event.keyCode === 83
+      ) {
+        this.submitLearningAndDevelopment();
+        event.preventDefault();
+        return true;
+      }
+    },
     addNewLearningAndDevelopmentField() {
       this.learnDev.push({
         title: "",
@@ -316,6 +328,7 @@ export default {
     },
   },
   created() {
+    window.addEventListener("keydown", this.isKeyCombinationSave);
     this.learnDev = this.personal_data.program_attained;
     if (this.learnDev.length === 0) {
       this.addNewLearningAndDevelopmentField();

@@ -187,6 +187,18 @@ export default {
     },
   },
   methods: {
+    isKeyCombinationSave(event) {
+      if (
+        !this.isComplete &&
+        event.ctrlKey &&
+        event.code.toLowerCase() === "keys" &&
+        event.keyCode === 83
+      ) {
+        this.submitOtherInformation();
+        event.preventDefault();
+        return true;
+      }
+    },
     addNewOtherInformationField() {
       this.otherInformation.push({
         special_skill: "",
@@ -251,6 +263,7 @@ export default {
     },
   },
   created() {
+    window.addEventListener("keydown", this.isKeyCombinationSave);
     this.otherInformation = this.personal_data.other_information;
     if (this.otherInformation.length === 0) {
       this.addNewOtherInformationField();

@@ -102,7 +102,7 @@ import OtherInformation from "./create/C3/OtherInformation.vue";
 
 import RelevantQueries from "./create/C4/RelevantQueries.vue";
 import Reference from "./create/C4/Reference.vue";
-import GovernmentIssuedID from "./create/C4/GovernmentIssuedID.vue";
+import GovernmentIssuedID from "./create/C4/GovernmentIssued.vue";
 
 export default {
   components: {

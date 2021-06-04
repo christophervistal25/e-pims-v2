@@ -549,6 +549,18 @@ export default {
     },
   },
   methods: {
+    isKeyCombinationSave() {
+      if (
+        !this.isComplete &&
+        event.ctrlKey &&
+        event.code.toLowerCase() === "keys" &&
+        event.keyCode === 83
+      ) {
+        this.submitPersonFamilyBackground();
+        event.preventDefault();
+        return true;
+      }
+    },
     generateNewSpuseField() {
       this.spouse.push({
         cname: "",
@@ -630,6 +642,7 @@ export default {
 
       this.$emit("next-panel-educational-background");
     }
+    window.addEventListener("keydown", this.isKeyCombinationSave);
   },
 };
 </script>

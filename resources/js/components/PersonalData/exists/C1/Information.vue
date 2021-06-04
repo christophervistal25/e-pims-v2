@@ -932,6 +932,18 @@ export default {
     };
   },
   methods: {
+    isKeyCombinationSave(event) {
+      if (
+        !this.isComplete &&
+        event.ctrlKey &&
+        event.code.toLowerCase() === "keys" &&
+        event.keyCode === 83
+      ) {
+        this.submitPersonalInformation(event);
+        event.preventDefault();
+        return true;
+      }
+    },
     civilStatusChange() {
       if (this.personal_data.civil_status === "OTHERS") {
         this.civilEqualToOthers = true;
@@ -1117,6 +1129,7 @@ export default {
         .axios(`/api/city/barangay/by/${this.personal_data.permanent_city}`)
         .then((response) => (this.permanentBarangays = response.data));
     }
+    window.addEventListener("keydown", this.isKeyCombinationSave);
   },
 };
 </script>

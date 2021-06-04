@@ -990,6 +990,7 @@ export default {
   methods: {
     isKeyCombinationSave(event) {
       if (
+        !this.isComplete &&
         event.ctrlKey &&
         event.code.toLowerCase() === "keys" &&
         event.keyCode === 83
@@ -1121,12 +1122,10 @@ export default {
 
       this.$emit("next-panel-family-background");
     }
+    window.addEventListener("keydown", this.isKeyCombinationSave);
   },
   created() {
-    // Event Listener for pressng Ctrl + S
-    window.addEventListener("keydown", this.isKeyCombinationSave);
-  
-  window.axios
+    window.axios
       .get("/api/province/all")
       .then((response) => (this.provinces = response.data));
 

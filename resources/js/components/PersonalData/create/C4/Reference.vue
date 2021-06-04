@@ -146,6 +146,18 @@ export default {
     },
   },
   methods: {
+    isKeyCombinationSave() {
+      if (
+        !this.isComplete &&
+        event.ctrlKey &&
+        event.code.toLowerCase() === "keys" &&
+        event.keyCode === 83
+      ) {
+        this.submitReferences();
+        event.preventDefault();
+        return true;
+      }
+    },
     addNewReferenceField() {
       this.references.push({
         refName: "",
@@ -185,6 +197,7 @@ export default {
       this.isComplete = true;
       this.$emit("display-issued-id");
     }
+    window.addEventListener("keydown", this.isKeyCombinationSave);
   },
 };
 </script>

@@ -274,6 +274,18 @@ export default {
     },
   },
   methods: {
+    isKeyCombinationSave(event) {
+      if (
+        !this.isComplete &&
+        event.ctrlKey &&
+        event.code.toLowerCase() === "keys" &&
+        event.keyCode === 83
+      ) {
+        this.submitWorkExperience();
+        event.preventDefault();
+        return true;
+      }
+    },
     addNewWorkExperienceField() {
       this.workExperience.push({
         from: "",
@@ -342,6 +354,7 @@ export default {
     },
   },
   created() {
+    window.addEventListener("keydown", this.isKeyCombinationSave);
     this.workExperience = this.personal_data.work_experience;
     if (this.workExperience.length === 0) {
       this.addNewWorkExperienceField();

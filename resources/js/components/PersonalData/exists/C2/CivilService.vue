@@ -237,6 +237,18 @@ export default {
     };
   },
   methods: {
+    isKeyCombinationSave(event) {
+      if (
+        !this.isComplete &&
+        event.ctrlKey &&
+        event.code.toLowerCase() === "keys" &&
+        event.keyCode === 83
+      ) {
+        this.submitCivilService();
+        event.preventDefault();
+        return true;
+      }
+    },
     addNewFieldCivilServiceRow() {
       this.civilService.push({
         career_service: "",
@@ -301,6 +313,7 @@ export default {
     },
   },
   created() {
+    window.addEventListener("keydown", this.isKeyCombinationSave);
     this.civilService = this.personal_data.civil_service;
     if (this.civilService.length === 0) {
       this.addNewFieldCivilServiceRow();

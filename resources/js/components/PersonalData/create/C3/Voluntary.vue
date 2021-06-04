@@ -209,6 +209,18 @@ export default {
     },
   },
   methods: {
+    isKeyCombinationSave() {
+      if (
+        !this.isComplete &&
+        event.ctrlKey &&
+        event.code.toLowerCase() === "keys" &&
+        event.keyCode === 83
+      ) {
+        this.submitVoluntary();
+        event.preventDefault();
+        return true;
+      }
+    },
     addNewFieldVoluntary() {
       this.volunOrg.push({
         nameOfOrg: "",
@@ -285,6 +297,8 @@ export default {
       this.isComplete = true;
       this.$emit("display-learning-and-development");
     }
+
+    window.addEventListener("keydown", this.isKeyCombinationSave);
   },
 };
 </script>

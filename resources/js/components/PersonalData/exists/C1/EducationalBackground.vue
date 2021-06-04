@@ -910,6 +910,18 @@ export default {
     };
   },
   methods: {
+    isKeyCombinationSave(event) {
+      if (
+        !this.isComplete &&
+        event.ctrlKey &&
+        event.code.toLowerCase() === "keys" &&
+        event.keyCode === 83
+      ) {
+        this.submitEducationalBackground();
+        event.preventDefault();
+        return true;
+      }
+    },
     submitEducationalBackground() {
       this.isLoading = true;
 
@@ -943,6 +955,7 @@ export default {
     },
   },
   created() {
+    window.addEventListener("keydown", this.isKeyCombinationSave);
     if (!this.personal_data.educational_background) {
       this.personal_data.educational_background = {
         employee_id: this.personal_data.employee_id,

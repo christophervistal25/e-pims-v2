@@ -217,6 +217,18 @@ export default {
     };
   },
   methods: {
+    isKeyCombinationSave() {
+      if (
+        !this.isComplete &&
+        event.ctrlKey &&
+        event.code.toLowerCase() === "keys" &&
+        event.keyCode === 83
+      ) {
+        this.submitCivilService();
+        event.preventDefault();
+        return true;
+      }
+    },
     addNewFieldCivilServiceRow() {
       this.civilService.push({
         number: "",
@@ -241,6 +253,7 @@ export default {
           this.isLoading = false;
           this.isComplete = true;
           this.errors = {};
+          this.rowErrors = "";
           this.$emit("display-work-experience");
           localStorage.setItem("civil_service", JSON.stringify(response.data));
         })
@@ -292,6 +305,7 @@ export default {
 
       this.$emit("display-work-experience");
     }
+    window.addEventListener("keydown", this.isKeyCombinationSave);
   },
 };
 </script>

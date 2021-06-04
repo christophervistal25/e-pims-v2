@@ -118,7 +118,7 @@ Vue.component(
 
 Vue.component(
     "create-goverment-issued-id",
-    require("./components/PersonalData/create/C4/GovernmentIssuedID.vue")
+    require("./components/PersonalData/create/C4/GovernmentIssued.vue")
         .default
 );
 // END OF PERSONAL DATA SHEET CREATE

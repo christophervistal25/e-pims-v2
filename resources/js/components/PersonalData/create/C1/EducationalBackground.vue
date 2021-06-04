@@ -781,6 +781,18 @@ export default {
     };
   },
   methods: {
+    isKeyCombinationSave() {
+      if (
+        !this.isComplete &&
+        event.ctrlKey &&
+        event.code.toLowerCase() === "keys" &&
+        event.keyCode === 83
+      ) {
+        this.submitEducationalBackground();
+        event.preventDefault();
+        return true;
+      }
+    },
     submitEducationalBackground() {
       this.isLoading = true;
       this.educationalBackground.employee_id = localStorage.getItem(
@@ -822,6 +834,7 @@ export default {
       );
       this.isComplete = true;
     }
+    window.addEventListener("keydown", this.isKeyCombinationSave);
   },
 };
 </script>

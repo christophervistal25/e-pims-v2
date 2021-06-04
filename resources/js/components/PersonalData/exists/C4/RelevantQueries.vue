@@ -988,6 +988,18 @@ export default {
     };
   },
   methods: {
+    isKeyCombinationSave(event) {
+      if (
+        !this.isComplete &&
+        event.ctrlKey &&
+        event.code.toLowerCase() === "keys" &&
+        event.keyCode === 83
+      ) {
+        this.submit();
+        event.preventDefault();
+        return true;
+      }
+    },
     markYes(question, others = []) {
       if (this.relevantQueries[`${question}_answer`] !== "yes") {
         this.relevantQueries[`${question}_answer`] = "yes";
@@ -1053,6 +1065,7 @@ export default {
     },
   },
   created() {
+    window.addEventListener("keydown", this.isKeyCombinationSave);
     if (!this.personal_data.relevant_queries) {
       this.personal_data.relevant_queries = this.relevantQueries;
     }

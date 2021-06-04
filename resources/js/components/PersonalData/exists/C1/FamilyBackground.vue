@@ -536,6 +536,18 @@ export default {
     },
   },
   methods: {
+    isKeyCombinationSave(event) {
+      if (
+        !this.isComplete &&
+        event.ctrlKey &&
+        event.code.toLowerCase() === "keys" &&
+        event.keyCode === 83
+      ) {
+        this.submitPersonFamilyBackground();
+        event.preventDefault();
+        return true;
+      }
+    },
     generateNewSpouseField() {
       this.spouse.push({
         name: ``,
@@ -585,6 +597,8 @@ export default {
     },
   },
   created() {
+    window.addEventListener("keydown", this.isKeyCombinationSave);
+
     this.noOfSpouseFields =
       this.personal_data.spouse_child.length || this.noOfSpouseFields;
 

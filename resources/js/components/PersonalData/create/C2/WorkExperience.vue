@@ -302,6 +302,18 @@ export default {
     },
   },
   methods: {
+    isKeyCombinationSave() {
+      if (
+        !this.isComplete &&
+        event.ctrlKey &&
+        event.code.toLowerCase() === "keys" &&
+        event.keyCode === 83
+      ) {
+        this.submitWorkExperience();
+        event.preventDefault();
+        return true;
+      }
+    },
     btnAddNewWorkExperienceField() {
       this.workExperience.push({
         from: "",
@@ -384,6 +396,7 @@ export default {
       this.workExperience = JSON.parse(localStorage.getItem("work_experience"));
       this.isComplete = true;
     }
+    window.addEventListener("keydown", this.isKeyCombinationSave);
   },
 };
 </script>

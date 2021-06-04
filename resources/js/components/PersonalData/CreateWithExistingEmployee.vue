@@ -90,36 +90,8 @@
 </template>
 
 <script>
-import FamilyBackground from "./create/C1/FamilyBackground.vue";
-import PersonalInformation from "./create/C1/Information.vue";
-import EducationalBackground from "./create/C1/EducationalBackground.vue";
-
-import CivilService from "./create/C2/CivilService.vue";
-import WorkExperience from "./create/C2/WorkExperience.vue";
-
-import Voluntary from "./create/C3/Voluntary.vue";
-import learningAndDevelopment from "./create/C3/Learning.vue";
-import OtherInformation from "./create/C3/OtherInformation.vue";
-
-import RelevantQueries from "./create/C4/RelevantQueries.vue";
-import Reference from "./create/C4/Reference.vue";
-import GovernmentIssuedID from "./create/C4/GovernmentIssuedID.vue";
-
 export default {
   props: ["employee"],
-  components: {
-    FamilyBackground,
-    PersonalInformation,
-    EducationalBackground,
-    CivilService,
-    WorkExperience,
-    Voluntary,
-    learningAndDevelopment,
-    OtherInformation,
-    RelevantQueries,
-    Reference,
-    GovernmentIssuedID,
-  },
   data() {
     return {
       hasSelecType: false,
