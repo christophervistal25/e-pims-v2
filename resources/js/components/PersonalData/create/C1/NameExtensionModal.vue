@@ -4,8 +4,8 @@
       <v-form v-model="valid" ref="form">
         <v-row justify="center" class="mt-1">
           <v-dialog
-            v-model="dialog"
             persistent
+            v-model="dialog"
             max-width="600px"
             :class="shownameext ? 'show' : ''"
           >
@@ -128,6 +128,13 @@ export default {
       this.errors = {};
       this.$refs.form.resetValidation();
     },
+  },
+  created() {
+    document.addEventListener("keydown", (e) => {
+      if (e.keyCode === 27 && e.key.toLowerCase() === "escape") {
+        this.dialog = false;
+      }
+    });
   },
 };
 </script>
