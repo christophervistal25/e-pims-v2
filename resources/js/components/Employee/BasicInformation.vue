@@ -40,10 +40,14 @@
             type="text"
             id="middlename"
             v-model="employee.middleName"
+            :class="errors.hasOwnProperty('middleName') ? 'is-invalid' : ''"
             class="form-control text-uppercase"
             style="outline: none; box-shadow: 0px 0px 0px transparent"
           />
           <span><strong>MIDDLE NAME</strong></span>
+          <p class="text-danger text-sm">
+            {{ errors.middleName }}
+          </p>
         </label>
         <div class="row">
           <div class="col-lg-10">
@@ -208,7 +212,9 @@
             :options="employmentStatus"
           ></v2-select>
           <p class="text-danger text-sm">
-            {{ errors["employmentStatus.stat_code"] }}
+            {{
+              errors["employmentStatus.stat_code"] || errors["employmentStatus"]
+            }}
           </p>
           <span
             ><strong>EMPLOYMENT STATUS</strong
