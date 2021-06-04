@@ -9,14 +9,15 @@ use Illuminate\Contracts\Validation\Rule;
 
 class StoreTrapfullname implements Rule
 {
+    private $data;
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(array $data = [])
     {
-        //
+        $this->data = $data;
     }
 
     /**
@@ -28,13 +29,21 @@ class StoreTrapfullname implements Rule
      */
     public function passes($attribute, $value)
     {
-        $records = Employee::where('lastname', Str::upper(request()->lastName))
-                ->where('firstname', Str::upper(request()->firstName))
-                ->where('middlename', Str::upper(request()->middleName))
-                ->where('extension', Str::upper(request()->extension))
-                ->where('date_birth', request()->dateOfBirth)
-                ->count();
-            
+        if(count($this->data) !== 0) {
+            $records = Employee::where('lastname', $this->data['lastname'])
+                                ->where('firstname', $this->data['firstname'])
+                                ->orWhere('middlename', $this->data['middlename'])
+                                ->orWhere('extension', $this->data['extension'])
+                                ->where('date_birth', $this->data['date_of_birth'])
+                                ->count();
+        } else {
+            $records = Employee::where('lastname', request()->lastName)
+                                ->where('firstname', request()->firstName)
+                                ->orWhere('middlename', request()->middleName)
+                                ->orWhere('extension', request()->extension)
+                                ->where('date_birth', request()->dateOfBirth)
+                                ->count();
+        }
         return $records <= 0;
     }
 

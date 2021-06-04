@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\C1;
 
-
+use App\Rules\StoreTrapfullname;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PersonalInformationRequest extends FormRequest
@@ -26,13 +26,21 @@ class PersonalInformationRequest extends FormRequest
     {
         $sex = ['MALE', 'FEMALE'];
         $status = ['SINGLE', 'MARRIED', 'WIDOWED', 'SEPARATED', 'OTHERS'];
-        
+
+        $data = [
+            'lastname'    => request()->surname,
+            'firstname'   => request()->firstname,
+            'middlename'  => request()->middlename,
+            'extension'   => request()->nameExtension,
+            'date_of_birth'  => request()->dateOfBirth,
+        ];
+
         return [
-            'surname'                  => 'required|regex:/^[a-zA-Z ].+$/u',
-            'firstname'                => 'required|regex:/^[a-zA-Z ].+$/u',
-            'middlename'               => ['nullable', 'regex:/^[a-zA-Z].+$/u', 'min:2'],
-            'nameExtension'            => ['nullable'],
-            'dateOfBirth'              => 'required',
+            'surname'                  => ['required', 'regex:/^[a-zA-Z ].+$/u', new StoreTrapfullname($data)],
+            'firstname'                => ['required', 'regex:/^[a-zA-Z ].+$/u', new StoreTrapfullname($data)],
+            'middlename'               => ['nullable', 'regex:/^[a-zA-Z].+$/u', 'min:2', new StoreTrapfullname($data)],
+            'nameExtension'            => ['nullable', new StoreTrapfullname($data)],
+            'dateOfBirth'              => ['required', new StoreTrapfullname($data)],
             'placeOfBirth'             => 'required',
             'sex'                      => 'required|in:' . implode(',', $sex),
             'status'                   => 'required|in:'  . implode(',', $status),

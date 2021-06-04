@@ -27,7 +27,7 @@ class OldEmployeeUpdateRequest extends FormRequest
         $rules = [
             'employee_id'      => 'required|exists:employees',
             'firstName'        => ['required', new UpdateTrapfullname()],
-            'middleName'       => ['required', new UpdateTrapfullname()],
+            'middleName'       => ['nullable', new UpdateTrapfullname()],
             'lastName'         => ['required', new UpdateTrapfullname()],
             'extension' => ['nullable', new UpdateTrapfullname()],
             'dateOfBirth'      => ['required', 'date', new UpdateTrapfullname()],

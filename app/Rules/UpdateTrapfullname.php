@@ -7,14 +7,16 @@ use Illuminate\Contracts\Validation\Rule;
 
 class UpdateTrapfullname implements Rule
 {
+    private $data;
+    
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(array $data = [])
     {
-        //
+        $this->data = $data;
     }
 
     /**
@@ -26,8 +28,24 @@ class UpdateTrapfullname implements Rule
      */
     public function passes($attribute, $value)
     {
-        $employee = Employee::where(['lastname' => request()->lastName, 'firstname' => request()->firstName, 'middlename' => request()->middleName, 'extension' => request()->extension, 'date_birth' => request()->dateOfBirth])->where('employee_id', '!=', request()->employee_id)->count();
-        return !$employee;
+        if(count($this->data) !== 0) {
+            $employee = Employee::where('lastname', $this->data['lastname'])
+                                ->where('firstname', $this->data['firstname'])
+                                ->orWhere('middlename', $this->data['middlename'])
+                                ->orWhere('extension', $this->data['extension'])
+                                ->where('date_birth', $this->data['date_of_birth'])
+                                ->where('employee_id', '!=', $this->data['employee_id'])
+                                ->count();
+        } else {
+            $employee = Employee::where('lastname', request()->lastName)
+                                ->where('firstname', request()->firstName)
+                                ->orWhere('middlename', request()->middleName)
+                                ->orWhere('extension', request()->extension)
+                                ->where('date_birth', request()->dateOfBirth)
+                                ->where('employee_id', '!=', request()->employee_id)
+                                ->count();
+        }
+        return $employee <= 0;
     }
 
     /**

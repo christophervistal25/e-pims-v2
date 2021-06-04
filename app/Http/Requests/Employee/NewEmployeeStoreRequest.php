@@ -25,21 +25,22 @@ class NewEmployeeStoreRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'firstName'        => ['required', new StoreTrapfullname()],
-            'middleName'       => ['required', new StoreTrapfullname()],
-            'lastName'         => ['required', new StoreTrapfullname()],
-            'extension'        => ['nullable', new StoreTrapfullname()],
-            'dateOfBirth'      => ['required', 'date', new StoreTrapfullname()],
-            'designation.position_code'      => 'required|exists:positions,position_code',
+            'firstName'                    => ['required', new StoreTrapfullname()],
+            'middleName'                   => ['nullable', new StoreTrapfullname],
+            'lastName'                     => ['required', new StoreTrapfullname()],
+            'extension'                    => ['nullable', new StoreTrapfullname()],
+            'dateOfBirth'                  => ['required', 'date', new StoreTrapfullname()],
+            'designation.position_code'    => 'required|exists:positions,position_code',
             'officeAssignment.office_code' => 'required|exists:offices,office_code',
-            'employmentStatus.stat_code' => 'required|exists:ref_statuses,stat_code',
-            'pagibigMidNo'     => 'nullable',
-            'philhealthNo'     => 'nullable',
-            'sssNo'            => 'nullable|unique:employees,sss_no',
-            'tinNo'            => 'nullable|unique:employees,tin_no',
+            'employmentStatus'             => 'required',
+            'employmentStatus.stat_code'   => 'required_with:employmentStatus|exists:ref_statuses,stat_code',
+            'pagibigMidNo'                 => 'nullable',
+            'philhealthNo'                 => 'nullable',
+            'sssNo'                        => 'nullable|unique:employees,sss_no',
+            'tinNo'                        => 'nullable|unique:employees,tin_no',
         ];
         
-        if(request()->employmentStatus['status_name'] === 'PERMANENT') {
+        if(request()->employmentStatus && request()->employmentStatus['status_name'] === 'PERMANENT') {
             // Ignore rules if the user enter an asterisk (*)
             echo request()->dbpAccountNo;
             if(request()->dbpAccountNo === '*') {
@@ -54,6 +55,7 @@ class NewEmployeeStoreRequest extends FormRequest
                 $rules['lbpAccountNo'] = 'required|unique:employees,lbp_account_no';
             }
         }
+
 
         return $rules;
     }
