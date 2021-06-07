@@ -176,7 +176,6 @@ $(document).ready(function() {
             "data-plantilla"
         );
         if (plantilla) {
-            console.log(plantilla);
             document.getElementById("officeAdjustment").innerHTML = plantilla;
         } else {
             $("#officeAdjustment").text("");
@@ -195,6 +194,7 @@ $(function() {
         },
         columns: [
             { data: "employee", name: "employee", visible: true },
+            { data: "office_code", name: "office_code", visible: true },
             { data: "position", name: "position", visible: true },
             { data: "sg_no", name: "sg_no", visible: true },
             { data: "step_no", name: "step_no", visible: true },
@@ -205,5 +205,56 @@ $(function() {
                 render: $.fn.dataTable.render.number(",", ".", 2)
             }
         ]
+    });
+    $("#employeeOffice").change(function(e) {
+        if (e.target.value == "" || e.target.value == "") {
+            table.destroy();
+            table = $("#salaryAdjustmentPerOfficeList").DataTable({
+                processing: true,
+                serverSide: true,
+                destroy: true,
+                retrieve: true,
+                ajax: {
+                    url: "/salary-adjustment-per-office-not-selected-list"
+                },
+                columns: [
+                    { data: "employee", name: "employee", visible: true },
+                    { data: "office_code", name: "office_code", visible: true },
+                    { data: "position", name: "position", visible: true },
+                    { data: "sg_no", name: "sg_no", visible: true },
+                    { data: "step_no", name: "step_no", visible: true },
+                    {
+                        data: "salary_amount",
+                        name: "salary_amount",
+                        visible: true,
+                        render: $.fn.dataTable.render.number(",", ".", 2)
+                    }
+                ]
+            });
+        } else {
+            table.destroy();
+            table = $("#salaryAdjustmentPerOfficeList").DataTable({
+                processing: true,
+                serverSide: true,
+                destroy: true,
+                retrieve: true,
+                ajax: {
+                    url: `/api/office/salary/adjustment/peroffice/notselected/${e.target.value}`
+                },
+                columns: [
+                    { data: "employee", name: "employee", visible: true },
+                    { data: "office_code", name: "office_code", visible: true },
+                    { data: "position", name: "position", visible: true },
+                    { data: "sg_no", name: "sg_no", visible: true },
+                    { data: "step_no", name: "step_no", visible: true },
+                    {
+                        data: "salary_amount",
+                        name: "salary_amount",
+                        visible: true,
+                        render: $.fn.dataTable.render.number(",", ".", 2)
+                    }
+                ]
+            });
+        }
     });
 });

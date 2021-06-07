@@ -28,12 +28,12 @@
             <v-container>
               <v-row>
                 <v-col cols="12">
-                  <p
+                  <!-- <p
                     class="text-danger text-sm mb-0"
                     v-if="errors.hasOwnProperty('name')"
                   >
                     {{ errors.name[0] }}
-                  </p>
+                  </p> -->
                   <v-text-field
                     label="Office Name"
                     :rules="nameRules"
@@ -44,12 +44,12 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12">
-                  <p
+                  <!-- <p
                     class="text-danger text-sm mb-0"
                     v-if="errors.hasOwnProperty('short_name')"
                   >
                     {{ errors.short_name[0] }}
-                  </p>
+                  </p> -->
                   <v-text-field
                     label="Office Short Name"
                     :rules="nameRules"
@@ -62,12 +62,12 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12">
-                  <p
+                  <!-- <p
                     class="text-danger text-sm mb-0"
                     v-if="errors.hasOwnProperty('address')"
                   >
                     {{ errors.address[0] }}
-                  </p>
+                  </p> -->
                   <v-text-field
                     label="Office Address"
                     :rules="nameRules"
@@ -80,12 +80,12 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12">
-                  <p
+                  <!-- <p
                     class="text-danger text-sm mb-0"
                     v-if="errors.hasOwnProperty('short_address')"
                   >
                     {{ errors.short_address[0] }}
-                  </p>
+                  </p> -->
                   <v-text-field
                     class="pt-0 form-input"
                     label="Office Short Address"
@@ -112,13 +112,13 @@
                       >Type to search office head</template
                     >
                   </v2-select>
-                  <p
+                  <!-- <p
                     class="text-danger text-sm"
                     v-if="errors.hasOwnProperty('head')"
                   >
                     {{ errors.head[0] }}
-                  </p></v-col
-                >
+                  </p> -->
+                </v-col>
 
                 <v-col cols="12">
                   <label>Position Name</label>
@@ -134,12 +134,12 @@
                       >Type to search position</template
                     >
                   </v2-select>
-                  <p
+                  <!-- <p
                     class="text-danger text-sm"
                     v-if="errors.hasOwnProperty('position_name')"
                   >
                     {{ errors.position_name[0] }}
-                  </p>
+                  </p> -->
                 </v-col>
               </v-row>
             </v-container>
@@ -154,7 +154,12 @@
             >
               Close
             </v-btn>
-            <v-btn color="blue darken-1" text @click="submitNewOffice">
+            <v-btn
+              color="blue darken-1"
+              text
+              @click="submitNewOffice"
+              v-on:click="validate"
+            >
               <div
                 v-if="isLoading"
                 class="spinner-border spinner-border-sm"
@@ -260,11 +265,16 @@ export default {
       this.dialog = false;
       this.$refs.form.resetValidation();
     },
+    validate() {
+      this.$refs.form.validate();
+    },
   },
   created() {
     document.addEventListener("keydown", (e) => {
       if (e.keyCode === 27 && e.key.toLowerCase() === "escape") {
         this.dialog = false;
+        this.errors = {};
+        this.$refs.form.resetValidation();
       }
     });
   },

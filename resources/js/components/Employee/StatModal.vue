@@ -32,12 +32,12 @@
                 <v-container>
                   <v-row>
                     <v-col cols="12">
-                      <p
+                      <!-- <p
                         class="text-danger text-sm mb-0"
                         v-if="errors.hasOwnProperty('status_name')"
                       >
                         {{ errors.status_name[0] }}
-                      </p>
+                      </p> -->
                       <v-text-field
                         class="pt-0 form-input"
                         label="Status Name"
@@ -65,7 +65,12 @@
                 >
                   Close
                 </v-btn>
-                <v-btn color="blue darken-1" text @click="submitNewStatus">
+                <v-btn
+                  color="blue darken-1"
+                  text
+                  @click="submitNewStatus"
+                  v-on:click="validate"
+                >
                   <div
                     v-if="isLoading"
                     class="spinner-border spinner-border-sm"
@@ -133,11 +138,16 @@ export default {
       this.$refs.form.resetValidation();
       this.errors = {};
     },
+    validate() {
+      this.$refs.form.validate();
+    },
   },
   created() {
     document.addEventListener("keydown", (e) => {
       if (e.keyCode === 27 && e.key.toLowerCase() === "escape") {
         this.dialog = false;
+        this.errors = {};
+        this.$refs.form.resetValidation();
       }
     });
   },

@@ -32,13 +32,13 @@
                 <v-container>
                   <v-row>
                     <v-col cols="12">
-                      <p class="text-danger text-sm mb-0">
+                      <!-- <p class="text-danger text-sm mb-0">
                         {{
                           errors.hasOwnProperty("errors")
                             ? errors.errors.extension[0]
                             : ""
                         }}
-                      </p>
+                      </p> -->
                       <v-text-field
                         class="mt-0 form-input"
                         label="Extension Name"
@@ -66,7 +66,12 @@
                 >
                   Close
                 </v-btn>
-                <v-btn color="blue darken-1" text @click="submitNewNameExt">
+                <v-btn
+                  color="blue darken-1"
+                  text
+                  @click="submitNewNameExt"
+                  v-on:click="validate"
+                >
                   <div
                     v-if="isLoading"
                     class="spinner-border spinner-border-sm"
@@ -131,11 +136,16 @@ export default {
       this.$refs.form.resetValidation();
       this.dialog = false;
     },
+    validate() {
+      this.$refs.form.validate();
+    },
   },
   created() {
     document.addEventListener("keydown", (e) => {
       if (e.keyCode === 27 && e.key.toLowerCase() === "escape") {
         this.dialog = false;
+        this.errors = {};
+        this.$refs.form.resetValidation();
       }
     });
   },
