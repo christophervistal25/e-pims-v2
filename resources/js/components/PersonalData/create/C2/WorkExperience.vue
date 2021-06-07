@@ -217,7 +217,7 @@
                   class="btn btn-danger mt-2 rounded-circle"
                   @click="removeField(index)"
                 >
-                  <i class="fas fa-times"></i>
+                  <i class="fa fa-times"></i>
                 </button>
               </td>
               <td class="align-middle">
@@ -302,9 +302,10 @@ export default {
     },
   },
   methods: {
-    isKeyCombinationSave() {
+    isKeyCombinationSave(event) {
       if (
         !this.isComplete &&
+        this.work_experience &&
         event.ctrlKey &&
         event.code.toLowerCase() === "keys" &&
         event.keyCode === 83

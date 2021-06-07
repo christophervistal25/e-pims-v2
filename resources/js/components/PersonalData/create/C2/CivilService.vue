@@ -147,7 +147,7 @@
                     @click="removeField(index)"
                     class="btn btn-danger font-weight-bold mt-1 rounded-circle"
                   >
-                    <i class="fas fa-times"></i>
+                    <i class="fa fa-times"></i>
                   </button>
                 </td>
                 <td v-if="!isComplete">
