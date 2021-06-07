@@ -51,7 +51,7 @@ class SalaryAdjustmentPerOfficeController extends Controller
     public function NotSelectedlist(Request $request){
         if ($request->ajax()) {
             $salaryAdjustment = SalaryAdjustment::get()->pluck('employee_id')->toArray();
-            $data = Plantilla::select('plantilla_id','item_no', 'position_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id')->with('position:position_id,position_name','employee:employee_id,firstname,middlename,lastname,extension')->whereNotIn('employee_id', $salaryAdjustment );
+            $data = Plantilla::select('plantilla_id','item_no', 'office_code', 'position_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id')->with('position:position_id,position_name','employee:employee_id,firstname,middlename,lastname,extension')->whereNotIn('employee_id', $salaryAdjustment );
             return (new Datatables)->eloquent($data)
                     ->addIndexColumn()
                     ->addColumn('employee', function ($row) {

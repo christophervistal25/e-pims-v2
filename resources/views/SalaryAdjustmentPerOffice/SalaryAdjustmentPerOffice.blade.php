@@ -34,6 +34,7 @@
                 <thead>
                 <tr>
                     <td scope="col" class="text-center font-weight-bold">Employee Name</td>
+                    <td scope="col" class="text-center font-weight-bold">Office Code</td>
                     <td scope="col" class="text-center font-weight-bold">Position</td>
                     <td scope="col" class="text-center font-weight-bold">Salary Grade</td>
                     <td scope="col" class="text-center font-weight-bold">Step Number</td>
