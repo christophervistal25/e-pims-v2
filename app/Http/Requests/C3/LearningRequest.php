@@ -25,8 +25,8 @@ class LearningRequest extends FormRequest
     {
         return [
             '*.nameOfTraining' => ['required'],
-            '*.from'           => ['nullable', 'required_with:*.nameOfTraining', 'date'],
-            '*.to'             => ['nullable', 'required_with:*.nameOfTraining', 'date'],
+            '*.from'           => ['nullable', 'required_with:*.nameOfTraining', 'date', 'before:*.to'],
+            '*.to'             => ['nullable', 'required_with:*.nameOfTraining', 'date', 'after:*.from'],
             '*.noOfHours'      => ['nullable', 'required_with:*.nameOfTraining', 'numeric'],
             '*.typeOfLD'       => ['nullable', 'required_with:*.nameOfTraining'],
             '*.conducted'      => ['nullable', 'required_with:*.nameOfTraining'],

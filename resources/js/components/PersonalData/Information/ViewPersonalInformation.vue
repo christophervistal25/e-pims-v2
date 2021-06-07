@@ -200,7 +200,11 @@
           <div class="text col-auto">
             <li>
               <div class="text">
-                {{ employee.agency_employee_no || "N/A" }}
+                {{
+                  (employee.agency_employee_no === "*"
+                    ? "N/A"
+                    : employee.agency_employee_no) || "N/A"
+                }}
               </div>
             </li>
           </div>

@@ -554,6 +554,7 @@ export default {
     isKeyCombinationSave() {
       if (
         !this.isComplete &&
+        this.show_panel &&
         event.ctrlKey &&
         event.code.toLowerCase() === "keys" &&
         event.keyCode === 83
@@ -629,6 +630,7 @@ export default {
   },
   created() {
     this.noOfSpouseFields = this.spouse.length;
+    window.addEventListener("keydown", this.isKeyCombinationSave);
   },
   mounted() {
     if (localStorage.getItem("family_background")) {
@@ -644,7 +646,6 @@ export default {
 
       this.$emit("next-panel-educational-background");
     }
-    window.addEventListener("keydown", this.isKeyCombinationSave);
   },
 };
 </script>

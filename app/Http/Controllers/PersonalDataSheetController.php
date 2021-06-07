@@ -264,8 +264,8 @@ class PersonalDataSheetController extends Controller
     {
         $this->validate($request, [
              '*.title'                   => ['required'],
-             '*.date_of_attendance_from' => ['nullable', 'required_with:*.title', 'date'],
-             '*.date_of_attendance_to'   => ['nullable', 'required_with:*.title', 'date'],
+             '*.date_of_attendance_from' => ['nullable', 'required_with:*.title', 'date', 'before:*.date_of_attendance_to'],
+             '*.date_of_attendance_to'   => ['nullable', 'required_with:*.title', 'date', 'after:*.date_of_attendance_from'],
              '*.number_of_hours'         => ['nullable', 'required_with:*.title', 'numeric'],
              '*.type_of_id'              => ['nullable', 'required_with:*.title'],
              '*.sponsored_by'            => ['nullable', 'required_with:*.title'],
@@ -318,7 +318,7 @@ class PersonalDataSheetController extends Controller
             'question_35_a_details'         => ['required_if:question_35_a_answer,yes'],
             'question_35_b_answer'          => ['required'],
             'question_35_b_details'         => ['required_if:question_35_b_answer,yes'],
-            'question_35_b_date_filled'     => ['nullable', 'required_if:question_35_b_answer,yes', 'date'],
+            'question_35_b_date_filled'     => ['nullable', 'required_if:question_35_b_answer,yes', 'date', 'before:today', 'after:1900-01-01'],
             'question_35_b_status_of_cases' => ['required_if:question_35_b_answer,yes'],
             'question_36_a_answer'          => ['required'],
             'question_36_a_details'         => ['required_if:question_36_a_answer,yes'],

@@ -1,5 +1,5 @@
 @extends('layouts.app-vue')
-@section('title', 'Create Personal Data Sheet')
+@section('title', 'CREATE PERSONAL DATA SHEET')
 @prepend('page-css')
 <script src="{{ asset('/js/app.js') }}" defer></script>
 <link rel="stylesheet" href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css"/>

@@ -6,69 +6,20 @@
         v-if="showProfile"
         @click="showProfile = false"
       >
-        <i class="fas fa-arrow-circle-left"></i>
+        <i class="la la-arrow-left text-white font-weight-bold"></i>
       </button>
     </div>
     <div class="float-right mb-2">
       <a
         href="/employee/create/personal/data/sheet"
-        class="btn btn-primary float-right"
-        >PDS for new employee</a
+        class="btn btn-primary float-right shadow"
+      >
+        <i class="la la-plus"></i> PDS for new employee</a
       >
     </div>
     <div class="clearfix"></div>
     <br />
     <div>
-      <!-- <table class="table table-hover table-bordered" v-if="!showProfile">
-        <thead>
-          <tr>
-            <th scope="col">Employee ID</th>
-            <th scope="col">Fullname</th>
-            <th scope="col" class="text-center">Position</th>
-            <th scope="col" class="text-center">Office</th>
-            <th scope="col" class="text-center">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(employee, index) in employees" :key="index">
-            <td>{{ employee.employee_id }}</td>
-            <td>
-              {{ employee.fullname }}
-            </td>
-            <td class="text-center">
-              {{
-                employee.information && employee.information.position
-                  ? employee.information.position.position_name
-                  : "N/A"
-              }}
-            </td>
-            <td class="text-center">
-              {{
-                employee.information && employee.information.office
-                  ? employee.information.office.office_name
-                  : "N/A"
-              }}
-            </td>
-            <td class="text-center">
-              <button
-                @click="fetchInformation(employee.employee_id)"
-                class="btn btn-info btn-sm rounded-circle shadow text-white mr-2"
-                :title="`View Information of ${employee.lastname} , ${employee.firstname} ${employee.middlename} ${employee.extension}`"
-              >
-                <i class="fas fa-eye font-weight-bold"></i>
-              </button>
-
-              <a
-                :href="`/employee/create/${employee.employee_id}/personal/data/sheet`"
-                class="btn btn-primary btn-sm rounded-circle shadow text-white mr-2"
-                :title="`Generate PDS for  ${employee.lastname} , ${employee.firstname} ${employee.middlename} ${employee.extension}`"
-              >
-                <i class="fas fa-plus font-weight-bold"></i>
-              </a>
-            </td>
-          </tr>
-        </tbody>
-      </table> -->
       <v-main v-if="!showProfile">
         <v-row>
           <v-col></v-col>
@@ -101,24 +52,24 @@
           <template v-slot:item.actions="{ item }">
             <button
               @click="fetchInformation(item.employee_id)"
-              class="btn btn-info rounded-circle text-white mr-2"
+              class="btn btn-info rounded-circle text-white mr-2 shadow"
             >
-              <i class="la la-eye font-weight-bold"></i>
+              <i class="la la-eye"></i>
             </button>
 
             <a
               :href="`/employee/create/${item.employee_id}/personal/data/sheet`"
-              class="btn btn-success rounded-circle text-white mr-2"
+              class="btn btn-success rounded-circle text-white mr-2 shadow"
             >
-              <i class="fas fa-edit"></i>
+              <i class="la la-pencil"></i>
             </a>
 
             <a
               @click="printPersonalDataSheet(item.employee_id)"
-              class="btn btn-primary rounded-circle text-white mr-2"
+              class="btn btn-primary rounded-circle text-white mr-2 shadow"
               :title="`Generate PDS for ${item.fullname}`"
             >
-              <i class="la la-file font-weight-bold"></i>
+              <i class="la la-print"></i>
             </a>
           </template>
         </v-data-table>
@@ -158,7 +109,13 @@
       <div class="row">
         <div class="col-md-6 d-flex">
           <div
-            class="card profile-box flex-fill rounded-0 rounded-bottom border-top-0"
+            class="
+              card
+              profile-box
+              flex-fill
+              rounded-0 rounded-bottom
+              border-top-0
+            "
           >
             <view-personal-information
               :employee="employee"
@@ -167,7 +124,13 @@
         </div>
         <div class="col-md-6 d-flex">
           <div
-            class="card profile-box flex-fill rounded-0 rounded-bottom border-top-0"
+            class="
+              card
+              profile-box
+              flex-fill
+              rounded-0 rounded-bottom
+              border-top-0
+            "
           >
             <view-person-address :employee="employee"></view-person-address>
           </div>

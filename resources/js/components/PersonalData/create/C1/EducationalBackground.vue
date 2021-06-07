@@ -130,10 +130,8 @@
                   v-model="educationalBackground.eyrGrad"
                   @input="
                     if (educationalBackground.eyrGrad.length > yearMaxLength)
-                      educationalBackground.eyrGrad = educationalBackground.eyrGrad.slice(
-                        0,
-                        yearMaxLength
-                      );
+                      educationalBackground.eyrGrad =
+                        educationalBackground.eyrGrad.slice(0, yearMaxLength);
                   "
                   :class="!errors.hasOwnProperty('eyrGrad') ? '' : 'is-invalid'"
                   style="outline: none; box-shadow: 0px 0px 0px transparent"
@@ -265,10 +263,8 @@
                   v-model="educationalBackground.syrGrad"
                   @input="
                     if (educationalBackground.syrGrad.length > yearMaxLength)
-                      educationalBackground.syrGrad = educationalBackground.syrGrad.slice(
-                        0,
-                        yearMaxLength
-                      );
+                      educationalBackground.syrGrad =
+                        educationalBackground.syrGrad.slice(0, yearMaxLength);
                   "
                   :class="!errors.hasOwnProperty('syrGrad') ? '' : 'is-invalid'"
                   style="outline; none; box-shadow: 0px 0px 0px transparent;"
@@ -400,10 +396,8 @@
                 v-model="educationalBackground.vyrGrad"
                 @input="
                   if (educationalBackground.vyrGrad.length > yearMaxLength)
-                    educationalBackground.vyrGrad = educationalBackground.vyrGrad.slice(
-                      0,
-                      yearMaxLength
-                    );
+                    educationalBackground.vyrGrad =
+                      educationalBackground.vyrGrad.slice(0, yearMaxLength);
                 "
                 :class="!errors.hasOwnProperty('vyrGrad') ? '' : 'is-invalid'"
                 style="outline; none; box-shadow: 0px 0px 0px transparent;"
@@ -529,10 +523,8 @@
                 v-model="educationalBackground.cyrGrad"
                 @input="
                   if (educationalBackground.cyrGrad.length > yearMaxLength)
-                    educationalBackground.cyrGrad = educationalBackground.cyrGrad.slice(
-                      0,
-                      yearMaxLength
-                    );
+                    educationalBackground.cyrGrad =
+                      educationalBackground.cyrGrad.slice(0, yearMaxLength);
                 "
                 :class="!errors.hasOwnProperty('cyrGrad') ? '' : 'is-invalid'"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
@@ -674,10 +666,8 @@
                 v-model="educationalBackground.gyrGrad"
                 @input="
                   if (educationalBackground.gyrGrad.length > yearMaxLength)
-                    educationalBackground.gyrGrad = educationalBackground.gyrGrad.slice(
-                      0,
-                      yearMaxLength
-                    );
+                    educationalBackground.gyrGrad =
+                      educationalBackground.gyrGrad.slice(0, yearMaxLength);
                 "
                 :class="!errors.hasOwnProperty('gyrGrad') ? '' : 'is-invalid'"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
@@ -781,9 +771,10 @@ export default {
     };
   },
   methods: {
-    isKeyCombinationSave() {
+    isKeyCombinationSave(event) {
       if (
         !this.isComplete &&
+        this.educational_background &&
         event.ctrlKey &&
         event.code.toLowerCase() === "keys" &&
         event.keyCode === 83
@@ -795,9 +786,8 @@ export default {
     },
     submitEducationalBackground() {
       this.isLoading = true;
-      this.educationalBackground.employee_id = localStorage.getItem(
-        "employee_id"
-      );
+      this.educationalBackground.employee_id =
+        localStorage.getItem("employee_id");
       window.axios
         .post(
           "/employee/personal/educational/background/store",
