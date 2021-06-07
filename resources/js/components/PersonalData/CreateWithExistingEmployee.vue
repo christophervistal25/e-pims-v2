@@ -2,6 +2,18 @@
   <!-- DATA-APP FOR MODAL OF VUETIFY -->
   <div data-app>
     <div class="container-fluid">
+      <div
+        class="float-right"
+        style="position: fixed; z-index: 99999; left: 97%"
+      >
+        <a
+          @click="printPersonalDataSheet(employee.employee_id)"
+          class="btn btn-primary btn-rounded shadow"
+        >
+          <i class="la la-print"></i>
+        </a>
+      </div>
+      <div class="clearfix"></div>
       <div class="row">
         <div class="col-lg-3" v-for="(tab, key) in tabs" :key="key">
           <button
@@ -129,6 +141,9 @@ export default {
     };
   },
   methods: {
+    printPersonalDataSheet(employee_id) {
+      window.axios.get(`/print/pds/${employee_id}`).then(_);
+    },
     updateNameExtensions(newExtension) {
       if (newExtension) {
         this.nameExtensions.push(newExtension.extension.toUpperCase());
