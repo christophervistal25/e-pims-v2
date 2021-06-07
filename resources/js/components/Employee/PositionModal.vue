@@ -30,12 +30,12 @@
                 <v-container>
                   <v-row>
                     <v-col cols="12">
-                      <p
+                      <!-- <p
                         class="text-danger text-sm mb-0"
                         v-if="errors.hasOwnProperty('name')"
                       >
                         {{ errors.name[0] }}
-                      </p>
+                      </p> -->
                       <v-text-field
                         :rules="nameRules"
                         label="Position Name"
@@ -48,12 +48,12 @@
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12">
-                      <p
+                      <!-- <p
                         class="text-danger text-sm mb-0"
                         v-if="errors.hasOwnProperty('short_name')"
                       >
                         {{ errors.short_name[0] }}
-                      </p>
+                      </p> -->
                       <v-text-field
                         label="Position Short Name"
                         :rules="nameRules"
@@ -68,12 +68,12 @@
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12">
-                      <p
+                      <!-- <p
                         class="text-danger text-sm mb-0"
                         v-if="errors.hasOwnProperty('salary_grade')"
                       >
                         {{ errors.salary_grade[0] }}
-                      </p>
+                      </p> -->
                       <v-select
                         label="Salary Grade"
                         required
@@ -97,7 +97,12 @@
                 >
                   Close
                 </v-btn>
-                <v-btn color="blue darken-1" text @click="submitNewDesignation">
+                <v-btn
+                  color="blue darken-1"
+                  text
+                  @click="submitNewDesignation"
+                  v-on:click="validate"
+                >
                   <div
                     v-if="isLoading"
                     class="spinner-border spinner-border-sm"
@@ -167,6 +172,9 @@ export default {
       this.dialog = false;
       this.errors = {};
       this.$refs.form.resetValidation();
+    },
+    validate() {
+      this.$refs.form.validate();
     },
   },
   created() {

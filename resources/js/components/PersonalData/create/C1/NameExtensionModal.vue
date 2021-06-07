@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <v-form v-model="valid" ref="form">
+      <v-form v-model="valid" ref="form" lazy-validation>
         <v-row justify="center" class="mt-1">
           <v-dialog
             persistent
@@ -32,13 +32,13 @@
                 <v-container>
                   <v-row>
                     <v-col cols="12">
-                      <p class="text-danger text-sm mb-0">
+                      <!-- <p class="text-danger text-sm mb-0">
                         {{
                           errors.hasOwnProperty("errors")
                             ? errors.errors.extension[0]
                             : ""
                         }}
-                      </p>
+                      </p> -->
                       <v-text-field
                         :rules="[(v) => !!v || 'Extension name is required']"
                         class="mt-0 form-input"
@@ -65,6 +65,7 @@
                   color="blue darken-1"
                   text
                   @click="submitNewNameExtension"
+                  v-on:click="validate"
                 >
                   <div
                     v-if="isLoading"
@@ -128,6 +129,9 @@ export default {
       this.dialog = false;
       this.errors = {};
       this.$refs.form.resetValidation();
+    },
+    validate() {
+      this.$refs.form.validate();
     },
   },
   created() {
