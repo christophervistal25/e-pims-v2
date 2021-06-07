@@ -265,6 +265,8 @@ export default {
     document.addEventListener("keydown", (e) => {
       if (e.keyCode === 27 && e.key.toLowerCase() === "escape") {
         this.dialog = false;
+        this.errors = {};
+        this.$refs.form.resetValidation();
       }
     });
   },
