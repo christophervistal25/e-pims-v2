@@ -137,7 +137,7 @@
                   class="btn btn-danger font-weight-bold mt-1 rounded-circle"
                   @click="removeField(index)"
                 >
-                  <i class="fas fa-times"></i>
+                  <i class="fa fa-times"></i>
                 </button>
               </td>
               <td class="text-center">

@@ -8,8 +8,8 @@
             :class="!showAddEmployeeForm ? 'btn-primary' : 'btn-info'"
             @click="newEmployeeForm"
           >
-            <i class="fas fa-plus" v-if="!showAddEmployeeForm"></i>
-            <i class="fas fa-list" v-else></i>
+            <i class="la la-plus" v-if="!showAddEmployeeForm"></i>
+            <i class="la la-list" v-else></i>
             {{ !showAddEmployeeForm ? "Add Employee" : "List of Employees" }}
           </button>
         </div>
@@ -90,7 +90,7 @@
                 <a class="nav-link active" href="#basictab1" data-toggle="tab">
                   Basic Information
                   <i
-                    class="fas fa-exclamation-triangle text-danger"
+                    class="fa fa-exclamation-triangle text-danger"
                     v-if="sectionError.basicInformation"
                   ></i>
                 </a>
@@ -420,9 +420,8 @@ export default {
             this.employee.officeAssignment =
               response.data.information.office.office_code;
 
-            let hasPosition = response.data.information.hasOwnProperty(
-              "position"
-            );
+            let hasPosition =
+              response.data.information.hasOwnProperty("position");
 
             let hasOffice = response.data.information.hasOwnProperty("office");
 

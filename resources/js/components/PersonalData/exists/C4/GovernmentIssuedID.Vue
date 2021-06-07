@@ -134,7 +134,7 @@ export default {
             this.isComplete = true;
             this.isLoading = false;
             swal({
-              text: "Successfully create new personal data sheet",
+              text: "Successfully update personal data sheet",
               icon: "success",
             });
           }

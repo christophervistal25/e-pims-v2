@@ -135,11 +135,11 @@
                 <span><strong>SPOUSE'S NAME EXTENSION</strong></span>
               </label>
             </div>
-            <!-- <div class="col-lg-1">
+            <div class="col-lg-1">
               <name-extension-modal
                 @nameext-modal-dismiss="closeNameExtensionModal"
               ></name-extension-modal>
-            </div> -->
+            </div>
           </div>
           <div class="row pl-3 pr-3">
             <div class="col-lg-6">
@@ -381,11 +381,11 @@
               <span><strong>FATHER'S NAME EXTENSION</strong></span>
             </label>
           </div>
-          <!-- <div class="col-lg-1">
+          <div class="col-lg-1">
             <name-extension-modal
               @nameext-modal-dismiss="closeNameExtensionModal"
             ></name-extension-modal>
-          </div> -->
+          </div>
         </div>
 
         <div class="pl-3 pr-3">
@@ -563,8 +563,10 @@ export default {
       this.isLoading = true;
       this.personal_data.family_background.has_spouse = this.hasSpouse;
       this.personal_data.family_background.spouse = this.spouse;
-      this.personal_data.family_background.spouse_extension = this.spouseNameExtension;
-      this.personal_data.family_background.father_extension = this.fatherNameExtension;
+      this.personal_data.family_background.spouse_extension =
+        this.spouseNameExtension;
+      this.personal_data.family_background.father_extension =
+        this.fatherNameExtension;
 
       window.axios
         .post(
@@ -628,8 +630,10 @@ export default {
         mother_extension: "",
       };
     } else {
-      this.spouseNameExtension = this.personal_data.family_background.spouse_extension;
-      this.fatherNameExtension = this.personal_data.family_background.father_extension;
+      this.spouseNameExtension =
+        this.personal_data.family_background.spouse_extension;
+      this.fatherNameExtension =
+        this.personal_data.family_background.father_extension;
       this.hasSpouse = this.personal_data.spouse_child.length !== 0;
     }
   },
