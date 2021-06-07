@@ -233,7 +233,7 @@ class EmployeePersonalDataSheetPrintController extends Controller
             'relation' => 'issued_id',
             'table'    => 'employee_issued_i_d_s',
             'except'   => ['created_at', 'updated_at', 'id'],
-            'alias'    => ['date' => '_date'],
+            'alias'    => ['id_type' => 'type', 'id_no' => 'no', 'date' => '_date'],
         ]);
 
         $this->oneToManyInsertion([
