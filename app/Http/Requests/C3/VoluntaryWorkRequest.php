@@ -25,8 +25,8 @@ class VoluntaryWorkRequest extends FormRequest
     {
         return [
             '*.nameOfOrg' => ['required'],
-            '*.from'      => ['nullable', 'required_with:*.nameOfOrg', 'date'],
-            '*.to'        => ['nullable', 'required_with:*.nameOfOrg', 'date'],
+            '*.from'      => ['nullable', 'required_with:*.nameOfOrg', 'date', 'before:*.to'],
+            '*.to'        => ['nullable', 'required_with:*.nameOfOrg', 'date', 'after:*.from'],
             '*.noOfHrs'   => ['nullable', 'required_with:*.nameOfOrg'],
             '*.position'  => ['nullable', 'required_with:*.nameOfOrg'],
         ];

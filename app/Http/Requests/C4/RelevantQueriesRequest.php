@@ -33,7 +33,7 @@ class RelevantQueriesRequest extends FormRequest
             'no_35_a_details'         => ['required_if:no_35_a,yes'],
             'no_35_b'                 => ['required'],
             'no_35_b_details'         => ['required_if:no_35_b,yes'],
-            'no_35_b_date_filled'     => ['nullable', 'required_if:no_35_b,yes', 'date'],
+            'no_35_b_date_filled'     => ['nullable', 'required_if:no_35_b,yes', 'date', 'before:today', 'after:1900-01-01'],
             'no_35_b_status_of_cases' => ['required_if:no_35_b,yes'],
 
             'no_36'         => ['required'],
