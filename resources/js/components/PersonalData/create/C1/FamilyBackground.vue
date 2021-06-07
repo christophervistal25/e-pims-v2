@@ -33,7 +33,9 @@
               type="checkbox"
               @click="hasSpouse = !hasSpouse"
             />
-            Do you have spouse? If YES, kindly tick the checkbox.
+            <strong
+              >Do you have spouse? If YES, kindly tick the checkbox.</strong
+            >
           </label>
         </div>
         <section v-if="hasSpouse">

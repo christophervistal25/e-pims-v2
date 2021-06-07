@@ -24,7 +24,10 @@
         :id="isComplete ? 'civilService' : ''"
       >
         <div class="card-body">
-          <p>Indicate <strong>N/A </strong>if not applicable</p>
+          <p>
+            Indicate <strong>N/A </strong>or <strong>LEAVE BLANK</strong> if not
+            applicable
+          </p>
           <table class="table table-bordered">
             <tr class="text-center" style="background: #eaeaea">
               <td rowspan="2">&nbsp;</td>
