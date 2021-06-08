@@ -137,9 +137,6 @@ Route::get('/office/salary/adjustment/peroffice/{officeCode}', function ($office
 
 //per office not selected
 Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}', function ($office_code) {
-    // $data = Plantilla::select('plantilla_id','item_no', 'office_code', 'position_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id')->with(['position:position_id,position_name','employee:employee_id,firstname,middlename,lastname,extension'])->whereHas('plantilla', function ($query) use ($office_code) {
-    //     $query->where('office_code', $office_code);
-    // });
     $salaryAdjustment = SalaryAdjustment::get()->pluck('employee_id')->toArray();
     $data = Plantilla::select('plantilla_id','item_no', 'office_code', 'position_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id')->with('position:position_id,position_name','employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code)->whereNotIn('employee_id', $salaryAdjustment );
     return (new Datatables)->eloquent($data)
