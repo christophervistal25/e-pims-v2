@@ -193,8 +193,15 @@ $(function() {
             url: "/salary-adjustment-per-office-not-selected-list"
         },
         columns: [
+            {
+                data: "checkbox",
+                name: "checkbox",
+                searchable: false,
+                orderable: false,
+                sortable: false
+            },
             { data: "employee", name: "employee", visible: true },
-            { data: "office_code", name: "office_code", visible: true },
+            { data: "office_code", name: "office_code", visible: false },
             { data: "position", name: "position", visible: true },
             { data: "sg_no", name: "sg_no", visible: true },
             { data: "step_no", name: "step_no", visible: true },
@@ -207,6 +214,7 @@ $(function() {
         ]
     });
     $("#employeeOffice").change(function(e) {
+        document.getElementById("selectAll").checked = false;
         if (e.target.value == "" || e.target.value == "") {
             table.destroy();
             table = $("#salaryAdjustmentPerOfficeList").DataTable({
@@ -218,8 +226,20 @@ $(function() {
                     url: "/salary-adjustment-per-office-not-selected-list"
                 },
                 columns: [
+                    {
+                        data: "checkbox",
+                        name: "checkbox",
+                        searchable: false,
+                        orderable: false,
+                        sortable: false,
+                        ordering: false
+                    },
                     { data: "employee", name: "employee", visible: true },
-                    { data: "office_code", name: "office_code", visible: true },
+                    {
+                        data: "office_code",
+                        name: "office_code",
+                        visible: false
+                    },
                     { data: "position", name: "position", visible: true },
                     { data: "sg_no", name: "sg_no", visible: true },
                     { data: "step_no", name: "step_no", visible: true },
@@ -242,8 +262,19 @@ $(function() {
                     url: `/api/office/salary/adjustment/peroffice/notselected/${e.target.value}`
                 },
                 columns: [
+                    {
+                        data: "checkbox",
+                        name: "checkbox",
+                        searchable: false,
+                        orderable: false,
+                        sortable: false
+                    },
                     { data: "employee", name: "employee", visible: true },
-                    { data: "office_code", name: "office_code", visible: true },
+                    {
+                        data: "office_code",
+                        name: "office_code",
+                        visible: false
+                    },
                     { data: "position", name: "position", visible: true },
                     { data: "sg_no", name: "sg_no", visible: true },
                     { data: "step_no", name: "step_no", visible: true },
@@ -257,4 +288,28 @@ $(function() {
             });
         }
     });
+    $("#selectAll").click(function() {
+        // Get all rows with search applied
+        var rows = table.rows({ search: "applied" }).nodes();
+        // Check/uncheck checkboxes for all rows in the table
+        $('input[type="checkbox"]', rows).prop("checked", this.checked);
+    });
+
+    // Handle click on checkbox to set state of "Select all" control
+    $("#salaryAdjustmentPerOffice tbody").on(
+        "change",
+        'input[type="checkbox"]',
+        function() {
+            // If checkbox is not checked
+            if (!this.checked) {
+                var el = $("#selectAll").get(0);
+                // If "Select all" control is checked and has 'indeterminate' property
+                if (el && el.checked && "indeterminate" in el) {
+                    // Set visual state of "Select all" control
+                    // as 'indeterminate'
+                    el.indeterminate = true;
+                }
+            }
+        }
+    );
 });

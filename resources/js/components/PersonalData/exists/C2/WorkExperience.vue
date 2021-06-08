@@ -53,7 +53,7 @@
             </td>
 
             <td rowspan="2" class="align-middle text-sm">
-              GOV'T SERVICE (Y/ N)
+              GOV'T SERVICE <strong>(Y/ N)</strong>
             </td>
             <td rowspan="2" class="pl-4 pr-4">&nbsp;</td>
           </tr>

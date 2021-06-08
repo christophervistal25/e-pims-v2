@@ -27,14 +27,24 @@
             </div>
             <div class="row">
             <div class="col-12">
-                <div class="alert alert-secondary text-center font-weight-bold" role="alert" ><a id="officeAdjustment"></a></div>
+                <div class="alert alert-secondary text-center font-weight-bold" role="alert" >
+                        <div class="row">
+                            <div class="col-9">
+                        <p style="margin-left:200px;" class="float-center" id="officeAdjustment"></p>
+                        </div>
+                            <div class="col-3">
+                            <input class="form-control" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" name="dateAdjustment" id="dateAdjustment" type="date">
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-12">
             <table class="table table-bordered text-center" id="salaryAdjustmentPerOfficeList" style="width:100%;">
                 <thead>
                 <tr>
+                    <td style="margin-top:10px;" scope="col" class="text-center font-weight-bold"><input style='transform:scale(1.3); margin-top:18px;' name="selectAll" value="selectAll" id="selectAll" type="checkbox" /></td>
                     <td scope="col" class="text-center font-weight-bold">Employee Name</td>
-                    <td scope="col" class="text-center font-weight-bold">Office Code</td>
+                    <td scope="col" class="text-center font-weight-bold d-none">Office Code</td>
                     <td scope="col" class="text-center font-weight-bold">Position</td>
                     <td scope="col" class="text-center font-weight-bold">Salary Grade</td>
                     <td scope="col" class="text-center font-weight-bold">Step Number</td>

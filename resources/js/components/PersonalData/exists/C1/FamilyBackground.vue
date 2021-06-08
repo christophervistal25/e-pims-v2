@@ -23,7 +23,10 @@
         :id="isComplete ? 'familyBackground' : ''"
       >
         <div class="form-check mt-3">
-          <p>Indicate <strong>N/A</strong> if not applicable</p>
+          <p>
+            Indicate <strong>N/A</strong> or <strong>LEAVE BLANK</strong> if not
+            applicable
+          </p>
           <label for="spouse">
             <input
               id="spouse"
@@ -31,7 +34,9 @@
               :checked="hasSpouse"
               @click="hasSpouse = !hasSpouse"
             />
-            Do you have spouse? If YES, kindly tick the checkbox.
+            <strong
+              >Do you have spouse? If YES, kindly tick the checkbox.</strong
+            >
           </label>
         </div>
         <section v-if="hasSpouse" v-show="hasSpouse">

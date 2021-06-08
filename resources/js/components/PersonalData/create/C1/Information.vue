@@ -34,13 +34,13 @@
               concerned.</strong
             >
           </div>
-          <p>Indicate <strong>N/A </strong>if not applicable</p>
           <div
             class="alert alert-secondary text-center font-weight-bold"
             role="alert"
           >
             PERSONAL INFORMATION
           </div>
+          <p>Indicate <strong>N/A </strong>if not applicable</p>
         </div>
         <div class="row pr-3 pl-3">
           <div class="col-lg-3">
