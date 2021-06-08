@@ -231,7 +231,7 @@ import ViewLearningAndDevelopment from "./Information/ViewLearningAndDevelopment
 import ViewOtherInformation from "./Information/ViewOtherInformation.vue";
 import ViewReferences from "./Information/ViewReferences.vue";
 import io from "socket.io-client";
-let socket = io.connect("http://192.168.1.13:3030");
+let socket = io.connect("http://192.168.1.14:3030");
 export default {
   data() {
     return {

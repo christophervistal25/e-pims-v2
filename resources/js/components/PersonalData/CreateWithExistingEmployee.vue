@@ -102,6 +102,8 @@
 </template>
 
 <script>
+import io from "socket.io-client";
+let socket = io.connect("http://192.168.1.14:3030");
 export default {
   props: ["employee"],
   data() {
@@ -142,7 +144,9 @@ export default {
   },
   methods: {
     printPersonalDataSheet(employee_id) {
-      window.axios.get(`/print/pds/${employee_id}`).then(_);
+      window.axios.get(`/print/pds/${employee_id}`).then(() => {
+        socket.emit("preview_personal_data_sheet");
+      });
     },
     updateNameExtensions(newExtension) {
       if (newExtension) {
