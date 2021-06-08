@@ -639,7 +639,7 @@ export default {
         this.personal_data.family_background.spouse_extension;
       this.fatherNameExtension =
         this.personal_data.family_background.father_extension;
-      this.hasSpouse = this.personal_data.spouse_child.length !== 0;
+      this.hasSpouse = this.personal_data.family_background.spouse_lastname;
     }
   },
 };
