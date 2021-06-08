@@ -78,7 +78,7 @@ class PersonalDataSheetController extends Controller
             'philhealth_no'        => ['nullable', 'unique:employees,philhealth_no,'. $request->employee_id . ',employee_id'],
             'sss_no'               => ['nullable', 'unique:employees,sss_no,'. $request->employee_id . ',employee_id'],
             'tin_no'               => ['nullable', 'unique:employees,tin_no,'. $request->employee_id . ',employee_id'],
-            'agency_employee_no'   => 'nullable|unique:employees,agency_employee_no,'. $request->employee_id . ',employee_id',
+            'agency_employee_no'   => 'nullable|exclude_if:agency_employee_no,*|unique:employees,agency_employee_no,'. $request->employee_id . ',employee_id',
             'citizenship'          => ['required'],
             'citizenship_by'       => ['required_if:citizenship,DUAL CITIZEN'],
             'indicate_country'     => ['required_if:citizenship,DUAL CITIZEN'],
