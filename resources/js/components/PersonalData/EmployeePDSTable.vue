@@ -52,21 +52,21 @@
           <template v-slot:item.actions="{ item }">
             <button
               @click="fetchInformation(item.employee_id)"
-              class="btn btn-info rounded-circle text-white mr-2 shadow"
+              class="btn btn-info rounded-circle text-white mr-2"
             >
               <i class="la la-eye"></i>
             </button>
 
             <a
               :href="`/employee/create/${item.employee_id}/personal/data/sheet`"
-              class="btn btn-success rounded-circle text-white mr-2 shadow"
+              class="btn btn-success rounded-circle text-white mr-2"
             >
               <i class="la la-pencil"></i>
             </a>
 
             <a
               @click="printPersonalDataSheet(item.employee_id)"
-              class="btn btn-primary rounded-circle text-white mr-2 shadow"
+              class="btn btn-primary rounded-circle text-white mr-2"
               :title="`Generate PDS for ${item.fullname}`"
             >
               <i class="la la-print"></i>
@@ -230,7 +230,8 @@ import ViewVoluntaryWork from "./Information/ViewVoluntaryWork.vue";
 import ViewLearningAndDevelopment from "./Information/ViewLearningAndDevelopment.vue";
 import ViewOtherInformation from "./Information/ViewOtherInformation.vue";
 import ViewReferences from "./Information/ViewReferences.vue";
-
+import io from "socket.io-client";
+let socket = io.connect("http://192.168.1.13:3030");
 export default {
   data() {
     return {
@@ -291,7 +292,9 @@ export default {
       });
     },
     printPersonalDataSheet(employee_id) {
-      window.axios.get(`/print/pds/${employee_id}`).then(_);
+      window.axios.get(`/print/pds/${employee_id}`).then(() => {
+        socket.emit("preview_personal_data_sheet");
+      });
     },
   },
   created() {
