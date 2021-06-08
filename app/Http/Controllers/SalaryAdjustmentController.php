@@ -25,6 +25,7 @@ class SalaryAdjustmentController extends Controller
             return $date->format('Y');
         })->toArray();
         $dates = array_values(array_unique($dates));
+        sort($dates);
         $position = Position::select('position_id', 'position_name')->get();
         // $employee = Employee::with(['plantilla', 'plantilla.position'])->get();
         $salaryAdjustment = SalaryAdjustment::get()->pluck('employee_id')->toArray();
