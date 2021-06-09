@@ -49,6 +49,22 @@
           @page-count="pageCount = $event"
           hide-default-footer
         >
+          <template v-slot:item.information.photo="{ item }">
+            <div class="p-2">
+              <v-img
+                :src="`/storage/employee_images/${item.information.photo}`"
+                aspect-ratio="1"
+                class="grey lighten-2 rounded-circle"
+              >
+                <template v-slot:placeholder>
+                  <v-progress-circular
+                    indeterminate
+                    color="rgb(255, 155, 68);"
+                  ></v-progress-circular>
+                </template>
+              </v-img>
+            </div>
+          </template>
           <template v-slot:item.actions="{ item }">
             <button
               @click="fetchInformation(item.employee_id)"
@@ -243,6 +259,11 @@ export default {
       search: "",
       employee_id: "",
       headers: [
+        {
+          text: "Photo",
+          value: "information.photo",
+          sortable: false,
+        },
         {
           text: "Employee ID",
           value: "employee_id",
