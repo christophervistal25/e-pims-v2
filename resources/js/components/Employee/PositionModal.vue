@@ -8,6 +8,9 @@
             v-model="dialog"
             max-width="600px"
             :class="showdesignation ? 'show' : ''"
+            id="positionModal"
+            @keydown.enter="validate"
+            @keydown.esc="dismissModal"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-btn
@@ -30,12 +33,12 @@
                 <v-container>
                   <v-row>
                     <v-col cols="12">
-                      <!-- <p
+                      <p
                         class="text-danger text-sm mb-0"
                         v-if="errors.hasOwnProperty('name')"
                       >
                         {{ errors.name[0] }}
-                      </p> -->
+                      </p>
                       <v-text-field
                         :rules="nameRules"
                         label="Position Name"
@@ -48,12 +51,12 @@
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12">
-                      <!-- <p
+                      <p
                         class="text-danger text-sm mb-0"
                         v-if="errors.hasOwnProperty('short_name')"
                       >
                         {{ errors.short_name[0] }}
-                      </p> -->
+                      </p>
                       <v-text-field
                         label="Position Short Name"
                         :rules="nameRules"
@@ -68,12 +71,12 @@
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12">
-                      <!-- <p
+                      <p
                         class="text-danger text-sm mb-0"
                         v-if="errors.hasOwnProperty('salary_grade')"
                       >
                         {{ errors.salary_grade[0] }}
-                      </p> -->
+                      </p>
                       <v-select
                         label="Salary Grade"
                         required
@@ -169,24 +172,16 @@ export default {
         });
     },
     dismissModal() {
+      this.position = {};
       this.dialog = false;
       this.errors = {};
       this.$refs.form.resetValidation();
     },
-    validate() {
+    validate(e) {
+      e.preventDefault();
+      this.submitNewDesignation();
       this.$refs.form.validate();
     },
-  },
-  created() {
-    document.addEventListener("keydown", (e) => {
-      if (e.keyCode === 27 && e.key.toLowerCase() === "escape") {
-        this.dialog = false;
-        this.errors = {};
-        this.$refs.form.resetValidation();
-        this.errors = {};
-        this.$refs.form.resetValidation();
-      }
-    });
   },
   mounted() {
     this.salary_grades = Array.from({ length: 33 }, (_, i) => i + 1);

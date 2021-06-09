@@ -8,6 +8,8 @@
             v-model="dialog"
             max-width="600px"
             :class="show ? 'show' : ''"
+            id="statusModal"
+            @keydown.enter="validate"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-btn
@@ -32,12 +34,12 @@
                 <v-container>
                   <v-row>
                     <v-col cols="12">
-                      <!-- <p
+                      <p
                         class="text-danger text-sm mb-0"
                         v-if="errors.hasOwnProperty('status_name')"
                       >
                         {{ errors.status_name[0] }}
-                      </p> -->
+                      </p>
                       <v-text-field
                         class="pt-0 form-input"
                         label="Status Name"
@@ -148,6 +150,14 @@ export default {
         this.dialog = false;
         this.errors = {};
         this.$refs.form.resetValidation();
+        this.status = {};
+      } else if (
+        e.keyCode === 13 &&
+        e.key.toLowerCase() === "enter" &&
+        this.dialog
+      ) {
+        e.preventDefault();
+        this.submitNewStatus();
       }
     });
   },
