@@ -220,7 +220,7 @@ class PersonalDataSheetController extends Controller
         ],[
             '*.government_service.in' => 'You can only type (Y,N) in goverment service.'
         ], [
-             '*.from'      => 'Inclusive date from',
+             '*.from'=> 'Inclusive date from',
              '*.to'        => 'Inclusive date to',
              '*.status_of_appointment' => 'Status of appointment',
              '*.government_service'   => 'Government Service',

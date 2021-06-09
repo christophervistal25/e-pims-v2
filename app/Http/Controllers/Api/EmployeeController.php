@@ -15,7 +15,7 @@ class EmployeeController extends Controller
     {
         Cache::forget('employees');
          return Cache::rememberForever('employees', function () {
-            return Employee::with(['information:EmpIDNo,pos_code,office_code', 'information.office:office_code,office_name', 'information.position:position_code,position_name'])->get();
+            return Employee::with(['information:EmpIDNo,pos_code,office_code,photo', 'information.office:office_code,office_name', 'information.position:position_code,position_name'])->get();
         });
     }
 

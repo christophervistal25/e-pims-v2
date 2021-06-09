@@ -39,8 +39,8 @@ class StoreTrapfullname implements Rule
         } else {
             $records = Employee::where('lastname', request()->lastName)
                                 ->where('firstname', request()->firstName)
-                                ->orWhere('middlename', request()->middleName)
-                                ->orWhere('extension', request()->extension)
+                                ->where('middlename', request()->middleName)
+                                ->where('extension', request()->extension)
                                 ->where('date_birth', request()->dateOfBirth)
                                 ->count();
         }

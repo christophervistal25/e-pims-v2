@@ -138,6 +138,8 @@ class EmployeeRepository
         $childrens = [];
         $childs = array_filter($childs, 'array_filter');
         
+        $employee->spouse_child()->delete();
+        
         foreach($childs as $child) {
             $childrens[] = EmployeeSpouseChildren::firstOrNew([
                 'name'          => $child['name'],
