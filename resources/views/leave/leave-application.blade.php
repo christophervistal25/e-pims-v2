@@ -3,6 +3,8 @@
 @prepend('page-css')
 <script src="{{ asset('/js/app.js') }}" defer></script>
 <link rel="stylesheet"
+    href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+<link rel="stylesheet"
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 @endprepend
 @section('content')
@@ -184,8 +186,8 @@
                         </select>
                         <hr>
                         <div class="text-center">
-                            <button type="button" class="btn btn-outline-primary px-5"><i
-                                    class="far fa-calendar-plus"></i> Add
+                            <button type="button" class="text-white btn btn-primary px-5"><i
+                                    class="las la-calendar-plus"></i> Add
                                 Days</button>
                         </div>
                     </div>
@@ -217,11 +219,11 @@
                                 class="text-danger"><strong>*</strong></span></span>
                     </label>
                 </div>
-                <button type="button" class="btn btn-outline-primary ml-3"><i class="fas fa-plus-circle"></i> New
+                <button type="button" class="text-white btn btn-primary ml-3"><i class="las la-plus-circle"></i> New
                     Application</button>
-                <button type="button" class="btn btn-outline-success"><i class="fas fa-save"></i> Save
+                <button type="button" class="text-white btn btn-success"><i class="lar la-save"></i> Save
                     Changes</button>
-                <button type="button" class="btn btn-outline-dark px-5"><i class="fas fa-print"></i> Print</button>
+                <button type="button" class="text-white btn btn-dark px-5"><i class="las la-print"></i> Print</button>
             </div>
         </div>
         <div class="card">

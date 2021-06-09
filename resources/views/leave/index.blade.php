@@ -2,7 +2,8 @@
 @section('title', 'Leave Starting Balance')
 @prepend('page-css')
 <script src="{{ asset('/js/app.js') }}" defer></script>
-<script src="https://use.fontawesome.com/78c056906b.js"></script>
+<link rel="stylesheet"
+    href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 <link rel="stylesheet"
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 @endprepend
@@ -117,11 +118,11 @@
 
 
                 <div class="row">
-                    <button type="button" class="btn btn-outline-primary ml-5"><i class="fas fa-plus"></i> New
+                    <button type="button" class="text-white btn btn-primary ml-5"><i class="las la-user-plus"></i> New
                         Record</button>
-                    <button type="button" class="btn btn-outline-success ml-2"><i class="far fa-save"></i> Save
+                    <button type="button" class="text-white btn btn-success ml-2"><i class="lar la-save"></i> Save
                         Changes</button>
-                    <button type="button" class="btn btn-outline-secondary ml-2"><i class="fas fa-ban"></i> Cancel
+                    <button type="button" class="text-white btn btn-secondary ml-2"><i class="las la-ban"></i> Cancel
                         Record</button>
 
                 </div>
