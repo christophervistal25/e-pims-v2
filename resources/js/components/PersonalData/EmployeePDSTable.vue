@@ -230,8 +230,7 @@ import ViewVoluntaryWork from "./Information/ViewVoluntaryWork.vue";
 import ViewLearningAndDevelopment from "./Information/ViewLearningAndDevelopment.vue";
 import ViewOtherInformation from "./Information/ViewOtherInformation.vue";
 import ViewReferences from "./Information/ViewReferences.vue";
-import io from "socket.io-client";
-let socket = io.connect("http://192.168.1.14:3030");
+import socket from "./../../socket.js";
 export default {
   data() {
     return {

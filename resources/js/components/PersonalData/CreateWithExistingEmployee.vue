@@ -102,8 +102,7 @@
 </template>
 
 <script>
-import io from "socket.io-client";
-let socket = io.connect("http://192.168.1.14:3030");
+import socket from "./../../socket.js";
 export default {
   props: ["employee"],
   data() {

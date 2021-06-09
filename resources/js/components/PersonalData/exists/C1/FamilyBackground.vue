@@ -267,7 +267,6 @@
                 </td>
                 <td class="text-center">
                   <button
-                    v-show="index != 0"
                     @click="removeField(index)"
                     class="btn btn-danger rounded-circle"
                   >
@@ -560,9 +559,7 @@ export default {
       });
     },
     removeField(index) {
-      if (index != 0) {
-        this.spouse.splice(index, 1);
-      }
+      this.spouse.splice(index, 1);
     },
     submitPersonFamilyBackground() {
       this.isLoading = true;
