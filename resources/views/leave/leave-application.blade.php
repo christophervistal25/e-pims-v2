@@ -219,11 +219,12 @@
                                 class="text-danger"><strong>*</strong></span></span>
                     </label>
                 </div>
-                <button type="button" class="text-white btn btn-primary ml-3"><i class="las la-plus-circle"></i> New
-                    Application</button>
-                <button type="button" class="text-white btn btn-success"><i class="lar la-save"></i> Save
-                    Changes</button>
-                <button type="button" class="text-white btn btn-dark px-5"><i class="las la-print"></i> Print</button>
+                <div class="float-right">
+<button type="button" title="New Application" class="text-white shadow rounded-circle btn btn-primary ml-3"><i class="las la-user-plus"></i></button>
+                <button type="button" class="text-white shadow rounded-circle btn btn-success" title="Save Changes"><i class="lar la-save"></i></button>
+                <button type="button" class="text-white shadow rounded-circle btn btn-dark" title="Print"><i class="las la-print"></i></button>
+                </div>
+                
             </div>
         </div>
         <div class="card">

@@ -136,6 +136,7 @@ export default {
         });
     },
     dismissModal() {
+      this.data = {};
       this.errors = {};
       this.$refs.form.resetValidation();
       this.dialog = false;
@@ -150,6 +151,7 @@ export default {
         this.dialog = false;
         this.errors = {};
         this.$refs.form.resetValidation();
+        this.data = {};
       } else if (
         e.keyCode === 13 &&
         e.key.toLowerCase() === "enter" &&

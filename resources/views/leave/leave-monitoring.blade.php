@@ -149,15 +149,14 @@
                             </div>
                         </div>
                         <div class="row">
-                        <div class="col lg-12">
-                        <button class="btn btn-primary mr-3 text-white" type="button"><i class="las la-user-plus"></i> New
-                            Record</button>
-                        <button class="btn btn-secondary mr-3 text-white" type="button"><i class="las la-ban"></i>
-                            Cancel Record</button>
-                        <button class="btn btn-success mr-3 text-white" type="button"><i class="lar la-save"></i> Save
-                            Changes</button>
+                        <div class="col-lg-6">
+                        <div class="text-right">
+                            <button class="btn btn-primary rounded-circle shadow text-white" title="New Record" type="button"><i class="las la-user-plus"></i></button>
+                        <button class="btn btn-success rounded-circle shadow text-white" title="Save Changes" type="button"><i class="lar la-save"></i></button>
+                            <button class="btn btn-danger text-white rounded-circle shadow" title="Cancel Record" type="button"><i class="las la-ban"></i></button>
                         </div>
-                            <div class="col-lg-3">
+                        </div>
+                            <div class="col-lg-6">
                             <label for="leaveOpt" class="form-group has-float-label mr-3">
                             <select name="" id="" class="custom-select" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <option value="">-----</option>
@@ -165,11 +164,7 @@
                             <span><strong>Leave Index Options</strong></span>
                             </label>
                             </div>
-                        
                         </div>
-                        
-                            
-                        
                     </div>
                 </div>
             </div>

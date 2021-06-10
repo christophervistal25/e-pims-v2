@@ -117,13 +117,16 @@
 
 
 
-                <div class="row">
-                    <button type="button" class="text-white btn btn-primary ml-5"><i class="las la-user-plus"></i> New
-                        Record</button>
-                    <button type="button" class="text-white btn btn-success ml-2"><i class="lar la-save"></i> Save
-                        Changes</button>
-                    <button type="button" class="text-white btn btn-secondary ml-2"><i class="las la-ban"></i> Cancel
-                        Record</button>
+                <div class="float-left">
+                    <button title="New Record" type="button"
+                        class="text-white rounded-circle shadow btn btn-primary"><i
+                            class="las la-user-plus"></i></button>
+                    <button title="Save Changes" type="button"
+                        class="text-white rounded-circle shadow btn btn-success"><i
+                            class="lar la-save"></i></button>
+                    <button title="Cancel Record" type="button"
+                        class="text-white rounded-circle shadow btn btn-danger"><i
+                            class="las la-ban"></i></button>
 
                 </div>
             </div>
