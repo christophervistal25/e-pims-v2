@@ -318,31 +318,12 @@ $(function() {
 function LockDepot() {
     $("#saveBtn").attr("disabled", true);
     $("#loading").removeClass("d-none");
-    let value = [];
-    $("input[type='checkbox']").each(function() {
-        value.push($(this).val());
-    });
-    let count = value.length - 1;
-    let dataArray = "";
 
-    for (let min = 1; min <= count; min++) {
-        if (document.getElementById("checkbox" + value[min]).checked === true) {
-            var checked = document
-                .getElementById("checkbox" + value[min])
-                .getAttribute("value");
-            if (count != min) {
-                var selected = checked + ",";
-            } else {
-                var selected = checked;
-            }
-            dataArray = dataArray.concat(selected);
-        }
-    }
-    console.log(dataArray);
+    console.log(selectedItemInAdjustmentPerOffice);
     $.ajax({
         type: "POST",
-        url: `/api/salary-adjustment-per-office/${dataArray}`,
-        data: checked,
+        url: `/api/salary-adjustment-per-office`,
+        data: { ids: selectedItemInAdjustmentPerOffice.toString() },
         success: function(response) {
             if (response.success) {
                 swal("Sucessfully Added!", "", "success");
@@ -389,3 +370,13 @@ function LockDepot() {
 //         // });
 //     });
 // });
+
+let selectedItemInAdjustmentPerOffice = [];
+$(document).on("change", 'input[type="checkbox"]', function(e) {
+    if (e.target.value !== "selectAll") {
+        if (!selectedItemInAdjustmentPerOffice.includes(e.target.value)) {
+            selectedItemInAdjustmentPerOffice.push(e.target.value);
+        }
+    }
+    console.log(e.target.value);
+});
