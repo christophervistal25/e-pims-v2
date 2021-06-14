@@ -61,7 +61,7 @@ class SalaryAdjustmentPerOfficeController extends Controller
                         return $row->position->position_name;
                     })
                     ->editColumn('checkbox', function ($row) {
-                        $checkbox = "<input id='checkbox' id='checkbox' style='transform:scale(1.3)' name='id[$row->id]' value='$row->id' type='checkbox' />";
+                        $checkbox = "<input id='checkbox$row->plantilla_id' style='transform:scale(1.35)' value='$row->plantilla_id' type='checkbox' />";
                         return $checkbox;
                     })->rawColumns(['checkbox'])
                     ->make(true);
