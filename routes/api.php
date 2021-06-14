@@ -148,8 +148,32 @@ Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}', funct
         return $row->position->position_name;
     })
     ->editColumn('checkbox', function ($row) {
-        $checkbox = "<input id='checkbox' id='checkbox' style='transform:scale(1.3)' name='id[$row->id]' value='$row->id' type='checkbox' />";
+        $checkbox = "<input id='checkbox$row->plantilla_id' style='transform:scale(1.3)' value='$row->plantilla_id' type='checkbox' />";
         return $checkbox;
     })->rawColumns(['checkbox'])
     ->make(true);
+});
+
+
+Route::post('/salary-adjustment-per-office/{plantilla_id}', function ($plantilla_id) {
+    // dd(request()->all());
+    $data = Plantilla::where('plantilla_id', $plantilla_id)->get();
+    $newAdjustment = $data->toArray();
+
+    foreach($data as $newAdjustment){
+        $salaryAdjustment= new SalaryAdjustment();
+        $salaryAdjustment->employee_id = $newAdjustment->employee_id;
+        $salaryAdjustment->item_no = $newAdjustment->item_no;
+        $salaryAdjustment->position_id = $newAdjustment->position_id;
+        $salaryAdjustment->date_adjustment = $newAdjustment->date_original_appointment;
+        $salaryAdjustment->sg_no = $newAdjustment->sg_no;
+        $salaryAdjustment->step_no = $newAdjustment->step_no;
+        $salaryAdjustment->salary_previous = $newAdjustment->salary_amount;
+        $salaryAdjustment->salary_new = $newAdjustment->salary_amount;
+        $salaryAdjustment->salary_diff = $newAdjustment->salary_amount;
+        $salaryAdjustment->save();
+        return response()->json(['success'=>true]);
+    }
+
+
 });

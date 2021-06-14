@@ -29,16 +29,18 @@
             <div class="col-12">
                 <div class="alert alert-secondary text-center font-weight-bold" role="alert" >
                         <div class="row">
-                            <div class="col-9">
-                        <p style="margin-left:200px;" class="float-center" id="officeAdjustment"></p>
+                            <div class="col-12 col-md-9">
+                        <p class="float-center" id="officeAdjustment"></p>
                         </div>
-                            <div class="col-3">
+                            <div class="col-12 col-md-3">
                             <input class="form-control" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" name="dateAdjustment" id="dateAdjustment" type="date">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-12">
+            <form id="frm-example" action="" method="" id="salaryAdjustmentPerOfficeNotSelected">
+            @csrf
             <table class="table table-bordered text-center" id="salaryAdjustmentPerOfficeList" style="width:100%;">
                 <thead>
                 <tr>
@@ -48,10 +50,18 @@
                     <td scope="col" class="text-center font-weight-bold">Position</td>
                     <td scope="col" class="text-center font-weight-bold">Salary Grade</td>
                     <td scope="col" class="text-center font-weight-bold">Step Number</td>
-                    <td scope="col" class="text-center font-weight-bold">Previous Salary</td>
+                    <td scope="col" class="text-center font-weight-bold">Current Salary</td>
                 </tr>
                 </thead>
             </table>
+            </form>
+
+            <button style="margin-top:10px;" id="saveBtn" class="btn btn-success submit-btn float-right" onclick="LockDepot()" type="submit">
+                <span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>
+                Submit
+            </button>
+
+
         </div>
         </div>
         </div>

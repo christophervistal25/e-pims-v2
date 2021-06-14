@@ -296,20 +296,96 @@ $(function() {
     });
 
     // Handle click on checkbox to set state of "Select all" control
-    $("#salaryAdjustmentPerOffice tbody").on(
-        "change",
-        'input[type="checkbox"]',
-        function() {
-            // If checkbox is not checked
-            if (!this.checked) {
-                var el = $("#selectAll").get(0);
-                // If "Select all" control is checked and has 'indeterminate' property
-                if (el && el.checked && "indeterminate" in el) {
-                    // Set visual state of "Select all" control
-                    // as 'indeterminate'
-                    el.indeterminate = true;
-                }
+    // $("#salaryAdjustmentPerOffice tbody").on(
+    //     "change",
+    //     'input[type="checkbox"]',
+    //     function() {
+    //         // If checkbox is not checked
+    //         if (!this.checked) {
+    //             var el = $("#selectAll").get(0);
+    //             alert("test");
+    //             // If "Select all" control is checked and has 'indeterminate' property
+    //             if (el && el.checked && "indeterminate" in el) {
+    //                 // Set visual state of "Select all" control
+    //                 // as 'indeterminate'
+    //                 el.indeterminate = true;
+    //             }
+    //         }
+    //     }
+    // );
+});
+
+function LockDepot() {
+    $("#saveBtn").attr("disabled", true);
+    $("#loading").removeClass("d-none");
+    let value = [];
+    $("input[type='checkbox']").each(function() {
+        value.push($(this).val());
+    });
+    let count = value.length - 1;
+    let dataArray = "";
+
+    for (let min = 1; min <= count; min++) {
+        if (document.getElementById("checkbox" + value[min]).checked === true) {
+            var checked = document
+                .getElementById("checkbox" + value[min])
+                .getAttribute("value");
+            if (count != min) {
+                var selected = checked + ",";
+            } else {
+                var selected = checked;
+            }
+            dataArray = dataArray.concat(selected);
+        }
+    }
+    console.log(dataArray);
+    $.ajax({
+        type: "POST",
+        url: `/api/salary-adjustment-per-office/${dataArray}`,
+        data: checked,
+        success: function(response) {
+            if (response.success) {
+                swal("Sucessfully Added!", "", "success");
+                $("#salaryAdjustmentPerOfficeList")
+                    .DataTable()
+                    .ajax.reload();
+                $("#salaryAdjustmentPerOffice")
+                    .DataTable()
+                    .ajax.reload();
+                $("#saveBtn").attr("disabled", false);
+                $("#loading").addClass("d-none");
+                $("#selectAll").prop("checked", false);
+            }
+        },
+        error: function(response) {
+            if (response.status === 404) {
+                swal("Please Select Employee", "", "error");
             }
         }
-    );
-});
+    });
+}
+// $(document).ready(function() {
+//     $("#salaryAdjustmentPerOfficeNotSelected").submit(function(e) {
+
+//         console.log();
+//         e.preventDefault();
+//         // $.ajax({
+//         //     type: "POST",
+//         //     url: "/plantilla-of-personnel",
+//         //     data: data,
+//         //     success: function(response) {
+//         //         if (response.success) {
+//         //         }
+//         //     },
+//         //     error: function(response) {
+//         //         if (response.status === 422) {
+//         //             let errors = response.responseJSON.errors;
+//         //             swal({
+//         //                 title: "The given data was invalid!",
+//         //                 icon: "error"
+//         //             });
+//         //         }
+//         //     }
+//         // });
+//     });
+// });
