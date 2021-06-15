@@ -112,7 +112,7 @@ Route::get('/salary/adjustment/{year}', function ($year) {
 Route::get('/office/salary/adjustment/peroffice/{officeCode}', function ($office_code) {
     $data = SalaryAdjustment::select('id','employee_id','item_no','position_id', 'date_adjustment', 'sg_no', 'step_no', 'salary_previous','salary_new','salary_diff')->with(['position:position_id,position_name','employee:employee_id,firstname,middlename,lastname,extension', 'plantilla:employee_id,office_code'])->whereHas('plantilla', function ($query) use ($office_code) {
         $query->where('office_code', $office_code);
-    });
+    })->orderBy('id', 'DESC');
     return (new Datatables)->eloquent($data)
             ->addIndexColumn()
             ->addColumn('employee', function ($row) {
@@ -172,9 +172,5 @@ Route::post('/salary-adjustment-per-office', function () {
         $salaryAdjustment->salary_diff = $newAdjustment->salary_amount;
         $salaryAdjustment->save();
     }
-
     return response()->json(['success'=>true]);
-
-
-
 });

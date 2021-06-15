@@ -295,7 +295,7 @@ $(function() {
         $('input[type="checkbox"]', rows).prop("checked", this.checked);
     });
 
-    // Handle click on checkbox to set state of "Select all" control
+    // // Handle click on checkbox to set state of "Select all" control
     // $("#salaryAdjustmentPerOffice tbody").on(
     //     "change",
     //     'input[type="checkbox"]',
@@ -318,65 +318,41 @@ $(function() {
 function LockDepot() {
     $("#saveBtn").attr("disabled", true);
     $("#loading").removeClass("d-none");
-
-    console.log(selectedItemInAdjustmentPerOffice);
-    $.ajax({
-        type: "POST",
-        url: `/api/salary-adjustment-per-office`,
-        data: { ids: selectedItemInAdjustmentPerOffice.toString() },
-        success: function(response) {
-            if (response.success) {
-                swal("Sucessfully Added!", "", "success");
-                $("#salaryAdjustmentPerOfficeList")
-                    .DataTable()
-                    .ajax.reload();
-                $("#salaryAdjustmentPerOffice")
-                    .DataTable()
-                    .ajax.reload();
-                $("#saveBtn").attr("disabled", false);
-                $("#loading").addClass("d-none");
-                $("#selectAll").prop("checked", false);
-            }
-        },
-        error: function(response) {
-            if (response.status === 404) {
-                swal("Please Select Employee", "", "error");
-            }
-        }
-    });
+    if (selectedItemInAdjustmentPerOffice == "") {
+        swal("Please Select Employee", "", "error");
+        $("#saveBtn").attr("disabled", false);
+        $("#loading").addClass("d-none");
+    } else {
+        $.ajax({
+            type: "POST",
+            url: `/api/salary-adjustment-per-office`,
+            data: { ids: selectedItemInAdjustmentPerOffice.toString() },
+            success: function(response) {
+                if (response.success) {
+                    swal("Sucessfully Added!", "", "success");
+                    $("#salaryAdjustmentPerOfficeList")
+                        .DataTable()
+                        .ajax.reload();
+                    $("#salaryAdjustmentPerOffice")
+                        .DataTable()
+                        .ajax.reload();
+                    $("#saveBtn").attr("disabled", false);
+                    $("#loading").addClass("d-none");
+                    $("#selectAll").prop("checked", false);
+                }
+            },
+            error: function(response) {}
+        });
+    }
 }
-// $(document).ready(function() {
-//     $("#salaryAdjustmentPerOfficeNotSelected").submit(function(e) {
-
-//         console.log();
-//         e.preventDefault();
-//         // $.ajax({
-//         //     type: "POST",
-//         //     url: "/plantilla-of-personnel",
-//         //     data: data,
-//         //     success: function(response) {
-//         //         if (response.success) {
-//         //         }
-//         //     },
-//         //     error: function(response) {
-//         //         if (response.status === 422) {
-//         //             let errors = response.responseJSON.errors;
-//         //             swal({
-//         //                 title: "The given data was invalid!",
-//         //                 icon: "error"
-//         //             });
-//         //         }
-//         //     }
-//         // });
-//     });
-// });
 
 let selectedItemInAdjustmentPerOffice = [];
 $(document).on("change", 'input[type="checkbox"]', function(e) {
     if (e.target.value !== "selectAll") {
         if (!selectedItemInAdjustmentPerOffice.includes(e.target.value)) {
             selectedItemInAdjustmentPerOffice.push(e.target.value);
+        } else {
         }
+    } else {
     }
-    console.log(e.target.value);
 });
