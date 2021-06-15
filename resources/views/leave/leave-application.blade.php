@@ -72,7 +72,7 @@
                         <label for="dateApply" class="form-group has-float-label">
                             <input type="date" name="dateApply" id="dateApply" class="form-control form-control"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>DATE APPLY</strong><span class="text-danger"><strong>*</strong></span></span>
+                            <span><strong>DATE APPLY<span class="text-danger">*</span></strong></span>
                         </label>
                         <label for="controlNo" class="form-group has-float-label">
                             <input type="text" name="controlNo" id="controlNo" class="form-control"
@@ -88,14 +88,12 @@
                                 <option value="">Sick Leave</option>
                                 <option value="">Others</option>
                             </select>
-                            <span><strong>LEAVE OPTION</strong><span
-                                    class="text-danger"><strong>*</strong></span></span>
+                            <span><strong>LEAVE OPTION<span class="text-danger">*</span></strong></span>
                         </label>
                         <label for="noOfDays" class="form-group has-float-label">
-                            <input type="text" class="form-control" id="noOfDays"
+                            <input type="number" class="form-control" id="noOfDays"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>NUMBER OF DAYS</strong><span
-                                    class="text-danger"><strong>*</strong></span></span>
+                            <span><strong>NUMBER OF DAYS<span class="text-danger">*</span></strong></span>
                         </label>
                         <label for="caseOfVl" class="form-group has-float-label">
                             <select class="form-control" id="caseOfVl"
@@ -111,7 +109,7 @@
                                 <option readonly selected value="">Requested</option>
                                 <option value="">----</option>
                             </select>
-                            <span><strong>COMMUTATION</strong><span class="text-danger"><strong>*</strong></span></span>
+                            <span><strong>COMMUTATION<span class="text-danger">*</span></strong></span>
                         </label>
                     </div>
                     <div class="col-lg-4">
@@ -178,7 +176,7 @@
                         <label for="dateApply" class="form-group has-float-label">
                             <input type="date" name="dateApply" id="dateApply" class="form-control"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>SELECT DATE</strong><span class="text-danger"><strong>*</strong></span></span>
+                            <span><strong>SELECT DATE<span class="text-danger">*</span></strong></span>
                         </label>
                         <select name="" id="" class="form-control">
                             <option value="">Whole Day</option>
@@ -186,7 +184,7 @@
                         </select>
                         <hr>
                         <div class="text-center">
-                            <button type="button" class="text-white btn btn-primary px-5"><i
+                            <button type="button" class="text-white btn btn-primary px-5 shadow"><i
                                     class="las la-calendar-plus"></i> Add
                                 Days</button>
                         </div>
@@ -199,15 +197,14 @@
                             style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <option value="">-----</option>
                         </select>
-                        <span><strong>RECOMMENDING APPROVAL</strong><span
-                                class="text-danger"><strong>*</strong></span></span>
+                        <span><strong>RECOMMENDING APPROVAL<span class="text-danger">*</span></strong></span>
                     </label>
                     <label for="approveBy" class="form-group has-float-label">
                         <select class="custom-select" name="approveBy" id="approveBy"
                             style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <option value="">-----</option>
                         </select>
-                        <span><strong>APPROVED BY</strong><span class="text-danger"><strong>*</strong></span></span>
+                        <span><strong>APPROVED BY<span class="text-danger">*</span></strong></span>
                     </label>
                     <label for="appStatus" class="form-group has-float-label">
                         <select name="appStatus" class="custom-select" id="appStatus"
@@ -215,16 +212,19 @@
                             <option value="">Approved</option>
                             <option value="">Pending</option>
                         </select>
-                        <span><strong>APPLICATION STATUS</strong><span
-                                class="text-danger"><strong>*</strong></span></span>
+                        <span><strong>APPLICATION STATUS<span class="text-danger">*</span></strong></span>
                     </label>
                 </div>
                 <div class="float-right">
-<button type="button" title="New Application" class="text-white shadow rounded-circle btn btn-primary ml-3"><i class="las la-user-plus"></i></button>
-                <button type="button" class="text-white shadow rounded-circle btn btn-success" title="Save Changes"><i class="lar la-save"></i></button>
-                <button type="button" class="text-white shadow rounded-circle btn btn-dark" title="Print"><i class="las la-print"></i></button>
+                    <button type="button" title="New Application"
+                        class="text-white shadow rounded-circle btn btn-primary ml-3"><i
+                            class="las la-user-plus"></i></button>
+                    <button type="button" class="text-white shadow rounded-circle btn btn-success"
+                        title="Save Changes"><i class="lar la-save"></i></button>
+                    <button type="button" class="text-white shadow rounded-circle btn btn-dark" title="Print"><i
+                            class="las la-print"></i></button>
                 </div>
-                
+
             </div>
         </div>
         <div class="card">

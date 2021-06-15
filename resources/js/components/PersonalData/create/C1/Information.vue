@@ -58,9 +58,10 @@
                 "
               />
               <span
-                ><strong>SURNAME</strong
-                ><span class="text-danger"><strong>*</strong></span>
-              </span>
+                ><strong
+                  >SURNAME<span class="text-danger">*</span></strong
+                ></span
+              >
             </label>
             <p class="text-danger text-sm">
               {{ errors.surname }}
@@ -81,8 +82,9 @@
                 "
               />
               <span
-                ><strong>FIRST NAME</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><strong
+                  >FIRST NAME<span class="text-danger">*</span></strong
+                ></span
               >
             </label>
             <p class="text-danger text-sm">
@@ -179,8 +181,9 @@
                 {{ errors.dateOfBirth }}
               </p>
               <span
-                ><strong>DATE OF BIRTH</strong
-                ><span class="text-danger"><strong>*</strong></span>
+                ><strong
+                  >DATE OF BIRTH<span class="text-danger">*</span></strong
+                >
                 (date/month/year)</span
               >
             </label>
@@ -202,8 +205,9 @@
                 "
               />
               <span
-                ><strong>PLACE OF BIRTH</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><strong
+                  >PLACE OF BIRTH<span class="text-danger">*</span></strong
+                ></span
               >
             </label>
             <p class="text-danger text-sm">
@@ -224,8 +228,7 @@
                 <option value="FEMALE">FEMALE</option>
               </select>
               <span
-                ><strong>SEX</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><strong>SEX<span class="text-danger">*</span></strong></span
               >
             </label>
             <p class="text-danger text-sm">
@@ -250,8 +253,7 @@
                 <option value="OTHERS">OTHERS</option>
               </select>
               <span
-                ><strong>STATUS</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><strong>STATUS<span class="text-danger">*</span></strong></span
               >
             </label>
             <p class="text-danger text-sm">
@@ -290,8 +292,9 @@
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
               <span
-                ><strong>HEIGHT(m)</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><strong
+                  >HEIGHT (m)<span class="text-danger">*</span></strong
+                ></span
               >
             </label>
             <p class="text-danger text-sm">{{ errors.height }}</p>
@@ -307,8 +310,9 @@
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
               <span
-                ><strong>WEIGHT(kg)</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><strong
+                  >WEIGHT (kg)<span class="text-danger">*</span></strong
+                ></span
               >
             </label>
             <p class="text-danger text-sm">
@@ -331,8 +335,9 @@
                 "
               />
               <span
-                ><strong>BLOODTYPE</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><strong
+                  >BLOODTYPE<span class="text-danger">*</span></strong
+                ></span
               >
             </label>
             <p class="text-danger text-sm">
@@ -458,8 +463,9 @@
                 <option value="DUAL CITIZEN">DUAL CITIZEN</option>
               </select>
               <span
-                ><strong>CITIZENSHIP</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><strong
+                  >CITIZENSHIP<span class="text-danger">*</span></strong
+                ></span
               >
             </label>
             <p class="text-danger text-sm">
@@ -484,8 +490,7 @@
                 <option value="NATURALIZATION">NATURALIZATION</option>
               </select>
               <span
-                ><strong>BY</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><strong>BY<span class="text-danger">*</span></strong></span
               >
             </label>
             <p class="text-danger text-sm">
@@ -520,8 +525,9 @@
                 </option>
               </select> -->
               <span
-                ><strong>INDICATE COUNTRY</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><strong
+                  >INDICATE COUNTRY<span class="text-danger">*</span></strong
+                ></span
               >
             </label>
             <p class="text-danger text-sm">{{ errors.country }}</p>
@@ -646,8 +652,9 @@
                 {{ errors["residentialProvince.code"] }}
               </p>
               <span
-                ><strong>PROVINCE</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><strong
+                  >PROVINCE<span class="text-danger">*</span></strong
+                ></span
               >
             </label>
           </div>
@@ -663,8 +670,7 @@
                 {{ errors["residentialCity.code"] }}
               </p>
               <span
-                ><strong>CITY</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><strong>CITY<span class="text-danger">*</span></strong></span
               >
             </label>
           </div>
@@ -679,8 +685,9 @@
                 {{ errors["residentialBarangay.code"] }}
               </p>
               <span
-                ><strong>BARANGAY</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><strong
+                  >BARANGAY<span class="text-danger">*</span></strong
+                ></span
               >
             </label>
           </div>
@@ -695,10 +702,11 @@
                   if (
                     personal_data.residentialZipCode.length > zipCodeMaxLength
                   )
-                    personal_data.residentialZipCode = personal_data.residentialZipCode.slice(
-                      0,
-                      zipCodeMaxLength
-                    );
+                    personal_data.residentialZipCode =
+                      personal_data.residentialZipCode.slice(
+                        0,
+                        zipCodeMaxLength
+                      );
                 "
                 :class="
                   !errors.hasOwnProperty('residentialZipCode')
@@ -708,8 +716,9 @@
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
               <span
-                ><strong>ZIP CODE</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><strong
+                  >ZIP CODE<span class="text-danger">*</span></strong
+                ></span
               >
             </label>
             <p class="text-danger text-sm">
@@ -808,8 +817,9 @@
                 {{ errors["permanentProvince.code"] }}
               </p>
               <span
-                ><strong>PROVINCE</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><strong
+                  >PROVINCE<span class="text-danger">*</span></strong
+                ></span
               >
             </label>
           </div>
@@ -826,8 +836,7 @@
                 {{ errors["permanentCity.code"] }}
               </p>
               <span
-                ><strong>CITY</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><strong>CITY<span class="text-danger">*</span></strong></span
               >
             </label>
           </div>
@@ -843,8 +852,9 @@
                 {{ errors["permanentBarangay.code"] }}
               </p>
               <span
-                ><strong>BARANGAY</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><strong
+                  >BARANGAY<span class="text-danger">*</span></strong
+                ></span
               >
             </label>
           </div>
@@ -860,10 +870,8 @@
                 v-model="personal_data.permanentZipCode"
                 @input="
                   if (personal_data.permanentZipCode.length > zipCodeMaxLength)
-                    personal_data.permanentZipCode = personal_data.permanentZipCode.slice(
-                      0,
-                      zipCodeMaxLength
-                    );
+                    personal_data.permanentZipCode =
+                      personal_data.permanentZipCode.slice(0, zipCodeMaxLength);
                 "
                 :class="
                   !errors.hasOwnProperty('permanentZipCode') ? '' : 'is-invalid'
@@ -873,8 +881,9 @@
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
               />
               <span
-                ><strong>ZIP CODE</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><strong
+                  >ZIP CODE<span class="text-danger">*</span></strong
+                ></span
               >
             </label>
             <p class="text-danger text-sm">
@@ -1040,32 +1049,45 @@ export default {
       this.isSameAsAbove = !this.isSameAsAbove;
 
       if (this.isSameAsAbove) {
-        this.tempPermanentAddress.province = this.personal_data.permanentProvince;
+        this.tempPermanentAddress.province =
+          this.personal_data.permanentProvince;
         this.tempPermanentAddress.city = this.personal_data.permanentCity;
-        this.tempPermanentAddress.barangay = this.personal_data.permanentBarangay;
+        this.tempPermanentAddress.barangay =
+          this.personal_data.permanentBarangay;
 
         this.tempPermanentAddress.house_no = this.personal_data.permanentLotNo;
         this.tempPermanentAddress.street = this.personal_data.permanentStreet;
-        this.tempPermanentAddress.village = this.personal_data.permanentSubdivision;
-        this.tempPermanentAddress.zip_code = this.personal_data.permanentZipCode;
+        this.tempPermanentAddress.village =
+          this.personal_data.permanentSubdivision;
+        this.tempPermanentAddress.zip_code =
+          this.personal_data.permanentZipCode;
 
         this.permanentCities = this.cities;
         this.permanentBarangays = this.barangays;
         this.personal_data.permanentLotNo = this.personal_data.residentialLotNo;
-        this.personal_data.permanentStreet = this.personal_data.residentialStreet;
-        this.personal_data.permanentSubdivision = this.personal_data.residentialSubdivision;
-        this.personal_data.permanentBarangay = this.personal_data.residentialBarangay;
+        this.personal_data.permanentStreet =
+          this.personal_data.residentialStreet;
+        this.personal_data.permanentSubdivision =
+          this.personal_data.residentialSubdivision;
+        this.personal_data.permanentBarangay =
+          this.personal_data.residentialBarangay;
         this.personal_data.permanentCity = this.personal_data.residentialCity;
-        this.personal_data.permanentProvince = this.personal_data.residentialProvince;
-        this.personal_data.permanentZipCode = this.personal_data.residentialZipCode;
+        this.personal_data.permanentProvince =
+          this.personal_data.residentialProvince;
+        this.personal_data.permanentZipCode =
+          this.personal_data.residentialZipCode;
       } else {
         this.personal_data.permanentLotNo = this.tempPermanentAddress.house_no;
         this.personal_data.permanentStreet = this.tempPermanentAddress.street;
-        this.personal_data.permanentSubdivision = this.tempPermanentAddress.village;
-        this.personal_data.permanentBarangay = this.tempPermanentAddress.barangay;
+        this.personal_data.permanentSubdivision =
+          this.tempPermanentAddress.village;
+        this.personal_data.permanentBarangay =
+          this.tempPermanentAddress.barangay;
         this.personal_data.permanentCity = this.tempPermanentAddress.city;
-        this.personal_data.permanentProvince = this.tempPermanentAddress.province;
-        this.personal_data.permanentZipCode = this.tempPermanentAddress.zip_code;
+        this.personal_data.permanentProvince =
+          this.tempPermanentAddress.province;
+        this.personal_data.permanentZipCode =
+          this.tempPermanentAddress.zip_code;
       }
     },
     submitPersonalInformation(e) {

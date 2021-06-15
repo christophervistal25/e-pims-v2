@@ -70,22 +70,22 @@
                         <label for="transID" class="form-group has-float-label mt-3">
                             <input type="text" id="transID" class="form-control"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>TRANSACTION ID</strong></span>
+                            <span><strong>TRANSACTION ID<span class="text-danger">*</span></strong></span>
                         </label>
                         <label for="period" class="form-group has-float-label">
                             <input type="text" class="form-control"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>PERIOD</strong></span>
+                            <span><strong>PERIOD<span class="text-danger">*</span></strong></span>
                         </label>
                         <label for="particular" class="form-group has-float-label">
                             <input type="text" id="particular" class="form-control"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>PARTICULAR</strong></span>
+                            <span><strong>PARTICULAR<span class="text-danger">*</span></strong></span>
                         </label>
                         <label for="leaveApp" class="form-group has-float-label">
                             <input type="text" id="leaveApp" style="outline:none; box-shadow: 0px 0px 0px transparent;"
                                 class="form-control">
-                            <span><strong>LEAVE APPLICATION ID</strong></span>
+                            <span><strong>LEAVE APPLICATION ID<span class="text-danger">*</span></strong></span>
                         </label>
                         <label for="ordering" class="form-group has-float-label">
                             <input type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;"
@@ -94,14 +94,14 @@
                         </label>
                     </div>
                     <div class="col-lg-9">
-                        <div class="card mt-3">
+                        <div class="card shadow mt-3">
                             <div class="card-body">
                                 <h3 class="card-title mb-4">Balances</h3>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <label for="vlEarned" class="form-group has-float-label">
                                             <input type="text" class="form-control" id="vlEarned"
-                                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                                style="outline: none; box-shadfow: 0px 0px 0px transparent;">
                                             <span><strong>VL EARNED</strong></span>
                                         </label>
                                         <label for="vlEnjoyedWP" class="form-group has-float-label">

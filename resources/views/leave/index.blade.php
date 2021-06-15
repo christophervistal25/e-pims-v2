@@ -63,26 +63,28 @@
     <div class="col-lg-9">
         <div class="card shadow">
             <div class="card-body">
-                <h3 class="card-title">Starting Leave Balance Detail</h3>
+                <div class="alert alert-secondary text-center" role="alert"><strong
+                        style="text-transform: uppercase">Starting Leave Balance Detail</strong>
+                </div>
                 <hr>
                 <div class="row">
                     <div class="col-lg-9">
                         <label for="name" class="form-group has-float-label">
                             <input type="text" name="name" id="name" class="form-control" placeholder=""
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>NAME</strong></span>
+                            <span><strong>NAME<span class="text-danger">*</span></strong></span>
                         </label>
 
                         <label for="office" class="form-group has-float-label">
                             <input type="text" name="office" id="office" class="form-control" placeholder=""
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>OFFICE</strong></span>
+                            <span><strong>OFFICE<span class="text-danger">*</span></strong></span>
                         </label>
 
                         <label for="position" class="form-group has-float-label">
                             <input type="text" name="position" id="position" class="form-control" placeholder=""
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>POSITION</strong></span>
+                            <span><strong>POSITION<span class="text-danger">*</span></strong></span>
                         </label>
                     </div>
                     <div class="col-lg-3">
@@ -96,7 +98,7 @@
                         <label for="dateStart" class="form-group has-float-label">
                             <input type="date" name="dateStart" id="dateStart" class="form-control" placeholder=""
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>DATE START</strong></span>
+                            <span><strong>DATE START<span class="text-danger">*</span></strong></span>
                         </label>
                     </div>
                     <div class="col-lg-3">
@@ -118,15 +120,12 @@
 
 
                 <div class="float-left">
-                    <button title="New Record" type="button"
-                        class="text-white rounded-circle shadow btn btn-primary"><i
+                    <button title="New Record" type="button" class="text-white rounded-circle shadow btn btn-primary"><i
                             class="las la-user-plus"></i></button>
                     <button title="Save Changes" type="button"
-                        class="text-white rounded-circle shadow btn btn-success"><i
-                            class="lar la-save"></i></button>
+                        class="text-white rounded-circle shadow btn btn-success"><i class="lar la-save"></i></button>
                     <button title="Cancel Record" type="button"
-                        class="text-white rounded-circle shadow btn btn-danger"><i
-                            class="las la-ban"></i></button>
+                        class="text-white rounded-circle shadow btn btn-danger"><i class="las la-ban"></i></button>
 
                 </div>
             </div>

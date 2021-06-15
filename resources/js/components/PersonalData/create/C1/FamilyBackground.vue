@@ -60,8 +60,9 @@
                   style="outline: none; box-shadow: 0px 0px 0px transparent"
                 />
                 <span
-                  ><strong>SURNAME</strong
-                  ><span class="text-danger"><strong>*</strong></span></span
+                  ><strong
+                    >SURNAME<span class="text-danger">*</span></strong
+                  ></span
                 >
               </label>
               <p class="text-danger text-sm">
@@ -82,8 +83,9 @@
                   style="outline: none; box-shadow: 0px 0px 0px transparent"
                 />
                 <span
-                  ><strong>FIRST NAME</strong
-                  ><span class="text-danger"><strong>*</strong></span></span
+                  ><strong
+                    >FIRST NAME<span class="text-danger">*</span></strong
+                  ></span
                 >
               </label>
               <p class="text-danger text-sm">
@@ -316,8 +318,9 @@
                 "
               />
               <span
-                ><strong>SURNAME</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><strong
+                  >SURNAME<span class="text-danger">*</span></strong
+                ></span
               >
             </label>
             <p class="text-danger text-sm">{{ errors.fsurname }}</p>
@@ -340,8 +343,9 @@
                 "
               />
               <span
-                ><strong>FIRST NAME</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><strong
+                  >FIRST NAME<span class="text-danger">*</span></strong
+                ></span
               >
             </label>
             <p class="text-danger text-sm">
@@ -413,8 +417,9 @@
                 "
               />
               <span
-                ><strong>MAIDEN SURNAME</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><strong
+                  >MAIDEN SURNAME<span class="text-danger">*</span></strong
+                ></span
               >
             </label>
             <p class="text-danger text-sm">{{ errors.msurname }}</p>
@@ -437,8 +442,9 @@
                 "
               />
               <span
-                ><strong>FIRST NAME</strong
-                ><span class="text-danger"><strong>*</strong></span></span
+                ><strong
+                  >FIRST NAME<span class="text-danger">*</span></strong
+                ></span
               >
             </label>
             <p class="text-danger text-sm">

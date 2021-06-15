@@ -92,8 +92,9 @@
           style="outline: none; box-shadow: 0px 0px 0px transparent"
         />
         <span
-          ><strong>LBP ACCOUNT NO.</strong
-          ><span class="text-danger"><strong>*</strong></span></span
+          ><strong
+            >LBP ACCOUNT NO.<span class="text-danger">*</span></strong
+          ></span
         >
       </label>
       <p class="text-danger text-sm" v-if="errors.lbpAccountNo">

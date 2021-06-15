@@ -13,8 +13,7 @@
             :class="errors.hasOwnProperty('lastName') ? 'is-invalid' : ''"
           />
           <span
-            ><strong>LAST NAME</strong
-            ><span class="text-danger"><strong>*</strong></span></span
+            ><strong>LAST NAME<span class="text-danger">*</span></strong></span
           >
           <p class="text-danger text-sm">{{ errors.lastName }}</p>
         </label>
@@ -28,8 +27,7 @@
             :class="errors.hasOwnProperty('firstName') ? 'is-invalid' : ''"
           />
           <span
-            ><strong>FIRST NAME</strong
-            ><span class="text-danger"><strong>*</strong></span></span
+            ><strong>FIRST NAME<span class="text-danger">*</span></strong></span
           >
           <p class="text-danger text-sm">
             {{ errors.firstName }}
@@ -102,8 +100,9 @@
                 {{ errors.dateOfBirth }}
               </p>
               <span
-                ><strong>DATE OF BIRTH</strong
-                ><span class="text-danger"><strong>*</strong></span>
+                ><strong
+                  >DATE OF BIRTH<span class="text-danger">*</span></strong
+                >
                 (date/month/year)</span
               >
             </label>
@@ -177,7 +176,15 @@
       </div>
       <div class="col-lg-4 mb-3 mt-4 text-center">
         <img
-          class="w-50 shadow-sm rounded border mr-auto ml-auto img-fluid img-thumbnail"
+          class="
+            w-50
+            shadow-sm
+            rounded
+            border
+            mr-auto
+            ml-auto
+            img-fluid img-thumbnail
+          "
           id="employee-image"
           loading="lazy"
           :src="`/storage/employee_images/${employee.image}`"
@@ -218,8 +225,9 @@
             }}
           </p>
           <span
-            ><strong>EMPLOYMENT STATUS</strong
-            ><span class="text-danger"><strong>*</strong></span></span
+            ><strong
+              >EMPLOYMENT STATUS<span class="text-danger">*</span></strong
+            ></span
           >
         </label>
       </div>
@@ -250,8 +258,7 @@
             {{ errors["designation.position_code"] }}
           </p>
           <span
-            ><strong>POSITION</strong
-            ><span class="text-danger"><strong>*</strong></span></span
+            ><strong>POSITION<span class="text-danger">*</span></strong></span
           >
         </label>
       </div>
@@ -278,8 +285,9 @@
             {{ errors["officeAssignment.office_code"] }}
           </p>
           <span
-            ><strong>OFFICE ASSIGNMENT</strong
-            ><span class="text-danger"><strong>*</strong></span></span
+            ><strong
+              >OFFICE ASSIGNMENT<span class="text-danger">*</span></strong
+            ></span
           >
         </label>
       </div>
