@@ -294,25 +294,6 @@ $(function() {
         // Check/uncheck checkboxes for all rows in the table
         $('input[type="checkbox"]', rows).prop("checked", this.checked);
     });
-
-    // // Handle click on checkbox to set state of "Select all" control
-    // $("#salaryAdjustmentPerOffice tbody").on(
-    //     "change",
-    //     'input[type="checkbox"]',
-    //     function() {
-    //         // If checkbox is not checked
-    //         if (!this.checked) {
-    //             var el = $("#selectAll").get(0);
-    //             alert("test");
-    //             // If "Select all" control is checked and has 'indeterminate' property
-    //             if (el && el.checked && "indeterminate" in el) {
-    //                 // Set visual state of "Select all" control
-    //                 // as 'indeterminate'
-    //                 el.indeterminate = true;
-    //             }
-    //         }
-    //     }
-    // );
 });
 
 function LockDepot() {
@@ -339,6 +320,7 @@ function LockDepot() {
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
                     $("#selectAll").prop("checked", false);
+                    selectedItemInAdjustmentPerOffice = [];
                 }
             },
             error: function(response) {}
@@ -347,12 +329,28 @@ function LockDepot() {
 }
 
 let selectedItemInAdjustmentPerOffice = [];
+
+// let date = document.querySelector("#dateAdjustment").value;
 $(document).on("change", 'input[type="checkbox"]', function(e) {
+    let id = $(this).val();
+    let index = selectedItemInAdjustmentPerOffice.indexOf(id);
     if (e.target.value !== "selectAll") {
         if (!selectedItemInAdjustmentPerOffice.includes(e.target.value)) {
+            alert(e.target.value);
             selectedItemInAdjustmentPerOffice.push(e.target.value);
         } else {
+            if (index > -1) {
+                selectedItemInAdjustmentPerOffice.splice(index, 1);
+            }
+            $(this).parent().val = "";
         }
     } else {
+        let count =
+            document.querySelectorAll('input[type="checkbox"]').length - 1;
+        for (let check = 1; check <= count; check++) {
+            selectedItemInAdjustmentPerOffice.push(
+                document.querySelectorAll('input[type="checkbox"]')[check].value
+            );
+        }
     }
 });
