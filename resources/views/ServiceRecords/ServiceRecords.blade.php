@@ -42,14 +42,14 @@
                         <div class="form-group col-12 col-lg-3">
                             <label>From<span class="text-danger">*</span></label>
                             <input class="form-control" value="" name="fromDate" id="fromDate" type="date">
-                            <div id='from-date-error-message' class='text-danger'>
+                            <div id='from-date-error-message' class='text-danger text-sm'>
                             </div>
                         </div>
 
                         <div class="form-group col-12 col-lg-3">
                             <label>To<span class="text-danger">*</span></label>
                             <input class="form-control" value="" name="toDate" id="toDate" type="date">
-                            <div id='to-date-error-message' class='text-danger'>
+                            <div id='to-date-error-message' class='text-danger text-sm'>
                             </div>
                         </div>
 
@@ -62,12 +62,12 @@
                                 <option style="width:350px;" {{ old('positionTitle') == $positions->position_id ? 'selected' : '' }} value="{{ $positions->position_id}}">{{ $positions->position_name }}</option>
                             @endforeach
                             </select>
-                            <div id='position-title-error-message' class='text-danger'>
+                            <div id='position-title-error-message' class='text-danger text-sm'>
                             </div>
                         </div>
 
                         <div class="form-group col-12 col-lg-3">
-                            <label>Status <span class="text-danger">*</span></label>
+                            <label>Status<span class="text-danger">*</span></label>
                             <select value="" name="status" class="select {{ $errors->has('status')  ? 'is-invalid' : ''}}" id="status">
                                 @foreach(range(0, 10) as $statuses)
                                     @if($status[$statuses] == old('status'))
@@ -77,14 +77,14 @@
                                     @endif
                                 @endforeach
                             </select>
-                            <div id='status-error-message' class='text-danger'>
+                            <div id='status-error-message' class='text-danger text-sm'>
                             </div>
                         </div>
 
                         <div class="form-group col-12 col-lg-3">
                             <label>Salary<span class="text-danger">*</span></label>
                             <input value="{{ old('salary') }}" class="form-control {{ $errors->has('salary')  ? 'is-invalid' : ''}}" name="salary" id="salary" type="text">
-                            <div id='salary-error-message' class='text-danger'>
+                            <div id='salary-error-message' class='text-danger text-sm'>
                             </div>
                         </div>
 
@@ -96,28 +96,27 @@
                                 <option {{ old('officeCode') == $offices->office_code ? 'selected' : '' }} value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
                                 @endforeach
                             </select>
-                            <div id='office-error-message' class='text-danger'>
+                            <div id='office-error-message' class='text-danger text-sm'>
                             </div>
                         </div>
 
                         <div class="form-group col-12 col-lg-3">
                             <label>Leave w/o Pay<span class="text-danger">*</span></label>
                             <input value="{{ old('leavePay') }}" class="form-control {{ $errors->has('leavePay')  ? 'is-invalid' : ''}}" name="leavePay" id="leavePay" type="text">
-                            <div id='leave-pay-error-message' class='text-danger'>
+                            <div id='leave-pay-error-message' class='text-danger text-sm'>
                             </div>
                         </div>
 
                         <div class="form-group col-12 col-lg-3">
                             <label>Date<span class="text-danger">*</span></label>
                             <input class="form-control" value="" name="date" id="date" type="date">
-                            <div id='date-error-message' class='text-danger'>
+                            <div id='date-error-message' class='text-danger text-sm'>
                             </div>
                         </div>
-
                         <div class="form-group col-12 col-lg-12">
                             <label>Cause<span class="text-danger">*</span></label>
                             <input value="{{ old('cause') }}" class="form-control {{ $errors->has('cause')  ? 'is-invalid' : ''}}" name="cause" id="cause" type="text">
-                            <div id='cause-error-message' class='text-danger'>
+                            <div id='cause-error-message' class='text-danger text-sm'>
                             </div>
                         </div>
 
