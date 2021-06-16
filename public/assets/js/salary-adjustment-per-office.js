@@ -296,6 +296,7 @@ $(function() {
     });
 });
 
+let date = document.querySelector("#dateAdjustment").value;
 function LockDepot() {
     $("#saveBtn").attr("disabled", true);
     $("#loading").removeClass("d-none");
@@ -307,7 +308,10 @@ function LockDepot() {
         $.ajax({
             type: "POST",
             url: `/api/salary-adjustment-per-office`,
-            data: { ids: selectedItemInAdjustmentPerOffice.toString() },
+            data: {
+                ids: selectedItemInAdjustmentPerOffice.toString(),
+                date: date
+            },
             success: function(response) {
                 if (response.success) {
                     swal("Sucessfully Added!", "", "success");
@@ -330,13 +334,11 @@ function LockDepot() {
 
 let selectedItemInAdjustmentPerOffice = [];
 
-// let date = document.querySelector("#dateAdjustment").value;
 $(document).on("change", 'input[type="checkbox"]', function(e) {
     let id = $(this).val();
     let index = selectedItemInAdjustmentPerOffice.indexOf(id);
     if (e.target.value !== "selectAll") {
         if (!selectedItemInAdjustmentPerOffice.includes(e.target.value)) {
-            alert(e.target.value);
             selectedItemInAdjustmentPerOffice.push(e.target.value);
         } else {
             if (index > -1) {

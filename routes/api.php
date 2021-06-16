@@ -156,6 +156,8 @@ Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}', funct
 
 
 Route::post('/salary-adjustment-per-office', function () {
+    $plantilla = Plantilla::select('plantilla_id', 'sg_no', 'step_no', 'salary_amount')->get();
+    $salaryGrade = SalaryGrade::select('id', 'sg_step1', 'sg_step2', 'sg_step3', 'sg_step4', 'sg_step5', 'sg_step6', 'sg_step7', 'sg_step8', 'sg_year')->get();
     $plantillaIds = explode(',', request()->ids);
     $data = Plantilla::whereIn('plantilla_id', $plantillaIds)->get();
     $newAdjustment = $data->toArray();
@@ -164,7 +166,7 @@ Route::post('/salary-adjustment-per-office', function () {
         $salaryAdjustment->employee_id = $newAdjustment->employee_id;
         $salaryAdjustment->item_no = $newAdjustment->item_no;
         $salaryAdjustment->position_id = $newAdjustment->position_id;
-        $salaryAdjustment->date_adjustment = $newAdjustment->date_original_appointment;
+        $salaryAdjustment->date_adjustment = request()->date;
         $salaryAdjustment->sg_no = $newAdjustment->sg_no;
         $salaryAdjustment->step_no = $newAdjustment->step_no;
         $salaryAdjustment->salary_previous = $newAdjustment->salary_amount;

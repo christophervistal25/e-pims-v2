@@ -33,6 +33,7 @@
                         <p class="float-center" id="officeAdjustment"></p>
                         </div>
                             <div class="col-12 col-md-3">
+                            <input type="text" id="year" class="form-control d-none" value="{{ Carbon\Carbon::now()->year }}" name="year" readonly>
                             <input class="form-control" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" name="dateAdjustment" id="dateAdjustment" type="date">
                         </div>
                     </div>
