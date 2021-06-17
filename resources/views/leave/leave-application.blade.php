@@ -167,8 +167,8 @@
                         </div>
                         <hr class="mt-1 mb-1">
                         <div class="checkbox">
-                            <label class="checkbox-inline no_indent text-sm" for="incHolidays">
-                                <input type="checkbox" name="incHolidays" id="incHolidays" disabled
+                            <label class="checkbox-inline no_indent text-sm" for="populateDate">
+                                <input type="checkbox" name="populateDate" id="populateDate" disabled
                                     style="transform: scale(1.2)">Populate Dates
                             </label>
                         </div>
