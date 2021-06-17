@@ -132,6 +132,7 @@ class SalaryAdjustmentPerOfficeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        SalaryAdjustment::find($id)->delete();
+        return json_encode(array('statusCode'=>200));
     }
 }
