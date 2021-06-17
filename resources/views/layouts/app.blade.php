@@ -256,18 +256,6 @@
 							</ul>
 						</li>
 
-
-						<li class="submenu">
-							<a href="#" class='text-decoration-none'><i class="la la-bars"></i> <span>Service Record</span> <span class="menu-arrow"></span></a>
-							<ul style="display: none;">
-								<li>
-                                    <a class='text-decoration-none mr-2' href="{{  route('service-records.index') }}">
-                                        Maintenance & Monitoring
-                                    </a>
-                                </li>
-							</ul>
-						</li>
-
                         <li class="submenu">
 							<a href="#" class='text-decoration-none'><i class="la la-bookmark"></i> <span>Plantilla</span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
@@ -300,8 +288,28 @@
 									</ul>
 								</li>
 							</ul>
+
+                            <li class="submenu">
+                                <a href="#" class='text-decoration-none'><i class="la la-bars"></i> <span>Service Record</span> <span class="menu-arrow"></span></a>
+                                <ul style="display: none;">
+                                    <li>
+                                        <a class='text-decoration-none mr-2' href="{{  route('service-records.index') }}">
+                                            Maintenance & Monitoring
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a class='text-decoration-none' href="{{ route('salary-grade.index') }}">
+                                    <i class="la la-money"></i> <span> Salary Grade </span>
+                                </a>
+                            </li>
+
 						</li>
 					</ul>
+
+
 				</div>
 			</div>
 		</div>
