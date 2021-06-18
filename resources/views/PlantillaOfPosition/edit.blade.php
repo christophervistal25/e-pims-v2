@@ -80,8 +80,7 @@
                                     <i class="fas fa-save"></i> Save
                                 </button>
                                 <a href="/plantilla-of-position"><button style="margin-right:10px;" type="button"
-                                        class="text-white btn btn-warning submit-btn float-right"><i
-                                            class="la la-arrow-left"></i> Back</button></a>
+                                        class="text-white btn btn-warning submit-btn float-right"><i class="fas fa-arrow-left"></i> Back</button></a>
                             </div>
                         </div>
                     </div>
