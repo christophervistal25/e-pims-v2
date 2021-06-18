@@ -297,6 +297,7 @@ $(function() {
 });
 
 let date = document.querySelector("#dateAdjustment").value;
+let currentYear = document.querySelector("#year").value;
 function LockDepot() {
     $("#saveBtn").attr("disabled", true);
     $("#loading").removeClass("d-none");
@@ -310,7 +311,8 @@ function LockDepot() {
             url: `/api/salary-adjustment-per-office`,
             data: {
                 ids: selectedItemInAdjustmentPerOffice.toString(),
-                date: date
+                date: date,
+                year: currentYear
             },
             success: function(response) {
                 if (response.success) {
@@ -333,7 +335,6 @@ function LockDepot() {
 }
 
 let selectedItemInAdjustmentPerOffice = [];
-
 $(document).on("change", 'input[type="checkbox"]', function(e) {
     let id = $(this).val();
     let index = selectedItemInAdjustmentPerOffice.indexOf(id);

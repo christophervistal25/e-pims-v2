@@ -122,8 +122,7 @@ Route::get('/office/salary/adjustment/peroffice/{officeCode}', function ($office
                 return $row->plantilla->office_code;
             })
             ->addColumn('action', function($row){
-                $btn = "<a title='Edit Salary Adjustment' href='$row->id' class='rounded-circle edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
-                $btn = $btn."<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                $btn = "<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
                 ";
                     return $btn;
             })
@@ -156,12 +155,18 @@ Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}', funct
 
 
 Route::post('/salary-adjustment-per-office', function () {
-    $plantilla = Plantilla::select('plantilla_id', 'sg_no', 'step_no', 'salary_amount')->get();
-    $salaryGrade = SalaryGrade::select('id', 'sg_step1', 'sg_step2', 'sg_step3', 'sg_step4', 'sg_step5', 'sg_step6', 'sg_step7', 'sg_step8', 'sg_year')->get();
     $plantillaIds = explode(',', request()->ids);
     $data = Plantilla::whereIn('plantilla_id', $plantillaIds)->get();
     $newAdjustment = $data->toArray();
     foreach($data as $newAdjustment){
+        $newAdjustment->plantilla_id;
+        $newAdjustment->sg_no;
+        $newAdjustment->step_no;
+        $newAdjustment->salary_amount;
+        $getsalaryResult = SalaryGrade::where('sg_no', $newAdjustment->sg_no)
+                            ->where('sg_year', request()->year)
+                            ->first(['sg_year' ,'sg_step' .  $newAdjustment->step_no]);
+        $salaryDiff = $getsalaryResult['sg_step' .  $newAdjustment->step_no] - $newAdjustment->salary_amount;
         $salaryAdjustment= new SalaryAdjustment();
         $salaryAdjustment->employee_id = $newAdjustment->employee_id;
         $salaryAdjustment->item_no = $newAdjustment->item_no;
@@ -170,8 +175,8 @@ Route::post('/salary-adjustment-per-office', function () {
         $salaryAdjustment->sg_no = $newAdjustment->sg_no;
         $salaryAdjustment->step_no = $newAdjustment->step_no;
         $salaryAdjustment->salary_previous = $newAdjustment->salary_amount;
-        $salaryAdjustment->salary_new = $newAdjustment->salary_amount;
-        $salaryAdjustment->salary_diff = $newAdjustment->salary_amount;
+        $salaryAdjustment->salary_new =  $getsalaryResult['sg_step' .  $newAdjustment->step_no];
+        $salaryAdjustment->salary_diff = $salaryDiff;
         $salaryAdjustment->save();
     }
     return response()->json(['success'=>true]);

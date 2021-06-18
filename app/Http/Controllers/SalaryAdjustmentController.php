@@ -27,7 +27,6 @@ class SalaryAdjustmentController extends Controller
         $dates = array_values(array_unique($dates));
         sort($dates);
         $position = Position::select('position_id', 'position_name')->get();
-        // $employee = Employee::with(['plantilla', 'plantilla.position'])->get();
         $salaryAdjustment = SalaryAdjustment::get()->pluck('employee_id')->toArray();
         $employee = Plantilla::select('item_no', 'position_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id')->with('employee:employee_id,firstname,middlename,lastname,extension','positions:position_id,position_name')->whereNotIn('employee_id', $salaryAdjustment )->get();
         return view('SalaryAdjustment.SalaryAdjustment', compact('employee', 'position', 'dates'));
