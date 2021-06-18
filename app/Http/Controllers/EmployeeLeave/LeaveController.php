@@ -9,7 +9,7 @@ class LeaveController extends Controller
 {
     public function index()
     {
-        return view('leave.index');
+        return view('leave.leave-starting-balance');
     }
     
     public function show()
