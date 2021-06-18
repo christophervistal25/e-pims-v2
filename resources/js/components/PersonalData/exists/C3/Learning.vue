@@ -244,8 +244,9 @@ export default {
     };
   },
   watch: {
-    learnDev(from, to) {
+    learnDev(to) {
       this.noOfFields = to.length;
+      alert(to.length);
     },
   },
   methods: {

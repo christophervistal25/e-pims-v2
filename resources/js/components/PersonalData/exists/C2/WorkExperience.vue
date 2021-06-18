@@ -185,7 +185,6 @@
               </td>
               <td class="jumbotron align-middle">
                 <button
-                  v-show="index != 0"
                   class="btn btn-danger font-weight-bold rounded-circle"
                   @click="removeField(index)"
                 >

@@ -133,8 +133,7 @@
               </td>
               <td class="text-center jumbotron">
                 <button
-                  v-show="index != 0"
-                  class="btn btn-danger font-weight-bold mt-1 rounded-circle"
+                  class="btn btn-danger font-weight-bold rounded-circle"
                   @click="removeField(index)"
                 >
                   <i class="fa fa-times"></i>
@@ -143,7 +142,7 @@
               <td class="text-center">
                 <button
                   v-if="index == noOfFields - 1"
-                  class="btn btn-primary rounded-circle font-weight-bold"
+                  class="btn btn-primary rounded-circle font-weight-bold mt-2"
                   @click="addNewFieldVoluntary"
                 >
                   <i class="fa fa-plus"></i>
@@ -207,11 +206,6 @@ export default {
       errors: {},
       rowErrors: "",
     };
-  },
-  watch: {
-    volunOrg(from, to) {
-      this.noOfFields = to.length;
-    },
   },
   methods: {
     isKeyCombinationSave(event) {

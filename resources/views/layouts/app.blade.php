@@ -234,7 +234,7 @@
                                 </li>
 								<li>
                                     <a class='text-decoration-none mr-2' href="#">
-                                        Leave Index Monitoring
+                                        Leave Monitoring Index
                                     </a>
                                 </li>
 

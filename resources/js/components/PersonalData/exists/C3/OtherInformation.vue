@@ -181,11 +181,6 @@ export default {
       errors: [],
     };
   },
-  watch: {
-    otherInformation(from, to) {
-      this.noOfFields = to.length;
-    },
-  },
   methods: {
     isKeyCombinationSave(event) {
       if (

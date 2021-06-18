@@ -158,7 +158,6 @@
                 </td>
                 <td class="jumbotron" v-if="!isComplete">
                   <button
-                    v-show="index != 0"
                     @click="removeField(index)"
                     class="btn btn-danger font-weight-bold mt-2 rounded-circle"
                   >
@@ -168,7 +167,7 @@
                 <td v-if="!isComplete">
                   <button
                     v-if="index == personal_data.civil_service.length - 1"
-                    class="btn btn-primary rounded-circle font-weight-bold"
+                    class="btn btn-primary rounded-circle font-weight-bold mt-2"
                     @click="addNewFieldCivilServiceRow"
                   >
                     <i class="fa fa-plus"></i>

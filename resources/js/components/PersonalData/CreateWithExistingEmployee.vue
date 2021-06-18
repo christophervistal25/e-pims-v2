@@ -102,11 +102,12 @@
 </template>
 
 <script>
-import socket from "./../../socket.js";
+import io from "socket.io-client";
 export default {
   props: ["employee"],
   data() {
     return {
+      socket: "",
       hasSelecType: false,
       tabs: [
         {
@@ -144,7 +145,12 @@ export default {
   methods: {
     printPersonalDataSheet(employee_id) {
       window.axios.get(`/print/pds/${employee_id}`).then(() => {
-        socket.emit("preview_personal_data_sheet");
+        if (!this.socket.connected) {
+          this.socket = io.connect("http://192.168.1.16:3030");
+          this.socket.emit("preview_personal_data_sheet");
+        } else {
+          this.socket.emit("preview_personal_data_sheet");
+        }
       });
     },
     updateNameExtensions(newExtension) {
@@ -192,6 +198,7 @@ export default {
     },
   },
   created() {
+    this.socket = io.connect("http://192.168.1.16:3030");
     // set the default tab display to C1
     this.selectedTab = this.tabs[0];
     window.axios

@@ -177,7 +177,15 @@
       </div>
       <div class="col-lg-4 mb-3 mt-4 text-center">
         <img
-          class="w-50 shadow-sm rounded border mr-auto ml-auto img-fluid img-thumbnail"
+          class="
+            w-50
+            shadow-sm
+            rounded
+            border
+            mr-auto
+            ml-auto
+            img-fluid img-thumbnail
+          "
           id="employee-image"
           loading="lazy"
           :src="`/storage/employee_images/${employee.image}`"
@@ -433,7 +441,6 @@ export default {
       this.isShowNameExtension = false;
     },
   },
-  created() {},
 };
 </script>
 

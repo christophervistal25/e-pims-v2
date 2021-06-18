@@ -48,7 +48,22 @@
             <template v-slot:item.information.photo="{ item }">
               <div class="p-2">
                 <v-img
+                  v-if="item.information && item.information.photo"
                   :src="`/storage/employee_images/${item.information.photo}`"
+                  aspect-ratio="1"
+                  class="grey lighten-2 rounded-circle"
+                >
+                  <template v-slot:placeholder>
+                    <v-progress-circular
+                      indeterminate
+                      color="rgb(255, 155, 68);"
+                    ></v-progress-circular>
+                  </template>
+                </v-img>
+
+                <v-img
+                  v-else
+                  :src="`/storage/employee_images/no_image.png`"
                   aspect-ratio="1"
                   class="grey lighten-2 rounded-circle"
                 >
@@ -412,6 +427,12 @@ export default {
     fetchEmployeeData(employee_id) {
       window.axios.get(`/api/employee/find/${employee_id}`).then((response) => {
         if (response.status == 200) {
+          // Clear some fields.
+          this.employee.step = "";
+          this.employee.basicRate = "";
+          this.employee.officeAssignment = "";
+          this.employee.designation = "";
+
           this.errors = {};
           let dateYear = new Date().getFullYear();
           let age = dateYear - new Date(response.data.date_birth).getFullYear();
@@ -458,6 +479,8 @@ export default {
               this.employee.basicRate = response.data.step.salary_amount_to;
               this.employee.step = response.data.step.step_no_to;
             }
+          } else {
+            this.employee.image = "no_image.png";
           }
 
           this.showAddEmployeeForm = true;
