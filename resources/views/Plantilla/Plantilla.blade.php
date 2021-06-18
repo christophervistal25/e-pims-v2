@@ -23,11 +23,12 @@
                         class="fa fa-list"></i>
                     Personnel List</button>
             </div>
+        <div class="alert alert-secondary font-weight-bold text-center">ADD NEW PLANTILLA OF PERSONNEL</div>
             <form action="/plantilla" method="post" id="plantillaForm">
                 @csrf
                 <div class="row">
                     <div class="form-group col-12 col-lg-10">
-                        <label>Employee Name<span class="text-danger font-weight-bold">*</span></label>
+                        <label>Employee Name<span class="text-danger">*</span></label>
                         <select value=""
                             class="form-control selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}"
                             name="employeeName" data-live-search="true" id="employeeName" data-size="5">
@@ -49,7 +50,7 @@
                             id="employeeID" type="text" readonly>
                     </div>
                     <div class="form-group col-12 col-lg-6">
-                        <label>Item No<span class="text-danger font-weight-bold">*</span></label>
+                        <label>Item No<span class="text-danger">*</span></label>
                         <input value="{{ old('itemNo') }}"
                             class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" name="itemNo"
                             id="itemNo" type="text" placeholder="">
@@ -66,7 +67,7 @@
                         </div>
                     </div>
                 <div class="form-group col-12 col-lg-6">
-                    <label>Position<span class="text-danger font-weight-bold">*</span></label>
+                    <label>Position<span class="text-danger">*</span></label>
                     <select value=""
                         class="form-control selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
                         name="positionTitle" data-live-search="true" id="positionTitle" data-size="5" data-width="100%">
@@ -105,7 +106,7 @@
                 </div>
         </div> --}}
         <div class="form-group col-12 col-lg-3">
-            <label>Current SG Year<span class="text-danger font-weight-bold">*</span></label>
+            <label>Current SG Year<span class="text-danger">*</span></label>
             <select name="currentSgyear" id="currentSgyear" value="" class="select floating" disabled>
                 {{ $year3 = date("Y",strtotime("-0 year")) }}
                 <option value={{ $year3 }}>{{ $year3 }}</option>
@@ -117,7 +118,7 @@
         </div>
 
     <div class="form-group col-12 col-lg-3">
-        <label>Steps<span class="text-danger font-weight-bold">*</span></label>
+        <label>Steps<span class="text-danger">*</span></label>
         <select name="stepNo" value="" class="select floating {{ $errors->has('stepNo')  ? 'is-invalid' : ''}}"
             id="currentStepno">
             <option>Please Select</option>
@@ -129,14 +130,14 @@
         </div>
     </div>
     <div class="form-group col-12 col-lg-3">
-        <label>Salary Grade<span class="text-danger font-weight-bold">*</span></label>
+        <label>Salary Grade<span class="text-danger">*</span></label>
         <input value="{{ old('') }}" class="form-control {{ $errors->has('')  ? 'is-invalid' : ''}}" name="salaryGrade"
             id="currentSalarygrade" type="text" readonly>
         <div id='salary-grade-error-message' class='text-danger text-sm'>
         </div>
     </div>
     <div class="form-group col-12 col-lg-3">
-        <label>Salary Amount<span class="text-danger font-weight-bold">*</span></label>
+        <label>Salary Amount<span class="text-danger">*</span></label>
         <input value="{{ old('salaryAmount') }}"
             class="form-control {{ $errors->has('salaryAmount')  ? 'is-invalid' : ''}}" name="salaryAmount"
             id="currentSalaryamount" type="text" readonly>
@@ -144,7 +145,7 @@
         </div>
     </div>
 <div class="form-group col-12 col-lg-4">
-    <label>Status<span class="text-danger font-weight-bold">*</span></label>
+    <label>Status<span class="text-danger">*</span></label>
     <select value="" name="status" class="select {{ $errors->has('status')  ? 'is-invalid' : ''}}" id="status">
         @foreach(range(0, 10) as $statuses)
         @if($status[$statuses] == old('status'))
@@ -158,7 +159,7 @@
     </div>
 </div>
 <div class="form-group col-12 col-lg-4">
-    <label>Office<span class="text-danger font-weight-bold">*</span></label>
+    <label>Office<span class="text-danger">*</span></label>
     <select value="" name="officeCode" class="select {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
         id="officeCode">
         <option>Please Select</option>
@@ -171,7 +172,7 @@
     </div>
 </div>
 <div class="form-group col-12 col-lg-4">
-    <label>Division<span class="text-danger font-weight-bold">*</span></label>
+    <label>Division<span class="text-danger">*</span></label>
     <select value="" name="divisionId" class="select {{ $errors->has('divisionId')  ? 'is-invalid' : ''}}"
         id="divisionId">
         <option>Please Select</option>
@@ -184,7 +185,7 @@
     </div>
 </div>
 <div class="form-group col-12 col-lg-6">
-    <label>Original Appointment<span class="text-danger font-weight-bold">*</span></label>
+    <label>Original Appointment<span class="text-danger">*</span></label>
     <input value="{{ old('originalAppointment') }}"
         class="form-control {{ $errors->has('originalAppointment')  ? 'is-invalid' : ''}}" name="originalAppointment"
         type="date" id="originalAppointment">
@@ -193,7 +194,7 @@
 </div>
 
 <div class="form-group col-12 col-lg-6">
-    <label>Last Promotion</label>
+    <label>Last Promotion<span class="text-danger">*</span></label>
     <input value="{{ old('lastPromotion') }}"
         class="form-control {{ $errors->has('lastPromotion')  ? 'is-invalid' : ''}}" name="lastPromotion" type="date"
         id="lastPromotion">
@@ -202,7 +203,7 @@
 </div>
 
 <div class="form-group col-12 col-lg-4">
-    <label>Area Code<span class="text-danger font-weight-bold">*</span></label>
+    <label>Area Code<span class="text-danger">*</span></label>
     <select name="areaCode" value="" class="select floating {{ $errors->has('areaCode')  ? 'is-invalid' : ''}}"
         id="areaCode">
         @foreach(range(0, 16) as $areacodes)
@@ -218,7 +219,7 @@
 </div>
 
 <div class="form-group form-group col-12 col-lg-4">
-    <label>Area Type<span class="text-danger font-weight-bold">*</span></label>
+    <label>Area Type<span class="text-danger">*</span></label>
     <select name="areaType" value="" class="select floating {{ $errors->has('areaType')  ? 'is-invalid' : ''}}"
         id="areaType">
         @foreach(range(0, 5) as $areatypes)
@@ -234,7 +235,7 @@
 </div>
 
 <div class="form-group form-group col-12 col-lg-4">
-    <label>Area Level<span class="text-danger font-weight-bold">*</span></label>
+    <label>Area Level<span class="text-danger">*</span></label>
     <select name="areaLevel" value="" class="select floating {{ $errors->has('areaLevel')  ? 'is-invalid' : ''}}"
         id="areaLevel">
         @foreach(range(0, 4) as $arealevels)
