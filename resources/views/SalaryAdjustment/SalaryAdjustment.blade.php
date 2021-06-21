@@ -85,7 +85,7 @@
                         <input class="form-control " value="" id="positionId" name="positionId" type="text" readonly>
                     </div>
 
-                    <div class="form-group col-12 col-lg-4">
+                    <div class="form-group col-12 col-lg-4 mt-2">
                         <label class="has-float-label mb-0" for="positionName">
                             <input class="form-control" value="" name="positionName" id="positionName" type="text"
                                 readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -95,7 +95,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-12 col-lg-4">
+                    <div class="form-group col-12 col-lg-4 mt-2">
                         <label class="has-float-label mb-0" for="salaryGrade">
                             <input class="form-control" value="" name="salaryGrade" id="salaryGrade" type="text"
                                 readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -105,7 +105,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-12 col-lg-4">
+                    <div class="form-group col-12 col-lg-4 mt-2">
                         <label class="has-float-label mb-0" for="stepNo">
                             <input class="form-control" value="" name="stepNo" id="stepNo" type="text" readonly
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -128,43 +128,43 @@
                     </div>
 
                     <div class="col-lg-4">
-                        <div class="form-group input-group col-12">
+                        <div class="form-group input-group col-12 mb-0 mt-3">
                             <span class="input-group-text">&#8369;</span>
                             <label class="has-float-label">
                                 <input class="form-control" value="" name="salaryPrevious" id="salaryPrevious"
                                     type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <span class="font-weight-bold">SALARY PREVIOUS<span class="text-danger">*</span></span>
                             </label>
-                            <div id='salary-previous-error-message' class='text-danger text-sm'>
-                            </div>
                         </div>
+                        <div id='salary-previous-error-message' class='text-danger text-sm text-center'>
+                            </div>
                     </div>
 
                     <div class="col-lg-4">
-                        <div class="form-group input-group col-12">
+                        <div class="form-group input-group col-12 mb-0 mt-3">
                             <span class="input-group-text">&#8369;</span>
                             <label class="has-float-label">
                                 <input class="form-control" value="" name="salaryNew" id="salaryNew" type="text"
                                     placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                     <span class="font-weight-bold">SALARY NEW<span class="text-danger">*</span></span>
                                 </label>
-                            <div id='salary-new-error-message' class='text-danger text-sm'>
-                            </div>
                         </div>
+                        <div id='salary-new-error-message' class='text-danger text-sm text-center'>
+                            </div>
                     </div>
 
 
                     <div class="col-lg-4">
-                        <div class="form-group input-group col-12">
+                        <div class="form-group input-group col-12 mb-0 mt-3">
                             <span class="input-group-text">&#8369;</span>
                         <label class="has-float-label">
                             <input class="form-control" value="" name="salaryDifference" id="salaryDifference"
                                 type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <span class="font-weight-bold">SALARY DIFFERENCE<span class="text-danger">*</span></span>
                         </label>
-                        <div id='salary-difference-error-message' class='text-danger text-sm'>
-                        </div>
                     </div>
+                    <div id='salary-difference-error-message' class='text-danger text-sm text-center'>
+                        </div>
                     </div>
 
                     <div class="form-group form-group submit-section col-12">
