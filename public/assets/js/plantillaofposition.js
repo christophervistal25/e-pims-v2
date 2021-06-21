@@ -60,26 +60,32 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.success) {
                     $("input").val("");
-                    const select = ["#salaryGrade"];
+                    const select = [
+                        "#positionTitle",
+                        "#salaryGrade",
+                        "#officeCode"
+                    ];
                     $.each(select, function(index, value) {
                         $(`${value}`)
                             .val("Please Select")
                             .trigger("change");
                     });
                     const errorClass = [
-                        "#positionCode",
-                        "#positionName",
+                        "#positionTitle",
+                        "#itemNo",
                         "#salaryGrade",
-                        "#positionNameShortname"
+                        "#officeCode",
+                        "#positionOldName"
                     ];
                     $.each(errorClass, function(index, value) {
                         $(`${value}`).removeClass("is-invalid");
                     });
                     const errorMessage = [
-                        "#position-code-error-message",
-                        "#position-name-no-error-message",
+                        "#position-title-error-message",
+                        "#item-error-message",
                         "#salary-grade-error-message",
-                        "#position-short-name-no-error-message"
+                        "#office-error-message",
+                        "#old-position-name-error-message"
                     ];
                     $.each(errorMessage, function(index, value) {
                         $(`${value}`).html("");
@@ -95,25 +101,25 @@ $(document).ready(function() {
             error: function(response) {
                 if (response.status === 422) {
                     let errors = response.responseJSON.errors;
-                    if (errors.hasOwnProperty("positionCode")) {
-                        $("#positionCode").addClass("is-invalid");
-                        $("#position-code-error-message").html("");
-                        $("#position-code-error-message").append(
-                            `<span>${errors.positionCode[0]}</span>`
+                    if (errors.hasOwnProperty("positionTitle")) {
+                        $("#positionTitle").addClass("is-invalid");
+                        $("#position-title-error-message").html("");
+                        $("#position-title-error-message").append(
+                            `<span>${errors.positionTitle[0]}</span>`
                         );
                     } else {
-                        $("#positionCode").removeClass("is-invalid");
-                        $("#position-code-error-message").html("");
+                        $("#positionTitle").removeClass("is-invalid");
+                        $("#position-title-error-message").html("");
                     }
-                    if (errors.hasOwnProperty("positionName")) {
-                        $("#positionName").addClass("is-invalid");
-                        $("#position-name-no-error-message").html("");
-                        $("#position-name-no-error-message").append(
-                            `<span>${errors.positionName[0]}</span>`
+                    if (errors.hasOwnProperty("itemNo")) {
+                        $("#itemNo").addClass("is-invalid");
+                        $("#item-error-message").html("");
+                        $("#item-error-message").append(
+                            `<span>${errors.itemNo[0]}</span>`
                         );
                     } else {
-                        $("#positionName").removeClass("is-invalid");
-                        $("#position-name-no-error-message").html("");
+                        $("#itemNo").removeClass("is-invalid");
+                        $("#item-error-message").html("");
                     }
                     if (errors.hasOwnProperty("salaryGrade")) {
                         $("#salaryGrade").addClass("is-invalid");
@@ -125,15 +131,25 @@ $(document).ready(function() {
                         $("#salaryGrade").removeClass("is-invalid");
                         $("#salary-grade-error-message").html("");
                     }
-                    if (errors.hasOwnProperty("positionNameShortname")) {
-                        $("#positionNameShortname").addClass("is-invalid");
-                        $("#position-short-name-no-error-message").html("");
-                        $("#position-short-name-no-error-message").append(
-                            `<span>${errors.positionNameShortname[0]}</span>`
+                    if (errors.hasOwnProperty("officeCode")) {
+                        $("#officeCode").addClass("is-invalid");
+                        $("#office-error-message").html("");
+                        $("#office-error-message").append(
+                            `<span>${errors.officeCode[0]}</span>`
                         );
                     } else {
-                        $("#positionNameShortname").removeClass("is-invalid");
-                        $("#position-short-name-no-error-message").html("");
+                        $("#officeCode").removeClass("is-invalid");
+                        $("#office-error-message").html("");
+                    }
+                    if (errors.hasOwnProperty("positionOldName")) {
+                        $("#positionOldName").addClass("is-invalid");
+                        $("#old-position-name-error-message").html("");
+                        $("#old-position-name-error-message").append(
+                            `<span>${errors.positionOldName[0]}</span>`
+                        );
+                    } else {
+                        $("#positionOldName").removeClass("is-invalid");
+                        $("#old-position-name-error-message").html("");
                     }
                     // Create an parent element
                     let parentElement = document.createElement("ul");
@@ -164,10 +180,11 @@ $(function() {
         columnDefs: [{ width: "10%", targets: 4 }],
         ajax: "/plantilla-of-position-list",
         columns: [
-            { data: "position_code", name: "position_code" },
-            { data: "position_name", name: "position_name" },
+            { data: "position", name: "position" },
+            { data: "item_no", name: "item_no" },
             { data: "sg_no", name: "sg_no" },
-            { data: "position_short_name", name: "position_short_name" },
+            { data: "office", name: "office" },
+            { data: "old_position_name", name: "old_position_name" },
             {
                 data: "action",
                 name: "action",

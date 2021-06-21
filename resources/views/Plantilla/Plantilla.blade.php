@@ -66,6 +66,7 @@
                         <div id='old_item-no-error-message' class='text-danger'>
                         </div>
                     </div>
+
                 <div class="form-group col-12 col-lg-6">
                     <label>Position<span class="text-danger">*</span></label>
                     <select value=""
@@ -158,6 +159,7 @@
     <div id='status-error-message' class='text-danger text-sm'>
     </div>
 </div>
+
 <div class="form-group col-12 col-lg-4">
     <label>Office<span class="text-danger">*</span></label>
     <select value="" name="officeCode" class="select {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
