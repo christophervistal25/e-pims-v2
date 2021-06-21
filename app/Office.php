@@ -62,5 +62,10 @@ class Office extends Model
         return $this->belongsTo(service_record::class, 'office_code', 'office_code');
     }
 
-    
+    public function plantilla_positions()
+    {
+        return $this->belongsTo(PlantillaPosition::class, 'office_code', 'office_code');
+    }
+
+
 }

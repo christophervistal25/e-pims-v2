@@ -65,6 +65,10 @@ class Position extends Model
     {
         return $this->hasOne(SalaryAdjustment::class, 'position_id', 'position_id');
     }
+    public function plantilla_positions()
+    {
+        return $this->belongsTo(PlantillaPosition::class, 'position_id', 'pp_id');
+    }
 }
 
 
