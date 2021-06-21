@@ -36,8 +36,8 @@ class PlantillaOfPositionController extends Controller
                     })
                     ->addColumn('action', function($row){
 
-                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-position.edit', $row->position_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
-                        $btn = $btn."<a title='Delete Position' id='delete' value='$row->position_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-position.edit', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
+                        $btn = $btn."<a title='Delete Position' id='delete' value='$row->pp_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
                         ";
                             return $btn;
                     })
@@ -100,10 +100,12 @@ class PlantillaOfPositionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($position_id)
+    public function edit($pp_id)
     {
-        $plantillaofposition = Position::find($position_id);
-        return view('PlantillaOfPosition.edit', compact('plantillaofposition'));
+        $office = Office::select('office_code', 'office_name')->get();
+        $position = Position::select('position_id', 'position_name', 'sg_no')->get();
+        $plantillaofposition = PlantillaPosition::find($pp_id);
+        return view('PlantillaOfPosition.edit', compact('plantillaofposition','position', 'office'));
     }
 
     /**
@@ -113,19 +115,21 @@ class PlantillaOfPositionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $position_id)
+    public function update(Request $request, $pp_id)
     {
         $this->validate($request, [
-            'positionCode'                 => 'required',
-            'positionName'                 => 'required',
-            'salaryGrade'                  => 'required | in:' . implode(',',range(1, 33)),
-            'positionNameShortname'        => 'required'
+            'positionTitle'                 => 'required',
+            'itemNo'                        => 'required',
+            'salaryGrade'                   => 'required | in:' . implode(',',range(1, 33)),
+            'officeCode'                    => 'required',
+            'positionOldName'             => 'required'
         ]);
-        $plantillaposition = Position::find($position_id);
-        $plantillaposition->position_code                       = $request['positionCode'];
-        $plantillaposition->position_name                       = $request['positionName'];
-        $plantillaposition->sg_no                               = $request['salaryGrade'];
-        $plantillaposition->position_short_name                 = $request['positionNameShortname'];
+        $plantillaposition = PlantillaPosition::find($pp_id);
+        $plantillaposition->position_id                       = $request['positionTitle'];
+        $plantillaposition->item_no                           = $request['itemNo'];
+        $plantillaposition->sg_no                             = $request['salaryGrade'];
+        $plantillaposition->office_code                       = $request['officeCode'];
+        $plantillaposition->old_position_name                 = $request['positionOldName'];
         $plantillaposition->save();
         Session::flash('alert-success', 'Position Updated Successfully');
         return back()->with('success','Updated Successfully');

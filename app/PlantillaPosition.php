@@ -20,7 +20,7 @@ class PlantillaPosition extends Model
     }
     public function position()
     {
-        return $this->hasOne('App\Position', 'position_id', 'pp_id');
+        return $this->hasOne('App\Position', 'position_id', 'position_id');
     }
     public function office()
     {

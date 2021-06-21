@@ -36,7 +36,7 @@
                                 name="positionTitle" data-live-search="true" id="positionTitle" data-size="4" data-width="100%">
                                 <option></option>
                                 @foreach($position as $positions)
-                                <option style="width:350px;"
+                                <option data-position="{{ $positions }}" style="width:350px;"
                                     {{ old('positionTitle') == $positions->position_id ? 'selected' : '' }}
                                     value="{{ $positions->position_id}}">{{ $positions->position_name }}</option>
                                 @endforeach

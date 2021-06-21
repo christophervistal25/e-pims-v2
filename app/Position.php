@@ -67,7 +67,7 @@ class Position extends Model
     }
     public function plantilla_positions()
     {
-        return $this->belongsTo(PlantillaPosition::class, 'position_id', 'pp_id');
+        return $this->belongsTo(PlantillaPosition::class, 'position_id', 'position_id');
     }
 }
 

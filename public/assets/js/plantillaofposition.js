@@ -21,23 +21,25 @@ $(document).ready(function() {
 
 function myFunction() {
     $("input").val("");
-    $("#salaryGrade")
+    $("#positionTitle,#salaryGrade,#officeCode")
         .val("Please Select")
         .trigger("change");
     const errorClass = [
-        "#positionCode",
-        "#positionName",
+        "#positionTitle",
+        "#itemNo",
         "#salaryGrade",
-        "#positionNameShortname"
+        "#officeCode",
+        "#positionOldName"
     ];
     $.each(errorClass, function(index, value) {
         $(`${value}`).removeClass("is-invalid");
     });
     const errorMessage = [
-        "#position-code-error-message",
-        "#position-name-no-error-message",
+        "#position-title-error-message",
+        "#item-error-message",
         "#salary-grade-error-message",
-        "#position-short-name-no-error-message"
+        "#office-error-message",
+        "#old-position-name-error-message"
     ];
     $.each(errorMessage, function(index, value) {
         $(`${value}`).html("");
@@ -192,5 +194,26 @@ $(function() {
                 sortable: false
             }
         ]
+    });
+});
+
+// get value of employees sg, sn, sp
+$(document).ready(function() {
+    $("#positionTitle").change(function(e) {
+        let employeeID = e.target.value;
+        let position = $($("#positionTitle option:selected")[0]).attr(
+            "data-position"
+        );
+        console.log(position);
+        if (position) {
+            position = JSON.parse(position);
+            $("#salaryGrade")
+                .val(position.sg_no)
+                .change();
+        } else {
+            $("#salaryGrade")
+                .val("")
+                .change();
+        }
     });
 });
