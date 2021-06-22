@@ -21,7 +21,7 @@
 
 {{-- FORM AND TABLE --}}
 <div class="content container-fluid">
-    <div class="kanban-board card mb-0">
+    <div class="kanban-board card shadow mb-0">
         <div class="card-body">
             <form action="{{ route('step-increment.update', $stepIncrement->id ) }}" method="POST"
                 id="formStepIncrement">
@@ -29,8 +29,7 @@
                 @method('PUT')
                 <div class="row">
                     <div class="col-12">
-                        <div class="alert alert-secondary text-center font-weight-bold" role="alert">Edit Step Increment
-                        </div>
+                        <div class="alert alert-secondary text-center font-weight-bold" role="alert">EDIT STEP INCREMENT</div>
                     </div>
                     <div class="card-body">
                         <div class="form-group col-12 col-lg-11">
@@ -182,7 +181,7 @@
                         <div class="form-group col-12 col-lg-12" id="buttons">
                             {{-- <a href="/step-increment" type="button" id="btnCancel" class="form-control col-5 btn btn-warning float-right">Back</a> --}}
                             <button type="submit" id="btnUpdate"
-                                class="form-control col-12 float-right btn btn-success mb-3"><i class="fas fa-check"></i> Update</button>
+                                class="form-control col-12 float-right btn btn-success mb-3 shadow"><i class="fas fa-check"></i> Update</button>
                         </div>
                     </div>
                 </div>

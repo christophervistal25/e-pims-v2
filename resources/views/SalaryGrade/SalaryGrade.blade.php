@@ -26,7 +26,7 @@
                     @csrf
                     <div class="row">
                         <div class="form-group col-12 col-lg-6">
-                            <label>Salary Grade <span class="text-danger">*</span></label>
+                            <label class="font-weight-bold text-sm">SALARY GRADE<span class="text-danger">*</span></label>
                             <select name="sgNo" value="{{ old('sgNo') }}" class="select floating" id="sgNo">
                                 <option selected>Please Select</option>s
                                 @foreach (range(1, 33) as $salarygrade)
@@ -154,7 +154,7 @@
                         
                         <div class="row">
                             <div class="form-group col-12 col-lg-6 mt-3">
-                            <label>Salary Grade Year <span class="text-danger">*</span></label>
+                            <label class="font-weight-bold text-sm">SALARY GRADE YEAR<span class="text-danger">*</span></label>
                             <select id="sgYear" name="sgYear" value="{{ old('sgYear') }}" class="select floating">
                                 <option>Please Select</option>
                                 {{ $year2 = date("Y",strtotime("-1 year")) }}

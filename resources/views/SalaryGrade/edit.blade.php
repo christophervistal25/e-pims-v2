@@ -19,7 +19,7 @@
                     @method('PUT')
                     <div class="row">
                         <div class="form-group col-6 col-lg-6">
-                            <label>Salary Grade <span class="text-danger">*</span></label>
+                            <label class="font-weight-bold text-sm">SALARY GRADE<span class="text-danger">*</span></label>
                             <select name="sgNo" value="{{ old('sgNo')}}"
                                 class="select floating {{ $errors->has('sgNo')  ? 'is-invalid' : ''}}" id="sgNo"
                                 disabled>
@@ -184,7 +184,7 @@
                         
                         <div class="row">
                             <div class="form-group col-12 col-lg-6 mb-0 mt-2">
-                            <label>Salary Grade Year <span class="text-danger">*</span></label>
+                            <label class="font-weight-bold text-sm">SALARY GRADE YEAR<span class="text-danger">*</span></label>
                             <select name="sgYear" value="{{ old('sgYear') }}" class="select floating" disabled>
                                 <option>Please Select</option>
                                 {{ $year2 = date("Y",strtotime("-1 year")) }}

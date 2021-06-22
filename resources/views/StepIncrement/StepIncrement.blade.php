@@ -34,8 +34,7 @@
                     <div class="row">
 
                         <div class="col-12">
-                            <div class="alert alert-secondary text-center font-weight-bold" role="alert">Add Step
-                                Increment</div>
+                            <div class="alert alert-secondary text-center font-weight-bold" role="alert">ADD STEP INCREMENT</div>
                         </div>
 
                         <div class="card-body">
