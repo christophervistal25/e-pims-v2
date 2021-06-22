@@ -195,7 +195,7 @@
                                         </div>
                                     </td>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <button class="btn btn-sm rounded-circle shadow btn-success"><i
                                                 class="fa fa-edit"></i></button>
                                         &nbsp;

@@ -250,13 +250,12 @@
                     </label>
                 </div>
                 <div class="float-start">
-                    <button type="button" title="New Application"
-                        class="text-white shadow rounded-circle btn btn-primary ml-3"><i
-                            class="las la-user-plus"></i></button>
-                    <button type="button" class="text-white shadow rounded-circle btn btn-success"
-                        title="Save Changes"><i class="lar la-save"></i></button>
-                    <button type="button" class="text-white shadow rounded-circle btn btn-dark" title="Print"><i
-                            class="las la-print"></i></button>
+                    <button type="button" class="text-white shadow btn btn-primary ml-3"><i
+                            class="las la-user-plus"></i> New Application</button>
+                    <button type="button" class="text-white shadow btn btn-success"><i class="lar la-save"></i> Save
+                        Changes</button>
+                    <button type="button" class="text-white shadow btn btn-dark px-5"><i class="las la-print">
+                        </i> Print</button>
                 </div>
 
             </div>
@@ -301,7 +300,7 @@
                                     </div>
                                 </td>
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <button class="btn btn-sm rounded-circle shadow btn-success"><i
                                             class="fa fa-edit"></i></button>
                                     &nbsp;
