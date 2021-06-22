@@ -31,14 +31,10 @@
 
                             <div class="form-group col-12 col-lg-6">
                                 <label>Position<span class="text-danger">*</span></label>
-                                <select value=""
-                                    class="form-control selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
-                                    name="positionTitle" data-live-search="true" id="positionTitle" data-size="4" data-width="100%">
-                                    <option></option>
+                                <select name="positionTitle" value="" class="select floating {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
+                                    id="positionTitle" disabled>
                                     @foreach($position as $positions)
-                                    <option style="width:350px;"
-                                    {{ $plantillaofposition->position_id == $positions->position_id ? 'selected' : '?? $plantillaofposition->position_id' }}
-                                        value="{{ $positions->position_id}}">{{ $positions->position_name }}</option>
+                                    <option {{ $plantillaofposition->position_id == $positions->position_id ? 'selected' : '?? $plantillaofposition->position_id' }} value="{{ $positions->position_id}}">{{ $positions->position_name }}</option>
                                     @endforeach
                                 </select>
                                 @if($errors->has('positionTitle'))
@@ -46,6 +42,7 @@
                                     {{ $errors->first('positionTitle') }} </small>
                                 @endif
                             </div>
+
 
                             <div class="form-group col-12 col-md-6 col-lg-6">
                                 <label>Item No</label>
@@ -58,17 +55,16 @@
                                     @endif
                             </div>
 
-
                             <div class="form-group col-12 col-md-6 col-lg-6">
                                 <label>Salary Grade<span class="text-danger">*</span></label>
-                                <select name="salaryGrade" value=""
-                                    class="select floating {{ $errors->has('salaryGrade')  ? 'is-invalid' : ''}}"
-                                    id="salaryGrade">
-                                    <option>Please Select</option>
+                                <select value=""
+                                    class="form-control selectpicker  {{ $errors->has('salaryGrade')  ? 'is-invalid' : ''}}"
+                                    name="salaryGrade" data-live-search="true" id="salaryGrade" data-size="4" data-width="100%">
+                                    <option></option>
                                     @foreach (range(1 , 33) as $salarygrades)
                                     <option
-                                        {{ $plantillaofposition->sg_no == $salarygrades ? 'selected' : '?? $plantillaofposition->sg_no' }}
-                                        value="{{ $salarygrades}}">{{ $salarygrades}}</option>
+                                    {{ $plantillaofposition->sg_no == $salarygrades ? 'selected' : '?? $plantillaofposition->sg_no' }}
+                                    value="{{ $salarygrades}}">{{ $salarygrades}}</option>
                                     @endforeach
                                 </select>
                                 @if($errors->has('salaryGrade'))
@@ -77,6 +73,8 @@
                                 @endif
                             </div>
 
+
+
                             <div class="form-group col-12 col-lg-6">
                                 <label>Office<span class="text-danger">*</span></label>
                                 <select value=""
@@ -84,7 +82,7 @@
                                     name="officeCode" data-live-search="true" id="officeCode" data-size="4" data-width="100%">
                                     <option></option>
                                     @foreach($office as $offices)
-                                    <option style="width:350px;"
+                                    <option
                                     {{ $plantillaofposition->office_code == $offices->office_code ? 'selected' : '' }}
                                         value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
                                     @endforeach

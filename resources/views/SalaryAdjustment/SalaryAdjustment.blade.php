@@ -128,7 +128,7 @@
                     </div>
 
                     <div class="col-lg-4">
-                        <div class="form-group input-group col-12 mb-0 mt-3">
+                        <div class="form-group input-group mb-0 mt-3">
                             <span class="input-group-text">&#8369;</span>
                             <label class="has-float-label">
                                 <input class="form-control" value="" name="salaryPrevious" id="salaryPrevious"
@@ -141,7 +141,7 @@
                     </div>
 
                     <div class="col-lg-4">
-                        <div class="form-group input-group col-12 mb-0 mt-3">
+                        <div class="form-group input-group mb-0 mt-3">
                             <span class="input-group-text">&#8369;</span>
                             <label class="has-float-label">
                                 <input class="form-control" value="" name="salaryNew" id="salaryNew" type="text"
@@ -155,7 +155,7 @@
 
 
                     <div class="col-lg-4">
-                        <div class="form-group input-group col-12 mb-0 mt-3">
+                        <div class="form-group input-group mb-0 mt-3">
                             <span class="input-group-text">&#8369;</span>
                         <label class="has-float-label">
                             <input class="form-control" value="" name="salaryDifference" id="salaryDifference"
@@ -168,7 +168,7 @@
                     </div>
 
                     <div class="form-group form-group submit-section col-12">
-                        <button id="saveBtn" class="btn btn-success submit-btn float-right shadow" type="submit"><i class="fas fa-save"></i> 
+                        <button id="saveBtn" class="btn btn-success submit-btn float-right shadow" type="submit"><i class="fas fa-save"></i>
                             <span id="loading" class="spinner-border spinner-border-sm d-none" role="status"
                                 aria-hidden="false"></span>
                             Save

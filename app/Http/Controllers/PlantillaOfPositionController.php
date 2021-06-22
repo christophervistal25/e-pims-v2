@@ -71,7 +71,6 @@ class PlantillaOfPositionController extends Controller
             'itemNo'                        => 'required',
             'salaryGrade'                   => 'required | in:' . implode(',',range(1, 33)),
             'officeCode'                    => 'required',
-            'positionOldName'             => 'required'
         ]);
         $plantillaposition = new PlantillaPosition;
         $plantillaposition->position_id                       = $request['positionTitle'];
@@ -118,14 +117,11 @@ class PlantillaOfPositionController extends Controller
     public function update(Request $request, $pp_id)
     {
         $this->validate($request, [
-            'positionTitle'                 => 'required',
             'itemNo'                        => 'required',
             'salaryGrade'                   => 'required | in:' . implode(',',range(1, 33)),
             'officeCode'                    => 'required',
-            'positionOldName'             => 'required'
         ]);
         $plantillaposition = PlantillaPosition::find($pp_id);
-        $plantillaposition->position_id                       = $request['positionTitle'];
         $plantillaposition->item_no                           = $request['itemNo'];
         $plantillaposition->sg_no                             = $request['salaryGrade'];
         $plantillaposition->office_code                       = $request['officeCode'];
@@ -143,13 +139,13 @@ class PlantillaOfPositionController extends Controller
      */
     public function destroy($id)
     {
-        Position::find($id)->delete();
+        PlantillaPosition::find($id)->delete();
         return json_encode(array('statusCode'=>200));
     }
 
     public function delete($id)
     {
-        Position::find($id)->delete();
+        PlantillaPosition::find($id)->delete();
         return json_encode(array('statusCode'=>200));
     }
 }

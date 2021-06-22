@@ -175,28 +175,6 @@ $(document).ready(function() {
     });
 });
 
-$(function() {
-    $("#plantillaofposition").DataTable({
-        processing: true,
-        serverSide: true,
-        columnDefs: [{ width: "10%", targets: 4 }],
-        ajax: "/plantilla-of-position-list",
-        columns: [
-            { data: "position", name: "position" },
-            { data: "item_no", name: "item_no" },
-            { data: "sg_no", name: "sg_no" },
-            { data: "office", name: "office" },
-            { data: "old_position_name", name: "old_position_name" },
-            {
-                data: "action",
-                name: "action",
-                searchable: false,
-                sortable: false
-            }
-        ]
-    });
-});
-
 // get value of employees sg, sn, sp
 $(document).ready(function() {
     $("#positionTitle").change(function(e) {
@@ -214,6 +192,86 @@ $(document).ready(function() {
             $("#salaryGrade")
                 .val("")
                 .change();
+        }
+    });
+});
+
+// display position
+$(function() {
+    let table = $("#plantillaofposition").DataTable({
+        processing: true,
+        serverSide: true,
+        destroy: true,
+        retrieve: true,
+        columnDefs: [{ width: "10%", targets: 5 }],
+        ajax: "/plantilla-of-position-list",
+        columns: [
+            { data: "position", name: "position" },
+            { data: "item_no", name: "item_no" },
+            { data: "sg_no", name: "sg_no" },
+            { data: "office", name: "office" },
+            { data: "old_position_name", name: "old_position_name" },
+            {
+                data: "action",
+                name: "action",
+                searchable: false,
+                sortable: false
+            }
+        ]
+    });
+
+    $("#employeeOffice").change(function(e) {
+        console.log(e.target.value);
+        if (e.target.value == "" || e.target.value == "") {
+            table.destroy();
+            table = $("#plantillaofposition").DataTable({
+                processing: true,
+                serverSide: true,
+                columnDefs: [{ width: "10%", targets: 5 }],
+                destroy: true,
+                retrieve: true,
+                ajax: {
+                    url: "/plantilla-of-position-list"
+                },
+                columns: [
+                    { data: "position", name: "position" },
+                    { data: "item_no", name: "item_no" },
+                    { data: "sg_no", name: "sg_no" },
+                    { data: "office", name: "office" },
+                    { data: "old_position_name", name: "old_position_name" },
+                    {
+                        data: "action",
+                        name: "action",
+                        searchable: false,
+                        sortable: false
+                    }
+                ]
+            });
+        } else {
+            table.destroy();
+            table = $("#plantillaofposition").DataTable({
+                processing: true,
+                serverSide: true,
+                columnDefs: [{ width: "10%", targets: 5 }],
+                destroy: true,
+                retrieve: true,
+                ajax: {
+                    url: `/api/plantilla/position/${e.target.value}`
+                },
+                columns: [
+                    { data: "position", name: "position" },
+                    { data: "item_no", name: "item_no" },
+                    { data: "sg_no", name: "sg_no" },
+                    { data: "office", name: "officeoffice_code" },
+                    { data: "old_position_name", name: "old_position_name" },
+                    {
+                        data: "action",
+                        name: "action",
+                        searchable: false,
+                        sortable: false
+                    }
+                ]
+            });
         }
     });
 });
