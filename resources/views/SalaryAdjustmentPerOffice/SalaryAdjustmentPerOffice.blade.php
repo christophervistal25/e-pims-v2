@@ -69,7 +69,6 @@
         </div>
 
         <div id="table" class="page-header ">
-            {{-- {{  count($errors->all()) == 0 ? '' : 'd-none' }} --}}
             <div class="row">
                 <div style="padding-left:35px;" class="col-5 mb-2">
                     <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}"
@@ -80,6 +79,7 @@
                         @endforeach
                         </select>
             </div>
+
             <div class="col-7 mb-2">
                     <div style="padding-right:20px;" class="float-right">
                         <button id="addbutton" class="btn btn-primary float-right" disabled><i class="fa fa-plus"></i> Adjust Salary</button>

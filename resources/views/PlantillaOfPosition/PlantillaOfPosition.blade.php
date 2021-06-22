@@ -60,9 +60,8 @@
                                 data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <option></option>
                                 @foreach (range(1 , 33) as $salarygrades)
-                                <option style="width:350px;" {{ old('salaryGrade') == $salarygrades ? 'selected' : '' }}
-                                    value="{{ $salarygrades}}">
-                                    {{ $salarygrades}}</option>
+                                    <option {{ old('salaryGrade') == $salarygrades ? 'selected' : '' }} value="{{ $salarygrades}}">
+                                        {{ $salarygrades}}</option>
                                 @endforeach
                             </select>
                             <span class="font-weight-bold">SALARY GRADE<span class="text-danger">*</span></span>    
@@ -98,10 +97,8 @@
                                 data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <option></option>
                                 @foreach($office as $offices)
-                                <option style="width:350px;"
-                                    {{ old('officeCode') == $offices->office_code ? 'selected' : '' }}
-                                    value="{{ $offices->office_code}}">
-                                    {{ $offices->office_name }}</option>
+                                    <option {{ old('officeCode') == $offices->office_code ? 'selected' : '' }} value="{{ $offices->office_code}}">
+                                        {{ $offices->office_name }}</option>
                                 @endforeach
                             </select>
                             <span class="font-weight-bold">OFFICE<span class="text-danger">*</span></span>    
@@ -123,25 +120,36 @@
                                     class="fas fa-ban"></i> Cancel</button>
                         </div>
                     </div>
-
-
                 </div>
-
-            </form>
+        </form>
         </div>
+
         <div id="table" class="page-header {{  count($errors->all()) == 0 ? '' : 'd-none' }}">
-            <div style="padding-bottom:10px;" class="row align-items-right">
-                <div class="col-auto float-right ml-auto">
+            <div class="row">
+            <div class="col-5 mb-2">
+                <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}"
+                    name="employeeOffice" data-live-search="true" id="employeeOffice" data-size="5">
+                    <option value="">All</option>
+                    @foreach($office as $offices){
+                        <option value="{{ $offices->office_code }}">{{ $offices->office_name }}</option>
+                    }
+                    @endforeach
+                    </select>
+            </div>
+
+                <div class="col-7 float-right mb-10">
                     <button id="addbutton" class="btn btn-primary submit-btn float-right"><i class="fa fa-plus"></i> Add
                         New Position</button>
                 </div>
-            </div>
+        </div>
+
+
             <div class="table" style="overflow-x:auto;">
                 <table class="table table-bordered text-center" id="plantillaofposition" style="width:100%;">
                     <thead>
                         <tr>
                             <td scope="col" class="text-center font-weight-bold">Position Name</td>
-                            <td scope="col" class="text-center font-weight-bold">Position Name</td>
+                            <td scope="col" class="text-center font-weight-bold">Item No</td>
                             <td scope="col" class="text-center font-weight-bold">Salary Grade</td>
                             <td scope="col" class="text-center font-weight-bold">Office</td>
                             <td scope="col" class="text-center font-weight-bold">Old Position Name</td>

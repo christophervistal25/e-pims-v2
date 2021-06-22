@@ -19,7 +19,7 @@ class CreatePlantillaPositionsTable extends Migration
             $table->string('item_no');
             $table->integer('sg_no');
             $table->string('office_code');
-            $table->string('old_position_name')->nullable;
+            $table->string('old_position_name')->nullable();
             $table->softDeletes()->nullable();
             $table->timestamps();
         });

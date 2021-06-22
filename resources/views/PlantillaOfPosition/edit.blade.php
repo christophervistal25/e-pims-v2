@@ -25,26 +25,80 @@
                 <div class="container">
                     <div class="row">
 
-                        <div class="col-12">
-                            <div class="alert alert-secondary text-center font-weight-bold" role="alert">EDIT POSITION
+
+                    <div class="col-12">
+                        <div class="alert alert-secondary text-center font-weight-bold" role="alert">Edit Position</div>
+                    </div>
+                    <div class="container">
+                        <div class="row justify-content-center align-items-center">
+
+                            <div class="form-group col-12 col-lg-6">
+                                <label>Position<span class="text-danger">*</span></label>
+                                <select name="positionTitle" value="" class="select floating {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
+                                    id="positionTitle" disabled>
+                                    @foreach($position as $positions)
+                                    <option {{ $plantillaofposition->position_id == $positions->position_id ? 'selected' : '?? $plantillaofposition->position_id' }} value="{{ $positions->position_id}}">{{ $positions->position_name }}</option>
+                                    @endforeach
+                                </select>
+                                @if($errors->has('positionTitle'))
+                                <small class="form-text text-danger">
+                                    {{ $errors->first('positionTitle') }} </small>
+                                @endif
                             </div>
                         </div>
                         <div class="container">
                             <div class="row justify-content-center align-items-center">
 
-                                <div class="form-group col-12 col-md-6 col-lg-7">
-                                    <label class="has-float-label mb-0">
-                                        <input value="{{ old('itemNo') ??  $plantillaofposition->item_no}}"
-                                            class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}"
-                                            name="itemNo" id="itemNo" type="text"
-                                            style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                        <span class="font-weight-bold">ITEM NO</span>
-                                    </label>
+
+                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                <label>Item No</label>
+                                <input value="{{ old('itemNo') ??  $plantillaofposition->item_no}}"
+                                    class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}"
+                                    name="itemNo" id="itemNo" type="text" placeholder="Input Position Name">
                                     @if($errors->has('itemNo'))
                                     <small class="form-text text-danger">
                                         {{ $errors->first('itemNo') }} </small>
                                     @endif
-                                </div>
+                            </div>
+
+                            <div class="form-group col-12 col-md-6 col-lg-6">
+                                <label>Salary Grade<span class="text-danger">*</span></label>
+                                <select value=""
+                                    class="form-control selectpicker  {{ $errors->has('salaryGrade')  ? 'is-invalid' : ''}}"
+                                    name="salaryGrade" data-live-search="true" id="salaryGrade" data-size="4" data-width="100%">
+                                    <option></option>
+                                    @foreach (range(1 , 33) as $salarygrades)
+                                    <option
+                                    {{ $plantillaofposition->sg_no == $salarygrades ? 'selected' : '?? $plantillaofposition->sg_no' }}
+                                    value="{{ $salarygrades}}">{{ $salarygrades}}</option>
+                                    @endforeach
+                                </select>
+                                @if($errors->has('salaryGrade'))
+                                <small class="form-text text-danger">
+                                    {{ $errors->first('salaryGrade') }} </small>
+                                @endif
+                            </div>
+
+
+
+                            <div class="form-group col-12 col-lg-6">
+                                <label>Office<span class="text-danger">*</span></label>
+                                <select value=""
+                                    class="form-control selectpicker  {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
+                                    name="officeCode" data-live-search="true" id="officeCode" data-size="4" data-width="100%">
+                                    <option></option>
+                                    @foreach($office as $offices)
+                                    <option
+                                    {{ $plantillaofposition->office_code == $offices->office_code ? 'selected' : '' }}
+                                        value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
+                                    @endforeach
+                                </select>
+                                @if($errors->has('officeCode'))
+                                <small class="form-text text-danger">
+                                    {{ $errors->first('officeCode') }} </small>
+                                @endif
+                            </div>
+
 
                                 <div class="form-group col-12 col-lg-7">
                                     <label class="has-float-label">
