@@ -87,6 +87,35 @@ $(document).ready(function() {
         });
     });
 });
+//  filter position by office
+$(document).ready(function () {
+    let metaData = document.getElementById('positionMetaData').content.replaceAll("|", '"');
+    var metaDataRemoveLast = '[' + metaData.substring(0, metaData.length - 2) + ']';
+    let positionOptionAll = JSON.parse(metaDataRemoveLast);
+    $('#officeCode').change(function (e) {
+        let officeCode = e.target.value;
+        //filter all position data//
+        let positionIdFilter = positionOptionAll.filter(function(position){
+            return position.officeCode == officeCode;
+        });
+        //Remove all option in #positionTitle//
+        function removeOptionsPosition(selectPosition) {
+            var ii, L = selectPosition.options.length - 1;
+            for(ii = L; ii >= 0; ii--) {
+                selectPosition.remove(ii);
+            }
+        }
+        removeOptionsPosition(document.getElementById('positionTitle'));
+        //add position data based in what you select in #officeCode//
+        var i, lengthPositionId = positionIdFilter.length;
+        $('#positionTitle').append('<option></option>');
+        for (i = 0; i < lengthPositionId; i++) {
+            var positionIdFilter_final = positionIdFilter[i];
+            $('#positionTitle').append('<option value="' + positionIdFilter_final.positionId + '">' + positionIdFilter_final.positionId + '</option>');
+        }
+        $("#positionTitle").selectpicker("refresh");
+    });
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 $(document).ready(function() {
