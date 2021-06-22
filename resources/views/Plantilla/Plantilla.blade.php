@@ -14,6 +14,10 @@
 
 </style>
 @endprepend
+
+@prepend('meta-data')
+<meta id="positionMetaData" content="@foreach($plantillaPosition as $plantillaPositions){ |officeCode|:|{{ $plantillaPositions->office_code }}|, |positionId|:|{{ $plantillaPositions->position_id }}|}, @endforeach">
+@endprepend
 @section('content')
 <div class="kanban-board card shadow mb-0">
     <div class="card-body">
@@ -73,11 +77,11 @@
                         class="form-control selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
                         name="positionTitle" data-live-search="true" id="positionTitle" data-size="5" data-width="100%">
                         <option></option>
-                        @foreach($position as $positions)
-                        <option style="width:350px;"
-                            {{ old('positionTitle') == $positions->position_id ? 'selected' : '' }}
-                            value="{{ $positions->position_id}}">{{ $positions->position_name }}</option>
-                        @endforeach
+                        {{-- @foreach($plantillaPosition as $plantillaPositions)
+                        <option
+                            {{ old('positionTitle') == $plantillaPositions->position_id ? 'selected' : '' }}
+                            value="{{ $plantillaPositions->position_id}}">{{ $plantillaPositions->position_id }}</option>
+                        @endforeach --}}
                     </select>
                     <div id='position-title-error-message' class='text-danger text-sm'>
                     </div>
