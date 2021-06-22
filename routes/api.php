@@ -3,15 +3,16 @@ use App\SalaryGrade;
 use App\service_record;
 use App\SalaryAdjustment;
 use Yajra\Datatables\Datatables;
+use App\PlantillaPosition;
 use App\Plantilla;
 
-// Route::get('/salaryList/{sg_no}' , 'Api\PlantillaController@salaryList');
+
 Route::get('/salarySteplist/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@salarySteplist');
 Route::get('/dbmPrevious/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@dbmPrevious');
 Route::get('/dbmCurrent/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@dbmCurrent');
 Route::get('/cscPrevious/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@cscPrevious');
-
 Route::get('/positionSalaryGrade/{positionTitle}' , 'Api\PlantillaController@positionSalaryGrade');
+Route::post('/addPosition' , 'Api\PlantillaController@addPosition');
 
 ///service record
 Route::get('/employee/service/records/{employeeId}', function ($employeeId) {
@@ -34,15 +35,10 @@ Route::get('/employee/service/records/{employeeId}', function ($employeeId) {
                     ->make(true);
 });
 
-
-
 Route::get('step/{sg_no}/{step}' , function ($sgNo, $step) {
     $salaryGrade = SalaryGrade::where('sg_no', $sgNo)->first(['sg_step' . $step]);
     return $salaryGrade;
 });
-
-Route::post('/addPosition' , 'Api\PlantillaController@addPosition');
-
 
 Route::group(['prefix' => 'employee'], function () {
     Route::get('employees', 'Api\EmployeeController@list');
@@ -80,12 +76,10 @@ Route::get('countries', function () {
     return config('countries.all');
 });
 
-
 // Reference Routes.
 Route::post('/employment/status/store', 'Api\ReferenceStatusController@store');
 Route::get('name/extensions', 'Api\ReferenceNameExtensionController@index');
 Route::post('name/extensions/store', 'Api\ReferenceNameExtensionController@store');
-
 
 /////// salary adjustment
 Route::get('/salaryAdjustment/{sg_no}/{sg_step?}/{sg_year}' , 'Api\SalaryAdjustmentController@salaryAdjustment');
@@ -180,4 +174,26 @@ Route::post('/salary-adjustment-per-office', function () {
         $salaryAdjustment->save();
     }
     return response()->json(['success'=>true]);
+});
+
+// plantilla position
+Route::get('/plantilla/position/{officeCode}', function ($office_code) {
+    $data = PlantillaPosition::select('pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name')->with('position:position_id,position_name', 'office:office_code,office_name')->where('office_code', $office_code)->get();
+    return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('position', function ($row) {
+                        return $row->position->position_name;
+                    })
+                    ->addColumn('office', function ($row) {
+                        return $row->office->office_name;
+                    })
+                    ->addColumn('action', function($row){
+
+                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-position.edit', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
+                        $btn = $btn."<a title='Delete Position' id='delete' value='$row->pp_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                        ";
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
 });
