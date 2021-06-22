@@ -22,7 +22,7 @@
 @endprepend
 @section('content')
 @include('ServiceRecords.add-ons.success')
-<div class="kanban-board card mb-0">
+<div class="kanban-board card shadow mb-0">
     <div class="card-body">
         <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  'd-none' : '' }}">
 
@@ -91,10 +91,10 @@
 
                     <div class="form-group col-12 col-lg-4">
                         <label class="has-float-label mb-0">
-                        <input value="{{ $service_record->leave_without_pay ?? old('leavePay') }}"
-                            class="form-control {{ $errors->has('leavePay')  ? 'is-invalid' : ''}}" name="leavePay"
-                            id="leavePay" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span class="font-weight-bold">LEAVE WITHOUT PAY<span class="text-danger">*</span></span>    
+                            <input value="{{ $service_record->leave_without_pay ?? old('leavePay') }}"
+                                class="form-control {{ $errors->has('leavePay')  ? 'is-invalid' : ''}}" name="leavePay"
+                                id="leavePay" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                            <span class="font-weight-bold">LEAVE WITHOUT PAY<span class="text-danger">*</span></span>
                         </label>
                         <div id='leave-pay-error-message' class='text-danger'>
                         </div>
@@ -102,9 +102,9 @@
 
                     <div class="form-group col-12 col-lg-4">
                         <label class="has-float-label mb-0">
-                        <input class="form-control" value="{{ $service_record->separation_date }}" name="date" id="date"
-                            type="date" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span class="font-weight-bold">DATE<span class="text-danger">*</span></span>    
+                            <input class="form-control" value="{{ $service_record->separation_date }}" name="date"
+                                id="date" type="date" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                            <span class="font-weight-bold">DATE<span class="text-danger">*</span></span>
                         </label>
                         <div id='date-error-message' class='text-danger'>
                         </div>
@@ -155,20 +155,22 @@
 
                     <div class="form-group col-12 col-lg-6">
                         <label class="has-float-label mb-0">
-                        <textarea value="{{ $service_record->separation_cause ?? old('cause') }}"
-                            class="form-control {{ $errors->has('cause')  ? 'is-invalid' : ''}}" name="cause" id="cause"
-                            type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;" rows="3"></textarea>
-                            <span class="font-weight-bold">CAUSE<span class="text-danger">*</span></span>    
+                            <textarea value="{{ $service_record->separation_cause ?? old('cause') }}"
+                                class="form-control {{ $errors->has('cause')  ? 'is-invalid' : ''}}" name="cause"
+                                id="cause" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;"
+                                rows="3"></textarea>
+                            <span class="font-weight-bold">CAUSE<span class="text-danger">*</span></span>
                         </label>
                         <div id='cause-error-message' class='text-danger'>
                         </div>
                     </div>
 
                     <div class="form-group form-group submit-section col-12">
-                        <button type="submit" class="btn btn-success submit-btn float-right">Update</button>
+                        <button type="submit" class="btn btn-success submit-btn float-right"><i
+                                class="fas fa-check"></i> Update</button>
                         <a href="{{ route('service-records.index') }}"><button style="margin-right:10px;" type="button"
                                 class="text-white btn btn-warning submit-btn float-right"><i
-                                    class="la la-arrow-left"></i>Back</button></a>
+                                    class="fas fa-arrow-left"></i> Back</button></a>
                     </div>
 
                 </div>

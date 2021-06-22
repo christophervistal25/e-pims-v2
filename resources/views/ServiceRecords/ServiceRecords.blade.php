@@ -21,7 +21,7 @@
 </style>
 @endprepend
 @section('content')
-<div class="kanban-board card mb-0">
+<div class="kanban-board card shadow mb-0">
     <div class="card-body">
         <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
 
@@ -157,13 +157,13 @@
                     
 
                     <div class="form-group form-group submit-section col-12">
-                        <button id="saveBtn" class="btn btn-success submit-btn float-right" type="submit">
+                        <button id="saveBtn" class="btn btn-success submit-btn float-right" type="submit"><i class="fas fa-save"></i> 
                             <span id="loading" class="spinner-border spinner-border-sm d-none" role="status"
                                 aria-hidden="false"></span>
                             Save
                         </button>
                         <button style="margin-right:10px;" type="button" onclick="myFunction()" id="cancelbutton1"
-                            class="text-white btn btn-warning submit-btn float-right">Cancel</button>
+                            class="text-white btn btn-warning submit-btn float-right"><i class="fas fa-ban"></i> Cancel</button>
                         {{-- onclick="reset()" --}}
                     </div>
 
