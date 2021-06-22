@@ -123,14 +123,14 @@
 
 
                 <div class="float-left">
-                    <button title="New Record" type="button" class="text-white rounded-circle shadow btn btn-primary"><i
-                            class="las la-user-plus"></i></button>
-                    <button title="Save Changes" type="button"
-                        class="text-white rounded-circle shadow btn btn-success"><i class="lar la-save"></i></button>
-                    <button title="Print Start Balances" type="button"
-                        class="text-white rounded-circle shadow btn btn-dark"><i class="las la-print"></i></button>
-                    <button title="Cancel Record" type="button"
-                        class="text-white rounded-circle shadow btn btn-danger"><i class="las la-ban"></i></button>
+                    <button type="button" class="text-white shadow btn btn-primary"><i class="las la-user-plus"></i> New
+                        Record</button>
+                    <button type="button" class="text-white shadow btn btn-success"><i class="lar la-save"></i> Save
+                        Changes</button>
+                    <button type="button" class="text-white px-5 shadow btn btn-dark"><i class="las la-print"></i>
+                        Print</button>
+                    <button type="button" class="text-white shadow btn btn-danger"><i
+                            class="las la-ban"></i> Cancel Record</button>
                 </div>
             </div>
 
@@ -140,18 +140,18 @@
                 <div class="col-lg-12">
                     <table class="table table-hover">
                         <tr>
-                            <th>Date Started</th>
-                            <th>Name of Employee</th>
-                            <th>Vacation Leave</th>
-                            <th>Sick Leave</th>
-                            <th>Actions</th>
+                            <th class="text-center">Date Started</th>
+                            <th class="text-center">Name of Employee</th>
+                            <th class="text-center">Vacation Leave</th>
+                            <th class="text-center">Sick Leave</th>
+                            <th class="text-center">Actions</th>
                         </tr>
                         <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>
+                            <td class="text-center">1</td>
+                            <td class="text-center">1</td>
+                            <td class="text-center">1</td>
+                            <td class="text-center">1</td>
+                            <td class="text-center">
                                 <button class=' btn btn-sm rounded-circle shadow btn-success'>
                                     <i class='fa fa-edit'></i>
                                 </button>
