@@ -155,12 +155,12 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="text-right">
-                                    <button class="btn btn-primary rounded-circle shadow text-white" title="New Record"
-                                        type="button"><i class="las la-user-plus"></i></button>
-                                    <button class="btn btn-success rounded-circle shadow text-white"
-                                        title="Save Changes" type="button"><i class="lar la-save"></i></button>
-                                    <button class="btn btn-danger text-white rounded-circle shadow"
-                                        title="Cancel Record" type="button"><i class="las la-ban"></i></button>
+                                    <button class="btn btn-primary shadow text-white" type="button"><i
+                                            class="las la-user-plus"></i> New Record</button>
+                                    <button class="btn btn-success shadow text-white" type="button"><i
+                                            class="lar la-save"></i> Save Changes</button>
+                                    <button class="btn btn-danger text-white shadow" type="button"><i
+                                            class="las la-ban"></i> Cancel Record</button>
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -203,7 +203,7 @@
                             <th class="text-center">1</th>
                             <th class="text-center">1</th>
                             <th class="text-center">1</th>
-                            <th>
+                            <th class="text-center">
                                 <button class="btn btn-sm rounded-circle shadow btn-success"><i
                                         class="fa fa-edit"></i></button>
                                 &nbsp;
