@@ -89,13 +89,19 @@ $(document).ready(function() {
 });
 //  filter position by office
 $(document).ready(function () {
+    //plantillaPositionMetaData
+    let plantillaMetaData = document.getElementById('plantillaPositionMetaData').content.replaceAll("|", '"');
+    var plantillaMetaDataRemoveLast = '[' + plantillaMetaData.substring(0, plantillaMetaData.length - 2) + ']';
+    let plantillaPositionOptionAll = JSON.parse(plantillaMetaDataRemoveLast);
+
+
     let metaData = document.getElementById('positionMetaData').content.replaceAll("|", '"');
     var metaDataRemoveLast = '[' + metaData.substring(0, metaData.length - 2) + ']';
     let positionOptionAll = JSON.parse(metaDataRemoveLast);
     $('#officeCode').change(function (e) {
         let officeCode = e.target.value;
-        //filter all position data//
-        let positionIdFilter = positionOptionAll.filter(function(position){
+        //filter all position data in plantilla//
+        let plantillaPositionIdFilter = plantillaPositionOptionAll.filter(function(position){
             return position.officeCode == officeCode;
         });
         //Remove all option in #positionTitle//
@@ -107,11 +113,15 @@ $(document).ready(function () {
         }
         removeOptionsPosition(document.getElementById('positionTitle'));
         //add position data based in what you select in #officeCode//
-        var i, lengthPositionId = positionIdFilter.length;
+        var i, plantillaLengthPositionId = plantillaPositionIdFilter.length;
         $('#positionTitle').append('<option></option>');
-        for (i = 0; i < lengthPositionId; i++) {
-            var positionIdFilter_final = positionIdFilter[i];
-            $('#positionTitle').append('<option value="' + positionIdFilter_final.positionId + '">' + positionIdFilter_final.positionId + '</option>');
+        for (i = 0; i < plantillaLengthPositionId; i++) {
+            var plantillaPositionIdFilter_final = plantillaPositionIdFilter[i];
+            //filter all position data//
+            let positionIdFilter = positionOptionAll.filter(function(position){
+                return position.positionId == plantillaPositionIdFilter_final.positionId;
+            });
+            $('#positionTitle').append('<option value="' + plantillaPositionIdFilter_final.positionId + '">' + positionIdFilter[0].positionName + '</option>');
         }
         $("#positionTitle").selectpicker("refresh");
     });
