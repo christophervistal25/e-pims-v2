@@ -3,6 +3,8 @@
 @prepend('page-css')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+<link rel="stylesheet"
+    href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
     .swal-content ul {
@@ -14,101 +16,121 @@
 @endprepend
 @section('content')
 @include('PlantillaOfPosition.add-ons.success')
-<div class="kanban-board card mb-0">
+<div class="kanban-board shadow card mb-0">
     <div class="card-body">
         <div id="add" class="page-header {{  count($errors->all())  !== 0 ?  '' : '' }}">
             <form action="{{ route('plantilla-of-position.update', $plantillaofposition->pp_id) }}" method="post">
                 @csrf
                 @method('PUT')
-                <div class="row">
+                <div class="container">
+                    <div class="row">
 
-
-                    <div class="col-12">
-                        <div class="alert alert-secondary text-center font-weight-bold" role="alert">Edit Position</div>
-                    </div>
-                    <div class="container">
-                        <div class="row justify-content-center align-items-center">
-
-                            <div class="form-group col-12 col-lg-6">
-                                <label>Position<span class="text-danger">*</span></label>
-                                <select value=""
-                                    class="form-control selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
-                                    name="positionTitle" data-live-search="true" id="positionTitle" data-size="4" data-width="100%">
-                                    <option></option>
-                                    @foreach($position as $positions)
-                                    <option style="width:350px;"
-                                    {{ $plantillaofposition->position_id == $positions->position_id ? 'selected' : '?? $plantillaofposition->position_id' }}
-                                        value="{{ $positions->position_id}}">{{ $positions->position_name }}</option>
-                                    @endforeach
-                                </select>
-                                @if($errors->has('positionTitle'))
-                                <small class="form-text text-danger">
-                                    {{ $errors->first('positionTitle') }} </small>
-                                @endif
+                        <div class="col-12">
+                            <div class="alert alert-secondary text-center font-weight-bold" role="alert">EDIT POSITION
                             </div>
+                        </div>
+                        <div class="container">
+                            <div class="row justify-content-center align-items-center">
 
-                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                <label>Item No</label>
-                                <input value="{{ old('itemNo') ??  $plantillaofposition->item_no}}"
-                                    class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}"
-                                    name="itemNo" id="itemNo" type="text" placeholder="Input Position Name">
+                                <div class="form-group col-12 col-md-6 col-lg-7">
+                                    <label class="has-float-label mb-0">
+                                        <input value="{{ old('itemNo') ??  $plantillaofposition->item_no}}"
+                                            class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}"
+                                            name="itemNo" id="itemNo" type="text"
+                                            style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                        <span class="font-weight-bold">ITEM NO</span>
+                                    </label>
                                     @if($errors->has('itemNo'))
                                     <small class="form-text text-danger">
                                         {{ $errors->first('itemNo') }} </small>
                                     @endif
-                            </div>
+                                </div>
 
+                                <div class="form-group col-12 col-lg-7">
+                                    <label class="has-float-label">
+                                        <select value=""
+                                            class="form-control selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
+                                            name="positionTitle" data-live-search="true" id="positionTitle"
+                                            data-size="4" data-width="100%"
+                                            style="outline: none; box-shadow: 0px 0px 0p transparent;">
+                                            <option></option>
+                                            @foreach($position as $positions)
+                                            <option style="width:350px;"
+                                                {{ $plantillaofposition->position_id == $positions->position_id ? 'selected' : '?? $plantillaofposition->position_id' }}
+                                                value="{{ $positions->position_id}}">{{ $positions->position_name }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                        <span class="font-weight-bold">POSITION<span class="text-danger">*</span></span>
+                                    </label>
+                                    @if($errors->has('positionTitle'))
+                                    <small class="form-text text-danger">
+                                        {{ $errors->first('positionTitle') }} </small>
+                                    @endif
+                                </div>
 
-                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                <label>Salary Grade<span class="text-danger">*</span></label>
-                                <select name="salaryGrade" value=""
-                                    class="select floating {{ $errors->has('salaryGrade')  ? 'is-invalid' : ''}}"
-                                    id="salaryGrade">
-                                    <option>Please Select</option>
-                                    @foreach (range(1 , 33) as $salarygrades)
-                                    <option
-                                        {{ $plantillaofposition->sg_no == $salarygrades ? 'selected' : '?? $plantillaofposition->sg_no' }}
-                                        value="{{ $salarygrades}}">{{ $salarygrades}}</option>
-                                    @endforeach
-                                </select>
-                                @if($errors->has('salaryGrade'))
-                                <small class="form-text text-danger">
-                                    {{ $errors->first('salaryGrade') }} </small>
-                                @endif
-                            </div>
-
-                            <div class="form-group col-12 col-lg-6">
-                                <label>Office<span class="text-danger">*</span></label>
-                                <select value=""
-                                    class="form-control selectpicker  {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
-                                    name="officeCode" data-live-search="true" id="officeCode" data-size="4" data-width="100%">
-                                    <option></option>
-                                    @foreach($office as $offices)
-                                    <option style="width:350px;"
-                                    {{ $plantillaofposition->office_code == $offices->office_code ? 'selected' : '' }}
-                                        value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
-                                    @endforeach
-                                </select>
-                                @if($errors->has('officeCode'))
-                                <small class="form-text text-danger">
-                                    {{ $errors->first('officeCode') }} </small>
-                                @endif
-                            </div>
-
-
-
-                            <div class="form-group col-12 col-md-6 col-lg-6">
-                                <label>Old Position Name<span class="text-danger">*</span></label>
-                                <input
-                                    value="{{ old('positionOldName') ?? $plantillaofposition->old_position_name }}"
-                                    class="form-control {{ $errors->has('positionOldName')  ? 'is-invalid' : ''}}"
-                                    name="positionOldName" id="positionOldName" type="text"
-                                    placeholder="">
+                                <div class="form-group col-12 col-md-6 col-lg-7">
+                                    <label class="has-float-label mb-0">
+                                        <input
+                                            value="{{ old('positionOldName') ?? $plantillaofposition->old_position_name }}"
+                                            class="form-control {{ $errors->has('positionOldName')  ? 'is-invalid' : ''}}"
+                                            name="positionOldName" id="positionOldName" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                        <span class="font-weight-bold">OLD POSITION NAME<span
+                                                class="text-danger">*</span></span>
+                                    </label>
                                     @if($errors->has('positionOldName'))
                                     <small class="form-text text-danger">
                                         {{ $errors->first('positionOldName') }} </small>
                                     @endif
+                                </div>
+                                <div class="form-group col-12 col-lg-7">
+                                    <label class="has-float-label">
+                                        <select value=""
+                                            class="form-control selectpicker  {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
+                                            name="officeCode" data-live-search="true" id="officeCode" data-size="4"
+                                            data-width="100%"
+                                            style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                            <option></option>
+                                            @foreach($office as $offices)
+                                            <option style="width:350px;"
+                                                {{ $plantillaofposition->office_code == $offices->office_code ? 'selected' : '' }}
+                                                value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <span class="font-weight-bold">OFFICE<span class="text-danger">*</span></span>
+                                    </label>
+                                    @if($errors->has('officeCode'))
+                                    <small class="form-text text-danger">
+                                        {{ $errors->first('officeCode') }} </small>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-12 col-md-6 col-lg-7">
+                                    <label class="font-weight-bold text-sm mr-2 mt-0 mb-0">SALARY GRADE<span class="text-danger">*</span></label>
+                                        <select name="salaryGrade" value=""
+                                            class="select floating {{ $errors->has('salaryGrade')  ? 'is-invalid' : ''}}"
+                                            id="salaryGrade"
+                                            <option>Please Select</option>
+                                            @foreach (range(1 , 33) as $salarygrades)
+                                            <option
+                                                {{ $plantillaofposition->sg_no == $salarygrades ? 'selected' : '?? $plantillaofposition->sg_no' }}
+                                                value="{{ $salarygrades}}">{{ $salarygrades}}</option>
+                                            @endforeach
+                                        </select>
+                                    @if($errors->has('salaryGrade'))
+                                    <small class="form-text text-danger">
+                                        {{ $errors->first('salaryGrade') }} </small>
+                                    @endif
+                                </div>
+
+
+
+
                             </div>
+
+
+
+
 
                             <div class="form-group form-group submit-section col-12">
                                 <button id="saveBtn" class="btn btn-success submit-btn float-right" type="submit">
@@ -117,7 +139,8 @@
                                     <i class="fas fa-save"></i> Save
                                 </button>
                                 <a href="/plantilla-of-position"><button style="margin-right:10px;" type="button"
-                                        class="text-white btn btn-warning submit-btn float-right"><i class="fas fa-arrow-left"></i> Back</button></a>
+                                        class="text-white btn btn-warning submit-btn float-right"><i
+                                            class="fas fa-arrow-left"></i> Back</button></a>
                             </div>
                         </div>
                     </div>

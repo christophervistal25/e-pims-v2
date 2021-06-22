@@ -3,6 +3,7 @@
 @prepend('page-css')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+<link rel="stylesheet" href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css"/>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
     .swal-content ul {
@@ -29,11 +30,53 @@
                 <div class="container">
                     <div class="row justify-content-center align-items-center">
 
-                        <div class="form-group col-12 col-lg-6">
-                            <label>Position<span class="text-danger">*</span></label>
+                        <div class="form-group col-12 col-md-6 col-lg-7">
+                            <label class="has-float-label mb-0">
+                            <input value="{{ old('itemNo') }}"
+                                class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" name="itemNo"
+                                id="itemNo" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <span class="font-weight-bold">ITEM NO.<span class="text-danger">*</span></span>    
+                            </label>
+                            <div id='item-error-message' class='text-danger text-sm'>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-12 col-lg-7">
+                            <label class="has-float-label mb-0">
+                            <input value="{{ old('positionOldName') }}"
+                                class="form-control {{ $errors->has('positionOldName')  ? 'is-invalid' : ''}}"
+                                name="positionOldName" id="positionOldName" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <span class="font-weight-bold">OLD POSITION NAME<span class="text-danger">*</span></span>    
+                            </label>
+                            <div id='old-position-name-error-message' class='text-danger text-sm'>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-12 col-md-6 col-lg-7">
+                            <label class="has-float-label mb-0">
+                            <select value=""
+                                class="form-control selectpicker  {{ $errors->has('salaryGrade')  ? 'is-invalid' : ''}}"
+                                name="salaryGrade" data-live-search="true" id="salaryGrade" data-size="4"
+                                data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <option></option>
+                                @foreach (range(1 , 33) as $salarygrades)
+                                <option style="width:350px;" {{ old('salaryGrade') == $salarygrades ? 'selected' : '' }}
+                                    value="{{ $salarygrades}}">
+                                    {{ $salarygrades}}</option>
+                                @endforeach
+                            </select>
+                            <span class="font-weight-bold">SALARY GRADE<span class="text-danger">*</span></span>    
+                        </label>
+                            <div id='salary-grade-error-message' class='text-danger text-sm'>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-12 col-lg-7">
+                            <label class="has-float-label mb-0">
                             <select value=""
                                 class="form-control selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
-                                name="positionTitle" data-live-search="true" id="positionTitle" data-size="4" data-width="100%">
+                                name="positionTitle" data-live-search="true" id="positionTitle" data-size="4"
+                                data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <option></option>
                                 @foreach($position as $positions)
                                 <option data-position="{{ $positions }}" style="width:350px;"
@@ -41,58 +84,33 @@
                                     value="{{ $positions->position_id}}">{{ $positions->position_name }}</option>
                                 @endforeach
                             </select>
+                            <span class="font-weight-bold">POSITION<span class="text-danger">*</span></span>    
+                        </label>
                             <div id='position-title-error-message' class='text-danger text-sm'>
                             </div>
                         </div>
 
-                        <div class="form-group col-12 col-md-6 col-lg-6">
-                            <label>Item No.<span class="text-danger">*</span></label>
-                            <input value="{{ old('itemNo') }}"
-                                class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}"
-                                name="itemNo" id="itemNo" type="text" placeholder="">
-                            <div id='item-error-message' class='text-danger text-sm'>
-                            </div>
-                        </div>
-
-                        <div class="form-group col-12 col-md-6 col-lg-6">
-                            <label>Salary Grade<span class="text-danger">*</span></label>
-                            <select value=""
-                                class="form-control selectpicker  {{ $errors->has('salaryGrade')  ? 'is-invalid' : ''}}"
-                                name="salaryGrade" data-live-search="true" id="salaryGrade" data-size="4" data-width="100%">
-                                <option></option>
-                                @foreach (range(1 , 33) as $salarygrades)
-                                    <option style="width:350px;" {{ old('salaryGrade') == $salarygrades ? 'selected' : '' }} value="{{ $salarygrades}}">
-                                        {{ $salarygrades}}</option>
-                                @endforeach
-                            </select>
-                            <div id='salary-grade-error-message' class='text-danger text-sm'>
-                            </div>
-                        </div>
-
-                        <div class="form-group col-12 col-lg-6">
-                            <label>Office<span class="text-danger">*</span></label>
+                        <div class="form-group col-12 col-lg-7">
+                            <label class="has-float-label mb-0">
                             <select value=""
                                 class="form-control selectpicker  {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
-                                name="officeCode" data-live-search="true" id="officeCode" data-size="4" data-width="100%">
+                                name="officeCode" data-live-search="true" id="officeCode" data-size="4"
+                                data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <option></option>
                                 @foreach($office as $offices)
-                                    <option style="width:350px;" {{ old('officeCode') == $offices->office_code ? 'selected' : '' }} value="{{ $offices->office_code}}">
-                                        {{ $offices->office_name }}</option>
+                                <option style="width:350px;"
+                                    {{ old('officeCode') == $offices->office_code ? 'selected' : '' }}
+                                    value="{{ $offices->office_code}}">
+                                    {{ $offices->office_name }}</option>
                                 @endforeach
                             </select>
+                            <span class="font-weight-bold">OFFICE<span class="text-danger">*</span></span>    
+                        </label>
                             <div id='office-error-message' class='text-danger text-sm'>
                             </div>
                         </div>
 
-                        <div class="form-group col-12 col-lg-6">
-                            <label>Old Position Name</label>
-                            <input value="{{ old('positionOldName') }}"
-                                class="form-control {{ $errors->has('positionOldName')  ? 'is-invalid' : ''}}"
-                                name="positionOldName" id="positionOldName" type="text"
-                                placeholder="(optional)">
-                            <div id='old-position-name-error-message' class='text-danger text-sm'>
-                            </div>
-                        </div>
+                        
 
                         <div class="form-group form-group submit-section col-12">
                             <button id="saveBtn" class="btn btn-success submit-btn float-right shadow" type="submit">
@@ -101,7 +119,8 @@
                                 <i class="fas fa-save"></i> Save
                             </button>
                             <button style="margin-right:10px;" type="button" id="cancelbutton1" onclick="myFunction()"
-                                class="text-white btn btn-warning submit-btn float-right shadow"><i class="fas fa-ban"></i> Cancel</button>
+                                class="text-white btn btn-warning submit-btn float-right shadow"><i
+                                    class="fas fa-ban"></i> Cancel</button>
                         </div>
                     </div>
 
