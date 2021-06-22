@@ -50,6 +50,7 @@
                             <div class="row justify-content-center align-items-center">
 
 
+
                             <div class="form-group col-12 col-md-6 col-lg-6">
                                 <label>Item No</label>
                                 <input value="{{ old('itemNo') ??  $plantillaofposition->item_no}}"
