@@ -87,11 +87,11 @@ Route::group(['prefix' => 'employee'], function () {
     Route::post('/exists/personal/educational/background/store', 'PersonalDataSheetController@existingEmployeeStoreEducationalBackground');
     Route::post('/exists/personal/{employee}/civil/service/store', 'PersonalDataSheetController@existingEmployeeStoreCivilService');
     Route::post('/exists/personal/{employee}/work/experience', 'PersonalDataSheetController@existingEmployeeStoreWorkExperience');
-    Route::post('/exists/personal/personal/voluntary', 'PersonalDataSheetController@existingEmployeeStoreVoluntary');
-    Route::post('/exists/personal/learning', 'PersonalDataSheetController@existingEmployeeStoreLearning');
-    Route::post('/exists/personal/other/information', 'PersonalDataSheetController@existingEmployeeStoreOtherInformation');
+    Route::post('/exists/personal/{employee}/voluntary', 'PersonalDataSheetController@existingEmployeeStoreVoluntary');
+    Route::post('/exists/personal/{employee}/learning', 'PersonalDataSheetController@existingEmployeeStoreLearning');
+    Route::post('/exists/personal/{employee}/other/information', 'PersonalDataSheetController@existingEmployeeStoreOtherInformation');
     Route::post('/exists/personal/relevant/queries', 'PersonalDataSheetController@existingEmployeeStoreRelevantQueries');
-    Route::post('/exists/personal/references', 'PersonalDataSheetController@existingEmployeeStoreReferences');
+    Route::post('/exists/personal/{employee}/references', 'PersonalDataSheetController@existingEmployeeStoreReferences');
     Route::post('/exists/personal/issued/id', 'PersonalDataSheetController@existingEmployeeStoreIssuedID');
 
     Route::get('/leave/application', 'EmployeeLeave\LeaveController@show')->name('leave.application.filling');

@@ -351,9 +351,6 @@ export default {
   created() {
     window.addEventListener("keydown", this.isKeyCombinationSave);
     this.workExperience = this.personal_data.work_experience;
-    if (this.workExperience.length === 0) {
-      this.addNewWorkExperienceField();
-    }
     this.noOfFields = this.workExperience.length;
   },
 };

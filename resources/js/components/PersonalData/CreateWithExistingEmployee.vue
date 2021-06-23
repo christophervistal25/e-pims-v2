@@ -146,7 +146,7 @@ export default {
     printPersonalDataSheet(employee_id) {
       window.axios.get(`/print/pds/${employee_id}`).then(() => {
         if (!this.socket.connected) {
-          this.socket = io.connect("http://192.168.1.14:3030");
+          this.socket = io.connect("http://192.168.1.9:3030");
           this.socket.emit("preview_personal_data_sheet");
         } else {
           this.socket.emit("preview_personal_data_sheet");
@@ -198,7 +198,7 @@ export default {
     },
   },
   created() {
-    this.socket = io.connect("http://192.168.1.14:3030");
+    this.socket = io.connect("http://192.168.1.9:3030");
     // set the default tab display to C1
     this.selectedTab = this.tabs[0];
     window.axios

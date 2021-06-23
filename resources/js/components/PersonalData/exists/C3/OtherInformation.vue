@@ -180,7 +180,6 @@ export default {
           special_skill: "",
           non_academic: "",
           organization: "",
-          employee_id: this.personal_data.employee_id,
         },
       ],
       rowErrors: "",
@@ -195,7 +194,6 @@ export default {
   methods: {
     isKeyCombinationSave(event) {
       if (
-        !this.isComplete &&
         event.ctrlKey &&
         event.code.toLowerCase() === "keys" &&
         event.keyCode === 83
@@ -210,7 +208,6 @@ export default {
         special_skill: "",
         non_academic: "",
         organization: "",
-        employee_id: this.personal_data.employee_id,
       });
     },
     skipSection() {
@@ -223,10 +220,10 @@ export default {
       this.isLoading = true;
       window.axios
         .post(
-          "/employee/exists/personal/other/information",
+          `/employee/exists/personal/${this.personal_data.employee_id}/other/information`,
           this.otherInformation
         )
-        .then((response) => {
+        .then(() => {
           this.isComplete = true;
           this.isLoading = false;
           this.$emit("next_tab");

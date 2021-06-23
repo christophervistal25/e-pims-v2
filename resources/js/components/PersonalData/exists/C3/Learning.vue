@@ -238,7 +238,6 @@ export default {
           noOfHours: "",
           typeOfLD: "",
           conducted: "",
-          employee_id: localStorage.getItem("employee_id"),
         },
       ],
       errors: {},
@@ -253,7 +252,6 @@ export default {
   methods: {
     isKeyCombinationSave(event) {
       if (
-        !this.isComplete &&
         event.ctrlKey &&
         event.code.toLowerCase() === "keys" &&
         event.keyCode === 83
@@ -271,28 +269,24 @@ export default {
         number_of_hours: "",
         type_of_id: "",
         sponsored_by: "",
-        employee_id: this.personal_data.employee_id,
       });
     },
     removeField(index) {
       this.learnDev.splice(index, 1);
-    },
-    skipSection() {
-      this.isComplete = true;
-      this.$emit("display-other-information");
     },
     submitLearningAndDevelopment() {
       this.errors = {};
       this.rowErrors = "";
       this.isLoading = true;
       window.axios
-        .post("/employee/exists/personal/learning", this.learnDev)
-        .then((response) => {
+        .post(
+          `/employee/exists/personal/${this.personal_data.employee_id}/learning`,
+          this.learnDev
+        )
+        .then(() => {
           this.isLoading = false;
           this.isComplete = true;
           this.errors = {};
-
-          this.$emit("display-other-information");
         })
         .catch((error) => {
           this.isLoading = false;
@@ -332,9 +326,6 @@ export default {
   created() {
     window.addEventListener("keydown", this.isKeyCombinationSave);
     this.learnDev = this.personal_data.program_attained;
-    if (this.learnDev.length === 0) {
-      this.addNewLearningAndDevelopmentField();
-    }
     this.noOfFields = this.learnDev.length;
   },
 };

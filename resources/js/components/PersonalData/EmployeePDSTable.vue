@@ -338,7 +338,7 @@ export default {
     printPersonalDataSheet(employee_id) {
       window.axios.get(`/print/pds/${employee_id}`).then(() => {
         if (!this.socket.connected) {
-          this.socket = io.connect("http://192.168.200.161:3030");
+          this.socket = io.connect("http://192.168.1.9:3030");
           this.socket.emit("preview_personal_data_sheet");
         } else {
           this.socket.emit("preview_personal_data_sheet");
@@ -347,7 +347,7 @@ export default {
     },
   },
   created() {
-    this.socket = io.connect("http://192.168.200.161:3030");
+    this.socket = io.connect("http://192.168.1.9:3030");
     window.axios.get(`/api/employee/employees`).then((response) => {
       if (response.status === 200) {
         this.employees = response.data;

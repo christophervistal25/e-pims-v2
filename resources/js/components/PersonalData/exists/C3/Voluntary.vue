@@ -203,7 +203,6 @@ export default {
           inclusive_date_to: "",
           no_of_hours: "",
           position: "",
-          employee_id: this.personal_data.employee_id,
         },
       ],
       errors: {},
@@ -213,7 +212,6 @@ export default {
   methods: {
     isKeyCombinationSave(event) {
       if (
-        !this.isComplete &&
         event.ctrlKey &&
         event.code.toLowerCase() === "keys" &&
         event.keyCode === 83
@@ -230,7 +228,6 @@ export default {
         inclusive_date_to: "",
         no_of_hours: "",
         position: "",
-        employee_id: this.personal_data.employee_id,
       });
     },
     removeField(index) {
@@ -241,7 +238,10 @@ export default {
       this.rowErrors = "";
       this.isLoading = true;
       window.axios
-        .post("/employee/exists/personal/personal/voluntary", this.volunOrg)
+        .post(
+          `/employee/exists/personal/${this.personal_data.employee_id}/voluntary`,
+          this.volunOrg
+        )
         .then((response) => {
           this.isLoading = false;
           this.isComplete = true;
@@ -290,10 +290,6 @@ export default {
   created() {
     window.addEventListener("keydown", this.isKeyCombinationSave);
     this.volunOrg = this.personal_data.voluntary_work;
-    // Base default avlues
-    if (this.volunOrg.length === 0) {
-      this.addNewFieldVoluntary();
-    }
     this.noOfFields = this.volunOrg.length;
   },
 };

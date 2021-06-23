@@ -238,7 +238,7 @@ class PersonalDataSheetController extends Controller
         return $this->employeeRepository->addVoluntary($request->all());
     }
 
-    public function existingEmployeeStoreVoluntary(Request $request)
+    public function existingEmployeeStoreVoluntary(Request $request, $employeeId)
     {
         $this->validate($request, [
                '*.name_and_address'    => ['required'],
@@ -253,7 +253,7 @@ class PersonalDataSheetController extends Controller
             '*.no_of_hours'         => 'Number of Hours',
             '*.position'            => 'Position',
         ]);
-        return $this->employeeRepository->existingEmployeeAddVoluntaryWork($request->all());
+        return $this->employeeRepository->existingEmployeeAddVoluntaryWork($request->all(), $employeeId);
     }
 
     public function storeLearning(LearningRequest $request)
@@ -261,7 +261,7 @@ class PersonalDataSheetController extends Controller
         return $this->employeeRepository->addLearning($request->all());
     }
 
-    public function existingEmployeeStoreLearning(Request $request)
+    public function existingEmployeeStoreLearning(Request $request, $employeeID)
     {
         $this->validate($request, [
              '*.title'                   => ['required'],
@@ -279,7 +279,7 @@ class PersonalDataSheetController extends Controller
             '*.sponsored_by'            => 'Conducted/Sponsored',
         ]);
 
-        return $this->employeeRepository->existingEmployeeAddLearning($request->all());
+        return $this->employeeRepository->existingEmployeeAddLearning($request->all(), $employeeID);
     }
 
     public function storeOtherInformation(Request $request)
@@ -292,7 +292,7 @@ class PersonalDataSheetController extends Controller
         return $this->employeeRepository->addOtherInformation($request->all());
     }
 
-    public function existingEmployeeStoreOtherInformation(Request $request)
+    public function existingEmployeeStoreOtherInformation(Request $request, $employeeId)
     {
         $this->validate($request, [
             '*.special_skill' => 'required',
@@ -300,7 +300,7 @@ class PersonalDataSheetController extends Controller
             '*.organization'  => 'required',
         ],[] , ['*.special_skill' => 'Special Skill', '*.non_academic' => 'Non-academic', '*.organization' => 'Organization']);
 
-        return $this->employeeRepository->existingEmployeeAddOtherInformation($request->all());
+        return $this->employeeRepository->existingEmployeeAddOtherInformation($request->all(), $employeeId);
     }
 
     public function storeRelevantQueries(RelevantQueriesRequest $request)
@@ -347,13 +347,13 @@ class PersonalDataSheetController extends Controller
         return $this->employeeRepository->addReferences($request->all());
     }
 
-    public function existingEmployeeStoreReferences(Request $request)
+    public function existingEmployeeStoreReferences(Request $request, $employeeId)
     {
         $this->validate($request, [
             '*.name' => 'required',
         ],[], ['*.name' => 'name']);
 
-        return $this->employeeRepository->existingEmployeeAddReferences($request->all());
+        return $this->employeeRepository->existingEmployeeAddReferences($request->all(), $employeeId);
     }
 
     public function storeIssuedID(GovernmentIssuedIDRequest $request)

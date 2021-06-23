@@ -311,9 +311,6 @@ export default {
   created() {
     window.addEventListener("keydown", this.isKeyCombinationSave);
     this.civilService = this.personal_data.civil_service;
-    if (this.civilService.length === 0) {
-      this.addNewFieldCivilServiceRow();
-    }
   },
 };
 </script>

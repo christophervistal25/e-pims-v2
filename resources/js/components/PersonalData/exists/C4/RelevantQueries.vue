@@ -992,7 +992,6 @@ export default {
   methods: {
     isKeyCombinationSave(event) {
       if (
-        !this.isComplete &&
         event.ctrlKey &&
         event.code.toLowerCase() === "keys" &&
         event.keyCode === 83
