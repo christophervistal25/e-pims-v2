@@ -84,8 +84,8 @@ Route::group(['prefix' => 'employee'], function () {
     Route::post('/exists/personal/information/store', 'PersonalDataSheetController@existingEmployeeStoreInformation');
     Route::post('/exists/personal/family/background/store', 'PersonalDataSheetController@existingEmployeeStoreFamilyBackground');
     Route::post('/exists/personal/educational/background/store', 'PersonalDataSheetController@existingEmployeeStoreEducationalBackground');
-    Route::post('/exists/personal/civil/service/store', 'PersonalDataSheetController@existingEmployeeStoreCivilService');
-    Route::post('/exists/personal/work/experience', 'PersonalDataSheetController@existingEmployeeStoreWorkExperience');
+    Route::post('/exists/personal/{employee}/civil/service/store', 'PersonalDataSheetController@existingEmployeeStoreCivilService');
+    Route::post('/exists/personal/{employee}/work/experience', 'PersonalDataSheetController@existingEmployeeStoreWorkExperience');
     Route::post('/exists/personal/personal/voluntary', 'PersonalDataSheetController@existingEmployeeStoreVoluntary');
     Route::post('/exists/personal/learning', 'PersonalDataSheetController@existingEmployeeStoreLearning');
     Route::post('/exists/personal/other/information', 'PersonalDataSheetController@existingEmployeeStoreOtherInformation');

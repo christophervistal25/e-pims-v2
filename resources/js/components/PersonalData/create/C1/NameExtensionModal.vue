@@ -32,13 +32,13 @@
                 <v-container>
                   <v-row>
                     <v-col cols="12">
-                      <!-- <p class="text-danger text-sm mb-0">
+                      <p class="text-danger text-sm mb-0">
                         {{
                           errors.hasOwnProperty("errors")
                             ? errors.errors.extension[0]
                             : ""
                         }}
-                      </p> -->
+                      </p>
                       <v-text-field
                         :rules="[(v) => !!v || 'Extension name is required']"
                         class="mt-0 form-input"
