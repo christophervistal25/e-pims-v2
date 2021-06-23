@@ -171,12 +171,12 @@ export default {
     };
   },
   watch: {
-    references(from, to) {
+    references(to) {
       this.noOfFields = to.length;
     },
   },
   methods: {
-    isKeyCombinationSave() {
+    isKeyCombinationSave(event) {
       if (
         !this.isComplete &&
         event.ctrlKey &&
@@ -202,10 +202,12 @@ export default {
       }
     },
     submitReferences() {
+      this.errors = {};
+      this.rowErrors = "";
       this.isLoading = true;
       window.axios
         .post("/employee/exists/personal/references", this.references)
-        .then((response) => {
+        .then(() => {
           this.isLoading = false;
           this.isComplete = true;
           this.$emit("display-issued-id");
@@ -213,7 +215,7 @@ export default {
         .catch((error) => {
           this.isLoading = false;
           if (error.response.status === 422) {
-            Object.keys(error.response.data.errors).map((field, index) => {
+            Object.keys(error.response.data.errors).map((field) => {
               let [fieldMessage] = error.response.data.errors[field];
               this.errors[field] = fieldMessage;
             });

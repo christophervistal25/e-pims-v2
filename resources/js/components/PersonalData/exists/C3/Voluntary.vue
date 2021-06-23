@@ -240,6 +240,8 @@ export default {
       this.$emit("display-learning-and-development");
     },
     submitVoluntary() {
+      this.errors = {};
+      this.rowErrors = "";
       this.isLoading = true;
       window.axios
         .post("/employee/exists/personal/personal/voluntary", this.volunOrg)

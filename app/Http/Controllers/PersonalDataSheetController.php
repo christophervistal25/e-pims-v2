@@ -187,7 +187,7 @@ class PersonalDataSheetController extends Controller
         return $this->employeeRepository->addCivilService($request->all());
     }
 
-    public function existingEmployeeStoreCivilService(Request $request)
+    public function existingEmployeeStoreCivilService(Request $request, string $employee_id)
     {
         $this->validate($request, [
             '*.career_service'       => ['required'],
@@ -198,7 +198,8 @@ class PersonalDataSheetController extends Controller
             '*.date_of_validitiy'    => ['nullable', 'date'],
         ],[], ['*.career_service' => 'career service']);
 
-        return $this->employeeRepository->existingEmployeeAddCivilService($request->all());
+        
+        return $this->employeeRepository->existingEmployeeAddCivilService($request->all(), $employee_id);
     }
 
     public function storeWorkExperience(WorkExperienceRequest $request)
@@ -206,7 +207,7 @@ class PersonalDataSheetController extends Controller
         return $this->employeeRepository->addWorkExperience($request->all());
     }
 
-    public function existingEmployeeStoreWorkExperience(Request $request)
+    public function existingEmployeeStoreWorkExperience(Request $request, $employeeId)
     {
         $this->validate($request, [
             '*.from'                  => ['nullable', 'required_with:*.status_of_appointment', 'required_with:*.government_service', 'required_with:*.to', 'date', 'before:*.to'],
@@ -229,7 +230,7 @@ class PersonalDataSheetController extends Controller
              '*.monthly_salary' => 'Monthly Salary',
              '*.salary_job_pay_grade'  => 'Pay Grade',
         ]);
-        return $this->employeeRepository->existingEmployeeAddWorkExperience($request->all());
+        return $this->employeeRepository->existingEmployeeAddWorkExperience($request->all(), $employeeId);
     }
 
     public function storeVoluntary(VoluntaryWorkRequest $request)

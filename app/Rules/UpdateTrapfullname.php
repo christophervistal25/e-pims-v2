@@ -29,8 +29,8 @@ class UpdateTrapfullname implements Rule
         $employee = Employee::where('lastname', request()->lastName)
                             ->where('firstname', request()->firstName)
                             ->where('date_birth', request()->dateOfBirth)
-                            ->where('middlename', request()->middleName)
-                            ->where('extension', request()->extension)
+                            ->where('middlename', request()->middleName ?? '')
+                            ->where('extension', request()->extension ?? '')
                             ->where('employee_id', '!=', request()->employee_id)
                             ->get(['firstname', 'middlename', 'lastname', 'date_birth', 'extension', 'employee_id']);
 

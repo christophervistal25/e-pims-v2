@@ -283,6 +283,8 @@ export default {
       this.$emit("display-other-information");
     },
     submitLearningAndDevelopment() {
+      this.errors = {};
+      this.rowErrors = "";
       this.isLoading = true;
       window.axios
         .post("/employee/exists/personal/learning", this.learnDev)

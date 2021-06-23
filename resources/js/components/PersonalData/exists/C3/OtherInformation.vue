@@ -207,6 +207,8 @@ export default {
       this.$emit("next_tab");
     },
     submitOtherInformation() {
+      this.errors = {};
+      this.rowErrors = "";
       this.isLoading = true;
       window.axios
         .post(

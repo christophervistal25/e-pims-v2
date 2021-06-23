@@ -1003,16 +1003,14 @@ export default {
     markYes(question, others = []) {
       if (this.relevantQueries[`${question}_answer`] !== "yes") {
         this.relevantQueries[`${question}_answer`] = "yes";
-        this.relevantQueries[`${question}_details`] = this.temporary[
-          `${question}_details`
-        ];
+        this.relevantQueries[`${question}_details`] =
+          this.temporary[`${question}_details`];
 
         if (others.length !== 0) {
           others.forEach(
             (other) =>
-              (this.relevantQueries[`${question}_${other}`] = this.temporary[
-                `${question}_${other}`
-              ])
+              (this.relevantQueries[`${question}_${other}`] =
+                this.temporary[`${question}_${other}`])
           );
         }
       }
@@ -1036,6 +1034,7 @@ export default {
       }
     },
     submit() {
+      this.errors = {};
       this.isLoading = true;
       window.axios
         .post(

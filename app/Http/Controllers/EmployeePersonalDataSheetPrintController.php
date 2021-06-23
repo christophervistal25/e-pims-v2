@@ -8,15 +8,16 @@ use App\EmployeeReference;
 use App\Services\MSAccess;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use App\EmployeeInformation;
 use App\EmployeeCivilService;
-use App\EmployeeEducationalBackground;
+use App\EmployeeRelevantQuery;
 use App\EmployeeVoluntaryWork;
 use App\EmployeeSpouseChildren;
 use App\EmployeeWorkExperience;
 use App\EmployeeFamilyBackground;
 use App\EmployeeOtherInformation;
-use App\EmployeeRelevantQuery;
 use App\EmployeeTrainingAttained;
+use App\EmployeeEducationalBackground;
 use CreateEmployeeEducationalBackgroundsTable;
 
 // use App\Http\Traits\PersonalDataSheetCellPrint;
@@ -51,9 +52,8 @@ class EmployeePersonalDataSheetPrintController extends Controller
             if(in_array($column, $fieldsWithPostFix)) {
                 $column .= '_text';
             }
-
-          
-                $values .=  "'" . ($employee->$column  ?? '') . "',";
+            $data = ($employee->$column !== '*' ? $employee->$column : '');
+            $values .=  "'" . ($data  ?? '') . "',";
         }
 
         $values = rtrim($values, ',');
@@ -94,7 +94,8 @@ class EmployeePersonalDataSheetPrintController extends Controller
             $formattedValues = "";
 
             foreach($values as $value) {
-                $formattedValues .=  "'" . ($value  ?? '') . "',";
+                $data = ($value !== '*' ? $value : '');
+                $formattedValues .=  "'" . ($data) . "',";
             }
 
             $formattedValues = rtrim($formattedValues, ',');
@@ -178,7 +179,8 @@ class EmployeePersonalDataSheetPrintController extends Controller
 
                 foreach($r as $column => $record) {
                     if(!in_array($column, $except)) {
-                        $formattedValues .= "'" . ($record  ?? ' ') . "',";
+                        $data = ($record !== "*" ? $record : '');
+                        $formattedValues .= "'" . ($data  ?? ' ') . "',";
                     }
                 }
                 
@@ -256,7 +258,7 @@ class EmployeePersonalDataSheetPrintController extends Controller
         $this->oneToOneInsertion([
             'model'    => $employee,
             'relation' => 'information',
-            'model_name' => EmployeeOtherInformation::class,
+            'model_name' => EmployeeInformation::class,
             'table'    => 'employee_information',
             'except'   => ['EmpIDNo', 'created_at', 'updated_at', 'id', 'old_office_code', 'division_code' , 'first_of_service', 'basic_rate', 'salary_grade', 'step', 'skills', 'hobbies', 'religion', 'swipe_station_no', 'time_reference', 'exempted_swipe', 'active_inactive', 'new_employee', 'PNB_account_no', 'zip_code', 'shifting_employee', 'PHW', 'item_number', 'first_day_of_service'],
             'alias' => [],

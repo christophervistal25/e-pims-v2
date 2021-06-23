@@ -324,9 +324,10 @@ class EmployeeRepository
         return $civilRecords;
     }
 
-    public function existingEmployeeAddCivilService(array $data = []) :array
+    public function existingEmployeeAddCivilService(array $data = [], $employeeId) :array
     {
-        $employee = Employee::find($data[self::FIRST_INDEX]['employee_id']);
+        $employee = Employee::find($employeeId);
+        
         $records = [];
 
         $employee->civil_service()->delete();
@@ -377,9 +378,9 @@ class EmployeeRepository
         return $workExperiences;
     }
 
-    public function existingEmployeeAddWorkExperience(array $data = []) :array
+    public function existingEmployeeAddWorkExperience(array $data = [], $employeeId) :array
     {
-         $employee = Employee::find($data[self::FIRST_INDEX]['employee_id']);
+        $employee = Employee::find($employeeId);
 
          $records = [];
 

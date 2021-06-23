@@ -125,6 +125,7 @@ export default {
       }
     },
     submitIssuedID() {
+      this.errors = {};
       this.isLoading = true;
       window.axios
         .post("/employee/exists/personal/issued/id", this.governmentId)
@@ -136,6 +137,7 @@ export default {
             swal({
               text: "Successfully update personal data sheet",
               icon: "success",
+              timer: 2000,
             });
           }
         })
@@ -144,7 +146,7 @@ export default {
           this.errors = {};
           // Check the error status code.
           if (error.response.status === 422) {
-            Object.keys(error.response.data.errors).map((field, index) => {
+            Object.keys(error.response.data.errors).map((field) => {
               let [fieldMessage] = error.response.data.errors[field];
               this.errors[field] = fieldMessage;
             });

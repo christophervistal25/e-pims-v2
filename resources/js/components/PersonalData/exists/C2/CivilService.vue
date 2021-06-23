@@ -18,11 +18,7 @@
         </h5>
       </div>
 
-      <div
-        class="collapse"
-        :class="!isComplete ? 'show' : ''"
-        :id="isComplete ? 'civilService' : ''"
-      >
+      <div class="collapse show" :id="isComplete ? 'civilService' : ''">
         <div class="card-body">
           <p>Indicate <strong>N/A</strong> if not applicable</p>
           <table class="table table-bordered">
@@ -46,7 +42,15 @@
                 LICENSE
                 <span class="text-secondary">(If Applicable)</span>
               </td>
-              <td rowspan="2" class="pl-4 pr-4" v-if="!isComplete">&nbsp;</td>
+              <td rowspan="2" class="pl-4 pr-4 align-middle">
+                <button
+                  class="btn btn-primary rounded-circle"
+                  v-if="civilService.length === 0"
+                  @click="addNewFieldCivilServiceRow"
+                >
+                  <i class="font-weight-bold fa fa-plus"></i>
+                </button>
+              </td>
             </tr>
             <tr style="background: #eaeaea">
               <td scope="col" class="text-center text-sm">NUMBER</td>
@@ -156,7 +160,7 @@
                     "
                   />
                 </td>
-                <td class="jumbotron" v-if="!isComplete">
+                <td class="jumbotron text-center">
                   <button
                     @click="removeField(index)"
                     class="btn btn-danger font-weight-bold mt-2 rounded-circle"
@@ -164,10 +168,10 @@
                     <i class="fa fa-times"></i>
                   </button>
                 </td>
-                <td v-if="!isComplete">
+                <td class="align-middle">
                   <button
                     v-if="index == personal_data.civil_service.length - 1"
-                    class="btn btn-primary rounded-circle font-weight-bold mt-2"
+                    class="btn btn-primary rounded-circle font-weight-bold"
                     @click="addNewFieldCivilServiceRow"
                   >
                     <i class="fa fa-plus"></i>
@@ -178,23 +182,17 @@
           </table>
           <div class="float-right mb-3">
             <button
-              @click="isComplete = true"
-              class="btn btn-danger font-weight-bold"
-            >
-              SKIP
-            </button>
-
-            <button
-              class="btn btn-primary font-weight-bold"
+              class="btn btn-success"
               :class="
-                Object.keys(errors).length === 0 ? 'btn-primary' : 'btn-danger'
+                Object.keys(errors).length === 0 ? 'btn-success' : 'btn-danger'
               "
               @click="submitCivilService"
-              :disabled="isLoading || isComplete"
-              v-if="!isComplete"
+              :disabled="isLoading"
             >
-              NEXT
-
+              <i class="la la-check" v-if="isComplete"></i>
+              <i class="la la-pencil" v-else></i>
+              <span v-if="isComplete">UPDATED</span>
+              <span v-else>UPDATE</span>
               <div
                 class="spinner-border spinner-border-sm mb-1"
                 v-show="isLoading"
@@ -238,7 +236,6 @@ export default {
   methods: {
     isKeyCombinationSave(event) {
       if (
-        !this.isComplete &&
         event.ctrlKey &&
         event.code.toLowerCase() === "keys" &&
         event.keyCode === 83
@@ -256,17 +253,18 @@ export default {
         place_of_examination: "",
         license_number: "",
         date_of_validitiy: "",
-        employee_id: this.personal_data.employee_id,
       });
     },
     submitCivilService() {
+      this.errors = {};
+      this.rowErrors = "";
       this.isLoading = true;
       window.axios
         .post(
-          "/employee/exists/personal/civil/service/store",
+          `/employee/exists/personal/${this.personal_data.employee_id}/civil/service/store`,
           this.civilService
         )
-        .then((response) => {
+        .then(() => {
           this.errors = {};
           this.isLoading = false;
           this.isComplete = true;
@@ -274,9 +272,10 @@ export default {
         .catch((error) => {
           this.isLoading = false;
           this.errors = {};
+          this.isComplete = false;
           // Check the error status code.
           if (error.response.status === 422) {
-            Object.keys(error.response.data.errors).map((field, index) => {
+            Object.keys(error.response.data.errors).map((field) => {
               let [fieldMessage] = error.response.data.errors[field];
               this.errors[field] = fieldMessage;
             });
@@ -286,9 +285,7 @@ export default {
         });
     },
     removeField(index) {
-      if (index != 0) {
-        this.civilService.splice(index, 1);
-      }
+      this.civilService.splice(index, 1);
     },
     displayRowErrorMessage(index) {
       let parentElement = document.createElement("ul");
