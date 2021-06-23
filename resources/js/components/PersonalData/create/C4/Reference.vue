@@ -88,7 +88,7 @@
           </table>
           <div class="float-right mb-3">
             <button
-              class="btn btn-danger font-weight-bold"
+              class="btn btn-secondary text-white shadow"
               @click="skipSection"
               v-if="!isComplete"
               :disabled="isLoading"
@@ -96,7 +96,7 @@
               SKIP
             </button>
             <button
-              class="btn btn-primary font-weight-bold"
+              class="btn btn-primary shadow"
               @click="submitReferences"
               :disabled="isLoading"
               v-if="!isComplete"

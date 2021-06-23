@@ -373,15 +373,13 @@ export default {
           }
         })
         .catch((error) => {
-          this.isLoading = false;
           this.errors = {};
-
+          this.isLoading = false;
           this.sectionValidatorChecker(Object.keys(error.response.data.errors));
-
           if (error.response.status === 422) {
-            Object.keys(error.response.data.errors).map((field) => {
-              let [fieldMessage] = error.response.data.errors[field];
-              this.errors[field] = fieldMessage;
+            Object.keys(error.response.data.errors).forEach((field) => {
+              let [message] = error.response.data.errors[field];
+              this.errors[field] = message;
             });
           }
         });

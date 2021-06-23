@@ -915,7 +915,7 @@
 
           <div class="float-right mb-3">
             <button
-              class="btn btn-primary font-weight-bold"
+              class="btn btn-primary shadow"
               @click="submit"
               :disabled="isLoading"
               v-if="!isComplete"
@@ -997,16 +997,14 @@ export default {
     markYes(question, others = []) {
       if (this.relevantQueries[question] !== "yes") {
         this.relevantQueries[question] = "yes";
-        this.relevantQueries[`${question}_details`] = this.temporary[
-          `${question}_details`
-        ];
+        this.relevantQueries[`${question}_details`] =
+          this.temporary[`${question}_details`];
 
         if (others.length !== 0) {
           others.forEach(
             (other) =>
-              (this.relevantQueries[`${question}_${other}`] = this.temporary[
-                `${question}_${other}`
-              ])
+              (this.relevantQueries[`${question}_${other}`] =
+                this.temporary[`${question}_${other}`])
           );
         }
       }
@@ -1052,7 +1050,7 @@ export default {
           this.errors = {};
           // Check the error status code.
           if (error.response.status === 422) {
-            Object.keys(error.response.data.errors).map((field, index) => {
+            Object.keys(error.response.data.errors).map((field) => {
               let [fieldMessage] = error.response.data.errors[field];
               this.errors[field] = fieldMessage;
             });

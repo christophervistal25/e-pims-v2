@@ -134,7 +134,7 @@
               <td class="text-center jumbotron">
                 <button
                   v-show="index != 0"
-                  class="btn btn-danger font-weight-bold mt-1 rounded-circle"
+                  class="btn btn-danger mt-1 rounded-circle"
                   @click="removeField(index)"
                 >
                   <i class="fa fa-times"></i>
@@ -143,7 +143,7 @@
               <td class="text-center">
                 <button
                   v-if="index == noOfFields - 1"
-                  class="btn btn-primary rounded-circle font-weight-bold"
+                  class="btn btn-primary rounded-circle"
                   @click="addNewFieldVoluntary"
                 >
                   <i class="fa fa-plus"></i>
@@ -154,14 +154,14 @@
         </table>
         <div class="float-right mb-3">
           <button
-            class="btn btn-danger font-weight-bold"
+            class="btn btn-secondary shadow"
             @click="skipSection"
             v-if="!isComplete"
           >
             SKIP
           </button>
           <button
-            class="btn btn-primary font-weight-bold"
+            class="btn btn-primary shadow"
             @click="submitVoluntary"
             :disabled="isLoading"
             v-if="!isComplete"

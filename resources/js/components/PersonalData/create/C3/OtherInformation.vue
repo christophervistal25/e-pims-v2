@@ -124,14 +124,14 @@
           </table>
           <div class="float-right mb-3">
             <button
-              class="btn btn-danger font-weight-bold"
+              class="btn btn-secondary text-white shadow"
               @click="skipSection"
               v-if="!isComplete"
             >
               SKIP
             </button>
             <button
-              class="btn btn-primary font-weight-bold"
+              class="btn btn-primary shadow"
               @click="submitOtherInformation"
               :disabled="isLoading"
               v-if="!isComplete"
@@ -177,7 +177,7 @@ export default {
     };
   },
   watch: {
-    otherInformation(from, to) {
+    otherInformation(to) {
       this.noOfFields = to.length;
     },
   },

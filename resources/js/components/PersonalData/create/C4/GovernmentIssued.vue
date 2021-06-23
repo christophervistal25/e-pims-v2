@@ -73,7 +73,7 @@
           </table>
           <div class="float-right mb-3">
             <button
-              class="btn btn-primary font-weight-bold"
+              class="btn btn-primary shadow"
               @click="submitIssuedID"
               :disabled="isLoading"
             >
@@ -162,7 +162,7 @@ export default {
           this.errors = {};
           // Check the error status code.
           if (error.response.status === 422) {
-            Object.keys(error.response.data.errors).map((field, index) => {
+            Object.keys(error.response.data.errors).map((field) => {
               let [fieldMessage] = error.response.data.errors[field];
               this.errors[field] = fieldMessage;
             });

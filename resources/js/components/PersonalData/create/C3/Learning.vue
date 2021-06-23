@@ -175,7 +175,7 @@
                 <td>
                   <button
                     v-if="index == noOfFields - 1"
-                    class="btn btn-primary font-weight-bold rounded-circle"
+                    class="btn btn-primary rounded-circle font-weight-bold"
                     @click="addNewLearningAndDevelopmentField"
                   >
                     <i class="fa fa-plus"></i>
@@ -186,14 +186,14 @@
           </table>
           <div class="float-right mb-3">
             <button
-              class="btn btn-danger font-weight-bold"
+              class="btn btn-secondary text-white shadow"
               @click="skipSection"
               v-if="!isComplete"
             >
               SKIP
             </button>
             <button
-              class="btn btn-primary font-weight-bold"
+              class="btn btn-primary shadow"
               @click="submitLearningAndDevelopment"
               :disabled="isLoading"
               v-if="!isComplete"
@@ -242,7 +242,7 @@ export default {
     };
   },
   watch: {
-    learnDev(from, to) {
+    learnDev(to) {
       this.noOfFields = to.length;
     },
   },

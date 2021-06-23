@@ -167,7 +167,7 @@
           </table>
           <div class="float-right mb-3">
             <button
-              class="btn btn-danger font-weight-bold"
+              class="btn btn-warning shadow"
               @click="skipSection"
               v-if="!isComplete"
               :disabled="isLoading"
@@ -175,7 +175,7 @@
               SKIP
             </button>
             <button
-              class="btn btn-primary font-weight-bold"
+              class="btn btn-primary shadow"
               @click="submitCivilService"
               :disabled="isLoading || isComplete"
               v-if="!isComplete"
