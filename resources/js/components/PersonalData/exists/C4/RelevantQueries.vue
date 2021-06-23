@@ -18,11 +18,7 @@
         </h5>
       </div>
 
-      <div
-        class="collapse"
-        :class="!isComplete ? 'show' : ''"
-        :id="isComplete ? 'relevantQueries' : ''"
-      >
+      <div class="collapse show" id="relevantQueries">
         <div class="card-body">
           <!-- {{-- BEGIN CONTENT OF RELEVANT QUERIES --}} -->
           <table class="table table-bordered">
@@ -922,12 +918,18 @@
 
           <div class="float-right mb-3">
             <button
-              class="btn btn-primary font-weight-bold"
+              class="btn btn-success shadow"
               @click="submit"
               :disabled="isLoading"
-              v-if="!isComplete"
+              :class="
+                Object.keys(errors).length === 0 ? 'btn-success' : 'btn-danger'
+              "
             >
-              NEXT
+              <i class="la la-check" v-if="isComplete"></i>
+              <i class="la la-pencil" v-else></i>
+
+              <span v-if="isComplete">UPDATED</span>
+              <span v-else>UPDATE</span>
               <div
                 class="spinner-border spinner-border-sm mb-1"
                 v-show="isLoading"

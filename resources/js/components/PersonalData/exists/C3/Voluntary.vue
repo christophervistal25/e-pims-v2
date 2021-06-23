@@ -18,11 +18,7 @@
       </h5>
     </div>
 
-    <div
-      class="collapse"
-      :class="!isComplete ? 'show' : ''"
-      :id="isComplete ? 'voluntary' : ''"
-    >
+    <div class="collapse show" id="voluntary">
       <div class="card-body">
         <p>Indicate <strong>N/A </strong>if not applicable</p>
         <table class="table table-bordered">
@@ -40,7 +36,15 @@
             <td rowspan="2" class="align-middle text-sm" scope="colgroup">
               POSITION / NATURE OF WORK
             </td>
-            <td rowspan="2" class="align-middle text-sm">&nbsp;</td>
+            <td rowspan="2" class="align-middle text-sm">
+              <button
+                class="btn btn-primary rounded-circle"
+                v-if="volunOrg.length === 0"
+                @click="addNewFieldVoluntary"
+              >
+                <i class="fa fa-plus"></i>
+              </button>
+            </td>
           </tr>
           <tr style="background: #eaeaea">
             <td></td>
@@ -153,19 +157,18 @@
         </table>
         <div class="float-right mb-3">
           <button
-            class="btn btn-danger font-weight-bold"
-            @click="skipSection"
-            v-if="!isComplete"
-          >
-            SKIP
-          </button>
-          <button
-            class="btn btn-primary font-weight-bold"
+            class="btn btn-success shadow"
             @click="submitVoluntary"
             :disabled="isLoading"
-            v-if="!isComplete"
+            :class="
+              Object.keys(errors).length != 0 ? 'btn-danger' : 'btn-success'
+            "
           >
-            NEXT
+            <i class="la la-check" v-if="isComplete"></i>
+            <i class="la la-pencil" v-else></i>
+
+            <span v-if="isComplete">UPDATED</span>
+            <span v-else>UPDATE</span>
             <div
               class="spinner-border spinner-border-sm mb-1"
               v-show="isLoading"
@@ -231,13 +234,7 @@ export default {
       });
     },
     removeField(index) {
-      if (index != 0) {
-        this.volunOrg.splice(index, 1);
-      }
-    },
-    skipSection() {
-      this.isComplete = true;
-      this.$emit("display-learning-and-development");
+      this.volunOrg.splice(index, 1);
     },
     submitVoluntary() {
       this.errors = {};

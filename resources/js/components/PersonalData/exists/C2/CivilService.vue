@@ -182,7 +182,7 @@
           </table>
           <div class="float-right mb-3">
             <button
-              class="btn btn-success"
+              class="btn btn-success shadow"
               :class="
                 Object.keys(errors).length === 0 ? 'btn-success' : 'btn-danger'
               "

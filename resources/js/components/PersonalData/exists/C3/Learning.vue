@@ -19,11 +19,7 @@
         </h5>
       </div>
 
-      <div
-        class="collapse"
-        :class="!isComplete && show_panel ? 'show' : ''"
-        :id="isComplete ? 'learning' : ''"
-      >
+      <div class="collapse show" id="learning">
         <div class="card-body">
           <div
             class="alert alert-info text-center"
@@ -55,7 +51,15 @@
               <td rowspan="2" class="align-middle text-sm" scope="colgroup">
                 CONDUCTED/ SPONSORED (Write in full)
               </td>
-              <td rowspan="2" class="align-middle">&nbsp;</td>
+              <td rowspan="2" class="align-middle">
+                <button
+                  v-if="learnDev.length === 0"
+                  class="btn btn-primary font-weight-bold rounded-circle"
+                  @click="addNewLearningAndDevelopmentField"
+                >
+                  <i class="fa fa-plus"></i>
+                </button>
+              </td>
             </tr>
             <tr style="background: #eaeaea">
               <td></td>
@@ -164,7 +168,6 @@
                 </td>
                 <td class="jumbotron">
                   <button
-                    v-show="index != 0"
                     @click="removeField(index)"
                     class="btn btn-danger font-weight-bold mt-2 rounded-circle"
                   >
@@ -185,19 +188,18 @@
           </table>
           <div class="float-right mb-3">
             <button
-              class="btn btn-danger font-weight-bold"
-              @click="skipSection"
-              v-if="!isComplete"
-            >
-              SKIP
-            </button>
-            <button
-              class="btn btn-primary font-weight-bold"
+              class="btn btn-primary shadow"
               @click="submitLearningAndDevelopment"
               :disabled="isLoading"
-              v-if="!isComplete"
+              :class="
+                Object.keys(errors).length != 0 ? 'btn-danger' : 'btn-success'
+              "
             >
-              NEXT
+              <i class="la la-check" v-if="isComplete"></i>
+              <i class="la la-pencil" v-else></i>
+
+              <span v-if="isComplete">UPDATED</span>
+              <span v-else>UPDATE</span>
               <div
                 class="spinner-border spinner-border-sm mb-1"
                 v-show="isLoading"
@@ -246,7 +248,6 @@ export default {
   watch: {
     learnDev(to) {
       this.noOfFields = to.length;
-      alert(to.length);
     },
   },
   methods: {
@@ -274,9 +275,7 @@ export default {
       });
     },
     removeField(index) {
-      if (index !== 0) {
-        this.learnDev.splice(index, 1);
-      }
+      this.learnDev.splice(index, 1);
     },
     skipSection() {
       this.isComplete = true;

@@ -209,14 +209,14 @@
         </table>
         <div class="float-right mb-3">
           <button
-            class="btn btn-success"
+            class="btn btn-success shadow"
             @click="submitWorkExperience"
             :class="
               Object.keys(errors).length != 0 ? 'btn-danger' : 'btn-success'
             "
             :disabled="isLoading"
           >
-            <i class="fa fa-check" v-if="isComplete"></i>
+            <i class="la la-check" v-if="isComplete"></i>
             <i class="la la-pencil" v-else></i>
 
             <span v-if="isComplete">UPDATED</span>

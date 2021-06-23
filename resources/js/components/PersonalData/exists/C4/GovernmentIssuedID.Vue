@@ -68,11 +68,17 @@
           </table>
           <div class="float-right mb-3">
             <button
-              class="btn btn-primary font-weight-bold"
+              class="btn btn-success"
               @click="submitIssuedID"
               :disabled="isLoading"
+              :class="
+                Object.keys(errors).length === 0 ? 'btn-success' : 'btn-danger'
+              "
             >
-              FINAL TOUCH
+              <i class="la la-check" v-if="isComplete"></i>
+              <i class="la la-pencil" v-else></i>
+              <span v-if="isComplete">UPDATED</span>
+              <span v-else>UPDATE</span>
               <div
                 class="spinner-border spinner-border-sm mb-1"
                 v-show="isLoading"

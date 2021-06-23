@@ -857,15 +857,18 @@
         </div>
         <div class="p-3 float-right">
           <button
-            class="btn btn-success"
+            class="btn btn-success shadow"
             :class="
               Object.keys(errors).length != 0 ? 'btn-danger' : 'btn-success'
             "
             @click="submitPersonalInformation"
             :disabled="isLoading"
           >
-            <i class="fa fa-check text-white" v-if="isComplete"></i>
-            UPDATE
+            <i class="la la-check" v-if="isComplete"></i>
+            <i class="la la-pencil" v-else></i>
+
+            <span v-if="isComplete">UPDATED</span>
+            <span v-else>UPDATE</span>
             <div
               class="spinner-border spinner-border-sm mb-1"
               v-show="isLoading"

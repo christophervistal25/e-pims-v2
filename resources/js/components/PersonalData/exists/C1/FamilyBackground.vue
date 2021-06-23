@@ -475,7 +475,7 @@
         </div>
         <div class="float-right">
           <button
-            class="btn btn-success mr-3 mb-2"
+            class="btn btn-success mr-3 mb-2 shadow"
             @click="submitPersonFamilyBackground"
             :class="
               Object.keys(this.errors).length === 0
@@ -484,8 +484,11 @@
             "
             :disabled="isLoading"
           >
-            <i class="fa fa-check text-white" v-if="isComplete"></i>
-            UPDATE
+            <i class="la la-check" v-if="isComplete"></i>
+            <i class="la la-pencil" v-else></i>
+
+            <span v-if="isComplete">UPDATED</span>
+            <span v-else>UPDATE</span>
             <div
               class="spinner-border spinner-border-sm mb-1"
               role="status"

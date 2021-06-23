@@ -22,11 +22,7 @@
         </h5>
       </div>
 
-      <div
-        class="collapse"
-        :class="!isComplete && show_panel ? 'show' : ''"
-        :id="isComplete ? 'reference' : ''"
-      >
+      <div class="collaps show" id="reference">
         <div class="card-body">
           <p>Indicate <strong>N/A </strong>if not applicable</p>
           <table class="table table-bordered">
@@ -35,6 +31,15 @@
               <td>NAME</td>
               <td>ADDRESS</td>
               <td colspan="2">TEL. NO</td>
+              <td>
+                <button
+                  v-if="noOfFields === 0"
+                  class="btn btn-primary font-weight-bold rounded-circle"
+                  @click="addNewReferenceField"
+                >
+                  <i class="fa fa-plus"></i>
+                </button>
+              </td>
             </tr>
 
             <tbody>
@@ -92,7 +97,6 @@
 
                 <td class="jumbotron text-center">
                   <button
-                    v-show="index != 0"
                     @click="removeField(index)"
                     class="btn btn-danger font-weight-bold rounded-circle"
                   >
@@ -113,20 +117,18 @@
           </table>
           <div class="float-right mb-3">
             <button
-              class="btn btn-danger font-weight-bold"
-              @click="skipSection"
-              v-if="!isComplete"
-              :disabled="isLoading"
-            >
-              SKIP
-            </button>
-            <button
-              class="btn btn-primary font-weight-bold"
+              class="btn btn-success shadow"
               @click="submitReferences"
               :disabled="isLoading"
-              v-if="!isComplete"
+              :class="
+                Object.keys(errors).length === 0 ? 'btn-success' : 'btn-danger'
+              "
             >
-              NEXT
+              <i class="la la-check" v-if="isComplete"></i>
+              <i class="la la-pencil" v-else></i>
+
+              <span v-if="isComplete">UPDATED</span>
+              <span v-else>UPDATE</span>
               <div
                 class="spinner-border spinner-border-sm mb-1"
                 v-show="isLoading"
@@ -197,9 +199,7 @@ export default {
       });
     },
     removeField(index) {
-      if (index != 0) {
-        this.references.splice(index, 1);
-      }
+      this.references.splice(index, 1);
     },
     submitReferences() {
       this.errors = {};
