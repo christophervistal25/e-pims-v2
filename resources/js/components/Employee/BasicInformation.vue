@@ -280,7 +280,11 @@
             @input="onSetSelectOffice"
             :options="offices"
             @search="onSearchOffice"
-          ></v2-select>
+          >
+            <template slot="no-options">
+              Type atleast 1 word of office to search.
+            </template>
+          </v2-select>
           <p class="text-danger text-sm">
             {{ errors["officeAssignment.office_code"] }}
           </p>
