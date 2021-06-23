@@ -244,6 +244,12 @@
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <view-relevant-queries :employee="employee"></view-relevant-queries>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -262,6 +268,7 @@ import ViewLearningAndDevelopment from "./Information/ViewLearningAndDevelopment
 import ViewOtherInformation from "./Information/ViewOtherInformation.vue";
 import ViewReferences from "./Information/ViewReferences.vue";
 import io from "socket.io-client";
+import ViewRelevantQueries from "./Information/ViewRelevantQueries.vue";
 export default {
   data() {
     return {
@@ -317,6 +324,7 @@ export default {
     ViewLearningAndDevelopment,
     ViewOtherInformation,
     ViewReferences,
+    ViewRelevantQueries,
   },
   methods: {
     fetchInformation(employee_id) {
@@ -330,7 +338,7 @@ export default {
     printPersonalDataSheet(employee_id) {
       window.axios.get(`/print/pds/${employee_id}`).then(() => {
         if (!this.socket.connected) {
-          this.socket = io.connect("http://192.168.1.16:3030");
+          this.socket = io.connect("http://192.168.200.161:3030");
           this.socket.emit("preview_personal_data_sheet");
         } else {
           this.socket.emit("preview_personal_data_sheet");
@@ -339,7 +347,7 @@ export default {
     },
   },
   created() {
-    this.socket = io.connect("http://192.168.1.16:3030");
+    this.socket = io.connect("http://192.168.200.161:3030");
     window.axios.get(`/api/employee/employees`).then((response) => {
       if (response.status === 200) {
         this.employees = response.data;
