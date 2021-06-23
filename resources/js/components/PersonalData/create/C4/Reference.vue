@@ -76,7 +76,7 @@
                 </td>
                 <td class="text-center">
                   <button
-                    v-if="index == noOfFields - 1"
+                    v-if="index == noOfFields - 1 && noOfFields <= 2"
                     class="btn btn-primary font-weight-bold rounded-circle"
                     @click="addNewReferenceField"
                   >
@@ -118,7 +118,6 @@
 </template>
 
 <script>
-import swal from "sweetalert";
 export default {
   props: {
     show_panel: {
@@ -141,7 +140,7 @@ export default {
     };
   },
   watch: {
-    references(from, to) {
+    references(to) {
       this.noOfFields = to.length;
     },
   },
@@ -160,12 +159,14 @@ export default {
       }
     },
     addNewReferenceField() {
-      this.references.push({
-        refName: "",
-        refAdd: "",
-        refTelNo: "",
-        employee_id: localStorage.getItem("employee_id"),
-      });
+      if (this.references.length <= 2) {
+        this.references.push({
+          refName: "",
+          refAdd: "",
+          refTelNo: "",
+          employee_id: localStorage.getItem("employee_id"),
+        });
+      }
     },
     removeField(index) {
       if (index != 0) {

@@ -105,7 +105,7 @@
                 </td>
                 <td class="text-center">
                   <button
-                    v-if="index == noOfFields - 1"
+                    v-if="index == noOfFields - 1 && noOfFields <= 2"
                     class="btn btn-primary font-weight-bold rounded-circle"
                     @click="addNewReferenceField"
                   >
@@ -165,7 +165,6 @@ export default {
           name: "",
           address: "",
           telephone_number: "",
-          employee_id: this.personal_data.employee_id,
         },
       ],
       errors: [],
@@ -173,14 +172,15 @@ export default {
     };
   },
   watch: {
-    references(to) {
-      this.noOfFields = to.length;
+    references(to, from) {
+      if (this.noOfFields <= 2) {
+        this.noOfFields = to.length;
+      }
     },
   },
   methods: {
     isKeyCombinationSave(event) {
       if (
-        !this.isComplete &&
         event.ctrlKey &&
         event.code.toLowerCase() === "keys" &&
         event.keyCode === 83
@@ -191,26 +191,30 @@ export default {
       }
     },
     addNewReferenceField() {
-      this.references.push({
-        name: "",
-        address: "",
-        telephone_number: "",
-        employee_id: this.personal_data.employee_id,
-      });
+      if (this.noOfFields <= 2) {
+        this.references.push({
+          name: "",
+          address: "",
+          telephone_number: "",
+        });
+      }
     },
     removeField(index) {
       this.references.splice(index, 1);
+      this.noOfFields = this.references.length;
     },
     submitReferences() {
       this.errors = {};
       this.rowErrors = "";
       this.isLoading = true;
       window.axios
-        .post("/employee/exists/personal/references", this.references)
+        .post(
+          `/employee/exists/personal/${this.personal_data.employee_id}/references`,
+          this.references
+        )
         .then(() => {
           this.isLoading = false;
           this.isComplete = true;
-          this.$emit("display-issued-id");
         })
         .catch((error) => {
           this.isLoading = false;
@@ -252,9 +256,6 @@ export default {
   created() {
     window.addEventListener("keydown", this.isKeyCombinationSave);
     this.references = this.personal_data.references;
-    if (this.references.length === 0) {
-      this.addNewReferenceField();
-    }
     this.noOfFields = this.references.length;
   },
 };
