@@ -131,7 +131,7 @@
                   >Account Numbers
                   <i
                     v-if="sectionError.accountNumbers"
-                    class="fas fa-exclamation-triangle text-danger"
+                    class="fa fa-exclamation-triangle text-danger"
                   ></i>
                 </a>
               </li>
@@ -366,6 +366,7 @@ export default {
             swal({
               text: "Successfully add new employee.",
               icon: "success",
+              timer: 2000,
             });
 
             this.employees.unshift(response.data);

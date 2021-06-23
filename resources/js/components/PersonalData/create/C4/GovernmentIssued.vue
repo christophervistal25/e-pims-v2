@@ -153,6 +153,7 @@ export default {
             swal({
               text: "Successfully create new personal data sheet",
               icon: "success",
+              timer: 2000,
             });
           }
         })
