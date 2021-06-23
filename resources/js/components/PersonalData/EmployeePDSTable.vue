@@ -38,8 +38,6 @@
 
         <div class="mt-1"></div>
         <v-data-table
-          loading
-          loading-text="Processing..."
           :headers="headers"
           :items="employees"
           :search="search"
@@ -132,6 +130,17 @@
     </div>
 
     <div id="emp__profile" v-if="showProfile">
+      <div
+        class="float-right"
+        style="position: fixed; z-index: 99999; left: 97%"
+      >
+        <a
+          @click="printPersonalDataSheet(employee.employee_id)"
+          class="btn btn-primary btn-rounded shadow"
+        >
+          <i class="la la-print"></i>
+        </a>
+      </div>
       <div class="card mb-0 rounded-0 shadow-none">
         <view-information-summary
           :employee="employee"
@@ -338,7 +347,7 @@ export default {
     printPersonalDataSheet(employee_id) {
       window.axios.get(`/print/pds/${employee_id}`).then(() => {
         if (!this.socket.connected) {
-          this.socket = io.connect("http://192.168.1.9:3030");
+          this.socket = io.connect("http://192.168.1.13:3030");
           this.socket.emit("preview_personal_data_sheet");
         } else {
           this.socket.emit("preview_personal_data_sheet");
@@ -347,7 +356,7 @@ export default {
     },
   },
   created() {
-    this.socket = io.connect("http://192.168.1.9:3030");
+    this.socket = io.connect("http://192.168.1.13:3030");
     window.axios.get(`/api/employee/employees`).then((response) => {
       if (response.status === 200) {
         this.employees = response.data;

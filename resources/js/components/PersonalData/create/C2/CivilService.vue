@@ -167,7 +167,7 @@
           </table>
           <div class="float-right mb-3">
             <button
-              class="btn btn-warning shadow"
+              class="btn btn-secondary text-white shadow"
               @click="skipSection"
               v-if="!isComplete"
               :disabled="isLoading"

@@ -25,7 +25,6 @@
           </button>
         </div>
       </div>
-
       <exists-personal-information
         :personal_data="employee"
         @update-name-extensions="updateNameExtensions"

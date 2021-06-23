@@ -34,8 +34,6 @@
 
           <div class="mt-1"></div>
           <v-data-table
-            loading
-            loading-text="Processing..."
             :headers="headers"
             :items="employees"
             :search="search"
