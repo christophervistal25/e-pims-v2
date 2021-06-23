@@ -8,6 +8,8 @@
             v-model="dialog"
             max-width="600px"
             :class="shownameext ? 'show' : ''"
+            id="nameExtensionModal"
+            @keydown.enter="validate"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-btn
@@ -43,6 +45,7 @@
                         :rules="[(v) => !!v || 'Extension name is required']"
                         class="mt-0 form-input"
                         label="Extension Name"
+                        maxlength="3"
                         required
                         v-model="info.extension"
                         :class="
@@ -93,6 +96,8 @@ export default {
       valid: false,
       isLoading: false,
       dialog: false,
+      nameRules: [(v) => v.length <= 3 || "Max 3 characters"],
+      // nameRules: [(v) => !!v || 'Extension name is required'],
       info: {
         extension: "",
       },
@@ -121,11 +126,13 @@ export default {
           this.isLoading = false;
           this.errors = {};
           if (error.response.status === 422) {
+            this.validate();
             this.errors = error.response.data;
           }
         });
     },
     dismissModal() {
+      this.info = "";
       this.dialog = false;
       this.errors = {};
       this.$refs.form.resetValidation();
@@ -137,9 +144,17 @@ export default {
   created() {
     document.addEventListener("keydown", (e) => {
       if (e.keyCode === 27 && e.key.toLowerCase() === "escape") {
+        this.info = {};
         this.dialog = false;
         this.errors = {};
         this.$refs.form.resetValidation();
+      } else if (
+        e.keyCode === 13 &&
+        e.key.toLowerCase() === "enter" &&
+        this.dialog
+      ) {
+        e.preventDefault();
+        this.submitNewNameExtension();
       }
     });
   },

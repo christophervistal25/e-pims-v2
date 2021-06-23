@@ -8,6 +8,8 @@
             v-model="dialog"
             max-width="600px"
             :class="shownameextension ? 'show' : ''"
+            id="nameExtModal"
+            @keydown.enter="validate"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-btn
@@ -32,17 +34,18 @@
                 <v-container>
                   <v-row>
                     <v-col cols="12">
-                      <!-- <p class="text-danger text-sm mb-0">
+                      <p class="text-danger text-sm mb-0">
                         {{
                           errors.hasOwnProperty("errors")
                             ? errors.errors.extension[0]
                             : ""
                         }}
-                      </p> -->
+                      </p>
                       <v-text-field
                         class="mt-0 form-input"
                         label="Extension Name"
                         :rules="[(v) => !!v || 'Extension name is required']"
+                        maxlength="3"
                         required
                         v-model="data.extension"
                         :class="
@@ -127,11 +130,13 @@ export default {
           this.isLoading = false;
           this.errors = {};
           if (error.response.status === 422) {
+            this.validate();
             this.errors = error.response.data;
           }
         });
     },
     dismissModal() {
+      this.data = {};
       this.errors = {};
       this.$refs.form.resetValidation();
       this.dialog = false;
@@ -146,6 +151,14 @@ export default {
         this.dialog = false;
         this.errors = {};
         this.$refs.form.resetValidation();
+        this.data = {};
+      } else if (
+        e.keyCode === 13 &&
+        e.key.toLowerCase() === "enter" &&
+        this.dialog
+      ) {
+        e.preventDefault();
+        this.submitNewNameExt();
       }
     });
   },

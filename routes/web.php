@@ -54,6 +54,7 @@ Route::get('/print-adjustment/{id}', 'PrintAdjustmentController@printList')->nam
 Route::resource('/salary-adjustment-per-office', 'SalaryAdjustmentPerOfficeController');
 Route::get('/salary-adjustment-per-office-list', 'SalaryAdjustmentPerOfficeController@list');
 Route::get('/salary-adjustment-per-office-not-selected-list', 'SalaryAdjustmentPerOfficeController@NotSelectedlist');
+Route::get('/salary-adjustment-per-office/{id}', 'SalaryAdjustmentPerOfficeController@destroy')->name('salary-adjustment-per-office.delete');
 
 // Service Records
 Route::get('/service-records/{id}', 'ServiceRecordsController@destroy')->name('service-records.delete');
@@ -94,8 +95,11 @@ Route::group(['prefix' => 'employee'], function () {
     Route::post('/exists/personal/issued/id', 'PersonalDataSheetController@existingEmployeeStoreIssuedID');
 
     Route::get('/leave/application', 'EmployeeLeave\LeaveController@show')->name('leave.application.filling');
-    Route::resource('leave', 'EmployeeLeave\LeaveController');
-    Route::get('/leave-monitoring', 'EmployeeLeave\LeaveController@create');
+    Route::resource('leave-starting-balance', 'EmployeeLeave\LeaveStartingBalanceController');
+    Route::resource('/leave-monitoring', 'EmployeeLeave\LeaveMonitoringController');
+    Route::resource('/leave-recall', 'EmployeeLeave\LeaveRecallController');
+    Route::resource('/leave-forwarded-balance', 'EmployeeLeave\LeaveForwardedBalanceController');
+    Route::resource('/compensatory-build-up', 'EmployeeLeave\CompensatoryBuildUpController');
 });
 // Route::resource('/print-increment', 'PrintIncrementController');
 Route::get('/profile', 'EmployeeController@profile');

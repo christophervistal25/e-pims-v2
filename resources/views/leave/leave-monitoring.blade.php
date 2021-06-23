@@ -2,7 +2,8 @@
 @section('title', 'Leave Monitoring Index')
 @prepend('page-css')
 <script src="{{ asset('/js/app.js') }}" defer></script>
-<script src="https://use.fontawesome.com/78c056906b.js"></script>
+<link rel="stylesheet"
+    href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 <link rel="stylesheet"
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 @endprepend
@@ -48,12 +49,15 @@
             <div class="card-body">
                 <div class="card-title text-center text-sm mb-4">Search Employee</div>
                 <div class="row">
-                    <div class="col-lg">
+                    <div class="col-lg-10 pr-0">
                         <label for="empName" class="form-group has-float-label">
                             <input class="form-control" type="text" id="empName"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <span><strong>Name of Employee</strong></span>
                         </label>
+                    </div>
+                    <div class="col-lg-2 pl-0">
+                        <button class="btn btn-outline-light"><i class="las la-search text-dark"></i></button>
                     </div>
                 </div>
             </div>
@@ -64,28 +68,28 @@
             <div class="card-body">
                 <div class="alert alert-secondary text-center"><strong>LEAVE MONITORING INDEX</strong></div>
                 <hr>
-                <h6 class="text-sm ml-3">Leave Index Information</h6>
+                <h6 class="text-sm ml-3">LEAVE INDEX INFORMATION</h6>
                 <div class="row">
                     <div class="col-lg-3">
                         <label for="transID" class="form-group has-float-label mt-3">
                             <input type="text" id="transID" class="form-control"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>TRANSACTION ID</strong></span>
+                            <span><strong>TRANSACTION ID<span class="text-danger">*</span></strong></span>
                         </label>
                         <label for="period" class="form-group has-float-label">
                             <input type="text" class="form-control"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>PERIOD</strong></span>
+                            <span><strong>PERIOD<span class="text-danger">*</span></strong></span>
                         </label>
                         <label for="particular" class="form-group has-float-label">
                             <input type="text" id="particular" class="form-control"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>PARTICULAR</strong></span>
+                            <span><strong>PARTICULAR<span class="text-danger">*</span></strong></span>
                         </label>
                         <label for="leaveApp" class="form-group has-float-label">
                             <input type="text" id="leaveApp" style="outline:none; box-shadow: 0px 0px 0px transparent;"
                                 class="form-control">
-                            <span><strong>LEAVE APPLICATION ID</strong></span>
+                            <span><strong>LEAVE APPLICATION ID<span class="text-danger">*</span></strong></span>
                         </label>
                         <label for="ordering" class="form-group has-float-label">
                             <input type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;"
@@ -94,14 +98,14 @@
                         </label>
                     </div>
                     <div class="col-lg-9">
-                        <div class="card mt-3">
+                        <div class="card shadow mt-3">
                             <div class="card-body">
-                                <h3 class="card-title mb-4">Balances</h3>
+                                <h3 class="card-title mb-4">BALANCES</h3>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <label for="vlEarned" class="form-group has-float-label">
                                             <input type="text" class="form-control" id="vlEarned"
-                                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                                style="outline: none; box-shadfow: 0px 0px 0px transparent;">
                                             <span><strong>VL EARNED</strong></span>
                                         </label>
                                         <label for="vlEnjoyedWP" class="form-group has-float-label">
@@ -149,34 +153,33 @@
                             </div>
                         </div>
                         <div class="row">
-                        <div class="col lg-12">
-                        <button class="btn btn-outline-primary mr-3" type="button"><i class="fas fa-plus"></i> New
-                            Record</button>
-                        <button class="btn btn-outline-secondary mr-3" type="buttin"><i class="fas fa-ban"></i>
-                            Cancel Record</button>
-                        <button class="btn btn-outline-success mr-3" type="button"><i class="fas fa-save"></i> Save
-                            Changes</button>
-                        </div>
-                            <div class="col-lg-3">
-                            <label for="leaveOpt" class="form-group has-float-label mr-3">
-                            <select name="" id="" class="custom-select" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <option value="">-----</option>
-                            </select>
-                            <span><strong>Leave Index Options</strong></span>
-                            </label>
+                            <div class="col-lg-6">
+                                <div class="text-right">
+                                    <button class="btn btn-primary shadow text-white" type="button"><i
+                                            class="las la-user-plus"></i> New Record</button>
+                                    <button class="btn btn-success shadow text-white" type="button"><i
+                                            class="lar la-save"></i> Save Changes</button>
+                                    <button class="btn btn-danger text-white shadow" type="button"><i
+                                            class="las la-ban"></i> Cancel Record</button>
+                                </div>
                             </div>
-                        
+                            <div class="col-lg-6">
+                                <label for="leaveOpt" class="form-group has-float-label mr-3">
+                                    <select name="" id="" class="custom-select"
+                                        style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                        <option value="">-----</option>
+                                    </select>
+                                    <span><strong>Leave Index Options</strong></span>
+                                </label>
+                            </div>
                         </div>
-                        
-                            
-                        
                     </div>
                 </div>
             </div>
         </div>
         <div class="card">
             <div class="card-body">
-                <table class="table table-striped table-hover">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th class="text-center">Particular</th>
@@ -200,7 +203,7 @@
                             <th class="text-center">1</th>
                             <th class="text-center">1</th>
                             <th class="text-center">1</th>
-                            <th>
+                            <th class="text-center">
                                 <button class="btn btn-sm rounded-circle shadow btn-success"><i
                                         class="fa fa-edit"></i></button>
                                 &nbsp;

@@ -3,15 +3,16 @@ use App\SalaryGrade;
 use App\service_record;
 use App\SalaryAdjustment;
 use Yajra\Datatables\Datatables;
+use App\PlantillaPosition;
 use App\Plantilla;
 
-// Route::get('/salaryList/{sg_no}' , 'Api\PlantillaController@salaryList');
+
 Route::get('/salarySteplist/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@salarySteplist');
 Route::get('/dbmPrevious/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@dbmPrevious');
 Route::get('/dbmCurrent/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@dbmCurrent');
 Route::get('/cscPrevious/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@cscPrevious');
-
 Route::get('/positionSalaryGrade/{positionTitle}' , 'Api\PlantillaController@positionSalaryGrade');
+Route::post('/addPosition' , 'Api\PlantillaController@addPosition');
 
 ///service record
 Route::get('/employee/service/records/{employeeId}', function ($employeeId) {
@@ -34,15 +35,10 @@ Route::get('/employee/service/records/{employeeId}', function ($employeeId) {
                     ->make(true);
 });
 
-
-
 Route::get('step/{sg_no}/{step}' , function ($sgNo, $step) {
     $salaryGrade = SalaryGrade::where('sg_no', $sgNo)->first(['sg_step' . $step]);
     return $salaryGrade;
 });
-
-Route::post('/addPosition' , 'Api\PlantillaController@addPosition');
-
 
 Route::group(['prefix' => 'employee'], function () {
     Route::get('employees', 'Api\EmployeeController@list');
@@ -80,12 +76,10 @@ Route::get('countries', function () {
     return config('countries.all');
 });
 
-
 // Reference Routes.
 Route::post('/employment/status/store', 'Api\ReferenceStatusController@store');
 Route::get('name/extensions', 'Api\ReferenceNameExtensionController@index');
 Route::post('name/extensions/store', 'Api\ReferenceNameExtensionController@store');
-
 
 /////// salary adjustment
 Route::get('/salaryAdjustment/{sg_no}/{sg_step?}/{sg_year}' , 'Api\SalaryAdjustmentController@salaryAdjustment');
@@ -112,7 +106,7 @@ Route::get('/salary/adjustment/{year}', function ($year) {
 Route::get('/office/salary/adjustment/peroffice/{officeCode}', function ($office_code) {
     $data = SalaryAdjustment::select('id','employee_id','item_no','position_id', 'date_adjustment', 'sg_no', 'step_no', 'salary_previous','salary_new','salary_diff')->with(['position:position_id,position_name','employee:employee_id,firstname,middlename,lastname,extension', 'plantilla:employee_id,office_code'])->whereHas('plantilla', function ($query) use ($office_code) {
         $query->where('office_code', $office_code);
-    });
+    })->orderBy('id', 'DESC');
     return (new Datatables)->eloquent($data)
             ->addIndexColumn()
             ->addColumn('employee', function ($row) {
@@ -122,8 +116,7 @@ Route::get('/office/salary/adjustment/peroffice/{officeCode}', function ($office
                 return $row->plantilla->office_code;
             })
             ->addColumn('action', function($row){
-                $btn = "<a title='Edit Salary Adjustment' href='$row->id' class='rounded-circle edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
-                $btn = $btn."<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                $btn = "<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
                 ";
                     return $btn;
             })
@@ -148,8 +141,59 @@ Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}', funct
         return $row->position->position_name;
     })
     ->editColumn('checkbox', function ($row) {
-        $checkbox = "<input id='checkbox' id='checkbox' style='transform:scale(1.3)' name='id[$row->id]' value='$row->id' type='checkbox' />";
+        $checkbox = "<input class='check-select' id='checkbox$row->plantilla_id' style='transform:scale(1.3)' value='$row->plantilla_id' type='checkbox' />";
         return $checkbox;
     })->rawColumns(['checkbox'])
     ->make(true);
+});
+
+
+Route::post('/salary-adjustment-per-office', function () {
+    $plantillaIds = explode(',', request()->ids);
+    $data = Plantilla::whereIn('plantilla_id', $plantillaIds)->get();
+    $newAdjustment = $data->toArray();
+    foreach($data as $newAdjustment){
+        $newAdjustment->plantilla_id;
+        $newAdjustment->sg_no;
+        $newAdjustment->step_no;
+        $newAdjustment->salary_amount;
+        $getsalaryResult = SalaryGrade::where('sg_no', $newAdjustment->sg_no)
+                            ->where('sg_year', request()->year)
+                            ->first(['sg_year' ,'sg_step' .  $newAdjustment->step_no]);
+        $salaryDiff = $getsalaryResult['sg_step' .  $newAdjustment->step_no] - $newAdjustment->salary_amount;
+        $salaryAdjustment= new SalaryAdjustment();
+        $salaryAdjustment->employee_id = $newAdjustment->employee_id;
+        $salaryAdjustment->item_no = $newAdjustment->item_no;
+        $salaryAdjustment->position_id = $newAdjustment->position_id;
+        $salaryAdjustment->date_adjustment = request()->date;
+        $salaryAdjustment->sg_no = $newAdjustment->sg_no;
+        $salaryAdjustment->step_no = $newAdjustment->step_no;
+        $salaryAdjustment->salary_previous = $newAdjustment->salary_amount;
+        $salaryAdjustment->salary_new =  $getsalaryResult['sg_step' .  $newAdjustment->step_no];
+        $salaryAdjustment->salary_diff = $salaryDiff;
+        $salaryAdjustment->save();
+    }
+    return response()->json(['success'=>true]);
+});
+
+// plantilla position
+Route::get('/plantilla/position/{officeCode}', function ($office_code) {
+    $data = PlantillaPosition::select('pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name')->with('position:position_id,position_name', 'office:office_code,office_name')->where('office_code', $office_code)->get();
+    return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('position', function ($row) {
+                        return $row->position->position_name;
+                    })
+                    ->addColumn('office', function ($row) {
+                        return $row->office->office_name;
+                    })
+                    ->addColumn('action', function($row){
+
+                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-position.edit', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
+                        $btn = $btn."<a title='Delete Position' id='delete' value='$row->pp_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                        ";
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
 });

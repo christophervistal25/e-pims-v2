@@ -46,7 +46,7 @@
           </div>
           <div class="row pr-3 pl-3">
             <div class="col-lg-3">
-              <label for="ssurname" class="form-group has-float-label">
+              <label for="ssurname" class="form-group has-float-label mb-0">
                 <input
                   type="text"
                   class="form-control"
@@ -292,7 +292,7 @@
         </div>
         <div class="row pr-3 pl-3">
           <div class="col-lg-3">
-            <label for="fsurname" class="form-group has-float-label">
+            <label for="fsurname" class="form-group has-float-label mb-0">
               <input
                 type="text"
                 class="form-control"
@@ -316,7 +316,7 @@
             <p class="text-danger text-sm">{{ errors.father_lastname }}</p>
           </div>
           <div class="col-lg-3">
-            <label for="ffirstname" class="form-group has-float-label">
+            <label for="ffirstname" class="form-group has-float-label mb-0">
               <input
                 type="text"
                 class="form-control"
@@ -398,7 +398,7 @@
         </div>
         <div class="row pr-3 pl-3">
           <div class="col-lg-3">
-            <label for="msurname" class="form-group has-float-label">
+            <label for="msurname" class="form-group has-float-label mb-0">
               <input
                 type="text"
                 class="form-control"
@@ -422,7 +422,7 @@
             <p class="text-danger text-sm">{{ errors.mother_lastname }}</p>
           </div>
           <div class="col-lg-3">
-            <label for="mfirstname" class="form-group has-float-label">
+            <label for="mfirstname" class="form-group has-float-label mb-0">
               <input
                 type="text"
                 :class="

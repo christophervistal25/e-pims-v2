@@ -6,6 +6,9 @@
         v-model="dialog"
         max-width="600px"
         :class="showassignment ? 'show' : ''"
+        id="assignModal"
+        @keydown.enter="validate"
+        @keydown.esc="dismissModal"
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn
@@ -28,12 +31,12 @@
             <v-container>
               <v-row>
                 <v-col cols="12">
-                  <!-- <p
+                  <p
                     class="text-danger text-sm mb-0"
                     v-if="errors.hasOwnProperty('name')"
                   >
                     {{ errors.name[0] }}
-                  </p> -->
+                  </p>
                   <v-text-field
                     label="Office Name"
                     :rules="nameRules"
@@ -44,12 +47,12 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12">
-                  <!-- <p
+                  <p
                     class="text-danger text-sm mb-0"
                     v-if="errors.hasOwnProperty('short_name')"
                   >
                     {{ errors.short_name[0] }}
-                  </p> -->
+                  </p>
                   <v-text-field
                     label="Office Short Name"
                     :rules="nameRules"
@@ -62,12 +65,12 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12">
-                  <!-- <p
+                  <p
                     class="text-danger text-sm mb-0"
                     v-if="errors.hasOwnProperty('address')"
                   >
                     {{ errors.address[0] }}
-                  </p> -->
+                  </p>
                   <v-text-field
                     label="Office Address"
                     :rules="nameRules"
@@ -80,12 +83,12 @@
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12">
-                  <!-- <p
+                  <p
                     class="text-danger text-sm mb-0"
                     v-if="errors.hasOwnProperty('short_address')"
                   >
                     {{ errors.short_address[0] }}
-                  </p> -->
+                  </p>
                   <v-text-field
                     class="pt-0 form-input"
                     label="Office Short Address"
@@ -112,12 +115,12 @@
                       >Type to search office head</template
                     >
                   </v2-select>
-                  <!-- <p
+                  <p
                     class="text-danger text-sm"
                     v-if="errors.hasOwnProperty('head')"
                   >
                     {{ errors.head[0] }}
-                  </p> -->
+                  </p>
                 </v-col>
 
                 <v-col cols="12">
@@ -134,12 +137,12 @@
                       >Type to search position</template
                     >
                   </v2-select>
-                  <!-- <p
+                  <p
                     class="text-danger text-sm"
                     v-if="errors.hasOwnProperty('position_name')"
                   >
                     {{ errors.position_name[0] }}
-                  </p> -->
+                  </p>
                 </v-col>
               </v-row>
             </v-container>
@@ -261,22 +264,16 @@ export default {
         });
     },
     dismissModal() {
+      this.office = {};
       this.errors = {};
       this.dialog = false;
       this.$refs.form.resetValidation();
     },
-    validate() {
+    validate(e) {
+      e.preventDefault();
+      this.submitNewOffice();
       this.$refs.form.validate();
     },
-  },
-  created() {
-    document.addEventListener("keydown", (e) => {
-      if (e.keyCode === 27 && e.key.toLowerCase() === "escape") {
-        this.dialog = false;
-        this.errors = {};
-        this.$refs.form.resetValidation();
-      }
-    });
   },
 };
 </script>

@@ -2,7 +2,8 @@
 @section('title', 'Leave Starting Balance')
 @prepend('page-css')
 <script src="{{ asset('/js/app.js') }}" defer></script>
-<script src="https://use.fontawesome.com/78c056906b.js"></script>
+<link rel="stylesheet"
+    href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 <link rel="stylesheet"
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 @endprepend
@@ -48,12 +49,15 @@
             <div class="card-body">
                 <div class="card-title text-center text-sm mb-4">Search Employee</div>
                 <div class="row">
-                    <div class="col-lg">
+                    <div class="col-lg-10 pr-0">
                         <label for="empName" class="form-group has-float-label">
                             <input class="form-control" type="text" id="empName"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <span><strong>Name of Employee</strong></span>
                         </label>
+                    </div>
+                    <div class="col-lg-2 pl-0">
+                        <button class="btn btn-outline-light"><i class="las la-search text-dark"></i></button>
                     </div>
                 </div>
             </div>
@@ -62,26 +66,28 @@
     <div class="col-lg-9">
         <div class="card shadow">
             <div class="card-body">
-                <h3 class="card-title">Starting Leave Balance Detail</h3>
+                <div class="alert alert-secondary text-center" role="alert"><strong
+                        style="text-transform: uppercase">Starting Leave Balance Detail</strong>
+                </div>
                 <hr>
                 <div class="row">
                     <div class="col-lg-9">
                         <label for="name" class="form-group has-float-label">
                             <input type="text" name="name" id="name" class="form-control" placeholder=""
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>NAME</strong></span>
+                            <span><strong>NAME<span class="text-danger">*</span></strong></span>
                         </label>
 
                         <label for="office" class="form-group has-float-label">
                             <input type="text" name="office" id="office" class="form-control" placeholder=""
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>OFFICE</strong></span>
+                            <span><strong>OFFICE<span class="text-danger">*</span></strong></span>
                         </label>
 
                         <label for="position" class="form-group has-float-label">
                             <input type="text" name="position" id="position" class="form-control" placeholder=""
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>POSITION</strong></span>
+                            <span><strong>POSITION<span class="text-danger">*</span></strong></span>
                         </label>
                     </div>
                     <div class="col-lg-3">
@@ -95,7 +101,7 @@
                         <label for="dateStart" class="form-group has-float-label">
                             <input type="date" name="dateStart" id="dateStart" class="form-control" placeholder=""
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>DATE START</strong></span>
+                            <span><strong>DATE START<span class="text-danger">*</span></strong></span>
                         </label>
                     </div>
                     <div class="col-lg-3">
@@ -116,14 +122,15 @@
 
 
 
-                <div class="row">
-                    <button type="button" class="btn btn-outline-primary ml-5"><i class="fas fa-plus"></i> New
+                <div class="float-left">
+                    <button type="button" class="text-white shadow btn btn-primary"><i class="las la-user-plus"></i> New
                         Record</button>
-                    <button type="button" class="btn btn-outline-success ml-2"><i class="far fa-save"></i> Save
+                    <button type="button" class="text-white shadow btn btn-success"><i class="lar la-save"></i> Save
                         Changes</button>
-                    <button type="button" class="btn btn-outline-secondary ml-2"><i class="fas fa-ban"></i> Cancel
-                        Record</button>
-
+                    <button type="button" class="text-white px-5 shadow btn btn-dark"><i class="las la-print"></i>
+                        Print</button>
+                    <button type="button" class="text-white shadow btn btn-danger"><i
+                            class="las la-ban"></i> Cancel Record</button>
                 </div>
             </div>
 
@@ -131,20 +138,20 @@
         <div class="card">
             <div class="card-body">
                 <div class="col-lg-12">
-                    <table class="table table-striped table-hover">
+                    <table class="table table-hover">
                         <tr>
-                            <th>Date Started</th>
-                            <th>Name of Employee</th>
-                            <th>Vacation Leave</th>
-                            <th>Sick Leave</th>
-                            <th>Actions</th>
+                            <th class="text-center">Date Started</th>
+                            <th class="text-center">Name of Employee</th>
+                            <th class="text-center">Vacation Leave</th>
+                            <th class="text-center">Sick Leave</th>
+                            <th class="text-center">Actions</th>
                         </tr>
                         <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>
+                            <td class="text-center">1</td>
+                            <td class="text-center">1</td>
+                            <td class="text-center">1</td>
+                            <td class="text-center">1</td>
+                            <td class="text-center">
                                 <button class=' btn btn-sm rounded-circle shadow btn-success'>
                                     <i class='fa fa-edit'></i>
                                 </button>

@@ -37,8 +37,7 @@ class SalaryAdjustmentPerOfficeController extends Controller
                         return $row->plantilla->office_code;
                     })
                     ->addColumn('action', function($row){
-                        $btn = "<a title='Edit Salary Adjustment' href='$row->id' class='rounded-circle edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
-                        $btn = $btn."<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                        $btn = "<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
                         ";
                             return $btn;
                     })
@@ -61,7 +60,7 @@ class SalaryAdjustmentPerOfficeController extends Controller
                         return $row->position->position_name;
                     })
                     ->editColumn('checkbox', function ($row) {
-                        $checkbox = "<input id='checkbox' id='checkbox' style='transform:scale(1.3)' name='id[$row->id]' value='$row->id' type='checkbox' />";
+                        $checkbox = "<input id='checkbox$row->plantilla_id' style='transform:scale(1.35)' value='$row->plantilla_id' type='checkbox' />";
                         return $checkbox;
                     })->rawColumns(['checkbox'])
                     ->make(true);
@@ -133,6 +132,7 @@ class SalaryAdjustmentPerOfficeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        SalaryAdjustment::find($id)->delete();
+        return json_encode(array('statusCode'=>200));
     }
 }
