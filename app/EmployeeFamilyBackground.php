@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
 class EmployeeFamilyBackground extends Model
@@ -48,5 +49,40 @@ class EmployeeFamilyBackground extends Model
     // {
     //     return strtoupper("{$this->father_firstname} {$this->father_middlename} {$this->father_lastname} {$this->father_extension}");
     // }
+
+    public function setFatherFirstnameAttribute($value)
+    {
+        return $this->attributes['father_firstname'] = Str::upper($value);
+    }
+
+    public function setFatherLastnameAttribute($value)
+    {
+        return $this->attributes['father_lastname'] = Str::upper($value);
+    }
+
+    public function setFatherMiddlenameAttribute($value)
+    {
+        return $this->attributes['father_middlename'] = Str::upper($value);
+    }
+
+    public function setFatherExtensionAttribute($value)
+    {
+        return $this->attributes['father_extension'] = Str::upper($value);
+    }
+
+    public function setMotherLastnameAttribute($value)
+    {
+        return $this->attributes['mother_lastname'] = Str::upper($value);
+    }
+
+    public function setMotherFirstnameAttribute($value)
+    {
+        return $this->attributes['mother_firstname'] = Str::upper($value);
+    }
+
+    public function setMotherMiddlenameAttribute($value)
+    {
+        return $this->attributes['mother_middlename'] = Str::upper($value);
+    }
 
 }
