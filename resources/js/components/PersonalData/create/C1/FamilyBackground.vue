@@ -425,7 +425,7 @@
             <p class="text-danger text-sm">{{ errors.msurname }}</p>
           </div>
           <div class="col-lg-3">
-            <label for="mfirstname" class="form-group has-float-label">
+            <label for="mfirstname" class="form-group has-float-label mb-0">
               <input
                 type="text"
                 :class="
@@ -483,6 +483,7 @@
             :disabled="isLoading"
           >
             NEXT
+            <i class="fa fa-hand-o-right"></i>
             <div
               class="spinner-border spinner-border-sm mb-1"
               role="status"

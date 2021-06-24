@@ -77,6 +77,7 @@
               @click="submitIssuedID"
               :disabled="isLoading"
             >
+              <i class="fa fa-check"></i>
               FINAL TOUCH
               <div
                 class="spinner-border spinner-border-sm mb-1"

@@ -902,7 +902,7 @@
             :disabled="isLoading"
           >
             NEXT
-
+            <i class="fa fa-hand-o-right"></i>
             <div
               class="spinner-border spinner-border-sm mb-1"
               v-show="isLoading"
