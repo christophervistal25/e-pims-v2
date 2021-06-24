@@ -172,7 +172,7 @@ export default {
     };
   },
   watch: {
-    references(to, from) {
+    references(to) {
       if (this.noOfFields <= 2) {
         this.noOfFields = to.length;
       }
@@ -247,10 +247,6 @@ export default {
         icon: "error",
         dangerMode: true,
       });
-    },
-    skipSection() {
-      this.isComplete = true;
-      this.$emit("display-issued-id");
     },
   },
   created() {
