@@ -26,6 +26,7 @@
         <div class="card-body">
           <table class="table table-bordered">
             <tr class="text-center text-sm" style="background: #eaeaea">
+              <td></td>
               <td>Government Issued ID</td>
               <td>ID/License/Passport No.</td>
               <td>Date/Place of Issuance</td>
@@ -33,6 +34,15 @@
 
             <tbody>
               <tr>
+                <td
+                  class="align-middle text-center bg-danger text-white"
+                  v-if="Object.keys(errors).length !== 0"
+                  @click="
+                    Object.keys(errors).length !== 0 && displayErrorMessage()
+                  "
+                >
+                  <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                </td>
                 <td>
                   <input
                     type="text"
@@ -95,6 +105,7 @@
 </template>
 
 <script>
+import swal from "sweetalert";
 export default {
   props: {
     show_panel: {
@@ -127,6 +138,24 @@ export default {
         event.preventDefault();
         return true;
       }
+    },
+    displayErrorMessage() {
+      let parentElement = document.createElement("ul");
+
+      for (let [field, error] of Object.entries(this.errors)) {
+        let errorElement = document.createElement("p");
+        let horizontalLine = document.createElement("hr");
+        errorElement.innerHTML = error;
+        parentElement.appendChild(errorElement);
+        parentElement.appendChild(horizontalLine);
+      }
+
+      swal({
+        content: parentElement,
+        title: "Opps!",
+        icon: "error",
+        dangerMode: true,
+      });
     },
     removeSavedItemsInStorage() {
       localStorage.removeItem("learning");

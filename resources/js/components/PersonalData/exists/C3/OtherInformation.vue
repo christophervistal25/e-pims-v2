@@ -268,9 +268,6 @@ export default {
   created() {
     window.addEventListener("keydown", this.isKeyCombinationSave);
     this.otherInformation = this.personal_data.other_information;
-    if (this.otherInformation.length === 0) {
-      this.addNewOtherInformationField();
-    }
     this.noOfFields = this.otherInformation.length;
   },
 };
