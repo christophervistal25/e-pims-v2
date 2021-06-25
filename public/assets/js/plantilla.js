@@ -88,40 +88,60 @@ $(document).ready(function() {
     });
 });
 //  filter position by office
-$(document).ready(function () {
+$(document).ready(function() {
     //plantillaPositionMetaData
-    let plantillaMetaData = document.getElementById('plantillaPositionMetaData').content.replaceAll("|", '"');
-    var plantillaMetaDataRemoveLast = '[' + plantillaMetaData.substring(0, plantillaMetaData.length - 2) + ']';
+    let plantillaMetaData = document
+        .getElementById("plantillaPositionMetaData")
+        .content.replaceAll("|", '"');
+    var plantillaMetaDataRemoveLast =
+        "[" +
+        plantillaMetaData.substring(0, plantillaMetaData.length - 2) +
+        "]";
     let plantillaPositionOptionAll = JSON.parse(plantillaMetaDataRemoveLast);
 
-
-    let metaData = document.getElementById('positionMetaData').content.replaceAll("|", '"');
-    var metaDataRemoveLast = '[' + metaData.substring(0, metaData.length - 2) + ']';
+    let metaData = document
+        .getElementById("positionMetaData")
+        .content.replaceAll("|", '"');
+    var metaDataRemoveLast =
+        "[" + metaData.substring(0, metaData.length - 2) + "]";
     let positionOptionAll = JSON.parse(metaDataRemoveLast);
-    $('#officeCode').change(function (e) {
+    $("#officeCode").change(function(e) {
         let officeCode = e.target.value;
         //filter all position data in plantilla//
-        let plantillaPositionIdFilter = plantillaPositionOptionAll.filter(function(position){
-            return position.officeCode == officeCode;
-        });
+        let plantillaPositionIdFilter = plantillaPositionOptionAll.filter(
+            function(position) {
+                return position.officeCode == officeCode;
+            }
+        );
         //Remove all option in #positionTitle//
         function removeOptionsPosition(selectPosition) {
-            var ii, L = selectPosition.options.length - 1;
-            for(ii = L; ii >= 0; ii--) {
+            var ii,
+                L = selectPosition.options.length - 1;
+            for (ii = L; ii >= 0; ii--) {
                 selectPosition.remove(ii);
             }
         }
-        removeOptionsPosition(document.getElementById('positionTitle'));
+        removeOptionsPosition(document.getElementById("positionTitle"));
         //add position data based in what you select in #officeCode//
-        var i, plantillaLengthPositionId = plantillaPositionIdFilter.length;
-        $('#positionTitle').append('<option></option>');
+        var i,
+            plantillaLengthPositionId = plantillaPositionIdFilter.length;
+        $("#positionTitle").append("<option></option>");
         for (i = 0; i < plantillaLengthPositionId; i++) {
             var plantillaPositionIdFilter_final = plantillaPositionIdFilter[i];
             //filter all position data//
-            let positionIdFilter = positionOptionAll.filter(function(position){
-                return position.positionId == plantillaPositionIdFilter_final.positionId;
+            let positionIdFilter = positionOptionAll.filter(function(position) {
+                return (
+                    position.positionId ==
+                    plantillaPositionIdFilter_final.positionId
+                );
             });
-            $('#positionTitle').append('<option value="' + plantillaPositionIdFilter_final.positionId + '">' + positionIdFilter[0].positionName + '</option>');
+            $("#positionTitle").append(
+                '<option value="' +
+                    plantillaPositionIdFilter_final.positionId +
+                    '">' +
+                    positionIdFilter[0].positionName +
+                    "</option>"
+            );
         }
         $("#positionTitle").selectpicker("refresh");
     });
@@ -180,67 +200,6 @@ $(document).ready(function() {
                 }
             }
         });
-    });
-});
-/////////add position function
-$(document).ready(function() {
-    $("#btnPosition").click(function(response) {
-        let code = $("#positionCode").val();
-        let name = $("#positionName").val();
-        let sgGrade = $("#salaryGrades").val();
-        let shortName = $("#positionShortName").val();
-        if ((code != "", name != "", sgGrade != "", shortName != "")) {
-            $.ajax({
-                type: "POST",
-                url: "/api/addPosition",
-                data: {
-                    positionCode: code,
-                    positionName: name,
-                    salaryGrades: sgGrade,
-                    positionShortName: shortName
-                },
-                success: function(response) {
-                    if (response.success) {
-                        $(".modal").each(function() {
-                            $(this).modal("hide");
-                        });
-                        swal("Sucessfully Added!", "", "success");
-                        $('input[type="text"],select').val("");
-                        $("#salaryGrades")
-                            .val("Please Select")
-                            .trigger("change");
-                        $("#positionTitle").append(
-                            "<option value=" +
-                                response.position_id +
-                                ">" +
-                                name +
-                                "</option>"
-                        );
-                        $("#positionTitle").selectpicker("refresh");
-                    }
-                },
-                error: function(response) {
-                    if (response.status === 422) {
-                        // Create an parent element
-                        let parentElement = document.createElement("ul");
-                        let errors = response.responseJSON.errors;
-                        $.each(errors, function(key, value) {
-                            let errorMessage = document.createElement("li");
-                            let [error] = value;
-                            errorMessage.innerHTML = error;
-                            parentElement.appendChild(errorMessage);
-                        });
-                        swal({
-                            title: "The given data was invalid!",
-                            icon: "error",
-                            content: parentElement
-                        });
-                    }
-                }
-            });
-        } else {
-            swal("Please Input Data", "", "warning");
-        }
     });
 });
 

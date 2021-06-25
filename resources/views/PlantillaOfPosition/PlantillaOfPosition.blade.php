@@ -23,9 +23,8 @@
             </div>
             <form action="/plantilla-of-position" method="post" id="plantillaOfPositionForm">
                 @csrf
-                <div class="col-12">
                     <div class="alert alert-secondary text-center font-weight-bold" role="alert">ADD NEW POSITION</div>
-                </div>
+
 
                 <div class="container">
                     <div class="row justify-content-center align-items-center">
@@ -35,9 +34,106 @@
                             <input value="{{ old('itemNo') }}"
                                 class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" name="itemNo"
                                 id="itemNo" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <span class="font-weight-bold">ITEM NO.<span class="text-danger">*</span></span>    
+                                <span class="font-weight-bold">ITEM NO.<span class="text-danger">*</span></span>
                             </label>
                             <div id='item-error-message' class='text-danger text-sm'>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-10 col-lg-6">
+                            <label class="has-float-label mb-0">
+                            <select value=""
+                                class="form-control selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
+                                name="positionTitle" data-live-search="true" id="positionTitle" data-size="4"
+                                data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <option></option>
+                                @foreach($position as $positions)
+                                <option data-position="{{ $positions }}" style="width:350px;"
+                                    {{ old('positionTitle') == $positions->position_id ? 'selected' : '' }}
+                                    value="{{ $positions->position_id}}">{{ $positions->position_name }}</option>
+                                @endforeach
+                            </select>
+                            <span class="font-weight-bold">POSITION<span class="text-danger">*</span></span>
+                        </label>
+                            <div id='position-title-error-message' class='text-danger text-sm'>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                            <i class="fa fa-list"></i>
+                          </button>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Add New Position</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="form-group col-12 col-md-6 col-lg-12">
+                                        <label class="has-float-label mb-0">
+                                        <input value="{{ old('addPositionCode') }}"
+                                            class="form-control {{ $errors->has('addPositionCode')  ? 'is-invalid' : ''}}" name="addPositionCode"
+                                            id="addPositionCode" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                            <span class="font-weight-bold">Position Code<span class="text-danger">*</span></span>
+                                        </label>
+                                        <div id='add-position-code-error-message' class='text-danger text-sm'>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-12 col-md-6 col-lg-12">
+                                        <label class="has-float-label mb-0">
+                                        <input value="{{ old('addPositionName') }}"
+                                            class="form-control {{ $errors->has('addPositionName')  ? 'is-invalid' : ''}}" name="addPositionName"
+                                            id="addPositionName" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                            <span class="font-weight-bold">Position Name<span class="text-danger">*</span></span>
+                                        </label>
+                                        <div id='add-position-name-error-message' class='text-danger text-sm'>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-12 col-md-6 col-lg-12">
+                                        <label class="has-float-label mb-0">
+                                        <select value=""
+                                            class="form-control selectpicker  {{ $errors->has('addSalaryGrade')  ? 'is-invalid' : ''}}"
+                                            name="addSalaryGrade" data-live-search="true" id="addSalaryGrade" data-size="4"
+                                            data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                            <option></option>
+                                            @foreach (range(1 , 33) as $salarygrades)
+                                                <option {{ old('addSalaryGrade') == $salarygrades ? 'selected' : '' }} value="{{ $salarygrades}}">
+                                                    {{ $salarygrades}}</option>
+                                            @endforeach
+                                        </select>
+                                        <span class="font-weight-bold">SALARY GRADE<span class="text-danger">*</span></span>
+                                    </label>
+                                        <div id='add-salary-grade-error-message' class='text-danger text-sm'>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-12 col-md-6 col-lg-12">
+                                        <label class="has-float-label mb-0">
+                                        <input value="{{ old('addPositionShortName') }}"
+                                            class="form-control {{ $errors->has('addPositionShortName')  ? 'is-invalid' : ''}}" name="addPositionShortName"
+                                            id="addPositionShortName" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                            <span class="font-weight-bold">Position Short Name<span class="text-danger">*</span></span>
+                                        </label>
+                                        <div id='add-position-short-name-error-message' class='text-danger text-sm'>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" id="btnPosition" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
                             </div>
                         </div>
 
@@ -46,7 +142,7 @@
                             <input value="{{ old('positionOldName') }}"
                                 class="form-control {{ $errors->has('positionOldName')  ? 'is-invalid' : ''}}"
                                 name="positionOldName" id="positionOldName" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <span class="font-weight-bold">OLD POSITION NAME<span class="text-danger">*</span></span>    
+                                <span class="font-weight-bold">OLD POSITION NAME<span class="text-danger">*</span></span>
                             </label>
                             <div id='old-position-name-error-message' class='text-danger text-sm'>
                             </div>
@@ -64,28 +160,9 @@
                                         {{ $salarygrades}}</option>
                                 @endforeach
                             </select>
-                            <span class="font-weight-bold">SALARY GRADE<span class="text-danger">*</span></span>    
+                            <span class="font-weight-bold">SALARY GRADE<span class="text-danger">*</span></span>
                         </label>
                             <div id='salary-grade-error-message' class='text-danger text-sm'>
-                            </div>
-                        </div>
-
-                        <div class="form-group col-12 col-lg-7">
-                            <label class="has-float-label mb-0">
-                            <select value=""
-                                class="form-control selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
-                                name="positionTitle" data-live-search="true" id="positionTitle" data-size="4"
-                                data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <option></option>
-                                @foreach($position as $positions)
-                                <option data-position="{{ $positions }}" style="width:350px;"
-                                    {{ old('positionTitle') == $positions->position_id ? 'selected' : '' }}
-                                    value="{{ $positions->position_id}}">{{ $positions->position_name }}</option>
-                                @endforeach
-                            </select>
-                            <span class="font-weight-bold">POSITION<span class="text-danger">*</span></span>    
-                        </label>
-                            <div id='position-title-error-message' class='text-danger text-sm'>
                             </div>
                         </div>
 
@@ -101,13 +178,13 @@
                                         {{ $offices->office_name }}</option>
                                 @endforeach
                             </select>
-                            <span class="font-weight-bold">OFFICE<span class="text-danger">*</span></span>    
+                            <span class="font-weight-bold">OFFICE<span class="text-danger">*</span></span>
                         </label>
                             <div id='office-error-message' class='text-danger text-sm'>
                             </div>
                         </div>
 
-                        
+
 
                         <div class="form-group form-group submit-section col-12">
                             <button id="saveBtn" class="btn btn-success submit-btn float-right shadow" type="submit">
