@@ -275,3 +275,136 @@ $(function() {
         }
     });
 });
+
+/////////add position function
+$(document).ready(function() {
+    $("#btnPosition").click(function(response) {
+        let addPositionCode = $("#addPositionCode").val();
+        let addPositionName = $("#addPositionName").val();
+        let addSalaryGrade = $("#addSalaryGrade").val();
+        let addPositionShortName = $("#addPositionShortName").val();
+        if (
+            (addPositionCode != "",
+            addPositionName != "",
+            addSalaryGrade != "",
+            addPositionShortName != "")
+        ) {
+            $.ajax({
+                type: "POST",
+                url: "/api/addPosition",
+                data: {
+                    addPositionCode: addPositionCode,
+                    addPositionName: addPositionName,
+                    addSalaryGrade: addSalaryGrade,
+                    addPositionShortName: addPositionShortName
+                },
+                success: function(response) {
+                    if (response.success) {
+                        $(".modal").each(function() {
+                            $(this).modal("hide");
+                        });
+                        swal("Sucessfully Added!", "", "success");
+                        $('input[type="text"],select').val("");
+                        $("#addSalaryGrade")
+                            .val("Please Select")
+                            .trigger("change");
+                        $("#positionTitle").append(
+                            "<option value=" +
+                                response.position_id +
+                                ">" +
+                                addPositionName +
+                                "</option>"
+                        );
+                        const errorClass = [
+                            "#addPositionCode",
+                            "#addPositionName",
+                            "#addSalaryGrade",
+                            "#addPositionShortName"
+                        ];
+                        $.each(errorClass, function(index, value) {
+                            $(`${value}`).removeClass("is-invalid");
+                        });
+                        const errorMessage = [
+                            "#add-position-code-error-message",
+                            "#add-position-name-error-message",
+                            "#add-salary-grade-error-message",
+                            "#add-position-short-name-error-message"
+                        ];
+                        $.each(errorMessage, function(index, value) {
+                            $(`${value}`).html("");
+                        });
+                        $("#positionTitle").selectpicker("refresh");
+                    }
+                },
+                error: function(response) {
+                    if (response.status === 422) {
+                        // Create an parent element
+                        let parentElement = document.createElement("ul");
+                        let errors = response.responseJSON.errors;
+
+                        if (errors.hasOwnProperty("addPositionCode")) {
+                            $("#addPositionCode").addClass("is-invalid");
+                            $("#add-position-code-error-message").html("");
+                            $("#add-position-code-error-message").append(
+                                `<span>${errors.addPositionCode[0]}</span>`
+                            );
+                        } else {
+                            $("#addPositionCode").removeClass("is-invalid");
+                            $("#add-position-code-error-message").html("");
+                        }
+                        if (errors.hasOwnProperty("addPositionName")) {
+                            $("#addPositionName").addClass("is-invalid");
+                            $("#add-position-name-error-message").html("");
+                            $("#add-position-name-error-message").append(
+                                `<span>${errors.addPositionName[0]}</span>`
+                            );
+                        } else {
+                            $("#addPositionName").removeClass("is-invalid");
+                            $("#add-position-name-error-message").html("");
+                        }
+                        if (errors.hasOwnProperty("addSalaryGrade")) {
+                            $("#addSalaryGrade").addClass("is-invalid");
+                            $("#add-salary-grade-error-message").html("");
+                            $("#add-salary-grade-error-message").append(
+                                `<span>${errors.addSalaryGrade[0]}</span>`
+                            );
+                        } else {
+                            $("#addSalaryGrade").removeClass("is-invalid");
+                            $("#add-salary-grade-error-message").html("");
+                        }
+                        if (errors.hasOwnProperty("addPositionShortName")) {
+                            $("#addPositionShortName").addClass("is-invalid");
+                            $("#add-position-short-name-error-message").html(
+                                ""
+                            );
+                            $("#add-position-short-name-error-message").append(
+                                `<span>${errors.addPositionShortName[0]}</span>`
+                            );
+                        } else {
+                            $("#addPositionShortName").removeClass(
+                                "is-invalid"
+                            );
+                            $("#add-position-short-name-error-message").html(
+                                ""
+                            );
+                        }
+
+                        $.each(errors, function(key, value) {
+                            let errorMessage = document.createElement("li");
+                            let [error] = value;
+                            errorMessage.innerHTML = error;
+                            parentElement.appendChild(errorMessage);
+                        });
+                        swal({
+                            title: "The given data was invalid!",
+                            icon: "error",
+                            content: parentElement
+                        });
+                    }
+                }
+            });
+        } else {
+            swal("Please Input Data", "", "warning");
+        }
+    });
+});
