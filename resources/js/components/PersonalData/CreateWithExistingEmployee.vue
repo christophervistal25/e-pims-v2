@@ -14,17 +14,18 @@
         </a>
       </div>
       <div class="clearfix"></div>
-      <div class="row">
-        <div class="col-lg-3" v-for="(tab, key) in tabs" :key="key">
-          <button
-            class="btn btn-block font-weight-bold text-uppercase m-2"
-            :class="[tab.status ? 'btn-primary' : 'btn-danger']"
+      <ul class="nav nav-tabs nav-tabs-solid nav-justified">
+        <li class="nav-item" v-for="(tab, key) in tabs" :key="key">
+          <a
+            href="javascript:;"
+            class="font-weight-bold text-uppercase"
+            :class="[selectedTab === tab ? 'nav-link active' : 'nav-link']"
             @click="openTab(tab)"
           >
             {{ tab.name }}
-          </button>
-        </div>
-      </div>
+          </a>
+        </li>
+      </ul>
       <exists-personal-information
         :personal_data="employee"
         @update-name-extensions="updateNameExtensions"
@@ -178,28 +179,31 @@ export default {
     displayIssuedID() {
       this.needToShowIssuedID = true;
     },
-    openTab(tab) {
-      this.tabs.map((tab) => (tab.status = false));
-      this.selectedTab = tab;
-      tab.status = true;
-    },
-    openNextTab() {
-      // Get the current opened tab.
-      let currentTabName = this.selectedTab.name;
+    openTab(selectedTab) {
+      let tabIndex = 0;
       this.tabs.map((tab, index) => {
-        if (currentTabName == tab.name) {
-          this.selectedTab = this.tabs[index + 1];
-          this.selectedTab.status = true;
-        } else {
-          tab.status = false;
+        if (selectedTab.name === tab.name) {
+          tabIndex = index;
         }
+
+        tab.status = false;
       });
+
+      this.selectedTab = selectedTab;
+
+      selectedTab.status = true;
+      localStorage.setItem("existing__current__tab", tabIndex);
     },
   },
   created() {
     this.socket = io.connect("http://192.168.1.9:3030");
-    // set the default tab display to C1
-    this.selectedTab = this.tabs[0];
+    if (localStorage.getItem("existing__current__tab")) {
+      this.selectedTab =
+        this.tabs[localStorage.getItem("existing__current__tab")];
+    } else {
+      // set the default tab display to C1
+      this.selectedTab = this.tabs[0];
+    }
     window.axios
       .get("/api/name/extensions")
       .then((response) => (this.nameExtensions = response.data));

@@ -2,88 +2,91 @@
   <!-- DATA-APP FOR MODAL OF VUETIFY -->
   <div data-app>
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-lg-3" v-for="(tab, key) in tabs" :key="key">
-          <button
-            class="btn btn-block font-weight-bold text-uppercase m-2"
-            :class="[tab.status ? 'btn-primary' : 'btn-danger']"
+      <ul class="nav nav-tabs nav-tabs-solid nav-justified">
+        <li class="nav-item" v-for="(tab, key) in tabs" :key="key">
+          <a
+            href="javascript:;"
+            class="font-weight-bold text-uppercase"
+            :class="[selectedTab === tab ? 'nav-link active' : 'nav-link']"
             @click="openTab(tab)"
           >
             {{ tab.name }}
-          </button>
-        </div>
+          </a>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+        <create-personal-information
+          v-on:next-panel-family-background="displayFamilyBackgroundPanel"
+          v-if="selectedTab.name === 'C1'"
+          :name_extensions="nameExtensions"
+          @update-name-extensions="updateNameExtensions"
+        ></create-personal-information>
+
+        <create-family-background
+          :name_extensions="nameExtensions"
+          :show_panel="familyBackgroundPanel"
+          @update-name-extensions="updateNameExtensions"
+          v-on:next-panel-educational-background="
+            displayEducationalBackgroundPanel
+          "
+          v-if="selectedTab.name === 'C1'"
+        ></create-family-background>
+
+        <create-educational-background
+          :educational_background="educationalBackgroundPanel"
+          v-if="selectedTab.name === 'C1'"
+          @next_tab="openNextTab"
+        ></create-educational-background>
+
+        <!-- C2 -->
+        <create-civil-service
+          @display-work-experience="workExperienceSection"
+          v-if="selectedTab.name === 'C2'"
+        ></create-civil-service>
+
+        <create-work-experience
+          :work_experience="isWorkExperienceShow"
+          v-if="selectedTab.name === 'C2'"
+          @next_tab="openNextTab"
+        ></create-work-experience>
+        <!-- END OF C2 -->
+
+        <!-- C3 -->
+        <create-voluntary
+          @display-learning-and-development="displayLearningAndDevelopment"
+          v-if="selectedTab.name === 'C3'"
+        ></create-voluntary>
+
+        <create-learning-and-development
+          v-if="selectedTab.name === 'C3'"
+          @display-other-information="displayOtherInformation"
+          :show_panel="needToShowLearningAndDevelopment"
+        ></create-learning-and-development>
+
+        <create-other-information
+          v-if="selectedTab.name === 'C3'"
+          :show_panel="needToShowOtherInformation"
+          @next_tab="openNextTab"
+        ></create-other-information>
+        <!-- END OF C3 -->
+
+        <!-- C4 -->
+        <create-relevant-queries
+          v-if="selectedTab.name === 'C4'"
+          @display-reference="displayReference"
+        ></create-relevant-queries>
+        <create-references
+          :show_panel="needToShowReference"
+          @display-issued-id="displayIssuedID"
+          v-if="selectedTab.name === 'C4'"
+        ></create-references>
+        <create-goverment-issued-id
+          :show_panel="needToShowIssuedID"
+          v-if="selectedTab.name === 'C4'"
+        ></create-goverment-issued-id>
+        <!-- END OF C4 -->
       </div>
-
-      <create-personal-information
-        v-on:next-panel-family-background="displayFamilyBackgroundPanel"
-        v-if="selectedTab.name === 'C1'"
-        :name_extensions="nameExtensions"
-        @update-name-extensions="updateNameExtensions"
-      ></create-personal-information>
-
-      <create-family-background
-        :name_extensions="nameExtensions"
-        :show_panel="familyBackgroundPanel"
-        @update-name-extensions="updateNameExtensions"
-        v-on:next-panel-educational-background="
-          displayEducationalBackgroundPanel
-        "
-        v-if="selectedTab.name === 'C1'"
-      ></create-family-background>
-
-      <create-educational-background
-        :educational_background="educationalBackgroundPanel"
-        v-if="selectedTab.name === 'C1'"
-        @next_tab="openNextTab"
-      ></create-educational-background>
-
-      <!-- C2 -->
-      <create-civil-service
-        @display-work-experience="workExperienceSection"
-        v-if="selectedTab.name === 'C2'"
-      ></create-civil-service>
-
-      <create-work-experience
-        :work_experience="isWorkExperienceShow"
-        v-if="selectedTab.name === 'C2'"
-        @next_tab="openNextTab"
-      ></create-work-experience>
-      <!-- END OF C2 -->
-
-      <!-- C3 -->
-      <create-voluntary
-        @display-learning-and-development="displayLearningAndDevelopment"
-        v-if="selectedTab.name === 'C3'"
-      ></create-voluntary>
-
-      <create-learning-and-development
-        v-if="selectedTab.name === 'C3'"
-        @display-other-information="displayOtherInformation"
-        :show_panel="needToShowLearningAndDevelopment"
-      ></create-learning-and-development>
-
-      <create-other-information
-        v-if="selectedTab.name === 'C3'"
-        :show_panel="needToShowOtherInformation"
-        @next_tab="openNextTab"
-      ></create-other-information>
-      <!-- END OF C3 -->
-
-      <!-- C4 -->
-      <create-relevant-queries
-        v-if="selectedTab.name === 'C4'"
-        @display-reference="displayReference"
-      ></create-relevant-queries>
-      <create-references
-        :show_panel="needToShowReference"
-        @display-issued-id="displayIssuedID"
-        v-if="selectedTab.name === 'C4'"
-      ></create-references>
-      <create-goverment-issued-id
-        :show_panel="needToShowIssuedID"
-        v-if="selectedTab.name === 'C4'"
-      ></create-goverment-issued-id>
-      <!-- END OF C4 -->
     </div>
   </div>
 </template>
@@ -126,22 +129,18 @@ export default {
         {
           name: "C1",
           status: true,
-          no_of_items: 3,
         },
         {
           name: "C2",
           status: false,
-          no_of_items: 3,
         },
         {
           name: "C3",
           status: false,
-          no_of_items: 3,
         },
         {
           name: "C4",
           status: false,
-          no_of_items: 3,
         },
       ],
       selectedTab: {},
@@ -181,10 +180,21 @@ export default {
     displayIssuedID() {
       this.needToShowIssuedID = true;
     },
-    openTab(tab) {
-      this.tabs.map((tab) => (tab.status = false));
-      this.selectedTab = tab;
-      tab.status = true;
+    openTab(selectedTab) {
+      let tabIndex = 0;
+      this.tabs.map((tab, index) => {
+        if (selectedTab.name === tab.name) {
+          tabIndex = index;
+        }
+
+        tab.status = false;
+      });
+
+      this.selectedTab = selectedTab;
+
+      selectedTab.status = true;
+
+      localStorage.setItem("create__current__tab", tabIndex);
     },
     openNextTab() {
       // Get the current opened tab.
@@ -193,6 +203,7 @@ export default {
         if (currentTabName == tab.name) {
           this.selectedTab = this.tabs[index + 1];
           this.selectedTab.status = true;
+          localStorage.setItem("create__current__tab", index + 1);
         } else {
           tab.status = false;
         }
@@ -200,8 +211,14 @@ export default {
     },
   },
   created() {
-    // set the default tab display to C1
-    this.selectedTab = this.tabs[0];
+    if (localStorage.getItem("create__current__tab")) {
+      this.selectedTab =
+        this.tabs[localStorage.getItem("create__current__tab")];
+    } else {
+      // set the default tab display to C1
+      this.selectedTab = this.tabs[0];
+    }
+
     window.axios
       .get("/api/name/extensions")
       .then((response) => (this.nameExtensions = response.data));
