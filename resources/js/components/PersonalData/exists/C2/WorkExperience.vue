@@ -1,5 +1,9 @@
 <template>
-  <div class="card">
+  <div
+    class="card"
+    @mouseenter="isParentContainerFocus = true"
+    @mouseleave="isParentContainerFocus = false"
+  >
     <div
       class="card-header"
       :data-target="isComplete ? '#workExperience' : ''"
@@ -245,6 +249,7 @@ export default {
   },
   data() {
     return {
+      isParentContainerFocus: false,
       isComplete: false,
       isLoading: false,
       noOfFields: 0,
@@ -274,6 +279,7 @@ export default {
   methods: {
     isKeyCombinationSave(event) {
       if (
+        this.isParentContainerFocus &&
         event.ctrlKey &&
         event.code.toLowerCase() === "keys" &&
         event.keyCode === 83

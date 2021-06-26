@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div
+    @mouseenter="isParentContainerFocus = true"
+    @mouseleave="isParentContainerFocus = false"
+  >
     <div class="card">
       <div
         class="card-header"
@@ -172,6 +175,7 @@ export default {
   },
   data() {
     return {
+      isParentContainerFocus: false,
       isLoading: false,
       isComplete: false,
       noOfFields: 0,
@@ -194,6 +198,7 @@ export default {
   methods: {
     isKeyCombinationSave(event) {
       if (
+        this.isParentContainerFocus &&
         event.ctrlKey &&
         event.code.toLowerCase() === "keys" &&
         event.keyCode === 83
