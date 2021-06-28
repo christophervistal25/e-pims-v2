@@ -1,5 +1,9 @@
 <template>
-  <div class="card">
+  <div
+    class="card"
+    @mouseenter="isParentContainerFocus = true"
+    @mouseleave="isParentContainerFocus = false"
+  >
     <div
       class="card-header"
       :data-target="isComplete ? '#educationalBackground' : ''"
@@ -16,11 +20,7 @@
         ></i>
       </h5>
     </div>
-    <div
-      class="collapse"
-      :class="show_panel && !isComplete ? 'show' : ''"
-      :id="isComplete ? 'educationalBackground' : ''"
-    >
+    <div class="collapse show" :id="isComplete ? 'educationalBackground' : ''">
       <div class="p-3">
         <p>
           Indicate <strong>N/A</strong> or <strong>LEAVE BLANK</strong> if not
@@ -870,12 +870,18 @@
       </div>
       <div class="float-right">
         <button
-          class="btn btn-primary font-weight-bold mr-3 mb-2"
+          class="btn btn-success mr-3 mb-2 shadow"
           @click="submitEducationalBackground"
-          v-if="!isComplete"
+          :class="
+            Object.keys(this.errors).length === 0 ? 'btn-success' : 'btn-danger'
+          "
           :disabled="isLoading"
         >
-          NEXT
+          <i class="la la-check" v-if="isComplete"></i>
+          <i class="la la-pencil" v-else></i>
+
+          <span v-if="isComplete">UPDATED</span>
+          <span v-else>UPDATE</span>
           <div
             class="spinner-border spinner-border-sm mb-1"
             role="status"
@@ -901,6 +907,7 @@ export default {
   },
   data() {
     return {
+      isParentContainerFocus: false,
       isComplete: false,
       isLoading: false,
       yearMaxLength: 4,
@@ -915,7 +922,7 @@ export default {
   methods: {
     isKeyCombinationSave(event) {
       if (
-        !this.isComplete &&
+        this.isParentContainerFocus &&
         event.ctrlKey &&
         event.code.toLowerCase() === "keys" &&
         event.keyCode === 83
@@ -926,30 +933,36 @@ export default {
       }
     },
     submitEducationalBackground() {
+      this.errors = {};
       this.isLoading = true;
 
-      this.personal_data.educational_background.graduate_studies_year_graduated = this.yearGraduated;
-      this.personal_data.educational_background.college_year_graduated = this.yearCollegeGraduated;
-      this.personal_data.educational_background.vocational_trade_course_year_graduated = this.yearVocationalGraduated;
-      this.personal_data.educational_background.secondary_year_graduated = this.yearSecondaryGraduated;
-      this.personal_data.educational_background.elementary_year_graduated = this.yearElementaryGraduated;
+      this.personal_data.educational_background.graduate_studies_year_graduated =
+        this.yearGraduated;
+      this.personal_data.educational_background.college_year_graduated =
+        this.yearCollegeGraduated;
+      this.personal_data.educational_background.vocational_trade_course_year_graduated =
+        this.yearVocationalGraduated;
+      this.personal_data.educational_background.secondary_year_graduated =
+        this.yearSecondaryGraduated;
+      this.personal_data.educational_background.elementary_year_graduated =
+        this.yearElementaryGraduated;
 
       window.axios
         .post(
           "/employee/exists/personal/educational/background/store",
           this.personal_data.educational_background
         )
-        .then((response) => {
+        .then(() => {
           this.isLoading = false;
           this.isComplete = true;
           this.errors = {};
-          this.$emit("next_tab");
         })
         .catch((error) => {
           this.isLoading = false;
           this.errors = {};
+          this.isComplete = false;
           if (error.response.status === 422) {
-            Object.keys(error.response.data.errors).map((field, index) => {
+            Object.keys(error.response.data.errors).map((field) => {
               let [fieldMessage] = error.response.data.errors[field];
               this.errors[field] = fieldMessage;
             });
@@ -999,11 +1012,16 @@ export default {
         graduate_studies_scholarship: "",
       };
     } else {
-      this.yearGraduated = this.personal_data.educational_background.graduate_studies_year_graduated;
-      this.yearCollegeGraduated = this.personal_data.educational_background.college_year_graduated;
-      this.yearVocationalGraduated = this.personal_data.educational_background.vocational_trade_course_year_graduated;
-      this.yearSecondaryGraduated = this.personal_data.educational_background.secondary_year_graduated;
-      this.yearElementaryGraduated = this.personal_data.educational_background.elementary_year_graduated;
+      this.yearGraduated =
+        this.personal_data.educational_background.graduate_studies_year_graduated;
+      this.yearCollegeGraduated =
+        this.personal_data.educational_background.college_year_graduated;
+      this.yearVocationalGraduated =
+        this.personal_data.educational_background.vocational_trade_course_year_graduated;
+      this.yearSecondaryGraduated =
+        this.personal_data.educational_background.secondary_year_graduated;
+      this.yearElementaryGraduated =
+        this.personal_data.educational_background.elementary_year_graduated;
     }
   },
 };

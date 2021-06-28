@@ -187,7 +187,7 @@ class PersonalDataSheetController extends Controller
         return $this->employeeRepository->addCivilService($request->all());
     }
 
-    public function existingEmployeeStoreCivilService(Request $request)
+    public function existingEmployeeStoreCivilService(Request $request, string $employee_id)
     {
         $this->validate($request, [
             '*.career_service'       => ['required'],
@@ -198,7 +198,8 @@ class PersonalDataSheetController extends Controller
             '*.date_of_validitiy'    => ['nullable', 'date'],
         ],[], ['*.career_service' => 'career service']);
 
-        return $this->employeeRepository->existingEmployeeAddCivilService($request->all());
+        
+        return $this->employeeRepository->existingEmployeeAddCivilService($request->all(), $employee_id);
     }
 
     public function storeWorkExperience(WorkExperienceRequest $request)
@@ -206,7 +207,7 @@ class PersonalDataSheetController extends Controller
         return $this->employeeRepository->addWorkExperience($request->all());
     }
 
-    public function existingEmployeeStoreWorkExperience(Request $request)
+    public function existingEmployeeStoreWorkExperience(Request $request, $employeeId)
     {
         $this->validate($request, [
             '*.from'                  => ['nullable', 'required_with:*.status_of_appointment', 'required_with:*.government_service', 'required_with:*.to', 'date', 'before:*.to'],
@@ -220,7 +221,7 @@ class PersonalDataSheetController extends Controller
         ],[
             '*.government_service.in' => 'You can only type (Y,N) in goverment service.'
         ], [
-             '*.from'      => 'Inclusive date from',
+             '*.from'=> 'Inclusive date from',
              '*.to'        => 'Inclusive date to',
              '*.status_of_appointment' => 'Status of appointment',
              '*.government_service'   => 'Government Service',
@@ -229,7 +230,7 @@ class PersonalDataSheetController extends Controller
              '*.monthly_salary' => 'Monthly Salary',
              '*.salary_job_pay_grade'  => 'Pay Grade',
         ]);
-        return $this->employeeRepository->existingEmployeeAddWorkExperience($request->all());
+        return $this->employeeRepository->existingEmployeeAddWorkExperience($request->all(), $employeeId);
     }
 
     public function storeVoluntary(VoluntaryWorkRequest $request)
@@ -237,7 +238,7 @@ class PersonalDataSheetController extends Controller
         return $this->employeeRepository->addVoluntary($request->all());
     }
 
-    public function existingEmployeeStoreVoluntary(Request $request)
+    public function existingEmployeeStoreVoluntary(Request $request, $employeeId)
     {
         $this->validate($request, [
                '*.name_and_address'    => ['required'],
@@ -252,7 +253,7 @@ class PersonalDataSheetController extends Controller
             '*.no_of_hours'         => 'Number of Hours',
             '*.position'            => 'Position',
         ]);
-        return $this->employeeRepository->existingEmployeeAddVoluntaryWork($request->all());
+        return $this->employeeRepository->existingEmployeeAddVoluntaryWork($request->all(), $employeeId);
     }
 
     public function storeLearning(LearningRequest $request)
@@ -260,7 +261,7 @@ class PersonalDataSheetController extends Controller
         return $this->employeeRepository->addLearning($request->all());
     }
 
-    public function existingEmployeeStoreLearning(Request $request)
+    public function existingEmployeeStoreLearning(Request $request, $employeeID)
     {
         $this->validate($request, [
              '*.title'                   => ['required'],
@@ -278,7 +279,7 @@ class PersonalDataSheetController extends Controller
             '*.sponsored_by'            => 'Conducted/Sponsored',
         ]);
 
-        return $this->employeeRepository->existingEmployeeAddLearning($request->all());
+        return $this->employeeRepository->existingEmployeeAddLearning($request->all(), $employeeID);
     }
 
     public function storeOtherInformation(Request $request)
@@ -291,7 +292,7 @@ class PersonalDataSheetController extends Controller
         return $this->employeeRepository->addOtherInformation($request->all());
     }
 
-    public function existingEmployeeStoreOtherInformation(Request $request)
+    public function existingEmployeeStoreOtherInformation(Request $request, $employeeId)
     {
         $this->validate($request, [
             '*.special_skill' => 'required',
@@ -299,7 +300,7 @@ class PersonalDataSheetController extends Controller
             '*.organization'  => 'required',
         ],[] , ['*.special_skill' => 'Special Skill', '*.non_academic' => 'Non-academic', '*.organization' => 'Organization']);
 
-        return $this->employeeRepository->existingEmployeeAddOtherInformation($request->all());
+        return $this->employeeRepository->existingEmployeeAddOtherInformation($request->all(), $employeeId);
     }
 
     public function storeRelevantQueries(RelevantQueriesRequest $request)
@@ -346,13 +347,13 @@ class PersonalDataSheetController extends Controller
         return $this->employeeRepository->addReferences($request->all());
     }
 
-    public function existingEmployeeStoreReferences(Request $request)
+    public function existingEmployeeStoreReferences(Request $request, $employeeId)
     {
         $this->validate($request, [
             '*.name' => 'required',
         ],[], ['*.name' => 'name']);
 
-        return $this->employeeRepository->existingEmployeeAddReferences($request->all());
+        return $this->employeeRepository->existingEmployeeAddReferences($request->all(), $employeeId);
     }
 
     public function storeIssuedID(GovernmentIssuedIDRequest $request)

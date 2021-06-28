@@ -48,7 +48,7 @@
 </head>
 {{-- mini-sidebar --}}
 
-<body class="mini-sidebar" onbeforeunload="return exitConfirmation()">
+<body class="" onbeforeunload="return exitConfirmation()">
     <div id="loader-wrapper">
         <div id="loader">
             <div class="loader-ellips">
@@ -246,6 +246,8 @@
                         <li class="menu-title">
                             <span>Human Resource Module</span>
                         </li>
+
+                        
                         <li class="submenu">
                             <a href="#" class='text-decoration-none'><i class="la la-home"></i> <span> Leave Management
                                 </span> <span class="menu-arrow"></span></a>
@@ -262,7 +264,7 @@
                                 </li>
                                 <li>
                                     <a class='text-decoration-none mr-2' href="#">
-                                        Leave Index Monitoring
+                                        Leave Monitoring Index
                                     </a>
                                 </li>
 
@@ -284,32 +286,17 @@
                             </ul>
                         </li>
 
-
+                        
                         <li class="submenu">
-                            <a href="#" class='text-decoration-none'><i class="la la-bars"></i> <span>Service
-                                    Record</span> <span class="menu-arrow"></span></a>
-                            <ul style="display: none;">
-                                <li>
-                                    <a class='text-decoration-none mr-2' href="{{  route('service-records.index') }}">
-                                        Maintenance & Monitoring
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="submenu">
-                            <a href="#" class='text-decoration-none'><i class="la la-bookmark"></i>
-                                <span>Plantilla</span> <span class="menu-arrow"></span></a>
-                            <ul style="display: none;">
-                                <li>
-                                    <a class='text-decoration-none mr-2'
-                                        href="{{  route('plantilla-of-position.index') }}">
+							<a href="#" class='text-decoration-none'><i class="la la-bookmark"></i> <span>Plantilla</span> <span class="menu-arrow"></span></a>
+							<ul style="display: none;">
+								<li>
+                                    <a class='text-decoration-none mr-2' href="{{  route('plantilla-of-position.index') }}">
                                         Plantilla of Position
                                     </a>
                                 </li>
                                 <li>
-                                    <a class='text-decoration-none mr-2'
-                                        href="{{  route('plantilla-of-personnel.index') }}">
+                                    <a class='text-decoration-none mr-2' href="{{  route('plantilla-of-personnel.index') }}">
                                         Plantilla of Personnel
                                     </a>
                                 </li>
@@ -319,23 +306,43 @@
                                     </a>
                                 </li>
                                 <li class="submenu">
-                                    <a class='text-decoration-none' href="javascript:void(0);"> <span>Salary
-                                            Adjustment</span> <span class="menu-arrow"></span></a>
-                                    <ul style="display: none;">
-                                        <li>
-                                            <a class='text-decoration-none'
-                                                href="{{  route('salary-adjustment.index') }}">
+									<a  class='text-decoration-none' href="javascript:void(0);"> <span>Salary Adjustment</span> <span class="menu-arrow"></span></a>
+									<ul style="display: none;">
+										<li>
+                                            <a class='text-decoration-none' href="{{  route('salary-adjustment.index') }}">
                                                 <span>Individual</span>
                                             </a>
-                                            <a class='text-decoration-none'
-                                                href="{{  route('salary-adjustment-per-office.index') }}">
+                                            <a class='text-decoration-none' href="{{  route('salary-adjustment-per-office.index') }}">
                                                 <span>Per Office</span>
                                             </a>
                                         </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
+									</ul>
+								</li>
+							</ul>
+
+                            <li class="submenu">
+                                <a href="#" class='text-decoration-none'><i class="la la-bars"></i> <span>Service Record</span> <span class="menu-arrow"></span></a>
+                                <ul style="display: none;">
+                                    <li>
+                                        <a class='text-decoration-none mr-2' href="{{  route('service-records.index') }}">
+                                            Maintenance & Monitoring
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a class='text-decoration-none' href="{{ route('salary-grade.index') }}">
+                                    <i class="la la-money"></i> <span> Salary Grade </span>
+                                </a>
+                            </li>
+
+						</li>
+
+
+                        
+
+                        
                     </ul>
                 </div>
             </div>

@@ -3,15 +3,16 @@ use App\SalaryGrade;
 use App\service_record;
 use App\SalaryAdjustment;
 use Yajra\Datatables\Datatables;
+use App\PlantillaPosition;
 use App\Plantilla;
 
-// Route::get('/salaryList/{sg_no}' , 'Api\PlantillaController@salaryList');
+
 Route::get('/salarySteplist/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@salarySteplist');
 Route::get('/dbmPrevious/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@dbmPrevious');
 Route::get('/dbmCurrent/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@dbmCurrent');
 Route::get('/cscPrevious/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@cscPrevious');
-
 Route::get('/positionSalaryGrade/{positionTitle}' , 'Api\PlantillaController@positionSalaryGrade');
+Route::post('/addPosition' , 'Api\PlantillaController@addPosition');
 
 ///service record
 Route::get('/employee/service/records/{employeeId}', function ($employeeId) {
@@ -34,15 +35,10 @@ Route::get('/employee/service/records/{employeeId}', function ($employeeId) {
                     ->make(true);
 });
 
-
-
 Route::get('step/{sg_no}/{step}' , function ($sgNo, $step) {
     $salaryGrade = SalaryGrade::where('sg_no', $sgNo)->first(['sg_step' . $step]);
     return $salaryGrade;
 });
-
-Route::post('/addPosition' , 'Api\PlantillaController@addPosition');
-
 
 Route::group(['prefix' => 'employee'], function () {
     Route::get('employees', 'Api\EmployeeController@list');
@@ -80,12 +76,10 @@ Route::get('countries', function () {
     return config('countries.all');
 });
 
-
 // Reference Routes.
 Route::post('/employment/status/store', 'Api\ReferenceStatusController@store');
 Route::get('name/extensions', 'Api\ReferenceNameExtensionController@index');
 Route::post('name/extensions/store', 'Api\ReferenceNameExtensionController@store');
-
 
 /////// salary adjustment
 Route::get('/salaryAdjustment/{sg_no}/{sg_step?}/{sg_year}' , 'Api\SalaryAdjustmentController@salaryAdjustment');
@@ -122,8 +116,7 @@ Route::get('/office/salary/adjustment/peroffice/{officeCode}', function ($office
                 return $row->plantilla->office_code;
             })
             ->addColumn('action', function($row){
-                $btn = "<a title='Edit Salary Adjustment' href='$row->id' class='rounded-circle edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
-                $btn = $btn."<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                $btn = "<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
                 ";
                     return $btn;
             })
@@ -156,12 +149,18 @@ Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}', funct
 
 
 Route::post('/salary-adjustment-per-office', function () {
-    $plantilla = Plantilla::select('plantilla_id', 'sg_no', 'step_no', 'salary_amount')->get();
-    $salaryGrade = SalaryGrade::select('id', 'sg_step1', 'sg_step2', 'sg_step3', 'sg_step4', 'sg_step5', 'sg_step6', 'sg_step7', 'sg_step8', 'sg_year')->get();
     $plantillaIds = explode(',', request()->ids);
     $data = Plantilla::whereIn('plantilla_id', $plantillaIds)->get();
     $newAdjustment = $data->toArray();
     foreach($data as $newAdjustment){
+        $newAdjustment->plantilla_id;
+        $newAdjustment->sg_no;
+        $newAdjustment->step_no;
+        $newAdjustment->salary_amount;
+        $getsalaryResult = SalaryGrade::where('sg_no', $newAdjustment->sg_no)
+                            ->where('sg_year', request()->year)
+                            ->first(['sg_year' ,'sg_step' .  $newAdjustment->step_no]);
+        $salaryDiff = $getsalaryResult['sg_step' .  $newAdjustment->step_no] - $newAdjustment->salary_amount;
         $salaryAdjustment= new SalaryAdjustment();
         $salaryAdjustment->employee_id = $newAdjustment->employee_id;
         $salaryAdjustment->item_no = $newAdjustment->item_no;
@@ -170,9 +169,53 @@ Route::post('/salary-adjustment-per-office', function () {
         $salaryAdjustment->sg_no = $newAdjustment->sg_no;
         $salaryAdjustment->step_no = $newAdjustment->step_no;
         $salaryAdjustment->salary_previous = $newAdjustment->salary_amount;
-        $salaryAdjustment->salary_new = $newAdjustment->salary_amount;
-        $salaryAdjustment->salary_diff = $newAdjustment->salary_amount;
+        $salaryAdjustment->salary_new =  $getsalaryResult['sg_step' .  $newAdjustment->step_no];
+        $salaryAdjustment->salary_diff = $salaryDiff;
         $salaryAdjustment->save();
     }
     return response()->json(['success'=>true]);
+});
+
+// plantilla position
+Route::get('/plantilla/position/{officeCode}', function ($office_code) {
+    $data = PlantillaPosition::select('pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name')->with('position:position_id,position_name', 'office:office_code,office_name')->where('office_code', $office_code)->get();
+    return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('position', function ($row) {
+                        return $row->position->position_name;
+                    })
+                    ->addColumn('office', function ($row) {
+                        return $row->office->office_name;
+                    })
+                    ->addColumn('action', function($row){
+
+                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-position.edit', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
+                        $btn = $btn."<a title='Delete Position' id='delete' value='$row->pp_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                        ";
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+});
+
+// plantilla personnel
+Route::get('/plantilla/personnel/{officeCode}', function ($office_code) {
+    $data = Plantilla::select('plantilla_id', 'item_no', 'position_id', 'office_code', 'status', 'employee_id')->with('office:office_code,office_short_name','positions:position_id,position_name', 'employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code)->orderBy('plantilla_id', 'DESC')->get();
+    return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('employee', function ($row) {
+                        return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
+                    })
+                    ->addColumn('positions', function ($row) {
+                        return $row->positions->position_name;
+                    })
+                    ->addColumn('office', function ($row) {
+                        return $row->office->office_short_name;
+                    })
+                    ->addColumn('action', function($row){
+                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm'><i class='la la-edit'></i></a>";
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
 });

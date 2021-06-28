@@ -76,7 +76,7 @@
                 </td>
                 <td class="text-center">
                   <button
-                    v-if="index == noOfFields - 1"
+                    v-if="index == noOfFields - 1 && noOfFields <= 2"
                     class="btn btn-primary font-weight-bold rounded-circle"
                     @click="addNewReferenceField"
                   >
@@ -88,20 +88,22 @@
           </table>
           <div class="float-right mb-3">
             <button
-              class="btn btn-danger font-weight-bold"
+              class="btn btn-secondary text-white shadow"
               @click="skipSection"
               v-if="!isComplete"
               :disabled="isLoading"
             >
+              <i class="fa fa-forward"></i>
               SKIP
             </button>
             <button
-              class="btn btn-primary font-weight-bold"
+              class="btn btn-primary shadow"
               @click="submitReferences"
               :disabled="isLoading"
               v-if="!isComplete"
             >
               NEXT
+              <i class="fa fa-hand-o-right"></i>
               <div
                 class="spinner-border spinner-border-sm mb-1"
                 v-show="isLoading"
@@ -118,7 +120,6 @@
 </template>
 
 <script>
-import swal from "sweetalert";
 export default {
   props: {
     show_panel: {
@@ -141,7 +142,7 @@ export default {
     };
   },
   watch: {
-    references(from, to) {
+    references(to) {
       this.noOfFields = to.length;
     },
   },
@@ -160,12 +161,14 @@ export default {
       }
     },
     addNewReferenceField() {
-      this.references.push({
-        refName: "",
-        refAdd: "",
-        refTelNo: "",
-        employee_id: localStorage.getItem("employee_id"),
-      });
+      if (this.references.length <= 2) {
+        this.references.push({
+          refName: "",
+          refAdd: "",
+          refTelNo: "",
+          employee_id: localStorage.getItem("employee_id"),
+        });
+      }
     },
     removeField(index) {
       if (index != 0) {

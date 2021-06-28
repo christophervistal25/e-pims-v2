@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div
+    @mouseenter="isParentContainerFocus = true"
+    @mouseleave="isParentContainerFocus = false"
+  >
     <div class="card">
       <div
         class="card-header"
@@ -18,11 +21,7 @@
         </h5>
       </div>
 
-      <div
-        class="collapse"
-        :class="!isComplete ? 'show' : ''"
-        :id="isComplete ? 'relevantQueries' : ''"
-      >
+      <div class="collapse show" id="relevantQueries">
         <div class="card-body">
           <!-- {{-- BEGIN CONTENT OF RELEVANT QUERIES --}} -->
           <table class="table table-bordered">
@@ -922,12 +921,18 @@
 
           <div class="float-right mb-3">
             <button
-              class="btn btn-primary font-weight-bold"
+              class="btn btn-success shadow"
               @click="submit"
               :disabled="isLoading"
-              v-if="!isComplete"
+              :class="
+                Object.keys(errors).length === 0 ? 'btn-success' : 'btn-danger'
+              "
             >
-              NEXT
+              <i class="la la-check" v-if="isComplete"></i>
+              <i class="la la-pencil" v-else></i>
+
+              <span v-if="isComplete">UPDATED</span>
+              <span v-else>UPDATE</span>
               <div
                 class="spinner-border spinner-border-sm mb-1"
                 v-show="isLoading"
@@ -952,6 +957,7 @@ export default {
   },
   data() {
     return {
+      isParentContainerFocus: false,
       isComplete: false,
       isLoading: false,
       relevantQueries: {
@@ -990,7 +996,7 @@ export default {
   methods: {
     isKeyCombinationSave(event) {
       if (
-        !this.isComplete &&
+        this.isParentContainerFocus &&
         event.ctrlKey &&
         event.code.toLowerCase() === "keys" &&
         event.keyCode === 83
@@ -1003,16 +1009,14 @@ export default {
     markYes(question, others = []) {
       if (this.relevantQueries[`${question}_answer`] !== "yes") {
         this.relevantQueries[`${question}_answer`] = "yes";
-        this.relevantQueries[`${question}_details`] = this.temporary[
-          `${question}_details`
-        ];
+        this.relevantQueries[`${question}_details`] =
+          this.temporary[`${question}_details`];
 
         if (others.length !== 0) {
           others.forEach(
             (other) =>
-              (this.relevantQueries[`${question}_${other}`] = this.temporary[
-                `${question}_${other}`
-              ])
+              (this.relevantQueries[`${question}_${other}`] =
+                this.temporary[`${question}_${other}`])
           );
         }
       }
@@ -1036,6 +1040,7 @@ export default {
       }
     },
     submit() {
+      this.errors = {};
       this.isLoading = true;
       window.axios
         .post(

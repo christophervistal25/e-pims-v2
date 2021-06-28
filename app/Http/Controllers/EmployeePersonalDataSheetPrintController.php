@@ -3,9 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
+use App\EmployeeIssuedID;
+use App\EmployeeReference;
 use App\Services\MSAccess;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use App\EmployeeInformation;
+use App\EmployeeCivilService;
+use App\EmployeeRelevantQuery;
+use App\EmployeeVoluntaryWork;
+use App\EmployeeSpouseChildren;
+use App\EmployeeWorkExperience;
+use App\EmployeeFamilyBackground;
+use App\EmployeeOtherInformation;
+use App\EmployeeTrainingAttained;
+use App\EmployeeEducationalBackground;
+use CreateEmployeeEducationalBackgroundsTable;
+
 // use App\Http\Traits\PersonalDataSheetCellPrint;
 
 
@@ -30,10 +44,6 @@ class EmployeePersonalDataSheetPrintController extends Controller
             'permanent_province',
         ];
 
-        $excludeToUppercase = [
-            'email',
-        ];
-
         $columns = implode(',', $employee->getFillable());
     
         $values = "";
@@ -42,9 +52,8 @@ class EmployeePersonalDataSheetPrintController extends Controller
             if(in_array($column, $fieldsWithPostFix)) {
                 $column .= '_text';
             }
-
-          
-                $values .=  "'" . ($employee->$column  ?? '') . "',";
+            $data = ($employee->$column !== '*' ? $employee->$column : '');
+            $values .=  "'" . ($data  ?? '') . "',";
         }
 
         $values = rtrim($values, ',');
@@ -61,43 +70,70 @@ class EmployeePersonalDataSheetPrintController extends Controller
         $except   = $data['except'];
         $table    = $data['table'];
         $alias    = $data['alias'];
+        $modelName = $data['model_name'];
 
-        if(is_null($model->$relation)) {
-            return false;
-        }
+        if(!is_null($model->$relation)) {
+            // Get the relation information record.
+            $record = Arr::except($model->$relation->toArray(), $except);
 
 
-        // Get the relation information record.
-        $record = Arr::except($model->$relation->toArray(), $except);
+            // Seperate the keys and values of the employee relation record.
+            [$columns, $values] = Arr::divide($record);
 
-        // Seperate the keys and values of the employee relation record.
-        [$columns, $values] = Arr::divide($record);
-
-        foreach($alias as $currentColumn => $replace) {
+            foreach($alias as $currentColumn => $replace) {
+                $index =  array_search($currentColumn, $columns);
+                if($index) {
+                    $columns[$index] = $replace;                
+                }
+            }
             
-            $index =  array_search($currentColumn, $columns);
-            
-            if($index) {
-                $columns[$index] = $replace;                
+            // Format the columns
+            $columns = implode(',', $columns);
+
+            // Format the values
+            $formattedValues = "";
+
+            foreach($values as $value) {
+                $data = ($value !== '*' ? $value : '');
+                $formattedValues .=  "'" . ($data) . "',";
             }
 
+            $formattedValues = rtrim($formattedValues, ',');
+            
+
+            // Insert into MS Access table.
+            $this->database->execute("INSERT INTO $table ($columns) VALUES ($formattedValues)");
+        } else {
+            $columns = (new $modelName)->getFillable();
+
+            
+            foreach($alias as $currentColumn => $replace) {
+                $index =  array_search($currentColumn, $columns);
+                if($index) {
+                    $columns[$index] = $replace;                
+                }
+            }
+
+            foreach($columns as $index => $column) {
+                if(in_array($column, $except)) {
+                    unset($columns[$index]);
+                }
+            }
+
+            $formattedValues = null;
+
+            for($iteration = 0; $iteration<count($columns); $iteration++) {
+                $formattedValues .= "' ',";
+            }
+
+            $formattedValues = rtrim($formattedValues, ',');
+
+            $columns = implode(',', $columns);
+
+            $this->database->execute("INSERT INTO $table ($columns) VALUES ($formattedValues)");
         }
         
-        // Format the columns
-        $columns = implode(',', $columns);
 
-        // Format the values
-        $formattedValues = "";
-
-        foreach($values as $value) {
-            $formattedValues .=  "'" . ($value  ?? '') . "',";
-        }
-
-        $formattedValues = rtrim($formattedValues, ',');
-        
-
-        // Insert into MS Access table.
-        $this->database->execute("INSERT INTO $table ($columns) VALUES ($formattedValues)");
     }
 
     private function oneToManyInsertion(array $data = [])
@@ -106,59 +142,82 @@ class EmployeePersonalDataSheetPrintController extends Controller
         $relation = $data['relation'];
         $except   = $data['except'];
         $table    = $data['table'];
-        $alias = $data['alias'];
+        $alias    = $data['alias'];
+        $modelName = $data['model_name'];
 
-        if(is_null($model->$relation)) {
-            return false;
-        }
 
         // Get the relation information record.
         $records = $model->$relation->toArray();
+        $columns = (new $modelName)->getFillable();
+        if(count($records) >= 1) {
+            // Get the first record of the relation in order to generate a columns.
+            $columns = array_map(function ($column) use($except) {
+                return !in_array($column, $except) ? $column : null;
+            }, $columns);
 
-        // Get the first record of the relation in order to generate a columns.
-        $columns = array_keys($records[0]);
-        
-        $columns = array_map(function ($column) use($except) {
-            return !in_array($column, $except) ? $column : null;
-        }, $columns);
+            foreach($alias as $currentColumn => $replace) {
+                
+                $index =  array_search($currentColumn, $columns);
+                
+                if($index) {
+                    $columns[$index] = $replace;                
+                }
 
-        foreach($alias as $currentColumn => $replace) {
-            
-            $index =  array_search($currentColumn, $columns);
-            
-            if($index) {
-                $columns[$index] = $replace;                
             }
 
-        }
+            // Rebase the index of the array columns.
+            $columns = array_values(array_filter($columns));
+            
 
-        // Rebase the index of the array columns.
-        $columns = array_values(array_filter($columns));
-        
+            // Format the columns
+            $columns = implode(',', $columns);
 
-        // Format the columns
-        $columns = implode(',', $columns);
+            // Format for values
+            foreach($records as $r) {
+                $formattedValues = "";
+                $formattedValues .= "(";
 
-        
-        // Format for values
+                foreach($r as $column => $record) {
+                    if(!in_array($column, $except)) {
+                        $data = ($record !== "*" ? $record : '');
+                        $formattedValues .= "'" . ($data  ?? ' ') . "',";
+                    }
+                }
+                
+                $formattedValues  = rtrim($formattedValues, ',');
+                $formattedValues .= "),";
+                $formattedValues  = rtrim($formattedValues, ',');
 
-        foreach($records as $civilService) {
-            $formattedValues = "";
-            $formattedValues .= "(";
-            foreach($civilService as $column => $record) {
-                if(!in_array($column, $except)) {
-                    $formattedValues .= "'" . ($record  ?? ' ') . "',";
+                // Insert into MS Access table.
+                $this->database->execute("INSERT INTO $table ($columns) VALUES $formattedValues");
+            }
+        } else {
+            $formattedValues = null;
+
+            
+            
+            $columns = array_filter(array_map(function ($column) use($except) {
+                return !in_array($column, $except) ? $column : null;
+            }, $columns));
+
+            foreach($alias as $currentColumn => $replace) {
+                
+                $index =  array_search($currentColumn, $columns);
+                
+                if($index) {
+                    $columns[$index] = $replace;                
                 }
             }
-            
-            $formattedValues  = rtrim($formattedValues, ',');
-            $formattedValues .= "),";
-            $formattedValues  = rtrim($formattedValues, ',');
 
-            // Insert into MS Access table.
-            $this->database->execute("INSERT INTO $table ($columns) VALUES $formattedValues");
+            foreach($columns as $column) {
+                $formattedValues .= "' '" . ',';
+            }
+            
+            $columns = implode(',', $columns);
+            $formattedValues = rtrim($formattedValues, ',');
+            $this->database->execute("INSERT INTO $table ($columns) VALUES ($formattedValues)");
         }
-        
+         
     }
 
 
@@ -189,31 +248,43 @@ class EmployeePersonalDataSheetPrintController extends Controller
 
         $this->oneToOneInsertion([
             'model'    => $employee,
-            'relation' => 'information',
-            'table'    => 'employee_information',
-            'except'   => ['created_at', 'updated_at', 'id', 'old_office_code', 'division_code' , 'first_of_service', 'basic_rate', 'salary_grade', 'step', 'skills', 'hobbies', 'religion', 'swipe_station_no', 'time_reference', 'exempted_swipe', 'active_inactive', 'new_employee', 'PNB_account_no', 'zip_code', 'shifting_employee', 'PHW', 'item_number', 'first_day_of_service'],
-            'alias' => ['EmpIDNo' => 'employee_id'],
+            'relation' => 'issued_id',
+            'model_name' => EmployeeIssuedID::class,
+            'table'    => 'employee_issued_i_d_s',
+            'except'   => ['employee_id', 'created_at', 'updated_at', 'id', 'place_of_issuance'],
+            'alias'    => ['id_no' => 'no', 'date' => '_date'],
         ]);
 
-        // Insertion of employee educational background
         $this->oneToOneInsertion([
             'model'    => $employee,
+            'relation' => 'information',
+            'model_name' => EmployeeInformation::class,
+            'table'    => 'employee_information',
+            'except'   => ['EmpIDNo', 'created_at', 'updated_at', 'id', 'old_office_code', 'division_code' , 'first_of_service', 'basic_rate', 'salary_grade', 'step', 'skills', 'hobbies', 'religion', 'swipe_station_no', 'time_reference', 'exempted_swipe', 'active_inactive', 'new_employee', 'PNB_account_no', 'zip_code', 'shifting_employee', 'PHW', 'item_number', 'first_day_of_service'],
+            'alias' => [],
+        ]);
+
+        $this->oneToOneInsertion([
+            'model'    => $employee,
+            'model_name' => EmployeeEducationalBackground::class,
             'relation' => 'educational_background',
             'table'    => 'employee_educational_backgrounds',
-            'except'   => ['created_at', 'updated_at', 'id'],
+            'except'   => ['employee_id', 'created_at', 'updated_at', 'id'],
             'alias' => [],
         ]);
 
          $this->oneToManyInsertion([
             'model'    => $employee,
+            'model_name' => EmployeeCivilService::class,
             'relation' => 'civil_service',
             'table'    => 'employee_civil_services',
-            'except'   => ['created_at', 'updated_at', 'id'],
+            'except'   => ['employee_id', 'created_at', 'updated_at', 'id'],
             'alias' => [],
         ]);
 
         $this->oneToManyInsertion([
             'model'    => $employee,
+            'model_name' => EmployeeSpouseChildren::class,
             'relation' => 'spouse_child',
             'table'    => 'employee_spouse_childrens',
             'except'   => ['employee_id', 'created_at', 'updated_at', 'id'],
@@ -222,73 +293,70 @@ class EmployeePersonalDataSheetPrintController extends Controller
 
         $this->oneToOneInsertion([
             'model'    => $employee,
+            'model_name' => EmployeeFamilyBackground::class,
             'relation' => 'family_background',
             'table'    => 'employee_family_backgrounds',
-            'except'   => ['created_at', 'updated_at', 'id'],
+            'except'   => ['employee_id', 'created_at', 'updated_at', 'id', 'mother_extension'],
             'alias' => [],
         ]);
         
-         $this->oneToOneInsertion([
-            'model'    => $employee,
-            'relation' => 'issued_id',
-            'table'    => 'employee_issued_i_d_s',
-            'except'   => ['created_at', 'updated_at', 'id'],
-            'alias'    => ['id_type' => 'type', 'id_no' => 'no', 'date' => '_date'],
-        ]);
+         
 
         $this->oneToManyInsertion([
             'model'    => $employee,
+            'model_name' => EmployeeOtherInformation::class,
             'relation' => 'other_information',
             'table'    => 'employee_other_information',
-            'except'   => ['created_at', 'updated_at', 'id'],
+            'except'   => ['employee_id', 'created_at', 'updated_at', 'id'],
             'alias'    => [],
         ]);
 
         $this->oneToManyInsertion([
             'model'    => $employee,
+            'model_name' => EmployeeReference::class,
             'relation' => 'references',
             'table'    => 'employee_references',
-            'except'   => ['created_at', 'updated_at', 'id'],
+            'except'   => ['employee_id', 'created_at', 'updated_at', 'id'],
             'alias'    => [],
         ]);
 
         $this->oneToOneInsertion([
             'model'    => $employee,
+            'model_name' => EmployeeRelevantQuery::class,
             'relation' => 'relevant_queries',
             'table'    => 'employee_relevant_queries',
-            'except'   => ['created_at', 'updated_at', 'id'],
+            'except'   => ['employee_id', 'created_at', 'updated_at', 'id'],
             'alias' => [],
         ]);
 
 
         $this->oneToManyInsertion([
             'model'    => $employee,
+            'model_name' => EmployeeTrainingAttained::class,
             'relation' => 'program_attained',
             'table'    => 'employee_training_attaineds',
-            'except'   => ['created_at', 'updated_at', 'id'],
+            'except'   => ['employee_id', 'created_at', 'updated_at', 'id'],
             'alias'    => [],
         ]);
 
         $this->oneToManyInsertion([
             'model'    => $employee,
+            'model_name' => EmployeeVoluntaryWork::class,
             'relation' => 'voluntary_work',
             'table'    => 'employee_voluntary_works',
-            'except'   => ['created_at', 'updated_at', 'id'],
+            'except'   => ['employee_id', 'created_at', 'updated_at', 'id'],
             'alias'    => [],
         ]);
 
          $this->oneToManyInsertion([
             'model'    => $employee,
+            'model_name' => EmployeeWorkExperience::class,
             'relation' => 'work_experience',
             'table'    => 'employee_work_experiences',
-            'except'   => ['created_at', 'updated_at', 'id'],
-            'alias' => ['from' => 'from_date', 'to' => 'to_date'],
+            'except'   => ['employee_id', 'created_at', 'updated_at', 'id'],
+            'alias'    => ['from' => 'from_date', 'to' => 'to_date'],
         ]);
-
-        $windowExeLocation = config('window.base_path') . config('window.app_name');
-
-        shell_exec($windowExeLocation);
-
+        
         return response()->json(['success' => true]);
     }
 }

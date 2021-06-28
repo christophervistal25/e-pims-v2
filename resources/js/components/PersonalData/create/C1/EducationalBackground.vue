@@ -696,12 +696,13 @@
       </div>
       <div class="float-right">
         <button
-          class="btn btn-primary font-weight-bold mr-3 mb-2"
+          class="btn btn-primary mr-3 mb-2"
           @click="submitEducationalBackground"
           v-if="!isComplete"
           :disabled="isLoading"
         >
           NEXT
+          <i class="fa fa-hand-o-right"></i>
           <div
             class="spinner-border spinner-border-sm mb-1"
             role="status"

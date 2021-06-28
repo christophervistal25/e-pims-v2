@@ -138,6 +138,8 @@ class EmployeeRepository
         $childrens = [];
         $childs = array_filter($childs, 'array_filter');
         
+        $employee->spouse_child()->delete();
+        
         foreach($childs as $child) {
             $childrens[] = EmployeeSpouseChildren::firstOrNew([
                 'name'          => $child['name'],
@@ -322,9 +324,10 @@ class EmployeeRepository
         return $civilRecords;
     }
 
-    public function existingEmployeeAddCivilService(array $data = []) :array
+    public function existingEmployeeAddCivilService(array $data = [], $employeeId) :array
     {
-        $employee = Employee::find($data[self::FIRST_INDEX]['employee_id']);
+        $employee = Employee::find($employeeId);
+        
         $records = [];
 
         $employee->civil_service()->delete();
@@ -375,13 +378,15 @@ class EmployeeRepository
         return $workExperiences;
     }
 
-    public function existingEmployeeAddWorkExperience(array $data = []) :array
+    public function existingEmployeeAddWorkExperience(array $data = [], $employeeId) :array
     {
-         $employee = Employee::find($data[self::FIRST_INDEX]['employee_id']);
+        $employee = Employee::find($employeeId);
 
          $records = [];
 
-        $employee->work_experience()->delete();
+         if($employee->work_experience()->count() !== 0) {
+            $employee->work_experience()->delete();
+         }
 
          foreach($data as $record) {
             if(!is_null($record['from'])) {
@@ -429,15 +434,15 @@ class EmployeeRepository
        return $voluntaryRecord;
     }
 
-    public function existingEmployeeAddVoluntaryWork(array $data = []) :array
+    public function existingEmployeeAddVoluntaryWork(array $data = [], $employeeId) :array
     {
-        $employeeId = $data[self::FIRST_INDEX]['employee_id'];
-
         $employee = Employee::find($employeeId);
 
         $records = [];
         
-        $employee->voluntary_work()->delete();
+        if($employee->voluntary_work()->count() !== 0) {
+            $employee->voluntary_work()->delete();
+        }
 
         foreach($data as $record) {
             if(!is_null($record['name_and_address'])) {
@@ -453,9 +458,9 @@ class EmployeeRepository
             }
         }
 
-       $employee->voluntary_work()->saveMany($records);
+        $employee->voluntary_work()->saveMany($records);
 
-       return $records;
+        return $records;
     }
 
     public function addLearning(array $trainings = []) :array
@@ -487,13 +492,13 @@ class EmployeeRepository
         return $trainings;
     }
 
-    public function existingEmployeeAddLearning(array $data = []) :array
+    public function existingEmployeeAddLearning(array $data = [], $employeeId) :array
     {
-        $employeeId = $data[self::FIRST_INDEX]['employee_id'];
-        
         $employee = Employee::find($employeeId);
         
-        $employee->program_attained()->delete();
+        if($employee->program_attained()->count() !== 0) {
+            $employee->program_attained()->delete();
+        }
 
         $records = [];
 
@@ -539,13 +544,13 @@ class EmployeeRepository
         return $informations;
     }
 
-    public function existingEmployeeAddOtherInformation(array $data = []) :array
+    public function existingEmployeeAddOtherInformation(array $data = [], $employeeId) :array
     {
-          $employeeId = $data[self::FIRST_INDEX]['employee_id'];
-
         $employee = Employee::find($employeeId);
         
-        $employee->other_information()->delete();
+        if($employee->other_information()->count() !== 0) {
+            $employee->other_information()->delete();
+        }
 
         $records = [];
         
@@ -659,13 +664,14 @@ class EmployeeRepository
         return $references;
     }
 
-    public function existingEmployeeAddReferences(array $data = []) : array
+    public function existingEmployeeAddReferences(array $data = [], $employeeId) : array
     {
-        $employeeId = $data[self::FIRST_INDEX]['employee_id'];
-
+        $records = [];
         $employee = Employee::find($employeeId);
 
-        $employee->references()->delete();
+        if($employee->references()->count() !== 0) {
+            $employee->references()->delete();
+        }
 
         foreach($data as $reference) {
             $records[] = EmployeeReference::firstOrNew([

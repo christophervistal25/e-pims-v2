@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div
+    @mouseenter="isParentContainerFocus = true"
+    @mouseleave="isParentContainerFocus = false"
+  >
     <div class="card">
       <div
         class="card-header"
@@ -17,11 +20,7 @@
           ></i>
         </h5>
       </div>
-      <div
-        class="collapse"
-        :class="isComplete ? '' : 'show'"
-        :id="isComplete ? 'information' : ''"
-      >
+      <div class="collapse show" :id="isComplete ? 'information' : ''">
         <div class="p-3">
           <div
             class="alert alert-warning text-center"
@@ -661,10 +660,11 @@
                   if (
                     personal_data.residential_zip_code.length > zipCodeMaxLength
                   )
-                    personal_data.residential_zip_code = personal_data.residential_zip_code.slice(
-                      0,
-                      zipCodeMaxLength
-                    );
+                    personal_data.residential_zip_code =
+                      personal_data.residential_zip_code.slice(
+                        0,
+                        zipCodeMaxLength
+                      );
                 "
                 :class="
                   !errors.hasOwnProperty('residential_zip_code')
@@ -833,10 +833,11 @@
                   if (
                     personal_data.permanent_zip_code.length > zipCodeMaxLength
                   )
-                    personal_data.permanent_zip_code = personal_data.permanent_zip_code.slice(
-                      0,
-                      zipCodeMaxLength
-                    );
+                    personal_data.permanent_zip_code =
+                      personal_data.permanent_zip_code.slice(
+                        0,
+                        zipCodeMaxLength
+                      );
                 "
                 :class="
                   !errors.hasOwnProperty('permanent_zip_code')
@@ -859,16 +860,18 @@
         </div>
         <div class="p-3 float-right">
           <button
-            class="btn btn-primary font-weight-bold"
+            class="btn btn-success shadow"
             :class="
-              Object.keys(errors).length != 0 ? 'btn-danger' : 'btn-primary'
+              Object.keys(errors).length != 0 ? 'btn-danger' : 'btn-success'
             "
             @click="submitPersonalInformation"
-            v-if="!isComplete"
             :disabled="isLoading"
           >
-            NEXT
+            <i class="la la-check" v-if="isComplete"></i>
+            <i class="la la-pencil" v-else></i>
 
+            <span v-if="isComplete">UPDATED</span>
+            <span v-else>UPDATE</span>
             <div
               class="spinner-border spinner-border-sm mb-1"
               v-show="isLoading"
@@ -900,6 +903,7 @@ export default {
   },
   data() {
     return {
+      isParentContainerFocus: false,
       civilEqualToOthers: false,
       onCitizenDual: false,
       isShow: false,
@@ -937,7 +941,7 @@ export default {
   methods: {
     isKeyCombinationSave(event) {
       if (
-        !this.isComplete &&
+        this.isParentContainerFocus &&
         event.ctrlKey &&
         event.code.toLowerCase() === "keys" &&
         event.keyCode === 83
@@ -1016,28 +1020,40 @@ export default {
         this.tempPermanentAddress.city = this.personPermanentCity;
         this.tempPermanentAddress.barangay = this.personPermanentBarangay;
 
-        this.tempPermanentAddress.house_no = this.personal_data.permanent_house_no;
+        this.tempPermanentAddress.house_no =
+          this.personal_data.permanent_house_no;
         this.tempPermanentAddress.street = this.personal_data.permanent_street;
-        this.tempPermanentAddress.village = this.personal_data.permanent_village;
-        this.tempPermanentAddress.zip_code = this.personal_data.permanent_zip_code;
+        this.tempPermanentAddress.village =
+          this.personal_data.permanent_village;
+        this.tempPermanentAddress.zip_code =
+          this.personal_data.permanent_zip_code;
 
         this.personPermanentProvince = this.personResidentialProvince;
         this.personPermanentCity = this.personResidentialCity;
         this.personPermanentBarangay = this.personResidentialBarangay;
 
-        this.personal_data.permanent_house_no = this.personal_data.residential_house_no;
-        this.personal_data.permanent_street = this.personal_data.residential_street;
-        this.personal_data.permanent_village = this.personal_data.residential_village;
-        this.personal_data.permanent_zip_code = this.personal_data.residential_zip_code;
+        this.personal_data.permanent_house_no =
+          this.personal_data.residential_house_no;
+        this.personal_data.permanent_street =
+          this.personal_data.residential_street;
+        this.personal_data.permanent_village =
+          this.personal_data.residential_village;
+        this.personal_data.permanent_zip_code =
+          this.personal_data.residential_zip_code;
 
-        this.personal_data.permanent_province = this.personal_data.residential_province;
+        this.personal_data.permanent_province =
+          this.personal_data.residential_province;
         this.personal_data.permanent_city = this.personal_data.residential_city;
-        this.personal_data.permanent_barangay = this.personal_data.residential_barangay;
+        this.personal_data.permanent_barangay =
+          this.personal_data.residential_barangay;
       } else {
-        this.personal_data.permanent_house_no = this.tempPermanentAddress.house_no;
+        this.personal_data.permanent_house_no =
+          this.tempPermanentAddress.house_no;
         this.personal_data.permanent_street = this.tempPermanentAddress.street;
-        this.personal_data.permanent_village = this.tempPermanentAddress.village;
-        this.personal_data.permanent_zip_code = this.tempPermanentAddress.zip_code;
+        this.personal_data.permanent_village =
+          this.tempPermanentAddress.village;
+        this.personal_data.permanent_zip_code =
+          this.tempPermanentAddress.zip_code;
 
         this.personPermanentProvince = this.tempPermanentAddress.province;
         this.personPermanentCity = this.tempPermanentAddress.city;
@@ -1047,20 +1063,19 @@ export default {
     submitPersonalInformation(e) {
       e.preventDefault();
       this.isLoading = true;
+      this.errors = {};
       this.personal_data.extension = this.personSelectedNameExtension;
       window.axios
         .post("/employee/exists/personal/information/store", this.personal_data)
-        .then((response) => {
+        .then(() => {
           this.errors = {};
           this.isLoading = false;
           this.isComplete = true;
-          if (response.status === 200) {
-            this.$emit("next-panel-family-background");
-          }
         })
         .catch((error) => {
           this.errors = {};
           this.isLoading = false;
+          this.isComplete = false;
           if (error.response.status === 422) {
             Object.keys(error.response.data.errors).map((field) => {
               let [fieldMessage] = error.response.data.errors[field];
@@ -1097,9 +1112,11 @@ export default {
 
     this.personSelectedNameExtension = this.personal_data.extension;
     this.personCountry = this.personal_data.indicate_country;
-    this.personResidentialProvince = this.personal_data.residential_province_text;
+    this.personResidentialProvince =
+      this.personal_data.residential_province_text;
     this.personResidentialCity = this.personal_data.residential_city_text;
-    this.personResidentialBarangay = this.personal_data.residential_barangay_text;
+    this.personResidentialBarangay =
+      this.personal_data.residential_barangay_text;
 
     this.personPermanentProvince = this.personal_data.permanent_province_text;
     this.personPermanentCity = this.personal_data.permanent_city_text;

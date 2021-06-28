@@ -5,11 +5,17 @@ namespace App\Http\Controllers\EmployeeLeave;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class LeaveController extends Controller
+class LeaveRecallController extends Controller
 {
-    public function show()
+    public function index()
     {
-        return view('leave.leave-application');
+        return view('leave.leave-recall');
     }
+} 
 
-}
+
+
+
+
+
+?>

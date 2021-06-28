@@ -7,7 +7,6 @@ use Illuminate\Contracts\Validation\Rule;
 
 class UpdateTrapfullname implements Rule
 {
-    private $data;
     
     /**
      * Create a new rule instance.
@@ -16,7 +15,6 @@ class UpdateTrapfullname implements Rule
      */
     public function __construct(array $data = [])
     {
-        $this->data = $data;
     }
 
     /**
@@ -31,15 +29,12 @@ class UpdateTrapfullname implements Rule
         $employee = Employee::where('lastname', request()->lastName)
                             ->where('firstname', request()->firstName)
                             ->where('date_birth', request()->dateOfBirth)
-                            ->orWhere('middlename', request()->middleName)
-                            ->orWhere('extension', request()->extension)
-                            ->get(['firstname', 'middlename', 'lastname', 'date_birth', 'extension', 'employee_id'])
-                            ->filter(function ($data) {
-                                return $data->employee_id != request()->employee_id;
-                            })->count();
-                            
+                            ->where('middlename', request()->middleName ?? '')
+                            ->where('extension', request()->extension ?? '')
+                            ->where('employee_id', '!=', request()->employee_id)
+                            ->get(['firstname', 'middlename', 'lastname', 'date_birth', 'extension', 'employee_id']);
 
-        return $employee  === 0;
+        return $employee->count()  === 0;
 
     }
 

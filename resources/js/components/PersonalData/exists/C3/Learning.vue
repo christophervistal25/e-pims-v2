@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div
+    @mouseenter="isParentContainerFocus = true"
+    @mouseleave="isParentContainerFocus = false"
+  >
     <div class="card">
       <div
         class="card-header"
@@ -19,11 +22,7 @@
         </h5>
       </div>
 
-      <div
-        class="collapse"
-        :class="!isComplete && show_panel ? 'show' : ''"
-        :id="isComplete ? 'learning' : ''"
-      >
+      <div class="collapse show" id="learning">
         <div class="card-body">
           <div
             class="alert alert-info text-center"
@@ -55,7 +54,15 @@
               <td rowspan="2" class="align-middle text-sm" scope="colgroup">
                 CONDUCTED/ SPONSORED (Write in full)
               </td>
-              <td rowspan="2" class="align-middle">&nbsp;</td>
+              <td rowspan="2" class="align-middle">
+                <button
+                  v-if="learnDev.length === 0"
+                  class="btn btn-primary font-weight-bold rounded-circle"
+                  @click="addNewLearningAndDevelopmentField"
+                >
+                  <i class="fa fa-plus"></i>
+                </button>
+              </td>
             </tr>
             <tr style="background: #eaeaea">
               <td></td>
@@ -164,7 +171,6 @@
                 </td>
                 <td class="jumbotron">
                   <button
-                    v-show="index != 0"
                     @click="removeField(index)"
                     class="btn btn-danger font-weight-bold mt-2 rounded-circle"
                   >
@@ -185,19 +191,18 @@
           </table>
           <div class="float-right mb-3">
             <button
-              class="btn btn-danger font-weight-bold"
-              @click="skipSection"
-              v-if="!isComplete"
-            >
-              SKIP
-            </button>
-            <button
-              class="btn btn-primary font-weight-bold"
+              class="btn btn-primary shadow"
               @click="submitLearningAndDevelopment"
               :disabled="isLoading"
-              v-if="!isComplete"
+              :class="
+                Object.keys(errors).length != 0 ? 'btn-danger' : 'btn-success'
+              "
             >
-              NEXT
+              <i class="la la-check" v-if="isComplete"></i>
+              <i class="la la-pencil" v-else></i>
+
+              <span v-if="isComplete">UPDATED</span>
+              <span v-else>UPDATE</span>
               <div
                 class="spinner-border spinner-border-sm mb-1"
                 v-show="isLoading"
@@ -225,6 +230,7 @@ export default {
   },
   data() {
     return {
+      isParentContainerFocus: false,
       isLoading: false,
       isComplete: false,
       noOfFields: 0,
@@ -236,7 +242,6 @@ export default {
           noOfHours: "",
           typeOfLD: "",
           conducted: "",
-          employee_id: localStorage.getItem("employee_id"),
         },
       ],
       errors: {},
@@ -244,14 +249,14 @@ export default {
     };
   },
   watch: {
-    learnDev(from, to) {
+    learnDev(to) {
       this.noOfFields = to.length;
     },
   },
   methods: {
     isKeyCombinationSave(event) {
       if (
-        !this.isComplete &&
+        this.isParentContainerFocus &&
         event.ctrlKey &&
         event.code.toLowerCase() === "keys" &&
         event.keyCode === 83
@@ -269,28 +274,24 @@ export default {
         number_of_hours: "",
         type_of_id: "",
         sponsored_by: "",
-        employee_id: this.personal_data.employee_id,
       });
     },
     removeField(index) {
-      if (index !== 0) {
-        this.learnDev.splice(index, 1);
-      }
-    },
-    skipSection() {
-      this.isComplete = true;
-      this.$emit("display-other-information");
+      this.learnDev.splice(index, 1);
     },
     submitLearningAndDevelopment() {
+      this.errors = {};
+      this.rowErrors = "";
       this.isLoading = true;
       window.axios
-        .post("/employee/exists/personal/learning", this.learnDev)
-        .then((response) => {
+        .post(
+          `/employee/exists/personal/${this.personal_data.employee_id}/learning`,
+          this.learnDev
+        )
+        .then(() => {
           this.isLoading = false;
           this.isComplete = true;
           this.errors = {};
-
-          this.$emit("display-other-information");
         })
         .catch((error) => {
           this.isLoading = false;
@@ -330,9 +331,6 @@ export default {
   created() {
     window.addEventListener("keydown", this.isKeyCombinationSave);
     this.learnDev = this.personal_data.program_attained;
-    if (this.learnDev.length === 0) {
-      this.addNewLearningAndDevelopmentField();
-    }
     this.noOfFields = this.learnDev.length;
   },
 };

@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div
+    @mouseenter="isParentContainerFocus = true"
+    @mouseleave="isParentContainerFocus = false"
+  >
     <div class="card">
       <div
         class="card-header"
@@ -19,9 +22,9 @@
       </div>
 
       <div
-        class="collapse"
+        class="collapse show"
         :class="!isComplete && show_panel ? 'show' : ''"
-        :id="isComplete ? 'otherInformation' : ''"
+        id="otherInformation"
       >
         <div class="card-body">
           <p>Indicate <strong>N/A </strong>if not applicable</p>
@@ -37,7 +40,15 @@
               <td rowspan="2" class="align-middle text-sm" scope="colgroup">
                 33. MEMBERSHIP IN ASSOCIATION/ORGANIZATION (Write in full)
               </td>
-              <td rowspan="2" class="align-middle">&nbsp;</td>
+              <td rowspan="2" class="align-middle">
+                <button
+                  v-if="otherInformation.length === 0"
+                  class="btn btn-primary font-weight-bold rounded-circle"
+                  @click="addNewOtherInformationField"
+                >
+                  <i class="fa fa-plus"></i>
+                </button>
+              </td>
             </tr>
 
             <tbody>
@@ -104,7 +115,6 @@
                 </td>
                 <td class="jumbotron text-center">
                   <button
-                    v-show="index != 0"
                     class="btn btn-danger font-weight-bold mt-2 rounded-circle"
                     @click="removeField(index)"
                   >
@@ -125,19 +135,18 @@
           </table>
           <div class="float-right mb-3">
             <button
-              class="btn btn-danger font-weight-bold"
-              @click="skipSection"
-              v-if="!isComplete"
-            >
-              SKIP
-            </button>
-            <button
-              class="btn btn-primary font-weight-bold"
+              class="btn btn-success shadow"
               @click="submitOtherInformation"
+              :class="
+                Object.keys(errors).length === 0 ? 'btn-success' : 'btn-danger'
+              "
               :disabled="isLoading"
-              v-if="!isComplete"
             >
-              NEXT
+              <i class="la la-check" v-if="isComplete"></i>
+              <i class="la la-pencil" v-else></i>
+
+              <span v-if="isComplete">UPDATED</span>
+              <span v-else>UPDATE</span>
               <div
                 class="spinner-border spinner-border-sm mb-1"
                 v-show="isLoading"
@@ -166,6 +175,7 @@ export default {
   },
   data() {
     return {
+      isParentContainerFocus: false,
       isLoading: false,
       isComplete: false,
       noOfFields: 0,
@@ -174,7 +184,6 @@ export default {
           special_skill: "",
           non_academic: "",
           organization: "",
-          employee_id: this.personal_data.employee_id,
         },
       ],
       rowErrors: "",
@@ -182,14 +191,14 @@ export default {
     };
   },
   watch: {
-    otherInformation(from, to) {
+    otherInformation(to) {
       this.noOfFields = to.length;
     },
   },
   methods: {
     isKeyCombinationSave(event) {
       if (
-        !this.isComplete &&
+        this.isParentContainerFocus &&
         event.ctrlKey &&
         event.code.toLowerCase() === "keys" &&
         event.keyCode === 83
@@ -204,7 +213,6 @@ export default {
         special_skill: "",
         non_academic: "",
         organization: "",
-        employee_id: this.personal_data.employee_id,
       });
     },
     skipSection() {
@@ -212,13 +220,15 @@ export default {
       this.$emit("next_tab");
     },
     submitOtherInformation() {
+      this.errors = {};
+      this.rowErrors = "";
       this.isLoading = true;
       window.axios
         .post(
-          "/employee/exists/personal/other/information",
+          `/employee/exists/personal/${this.personal_data.employee_id}/other/information`,
           this.otherInformation
         )
-        .then((response) => {
+        .then(() => {
           this.isComplete = true;
           this.isLoading = false;
           this.$emit("next_tab");
@@ -257,17 +267,12 @@ export default {
       });
     },
     removeField(index) {
-      if (index !== 0) {
-        this.otherInformation.splice(index, 1);
-      }
+      this.otherInformation.splice(index, 1);
     },
   },
   created() {
     window.addEventListener("keydown", this.isKeyCombinationSave);
     this.otherInformation = this.personal_data.other_information;
-    if (this.otherInformation.length === 0) {
-      this.addNewOtherInformationField();
-    }
     this.noOfFields = this.otherInformation.length;
   },
 };

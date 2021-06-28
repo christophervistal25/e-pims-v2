@@ -89,7 +89,7 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(OldEmployeeUpdateRequest $request, $employeeId)
+    public function update(OldEmployeeUpdateRequest $request)
     {
         return $this->employeeRepository->updateEmployee($request->all());
     }

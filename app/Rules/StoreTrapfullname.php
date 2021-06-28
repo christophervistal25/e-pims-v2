@@ -32,17 +32,18 @@ class StoreTrapfullname implements Rule
         if(count($this->data) !== 0) {
             $records = Employee::where('lastname', $this->data['lastname'])
                                 ->where('firstname', $this->data['firstname'])
-                                ->orWhere('middlename', $this->data['middlename'])
-                                ->orWhere('extension', $this->data['extension'])
+                                ->where('middlename', $this->data['middlename'] ?? '')
+                                ->where('extension', $this->data['extension'] ?? '')
                                 ->where('date_birth', $this->data['date_of_birth'])
                                 ->count();
         } else {
             $records = Employee::where('lastname', request()->lastName)
                                 ->where('firstname', request()->firstName)
-                                ->orWhere('middlename', request()->middleName)
-                                ->orWhere('extension', request()->extension)
+                                ->where('middlename', request()->middleName ?? '')
+                                ->where('extension', request()->extension  ?? '')
                                 ->where('date_birth', request()->dateOfBirth)
                                 ->count();
+                                
         }
         return $records <= 0;
     }

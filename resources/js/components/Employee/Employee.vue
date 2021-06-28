@@ -34,8 +34,6 @@
 
           <div class="mt-1"></div>
           <v-data-table
-            loading
-            loading-text="Processing..."
             :headers="headers"
             :items="employees"
             :search="search"
@@ -45,6 +43,37 @@
             @page-count="pageCount = $event"
             hide-default-footer
           >
+            <template v-slot:item.information.photo="{ item }">
+              <div class="p-2">
+                <v-img
+                  v-if="item.information && item.information.photo"
+                  :src="`/storage/employee_images/${item.information.photo}`"
+                  aspect-ratio="1"
+                  class="grey lighten-2 rounded-circle"
+                >
+                  <template v-slot:placeholder>
+                    <v-progress-circular
+                      indeterminate
+                      color="rgb(255, 155, 68);"
+                    ></v-progress-circular>
+                  </template>
+                </v-img>
+
+                <v-img
+                  v-else
+                  :src="`/storage/employee_images/no_image.png`"
+                  aspect-ratio="1"
+                  class="grey lighten-2 rounded-circle"
+                >
+                  <template v-slot:placeholder>
+                    <v-progress-circular
+                      indeterminate
+                      color="rgb(255, 155, 68);"
+                    ></v-progress-circular>
+                  </template>
+                </v-img>
+              </div>
+            </template>
             <template v-slot:item.actions="{ item }">
               <button
                 class="btn btn-success rounded-circle"
@@ -100,7 +129,7 @@
                   >Account Numbers
                   <i
                     v-if="sectionError.accountNumbers"
-                    class="fas fa-exclamation-triangle text-danger"
+                    class="fa fa-exclamation-triangle text-danger"
                   ></i>
                 </a>
               </li>
@@ -165,6 +194,11 @@ export default {
       search: "",
       employee_id: "",
       headers: [
+        {
+          text: "Photo",
+          value: "information.photo",
+          sortable: false,
+        },
         {
           text: "Employee ID",
           value: "employee_id",
@@ -330,21 +364,20 @@ export default {
             swal({
               text: "Successfully add new employee.",
               icon: "success",
+              timer: 2000,
             });
 
             this.employees.unshift(response.data);
           }
         })
         .catch((error) => {
-          this.isLoading = false;
           this.errors = {};
-
+          this.isLoading = false;
           this.sectionValidatorChecker(Object.keys(error.response.data.errors));
-
           if (error.response.status === 422) {
-            Object.keys(error.response.data.errors).map((field) => {
-              let [fieldMessage] = error.response.data.errors[field];
-              this.errors[field] = fieldMessage;
+            Object.keys(error.response.data.errors).forEach((field) => {
+              let [message] = error.response.data.errors[field];
+              this.errors[field] = message;
             });
           }
         });
@@ -391,6 +424,12 @@ export default {
     fetchEmployeeData(employee_id) {
       window.axios.get(`/api/employee/find/${employee_id}`).then((response) => {
         if (response.status == 200) {
+          // Clear some fields.
+          this.employee.step = "";
+          this.employee.basicRate = "";
+          this.employee.officeAssignment = "";
+          this.employee.designation = "";
+
           this.errors = {};
           let dateYear = new Date().getFullYear();
           let age = dateYear - new Date(response.data.date_birth).getFullYear();
@@ -437,6 +476,8 @@ export default {
               this.employee.basicRate = response.data.step.salary_amount_to;
               this.employee.step = response.data.step.step_no_to;
             }
+          } else {
+            this.employee.image = "no_image.png";
           }
 
           this.showAddEmployeeForm = true;

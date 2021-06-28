@@ -893,7 +893,7 @@
         </div>
         <div class="p-3 float-right">
           <button
-            class="btn btn-primary font-weight-bold"
+            class="btn btn-primary shadow"
             :class="
               Object.keys(errors).length != 0 ? 'btn-danger' : 'btn-primary'
             "
@@ -902,7 +902,7 @@
             :disabled="isLoading"
           >
             NEXT
-
+            <i class="fa fa-hand-o-right"></i>
             <div
               class="spinner-border spinner-border-sm mb-1"
               v-show="isLoading"

@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div
+    @mouseenter="isParentContainerFocus = true"
+    @mouseleave="isParentContainerFocus = false"
+  >
     <div class="card">
       <div
         class="card-header"
@@ -22,11 +25,7 @@
         </h5>
       </div>
 
-      <div
-        class="collapse"
-        :class="!isComplete && show_panel ? 'show' : ''"
-        :id="isComplete ? 'reference' : ''"
-      >
+      <div class="collaps show" id="reference">
         <div class="card-body">
           <p>Indicate <strong>N/A </strong>if not applicable</p>
           <table class="table table-bordered">
@@ -35,6 +34,15 @@
               <td>NAME</td>
               <td>ADDRESS</td>
               <td colspan="2">TEL. NO</td>
+              <td>
+                <button
+                  v-if="noOfFields === 0"
+                  class="btn btn-primary font-weight-bold rounded-circle"
+                  @click="addNewReferenceField"
+                >
+                  <i class="fa fa-plus"></i>
+                </button>
+              </td>
             </tr>
 
             <tbody>
@@ -92,7 +100,6 @@
 
                 <td class="jumbotron text-center">
                   <button
-                    v-show="index != 0"
                     @click="removeField(index)"
                     class="btn btn-danger font-weight-bold rounded-circle"
                   >
@@ -101,7 +108,7 @@
                 </td>
                 <td class="text-center">
                   <button
-                    v-if="index == noOfFields - 1"
+                    v-if="index == noOfFields - 1 && noOfFields <= 2"
                     class="btn btn-primary font-weight-bold rounded-circle"
                     @click="addNewReferenceField"
                   >
@@ -113,20 +120,18 @@
           </table>
           <div class="float-right mb-3">
             <button
-              class="btn btn-danger font-weight-bold"
-              @click="skipSection"
-              v-if="!isComplete"
-              :disabled="isLoading"
-            >
-              SKIP
-            </button>
-            <button
-              class="btn btn-primary font-weight-bold"
+              class="btn btn-success shadow"
               @click="submitReferences"
               :disabled="isLoading"
-              v-if="!isComplete"
+              :class="
+                Object.keys(errors).length === 0 ? 'btn-success' : 'btn-danger'
+              "
             >
-              NEXT
+              <i class="la la-check" v-if="isComplete"></i>
+              <i class="la la-pencil" v-else></i>
+
+              <span v-if="isComplete">UPDATED</span>
+              <span v-else>UPDATE</span>
               <div
                 class="spinner-border spinner-border-sm mb-1"
                 v-show="isLoading"
@@ -155,6 +160,7 @@ export default {
   },
   data() {
     return {
+      isParentContainerFocus: false,
       isLoading: false,
       isComplete: false,
       noOfFields: 0,
@@ -163,7 +169,6 @@ export default {
           name: "",
           address: "",
           telephone_number: "",
-          employee_id: this.personal_data.employee_id,
         },
       ],
       errors: [],
@@ -171,14 +176,16 @@ export default {
     };
   },
   watch: {
-    references(from, to) {
-      this.noOfFields = to.length;
+    references(to) {
+      if (this.noOfFields <= 2) {
+        this.noOfFields = to.length;
+      }
     },
   },
   methods: {
-    isKeyCombinationSave() {
+    isKeyCombinationSave(event) {
       if (
-        !this.isComplete &&
+        this.isParentContainerFocus &&
         event.ctrlKey &&
         event.code.toLowerCase() === "keys" &&
         event.keyCode === 83
@@ -189,31 +196,35 @@ export default {
       }
     },
     addNewReferenceField() {
-      this.references.push({
-        name: "",
-        address: "",
-        telephone_number: "",
-        employee_id: this.personal_data.employee_id,
-      });
-    },
-    removeField(index) {
-      if (index != 0) {
-        this.references.splice(index, 1);
+      if (this.noOfFields <= 2) {
+        this.references.push({
+          name: "",
+          address: "",
+          telephone_number: "",
+        });
       }
     },
+    removeField(index) {
+      this.references.splice(index, 1);
+      this.noOfFields = this.references.length;
+    },
     submitReferences() {
+      this.errors = {};
+      this.rowErrors = "";
       this.isLoading = true;
       window.axios
-        .post("/employee/exists/personal/references", this.references)
-        .then((response) => {
+        .post(
+          `/employee/exists/personal/${this.personal_data.employee_id}/references`,
+          this.references
+        )
+        .then(() => {
           this.isLoading = false;
           this.isComplete = true;
-          this.$emit("display-issued-id");
         })
         .catch((error) => {
           this.isLoading = false;
           if (error.response.status === 422) {
-            Object.keys(error.response.data.errors).map((field, index) => {
+            Object.keys(error.response.data.errors).map((field) => {
               let [fieldMessage] = error.response.data.errors[field];
               this.errors[field] = fieldMessage;
             });
@@ -242,17 +253,10 @@ export default {
         dangerMode: true,
       });
     },
-    skipSection() {
-      this.isComplete = true;
-      this.$emit("display-issued-id");
-    },
   },
   created() {
     window.addEventListener("keydown", this.isKeyCombinationSave);
     this.references = this.personal_data.references;
-    if (this.references.length === 0) {
-      this.addNewReferenceField();
-    }
     this.noOfFields = this.references.length;
   },
 };

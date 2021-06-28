@@ -1,5 +1,9 @@
 <template>
-  <div class="card">
+  <div
+    class="card"
+    @mouseenter="isParentContainerFocus = true"
+    @mouseleave="isParentContainerFocus = false"
+  >
     <div
       class="card-header"
       :data-target="isComplete ? '#workExperience' : ''"
@@ -17,11 +21,7 @@
       </h5>
     </div>
 
-    <div
-      class="collapse"
-      :class="!isComplete ? 'show' : ''"
-      :id="isComplete ? 'workExperience' : ''"
-    >
+    <div class="collapse show" :id="isComplete ? 'workExperience' : ''">
       <div class="card-body">
         <div class="alert alert-info text-center" role="alert">
           <strong
@@ -55,7 +55,15 @@
             <td rowspan="2" class="align-middle text-sm">
               GOV'T SERVICE <strong>(Y/ N)</strong>
             </td>
-            <td rowspan="2" class="pl-4 pr-4">&nbsp;</td>
+            <td rowspan="2" class="pl-4 pr-4 align-middle">
+              <button
+                class="btn btn-primary rounded-circle"
+                v-if="workExperience.length === 0"
+                @click="addNewWorkExperienceField"
+              >
+                <i class="fa fa-plus"></i>
+              </button>
+            </td>
           </tr>
 
           <tr style="background: #eaeaea">
@@ -185,7 +193,6 @@
               </td>
               <td class="jumbotron align-middle">
                 <button
-                  v-show="index != 0"
                   class="btn btn-danger font-weight-bold rounded-circle"
                   @click="removeField(index)"
                 >
@@ -206,23 +213,18 @@
         </table>
         <div class="float-right mb-3">
           <button
-            class="btn btn-danger font-weight-bold"
-            @click="skipSection"
-            v-if="!isComplete"
-          >
-            SKIP
-          </button>
-          <button
-            class="btn btn-primary font-weight-bold"
+            class="btn btn-success shadow"
             @click="submitWorkExperience"
             :class="
-              Object.keys(errors).length != 0 ? 'btn-danger' : 'btn-primary'
+              Object.keys(errors).length != 0 ? 'btn-danger' : 'btn-success'
             "
             :disabled="isLoading"
-            v-if="!isComplete"
           >
-            NEXT
+            <i class="la la-check" v-if="isComplete"></i>
+            <i class="la la-pencil" v-else></i>
 
+            <span v-if="isComplete">UPDATED</span>
+            <span v-else>UPDATE</span>
             <div
               class="spinner-border spinner-border-sm mb-1"
               v-show="isLoading"
@@ -247,6 +249,7 @@ export default {
   },
   data() {
     return {
+      isParentContainerFocus: false,
       isComplete: false,
       isLoading: false,
       noOfFields: 0,
@@ -269,14 +272,14 @@ export default {
     };
   },
   watch: {
-    workExperience(from, to) {
+    workExperience(to) {
       this.noOfFields = to.length;
     },
   },
   methods: {
     isKeyCombinationSave(event) {
       if (
-        !this.isComplete &&
+        this.isParentContainerFocus &&
         event.ctrlKey &&
         event.code.toLowerCase() === "keys" &&
         event.keyCode === 83
@@ -296,29 +299,29 @@ export default {
         pay_grade: "",
         status_of_appointment: "",
         government_service: "",
-        employee_id: this.personal_data.employee_id,
       });
     },
-    skipSection() {
-      this.isComplete = true;
-      this.$emit("next_tab");
-    },
+
     submitWorkExperience() {
+      this.errors = {};
+      this.rowErrors = "";
       this.isLoading = true;
       window.axios
-        .post("/employee/exists/personal/work/experience", this.workExperience)
-        .then((response) => {
+        .post(
+          `/employee/exists/personal/${this.personal_data.employee_id}/work/experience`,
+          this.workExperience
+        )
+        .then(() => {
           this.isLoading = false;
           this.isComplete = true;
           this.errors = {};
-          this.$emit("next_tab");
         })
         .catch((error) => {
           this.isLoading = false;
           this.errors = {};
           // Check the error status code.
           if (error.response.status === 422) {
-            Object.keys(error.response.data.errors).map((field, index) => {
+            Object.keys(error.response.data.errors).map((field) => {
               let [fieldMessage] = error.response.data.errors[field];
               this.errors[field] = fieldMessage;
             });
@@ -328,9 +331,7 @@ export default {
         });
     },
     removeField(index) {
-      if (index != 0) {
-        this.workExperience.splice(index, 1);
-      }
+      this.workExperience.splice(index, 1);
     },
     displayRowErrorMessage(index) {
       let parentElement = document.createElement("ul");
@@ -356,9 +357,6 @@ export default {
   created() {
     window.addEventListener("keydown", this.isKeyCombinationSave);
     this.workExperience = this.personal_data.work_experience;
-    if (this.workExperience.length === 0) {
-      this.addNewWorkExperienceField();
-    }
     this.noOfFields = this.workExperience.length;
   },
 };

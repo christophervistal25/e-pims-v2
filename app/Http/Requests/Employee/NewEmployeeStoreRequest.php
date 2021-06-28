@@ -26,7 +26,7 @@ class NewEmployeeStoreRequest extends FormRequest
     {
         $rules = [
             'firstName'                    => ['required', new StoreTrapfullname()],
-            'middleName'                   => ['nullable', new StoreTrapfullname],
+            'middleName'                   => ['nullable', new StoreTrapfullname()],
             'lastName'                     => ['required', new StoreTrapfullname()],
             'extension'                    => ['nullable', new StoreTrapfullname()],
             'dateOfBirth'                  => ['required', 'date', new StoreTrapfullname()],

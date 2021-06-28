@@ -38,8 +38,6 @@
 
         <div class="mt-1"></div>
         <v-data-table
-          loading
-          loading-text="Processing..."
           :headers="headers"
           :items="employees"
           :search="search"
@@ -49,6 +47,37 @@
           @page-count="pageCount = $event"
           hide-default-footer
         >
+          <template v-slot:item.information.photo="{ item }">
+            <div class="p-2">
+              <v-img
+                v-if="item.information && item.information.photo"
+                :src="`/storage/employee_images/${item.information.photo}`"
+                aspect-ratio="1"
+                class="grey lighten-2 rounded-circle"
+              >
+                <template v-slot:placeholder>
+                  <v-progress-circular
+                    indeterminate
+                    color="rgb(255, 155, 68);"
+                  ></v-progress-circular>
+                </template>
+              </v-img>
+
+              <v-img
+                v-else
+                :src="`/storage/employee_images/no_image.png`"
+                aspect-ratio="1"
+                class="grey lighten-2 rounded-circle"
+              >
+                <template v-slot:placeholder>
+                  <v-progress-circular
+                    indeterminate
+                    color="rgb(255, 155, 68);"
+                  ></v-progress-circular>
+                </template>
+              </v-img>
+            </div>
+          </template>
           <template v-slot:item.actions="{ item }">
             <button
               @click="fetchInformation(item.employee_id)"
@@ -101,6 +130,17 @@
     </div>
 
     <div id="emp__profile" v-if="showProfile">
+      <div
+        class="float-right"
+        style="position: fixed; z-index: 99999; left: 97%"
+      >
+        <a
+          @click="printPersonalDataSheet(employee.employee_id)"
+          class="btn btn-primary btn-rounded shadow"
+        >
+          <i class="la la-print"></i>
+        </a>
+      </div>
       <div class="card mb-0 rounded-0 shadow-none">
         <view-information-summary
           :employee="employee"
@@ -213,6 +253,12 @@
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-lg-12">
+          <view-relevant-queries :employee="employee"></view-relevant-queries>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -230,10 +276,12 @@ import ViewVoluntaryWork from "./Information/ViewVoluntaryWork.vue";
 import ViewLearningAndDevelopment from "./Information/ViewLearningAndDevelopment.vue";
 import ViewOtherInformation from "./Information/ViewOtherInformation.vue";
 import ViewReferences from "./Information/ViewReferences.vue";
-import socket from "./../../socket.js";
+import io from "socket.io-client";
+import ViewRelevantQueries from "./Information/ViewRelevantQueries.vue";
 export default {
   data() {
     return {
+      socket: "",
       employees: [],
       employee: {},
       showProfile: false,
@@ -243,6 +291,11 @@ export default {
       search: "",
       employee_id: "",
       headers: [
+        {
+          text: "Photo",
+          value: "information.photo",
+          sortable: false,
+        },
         {
           text: "Employee ID",
           value: "employee_id",
@@ -280,6 +333,7 @@ export default {
     ViewLearningAndDevelopment,
     ViewOtherInformation,
     ViewReferences,
+    ViewRelevantQueries,
   },
   methods: {
     fetchInformation(employee_id) {
@@ -292,11 +346,17 @@ export default {
     },
     printPersonalDataSheet(employee_id) {
       window.axios.get(`/print/pds/${employee_id}`).then(() => {
-        socket.emit("preview_personal_data_sheet");
+        if (!this.socket.connected) {
+          this.socket = io.connect("http://192.168.1.13:3030");
+          this.socket.emit("preview_personal_data_sheet");
+        } else {
+          this.socket.emit("preview_personal_data_sheet");
+        }
       });
     },
   },
   created() {
+    this.socket = io.connect("http://192.168.1.13:3030");
     window.axios.get(`/api/employee/employees`).then((response) => {
       if (response.status === 200) {
         this.employees = response.data;

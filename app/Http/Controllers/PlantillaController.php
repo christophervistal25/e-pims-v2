@@ -9,6 +9,7 @@ use App\Employee;
 use App\SalaryGrade;
 use App\Office;
 use App\Position;
+use App\PlantillaPosition;
 use Illuminate\Support\Facades\Session;
 class PlantillaController extends Controller
 {
@@ -28,6 +29,8 @@ class PlantillaController extends Controller
         $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->whereNotIn('employee_id', $plantillaEmp )->get();
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('position_id', 'position_name')->get();
+        $plantillaPositionID = Plantilla::get()->pluck('position_id')->toArray();
+        $plantillaPosition = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->whereNotIn('position_id', $plantillaPositionID )->get();
         $salarygrade = SalaryGrade::get(['sg_no']);
         $status = ['Please Select', 'Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
         count($status) - 1;
@@ -37,7 +40,7 @@ class PlantillaController extends Controller
         count($areatype) - 1;
         $arealevel = ['Please Select','K','T','S','A'];
         count($arealevel) - 1;
-        return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade'));
+        return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition'));
     }
 
     public function list(Request $request)
@@ -142,6 +145,7 @@ class PlantillaController extends Controller
         $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->get();
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('position_id', 'position_name')->get();
+        $plantillaPosition = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->get();
         $salarygrade = SalaryGrade::get(['sg_no']);
         $status = ['Please Select', 'Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
         count($status) - 1;
@@ -152,7 +156,7 @@ class PlantillaController extends Controller
         $arealevel = ['Please Select','K','T','S','A'];
         count($arealevel) - 1;
         $plantilla = Plantilla::find($plantilla_id);
-        return view ('Plantilla.edit', compact('plantilla','employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade'));
+        return view ('Plantilla.edit', compact('plantilla','employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition'));
     }
 
     /**

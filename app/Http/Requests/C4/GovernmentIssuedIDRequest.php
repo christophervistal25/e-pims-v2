@@ -29,4 +29,13 @@ class GovernmentIssuedIDRequest extends FormRequest
             "dateOfIssuance" => 'required',
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'nameOfGovId'    => 'Government Issued ID',
+            'idNo'           => 'ID/License/Passport No.',
+            'dateOfIssuance' => 'Date/Place of Issuance'
+        ];
+    }
 }

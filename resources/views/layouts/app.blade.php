@@ -8,6 +8,7 @@
 	<meta name="author" content="DreamguysBootstrap Admin Template">
 	<meta name="robots" content="noindex, nofollow">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
+	@stack('meta-data')
 	<title>@yield('title') |  {{  config('app.name') }}</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
@@ -234,7 +235,7 @@
                                 </li>
 								<li>
                                     <a class='text-decoration-none mr-2' href="#">
-                                        Leave Index Monitoring
+                                        Leave Monitoring Index
                                     </a>
                                 </li>
 
@@ -251,18 +252,6 @@
 								<li>
                                     <a class='text-decoration-none mr-2' href="#">
                                         Compensatory Build-up
-                                    </a>
-                                </li>
-							</ul>
-						</li>
-
-
-						<li class="submenu">
-							<a href="#" class='text-decoration-none'><i class="la la-bars"></i> <span>Service Record</span> <span class="menu-arrow"></span></a>
-							<ul style="display: none;">
-								<li>
-                                    <a class='text-decoration-none mr-2' href="{{  route('service-records.index') }}">
-                                        Maintenance & Monitoring
                                     </a>
                                 </li>
 							</ul>
@@ -300,8 +289,28 @@
 									</ul>
 								</li>
 							</ul>
+
+                            <li class="submenu">
+                                <a href="#" class='text-decoration-none'><i class="la la-bars"></i> <span>Service Record</span> <span class="menu-arrow"></span></a>
+                                <ul style="display: none;">
+                                    <li>
+                                        <a class='text-decoration-none mr-2' href="{{  route('service-records.index') }}">
+                                            Maintenance & Monitoring
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a class='text-decoration-none' href="{{ route('salary-grade.index') }}">
+                                    <i class="la la-money"></i> <span> Salary Grade </span>
+                                </a>
+                            </li>
+
 						</li>
 					</ul>
+
+
 				</div>
 			</div>
 		</div>
