@@ -187,7 +187,7 @@
             <div class="row">
                 <div class="col-3 mb-2">
                     <select value="" data-style="btn-primary text-white"
-                        class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}"
+                        class="form-control form-control-xs selectpicker yearAdjustment {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}"
                         name="yearAdjustment" data-live-search="true" id="yearAdjustment" data-size="5">
                         <option value="">All</option>
                         @foreach ($dates as $date)

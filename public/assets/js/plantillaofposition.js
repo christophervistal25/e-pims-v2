@@ -308,6 +308,7 @@ $(document).ready(function() {
                         $("#addSalaryGrade")
                             .val("Please Select")
                             .trigger("change");
+
                         $("#positionTitle").append(
                             "<option value=" +
                                 response.position_id +

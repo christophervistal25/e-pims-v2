@@ -68,7 +68,7 @@ class PlantillaOfPositionController extends Controller
     {
         $this->validate($request, [
             'positionTitle'                 => 'required',
-            'itemNo'                        => 'required',
+            'itemNo'                        => 'required|numeric',
             'salaryGrade'                   => 'required | in:' . implode(',',range(1, 33)),
             'officeCode'                    => 'required',
         ]);
@@ -117,7 +117,7 @@ class PlantillaOfPositionController extends Controller
     public function update(Request $request, $pp_id)
     {
         $this->validate($request, [
-            'itemNo'                        => 'required',
+            'itemNo'                        => 'required|numeric',
             'salaryGrade'                   => 'required | in:' . implode(',',range(1, 33)),
             'officeCode'                    => 'required',
         ]);
