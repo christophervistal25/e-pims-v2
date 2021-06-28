@@ -214,6 +214,11 @@ export default {
       rowErrors: "",
     };
   },
+  watch: {
+    volunOrg(to) {
+      this.noOfFields = to.length;
+    },
+  },
   methods: {
     isKeyCombinationSave(event) {
       if (

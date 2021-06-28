@@ -144,11 +144,14 @@ class EmployeePersonalDataSheetPrintController extends Controller
         $table    = $data['table'];
         $alias    = $data['alias'];
         $modelName = $data['model_name'];
+        $max = $data['max'] ?? 99;
+        $continue_table = $data['continue_table'] ?? '';
 
 
         // Get the relation information record.
         $records = $model->$relation->toArray();
         $columns = (new $modelName)->getFillable();
+
         if(count($records) >= 1) {
             // Get the first record of the relation in order to generate a columns.
             $columns = array_map(function ($column) use($except) {
@@ -171,9 +174,12 @@ class EmployeePersonalDataSheetPrintController extends Controller
 
             // Format the columns
             $columns = implode(',', $columns);
+            
+            $index = 0;
 
             // Format for values
             foreach($records as $r) {
+                $index++;
                 $formattedValues = "";
                 $formattedValues .= "(";
 
@@ -187,6 +193,10 @@ class EmployeePersonalDataSheetPrintController extends Controller
                 $formattedValues  = rtrim($formattedValues, ',');
                 $formattedValues .= "),";
                 $formattedValues  = rtrim($formattedValues, ',');
+
+                echo $index . ' => ' . $max;
+                
+                $table = ($index > $max ) ? $continue_table : $table;
 
                 // Insert into MS Access table.
                 $this->database->execute("INSERT INTO $table ($columns) VALUES $formattedValues");
@@ -217,7 +227,6 @@ class EmployeePersonalDataSheetPrintController extends Controller
             $formattedValues = rtrim($formattedValues, ',');
             $this->database->execute("INSERT INTO $table ($columns) VALUES ($formattedValues)");
         }
-         
     }
 
 
@@ -240,6 +249,12 @@ class EmployeePersonalDataSheetPrintController extends Controller
             'employee_training_attaineds',
             'employee_voluntary_works',
             'employee_work_experiences',
+            'spouse_childrens_continue',
+            'civil_service_continue',
+            'other_information_continue',
+            'program_attained_continue',
+            'voluntary_work_continue',
+            'work_experience_continue',
         ]);
 
         
@@ -273,13 +288,15 @@ class EmployeePersonalDataSheetPrintController extends Controller
             'alias' => [],
         ]);
 
-         $this->oneToManyInsertion([
+        $this->oneToManyInsertion([
             'model'    => $employee,
             'model_name' => EmployeeCivilService::class,
             'relation' => 'civil_service',
             'table'    => 'employee_civil_services',
             'except'   => ['employee_id', 'created_at', 'updated_at', 'id'],
             'alias' => [],
+            'max' => 8,
+            'continue_table' => 'civil_service_continue',
         ]);
 
         $this->oneToManyInsertion([
@@ -287,8 +304,10 @@ class EmployeePersonalDataSheetPrintController extends Controller
             'model_name' => EmployeeSpouseChildren::class,
             'relation' => 'spouse_child',
             'table'    => 'employee_spouse_childrens',
+            'continue_table' => 'spouse_childrens_continue',
             'except'   => ['employee_id', 'created_at', 'updated_at', 'id'],
             'alias' => [],
+            'max' => 8,
         ]);
 
         $this->oneToOneInsertion([
@@ -300,7 +319,6 @@ class EmployeePersonalDataSheetPrintController extends Controller
             'alias' => [],
         ]);
         
-         
 
         $this->oneToManyInsertion([
             'model'    => $employee,
@@ -309,6 +327,8 @@ class EmployeePersonalDataSheetPrintController extends Controller
             'table'    => 'employee_other_information',
             'except'   => ['employee_id', 'created_at', 'updated_at', 'id'],
             'alias'    => [],
+            'max' => 7,
+            'continue_table' => 'other_information_continue',
         ]);
 
         $this->oneToManyInsertion([
@@ -337,6 +357,8 @@ class EmployeePersonalDataSheetPrintController extends Controller
             'table'    => 'employee_training_attaineds',
             'except'   => ['employee_id', 'created_at', 'updated_at', 'id'],
             'alias'    => [],
+            'max' => 17,
+            'continue_table' => 'program_attained_continue'
         ]);
 
         $this->oneToManyInsertion([
@@ -346,15 +368,19 @@ class EmployeePersonalDataSheetPrintController extends Controller
             'table'    => 'employee_voluntary_works',
             'except'   => ['employee_id', 'created_at', 'updated_at', 'id'],
             'alias'    => [],
+            'max' => 7,
+            'continue_table' => 'voluntary_work_continue'
         ]);
 
-         $this->oneToManyInsertion([
+        $this->oneToManyInsertion([
             'model'    => $employee,
             'model_name' => EmployeeWorkExperience::class,
             'relation' => 'work_experience',
             'table'    => 'employee_work_experiences',
             'except'   => ['employee_id', 'created_at', 'updated_at', 'id'],
             'alias'    => ['from' => 'from_date', 'to' => 'to_date'],
+            'max' => 21,
+            'continue_table' => 'work_experience_continue'
         ]);
         
         return response()->json(['success' => true]);

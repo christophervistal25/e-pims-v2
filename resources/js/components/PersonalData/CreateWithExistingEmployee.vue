@@ -148,7 +148,7 @@ export default {
     printPersonalDataSheet(employee_id) {
       window.axios.get(`/print/pds/${employee_id}`).then(() => {
         if (!this.socket.connected) {
-          this.socket = io.connect("http://192.168.1.9:3030");
+          this.socket = io.connect(process.env.MIX_SOCKET_IP);
           this.socket.emit("preview_personal_data_sheet");
         } else {
           this.socket.emit("preview_personal_data_sheet");
@@ -198,7 +198,7 @@ export default {
     },
   },
   created() {
-    this.socket = io.connect("http://192.168.1.9:3030");
+    this.socket = io.connect(process.env.MIX_SOCKET_IP);
     if (localStorage.getItem("existing__current__tab")) {
       this.selectedTab =
         this.tabs[localStorage.getItem("existing__current__tab")];
