@@ -3,9 +3,7 @@
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet"
-    href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
-<script src="{{ asset('js/app.js') }}" defer></script>
+<link rel="stylesheet" href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 <style>
     .swal-button--cancel {
         background: #FEFAE3;
@@ -19,7 +17,7 @@
 <div class="float-right mr-3 d-none" id='btnViewTableContainer'>
     <button class="btn btn-info shadow"><i class='la la-list'></i>&nbsp View Table</button>
 </div>
-<div class="clearfix"></div>
+{{-- <div class="clearfix"></div> --}}
 <br>
 <br>
 
@@ -30,7 +28,7 @@
             <div id="addIncrement" class="page-header d-none">
                 <form action="" method="POST" id="formStepIncrement">
                     @csrf
-
+                   
                     <div class="row">
 
                         <div class="col-12">
@@ -232,15 +230,6 @@
         }
     });
 
-    //SWEET ALERT SUCCESS
-    (function () {
-        let isSuccess = "{{ Session::get('success') }}";
-        if (isSuccess) {
-            swal("Good job!", "Successfully added!", "success");
-        }
-    })();
-
-    // SHOWS THE DATA ON THE TABLE
     $(document).ready(function () {
         let table = $('#step-increment-table').DataTable({
             processing: true,
@@ -350,7 +339,7 @@
             $('#addIncrement').attr("class", "page-header");
             $('#stepIncrementTable').attr("class", "page-header d-none");
             $('#btnViewTableContainer').removeClass('d-none');
-            $('#formStepIncrement').removeClass('d-none');
+            $('#formStepIncrement').removeClass('d-none');  
         });
 
         // DISPLAY TABLE
@@ -452,15 +441,34 @@
             // or all fields that required is filled by the user.
             if (filteredError.length === 0) {
                 $('#formStepIncrement').submit();
+                swal("Good job!", "Successfully added!", "success").then((response) => {
+                    if(response){
+                        location.reload();
+                    }
+                });
             }
         });
 
 
         $('#btnCancel').click(function (e) {
-            location.reload();
-        })
+            location.reload()
+        });
 
     });
+
+
+    // function numberWithCommas(number) {
+    // var parts = number.toString().split(".");
+    // parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    // return parts.join(".");
+    // }
+    // $(document).ready(function() {
+    // $("#agent_commission_model td").each(function() {
+    //     var num = $(this).text();
+    //     var commaNum = numberWithCommas(num);
+    //     $(this).text(commaNum);
+    // });
+    // });
 
 </script>
 @endpush

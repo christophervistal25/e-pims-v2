@@ -27,7 +27,7 @@
 <div class="clearfix"></div>
 
 <div class="col-12 card" id='main-container'>
-    <div class="card-header pl-5 pr-5" id="headingOne">
+    <div class="card-header pl-5 pr-5" id="headingOne" contenteditable="true">
         {{-- HEADING --}}
         <div class="body-container row">
             {{-- LOGO --}}

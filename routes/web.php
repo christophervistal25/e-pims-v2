@@ -36,9 +36,11 @@ Route::resource('/plantilla-of-position', 'PlantillaOfPositionController');
 Route::get('/plantilla-of-position-list', 'PlantillaOfPositionController@list');
 Route::get('/plantilla-of-position/{id}', 'PlantillaOfPositionController@destroy')->name('plantilla-of-position.delete');
 
-//Increment
+// Step-Increment //
 Route::get('/step-increment/list', 'StepIncrementController@list');
+Route::delete('/step-increment/{id}', 'StepIncrementController@destroy')->name('step-increment.delete');
 Route::resource('/step-increment', 'StepIncrementController');
+
 Route::get('/print-increment/{id}/previewed', 'PrintIncrementController@print')->name('step-increment.previewed.print');
 Route::get('/print-increment/{id}', 'PrintIncrementController@printList')->name('print-increment');
 Route::resource('/print-increment', 'PrintIncrementController');

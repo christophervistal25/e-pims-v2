@@ -21,7 +21,7 @@ class Position extends Model
         self::creating(function ($position) {
             $maxPositionCode       = self::max('position_code');
             $code                  = str_pad(($maxPositionCode + 1), 4, '0', STR_PAD_LEFT);
-            $position->position_code = $code;
+            // $position->position_code = $code;
             Cache::forget('positions');
         });
 
@@ -34,7 +34,7 @@ class Position extends Model
         });
 
         self::saved(function() {
-            Cache::forget('positions');
+            Cache::forget('positions'); 
         });
 
         self::deleted(function() {

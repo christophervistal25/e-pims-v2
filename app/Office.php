@@ -33,7 +33,7 @@ class Office extends Model
         self::creating(function ($office) {
             $maxOfficeCode         = self::max('office_code');
             $code                  = self::ID_PREFIX . str_pad(($maxOfficeCode + 1), 4, '0', STR_PAD_LEFT);
-            $office->office_code = $code;
+            // $office->office_code = $code;
         });
 
         self::created(function() {

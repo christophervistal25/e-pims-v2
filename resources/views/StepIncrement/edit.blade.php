@@ -3,7 +3,7 @@
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css"> --}}
- <script src="{{ asset('js/app.js') }}" defer></script>
+ {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 @endprepend
 @section('content')
     @foreach($errors->all() as $error)
@@ -77,7 +77,12 @@
                             
                             <div class="form-group col-12 col-lg-11">
                                 <label>Amount:</label>
-                                <input class="form-control" value="{{ old('amountFrom') ?? $stepIncrement->salary_amount_from }}" id="amount" name="amountFrom" type="text" readonly>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">&#8369;</span>
+                                    </div>
+                                        <input class="form-control" value="{{ old('amountFrom') ?? $stepIncrement->salary_amount_from }}" id="amount" name="amountFrom" type="text" readonly>
+                                </div>
                             </div>
                         </div>
 
@@ -112,14 +117,24 @@
                             
                             <div class="form-group col-12 col-lg-12">
                                 <label>Amount:</label>
-                                <input class="form-control" value="{{ old('amount2') ?? $stepIncrement->salary_amount_to }}" id="amount2" name="amount2" type="text" readonly>
-                                <div id="amount2-error-message" class="text-danger">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">&#8369;</span>
+                                    </div>
+                                        <input class="form-control" value="{{ old('amount2') ?? $stepIncrement->salary_amount_to }}" id="amount2" name="amount2" type="text" readonly>
+                                    <div id="amount2-error-message" class="text-danger">
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="form-group col-12 col-lg-12">
                                 <label>Monthly Difference:</label>
-                                <input class="form-control" value="{{ old('monthlyDifference') ?? $stepIncrement->salary_diff }}" id="monthlyDifference" name="monthlyDifference" type="text" readonly>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">&#8369;</span>
+                                    </div>
+                                    <input class="form-control" value="{{ old('monthlyDifference') ?? $stepIncrement->salary_diff }}" id="monthlyDifference" name="monthlyDifference" type="text" readonly>
+                                </div>
                             </div>
 
                             <div class="form-group col-12 col-lg-12" id="buttons">
@@ -140,14 +155,9 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script>
-    (function() {
-        let isSuccess = "{{ Session::get('success') }}";
-        if(isSuccess) {
-            swal("Good Job!", "You successfully update.", "success");
-        } 
-    })();
 
-        $(document).ready(function(e) {
+     $(document).ready(function(e) {
+         
                 $('#stepNo2').change(function (e) {
                     let selectedSetep = e.target.value;
                     $.ajax({
@@ -156,18 +166,57 @@
                             $('#amount2').val(`${response['sg_step' + selectedSetep]}`)
                             var amount = parseFloat($('#amount').val());
                             var amount2 = parseFloat($('#amount2').val());
-                            var amountDifference = parseFloat((( amount2 - amount) || ''));
+                            var amountDifference = parseFloat(((amount2 - amount) || ''));                            
                             $('#monthlyDifference').val(amountDifference);
                         }
                     });
                 });
 
-            $('#btnCancel').click(function (e) {
-                location.reload();
-            })
+                $('#btnCancel').click(function (e) {
+                    location.reload();
+                })
+            });
 
 
-        });
+
+            document.querySelector('#btnUpdate').addEventListener('click', (e) => {
+                e.preventDefault();
+                let getId = "{{ $stepIncrement->id }}";
+
+                // Prepare data
+                let data = {
+                    employeeID : document.querySelector('#employeeId').value,
+                    itemNoFrom : document.querySelector('#itemNo').value,
+                    positionID : document.querySelector('#positionID').value,
+                    dateStepIncrement : document.querySelector('#dateIncrement').value,
+                    datePromotion : document.querySelector('#lastAppointment').value,
+                    sgNoFrom : document.querySelector('#salaryGrade').value,
+                    stepNoFrom : document.querySelector('#stepNo').value,
+                    amountFrom : document.querySelector('#amount').value,
+                    sgNo2 : document.querySelector('#sgNo2').value,
+                    stepNo2 : document.querySelector('#stepNo2').value,
+                    amount2 : document.querySelector('#amount2').value,
+                    monthlyDifference : document.querySelector('#monthlyDifference').value,
+                };
+
+
+                // Ajax Request
+
+               fetch(`/step-increment/${getId}`, {
+                    method: 'PUT',
+                    headers :  {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                    }).then(res => res.json())
+                    .then((res) => {
+                        // getRefresh();                     
+                });
+                swal("Good Job!", "You have successfully updated.", "success");
+                
+            });
+
     </script>
 
     @endpush

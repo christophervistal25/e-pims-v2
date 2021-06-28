@@ -26,12 +26,12 @@
 
 {{-- BUTTONS --}}
 <div id='action-buttons' class="float-right mb-2">
-    <a class="btn btn-outline-dark" href="{{ route('step-increment.previewed.print', $id) }}" id="printBtn"><i class="la la-print"></i>&nbsp Print Preview</a>
+    <a class="btn btn-outline-dark" href="{{ route('step-increment.previewed.print', $id) }}" id="printBtn"><i class="la la-print"></i>&nbsp Print</a>
     <a href="/step-increment" class="btn btn-info"><i class="la la-list"></i>&nbsp View Table</a>
 </div>
 <div class="clearfix"></div>
 
-<div class="card" id='main-container'>
+<div class="card" id='main-container' contenteditable="true">  {{-- contenteditable is it can able to edit inside of the page --}}
     <div class="card-header pl-5 pr-5" id="headingOne">
         {{-- HEADING --}}
         <div class="body-container row">
@@ -54,7 +54,7 @@
         </div>
         
         {{-- DATE --}}
-        <div class="card-body-p">
+        <div class="card-body-p" contenteditable="true">
             <p class="date">{{ Carbon\Carbon::parse($stepIncrement->date_step_increment)->format('F d, Y') }}</p>
             <br>
             {{-- NAME --}}
