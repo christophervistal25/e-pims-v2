@@ -195,6 +195,9 @@
             </button>
             <button
               class="btn btn-primary shadow"
+              :class="
+                Object.keys(errors).length != 0 ? 'btn-danger' : 'btn-primary'
+              "
               @click="submitLearningAndDevelopment"
               :disabled="isLoading"
               v-if="!isComplete"

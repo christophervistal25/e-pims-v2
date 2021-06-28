@@ -477,7 +477,10 @@
         </div>
         <div class="float-right">
           <button
-            class="btn btn-primary mr-3 mb-2"
+            class="btn btn-primary mr-3 mb-2 shadow"
+            :class="
+              Object.keys(errors).length != 0 ? 'btn-danger' : 'btn-primary'
+            "
             @click="submitPersonFamilyBackground"
             v-if="!isComplete"
             :disabled="isLoading"
