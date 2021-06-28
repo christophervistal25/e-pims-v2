@@ -37,9 +37,9 @@
                             <div id='salary-grade-error-message' class='text-danger'>
                             </div>
                         </div>
-                    </div>                        
+                    </div>
                         <div class="row">
-                            <div class="col-lg-3">
+                            <div class="col-lg-4">
                             <div class="form-group input-group col-12 mb-0 mt-2">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep1">
@@ -54,7 +54,7 @@
                         </div>
 
 
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="form-group input-group col-12 mb-0 mt-2">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep2">
@@ -68,7 +68,7 @@
                                 </div>
                         </div>
 
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="form-group input-group col-12 mb-0 mt-2">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep3">
@@ -81,8 +81,8 @@
                                 </div>
                         </div>
 
-                        <div class="col-lg-3">
-                            <div class="form-group input-group col-12 mb-0 mt-2">
+                        <div class="col-lg-4">
+                            <div class="form-group input-group col-12 mb-0 mt-3">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep4">
                                     <input style="outline: none; box-shadow: 0px 0px 0px transparent;"
@@ -96,7 +96,7 @@
                                 </div>
                         </div>
 
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="form-group input-group col-12 mb-0 mt-3">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep5">
@@ -109,7 +109,7 @@
                                 </div>
                         </div>
 
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="form-group input-group col-12 mb-0 mt-3">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep6">
@@ -123,7 +123,7 @@
                                 </div>
                         </div>
 
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="form-group input-group col-12 mb-0 mt-3">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep7">
@@ -137,7 +137,7 @@
                                 </div>
                         </div>
 
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="form-group input-group col-12 mb-0 mt-3">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label">
@@ -151,7 +151,7 @@
                                 </div>
                         </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="form-group col-12 col-lg-6 mt-3">
                             <label class="font-weight-bold text-sm">SALARY GRADE YEAR<span class="text-danger">*</span></label>
@@ -173,11 +173,11 @@
                             </div>
                         </div>
                         </div>
-                        
+
 
 
                         <div class="form-group submit-section col-12">
-                            <button id="saveBtn" class="btn btn-success submit-btn float-right shadow" type="submit"><i class="fas fa-save"></i> 
+                            <button id="saveBtn" class="btn btn-success submit-btn float-right shadow" type="submit"><i class="fas fa-save"></i>
                                 <span id="loading" class="spinner-border spinner-border-sm d-none" role="status"
                                     aria-hidden="false"></span>
                                 Save

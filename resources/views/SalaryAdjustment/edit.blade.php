@@ -168,7 +168,7 @@
                 </div>
 
                 <div class="col-lg-4">
-                    <div class="form-group input-group col-12">
+                    <div class="form-group input-group">
                         <span class="input-group-text">&#8369;</span>
                         <label class="has-float-label">
                             <input class="form-control {{ $errors->has('salaryPrevious')  ? 'is-invalid' : ''}}"
@@ -185,7 +185,7 @@
                 </div>
 
                 <div class="col-lg-4">
-                    <div class="form-group input-group col-12">
+                    <div class="form-group input-group">
                         <span class="input-group-text">&#8369;</span>
                         <label class="has-float-label" for="salaryNew">
                             <input class="form-control {{ $errors->has('salaryNew')  ? 'is-invalid' : ''}}"
@@ -202,7 +202,7 @@
 
 
                 <div class="col-lg-4">
-                    <div class="form-group input-group col-12">
+                    <div class="form-group input-group">
                         <span class="input-group-text">&#8369;</span>
                     <label class="has-float-label">
                         <input class="form-control {{ $errors->has('salaryDifference')  ? 'is-invalid' : ''}}"

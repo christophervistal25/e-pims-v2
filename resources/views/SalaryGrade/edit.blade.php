@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="form-group input-group col-12 mb-0 mt-2">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep1">
@@ -54,7 +54,7 @@
                                 @endif
                         </div>
 
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="form-group input-group col-12 mt-2 mb-0">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep2">
@@ -72,7 +72,7 @@
                                 @endif
                         </div>
 
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="form-group input-group col-12 mt-2 mb-0">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep3">
@@ -90,8 +90,8 @@
                                 @endif
                         </div>
 
-                        <div class="col-lg-3">
-                            <div class="form-group input-group col-12 mt-2 mb-0">
+                        <div class="col-lg-4">
+                            <div class="form-group input-group col-12 mt-3 mb-0">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep4">
                                     <input
@@ -108,7 +108,7 @@
                                 @endif
                         </div>
 
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="form-group input-group col-12 mt-3 mb-0">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep5">
@@ -126,7 +126,7 @@
                                 @endif
                         </div>
 
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="form-group input-group col-12 mt-3 mb-0">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label">
@@ -144,7 +144,7 @@
                                 @endif
                         </div>
 
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="form-group input-group col-12 mt-3 mb-0">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep7">
@@ -163,7 +163,7 @@
                         </div>
 
 
-                        <div class="col-lg-3">
+                        <div class="col-lg-4">
                             <div class="form-group input-group col-12 mt-3 mb-0">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep8">
@@ -181,7 +181,7 @@
                                 @endif
                         </div>
                     </div>
-                        
+
                         <div class="row">
                             <div class="form-group col-12 col-lg-6 mb-0 mt-2">
                             <label class="font-weight-bold text-sm">SALARY GRADE YEAR<span class="text-danger">*</span></label>
@@ -205,7 +205,7 @@
                             @endif
                         </div>
                         </div>
-                        
+
                         <div class="form-group submit-section col-12">
                             <button type="submit" class="btn btn-success submit-btn float-right shadow"><i
                                     class="fas fa-check"></i> Update</button>
