@@ -256,13 +256,25 @@
 </div>
 </form>
 </div>
-<div id="table" class="page-header {{  count($errors->all()) == 0 ? '' : 'd-none' }}">
-    <div style="padding-bottom:10px;" class="row align-items-right">
-        <div class="col-auto float-right ml-auto">
-            <button id="addbutton" class="btn btn-primary submit-btn float-right"><i class="fa fa-plus"></i> Add
-                Plantillas</button>
+
+    <div id="table" class="page-header {{  count($errors->all()) == 0 ? '' : 'd-none' }}">
+        <div class="row">
+            <div class="col-5 mb-2">
+                <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}"
+                    name="employeeOffice" data-live-search="true" id="employeeOffice" data-size="5">
+                    <option value="">All</option>
+                    @foreach($office as $offices){
+                        <option value="{{ $offices->office_code }}">{{ $offices->office_name }}</option>
+                    }
+                    @endforeach
+                    </select>
+            </div>
+
+            <div class="col-7 float-right mb-10">
+                <button id="addbutton" class="btn btn-primary submit-btn float-right"><i class="fa fa-plus"></i> Add
+                    Plantillas</button>
+            </div>
         </div>
-    </div>
     <div class="table" style="overflow-x:auto;">
         <table class="table table-bordered text-center" id="plantilla" style="width:100%;">
             <thead>

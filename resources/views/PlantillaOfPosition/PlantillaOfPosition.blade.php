@@ -33,7 +33,7 @@
                             <label class="has-float-label mb-0">
                             <input value="{{ old('itemNo') }}"
                                 class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" name="itemNo"
-                                id="itemNo" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                id="itemNo" type="number" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <span class="font-weight-bold">ITEM NO.<span class="text-danger">*</span></span>
                             </label>
                             <div id='item-error-message' class='text-danger text-sm'>

@@ -1,5 +1,5 @@
 $(function() {
-    $("#plantilla").DataTable({
+    let table = $("#plantilla").DataTable({
         processing: true,
         serverSide: true,
         ajax: "/plantilla-list",
@@ -35,6 +35,96 @@ $(function() {
                 sortable: false
             }
         ]
+    });
+
+    $("#employeeOffice").change(function(e) {
+        if (e.target.value == "" || e.target.value == "") {
+            table.destroy();
+            table = $("#plantilla").DataTable({
+                processing: true,
+                serverSide: true,
+                destroy: true,
+                retrieve: true,
+                ajax: {
+                    url: "/plantilla-list"
+                },
+                columns: [
+                    { data: "plantilla_id", name: "plantilla_id" },
+                    { data: "item_no", name: "item_no" },
+                    {
+                        data: "positions",
+                        name: "positions.position_name",
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        data: "employee",
+                        name: "employee.firstname",
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        data: "office",
+                        name: "office.office_short_name",
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    { data: "status", name: "status", sortable: false },
+                    {
+                        data: "action",
+                        name: "action",
+                        searchable: false,
+                        sortable: false
+                    }
+                ]
+            });
+        } else {
+            table.destroy();
+            table = $("#plantilla").DataTable({
+                processing: true,
+                serverSide: true,
+                destroy: true,
+                retrieve: true,
+                ajax: {
+                    url: `/api/plantilla/personnel/${e.target.value}`
+                },
+                columns: [
+                    { data: "plantilla_id", name: "plantilla_id" },
+                    { data: "item_no", name: "item_no" },
+                    {
+                        data: "positions",
+                        name: "positions.position_name",
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        data: "employee",
+                        name: "employee.firstname",
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        data: "office",
+                        name: "office.office_short_name",
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    { data: "status", name: "status", sortable: false },
+                    {
+                        data: "action",
+                        name: "action",
+                        searchable: false,
+                        sortable: false
+                    }
+                ]
+            });
+        }
     });
 });
 // code for show add form
@@ -208,6 +298,7 @@ $(document).ready(function() {
     $("#plantillaForm").submit(function(e) {
         e.preventDefault();
         let empIds = $("#employeeName").val();
+        let positionIds = $("#positionTitle").val();
         let data = $(this).serialize();
         $("#saveBtn").attr("disabled", true);
         $("#loading").removeClass("d-none");
@@ -221,6 +312,12 @@ $(document).ready(function() {
                         .find('[value="' + empIds + '"]')
                         .remove();
                     $("#employeeName").selectpicker("refresh");
+
+                    $("#positionTitle")
+                        .find('[value="' + positionIds + '"]')
+                        .remove();
+                    $("#employepositionTitleeName").selectpicker("refresh");
+
                     $("input").val("");
                     const select = [
                         "#salaryGrade",
