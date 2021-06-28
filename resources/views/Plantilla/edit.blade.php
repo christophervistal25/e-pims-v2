@@ -4,6 +4,10 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 @endprepend
+@prepend('meta-data')
+<meta id="plantillaPositionMetaData" content="@foreach($plantillaPosition as $plantillaPositions){ |officeCode|:|{{ $plantillaPositions->office_code }}|, |positionId|:|{{ $plantillaPositions->position_id }}|}, @endforeach">
+<meta id="positionMetaData" content="@foreach($position as $positions){ |positionId|:|{{ $positions->position_id }}|, |positionName|:|{{ $positions->position_name }}|}, @endforeach">
+@endprepend
 @section('content')
 <div class="content">
     @include('Plantilla.add-ons.success')
@@ -71,7 +75,7 @@
 
                         <div class="form-group col-12 col-lg-6">
                             <label>Office<span class="text-danger">*</span></label>
-                            <select value="{{ old('officeCode') }}" name="officeCode"
+                            <select value="{{ old('officeCode') }}" name="officeCode" id="officeCode"
                                 class="select {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}">
                                 <option>Please Select</option>
                                 @foreach($office as $offices)
@@ -107,10 +111,16 @@
                                 class="form-control form-control-xs selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
                                 name="positionTitle" data-live-search="true" id="positionTitle" data-width="100%">
                                 <option></option>
-                                @foreach($position as $positions)
-                                <option style="width:350px;"
-                                    {{ $plantilla->position_id == $positions->position_id ? 'selected' : '' }}
-                                    value="{{ $positions->position_id}}">{{ $positions->position_name }}</option>
+                                @foreach($plantillaPosition as $plantillaPositions)
+                                    @if ($plantilla->office_code == $plantillaPositions->office_code)
+                                        <option style="width:350px;"
+                                        {{ $plantilla->position_id == $plantillaPositions->position_id ? 'selected' : '' }}
+                                        value="{{ $plantillaPositions->position_id}}">
+                                        @foreach($position as $positions)
+                                        {{ $plantillaPositions->position_id == $positions->position_id ? $positions->position_name : '' }}
+                                        @endforeach
+                                        </option>
+                                    @endif
                                 @endforeach
                             </select>
                             @if($errors->has('positionTitle'))
