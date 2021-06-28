@@ -29,7 +29,23 @@
                 <div class="container">
                     <div class="row">
                         <div class="container">
+
                             <div class="row justify-content-center align-items-center">
+
+                                <div class="form-group col-12 col-md-6 col-lg-7">
+                                    <label class="has-float-label mb-0">
+                                        <input value="{{ old('itemNo') ??  $plantillaofposition->item_no}}"
+                                            class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}"
+                                            name="itemNo" id="itemNo" type="text"
+                                            style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                        <span class="font-weight-bold">ITEM NO<span class="text-danger">*</span></span>
+                                    </label>
+                                    @if($errors->has('itemNo'))
+                                    <small class="form-text text-danger">
+                                        {{ $errors->first('itemNo') }} </small>
+                                    @endif
+                                </div>
+
                                 <div class="form-group col-12 col-lg-7">
                                     <label class="font-weight-bold text-sm">POSITION<span
                                             class="text-danger">*</span></label>
@@ -47,28 +63,6 @@
                                     @endif
                                 </div>
 
-                                <div class="form-group col-12 col-lg-7">
-                                    <label class="has-float-label">
-                                        <select value=""
-                                            class="form-control selectpicker  {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
-                                            name="officeCode" data-live-search="true" id="officeCode" data-size="4"
-                                            data-width="100%"
-                                            style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                            <option></option>
-                                            @foreach($office as $offices)
-                                            <option
-                                                {{ $plantillaofposition->office_code == $offices->office_code ? 'selected' : '' }}
-                                                value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
-                                            @endforeach
-                                        </select>
-                                        <span class="font-weight-bold">OFFICE<span class="text-danger">*</span></span>
-                                    </label>
-                                    @if($errors->has('officeCode'))
-                                    <small class="form-text text-danger">
-                                        {{ $errors->first('officeCode') }} </small>
-                                    @endif
-                                </div>
-
                                 <div class="form-group col-12 col-md-6 col-lg-7">
                                     <label class="has-float-label mb-0">
                                         <input
@@ -82,20 +76,6 @@
                                     @if($errors->has('positionOldName'))
                                     <small class="form-text text-danger">
                                         {{ $errors->first('positionOldName') }} </small>
-                                    @endif
-                                </div>
-
-                                <div class="form-group col-12 col-md-6 col-lg-7">
-                                    <label class="has-float-label mb-0">
-                                        <input value="{{ old('itemNo') ??  $plantillaofposition->item_no}}"
-                                            class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}"
-                                            name="itemNo" id="itemNo" type="text"
-                                            style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                        <span class="font-weight-bold">ITEM NO<span class="text-danger">*</span></span>
-                                    </label>
-                                    @if($errors->has('itemNo'))
-                                    <small class="form-text text-danger">
-                                        {{ $errors->first('itemNo') }} </small>
                                     @endif
                                 </div>
 
@@ -119,6 +99,28 @@
                                     @if($errors->has('salaryGrade'))
                                     <small class="form-text text-danger">
                                         {{ $errors->first('salaryGrade') }} </small>
+                                    @endif
+                                </div>
+
+                                <div class="form-group col-12 col-lg-7">
+                                    <label class="has-float-label">
+                                        <select value=""
+                                            class="form-control selectpicker  {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
+                                            name="officeCode" data-live-search="true" id="officeCode" data-size="4"
+                                            data-width="100%"
+                                            style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                            <option></option>
+                                            @foreach($office as $offices)
+                                            <option
+                                                {{ $plantillaofposition->office_code == $offices->office_code ? 'selected' : '' }}
+                                                value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <span class="font-weight-bold">OFFICE<span class="text-danger">*</span></span>
+                                    </label>
+                                    @if($errors->has('officeCode'))
+                                    <small class="form-text text-danger">
+                                        {{ $errors->first('officeCode') }} </small>
                                     @endif
                                 </div>
                             </div>

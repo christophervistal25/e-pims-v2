@@ -22,7 +22,7 @@
                                 OF PERSONNEL</div>
                         </div>
 
-                        <div class="form-group col-12 col-lg-9">
+                        <div class="form-group col-12 col-lg-10">
                             <label>Employee Name<span class="text-danger">*</span></label>
                             <select value="{{ old('employeeName') }}"
                                 class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}"
@@ -40,22 +40,11 @@
                             @endif
                         </div>
 
-                        <div class="form-group col-12 col-lg-3">
-                            <label>Status<span class="text-danger">*</span></label>
-                            <select value="{{ old('status') }}" name="status"
-                                class="select {{ $errors->has('status')  ? 'is-invalid' : ''}}">
-                                @foreach(range(0, 10) as $statuses)
-                                @if($status[$statuses] == $plantilla->status)
-                                <option value="{{ $status[$statuses]}}" selected>{{ $status[$statuses] }}</option>
-                                @else
-                                <option value="{{ $status[$statuses]}}">{{ $status[$statuses] }}</option>
-                                @endif
-                                @endforeach
-                            </select>
-                            @if($errors->has('status'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('status') }} </small>
-                            @endif
+                        <div class="form-group col-12 col-lg-2">
+                            <label>Employee Id<span class="text-danger">*</span></label>
+                            <input value="{{ old('employeeId') ?? $plantilla->employee_id }}"
+                                class="form-control {{ $errors->has ('employeeId')  ? 'is-invalid' : ''}}"
+                                name="employeeId" type="text" readonly>
                         </div>
 
                         <div class="form-group col-12 col-lg-6">
@@ -80,15 +69,39 @@
                             @endif
                         </div>
 
-                        <div class="form-group col-12 col-lg-2 d-none">
-                            <label>Employee Id<span class="text-danger">*</span></label>
-                            <input value="{{ old('employeeId') ?? $plantilla->employee_id }}"
-                                class="form-control {{ $errors->has ('employeeId')  ? 'is-invalid' : ''}}"
-                                name="employeeId" type="text">
+                        <div class="form-group col-12 col-lg-6">
+                            <label>Office<span class="text-danger">*</span></label>
+                            <select value="{{ old('officeCode') }}" name="officeCode"
+                                class="select {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}">
+                                <option>Please Select</option>
+                                @foreach($office as $offices)
+                                <option {{ $plantilla->office_code == $offices->office_code ? 'selected' : '' }}
+                                    value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('officeCode'))
+                            <small class="form-text text-danger">
+                                {{ $errors->first('officeCode') }} </small>
+                            @endif
                         </div>
 
-
                         <div class="form-group col-12 col-lg-6">
+                            <label>Division<span class="text-danger">*</span></label>
+                            <select value="{{ old('divisionId') }}" name="divisionId"
+                                class="select {{ $errors->has('divisionId')  ? 'is-invalid' : ''}}">
+                                <option>Please Select</option>
+                                @foreach($office as $offices)
+                                <option {{ $plantilla->division_id == $offices->office_code ? 'selected' : '' }}
+                                    value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('divisionId'))
+                            <small class="form-text text-danger">
+                                {{ $errors->first('divisionId') }} </small>
+                            @endif
+                        </div>
+
+                        <div class="form-group col-12 col-lg-4">
                             <label>Position<span class="text-danger">*</span></label>
                             <select value="{{ old('positionTitle') }}"
                                 class="form-control form-control-xs selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
@@ -106,7 +119,7 @@
                             @endif
                         </div>
 
-                        <div class="form-group col-12 col-lg-6">
+                        <div class="form-group col-12 col-lg-4">
                             <label>Position Ext</label>
                             <input value="{{ old('positionTitleExt') ?? $plantilla->position_ext }}"
                                 class="form-control {{ $errors->has('positionTitleExt')  ? 'is-invalid' : ''}}"
@@ -118,6 +131,36 @@
                         </div>
 
                         <div class="form-group col-12 col-lg-4">
+                            <label>Status<span class="text-danger">*</span></label>
+                            <select value="{{ old('status') }}" name="status"
+                                class="select {{ $errors->has('status')  ? 'is-invalid' : ''}}">
+                                @foreach(range(0, 10) as $statuses)
+                                @if($status[$statuses] == $plantilla->status)
+                                <option value="{{ $status[$statuses]}}" selected>{{ $status[$statuses] }}</option>
+                                @else
+                                <option value="{{ $status[$statuses]}}">{{ $status[$statuses] }}</option>
+                                @endif
+                                @endforeach
+                            </select>
+                            @if($errors->has('status'))
+                            <small class="form-text text-danger">
+                                {{ $errors->first('status') }} </small>
+                            @endif
+                        </div>
+
+                        <div class="form-group col-12 col-lg-3">
+                            <label>Current SG Year<span class="text-danger">*</span></label>
+                            <select name="currentSgyear" id="currentSgyear" value="" class="select floating" disabled>
+                                {{ $year3 = date("Y",strtotime("-0 year")) }}
+                                <option value={{ $year3 }}>{{ $year3 }}</option>
+                            </select>
+                            @if($errors->has('currentSgyear'))
+                            <small class="form-text text-danger">
+                                {{ $errors->first('currentSgyear') }} </small>
+                            @endif
+                        </div>
+
+                        <div class="form-group col-12 col-lg-3">
                             <label>Steps<span class="text-danger">*</span></label>
                             <select name="stepNo" id="currentStepno" value="{{ old('stepNo') }}"
                                 class="select floating {{ $errors->has('stepNo')  ? 'is-invalid' : ''}}">
@@ -133,28 +176,14 @@
                             @endif
                         </div>
 
-                        <div class="form-group col-12 col-lg-4">
+                        <div class="form-group col-12 col-lg-3">
                             <label>Salary Grade<span class="text-danger">*</span></label>
                             <input value="{{ old('salaryGrade') ?? $plantilla->sg_no}}"
                                 class="form-control {{ $errors->has('')  ? 'is-invalid' : ''}}" name="salaryGrade"
                                 id="currentSalarygrade" type="text" readonly>
                         </div>
 
-
-
-                        <div class="form-group col-12 col-lg-3 d-none">
-                            <label>Current SG Year<span class="text-danger">*</span></label>
-                            <select name="currentSgyear" id="currentSgyear" value="" class="select floating">
-                                {{ $year3 = date("Y",strtotime("-0 year")) }}
-                                <option value={{ $year3 }}>{{ $year3 }}</option>
-                            </select>
-                            @if($errors->has('currentSgyear'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('currentSgyear') }} </small>
-                            @endif
-                        </div>
-
-                        <div class="form-group col-12 col-lg-4">
+                        <div class="form-group col-12 col-lg-3">
                             <label>Salary Amount<span class="text-danger">*</span></label>
                             <input value="{{ old('salaryAmount') ?? $plantilla->salary_amount}}"
                                 class="form-control {{ $errors->has('salaryAmount')  ? 'is-invalid' : ''}}"
@@ -164,7 +193,8 @@
                                 {{ $errors->first('salaryAmount') }} </small>
                             @endif
                         </div>
-                        <div class="form-group col-12 col-lg-3">
+
+                        <div class="form-group col-12 col-lg-6">
                             <label>Original Appointment<span class="text-danger">*</span></label>
                             <input value="{{ old('originalAppointment') ?? $plantilla->date_original_appointment }}"
                                 class="form-control {{ $errors->has('originalAppointment')  ? 'is-invalid' : ''}}"
@@ -175,7 +205,7 @@
                             @endif
                         </div>
 
-                        <div class="form-group col-12 col-lg-3">
+                        <div class="form-group col-12 col-lg-6">
                             <label>Last Promotion<span class="text-danger">*</span></label>
                             <input value="{{ old('lastPromotion') ?? $plantilla->date_last_promotion }}"
                                 class="form-control {{ $errors->has('lastPromotion')  ? 'is-invalid' : ''}}"
@@ -185,41 +215,6 @@
                                 {{ $errors->first('lastPromotion') }} </small>
                             @endif
                         </div>
-                        <div class="form-group col-12 col-lg-3">
-                            <label>Office<span class="text-danger">*</span></label>
-                            <select value="{{ old('officeCode') }}" name="officeCode"
-                                class="select {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}">
-                                <option>Please Select</option>
-                                @foreach($office as $offices)
-                                <option {{ $plantilla->office_code == $offices->office_code ? 'selected' : '' }}
-                                    value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('officeCode'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('officeCode') }} </small>
-                            @endif
-                        </div>
-
-                        <div class="form-group col-12 col-lg-3">
-                            <label>Division<span class="text-danger">*</span></label>
-                            <select value="{{ old('divisionId') }}" name="divisionId"
-                                class="select {{ $errors->has('divisionId')  ? 'is-invalid' : ''}}">
-                                <option>Please Select</option>
-                                @foreach($office as $offices)
-                                <option {{ $plantilla->division_id == $offices->office_code ? 'selected' : '' }}
-                                    value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('divisionId'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('divisionId') }} </small>
-                            @endif
-                        </div>
-
-
-
-
 
                         <div class="form-group col-12 col-lg-4">
                             <label>Area Code<span class="text-danger">*</span></label>
@@ -281,7 +276,7 @@
                                     class="fas fa-check"></i> Update</button>
                             <a href="/plantilla-of-personnel"><button style="margin-right:10px;" type="button"
                                     class="text-white btn btn-warning submit-btn float-right shadow"><i
-                                        class="fas fa-arrow-left"></i> Back</button></a>
+                                    class="fas fa-arrow-left"></i> Back</button></a>
                         </div>
                     </div>
                 </form>
@@ -297,7 +292,6 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-
 </script>
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>

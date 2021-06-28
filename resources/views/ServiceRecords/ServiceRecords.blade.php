@@ -68,7 +68,7 @@
                         <label class="has-float-label mb-0">
                             <input value="{{ old('salary') }}"
                                 class="form-control {{ $errors->has('salary')  ? 'is-invalid' : ''}}" name="salary"
-                                id="salary" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                id="salary" type="number" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <span class="font-weight-bold">SALARY<span class="text-danger">*</span></span>
                         </label>
                         <div id='salary-error-message' class='text-danger text-sm'>
@@ -154,10 +154,10 @@
                         <div id='cause-error-message' class='text-danger text-sm'>
                         </div>
                     </div>
-                    
+
 
                     <div class="form-group form-group submit-section col-12">
-                        <button id="saveBtn" class="btn btn-success submit-btn float-right" type="submit"><i class="fas fa-save"></i> 
+                        <button id="saveBtn" class="btn btn-success submit-btn float-right" type="submit"><i class="fas fa-save"></i>
                             <span id="loading" class="spinner-border spinner-border-sm d-none" role="status"
                                 aria-hidden="false"></span>
                             Save
