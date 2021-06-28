@@ -26,77 +26,79 @@
           </a>
         </li>
       </ul>
-      <exists-personal-information
-        :personal_data="employee"
-        @update-name-extensions="updateNameExtensions"
-        :name_extensions="nameExtensions"
-        v-if="selectedTab.name === 'C1'"
-      ></exists-personal-information>
+      <div class="tab-content">
+        <exists-personal-information
+          :personal_data="employee"
+          @update-name-extensions="updateNameExtensions"
+          :name_extensions="nameExtensions"
+          v-if="selectedTab.name === 'C1'"
+        ></exists-personal-information>
 
-      <exists-family-background
-        :show_panel="true"
-        :personal_data="employee"
-        @update-name-extensions="updateNameExtensions"
-        :name_extensions="nameExtensions"
-        v-if="selectedTab.name === 'C1'"
-      ></exists-family-background>
+        <exists-family-background
+          :show_panel="true"
+          :personal_data="employee"
+          @update-name-extensions="updateNameExtensions"
+          :name_extensions="nameExtensions"
+          v-if="selectedTab.name === 'C1'"
+        ></exists-family-background>
 
-      <exists-educational-background
-        :show_panel="true"
-        :personal_data="employee"
-        v-if="selectedTab.name === 'C1'"
-      ></exists-educational-background>
+        <exists-educational-background
+          :show_panel="true"
+          :personal_data="employee"
+          v-if="selectedTab.name === 'C1'"
+        ></exists-educational-background>
 
-      <!-- C2 -->
-      <exists-civil-service
-        :personal_data="employee"
-        v-if="selectedTab.name === 'C2'"
-      ></exists-civil-service>
+        <!-- C2 -->
+        <exists-civil-service
+          :personal_data="employee"
+          v-if="selectedTab.name === 'C2'"
+        ></exists-civil-service>
 
-      <exists-work-experience
-        :personal_data="employee"
-        v-if="selectedTab.name === 'C2'"
-      ></exists-work-experience>
-      <!-- END OF C2 -->
+        <exists-work-experience
+          :personal_data="employee"
+          v-if="selectedTab.name === 'C2'"
+        ></exists-work-experience>
+        <!-- END OF C2 -->
 
-      <!-- C3 -->
-      <exists-voluntary
-        v-if="selectedTab.name === 'C3'"
-        :personal_data="employee"
-      ></exists-voluntary>
+        <!-- C3 -->
+        <exists-voluntary
+          v-if="selectedTab.name === 'C3'"
+          :personal_data="employee"
+        ></exists-voluntary>
 
-      <exists-learning-and-development
-        v-if="selectedTab.name === 'C3'"
-        :personal_data="employee"
-        :show_panel="true"
-      ></exists-learning-and-development>
+        <exists-learning-and-development
+          v-if="selectedTab.name === 'C3'"
+          :personal_data="employee"
+          :show_panel="true"
+        ></exists-learning-and-development>
 
-      <exists-other-information
-        v-if="selectedTab.name === 'C3'"
-        :personal_data="employee"
-        :show_panel="true"
-      ></exists-other-information>
-      <!-- END OF C3 -->
+        <exists-other-information
+          v-if="selectedTab.name === 'C3'"
+          :personal_data="employee"
+          :show_panel="true"
+        ></exists-other-information>
+        <!-- END OF C3 -->
 
-      <!-- C4 -->
-      <exists-relevant-queries
-        :personal_data="employee"
-        v-if="selectedTab.name === 'C4'"
-      ></exists-relevant-queries>
+        <!-- C4 -->
+        <exists-relevant-queries
+          :personal_data="employee"
+          v-if="selectedTab.name === 'C4'"
+        ></exists-relevant-queries>
 
-      <exists-references
-        :show_panel="true"
-        :personal_data="employee"
-        v-if="selectedTab.name === 'C4'"
-      ></exists-references>
+        <exists-references
+          :show_panel="true"
+          :personal_data="employee"
+          v-if="selectedTab.name === 'C4'"
+        ></exists-references>
 
-      <exists-goverment-issued-id
-        :show_panel="true"
-        :personal_data="employee"
-        v-if="selectedTab.name === 'C4'"
-      ></exists-goverment-issued-id>
+        <exists-goverment-issued-id
+          :show_panel="true"
+          :personal_data="employee"
+          v-if="selectedTab.name === 'C4'"
+        ></exists-goverment-issued-id>
 
-      <!-- END OF C4 -->
+        <!-- END OF C4 -->
+      </div>
     </div>
   </div>
 </template>
