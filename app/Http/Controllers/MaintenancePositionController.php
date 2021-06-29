@@ -27,7 +27,7 @@ class MaintenancePositionController extends Controller
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-position.edit', $row->position_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
+                        $btn = "<a title='Edit Plantilla' href='". route('maintenance-position.edit', $row->position_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
                         $btn = $btn."<a title='Delete Position' id='delete' value='$row->position_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
                         ";
                             return $btn;
@@ -56,7 +56,7 @@ class MaintenancePositionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'positionCode'                 => 'required',
+            'positionCode'                 => 'required|unique:positions,position_id',
             'positionName'                 => 'required',
             'salaryGradeNo'                => 'required',
             'positionShortName'            => 'required',
@@ -88,9 +88,10 @@ class MaintenancePositionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($position_id)
     {
-        //
+        $position = Position::find($position_id);
+        return view('MaintenancePosition.edit', compact('position'));
     }
 
     /**
@@ -100,9 +101,22 @@ class MaintenancePositionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $position_id)
     {
-        //
+        $this->validate($request, [
+            'positionCode'                   => 'required',
+            'positionName'                   => 'required',
+            'salaryGradeNo'                  => 'required',
+            'positionShortName'              => 'required',
+        ]);
+        $position                               = Position::find($position_id);
+        $position->position_code                = $request['positionCode'];
+        $position->position_name                = $request['positionName'];
+        $position->sg_no                        = $request['salaryGradeNo'];
+        $position->position_short_name          = $request['positionShortName'];
+        $position->save();
+        Session::flash('alert-success', 'Position Updated Successfully');
+        return back()->with('success','Updated Successfully');
     }
 
     /**

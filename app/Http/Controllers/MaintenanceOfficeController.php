@@ -91,9 +91,10 @@ class MaintenanceOfficeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($office_code)
     {
-        //
+        $office = Office::find($office_code);
+        return view('MaintenanceOffice.edit', compact('office'));
     }
 
     /**
@@ -103,9 +104,26 @@ class MaintenanceOfficeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $office_code)
     {
-        //
+        $this->validate($request, [
+            'officeCode'                 => 'required|numeric',
+            'officeName'                 => 'required',
+            'officeShortName'            => 'required',
+            'officeHead'                 => 'required',
+            'positionName'               => 'required',
+        ]);
+        $office                             = Office::find($office_code);
+        $office->office_code                = $request['officeCode'];
+        $office->office_name                = $request['officeName'];
+        $office->office_short_name          = $request['officeShortName'];
+        $office->office_address             = $request['officeAddress'];
+        $office->office_short_address       = $request['officeShortAddress'];
+        $office->office_head                = $request['officeHead'];
+        $office->position_name              = $request['positionName'];
+        $office->save();
+        Session::flash('alert-success', 'Office Updated Successfully');
+        return back()->with('success','Updated Successfully');
     }
 
     /**

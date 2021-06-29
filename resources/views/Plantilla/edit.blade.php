@@ -99,10 +99,8 @@
                                 name="divisionId" data-live-search="true" id="divisionId" data-size="5">
                                 <option></option>
                                 @foreach($office as $offices)
-                                @foreach($office as $offices)
                                 <option {{ $plantilla->division_id == $offices->office_code ? 'selected' : '' }}
                                     value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
-                                @endforeach
                                 @endforeach
                             </select>
                             @if($errors->has('divisionId'))
