@@ -915,7 +915,7 @@
 
           <div class="float-right mb-3">
             <button
-              class="btn btn-primary shadow"
+              class="btn btn-primary shadow font-weight-bold"
               :class="
                 Object.keys(errors).length != 0 ? 'btn-danger' : 'btn-primary'
               "
@@ -924,7 +924,7 @@
               v-if="!isComplete"
             >
               NEXT
-              <i class="fa fa-hand-o-right"></i>
+              <i class="fa fa-hand-o-right font-weight-bold"></i>
               <div
                 class="spinner-border spinner-border-sm mb-1"
                 v-show="isLoading"

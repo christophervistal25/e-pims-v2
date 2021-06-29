@@ -83,14 +83,14 @@
           </table>
           <div class="float-right mb-3">
             <button
-              class="btn btn-primary shadow"
+              class="btn btn-primary shadow font-weight-bold"
               :class="
                 Object.keys(errors).length != 0 ? 'btn-danger' : 'btn-primary'
               "
               @click="submitIssuedID"
               :disabled="isLoading"
             >
-              <i class="fa fa-check"></i>
+              <i class="fa fa-check font-weight-bold"></i>
               FINAL TOUCH
               <div
                 class="spinner-border spinner-border-sm mb-1"

@@ -97,13 +97,13 @@
               SKIP
             </button>
             <button
-              class="btn btn-primary shadow"
+              class="btn btn-primary shadow font-weight-bold"
               @click="submitReferences"
               :disabled="isLoading"
               v-if="!isComplete"
             >
               NEXT
-              <i class="fa fa-hand-o-right"></i>
+              <i class="fa fa-hand-o-right font-weight-bold"></i>
               <div
                 class="spinner-border spinner-border-sm mb-1"
                 v-show="isLoading"
