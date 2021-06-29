@@ -179,23 +179,27 @@ $(document).ready(function() {
 });
 //  filter position by office
 $(document).ready(function() {
-    //plantillaPositionMetaData
-    let plantillaMetaData = document
-        .getElementById("plantillaPositionMetaData")
-        .content.replaceAll("|", '"');
-    var plantillaMetaDataRemoveLast =
-        "[" +
-        plantillaMetaData.substring(0, plantillaMetaData.length - 2) +
-        "]";
-    let plantillaPositionOptionAll = JSON.parse(plantillaMetaDataRemoveLast);
-
-    let metaData = document
-        .getElementById("positionMetaData")
-        .content.replaceAll("|", '"');
-    var metaDataRemoveLast =
-        "[" + metaData.substring(0, metaData.length - 2) + "]";
-    let positionOptionAll = JSON.parse(metaDataRemoveLast);
     $("#officeCode").change(function(e) {
+        //plantillaPositionMetaData
+        if(document.querySelectorAll('[id="plantillaPositionMetaData"]')[1] == null){
+            var plantillaMetaData = document.querySelectorAll('[id="plantillaPositionMetaData"]')[0].content.replaceAll("|", '"');
+        }else{
+            var plantillaMetaData = document.querySelectorAll('[id="plantillaPositionMetaData"]')[1].content.replaceAll("|", '"');
+        }
+        var plantillaMetaDataRemoveLast =
+            "[" +
+            plantillaMetaData.substring(0, plantillaMetaData.length - 2) +
+            "]";
+        let plantillaPositionOptionAll = JSON.parse(plantillaMetaDataRemoveLast);
+            //positionMetaData
+            if(document.querySelectorAll('[id="positionMetaData"]')[1] == null){
+                var metaData = document.querySelectorAll('[id="positionMetaData"]')[0].content.replaceAll("|", '"');
+            }else{
+                var metaData = document.querySelectorAll('[id="positionMetaData"]')[1].content.replaceAll("|", '"');
+            }
+        var metaDataRemoveLast =
+            "[" + metaData.substring(0, metaData.length - 2) + "]";
+        let positionOptionAll = JSON.parse(metaDataRemoveLast);
         let officeCode = e.target.value;
         //filter all position data in plantilla//
         let plantillaPositionIdFilter = plantillaPositionOptionAll.filter(
@@ -379,6 +383,10 @@ $(document).ready(function() {
                     swal("Sucessfully Added!", "", "success");
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
+                    $(document).ready(function () {
+                        $('#plantillaPositionMetaData').load('#plantillaPositionMetaData > #plantillaPositionMetaData');
+                        $('#positionMetaData').load('#positionMetaData > #positionMetaData');
+                    });
                 }
             },
             error: function(response) {
