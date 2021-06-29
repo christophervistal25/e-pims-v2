@@ -31,7 +31,7 @@
                             <label class="has-float-label mb-0">
                             <input value="{{ old('officeCode') }}"
                                 class="form-control {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}" name="officeCode"
-                                id="officeCode" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                id="officeCode" type="number" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <span class="font-weight-bold">Office Code<span class="text-danger">*</span></span>
                             </label>
                             <div id='office-code-error-message' class='text-danger text-sm'>

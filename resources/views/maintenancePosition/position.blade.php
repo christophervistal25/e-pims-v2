@@ -21,7 +21,7 @@
                 <button id="cancelbutton" class="btn btn-primary submit-btn float-right shadow"><i
                         class="fa fa-list"></i> Position List</button>
             </div>
-            <form action="/plantilla-of-position" method="post" id="plantillaOfPositionForm">
+            <form action="/plantilla-of-position" method="post" id="maintenancePositionForm">
                 @csrf
                     <div class="alert alert-secondary text-center font-weight-bold" role="alert">ADD NEW POSITION</div>
                 <div class="container">
@@ -29,10 +29,10 @@
 
                         <div class="form-group col-12 col-md-6 col-lg-7">
                             <label class="has-float-label mb-0">
-                            <input value="{{ old('positionCode') }}"
+                            <input value="{{ old('positionCode') ?? $lastId->position_code + 1}}"
                                 class="form-control {{ $errors->has('positionCode')  ? 'is-invalid' : ''}}" name="positionCode"
                                 id="positionCode" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <span class="font-weight-bold">Position Name<span class="text-danger">*</span></span>
+                                <span class="font-weight-bold">Position Code<span class="text-danger">*</span></span>
                             </label>
                             <div id='position-code-error-message' class='text-danger text-sm'>
                             </div>
@@ -49,14 +49,20 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-12 col-lg-7">
+                        <div class="form-group col-10 col-lg-7">
                             <label class="has-float-label mb-0">
-                            <input value="{{ old('salaryGradeNo') }}"
-                                class="form-control {{ $errors->has('salaryGradeNo')  ? 'is-invalid' : ''}}"
-                                name="salaryGradeNo" id="salaryGradeNo" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <span class="font-weight-bold">Salary Grade No<span class="text-danger">*</span></span>
-                            </label>
-                            <div id='old-position-name-error-message' class='text-danger text-sm'>
+                            <select value=""
+                                class="form-control selectpicker  {{ $errors->has('salaryGradeNo')  ? 'is-invalid' : ''}}"
+                                name="salaryGradeNo" data-live-search="true" id="salaryGradeNo" data-size="4"
+                                data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <option></option>
+                                @foreach (range(1, 8) as $step_no)
+                                <option {{ old('stepNo') == $step_no ? 'selected' : '' }} value="{{ $step_no}}">{{ $step_no}}</option>
+                                @endforeach
+                            </select>
+                            <span class="font-weight-bold">Salary Grade<span class="text-danger">*</span></span>
+                        </label>
+                            <div id='salary-grade-no-error-message' class='text-danger text-sm'>
                             </div>
                         </div>
 
@@ -67,7 +73,7 @@
                                 name="positionShortName" id="positionShortName" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <span class="font-weight-bold">Position Short Name<span class="text-danger">*</span></span>
                             </label>
-                            <div id='old-position-name-error-message' class='text-danger text-sm'>
+                            <div id='position-short-name-error-message' class='text-danger text-sm'>
                             </div>
                         </div>
 

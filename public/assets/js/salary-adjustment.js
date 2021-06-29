@@ -336,7 +336,7 @@ $(document).ready(function() {
 
 //  position display salary grade
 $(document).ready(function() {
-    $("#employeeName").change(function() {
+    $("#maintenancePosition").change(function() {
         let salaryGrade = $("#salaryGrade").val();
         let stepNo = $("#stepNo").val();
         let currentSgyear = $("#currentSgyear").val();

@@ -55,7 +55,23 @@ class MaintenanceOfficeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'officeCode'                 => 'required|numeric',
+            'officeName'                 => 'required',
+            'officeShortName'            => 'required',
+            'officeHead'                 => 'required',
+            'positionName'               => 'required',
+        ]);
+        $office = new Office;
+        $office->office_code                = $request['officeCode'];
+        $office->office_name                = $request['officeName'];
+        $office->office_short_name          = $request['officeShortName'];
+        $office->office_address             = $request['officeAddress'];
+        $office->office_short_address       = $request['officeShortAddress'];
+        $office->office_head                = $request['officeHead'];
+        $office->position_name              = $request['positionName'];
+        $office->save();
+        return response()->json(['success'=>true]);
     }
 
     /**
