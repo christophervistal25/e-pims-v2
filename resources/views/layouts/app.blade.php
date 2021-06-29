@@ -308,10 +308,10 @@
                                         <a class='text-decoration-none' href="{{ route('salary-grade.index') }}">
                                             Salary Grade
                                         </a>
-                                        <a class='text-decoration-none mr-2' href="{{ 'maintenance-position' }}">
+                                        <a class='text-decoration-none mr-2' href="{{ route('maintenance-position.index') }}">
                                             Position
                                         </a>
-                                        <a class='text-decoration-none mr-2' href="{{ 'maintenance-office' }}">
+                                        <a class='text-decoration-none mr-2' href="{{ route('maintenance-office.index') }}">
                                             Office
                                         </a>
                                         <a class='text-decoration-none mr-2' href="">
