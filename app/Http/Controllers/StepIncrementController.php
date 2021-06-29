@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Session;
 class StepIncrementController extends Controller
 {
 
+
+    //  FETCH DATA IN YAJRA TABLE //
     public function list()
     {
         $data = DB::table('step_increments')
@@ -20,22 +22,46 @@ class StepIncrementController extends Controller
             ->leftJoin('positions', 'step_increments.position_id', '=', 'positions.position_id')
             ->select('id', 'date_step_increment', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'position_name', 'item_no', 'date_latest_appointment',
             DB::raw('CONCAT(sg_no_from, "-" , step_no_from) AS sg_from_and_step_from'), 'salary_amount_from', DB::raw('CONCAT(sg_no_to, "-" , step_no_to) AS sg_to_and_step_to'), 'salary_amount_to', 'salary_diff')
-            // ->where('deleted_at', null)
-            ->get();
 
+            ->where('step_increments.deleted_at', null)
+            ->get();
+            
             if($data->count() === 0){
                 $data = $data->where('delete_at', null);
             }
 
-            return Datatables::of($data)->addColumn('action', function($row) {
-                $btnEdit = "<a href='". route('step-increment.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-info btn-sm'><i class='la la-edit' title='Edit'></i></a>"; 
-                $btnDelete = "<button type='submit' class='rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord' title='Delete' data-id=" .$row->id . "><i class='la la-trash'></i></button>";
+
+            
+
+            return Datatables::of($data)
+                ->addColumn('salary_amount_from', function ($row) {
+                    return '₱' . number_format($row->salary_amount_from, 2, '.', ',');
+                })
+                ->addColumn('salary_amount_to', function ($row) {
+                    return '₱' . number_format($row->salary_amount_to, 2, '.', ',');
+                })
+                ->addColumn('salary_diff', function ($row) {
+                    return '₱' . number_format($row->salary_diff, 2, '.', ',');
+                })
+
+                // EDIT FUNCTION IN YAJRA TABLE //
+
+                ->addColumn('action', function($row) {
+                    $btnEdit = "<a href='". route('step-increment.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-info btn-sm'><i class='la la-edit' title='Edit'></i></a>"; 
+                    
+
+                    // DELETE FUNCTION IN YAJRA TABLE //
+        
+                    $btnDelete = '<button type="submit" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="'.$row->id.'"><i class="la la-trash"></i></button>';
+
+                
                 return $btnEdit . "&nbsp" . $btnDelete;
+                
             })->make(true);
                     
     }
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource. 
      *
      * @return \Illuminate\Http\Response
      */
@@ -51,6 +77,7 @@ class StepIncrementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create()
     {
         //
@@ -62,6 +89,9 @@ class StepIncrementController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
+     //  POST FUNCTION //
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -106,6 +136,9 @@ class StepIncrementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
+    //  EDIT FUNCTION //
     public function edit($id)
     {
         $stepIncrement = StepIncrement::with(['employee:employee_id,firstname,middlename,lastname,extension', 'position:position_id,position_name'])->find($id);
@@ -121,15 +154,18 @@ class StepIncrementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
+    //  UPDATE FUNCTION //
     public function update(Request $request, $id)
     {
-            $this->validate($request, [
-                'employeeName'      => 'required',
-                'dateStepIncrement' => 'required',
-                'stepNo2'           => 'required',
-            ]);
+            // $this->validate($request, [
+            //     'employeeName'      => 'required',
+            //     'dateStepIncrement' => 'required',
+            //     'stepNo2'           => 'required',
+            // ]);
             
-            $step_increments                          = StepIncrement::find($id);
+            $step_increments = StepIncrement::find($id);
             $step_increments->employee_id             = $request['employeeID'];
             $step_increments->item_no                 = $request['itemNoFrom'];
             $step_increments->position_id             = $request['positionID'];
@@ -145,8 +181,9 @@ class StepIncrementController extends Controller
             $step_increments->save();
             
             Session::flash('success', true);
+            return response()->json(['success' => true]);
 
-            return redirect()->to(route('step-increment.edit', $step_increments->id));
+            // return redirect()->to(route('step-increment.edit', $step_increments->id));
     }
 
     /**
@@ -155,9 +192,14 @@ class StepIncrementController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(StepIncrement $step_increment)
+
+
+    //  DELETE FUNCTION //
+    public function destroy($id)
     {
-        $step_increment->delete();
+        $stepIncrement = StepIncrement::find($id);
+        $stepIncrement->delete();
+
         return response()->json(['success' => true]);
     }
 }
