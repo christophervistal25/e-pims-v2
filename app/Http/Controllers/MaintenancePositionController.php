@@ -16,7 +16,8 @@ class MaintenancePositionController extends Controller
      */
     public function index()
     {
-        return view('MaintenancePosition.position');
+        $lastId = Position::latest('position_id')->first();
+        return view('MaintenancePosition.position', compact('lastId'));
     }
 
     public function list(Request $request)
@@ -54,7 +55,20 @@ class MaintenancePositionController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'positionCode'                 => 'required',
+            'positionName'                 => 'required',
+            'salaryGradeNo'                => 'required',
+            'positionShortName'            => 'required',
 
+        ]);
+        $position = new Position;
+        $position->position_code                = $request['positionCode'];
+        $position->position_name                = $request['positionName'];
+        $position->sg_no                        = $request['salaryGradeNo'];
+        $position->position_short_name          = $request['positionShortName'];
+        $position->save();
+        return response()->json(['success'=>true]);
     }
 
     /**
