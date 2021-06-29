@@ -307,7 +307,7 @@ class EmployeePersonalDataSheetPrintController extends Controller
             'continue_table' => 'spouse_childrens_continue',
             'except'   => ['employee_id', 'created_at', 'updated_at', 'id'],
             'alias' => [],
-            'max' => 8,
+            'max' => 12,
         ]);
 
         $this->oneToOneInsertion([
