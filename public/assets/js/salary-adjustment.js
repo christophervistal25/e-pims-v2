@@ -370,6 +370,38 @@ $(document).ready(function() {
     $("#cancelbutton1").click(function() {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
+        $("input").val("");
+        $("#employeeName")
+            .val("Please Select")
+            .trigger("change");
+        const errorClass = [
+            "#dateAdjustment",
+            "#employeeName",
+            "#itemNo",
+            "#positionName",
+            "#salaryGrade",
+            "#stepNo",
+            "#salaryPrevious",
+            "#salaryNew",
+            "#salaryDifference"
+        ];
+        $.each(errorClass, function(index, value) {
+            $(`${value}`).removeClass("is-invalid");
+        });
+        const errorMessage = [
+            "#date-adjustment-error-message",
+            "#employee-error-message",
+            "#item-no-error-message",
+            "#position-error-message",
+            "#salary-grade-error-message",
+            "#step-no-error-message",
+            "#salary-previous-error-message",
+            "#salary-new-error-message",
+            "#salary-difference-error-message"
+        ];
+        $.each(errorMessage, function(index, value) {
+            $(`${value}`).html("");
+        });
     });
 });
 

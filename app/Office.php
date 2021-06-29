@@ -4,9 +4,12 @@ namespace App;
 use App\Plantilla;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Office extends Model
 {
+
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
 
     protected $primaryKey = 'office_code';
 

@@ -52,7 +52,6 @@ $(document).ready(function() {
         e.preventDefault();
         // let empIds = $("#employeeName").val();
         let data = $(this).serialize();
-        console.log(data);
         $("#saveBtn").attr("disabled", true);
         $("#loading").removeClass("d-none");
         $.ajax({
