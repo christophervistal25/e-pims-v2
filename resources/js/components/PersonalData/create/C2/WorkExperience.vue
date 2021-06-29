@@ -235,7 +235,7 @@
         </table>
         <div class="float-right mb-3">
           <button
-            class="btn btn-secondary text-white shadow"
+            class="btn btn-secondary text-white shadow font-weight-bold"
             @click="skipSection"
             v-if="!isComplete"
           >
@@ -243,7 +243,7 @@
             SKIP
           </button>
           <button
-            class="btn btn-primary shadow"
+            class="btn btn-primary shadow font-weight-bold"
             @click="submitWorkExperience"
             :class="
               Object.keys(errors).length != 0 ? 'btn-danger' : 'btn-primary'
@@ -252,7 +252,7 @@
             v-if="!isComplete"
           >
             NEXT
-            <i class="fa fa-hand-o-right"></i>
+            <i class="fa fa-hand-o-right font-weight-bold"></i>
             <div
               class="spinner-border spinner-border-sm mb-1"
               v-show="isLoading"

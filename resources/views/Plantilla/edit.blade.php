@@ -73,14 +73,17 @@
                             @endif
                         </div>
 
+
                         <div class="form-group col-12 col-lg-6">
                             <label>Office<span class="text-danger">*</span></label>
-                            <select value="{{ old('officeCode') }}" name="officeCode" id="officeCode"
-                                class="select {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}">
-                                <option>Please Select</option>
+                            <select value=""
+                                class="form-control selectpicker {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
+                                name="officeCode" data-live-search="true" id="officeCode" data-size="5">
+                                <option></option>
                                 @foreach($office as $offices)
                                 <option {{ $plantilla->office_code == $offices->office_code ? 'selected' : '' }}
-                                    value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
+                                    value="{{ $offices->office_code}}">
+                                    {{ $offices->office_name }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('officeCode'))
@@ -91,9 +94,10 @@
 
                         <div class="form-group col-12 col-lg-6">
                             <label>Division<span class="text-danger">*</span></label>
-                            <select value="{{ old('divisionId') }}" name="divisionId"
-                                class="select {{ $errors->has('divisionId')  ? 'is-invalid' : ''}}">
-                                <option>Please Select</option>
+                            <select value=""
+                                class="form-control selectpicker {{ $errors->has('divisionId')  ? 'is-invalid' : ''}}"
+                                name="divisionId" data-live-search="true" id="divisionId" data-size="5">
+                                <option></option>
                                 @foreach($office as $offices)
                                 <option {{ $plantilla->division_id == $offices->office_code ? 'selected' : '' }}
                                     value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
@@ -105,7 +109,9 @@
                             @endif
                         </div>
 
-                        <div class="form-group col-12 col-lg-4">
+
+
+                        <div class="form-group col-12 col-lg-6">
                             <label>Position<span class="text-danger">*</span></label>
                             <select value="{{ old('positionTitle') }}"
                                 class="form-control form-control-xs selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
@@ -113,7 +119,7 @@
                                 <option></option>
                                 @foreach($plantillaPosition as $plantillaPositions)
                                     @if ($plantilla->office_code == $plantillaPositions->office_code)
-                                        <option style="width:350px;"
+                                        <option
                                         {{ $plantilla->position_id == $plantillaPositions->position_id ? 'selected' : '' }}
                                         value="{{ $plantillaPositions->position_id}}">
                                         @foreach($position as $positions)
@@ -129,18 +135,7 @@
                             @endif
                         </div>
 
-                        <div class="form-group col-12 col-lg-4">
-                            <label>Position Ext</label>
-                            <input value="{{ old('positionTitleExt') ?? $plantilla->position_ext }}"
-                                class="form-control {{ $errors->has('positionTitleExt')  ? 'is-invalid' : ''}}"
-                                name="positionTitleExt" type="text">
-                            @if($errors->has('positionTitleExt'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('positionTitleExt') }} </small>
-                            @endif
-                        </div>
-
-                        <div class="form-group col-12 col-lg-4">
+                        <div class="form-group col-12 col-lg-6">
                             <label>Status<span class="text-danger">*</span></label>
                             <select value="{{ old('status') }}" name="status"
                                 class="select {{ $errors->has('status')  ? 'is-invalid' : ''}}">

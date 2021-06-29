@@ -22,9 +22,17 @@ Route::get('/', function () {
 });
 
 
-//salary grade
+//maintenance salary grade
 Route::get('/salary-grade-list', 'SalaryGradecontroller@list')->name('salary-grade-list');
 Route::resource('/salary-grade', 'SalaryGradeController');
+//maintenance position
+Route::get('/maintenance-position-list', 'MaintenancePositionController@list')->name('maintenance-position-list');
+Route::resource('/maintenance-position', 'MaintenancePositionController');
+Route::get('/maintenance-position/{id}', 'MaintenancePositionController@destroy')->name('maintenance-position.delete');
+//maintenance office
+Route::get('/maintenance-office-list', 'MaintenanceOfficeController@list')->name('maintenance-office-list');
+Route::resource('/maintenance-office', 'MaintenanceOfficeController');
+Route::get('/maintenance-office/{id}', 'MaintenanceOfficeController@destroy')->name('maintenance-office.delete');
 
 
 //plantilla of personnel

@@ -16,7 +16,7 @@
 @endprepend
 
 @prepend('meta-data')
-<meta id="plantillaPositionMetaData" content="@foreach($plantillaPosition as $plantillaPositions){ |officeCode|:|{{ $plantillaPositions->office_code }}|, |positionId|:|{{ $plantillaPositions->position_id }}|}, @endforeach">
+<meta id="plantillaPositionMetaData" class="sdas" content="@foreach($plantillaPosition as $plantillaPositions){ |officeCode|:|{{ $plantillaPositions->office_code }}|, |positionId|:|{{ $plantillaPositions->position_id }}|}, @endforeach">
 <meta id="positionMetaData" content="@foreach($position as $positions){ |positionId|:|{{ $positions->position_id }}|, |positionName|:|{{ $positions->position_name }}|}, @endforeach">
 @endprepend
 @section('content')
@@ -94,9 +94,10 @@
 
                     <div class="form-group col-12 col-lg-6">
                         <label>Division<span class="text-danger">*</span></label>
-                        <select value="" name="divisionId" class="select {{ $errors->has('divisionId')  ? 'is-invalid' : ''}}"
-                            id="divisionId">
-                            <option>Please Select</option>
+                        <select value=""
+                            class="form-control selectpicker {{ $errors->has('divisionId')  ? 'is-invalid' : ''}}"
+                            name="divisionId" data-live-search="true" id="divisionId" data-size="5">
+                            <option></option>
                             @foreach($office as $offices)
                             <option {{ old('divisionId') == $offices->office_code ? 'selected' : '' }} value="{{ $offices->office_code}}">
                                 {{ $offices->office_name }}</option>
@@ -106,7 +107,7 @@
                         </div>
                     </div>
 
-        <div class="form-group col-12 col-lg-4">
+        <div class="form-group col-12 col-lg-6">
             <label>Position<span class="text-danger">*</span></label>
             <select value=""
                 class="form-control selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
@@ -117,14 +118,7 @@
             </div>
         </div>
 
-        <div class="form-group col-12 col-lg-4">
-            <label>Position Ext</label>
-            <input value="{{ old('positionTitleExt') }}" placeholder="(optional)"
-                class="form-control {{ $errors->has('positionTitleExt')  ? 'is-invalid' : ''}}"
-                name="positionTitleExt" type="text">
-        </div>
-
-        <div class="form-group col-12 col-lg-4">
+        <div class="form-group col-12 col-lg-6">
             <label>Status<span class="text-danger">*</span></label>
             <select value="" name="status" class="select {{ $errors->has('status')  ? 'is-invalid' : ''}}" id="status">
                 @foreach(range(0, 10) as $statuses)
@@ -155,7 +149,7 @@
         <label>Steps<span class="text-danger">*</span></label>
         <select name="stepNo" value="" class="select floating {{ $errors->has('stepNo')  ? 'is-invalid' : ''}}"
             id="currentStepno">
-            <option>Please Select</option>
+            <option value="">Please Select</option>
             @foreach (range(1, 8) as $step_no)
             <option {{ old('stepNo') == $step_no ? 'selected' : '' }} value="{{ $step_no}}">{{ $step_no}}</option>
             @endforeach

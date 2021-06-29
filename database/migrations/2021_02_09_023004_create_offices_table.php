@@ -22,6 +22,7 @@ class CreateOfficesTable extends Migration
             $table->string('office_short_address')->nullable();
             $table->string('position_name')->nullable();
             $table->timestamps();
+            $table->softDeletes()->nullable();
         });
     }
 

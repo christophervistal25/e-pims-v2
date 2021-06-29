@@ -301,10 +301,24 @@
                                 </ul>
                             </li>
 
-                            <li>
-                                <a class='text-decoration-none' href="{{ route('salary-grade.index') }}">
-                                    <i class="la la-money"></i> <span> Salary Grade </span>
-                                </a>
+                            <li class="submenu">
+                                <a href="#" class='text-decoration-none'><i class="la la-cog"></i> <span>Maintenance</span> <span class="menu-arrow"></span></a>
+                                <ul style="display: none;">
+                                    <li>
+                                        <a class='text-decoration-none' href="{{ route('salary-grade.index') }}">
+                                            Salary Grade
+                                        </a>
+                                        <a class='text-decoration-none mr-2' href="{{ route('maintenance-position.index') }}">
+                                            Position
+                                        </a>
+                                        <a class='text-decoration-none mr-2' href="{{ route('maintenance-office.index') }}">
+                                            Office
+                                        </a>
+                                        <a class='text-decoration-none mr-2' href="">
+                                            Division
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
 
 						</li>

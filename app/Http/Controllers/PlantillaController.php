@@ -106,7 +106,6 @@ class PlantillaController extends Controller
         $plantilla->item_no                = $request['itemNo'];
         $plantilla->old_item_no            = $request['oldItemNo'];
         $plantilla->position_id            = $request['positionTitle'];
-        $plantilla->position_ext           = $request['positionTitleExt'];
         $plantilla->employee_id            = $request['employeeName'];
         $plantilla->sg_no                  = $request['salaryGrade'];
         $plantilla->step_no                = $request['stepNo'];
@@ -145,7 +144,8 @@ class PlantillaController extends Controller
         $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->get();
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('position_id', 'position_name')->get();
-        $plantillaPosition = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->get();
+        $plantillaPositionID = Plantilla::where('position_id','!=',$plantilla_id)->get()->pluck('position_id')->toArray();
+        $plantillaPosition = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->whereNotIn('position_id', $plantillaPositionID )->get();
         $salarygrade = SalaryGrade::get(['sg_no']);
         $status = ['Please Select', 'Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
         count($status) - 1;
@@ -188,7 +188,6 @@ class PlantillaController extends Controller
         $plantilla->item_no                = $request['itemNo'];
         $plantilla->old_item_no            = $request['oldItemNo'];
         $plantilla->position_id            = $request['positionTitle'];
-        $plantilla->position_ext           = $request['positionTitleExt'];
         $plantilla->employee_id            = $request['employeeId'];
         $plantilla->sg_no                  = $request['salaryGrade'];
         $plantilla->step_no                = $request['stepNo'];
