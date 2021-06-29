@@ -106,7 +106,6 @@ class PlantillaController extends Controller
         $plantilla->item_no                = $request['itemNo'];
         $plantilla->old_item_no            = $request['oldItemNo'];
         $plantilla->position_id            = $request['positionTitle'];
-        $plantilla->position_ext           = $request['positionTitleExt'];
         $plantilla->employee_id            = $request['employeeName'];
         $plantilla->sg_no                  = $request['salaryGrade'];
         $plantilla->step_no                = $request['stepNo'];
@@ -188,7 +187,6 @@ class PlantillaController extends Controller
         $plantilla->item_no                = $request['itemNo'];
         $plantilla->old_item_no            = $request['oldItemNo'];
         $plantilla->position_id            = $request['positionTitle'];
-        $plantilla->position_ext           = $request['positionTitleExt'];
         $plantilla->employee_id            = $request['employeeId'];
         $plantilla->sg_no                  = $request['salaryGrade'];
         $plantilla->step_no                = $request['stepNo'];
