@@ -324,7 +324,7 @@
                                         <a class='text-decoration-none mr-2' href="{{ route('maintenance-office.index') }}">
                                             Office
                                         </a>
-                                        <a class='text-decoration-none mr-2' href="">
+                                        <a class='text-decoration-none mr-2' href="{{ route('maintenance-division.index') }}">
                                             Division
                                         </a>
                                     </li>

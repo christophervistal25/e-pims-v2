@@ -5,6 +5,7 @@ use App\SalaryAdjustment;
 use Yajra\Datatables\Datatables;
 use App\PlantillaPosition;
 use App\Plantilla;
+use App\Division;
 
 
 Route::get('/salarySteplist/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@salarySteplist');
@@ -218,4 +219,22 @@ Route::get('/plantilla/personnel/{officeCode}', function ($office_code) {
                     })
                     ->rawColumns(['action'])
                     ->make(true);
+});
+
+// maintenance division
+Route::get('/maintenance/division/{officeCode}', function ($office_code) {
+    $data = Division::select('division_id','division_name', 'office_code')->with('offices:office_code,office_name,office_short_name')->where('office_code', $office_code)->get();
+    return Datatables::of($data)
+    ->addIndexColumn()
+    ->addColumn('offices', function ($row) {
+        return $row->offices->office_name;
+    })
+    ->addColumn('action', function($row){
+        $btn = "<a title='Edit Division' href='". route('maintenance-division.edit', $row->division_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
+        $btn = $btn."<a title='Delete Division' id='delete' value='$row->division_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+        ";
+            return $btn;
+    })
+    ->rawColumns(['action'])
+    ->make(true);
 });

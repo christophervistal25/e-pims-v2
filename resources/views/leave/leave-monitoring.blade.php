@@ -154,14 +154,6 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
-                                <div class="text-right">
-                                    <button class="btn btn-primary shadow text-white" type="button"><i
-                                            class="las la-user-plus"></i> New Record</button>
-                                    <button class="btn btn-success shadow text-white" type="button"><i
-                                            class="lar la-save"></i> Save Changes</button>
-                                    <button class="btn btn-danger text-white shadow" type="button"><i
-                                            class="las la-ban"></i> Cancel Record</button>
-                                </div>
                             </div>
                             <div class="col-lg-6">
                                 <label for="leaveOpt" class="form-group has-float-label mr-3">
@@ -171,6 +163,15 @@
                                     </select>
                                     <span><strong>Leave Index Options</strong></span>
                                 </label>
+                                <div class="text-right mr-3">
+                                    <button class="btn btn-primary shadow rounded-circle text-white" title="New Record" type="button"><i
+                                            class="las la-user-plus"></i> </button>
+                                    <button class="btn btn-success shadow rounded-circle text-white" title="Save Changes" type="button"><i
+                                            class="lar la-save"></i> </button>
+                                    <button class="btn btn-danger text-white shadow rounded-circle" type="button" title="Cancel Record"><i
+                                            class="las la-ban"></i> </button>
+
+                                </div>
                             </div>
                         </div>
                     </div>
