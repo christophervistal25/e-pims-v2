@@ -196,7 +196,10 @@ class PersonalDataSheetController extends Controller
             '*.rating'               => ['nullable', 'numeric', 'between:0,99.99'],
             '*.license_number'       => ['nullable'],
             '*.date_of_validitiy'    => ['nullable', 'date'],
-        ],[], ['*.career_service' => 'career service']);
+        ],[], ['*.career_service' => 'career service',       '*.careerServ' => 'career service',
+            '*.date_of_examination' => 'Date of examination',
+            '*.place_of_examination' => 'Place of examination',
+            '*.dateOfdate_of_validitiyValid' => 'Date of validity',]);
 
         
         return $this->employeeRepository->existingEmployeeAddCivilService($request->all(), $employee_id);
@@ -349,10 +352,6 @@ class PersonalDataSheetController extends Controller
 
     public function existingEmployeeStoreReferences(Request $request, $employeeId)
     {
-        $this->validate($request, [
-            '*.name' => 'required',
-        ],[], ['*.name' => 'name']);
-
         return $this->employeeRepository->existingEmployeeAddReferences($request->all(), $employeeId);
     }
 

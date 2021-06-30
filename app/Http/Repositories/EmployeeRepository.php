@@ -1,20 +1,21 @@
 <?php
 namespace App\Http\Repositories;
 use App\Employee;
-use App\EmployeeInformation;
-use App\EmployeeFamilyBackground;
-use App\EmployeeEducationalBackground;
-use App\EmployeeCivilService;
-use App\EmployeeWorkExperience;
-use App\EmployeeVoluntaryWork;
-use App\EmployeeTrainingAttained;
-use App\EmployeeOtherInformation;
-use App\EmployeeReference;
-use App\EmployeeRelevantQuery;
-use App\EmployeeSpouseChildren;
-use App\EmployeeIssuedID;
 use App\RefStatus;
+use App\EmployeeIssuedID;
+use App\EmployeeReference;
+use Illuminate\Support\Str;
+use App\EmployeeInformation;
+use App\EmployeeCivilService;
+use App\EmployeeRelevantQuery;
+use App\EmployeeVoluntaryWork;
+use App\EmployeeSpouseChildren;
+use App\EmployeeWorkExperience;
+use App\EmployeeFamilyBackground;
+use App\EmployeeOtherInformation;
+use App\EmployeeTrainingAttained;
 use Illuminate\Support\Facades\DB;
+use App\EmployeeEducationalBackground;
 
 class EmployeeRepository
 {
@@ -84,7 +85,7 @@ class EmployeeRepository
         $employee->place_birth          = $data['place_birth'];
         $employee->sex                  = $data['sex'];
         $employee->civil_status         = $data['civil_status'];
-        $employee->civil_status_others = $data['civil_status_others'];
+        $employee->civil_status_others  = (Str::upper($data['civil_status']) !== 'OTHERS') ? '' : $data['civil_status_others'];
         $employee->height               = $data['height'];
         $employee->weight               = $data['weight'];
         $employee->blood_type           = $data['blood_type'];
@@ -95,8 +96,8 @@ class EmployeeRepository
         $employee->tin_no               = $data['tin_no'];
         $employee->agency_employee_no   = $data['agency_employee_no'];
         $employee->citizenship          = $data['citizenship'];
-        $employee->citizenship_by       = $data['citizenship_by'];
-        $employee->indicate_country     = $data['indicate_country'];
+        $employee->citizenship_by       = (Str::upper($data['citizenship']) === 'DUAL CITIZEN') ? $data['citizenship_by'] : '';
+        $employee->indicate_country     = (Str::upper($data['citizenship']) === 'DUAL CITIZEN') ? $data['indicate_country'] : '';
         $employee->residential_house_no = $data['residential_house_no'];
         $employee->residential_street   = $data['residential_street'];
         $employee->residential_village  = $data['residential_village'];
