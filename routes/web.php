@@ -33,6 +33,10 @@ Route::get('/maintenance-position/{id}', 'MaintenancePositionController@destroy'
 Route::get('/maintenance-office-list', 'MaintenanceOfficeController@list')->name('maintenance-office-list');
 Route::resource('/maintenance-office', 'MaintenanceOfficeController');
 Route::get('/maintenance-office/{id}', 'MaintenanceOfficeController@destroy')->name('maintenance-office.delete');
+//maintenance division
+Route::get('/maintenance-division-list', 'MaintenanceDivisionController@list')->name('maintenance-division-list');
+Route::resource('/maintenance-division', 'MaintenanceDivisionController');
+Route::get('/maintenance-division/{id}', 'MaintenanceDivisionController@destroy')->name('maintenance-division.delete');
 
 
 //plantilla of personnel
