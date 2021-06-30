@@ -5,11 +5,7 @@
 <link rel="stylesheet"
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css"> --}}
-<<<<<<< HEAD
  {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
-=======
-<script src="{{ asset('js/app.js') }}" defer></script>
->>>>>>> 2e0bbfc891937f0dbf81e1ea9f7bbcdd9a55bca3
 @endprepend
 @section('content')
 @foreach($errors->all() as $error)
@@ -106,17 +102,6 @@
                                     <span class="font-weight-bold">SALARY GRADE</span>
                                 </label>
                             </div>
-<<<<<<< HEAD
-                            
-                            <div class="form-group col-12 col-lg-11">
-                                <label>Amount:</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">&#8369;</span>
-                                    </div>
-                                        <input class="form-control" value="{{ old('amountFrom') ?? $stepIncrement->salary_amount_from }}" id="amount" name="amountFrom" type="text" readonly>
-                                </div>
-=======
 
                             <div class="form-group col-6 col-lg-5 ml-2">
                                 <label class="has-float-label" for="stepNo">
@@ -126,7 +111,6 @@
                                         style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                     <span class="font-weight-bold"></span>
                                 </label>
->>>>>>> 2e0bbfc891937f0dbf81e1ea9f7bbcdd9a55bca3
                             </div>
                         </div>
 
@@ -168,43 +152,13 @@
                                     {{ $step }}</option>
                                 @endforeach
                                 @endif
-<<<<<<< HEAD
-                                
-                                    
-                                </select>
-                                <div id="stepNo2-error-message" class="text-danger">
-                                </div>
-                            </div>
-                            
-                            <div class="form-group col-12 col-lg-12">
-                                <label>Amount:</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">&#8369;</span>
-                                    </div>
-                                        <input class="form-control" value="{{ old('amount2') ?? $stepIncrement->salary_amount_to }}" id="amount2" name="amount2" type="text" readonly>
-                                    <div id="amount2-error-message" class="text-danger">
-                                    </div>
-                                </div>
-=======
                             </select>
                             <span class="font-weight-bold">STEP</span>
                             </label>
                             <div id="stepNo2-error-message" class="text-danger">
->>>>>>> 2e0bbfc891937f0dbf81e1ea9f7bbcdd9a55bca3
                             </div>
                         </div>
 
-<<<<<<< HEAD
-                            <div class="form-group col-12 col-lg-12">
-                                <label>Monthly Difference:</label>
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">&#8369;</span>
-                                    </div>
-                                    <input class="form-control" value="{{ old('monthlyDifference') ?? $stepIncrement->salary_diff }}" id="monthlyDifference" name="monthlyDifference" type="text" readonly>
-                                </div>
-=======
                         <div class="form-group col-12 col-lg-12">
                             <label class="has-float-label" for="amount2">
                             <input class="form-control" value="{{ old('amount2') ?? $stepIncrement->salary_amount_to }}"
@@ -212,7 +166,6 @@
                                 <span class="font-weight-bold">AMOUNT</span>
                             </label>
                             <div id="amount2-error-message" class="text-danger">
->>>>>>> 2e0bbfc891937f0dbf81e1ea9f7bbcdd9a55bca3
                             </div>
                         </div>
 
@@ -243,7 +196,6 @@
 <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-<<<<<<< HEAD
     <script>
 
      $(document).ready(function(e) {
@@ -308,40 +260,6 @@
             });
 
     </script>
-=======
-<script>
-    (function () {
-        let isSuccess = "{{ Session::get('success') }}";
-        if (isSuccess) {
-            swal("Good Job!", "You successfully update.", "success");
-        }
-    })();
-
-    $(document).ready(function (e) {
-        $('#stepNo2').change(function (e) {
-            let selectedSetep = e.target.value;
-            $.ajax({
-                url: `/api/step/${$('#sgNo2').val()}/${selectedSetep}`,
-                success: function (response) {
-                    $('#amount2').val(`${response['sg_step' + selectedSetep]}`)
-                    var amount = parseFloat($('#amount').val());
-                    var amount2 = parseFloat($('#amount2').val());
-                    var amountDifference = parseFloat(((amount2 - amount) || ''));
-                    $('#monthlyDifference').val(amountDifference);
-                }
-            });
-        });
-
-        $('#btnCancel').click(function (e) {
-            location.reload();
-        })
-
-
-    });
-
-</script>
-
-@endpush
->>>>>>> 2e0bbfc891937f0dbf81e1ea9f7bbcdd9a55bca3
+    @endpush
 
 @endsection

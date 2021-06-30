@@ -117,3 +117,5 @@ Route::group(['prefix' => 'employee'], function () {
 });
 // Route::resource('/print-increment', 'PrintIncrementController');
 Route::get('/profile', 'EmployeeController@profile');
+
+Route::get('/restore', 'RestoreController@index');
