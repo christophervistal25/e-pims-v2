@@ -65,7 +65,7 @@
                             <input value="{{ old('officeAddress') }}"
                                 class="form-control {{ $errors->has('officeAddress')  ? 'is-invalid' : ''}}"
                                 name="officeAddress" id="officeAddress" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <span class="font-weight-bold">Office Address<span class="text-danger">*</span></span>
+                                <span class="font-weight-bold">Office Address</span>
                             </label>
                             <div id='office-address-error-message' class='text-danger text-sm'>
                             </div>
@@ -76,7 +76,7 @@
                             <input value="{{ old('officeShortAddress') }}"
                                 class="form-control {{ $errors->has('officeShortAddress')  ? 'is-invalid' : ''}}"
                                 name="officeShortAddress" id="officeShortAddress" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <span class="font-weight-bold">Office Short Address<span class="text-danger">*</span></span>
+                                <span class="font-weight-bold">Office Short Address</span>
                             </label>
                             <div id='office-short-address-error-message' class='text-danger text-sm'>
                             </div>

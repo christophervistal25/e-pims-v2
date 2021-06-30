@@ -69,6 +69,10 @@ class Office extends Model
     {
         return $this->belongsTo(PlantillaPosition::class, 'office_code', 'office_code');
     }
+    public function divisions()
+    {
+        return $this->belongsTo(Division::class, 'office_code', 'office_code');
+    }
 
 
 }
