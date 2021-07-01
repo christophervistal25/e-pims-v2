@@ -4,8 +4,7 @@
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 <link rel="stylesheet"
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
-{{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css"> --}}
- {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+
 @endprepend
 @section('content')
 @foreach($errors->all() as $error)
@@ -117,7 +116,7 @@
                         <div class="form-group col-12 col-lg-11">
                             <label class="has-float-label" for="amount">
                                 <input class="form-control"
-                                    value="{{ old('amountFrom') ?? $stepIncrement->salary_amount_from }}" id="amount"
+                                    value="{{ old('amountFrom') ?? $stepIncrement->salary_amount_from }}" id="amountFrom"
                                     name="amountFrom" type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <span class="font-weight-bold">AMOUNT</span>
                             </label>
@@ -162,7 +161,7 @@
                         <div class="form-group col-12 col-lg-12">
                             <label class="has-float-label" for="amount2">
                             <input class="form-control" value="{{ old('amount2') ?? $stepIncrement->salary_amount_to }}"
-                                id="amount2" name="amount2" type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                id="amountTo" name="amount2" type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <span class="font-weight-bold">AMOUNT</span>
                             </label>
                             <div id="amount2-error-message" class="text-danger">
@@ -179,7 +178,6 @@
                         </div>
 
                         <div class="form-group col-12 col-lg-12" id="buttons">
-                            {{-- <a href="/step-increment" type="button" id="btnCancel" class="form-control col-5 btn btn-warning float-right">Back</a> --}}
                             <button type="submit" id="btnUpdate"
                                 class="form-control col-12 float-right btn btn-success mb-3 shadow"><i class="fas fa-check"></i> Update</button>
                         </div>
@@ -196,68 +194,73 @@
 <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+
+    {{-- Javascript Function --}}
     <script>
 
-     $(document).ready(function(e) {
+    // GET THE VALUE OF INPUT //
+
+     $(document).ready( (e)=> {
          
-                $('#stepNo2').change(function (e) {
-                    let selectedSetep = e.target.value;
+                $('#stepNo2').change( (e)=> {
+                    let valueSelected = e.target.value;
                     $.ajax({
-                        url : `/api/step/${$('#sgNo2').val()}/${selectedSetep}`,
+                        url : `/api/step/${$('#sgNo2').val()}/${valueSelected}`,
                         success : function (response) {
-                            $('#amount2').val(`${response['sg_step' + selectedSetep]}`)
-                            var amount = parseFloat($('#amount').val());
-                            var amount2 = parseFloat($('#amount2').val());
-                            var amountDifference = parseFloat(((amount2 - amount) || ''));                            
+                            $('#amountTo').val(`${response['sg_step' + valueSelected]}`)
+                            var amountFrom = parseFloat($('#amountFrom').val());
+                            var amountTo = parseFloat($('#amountTo').val());
+                            var amountDifference = parseFloat(((amountTo - amountFrom) || ''));                            
                             $('#monthlyDifference').val(amountDifference);
                         }
                     });
                 });
 
-                $('#btnCancel').click(function (e) {
+                $('#btnCancel').click( (e)=> {
                     location.reload();
                 })
             });
 
+        
+        // UPDATE FUNCTION //
+
+        document.querySelector('#btnUpdate').addEventListener('click', (e)=> {
+            e.preventDefault();
+            let getId = "{{ $stepIncrement->id }}";
+
+            // Prepare data
+            let data = {
+                employeeID : document.querySelector('#employeeId').value,
+                itemNoFrom : document.querySelector('#itemNo').value,
+                positionID : document.querySelector('#positionID').value,
+                dateStepIncrement : document.querySelector('#dateIncrement').value,
+                datePromotion : document.querySelector('#lastAppointment').value,
+                sgNoFrom : document.querySelector('#salaryGrade').value,
+                stepNoFrom : document.querySelector('#stepNo').value,
+                amountFrom : document.querySelector('#amountFrom').value,
+                sgNo2 : document.querySelector('#sgNo2').value,
+                stepNo2 : document.querySelector('#stepNo2').value,
+                amount2 : document.querySelector('#amountTo').value,
+                monthlyDifference : document.querySelector('#monthlyDifference').value,
+            };
 
 
-            document.querySelector('#btnUpdate').addEventListener('click', (e) => {
-                e.preventDefault();
-                let getId = "{{ $stepIncrement->id }}";
+            // Ajax Request for sweet alert function //
 
-                // Prepare data
-                let data = {
-                    employeeID : document.querySelector('#employeeId').value,
-                    itemNoFrom : document.querySelector('#itemNo').value,
-                    positionID : document.querySelector('#positionID').value,
-                    dateStepIncrement : document.querySelector('#dateIncrement').value,
-                    datePromotion : document.querySelector('#lastAppointment').value,
-                    sgNoFrom : document.querySelector('#salaryGrade').value,
-                    stepNoFrom : document.querySelector('#stepNo').value,
-                    amountFrom : document.querySelector('#amount').value,
-                    sgNo2 : document.querySelector('#sgNo2').value,
-                    stepNo2 : document.querySelector('#stepNo2').value,
-                    amount2 : document.querySelector('#amount2').value,
-                    monthlyDifference : document.querySelector('#monthlyDifference').value,
-                };
-
-
-                // Ajax Request
-
-               fetch(`/step-increment/${getId}`, {
-                    method: 'PUT',
-                    headers :  {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data),
-                    }).then(res => res.json())
-                    .then((res) => {
-                        // getRefresh();                     
-                });
-                swal("Good Job!", "You have successfully updated.", "success");
+            fetch(`/step-increment/${getId}`, {
+                method: 'PUT',
+                headers :  {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+                }).then(res => res.json())
+                .then((data) => {
                 
             });
+            swal("Good Job!", "You have successfully updated.", "success");
+            
+        });
 
     </script>
     @endpush

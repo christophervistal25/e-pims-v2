@@ -222,14 +222,18 @@
 <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
 <script>
+
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
 
-    $(document).ready(function () {
+    $(document).ready( ()=> {
         let table = $('#step-increment-table').DataTable({
             processing: true,
             serverSide: true,
@@ -298,7 +302,7 @@
         const MAX_NUMBER_OF_STEP_NO = 8;
 
         //SOFT DELETE BUTTON
-        $(document).on('click', '.btnRemoveRecord', function () {
+        $(document).on('click', '.btnRemoveRecord', ()=> {
             let id = $(this).attr('data-id');
             let message = document.createElement('h3');
             message.innerText = 'Are you sure you want to delete this row?';
@@ -334,7 +338,7 @@
         });
 
         // TRANSITION OF FORM TO TABLE
-        $('#addBtn').click(function () {
+        $('#addBtn').click( ()=> {
             $('#addIncrement').attr("class", "page-header");
             $('#stepIncrementTable').attr("class", "page-header d-none");
             $('#btnViewTableContainer').removeClass('d-none');
@@ -342,14 +346,14 @@
         });
 
         // DISPLAY TABLE
-        $('#btnViewTableContainer').click(function () {
+        $('#btnViewTableContainer').click( ()=> {
             $('#stepIncrementTable').removeClass('d-none');
             $(this).addClass('d-none');
             $('#formStepIncrement').addClass('d-none');
         });
 
         // SHOWS THE DATA VALUE IN INPUT
-        $('#employeeName').change(function (e) {
+        $('#employeeName').change( (e)=> {
             let employeeID = e.target.value;
             let plantilla = $($("#employeeName option:selected")[0]).attr('data-plantilla');
             /*let moneyFormat = toLocalString("ph", {maximumFractionDigits:2}) + '.00';*/
@@ -388,12 +392,12 @@
         });
 
         //STEP NUMBER CONDITION WITH ERRORS
-        $('#stepNo2').change(function (e) {
-            let selectedSetep = e.target.value;
+        $('#stepNo2').change( (e)=> {
+            let valueSelected = e.target.value;
             $.ajax({
-                url: `/api/step/${$('#sgNo2').val()}/${selectedSetep}`,
+                url: `/api/step/${$('#sgNo2').val()}/${valueSelected}`,
                 success: function (response) {
-                    $('#amount2').val(`${response['sg_step' + selectedSetep]}`)
+                    $('#amount2').val(`${response['sg_step' + valueSelected]}`)
                     var amount = parseFloat($('#amount').val());
                     var amount2 = parseFloat($('#amount2').val());
                     var amountDifference = parseFloat(((amount2 - amount) || ''));
@@ -402,8 +406,8 @@
             });
         });
 
-        $('#btnSave').click(function (e) {
-            e.preventDefault()
+        $('#btnSave').click( (e)=> {
+            e.preventDefault();
 
             let employeeName = $('#employeeName').val();
             let sgNo = $('#sgNo2').val();
@@ -440,17 +444,13 @@
             // or all fields that required is filled by the user.
             if (filteredError.length === 0) {
                 $('#formStepIncrement').submit();
-                swal("Good job!", "Successfully added!", "success").then((response) => {
+                swal("Good job!", "Successfully added!", "success")
+                .then((response) => {
                     if(response){
                         location.reload();
                     }
                 });
             }
-        });
-
-
-        $('#btnCancel').click(function (e) {
-            location.reload()
         });
 
     });
@@ -470,6 +470,7 @@
     // });
 
 </script>
+
 @endpush
 
 @endsection
