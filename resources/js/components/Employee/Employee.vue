@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div data-app>
     <div class="row">
       <div class="col-lg-12">
         <div class="float-right">
@@ -18,7 +18,16 @@
       <div class="col-lg-12">
         <v-main v-if="!showAddEmployeeForm">
           <v-row>
-            <v-col></v-col>
+            <v-col>
+              <v-select
+                label="Employment status"
+                clearable
+                :items="employmentStatus"
+                item-text="status_name"
+                v-model="selectedEmploymentStatusForFilter"
+                @change="filterEmployees"
+              ></v-select>
+            </v-col>
             <v-col></v-col>
             <v-col>
               <v-text-field
@@ -35,13 +44,15 @@
           <div class="mt-1"></div>
           <v-data-table
             :headers="headers"
-            :items="employees"
+            :items="filteredEmployees"
             :search="search"
             multi-sort
             :page.sync="page"
             :items-per-page="itemsPerPage"
             @page-count="pageCount = $event"
             hide-default-footer
+            loading="true"
+            :loading-text="message"
           >
             <template v-slot:item.information.photo="{ item }">
               <div class="p-2">
@@ -96,10 +107,11 @@
                   @input="itemsPerPage = parseInt($event, 10)"
                 ></v-text-field>
               </v-col>
+              <v-col></v-col>
               <v-col>
                 <v-pagination
                   color="rgba(255, 155, 68, 1)"
-                  v-if="employees.length !== 0"
+                  v-if="filteredEmployees.length !== 0"
                   v-model="page"
                   :length="pageCount ? pageCount : 10"
                   :total-visible="7"
@@ -194,11 +206,11 @@ export default {
       search: "",
       employee_id: "",
       headers: [
-        {
-          text: "Photo",
-          value: "information.photo",
-          sortable: false,
-        },
+        // {
+        //   text: "Photo",
+        //   value: "information.photo",
+        //   sortable: false,
+        // },
         {
           text: "Employee ID",
           value: "employee_id",
@@ -226,6 +238,10 @@ export default {
         {
           text: "Office",
           value: "information.office.office_name",
+        },
+        {
+          text: "Status",
+          value: "status.status_name",
         },
         {
           text: "Actions",
@@ -293,6 +309,9 @@ export default {
       offices: [],
       positions: [],
       errors: {},
+      selectedEmploymentStatusForFilter: "",
+      filteredEmployees: [],
+      message: "Loading employee's",
     };
   },
   components: {
@@ -300,6 +319,24 @@ export default {
     AccountNumber,
   },
   methods: {
+    filterEmployees() {
+      if (!this.selectedEmploymentStatusForFilter) {
+        this.filteredEmployees = this.employees;
+      } else {
+        let data = [];
+        this.filteredEmployees = [];
+        this.employees.map((employee) => {
+          if (
+            employee.status &&
+            employee.status.status_name ==
+              this.selectedEmploymentStatusForFilter
+          ) {
+            data.push(employee);
+          }
+        });
+        this.filteredEmployees = data;
+      }
+    },
     isKeyCombinationSave(event) {
       if (
         event.ctrlKey &&
@@ -488,6 +525,8 @@ export default {
       window.axios.get(`/api/employee/employees`).then((response) => {
         if (response.status === 200) {
           this.employees = response.data;
+          this.filteredEmployees = response.data;
+          this.message = "No available data";
           this.isComplete = true;
         }
       });
