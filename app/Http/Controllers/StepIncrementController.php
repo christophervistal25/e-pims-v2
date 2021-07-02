@@ -15,6 +15,7 @@ class StepIncrementController extends Controller
 
 
     //  FETCH DATA IN YAJRA TABLE //
+    
     public function list()
     {
         $data = DB::table('step_increments')

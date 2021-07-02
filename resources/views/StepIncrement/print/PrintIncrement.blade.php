@@ -3,7 +3,7 @@
 @section('title', 'Print Increment of Employee')
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-{{-- <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}"> --}}
+
 <style>
    @media print{
     .header,.sidebar, #action-buttons,.breadcrumb {
@@ -116,10 +116,11 @@
 </div>
 
 @push('page-scripts')
-<script src="{{ asset('/assets/js/custom.js') }}"></script>
+    <script src="{{ asset('/assets/js/custom.js') }}"></script>
+
     <script>
-        $(document).ready(function () {
-            $(document).click(function () {
+        $(document).ready( ()=> {
+            $(document).click( ()=> {
                 console.log("Hello World");
             });
         });
