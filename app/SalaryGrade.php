@@ -23,4 +23,8 @@ class SalaryGrade extends Model
     {
         return $this->belongsTo(Position::class, 'sg_no', 'salary_grade');
     }
+    public function plantilla_position()
+    {
+        return $this->belongsTo(PlantillaPosition::class, 'sg_no', 'sg_no');
+    }
 }

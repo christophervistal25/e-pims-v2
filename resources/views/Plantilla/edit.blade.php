@@ -98,9 +98,9 @@
                                 class="form-control selectpicker {{ $errors->has('divisionId')  ? 'is-invalid' : ''}}"
                                 name="divisionId" data-live-search="true" id="divisionId" data-size="5">
                                 <option></option>
-                                @foreach($office as $offices)
-                                <option {{ $plantilla->division_id == $offices->office_code ? 'selected' : '' }}
-                                    value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
+                                @foreach($division as $divisions)
+                                <option {{ $plantilla->division_id == $divisions->division_id ? 'selected' : '' }}
+                                    value="{{ $divisions->division_id }}">{{ $divisions->division_name }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('divisionId'))
