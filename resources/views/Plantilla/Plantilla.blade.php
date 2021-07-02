@@ -58,25 +58,6 @@
                     </div>
 
                     <div class="form-group col-12 col-lg-6">
-                        <label>Item No<span class="text-danger">*</span></label>
-                        <input value="{{ old('itemNo') }}"
-                            class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" name="itemNo"
-                            id="itemNo" type="text" placeholder="">
-                        <div id='item-no-error-message' class='text-danger text-sm'>
-                        </div>
-                    </div>
-
-                    <div class="form-group col-12 col-lg-6">
-                        <label>Old Item No</label>
-                        <input value="{{ old('oldItemNo') }}"
-                            class="form-control {{ $errors->has('oldItemNo')  ? 'is-invalid' : ''}}" name="oldItemNo"
-                            id="oldItemNo" type="text" placeholder="(optional)">
-                        <div id='old_item-no-error-message' class='text-danger'>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group col-12 col-lg-6">
                         <label>Office<span class="text-danger">*</span></label>
                         <select value=""
                             class="form-control selectpicker {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
@@ -98,14 +79,15 @@
                             class="form-control selectpicker {{ $errors->has('divisionId')  ? 'is-invalid' : ''}}"
                             name="divisionId" data-live-search="true" id="divisionId" data-size="5">
                             <option></option>
-                            @foreach($office as $offices)
-                            <option {{ old('divisionId') == $offices->office_code ? 'selected' : '' }} value="{{ $offices->office_code}}">
-                                {{ $offices->office_name }}</option>
+                            @foreach($division as $division)
+                            <option {{ old('divisionId') == $division->division_id ? 'selected' : '' }} value="{{ $division->division_id }}">
+                                {{ $division->division_name }}</option>
                             @endforeach
                         </select>
                         <div id='division-error-message' class='text-danger text-sm'>
                         </div>
                     </div>
+
 
         <div class="form-group col-12 col-lg-6">
             <label>Position<span class="text-danger">*</span></label>
@@ -130,6 +112,24 @@
                 @endforeach
             </select>
             <div id='status-error-message' class='text-danger text-sm'>
+            </div>
+        </div>
+
+        <div class="form-group col-12 col-lg-6">
+            <label>Item No<span class="text-danger">*</span></label>
+            <input value="{{ old('itemNo') }}"
+                class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" name="itemNo"
+                id="itemNo" type="text" placeholder="">
+            <div id='item-no-error-message' class='text-danger text-sm'>
+            </div>
+        </div>
+
+        <div class="form-group col-12 col-lg-6">
+            <label>Old Item No</label>
+            <input value="{{ old('oldItemNo') }}"
+                class="form-control {{ $errors->has('oldItemNo')  ? 'is-invalid' : ''}}" name="oldItemNo"
+                id="oldItemNo" type="text" placeholder="(optional)">
+            <div id='old_item-no-error-message' class='text-danger'>
             </div>
         </div>
 
