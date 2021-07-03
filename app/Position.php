@@ -34,7 +34,7 @@ class Position extends Model
         });
 
         self::saved(function() {
-            Cache::forget('positions'); 
+            Cache::forget('positions');
         });
 
         self::deleted(function() {
@@ -69,6 +69,8 @@ class Position extends Model
     {
         return $this->belongsTo(PlantillaPosition::class, 'position_id', 'position_id');
     }
+
+
 }
 
 

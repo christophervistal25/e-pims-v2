@@ -10,6 +10,7 @@ use App\SalaryGrade;
 use App\Office;
 use App\Position;
 use App\PlantillaPosition;
+use App\Division;
 use Illuminate\Support\Facades\Session;
 class PlantillaController extends Controller
 {
@@ -25,6 +26,7 @@ class PlantillaController extends Controller
      */
     public function index(Request $req)
     {
+        $division = Division::select('division_id', 'division_name', 'office_code')->get();
         $plantillaEmp = Plantilla::get()->pluck('employee_id')->toArray();
         $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->whereNotIn('employee_id', $plantillaEmp )->get();
         $office = Office::select('office_code', 'office_name')->get();
@@ -40,7 +42,7 @@ class PlantillaController extends Controller
         count($areatype) - 1;
         $arealevel = ['Please Select','K','T','S','A'];
         count($arealevel) - 1;
-        return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition'));
+        return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition', 'division'));
     }
 
     public function list(Request $request)
@@ -93,7 +95,7 @@ class PlantillaController extends Controller
             'stepNo'                        => 'required|in:' . implode(',',range(1, 8)),
             'salaryAmount'                  => 'required|numeric',
             'officeCode'                    => 'required|in:' . implode(',',range(10001, 10056)),
-            'divisionId'                    => 'required|in:' . implode(',',range(10001, 10056)),
+            'divisionId'                    => 'required',
             'originalAppointment'           => 'required',
             'lastPromotion'                 => 'required|after:originalAppointment',
             'status'                        => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
@@ -141,6 +143,7 @@ class PlantillaController extends Controller
      */
     public function edit($plantilla_id)
     {
+        $division = Division::select('division_id', 'division_name', 'office_code')->get();
         $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->get();
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('position_id', 'position_name')->get();
@@ -156,7 +159,7 @@ class PlantillaController extends Controller
         $arealevel = ['Please Select','K','T','S','A'];
         count($arealevel) - 1;
         $plantilla = Plantilla::find($plantilla_id);
-        return view ('Plantilla.edit', compact('plantilla','employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition'));
+        return view ('Plantilla.edit', compact('division', 'plantilla','employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition'));
     }
 
     /**
@@ -176,7 +179,7 @@ class PlantillaController extends Controller
             'stepNo'                        => 'required|in:' . implode(',',range(1, 8)),
             'salaryAmount'                  => 'required|numeric',
             'officeCode'                    => 'required|in:' . implode(',',range(10001, 10056)),
-            'divisionId'                    => 'required|in:' . implode(',',range(10001, 10056)),
+            'divisionId'                    => 'required',
             'originalAppointment'           => 'required',
             'lastPromotion'                 => 'required|after:originalAppointment',
             'status'                        => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
