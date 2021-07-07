@@ -5,8 +5,9 @@
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 @endprepend
 @prepend('meta-data')
-{{-- <meta id="plantillaPositionMetaData" content="@foreach($plantillaPosition as $plantillaPositions){ |officeCode|:|{{ $plantillaPositions->office_code }}|, |positionId|:|{{ $plantillaPositions->position_id }}|}, @endforeach">
-<meta id="positionMetaData" content="@foreach($position as $positions){ |positionId|:|{{ $positions->position_id }}|, |positionName|:|{{ $positions->position_name }}|}, @endforeach"> --}}
+<meta id="plantillaPositionMetaData" content="@foreach($plantillaPositionAll as $plantillaPositionAlls){ |officeCode|:|{{ $plantillaPositionAlls->office_code }}|, |positionId|:|{{ $plantillaPositionAlls->position_id }}|, |ppId|:|{{ $plantillaPositionAlls->pp_id }}|}, @endforeach">
+<meta id="positionMetaData" content="@foreach($position as $positions){ |positionId|:|{{ $positions->position_id }}|, |positionName|:|{{ $positions->position_name }}|}, @endforeach">
+<meta id="divisionMetaData" content="@foreach($division as $divisions){ |officeCode|:|{{ $divisions->office_code }}|, |divisionId|:|{{ $divisions->division_id }}|, |divisionName|:|{{ $divisions->division_name }}|}, @endforeach">
 @endprepend
 @section('content')
 <div class="content">
