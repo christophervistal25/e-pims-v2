@@ -37,7 +37,8 @@
 
                     <div class="form-group col-12 col-lg-4">
                         <label for="dateAdjustment" class="has-float-label">
-                            <input class="form-control" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}"
+                            {{-- Carbon\Carbon::now()->format('Y-m-d') --}}
+                            <input class="form-control" value="{{ Carbon\Carbon::now()->toDateString() }}"
                                 name="dateAdjustment" id="dateAdjustment" type="date"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <span class="font-weight-bold">DATE ADJUSTMENT<span class="text-danger">*</span></span>

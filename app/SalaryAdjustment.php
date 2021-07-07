@@ -11,7 +11,7 @@ class SalaryAdjustment extends Model
 {
 
     use SoftDeletes;
-    protected $dates = ['deleted_at', 'date_adjustment'];
+    protected $dates = ['date_adjustment','deleted_at', 'date_adjustment'];
     protected $fillable = [
         'employee_id',
         'item_no',
@@ -31,6 +31,10 @@ class SalaryAdjustment extends Model
     public function position()
     {
         return $this->belongsTo(Position::class, 'position_id', 'position_id');
+    }
+    public function plantillaPosition()
+    {
+        return $this->belongsTo(PlantillaPosition::class, 'pp_id', 'pp_id');
     }
     public function plantilla()
     {

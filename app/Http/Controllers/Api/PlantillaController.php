@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\SalaryGrade;
 use App\Position;
+use App\PlantillaPosition;
 class PlantillaController extends Controller
 {
     public function salarySteplist($sg_no, $sg_step, $sg_year)
@@ -37,7 +38,7 @@ class PlantillaController extends Controller
     //position display sg
     public function positionSalaryGrade($position_id)
     {
-        return Position::with('salary_grade')->find($position_id);
+        return PlantillaPosition::with('salary_grade')->find($position_id);
     }
 
     // add position function

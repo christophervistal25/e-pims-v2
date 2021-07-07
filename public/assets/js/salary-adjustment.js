@@ -109,8 +109,10 @@ $(document).ready(function() {
         if (plantilla) {
             plantilla = JSON.parse(plantilla);
             $("#employeeId").val(plantilla.employee_id);
-            $("#positionName").val(plantilla.positions.position_name);
-            $("#positionId").val(plantilla.positions.position_id);
+            $("#positionName").val(
+                plantilla.plantilla_position.position.position_name
+            );
+            $("#positionId").val(plantilla.pp_id);
             $("#itemNo").val(plantilla.item_no);
             $("#salaryGrade").val(plantilla.sg_no);
             $("#stepNo").val(plantilla.step_no);
@@ -121,6 +123,8 @@ $(document).ready(function() {
             $("#salaryGrade").val("");
             $("#stepNo").val("");
             $("#salaryPrevious").val("");
+            $("#salaryNew").val("");
+            $("#salaryDifference").val("");
         }
     });
 });

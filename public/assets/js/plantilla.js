@@ -7,8 +7,8 @@ $(function() {
             { data: "plantilla_id", name: "plantilla_id" },
             { data: "item_no", name: "item_no" },
             {
-                data: "positions",
-                name: "positions.position_name",
+                data: "plantillaPosition",
+                name: "plantillaPosition",
                 searchable: true,
                 sortable: false,
                 visible: true
@@ -52,8 +52,8 @@ $(function() {
                     { data: "plantilla_id", name: "plantilla_id" },
                     { data: "item_no", name: "item_no" },
                     {
-                        data: "positions",
-                        name: "positions.position_name",
+                        data: "plantillaPosition",
+                        name: "plantillaPosition",
                         searchable: true,
                         sortable: false,
                         visible: true
@@ -95,8 +95,8 @@ $(function() {
                     { data: "plantilla_id", name: "plantilla_id" },
                     { data: "item_no", name: "item_no" },
                     {
-                        data: "positions",
-                        name: "positions.position_name",
+                        data: "plantillaPosition",
+                        name: "plantillaPosition",
                         searchable: true,
                         sortable: false,
                         visible: true
@@ -168,11 +168,19 @@ $(document).ready(function() {
         $.ajax({
             url: `/api/positionSalaryGrade/${positionTitle}`,
             success: response => {
-                let currentSalaryGrade = response.salary_grade.sg_no;
-                $("#currentSalarygrade").val(currentSalaryGrade);
-                let currentSalaryAmount =
-                    response.salary_grade["sg_step" + currentStepno];
-                $("#currentSalaryamount").val(currentSalaryAmount);
+                if (response == "") {
+                    $("#currentSalarygrade").val("");
+                    $("#itemNo").val("");
+                    $("#currentSalaryamount").val("");
+                } else {
+                    let currentSalaryGrade = response.salary_grade.sg_no;
+                    $("#currentSalarygrade").val(currentSalaryGrade);
+                    let currentItemNo = response.item_no;
+                    $("#itemNo").val(currentItemNo);
+                    let currentSalaryAmount =
+                        response.salary_grade["sg_step" + currentStepno];
+                    $("#currentSalaryamount").val(currentSalaryAmount);
+                }
             }
         });
     });
@@ -244,13 +252,85 @@ $(document).ready(function() {
             });
             $("#positionTitle").append(
                 '<option value="' +
-                    plantillaPositionIdFilter_final.positionId +
+                    plantillaPositionIdFilter_final.ppId +
                     '">' +
                     positionIdFilter[0].positionName +
                     "</option>"
             );
         }
         $("#positionTitle").selectpicker("refresh");
+
+        //divisionMetaData
+        if (
+            document.querySelectorAll('[id="divisionMetaData"]')[1] ==
+            null
+        ) {
+            var divisionMetaData = document
+                .querySelectorAll('[id="divisionMetaData"]')[0]
+                .content.replaceAll("|", '"');
+        } else {
+            var divisionMetaData = document
+                .querySelectorAll('[id="divisionMetaData"]')[1]
+                .content.replaceAll("|", '"');
+        }
+        var divisionMetaDataRemoveLast =
+            "[" +
+            divisionMetaData.substring(0, divisionMetaData.length - 2) +
+            "]";
+        let divisionOfficeCodeOptionAll = JSON.parse(
+            divisionMetaDataRemoveLast
+        );
+        
+        if (document.querySelectorAll('[id="divisionMetaData"]')[1] == null) {
+            var metaDataDivision = document
+                .querySelectorAll('[id="divisionMetaData"]')[0]
+                .content.replaceAll("|", '"');
+        } else {
+            var metaDataDivision = document
+                .querySelectorAll('[id="divisionMetaData"]')[1]
+                .content.replaceAll("|", '"');
+        }
+        var metaDataDivisionRemoveLast =
+            "[" + metaDataDivision.substring(0, metaDataDivision.length - 2) + "]";
+        let divisionOptionAll = JSON.parse(metaDataDivisionRemoveLast);
+        let officeCode2 = e.target.value;
+        //filter all division data in plantilla//
+        let plantillaDivisionFilter = divisionOfficeCodeOptionAll.filter(
+            function(Division) {
+                return Division.officeCode == officeCode2;
+            }
+        );
+        //Remove all option in #divisionId//
+        function removeOptionsDivision(selectDivision) {
+            var ii,
+                L = selectDivision.options.length - 1;
+            for (ii = L; ii >= 0; ii--) {
+                selectDivision.remove(ii);
+            }
+        }
+        removeOptionsDivision(document.getElementById("divisionId"));
+        //add division data based in what you select in #officeCode//
+        var i,
+            plantillaLengthDivisionId = plantillaDivisionFilter.length;
+        $("#divisionId").append("<option></option>");
+        for (i = 0; i < plantillaLengthDivisionId; i++) {
+            var plantillaDivisionFilter_final = plantillaDivisionFilter[i];
+            //filter all position data//
+            let divisionIdFilter = divisionOptionAll.filter(function(Division) {
+                return (
+                    Division.officeCode ==
+                    plantillaDivisionFilter_final.officeCode
+                );
+            });
+            $("#divisionId").append(
+                '<option value="' +
+                    divisionIdFilter[i].divisionId +
+                    '">' +
+                    divisionIdFilter[i].divisionName +
+                    "</option>"
+            );
+        }
+        $("#divisionId").selectpicker("refresh");
     });
 });
 
@@ -285,7 +365,6 @@ $(document).ready(function() {
                 } else {
                     let currentSalaryAmount =
                         response["sg_step" + currentStepno];
-                    console.log(response);
                     $("#currentSalaryamount").val(currentSalaryAmount);
                 }
             }
@@ -333,7 +412,7 @@ $(document).ready(function() {
                     $("#positionTitle")
                         .find('[value="' + positionIds + '"]')
                         .remove();
-                    $("#employepositionTitleeName").selectpicker("refresh");
+                    $("#positionTitle").selectpicker("refresh");
 
                     $("input").val("");
                     const select = [

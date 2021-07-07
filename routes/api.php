@@ -105,7 +105,7 @@ Route::get('/salary/adjustment/{year}', function ($year) {
 
 //per office
 Route::get('/office/salary/adjustment/peroffice/{officeCode}', function ($office_code) {
-    $data = SalaryAdjustment::select('id','employee_id','item_no','position_id', 'date_adjustment', 'sg_no', 'step_no', 'salary_previous','salary_new','salary_diff')->with(['position:position_id,position_name','employee:employee_id,firstname,middlename,lastname,extension', 'plantilla:employee_id,office_code'])->whereHas('plantilla', function ($query) use ($office_code) {
+    $data = SalaryAdjustment::select('id','employee_id','item_no','pp_id', 'date_adjustment', 'sg_no', 'step_no', 'salary_previous','salary_new','salary_diff')->with(['plantillaPosition:pp_id,position_id','plantillaPosition', 'plantillaPosition.position','employee:employee_id,firstname,middlename,lastname,extension', 'plantilla:employee_id,office_code'])->whereHas('plantilla', function ($query) use ($office_code) {
         $query->where('office_code', $office_code);
     })->orderBy('id', 'DESC');
     return (new Datatables)->eloquent($data)
@@ -132,14 +132,14 @@ Route::get('/office/salary/adjustment/peroffice/{officeCode}', function ($office
 //per office not selected
 Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}', function ($office_code) {
     $salaryAdjustment = SalaryAdjustment::get()->pluck('employee_id')->toArray();
-    $data = Plantilla::select('plantilla_id','item_no', 'office_code', 'position_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id')->with('position:position_id,position_name','employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code)->whereNotIn('employee_id', $salaryAdjustment );
+    $data = Plantilla::select('plantilla_id','item_no', 'office_code', 'pp_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position','employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code)->whereNotIn('employee_id', $salaryAdjustment );
     return (new Datatables)->eloquent($data)
     ->addIndexColumn()
     ->addColumn('employee', function ($row) {
         return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
     })
-    ->addColumn('position', function ($row) {
-        return $row->position->position_name;
+    ->addColumn('plantillaPosition', function ($row) {
+        return $row->plantillaPosition->position->position_name;
     })
     ->editColumn('checkbox', function ($row) {
         $checkbox = "<input class='check-select' id='checkbox$row->plantilla_id' style='transform:scale(1.3)' value='$row->plantilla_id' type='checkbox' />";
@@ -165,7 +165,7 @@ Route::post('/salary-adjustment-per-office', function () {
         $salaryAdjustment= new SalaryAdjustment();
         $salaryAdjustment->employee_id = $newAdjustment->employee_id;
         $salaryAdjustment->item_no = $newAdjustment->item_no;
-        $salaryAdjustment->position_id = $newAdjustment->position_id;
+        $salaryAdjustment->pp_id = $newAdjustment->pp_id;
         $salaryAdjustment->date_adjustment = request()->date;
         $salaryAdjustment->sg_no = $newAdjustment->sg_no;
         $salaryAdjustment->step_no = $newAdjustment->step_no;
@@ -201,14 +201,14 @@ Route::get('/plantilla/position/{officeCode}', function ($office_code) {
 
 // plantilla personnel
 Route::get('/plantilla/personnel/{officeCode}', function ($office_code) {
-    $data = Plantilla::select('plantilla_id', 'item_no', 'position_id', 'office_code', 'status', 'employee_id')->with('office:office_code,office_short_name','positions:position_id,position_name', 'employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code)->orderBy('plantilla_id', 'DESC')->get();
+    $data = Plantilla::select('plantilla_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id')->with('office:office_code,office_short_name','plantillaPosition:pp_id,position_id', 'employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code)->orderBy('plantilla_id', 'DESC')->get();
     return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('employee', function ($row) {
                         return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
                     })
-                    ->addColumn('positions', function ($row) {
-                        return $row->positions->position_name;
+                    ->addColumn('plantillaPosition', function ($row) {
+                        return $row->plantillaPosition->position->position_name;
                     })
                     ->addColumn('office', function ($row) {
                         return $row->office->office_short_name;
