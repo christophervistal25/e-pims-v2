@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Employee;
 use App\Position;
 use App\Plantilla;
-use App\SalaryAdjustment;
-use Yajra\Datatables\Datatables;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Validation\Rule;
 use Carbon\Carbon;
+use App\SalaryAdjustment;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+
 class SalaryAdjustmentController extends Controller
 {
     /**
@@ -86,7 +88,9 @@ class SalaryAdjustmentController extends Controller
                     ->where('step_no', $request->stepNo)
                     ->where('salary_previous', $request->salaryPrevious)
                     ->where('salary_new', $request->salaryNew)
-                    ->where('salary_diff', $request->salaryDifference);
+                    ->where('salary_diff', $request->salaryDifference)
+                    ->where('deleted_at', '=', null)
+                    ->get();
                 }),
             ],
             'itemNo'                              => 'required',
@@ -98,17 +102,24 @@ class SalaryAdjustmentController extends Controller
             'salaryNew'                           => 'required|numeric',
             'salaryDifference'                    => 'required|numeric',
         ]);
-        $salaryAdjustment = new SalaryAdjustment;
-        $salaryAdjustment->employee_id                = $request['employeeId'];
-        $salaryAdjustment->item_no                    = $request['itemNo'];
-        $salaryAdjustment->position_id                = $request['positionId'];
-        $salaryAdjustment->date_adjustment            = $request['dateAdjustment'];
-        $salaryAdjustment->sg_no                      = $request['salaryGrade'];
-        $salaryAdjustment->step_no                    = $request['stepNo'];
-        $salaryAdjustment->salary_previous            = $request['salaryPrevious'];
-        $salaryAdjustment->salary_new                 = $request['salaryNew'];
-        $salaryAdjustment->salary_diff                = $request['salaryDifference'];
-        $salaryAdjustment->save();
+        
+        DB::table('salary_adjustments')->updateOrInsert(
+            [
+                'employee_id' => $request['employeeId']
+        ],
+        [
+            'employee_id'     => $request['employeeId'],
+            'item_no'         => $request['itemNo'],
+            'position_id'     => $request['positionId'],
+            'date_adjustment' => $request['dateAdjustment'],
+            'sg_no'           => $request['salaryGrade'],
+            'step_no'         => $request['stepNo'],
+            'salary_previous' => $request['salaryPrevious'],
+            'salary_new'      => $request['salaryNew'],
+            'salary_diff'     => $request['salaryDifference'],
+            'deleted_at'      => null,
+        ]);
+
         return response()->json(['success'=>true]);
     }
 
