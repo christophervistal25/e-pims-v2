@@ -40,7 +40,7 @@
                     <label class="has-float-label mb-0">
                         <input style="outline: none; box-shadow: 0px 0px 0px transparent;"
                             class="form-control {{ $errors->has('dateAdjustment')  ? 'is-invalid' : ''}}"
-                            value="{{ old('dateAdjustment') ?? $salaryAdjustment->date_adjustment }}"
+                            value="{{ $salaryAdjustment->date_adjustment }}"
                             name="dateAdjustment" id="dateAdjustment" type="date">
                         <span class="font-weight-bold">DATE ADJUSTMENT<span class="text-danger">*</span></span>
                     </label>
@@ -100,10 +100,10 @@
                             name="" data-live-search="true" data-width="100%" disabled
                             style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <option></option>
-                            @foreach($position as $positions)
+                            @foreach($plantillaPosition as $plantillaPositions)
                             <option style="width:350px;"
-                                {{ $salaryAdjustment->position_id == $positions->position_id ? 'selected' : '' }}
-                                value="{{ $positions->position_id}}">{{ $positions->position_name }}</option>
+                                {{ $salaryAdjustment->pp_id == $plantillaPositions->pp_id ? 'selected' : '' }}
+                                value="{{ $plantillaPositions->pp_id}}">{{ $plantillaPositions->position->position_name }}</option>
                             @endforeach
                         </select>
                         <span class="font-weight-bold">POSITION</span>
@@ -116,7 +116,7 @@
 
                 <div class="form-group col-12 col-lg-4 d-none">
                     <label>Position Id</label>
-                    <input class="form-control" value="{{ $salaryAdjustment->position_id }}" name="position"
+                    <input class="form-control" value="{{ $salaryAdjustment->pp_id }}" name="position"
                         id="position" type="text" readonly>
                     @if($errors->has('position'))
                     <small class="form-text text-danger">

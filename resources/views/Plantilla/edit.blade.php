@@ -5,8 +5,8 @@
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 @endprepend
 @prepend('meta-data')
-<meta id="plantillaPositionMetaData" content="@foreach($plantillaPosition as $plantillaPositions){ |officeCode|:|{{ $plantillaPositions->office_code }}|, |positionId|:|{{ $plantillaPositions->position_id }}|}, @endforeach">
-<meta id="positionMetaData" content="@foreach($position as $positions){ |positionId|:|{{ $positions->position_id }}|, |positionName|:|{{ $positions->position_name }}|}, @endforeach">
+{{-- <meta id="plantillaPositionMetaData" content="@foreach($plantillaPosition as $plantillaPositions){ |officeCode|:|{{ $plantillaPositions->office_code }}|, |positionId|:|{{ $plantillaPositions->position_id }}|}, @endforeach">
+<meta id="positionMetaData" content="@foreach($position as $positions){ |positionId|:|{{ $positions->position_id }}|, |positionName|:|{{ $positions->position_name }}|}, @endforeach"> --}}
 @endprepend
 @section('content')
 <div class="content">
@@ -115,19 +115,23 @@
                             <label>Position<span class="text-danger">*</span></label>
                             <select value="{{ old('positionTitle') }}"
                                 class="form-control form-control-xs selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
-                                name="positionTitle" data-live-search="true" id="positionTitle" data-width="100%">
+                                name="positionTitle" data-live-search="true" id="positionTitle" data-size="5" data-width="100%">
                                 <option></option>
                                 @foreach($plantillaPosition as $plantillaPositions)
+                                <option {{ $plantilla->pp_id == $plantillaPositions->pp_id ? 'selected' : '' }} value="{{ $plantillaPositions->pp_id }}">
+                                    {{ $plantillaPositions->position->position_name }}</option>
+                                @endforeach
+                                {{-- @foreach($plantillaPosition as $plantillaPositions)
                                     @if ($plantilla->office_code == $plantillaPositions->office_code)
                                         <option
-                                        {{ $plantilla->position_id == $plantillaPositions->position_id ? 'selected' : '' }}
-                                        value="{{ $plantillaPositions->position_id}}">
+                                        {{ $plantilla->pp_id == $plantillaPositions->pp_id ? 'selected' : '' }}
+                                        value="{{ $plantillaPositions->pp_id}}">
                                         @foreach($position as $positions)
-                                        {{ $plantillaPositions->position_id == $positions->position_id ? $positions->position_name : '' }}
+                                        {{ $plantillaPositions->pp_id == $positions->pp_id ? $positions->position->position_name : '' }}
                                         @endforeach
                                         </option>
                                     @endif
-                                @endforeach
+                                @endforeach --}}
                             </select>
                             @if($errors->has('positionTitle'))
                             <small class="form-text text-danger">

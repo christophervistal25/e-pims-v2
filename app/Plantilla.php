@@ -65,6 +65,10 @@ class Plantilla extends Model
     {
         return $this->hasOne('App\Position', 'position_id', 'position_id');
     }
+    public function plantillaPosition()
+    {
+        return $this->hasOne('App\PlantillaPosition', 'pp_id', 'pp_id');
+    }
     public function salary_adjustment()
     {
         return $this->hasOne(SalaryAdjustment::class, 'employee_id', 'employee_id');

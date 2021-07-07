@@ -16,8 +16,8 @@
 @endprepend
 
 @prepend('meta-data')
-<meta id="plantillaPositionMetaData" class="sdas" content="@foreach($plantillaPosition as $plantillaPositions){ |officeCode|:|{{ $plantillaPositions->office_code }}|, |positionId|:|{{ $plantillaPositions->position_id }}|}, @endforeach">
-<meta id="positionMetaData" content="@foreach($position as $positions){ |positionId|:|{{ $positions->position_id }}|, |positionName|:|{{ $positions->position_name }}|}, @endforeach">
+{{-- <meta id="plantillaPositionMetaData" class="sdas" content="@foreach($plantillaPosition as $plantillaPositions){ |officeCode|:|{{ $plantillaPositions->office_code }}|, |positionId|:|{{ $plantillaPositions->position_id }}|}, @endforeach">
+<meta id="positionMetaData" content="@foreach($position as $positions){ |positionId|:|{{ $positions->position_id }}|, |positionName|:|{{ $positions->position_name }}|}, @endforeach"> --}}
 @endprepend
 @section('content')
 <div class="kanban-board card shadow mb-0">
@@ -95,6 +95,10 @@
                 class="form-control selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
                 name="positionTitle" data-live-search="true" id="positionTitle" data-size="5" data-width="100%">
                 <option></option>
+                @foreach($plantillaPosition as $plantillaPositions)
+                <option {{ old('positionTitle') == $plantillaPositions->pp_id ? 'selected' : '' }} value="{{ $plantillaPositions->pp_id }}">
+                    {{ $plantillaPositions->position->position_name }}</option>
+                @endforeach
             </select>
             <div id='position-title-error-message' class='text-danger text-sm'>
             </div>
@@ -119,7 +123,7 @@
             <label>Item No<span class="text-danger">*</span></label>
             <input value="{{ old('itemNo') }}"
                 class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" name="itemNo"
-                id="itemNo" type="text" placeholder="">
+                id="itemNo" type="text" placeholder="" readonly>
             <div id='item-no-error-message' class='text-danger text-sm'>
             </div>
         </div>
