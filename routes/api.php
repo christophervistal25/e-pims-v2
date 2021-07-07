@@ -238,3 +238,5 @@ Route::get('/maintenance/division/{officeCode}', function ($office_code) {
     ->rawColumns(['action'])
     ->make(true);
 });
+
+

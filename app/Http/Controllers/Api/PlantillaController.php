@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\SalaryGrade;
 use App\Position;
 use App\PlantillaPosition;
+use App\Plantilla;
 class PlantillaController extends Controller
 {
     public function salarySteplist($sg_no, $sg_step, $sg_year)
