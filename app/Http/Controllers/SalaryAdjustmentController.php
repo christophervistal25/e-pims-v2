@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Employee;
 use App\Position;
 use App\Plantilla;
+use App\PlantillaPosition;
 use App\SalaryAdjustment;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Session;
@@ -28,7 +29,7 @@ class SalaryAdjustmentController extends Controller
         sort($dates);
         $position = Position::select('position_id', 'position_name')->get();
         $salaryAdjustment = SalaryAdjustment::get()->pluck('employee_id')->toArray();
-        $employee = Plantilla::select('item_no', 'position_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id')->with('employee:employee_id,firstname,middlename,lastname,extension','positions:position_id,position_name')->whereNotIn('employee_id', $salaryAdjustment )->get();
+        $employee = Plantilla::select('item_no', 'pp_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id')->with('employee:employee_id,firstname,middlename,lastname,extension','plantillaPosition', 'plantillaPosition.position','plantillaPosition:pp_id,position_id,office_code,item_no,sg_no')->whereNotIn('employee_id', $salaryAdjustment )->get();
         return view('SalaryAdjustment.SalaryAdjustment', compact('employee', 'position', 'dates'));
     }
 
@@ -80,7 +81,7 @@ class SalaryAdjustmentController extends Controller
                     return $query
                     ->where('employee_id', $request->employeeId)
                     ->where('item_no', $request->itemNo)
-                    ->where('position_id', $request->positionId)
+                    ->where('pp_id', $request->positionId)
                     ->where('date_adjustment', $request->dateAdjustment)
                     ->where('sg_no', $request->salaryGrade)
                     ->where('step_no', $request->stepNo)
@@ -101,7 +102,7 @@ class SalaryAdjustmentController extends Controller
         $salaryAdjustment = new SalaryAdjustment;
         $salaryAdjustment->employee_id                = $request['employeeId'];
         $salaryAdjustment->item_no                    = $request['itemNo'];
-        $salaryAdjustment->position_id                = $request['positionId'];
+        $salaryAdjustment->pp_id                = $request['positionId'];
         $salaryAdjustment->date_adjustment            = $request['dateAdjustment'];
         $salaryAdjustment->sg_no                      = $request['salaryGrade'];
         $salaryAdjustment->step_no                    = $request['stepNo'];
@@ -133,9 +134,9 @@ class SalaryAdjustmentController extends Controller
     {
 
         $employee = Employee::select('employee_id', 'firstname', 'lastname', 'middlename')->get();
-        $position = Position::select('position_id', 'position_name')->get();
+        $plantillaPosition = PlantillaPosition::select('pp_id','position_id','item_no','sg_no','office_code', 'old_position_name')->with('position:position_id,position_name')->get();
         $salaryAdjustment = SalaryAdjustment::find($id);
-        return view('SalaryAdjustment.edit', compact('salaryAdjustment','employee', 'position'));
+        return view('SalaryAdjustment.edit', compact('salaryAdjustment','employee', 'plantillaPosition'));
     }
 
     /**
@@ -161,7 +162,7 @@ class SalaryAdjustmentController extends Controller
         $salaryAdjustment                             =  SalaryAdjustment::find($id);
         $salaryAdjustment->employee_id                = $request['employeeName'];
         $salaryAdjustment->item_no                    = $request['itemNo'];
-        $salaryAdjustment->position_id                = $request['position'];
+        $salaryAdjustment->pp_id                = $request['position'];
         $salaryAdjustment->date_adjustment            = $request['dateAdjustment'];
         $salaryAdjustment->sg_no                      = $request['salaryGrade'];
         $salaryAdjustment->step_no                    = $request['stepNo'];

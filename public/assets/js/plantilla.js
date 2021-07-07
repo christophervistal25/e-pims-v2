@@ -7,8 +7,8 @@ $(function() {
             { data: "plantilla_id", name: "plantilla_id" },
             { data: "item_no", name: "item_no" },
             {
-                data: "positions",
-                name: "positions.position_name",
+                data: "plantillaPosition",
+                name: "plantillaPosition",
                 searchable: true,
                 sortable: false,
                 visible: true
@@ -52,8 +52,8 @@ $(function() {
                     { data: "plantilla_id", name: "plantilla_id" },
                     { data: "item_no", name: "item_no" },
                     {
-                        data: "positions",
-                        name: "positions.position_name",
+                        data: "plantillaPosition",
+                        name: "plantillaPosition",
                         searchable: true,
                         sortable: false,
                         visible: true
@@ -95,8 +95,8 @@ $(function() {
                     { data: "plantilla_id", name: "plantilla_id" },
                     { data: "item_no", name: "item_no" },
                     {
-                        data: "positions",
-                        name: "positions.position_name",
+                        data: "plantillaPosition",
+                        name: "plantillaPosition",
                         searchable: true,
                         sortable: false,
                         visible: true
@@ -168,91 +168,99 @@ $(document).ready(function() {
         $.ajax({
             url: `/api/positionSalaryGrade/${positionTitle}`,
             success: response => {
-                let currentSalaryGrade = response.salary_grade.sg_no;
-                $("#currentSalarygrade").val(currentSalaryGrade);
-                let currentSalaryAmount =
-                    response.salary_grade["sg_step" + currentStepno];
-                $("#currentSalaryamount").val(currentSalaryAmount);
+                if (response == "") {
+                    $("#currentSalarygrade").val("");
+                    $("#itemNo").val("");
+                    $("#currentSalaryamount").val("");
+                } else {
+                    let currentSalaryGrade = response.salary_grade.sg_no;
+                    $("#currentSalarygrade").val(currentSalaryGrade);
+                    let currentItemNo = response.item_no;
+                    $("#itemNo").val(currentItemNo);
+                    let currentSalaryAmount =
+                        response.salary_grade["sg_step" + currentStepno];
+                    $("#currentSalaryamount").val(currentSalaryAmount);
+                }
             }
         });
     });
 });
-//  filter position by office
-$(document).ready(function() {
-    $("#officeCode").change(function(e) {
-        //plantillaPositionMetaData
-        if (
-            document.querySelectorAll('[id="plantillaPositionMetaData"]')[1] ==
-            null
-        ) {
-            var plantillaMetaData = document
-                .querySelectorAll('[id="plantillaPositionMetaData"]')[0]
-                .content.replaceAll("|", '"');
-        } else {
-            var plantillaMetaData = document
-                .querySelectorAll('[id="plantillaPositionMetaData"]')[1]
-                .content.replaceAll("|", '"');
-        }
-        var plantillaMetaDataRemoveLast =
-            "[" +
-            plantillaMetaData.substring(0, plantillaMetaData.length - 2) +
-            "]";
-        let plantillaPositionOptionAll = JSON.parse(
-            plantillaMetaDataRemoveLast
-        );
-        //positionMetaData
-        if (document.querySelectorAll('[id="positionMetaData"]')[1] == null) {
-            var metaData = document
-                .querySelectorAll('[id="positionMetaData"]')[0]
-                .content.replaceAll("|", '"');
-        } else {
-            var metaData = document
-                .querySelectorAll('[id="positionMetaData"]')[1]
-                .content.replaceAll("|", '"');
-        }
-        var metaDataRemoveLast =
-            "[" + metaData.substring(0, metaData.length - 2) + "]";
-        let positionOptionAll = JSON.parse(metaDataRemoveLast);
-        let officeCode = e.target.value;
-        //filter all position data in plantilla//
-        let plantillaPositionIdFilter = plantillaPositionOptionAll.filter(
-            function(position) {
-                return position.officeCode == officeCode;
-            }
-        );
-        //Remove all option in #positionTitle//
-        function removeOptionsPosition(selectPosition) {
-            var ii,
-                L = selectPosition.options.length - 1;
-            for (ii = L; ii >= 0; ii--) {
-                selectPosition.remove(ii);
-            }
-        }
-        removeOptionsPosition(document.getElementById("positionTitle"));
-        //add position data based in what you select in #officeCode//
-        var i,
-            plantillaLengthPositionId = plantillaPositionIdFilter.length;
-        $("#positionTitle").append("<option></option>");
-        for (i = 0; i < plantillaLengthPositionId; i++) {
-            var plantillaPositionIdFilter_final = plantillaPositionIdFilter[i];
-            //filter all position data//
-            let positionIdFilter = positionOptionAll.filter(function(position) {
-                return (
-                    position.positionId ==
-                    plantillaPositionIdFilter_final.positionId
-                );
-            });
-            $("#positionTitle").append(
-                '<option value="' +
-                    plantillaPositionIdFilter_final.positionId +
-                    '">' +
-                    positionIdFilter[0].positionName +
-                    "</option>"
-            );
-        }
-        $("#positionTitle").selectpicker("refresh");
-    });
-});
+// //  filter position by office
+// $(document).ready(function() {
+//     $("#officeCode").change(function(e) {
+//         //plantillaPositionMetaData
+//         if (
+//             document.querySelectorAll('[id="plantillaPositionMetaData"]')[1] ==
+//             null
+//         ) {
+//             var plantillaMetaData = document
+//                 .querySelectorAll('[id="plantillaPositionMetaData"]')[0]
+//                 .content.replaceAll("|", '"');
+//         } else {
+//             var plantillaMetaData = document
+//                 .querySelectorAll('[id="plantillaPositionMetaData"]')[1]
+//                 .content.replaceAll("|", '"');
+//         }
+//         var plantillaMetaDataRemoveLast =
+//             "[" +
+//             plantillaMetaData.substring(0, plantillaMetaData.length - 2) +
+//             "]";
+//         let plantillaPositionOptionAll = JSON.parse(
+//             plantillaMetaDataRemoveLast
+//         );
+//         //positionMetaData
+//         if (document.querySelectorAll('[id="positionMetaData"]')[1] == null) {
+//             var metaData = document
+//                 .querySelectorAll('[id="positionMetaData"]')[0]
+//                 .content.replaceAll("|", '"');
+//         } else {
+//             var metaData = document
+//                 .querySelectorAll('[id="positionMetaData"]')[1]
+//                 .content.replaceAll("|", '"');
+//         }
+//         var metaDataRemoveLast =
+//             "[" + metaData.substring(0, metaData.length - 2) + "]";
+//         let positionOptionAll = JSON.parse(metaDataRemoveLast);
+//         let officeCode = e.target.value;
+//         //filter all position data in plantilla//
+//         let plantillaPositionIdFilter = plantillaPositionOptionAll.filter(
+//             function(position) {
+//                 return position.officeCode == officeCode;
+//             }
+//         );
+//         //Remove all option in #positionTitle//
+//         function removeOptionsPosition(selectPosition) {
+//             var ii,
+//                 L = selectPosition.options.length - 1;
+//             for (ii = L; ii >= 0; ii--) {
+//                 selectPosition.remove(ii);
+//             }
+//         }
+//         removeOptionsPosition(document.getElementById("positionTitle"));
+//         //add position data based in what you select in #officeCode//
+//         var i,
+//             plantillaLengthPositionId = plantillaPositionIdFilter.length;
+//         $("#positionTitle").append("<option></option>");
+//         for (i = 0; i < plantillaLengthPositionId; i++) {
+//             var plantillaPositionIdFilter_final = plantillaPositionIdFilter[i];
+//             //filter all position data//
+//             let positionIdFilter = positionOptionAll.filter(function(position) {
+//                 return (
+//                     position.positionId ==
+//                     plantillaPositionIdFilter_final.positionId
+//                 );
+//             });
+//             $("#positionTitle").append(
+//                 '<option value="' +
+//                     plantillaPositionIdFilter_final.positionId +
+//                     '">' +
+//                     positionIdFilter[0].positionName +
+//                     "</option>"
+//             );
+//         }
+//         $("#positionTitle").selectpicker("refresh");
+//     });
+// });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 $(document).ready(function() {
@@ -333,7 +341,7 @@ $(document).ready(function() {
                     $("#positionTitle")
                         .find('[value="' + positionIds + '"]')
                         .remove();
-                    $("#employepositionTitleeName").selectpicker("refresh");
+                    $("#positionTitle").selectpicker("refresh");
 
                     $("input").val("");
                     const select = [

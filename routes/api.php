@@ -201,14 +201,14 @@ Route::get('/plantilla/position/{officeCode}', function ($office_code) {
 
 // plantilla personnel
 Route::get('/plantilla/personnel/{officeCode}', function ($office_code) {
-    $data = Plantilla::select('plantilla_id', 'item_no', 'position_id', 'office_code', 'status', 'employee_id')->with('office:office_code,office_short_name','positions:position_id,position_name', 'employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code)->orderBy('plantilla_id', 'DESC')->get();
+    $data = Plantilla::select('plantilla_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id')->with('office:office_code,office_short_name','plantillaPosition:pp_id,position_id', 'employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code)->orderBy('plantilla_id', 'DESC')->get();
     return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('employee', function ($row) {
                         return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
                     })
-                    ->addColumn('positions', function ($row) {
-                        return $row->positions->position_name;
+                    ->addColumn('plantillaPosition', function ($row) {
+                        return $row->plantillaPosition->position->position_name;
                     })
                     ->addColumn('office', function ($row) {
                         return $row->office->office_short_name;
