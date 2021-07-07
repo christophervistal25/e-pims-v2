@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 
 
 
-
 // Route::get('open-app/{employee_id}', function (string $employeeId) {
 
 // });
@@ -125,6 +124,6 @@ Route::get('/profile', 'EmployeeController@profile');
 
 Route::get('/restore', 'RestoreController@index');
 
-Auth::routes();
+// Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

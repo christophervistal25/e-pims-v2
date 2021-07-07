@@ -8,6 +8,7 @@ use App\Plantilla;
 use App\Office;
 use App\Position;
 use App\Employee;
+use App\PlantillaPosition;
 use App\SalaryAdjustment;
 
 class SalaryAdjustmentPerOfficeController extends Controller
@@ -26,7 +27,7 @@ class SalaryAdjustmentPerOfficeController extends Controller
     public function list(Request $request)
     {
         if ($request->ajax()) {
-            $data = SalaryAdjustment::select('id','employee_id','item_no','position_id', 'date_adjustment', 'sg_no', 'step_no', 'salary_previous','salary_new','salary_diff')->with('position:position_id,position_name','employee:employee_id,firstname,middlename,lastname,extension', 'plantilla:employee_id,office_code');
+            $data = SalaryAdjustment::select('id','employee_id','item_no','pp_id', 'date_adjustment', 'sg_no', 'step_no', 'salary_previous','salary_new','salary_diff')->with('plantillaPosition:pp_id,position_id','plantillaPosition', 'plantillaPosition.position','employee:employee_id,firstname,middlename,lastname,extension', 'plantilla:employee_id,office_code');
 
             return (new Datatables)->eloquent($data)
                     ->addIndexColumn()
@@ -50,14 +51,14 @@ class SalaryAdjustmentPerOfficeController extends Controller
     public function NotSelectedlist(Request $request){
         if ($request->ajax()) {
             $salaryAdjustment = SalaryAdjustment::get()->pluck('employee_id')->toArray();
-            $data = Plantilla::select('plantilla_id','item_no', 'office_code', 'position_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id')->with('position:position_id,position_name','employee:employee_id,firstname,middlename,lastname,extension')->whereNotIn('employee_id', $salaryAdjustment );
+            $data = Plantilla::select('plantilla_id','item_no', 'office_code', 'pp_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id')->with('plantillaPosition:pp_id,position_id','plantillaPosition', 'plantillaPosition.position','employee:employee_id,firstname,middlename,lastname,extension')->whereNotIn('employee_id', $salaryAdjustment );
             return (new Datatables)->eloquent($data)
                     ->addIndexColumn()
                     ->addColumn('employee', function ($row) {
                         return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
                     })
-                    ->addColumn('position', function ($row) {
-                        return $row->position->position_name;
+                    ->addColumn('plantillaPosition', function ($row) {
+                        return $row->plantillaPosition->position->position_name;
                     })
                     ->editColumn('checkbox', function ($row) {
                         $checkbox = "<input id='checkbox$row->plantilla_id' style='transform:scale(1.35)' value='$row->plantilla_id' type='checkbox' />";

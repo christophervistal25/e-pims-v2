@@ -202,7 +202,11 @@ $(function() {
             },
             { data: "employee", name: "employee", visible: true },
             { data: "office_code", name: "office_code", visible: false },
-            { data: "position", name: "position", visible: true },
+            {
+                data: "plantillaPosition",
+                name: "plantillaPosition",
+                visible: true
+            },
             { data: "sg_no", name: "sg_no", visible: true },
             { data: "step_no", name: "step_no", visible: true },
             {
@@ -240,7 +244,11 @@ $(function() {
                         name: "office_code",
                         visible: false
                     },
-                    { data: "position", name: "position", visible: true },
+                    {
+                        data: "plantillaPosition",
+                        name: "plantillaPosition",
+                        visible: true
+                    },
                     { data: "sg_no", name: "sg_no", visible: true },
                     { data: "step_no", name: "step_no", visible: true },
                     {
@@ -275,7 +283,11 @@ $(function() {
                         name: "office_code",
                         visible: false
                     },
-                    { data: "position", name: "position", visible: true },
+                    {
+                        data: "plantillaPosition",
+                        name: "plantillaPosition",
+                        visible: true
+                    },
                     { data: "sg_no", name: "sg_no", visible: true },
                     { data: "step_no", name: "step_no", visible: true },
                     {
