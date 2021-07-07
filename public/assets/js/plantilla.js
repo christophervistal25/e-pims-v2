@@ -185,82 +185,154 @@ $(document).ready(function() {
         });
     });
 });
-// //  filter position by office
-// $(document).ready(function() {
-//     $("#officeCode").change(function(e) {
-//         //plantillaPositionMetaData
-//         if (
-//             document.querySelectorAll('[id="plantillaPositionMetaData"]')[1] ==
-//             null
-//         ) {
-//             var plantillaMetaData = document
-//                 .querySelectorAll('[id="plantillaPositionMetaData"]')[0]
-//                 .content.replaceAll("|", '"');
-//         } else {
-//             var plantillaMetaData = document
-//                 .querySelectorAll('[id="plantillaPositionMetaData"]')[1]
-//                 .content.replaceAll("|", '"');
-//         }
-//         var plantillaMetaDataRemoveLast =
-//             "[" +
-//             plantillaMetaData.substring(0, plantillaMetaData.length - 2) +
-//             "]";
-//         let plantillaPositionOptionAll = JSON.parse(
-//             plantillaMetaDataRemoveLast
-//         );
-//         //positionMetaData
-//         if (document.querySelectorAll('[id="positionMetaData"]')[1] == null) {
-//             var metaData = document
-//                 .querySelectorAll('[id="positionMetaData"]')[0]
-//                 .content.replaceAll("|", '"');
-//         } else {
-//             var metaData = document
-//                 .querySelectorAll('[id="positionMetaData"]')[1]
-//                 .content.replaceAll("|", '"');
-//         }
-//         var metaDataRemoveLast =
-//             "[" + metaData.substring(0, metaData.length - 2) + "]";
-//         let positionOptionAll = JSON.parse(metaDataRemoveLast);
-//         let officeCode = e.target.value;
-//         //filter all position data in plantilla//
-//         let plantillaPositionIdFilter = plantillaPositionOptionAll.filter(
-//             function(position) {
-//                 return position.officeCode == officeCode;
-//             }
-//         );
-//         //Remove all option in #positionTitle//
-//         function removeOptionsPosition(selectPosition) {
-//             var ii,
-//                 L = selectPosition.options.length - 1;
-//             for (ii = L; ii >= 0; ii--) {
-//                 selectPosition.remove(ii);
-//             }
-//         }
-//         removeOptionsPosition(document.getElementById("positionTitle"));
-//         //add position data based in what you select in #officeCode//
-//         var i,
-//             plantillaLengthPositionId = plantillaPositionIdFilter.length;
-//         $("#positionTitle").append("<option></option>");
-//         for (i = 0; i < plantillaLengthPositionId; i++) {
-//             var plantillaPositionIdFilter_final = plantillaPositionIdFilter[i];
-//             //filter all position data//
-//             let positionIdFilter = positionOptionAll.filter(function(position) {
-//                 return (
-//                     position.positionId ==
-//                     plantillaPositionIdFilter_final.positionId
-//                 );
-//             });
-//             $("#positionTitle").append(
-//                 '<option value="' +
-//                     plantillaPositionIdFilter_final.positionId +
-//                     '">' +
-//                     positionIdFilter[0].positionName +
-//                     "</option>"
-//             );
-//         }
-//         $("#positionTitle").selectpicker("refresh");
-//     });
-// });
+//  filter position by office
+$(document).ready(function() {
+    $("#officeCode").change(function(e) {
+        //plantillaPositionMetaData
+        if (
+            document.querySelectorAll('[id="plantillaPositionMetaData"]')[1] ==
+            null
+        ) {
+            var plantillaMetaData = document
+                .querySelectorAll('[id="plantillaPositionMetaData"]')[0]
+                .content.replaceAll("|", '"');
+        } else {
+            var plantillaMetaData = document
+                .querySelectorAll('[id="plantillaPositionMetaData"]')[1]
+                .content.replaceAll("|", '"');
+        }
+        var plantillaMetaDataRemoveLast =
+            "[" +
+            plantillaMetaData.substring(0, plantillaMetaData.length - 2) +
+            "]";
+        let plantillaPositionOptionAll = JSON.parse(
+            plantillaMetaDataRemoveLast
+        );
+        //positionMetaData
+        if (document.querySelectorAll('[id="positionMetaData"]')[1] == null) {
+            var metaData = document
+                .querySelectorAll('[id="positionMetaData"]')[0]
+                .content.replaceAll("|", '"');
+        } else {
+            var metaData = document
+                .querySelectorAll('[id="positionMetaData"]')[1]
+                .content.replaceAll("|", '"');
+        }
+        var metaDataRemoveLast =
+            "[" + metaData.substring(0, metaData.length - 2) + "]";
+        let positionOptionAll = JSON.parse(metaDataRemoveLast);
+        let officeCode = e.target.value;
+        //filter all position data in plantilla//
+        let plantillaPositionIdFilter = plantillaPositionOptionAll.filter(
+            function(position) {
+                return position.officeCode == officeCode;
+            }
+        );
+        //Remove all option in #positionTitle//
+        function removeOptionsPosition(selectPosition) {
+            var ii,
+                L = selectPosition.options.length - 1;
+            for (ii = L; ii >= 0; ii--) {
+                selectPosition.remove(ii);
+            }
+        }
+        removeOptionsPosition(document.getElementById("positionTitle"));
+        //add position data based in what you select in #officeCode//
+        var i,
+            plantillaLengthPositionId = plantillaPositionIdFilter.length;
+        $("#positionTitle").append("<option></option>");
+        for (i = 0; i < plantillaLengthPositionId; i++) {
+            var plantillaPositionIdFilter_final = plantillaPositionIdFilter[i];
+            //filter all position data//
+            let positionIdFilter = positionOptionAll.filter(function(position) {
+                return (
+                    position.positionId ==
+                    plantillaPositionIdFilter_final.positionId
+                );
+            });
+            $("#positionTitle").append(
+                '<option value="' +
+                    plantillaPositionIdFilter_final.ppId +
+                    '">' +
+                    positionIdFilter[0].positionName +
+                    "</option>"
+            );
+        }
+        $("#positionTitle").selectpicker("refresh");
+
+        //divisionMetaData
+        if (
+            document.querySelectorAll('[id="divisionMetaData"]')[1] ==
+            null
+        ) {
+            var divisionMetaData = document
+                .querySelectorAll('[id="divisionMetaData"]')[0]
+                .content.replaceAll("|", '"');
+        } else {
+            var divisionMetaData = document
+                .querySelectorAll('[id="divisionMetaData"]')[1]
+                .content.replaceAll("|", '"');
+        }
+        var divisionMetaDataRemoveLast =
+            "[" +
+            divisionMetaData.substring(0, divisionMetaData.length - 2) +
+            "]";
+        let divisionOfficeCodeOptionAll = JSON.parse(
+            divisionMetaDataRemoveLast
+        );
+        
+        if (document.querySelectorAll('[id="divisionMetaData"]')[1] == null) {
+            var metaDataDivision = document
+                .querySelectorAll('[id="divisionMetaData"]')[0]
+                .content.replaceAll("|", '"');
+        } else {
+            var metaDataDivision = document
+                .querySelectorAll('[id="divisionMetaData"]')[1]
+                .content.replaceAll("|", '"');
+        }
+        var metaDataDivisionRemoveLast =
+            "[" + metaDataDivision.substring(0, metaDataDivision.length - 2) + "]";
+        let divisionOptionAll = JSON.parse(metaDataDivisionRemoveLast);
+        let officeCode2 = e.target.value;
+        //filter all division data in plantilla//
+        let plantillaDivisionFilter = divisionOfficeCodeOptionAll.filter(
+            function(Division) {
+                return Division.officeCode == officeCode2;
+            }
+        );
+        //Remove all option in #divisionId//
+        function removeOptionsDivision(selectDivision) {
+            var ii,
+                L = selectDivision.options.length - 1;
+            for (ii = L; ii >= 0; ii--) {
+                selectDivision.remove(ii);
+            }
+        }
+        removeOptionsDivision(document.getElementById("divisionId"));
+        //add division data based in what you select in #officeCode//
+        var i,
+            plantillaLengthDivisionId = plantillaDivisionFilter.length;
+        $("#divisionId").append("<option></option>");
+        for (i = 0; i < plantillaLengthDivisionId; i++) {
+            var plantillaDivisionFilter_final = plantillaDivisionFilter[i];
+            //filter all position data//
+            let divisionIdFilter = divisionOptionAll.filter(function(Division) {
+                return (
+                    Division.officeCode ==
+                    plantillaDivisionFilter_final.officeCode
+                );
+            });
+            $("#divisionId").append(
+                '<option value="' +
+                    divisionIdFilter[i].divisionId +
+                    '">' +
+                    divisionIdFilter[i].divisionName +
+                    "</option>"
+            );
+        }
+        $("#divisionId").selectpicker("refresh");
+    });
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 $(document).ready(function() {
@@ -293,7 +365,6 @@ $(document).ready(function() {
                 } else {
                     let currentSalaryAmount =
                         response["sg_step" + currentStepno];
-                    console.log(response);
                     $("#currentSalaryamount").val(currentSalaryAmount);
                 }
             }

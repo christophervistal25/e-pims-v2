@@ -16,8 +16,9 @@
 @endprepend
 
 @prepend('meta-data')
-{{-- <meta id="plantillaPositionMetaData" class="sdas" content="@foreach($plantillaPosition as $plantillaPositions){ |officeCode|:|{{ $plantillaPositions->office_code }}|, |positionId|:|{{ $plantillaPositions->position_id }}|}, @endforeach">
-<meta id="positionMetaData" content="@foreach($position as $positions){ |positionId|:|{{ $positions->position_id }}|, |positionName|:|{{ $positions->position_name }}|}, @endforeach"> --}}
+<meta id="plantillaPositionMetaData" content="@foreach($plantillaPosition as $plantillaPositions){ |officeCode|:|{{ $plantillaPositions->office_code }}|, |positionId|:|{{ $plantillaPositions->position_id }}|, |ppId|:|{{ $plantillaPositions->pp_id }}|}, @endforeach">
+<meta id="positionMetaData" content="@foreach($position as $positions){ |positionId|:|{{ $positions->position_id }}|, |positionName|:|{{ $positions->position_name }}|}, @endforeach">
+<meta id="divisionMetaData" content="@foreach($division as $divisions){ |officeCode|:|{{ $divisions->office_code }}|, |divisionId|:|{{ $divisions->division_id }}|, |divisionName|:|{{ $divisions->division_name }}|}, @endforeach">
 @endprepend
 @section('content')
 <div class="kanban-board card shadow mb-0">
@@ -79,10 +80,10 @@
                             class="form-control selectpicker {{ $errors->has('divisionId')  ? 'is-invalid' : ''}}"
                             name="divisionId" data-live-search="true" id="divisionId" data-size="5">
                             <option></option>
-                            @foreach($division as $division)
+                            {{-- @foreach($division as $division)
                             <option {{ old('divisionId') == $division->division_id ? 'selected' : '' }} value="{{ $division->division_id }}">
                                 {{ $division->division_name }}</option>
-                            @endforeach
+                            @endforeach --}}
                         </select>
                         <div id='division-error-message' class='text-danger text-sm'>
                         </div>
@@ -95,10 +96,10 @@
                 class="form-control selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
                 name="positionTitle" data-live-search="true" id="positionTitle" data-size="5" data-width="100%">
                 <option></option>
-                @foreach($plantillaPosition as $plantillaPositions)
+                {{-- @foreach($plantillaPosition as $plantillaPositions)
                 <option {{ old('positionTitle') == $plantillaPositions->pp_id ? 'selected' : '' }} value="{{ $plantillaPositions->pp_id }}">
                     {{ $plantillaPositions->position->position_name }}</option>
-                @endforeach
+                @endforeach --}}
             </select>
             <div id='position-title-error-message' class='text-danger text-sm'>
             </div>

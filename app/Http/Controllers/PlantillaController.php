@@ -147,10 +147,8 @@ class PlantillaController extends Controller
         $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->get();
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('position_id', 'position_name')->get();
-        // $plantillaPositionID = Plantilla::where('position_id','!=',$plantilla_id)->get()->pluck('position_id')->toArray();
-        // $plantillaPosition = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->whereNotIn('position_id', $plantillaPositionID )->get();
-        $plantillaPositionID = Plantilla::where('pp_id','!=',$plantilla_id)->get()->pluck('pp_id')->toArray();
-        $plantillaPosition = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->with('position:position_id,position_name')->whereNotIn('pp_id', $plantillaPositionID )->get();
+        $plantillaPositionIDAll = Plantilla::where('plantilla_id','!=',$plantilla_id)->get()->pluck('pp_id')->toArray();
+        $plantillaPositionAll = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->with('position:position_id,position_name')->whereNotIn('pp_id', $plantillaPositionIDAll )->get();
         $salarygrade = SalaryGrade::get(['sg_no']);
         $status = ['Please Select', 'Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
         count($status) - 1;
@@ -161,7 +159,10 @@ class PlantillaController extends Controller
         $arealevel = ['Please Select','K','T','S','A'];
         count($arealevel) - 1;
         $plantilla = Plantilla::find($plantilla_id);
-        return view ('Plantilla.edit', compact('division', 'plantilla','employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition'));
+        $officeCode = $plantilla->office_code;
+        $plantillaPositionID = Plantilla::where('plantilla_id','!=',$plantilla_id)->get()->pluck('pp_id')->toArray();
+        $plantillaPosition = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->with('position:position_id,position_name')->where('office_code',$officeCode)->whereNotIn('pp_id', $plantillaPositionID )->get();
+        return view ('Plantilla.edit', compact('division', 'plantilla','employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition', 'plantillaPositionAll'));
     }
 
     /**
