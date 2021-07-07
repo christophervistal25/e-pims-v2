@@ -291,11 +291,11 @@ export default {
       search: "",
       employee_id: "",
       headers: [
-        {
-          text: "Photo",
-          value: "information.photo",
-          sortable: false,
-        },
+        // {
+        //   text: "Photo",
+        //   value: "information.photo",
+        //   sortable: false,
+        // },
         {
           text: "Employee ID",
           value: "employee_id",
