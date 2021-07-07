@@ -11,7 +11,7 @@ class StepIncrement extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
-    protected $fillable = [        
+    protected $fillable = [
         'employee_id',
         'item_no',
         'position_id',
@@ -39,7 +39,7 @@ class StepIncrement extends Model
             Cache::forget('step_increment_records');
         });
 
-        self::updated(function() {
+        self::updated(function($record) {
             Cache::forget('step_increment_records');
         });
 

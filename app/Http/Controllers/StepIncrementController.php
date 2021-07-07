@@ -15,7 +15,7 @@ class StepIncrementController extends Controller
 
 
     //  FETCH DATA IN YAJRA TABLE //
-    
+
     public function list()
     {
         $data = DB::table('step_increments')
@@ -26,13 +26,13 @@ class StepIncrementController extends Controller
 
             ->where('step_increments.deleted_at', null)
             ->get();
-            
+
             if($data->count() === 0){
                 $data = $data->where('delete_at', null);
             }
 
 
-            
+
 
             return Datatables::of($data)
                 ->addColumn('salary_amount_from', function ($row) {
@@ -48,27 +48,26 @@ class StepIncrementController extends Controller
                 // EDIT FUNCTION IN YAJRA TABLE //
 
                 ->addColumn('action', function($row) {
-                    $btnEdit = "<a href='". route('step-increment.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-info btn-sm'><i class='la la-edit' title='Edit'></i></a>"; 
-                    
+                    $btnEdit = "<a href='". route('step-increment.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-info btn-sm'><i class='la la-edit' title='Edit'></i></a>";
+
 
                     // DELETE FUNCTION IN YAJRA TABLE //
-        
-                    $btnDelete = '<button type="submit" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="'.$row->id.'"><i class="la la-trash"></i></button>';
 
-                
+                    $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="'.$row->id.'"><i style="pointer-events:none;" class="la la-trash"></i></button>';
+
+
                 return $btnEdit . "&nbsp" . $btnDelete;
-                
+
             })->make(true);
-                    
+
     }
     /**
-     * Display a listing of the resource. 
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        
         $employee = Employee::whereDoesntHave('step')->with(['plantilla', 'plantilla.position'])->get();
         return view('StepIncrement.StepIncrement', compact('employee'));
     }
@@ -99,7 +98,7 @@ class StepIncrementController extends Controller
                 'employeeName'      => 'required',
                 'dateStepIncrement' => 'required',
                 'stepNo2'           => 'required',
-        
+
         ]);
             $step_increments = new StepIncrement;
             $step_increments->employee_id             = $request['employeeID'];
@@ -115,15 +114,18 @@ class StepIncrementController extends Controller
             $step_increments->salary_amount_to        = $request['amount2'];
             $step_increments->salary_diff             = $request['monthlyDifference'];
             $step_increments->save();
-        
 
+            $step_increments->plantilla->update([
+                'step_no' => $request['stepNo2'],
+                'salary_amount' => $request['amount2']
+            ]);
         return redirect('/step-increment')->with('success', true);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id 
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -165,7 +167,7 @@ class StepIncrementController extends Controller
             //     'dateStepIncrement' => 'required',
             //     'stepNo2'           => 'required',
             // ]);
-            
+
             $step_increments = StepIncrement::find($id);
             $step_increments->employee_id             = $request['employeeID'];
             $step_increments->item_no                 = $request['itemNoFrom'];
@@ -180,7 +182,8 @@ class StepIncrementController extends Controller
             $step_increments->salary_amount_to        = $request['amount2'];
             $step_increments->salary_diff             = $request['monthlyDifference'];
             $step_increments->save();
-            
+
+
             Session::flash('success', true);
             return response()->json(['success' => true]);
 

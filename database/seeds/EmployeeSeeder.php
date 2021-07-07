@@ -55643,10 +55643,10 @@ class EmployeeSeeder extends Seeder
         ];
 
         foreach($data as $key => $employee) {
-            if($key === 1000) {
+            if($key === 5) {
                 break;
             }
-            
+
             Employee::create([
                 'employee_id'          => $employee['employee_id'],
                 'lastname'             => $employee['last_name'],
