@@ -24,7 +24,7 @@ class CreateServiceRecordsTable extends Migration
             $table->string('office_code');
             $table->string('leave_without_pay')->nullable();
             $table->date('separation_date')->nullable();
-            $table->string('separation_cause');
+            $table->string('separation_cause')->nullable();
             $table->timestamps();
             $table->softDeletes()->nullable();
         });

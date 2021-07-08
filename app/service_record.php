@@ -36,4 +36,8 @@ class service_record extends Model
     {
         return $this->belongsTo(StepIncrement::class, 'employee_id', 'employee_id');
     }
+    public function SalaryAdjustment()
+    {
+        return $this->belongsTo(SalaryAdjustment::class, 'employee_id', 'employee_id');
+    }
 }

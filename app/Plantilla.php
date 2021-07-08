@@ -42,6 +42,7 @@ class Plantilla extends Model
         'office_code',
         'division_id',
         'status',
+        'year',
     ];
 
     protected $primaryKey = 'plantilla_id';

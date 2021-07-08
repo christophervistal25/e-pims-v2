@@ -133,16 +133,31 @@
         </div>
 
         <div class="form-group col-12 col-lg-3">
-            <label>Current SG Year<span class="text-danger">*</span></label>
-            <select name="currentSgyear" id="currentSgyear" value="" class="select floating" disabled>
+            <label>Current Salary Grade Year<span class="text-danger">*</span></label>
+            <select name="currentSgyear" id="currentSgyear" value="" class="select floating">
+                {{ $year2 = date("Y",strtotime("-1  year")) }}
+                <option {{ old('sgYear') == $year2 ? 'selected' : '' }} value={{ $year2 }}>{{ $year2 }}
+                </option>
                 {{ $year3 = date("Y",strtotime("-0 year")) }}
-                <option value={{ $year3 }}>{{ $year3 }}</option>
+                <option {{ old('sgYear') == $year3 ? '' : 'selected' }} value={{ $year3 }}>{{ $year3 }}
+                </option>
+                @foreach (range(1, 3) as $year)
+                {{ $year1 = date("Y",strtotime("$year year")) }}
+                <option {{ old('sgYear') == $year1 ? 'selected' : '' }} value={{ $year1 }}>{{ $year1 }}
+                </option>
+                @endforeach
             </select>
-            @if($errors->has('currentSgyear'))
-            <small class="form-text text-danger text-sm">
-                {{ $errors->first('currentSgyear') }} </small>
-            @endif
+            <div id='year-error-message' class='text-danger text-sm'>
+            </div>
         </div>
+
+    <div class="form-group col-12 col-lg-3">
+        <label>Salary Grade<span class="text-danger">*</span></label>
+        <input value="{{ old('') }}" class="form-control {{ $errors->has('')  ? 'is-invalid' : ''}}" name="salaryGrade"
+            id="currentSalarygrade" type="text" readonly>
+        <div id='salary-grade-error-message' class='text-danger text-sm'>
+        </div>
+    </div>
 
     <div class="form-group col-12 col-lg-3">
         <label>Steps<span class="text-danger">*</span></label>
@@ -156,13 +171,8 @@
         <div id='steps-error-message' class='text-danger text-sm'>
         </div>
     </div>
-    <div class="form-group col-12 col-lg-3">
-        <label>Salary Grade<span class="text-danger">*</span></label>
-        <input value="{{ old('') }}" class="form-control {{ $errors->has('')  ? 'is-invalid' : ''}}" name="salaryGrade"
-            id="currentSalarygrade" type="text" readonly>
-        <div id='salary-grade-error-message' class='text-danger text-sm'>
-        </div>
-    </div>
+
+
     <div class="form-group col-12 col-lg-3">
         <label>Salary Amount<span class="text-danger">*</span></label>
         <input value="{{ old('salaryAmount') }}"

@@ -24,6 +24,7 @@ class CreateSalaryAdjustmentsTable extends Migration
             $table->decimal('salary_previous',11,2);
             $table->decimal('salary_new',11,2);
             $table->decimal('salary_diff',11,2);
+            $table->string('remarks')->nullable();
             $table->timestamps();
             $table->softDeletes()->nullable();
         });

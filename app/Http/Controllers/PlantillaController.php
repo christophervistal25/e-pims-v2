@@ -94,6 +94,7 @@ class PlantillaController extends Controller
             'salaryGrade'                   => 'required|in:' . implode(',',range(1, 33)),
             'stepNo'                        => 'required|in:' . implode(',',range(1, 8)),
             'salaryAmount'                  => 'required|numeric',
+            'currentSgyear'                          => 'required',
             'officeCode'                    => 'required|in:' . implode(',',range(10001, 10056)),
             'divisionId'                    => 'required',
             'originalAppointment'           => 'required',
@@ -107,7 +108,7 @@ class PlantillaController extends Controller
         $plantilla = new Plantilla;
         $plantilla->item_no                = $request['itemNo'];
         $plantilla->old_item_no            = $request['oldItemNo'];
-        $plantilla->pp_id            = $request['positionTitle'];
+        $plantilla->pp_id                  = $request['positionTitle'];
         $plantilla->employee_id            = $request['employeeName'];
         $plantilla->sg_no                  = $request['salaryGrade'];
         $plantilla->step_no                = $request['stepNo'];
@@ -120,6 +121,7 @@ class PlantillaController extends Controller
         $plantilla->area_code              = $request['areaCode'];
         $plantilla->area_type              = $request['areaType'];
         $plantilla->area_level             = $request['areaLevel'];
+        $plantilla->year                   = $request['currentSgyear'];
         $plantilla->save();
         return response()->json(['success'=>true]);
     }
@@ -180,6 +182,7 @@ class PlantillaController extends Controller
             'employeeId'                  => 'required',
             'salaryGrade'                   => 'required|in:' . implode(',',range(1, 33)),
             'stepNo'                        => 'required|in:' . implode(',',range(1, 8)),
+            'currentSgyear'                  => 'required',
             'salaryAmount'                  => 'required|numeric',
             'officeCode'                    => 'required|in:' . implode(',',range(10001, 10056)),
             'divisionId'                    => 'required',
@@ -193,7 +196,7 @@ class PlantillaController extends Controller
         $plantilla                         = Plantilla::find($plantilla_id);
         $plantilla->item_no                = $request['itemNo'];
         $plantilla->old_item_no            = $request['oldItemNo'];
-        $plantilla->pp_id            = $request['positionTitle'];
+        $plantilla->pp_id                  = $request['positionTitle'];
         $plantilla->employee_id            = $request['employeeId'];
         $plantilla->sg_no                  = $request['salaryGrade'];
         $plantilla->step_no                = $request['stepNo'];
@@ -206,6 +209,7 @@ class PlantillaController extends Controller
         $plantilla->area_code              = $request['areaCode'];
         $plantilla->area_type              = $request['areaType'];
         $plantilla->area_level             = $request['areaLevel'];
+        $plantilla->year             = $request['currentSgyear'];
         $plantilla->save();
         Session::flash('alert-success', 'Plantilla of Personnel Record Updated Successfully');
         return back()->with('success','Updated Successfully');

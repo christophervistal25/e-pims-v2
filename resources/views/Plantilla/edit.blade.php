@@ -122,17 +122,6 @@
                                 <option {{ $plantilla->pp_id == $plantillaPositions->pp_id ? 'selected' : '' }} value="{{ $plantillaPositions->pp_id }}">
                                     {{ $plantillaPositions->position->position_name }}</option>
                                 @endforeach
-                                {{-- @foreach($plantillaPosition as $plantillaPositions)
-                                    @if ($plantilla->office_code == $plantillaPositions->office_code)
-                                        <option
-                                        {{ $plantilla->pp_id == $plantillaPositions->pp_id ? 'selected' : '' }}
-                                        value="{{ $plantillaPositions->pp_id}}">
-                                        @foreach($position as $positions)
-                                        {{ $plantillaPositions->pp_id == $positions->pp_id ? $positions->position->position_name : '' }}
-                                        @endforeach
-                                        </option>
-                                    @endif
-                                @endforeach --}}
                             </select>
                             @if($errors->has('positionTitle'))
                             <small class="form-text text-danger">
@@ -159,11 +148,10 @@
                         </div>
 
                         <div class="form-group col-12 col-lg-3">
-                            <label>Current SG Year<span class="text-danger">*</span></label>
-                            <select name="currentSgyear" id="currentSgyear" value="" class="select floating" disabled>
-                                {{ $year3 = date("Y",strtotime("-0 year")) }}
-                                <option value={{ $year3 }}>{{ $year3 }}</option>
-                            </select>
+                            <label>Current Salary Grade Year<span class="text-danger">*</span></label>
+                                <input value="{{ old('currentSgyear') ?? $plantilla->year }}"
+                                class="form-control {{ $errors->has('currentSgyear')  ? 'is-invalid' : ''}}" name="currentSgyear"
+                                id="num-only" type="text" placeholder="Item No.">
                             @if($errors->has('currentSgyear'))
                             <small class="form-text text-danger">
                                 {{ $errors->first('currentSgyear') }} </small>

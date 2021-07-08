@@ -44,5 +44,10 @@ class SalaryAdjustment extends Model
     {
         return $date->format('Y-m-d');
     }
+
+    public function service_record()
+    {
+        return $this->hasOne('App\service_record', 'employee_id', 'employee_id');
+    }
 }
 
