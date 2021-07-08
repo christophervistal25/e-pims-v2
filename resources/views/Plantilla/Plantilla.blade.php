@@ -80,10 +80,7 @@
                             class="form-control selectpicker {{ $errors->has('divisionId')  ? 'is-invalid' : ''}}"
                             name="divisionId" data-live-search="true" id="divisionId" data-size="5">
                             <option></option>
-                            {{-- @foreach($division as $division)
-                            <option {{ old('divisionId') == $division->division_id ? 'selected' : '' }} value="{{ $division->division_id }}">
-                                {{ $division->division_name }}</option>
-                            @endforeach --}}
+
                         </select>
                         <div id='division-error-message' class='text-danger text-sm'>
                         </div>
@@ -96,10 +93,7 @@
                 class="form-control selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
                 name="positionTitle" data-live-search="true" id="positionTitle" data-size="5" data-width="100%">
                 <option></option>
-                {{-- @foreach($plantillaPosition as $plantillaPositions)
-                <option {{ old('positionTitle') == $plantillaPositions->pp_id ? 'selected' : '' }} value="{{ $plantillaPositions->pp_id }}">
-                    {{ $plantillaPositions->position->position_name }}</option>
-                @endforeach --}}
+
             </select>
             <div id='position-title-error-message' class='text-danger text-sm'>
             </div>
@@ -280,8 +274,8 @@
                 <tr>
                     <td scope="col" class="text-center font-weight-bold">ID</td>
                     <td scope="col" class="text-center font-weight-bold">Item No</td>
-                    <td scope="col" class="text-center font-weight-bold">Position Title</td>
                     <td scope="col" class="text-center font-weight-bold">Employee Name</td>
+                    <td scope="col" class="text-center font-weight-bold">Position Title</td>
                     <td scope="col" class="text-center font-weight-bold">Office</td>
                     <td scope="col" class="text-center font-weight-bold">Status</td>
                     <td scope="col" class="text-center font-weight-bold">Action</td>

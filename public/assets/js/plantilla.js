@@ -7,15 +7,15 @@ $(function() {
             { data: "plantilla_id", name: "plantilla_id" },
             { data: "item_no", name: "item_no" },
             {
-                data: "plantillaPosition",
-                name: "plantillaPosition",
+                data: "employee",
+                name: "employee.firstname",
                 searchable: true,
                 sortable: false,
                 visible: true
             },
             {
-                data: "employee",
-                name: "employee.firstname",
+                data: "plantillaPosition",
+                name: "plantillaPosition",
                 searchable: true,
                 sortable: false,
                 visible: true
@@ -52,15 +52,15 @@ $(function() {
                     { data: "plantilla_id", name: "plantilla_id" },
                     { data: "item_no", name: "item_no" },
                     {
-                        data: "plantillaPosition",
-                        name: "plantillaPosition",
+                        data: "employee",
+                        name: "employee.firstname",
                         searchable: true,
                         sortable: false,
                         visible: true
                     },
                     {
-                        data: "employee",
-                        name: "employee.firstname",
+                        data: "plantillaPosition",
+                        name: "plantillaPosition",
                         searchable: true,
                         sortable: false,
                         visible: true
@@ -95,15 +95,15 @@ $(function() {
                     { data: "plantilla_id", name: "plantilla_id" },
                     { data: "item_no", name: "item_no" },
                     {
-                        data: "plantillaPosition",
-                        name: "plantillaPosition",
+                        data: "employee",
+                        name: "employee.firstname",
                         searchable: true,
                         sortable: false,
                         visible: true
                     },
                     {
-                        data: "employee",
-                        name: "employee.firstname",
+                        data: "plantillaPosition",
+                        name: "plantillaPosition",
                         searchable: true,
                         sortable: false,
                         visible: true
@@ -261,10 +261,7 @@ $(document).ready(function() {
         $("#positionTitle").selectpicker("refresh");
 
         //divisionMetaData
-        if (
-            document.querySelectorAll('[id="divisionMetaData"]')[1] ==
-            null
-        ) {
+        if (document.querySelectorAll('[id="divisionMetaData"]')[1] == null) {
             var divisionMetaData = document
                 .querySelectorAll('[id="divisionMetaData"]')[0]
                 .content.replaceAll("|", '"');
@@ -280,7 +277,7 @@ $(document).ready(function() {
         let divisionOfficeCodeOptionAll = JSON.parse(
             divisionMetaDataRemoveLast
         );
-        
+
         if (document.querySelectorAll('[id="divisionMetaData"]')[1] == null) {
             var metaDataDivision = document
                 .querySelectorAll('[id="divisionMetaData"]')[0]
@@ -291,7 +288,9 @@ $(document).ready(function() {
                 .content.replaceAll("|", '"');
         }
         var metaDataDivisionRemoveLast =
-            "[" + metaDataDivision.substring(0, metaDataDivision.length - 2) + "]";
+            "[" +
+            metaDataDivision.substring(0, metaDataDivision.length - 2) +
+            "]";
         let divisionOptionAll = JSON.parse(metaDataDivisionRemoveLast);
         let officeCode2 = e.target.value;
         //filter all division data in plantilla//

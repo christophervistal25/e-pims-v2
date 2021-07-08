@@ -139,13 +139,13 @@ $(function() {
                     { data: "office", name: "office" },
                     { data: "leave_without_pay", name: "leave_without_pay" },
                     { data: "separation_date", name: "separation_date" },
-                    { data: "separation_cause", name: "separation_cause" },
+                    {
+                        data: "separation_cause",
+                        name: "separation_cause"
+                    },
                     { data: "action", name: "action" }
                 ]
             });
-            // setInterval( function () {
-            //     table.ajax.reload();
-            // }, 5000 );
         }
     });
 });
