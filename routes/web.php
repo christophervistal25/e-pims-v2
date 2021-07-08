@@ -74,6 +74,8 @@ Route::get('/salary-adjustment-per-office/{id}', 'SalaryAdjustmentPerOfficeContr
 Route::get('/service-records/{id}', 'ServiceRecordsController@destroy')->name('service-records.delete');
 Route::resource('/service-records', 'ServiceRecordsController');
 Route::get('/service-records-list', 'ServiceRecordsController@list');
+Route::get('/print-service-records/{id}/previewed', 'PrintServiceRecordsController@print')->name('service-records.previewed.print');
+Route::get('/print-service-records/{id}', 'PrintServiceRecordsController@printList')->name('print-service-records');
 
 Route::get('employees-birthdays/{from}/{to}', 'BirthdayController@range');
 Route::resource('employees-birthday', 'BirthdayController');

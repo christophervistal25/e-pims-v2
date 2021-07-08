@@ -96,7 +96,7 @@
             <br><br><br><br>
             <br><br><br><br>
             <div class="mr-5 float-left">
-                <p>Position Title: <b style="text-decoration: underline">{{ $salaryAdjustment->position->position_name }}</b></p> 
+                <p>Position Title: <b style="text-decoration: underline">{{ $salaryAdjustment->plantillaPosition->position->position_name }}</b></p> 
                 <p>Salary Grade: {{ $salaryAdjustment->sg_no }}</p>
                 <p>Item No., FY: 2021 Plantilla of Personnel: 1</p>
             </div>
