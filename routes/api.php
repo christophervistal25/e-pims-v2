@@ -151,7 +151,7 @@ Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}', funct
 
 Route::post('/salary-adjustment-per-office', function () {
     $plantillaIds = explode(',', request()->ids);
-    $data = Plantilla::whereIn('plantilla_id', $plantillaIds)->get();
+    $data = Plantilla::with('plantillaPosition', 'plantillaPosition.position')->whereIn('plantilla_id', $plantillaIds)->get();
     $newAdjustment = $data->toArray();
     foreach($data as $newAdjustment){
         $newAdjustment->plantilla_id;
@@ -173,6 +173,16 @@ Route::post('/salary-adjustment-per-office', function () {
         $salaryAdjustment->salary_new =  $getsalaryResult['sg_step' .  $newAdjustment->step_no];
         $salaryAdjustment->salary_diff = $salaryDiff;
         $salaryAdjustment->save();
+        $service_record                         = new service_record;
+        $service_record->employee_id            = $newAdjustment->employee_id;
+        $service_record->service_from_date      = request()->date;
+        $service_record->position_id            = $newAdjustment->plantillaPosition->position_id;
+        $service_record->status                 = $newAdjustment->status;
+        $service_record->salary                 = $getsalaryResult['sg_step' .  $newAdjustment->step_no];
+        $service_record->office_code            = $newAdjustment->office_code;
+        $service_record->separation_cause       =  'try da ine';
+        $service_record->save();
+
     }
     return response()->json(['success'=>true]);
 });
