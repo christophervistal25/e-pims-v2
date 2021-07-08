@@ -9,12 +9,12 @@ class service_record extends Model
 {
     use SoftDeletes;
     protected $dates = ['deleted_at'];
-    protected $fillable = [    
+    protected $fillable = [
         'employee_id',
         'service_from_date',
         'service_to_date',
         'position_id',
-        'status',        
+        'status',
         'salary',
         'office_name',
         'office_address',
@@ -26,8 +26,14 @@ class service_record extends Model
     {
         return $this->belongsTo(Position::class, 'position_id', 'position_id');
     }
+
     public function office()
     {
         return $this->hasOne(Office::class, 'office_code', 'office_code');
+    }
+
+    public function StepIncrement()
+    {
+        return $this->belongsTo(StepIncrement::class, 'employee_id', 'employee_id');
     }
 }

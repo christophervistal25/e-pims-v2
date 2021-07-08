@@ -31,7 +31,7 @@
 
 <div class="kanban-board card shadow mb-0">
     <div class="card-body">
-        <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  'd-none' : '' }}">
+        <div id="add" class="page-header">
 
             <form action="{{ route('service-records.update', $service_record->id) }}" method="post"
                 id="serviceRecordUpdateForm">

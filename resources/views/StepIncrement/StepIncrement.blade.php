@@ -68,6 +68,15 @@
                                 <input type="hidden" name="plantillaID" id="plantillaId" class="">
                             </div>
 
+                            <div class="form-group">
+                                <input type="hidden" name="status" id="status" class="">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="hidden" name="officeCode" id="officeCode" class="">
+                            </div>
+
+
                             <div class="form-group col-12 col-lg-11">
                                 <input class="form-control d-none" value="" id="positionId" name="positionID"
                                     type="text" readonly>
@@ -365,6 +374,8 @@
 
                 $('#employeeId').val(plantilla.employee_id);
                 $('#plantillaId').val(plantilla.plantilla_id);
+                $('#officeCode').val(plantilla.office_code);
+                $('#status').val(plantilla.status);
                 $('#positionName').val(plantilla.position.position_name);
                 $('#positionId').val(plantilla.position.position_id);
                 $('#itemNo').val(plantilla.item_no);
@@ -383,6 +394,8 @@
                 }
 
             } else {
+                $('#officeCode').val('');
+                $('#status').val('');
                 $('#positionName').val('');
                 $('#itemNo').val('');
                 $('#lastAppointment').val('');
