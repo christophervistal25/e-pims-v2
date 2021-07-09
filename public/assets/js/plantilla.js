@@ -125,19 +125,19 @@ $(function() {
     });
 });
 // code for show add form
-$(document).ready(function() {
-    $("#addbutton").click(function() {
-        $("#add").attr("class", "page-header");
-        $("#table").attr("class", "page-header d-none");
-    });
-});
+// $(document).ready(function() {
+//     $("#addbutton").click(function() {
+//         $("#add").attr("class", "page-header");
+//         $("#table").attr("class", "page-header d-none");
+//     });
+// });
 // {{-- code for show table --}}
-$(document).ready(function() {
-    $("#cancelbutton").click(function() {
-        $("#add").attr("class", "page-header d-none");
-        $("#table").attr("class", "page-header");
-    });
-});
+// $(document).ready(function() {
+//     $("#cancelbutton").click(function() {
+//         $("#add").attr("class", "page-header d-none");
+//         $("#table").attr("class", "page-header");
+//     });
+// });
 // {{-- code for number only --}}
 $(function() {
     $("input[id='oldItemNo']").on("input", function(e) {

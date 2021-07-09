@@ -1,6 +1,6 @@
 @extends('layouts.app')
 {{-- @section('title', 'Plantilla Of Personnel') --}}
-@section('title', 'Add New Plantilla of Personnel')
+@section('title', 'Add Plantilla of Personnel')
 @prepend('page-css')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
@@ -23,13 +23,14 @@
 @section('content')
 <div class="kanban-board card shadow mb-0">
     <div class="card-body">
-        <div id="add" class="page-header {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
+        <div id="add" class="page-header">
+            {{-- {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}
             <div style='padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
                 <button id="cancelbutton" class="btn btn-primary submit-btn float-right shadow"><i
                         class="fa fa-list"></i>
                     Personnel List</button>
-            </div>
-        <div class="alert alert-secondary font-weight-bold text-center">ADD NEW PLANTILLA OF PERSONNEL</div>
+            </div> --}}
+        <div class="alert alert-secondary font-weight-bold text-center">ADD PLANTILLA OF PERSONNEL</div>
             <form action="/plantilla" method="post" id="plantillaForm">
                 @csrf
                 <div class="row">
@@ -253,14 +254,16 @@
             <span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>
             <i class="fas fa-save"></i> Save
         </button>
-        <button style="margin-right:10px;" type="button" id="cancelbutton1" onclick="myFunction()"
-            class="text-white btn btn-warning submit-btn float-right shadow"><i class="fas fa-ban"></i> Cancel</button>
+        <a href="">
+        <button style="margin-right:10px;" type="button"
+            class="text-white btn btn-warning submit-btn float-right shadow"><i class="fa fa-refresh"></i> Reset</button>
+        </a>
     </div>
 </div>
 </form>
 </div>
 
-    <div id="table" class="page-header {{  count($errors->all()) == 0 ? '' : 'd-none' }}">
+    {{-- <div id="table" class="page-header {{  count($errors->all()) == 0 ? '' : 'd-none' }}">
         <div class="row">
             <div class="col-5 mb-2">
                 <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}"
@@ -275,10 +278,10 @@
 
             <div class="col-7 float-right mb-10">
                 <button id="addbutton" class="btn btn-primary submit-btn float-right"><i class="fa fa-plus"></i> Add
-                    Plantilla of Personnel</button>
+                    Plantilla of Personnel</button>B
             </div>
-        </div>
-    <div class="table" style="overflow-x:auto;">
+        </div> --}}
+    {{-- <div class="table" style="overflow-x:auto;">
         <table class="table table-bordered text-center" id="plantilla" style="width:100%;">
             <thead>
                 <tr>
@@ -291,10 +294,10 @@
                 </tr>
             </thead>
         </table>
-    </div>
-    <div class="result">
-    </div>
-</div>
+    </div> --}}
+    {{-- <div class="result">
+    </div> --}}
+{{-- </div> --}}
 </div>
 </div>
 @include('Plantilla.add-ons.plantillamodal')
