@@ -21,6 +21,10 @@
 </style>
 @endprepend
 @section('content')
+<div class="float-right mr-3 mb-2" id='btnViewTableContainer'>
+    <a id="printPreviewA"><button class="btn btn-secondary" id="printPreview" disabled="true"><i class="la la-print"></i>&nbsp; Print Preview</button></a>
+</div>
+<div class="clearfix"></div>
 <div class="kanban-board card shadow mb-0">
     <div class="card-body">
         <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">

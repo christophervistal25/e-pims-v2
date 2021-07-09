@@ -22,18 +22,20 @@ class PrintServiceRecordsController extends Controller
     }
     public function print($id)
     {
-        $serviceRecord = service_record::find($id);
+        $serviceRecord = service_record::Where('employee_id',$id)->get();
+        $office = Office::select('office_code', 'office_name','office_short_name','office_short_address')->Where('office_code',$serviceRecord[0]['office_code'])->get();
+        $position = Position::select('position_id', 'position_name')->Where('position_id',$serviceRecord[0]['position_id'])->get();
+        $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename','date_birth','place_birth')->Where('employee_id',$serviceRecord[0]['employee_id'])->get();
         $setting = Setting::find(1);
-        return view('serviceRecords.print.previewed', compact('serviceRecord', 'setting'));
+        return view('serviceRecords.print.previewed', compact('serviceRecord', 'employee', 'office', 'position', 'id', 'setting'));
     }
 
     public function printList($id)
     {
-        $serviceRecord = service_record::find($id);
-        $office = Office::select('office_code', 'office_name')->Where('office_code',$serviceRecord->office_code)->get();
-        $position = Position::select('position_id', 'position_name')->Where('position_id',$serviceRecord->position_id)->get();
-        $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->Where('employee_id',$serviceRecord->employee_id)->get();
-        // dd($employee);
+        $serviceRecord = service_record::Where('employee_id',$id)->get();
+        $office = Office::select('office_code', 'office_name','office_short_name','office_short_address')->Where('office_code',$serviceRecord[0]['office_code'])->get();
+        $position = Position::select('position_id', 'position_name')->Where('position_id',$serviceRecord[0]['position_id'])->get();
+        $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename','date_birth','place_birth')->Where('employee_id',$serviceRecord[0]['employee_id'])->get();
         $setting = Setting::find(1);
         return view('serviceRecords.print.printServiceRecords', compact('serviceRecord', 'employee', 'office', 'position', 'id', 'setting'));
     }
