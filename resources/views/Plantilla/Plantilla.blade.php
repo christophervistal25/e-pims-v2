@@ -275,18 +275,17 @@
 
             <div class="col-7 float-right mb-10">
                 <button id="addbutton" class="btn btn-primary submit-btn float-right"><i class="fa fa-plus"></i> Add
-                    Plantillas</button>
+                    Plantilla of Personnel</button>
             </div>
         </div>
     <div class="table" style="overflow-x:auto;">
         <table class="table table-bordered text-center" id="plantilla" style="width:100%;">
             <thead>
                 <tr>
-                    <td scope="col" class="text-center font-weight-bold">ID</td>
-                    <td scope="col" class="text-center font-weight-bold">Item No</td>
                     <td scope="col" class="text-center font-weight-bold">Employee Name</td>
                     <td scope="col" class="text-center font-weight-bold">Position Title</td>
                     <td scope="col" class="text-center font-weight-bold">Office</td>
+                    <td scope="col" class="text-center font-weight-bold">Item No</td>
                     <td scope="col" class="text-center font-weight-bold">Status</td>
                     <td scope="col" class="text-center font-weight-bold">Action</td>
                 </tr>
