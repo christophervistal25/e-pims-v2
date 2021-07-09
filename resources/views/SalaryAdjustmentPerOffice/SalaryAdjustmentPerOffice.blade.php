@@ -2,6 +2,8 @@
 @section('title', 'Salary Adjustment Per Office')
 @prepend('page-css')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+<link rel="stylesheet"
+    href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 @prepend('page-css')
 <script src="{{ asset('/js/app.js') }}" defer></script>
@@ -29,12 +31,8 @@
             <div class="col-12">
                 <div class="alert alert-secondary text-center font-weight-bold" role="alert" >
                         <div class="row">
-                            <div class="col-12 col-md-9">
+                            <div class="col-12 col-md-12">
                         <p class="float-center" id="officeAdjustment"></p>
-                        </div>
-                            <div class="col-12 col-md-3">
-                            <input type="text" id="year" class="form-control d-none" value="{{ Carbon\Carbon::now()->year }}" name="year" readonly>
-                            <input class="form-control" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" name="dateAdjustment" id="dateAdjustment" type="date">
                         </div>
                     </div>
                 </div>
@@ -56,6 +54,22 @@
                 </thead>
             </table>
             </form>
+
+            <div class="row">
+            <div class="col-12 col-md-6 col-lg-6 mt-2">
+                <input type="text" id="year" class="form-control d-none" value="{{ Carbon\Carbon::now()->year }}" name="year" readonly>
+                <input class="form-control" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}" name="dateAdjustment" id="dateAdjustment" type="date">
+            </div>
+
+            <div class="form-group col-12 col-md-6 col-lg-6 mt-2">
+                <label class="has-float-label mb-0">
+                <input value="{{ old('remarks') }}"
+                    class="form-control {{ $errors->has('remarks')  ? 'is-invalid' : ''}}"
+                    name="remarks" id="remarks" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                    <span class="font-weight-bold">REMARKS</span>
+                </label>
+            </div>
+        </div>
 
             <button style="margin-top:10px;" id="saveBtn" class="btn btn-success submit-btn float-right" onclick="LockDepot()" type="submit">
                 <span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>
@@ -90,9 +104,9 @@
                 <table class="table table-bordered text-center" id="salaryAdjustmentPerOffice"  style="width:100%;">
                     <thead>
                     <tr>
-                        <td scope="col" class="text-center font-weight-bold">Employee Name</td>
-                        <td scope="col" class="text-center font-weight-bold d-none">Office</td>
                         <td scope="col" class="text-center font-weight-bold">Adjustment Date</td>
+                        <td scope="col" class="text-center font-weight-bold d-none">Office</td>
+                        <td scope="col" class="text-center font-weight-bold">Employee Name</td>
                         <td scope="col" class="text-center font-weight-bold">Salary Grade</td>
                         <td scope="col" class="text-center font-weight-bold">Step Number</td>
                         <td scope="col" class="text-center font-weight-bold">Previous Salary</td>

@@ -240,12 +240,12 @@
                 <table class="table table-bordered text-center" id="salaryAdjustment" style="width:100%;">
                     <thead>
                         <tr>
-                            <td scope="col" class="text-center font-weight-bold">Date Adjustment</td>
+                            <td scope="col" class="text-center font-weight-bold">Adjustment Date</td>
                             <td scope="col" class="text-center font-weight-bold">Employee Name</td>
                             <td scope="col" class="text-center font-weight-bold">Salary Grade</td>
                             <td scope="col" class="text-center font-weight-bold">Step Number</td>
-                            <td scope="col" class="text-center font-weight-bold">Salary Previous</td>
-                            <td scope="col" class="text-center font-weight-bold">Salary New</td>
+                            <td scope="col" class="text-center font-weight-bold">Previous Salary</td>
+                            <td scope="col" class="text-center font-weight-bold">New Salary</td>
                             <td scope="col" class="text-center font-weight-bold">Salary Difference</td>
                             <td scope="col" class="text-center font-weight-bold">Action</td>
                         </tr>
