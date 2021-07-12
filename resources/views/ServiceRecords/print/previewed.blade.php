@@ -98,272 +98,29 @@
                     
             </thead>
             <tbody>
-                @foreach(range(0,$serviceRecord->count() - 1) as $range)
+                @foreach($serviceRecord as $serviceRecords)
                     <tr>
-                        <td style="padding: 0;border: 2px solid black !important;font-size: 14px;color: #000000;text-align: center;">{{Carbon\Carbon::parse($serviceRecord[$range]['service_from_date'])->format('m/d/Y')}}</td>
-                        <td style="padding: 0;border: 2px solid black !important;font-size: 14px;color: #000000;text-align: center;">{{Carbon\Carbon::parse($serviceRecord[$range]['service_to_date'])->format('m/d/Y')}}</td>
-                        <td style="padding: 0;border: 2px solid black !important;font-size: 14px;color: #000000;text-align: center;">{{$position[$range]['position_name']}}</td>
-                        <td style="padding: 0;border: 2px solid black !important;font-size: 14px;color: #000000;text-align: center;">{{$serviceRecord[$range]['status']}}</td>
-                        <td style="padding: 0;border: 2px solid black !important;font-size: 14px;color: #000000;text-align: center;">{{$serviceRecord[$range]['salary']}}</td>
-                        <td style="padding: 0;border: 2px solid black !important;font-size: 14px;color: #000000;text-align: center;">{{$office[$range]['office_short_name'].' - '.$office[$range]['office_short_address']}}</td>
-                        <td style="padding: 0;border: 2px solid black !important;font-size: 14px;color: #000000;text-align: center;">{{$serviceRecord[$range]['leave_without_pay']}}</td>
-                        <td style="padding: 0;border: 2px solid black !important;font-size: 14px;color: #000000;text-align: center;">{{Carbon\Carbon::parse($serviceRecord[$range]['separation_date'])->format('m/d/Y')}}</td>
-                        <td style="padding: 0;border: 2px solid black !important;font-size: 14px;color: #000000;text-align: center;">{{$serviceRecord[$range]['separation_cause']}}</td>
+                        <td style="padding: 0;border: 2px solid black !important;font-size: 14px;color: #000000;text-align: center;">{{Carbon\Carbon::parse($serviceRecords->service_from_date)->format('m/d/Y')}}</td>
+                        <td style="padding: 0;border: 2px solid black !important;font-size: 14px;color: #000000;text-align: center;">{{Carbon\Carbon::parse($serviceRecords->service_to_date)->format('m/d/Y')}}</td>
+                        <td style="padding: 0;border: 2px solid black !important;font-size: 14px;color: #000000;text-align: center;">
+                        @foreach ($position as $positions)
+                            {{ $serviceRecords->position_id == $positions->position_id ? $positions->position_name : '' }}
+                        @endforeach
+                        </td>
+                        <td style="padding: 0;border: 2px solid black !important;font-size: 14px;color: #000000;text-align: center;">{{$serviceRecords->status}}</td>
+                        <td style="padding: 0;border: 2px solid black !important;font-size: 14px;color: #000000;text-align: center;">{{$serviceRecords->salary}}</td>
+                        <td style="padding: 0;border: 2px solid black !important;font-size: 14px;color: #000000;text-align: center;">
+                        @foreach ($office as $offices)
+                            {{ $serviceRecords->office_code == $offices->office_code ? $offices->office_short_name.' - '.$offices->office_short_address : '' }}
+                        @Endforeach
+                        </td>
+                        <td style="padding: 0;border: 2px solid black !important;font-size: 14px;color: #000000;text-align: center;">{{$serviceRecords->leave_without_pay}}</td>
+                        <td style="padding: 0;border: 2px solid black !important;font-size: 14px;color: #000000;text-align: center;">{{Carbon\Carbon::parse($serviceRecords->separation_date)->format('m/d/Y')}}</td>
+                        <td style="padding: 0;border: 2px solid black !important;font-size: 14px;color: #000000;text-align: center;">{{$serviceRecords->separation_cause}}</td>
                     </tr>
-                @Endforeach
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
-                <tr>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
-                    </tr>
+                @Endforeach  
+                <tbody id="displayEmptyRows">
+                </tbody>
             </tbody>
         </table>
             <div class="float-right">
@@ -394,6 +151,24 @@
     </div>
 </div>
     <script>
+        if(localStorage.getItem('serviceRecordsRows') != null){
+            var emptyRowsNumber = localStorage.getItem('serviceRecordsRows');
+            var tr = [];
+                for(var i = 1;i <= emptyRowsNumber; i++){
+                    tr += `<tr>
+                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
+                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
+                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
+                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
+                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
+                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
+                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
+                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
+                    <td style="border: 2px solid black !important;font-size: 14px;color:#000000;text-align: center;"></td>
+                </tr>`;
+                }
+                document.getElementById('displayEmptyRows').innerHTML = tr;
+        }
         window.print();
     </script>
 </body>
