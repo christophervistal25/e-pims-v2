@@ -55643,7 +55643,7 @@ class EmployeeSeeder extends Seeder
         ];
 
         foreach($data as $key => $employee) {
-            if($key === 1000) {
+            if($key === 200) {
                 break;
             }
             
@@ -55690,6 +55690,7 @@ class EmployeeSeeder extends Seeder
             ]);
 
             if(isset($dataPosCode[$employee['employee_id']])) {
+
                 list($position, $office) = explode(',', $dataPosCode[$employee['employee_id']]);
                 EmployeeInformation::create([
                     'EmpIDNo' => $employee['employee_id'],

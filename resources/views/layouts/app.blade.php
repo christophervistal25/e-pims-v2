@@ -239,7 +239,7 @@
                                         Leave Application Filling</a>
                                     </li>
 								<li>
-                                    <a class='text-decoration-none mr-2' href="#">
+                                    <a class='text-decoration-none mr-2' href="{{ route('leave.leave-recall') }}">
                                         Leave Recall, Cancel or Transfer
                                     </a>
                                 </li>
