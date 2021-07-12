@@ -35,9 +35,9 @@
                         </div>
 
                         <div class="form-group col-4 mb-2">
-                            <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('office')  ? 'is-invalid' : ''}}"
-                                name="office" data-live-search="true" id="office" data-size="5" onchange="ValidateDropDown(this)">
-                                <option value="All">All</option>
+                            <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('officePlantillaList')  ? 'is-invalid' : ''}}"
+                                name="officePlantillaList" data-live-search="true" id="officePlantillaList" data-size="5">
+                                <option value="">All</option>
                                 @foreach($office as $offices)
                                 <option data-plantilla="{{ $offices->office_name }}" value="{{ $offices->office_code }}">{{ $offices->office_name }}</option>
                                 @endforeach
@@ -47,13 +47,13 @@
                     <div class="form-group col-4">
                         <label class="has-float-label mb-0">
                         <select value=""
-                            class="form-control selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
-                            name="positionTitle" data-live-search="true" id="positionTitle" data-size="4"
+                            class="form-control selectpicker  {{ $errors->has('year')  ? 'is-invalid' : ''}}"
+                            name="year" data-live-search="true" id="year" data-size="4"
                             data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <option></option>
                             @foreach($plantillaYear as $plantillaYears)
                             <option data-position="{{ $plantillaYears }}" style="width:350px;"
-                                {{ old('positionTitle') == $plantillaYears->year ? 'selected' : '' }}
+                                {{ old('year') == $plantillaYears->year ? 'selected' : '' }}
                                 value="{{ $plantillaYears->year}}">{{ $plantillaYears->year }}</option>
                             @endforeach
                         </select>
@@ -70,7 +70,7 @@
                 </div>
 
                         <div class="col-12">
-                        <form id="frm-example" action="" method="" id="salaryAdjustmentPerOfficeNotSelected">
+                        <form id="frm-example" action="" method="" id="">
                         @csrf
                         <table class="table table-bordered text-center" id="plantillaList" style="width:100%;">
                             <thead>
@@ -84,6 +84,7 @@
                                     <td scope="col" class="text-center font-weight-bold">Action</td>
                                 </tr>
                             </thead>
+                            <tbody></tbody>
                         </table>
                         </form>
                     </div>
@@ -93,9 +94,9 @@
         <div id="table" class="page-header ">
             <div class="row">
                 <div style="padding-left:35px;" class="col-4 mb-2">
-                    <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('office')  ? 'is-invalid' : ''}}"
-                        name="office" data-live-search="true" id="office" data-size="5" onchange="ValidateDropDown(this)">
-                        <option value="All">All</option>
+                    <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
+                        name="officeCode" data-live-search="true" id="officeCode" data-size="5" >
+                        <option value="">All</option>
                         @foreach($office as $offices)
                         <option data-plantilla="{{ $offices->office_name }}" value="{{ $offices->office_code }}">{{ $offices->office_name }}</option>
                         @endforeach
@@ -103,7 +104,7 @@
             </div>
             <div class="col-2 mb-2">
                 <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('office')  ? 'is-invalid' : ''}}"
-                    name="office" data-live-search="true" id="office" data-size="5" onchange="ValidateDropDown(this)">
+                    name="office" data-live-search="true" id="office" data-size="5">
                     <option value="All">All</option>
                     @foreach($PlantillaOfScheduleYear as $PlantillaOfScheduleYears)
                     <option data-plantilla="{{ $PlantillaOfScheduleYears->year }}" value="{{ $PlantillaOfScheduleYears->year }}">{{ $PlantillaOfScheduleYears->year }}</option>

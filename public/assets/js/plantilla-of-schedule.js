@@ -37,7 +37,7 @@ $(function() {
         ]
     });
 
-    $("#employeeOffice").change(function(e) {
+    $("#officePlantillaList").change(function(e) {
         if (e.target.value == "" || e.target.value == "") {
             table.destroy();
             table = $("#plantillaList").DataTable({
@@ -72,6 +72,7 @@ $(function() {
                     },
                     { data: "item_no", name: "item_no" },
                     { data: "status", name: "status", sortable: false },
+                    { data: "year", name: "year", sortable: false },
                     {
                         data: "action",
                         name: "action",
@@ -88,7 +89,7 @@ $(function() {
                 destroy: true,
                 retrieve: true,
                 ajax: {
-                    url: `/api/plantilla/schedule/${e.target.value}`
+                    url: `/api/plantilla/list/${e.target.value}`
                 },
                 columns: [
                     {
@@ -114,6 +115,7 @@ $(function() {
                     },
                     { data: "item_no", name: "item_no" },
                     { data: "status", name: "status", sortable: false },
+                    { data: "year", name: "year", sortable: false },
                     {
                         data: "action",
                         name: "action",
@@ -165,93 +167,95 @@ $(function() {
         ]
     });
 
-    // $("#employeeOffice").change(function(e) {
-    //     if (e.target.value == "" || e.target.value == "") {
-    //         table.destroy();
-    //         table = $("#plantillaList").DataTable({
-    //             processing: true,
-    //             serverSide: true,
-    //             destroy: true,
-    //             retrieve: true,
-    //             ajax: {
-    //                 url: "/plantilla-of-schedule-list"
-    //             },
-    //             columns: [
-    //                 {
-    //                     data: "employee",
-    //                     name: "employee.firstname",
-    //                     searchable: true,
-    //                     sortable: false,
-    //                     visible: true
-    //                 },
-    //                 {
-    //                     data: "plantillaPosition",
-    //                     name: "plantillaPosition",
-    //                     searchable: true,
-    //                     sortable: false,
-    //                     visible: true
-    //                 },
-    //                 {
-    //                     data: "office",
-    //                     name: "office.office_short_name",
-    //                     searchable: true,
-    //                     sortable: false,
-    //                     visible: true
-    //                 },
-    //                 { data: "item_no", name: "item_no" },
-    //                 { data: "status", name: "status", sortable: false },
-    //                 {
-    //                     data: "action",
-    //                     name: "action",
-    //                     searchable: false,
-    //                     sortable: false
-    //                 }
-    //             ]
-    //         });
-    //     } else {
-    //         table.destroy();
-    //         table = $("#plantillaList").DataTable({
-    //             processing: true,
-    //             serverSide: true,
-    //             destroy: true,
-    //             retrieve: true,
-    //             ajax: {
-    //                 url: `/api/plantilla/schedule/${e.target.value}`
-    //             },
-    //             columns: [
-    //                 {
-    //                     data: "employee",
-    //                     name: "employee.firstname",
-    //                     searchable: true,
-    //                     sortable: false,
-    //                     visible: true
-    //                 },
-    //                 {
-    //                     data: "plantillaPosition",
-    //                     name: "plantillaPosition",
-    //                     searchable: true,
-    //                     sortable: false,
-    //                     visible: true
-    //                 },
-    //                 {
-    //                     data: "office",
-    //                     name: "office.office_short_name",
-    //                     searchable: true,
-    //                     sortable: false,
-    //                     visible: true
-    //                 },
-    //                 { data: "item_no", name: "item_no" },
-    //                 { data: "status", name: "status", sortable: false },
-    //                 {
-    //                     data: "action",
-    //                     name: "action",
-    //                     searchable: false,
-    //                     sortable: false
-    //                 }
-    //             ]
-    //         });
-    //     }
-    // });
+    $("#officeCode").change(function(e) {
+        if (e.target.value == "" || e.target.value == "") {
+            table.destroy();
+            table = $("#plantillaOfSchedule").DataTable({
+                processing: true,
+                serverSide: true,
+                destroy: true,
+                retrieve: true,
+                ajax: {
+                    url: "/plantilla-of-schedule-adjustedlist"
+                },
+                columns: [
+                    {
+                        data: "employee",
+                        name: "employee.firstname",
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        data: "plantillaPosition",
+                        name: "plantillaPosition",
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        data: "office",
+                        name: "office.office_short_name",
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    { data: "item_no", name: "item_no" },
+                    { data: "status", name: "status", sortable: false },
+                    { data: "year", name: "year", sortable: false },
+                    {
+                        data: "action",
+                        name: "action",
+                        searchable: false,
+                        sortable: false
+                    }
+                ]
+            });
+        } else {
+            table.destroy();
+            table = $("#plantillaOfSchedule").DataTable({
+                processing: true,
+                serverSide: true,
+                destroy: true,
+                retrieve: true,
+                ajax: {
+                    url: `/api/plantilla/schedule/${e.target.value}`
+                },
+                columns: [
+                    {
+                        data: "employee",
+                        name: "employee.firstname",
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        data: "plantillaPosition",
+                        name: "plantillaPosition",
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        data: "office",
+                        name: "office.office_short_name",
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    { data: "item_no", name: "item_no" },
+                    { data: "status", name: "status", sortable: false },
+                    { data: "year", name: "year", sortable: false },
+                    {
+                        data: "action",
+                        name: "action",
+                        searchable: false,
+                        sortable: false
+                    }
+                ]
+            });
+        }
+    });
 });
 
 // code for show add form
