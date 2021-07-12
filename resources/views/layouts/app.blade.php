@@ -283,7 +283,7 @@
                                             <a class='text-decoration-none' href="{{  route('plantilla-of-personnel.index') }}">
                                                 <span>Add New Plantilla</span>
                                             </a>
-                                            <a class='text-decoration-none' href="">
+                                            <a class='text-decoration-none' href="{{  route('plantilla-of-schedule.index') }}">
                                                 <span>Create Plantilla Schedule</span>
                                             </a>
                                         </li>

@@ -38,6 +38,10 @@ Route::get('/maintenance-division-list', 'MaintenanceDivisionController@list')->
 Route::resource('/maintenance-division', 'MaintenanceDivisionController');
 Route::get('/maintenance-division/{id}', 'MaintenanceDivisionController@destroy')->name('maintenance-division.delete');
 
+//plantilla of schedule
+Route::resource('/plantilla-of-schedule', 'PlantillaOfScheduleController');
+Route::get('/plantilla-of-schedule-list', 'PlantillaOfScheduleController@list');
+Route::get('/plantilla-of-schedule-adjustedlist', 'PlantillaOfScheduleController@adjustedlist');
 
 //plantilla of personnel
 Route::get('/plantilla-list', 'Plantillacontroller@list');
