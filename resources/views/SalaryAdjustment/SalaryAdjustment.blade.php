@@ -35,9 +35,10 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-12 col-lg-4">
+                    <div class="form-group col-12 col-lg-3">
                         <label for="dateAdjustment" class="has-float-label">
-                            <input class="form-control" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}"
+                            {{-- Carbon\Carbon::now()->format('Y-m-d') --}}
+                            <input class="form-control" value="{{ Carbon\Carbon::now()->toDateString() }}"
                                 name="dateAdjustment" id="dateAdjustment" type="date"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <span class="font-weight-bold">DATE ADJUSTMENT<span class="text-danger">*</span></span>
@@ -46,7 +47,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-12 col-lg-4">
+                    <div class="form-group col-12 col-lg-3">
                         <label class="has-float-label mb-0" for="employeeName">
                             <select value=""
                                 class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}"
@@ -66,12 +67,12 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-12 col-lg-4 d-none">
+                    <div class="form-group col-12 col-lg-3 d-none">
                         <input class="form-control" value="" name="employeeId" id="employeeId" type="text"
                             placeholder="Input item No.">
                     </div>
 
-                    <div class="form-group col-12 col-lg-4">
+                    <div class="form-group col-12 col-lg-2">
                         <label class="has-float-label mb-0" for="itemNo">
                             <input class="form-control" value="" name="itemNo" id="itemNo" type="text" placeholder=""
                                 readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -81,11 +82,19 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-12 col-lg-11 d-none">
+                    <div class="form-group col-12 mt-2 d-none">
                         <input class="form-control " value="" id="positionId" name="positionId" type="text" readonly>
                     </div>
 
-                    <div class="form-group col-12 col-lg-4 mt-2">
+                    <div class="form-group col-12 mt-2 d-none">
+                        <input class="form-control " value="" id="officeCode" name="officeCode" type="text" readonly>
+                    </div>
+
+                    <div class="form-group col-12 mt-2 d-none">
+                        <input class="form-control " value="" id="status" name="status" type="text" readonly>
+                    </div>
+
+                    <div class="form-group col-12 col-lg-4">
                         <label class="has-float-label mb-0" for="positionName">
                             <input class="form-control" value="" name="positionName" id="positionName" type="text"
                                 readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -95,7 +104,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-12 col-lg-4 mt-2">
+                    <div class="form-group col-12 col-lg-3 mt-2">
                         <label class="has-float-label mb-0" for="salaryGrade">
                             <input class="form-control" value="" name="salaryGrade" id="salaryGrade" type="text"
                                 readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -105,7 +114,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-12 col-lg-4 mt-2">
+                    <div class="form-group col-12 col-lg-3 mt-2">
                         <label class="has-float-label mb-0" for="stepNo">
                             <input class="form-control" value="" name="stepNo" id="stepNo" type="text" readonly
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -115,16 +124,31 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-12 col-lg-3 d-none">
-                        <label>Current SG Year</label>
-                        <select name="currentSgyear" id="currentSgyear" value="" class="select floating">
-                            {{ $year3 = date("Y",strtotime("-0 year")) }}
-                            <option value={{ $year3 }}>{{ $year3 }}</option>
-                        </select>
-                        @if($errors->has('currentSgyear'))
-                        <small class="form-text text-danger">
-                            {{ $errors->first('currentSgyear') }} </small>
-                        @endif
+                    <div class="form-group col-12 col-lg-3 mt-2">
+                        <label class="has-float-label mb-0">
+                            <input class="form-control" value="" name="previousYear" id="previousYear" type="text"
+                            readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                        <span class="font-weight-bold">PREVIOUS YEAR</span>
+                    </label>
+                        <div id='previous-year-error-message' class='text-danger text-sm'>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-12 col-lg-3 mt-2">
+                        <label class="has-float-label mb-0">
+                            <select name="currentSgyear" id="currentSgyear" value="" class="select floating">
+                                {{ $year3 = date("Y",strtotime("-0 year")) }}
+                                <option value={{ $year3 }}>{{ $year3 }}</option>
+                                @foreach (range(1, 3) as $year)
+                                {{ $year1 = date("Y",strtotime("$year year")) }}
+                                <option {{ old('sgYear') == $year1 ? 'selected' : '' }} value={{ $year1 }}>{{ $year1 }}
+                                </option>
+                                @endforeach
+                            </select>
+                        <span class="font-weight-bold">CURRENT YEAR</span>
+                    </label>
+                        <div id='previous-year-error-message' class='text-danger text-sm'>
+                        </div>
                     </div>
 
                     <div class="col-lg-4">
@@ -153,7 +177,6 @@
                             </div>
                     </div>
 
-
                     <div class="col-lg-4">
                         <div class="form-group input-group mb-0 mt-3">
                             <span class="input-group-text">&#8369;</span>
@@ -165,6 +188,15 @@
                     </div>
                     <div id='salary-difference-error-message' class='text-danger text-sm text-center'>
                         </div>
+                    </div>
+
+                    <div class="form-group col-12 col-lg-12 mt-4">
+                        <label class="has-float-label mb-0">
+                        <input value="{{ old('remarks') }}"
+                            class="form-control {{ $errors->has('remarks')  ? 'is-invalid' : ''}}"
+                            name="remarks" id="remarks" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                            <span class="font-weight-bold">REMARKS</span>
+                        </label>
                     </div>
 
                     <div class="form-group form-group submit-section col-12">
@@ -208,12 +240,12 @@
                 <table class="table table-bordered text-center" id="salaryAdjustment" style="width:100%;">
                     <thead>
                         <tr>
-                            <td scope="col" class="text-center font-weight-bold">Date Adjustment</td>
+                            <td scope="col" class="text-center font-weight-bold">Adjustment Date</td>
                             <td scope="col" class="text-center font-weight-bold">Employee Name</td>
                             <td scope="col" class="text-center font-weight-bold">Salary Grade</td>
                             <td scope="col" class="text-center font-weight-bold">Step Number</td>
-                            <td scope="col" class="text-center font-weight-bold">Salary Previous</td>
-                            <td scope="col" class="text-center font-weight-bold">Salary New</td>
+                            <td scope="col" class="text-center font-weight-bold">Previous Salary</td>
+                            <td scope="col" class="text-center font-weight-bold">New Salary</td>
                             <td scope="col" class="text-center font-weight-bold">Salary Difference</td>
                             <td scope="col" class="text-center font-weight-bold">Action</td>
                         </tr>

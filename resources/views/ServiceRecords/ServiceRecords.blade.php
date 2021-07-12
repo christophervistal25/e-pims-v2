@@ -21,6 +21,10 @@
 </style>
 @endprepend
 @section('content')
+<div class="float-right mr-3 mb-2" id='btnViewTableContainer'>
+    <a id="printPreviewA"><button class="btn btn-secondary" id="printPreview" disabled="true"><i class="la la-print"></i>&nbsp; Print Preview</button></a>
+</div>
+<div class="clearfix"></div>
 <div class="kanban-board card shadow mb-0">
     <div class="card-body">
         <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
@@ -204,8 +208,8 @@
                                 Records<br><small>(Inclusive dates)</small></th>
                             <th class="font-weight-bold align-middle text-center" rowspan="1" colspan="3">Records of
                                 Appointment</th>
-                            <th class="font-weight-bold align-middle text-center" rowspan="1 " colspan="2">From</th>
-                            <th class="font-weight-bold align-middle text-center" rowspan="1" colspan="2">To</th>
+                            <th class="font-weight-bold align-middle text-center" rowspan="1 " colspan="2"></th>
+                            <th class="font-weight-bold align-middle text-center" rowspan="1" colspan="2"></th>
                             <th class="font-weight-bold align-middle text-center" rowspan="2">Option</th>
 
                         <tr>
@@ -216,7 +220,7 @@
                             <td class="font-weight-bold align-middle text-center">Salary</td>
                             <td class="font-weight-bold align-middle text-center">Station/Place of Assignment</td>
                             <td class="font-weight-bold align-middle text-center">Leave w/o Pay</td>
-                            <td class="font-weight-bold align-middle text-center">Date</td>
+                            <td class="font-weight-bold align-middle text-center">Separation Date</td>
                             <td class="font-weight-bold align-middle text-center">Cause</td>
                         </tr>
                         </tr>

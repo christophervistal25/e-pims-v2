@@ -28,14 +28,14 @@
             <div id="addIncrement" class="page-header d-none">
                 <form action="" method="POST" id="formStepIncrement">
                     @csrf
-                   
+
                     <div class="row">
 
                         <div class="col-12">
                             <div class="alert alert-secondary text-center font-weight-bold" role="alert">ADD STEP INCREMENT</div>
                         </div>
 
-                        <div class="card-body">
+                        <div class="card-body col-12 col-md-6 col-lg-6">
                             <div class="col-12 col-lg-11 mt-2">
                                 <label class="form-group has-float-label mb-0" for="employeeName">
                                 <select class="form-control selectpicker" value="" data-live-search="true"
@@ -56,7 +56,7 @@
                                 <label class="form-group has-float-label" for="dateStepIncrement">
                                 <input class="form-control" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}"
                                     id="dateIncrement" name="dateStepIncrement" type="date" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                    <span><strong>DATE<span class="text-danger">*</span></strong></span>    
+                                    <span><strong>DATE<span class="text-danger">*</span></strong></span>
                                 </label>
                             </div>
 
@@ -67,6 +67,15 @@
                             <div class="form-group">
                                 <input type="hidden" name="plantillaID" id="plantillaId" class="">
                             </div>
+
+                            <div class="form-group">
+                                <input type="hidden" name="status" id="status" class="">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="hidden" name="officeCode" id="officeCode" class="">
+                            </div>
+
 
                             <div class="form-group col-12 col-lg-11">
                                 <input class="form-control d-none" value="" id="positionId" name="positionID"
@@ -97,33 +106,36 @@
                             </div>
 
                             <div class="form-row col-12">
-                                <div class="col-6 col-lg-6">
+
+                                <div class="col-12 col-lg-6">
                                     <label class="form-group has-float-label" for="sgNoFrom">
                                     <input class="form-control" value="" id="salaryGrade" name="sgNoFrom" type="text"
                                         readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                    <span><strong>SALARY GRADE</strong></span>    
+                                    <span><strong>SALARY GRADE</strong></span>
                                     </label>
                                 </div>
-                                <div class="col-6 col-lg-5 ml-2">
+
+                                <div class="col-12 col-lg-5 ml-2">
                                     <label class="form-group has-float-label mb-0" for="stepNo">
                                     <input class="form-control" value="" id="stepNo" name="stepNoFrom" type="text"
                                         readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                    <span><strong>STEP</strong></span>    
+                                    <span><strong>STEP</strong></span>
                                     </label>
                                 </div>
+
                             </div>
 
                             <div class="col-12 col-lg-11">
                                 <label class="form-group has-float-label" for="amountFrom">
                                 <input class="form-control" value="" id="amount" name="amountFrom" type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <span><strong>AMOUNT</strong></span> 
+                                <span><strong>AMOUNT</strong></span>
                             </label>
                             </div>
                         </div>
 
                         {{-- FORM THAT HAS TO BE INPUT --}}
                         <!-- <div class="step-increment"> -->
-                        <div class="card-body">
+                        <div class="card-body col-12 col-md-6 col-lg-6">
                             <div class="col-12 col-lg-12 mt-2">
                                 <label class="form-group has-float-label" for="">
                                 <input type="text" class="form-control" name="sgNo2" id="sgNo2" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -158,13 +170,13 @@
                                 <label class="form-group has-float-label" for="monthlyDifference">
                                 <input class="form-control" value="" id="monthlyDifference" name="monthlyDifference"
                                     type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <span><strong>MONTHLY DIFFERENCE</strong></span>    
+                                <span><strong>MONTHLY DIFFERENCE</strong></span>
                                 </label>
                             </div>
 
                             <div class="form-group col-12 col-lg-12" id="buttons">
                                 <button type="submit" id="btnSave"
-                                    class="form-control col-5 float-right btn btn-success mb-5 shadow"><i class="fas fa-save"></i>&nbsp; Save</button>
+                                    class="form-control col-5 float-right btn btn-success mb-5 shadow" onclick="update()"><i class="fas fa-save"></i>&nbsp; Save</button>
                                 <button type="button" id="btnCancel" style="margin-right:10px"
                                     class="form-control col-5 btn btn-warning float-right shadow text-light"><i class="fas fa-ban"></i>&nbsp; Cancel</button>
                             </div>
@@ -302,7 +314,7 @@
         const MAX_NUMBER_OF_STEP_NO = 8;
 
         //SOFT DELETE BUTTON
-        $(document).on('click', '.btnRemoveRecord', ()=> {
+        $(document).on('click', '.btnRemoveRecord', function () {
             let id = $(this).attr('data-id');
             let message = document.createElement('h3');
             message.innerText = 'Are you sure you want to delete this row?';
@@ -328,6 +340,7 @@
                                         title: messageText.innerText,
                                         icon: "success",
                                     });
+
                                     table.draw();
                                 }
                             },
@@ -342,7 +355,7 @@
             $('#addIncrement').attr("class", "page-header");
             $('#stepIncrementTable').attr("class", "page-header d-none");
             $('#btnViewTableContainer').removeClass('d-none');
-            $('#formStepIncrement').removeClass('d-none');  
+            $('#formStepIncrement').removeClass('d-none');
         });
 
         // DISPLAY TABLE
@@ -357,13 +370,15 @@
             let employeeID = e.target.value;
             let plantilla = $($("#employeeName option:selected")[0]).attr('data-plantilla');
             /*let moneyFormat = toLocalString("ph", {maximumFractionDigits:2}) + '.00';*/
-            
+
 
             if (plantilla) {
                 plantilla = JSON.parse(plantilla);
 
                 $('#employeeId').val(plantilla.employee_id);
                 $('#plantillaId').val(plantilla.plantilla_id);
+                $('#officeCode').val(plantilla.office_code);
+                $('#status').val(plantilla.status);
                 $('#positionName').val(plantilla.position.position_name);
                 $('#positionId').val(plantilla.position.position_id);
                 $('#itemNo').val(plantilla.item_no);
@@ -382,6 +397,8 @@
                 }
 
             } else {
+                $('#officeCode').val('');
+                $('#status').val('');
                 $('#positionName').val('');
                 $('#itemNo').val('');
                 $('#lastAppointment').val('');

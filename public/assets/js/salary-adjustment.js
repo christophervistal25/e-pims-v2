@@ -109,11 +109,16 @@ $(document).ready(function() {
         if (plantilla) {
             plantilla = JSON.parse(plantilla);
             $("#employeeId").val(plantilla.employee_id);
-            $("#positionName").val(plantilla.positions.position_name);
-            $("#positionId").val(plantilla.positions.position_id);
+            $("#positionName").val(
+                plantilla.plantilla_position.position.position_name
+            );
+            $("#status").val(plantilla.status);
+            $("#positionId").val(plantilla.pp_id);
             $("#itemNo").val(plantilla.item_no);
             $("#salaryGrade").val(plantilla.sg_no);
             $("#stepNo").val(plantilla.step_no);
+            $("#officeCode").val(plantilla.office_code);
+            $("#previousYear").val(plantilla.year);
             $("#salaryPrevious").val(plantilla.salary_amount);
         } else {
             $("#positionName").val("");
@@ -121,6 +126,11 @@ $(document).ready(function() {
             $("#salaryGrade").val("");
             $("#stepNo").val("");
             $("#salaryPrevious").val("");
+            $("#salaryNew").val("");
+            $("#salaryDifference").val("");
+            $("#status").val("");
+            $("#previousYear").val("");
+            $("#officeCode").val("");
         }
     });
 });
@@ -336,7 +346,30 @@ $(document).ready(function() {
 
 //  position display salary grade
 $(document).ready(function() {
-    $("#maintenancePosition").change(function() {
+    $("#employeeName").change(function() {
+        let salaryGrade = $("#salaryGrade").val();
+        let stepNo = $("#stepNo").val();
+        let currentSgyear = $("#currentSgyear").val();
+        $.ajax({
+            url: `/api/salaryAdjustment/${salaryGrade}/${stepNo}/${currentSgyear}`,
+            success: response => {
+                if (response == "") {
+                    $("#salaryNew").val("");
+                } else {
+                    let currentSalaryAmount = response["sg_step" + stepNo];
+                    $("#salaryNew").val(currentSalaryAmount);
+                    var amount = parseFloat($("#salaryPrevious").val());
+                    var amount2 = parseFloat($("#salaryNew").val());
+                    var amountDifference = amount2 - amount;
+                    $("#salaryDifference").val(amountDifference.toFixed(2));
+                }
+            }
+        });
+    });
+});
+
+$(document).ready(function() {
+    $("#currentSgyear").change(function() {
         let salaryGrade = $("#salaryGrade").val();
         let stepNo = $("#stepNo").val();
         let currentSgyear = $("#currentSgyear").val();
@@ -352,13 +385,13 @@ $(document).ready(function() {
                     var amount = parseFloat($("#salaryPrevious").val());
                     var amount2 = parseFloat($("#salaryNew").val());
                     var amountDifference = amount2 - amount;
-                    console.log(amountDifference);
                     $("#salaryDifference").val(amountDifference.toFixed(2));
                 }
             }
         });
     });
 });
+
 $(document).keyup(function() {
     var salaryPrevious = parseFloat($("#salaryPrevious").val());
     var salaryNew = parseFloat($("#salaryNew").val());

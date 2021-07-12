@@ -10,6 +10,7 @@ use App\SalaryGrade;
 use App\Office;
 use App\Position;
 use App\PlantillaPosition;
+use App\Division;
 use Illuminate\Support\Facades\Session;
 class PlantillaController extends Controller
 {
@@ -25,12 +26,13 @@ class PlantillaController extends Controller
      */
     public function index(Request $req)
     {
+        $division = Division::select('division_id', 'division_name', 'office_code')->get();
         $plantillaEmp = Plantilla::get()->pluck('employee_id')->toArray();
         $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->whereNotIn('employee_id', $plantillaEmp )->get();
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('position_id', 'position_name')->get();
-        $plantillaPositionID = Plantilla::get()->pluck('position_id')->toArray();
-        $plantillaPosition = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->whereNotIn('position_id', $plantillaPositionID )->get();
+        $plantillaPositionID = Plantilla::get()->pluck('pp_id')->toArray();
+        $plantillaPosition = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->with('position:position_id,position_name')->whereNotIn('pp_id', $plantillaPositionID )->get();
         $salarygrade = SalaryGrade::get(['sg_no']);
         $status = ['Please Select', 'Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
         count($status) - 1;
@@ -40,20 +42,20 @@ class PlantillaController extends Controller
         count($areatype) - 1;
         $arealevel = ['Please Select','K','T','S','A'];
         count($arealevel) - 1;
-        return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition'));
+        return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition', 'division'));
     }
 
     public function list(Request $request)
     {
         if ($request->ajax()) {
-            $data = Plantilla::select('plantilla_id', 'item_no', 'position_id', 'office_code', 'status', 'employee_id')->with('office:office_code,office_short_name','positions:position_id,position_name', 'employee:employee_id,firstname,middlename,lastname,extension')->orderBy('plantilla_id', 'DESC');
+            $data = Plantilla::select('plantilla_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->orderBy('plantilla_id', 'DESC');
             return (new Datatables)->eloquent($data)
                     ->addIndexColumn()
                     ->addColumn('employee', function ($row) {
                         return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
                     })
-                    ->addColumn('positions', function ($row) {
-                        return $row->positions->position_name;
+                    ->addColumn('plantillaPosition', function ($row) {
+                        return $row->plantillaPosition->position->position_name;
                     })
                     ->addColumn('office', function ($row) {
                         return $row->office->office_short_name;
@@ -92,8 +94,9 @@ class PlantillaController extends Controller
             'salaryGrade'                   => 'required|in:' . implode(',',range(1, 33)),
             'stepNo'                        => 'required|in:' . implode(',',range(1, 8)),
             'salaryAmount'                  => 'required|numeric',
+            'currentSgyear'                          => 'required',
             'officeCode'                    => 'required|in:' . implode(',',range(10001, 10056)),
-            'divisionId'                    => 'required|in:' . implode(',',range(10001, 10056)),
+            'divisionId'                    => 'required',
             'originalAppointment'           => 'required',
             'lastPromotion'                 => 'required|after:originalAppointment',
             'status'                        => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
@@ -105,7 +108,7 @@ class PlantillaController extends Controller
         $plantilla = new Plantilla;
         $plantilla->item_no                = $request['itemNo'];
         $plantilla->old_item_no            = $request['oldItemNo'];
-        $plantilla->position_id            = $request['positionTitle'];
+        $plantilla->pp_id                  = $request['positionTitle'];
         $plantilla->employee_id            = $request['employeeName'];
         $plantilla->sg_no                  = $request['salaryGrade'];
         $plantilla->step_no                = $request['stepNo'];
@@ -118,6 +121,7 @@ class PlantillaController extends Controller
         $plantilla->area_code              = $request['areaCode'];
         $plantilla->area_type              = $request['areaType'];
         $plantilla->area_level             = $request['areaLevel'];
+        $plantilla->year                   = $request['currentSgyear'];
         $plantilla->save();
         return response()->json(['success'=>true]);
     }
@@ -141,11 +145,12 @@ class PlantillaController extends Controller
      */
     public function edit($plantilla_id)
     {
+        $division = Division::select('division_id', 'division_name', 'office_code')->get();
         $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->get();
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('position_id', 'position_name')->get();
-        $plantillaPositionID = Plantilla::where('position_id','!=',$plantilla_id)->get()->pluck('position_id')->toArray();
-        $plantillaPosition = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->whereNotIn('position_id', $plantillaPositionID )->get();
+        $plantillaPositionIDAll = Plantilla::where('plantilla_id','!=',$plantilla_id)->get()->pluck('pp_id')->toArray();
+        $plantillaPositionAll = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->with('position:position_id,position_name')->whereNotIn('pp_id', $plantillaPositionIDAll )->get();
         $salarygrade = SalaryGrade::get(['sg_no']);
         $status = ['Please Select', 'Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
         count($status) - 1;
@@ -156,7 +161,10 @@ class PlantillaController extends Controller
         $arealevel = ['Please Select','K','T','S','A'];
         count($arealevel) - 1;
         $plantilla = Plantilla::find($plantilla_id);
-        return view ('Plantilla.edit', compact('plantilla','employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition'));
+        $officeCode = $plantilla->office_code;
+        $plantillaPositionID = Plantilla::where('plantilla_id','!=',$plantilla_id)->get()->pluck('pp_id')->toArray();
+        $plantillaPosition = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->with('position:position_id,position_name')->where('office_code',$officeCode)->whereNotIn('pp_id', $plantillaPositionID )->get();
+        return view ('Plantilla.edit', compact('division', 'plantilla','employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition', 'plantillaPositionAll'));
     }
 
     /**
@@ -174,9 +182,10 @@ class PlantillaController extends Controller
             'employeeId'                  => 'required',
             'salaryGrade'                   => 'required|in:' . implode(',',range(1, 33)),
             'stepNo'                        => 'required|in:' . implode(',',range(1, 8)),
+            'currentSgyear'                  => 'required',
             'salaryAmount'                  => 'required|numeric',
             'officeCode'                    => 'required|in:' . implode(',',range(10001, 10056)),
-            'divisionId'                    => 'required|in:' . implode(',',range(10001, 10056)),
+            'divisionId'                    => 'required',
             'originalAppointment'           => 'required',
             'lastPromotion'                 => 'required|after:originalAppointment',
             'status'                        => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
@@ -187,7 +196,7 @@ class PlantillaController extends Controller
         $plantilla                         = Plantilla::find($plantilla_id);
         $plantilla->item_no                = $request['itemNo'];
         $plantilla->old_item_no            = $request['oldItemNo'];
-        $plantilla->position_id            = $request['positionTitle'];
+        $plantilla->pp_id                  = $request['positionTitle'];
         $plantilla->employee_id            = $request['employeeId'];
         $plantilla->sg_no                  = $request['salaryGrade'];
         $plantilla->step_no                = $request['stepNo'];
@@ -200,6 +209,7 @@ class PlantillaController extends Controller
         $plantilla->area_code              = $request['areaCode'];
         $plantilla->area_type              = $request['areaType'];
         $plantilla->area_level             = $request['areaLevel'];
+        $plantilla->year             = $request['currentSgyear'];
         $plantilla->save();
         Session::flash('alert-success', 'Plantilla of Personnel Record Updated Successfully');
         return back()->with('success','Updated Successfully');

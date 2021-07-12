@@ -11,17 +11,17 @@ $(function() {
             url: "/salary-adjustment-per-office-list"
         },
         columns: [
-            { data: "employee", name: "employee", visible: false },
-            {
-                data: "plantilla",
-                name: "plantilla.office_code",
-                visible: false
-            },
             {
                 data: "date_adjustment",
                 name: "date_adjustment",
                 visible: false
             },
+            {
+                data: "plantilla",
+                name: "plantilla.office_code",
+                visible: false
+            },
+            { data: "employee", name: "employee", visible: false },
             { data: "sg_no", name: "sg_no", visible: false },
             { data: "step_no", name: "step_no", visible: false },
             {
@@ -49,17 +49,17 @@ $(function() {
                     url: "/salary-adjustment-per-office-list"
                 },
                 columns: [
-                    { data: "employee", name: "employee", visible: false },
-                    {
-                        data: "plantilla",
-                        name: "plantilla.office_code",
-                        visible: false
-                    },
                     {
                         data: "date_adjustment",
                         name: "date_adjustment",
                         visible: false
                     },
+                    {
+                        data: "plantilla",
+                        name: "plantilla.office_code",
+                        visible: false
+                    },
+                    { data: "employee", name: "employee", visible: false },
                     { data: "sg_no", name: "sg_no", visible: false },
                     { data: "step_no", name: "step_no", visible: false },
                     {
@@ -98,17 +98,17 @@ $(function() {
                     url: `/api/office/salary/adjustment/peroffice/${e.target.value}`
                 },
                 columns: [
-                    { data: "employee", name: "employee", visible: true },
-                    {
-                        data: "plantilla",
-                        name: "plantilla.office_code",
-                        visible: false
-                    },
                     {
                         data: "date_adjustment",
                         name: "date_adjustment",
                         visible: true
                     },
+                    {
+                        data: "plantilla",
+                        name: "plantilla.office_code",
+                        visible: false
+                    },
+                    { data: "employee", name: "employee", visible: true },
                     { data: "sg_no", name: "sg_no", visible: true },
                     { data: "step_no", name: "step_no", visible: true },
                     {
@@ -202,7 +202,11 @@ $(function() {
             },
             { data: "employee", name: "employee", visible: true },
             { data: "office_code", name: "office_code", visible: false },
-            { data: "position", name: "position", visible: true },
+            {
+                data: "plantillaPosition",
+                name: "plantillaPosition",
+                visible: true
+            },
             { data: "sg_no", name: "sg_no", visible: true },
             { data: "step_no", name: "step_no", visible: true },
             {
@@ -240,7 +244,11 @@ $(function() {
                         name: "office_code",
                         visible: false
                     },
-                    { data: "position", name: "position", visible: true },
+                    {
+                        data: "plantillaPosition",
+                        name: "plantillaPosition",
+                        visible: true
+                    },
                     { data: "sg_no", name: "sg_no", visible: true },
                     { data: "step_no", name: "step_no", visible: true },
                     {
@@ -275,7 +283,11 @@ $(function() {
                         name: "office_code",
                         visible: false
                     },
-                    { data: "position", name: "position", visible: true },
+                    {
+                        data: "plantillaPosition",
+                        name: "plantillaPosition",
+                        visible: true
+                    },
                     { data: "sg_no", name: "sg_no", visible: true },
                     { data: "step_no", name: "step_no", visible: true },
                     {
@@ -296,9 +308,10 @@ $(function() {
     });
 });
 
-let date = document.querySelector("#dateAdjustment").value;
-let currentYear = document.querySelector("#year").value;
 function LockDepot() {
+    let date = document.querySelector("#dateAdjustment").value;
+    let currentYear = document.querySelector("#year").value;
+    let remarks = document.querySelector("#remarks").value;
     $("#saveBtn").attr("disabled", true);
     $("#loading").removeClass("d-none");
     if (selectedItemInAdjustmentPerOffice == "") {
@@ -312,7 +325,8 @@ function LockDepot() {
             data: {
                 ids: selectedItemInAdjustmentPerOffice.toString(),
                 date: date,
-                year: currentYear
+                year: currentYear,
+                remarks: remarks
             },
             success: function(response) {
                 if (response.success) {
@@ -326,6 +340,7 @@ function LockDepot() {
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
                     $("#selectAll").prop("checked", false);
+                    $("#remarks").val("");
                     selectedItemInAdjustmentPerOffice = [];
                 }
             },

@@ -5,8 +5,9 @@
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 @endprepend
 @prepend('meta-data')
-<meta id="plantillaPositionMetaData" content="@foreach($plantillaPosition as $plantillaPositions){ |officeCode|:|{{ $plantillaPositions->office_code }}|, |positionId|:|{{ $plantillaPositions->position_id }}|}, @endforeach">
+<meta id="plantillaPositionMetaData" content="@foreach($plantillaPositionAll as $plantillaPositionAlls){ |officeCode|:|{{ $plantillaPositionAlls->office_code }}|, |positionId|:|{{ $plantillaPositionAlls->position_id }}|, |ppId|:|{{ $plantillaPositionAlls->pp_id }}|}, @endforeach">
 <meta id="positionMetaData" content="@foreach($position as $positions){ |positionId|:|{{ $positions->position_id }}|, |positionName|:|{{ $positions->position_name }}|}, @endforeach">
+<meta id="divisionMetaData" content="@foreach($division as $divisions){ |officeCode|:|{{ $divisions->office_code }}|, |divisionId|:|{{ $divisions->division_id }}|, |divisionName|:|{{ $divisions->division_name }}|}, @endforeach">
 @endprepend
 @section('content')
 <div class="content">
@@ -98,9 +99,9 @@
                                 class="form-control selectpicker {{ $errors->has('divisionId')  ? 'is-invalid' : ''}}"
                                 name="divisionId" data-live-search="true" id="divisionId" data-size="5">
                                 <option></option>
-                                @foreach($office as $offices)
-                                <option {{ $plantilla->division_id == $offices->office_code ? 'selected' : '' }}
-                                    value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
+                                @foreach($division as $divisions)
+                                <option {{ $plantilla->division_id == $divisions->division_id ? 'selected' : '' }}
+                                    value="{{ $divisions->division_id }}">{{ $divisions->division_name }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('divisionId'))
@@ -115,18 +116,11 @@
                             <label>Position<span class="text-danger">*</span></label>
                             <select value="{{ old('positionTitle') }}"
                                 class="form-control form-control-xs selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
-                                name="positionTitle" data-live-search="true" id="positionTitle" data-width="100%">
+                                name="positionTitle" data-live-search="true" id="positionTitle" data-size="5" data-width="100%">
                                 <option></option>
                                 @foreach($plantillaPosition as $plantillaPositions)
-                                    @if ($plantilla->office_code == $plantillaPositions->office_code)
-                                        <option
-                                        {{ $plantilla->position_id == $plantillaPositions->position_id ? 'selected' : '' }}
-                                        value="{{ $plantillaPositions->position_id}}">
-                                        @foreach($position as $positions)
-                                        {{ $plantillaPositions->position_id == $positions->position_id ? $positions->position_name : '' }}
-                                        @endforeach
-                                        </option>
-                                    @endif
+                                <option {{ $plantilla->pp_id == $plantillaPositions->pp_id ? 'selected' : '' }} value="{{ $plantillaPositions->pp_id }}">
+                                    {{ $plantillaPositions->position->position_name }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('positionTitle'))
@@ -154,11 +148,10 @@
                         </div>
 
                         <div class="form-group col-12 col-lg-3">
-                            <label>Current SG Year<span class="text-danger">*</span></label>
-                            <select name="currentSgyear" id="currentSgyear" value="" class="select floating" disabled>
-                                {{ $year3 = date("Y",strtotime("-0 year")) }}
-                                <option value={{ $year3 }}>{{ $year3 }}</option>
-                            </select>
+                            <label>Current Salary Grade Year<span class="text-danger">*</span></label>
+                                <input value="{{ old('currentSgyear') ?? $plantilla->year }}"
+                                class="form-control {{ $errors->has('currentSgyear')  ? 'is-invalid' : ''}}" name="currentSgyear"
+                                id="num-only" type="text" placeholder="Item No.">
                             @if($errors->has('currentSgyear'))
                             <small class="form-text text-danger">
                                 {{ $errors->first('currentSgyear') }} </small>

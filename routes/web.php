@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 
 
 
-
 // Route::get('open-app/{employee_id}', function (string $employeeId) {
 
 // });
@@ -17,10 +16,11 @@ Route::get('/employee-dashboard', function () {
     return view('employee-dashboard');
 });
 
-Route::get('/', function () {
-    return view('blank-page');
+Route::get('/login', function () {
+    return view('login');
 });
 
+Route::get('/', 'DashboardController@index');
 
 //maintenance salary grade
 Route::get('/salary-grade-list', 'SalaryGradecontroller@list')->name('salary-grade-list');
@@ -74,6 +74,11 @@ Route::get('/salary-adjustment-per-office/{id}', 'SalaryAdjustmentPerOfficeContr
 Route::get('/service-records/{id}', 'ServiceRecordsController@destroy')->name('service-records.delete');
 Route::resource('/service-records', 'ServiceRecordsController');
 Route::get('/service-records-list', 'ServiceRecordsController@list');
+Route::get('/print-service-records/{id}/previewed', 'PrintServiceRecordsController@print')->name('service-records.previewed.print');
+Route::get('/print-service-records/{id}', 'PrintServiceRecordsController@printList')->name('print-service-records');
+
+Route::get('employees-birthdays/{from}/{to}', 'BirthdayController@range');
+Route::resource('employees-birthday', 'BirthdayController');
 
 Route::group(['prefix' => 'employee'], function () {
     Route::get('/record', 'EmployeeController@index')->name('employee.index');
@@ -115,8 +120,13 @@ Route::group(['prefix' => 'employee'], function () {
     Route::resource('/leave-recall', 'EmployeeLeave\LeaveRecallController');
     Route::resource('/leave-forwarded-balance', 'EmployeeLeave\LeaveForwardedBalanceController');
     Route::resource('/compensatory-build-up', 'EmployeeLeave\CompensatoryBuildUpController');
+
 });
 // Route::resource('/print-increment', 'PrintIncrementController');
 Route::get('/profile', 'EmployeeController@profile');
 
 Route::get('/restore', 'RestoreController@index');
+
+// Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

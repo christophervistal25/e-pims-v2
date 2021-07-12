@@ -26,4 +26,12 @@ class PlantillaPosition extends Model
     {
         return $this->hasOne('App\Office', 'office_code', 'office_code');
     }
+    public function salaryAdjustment()
+    {
+        return $this->hasOne('App\SalaryAdjustment', 'pp_id', 'pp_id');
+    }
+    public function salary_grade()
+    {
+        return $this->hasOne(SalaryGrade::class, 'sg_no', 'sg_no');
+    }
 }

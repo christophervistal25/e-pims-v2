@@ -17,15 +17,16 @@ class CreateSalaryAdjustmentsTable extends Migration
             $table->id();
             $table->string('employee_id');
             $table->integer('item_no');
-            $table->bigInteger('position_id');
-            $table->date('date_adjustment');            
+            $table->bigInteger('pp_id');
+            $table->date('date_adjustment');
             $table->integer('sg_no');
             $table->integer('step_no');
-            $table->decimal('salary_previous',11,2);            
-            $table->decimal('salary_new',11,2);            
+            $table->decimal('salary_previous',11,2);
+            $table->decimal('salary_new',11,2);
             $table->decimal('salary_diff',11,2);
+            $table->string('remarks')->nullable();
             $table->timestamps();
-            $table->softDeletes()->nullable();  
+            $table->softDeletes()->nullable();
         });
     }
 

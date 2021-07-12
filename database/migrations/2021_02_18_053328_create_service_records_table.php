@@ -17,16 +17,16 @@ class CreateServiceRecordsTable extends Migration
             $table->id();
             $table->string('employee_id');
             $table->date('service_from_date');
-            $table->date('service_to_date');
+            $table->date('service_to_date')->nullable();
             $table->bigInteger('position_id');
             $table->string('status');
             $table->string('salary');
             $table->string('office_code');
-            $table->string('leave_without_pay');
-            $table->date('separation_date');
-            $table->string('separation_cause');
+            $table->string('leave_without_pay')->nullable();
+            $table->date('separation_date')->nullable();
+            $table->string('separation_cause')->nullable();
             $table->timestamps();
-            $table->softDeletes()->nullable();  
+            $table->softDeletes()->nullable();
         });
     }
 

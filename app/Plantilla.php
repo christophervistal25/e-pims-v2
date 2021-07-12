@@ -42,6 +42,7 @@ class Plantilla extends Model
         'office_code',
         'division_id',
         'status',
+        'year',
     ];
 
     protected $primaryKey = 'plantilla_id';
@@ -63,7 +64,11 @@ class Plantilla extends Model
 
     public function position()
     {
-        return $this->hasOne('App\Position', 'position_id', 'position_id');
+        return $this->hasOne('App\Position', 'position_id', 'pp_id');
+    }
+    public function plantillaPosition()
+    {
+        return $this->hasOne('App\PlantillaPosition', 'pp_id', 'pp_id');
     }
     public function salary_adjustment()
     {

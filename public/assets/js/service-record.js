@@ -139,13 +139,13 @@ $(function() {
                     { data: "office", name: "office" },
                     { data: "leave_without_pay", name: "leave_without_pay" },
                     { data: "separation_date", name: "separation_date" },
-                    { data: "separation_cause", name: "separation_cause" },
+                    {
+                        data: "separation_cause",
+                        name: "separation_cause"
+                    },
                     { data: "action", name: "action" }
                 ]
             });
-            // setInterval( function () {
-            //     table.ajax.reload();
-            // }, 5000 );
         }
     });
 });
@@ -175,6 +175,8 @@ function ValidateDropDown(dd) {
     if (dd.value == "") {
         document.getElementById("line").style.visibility = "visible";
     } else {
+        document.getElementById("printPreviewA").setAttribute('href','print-service-records/' + dd.value);
+        document.getElementById("printPreview").removeAttribute('disabled');
         document.getElementById("line").style.visibility = "hidden";
     }
     $("input").val("");
@@ -207,7 +209,6 @@ $(document).ready(function() {
         }
     });
 });
-
 //// add salary adjustment
 $(document).ready(function() {
     $("#serviceRecordForm").submit(function(e) {
