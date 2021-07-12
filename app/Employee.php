@@ -80,7 +80,7 @@ class Employee extends Model
             $employee->trans_no = str_pad((self::count() + 1), 3, 0, STR_PAD_LEFT);
             Cache::forget('employees');
         });
-        
+
         self::created(function() {
             Cache::forget('employees');
         });
@@ -110,7 +110,7 @@ class Employee extends Model
     {
        return Province::find($this->residential_province, 'name')->name ?? 'N/A';
     }
-    
+
     public function getResidentialCityTextAttribute()
     {
        return City::find($this->residential_city, 'name')->name ?? 'N/A';
@@ -126,7 +126,7 @@ class Employee extends Model
     {
        return Province::find($this->permanent_province, 'name')->name ?? 'N/A';
     }
-    
+
     public function getPermanentCityTextAttribute()
     {
        return City::find($this->permanent_city, 'name')->name ?? 'N/A';
@@ -190,10 +190,15 @@ class Employee extends Model
     {
         $this->attributes['extension'] = Str::upper($value);
     }
-    
+
     public function plantilla()
     {
         return $this->hasOne(Plantilla::class, 'employee_id', 'employee_id');
+    }
+
+    public function PlantillaOfSchedule()
+    {
+        return $this->hasOne(PlantillaOfSchedule::class, 'employee_id', 'employee_id');
     }
 
 

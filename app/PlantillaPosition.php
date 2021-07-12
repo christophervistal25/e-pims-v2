@@ -34,4 +34,8 @@ class PlantillaPosition extends Model
     {
         return $this->hasOne(SalaryGrade::class, 'sg_no', 'sg_no');
     }
+    public function PlantillaOfSchedule()
+    {
+        return $this->belongsTo(PlantillaOfSchedule::class, 'pp_id', 'pp_id');
+    }
 }
