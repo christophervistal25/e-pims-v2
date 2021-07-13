@@ -4,6 +4,7 @@ $(function() {
         serverSide: true,
         ajax: "/plantilla-of-schedule-list",
         columns: [
+            { data: "plantilla_id", name: "plantilla_id" },
             {
                 data: "employee",
                 name: "employee.firstname",
@@ -34,7 +35,11 @@ $(function() {
                 searchable: false,
                 sortable: false
             }
-        ]
+        ],
+        rowId: "plantilla_id",
+        select: {
+            style: "multi"
+        }
     });
 
     $("#officePlantillaList").change(function(e) {
@@ -49,6 +54,7 @@ $(function() {
                     url: "/plantilla-of-schedule-list"
                 },
                 columns: [
+                    { data: "plantilla_id", name: "plantilla_id" },
                     {
                         data: "employee",
                         name: "employee.firstname",
@@ -92,6 +98,7 @@ $(function() {
                     url: `/api/plantilla/list/${e.target.value}`
                 },
                 columns: [
+                    { data: "plantilla_id", name: "plantilla_id" },
                     {
                         data: "employee",
                         name: "employee.firstname",
@@ -272,3 +279,45 @@ $(document).ready(function() {
         $("#table").attr("class", "page-header");
     });
 });
+//get all ids
+
+function LockDepot() {
+    let coveredYear = document.querySelector("#year").value;
+    $("#saveBtn").attr("disabled", true);
+    $("#loading").removeClass("d-none");
+    let ids = [];
+    $(".id__holder").each(function(key, element) {
+        if (element.getAttribute("data-id")) {
+            ids.push($(element).attr("data-id"));
+        }
+    });
+    if ((coveredYear == "") | (ids == "")) {
+        swal("Please Select Employee", "", "error");
+        $("#saveBtn").attr("disabled", false);
+        $("#loading").addClass("d-none");
+    } else {
+        $.ajax({
+            type: "POST",
+            url: `/api/plantilla/schedule/adjust`,
+            data: {
+                ids: ids.toString(),
+                coveredYear: coveredYear
+            },
+            success: function(response) {
+                if (response.success) {
+                    swal("Sucessfully Added!", "", "success");
+                    $("#plantillaList")
+                        .DataTable()
+                        .ajax.reload();
+                    $("#plantillaOfSchedule")
+                        .DataTable()
+                        .ajax.reload();
+                    $("#saveBtn").attr("disabled", false);
+                    $("#loading").addClass("d-none");
+                    ids = [];
+                }
+            },
+            error: function(response) {}
+        });
+    }
+}
