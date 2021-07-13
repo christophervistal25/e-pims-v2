@@ -63,7 +63,7 @@
                         </div>
                     </div>
                     <div class="form-group col-4">
-                    <button id="saveBtn" class="btn btn-success submit-btn float-right" onclick="LockDepot()" type="submit">
+                    <button id="saveBtn" class="btn btn-success submit-btn float-right" type="submit" onclick="LockDepot()">
                         <span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>
                         Post
                     </button>
@@ -75,6 +75,7 @@
                         <table class="table table-bordered text-center" id="plantillaList" style="width:100%;">
                             <thead>
                                 <tr>
+                                    <td scope="col" class="text-center font-weight-bold">ID</td>
                                     <td scope="col" class="text-center font-weight-bold">Employee Name</td>
                                     <td scope="col" class="text-center font-weight-bold">Position Title</td>
                                     <td scope="col" class="text-center font-weight-bold">Office</td>
@@ -103,9 +104,9 @@
                         </select>
             </div>
             <div class="col-2 mb-2">
-                <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('office')  ? 'is-invalid' : ''}}"
-                    name="office" data-live-search="true" id="office" data-size="5">
-                    <option value="All">All</option>
+                <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('yearFilter')  ? 'is-invalid' : ''}}"
+                    name="yearFilter" data-live-search="true" id="yearFilter" data-size="5">
+                    <option value="">All</option>
                     @foreach($PlantillaOfScheduleYear as $PlantillaOfScheduleYears)
                     <option data-plantilla="{{ $PlantillaOfScheduleYears->year }}" value="{{ $PlantillaOfScheduleYears->year }}">{{ $PlantillaOfScheduleYears->year }}</option>
                     @endforeach

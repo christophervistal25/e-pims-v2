@@ -11,6 +11,7 @@ class PlantillaOfSchedule extends Model
         'plantilla_id',
         'old_item_no',
         'item_no',
+        'pp_id',
         'position_id',
         'position_ext',
         'sg_no',

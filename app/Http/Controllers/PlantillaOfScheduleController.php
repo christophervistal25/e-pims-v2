@@ -48,7 +48,7 @@ class PlantillaOfScheduleController extends Controller
                         return $row->office->office_short_name;
                     })
                     ->addColumn('action', function($row){
-                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm'><i class='la la-edit'></i></a>";
+                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm id__holder' data-id='".$row['plantilla_id']."'><i class='la la-edit'></i></a>";
                             return $btn;
                     })
                     ->rawColumns(['action'])

@@ -249,7 +249,7 @@ Route::get('/plantilla/list/{officeCode}', function ($office_code) {
                         return $row->office->office_short_name;
                     })
                     ->addColumn('action', function($row){
-                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm'><i class='la la-edit'></i></a>";
+                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm id__holder' data-id='".$row['plantilla_id']."'><i class='la la-edit'></i></a>";
                             return $btn;
                     })
                     ->rawColumns(['action'])
@@ -297,4 +297,35 @@ Route::get('/maintenance/division/{officeCode}', function ($office_code) {
     ->make(true);
 });
 
+
+Route::post('/plantilla/schedule/adjust', function () {
+    $plantillaIds = explode(',', request()->ids);
+    $data = Plantilla::whereIn('plantilla_id', $plantillaIds)->get();
+    $newSchedcule = $data->toArray();
+    foreach($data as $newSchedcule){
+            PlantillaOfSchedule::FirstOrCreate([
+                'employee_id' => $newSchedcule->employee_id,
+                'year' => $newSchedcule->year,
+            ],[
+            'plantilla_id' => $newSchedcule->plantilla_id,
+            'old_item_no' => $newSchedcule->old_item_no,
+            'item_no' => $newSchedcule->item_no,
+            'pp_id' => $newSchedcule->pp_id,
+            'sg_no' => $newSchedcule->sg_no,
+            'step_no' => $newSchedcule->step_no,
+            'salary_amount' => $newSchedcule->salary_amount,
+            'employee_id' => $newSchedcule->employee_id,
+            'area_code' => $newSchedcule->area_code,
+            'area_type' => $newSchedcule->area_type,
+            'area_level' => $newSchedcule->area_level,
+            'date_original_appointment' => $newSchedcule->date_original_appointment,
+            'date_last_promotion' => $newSchedcule->date_last_promotion,
+            'office_code' => $newSchedcule->office_code,
+            'division_id' => $newSchedcule->division_id,
+            'status' => $newSchedcule->status,
+            'year' => $newSchedcule->year,
+        ]);
+    }
+    return response()->json(['success'=>true]);
+});
 
