@@ -1,5 +1,6 @@
 <?php
 
+use App\Holiday;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,8 +13,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            LeaveTypeSeeder::class,
             RefNameExtensionSeeder::class,
-            TypeSeeder::class,
             RefStatusSeeder::class,
             // EmployeeSeeder::class,
             OfficeSeeder::class,
@@ -24,6 +25,7 @@ class DatabaseSeeder extends Seeder
             BarangaySeeder::class,
             SettingSeeder::class,
             // PlantillaSeeder::class,
+            HolidaySeeder::class,
             ]);
     }
 }

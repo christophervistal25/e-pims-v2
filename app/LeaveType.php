@@ -6,6 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class LeaveType extends Model
 {
+    protected $fillable = [
+        'name',
+        'code',
+        'description',
+        'days_period',
+        'convertible_to_cash',
+        'applicable_gender',
+        'required_rendered_service',
+        'editable',
+    ];
+    
     public function getRequiredRenderedServiceAttribute($value)
     {
         return $value;
