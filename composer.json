@@ -14,8 +14,10 @@
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
+        "laravel/ui": "2.4",
         "phpoffice/phpspreadsheet": "^1.17",
         "royopa/ms-access-dbal-driver": "dev-master",
+        "spatie/laravel-permission": "^4.2",
         "yajra/laravel-datatables": "^1.5"
     },
     "require-dev": {
