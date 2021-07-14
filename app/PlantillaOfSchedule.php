@@ -50,5 +50,10 @@ class PlantillaOfSchedule extends Model
         return $this->hasOne('App\PlantillaPosition', 'pp_id', 'pp_id');
     }
 
+    public function plantilla()
+    {
+        return $this->hasOne('App\Plantilla', 'plantilla', 'plantilla');
+    }
+
 
 }

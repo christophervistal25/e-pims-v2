@@ -28,9 +28,8 @@
                 </div>
                     <div class="row">
 
-                        <div class="col-12">
-                            <div class="alert alert-secondary text-center font-weight-bold">
-                                    <h5>Create Plantilla Schedule</h5>
+                        <div class="col-12 mb-2">
+                            <div class="alert alert-secondary text-center font-weight-bold" role="alert">CREATE PLANTILLA SCHEDULE
                             </div>
                         </div>
 
@@ -46,22 +45,18 @@
 
                     <div class="form-group col-4">
                         <label class="has-float-label mb-0">
-                        <select value=""
-                            class="form-control selectpicker  {{ $errors->has('year')  ? 'is-invalid' : ''}}"
-                            name="year" data-live-search="true" id="year" data-size="4"
-                            data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <option></option>
-                            @foreach($plantillaYear as $plantillaYears)
-                            <option data-position="{{ $plantillaYears }}" style="width:350px;"
-                                {{ old('year') == $plantillaYears->year ? 'selected' : '' }}
-                                value="{{ $plantillaYears->year}}">{{ $plantillaYears->year }}</option>
-                            @endforeach
-                        </select>
-                        <span class="font-weight-bold">COVERED YEAR<span class="text-danger">*</span></span>
-                    </label>
-                        <div id='position-title-error-message' class='text-danger text-sm'>
+                        <input value="{{ Carbon\Carbon::now()->format('Y') }}"
+                            class="form-control {{ $errors->has('year')  ? 'is-invalid' : ''}}" name="year"
+                            id="year" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;" readonly>
+                            <span class="font-weight-bold">CURRENT YEAR<span class="text-danger">*</span></span>
+                        </label>
+                        <div id='item-error-message' class='text-danger text-sm'>
                         </div>
                     </div>
+
+
+
+
                     <div class="form-group col-4">
                     <button id="saveBtn" class="btn btn-success submit-btn float-right" type="submit" onclick="LockDepot()">
                         <span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>
@@ -75,7 +70,6 @@
                         <table class="table table-bordered text-center" id="plantillaList" style="width:100%;">
                             <thead>
                                 <tr>
-                                    <td scope="col" class="text-center font-weight-bold">ID</td>
                                     <td scope="col" class="text-center font-weight-bold">Employee Name</td>
                                     <td scope="col" class="text-center font-weight-bold">Position Title</td>
                                     <td scope="col" class="text-center font-weight-bold">Office</td>
