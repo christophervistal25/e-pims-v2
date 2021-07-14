@@ -11,6 +11,9 @@ class LeaveStartingBalanceController extends Controller
     {
         return view('leave.leave-starting-balance');
     }
+
+
+    
 }
 
 

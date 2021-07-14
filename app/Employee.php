@@ -298,4 +298,12 @@ class Employee extends Model
     {
         return $this->hasOne(StepIncrement::class, 'employee_id', 'employee_id');
     }
+
+    // LEAVE BALANCE //
+    public function leave_balances()
+    {
+        return $this->hasOne(EmployeeLeaveBalance::class, 'employee_id', 'employee_id');
+    }
+
+    
 }
