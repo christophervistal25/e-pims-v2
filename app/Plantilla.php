@@ -74,4 +74,8 @@ class Plantilla extends Model
     {
         return $this->hasOne(SalaryAdjustment::class, 'employee_id', 'employee_id');
     }
+    public function PlantillaOfSchedule()
+    {
+        return $this->belongsTo(PlantillaOfSchedule::class, 'plantilla_id', 'plantilla_id');
+    }
 }

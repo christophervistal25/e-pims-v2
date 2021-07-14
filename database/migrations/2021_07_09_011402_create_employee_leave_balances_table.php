@@ -17,7 +17,9 @@ class CreateEmployeeLeaveBalancesTable extends Migration
             $table->id();
             $table->unsignedInteger('leave_type_id');
             $table->unsignedInteger('remaining');
+            $table->unsignedInteger('used');
             $table->unsignedInteger('employee_id');
+            $table->date('fb_as_of');
             $table->timestamps();
         });
     }

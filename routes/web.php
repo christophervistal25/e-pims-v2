@@ -123,6 +123,7 @@ Route::group(['prefix' => 'employee'], function () {
 });
 
 Route::group(['prefix' => 'maintenance'], function () {
+        Route::get('leave/list', 'Maintenance\LeaveController@list');
         Route::resource('leave', 'Maintenance\LeaveController');
 });
 Route::get('holiday/list', 'HolidayController@list');

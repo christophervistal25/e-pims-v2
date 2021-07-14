@@ -190,7 +190,7 @@
                 </div>
                 <div class="col-6 mb-2">
                     <div class="float-right">
-                            <a id="printPreviewA" onclick="printPreview();"><button class="btn btn-secondary" id="printPreview" disabled="true"><i class="la la-print"></i>&nbsp; Print Preview</button></a>&nbsp;&nbsp;
+                            <a id="printPreviewA"><button class="btn btn-secondary" id="printPreview" disabled="true" style="visibility:hidden;"><i class="la la-print"></i>&nbsp; Print Preview</button></a>&nbsp;&nbsp;
                         <button id="addbutton" class="btn btn-primary float-right" disabled><i class="fa fa-plus"></i>
                             Add Service Records</button>
                     </div>
