@@ -114,6 +114,7 @@ Route::group(['prefix' => 'employee'], function () {
     Route::post('/exists/personal/issued/id', 'PersonalDataSheetController@existingEmployeeStoreIssuedID');
 
     Route::get('/leave/application', 'EmployeeLeave\LeaveController@show')->name('leave.application.filling');
+    Route::get('leave/leave-list', 'EmployeeLeave\LeaveListController@index')->name('leave.leave-list');
     Route::get('leave/leave-recall', 'EmployeeLeave\LeaveRecallController@index')->name('leave.leave-recall');
     Route::resource('leave-starting-balance', 'EmployeeLeave\LeaveStartingBalanceController');
     Route::resource('/leave-monitoring', 'EmployeeLeave\LeaveMonitoringController');

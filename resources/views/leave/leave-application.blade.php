@@ -12,48 +12,22 @@
     <div class="col-lg-3">
         <div class="card">
             <div class="card-body">
-                <h3 class="card-title text-center text-sm">Search Options</h3>
-                <div class="checkbox">
-                    <label class="checkbox-inline no_indent text-sm" for="individual">
-                        <input type="checkbox" name="individual" id="individual"
-                            style="transform: scale(1.2)">Individual
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label class="checkbox-inline no_indent text-sm" for="officename">
-                        <input type="checkbox" name="officename" id="officename" style="transform: scale(1.2)">Office /
-                        Department
-                    </label>
-                </div>
-                <hr class="mt-1">
+                <h3 class="card-title text-center text-sm">Filters</h3>
                 <label for="officelist" class="form-group has-float-label mb-0">
                     <select name="officelist" type="text" id="officelist" class="form-control"
                         style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                        <option readonly selected>Select Office Name</option>
+                        <option readonly selected>All Office</option>
                         <option>Office Name I</option>
                     </select>
-                    <span>Office Name</span>
+                    <span>Offices</span>
                 </label>
                 <hr>
-                <label for="filteropt" class="form-group has-float-label mb-0">
-                    <select name="filteropt" type="text" id="filteropt" class="form-control"
-                        style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                        <option readonly selected>Active</option>
-                        <option>Active</option>
-                    </select>
-                    <span>Filter Options</span>
-                </label>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <div class="card-title text-center text-sm mb-4">Search Employee</div>
                 <div class="row">
                     <div class="col-lg-10 pr-0">
                         <label for="empName" class="form-group has-float-label">
                             <input class="form-control" type="text" id="empName"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>Name of Employee</strong></span>
+                            <span><strong>Search by Employee</strong></span>
                         </label>
                     </div>
                     <div class="col-lg-2 pl-0">
@@ -64,7 +38,8 @@
         </div>
     </div>
     <div class="col-lg-9">
-        <div class="card shadow">
+        <div id="leaveApplication" class="card shadow">
+            
             <div class="card-body">
                 <div class="alert alert-secondary text-center font-weight-bold">LEAVE APPLICATION FILING</div>
                 <hr>
@@ -126,7 +101,6 @@
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <span><strong>PLEASE SPECIFY:</strong></span>
                         </label>
-
                     </div>
                     <div class="col-lg-4">
                         <h6 class="text-sm text-center">Leave Balance</h6>
@@ -173,7 +147,6 @@
                         </label>
                     </div>
                     <div class="col-lg-4">
-                        <div class="bg-danger shadow w-50 h-50 mx-auto mt-4"></div>
                         <div class="card mt-5 shadow">
                             <div class="card-body">
                                 <h6 class="text-center mt-3">Inclusive Dates</h6>
@@ -217,37 +190,39 @@
 
                     </div>
                 </div>
-                <div class="col-lg-8">
-                    <label for="commutation" class="form-group has-float-label">
-                        <select class="form-control" id="commutation"
-                            style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <option readonly selected value="">REQUESTED</option>
-                            <option value="">NOT REQUESTED</option>
-                        </select>
-                        <span><strong>COMMUTATION<span class="text-danger">*</span></strong></span>
-                    </label>
-                    <label for="recoApproval" class="form-group has-float-label">
-                        <select class="custom-select" name="recoApproval" id="recoApproval"
-                            style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <option value="">-----</option>
-                        </select>
-                        <span><strong>RECOMMENDING APPROVAL<span class="text-danger">*</span></strong></span>
-                    </label>
-                    <label for="approveBy" class="form-group has-float-label">
-                        <select class="custom-select" name="approveBy" id="approveBy"
-                            style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <option value="">-----</option>
-                        </select>
-                        <span><strong>APPROVED BY<span class="text-danger">*</span></strong></span>
-                    </label>
-                    <label for="appStatus" class="form-group has-float-label">
-                        <select name="appStatus" class="custom-select" id="appStatus"
-                            style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <option value="approved">APPROVED</option>
-                            <option value="pending">PENDING</option>
-                        </select>
-                        <span><strong>APPLICATION STATUS<span class="text-danger">*</span></strong></span>
-                    </label>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <label for="commutation" class="form-group has-float-label">
+                            <select class="form-control" id="commutation"
+                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <option readonly selected value="">REQUESTED</option>
+                                <option value="">NOT REQUESTED</option>
+                            </select>
+                            <span><strong>COMMUTATION<span class="text-danger">*</span></strong></span>
+                        </label>
+                        <label for="recoApproval" class="form-group has-float-label">
+                            <select class="custom-select" name="recoApproval" id="recoApproval"
+                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <option value="">-----</option>
+                            </select>
+                            <span><strong>RECOMMENDING APPROVAL<span class="text-danger">*</span></strong></span>
+                        </label>
+                        <label for="approveBy" class="form-group has-float-label">
+                            <select class="custom-select" name="approveBy" id="approveBy"
+                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <option value="">-----</option>
+                            </select>
+                            <span><strong>APPROVED BY<span class="text-danger">*</span></strong></span>
+                        </label>
+                        <label for="appStatus" class="form-group has-float-label">
+                            <select name="appStatus" class="custom-select" id="appStatus"
+                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <option value="approved">APPROVED</option>
+                                <option value="pending">PENDING</option>
+                            </select>
+                            <span><strong>APPLICATION STATUS<span class="text-danger">*</span></strong></span>
+                        </label>
+                    </div>
                 </div>
                 <div class="float-start">
                     <button type="button" class="text-white shadow btn btn-primary ml-3"><i
@@ -258,60 +233,6 @@
                         </i> Print</button>
                 </div>
 
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <div class="col-lg-12">
-                    <table class="table table-hover">
-                        <tr>
-                            <th class="text-center">Name of Employee</th>
-                            <th class="text-center">Date Filed</th>
-                            <th class="text-center">Control Number</th>
-                            <th class="text-center">Leave Type</th>
-                            <th class="text-center">Days</th>
-                            <th class="text-center">Status</th>
-                            <th class="text-center">Actions</th>
-                        </tr>
-                        <tbody>
-                            <tr>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">
-                                    <div class="dropdown action-label">
-                                        <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#"
-                                            data-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i
-                                                    class="fa fa-dot-circle-o text-purple"></i> New</a>
-                                            <a class="dropdown-item" href="#"><i
-                                                    class="fa fa-dot-circle-o text-info"></i> Pending</a>
-                                            <a class="dropdown-item" href="#" data-toggle="modal"
-                                                data-target="#approve_leave"><i
-                                                    class="fa fa-dot-circle-o text-success"></i> Approved</a>
-                                            <a class="dropdown-item" href="#"><i
-                                                    class="fa fa-dot-circle-o text-danger"></i> Declined</a>
-                                        </div>
-                                    </div>
-                                </td>
-                                </td>
-                                <td class="text-center">
-                                    <button class="btn btn-sm rounded-circle shadow btn-success"><i
-                                            class="fa fa-edit"></i></button>
-                                    &nbsp;
-                                    <button class="btn btn-danger btn-sm rounded-circle shadow"><i
-                                            class="fa fa-trash"></i></button>
-                                </td>
-
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </div>
     </div>
