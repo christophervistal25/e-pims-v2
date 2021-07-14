@@ -26,7 +26,7 @@
 </div>
 <div class="clearfix"></div>
 
-<div class="col-12 card" id='main-container'>
+<div class="col-12 card" id="main-container">
     <div class="card-header pl-5 pr-5" id="headingOne" contenteditable="true">
         {{-- HEADING --}}
         <div class="body-container row">
@@ -34,14 +34,14 @@
             <div class="w-25">
                 <img src="/assets/img/sdslogo.jpg" width="165px" style="margin-right: 100px">
             </div>
-            <div class="" style="margin-left: 30px">
+            <div class="" style="margin-left: 25px">
                 <span class="h4">Republic of the Philippines</span>
                 <h3>PROVINCE OF SURIGAO DEL SUR</h3>
                 <h4>TANDAG</h4>
                 <br>
                 <h1>Office of the Governor</h1>
             </div>
-            <hr size="8" style="width: 86%;text-align: center" color="black">
+            <hr size="8" style="width: 86%;text-align: center; border: solid black;">
             <br>
         </div>
         <div class="text-center">
@@ -74,19 +74,19 @@
             <br>
             <span class="text text-md mt-3 pl-5">Basic Salary as of
                 {{ Carbon\Carbon::parse($stepIncrement->date_step_increment)->format( 'F d, Y' ) }}</span><span
-                class="text text-md" style="padding: 187px">&#8369; {{ number_format($stepIncrement->salary_amount_from, 2, ".", ",") }}</span>
+                class="text text-md" style="padding: 227px">&#8369; {{ number_format($stepIncrement->salary_amount_from, 2, ".", ",") }}</span>
             <p class="text text-md pl-5">Salary Adjustment:</p>
             <span style="padding-left: 100px">a) Merit &nbsp &nbsp &nbsp &nbsp( &nbsp</span><span class="boxing">&nbsp
                 &nbsp &nbsp &nbsp</span><span>Step/s)</span>
             <br>
             <span style="padding-left: 100px">b) Length of Service {{ $stepIncrement->sg_no_to }} /
-                {{ $stepIncrement->step_no_to }} Step/s</span><span style="padding: 120px">&#8369;
+                {{ $stepIncrement->step_no_to }} Step/s</span><span style="padding: 160px">&#8369;
                 {{ number_format($stepIncrement->salary_diff, 2, ".", ",") }}</span>
             <br>
             <br>
             <span class="text text-md pl-5">Adjusted Salary effective
                 {{ Carbon\Carbon::parse($stepIncrement->date_step_increment)->format( 'F d, Y' ) }}</span><span
-                style="padding-left: 134px; text-decoration: underline">&#8369; {{ number_format($stepIncrement->salary_amount_to, 2, ".", ",") }}</span>
+                style="padding-left: 174px; text-decoration: underline">&#8369; {{ number_format($stepIncrement->salary_amount_to, 2, ".", ",") }}</span>
             <br>
             <br>
             <span class="text text-md pl-5">This Step Increment is subject for review and post-audit by the Department
@@ -96,7 +96,7 @@
             <br><br><br><br>
             <div class="mr-5 float-right">
                 <p class="mb-5">Very truly yours,</p>
-                <h4 class="mt-2"><b>ALEXANDER T. PIMENTEL</b></h4>
+                <h4 style="margin-top: 100px;"><b>ALEXANDER T. PIMENTEL</b></h4>
                 <h5 class="ml-5">&nbsp Provincial Governor</h5>
             </div>
 
