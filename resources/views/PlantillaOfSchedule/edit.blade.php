@@ -16,7 +16,7 @@
     <div class="kanban-board card mb-0">
         <div class="card-body">
             <div id="add" class="page-header {{  count($errors->all())  !== 0 }}">
-                <form action="" method="post"
+                <form action="{{ route('plantilla-of-schedule.update', $plantillaSchedule->ps_id) }}" method="post"
                     id="plantillaScheduleEditForm">
                     @csrf
                     @method('PUT')
@@ -24,7 +24,7 @@
 
                         <div class="col-12">
                             <div class="alert alert-secondary text-center font-weight-bold" role="alert">EDIT PLANTILLA
-                                Schedule</div>
+                                SCHEDULE</div>
                         </div>
 
                         <div class="form-group col-12 col-lg-10">

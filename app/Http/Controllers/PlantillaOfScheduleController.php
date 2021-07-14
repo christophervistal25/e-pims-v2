@@ -13,6 +13,7 @@ use App\PlantillaPosition;
 use App\SalaryGrade;
 use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\Session;
 class PlantillaOfScheduleController extends Controller
 {
     /**
@@ -150,9 +151,45 @@ class PlantillaOfScheduleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $ps_id)
     {
-        //
+        $this->validate($request, [
+            'itemNo'                        => 'required',
+            'positionTitle'                 => 'required',
+            'employeeId'                  => 'required',
+            'salaryGrade'                   => 'required|in:' . implode(',',range(1, 33)),
+            'stepNo'                        => 'required|in:' . implode(',',range(1, 8)),
+            'currentSgyear'                  => 'required',
+            'salaryAmount'                  => 'required|numeric',
+            'officeCode'                    => 'required|in:' . implode(',',range(10001, 10056)),
+            'divisionId'                    => 'required',
+            'originalAppointment'           => 'required',
+            'lastPromotion'                 => 'required|after:originalAppointment',
+            'status'                        => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
+            'areaCode'                      => 'required|in:' . implode(',', Plantilla::REGIONS),
+            'areaType'                      => 'required|in:Region,Province,District,Municipality,Foreign Post',
+            'areaLevel'                     => 'required|in:K,T,S,A',
+        ]);
+        $plantilla                         = PlantillaOfSchedule::find($ps_id);
+        $plantilla->item_no                = $request['itemNo'];
+        $plantilla->old_item_no            = $request['oldItemNo'];
+        $plantilla->pp_id                  = $request['positionTitle'];
+        $plantilla->employee_id            = $request['employeeId'];
+        $plantilla->sg_no                  = $request['salaryGrade'];
+        $plantilla->step_no                = $request['stepNo'];
+        $plantilla->salary_amount          = $request['salaryAmount'];
+        $plantilla->office_code            = $request['officeCode'];
+        $plantilla->division_id            = $request['divisionId'];
+        $plantilla->date_original_appointment = $request['originalAppointment'];
+        $plantilla->date_last_promotion    = $request['lastPromotion'];
+        $plantilla->status                 = $request['status'];
+        $plantilla->area_code              = $request['areaCode'];
+        $plantilla->area_type              = $request['areaType'];
+        $plantilla->area_level             = $request['areaLevel'];
+        $plantilla->year             = $request['currentSgyear'];
+        $plantilla->save();
+        Session::flash('alert-success', 'Plantilla Schedule Updated Successfully');
+        return back()->with('success','Updated Successfully');
     }
 
     /**
