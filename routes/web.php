@@ -3,12 +3,6 @@
 use Illuminate\Support\Facades\Route;
 
 
-
-// Route::get('open-app/{employee_id}', function (string $employeeId) {
-
-// });
-
-
 Route::get('/print/pds/{employeeId}', 'EmployeePersonalDataSheetPrintController');
 
 
@@ -111,14 +105,20 @@ Route::group(['prefix' => 'employee'], function () {
     Route::post('/exists/personal/{employee}/references', 'PersonalDataSheetController@existingEmployeeStoreReferences');
     Route::post('/exists/personal/issued/id', 'PersonalDataSheetController@existingEmployeeStoreIssuedID');
 
+
     Route::get('/leave/application', 'EmployeeLeave\LeaveController@show')->name('leave.application.filling');
     Route::resource('leave-starting-balance', 'EmployeeLeave\LeaveStartingBalanceController');
     Route::resource('/leave-monitoring', 'EmployeeLeave\LeaveMonitoringController');
     Route::resource('/leave-recall', 'EmployeeLeave\LeaveRecallController');
     Route::resource('/leave-forwarded-balance', 'EmployeeLeave\LeaveForwardedBalanceController');
     Route::resource('/compensatory-build-up', 'EmployeeLeave\CompensatoryBuildUpController');
-
 });
+
+Route::group(['prefix' => 'maintenance'], function () {
+        Route::resource('leave', 'Maintenance\LeaveController');
+});
+Route::get('holiday/list', 'HolidayController@list');
+Route::resource('holiday', HolidayController::class);
 // Route::resource('/print-increment', 'PrintIncrementController');
 Route::get('/profile', 'EmployeeController@profile');
 
