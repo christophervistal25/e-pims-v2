@@ -7,6 +7,7 @@ use App\PlantillaPosition;
 use App\Plantilla;
 use App\PlantillaOfSchedule;
 use App\Division;
+use Carbon\Carbon;
 
 
 Route::get('/salarySteplist/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@salarySteplist');
@@ -235,7 +236,8 @@ Route::get('/plantilla/personnel/{officeCode}', function ($office_code) {
 
 // plantilla schedule list
 Route::get('/plantilla/list/{officeCode}', function ($office_code) {
-    $data = Plantilla::select('plantilla_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code)->orderBy('plantilla_id', 'DESC')->get();
+    $year = Carbon::now()->format('Y') - 1;
+    $data = Plantilla::select('plantilla_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code)->where('year' ,'=',  $year)->orderBy('plantilla_id', 'DESC')->get();
     return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('employee', function ($row) {
@@ -256,11 +258,17 @@ Route::get('/plantilla/list/{officeCode}', function ($office_code) {
                     ->make(true);
 });
 
-
-// plantilla of schedule
-Route::get('/plantilla/schedule/{officeCode}', function ($office_code) {
-    $data = PlantillaOfSchedule::select('ps_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code);
-    return Datatables::of($data)
+Route::get('/plantilla/schedule/{officeCode}/{filterYear}', function ($office_code, $filterYear) {
+    if($office_code == "All" && $filterYear == "All"){
+        $data = PlantillaOfSchedule::select('ps_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->orderBy('plantilla_id', 'DESC');
+    }elseif($filterYear == "All"){
+        $data = PlantillaOfSchedule::select('ps_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code);
+    }elseif($office_code == "All"){
+        $data = PlantillaOfSchedule::select('ps_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->where('year', $filterYear);
+    }else{
+        $data = PlantillaOfSchedule::select('ps_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code)->where('year', $filterYear);
+    }
+            return (new Datatables)->eloquent($data)
                     ->addIndexColumn()
                     ->addColumn('employee', function ($row) {
                         return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
@@ -302,6 +310,7 @@ Route::post('/plantilla/schedule/adjust', function () {
     $plantillaIds = explode(',', request()->ids);
     $data = Plantilla::whereIn('plantilla_id', $plantillaIds)->get();
     $newSchedcule = $data->toArray();
+    $newYear = request()->coveredYear;
     foreach($data as $newSchedcule){
             PlantillaOfSchedule::FirstOrCreate([
                 'employee_id' => $newSchedcule->employee_id,
@@ -325,6 +334,8 @@ Route::post('/plantilla/schedule/adjust', function () {
             'status' => $newSchedcule->status,
             'year' => $newSchedcule->year,
         ]);
+        $data = Plantilla::whereIn('plantilla_id', $plantillaIds)
+        ->update(['year' => $newYear]);
     }
     return response()->json(['success'=>true]);
 });

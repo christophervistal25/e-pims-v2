@@ -28,7 +28,7 @@ class PlantillaController extends Controller
     {
         $division = Division::select('division_id', 'division_name', 'office_code')->get();
         $plantillaEmp = Plantilla::get()->pluck('employee_id')->toArray();
-        $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->whereNotIn('employee_id', $plantillaEmp )->get();
+        $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->whereNotIn('employee_id', $plantillaEmp)->get();
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('position_id', 'position_name')->get();
         $plantillaPositionID = Plantilla::get()->pluck('pp_id')->toArray();
