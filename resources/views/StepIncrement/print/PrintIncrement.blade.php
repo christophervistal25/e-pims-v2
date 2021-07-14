@@ -46,7 +46,7 @@
                 <br>
                 <h1>Office of the Governor</h1>
             </div>
-            <hr size="8" width="88%" color="black">
+            <hr size="8" width="88%" style="border: solid black;">
             <br>
         </div>
         <div class="text-center">
@@ -100,7 +100,7 @@
             <br><br><br><br>
             <div class="mr-5 float-right">
                 <p class="mb-5">Very truly yours,</p>
-                <h4 class="mt-2"><b>ALEXANDER T. PIMENTEL</b></h4>
+                <h4 class="mt-5"><b>ALEXANDER T. PIMENTEL</b></h4>
                 <h5 class="ml-5">&nbsp Provincial Governor</h5>
             </div>
 

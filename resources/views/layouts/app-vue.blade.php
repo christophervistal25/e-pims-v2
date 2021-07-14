@@ -27,7 +27,9 @@
     <meta name="msapplication-TileImage" content="{{ asset('/assets/img/icons/ms-icon-144x144.png') }}">
     <meta name="theme-color" content="#ffffff">
     <title>@yield('title') | {{  config('app.name') }}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/css/line-awesome.min.css') }}">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -247,38 +249,37 @@
                             <span>Human Resource Module</span>
                         </li>
 
-                        
+
                         <li class="submenu">
                             <a href="#" class='text-decoration-none'><i class="la la-home"></i> <span> Leave Management
                                 </span> <span class="menu-arrow"></span></a>
                             <ul style="display: none;">
                                 <li>
-                                    <a class='text-decoration-none mr-2'
-                                        href="{{ route('leave.application.filling') }}">
+                                    <a class='text-decoration-none mr-2' href="{{ route('leave.application.filling') }}">
                                         Leave Application Filling</a>
-                                </li>
-                                <li>
-                                    <a class='text-decoration-none mr-2' href="#">
+                                    </li>
+								<li>
+                                    <a class='text-decoration-none mr-2' href="{{  route('leave-recall.index') }}">
                                         Leave Recall, Cancel or Transfer
                                     </a>
                                 </li>
-                                <li>
-                                    <a class='text-decoration-none mr-2' href="#">
+								<li>
+                                    <a class='text-decoration-none mr-2' href="{{  route('leave-monitoring.index') }}">
                                         Leave Monitoring Index
                                     </a>
                                 </li>
 
-                                <li>
-                                    <a class='text-decoration-none mr-2' href="#">
+								<li>
+                                    <a class='text-decoration-none mr-2' href="{{  route('leave-starting-balance.index') }}">
                                         Leave Starting Balance
                                     </a>
                                 </li>
-                                <li>
-                                    <a class='text-decoration-none mr-2' href="#">
+								<li>
+                                    <a class='text-decoration-none mr-2' href="{{  route('leave-forwarded-balance.index') }}">
                                         Leave Forwaded Balance
                                     </a>
                                 </li>
-                                <li>
+								<li>
                                     <a class='text-decoration-none mr-2' href="#">
                                         Compensatory Build-up
                                     </a>
@@ -286,17 +287,20 @@
                             </ul>
                         </li>
 
-                        
+
                         <li class="submenu">
-							<a href="#" class='text-decoration-none'><i class="la la-bookmark"></i> <span>Plantilla</span> <span class="menu-arrow"></span></a>
-							<ul style="display: none;">
-								<li>
-                                    <a class='text-decoration-none mr-2' href="{{  route('plantilla-of-position.index') }}">
+                            <a href="#" class='text-decoration-none'><i class="la la-bookmark"></i>
+                                <span>Plantilla</span> <span class="menu-arrow"></span></a>
+                            <ul style="display: none;">
+                                <li>
+                                    <a class='text-decoration-none mr-2'
+                                        href="{{  route('plantilla-of-position.index') }}">
                                         Plantilla of Position
                                     </a>
                                 </li>
                                 <li>
-                                    <a class='text-decoration-none mr-2' href="{{  route('plantilla-of-personnel.index') }}">
+                                    <a class='text-decoration-none mr-2'
+                                        href="{{  route('plantilla-of-personnel.index') }}">
                                         Plantilla of Personnel
                                     </a>
                                 </li>
@@ -306,43 +310,70 @@
                                     </a>
                                 </li>
                                 <li class="submenu">
-									<a  class='text-decoration-none' href="javascript:void(0);"> <span>Salary Adjustment</span> <span class="menu-arrow"></span></a>
-									<ul style="display: none;">
-										<li>
-                                            <a class='text-decoration-none' href="{{  route('salary-adjustment.index') }}">
+                                    <a class='text-decoration-none' href="javascript:void(0);"> <span>Salary
+                                            Adjustment</span> <span class="menu-arrow"></span></a>
+                                    <ul style="display: none;">
+                                        <li>
+                                            <a class='text-decoration-none'
+                                                href="{{  route('salary-adjustment.index') }}">
                                                 <span>Individual</span>
                                             </a>
-                                            <a class='text-decoration-none' href="{{  route('salary-adjustment-per-office.index') }}">
+                                            <a class='text-decoration-none'
+                                                href="{{  route('salary-adjustment-per-office.index') }}">
                                                 <span>Per Office</span>
                                             </a>
                                         </li>
-									</ul>
-								</li>
-							</ul>
+                                    </ul>
+                                </li>
+                            </ul>
 
-                            <li class="submenu">
-                                <a href="#" class='text-decoration-none'><i class="la la-bars"></i> <span>Service Record</span> <span class="menu-arrow"></span></a>
-                                <ul style="display: none;">
-                                    <li>
-                                        <a class='text-decoration-none mr-2' href="{{  route('service-records.index') }}">
-                                            Maintenance & Monitoring
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                        <li class="submenu">
+                            <a href="#" class='text-decoration-none'><i class="la la-bars"></i> <span>Service
+                                    Record</span> <span class="menu-arrow"></span></a>
+                            <ul style="display: none;">
+                                <li>
+                                    <a class='text-decoration-none mr-2' href="{{  route('service-records.index') }}">
+                                        Maintenance & Monitoring
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-                            <li>
-                                <a class='text-decoration-none' href="{{ route('salary-grade.index') }}">
-                                    <i class="la la-money"></i> <span> Salary Grade </span>
-                                </a>
-                            </li>
+                        <li class="submenu">
+                            <a href="#" class='text-decoration-none'><i class="la la-cog"></i> <span>Maintenance</span>
+                                <span class="menu-arrow"></span></a>
+                            <ul style="display: none;">
+                                <li>
+                                    <a class='text-decoration-none' href="{{ route('salary-grade.index') }}">
+                                        Salary Grade
+                                    </a>
+                                    <a class='text-decoration-none mr-2'
+                                        href="{{ route('maintenance-position.index') }}">
+                                        Position
+                                    </a>
+                                    <a class='text-decoration-none mr-2' href="{{ route('maintenance-office.index') }}">
+                                        Office
+                                    </a>
+                                    <a class='text-decoration-none mr-2'
+                                        href="{{ route('maintenance-division.index') }}">
+                                        Division
+                                    </a>
+                                    <a class='text-decoration-none mr-2' href="{{ route('holiday.index') }}">
+                                        Holiday
+                                    </a>
+                                    <a class='text-decoration-none mr-2' href="{{ route('leave.index') }}">
+                                        Leave
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-						</li>
+                        </li>
 
 
-                        
 
-                        
+
+
                     </ul>
                 </div>
             </div>
