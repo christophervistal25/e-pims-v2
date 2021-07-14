@@ -91,7 +91,7 @@
                 <div style="padding-left:35px;" class="col-4 mb-2">
                     <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
                         name="officeCode" data-live-search="true" id="officeCode" data-size="5" >
-                        <option value="">All</option>
+                        <option value="All">All</option>
                         @foreach($office as $offices)
                         <option data-plantilla="{{ $offices->office_name }}" value="{{ $offices->office_code }}">{{ $offices->office_name }}</option>
                         @endforeach
@@ -100,7 +100,7 @@
             <div class="col-2 mb-2">
                 <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('yearFilter')  ? 'is-invalid' : ''}}"
                     name="yearFilter" data-live-search="true" id="yearFilter" data-size="5">
-                    <option value="">All</option>
+                    <option value="All">All</option>
                     @foreach($PlantillaOfScheduleYear as $PlantillaOfScheduleYears)
                     <option data-plantilla="{{ $PlantillaOfScheduleYears->year }}" value="{{ $PlantillaOfScheduleYears->year }}">{{ $PlantillaOfScheduleYears->year }}</option>
                     @endforeach
