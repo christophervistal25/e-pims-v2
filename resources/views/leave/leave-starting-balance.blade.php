@@ -9,7 +9,9 @@
 @endprepend
 @section('content')
 <div class="row">
-    <div class="col-lg-3">
+
+    {{-- Search Option Form --}}
+    {{-- <div class="col-lg-3">
         <div class="card">
             <div class="card-body">
                 <h3 class="card-title text-center text-sm">Search Option</h3>
@@ -27,25 +29,27 @@
                 </div>
                 <hr class="mt-1">
                 <label for="officelist" class="form-group has-float-label mb-0">
-                    <select name="officelist" type="text" id="officelist" class="form-control form-control-sm"
+                    <select name="officelist" type="text" id="officelist" class="form-control form-control-md"
                         style="outline: none; box-shadow: 0px 0px 0px transparent;">
                         <option readonly selected>Select Office Name</option>
                         <option>Office Name I</option>
                     </select>
-                    <span>Office Name</span>
+                    <span><strong>Office Name</strong></span>
                 </label>
                 <hr>
                 <label for="filteropt" class="form-group has-float-label mb-0">
-                    <select name="filteropt" type="text" id="filteropt" class="form-control form-control-sm"
+                    <select name="filteropt" type="text" id="filteropt" class="form-control form-control-md"
                         style="outline: none; box-shadow: 0px 0px 0px transparent;">
                         <option readonly selected>Active</option>
                         <option>Active</option>
                     </select>
-                    <span>Filter Option</span>
+                    <span><strong>Filter Option</strong></span>
                 </label>
             </div>
-        </div>
-        <div class="card">
+        </div> --}}
+
+        {{-- Search Employee Form --}}
+        {{-- <div class="card">
             <div class="card-body">
                 <div class="card-title text-center text-sm mb-4">Search Employee</div>
                 <div class="row">
@@ -62,8 +66,10 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-9">
+    </div> --}}
+
+    {{-- Starting Leave Balance Form --}}
+    <div class="col-lg-12">
         <div class="card shadow">
             <div class="card-body">
                 <div class="alert alert-secondary text-center" role="alert"><strong
@@ -72,21 +78,31 @@
                 <hr>
                 <div class="row">
                     <div class="col-lg-9">
-                        <label for="name" class="form-group has-float-label">
-                            <input type="text" name="name" id="name" class="form-control" placeholder=""
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>NAME<span class="text-danger">*</span></strong></span>
-                        </label>
+                        <div class="">
+                            <label for="name" class="form-group has-float-label">
+                                <select class="form-control selectpicker" value="" data-live-search="true"
+                                name="employeeName" id="employeeName" data-size="6" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <option>Search name here</option>
+                                <option data-plantilla="" value=""></option>
+                                </select>
+                                <span><strong>EMPLOYEE NAME<span class="text-danger">*</span></strong></span>
+                            </label>
+                        </div>
 
-                        <label for="office" class="form-group has-float-label">
-                            <input type="text" name="office" id="office" class="form-control" placeholder=""
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>OFFICE<span class="text-danger">*</span></strong></span>
-                        </label>
+                        <div class="">
+                            <label for="name" class="form-group has-float-label">
+                                <select class="form-control selectpicker" value="" data-live-search="true"
+                                name="employeeName" id="officeName" data-size="6" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <option>Search office here</option>
+                                <option data-plantilla="" value=""></option>
+                                </select>
+                                <span><strong>OFFICE<span class="text-danger">*</span></strong></span>
+                            </label>
+                        </div>
 
                         <label for="position" class="form-group has-float-label">
                             <input type="text" name="position" id="position" class="form-control" placeholder=""
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                style="outline: none; box-shadow: 0px 0px 0px transparent;" readonly>
                             <span><strong>POSITION<span class="text-danger">*</span></strong></span>
                         </label>
                     </div>
@@ -100,7 +116,7 @@
                     <div class="col-lg-3">
                         <label for="dateStart" class="form-group has-float-label">
                             <input type="date" name="dateStart" id="dateStart" class="form-control" placeholder=""
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                style="outline: none; box-shadow: 0px 0px 0px transparent;" readonly>
                             <span><strong>DATE START<span class="text-danger">*</span></strong></span>
                         </label>
                     </div>
@@ -121,20 +137,20 @@
                 </div>
 
 
-
-                <div class="float-left">
-                    <button type="button" class="text-white shadow btn btn-primary"><i class="las la-user-plus"></i> New
-                        Record</button>
+                 {{-- BUTTONS --}}   
+                <div class="float-left mt-3 col-md g-2">
                     <button type="button" class="text-white shadow btn btn-success"><i class="lar la-save"></i> Save
-                        Changes</button>
-                    <button type="button" class="text-white px-5 shadow btn btn-dark"><i class="las la-print"></i>
-                        Print</button>
-                    <button type="button" class="text-white shadow btn btn-danger"><i
+                        Record</button>
+                    <button type="button" class="text-white shadow btn btn-warning"><i
                             class="las la-ban"></i> Cancel Record</button>
+                    <button type="button" class="text-white px-5 shadow btn btn-dark"><i class="las la-print"></i>
+                                Print</button>
                 </div>
             </div>
 
         </div>
+
+        {{-- YAJRA DATA TABLES --}}
         <div class="card">
             <div class="card-body">
                 <div class="col-lg-12">
@@ -152,7 +168,7 @@
                             <td class="text-center">1</td>
                             <td class="text-center">1</td>
                             <td class="text-center">
-                                <button class=' btn btn-sm rounded-circle shadow btn-success'>
+                                <button class=' btn btn-sm rounded-circle shadow btn-info'>
                                     <i class='fa fa-edit'></i>
                                 </button>
                                 &nbsp;
@@ -179,5 +195,9 @@
     </div> --}}
 @push('page-scripts')
 <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
+
+<script>
+    alert("Hello");
+</script>
 @endpush
 @endsection

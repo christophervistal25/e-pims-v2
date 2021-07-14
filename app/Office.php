@@ -80,5 +80,10 @@ class Office extends Model
         return $this->belongsTo(Division::class, 'office_code', 'office_code');
     }
 
+    public function employee_information()
+    {
+        return $this->belongsTo(Employee::class, 'office_code', 'office_code');
+    }
+
 
 }

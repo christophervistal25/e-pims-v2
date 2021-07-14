@@ -135,7 +135,12 @@ class PlantillaOfScheduleController extends Controller
         $arealevel = ['Please Select','K','T','S','A'];
         count($arealevel) - 1;
         $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->get();
-        return view('PlantillaOfSchedule.edit', compact('employee', 'plantillaSchedule', 'salarygrade', 'status','areacode','areatype','arealevel'));
+        $office = Office::select('office_code', 'office_name')->get();
+        $division = Division::select('division_id', 'division_name', 'office_code')->get();
+        $position = Position::select('position_id', 'position_name')->get();
+        $plantillaSchedulePositionIDAll = PlantillaOfSchedule::where('ps_id','!=',$ps_id)->get()->pluck('pp_id')->toArray();
+        $plantillaSchedulePositionAll = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->with('position:position_id,position_name')->whereNotIn('pp_id', $plantillaSchedulePositionIDAll )->get();
+        return view('PlantillaOfSchedule.edit', compact('employee', 'plantillaSchedule', 'salarygrade', 'status','areacode','areatype','arealevel','office','division','position','plantillaSchedulePositionAll'));
     }
 
     /**
