@@ -3,9 +3,21 @@
 @prepend('page-css')
 <script src="{{ asset('/js/app.js') }}" defer></script>
 <link rel="stylesheet"
-    href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
-<link rel="stylesheet"
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+<style>
+    @media only screen and (max-width: 700px) {
+    #button_group {
+        display :flex;
+        flex-direction: column;
+    }
+
+    #button_group > button {
+        margin : 5px 0px 0px 0px;
+        width : 82vw;
+    }
+    
+}
+</style>
 @endprepend
 @section('content')
 <div class="row">
@@ -172,7 +184,7 @@
                             <span><strong>Total VL - SL</strong></span>
                         </label>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" id="employee__image__container">
                         <div class="bg-danger shadow w-50 h-50 mx-auto mt-4"></div>
                         <div class="card mt-5 shadow">
                             <div class="card-body">
@@ -217,7 +229,7 @@
 
                     </div>
                 </div>
-                <div class="col-lg-8">
+                <div class="col-lg-8 col-sm-12 pl-0 pt-0">
                     <label for="commutation" class="form-group has-float-label">
                         <select class="form-control" id="commutation"
                             style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -249,13 +261,15 @@
                         <span><strong>APPLICATION STATUS<span class="text-danger">*</span></strong></span>
                     </label>
                 </div>
-                <div class="float-start">
-                    <button type="button" class="text-white shadow btn btn-primary ml-3"><i
+                <div class="row">
+                    <div class="col-auto" id="button_group">
+                        <button type="button" class="text-white shadow btn btn-primary"><i
                             class="las la-user-plus"></i> New Application</button>
-                    <button type="button" class="text-white shadow btn btn-success"><i class="lar la-save"></i> Save
+                            <button type="button" class="text-white shadow btn btn-success"><i class="lar la-save"></i> Save
                         Changes</button>
-                    <button type="button" class="text-white shadow btn btn-dark px-5"><i class="las la-print">
+                            <button type="button" class="text-white shadow btn btn-dark px-5"><i class="las la-print">
                         </i> Print</button>
+                    </div>
                 </div>
 
             </div>

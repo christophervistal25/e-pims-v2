@@ -5,8 +5,6 @@
 
 <link rel="stylesheet"
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
-<link rel="stylesheet"
-    href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 @endprepend
 @section('content')
 <div class="row">
