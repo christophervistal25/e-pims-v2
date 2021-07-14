@@ -67,4 +67,9 @@ class StepIncrement extends Model
         return $this->hasOne('App\Plantilla', 'employee_id', 'employee_id');
     }
 
+    public function service_record()
+    {
+        return $this->hasOne('App\service_record', 'employee_id', 'employee_id');
+    }
+
 }

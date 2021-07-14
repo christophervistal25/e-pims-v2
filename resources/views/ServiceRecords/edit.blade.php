@@ -24,7 +24,7 @@
 @include('ServiceRecords.add-ons.success')
 <div class="kanban-board card shadow mb-0">
     <div class="card-body">
-        <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  'd-none' : '' }}">
+        <div id="add" class="page-header">
 
             <form action="{{ route('service-records.update', $service_record->id) }}" method="post"
                 id="serviceRecordUpdateForm">
@@ -155,10 +155,10 @@
 
                     <div class="form-group col-12 col-lg-6">
                         <label class="has-float-label mb-0">
-                            <textarea value="{{ $service_record->separation_cause ?? old('cause') }}"
+                            <textarea value=""
                                 class="form-control {{ $errors->has('cause')  ? 'is-invalid' : ''}}" name="cause"
                                 id="cause" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;"
-                                rows="3"></textarea>
+                                rows="3">{{ $service_record->separation_cause ?? old('cause') }}</textarea>
                             <span class="font-weight-bold">CAUSE<span class="text-danger">*</span></span>
                         </label>
                         <div id='cause-error-message' class='text-danger'>

@@ -217,6 +217,15 @@
                 </div>
                 </div>
 
+                <div class="form-group col-12 col-lg-12 mt-4">
+                    <label class="has-float-label mb-0">
+                    <input value="{{ old('remarks') ??  $salaryAdjustment->remarks }}"
+                        class="form-control {{ $errors->has('remarks')  ? 'is-invalid' : ''}}"
+                        name="remarks" id="remarks" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                        <span class="font-weight-bold">REMARKS</span>
+                    </label>
+                </div>
+
                 <div class="form-group form-group submit-section col-12">
                     <button type="submit" class="btn btn-success submit-btn float-right shadow"><i
                             class="fas fa-check"></i> Update</button>

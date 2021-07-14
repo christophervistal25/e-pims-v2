@@ -32,6 +32,10 @@ Route::get('/maintenance-division-list', 'MaintenanceDivisionController@list')->
 Route::resource('/maintenance-division', 'MaintenanceDivisionController');
 Route::get('/maintenance-division/{id}', 'MaintenanceDivisionController@destroy')->name('maintenance-division.delete');
 
+//plantilla of schedule
+Route::resource('/plantilla-of-schedule', 'PlantillaOfScheduleController');
+Route::get('/plantilla-of-schedule-list', 'PlantillaOfScheduleController@list');
+Route::get('/plantilla-of-schedule-adjustedlist', 'PlantillaOfScheduleController@adjustedlist');
 
 //plantilla of personnel
 Route::get('/plantilla-list', 'Plantillacontroller@list');
@@ -68,6 +72,8 @@ Route::get('/salary-adjustment-per-office/{id}', 'SalaryAdjustmentPerOfficeContr
 Route::get('/service-records/{id}', 'ServiceRecordsController@destroy')->name('service-records.delete');
 Route::resource('/service-records', 'ServiceRecordsController');
 Route::get('/service-records-list', 'ServiceRecordsController@list');
+Route::get('/print-service-records/{id}/previewed', 'PrintServiceRecordsController@print')->name('service-records.previewed.print');
+Route::get('/print-service-records/{id}', 'PrintServiceRecordsController@printList')->name('print-service-records');
 
 Route::get('employees-birthdays/{from}/{to}', 'BirthdayController@range');
 Route::resource('employees-birthday', 'BirthdayController');
@@ -107,6 +113,7 @@ Route::group(['prefix' => 'employee'], function () {
 
 
     Route::get('/leave/application', 'EmployeeLeave\LeaveController@show')->name('leave.application.filling');
+    Route::get('leave/leave-recall', 'EmployeeLeave\LeaveRecallController@index')->name('leave.leave-recall');
     Route::resource('leave-starting-balance', 'EmployeeLeave\LeaveStartingBalanceController');
     Route::resource('/leave-monitoring', 'EmployeeLeave\LeaveMonitoringController');
     Route::resource('/leave-recall', 'EmployeeLeave\LeaveRecallController');

@@ -40,7 +40,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-10 col-lg-6">
+                        <div class="form-group col-10 col-lg-7">
                             <label class="has-float-label mb-0">
                             <select value=""
                                 class="form-control selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"

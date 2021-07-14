@@ -9,6 +9,8 @@ use App\PlantillaPosition;
 use App\SalaryAdjustment;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\SalaryGrade;
+use App\service_record;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -22,16 +24,16 @@ class SalaryAdjustmentController extends Controller
      */
     public function index()
     {
-
         $dates = SalaryAdjustment::get('date_adjustment')->pluck('date_adjustment')->map(function ($date) {
             return $date->format('Y');
         })->toArray();
         $dates = array_values(array_unique($dates));
         sort($dates);
+        $year = SalaryGrade::select('sg_year')->distinct()->get();
         $position = Position::select('position_id', 'position_name')->get();
         $salaryAdjustment = SalaryAdjustment::get()->pluck('employee_id')->toArray();
-        $employee = Plantilla::select('item_no', 'pp_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id')->with('employee:employee_id,firstname,middlename,lastname,extension','plantillaPosition', 'plantillaPosition.position','plantillaPosition:pp_id,position_id,office_code,item_no,sg_no')->whereNotIn('employee_id', $salaryAdjustment )->get();
-        return view('SalaryAdjustment.SalaryAdjustment', compact('employee', 'position', 'dates'));
+        $employee = Plantilla::select('item_no', 'pp_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id', 'year', 'status', 'office_code')->with('employee:employee_id,firstname,middlename,lastname,extension','plantillaPosition', 'plantillaPosition.position','plantillaPosition:pp_id,position_id,office_code,item_no,sg_no')->whereNotIn('employee_id', $salaryAdjustment )->get();
+        return view('SalaryAdjustment.SalaryAdjustment', compact('employee', 'position', 'dates', 'year'));
     }
 
     public function list(Request $request)
@@ -102,7 +104,7 @@ class SalaryAdjustmentController extends Controller
             'salaryNew'                           => 'required|numeric',
             'salaryDifference'                    => 'required|numeric',
         ]);
-        
+
         DB::table('salary_adjustments')->updateOrInsert(
             [
                 'employee_id' => $request['employeeId']
@@ -110,15 +112,26 @@ class SalaryAdjustmentController extends Controller
         [
             'employee_id'     => $request['employeeId'],
             'item_no'         => $request['itemNo'],
-            'position_id'     => $request['positionId'],
+            'pp_id'           => $request['positionId'],
             'date_adjustment' => $request['dateAdjustment'],
             'sg_no'           => $request['salaryGrade'],
             'step_no'         => $request['stepNo'],
             'salary_previous' => $request['salaryPrevious'],
             'salary_new'      => $request['salaryNew'],
             'salary_diff'     => $request['salaryDifference'],
+            'remarks'     => $request['remarks'],
             'deleted_at'      => null,
         ]);
+
+        $service_record                         = new service_record;
+        $service_record->employee_id            = $request['employeeId'];
+        $service_record->service_from_date      = $request['dateAdjustment'];
+        $service_record->position_id            = $request['positionId'];
+        $service_record->status                 = $request['status'];
+        $service_record->salary                 = $request['salaryNew'];
+        $service_record->office_code            = $request['officeCode'];
+        $service_record->separation_cause       =  $request['remarks'];
+        $service_record->save();
 
         return response()->json(['success'=>true]);
     }
@@ -179,6 +192,7 @@ class SalaryAdjustmentController extends Controller
         $salaryAdjustment->salary_previous = $request['salaryPrevious'];
         $salaryAdjustment->salary_new      = $request['salaryNew'];
         $salaryAdjustment->salary_diff     = $request['salaryDifference'];
+        $salaryAdjustment->remarks     = $request['remarks'];
         $salaryAdjustment->save();
         Session::flash('alert-success', 'Update Salary Adjustment Successfully');
         return back()->with('success','Updated Successfully');

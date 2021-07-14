@@ -275,11 +275,22 @@
                                         Plantilla of Position
                                     </a>
                                 </li>
-                                <li>
-                                    <a class='text-decoration-none mr-2' href="{{  route('plantilla-of-personnel.index') }}">
-                                        Plantilla of Personnel
-                                    </a>
-                                </li>
+
+                                <li class="submenu">
+									<a  class='text-decoration-none' href="javascript:void(0);"> <span>Plantilla of Personnel</span> <span class="menu-arrow"></span></a>
+									<ul style="display: none;">
+										<li>
+                                            <a class='text-decoration-none' href="{{  route('plantilla-of-personnel.index') }}">
+                                                <span>Add New Plantilla</span>
+                                            </a>
+                                            <a class='text-decoration-none' href="{{  route('plantilla-of-schedule.index') }}">
+                                                <span>Create Plantilla Schedule</span>
+                                            </a>
+                                        </li>
+									</ul>
+								</li>
+
+
                                 <li>
                                     <a class='text-decoration-none mr-2' href="{{  route('step-increment.index') }}">
                                         Notice of Step Increment

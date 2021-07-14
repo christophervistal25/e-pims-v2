@@ -4,18 +4,16 @@ $(function() {
         serverSide: true,
         ajax: "/plantilla-list",
         columns: [
-            { data: "plantilla_id", name: "plantilla_id" },
-            { data: "item_no", name: "item_no" },
             {
-                data: "plantillaPosition",
-                name: "plantillaPosition",
+                data: "employee",
+                name: "employee.firstname",
                 searchable: true,
                 sortable: false,
                 visible: true
             },
             {
-                data: "employee",
-                name: "employee.firstname",
+                data: "plantillaPosition",
+                name: "plantillaPosition",
                 searchable: true,
                 sortable: false,
                 visible: true
@@ -27,6 +25,7 @@ $(function() {
                 sortable: false,
                 visible: true
             },
+            { data: "item_no", name: "item_no" },
             { data: "status", name: "status", sortable: false },
             {
                 data: "action",
@@ -49,18 +48,16 @@ $(function() {
                     url: "/plantilla-list"
                 },
                 columns: [
-                    { data: "plantilla_id", name: "plantilla_id" },
-                    { data: "item_no", name: "item_no" },
                     {
-                        data: "plantillaPosition",
-                        name: "plantillaPosition",
+                        data: "employee",
+                        name: "employee.firstname",
                         searchable: true,
                         sortable: false,
                         visible: true
                     },
                     {
-                        data: "employee",
-                        name: "employee.firstname",
+                        data: "plantillaPosition",
+                        name: "plantillaPosition",
                         searchable: true,
                         sortable: false,
                         visible: true
@@ -72,6 +69,7 @@ $(function() {
                         sortable: false,
                         visible: true
                     },
+                    { data: "item_no", name: "item_no" },
                     { data: "status", name: "status", sortable: false },
                     {
                         data: "action",
@@ -92,18 +90,16 @@ $(function() {
                     url: `/api/plantilla/personnel/${e.target.value}`
                 },
                 columns: [
-                    { data: "plantilla_id", name: "plantilla_id" },
-                    { data: "item_no", name: "item_no" },
                     {
-                        data: "plantillaPosition",
-                        name: "plantillaPosition",
+                        data: "employee",
+                        name: "employee.firstname",
                         searchable: true,
                         sortable: false,
                         visible: true
                     },
                     {
-                        data: "employee",
-                        name: "employee.firstname",
+                        data: "plantillaPosition",
+                        name: "plantillaPosition",
                         searchable: true,
                         sortable: false,
                         visible: true
@@ -115,6 +111,7 @@ $(function() {
                         sortable: false,
                         visible: true
                     },
+                    { data: "item_no", name: "item_no" },
                     { data: "status", name: "status", sortable: false },
                     {
                         data: "action",
@@ -128,19 +125,19 @@ $(function() {
     });
 });
 // code for show add form
-$(document).ready(function() {
-    $("#addbutton").click(function() {
-        $("#add").attr("class", "page-header");
-        $("#table").attr("class", "page-header d-none");
-    });
-});
+// $(document).ready(function() {
+//     $("#addbutton").click(function() {
+//         $("#add").attr("class", "page-header");
+//         $("#table").attr("class", "page-header d-none");
+//     });
+// });
 // {{-- code for show table --}}
-$(document).ready(function() {
-    $("#cancelbutton").click(function() {
-        $("#add").attr("class", "page-header d-none");
-        $("#table").attr("class", "page-header");
-    });
-});
+// $(document).ready(function() {
+//     $("#cancelbutton").click(function() {
+//         $("#add").attr("class", "page-header d-none");
+//         $("#table").attr("class", "page-header");
+//     });
+// });
 // {{-- code for number only --}}
 $(function() {
     $("input[id='oldItemNo']").on("input", function(e) {
@@ -261,10 +258,7 @@ $(document).ready(function() {
         $("#positionTitle").selectpicker("refresh");
 
         //divisionMetaData
-        if (
-            document.querySelectorAll('[id="divisionMetaData"]')[1] ==
-            null
-        ) {
+        if (document.querySelectorAll('[id="divisionMetaData"]')[1] == null) {
             var divisionMetaData = document
                 .querySelectorAll('[id="divisionMetaData"]')[0]
                 .content.replaceAll("|", '"');
@@ -280,7 +274,7 @@ $(document).ready(function() {
         let divisionOfficeCodeOptionAll = JSON.parse(
             divisionMetaDataRemoveLast
         );
-        
+
         if (document.querySelectorAll('[id="divisionMetaData"]')[1] == null) {
             var metaDataDivision = document
                 .querySelectorAll('[id="divisionMetaData"]')[0]
@@ -291,7 +285,9 @@ $(document).ready(function() {
                 .content.replaceAll("|", '"');
         }
         var metaDataDivisionRemoveLast =
-            "[" + metaDataDivision.substring(0, metaDataDivision.length - 2) + "]";
+            "[" +
+            metaDataDivision.substring(0, metaDataDivision.length - 2) +
+            "]";
         let divisionOptionAll = JSON.parse(metaDataDivisionRemoveLast);
         let officeCode2 = e.target.value;
         //filter all division data in plantilla//

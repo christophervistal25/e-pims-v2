@@ -51,7 +51,7 @@
                             <div class="alert alert-secondary text-center font-weight-bold" role="alert">ADD STEP INCREMENT</div>
                         </div>
 
-                        <div class="card-body">
+                        <div class="card-body col-12 col-md-6 col-lg-6">
                             <div class="col-12 col-lg-11 mt-2">
                                 <label class="form-group has-float-label mb-0" for="employeeName">
                                 <select class="form-control selectpicker" value="" data-live-search="true"
@@ -84,6 +84,15 @@
                                 <input type="hidden" name="plantillaID" id="plantillaId" class="">
                             </div>
 
+                            <div class="form-group">
+                                <input type="hidden" name="status" id="status" class="">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="hidden" name="officeCode" id="officeCode" class="">
+                            </div>
+
+
                             <div class="form-group col-12 col-lg-11">
                                 <input class="form-control d-none" value="" id="positionId" name="positionID"
                                     type="text" readonly>
@@ -113,20 +122,23 @@
                             </div>
 
                             <div class="form-row col-12">
-                                <div class="col-6 col-lg-6">
+
+                                <div class="col-12 col-lg-6">
                                     <label class="form-group has-float-label" for="sgNoFrom">
                                     <input class="form-control" value="" id="salaryGrade" name="sgNoFrom" type="text"
                                         readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                     <span><strong>SALARY GRADE</strong></span>
                                     </label>
                                 </div>
-                                <div class="col-6 col-lg-5 ml-2">
+
+                                <div class="col-12 col-lg-5 ml-2">
                                     <label class="form-group has-float-label mb-0" for="stepNo">
                                     <input class="form-control" value="" id="stepNo" name="stepNoFrom" type="text"
                                         readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                     <span><strong>STEP</strong></span>
                                     </label>
                                 </div>
+
                             </div>
 
                             <div class="col-12 col-lg-11">
@@ -139,7 +151,7 @@
 
                         {{-- FORM THAT HAS TO BE INPUT --}}
                         <!-- <div class="step-increment"> -->
-                        <div class="card-body">
+                        <div class="card-body col-12 col-md-6 col-lg-6">
                             <div class="col-12 col-lg-12 mt-2">
                                 <label class="form-group has-float-label" for="">
                                 <input type="text" class="form-control" name="sgNo2" id="sgNo2" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -384,6 +396,8 @@
 
                 $('#employeeId').val(plantilla.employee_id);
                 $('#plantillaId').val(plantilla.plantilla_id);
+                $('#officeCode').val(plantilla.office_code);
+                $('#status').val(plantilla.status);
                 $('#positionName').val(plantilla.position.position_name);
                 $('#positionId').val(plantilla.position.position_id);
                 $('#itemNo').val(plantilla.item_no);
@@ -402,6 +416,8 @@
                 }
 
             } else {
+                $('#officeCode').val('');
+                $('#status').val('');
                 $('#positionName').val('');
                 $('#itemNo').val('');
                 $('#lastAppointment').val('');
