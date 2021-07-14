@@ -4,7 +4,6 @@ $(function() {
         serverSide: true,
         ajax: "/plantilla-of-schedule-list",
         columns: [
-            { data: "plantilla_id", name: "plantilla_id" },
             {
                 data: "employee",
                 name: "employee.firstname",
@@ -54,7 +53,6 @@ $(function() {
                     url: "/plantilla-of-schedule-list"
                 },
                 columns: [
-                    { data: "plantilla_id", name: "plantilla_id" },
                     {
                         data: "employee",
                         name: "employee.firstname",
@@ -98,7 +96,6 @@ $(function() {
                     url: `/api/plantilla/list/${e.target.value}`
                 },
                 columns: [
-                    { data: "plantilla_id", name: "plantilla_id" },
                     {
                         data: "employee",
                         name: "employee.firstname",
@@ -291,33 +288,51 @@ function LockDepot() {
             ids.push($(element).attr("data-id"));
         }
     });
-    if ((coveredYear == "") | (ids == "")) {
-        swal("Please Select Employee", "", "error");
+    if (ids == "") {
+        swal("No Data Available on Table", "", "error");
         $("#saveBtn").attr("disabled", false);
         $("#loading").addClass("d-none");
     } else {
-        $.ajax({
-            type: "POST",
-            url: `/api/plantilla/schedule/adjust`,
-            data: {
-                ids: ids.toString(),
-                coveredYear: coveredYear
-            },
-            success: function(response) {
-                if (response.success) {
-                    swal("Sucessfully Added!", "", "success");
-                    $("#plantillaList")
-                        .DataTable()
-                        .ajax.reload();
-                    $("#plantillaOfSchedule")
-                        .DataTable()
-                        .ajax.reload();
-                    $("#saveBtn").attr("disabled", false);
-                    $("#loading").addClass("d-none");
-                    ids = [];
-                }
-            },
-            error: function(response) {}
+        swal({
+            title: "Are you sure you want to Post?",
+            text: "Once posted, you will not be able to undo the process!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        }).then(willPost => {
+            if (willPost) {
+                $.ajax({
+                    type: "POST",
+                    url: `/api/plantilla/schedule/adjust`,
+                    data: {
+                        ids: ids.toString(),
+                        coveredYear: coveredYear
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            swal(
+                                "Plantilla Schedule Added Successfully",
+                                "",
+                                "success"
+                            );
+                            $("#plantillaList")
+                                .DataTable()
+                                .ajax.reload();
+                            $("#plantillaOfSchedule")
+                                .DataTable()
+                                .ajax.reload();
+                            $("#saveBtn").attr("disabled", false);
+                            $("#loading").addClass("d-none");
+                            ids = [];
+                        }
+                    },
+                    error: function(response) {}
+                });
+            } else {
+                swal("Cancel!", "", "error");
+                $("#saveBtn").attr("disabled", false);
+                $("#loading").addClass("d-none");
+            }
         });
     }
 }

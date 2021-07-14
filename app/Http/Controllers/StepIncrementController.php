@@ -99,7 +99,6 @@ class StepIncrementController extends Controller
                 'employeeName'      => 'required',
                 'dateStepIncrement' => 'required',
                 'stepNo2'           => 'required',
-
         ]);
             $step_increments = new StepIncrement;
             $step_increments->employee_id             = $request['employeeID'];

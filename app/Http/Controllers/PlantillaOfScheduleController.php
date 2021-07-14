@@ -11,6 +11,7 @@ use App\Employee;
 use App\Position;
 use App\PlantillaPosition;
 use App\SalaryGrade;
+use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
 class PlantillaOfScheduleController extends Controller
 {
@@ -35,7 +36,8 @@ class PlantillaOfScheduleController extends Controller
     public function list(Request $request)
     {
         if ($request->ajax()) {
-            $data = Plantilla::select('plantilla_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->orderBy('plantilla_id', 'DESC');
+            $year = Carbon::now()->format('Y') - 1;
+            $data = Plantilla::select('plantilla_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->where('year' ,'=',  $year)->orderBy('plantilla_id', 'DESC');
             return (new Datatables)->eloquent($data)
                     ->addIndexColumn()
                     ->addColumn('employee', function ($row) {
