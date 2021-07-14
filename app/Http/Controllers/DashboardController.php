@@ -14,7 +14,7 @@ class DashboardController extends Controller
     {
         $today = $this->birthdayRepository->birthdaysToday();
         $tomorrow = $this->birthdayRepository->birthdaysTomorrow();
-        $oneWeekBeforeBirthdays = $this->birthdayRepository->oneWeekBeforeBirthdays();
+        $oneWeekBeforeBirthdays = $this->birthdayRepository->weekBeforeBirthdays();
 
         return view('blank-page', compact('today', 'tomorrow', 'oneWeekBeforeBirthdays'));   
     }

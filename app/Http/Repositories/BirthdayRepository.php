@@ -20,16 +20,23 @@ class BirthdayRepository
 
     public function birthdaysToday() : Collection
     {
-        return Employee::where('date_birth', 'like' ,  '%' .  $this->currentDate->format('m-d') . '%')
-                        ->get(['firstname', 'middlename', 'lastname', 'extension', 'date_birth']);
+        return Employee::with(['information:EmpIDNo,pos_code,office_code,photo',
+                            'information.office:office_code,office_short_name', 
+                            'information.position:position_code,position_name'])
+                        ->where('date_birth', 'like' ,  '%' .  $this->currentDate->format('m-d') . '%')
+                        ->get(['employee_id', 'firstname', 'middlename', 'lastname', 'extension', 'date_birth']);
     }
 
     public function birthdaysTomorrow() : Collection
     {
-        return Employee::where('date_birth', 'like' ,  '%' .  $this->tomorrowDate->format('m-d') . '%')->get(['firstname','middlename','lastname', 'extension', 'date_birth']);
+        return Employee::with(['information:EmpIDNo,pos_code,office_code,photo',
+                                'information.office:office_code,office_short_name', 
+                                'information.position:position_code,position_name'])
+                            ->where('date_birth', 'like' ,  '%' .  $this->tomorrowDate->format('m-d') . '%')
+                            ->get(['employee_id', 'firstname','middlename','lastname', 'extension', 'date_birth']);
     }
 
-    public function oneWeekBeforeBirthdays(string $from = null, string $to = null) : Collection
+    public function weekBeforeBirthdays(string $from = null, string $to = null) : Collection
     {
         $from = is_null($from) ? $this->currentDate  : Carbon::parse($from);
         $to = is_null($to) ? $this->currentDatePlusOneWeek : Carbon::parse($to);
