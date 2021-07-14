@@ -22,13 +22,6 @@
 @endprepend
 @section('content')
 @include('ServiceRecords.add-ons.success')
-<div class="float-right mr-3 mb-2" id='btnViewTableContainer'>
-    <a href="{{ route('print-service-records', $service_record->id) }}" class="btn btn-secondary"><i
-            class="la la-print"></i>&nbsp; Print Preview</a>
-    <a href="/service-records" class="btn btn-info"><i class="la la-list"></i>&nbsp; View List </a>
-</div>
-<div class="clearfix"></div>
-
 <div class="kanban-board card shadow mb-0">
     <div class="card-body">
         <div id="add" class="page-header">

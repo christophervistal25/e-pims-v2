@@ -239,23 +239,23 @@
                                         Leave Application Filling</a>
                                     </li>
 								<li>
-                                    <a class='text-decoration-none mr-2' href="#">
+                                    <a class='text-decoration-none mr-2' href="{{  route('leave-recall.index') }}">
                                         Leave Recall, Cancel or Transfer
                                     </a>
                                 </li>
 								<li>
-                                    <a class='text-decoration-none mr-2' href="#">
+                                    <a class='text-decoration-none mr-2' href="{{  route('leave-monitoring.index') }}">
                                         Leave Monitoring Index
                                     </a>
                                 </li>
 
 								<li>
-                                    <a class='text-decoration-none mr-2' href="#">
+                                    <a class='text-decoration-none mr-2' href="{{  route('leave-starting-balance.index') }}">
                                         Leave Starting Balance
                                     </a>
                                 </li>
 								<li>
-                                    <a class='text-decoration-none mr-2' href="#">
+                                    <a class='text-decoration-none mr-2' href="{{  route('leave-forwarded-balance.index') }}">
                                         Leave Forwaded Balance
                                     </a>
                                 </li>
@@ -275,11 +275,22 @@
                                         Plantilla of Position
                                     </a>
                                 </li>
-                                <li>
-                                    <a class='text-decoration-none mr-2' href="{{  route('plantilla-of-personnel.index') }}">
-                                        Plantilla of Personnel
-                                    </a>
-                                </li>
+
+                                <li class="submenu">
+									<a  class='text-decoration-none' href="javascript:void(0);"> <span>Plantilla of Personnel</span> <span class="menu-arrow"></span></a>
+									<ul style="display: none;">
+										<li>
+                                            <a class='text-decoration-none' href="{{  route('plantilla-of-personnel.index') }}">
+                                                <span>Add New Plantilla</span>
+                                            </a>
+                                            <a class='text-decoration-none' href="{{  route('plantilla-of-schedule.index') }}">
+                                                <span>Create Plantilla Schedule</span>
+                                            </a>
+                                        </li>
+									</ul>
+								</li>
+
+
                                 <li>
                                     <a class='text-decoration-none mr-2' href="{{  route('step-increment.index') }}">
                                         Notice of Step Increment
@@ -326,6 +337,12 @@
                                         </a>
                                         <a class='text-decoration-none mr-2' href="{{ route('maintenance-division.index') }}">
                                             Division
+                                        </a>
+										<a class='text-decoration-none mr-2' href="{{ route('holiday.index') }}">
+                                            Holiday
+                                        </a>
+										<a class='text-decoration-none mr-2' href="{{ route('leave.index') }}">
+                                            Leave
                                         </a>
                                     </li>
                                 </ul>

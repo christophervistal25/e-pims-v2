@@ -21,8 +21,9 @@
 </style>
 @endprepend
 @section('content')
+<div class="clearfix"></div>
 <div class="kanban-board card shadow mb-0">
-    <div class="card-body">
+    <div class="card-body">  
         <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
 
             <div style='padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
@@ -189,6 +190,7 @@
                 </div>
                 <div class="col-6 mb-2">
                     <div class="float-right">
+                            <a id="printPreviewA" onclick="printPreview();"><button class="btn btn-secondary" id="printPreview" disabled="true"><i class="la la-print"></i>&nbsp; Print Preview</button></a>&nbsp;&nbsp;
                         <button id="addbutton" class="btn btn-primary float-right" disabled><i class="fa fa-plus"></i>
                             Add Service Records</button>
                     </div>

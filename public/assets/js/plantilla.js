@@ -4,8 +4,6 @@ $(function() {
         serverSide: true,
         ajax: "/plantilla-list",
         columns: [
-            { data: "plantilla_id", name: "plantilla_id" },
-            { data: "item_no", name: "item_no" },
             {
                 data: "employee",
                 name: "employee.firstname",
@@ -27,6 +25,7 @@ $(function() {
                 sortable: false,
                 visible: true
             },
+            { data: "item_no", name: "item_no" },
             { data: "status", name: "status", sortable: false },
             {
                 data: "action",
@@ -49,8 +48,6 @@ $(function() {
                     url: "/plantilla-list"
                 },
                 columns: [
-                    { data: "plantilla_id", name: "plantilla_id" },
-                    { data: "item_no", name: "item_no" },
                     {
                         data: "employee",
                         name: "employee.firstname",
@@ -72,6 +69,7 @@ $(function() {
                         sortable: false,
                         visible: true
                     },
+                    { data: "item_no", name: "item_no" },
                     { data: "status", name: "status", sortable: false },
                     {
                         data: "action",
@@ -92,8 +90,6 @@ $(function() {
                     url: `/api/plantilla/personnel/${e.target.value}`
                 },
                 columns: [
-                    { data: "plantilla_id", name: "plantilla_id" },
-                    { data: "item_no", name: "item_no" },
                     {
                         data: "employee",
                         name: "employee.firstname",
@@ -115,6 +111,7 @@ $(function() {
                         sortable: false,
                         visible: true
                     },
+                    { data: "item_no", name: "item_no" },
                     { data: "status", name: "status", sortable: false },
                     {
                         data: "action",
@@ -128,19 +125,19 @@ $(function() {
     });
 });
 // code for show add form
-$(document).ready(function() {
-    $("#addbutton").click(function() {
-        $("#add").attr("class", "page-header");
-        $("#table").attr("class", "page-header d-none");
-    });
-});
+// $(document).ready(function() {
+//     $("#addbutton").click(function() {
+//         $("#add").attr("class", "page-header");
+//         $("#table").attr("class", "page-header d-none");
+//     });
+// });
 // {{-- code for show table --}}
-$(document).ready(function() {
-    $("#cancelbutton").click(function() {
-        $("#add").attr("class", "page-header d-none");
-        $("#table").attr("class", "page-header");
-    });
-});
+// $(document).ready(function() {
+//     $("#cancelbutton").click(function() {
+//         $("#add").attr("class", "page-header d-none");
+//         $("#table").attr("class", "page-header");
+//     });
+// });
 // {{-- code for number only --}}
 $(function() {
     $("input[id='oldItemNo']").on("input", function(e) {

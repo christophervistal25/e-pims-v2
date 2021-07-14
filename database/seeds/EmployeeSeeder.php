@@ -55690,6 +55690,7 @@ class EmployeeSeeder extends Seeder
             ]);
 
             if(isset($dataPosCode[$employee['employee_id']])) {
+
                 list($position, $office) = explode(',', $dataPosCode[$employee['employee_id']]);
                 EmployeeInformation::create([
                     'EmpIDNo' => $employee['employee_id'],

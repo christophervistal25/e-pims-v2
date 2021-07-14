@@ -16,8 +16,13 @@ class CreateLeaveTypesTable extends Migration
         Schema::create('leave_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedDecimal('per_increment', 8, 2);
-            $table->string('description')->nullable();
+            $table->string('code')->nullable();
+            $table->text('description')->nullable();
+            $table->integer('days_period');
+            $table->enum('convertible_to_cash', ['yes', 'no']);
+            $table->enum('applicable_gender', ['male', 'female', 'female/male']);
+            $table->integer('required_rendered_service')->default(0);
+            $table->enum('editable', ['yes', 'no']);
             $table->timestamps();
         });
     }

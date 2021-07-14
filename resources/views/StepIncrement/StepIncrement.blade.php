@@ -2,7 +2,23 @@
 @section('title', 'Step Increment')
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
+{{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css"> --}}
+<link rel="stylesheet" href="/assets/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="/assets/css/style.css">
+<style>
+    table.dataTable.no-footer {
+        border:1px solid #dee2e6;
+    }
+
+    table.dataTable thead th, table.dataTable thead td {
+        padding: 15px 25px;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    table.dataTable {
+        border-collapse: collapse;
+    }
+</style>
 <link rel="stylesheet" href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 <style>
     .swal-button--cancel {
@@ -35,7 +51,7 @@
                             <div class="alert alert-secondary text-center font-weight-bold" role="alert">ADD STEP INCREMENT</div>
                         </div>
 
-                        <div class="card-body">
+                        <div class="card-body col-12 col-md-6 col-lg-6">
                             <div class="col-12 col-lg-11 mt-2">
                                 <label class="form-group has-float-label mb-0" for="employeeName">
                                 <select class="form-control selectpicker" value="" data-live-search="true"
@@ -106,20 +122,23 @@
                             </div>
 
                             <div class="form-row col-12">
-                                <div class="col-6 col-lg-6">
+
+                                <div class="col-12 col-lg-6">
                                     <label class="form-group has-float-label" for="sgNoFrom">
                                     <input class="form-control" value="" id="salaryGrade" name="sgNoFrom" type="text"
                                         readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                     <span><strong>SALARY GRADE</strong></span>
                                     </label>
                                 </div>
-                                <div class="col-6 col-lg-5 ml-2">
+
+                                <div class="col-12 col-lg-5 ml-2">
                                     <label class="form-group has-float-label mb-0" for="stepNo">
                                     <input class="form-control" value="" id="stepNo" name="stepNoFrom" type="text"
                                         readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                     <span><strong>STEP</strong></span>
                                     </label>
                                 </div>
+
                             </div>
 
                             <div class="col-12 col-lg-11">
@@ -132,7 +151,7 @@
 
                         {{-- FORM THAT HAS TO BE INPUT --}}
                         <!-- <div class="step-increment"> -->
-                        <div class="card-body">
+                        <div class="card-body col-12 col-md-6 col-lg-6">
                             <div class="col-12 col-lg-12 mt-2">
                                 <label class="form-group has-float-label" for="">
                                 <input type="text" class="form-control" name="sgNo2" id="sgNo2" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -228,8 +247,10 @@
 @push('page-scripts')
 
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
-<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+{{-- <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script> --}}
+<script src="/assets/js/jquery.dataTables.min.js"></script>
+<script src="/assets/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
@@ -248,6 +269,7 @@
             serverSide: true,
             destroy: true,
             retrieve: true,
+            pagingType: "full_numbers",
             ajax: '/step-increment/list',
             columns: [{
                     data: 'date_step_increment',

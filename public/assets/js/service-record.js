@@ -174,7 +174,10 @@ function ValidateDropDown(dd) {
     else input.disabled = false;
     if (dd.value == "") {
         document.getElementById("line").style.visibility = "visible";
+        document.getElementById("printPreview").setAttribute('disabled',true);
     } else {
+        document.getElementById("printPreviewA").setAttribute('href','print-service-records/' + dd.value);
+        document.getElementById("printPreview").removeAttribute('disabled');
         document.getElementById("line").style.visibility = "hidden";
     }
     $("input").val("");
@@ -184,6 +187,15 @@ function ValidateDropDown(dd) {
             .val("Please Select")
             .trigger("change");
     });
+}
+function printPreview(){
+    var table_data = $("#serviceRecords > tbody > tr > td").text();
+    if(table_data == 'No data available in table'){
+        document.getElementById("printPreviewA").removeAttribute('href');
+        document.getElementById("printPreview").setAttribute('disabled',true);
+    }else{
+        document.getElementById("printPreview").removeAttribute('disabled');
+    }
 }
 
 // get value namesss
@@ -207,7 +219,6 @@ $(document).ready(function() {
         }
     });
 });
-
 //// add salary adjustment
 $(document).ready(function() {
     $("#serviceRecordForm").submit(function(e) {

@@ -5,6 +5,7 @@ use App\SalaryAdjustment;
 use Yajra\Datatables\Datatables;
 use App\PlantillaPosition;
 use App\Plantilla;
+use App\PlantillaOfSchedule;
 use App\Division;
 
 
@@ -151,7 +152,7 @@ Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}', funct
 
 Route::post('/salary-adjustment-per-office', function () {
     $plantillaIds = explode(',', request()->ids);
-    $data = Plantilla::whereIn('plantilla_id', $plantillaIds)->get();
+    $data = Plantilla::with('plantillaPosition', 'plantillaPosition.position')->whereIn('plantilla_id', $plantillaIds)->get();
     $newAdjustment = $data->toArray();
     foreach($data as $newAdjustment){
         $newAdjustment->plantilla_id;
@@ -173,6 +174,16 @@ Route::post('/salary-adjustment-per-office', function () {
         $salaryAdjustment->salary_new =  $getsalaryResult['sg_step' .  $newAdjustment->step_no];
         $salaryAdjustment->salary_diff = $salaryDiff;
         $salaryAdjustment->save();
+        $service_record                         = new service_record;
+        $service_record->employee_id            = $newAdjustment->employee_id;
+        $service_record->service_from_date      = request()->date;
+        $service_record->position_id            = $newAdjustment->plantillaPosition->position_id;
+        $service_record->status                 = $newAdjustment->status;
+        $service_record->salary                 = $getsalaryResult['sg_step' .  $newAdjustment->step_no];
+        $service_record->office_code            = $newAdjustment->office_code;
+        $service_record->separation_cause       =  request()->remarks;
+        $service_record->save();
+
     }
     return response()->json(['success'=>true]);
 });
@@ -221,6 +232,53 @@ Route::get('/plantilla/personnel/{officeCode}', function ($office_code) {
                     ->make(true);
 });
 
+
+// plantilla schedule list
+Route::get('/plantilla/list/{officeCode}', function ($office_code) {
+    $data = Plantilla::select('plantilla_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code)->orderBy('plantilla_id', 'DESC')->get();
+    return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('employee', function ($row) {
+                        return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
+                    })
+                    ->addColumn('plantillaPosition', function ($row) {
+                        return $row->plantillaPosition->position->position_name;
+                        return $row;
+                    })
+                    ->addColumn('office', function ($row) {
+                        return $row->office->office_short_name;
+                    })
+                    ->addColumn('action', function($row){
+                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm id__holder' data-id='".$row['plantilla_id']."'><i class='la la-edit'></i></a>";
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+});
+
+
+// plantilla of schedule
+Route::get('/plantilla/schedule/{officeCode}', function ($office_code) {
+    $data = PlantillaOfSchedule::select('ps_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code);
+    return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('employee', function ($row) {
+                        return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
+                    })
+                    ->addColumn('plantillaPosition', function ($row) {
+                        return $row->plantillaPosition->position->position_name;
+                    })
+                    ->addColumn('office', function ($row) {
+                        return $row->office->office_short_name;
+                    })
+                    ->addColumn('action', function($row){
+                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-schedule.edit', $row->ps_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm'><i class='la la-edit'></i></a>";
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+});
+
 // maintenance division
 Route::get('/maintenance/division/{officeCode}', function ($office_code) {
     $data = Division::select('division_id','division_name', 'office_code')->with('offices:office_code,office_name,office_short_name')->where('office_code', $office_code)->get();
@@ -239,4 +297,35 @@ Route::get('/maintenance/division/{officeCode}', function ($office_code) {
     ->make(true);
 });
 
+
+Route::post('/plantilla/schedule/adjust', function () {
+    $plantillaIds = explode(',', request()->ids);
+    $data = Plantilla::whereIn('plantilla_id', $plantillaIds)->get();
+    $newSchedcule = $data->toArray();
+    foreach($data as $newSchedcule){
+            PlantillaOfSchedule::FirstOrCreate([
+                'employee_id' => $newSchedcule->employee_id,
+                'year' => $newSchedcule->year,
+            ],[
+            'plantilla_id' => $newSchedcule->plantilla_id,
+            'old_item_no' => $newSchedcule->old_item_no,
+            'item_no' => $newSchedcule->item_no,
+            'pp_id' => $newSchedcule->pp_id,
+            'sg_no' => $newSchedcule->sg_no,
+            'step_no' => $newSchedcule->step_no,
+            'salary_amount' => $newSchedcule->salary_amount,
+            'employee_id' => $newSchedcule->employee_id,
+            'area_code' => $newSchedcule->area_code,
+            'area_type' => $newSchedcule->area_type,
+            'area_level' => $newSchedcule->area_level,
+            'date_original_appointment' => $newSchedcule->date_original_appointment,
+            'date_last_promotion' => $newSchedcule->date_last_promotion,
+            'office_code' => $newSchedcule->office_code,
+            'division_id' => $newSchedcule->division_id,
+            'status' => $newSchedcule->status,
+            'year' => $newSchedcule->year,
+        ]);
+    }
+    return response()->json(['success'=>true]);
+});
 
