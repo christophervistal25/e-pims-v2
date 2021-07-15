@@ -248,7 +248,7 @@
                     </div>
                 </div>
                 <div class="table" style="overflow-x:auto;">
-                    <table width="100%" cellspacing="0" class="table table-bordered text-center" id="myTable">
+                    <table width="100%" cellspacing="0" class="table table-bordered table-hover text-center" id="myTable">
                         <thead>
                             <tr>
                                 <td style="width:10px; important: !;" scope="col" class="text-center">

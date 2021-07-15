@@ -71,7 +71,7 @@
             <div class="col-12">
             <form id="frm-example" action="" method="" id="salaryAdjustmentPerOfficeNotSelected">
             @csrf
-            <table class="table table-bordered text-center" id="salaryAdjustmentPerOfficeList" style="width:100%;">
+            <table class="table table-bordered table-hover text-center" id="salaryAdjustmentPerOfficeList" style="width:100%;">
                 <thead>
                 <tr>
                     <td style="margin-top:10px;" scope="col" class="text-center font-weight-bold"><input style='transform:scale(1.3); margin-top:18px;' name="selectAll" value="selectAll" id="selectAll" type="checkbox" /></td>
@@ -132,7 +132,7 @@
                 </div>
             </div>
             <div style="padding-left:20px; padding-right:20px;" class="table" style="overflow-x:auto;">
-                <table class="table table-bordered text-center" id="salaryAdjustmentPerOffice"  style="width:100%;">
+                <table class="table table-bordered table-hover text-center" id="salaryAdjustmentPerOffice"  style="width:100%;">
                     <thead>
                     <tr>
                         <td scope="col" class="text-center">Adjustment Date</td>

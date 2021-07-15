@@ -99,7 +99,7 @@
                         <div class="col-12">
                         <form id="frm-example" action="" method="" id="">
                         @csrf
-                        <table class="table table-bordered text-center" id="plantillaList" style="width:100%;">
+                        <table class="table table-bordered table-hover text-center" id="plantillaList" style="width:100%;">
                             <thead>
                                 <tr>
                                     <td scope="col" class="text-center">Employee Name</td>
@@ -145,7 +145,7 @@
                 </div>
             </div>
             <div style="padding-left:20px; padding-right:20px;" class="table" style="overflow-x:auto;">
-                <table class="table table-bordered text-center" id="plantillaOfSchedule" style="width:100%;">
+                <table class="table table-bordered table-hover text-center" id="plantillaOfSchedule" style="width:100%;">
                     <thead>
                         <tr>
                             <td scope="col" class="text-center">Employee Name</td>

@@ -232,7 +232,7 @@
             </div>
 
             <div class="table" style="overflow-x:auto;">
-                <table class="table table-bordered text-center" id="serviceRecords" style="width:100%;">
+                <table class="table table-bordered table-hover text-center" id="serviceRecords" style="width:100%;">
                     <thead>
                         <tr>
                             <th class="font-weight-bold align-middle text-center" rowspan="2">Emp Id</th>
