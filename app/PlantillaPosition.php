@@ -10,7 +10,7 @@ class PlantillaPosition extends Model
 {
     // use SoftDeletes;
     protected $dates = ['deleted_at'];
-    protected $fillable = ['pp_id', 'position_id' ,'item_no', 'sg_no' ,'office_code', 'old_position_name'];
+    protected $fillable = ['pp_id', 'position_id' ,'item_no', 'sg_no' ,'office_code', 'old_position_name', 'year'];
 
     protected $primaryKey = 'pp_id';
 

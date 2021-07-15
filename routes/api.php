@@ -191,7 +191,7 @@ Route::post('/salary-adjustment-per-office', function () {
 
 // plantilla position
 Route::get('/plantilla/position/{officeCode}', function ($office_code) {
-    $data = PlantillaPosition::select('pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name')->with('position:position_id,position_name', 'office:office_code,office_name')->where('office_code', $office_code)->get();
+    $data = PlantillaPosition::select('pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name', 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->where('office_code', $office_code)->get();
     return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('position', function ($row) {

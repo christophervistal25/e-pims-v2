@@ -25,7 +25,7 @@ class PlantillaOfPositionController extends Controller
     public function list(Request $request )
     {
         if ($request->ajax()) {
-            $data = PlantillaPosition::select('pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name')->with('position:position_id,position_name', 'office:office_code,office_name')->orderBy('pp_id', 'DESC');
+            $data = PlantillaPosition::select('pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name' , 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->orderBy('pp_id', 'DESC');
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('position', function ($row) {
@@ -78,6 +78,7 @@ class PlantillaOfPositionController extends Controller
         $plantillaposition->sg_no                             = $request['salaryGrade'];
         $plantillaposition->office_code                       = $request['officeCode'];
         $plantillaposition->old_position_name                 = $request['positionOldName'];
+        $plantillaposition->year                              = $request['year'];
         $plantillaposition->save();
         return response()->json(['success'=>true]);
     }
@@ -126,6 +127,7 @@ class PlantillaOfPositionController extends Controller
         $plantillaposition->sg_no                             = $request['salaryGrade'];
         $plantillaposition->office_code                       = $request['officeCode'];
         $plantillaposition->old_position_name                 = $request['positionOldName'];
+        $plantillaposition->year                              = $request['year'];
         $plantillaposition->save();
         Session::flash('alert-success', 'Position Updated Successfully');
         return back()->with('success','Updated Successfully');

@@ -123,7 +123,19 @@
                                         {{ $errors->first('officeCode') }} </small>
                                     @endif
                                 </div>
+                                <div class="form-group col-12 col-lg-7">
+                                    <label class="has-float-label mb-0">
+                                    <input value="{{ old('year') ??  $plantillaofposition->year  }}"
+                                        class="form-control {{ $errors->has('year')  ? 'is-invalid' : ''}}" name="year"
+                                        id="year" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;" readonly>
+                                        <span class="font-weight-bold">CURRENT YEAR<span class="text-danger">*</span></span>
+                                    </label>
+                                    <div id='year-error-message' class='text-danger text-sm'>
+                                    </div>
+                                </div>
                             </div>
+
+
 
                             <div class="form-group form-group submit-section col-12">
                                 <button id="saveBtn" class="btn btn-success submit-btn float-right" type="submit">

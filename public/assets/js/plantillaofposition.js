@@ -20,7 +20,10 @@ $(document).ready(function() {
 });
 
 function myFunction() {
-    $("input").val("");
+    const valueE = ["#itemNo", "#positionOldName"];
+    $.each(valueE, function(index, value) {
+        $(`${value}`).val("");
+    });
     $("#positionTitle,#salaryGrade,#officeCode")
         .val("Please Select")
         .trigger("change");
@@ -50,7 +53,6 @@ function myFunction() {
 $(document).ready(function() {
     $("#plantillaOfPositionForm").submit(function(e) {
         e.preventDefault();
-        // let empIds = $("#employeeName").val();
         let data = $(this).serialize();
         $("#saveBtn").attr("disabled", true);
         $("#loading").removeClass("d-none");
@@ -60,7 +62,10 @@ $(document).ready(function() {
             data: data,
             success: function(response) {
                 if (response.success) {
-                    $("input").val("");
+                    const valueE = ["#itemNo", "#positionOldName"];
+                    $.each(valueE, function(index, value) {
+                        $(`${value}`).val("");
+                    });
                     const select = [
                         "#positionTitle",
                         "#salaryGrade",
@@ -216,6 +221,7 @@ $(function() {
             { data: "sg_no", name: "sg_no" },
             { data: "office", name: "office" },
             { data: "old_position_name", name: "old_position_name" },
+            { data: "year", name: "year" },
             {
                 data: "action",
                 name: "action",
@@ -248,6 +254,7 @@ $(function() {
                     { data: "sg_no", name: "sg_no" },
                     { data: "office", name: "office" },
                     { data: "old_position_name", name: "old_position_name" },
+                    { data: "year", name: "year" },
                     {
                         data: "action",
                         name: "action",
@@ -277,6 +284,7 @@ $(function() {
                     { data: "sg_no", name: "sg_no" },
                     { data: "office", name: "officeoffice_code" },
                     { data: "old_position_name", name: "old_position_name" },
+                    { data: "year", name: "year" },
                     {
                         data: "action",
                         name: "action",

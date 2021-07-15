@@ -216,6 +216,18 @@
                         </div>
 
 
+                        <div class="form-group col-12 col-lg-7">
+                            <label class="has-float-label mb-0">
+                            <input value="{{ Carbon\Carbon::now()->format('Y') }}"
+                                class="form-control {{ $errors->has('year')  ? 'is-invalid' : ''}}" name="year"
+                                id="year" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;" readonly>
+                                <span class="font-weight-bold">CURRENT YEAR<span class="text-danger">*</span></span>
+                            </label>
+                            <div id='year-error-message' class='text-danger text-sm'>
+                            </div>
+                        </div>
+
+
 
                         <div class="form-group form-group submit-section col-12">
                             <button id="saveBtn" class="btn btn-primarys submit-btn float-right shadow" type="submit">
@@ -245,6 +257,7 @@
                     </select>
             </div>
 
+
                 <div class="col-7 float-right mb-10">
                     <button id="addbutton" class="btn btn-primarys submit-btn float-right"><i class="fa fa-plus"></i> Add
                         New Position</button>
@@ -261,6 +274,7 @@
                             <td scope="col" class="text-center">Salary Grade</td>
                             <td scope="col" class="text-center">Office</td>
                             <td scope="col" class="text-center">Old Position Name</td>
+                            <td scope="col" class="text-center">Year</td>
                             <td scope="col" class="text-center">Action</td>
                         </tr>
                     </thead>
