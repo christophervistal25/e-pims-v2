@@ -196,9 +196,9 @@ class Employee extends Model
         return $this->hasOne(Plantilla::class, 'employee_id', 'employee_id');
     }
 
-    public function PlantillaOfSchedule()
+    public function PlantillaSchedule()
     {
-        return $this->hasOne(PlantillaOfSchedule::class, 'employee_id', 'employee_id');
+        return $this->hasOne(PlantillaSchedule::class, 'employee_id', 'employee_id');
     }
 
 
@@ -305,5 +305,5 @@ class Employee extends Model
         return $this->hasOne(EmployeeLeaveBalance::class, 'employee_id', 'employee_id');
     }
 
-    
+
 }
