@@ -5,9 +5,9 @@
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 @endprepend
 @prepend('meta-data')
-{{-- <meta id="plantillaPositionMetaData" content="@foreach($plantillaPositionAll as $plantillaPositionAlls){ |officeCode|:|{{ $plantillaPositionAlls->office_code }}|, |positionId|:|{{ $plantillaPositionAlls->position_id }}|, |ppId|:|{{ $plantillaPositionAlls->pp_id }}|}, @endforeach">
+<meta id="plantillaPositionMetaData" content="@foreach($plantillaSchedulePositionAll as $plantillaSchedulePositionAlls){ |officeCode|:|{{ $plantillaSchedulePositionAlls->office_code }}|, |positionId|:|{{ $plantillaSchedulePositionAlls->position_id }}|, |ppId|:|{{ $plantillaSchedulePositionAlls->pp_id }}|}, @endforeach">
 <meta id="positionMetaData" content="@foreach($position as $positions){ |positionId|:|{{ $positions->position_id }}|, |positionName|:|{{ $positions->position_name }}|}, @endforeach">
-<meta id="divisionMetaData" content="@foreach($division as $divisions){ |officeCode|:|{{ $divisions->office_code }}|, |divisionId|:|{{ $divisions->division_id }}|, |divisionName|:|{{ $divisions->division_name }}|}, @endforeach"> --}}
+<meta id="divisionMetaData" content="@foreach($division as $divisions){ |officeCode|:|{{ $divisions->office_code }}|, |divisionId|:|{{ $divisions->division_id }}|, |divisionName|:|{{ $divisions->division_name }}|}, @endforeach">
 @endprepend
 @section('content')
 <div class="content">
@@ -16,7 +16,7 @@
     <div class="kanban-board card mb-0">
         <div class="card-body">
             <div id="add" class="page-header {{  count($errors->all())  !== 0 }}">
-                <form action="" method="post"
+                <form action="{{ route('plantilla-of-schedule.update', $plantillaSchedule->ps_id) }}" method="post"
                     id="plantillaScheduleEditForm">
                     @csrf
                     @method('PUT')
@@ -24,7 +24,7 @@
 
                         <div class="col-12">
                             <div class="alert alert-secondary text-center font-weight-bold" role="alert">EDIT PLANTILLA
-                                Schedule</div>
+                                SCHEDULE</div>
                         </div>
 
                         <div class="form-group col-12 col-lg-10">
@@ -81,11 +81,11 @@
                                 class="form-control selectpicker {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
                                 name="officeCode" data-live-search="true" id="officeCode" data-size="5">
                                 <option></option>
-                                {{-- @foreach($office as $offices)
-                                <option {{ $plantilla->office_code == $offices->office_code ? 'selected' : '' }}
+                                @foreach($office as $offices)
+                                <option {{ $plantillaSchedule->office_code == $offices->office_code ? 'selected' : '' }}
                                     value="{{ $offices->office_code}}">
                                     {{ $offices->office_name }}</option>
-                                @endforeach --}}
+                                @endforeach
                             </select>
                             @if($errors->has('officeCode'))
                             <small class="form-text text-danger">
@@ -99,10 +99,10 @@
                                 class="form-control selectpicker {{ $errors->has('divisionId')  ? 'is-invalid' : ''}}"
                                 name="divisionId" data-live-search="true" id="divisionId" data-size="5">
                                 <option></option>
-                                {{-- @foreach($division as $divisions)
-                                <option {{ $plantilla->division_id == $divisions->division_id ? 'selected' : '' }}
+                                @foreach($division as $divisions)
+                                <option {{ $plantillaSchedule->division_id == $divisions->division_id ? 'selected' : '' }}
                                     value="{{ $divisions->division_id }}">{{ $divisions->division_name }}</option>
-                                @endforeach --}}
+                                @endforeach
                             </select>
                             @if($errors->has('divisionId'))
                             <small class="form-text text-danger">
@@ -118,10 +118,10 @@
                                 class="form-control form-control-xs selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
                                 name="positionTitle" data-live-search="true" id="positionTitle" data-size="5" data-width="100%">
                                 <option></option>
-                                {{-- @foreach($plantillaPosition as $plantillaPositions)
-                                <option {{ $plantilla->pp_id == $plantillaPositions->pp_id ? 'selected' : '' }} value="{{ $plantillaPositions->pp_id }}">
-                                    {{ $plantillaPositions->position->position_name }}</option>
-                                @endforeach --}}
+                                @foreach($plantillaSchedulePositionAll as $plantillaSchedulePositionAlls)
+                                <option {{ $plantillaSchedule->pp_id == $plantillaSchedulePositionAlls->pp_id ? 'selected' : '' }} value="{{ $plantillaSchedulePositionAlls->pp_id }}">
+                                    {{ $plantillaSchedulePositionAlls->position->position_name }}</option>
+                                @endforeach
                             </select>
                             @if($errors->has('positionTitle'))
                             <small class="form-text text-danger">
@@ -293,6 +293,6 @@
 </script>
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-{{-- <script src="{{ asset('/assets/js/plantilla.js') }}"></script> --}}
+<script src="{{ asset('/assets/js/plantilla-of-schedule.js') }}"></script>
 @endpush
 @endsection

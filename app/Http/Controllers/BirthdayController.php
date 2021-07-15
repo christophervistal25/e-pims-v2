@@ -33,7 +33,7 @@ class BirthdayController extends Controller
             'to' => ['date', 'required', 'after:from']
         ], [], ['from' => 'Start Date', 'to' => 'End Date']);
 
-        return $this->birthdayRepository->oneWeekBeforeBirthdays($from, $to);
+        return $this->birthdayRepository->weekBeforeBirthdays($from, $to);
     }
     /**
      * Display a listing of the resource.
@@ -44,7 +44,7 @@ class BirthdayController extends Controller
     {
         $currentDate = Carbon::now();
         $currentDatePlusOneWeek = ($currentDate->copy())->addDay(7);
-        $birthdates = $this->birthdayRepository->oneWeekBeforeBirthdays();
+        $birthdates = $this->birthdayRepository->weekBeforeBirthdays();
         return view('employee.birthdays', compact('currentDate', 'currentDatePlusOneWeek', 'birthdates'));
     }
 

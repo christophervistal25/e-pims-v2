@@ -180,7 +180,7 @@
                             <label for="">Name 
                                 <span class='text-danger'>*</span>
                             </label>
-                            <input type="text" class='form-control' name="edit_name">
+                            <input type="text" class='form-control' name="edit_name" id="edit_name">
                             <span class='text-danger' id="name__error__element__edit"></span>
                         </div>
                     </div>
@@ -188,7 +188,7 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label for="">Code</label>
-                            <input type="text" class='form-control' name="edit_code">
+                            <input type="text" class='form-control' name="edit_code" id="edit_code">
                         </div>
                     </div>
                 </div>
@@ -197,7 +197,7 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label for="">Description</label>
-                            <textarea name="edit_description" class="form-control" cols="30" rows="5"></textarea>
+                            <textarea name="edit_description" id="edit_description" class="form-control" cols="30" rows="5"></textarea>
                         </div>
                     </div>
                 </div>
@@ -208,7 +208,7 @@
                             <label>Days Period
                                 <span class='text-danger'>*</span>
                             </label>
-                            <input type="number" class="form-control" name="edit_days_period">
+                            <input type="number" class="form-control" name="edit_days_period" id="edit_days_period">
                             <span class='text-danger' id="days_period__error__element__edit"></span>
                         </div>
                     </div>
@@ -216,12 +216,12 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label>Applicable Gender <span class='text-danger'>*</span></label>
-                            <select name="applicable_gender" class="form-control">
+                            <select id="edit_applicable_gender" name="edit_applicable_gender" class="form-control">
                                 <option value="female">Female</option>
                                 <option value="male">Male</option>
                                 <option value="female/male">Female/Male</option>
                             </select>
-                            <span class='text-danger' id="applicable_gender__error__element"></span>
+                            <span class='text-danger' id="applicable_gender__error__element__edit"></span>
                         </div>
                     </div>
                 </div>
@@ -232,19 +232,19 @@
                             <label for="">Required Service Rendered (Days)
                                 <span class='text-danger'>*</span>
                             </label>
-                            <input type="number" class="form-control" name="edit_required_rendered_service">
+                            <input type="number" class="form-control" name="edit_required_rendered_service" id="edit_required_rendered_service">
                             <span class='text-danger' id="required_rendered_service__error__element__edit"></span>
                         </div>
                     </div>
 
                     <div class="col-lg-6 offset-6 text-right">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" name="edit_editable" type="checkbox" id="editEditableCheckbox">
+                            <input class="form-check-input" name="edit_editable" type="checkbox" id="edit_editable">
                             <label class="form-check-label" for="editEditableCheckbox"> &nbsp; Editable</label>
                         </div>
 
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="edit_convertible_to_cash" id="editConvertableToCashCheckbox">
+                            <input class="form-check-input" type="checkbox" name="edit_convertible_to_cash" id="edit_convertible_to_cash">
                             <label class="form-check-label" for="editConvertableToCashCheckbox"> &nbsp; Convertable to cash</label>
                         </div>
                     </div>
@@ -431,23 +431,74 @@
         // Show the edit leave type modal
         $('#editLeaveTypeModal').modal('toggle');
 
-        // Assign values.
-        
+        // Ajax request for fetching leave type data.
+        $.ajax({
+            url : `/maintenance/leave/${leaveID}/edit`,
+            success : function (leave) {
+                // Collect data of form fields.
+                Object.keys(leave).map((field, index) => {
+                    $(`#edit_${field}`).val(leave[field]);
+                    if(field === 'editable' || field === 'convertible_to_cash') {
+                        $(`#edit_${field}`).prop('checked', leave[field] === 'yes' ? true : false);
+                    } 
+                });
+            },
+        });
     });
 
     $('#editLeaveTypeForm').submit(function (e) {
         e.preventDefault();
         
+        // Display the spinner
+        $('#update-spinner').removeClass('d-none');
+
         // Collect data of form fields.
         let data = $('#editLeaveTypeForm').serialize();
-
-        alert(data);
+                
+        $.ajax({
+            url : `/maintenance/leave/${leaveID}`,
+            method : 'PUT',
+            data : data,
+            success : function (response) {
+                $('#update-spinner').addClass('d-none');
+                if(response.success) {
+                    table.ajax.reload();
+                    swal("Good Job!", "Successfully update a leave type.", "success");
+                    $('#editLeaveTypeModal').modal('toggle');
+                }
+            },
+            error : function (response) {
+                $('#update-spinner').addClass('d-none');
+                if(response.status === VALIDATION_ERROR) {
+                    Object.keys(response.responseJSON.errors).forEach((field, key) => {
+                        $(`#${field.replace('edit_', '')}__error__element__edit`).text(response.responseJSON.errors[field][0]);
+                    });
+                }
+            }
+        });
+        
     });
 
     $(document).on('click', '.delete__leave__type', function () {
         leaveID = $(this).attr('data-id');
-        alert(leaveID);
-        // Get the ID.
+        swal({
+            title: "Are you sure?",
+            text : "You are about to delete a leave type record",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            }).then((willDelete) => {
+                if(willDelete) {
+                    $.ajax({
+                        url : `/maintenance/leave/${leaveID}`,
+                        method : 'DELETE',
+                        success : function (response) {
+                            table.draw();
+                            swal("Good Job!", "Successfully delete a leave type record.", "success");
+                        }
+                    });
+                }
+            });
     });
 
 </script>

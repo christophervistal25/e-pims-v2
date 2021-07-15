@@ -16,13 +16,15 @@ class CreateEmployeeLeaveRecordsTable extends Migration
         Schema::create('employee_leave_records', function (Blueprint $table) {
             $table->id();
             $table->string('employee_id'); 
-            $table->unsignedInteger('leave_balance_id');
+            $table->unsignedInteger('leave_type_id');
             $table->decimal('earned', 5, 3);
+            $table->decimal('used', 5, 3);
+            $table->date('fb_as_of')->nullable();
             $table->text('particular');
             $table->decimal('absences_under_time_with_pay_balance', 5, 3);
             $table->decimal('absences_under_time_without_pay_balance', 5, 3);
             $table->timestamps();
-        });
+        });     
     }
 
     /**

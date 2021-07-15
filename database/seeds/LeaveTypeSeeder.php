@@ -134,7 +134,8 @@ class LeaveTypeSeeder extends Seeder
                 'applicable_gender'       => $type['applicable_gender'],
                 'convertible_to_cash'     => $type['convertible_to_cash'],
                 'required_rendered_service' => $type['required_rendered_service'],
-                'editable'                => $type['editable'],
+                // 'editable'                => $type['editable'],
+                'editable'                => 'yes',
             ]);
         }
     }

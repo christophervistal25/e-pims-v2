@@ -99,9 +99,9 @@ class LeaveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id) : LeaveType
     {
-        //
+        return LeaveType::findOrFail($id);
     }
 
     /**
@@ -113,7 +113,44 @@ class LeaveController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if($request->ajax()) {
+            $this->validate($request, [
+                'edit_name'                      => 'required',
+                'edit_code'                      => 'nullable|max:10',
+                'edit_description'               => 'nullable|string',
+                'edit_days_period'               => 'required',
+                'edit_convertible_to_cash'       => 'nullable',
+                'edit_applicable_gender'         => 'required|in:male,female,female/male',
+                'edit_required_rendered_service' => 'required',
+                'edit_editable'                  => 'nullable',
+            ], [], [
+                'edit_name'                      => 'name',
+                'edit_code'                      => 'code',
+                'edit_description'               => 'description',
+                'days_period'                    => 'days_period',
+                'edit_convertible_to_cash'       => 'convertible_to_cash',
+                'edit_applicable_gender'         => 'applicable_gender',
+                'edit_required_rendered_service' => 'required_rendered_service',
+                'edit_editable'                  => 'editable',
+            ]);
+
+            $leaveType = LeaveType::findOrFail($id);
+            
+            $leaveType->name = $request->edit_name;
+            $leaveType->code = $request->edit_code;
+            $leaveType->description = $request->edit_description;
+            $leaveType->days_period = $request->edit_days_period;
+            $leaveType->convertible_to_cash = $request->has('edit_convertible_to_cash') ? 'yes' : 'no';
+            $leaveType->applicable_gender = $request->edit_applicable_gender;
+            $leaveType->required_rendered_service = $request->edit_required_rendered_service;
+            $leaveType->editable = $request->has('edit_editable') ? 'yes' : 'no';
+
+            $leaveType->save();
+
+            return response()->json(['success' => $leaveType], 202);
+        }
+
+        return abort(404);
     }
 
     /**
@@ -124,6 +161,7 @@ class LeaveController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $leaveType = LeaveType::findOrFail($id);
+        return response()->json(['success' => $leaveType->delete()]);
     }
 }
