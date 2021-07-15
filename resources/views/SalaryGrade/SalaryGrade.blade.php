@@ -1,12 +1,45 @@
 @extends('layouts.app')
 @section('title', 'Salary Grade')
 @prepend('page-css')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="{{ asset('/assets/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/1.10.24/sorting/currency.js">
 <link rel="stylesheet"
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+<style>
+     .swal-content ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    table.dataTable.no-footer {
+        border: 1px solid #dee2e6;
+    }
+    table.dataTable thead th,
+    table.dataTable thead td {
+        padding: 15px 25px;
+        border-bottom: 1px solid #dee2e6;
+    }
+    table.dataTable {
+        border-collapse: collapse;
+    }
+    .btn-primarys{
+        background-color:#FF9B44;
+        color: white;
+    }
+    .btn-primarys:hover {
+    background-color: #FF8544;
+    color: white;
+    }
+    .page-item.active .page-link {
+    background-color: #FF9B44 !important;
+    border: 1px solid #FF9B44;
+}
+.page-item.active .page-link:hover{
+    background-color: #FF8544 !important;
+    border: 1px solid #FF8544;
+}
+</style>
 @endprepend
 @section('content')
 <div class="content">
@@ -18,7 +51,7 @@
 
             <div id="add" class="page-header {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
                 <div style='padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
-                    <button id="cancelbutton" class="btn btn-primary submit-btn float-right shadow"><i class="fa fa-list"></i>
+                    <button id="cancelbutton" class="btn btn-primarys submit-btn float-right shadow"><i class="fa fa-list"></i>
                         Salary Grade List</button>
                 </div>
                 <div class="alert alert-secondary text-center font-weight-bold" role="alert">ADD NEW SALARY GRADE</div>
@@ -177,13 +210,13 @@
 
 
                         <div class="form-group submit-section col-12">
-                            <button id="saveBtn" class="btn btn-success submit-btn float-right shadow" type="submit"><i class="fas fa-save"></i>
+                            <button id="saveBtn" class="btn btn-primarys submit-btn float-right shadow" type="submit"><i class="fas fa-save"></i>
                                 <span id="loading" class="spinner-border spinner-border-sm d-none" role="status"
                                     aria-hidden="false"></span>
                                 Save
                             </button>
                             <button style="margin-right:10px;" type="button" id="cancelbutton1"
-                                class="btn text-white btn-warning submit-btn float-right shadow"><i class="fas fa-ban"></i> Cancel</button>
+                                class="btn text-white btn-danger submit-btn float-right shadow"><i class="fas fa-ban"></i> Cancel</button>
                         </div>
 
                 </form>
@@ -210,7 +243,7 @@
                         </div>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <button id="addbutton" class="btn btn-primary submit-btn float-right"><i class="fa fa-plus"></i>
+                        <button id="addbutton" class="btn btn-primarys submit-btn float-right"><i class="fa fa-plus"></i>
                             Add Salary Grade</button>
                     </div>
                 </div>
@@ -218,18 +251,18 @@
                     <table width="100%" cellspacing="0" class="table table-bordered text-center" id="myTable">
                         <thead>
                             <tr>
-                                <td style="width:10px; important: !;" scope="col" class="text-center font-weight-bold">
+                                <td style="width:10px; important: !;" scope="col" class="text-center">
                                     Salary Grade</td>
-                                <td scope="col" class="text-center font-weight-bold">Step 1</td>
-                                <td scope="col" class="text-center font-weight-bold">Step 2</td>
-                                <td scope="col" class="text-center font-weight-bold">Step 3</td>
-                                <td scope="col" class="text-center font-weight-bold">Step 4</td>
-                                <td scope="col" class="text-center font-weight-bold">Step 5</td>
-                                <td scope="col" class="text-center font-weight-bold">Step 6</td>
-                                <td scope="col" class="text-center font-weight-bold">Step 7</td>
-                                <td scope="col" class="text-center font-weight-bold">Step 8</td>
-                                <td scope="col" class="text-center font-weight-bold">Base Year</td>
-                                <td scope="col" class="text-center font-weight-bold">Action</td>
+                                <td scope="col" class="text-center">Step 1</td>
+                                <td scope="col" class="text-center">Step 2</td>
+                                <td scope="col" class="text-center">Step 3</td>
+                                <td scope="col" class="text-center">Step 4</td>
+                                <td scope="col" class="text-center">Step 5</td>
+                                <td scope="col" class="text-center">Step 6</td>
+                                <td scope="col" class="text-center">Step 7</td>
+                                <td scope="col" class="text-center">Step 8</td>
+                                <td scope="col" class="text-center">Base Year</td>
+                                <td scope="col" class="text-center">Action</td>
                             </tr>
                         </thead>
                     </table>
@@ -240,7 +273,8 @@
 </div>
 
 @push('page-scripts')
-<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+<script src="{{ asset('/assets/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('/assets/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>
 <script src="{{ asset('/assets/js/salary-grade.js') }}"></script>

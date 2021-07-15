@@ -2,7 +2,7 @@
 @section('title', 'Service Records')
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="{{ asset('/assets/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet"
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 @prepend('page-css')
@@ -14,16 +14,50 @@
     }
 
     #line {
-        border-bottom: 1px solid black;
+        border-bottom: 2px solid #DEE2E6;
         padding-bottom: 15px;
     }
+
+    .btn-primarys{
+        background-color:#FF9B44;
+        color: white;
+    }
+    .btn-primarys:hover {
+    background-color: #FF8544;
+    color: white;
+    }
+    .page-item.active .page-link {
+    background-color: #FF9B44 !important;
+    border: 1px solid #FF9B44;
+}
+.page-item.active .page-link:hover{
+    background-color: #FF8544 !important;
+    border: 1px solid #FF8544;
+}
+
+ .swal-content ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    table.dataTable.no-footer {
+        border: 1px solid #dee2e6;
+    }
+    table.dataTable thead th,
+    table.dataTable thead td {
+        padding: 15px 25px;
+        border-bottom: 1px solid #dee2e6;
+    }
+    table.dataTable {
+        border-collapse: collapse;
+    }
+
 
 </style>
 @endprepend
 @section('content')
 <div class="clearfix"></div>
 <div class="kanban-board card shadow mb-0">
-    <div class="card-body">  
+    <div class="card-body">
         <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
 
             <div style='padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
@@ -158,13 +192,13 @@
 
 
                     <div class="form-group form-group submit-section col-12">
-                        <button id="saveBtn" class="btn btn-success submit-btn float-right" type="submit"><i class="fas fa-save"></i>
+                        <button id="saveBtn" class="btn btn-primarys submit-btn float-right" type="submit"><i class="fas fa-save"></i>
                             <span id="loading" class="spinner-border spinner-border-sm d-none" role="status"
                                 aria-hidden="false"></span>
                             Save
                         </button>
                         <button style="margin-right:10px;" type="button" onclick="myFunction()" id="cancelbutton1"
-                            class="text-white btn btn-warning submit-btn float-right"><i class="fas fa-ban"></i> Cancel</button>
+                            class="text-white btn btn-danger submit-btn float-right"><i class="fas fa-ban"></i> Cancel</button>
                         {{-- onclick="reset()" --}}
                     </div>
 
@@ -176,7 +210,7 @@
         <div id="table" class="page-header {{  count($errors->all()) == 0 ? '' : 'd-none' }}">
             <div class="row">
                 <div class="col-6 mb-2">
-                    <select value="" data-style="btn-primary text-white"
+                    <select value="" data-style="btn-primarys text-white"
                         class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}"
                         name="employeeName" data-live-search="true" id="employeeName" data-size="5"
                         onchange="ValidateDropDown(this)">
@@ -191,7 +225,7 @@
                 <div class="col-6 mb-2">
                     <div class="float-right">
                             <a id="printPreviewA"><button class="btn btn-secondary" id="printPreview" disabled="true" style="visibility:hidden;"><i class="la la-print"></i>&nbsp; Print Preview</button></a>&nbsp;&nbsp;
-                        <button id="addbutton" class="btn btn-primary float-right" disabled><i class="fa fa-plus"></i>
+                        <button id="addbutton" class="btn btn-primarys float-right" disabled><i class="fa fa-plus"></i>
                             Add Service Records</button>
                     </div>
                 </div>
@@ -235,7 +269,8 @@
 @push('page-scripts')
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="{{ asset('/assets/js/service-record.js') }}"></script>
-<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+<script src="{{ asset('/assets/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('/assets/js/dataTables.bootstrap4.min.js') }}"></script>
 <script>
     $.ajaxSetup({
         headers: {

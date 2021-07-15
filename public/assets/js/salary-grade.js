@@ -4,24 +4,20 @@ $.ajaxSetup({
     }
 });
 
-// $("#sgStep1").on("keyup", function() {
-//     var n = parseInt(
-//         $(this)
-//             .val()
-//             .replace(/\D/g, ""),
-//         10
-//     );
-//     $(this).val(n.toLocaleString());
-// });
-
 let date = new Date();
 let year = date.getFullYear();
 let myTable = $("#myTable").DataTable({
     processing: true,
     serverSide: true,
     pageLength: 35,
+    pagingType: "full_numbers",
+    stateSave: true,
     lengthMenu: [35, 50, 75, 100],
     autoWidth: false,
+    language: {
+        processing:
+            '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+    },
     ajax: "/salary-grade-list",
     columns: [
         { data: "sg_no", name: "sg_no" },

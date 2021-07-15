@@ -1,7 +1,7 @@
 @extends('layouts.app')
-@section('title', 'Salary Adjustment Individual')
+@section('title', 'SALARY ADJUSTMENT INDIVIDUAL')
 @prepend('page-css')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="{{ asset('/assets/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet"
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
@@ -14,6 +14,37 @@
         padding: 0;
     }
 
+ .swal-content ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    table.dataTable.no-footer {
+        border: 1px solid #dee2e6;
+    }
+    table.dataTable thead th,
+    table.dataTable thead td {
+        padding: 15px 25px;
+        border-bottom: 1px solid #dee2e6;
+    }
+    table.dataTable {
+        border-collapse: collapse;
+    }
+    .btn-primarys{
+        background-color:#FF9B44;
+        color: white;
+    }
+    .btn-primarys:hover {
+    background-color: #FF8544;
+    color: white;
+    }
+    .page-item.active .page-link {
+    background-color: #FF9B44 !important;
+    border: 1px solid #FF9B44;
+}
+.page-item.active .page-link:hover{
+    background-color: #FF8544 !important;
+    border: 1px solid #FF8544;
+}
 </style>
 @endprepend
 @section('content')
@@ -21,7 +52,7 @@
     <div class="card-body">
         <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
             <div style='padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
-                <button id="cancelbutton" class="btn btn-primary submit-btn float-right shadow"><i
+                <button id="cancelbutton" class="btn btn-primarys submit-btn float-right shadow"><i
                         class="fa fa-list"></i>
                     Salary Adjusment List</button>
             </div>
@@ -200,13 +231,13 @@
                     </div>
 
                     <div class="form-group form-group submit-section col-12">
-                        <button id="saveBtn" class="btn btn-success submit-btn float-right shadow" type="submit"><i class="fas fa-save"></i>
+                        <button id="saveBtn" class="btn btn-primarys submit-btn float-right shadow" type="submit"><i class="fas fa-save"></i>
                             <span id="loading" class="spinner-border spinner-border-sm d-none" role="status"
                                 aria-hidden="false"></span>
                             Save
                         </button>
                         <button style="margin-right:10px;" type="button" onclick="myFunction()" id="cancelbutton1"
-                            class="text-white btn btn-warning submit-btn float-right shadow"><i class="fas fa-ban"></i> Cancel</button>
+                            class="text-white btn btn-danger submit-btn float-right shadow"><i class="fas fa-ban"></i> Cancel</button>
                     </div>
 
                 </div>
@@ -218,7 +249,7 @@
 
             <div class="row">
                 <div class="col-3 mb-2">
-                    <select value="" data-style="btn-primary text-white"
+                    <select value="" data-style="btn-primarys text-white"
                         class="form-control form-control-xs selectpicker yearAdjustment {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}"
                         name="yearAdjustment" data-live-search="true" id="yearAdjustment" data-size="5">
                         <option value="">All</option>
@@ -229,7 +260,7 @@
                 </div>
                 <div class="col-9 mb-2">
                     <div class="float-right">
-                        <button id="addbutton" class="btn btn-primary submit-btn float-right shadow"><i
+                        <button id="addbutton" class="btn btn-primarys submit-btn float-right shadow"><i
                                 class="fa fa-plus"></i>
                             Add Salary Adjustment</button>
                     </div>
@@ -240,14 +271,14 @@
                 <table class="table table-bordered text-center" id="salaryAdjustment" style="width:100%;">
                     <thead>
                         <tr>
-                            <td scope="col" class="text-center font-weight-bold">Adjustment Date</td>
-                            <td scope="col" class="text-center font-weight-bold">Employee Name</td>
-                            <td scope="col" class="text-center font-weight-bold">Salary Grade</td>
-                            <td scope="col" class="text-center font-weight-bold">Step Number</td>
-                            <td scope="col" class="text-center font-weight-bold">Previous Salary</td>
-                            <td scope="col" class="text-center font-weight-bold">New Salary</td>
-                            <td scope="col" class="text-center font-weight-bold">Salary Difference</td>
-                            <td scope="col" class="text-center font-weight-bold">Action</td>
+                            <td scope="col" class="text-center">Adjustment Date</td>
+                            <td scope="col" class="text-center">Employee Name</td>
+                            <td scope="col" class="text-center">Salary Grade</td>
+                            <td scope="col" class="text-center">Step Number</td>
+                            <td scope="col" class="text-center">Previous Salary</td>
+                            <td scope="col" class="text-center">New Salary</td>
+                            <td scope="col" class="text-center">Salary Difference</td>
+                            <td scope="col" class="text-center">Action</td>
                         </tr>
                     </thead>
                 </table>
@@ -259,7 +290,8 @@
 @push('page-scripts')
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="{{ asset('/assets/js/salary-adjustment.js') }}"></script>
-<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+<script src="{{ asset('/assets/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('/assets/js/dataTables.bootstrap4.min.js') }}"></script>
 <script>
     $.ajaxSetup({
         headers: {

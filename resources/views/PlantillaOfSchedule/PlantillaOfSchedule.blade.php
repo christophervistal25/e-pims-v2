@@ -1,7 +1,7 @@
 @extends('layouts.app')
-@section('title', 'Plantilla Schedule')
+@section('title', 'PLANTILLA SCHEDULE')
 @prepend('page-css')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="{{ asset('/assets/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet"
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
@@ -12,6 +12,38 @@
     .swal-content ul{
     list-style-type: none;
     padding: 0;
+}
+
+.swal-content ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    table.dataTable.no-footer {
+        border: 1px solid #dee2e6;
+    }
+    table.dataTable thead th,
+    table.dataTable thead td {
+        padding: 15px 25px;
+        border-bottom: 1px solid #dee2e6;
+    }
+    table.dataTable {
+        border-collapse: collapse;
+    }
+    .btn-primarys{
+        background-color:#FF9B44;
+        color: white;
+    }
+    .btn-primarys:hover {
+    background-color: #FF8544;
+    color: white;
+    }
+    .page-item.active .page-link {
+    background-color: #FF9B44 !important;
+    border: 1px solid #FF9B44;
+}
+.page-item.active .page-link:hover{
+    background-color: #FF8544 !important;
+    border: 1px solid #FF8544;
 }
 #line {
         border-bottom: 1px solid black;
@@ -24,7 +56,7 @@
     <div class="card-body">
         <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
                 <div style='padding-top:20px; padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
-                    <button id="cancelbutton" class="btn submit-btn btn-primary float-right"><i class="fa fa-list"></i> Plantilla Schedule List</button>
+                    <button id="cancelbutton" class="btn submit-btn btn-primarys float-right"><i class="fa fa-list"></i> Plantilla Schedule List</button>
                 </div>
                     <div class="row">
 
@@ -34,7 +66,7 @@
                         </div>
 
                         <div class="form-group col-4 mb-2">
-                            <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('officePlantillaList')  ? 'is-invalid' : ''}}"
+                            <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('officePlantillaList')  ? 'is-invalid' : ''}}"
                                 name="officePlantillaList" data-live-search="true" id="officePlantillaList" data-size="5">
                                 <option value="">All</option>
                                 @foreach($office as $offices)
@@ -58,7 +90,7 @@
 
 
                     <div class="form-group col-4">
-                    <button id="saveBtn" class="btn btn-success submit-btn float-right" type="submit" onclick="LockDepot()">
+                    <button id="saveBtn" class="btn btn-danger submit-btn float-right" type="submit" onclick="LockDepot()">
                         <span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>
                         Post
                     </button>
@@ -70,13 +102,13 @@
                         <table class="table table-bordered text-center" id="plantillaList" style="width:100%;">
                             <thead>
                                 <tr>
-                                    <td scope="col" class="text-center font-weight-bold">Employee Name</td>
-                                    <td scope="col" class="text-center font-weight-bold">Position Title</td>
-                                    <td scope="col" class="text-center font-weight-bold">Office</td>
-                                    <td scope="col" class="text-center font-weight-bold">Item No</td>
-                                    <td scope="col" class="text-center font-weight-bold">Status</td>
-                                    <td scope="col" class="text-center font-weight-bold">Year</td>
-                                    <td scope="col" class="text-center font-weight-bold">Action</td>
+                                    <td scope="col" class="text-center">Employee Name</td>
+                                    <td scope="col" class="text-center">Position Title</td>
+                                    <td scope="col" class="text-center">Office</td>
+                                    <td scope="col" class="text-center">Item No</td>
+                                    <td scope="col" class="text-center">Status</td>
+                                    <td scope="col" class="text-center">Year</td>
+                                    <td scope="col" class="text-center">Action</td>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -89,7 +121,7 @@
         <div id="table" class="page-header ">
             <div class="row">
                 <div style="padding-left:35px;" class="col-4 mb-2">
-                    <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
+                    <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
                         name="officeCode" data-live-search="true" id="officeCode" data-size="5" >
                         <option value="All">All</option>
                         @foreach($office as $offices)
@@ -98,7 +130,7 @@
                         </select>
             </div>
             <div class="col-2 mb-2">
-                <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('yearFilter')  ? 'is-invalid' : ''}}"
+                <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('yearFilter')  ? 'is-invalid' : ''}}"
                     name="yearFilter" data-live-search="true" id="yearFilter" data-size="5">
                     <option value="All">All</option>
                     @foreach($PlantillaOfScheduleYear as $PlantillaOfScheduleYears)
@@ -108,7 +140,7 @@
         </div>
             <div class="col-6 mb-2">
                     <div style="padding-right:20px;" class="float-right">
-                        <button id="addbutton" class="btn btn-primary float-right" ><i class="fa fa-plus"></i> Create Plantilla Schedule</button>
+                        <button id="addbutton" class="btn btn-primarys float-right" ><i class="fa fa-plus"></i> Create Plantilla Schedule</button>
                     </div>
                 </div>
             </div>
@@ -116,13 +148,13 @@
                 <table class="table table-bordered text-center" id="plantillaOfSchedule" style="width:100%;">
                     <thead>
                         <tr>
-                            <td scope="col" class="text-center font-weight-bold">Employee Name</td>
-                            <td scope="col" class="text-center font-weight-bold">Position Title</td>
-                            <td scope="col" class="text-center font-weight-bold">Office</td>
-                            <td scope="col" class="text-center font-weight-bold">Item No</td>
-                            <td scope="col" class="text-center font-weight-bold">Status</td>
-                            <td scope="col" class="text-center font-weight-bold">Year</td>
-                            <td scope="col" class="text-center font-weight-bold">Action</td>
+                            <td scope="col" class="text-center">Employee Name</td>
+                            <td scope="col" class="text-center">Position Title</td>
+                            <td scope="col" class="text-center">Office</td>
+                            <td scope="col" class="text-center">Item No</td>
+                            <td scope="col" class="text-center">Status</td>
+                            <td scope="col" class="text-center">Year</td>
+                            <td scope="col" class="text-center">Action</td>
                         </tr>
                     </thead>
                 </table>
@@ -133,7 +165,8 @@
 @push('page-scripts')
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="{{ asset('/assets/js/plantilla-of-schedule.js') }}"></script>
-<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+<script src="{{ asset('/assets/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('/assets/js/dataTables.bootstrap4.min.js') }}"></script>
 <script>
     $.ajaxSetup({
         headers: {

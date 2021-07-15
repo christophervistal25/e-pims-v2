@@ -199,10 +199,16 @@ $(document).ready(function() {
 $(function() {
     let table = $("#plantillaofposition").DataTable({
         processing: true,
+        pagingType: "full_numbers",
+        stateSave: true,
         serverSide: true,
         destroy: true,
         retrieve: true,
         columnDefs: [{ width: "10%", targets: 5 }],
+        language: {
+            processing:
+                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },
         ajax: "/plantilla-of-position-list",
         columns: [
             { data: "position", name: "position" },
@@ -229,6 +235,10 @@ $(function() {
                 columnDefs: [{ width: "10%", targets: 5 }],
                 destroy: true,
                 retrieve: true,
+                language: {
+                    processing:
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
                 ajax: {
                     url: "/plantilla-of-position-list"
                 },
@@ -254,6 +264,10 @@ $(function() {
                 columnDefs: [{ width: "10%", targets: 5 }],
                 destroy: true,
                 retrieve: true,
+                language: {
+                    processing:
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
                 ajax: {
                     url: `/api/plantilla/position/${e.target.value}`
                 },
