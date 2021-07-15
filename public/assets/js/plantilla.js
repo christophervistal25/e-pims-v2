@@ -2,6 +2,12 @@ $(function() {
     let table = $("#plantilla").DataTable({
         processing: true,
         serverSide: true,
+        pagingType: "full_numbers",
+        stateSave: true,
+        language: {
+            processing:
+                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },
         ajax: "/plantilla-list",
         columns: [
             {
@@ -41,9 +47,15 @@ $(function() {
             table.destroy();
             table = $("#plantilla").DataTable({
                 processing: true,
+                pagingType: "full_numbers",
+                stateSave: true,
                 serverSide: true,
                 destroy: true,
                 retrieve: true,
+                language: {
+                    processing:
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
                 ajax: {
                     url: "/plantilla-list"
                 },
@@ -84,8 +96,14 @@ $(function() {
             table = $("#plantilla").DataTable({
                 processing: true,
                 serverSide: true,
+                pagingType: "full_numbers",
+                stateSave: true,
                 destroy: true,
                 retrieve: true,
+                language: {
+                    processing:
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
                 ajax: {
                     url: `/api/plantilla/personnel/${e.target.value}`
                 },

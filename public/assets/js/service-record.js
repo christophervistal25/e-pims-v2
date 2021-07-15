@@ -8,6 +8,12 @@ $(function() {
         paging: false,
         info: false,
         bFilter: false,
+        pagingType: "full_numbers",
+
+        language: {
+            processing:
+                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },
         ajax: {
             url: "/service-records-list",
             data: function(d) {
@@ -59,6 +65,11 @@ $(function() {
                 paging: false,
                 info: false,
                 bFilter: false,
+                pagingType: "full_numbers",
+                language: {
+                    processing:
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
                 ajax: {
                     url: "/service-records-list",
                     data: function(d) {
@@ -115,22 +126,16 @@ $(function() {
                 serverSide: true,
                 destroy: true,
                 retrieve: true,
+                pagingType: "full_numbers",
+                language: {
+                    processing:
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
                 ajax: {
                     url: `/api/employee/service/records/${e.target.value}`,
                     data: function(d) {
                         d.employeeName = $("#employeeName").val();
-                    },
-                    // success: function(a){
-                    //     console.log(a.recordsTotal);
-                    //     if(e.recordsTotal == 0){
-                    //         document.getElementById("printPreview").setAttribute('style','visibility:hidden;');
-                    //         document.getElementById("printPreviewA").removeAttribute('href');
-                    //         document.getElementById("printPreview").setAttribute('disabled',true);
-                    //     }else{
-                    //         document.getElementById("printPreview").setAttribute('style','visibility:visible;');
-                    //         document.getElementById("printPreview").removeAttribute('disabled');
-                    //     }
-                    // }
+                    }
                 },
                 columns: [
                     {
@@ -157,15 +162,25 @@ $(function() {
                     { data: "action", name: "action" }
                 ]
             });
-            setTimeout(function(){
+            setTimeout(function() {
                 var table_data = $("#serviceRecords > tbody > tr > td").text();
-                if(table_data == 'No data available in table'){
-                    document.getElementById("printPreview").setAttribute('style','visibility:hidden;');
-                    document.getElementById("printPreviewA").removeAttribute('href');
-                    document.getElementById("printPreview").setAttribute('disabled',true);
-                }else{
-                    document.getElementById("printPreview").setAttribute('style','visibility:visible;');
-                    document.getElementById("printPreview").removeAttribute('disabled');
+                if (table_data == "No data available in table") {
+                    document
+                        .getElementById("printPreview")
+                        .setAttribute("style", "visibility:hidden;");
+                    document
+                        .getElementById("printPreviewA")
+                        .removeAttribute("href");
+                    document
+                        .getElementById("printPreview")
+                        .setAttribute("disabled", true);
+                } else {
+                    document
+                        .getElementById("printPreview")
+                        .setAttribute("style", "visibility:visible;");
+                    document
+                        .getElementById("printPreview")
+                        .removeAttribute("disabled");
                 }
             }, 1000);
         }
@@ -196,11 +211,15 @@ function ValidateDropDown(dd) {
     else input.disabled = false;
     if (dd.value == "") {
         document.getElementById("line").style.visibility = "visible";
-        document.getElementById("printPreview").setAttribute('style','visibility:hidden;');
-        document.getElementById("printPreviewA").removeAttribute('href');
-        document.getElementById("printPreview").setAttribute('disabled',true);
+        document
+            .getElementById("printPreview")
+            .setAttribute("style", "visibility:hidden;");
+        document.getElementById("printPreviewA").removeAttribute("href");
+        document.getElementById("printPreview").setAttribute("disabled", true);
     } else {
-        document.getElementById("printPreviewA").setAttribute('href','print-service-records/' + dd.value);
+        document
+            .getElementById("printPreviewA")
+            .setAttribute("href", "print-service-records/" + dd.value);
         document.getElementById("line").style.visibility = "hidden";
     }
     $("input").val("");

@@ -36,9 +36,14 @@ $(document).ready(function() {
 
 $(function() {
     let table = $("#maintenanceDivision").DataTable({
-        processing: true,
+        pagingType: "full_numbers",
         serverSide: true,
-        retrieve: true,
+        stateSave: true,
+        processing: true,
+        language: {
+            processing:
+                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },
         ajax: "/maintenance-division-list",
         columns: [
             { data: "division_name", name: "division_name" },
@@ -56,10 +61,14 @@ $(function() {
         if (e.target.value == "" || e.target.value == "") {
             table.destroy();
             table = $("#maintenanceDivision").DataTable({
-                processing: true,
+                pagingType: "full_numbers",
                 serverSide: true,
-                destroy: true,
-                retrieve: true,
+                stateSave: true,
+                processing: true,
+                language: {
+                    processing:
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
                 ajax: "/maintenance-division-list",
                 columns: [
                     { data: "division_name", name: "division_name" },
@@ -75,10 +84,14 @@ $(function() {
         } else {
             table.destroy();
             table = $("#maintenanceDivision").DataTable({
-                processing: true,
+                pagingType: "full_numbers",
                 serverSide: true,
-                destroy: true,
-                retrieve: true,
+                stateSave: true,
+                processing: true,
+                language: {
+                    processing:
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
                 ajax: {
                     url: `/api/maintenance/division/${e.target.value}`
                 },
