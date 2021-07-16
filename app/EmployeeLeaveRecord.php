@@ -22,4 +22,9 @@ class EmployeeLeaveRecord extends Model
     {
         return $this->hasOne(LeaveType::class, 'id', 'leave_type_id');
     }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
+    }
 }
