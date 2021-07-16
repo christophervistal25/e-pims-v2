@@ -21,7 +21,7 @@ class PositionScheduleController extends Controller
     public function index()
     {
         $office = Office::select('office_code', 'office_name')->get();
-        $PositionScheduleYear = PositionSchedule::select('year')->orderBy('year', 'desc')->get();
+        $PositionScheduleYear = PositionSchedule::select('year')->orderBy('year', 'desc')->distinct()->get();
         return view('PositionSchedule.PositionSchedule', compact('office', 'PositionScheduleYear'));
     }
 

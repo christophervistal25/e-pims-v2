@@ -299,6 +299,7 @@ $(function() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 $(function() {
+    let yearFilter = document.querySelector("#year").value - 1;
     let table = $("#plantillaOfSchedule").DataTable({
         processing: true,
         serverSide: true,
@@ -308,7 +309,7 @@ $(function() {
             processing:
                 '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
         },
-        ajax: "/plantilla-of-schedule-adjustedlist",
+        ajax: `/plantilla-of-schedule-adjustedlist/${yearFilter}`,
         columns: [
             {
                 data: "employee",
@@ -344,6 +345,7 @@ $(function() {
     });
 
     $("#officeCode").change(function(e) {
+        let yearFilter = document.querySelector("#yearFilter").value - 1;
         if (e.target.value == "" || e.target.value == "") {
             table.destroy();
             table = $("#plantillaOfSchedule").DataTable({
@@ -358,7 +360,7 @@ $(function() {
                         '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
                 },
                 ajax: {
-                    url: "/plantilla-of-schedule-adjustedlist"
+                    url: `/plantilla-of-schedule-adjustedlist/${yearFilter}`
                 },
                 columns: [
                     {

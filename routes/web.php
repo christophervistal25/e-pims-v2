@@ -27,7 +27,7 @@ Route::get('/maintenance-division/{id}', 'MaintenanceDivisionController@destroy'
 //plantilla of schedule
 Route::resource('/plantilla-of-schedule', 'PlantillaOfScheduleController');
 Route::get('/plantilla-of-schedule-list', 'PlantillaOfScheduleController@list');
-Route::get('/plantilla-of-schedule-adjustedlist', 'PlantillaOfScheduleController@adjustedlist');
+Route::get('/plantilla-of-schedule-adjustedlist/{yearFilter}', 'PlantillaOfScheduleController@adjustedlist');
 
 //position of schedule
 Route::resource('/position-schedule', 'PositionScheduleController');
