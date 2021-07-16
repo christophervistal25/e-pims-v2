@@ -366,8 +366,12 @@ Route::get('/plantilla/position/schedule/{officeCode}', function ($office_code) 
 
 
 //  position schedule
-Route::get('/position/schedule/{officeCode}', function ($office_code) {
-    $data = PositionSchedule::select('pos_id','pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name' , 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->where('office_code', $office_code)->orderBy('pp_id', 'DESC')->get();
+Route::get('/position/schedule/{officeCode}/{yearFilter}', function ($office_code, $yearFilter) {
+    if($office_code == "All"){
+        $data = PositionSchedule::select('pos_id','pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name' , 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->where('year', $yearFilter)->orderBy('pp_id', 'DESC');
+      }else{
+        $data = PositionSchedule::select('pos_id','pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name' , 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->where('office_code', $office_code)->where('year', $yearFilter)->orderBy('pp_id', 'DESC')->get();
+     }
     return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('position', function ($row) {
@@ -376,12 +380,6 @@ Route::get('/position/schedule/{officeCode}', function ($office_code) {
                     ->addColumn('office', function ($row) {
                         return $row->office->office_name;
                     })
-                    ->addColumn('action', function($row){
-
-                          $btn = "<a title='Edit Position Schedule' href='". route('position-schedule.edits', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-                            return $btn;
-                    })
-                    ->rawColumns(['action'])
                     ->make(true);
 });
 

@@ -34,7 +34,7 @@ Route::resource('/position-schedule', 'PositionScheduleController');
 Route::get('/position-schedule/edit/{edit}', 'PositionScheduleController@edits')->name('position-schedule.edits');
 Route::put('/position-schedule/update/{edit}', 'PositionScheduleController@updates')->name('position-schedule.updates');
 Route::get('/position-schedule-list', 'PositionScheduleController@list');
-Route::get('/position-schedule-list-adjusted', 'PositionScheduleController@adjustedlist');
+Route::get('/position-schedule-list-adjusted/{year}', 'PositionScheduleController@adjustedlist');
 
 //plantilla of personnel
 Route::get('/plantilla-list', 'Plantillacontroller@list');
