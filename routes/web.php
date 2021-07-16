@@ -118,7 +118,7 @@ Route::group(['prefix' => 'employee'], function () {
     Route::resource('leave-starting-balance', 'EmployeeLeave\LeaveStartingBalanceController');
     Route::resource('/leave-monitoring', 'EmployeeLeave\LeaveMonitoringController');
     Route::resource('/leave-recall', 'EmployeeLeave\LeaveRecallController');
-    Route::resource('/leave-forwarded-balance', 'EmployeeLeave\LeaveForwardedBalanceController');
+    Route::resource('/leave-forwarded-balance', 'EmployeeLeave\EmployeeLeaveRecordController');
     Route::resource('/compensatory-build-up', 'EmployeeLeave\CompensatoryBuildUpController');
 });
 
@@ -135,4 +135,4 @@ Route::get('/restore', 'RestoreController@index');
 
 // Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');

@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
             LeaveTypeSeeder::class,
             RefNameExtensionSeeder::class,
             RefStatusSeeder::class,
-            // EmployeeSeeder::class,
+            EmployeeSeeder::class,
             OfficeSeeder::class,
             SalaryGradeSeeder::class,
             PositionSeeder::class,
