@@ -21,7 +21,7 @@ class PositionScheduleController extends Controller
     public function index()
     {
         $office = Office::select('office_code', 'office_name')->get();
-        $PositionScheduleYear = PositionSchedule::select('year')->get();
+        $PositionScheduleYear = PositionSchedule::select('year')->orderBy('year', 'desc')->get();
         return view('PositionSchedule.PositionSchedule', compact('office', 'PositionScheduleYear'));
     }
 
@@ -49,10 +49,10 @@ class PositionScheduleController extends Controller
         return view('PositionSchedule.PositionSchedule');
     }
 
-    public function adjustedlist(Request $request)
+    public function adjustedlist(Request $request, $year)
     {
         if ($request->ajax()) {
-            $data = PositionSchedule::select('pos_id','pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name' , 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->orderBy('pp_id', 'DESC');
+            $data = PositionSchedule::select('pos_id','pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name' , 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->where('year', $year)->orderBy('pp_id', 'DESC');
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('position', function ($row) {
@@ -61,12 +61,6 @@ class PositionScheduleController extends Controller
                     ->addColumn('office', function ($row) {
                         return $row->office->office_name;
                     })
-                    ->addColumn('action', function($row){
-
-                        $btn = "<a title='Edit Plantilla Of Position' href='". route('position-schedule.edits', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-                            return $btn;
-                    })
-                    ->rawColumns(['action'])
                     ->make(true);
         }
         return view('PositionSchedule.PositionSchedule');
@@ -110,9 +104,12 @@ class PositionScheduleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($pos_id)
     {
-        //
+        $PositionSchedule = PositionSchedule::find($pos_id);
+        $office = Office::select('office_code', 'office_name')->get();
+        $position = Position::select('position_id', 'position_name', 'sg_no')->get();
+        return view('PositionSchedule.editPositionSchedule', compact('PositionSchedule', 'office', 'position'));
     }
 
     public function edits($pp_id)
@@ -130,10 +127,12 @@ class PositionScheduleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $pos_id)
     {
         //
     }
+
+
     public function updates(Request $request, $pp_id)
     {
          $this->validate($request, [

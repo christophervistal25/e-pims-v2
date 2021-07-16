@@ -30,7 +30,6 @@ $(function() {
     });
 
     $("#officeScheduleList").change(function(e) {
-        console.log(e.target.value);
         if (e.target.value == "" || e.target.value == "") {
             table.destroy();
             table = $("#positionList").DataTable({
@@ -100,6 +99,7 @@ $(function() {
 });
 
 $(function() {
+    let yearFilter = document.querySelector("#year").value - 1;
     let table = $("#positionSchedule").DataTable({
         processing: true,
         pagingType: "full_numbers",
@@ -111,24 +111,19 @@ $(function() {
             processing:
                 '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
         },
-        ajax: "/position-schedule-list-adjusted",
+        ajax: `/position-schedule-list-adjusted/${yearFilter}`,
         columns: [
             { data: "position", name: "position" },
             { data: "item_no", name: "item_no" },
             { data: "sg_no", name: "sg_no" },
             { data: "office", name: "office" },
             { data: "old_position_name", name: "old_position_name" },
-            { data: "year", name: "year" },
-            {
-                data: "action",
-                name: "action",
-                searchable: false,
-                sortable: false
-            }
+            { data: "year", name: "year" }
         ]
     });
 
     $("#officeCode").change(function(e) {
+        let yearFilter = document.querySelector("#yearFilter").value;
         if (e.target.value == "" || e.target.value == "") {
             table.destroy();
             table = $("#positionSchedule").DataTable({
@@ -143,7 +138,7 @@ $(function() {
                         '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
                 },
                 ajax: {
-                    url: "/position-schedule-list-adjusted"
+                    url: `/position-schedule-list-adjusted/${yearFilter}`
                 },
                 columns: [
                     { data: "position", name: "position" },
@@ -151,13 +146,7 @@ $(function() {
                     { data: "sg_no", name: "sg_no" },
                     { data: "office", name: "office" },
                     { data: "old_position_name", name: "old_position_name" },
-                    { data: "year", name: "year" },
-                    {
-                        data: "action",
-                        name: "action",
-                        searchable: false,
-                        sortable: false
-                    }
+                    { data: "year", name: "year" }
                 ]
             });
         } else {
@@ -174,7 +163,7 @@ $(function() {
                         '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
                 },
                 ajax: {
-                    url: `/api/position/schedule/${e.target.value}`
+                    url: `/api/position/schedule/${e.target.value}/${yearFilter}`
                 },
                 columns: [
                     { data: "position", name: "position" },
@@ -182,13 +171,62 @@ $(function() {
                     { data: "sg_no", name: "sg_no" },
                     { data: "office", name: "office" },
                     { data: "old_position_name", name: "old_position_name" },
-                    { data: "year", name: "year" },
-                    {
-                        data: "action",
-                        name: "action",
-                        searchable: false,
-                        sortable: false
-                    }
+                    { data: "year", name: "year" }
+                ]
+            });
+        }
+    });
+
+    $("#yearFilter").change(function(e) {
+        let yearFilter = document.querySelector("#officeCode").value;
+        if (e.target.value == "" || e.target.value == "") {
+            table.destroy();
+            table = $("#positionSchedule").DataTable({
+                processing: true,
+                serverSide: true,
+                pagingType: "full_numbers",
+                columnDefs: [{ width: "10%", targets: 5 }],
+                destroy: true,
+                retrieve: true,
+                language: {
+                    processing:
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
+                ajax: {
+                    url: `/position-schedule-list-adjusted/${e.target.value}`
+                },
+                columns: [
+                    { data: "position", name: "position" },
+                    { data: "item_no", name: "item_no" },
+                    { data: "sg_no", name: "sg_no" },
+                    { data: "office", name: "office" },
+                    { data: "old_position_name", name: "old_position_name" },
+                    { data: "year", name: "year" }
+                ]
+            });
+        } else {
+            table.destroy();
+            table = $("#positionSchedule").DataTable({
+                processing: true,
+                serverSide: true,
+                pagingType: "full_numbers",
+                columnDefs: [{ width: "10%", targets: 5 }],
+                destroy: true,
+                retrieve: true,
+                language: {
+                    processing:
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
+                ajax: {
+                    url: `/api/position/schedule/${yearFilter}/${e.target.value}`
+                },
+                columns: [
+                    { data: "position", name: "position" },
+                    { data: "item_no", name: "item_no" },
+                    { data: "sg_no", name: "sg_no" },
+                    { data: "office", name: "office" },
+                    { data: "old_position_name", name: "old_position_name" },
+                    { data: "year", name: "year" }
                 ]
             });
         }
