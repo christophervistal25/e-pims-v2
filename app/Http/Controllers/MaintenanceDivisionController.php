@@ -66,7 +66,7 @@ class MaintenanceDivisionController extends Controller
                         return $row->offices->office_name;
                     })
                     ->addColumn('action', function($row){
-                        $btn = "<a title='Edit Division' href='". route('maintenance-division.edit', $row->division_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
+                        $btn = "<a title='Edit Division' href='". route('maintenance-division.edit', $row->division_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
                         $btn = $btn."<a title='Delete Division' id='delete' value='$row->division_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
                         ";
                             return $btn;

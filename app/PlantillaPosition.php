@@ -10,7 +10,7 @@ class PlantillaPosition extends Model
 {
     // use SoftDeletes;
     protected $dates = ['deleted_at'];
-    protected $fillable = ['pp_id', 'position_id' ,'item_no', 'sg_no' ,'office_code', 'old_position_name'];
+    protected $fillable = ['pp_id', 'position_id' ,'item_no', 'sg_no' ,'office_code', 'old_position_name', 'year'];
 
     protected $primaryKey = 'pp_id';
 
@@ -34,8 +34,8 @@ class PlantillaPosition extends Model
     {
         return $this->hasOne(SalaryGrade::class, 'sg_no', 'sg_no');
     }
-    public function PlantillaOfSchedule()
+    public function PlantillaSchedule()
     {
-        return $this->belongsTo(PlantillaOfSchedule::class, 'pp_id', 'pp_id');
+        return $this->belongsTo(PlantillaSchedule::class, 'pp_id', 'pp_id');
     }
 }

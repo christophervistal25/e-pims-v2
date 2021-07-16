@@ -14,6 +14,7 @@ class LeaveType extends Model
         'convertible_to_cash',
         'applicable_gender',
         'required_rendered_service',
+        'category',
         'editable',
     ];
     

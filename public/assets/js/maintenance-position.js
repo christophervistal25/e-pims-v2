@@ -22,9 +22,15 @@ $(document).ready(function() {
 $(function() {
     $("#maintenancePosition").DataTable({
         processing: true,
+        pagingType: "full_numbers",
+        stateSave: true,
         serverSide: true,
         retrieve: true,
         ajax: "/maintenance-position-list",
+        language: {
+            processing:
+                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },
         columns: [
             { data: "position_name", name: "position_name" },
             { data: "sg_no", name: "sg_no" },

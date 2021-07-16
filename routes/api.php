@@ -5,8 +5,9 @@ use App\SalaryAdjustment;
 use Yajra\Datatables\Datatables;
 use App\PlantillaPosition;
 use App\Plantilla;
-use App\PlantillaOfSchedule;
+use App\PlantillaSchedule;
 use App\Division;
+use App\PositionSchedule;
 use Carbon\Carbon;
 
 
@@ -29,7 +30,7 @@ Route::get('/employee/service/records/{employeeId}', function ($employeeId) {
                             return $row->office->office_name . '' . $row->office->office_address;
                         })
                     ->addColumn('action', function($row){
-                        $btn = "<a title='Edit Service Record' href='". route('service-records.edit', $row->id) . "' class='rounded-circle edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
+                        $btn = "<a title='Edit Service Record' href='". route('service-records.edit', $row->id) . "' class='rounded-circle edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
                         $btn = $btn."<a title='Delete Service Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
                         ";
                             return $btn;
@@ -96,7 +97,7 @@ Route::get('/salary/adjustment/{year}', function ($year) {
                             return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
                         })
                         ->addColumn('action', function($row){
-                            $btn = "<a title='Edit Salary Adjustment' href='". route('salary-adjustment.edit', $row->id) . "' class='rounded-circle edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
+                            $btn = "<a title='Edit Salary Adjustment' href='". route('salary-adjustment.edit', $row->id) . "' class='rounded-circle edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
                             $btn = $btn."<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
                             ";
                                 return $btn;
@@ -191,7 +192,7 @@ Route::post('/salary-adjustment-per-office', function () {
 
 // plantilla position
 Route::get('/plantilla/position/{officeCode}', function ($office_code) {
-    $data = PlantillaPosition::select('pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name')->with('position:position_id,position_name', 'office:office_code,office_name')->where('office_code', $office_code)->get();
+    $data = PlantillaPosition::select('pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name', 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->where('office_code', $office_code)->get();
     return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('position', function ($row) {
@@ -202,7 +203,7 @@ Route::get('/plantilla/position/{officeCode}', function ($office_code) {
                     })
                     ->addColumn('action', function($row){
 
-                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-position.edit', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
+                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-position.edit', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
                         $btn = $btn."<a title='Delete Position' id='delete' value='$row->pp_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
                         ";
                             return $btn;
@@ -226,7 +227,7 @@ Route::get('/plantilla/personnel/{officeCode}', function ($office_code) {
                         return $row->office->office_short_name;
                     })
                     ->addColumn('action', function($row){
-                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm'><i class='la la-edit'></i></a>";
+                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil'></i></a>";
                             return $btn;
                     })
                     ->rawColumns(['action'])
@@ -251,7 +252,7 @@ Route::get('/plantilla/list/{officeCode}', function ($office_code) {
                         return $row->office->office_short_name;
                     })
                     ->addColumn('action', function($row){
-                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm id__holder' data-id='".$row['plantilla_id']."'><i class='la la-edit'></i></a>";
+                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm id__holder' data-id='".$row['plantilla_id']."'><i class='la la-pencil'></i></a>";
                             return $btn;
                     })
                     ->rawColumns(['action'])
@@ -260,13 +261,13 @@ Route::get('/plantilla/list/{officeCode}', function ($office_code) {
 
 Route::get('/plantilla/schedule/{officeCode}/{filterYear}', function ($office_code, $filterYear) {
     if($office_code == "All" && $filterYear == "All"){
-        $data = PlantillaOfSchedule::select('ps_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->orderBy('plantilla_id', 'DESC');
+        $data = PlantillaSchedule::select('ps_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->orderBy('plantilla_id', 'DESC');
     }elseif($filterYear == "All"){
-        $data = PlantillaOfSchedule::select('ps_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code);
+        $data = PlantillaSchedule::select('ps_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code);
     }elseif($office_code == "All"){
-        $data = PlantillaOfSchedule::select('ps_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->where('year', $filterYear);
+        $data = PlantillaSchedule::select('ps_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->where('year', $filterYear);
     }else{
-        $data = PlantillaOfSchedule::select('ps_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code)->where('year', $filterYear);
+        $data = PlantillaSchedule::select('ps_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code)->where('year', $filterYear);
     }
             return (new Datatables)->eloquent($data)
                     ->addIndexColumn()
@@ -280,7 +281,7 @@ Route::get('/plantilla/schedule/{officeCode}/{filterYear}', function ($office_co
                         return $row->office->office_short_name;
                     })
                     ->addColumn('action', function($row){
-                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-schedule.edit', $row->ps_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm'><i class='la la-edit'></i></a>";
+                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-schedule.edit', $row->ps_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil'></i></a>";
                             return $btn;
                     })
                     ->rawColumns(['action'])
@@ -296,7 +297,7 @@ Route::get('/maintenance/division/{officeCode}', function ($office_code) {
         return $row->offices->office_name;
     })
     ->addColumn('action', function($row){
-        $btn = "<a title='Edit Division' href='". route('maintenance-division.edit', $row->division_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
+        $btn = "<a title='Edit Division' href='". route('maintenance-division.edit', $row->division_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
         $btn = $btn."<a title='Delete Division' id='delete' value='$row->division_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
         ";
             return $btn;
@@ -312,7 +313,7 @@ Route::post('/plantilla/schedule/adjust', function () {
     $newSchedcule = $data->toArray();
     $newYear = request()->coveredYear;
     foreach($data as $newSchedcule){
-            PlantillaOfSchedule::FirstOrCreate([
+            PlantillaSchedule::FirstOrCreate([
                 'employee_id' => $newSchedcule->employee_id,
                 'year' => $newSchedcule->year,
             ],[
@@ -340,3 +341,70 @@ Route::post('/plantilla/schedule/adjust', function () {
     return response()->json(['success'=>true]);
 });
 
+// plantilla position schedule
+Route::get('/plantilla/position/schedule/{officeCode}', function ($office_code) {
+    $year = Carbon::now()->format('Y') - 1;
+    $data = PlantillaPosition::select('pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name', 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->where('office_code', $office_code)->where('year' ,'=',  $year)->get();
+    return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('position', function ($row) {
+                        return $row->position->position_name;
+                    })
+                    ->addColumn('office', function ($row) {
+                        return $row->office->office_name;
+                    })
+                    ->addColumn('action', function($row){
+
+                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-position.edit', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+                        $btn = $btn."<a title='Delete Position' id='delete' value='$row->pp_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                        ";
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+});
+
+
+//  position schedule
+Route::get('/position/schedule/{officeCode}', function ($office_code) {
+    $data = PositionSchedule::select('pos_id','pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name' , 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->where('office_code', $office_code)->orderBy('pp_id', 'DESC')->get();
+    return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('position', function ($row) {
+                        return $row->position->position_name;
+                    })
+                    ->addColumn('office', function ($row) {
+                        return $row->office->office_name;
+                    })
+                    ->addColumn('action', function($row){
+
+                          $btn = "<a title='Edit Position Schedule' href='". route('position-schedule.edits', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+});
+
+Route::post('/position/schedule/adjust', function () {
+    $PlantillaPositionIds = explode(',', request()->ids);
+    $data = PlantillaPosition::whereIn('pp_id', $PlantillaPositionIds)->get();
+    $newSchedcule = $data->toArray();
+    $newYear = request()->currentYear;
+    foreach($data as $newSchedcule){
+            PositionSchedule::FirstOrCreate([
+                'position_id' => $newSchedcule->position_id,
+                'year' => $newSchedcule->year,
+            ],[
+            'pp_id' => $newSchedcule->pp_id,
+            'position_id' => $newSchedcule->position_id,
+            'item_no' => $newSchedcule->item_no,
+            'sg_no' => $newSchedcule->sg_no,
+            'office_code' => $newSchedcule->office_code,
+            'old_position_name' => $newSchedcule->old_position_name,
+            'year' => $newSchedcule->year
+        ]);
+        $data = PlantillaPosition::whereIn('pp_id', $PlantillaPositionIds)
+        ->update(['year' => $newYear]);
+    }
+    return response()->json(['success'=>true]);
+});

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'PLANTILLA OF PERSONNEL SCHEDULE')
+@section('title', 'PLANTILLA OF POSITION SCHEDULE')
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('/assets/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet"
@@ -56,18 +56,18 @@
     <div class="card-body">
         <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
                 <div style='padding-top:20px; padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
-                    <button id="cancelbutton" class="btn submit-btn btn-primarys float-right"><i class="fa fa-list"></i> Plantilla Schedule List</button>
+                    <button id="cancelbutton" class="btn submit-btn btn-primarys float-right"><i class="fa fa-list"></i> Plantilla Position List</button>
                 </div>
                     <div class="row">
 
                         <div class="col-12 mb-2">
-                            <div class="alert alert-secondary text-center font-weight-bold" role="alert">CREATE PLANTILLA SCHEDULE
+                            <div class="alert alert-secondary text-center font-weight-bold" role="alert">CREATE POSITION SCHEDULE
                             </div>
                         </div>
 
                         <div class="form-group col-4 mb-2">
                             <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('officePlantillaList')  ? 'is-invalid' : ''}}"
-                                name="officePlantillaList" data-live-search="true" id="officePlantillaList" data-size="5">
+                                name="officeScheduleList" data-live-search="true" id="officeScheduleList" data-size="5">
                                 <option value="">All</option>
                                 @foreach($office as $offices)
                                 <option data-plantilla="{{ $offices->office_name }}" value="{{ $offices->office_code }}">{{ $offices->office_name }}</option>
@@ -99,14 +99,14 @@
                         <div class="col-12">
                         <form id="frm-example" action="" method="" id="">
                         @csrf
-                        <table class="table table-bordered table-hover text-center" id="plantillaList" style="width:100%;">
+                        <table class="table table-bordered table-hover text-center" id="positionList" style="width:100%;">
                             <thead>
                                 <tr>
-                                    <td scope="col" class="text-center">Employee Name</td>
-                                    <td scope="col" class="text-center">Position Title</td>
-                                    <td scope="col" class="text-center">Office</td>
+                                    <td scope="col" class="text-center">Position Name</td>
                                     <td scope="col" class="text-center">Item No</td>
-                                    <td scope="col" class="text-center">Status</td>
+                                    <td scope="col" class="text-center">Salary Grade</td>
+                                    <td scope="col" class="text-center">Office</td>
+                                    <td scope="col" class="text-center">Old Position Name</td>
                                     <td scope="col" class="text-center">Year</td>
                                     <td scope="col" class="text-center">Action</td>
                                 </tr>
@@ -123,7 +123,7 @@
                 <div style="padding-left:35px;" class="col-4 mb-2">
                     <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
                         name="officeCode" data-live-search="true" id="officeCode" data-size="5" >
-                        <option value="All">All</option>
+                        <option value="">All</option>
                         @foreach($office as $offices)
                         <option data-plantilla="{{ $offices->office_name }}" value="{{ $offices->office_code }}">{{ $offices->office_name }}</option>
                         @endforeach
@@ -132,27 +132,26 @@
             <div class="col-2 mb-2">
                 <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('yearFilter')  ? 'is-invalid' : ''}}"
                     name="yearFilter" data-live-search="true" id="yearFilter" data-size="5">
-                    <option value="All">All</option>
-                    @foreach($PlantillaOfScheduleYear as $PlantillaOfScheduleYears)
-                    <option data-plantilla="{{ $PlantillaOfScheduleYears->year }}" value="{{ $PlantillaOfScheduleYears->year }}">{{ $PlantillaOfScheduleYears->year }}</option>
+                    @foreach($PositionScheduleYear as $PositionScheduleYears)
+                    <option data-plantilla="{{ $PositionScheduleYears->year }}" value="{{ $PositionScheduleYears->year }}">{{ $PositionScheduleYears->year }}</option>
                     @endforeach
                     </select>
         </div>
             <div class="col-6 mb-2">
                     <div style="padding-right:20px;" class="float-right">
-                        <button id="addbutton" class="btn btn-primarys float-right" ><i class="fa fa-plus"></i> Create Plantilla Schedule</button>
+                        <button id="addbutton" class="btn btn-primarys float-right" ><i class="fa fa-plus"></i> Create Position Schedule</button>
                     </div>
                 </div>
             </div>
             <div style="padding-left:20px; padding-right:20px;" class="table" style="overflow-x:auto;">
-                <table class="table table-bordered table-hover text-center" id="plantillaOfSchedule" style="width:100%;">
+                <table class="table table-bordered table-hover text-center" id="positionSchedule" style="width:100%;">
                     <thead>
                         <tr>
-                            <td scope="col" class="text-center">Employee Name</td>
-                            <td scope="col" class="text-center">Position Title</td>
-                            <td scope="col" class="text-center">Office</td>
+                            <td scope="col" class="text-center">Position Name</td>
                             <td scope="col" class="text-center">Item No</td>
-                            <td scope="col" class="text-center">Status</td>
+                            <td scope="col" class="text-center">Salary Grade</td>
+                            <td scope="col" class="text-center">Office</td>
+                            <td scope="col" class="text-center">Old Position Name</td>
                             <td scope="col" class="text-center">Year</td>
                             <td scope="col" class="text-center">Action</td>
                         </tr>
@@ -164,7 +163,7 @@
 </div>
 @push('page-scripts')
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
-<script src="{{ asset('/assets/js/plantilla-of-schedule.js') }}"></script>
+<script src="{{ asset('/assets/js/position-schedule.js') }}"></script>
 <script src="{{ asset('/assets/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('/assets/js/dataTables.bootstrap4.min.js') }}"></script>
 <script>
@@ -211,3 +210,4 @@
 </script>
 @endpush
 @endsection
+

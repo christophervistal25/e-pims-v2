@@ -70,9 +70,14 @@ class Position extends Model
         return $this->belongsTo(PlantillaPosition::class, 'position_id', 'position_id');
     }
 
-    public function PlantillaOfSchedule()
+    public function PlantillaSchedule()
     {
-        return $this->belongsTo(PlantillaOfSchedule::class, 'position_id', 'position_id');
+        return $this->belongsTo(PlantillaSchedule::class, 'position_id', 'position_id');
+    }
+
+    public function PositionSchedule()
+    {
+        return $this->belongsTo(PositionSchedule::class, 'position_id', 'position_id');
     }
 
 

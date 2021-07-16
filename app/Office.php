@@ -61,9 +61,9 @@ class Office extends Model
         return $this->belongsTo(Plantilla::class, 'office_code', 'office_code');
     }
 
-    public function PlantillaOfSchedule()
+    public function PlantillaSchedule()
     {
-        return $this->belongsTo(PlantillaOfSchedule::class, 'office_code', 'office_code');
+        return $this->belongsTo(PlantillaSchedule::class, 'office_code', 'office_code');
     }
 
     public function service_record()
@@ -83,6 +83,11 @@ class Office extends Model
     public function employee_information()
     {
         return $this->belongsTo(Employee::class, 'office_code', 'office_code');
+    }
+
+    public function PositionSchedule()
+    {
+        return $this->belongsTo(PositionSchedule::class, 'office_code', 'office_code');
     }
 
 

@@ -21,10 +21,16 @@ $(document).ready(function() {
 
 $(function() {
     $("#maintenanceOffice").DataTable({
+        pagingType: "full_numbers",
+        stateSave: true,
         processing: true,
         serverSide: true,
         retrieve: true,
         columnDefs: [{ width: "10%", targets: 7 }],
+        language: {
+            processing:
+                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },
         ajax: "/maintenance-office-list",
         columns: [
             { data: "office_code", name: "office_code" },

@@ -3,31 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Office;
-class Plantilla extends Model
+
+class PlantillaSchedule extends Model
 {
-    public const REGIONS = [
-        'Region 1',
-        'Region 2',
-        'Region 3',
-        'Region 4',
-        'Region 5',
-        'Region 6',
-        'Region 7',
-        'Region 8',
-        'Region 9',
-        'Region 10',
-        'Region 11',
-        'Region 12',
-        'NCR',
-        'CAR',
-        'CARAGA',
-        'ARMM',
-    ];
     protected $fillable = [
+        'ps_id',
         'plantilla_id',
         'old_item_no',
         'item_no',
+        'pp_id',
         'position_id',
         'position_ext',
         'sg_no',
@@ -45,7 +29,7 @@ class Plantilla extends Model
         'year',
     ];
 
-    protected $primaryKey = 'plantilla_id';
+    protected $primaryKey = 'ps_id';
 
     public function employee()
     {
@@ -57,11 +41,6 @@ class Plantilla extends Model
         return $this->hasOne(Office::class, 'office_code', 'office_code');
     }
 
-    public function positions()
-    {
-        return $this->hasOne(Position::class, 'position_id', 'position_id');
-    }
-
     public function position()
     {
         return $this->hasOne('App\Position', 'position_id', 'pp_id');
@@ -70,12 +49,9 @@ class Plantilla extends Model
     {
         return $this->hasOne('App\PlantillaPosition', 'pp_id', 'pp_id');
     }
-    public function salary_adjustment()
+
+    public function plantilla()
     {
-        return $this->hasOne(SalaryAdjustment::class, 'employee_id', 'employee_id');
-    }
-    public function PlantillaSchedule()
-    {
-        return $this->belongsTo(PlantillaSchedule::class, 'plantilla_id', 'plantilla_id');
+        return $this->hasOne('App\Plantilla', 'plantilla', 'plantilla');
     }
 }

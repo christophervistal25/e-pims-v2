@@ -1,7 +1,7 @@
 @extends('layouts.app')
-@section('title', 'Maintenance Division')
+@section('title', 'MAINTENANCE DIVISION')
 @prepend('page-css')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="{{ asset('/assets/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 <link rel="stylesheet" href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css"/>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -10,7 +10,33 @@
         list-style-type: none;
         padding: 0;
     }
-
+    table.dataTable.no-footer {
+        border: 1px solid #dee2e6;
+    }
+    table.dataTable thead th,
+    table.dataTable thead td {
+        padding: 15px 25px;
+        border-bottom: 1px solid #dee2e6;
+    }
+    table.dataTable {
+        border-collapse: collapse;
+    }
+    .btn-primarys{
+        background-color:#FF9B44;
+        color: white;
+    }
+    .btn-primarys:hover {
+    background-color: #FF8544;
+    color: white;
+    }
+    .page-item.active .page-link {
+    background-color: #FF9B44 !important;
+    border: 1px solid #FF9B44;
+}
+.page-item.active .page-link:hover{
+    background-color: #FF8544 !important;
+    border: 1px solid #FF8544;
+}
 </style>
 @endprepend
 @section('content')
@@ -18,7 +44,7 @@
     <div class="card-body">
         <div id="add" class="page-header {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
             <div style='padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
-                <button id="cancelbutton" class="btn btn-primary submit-btn float-right shadow"><i
+                <button id="cancelbutton" class="btn btn-primarys submit-btn float-right shadow"><i
                         class="fa fa-list"></i> Division List</button>
             </div>
             <form action="/plantilla-of-position" method="post" id="maintenanceDivisionForm">
@@ -57,13 +83,13 @@
                         </div>
 
                         <div class="form-group form-group submit-section col-12">
-                            <button id="saveBtn" class="btn btn-success submit-btn float-right shadow" type="submit">
+                            <button id="saveBtn" class="btn btn-primarys submit-btn float-right shadow" type="submit">
                                 <span id="loading" class="spinner-border spinner-border-sm d-none" role="status"
                                     aria-hidden="false"></span>
                                 <i class="fas fa-save"></i> Save
                             </button>
                             <button style="margin-right:10px;" type="button" id="cancelbutton1" onclick="myFunction()"
-                                class="text-white btn btn-warning submit-btn float-right shadow"><i
+                                class="text-white btn btn-danger submit-btn float-right shadow"><i
                                     class="fas fa-ban"></i> Cancel</button>
                         </div>
                     </div>
@@ -74,7 +100,7 @@
         <div id="table" class="page-header {{  count($errors->all()) == 0 ? '' : 'd-none' }}">
             <div class="row">
                 <div class="col-5 mb-2">
-                <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}"
+                <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}"
                     name="maintenanceDivisionOffice" data-live-search="true" id="maintenanceDivisionOffice" data-size="5">
                     <option value="">All</option>
                     @foreach($office as $offices){
@@ -84,18 +110,18 @@
                     </select>
                 </div>
                 <div class="col-7 float-right mb-2">
-                    <button id="addbutton" class="btn btn-primary submit-btn float-right"><i class="fa fa-plus"></i> Add
+                    <button id="addbutton" class="btn btn-primarys submit-btn float-right"><i class="fa fa-plus"></i> Add
                         New Division</button>
                 </div>
             </div>
 
             <div class="table" style="overflow-x:auto;">
-                <table class="table table-bordered text-center" id="maintenanceDivision" style="width:100%;">
+                <table class="table table-bordered table-hover text-center" id="maintenanceDivision" style="width:100%;">
                     <thead>
                         <tr>
-                            <td scope="col" class="text-center font-weight-bold">Division Name</td>
-                            <td scope="col" class="text-center font-weight-bold">Office</td>
-                            <td scope="col" class="text-center font-weight-bold">Action</td>
+                            <td scope="col" class="text-truncate">Division Name</td>
+                            <td scope="col" class="text-truncate">Office</td>
+                            <td scope="col" class="text-truncate">Action</td>
                         </tr>
                     </thead>
                 </table>
@@ -149,8 +175,9 @@
     });
 
 </script>
+<script src="{{ asset('/assets/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('/assets/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
-<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
 <script src="{{ asset('/assets/js/maintenance-division.js') }}"></script>
 @endpush
 @endsection
