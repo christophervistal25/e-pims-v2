@@ -70,7 +70,7 @@ let holidayID = null;
             },
             {
                 className: "text-center",
-                data: "date",
+                data: "date_string",
                 name: "date"
             },
             {

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -14,7 +15,7 @@ class Holiday extends Model
     
     protected $fillable = ['name', 'date',  'type'];
 
-    protected $appends = ['title'];
+    protected $appends = ['title', 'date_string'];
 
     public function getTypeAttribute($value)
     {
@@ -29,6 +30,11 @@ class Holiday extends Model
     public function getTitleAttribute()
     {
         return $this->name;
+    }
+
+    public function getDateStringAttribute($value)
+    {
+        return Carbon::parse($value)->format('l jS \of F Y');
     }
     
 }
