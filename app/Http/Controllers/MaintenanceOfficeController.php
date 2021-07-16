@@ -36,7 +36,7 @@ class MaintenanceOfficeController extends Controller
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
-                        $btn = "<a title='Edit Office' href='". route('maintenance-office.edit', $row->office_code) . "' class='rounded-circle text-white edit btn btn-primary btn-sm mr-1'><i class='la la-edit'></i></a>";
+                        $btn = "<a title='Edit Office' href='". route('maintenance-office.edit', $row->office_code) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
                         $btn = $btn."<a title='Delete Office' id='delete' value='$row->office_code' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
                         ";
                             return $btn;

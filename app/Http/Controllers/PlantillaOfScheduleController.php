@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Office;
 use App\Plantilla;
-use App\PlantillaOfSchedule;
+use App\PlantillaSchedule;
 use App\Division;
 use App\Employee;
 use App\Position;
@@ -24,7 +24,7 @@ class PlantillaOfScheduleController extends Controller
     public function index()
     {
         $plantillaYear = Plantilla::select('year')->distinct()->get();
-        $PlantillaOfScheduleYear = PlantillaOfSchedule::select('year')->distinct()->get();
+        $PlantillaOfScheduleYear = PlantillaSchedule::select('year')->distinct()->get();
         $office = Office::select('office_code', 'office_name')->get();
         return view('PlantillaOfSchedule.PlantillaOfSchedule', compact('office', 'plantillaYear', 'PlantillaOfScheduleYear'));
     }
@@ -51,7 +51,7 @@ class PlantillaOfScheduleController extends Controller
                         return $row->office->office_short_name;
                     })
                     ->addColumn('action', function($row){
-                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm id__holder' data-id='".$row['plantilla_id']."'><i class='la la-edit'></i></a>";
+                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm id__holder' data-id='".$row['plantilla_id']."'><i class='la la-pencil'></i></a>";
                             return $btn;
                     })
                     ->rawColumns(['action'])
@@ -64,7 +64,7 @@ class PlantillaOfScheduleController extends Controller
     public function adjustedlist(Request $request)
     {
         if ($request->ajax()) {
-            $data = PlantillaOfSchedule::select('ps_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->orderBy('plantilla_id', 'DESC');
+            $data = PlantillaSchedule::select('ps_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->orderBy('plantilla_id', 'DESC');
             return (new Datatables)->eloquent($data)
                     ->addIndexColumn()
                     ->addColumn('employee', function ($row) {
@@ -77,7 +77,7 @@ class PlantillaOfScheduleController extends Controller
                         return $row->office->office_short_name;
                     })
                     ->addColumn('action', function($row){
-                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-schedule.edit', $row->ps_id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm'><i class='la la-edit'></i></a>";
+                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-schedule.edit', $row->ps_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil'></i></a>";
                             return $btn;
                     })
                     ->rawColumns(['action'])
@@ -125,7 +125,7 @@ class PlantillaOfScheduleController extends Controller
      */
     public function edit($ps_id)
     {
-        $plantillaSchedule = PlantillaOfSchedule::find($ps_id);
+        $plantillaSchedule = PlantillaSchedule::find($ps_id);
         $salarygrade = SalaryGrade::get(['sg_no']);
         $status = ['Please Select', 'Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
         count($status) - 1;
@@ -139,7 +139,7 @@ class PlantillaOfScheduleController extends Controller
         $office = Office::select('office_code', 'office_name')->get();
         $division = Division::select('division_id', 'division_name', 'office_code')->get();
         $position = Position::select('position_id', 'position_name')->get();
-        $plantillaSchedulePositionIDAll = PlantillaOfSchedule::where('ps_id','!=',$ps_id)->get()->pluck('pp_id')->toArray();
+        $plantillaSchedulePositionIDAll = PlantillaSchedule::where('ps_id','!=',$ps_id)->get()->pluck('pp_id')->toArray();
         $plantillaSchedulePositionAll = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->with('position:position_id,position_name')->whereNotIn('pp_id', $plantillaSchedulePositionIDAll )->get();
         return view('PlantillaOfSchedule.edit', compact('employee', 'plantillaSchedule', 'salarygrade', 'status','areacode','areatype','arealevel','office','division','position','plantillaSchedulePositionAll'));
     }
@@ -170,7 +170,7 @@ class PlantillaOfScheduleController extends Controller
             'areaType'                      => 'required|in:Region,Province,District,Municipality,Foreign Post',
             'areaLevel'                     => 'required|in:K,T,S,A',
         ]);
-        $plantilla                         = PlantillaOfSchedule::find($ps_id);
+        $plantilla                         = PlantillaSchedule::find($ps_id);
         $plantilla->item_no                = $request['itemNo'];
         $plantilla->old_item_no            = $request['oldItemNo'];
         $plantilla->pp_id                  = $request['positionTitle'];

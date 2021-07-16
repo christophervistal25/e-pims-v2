@@ -5,6 +5,12 @@ $(function() {
         serverSide: true,
         destroy: true,
         retrieve: true,
+        pagingType: "full_numbers",
+        stateSave: true,
+        language: {
+            processing:
+                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },
         ajax: "/salary-adjustment-list",
         columns: [
             { data: "date_adjustment", name: "date_adjustment" },
@@ -31,6 +37,12 @@ $(function() {
                 serverSide: true,
                 destroy: true,
                 retrieve: true,
+                pagingType: "full_numbers",
+                stateSave: true,
+                language: {
+                    processing:
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
                 ajax: {
                     url: "/salary-adjustment-list"
                 },
@@ -57,6 +69,12 @@ $(function() {
                 serverSide: true,
                 destroy: true,
                 retrieve: true,
+                pagingType: "full_numbers",
+                stateSave: true,
+                language: {
+                    processing:
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
                 ajax: {
                     url: `/api/salary/adjustment/${e.target.value}`
                 },

@@ -20,7 +20,10 @@ $(document).ready(function() {
 });
 
 function myFunction() {
-    $("input").val("");
+    const valueE = ["#itemNo", "#positionOldName"];
+    $.each(valueE, function(index, value) {
+        $(`${value}`).val("");
+    });
     $("#positionTitle,#salaryGrade,#officeCode")
         .val("Please Select")
         .trigger("change");
@@ -50,7 +53,6 @@ function myFunction() {
 $(document).ready(function() {
     $("#plantillaOfPositionForm").submit(function(e) {
         e.preventDefault();
-        // let empIds = $("#employeeName").val();
         let data = $(this).serialize();
         $("#saveBtn").attr("disabled", true);
         $("#loading").removeClass("d-none");
@@ -60,7 +62,10 @@ $(document).ready(function() {
             data: data,
             success: function(response) {
                 if (response.success) {
-                    $("input").val("");
+                    const valueE = ["#itemNo", "#positionOldName"];
+                    $.each(valueE, function(index, value) {
+                        $(`${value}`).val("");
+                    });
                     const select = [
                         "#positionTitle",
                         "#salaryGrade",
@@ -199,10 +204,16 @@ $(document).ready(function() {
 $(function() {
     let table = $("#plantillaofposition").DataTable({
         processing: true,
+        pagingType: "full_numbers",
+        stateSave: true,
         serverSide: true,
         destroy: true,
         retrieve: true,
         columnDefs: [{ width: "10%", targets: 5 }],
+        language: {
+            processing:
+                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },
         ajax: "/plantilla-of-position-list",
         columns: [
             { data: "position", name: "position" },
@@ -210,6 +221,7 @@ $(function() {
             { data: "sg_no", name: "sg_no" },
             { data: "office", name: "office" },
             { data: "old_position_name", name: "old_position_name" },
+            { data: "year", name: "year" },
             {
                 data: "action",
                 name: "action",
@@ -226,9 +238,15 @@ $(function() {
             table = $("#plantillaofposition").DataTable({
                 processing: true,
                 serverSide: true,
+                pagingType: "full_numbers",
+                stateSave: true,
                 columnDefs: [{ width: "10%", targets: 5 }],
                 destroy: true,
                 retrieve: true,
+                language: {
+                    processing:
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
                 ajax: {
                     url: "/plantilla-of-position-list"
                 },
@@ -238,6 +256,7 @@ $(function() {
                     { data: "sg_no", name: "sg_no" },
                     { data: "office", name: "office" },
                     { data: "old_position_name", name: "old_position_name" },
+                    { data: "year", name: "year" },
                     {
                         data: "action",
                         name: "action",
@@ -251,9 +270,15 @@ $(function() {
             table = $("#plantillaofposition").DataTable({
                 processing: true,
                 serverSide: true,
+                pagingType: "full_numbers",
+                stateSave: true,
                 columnDefs: [{ width: "10%", targets: 5 }],
                 destroy: true,
                 retrieve: true,
+                language: {
+                    processing:
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
                 ajax: {
                     url: `/api/plantilla/position/${e.target.value}`
                 },
@@ -263,6 +288,7 @@ $(function() {
                     { data: "sg_no", name: "sg_no" },
                     { data: "office", name: "officeoffice_code" },
                     { data: "old_position_name", name: "old_position_name" },
+                    { data: "year", name: "year" },
                     {
                         data: "action",
                         name: "action",
