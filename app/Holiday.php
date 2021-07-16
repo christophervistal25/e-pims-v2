@@ -14,6 +14,8 @@ class Holiday extends Model
     
     protected $fillable = ['name', 'date',  'type'];
 
+    protected $appends = ['title'];
+
     public function getTypeAttribute($value)
     {
         return Str::upper($value);
@@ -23,4 +25,10 @@ class Holiday extends Model
     {
         return $this->attributes['type'] = Str::upper($value);
     }
+
+    public function getTitleAttribute()
+    {
+        return $this->name;
+    }
+    
 }
