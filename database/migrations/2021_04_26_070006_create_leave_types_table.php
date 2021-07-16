@@ -22,6 +22,7 @@ class CreateLeaveTypesTable extends Migration
             $table->enum('convertible_to_cash', ['yes', 'no']);
             $table->enum('applicable_gender', ['male', 'female', 'female/male']);
             $table->integer('required_rendered_service')->default(0);
+            $table->string('category');
             $table->enum('editable', ['yes', 'no']);
             $table->timestamps();
         });

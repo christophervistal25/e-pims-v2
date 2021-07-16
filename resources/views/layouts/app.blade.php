@@ -275,11 +275,20 @@
                         <li class="submenu">
 							<a href="#" class='text-decoration-none'><i class="la la-bookmark"></i> <span>Plantilla</span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
-								<li>
-                                    <a class='text-decoration-none mr-2' href="{{  route('plantilla-of-position.index') }}">
-                                        Plantilla of Position
-                                    </a>
-                                </li>
+
+                                <li class="submenu">
+									<a  class='text-decoration-none' href="javascript:void(0);"> <span>Plantilla of Position</span> <span class="menu-arrow"></span></a>
+									<ul style="display: none;">
+										<li>
+                                            <a class='text-decoration-none' href="{{  route('plantilla-of-position.index') }}">
+                                                <span>Add New Position</span>
+                                            </a>
+                                            <a class='text-decoration-none' href="{{ route('position-schedule.index') }}">
+                                                <span>Create Position Schedule</span>
+                                            </a>
+                                        </li>
+									</ul>
+								</li>
 
                                 <li class="submenu">
 									<a  class='text-decoration-none' href="javascript:void(0);"> <span>Plantilla of Personnel</span> <span class="menu-arrow"></span></a>

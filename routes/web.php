@@ -1,18 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
 
 Route::get('/print/pds/{employeeId}', 'EmployeePersonalDataSheetPrintController');
 
-
-Route::get('/employee-dashboard', function () {
-    return view('employee-dashboard');
-});
-
-Route::get('/login', function () {
-    return view('login');
-});
 
 Route::get('/', 'DashboardController@index');
 
@@ -36,6 +28,13 @@ Route::get('/maintenance-division/{id}', 'MaintenanceDivisionController@destroy'
 Route::resource('/plantilla-of-schedule', 'PlantillaOfScheduleController');
 Route::get('/plantilla-of-schedule-list', 'PlantillaOfScheduleController@list');
 Route::get('/plantilla-of-schedule-adjustedlist', 'PlantillaOfScheduleController@adjustedlist');
+
+//position of schedule
+Route::resource('/position-schedule', 'PositionScheduleController');
+Route::get('/position-schedule/edit/{edit}', 'PositionScheduleController@edits')->name('position-schedule.edits');
+Route::put('/position-schedule/update/{edit}', 'PositionScheduleController@updates')->name('position-schedule.updates');
+Route::get('/position-schedule-list', 'PositionScheduleController@list');
+Route::get('/position-schedule-list-adjusted', 'PositionScheduleController@adjustedlist');
 
 //plantilla of personnel
 Route::get('/plantilla-list', 'Plantillacontroller@list');
@@ -115,7 +114,7 @@ Route::group(['prefix' => 'employee'], function () {
     Route::get('/leave/application', 'EmployeeLeave\LeaveController@show')->name('leave.application.filling');
     Route::get('leave/leave-list', 'EmployeeLeave\LeaveListController@index')->name('leave.leave-list');
     Route::get('leave/leave-recall', 'EmployeeLeave\LeaveRecallController@index')->name('leave.leave-recall');
-    Route::resource('leave-starting-balance', 'EmployeeLeave\LeaveStartingBalanceController');
+    // Route::resource('leave-starting-balance', 'EmployeeLeave\LeaveStartingBalanceController');
     Route::resource('/leave-monitoring', 'EmployeeLeave\LeaveMonitoringController');
     Route::resource('/leave-recall', 'EmployeeLeave\LeaveRecallController');
     Route::resource('/leave-forwarded-balance', 'EmployeeLeave\EmployeeLeaveRecordController');
@@ -133,6 +132,17 @@ Route::get('/profile', 'EmployeeController@profile');
 
 Route::get('/restore', 'RestoreController@index');
 
-// Auth::routes();
 
-// Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes();
+
+
+// EMPLOYEES ACCOUNT ROUTES.
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('employee-dashboard', 'Account\Employee\DashboardController')->name('employee.dashboard');
+    Route::get('employee-setting', function () {
+
+    })->name('employee.setting');
+
+    Route::get('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@create')
+                                        ->name('employee.leave.application.filling');
+});

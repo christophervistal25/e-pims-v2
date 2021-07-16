@@ -17,8 +17,10 @@ class DatabaseSeeder extends Seeder
             RefNameExtensionSeeder::class,
             RefStatusSeeder::class,
             EmployeeSeeder::class,
+            UserSeeder::class,
             OfficeSeeder::class,
             SalaryGradeSeeder::class,
+            LeaveRecordSeeder::class,
             PositionSeeder::class,
             ProvinceSeeder::class,
             CitySeeder::class,
@@ -26,6 +28,6 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             // PlantillaSeeder::class,
             HolidaySeeder::class,
-            ]);
+        ]);
     }
 }

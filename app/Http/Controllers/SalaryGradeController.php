@@ -27,7 +27,7 @@ class SalaryGradeController extends Controller
         return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                    $btn = "<a title='Edit Salary Grade' href='". route('salary-grade.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-primary btn-sm'><i class='la la-edit'></i></a>";
+                    $btn = "<a title='Edit Salary Grade' href='". route('salary-grade.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil'></i></a>";
                         return $btn;
                 })
                 ->rawColumns(['action'])
@@ -82,7 +82,7 @@ class SalaryGradeController extends Controller
         ]);
 
         $salarygrade           = new SalaryGrade;
-        $salarygrade->sg_no    = $request['sgNo'];   
+        $salarygrade->sg_no    = $request['sgNo'];
         $salarygrade->sg_step1 = $request['sgStep1'];
         $salarygrade->sg_step2 = $request['sgStep2'];
         $salarygrade->sg_step3 = $request['sgStep3'];
@@ -142,7 +142,7 @@ class SalaryGradeController extends Controller
         ]);
 
         $salarygrade           = SalaryGrade::find($id);
-        $salarygrade->sg_no    = $request['sgNo'];   
+        $salarygrade->sg_no    = $request['sgNo'];
         $salarygrade->sg_step1 = $request['sgStep1'];
         $salarygrade->sg_step2 = $request['sgStep2'];
         $salarygrade->sg_step3 = $request['sgStep3'];

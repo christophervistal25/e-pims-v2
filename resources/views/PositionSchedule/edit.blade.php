@@ -19,7 +19,7 @@
 <div class="kanban-board shadow card mb-0">
     <div class="card-body">
         <div id="add" class="page-header {{  count($errors->all())  !== 0 ?  '' : '' }}">
-            <form action="{{ route('plantilla-of-position.update', $plantillaofposition->pp_id) }}" method="post">
+            <form action="{{ route('position-schedule.updates', $plantillaofposition->pp_id) }}" method="post">
                 @csrf
                 @method('PUT')
 
@@ -143,7 +143,7 @@
                                         aria-hidden="false"></span>
                                     <i class="fas fa-save"></i> Save
                                 </button>
-                                <a href="/plantilla-of-position"><button style="margin-right:10px;" type="button"
+                                <a href="/position-schedule"><button style="margin-right:10px;" type="button"
                                         class="text-white btn btn-warning submit-btn float-right"><i
                                             class="fas fa-arrow-left"></i>
                                         Back</button></a>
@@ -168,3 +168,4 @@
 <script src="{{ asset('/assets/js/plantillaofposition.js') }}"></script>
 @endpush
 @endsection
+

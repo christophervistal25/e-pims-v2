@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePlantillaOfSchedulesTable extends Migration
+class CreatePlantillaSchedulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePlantillaOfSchedulesTable extends Migration
      */
     public function up()
     {
-        Schema::create('plantilla_of_schedules', function (Blueprint $table) {
+        Schema::create('plantilla_schedules', function (Blueprint $table) {
             $table->id('ps_id');
             $table->integer('plantilla_id');
             $table->integer('old_item_no')->nullable();
@@ -43,6 +43,6 @@ class CreatePlantillaOfSchedulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plantilla_of_schedules');
+        Schema::dropIfExists('plantilla_schedules');
     }
 }

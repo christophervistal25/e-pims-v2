@@ -7,6 +7,11 @@ $(function() {
         paging: false,
         info: false,
         bFilter: false,
+        pagingType: "full_numbers",
+        language: {
+            processing:
+                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },
         ajax: {
             url: "/salary-adjustment-per-office-list"
         },
@@ -45,6 +50,11 @@ $(function() {
                 paging: false,
                 info: false,
                 bFilter: false,
+                pagingType: "full_numbers",
+                language: {
+                    processing:
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
                 ajax: {
                     url: "/salary-adjustment-per-office-list"
                 },
@@ -94,6 +104,11 @@ $(function() {
                 serverSide: true,
                 destroy: true,
                 retrieve: true,
+                pagingType: "full_numbers",
+                language: {
+                    processing:
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
                 ajax: {
                     url: `/api/office/salary/adjustment/peroffice/${e.target.value}`
                 },
