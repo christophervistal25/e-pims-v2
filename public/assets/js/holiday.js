@@ -176,9 +176,8 @@ let holidayID = null;
                 table.draw();
                 swal({
                     title: "Good Job!",
-                    text : "Successfully delete a holiday",
+                    text : "Successfully updated a holiday",
                     icon: "success",
-                    buttons: true,
                 })
                 .then((isClicked) => {
                     if (isClicked) {
@@ -222,9 +221,8 @@ let holidayID = null;
                                 
                                 swal({
                                     title: "Good Job!",
-                                    text : "Successfully delete a holiday",
+                                    text : "Successfully deleted a holiday",
                                     icon: "success",
-                                    buttons: true,
                                 })
                                 .then((isClicked) => {
                                     if (isClicked) {
