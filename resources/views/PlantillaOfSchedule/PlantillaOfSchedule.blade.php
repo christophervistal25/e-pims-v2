@@ -132,7 +132,6 @@
             <div class="col-2 mb-2">
                 <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('yearFilter')  ? 'is-invalid' : ''}}"
                     name="yearFilter" data-live-search="true" id="yearFilter" data-size="5">
-                    <option value="All">All</option>
                     @foreach($PlantillaOfScheduleYear as $PlantillaOfScheduleYears)
                     <option data-plantilla="{{ $PlantillaOfScheduleYears->year }}" value="{{ $PlantillaOfScheduleYears->year }}">{{ $PlantillaOfScheduleYears->year }}</option>
                     @endforeach

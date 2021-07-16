@@ -61,10 +61,10 @@ class PlantillaOfScheduleController extends Controller
     }
 
 
-    public function adjustedlist(Request $request)
+    public function adjustedlist(Request $request, $yearFilter)
     {
         if ($request->ajax()) {
-            $data = PlantillaSchedule::select('ps_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->orderBy('plantilla_id', 'DESC');
+            $data = PlantillaSchedule::select('ps_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->where('year', $yearFilter)->orderBy('plantilla_id', 'DESC');
             return (new Datatables)->eloquent($data)
                     ->addIndexColumn()
                     ->addColumn('employee', function ($row) {

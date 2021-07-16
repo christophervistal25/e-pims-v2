@@ -70,7 +70,7 @@ let holidayID = null;
             },
             {
                 className: "text-center",
-                data: "date",
+                data: "date_string",
                 name: "date"
             },
             {
@@ -117,7 +117,7 @@ let holidayID = null;
                     $('#save-spinner').addClass('d-none');
                     $('#addNewHolidayModal').modal('toggle');
                 }
-                window.location.reload();
+               
             },
             error: function (response) {
                 $('#save-spinner').addClass('d-none');
@@ -172,10 +172,19 @@ let holidayID = null;
             method : 'PUT',
             success : function (response) {
                 $('#update-spinner').addClass('d-none');
-                swal("Good Job!", "Successfully update a holiday", "success");
                 $('#editHolidayModal').modal('toggle');
                 table.draw();
-                window.location.reload();
+                swal({
+                    title: "Good Job!",
+                    text : "Successfully delete a holiday",
+                    icon: "success",
+                    buttons: true,
+                })
+                .then((isClicked) => {
+                    if (isClicked) {
+                        location.reload();                                        
+                    } 
+                });  
             },
             error: function (response) {
                 $('#update-spinner').addClass('d-none');
@@ -210,19 +219,31 @@ let holidayID = null;
                         success : function (response) {
                             if(response.success) {
                                 table.draw();
-                                swal("Good Job!", "Successfully delete a holiday", "success");
+                                
+                                swal({
+                                    title: "Good Job!",
+                                    text : "Successfully delete a holiday",
+                                    icon: "success",
+                                    buttons: true,
+                                })
+                                .then((isClicked) => {
+                                    if (isClicked) {
+                                        location.reload();                                        
+                                    } 
+                                });  
+                                
                             }
                         },
                     });
                 } 
-            });
-        
+            });        
     });
 
 
 
+
+
     // CALENDAR HOLIDAYS FUNCTION //
-    let cardBody = document.querySelector('#cardBody');
     let calendarBtn = document.querySelector('#calendarBtn');
     let tableParentContainer = document.querySelector('#table__parent__container');
 
@@ -249,7 +270,6 @@ let holidayID = null;
         }
 
     })
-
 
 
 

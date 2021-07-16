@@ -123,7 +123,7 @@
                 <div style="padding-left:35px;" class="col-4 mb-2">
                     <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
                         name="officeCode" data-live-search="true" id="officeCode" data-size="5" >
-                        <option value="">All</option>
+                        <option value="All">All</option>
                         @foreach($office as $offices)
                         <option data-plantilla="{{ $offices->office_name }}" value="{{ $offices->office_code }}">{{ $offices->office_name }}</option>
                         @endforeach
@@ -153,7 +153,6 @@
                             <td scope="col" class="text-center">Office</td>
                             <td scope="col" class="text-center">Old Position Name</td>
                             <td scope="col" class="text-center">Year</td>
-                            <td scope="col" class="text-center">Action</td>
                         </tr>
                     </thead>
                 </table>
