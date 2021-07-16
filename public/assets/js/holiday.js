@@ -212,6 +212,8 @@ let holidayID = null;
                                 table.draw();
                                 swal("Good Job!", "Successfully delete a holiday", "success");
                             }
+                        
+                            window.location.reload();
                         },
                     });
                 } 
