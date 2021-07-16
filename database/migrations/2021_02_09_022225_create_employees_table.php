@@ -59,6 +59,8 @@ class CreateEmployeesTable extends Migration
             $table->string('mobile_no')->nullable();
             $table->string('email_address')->nullable();
             $table->integer('status')->default(0)->nullable();
+            $table->date('first_day_of_service')->nullable();
+            $table->enum('active_status', ['active', 'in-active'])->default('active');
             $table->timestamps();
         });
     }
