@@ -1,18 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
 
 Route::get('/print/pds/{employeeId}', 'EmployeePersonalDataSheetPrintController');
 
-
-Route::get('/employee-dashboard', function () {
-    return view('employee-dashboard');
-});
-
-Route::get('/login', function () {
-    return view('login');
-});
 
 Route::get('/', 'DashboardController@index');
 
@@ -114,7 +106,7 @@ Route::group(['prefix' => 'employee'], function () {
 
     Route::get('/leave/application', 'EmployeeLeave\LeaveController@show')->name('leave.application.filling');
     Route::get('leave/leave-recall', 'EmployeeLeave\LeaveRecallController@index')->name('leave.leave-recall');
-    Route::resource('leave-starting-balance', 'EmployeeLeave\LeaveStartingBalanceController');
+    // Route::resource('leave-starting-balance', 'EmployeeLeave\LeaveStartingBalanceController');
     Route::resource('/leave-monitoring', 'EmployeeLeave\LeaveMonitoringController');
     Route::resource('/leave-recall', 'EmployeeLeave\LeaveRecallController');
     Route::resource('/leave-forwarded-balance', 'EmployeeLeave\LeaveForwardedBalanceController');
@@ -132,6 +124,17 @@ Route::get('/profile', 'EmployeeController@profile');
 
 Route::get('/restore', 'RestoreController@index');
 
-// Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes();
+
+
+// EMPLOYEES ACCOUNT ROUTES.
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('employee-dashboard', 'Account\Employee\DashboardController')->name('employee.dashboard');
+    Route::get('employee-setting', function () {
+
+    })->name('employee.setting');
+
+    Route::get('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@create')
+                                        ->name('employee.leave.application.filling');
+});
