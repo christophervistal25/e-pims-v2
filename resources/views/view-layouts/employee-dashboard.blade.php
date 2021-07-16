@@ -58,8 +58,8 @@
 								<img alt="" src="assets/img/profiles/avatar-02.jpg">
 							</div>
 							<div class="welcome-det">
-								<h3>Welcome, John Doe</h3>
-								<p>Monday, 20 May 2019</p>
+								<h3>Welcome, {{  Auth::user()->employee->fullname }}</h3>
+								<p>{{ Carbon\Carbon::now()->format('l jS \of F Y') }}</p>
 							</div>
 						</div>
 					</div>
