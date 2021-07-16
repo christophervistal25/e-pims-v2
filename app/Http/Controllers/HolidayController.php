@@ -15,6 +15,7 @@ class HolidayController extends Controller
      *
      * @return void
      */
+
     public function list()
     {
         if (request()->ajax()) {
@@ -129,4 +130,5 @@ class HolidayController extends Controller
     {
         return response()->json(['success' => $holiday->delete()]);
     }
+
 }

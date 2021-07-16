@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="/assets/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="/assets/css/style.css">
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css">
 <style>
     table.dataTable.no-footer {
         border: 1px solid #dee2e6;
@@ -20,35 +21,46 @@
         border-collapse: collapse;
     }
 
-    .holiday__edit..holiday__delete {
-        pointer-events: none;
-    }
-
 </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css">
 @endprepend
 @section('content')
-<div class="card">
+<div class="card" id="cardBody">
     <div class="card-body">
-        <div class="float-right mb-2">
-            <button type="button" class="btn btn-primary shadow" data-toggle="modal" data-target="#addNewHolidayModal" >
-                <i class='la la-plus'></i>
-                Add new holiday
-            </button>
+            <div class="row mb-3">
+                <div class="col-6">
+                    <button type="button" class="btn btn-info shadow" id="calendarBtn" data-view="calendar"><i class="far fa-calendar-alt float-start"></i> View Calendar</button>
+                </div>      
+                <div class="col-6 text-right">
+                    <button type="button" class="btn btn-primary shadow" data-toggle="modal" data-target="#addNewHolidayModal" >
+                        <i class='la la-plus'></i>
+                        Add new holiday
+                    </button>
+                </div>
+            </div>
+
+        
+        {{-- TABLE FOR HOLIDAYS --}}
+    <div class="clearfix"></div>
+        <div id="table__parent__container">
+            <table class='table table-bordered table-hover ' id='holidays-table' width="100%">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th class='text-center'>Actions</th>
+                    </tr>
+                </thead>
+                <tbody cellpadding="20"></tbody>
+            </table>
         </div>
-        <div class="clearfix"></div>
-        <table class='table table-bordered table-hover ' id='holidays-table' width="100%">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Date</th>
-                    <th>Type</th>
-                    <th class='text-center'>Actions</th>
-                </tr>
-            </thead>
-            <tbody cellpadding="20"></tbody>
-        </table>
+        <div id="calendar__container">
+            <div class="container" id="calendar"></div>
+        </div>
     </div>
 </div>
+
 
 
 <!-- SAVE Modal -->
@@ -156,229 +168,13 @@
 </div>
 
 
+
+
 @push('page-scripts')
 <script src="/assets/js/jquery.dataTables.min.js"></script>
 <script src="/assets/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.js"></script>
+<script src="{{ asset('/assets/js/holiday.js') }}"></script>
 
-<script>
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-</script>
-
-<script>
-    let holidayID = null;
-    
-    const DATE_COLUMN = 1;
-    const TYPE_COLUMN = 2;
-    const ACTION_COLUMN = 3;
-
-    const VALIDATION_ERROR = 422;
-
-    let table = $('#holidays-table').DataTable({
-        serverSide: true,
-        stateSave: true,
-        ajax: `/holiday/list`,
-        processing: true,
-        language: {
-                    processing: '<i class="text-primary fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
-        },
-        pagingType: "full_numbers",
-        columnDefs : [{
-            "targets": '_all',
-            "createdCell": function (td, cellData, rowData, row, col) {
-                $(td).css('padding', '15px 25px');
-                if (col === TYPE_COLUMN) {
-                    if (cellData === 'SPECIAL NON-WORKING') {
-                        $(td).html('')
-                            .html(
-                                `<center><span class='badge badge-success'>${cellData}</span></center>`
-                                );
-                    } else if (cellData === 'SPECIAL WORKING') {
-                        $(td).html('')
-                            .html(
-                                `<center><span class='badge badge-info'>${cellData}</span></center>`
-                                );
-                    } else {
-                        $(td).html('')
-                            .html(
-                                `<center><span class='badge badge-primary'>${cellData}</span></center>`
-                                );
-                    }
-                } else if (col === ACTION_COLUMN) {
-                    $(td).html('')
-                        .append(`
-                            <center>
-                                    <button class="btn btn-sm shadow btn-success rounded-circle holiday__edit" 
-                                            data-id="${rowData.id}" 
-                                            data-name="${rowData.name}" 
-                                            data-date="${rowData.date}" 
-                                            data-type="${rowData.type}">
-                                            <i class="la la-pencil"></i>
-                                    </button>
-                                    <button class="ml-1 btn btn-sm shadow btn-danger rounded-circle holiday__delete" data-id="${rowData.id}" >
-                                        <i class="la la-trash"></i>
-                                    </button>
-                                </center>
-                        `);
-                }
-            }
-        }],
-        columns: [{
-                data: "name",
-                name: "name"
-            },
-            {
-                className: "text-center",
-                data: "date",
-                name: "date"
-            },
-            {
-                data: "type",
-                type: "type"
-            },
-            {
-                orderable: false,
-                defaultContent: ''
-            }
-        ],
-    });
-
-    $('#btnHolidaySave').click(function (e) {
-        let nameField = $('#holidayName');
-        let dateField = $('#holidayDate');
-        let typeField = $("#holidayType");
-
-        // Display spinner
-        $('#save-spinner').removeClass('d-none');
-
-        // Clear failed form validation styles.
-        nameField.removeClass('is-invalid');
-        dateField.removeClass('is-invalid');
-        typeField.removeClass('is-invalid');
-
-        $('#name-error').text('');
-        $('#date-error').text('');
-        $('#type-error').text('');
-
-
-        $.ajax({
-            url: `/holiday`,
-            data: {
-                name: nameField.val(),
-                date: dateField.val(),
-                type: typeField.val()
-            },
-            method: 'POST',
-            success: function (response) {
-                if (response.success) {
-                    table.draw();
-                    swal("Good job!", "Sucessfully add new holiday.", "success");
-                    $('#save-spinner').addClass('d-none');
-                    $('#addNewHolidayModal').modal('toggle');
-                }
-            },
-            error: function (response) {
-                $('#save-spinner').addClass('d-none');
-                if (response.status === VALIDATION_ERROR) {
-                    Object.keys(response.responseJSON.errors).map((field) => {
-                        $(`#${field}-error`).text(
-                            `${response.responseJSON.errors[field][0]}`);
-                        // Capitalize field
-                        let capitalizedField = field.charAt(0).toUpperCase() + field.slice(
-                            1);
-                        $(`#holiday${capitalizedField}`).addClass('is-invalid');
-                    });
-                }
-            }
-        });
-    });
-
-    $(document).on('click', '.holiday__edit', function (e) {
-        holidayID = $(this).attr('data-id');
-        let name = $(this).attr('data-name');
-        let date = $(this).attr('data-date');
-        let type = $(this).attr('data-type');
-
-        
-        $('#editHolidayName').val(name);  
-        $('#editHolidayDate').val(date);  
-        $('#editHolidayType').val(type);  
-        
-        $('#editHolidayModal').modal('toggle');
-    });
-
-    $('#btnHolidayUpdate').click(function () {
-        let editHolidayField = $('#editHolidayName');  
-        let editHolidayDate = $('#editHolidayDate');  
-        let editHolidayType = $('#editHolidayType');
-
-        $('#update-spinner').removeClass('d-none');
-
-        // Clear failed form validation styles.
-        editHolidayField.removeClass('is-invalid');
-        editHolidayDate.removeClass('is-invalid');
-        editHolidayType.removeClass('is-invalid');
-
-        $('#edit-name-error').text('');
-        $('#edit-date-error').text('');
-        $('#edit-type-error').text('');
-        
-
-        $.ajax({
-            url : `/holiday/${holidayID}`,
-            data : {name : editHolidayField.val() , date : editHolidayDate.val(), type : editHolidayType.val() },
-            method : 'PUT',
-            success : function (response) {
-                $('#update-spinner').addClass('d-none');
-                swal("Good Job!", "Successfully update a holiday", "success");
-                $('#editHolidayModal').modal('toggle');
-                table.draw();
-            },
-            error: function (response) {
-                $('#update-spinner').addClass('d-none');
-                if (response.status === VALIDATION_ERROR) {
-                    Object.keys(response.responseJSON.errors).map((field) => {
-                        $(`#edit-${field}-error`).text(
-                            `${response.responseJSON.errors[field][0]}`);
-                        // Capitalize field
-                        let capitalizedField = field.charAt(0).toUpperCase() + field.slice(
-                            1);
-                        $(`#editHoliday${capitalizedField}`).addClass('is-invalid');
-                    });
-                }
-            }
-        });
-    });
-
-    $(document).on('click', '.holiday__delete', function (e) {
-        let id = $(this).attr('data-id');
-        swal({
-                title: "Are you sure?",
-                text : "You are about to delete a holiday record",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    $.ajax({
-                        url : `/holiday/${id}`,
-                        method : 'DELETE',
-                        success : function (response) {
-                            if(response.success) {
-                                table.draw();
-                                swal("Good Job!", "Successfully delete a holiday", "success");
-                            }
-                        },
-                    });
-                } 
-            });
-        
-    });
-
-</script>
 @endpush
 @endsection

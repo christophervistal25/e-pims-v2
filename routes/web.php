@@ -125,8 +125,18 @@ Route::group(['prefix' => 'maintenance'], function () {
         Route::get('leave/list', 'Maintenance\LeaveController@list');
         Route::resource('leave', 'Maintenance\LeaveController');
 });
+
+Route::get('holiday/attribute', function() {
+    return App\Holiday::get();
+});
+
+Route::get('holiday-by-date/{date}', function (string $date) {
+    return App\Holiday::where('date', $date)->first();
+});
+
 Route::get('holiday/list', 'HolidayController@list');
 Route::resource('holiday', HolidayController::class);
+
 // Route::resource('/print-increment', 'PrintIncrementController');
 Route::get('/profile', 'EmployeeController@profile');
 
