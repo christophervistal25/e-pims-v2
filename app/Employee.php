@@ -305,5 +305,10 @@ class Employee extends Model
         return $this->hasOne(EmployeeLeaveBalance::class, 'employee_id', 'employee_id');
     }
 
+    public function leave_records()
+    {
+        return $this->hasMany(EmployeeLeaveRecord::class, 'employee_id', 'employee_id');
+    }
+
     
 }

@@ -61,6 +61,7 @@ class LeaveTypeSeeder extends Seeder
                 'applicable_gender' => 'male',
                 'convertible_to_cash' => 'no',
                 'required_rendered_service' => 0,
+                'category' => 'others',
                 'editable' => 'no',
             ],
             [
@@ -71,6 +72,7 @@ class LeaveTypeSeeder extends Seeder
                 'applicable_gender' => 'female/male',
                 'convertible_to_cash' => 'no',
                 'required_rendered_service' => 365,
+                'category' => 'others',
                 'editable' => 'no',
             ],
             [
@@ -111,6 +113,7 @@ class LeaveTypeSeeder extends Seeder
                 'applicable_gender' => 'female/male',
                 'convertible_to_cash' => 'no',
                 'required_rendered_service' => 0,
+                'category' => 'others',
                 'editable' => 'no',
             ],
             [
@@ -121,6 +124,29 @@ class LeaveTypeSeeder extends Seeder
                 'applicable_gender' => 'female/male',
                 'convertible_to_cash' => 'no',
                 'required_rendered_service' => 0,
+                'category' => 'others', 
+                'editable' => 'no',
+            ],
+            [
+                'name' => 'COVID-19 TREATMENT (LEAVE)',
+                'code' => '',
+                'description' => '',
+                'days_period' => 14,
+                'applicable_gender' => 'female/male',
+                'convertible_to_cash' => 'no',
+                'required_rendered_service' => 0,
+                'category' => 'others',
+                'editable' => 'no',
+            ],
+            [
+                'name' => 'COVID-19 TREATMENT (QUARANTINE)',
+                'code' => '',
+                'description' => '',
+                'days_period' => 14,
+                'applicable_gender' => 'female/male',
+                'convertible_to_cash' => 'no',
+                'required_rendered_service' => 0,
+                'category' => 'others',
                 'editable' => 'no',
             ],
         ];
@@ -136,6 +162,7 @@ class LeaveTypeSeeder extends Seeder
                 'required_rendered_service' => $type['required_rendered_service'],
                 // 'editable'                => $type['editable'],
                 'editable'                => 'yes',
+                'category'                => $type['category'] ?? '',
             ]);
         }
     }
