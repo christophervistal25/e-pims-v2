@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Position;
 use App\PlantillaPosition;
 use Yajra\Datatables\Datatables;
-use Illuminate\Support\Facades\Session;
 use App\Office;
-class PlantillaOfPositionController extends Controller
+use App\Position;
+use App\PositionSchedule;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
+
+class PositionScheduleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,14 +21,15 @@ class PlantillaOfPositionController extends Controller
     public function index()
     {
         $office = Office::select('office_code', 'office_name')->get();
-        $position = Position::select('position_id', 'position_name', 'sg_no')->get();
-        return view('PlantillaOfPosition.PlantillaOfPosition', compact('position', 'office'));
+        $PositionScheduleYear = PositionSchedule::select('year')->get();
+        return view('PositionSchedule.PositionSchedule', compact('office', 'PositionScheduleYear'));
     }
 
     public function list(Request $request)
     {
         if ($request->ajax()) {
-            $data = PlantillaPosition::select('pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name' , 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->orderBy('pp_id', 'DESC');
+            $year = Carbon::now()->format('Y') - 1;
+            $data = PlantillaPosition::select('pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name' , 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->where('year' ,'=',  $year)->orderBy('pp_id', 'DESC');
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('position', function ($row) {
@@ -36,16 +40,36 @@ class PlantillaOfPositionController extends Controller
                     })
                     ->addColumn('action', function($row){
 
-                        $btn = "<a title='Edit Plantilla Of Position' href='". route('plantilla-of-position.edit', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-                        $btn = $btn."<a title='Delete Plantilla Of Position' id='delete' value='$row->pp_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
-                        ";
+                        $btn = "<a title='Edit Plantilla Of Position' href='". route('position-schedule.edits', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1 id__holder' data-id='".$row['pp_id']."'><i class='la la-pencil'></i></a>";
                             return $btn;
                     })
                     ->rawColumns(['action'])
                     ->make(true);
         }
+        return view('PositionSchedule.PositionSchedule');
+    }
 
-        return view('PlantillaOfPosition.PlantillaOfPosition');
+    public function adjustedlist(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = PositionSchedule::select('pos_id','pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name' , 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->orderBy('pp_id', 'DESC');
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('position', function ($row) {
+                        return $row->position->position_name;
+                    })
+                    ->addColumn('office', function ($row) {
+                        return $row->office->office_name;
+                    })
+                    ->addColumn('action', function($row){
+
+                        $btn = "<a title='Edit Plantilla Of Position' href='". route('position-schedule.edits', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('PositionSchedule.PositionSchedule');
     }
 
     /**
@@ -66,21 +90,7 @@ class PlantillaOfPositionController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'positionTitle'                 => 'required',
-            'itemNo'                        => 'required|numeric',
-            'salaryGrade'                   => 'required | in:' . implode(',',range(1, 33)),
-            'officeCode'                    => 'required',
-        ]);
-        $plantillaposition = new PlantillaPosition;
-        $plantillaposition->position_id                       = $request['positionTitle'];
-        $plantillaposition->item_no                           = $request['itemNo'];
-        $plantillaposition->sg_no                             = $request['salaryGrade'];
-        $plantillaposition->office_code                       = $request['officeCode'];
-        $plantillaposition->old_position_name                 = $request['positionOldName'];
-        $plantillaposition->year                              = $request['year'];
-        $plantillaposition->save();
-        return response()->json(['success'=>true]);
+        //
     }
 
     /**
@@ -100,12 +110,17 @@ class PlantillaOfPositionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($pp_id)
+    public function edit($id)
+    {
+        //
+    }
+
+    public function edits($pp_id)
     {
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('position_id', 'position_name', 'sg_no')->get();
         $plantillaofposition = PlantillaPosition::find($pp_id);
-        return view('PlantillaOfPosition.edit', compact('plantillaofposition','position', 'office'));
+        return view('PositionSchedule.edit', compact('plantillaofposition','position', 'office'));
     }
 
     /**
@@ -115,9 +130,13 @@ class PlantillaOfPositionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $pp_id)
+    public function update(Request $request, $id)
     {
-        $this->validate($request, [
+        //
+    }
+    public function updates(Request $request, $pp_id)
+    {
+         $this->validate($request, [
             'itemNo'                        => 'required|numeric',
             'salaryGrade'                   => 'required | in:' . implode(',',range(1, 33)),
             'officeCode'                    => 'required',
@@ -141,13 +160,6 @@ class PlantillaOfPositionController extends Controller
      */
     public function destroy($id)
     {
-        PlantillaPosition::find($id)->delete();
-        return json_encode(array('statusCode'=>200));
-    }
-
-    public function delete($id)
-    {
-        PlantillaPosition::find($id)->delete();
-        return json_encode(array('statusCode'=>200));
+        //
     }
 }

@@ -238,6 +238,8 @@ $(function() {
             table = $("#plantillaofposition").DataTable({
                 processing: true,
                 serverSide: true,
+                pagingType: "full_numbers",
+                stateSave: true,
                 columnDefs: [{ width: "10%", targets: 5 }],
                 destroy: true,
                 retrieve: true,
@@ -268,6 +270,8 @@ $(function() {
             table = $("#plantillaofposition").DataTable({
                 processing: true,
                 serverSide: true,
+                pagingType: "full_numbers",
+                stateSave: true,
                 columnDefs: [{ width: "10%", targets: 5 }],
                 destroy: true,
                 retrieve: true,

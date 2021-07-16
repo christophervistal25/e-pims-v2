@@ -85,5 +85,10 @@ class Office extends Model
         return $this->belongsTo(Employee::class, 'office_code', 'office_code');
     }
 
+    public function PositionSchedule()
+    {
+        return $this->belongsTo(PositionSchedule::class, 'office_code', 'office_code');
+    }
+
 
 }
