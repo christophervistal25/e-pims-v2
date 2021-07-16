@@ -445,6 +445,8 @@
             });
         });
 
+
+        // SAVE BUTTON //
         $('#btnSave').click( (e)=> {
             e.preventDefault();
 
@@ -493,6 +495,14 @@
         });
 
     });
+
+
+    let btnCancel = document.querySelector('#btnCancel');
+
+    btnCancel.addEventListener('click', function(e){
+        e.preventDefault();
+        location.reload();
+    })
 
 
     // function numberWithCommas(number) {
