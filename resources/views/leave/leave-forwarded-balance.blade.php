@@ -8,8 +8,7 @@
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 <link rel="stylesheet"
     href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
-<style>
-</style>
+<link rel="stylesheet" href="/assets/css/style.css">
 @endprepend
 @section('content')
 <div class="row">  
@@ -20,10 +19,11 @@
                 <div class="page-header">
                     <div class="row align-items-right mb-2 ">
                         <div class="col-auto float-right ml-auto">
-                            <button id="addBtn" type="button" class="btn btn-warning float-right shadow"><i class="la la-plus"></i>&nbsp
+                            <button id="addBtn" type="button" class="btn btn-primary float-right shadow"><i class="la la-plus"></i>&nbsp
                                 Add Forwarded Balance </button> 
                         </div>
                     </div>
+                    <hr>
                     <div class="table" style="overflow-x:auto;">
                         <table class="table table-bordered text-center" id="step-increment-table" style="width:100%;">
                             <thead>
@@ -33,15 +33,16 @@
                                     <th class="font-weight-bold align-middle text-center" rowspan="2">As Of</th>
                                     <th class="font-weight-bold align-middle text-center" rowspan="1 " colspan="3">Vacation Leave</th>
                                     <th class="font-weight-bold align-middle text-center" rowspan="1" colspan="3">Sick Leave</th>
-                                    <th class="font-weight-bold align-middle text-center" rowspan="2" >Balance Leave Credits</th>
+                                    <th class="font-weight-bold align-middle text-center" rowspan="2" width="5%">Balance Leave Credits</th>
+                                    <th class="font-weight-bold align-middle text-center" rowspan="2" width="10%">Actions</th>
                                 </tr>
                                 <tr>
-                                    <td class="font-weight-bold align-middle text-center">Earned</td>
-                                    <td class="font-weight-bold align-middle text-center">Enjoyed</td>
-                                    <td class="font-weight-bold align-middle text-center">Balance</td>
-                                    <td class="font-weight-bold align-middle text-center">Earned</td>
-                                    <td class="font-weight-bold align-middle text-center">Enjoyed</td>
-                                    <td class="font-weight-bold align-middle text-center">Balance</td>
+                                    <td class="font-weight-bold align-middle text-center" width="5%">Earned</td>
+                                    <td class="font-weight-bold align-middle text-center" width="5%">Enjoyed</td>
+                                    <td class="font-weight-bold align-middle text-center" width="5%">Balance</td>
+                                    <td class="font-weight-bold align-middle text-center" width="5%">Earned</td>
+                                    <td class="font-weight-bold align-middle text-center" width="5%">Enjoyed</td>
+                                    <td class="font-weight-bold align-middle text-center" width="5%">Balance</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -53,7 +54,7 @@
                                     @endphp
                                         <tr>
                                             <td>{{ $record->first() ? $record[0]->employee_id : '' }}</td>
-                                            <td>{{ $employeeFullname }}</td>
+                                            <td class="text-left">{{ $employeeFullname }}</td>
                                             <td>{{ $record->first() ? $record[0]->fb_as_of : '' }}</td>
                                             {{-- VACATION LEAVE --}}
                                             <td>{{ $record->where('type.code', 'VL')->sum('earned') }}</td>
@@ -66,7 +67,15 @@
                                             <td>{{ $slBAlance }}</td>
                                             {{-- END OF SICK LEAVE --}}
 
-                                            <td>{{ $totalBalance }}</td>
+                                            <td><b>{{ $totalBalance }}</b></td>
+                                            <td>
+                                                 <button class='btn btn-success btn-sm rounded-circle shadow edit__leave__type' data-id="{{ $record->first() ? $record[0]->employee_id : '' }}">
+                                                    <i class='la la-pencil'></i>
+                                                </button>
+                                                <button class='btn btn-danger btn-sm rounded-circle shadow delete__leave__type' data-id="{{ $record->first() ? $record[0]->employee_id : '' }}">
+                                                    <i class='la la-trash'></i>
+                                                </button>
+                                            </td>
                                         </tr>
                                 @endforeach
                             </tbody>
@@ -199,14 +208,11 @@
                     <div class="col-lg-4">
                     </div>
                     <div class="col-lg-8">
-                        <div class="row">
+                        <div class="row">   
+                            <div class="col-lg-6"></div>    
                             <div class="col-lg-6">
                                 <button type="submit" class="text-white shadow btn btn-lg btn-success w-100 ml-1" id="btnSave"><i class="lar la-save"></i> Add
                                 Record</button>
-                            </div>
-                            <div class="col-lg-6">
-                                <button type="button" class="text-white shadow btn btn-lg btn-warning w-100 ml-1"><i
-                                    class="las la-ban"></i> Cancel Record</button>
                             </div>
                         </div>
                     </div>
