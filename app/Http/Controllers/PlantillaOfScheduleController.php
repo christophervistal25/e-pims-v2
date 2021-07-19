@@ -24,7 +24,7 @@ class PlantillaOfScheduleController extends Controller
     public function index()
     {
         $plantillaYear = Plantilla::select('year')->distinct()->get();
-        $PlantillaOfScheduleYear = PlantillaSchedule::select('year')->distinct()->get();
+        $PlantillaOfScheduleYear = PlantillaSchedule::select('year')->orderBy('year', 'desc')->distinct()->get();
         $office = Office::select('office_code', 'office_name')->get();
         return view('PlantillaOfSchedule.PlantillaOfSchedule', compact('office', 'plantillaYear', 'PlantillaOfScheduleYear'));
     }
