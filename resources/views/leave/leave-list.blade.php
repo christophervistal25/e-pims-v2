@@ -12,10 +12,10 @@
     <div class="col-lg-12">
         <div id="leaveApplicationList" class="card">
             <div class="card-body">
-                <div class="row">
+                <div class="row mb-1">
                     <div class="col-lg-4">
                         <label for="officelist" class="form-group has-float-label mb-0">
-                            <select name="officelist" type="text" id="officelist" class="form-control"
+                            <select name="officeList" type="text" id="officeList" class="form-control"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <option readonly selected>All Office</option>
                                 <option>Office Name I</option>
@@ -49,7 +49,42 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12">
+
+
+                {{-- LEAVE LIST DATATABLES --}}
+               
+                    <div class="table" style="overflow-x:auto;">
+                        <table class="table table-bordered text-center" id="leaveListTable" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th class="font-weight-bold align-middle text-center text-truncate" rowspan="2">Name of Employee</th>
+                                    <th class="font-weight-bold align-middle text-center" rowspan="2">Recommending Approval</th>
+                                    <th class="font-weight-bold align-middle text-center" rowspan="2">Approved By</th>
+                                    <th class="font-weight-bold align-middle text-center text-truncate" rowspan="2">Leave Type</th>
+                                    <th class="font-weight-bold align-middle text-center" rowspan="2">Incase of</th>
+                                    
+                                    <th class="font-weight-bold align-middle text-center" rowspan="2">Commutation</th>   
+                                    <th class="font-weight-bold align-middle text-center" rowspan="2">Status</th>
+                                    <th class="font-weight-bold align-middle text-center" rowspan="1" colspan="4">Date</th>
+                                    <th class="font-weight-bold align-middle text-center" rowspan="2">No. of Days</th>
+                                    <th class="font-weight-bold align-middle text-center" rowspan="2">Actions</th>
+                                    <tr>
+                                        <td class="font-weight-bold align-middle text-center">Applied</td>
+                                        <td class="font-weight-bold align-middle text-center">Approved</td>
+                                        <td class="font-weight-bold align-middle text-center">From</td>
+                                        <td class="font-weight-bold align-middle text-center">To</td>
+                                    </tr>  
+                                    </tr>
+                                                                     
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+
+                </div>
+
+
+                {{-- <div class="col-lg-12">
                     <table class="table table-hover">
                         <tr>
                             <th class="text-center">Name of Employee</th>
@@ -102,7 +137,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>
+                </div> --}}
             </div>
         </div>
         <div id="leaveApplication" style="display:none;" class="card shadow">
@@ -309,11 +344,117 @@
 
 @push('page-scripts')
 <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
+<script src="/assets/js/jquery.dataTables.min.js"></script>
+<script src="/assets/js/dataTables.bootstrap4.min.js"></script>
 <script>
+
+    $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+
+    $(document).ready( ()=> {
+        let table = $('#leaveListTable').DataTable({
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            retrieve: true,
+            pagingType: "full_numbers",
+            ajax: '/employee/leave-list/list',
+            language: {
+                    processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
+            },
+            columns: [{
+                data: 'fullname',
+                name: 'fullname',
+                searchable: true,
+                sortable: false,
+                visible: true
+                },
+                {
+                    data: 'recommending_approval',
+                    name: 'recommending_approval',
+                    searchable: true,
+                    sortable: false,
+                    visible: true
+                },
+                {
+                    data: 'approved_by',
+                    name: 'approved_by',
+                    searchable: true,
+                    sortable: false,
+                    visible: true
+                },
+                {
+                    data: 'leave_type_id',
+                    name: 'leave_type_id',
+                    searchable: true,
+                    sortable: false,
+                    visible: true
+                },
+                {
+                    data: 'incase_of',
+                    name: 'incase_of',
+                    searchable: true,
+                    sortable: false,
+                    visible: true
+                },
+                {
+                    data: 'commutation',
+                    name: 'commutation',
+                    searchable: true,
+                    sortable: false,
+                    visible: true
+                },
+                {
+                    data: 'approved_status',
+                    name: 'approved_status',
+                    searchable: true,
+                    sortable: false,
+                    visible: true
+                },
+                {
+                    data: 'date_applied',
+                    name: 'date_applied'
+                },
+                {
+                    data: 'date_approved',
+                    name: 'date_approved'
+                },
+                {
+                    data: 'date_from',
+                    name: 'date_from'
+                },
+                {
+                    data: 'date_to',
+                    name: 'date_to'
+                },
+                {
+                    data: 'no_of_days',
+                    name: 'no_of_days'
+                },
+                {
+                    data: 'action',
+                    name: 'action'
+                }
+            ] 
+
+        });
     
+     });
+
+
+     $('#search').dataTable({
+         "searchig": false
+     });
+
+
+
     function showLeaveApplication() {
     var x = document.getElementById("leaveApplication");
-    var y = document.getElementById("leaveApplicationList");
+    var y = document.getElementById("leaveApplica,tionList");
         x.style.display = "block";
         y.style.display = "none";
     }
