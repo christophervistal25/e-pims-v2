@@ -2,7 +2,7 @@
 @section('title', 'Welcome User')
 @prepend('page-css')
 {{-- CSS HERE --}}
-<link rel="stylesheet" href="assets/plugins/morris/morris.css">">
+<link rel="stylesheet" href="assets/plugins/morris/morris.css">
 <style>
     .btn-primary {
         background : #ff9b44 !important;

@@ -32,9 +32,9 @@ class Holiday extends Model
         return $this->name;
     }
 
-    public function getDateStringAttribute($value)
+    public function getDateStringAttribute()
     {
-        return Carbon::parse($value)->format('l jS \of F Y');
+        return Carbon::parse($this->date)->format('l jS \of F Y');
     }
     
 }
