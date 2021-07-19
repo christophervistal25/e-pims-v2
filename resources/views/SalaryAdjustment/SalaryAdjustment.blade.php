@@ -322,8 +322,8 @@
                         success: function (dataResult) {
                             var dataResult = JSON.parse(dataResult);
                             if (dataResult.statusCode == 200) {
-                                $('#salaryAdjustment').DataTable().ajax.reload();
                                 swal("Successfully Deleted!", "", "success");
+                                 location.reload();
                             }
                         }
                     });
