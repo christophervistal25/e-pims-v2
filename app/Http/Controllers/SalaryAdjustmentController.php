@@ -77,7 +77,6 @@ class SalaryAdjustmentController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            // 'employeeName'                        => 'required',
             'employeeName'  => [
                 'required',
                     Rule::unique('salary_adjustments','employee_id')->where(function ($query) use ($request) {
@@ -104,7 +103,6 @@ class SalaryAdjustmentController extends Controller
             'salaryNew'                           => 'required|numeric',
             'salaryDifference'                    => 'required|numeric',
         ]);
-
         DB::table('salary_adjustments')->updateOrInsert(
             [
                 'employee_id' => $request['employeeId']
@@ -122,7 +120,6 @@ class SalaryAdjustmentController extends Controller
             'remarks'     => $request['remarks'],
             'deleted_at'      => null,
         ]);
-
         $service_record                         = new service_record;
         $service_record->employee_id            = $request['employeeId'];
         $service_record->service_from_date      = $request['dateAdjustment'];
@@ -130,9 +127,13 @@ class SalaryAdjustmentController extends Controller
         $service_record->status                 = $request['status'];
         $service_record->salary                 = $request['salaryNew'];
         $service_record->office_code            = $request['officeCode'];
-        $service_record->separation_cause       =  $request['remarks'];
+        $dateCheck = $request['remarks'];
+        if($dateCheck == ''){
+            $service_record->separation_cause       =  'Salary Adjust';
+        }else{
+            $service_record->separation_cause       =  $request['remarks'];
+        }
         $service_record->save();
-
         return response()->json(['success'=>true]);
     }
 

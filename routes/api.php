@@ -183,9 +183,13 @@ Route::post('/salary-adjustment-per-office', function () {
         $service_record->status                 = $newAdjustment->status;
         $service_record->salary                 = $getsalaryResult['sg_step' .  $newAdjustment->step_no];
         $service_record->office_code            = $newAdjustment->office_code;
-        $service_record->separation_cause       =  request()->remarks;
+        $dataCheck = request()->remarks;
+        if($dataCheck == ''){
+            $service_record->separation_cause       =  'Salary Adjust';
+        }else{
+            $service_record->separation_cause       =  request()->remarks;
+        }
         $service_record->save();
-
     }
     return response()->json(['success'=>true]);
 });
