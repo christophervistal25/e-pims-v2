@@ -271,6 +271,9 @@
             retrieve: true,
             pagingType: "full_numbers",
             ajax: '/step-increment/list',
+            language: {
+                    processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
+            },
             columns: [{
                     data: 'date_step_increment',
                     name: 'date_step_increment'
@@ -442,6 +445,8 @@
             });
         });
 
+
+        // SAVE BUTTON //
         $('#btnSave').click( (e)=> {
             e.preventDefault();
 
@@ -490,6 +495,14 @@
         });
 
     });
+
+
+    let btnCancel = document.querySelector('#btnCancel');
+
+    btnCancel.addEventListener('click', function(e){
+        e.preventDefault();
+        location.reload();
+    })
 
 
     // function numberWithCommas(number) {
