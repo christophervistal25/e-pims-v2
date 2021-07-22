@@ -27,6 +27,7 @@ class CreateEmployeeLeaveApplicationsTable extends Migration
             $table->date('date_applied');
             $table->date('date_from');
             $table->date('date_to');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

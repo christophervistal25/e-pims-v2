@@ -1,6 +1,7 @@
 @extends('layouts.app-vue')
 @section('title', 'Leave Lists')
 @prepend('page-css')
+
 <script src="{{ asset('/js/app.js') }}" defer></script>
 <link rel="stylesheet"
     href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
@@ -8,17 +9,42 @@
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 @endprepend
 @section('content')
+
+<div class="col-12">
+    <div class="row">
+        <div class="card card-body col-2 text-center bg-light">
+            <h5 class="badge badge-info" style="justify-content: center">All</h5>
+        </div>
+        <div class="card card-body col-2 text-center bg-light">
+            <h5 class="badge badge-warning" style="justify-content: center">Pending</h5>
+        </div>
+        <div class="card card-body col-2 text-center bg-light">
+            <h5 class="badge badge-danger" style="justify-content: center">Reject</h5>
+        </div>
+        <div class="card card-body col-2 text-center bg-light">
+            <h5 class="badge badge-success" style="justify-content: center">Approved</h5>
+        </div>
+        <div class="card card-body col-2 text-center bg-light">
+            <h5 class="badge badge-secondary" style="justify-content: center">On-going</h5>
+        </div>
+        <div class="card card-body col-2 text-center bg-light">
+            <h5 class="badge badge-primary" style="justify-content: center">Enjoyed</h5>
+        </div>
+    </div>
+</div>
+
+{{-- LEAVE APPLICATION CARD --}}
 <div class="row">
     <div class="col-lg-12">
-        <div id="leaveApplicationList" class="card">
+        <div id="leaveApplicationList" class="card bg-light">
             <div class="card-body">
-                <div class="row mb-1">
+                <div class="row mt-1">
                     <div class="col-lg-4">
                         <label for="officelist" class="form-group has-float-label mb-0">
-                            <select name="officeList" type="text" id="officeList" class="form-control"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <option readonly selected>All Office</option>
-                                <option>Office Name I</option>
+                            <select class="form-control" name="officeList" type="text" id="officeList" data-live-search="true" data-size="6" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <option>All Office</option>
+                                @foreach($employees as $employeee)
+                                <option data-leave="{{ $employee->employee_leave_applications }}" value="{{ $employee->employee_id }}">{{ $employee->lastname }}, {{ $employee->firstname }} {{ $employee->middlename }}</option>
                             </select>
                             <span><strong>Filter Offices</strong></span>
                         </label>
@@ -41,7 +67,7 @@
                         <div class="row">
                             <div class="col-lg-10">
                                 <label for="empName" class="form-group has-float-label">
-                                    <input class="form-control" type="text" id="empName"
+                                    <input class="form-control" type="text" name="searchName" id="searchName" value=""
                                         style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                     <span><strong>Search by Employee</strong></span>
                                 </label>
@@ -355,6 +381,8 @@
         });
 
 
+
+      
     $(document).ready( ()=> {
         let table = $('#leaveListTable').DataTable({
             processing: true,
@@ -442,19 +470,21 @@
             ] 
 
         });
+
+        $('.dataTables_filter').remove();
+        $('#leaveListTable_length').remove();
     
      });
 
 
-     $('#search').dataTable({
-         "searchig": false
-     });
+     
 
+    
 
 
     function showLeaveApplication() {
     var x = document.getElementById("leaveApplication");
-    var y = document.getElementById("leaveApplica,tionList");
+    var y = document.getElementById("leaveApplicationList");
         x.style.display = "block";
         y.style.display = "none";
     }
@@ -465,6 +495,9 @@
         x.style.display = "none";
         y.style.display = "block";
     }
+
+
+   
 </script>
 @endpush
 @endsection
