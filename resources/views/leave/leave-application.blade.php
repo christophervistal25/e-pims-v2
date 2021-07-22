@@ -158,12 +158,7 @@
                             <span><strong>Total VL - SL</strong></span>
                         </label>
                     </div>
-<<<<<<< HEAD
                     <div class="col-lg-4">
-=======
-                    <div class="col-lg-4" id="employee__image__container">
-                        <div class="bg-danger shadow w-50 h-50 mx-auto mt-4"></div>
->>>>>>> a94f62d5a6dd9fa2ce1dfa39a25158e53af78cd7
                         <div class="card mt-5 shadow">
                             <div class="card-body">
                                 <h6 class="text-center mt-3">Inclusive Dates</h6>
