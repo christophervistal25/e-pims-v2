@@ -30,4 +30,9 @@ class EmployeeLeaveApplication extends Model
     {
         return $this->hasOne(LeaveType::class, 'id', 'leave_type_id');
     }
+
+    public static function recordByStatus(string $status)
+    {
+        return self::where('approved_status', $status)->count();
+    }
 }

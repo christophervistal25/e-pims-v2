@@ -112,6 +112,10 @@ Route::group(['prefix' => 'employee'], function () {
 
 
     Route::get('/leave/application', 'EmployeeLeave\LeaveController@show')->name('leave.application.filling');
+
+
+    Route::get('/leave-list/list', 'EmployeeLeave\LeaveListController@list');
+
     Route::get('leave/leave-list', 'EmployeeLeave\LeaveListController@index')->name('leave.leave-list');
     Route::get('leave/leave-recall', 'EmployeeLeave\LeaveRecallController@index')->name('leave.leave-recall');
     Route::resource('leave-starting-balance', 'EmployeeLeave\LeaveStartingBalanceController');
