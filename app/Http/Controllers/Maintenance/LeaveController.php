@@ -58,7 +58,7 @@ class LeaveController extends Controller
         if($request->ajax()) {
             $this->validate($request, [
                 'name'                      => 'required',
-                'code'                      => 'nullable|max:10',
+                'code'                      => 'required|unique:leave_types,code|max:10',
                 'description'               => 'nullable|string',
                 'days_period'               => 'required',
                 'convertible_to_cash'       => 'nullable',
@@ -116,7 +116,7 @@ class LeaveController extends Controller
         if($request->ajax()) {
             $this->validate($request, [
                 'edit_name'                      => 'required',
-                'edit_code'                      => 'nullable|max:10',
+                // 'edit_code'                      => ['required', 'unique:leave_types,code,' . $id, 'max:10'],
                 'edit_description'               => 'nullable|string',
                 'edit_days_period'               => 'required',
                 'edit_convertible_to_cash'       => 'nullable',
@@ -125,7 +125,7 @@ class LeaveController extends Controller
                 'edit_editable'                  => 'nullable',
             ], [], [
                 'edit_name'                      => 'name',
-                'edit_code'                      => 'code',
+                // 'edit_code'                      => 'code',
                 'edit_description'               => 'description',
                 'days_period'                    => 'days_period',
                 'edit_convertible_to_cash'       => 'convertible_to_cash',
