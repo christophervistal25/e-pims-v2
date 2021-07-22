@@ -10,6 +10,7 @@ use App\Division;
 use App\Employee;
 use App\Position;
 use App\PlantillaPosition;
+use Illuminate\Support\Facades\DB;
 use App\SalaryGrade;
 use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
@@ -36,53 +37,86 @@ class PlantillaOfScheduleController extends Controller
      */
     public function list(Request $request)
     {
-        if ($request->ajax()) {
-            $year = Carbon::now()->format('Y') - 1;
-            $data = Plantilla::select('plantilla_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->where('year' ,'=',  $year)->orderBy('plantilla_id', 'DESC');
-            return (new Datatables)->eloquent($data)
-                    ->addIndexColumn()
-                    ->addColumn('employee', function ($row) {
-                        return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
-                    })
-                    ->addColumn('plantillaPosition', function ($row) {
-                        return $row->plantillaPosition->position->position_name;
-                    })
-                    ->addColumn('office', function ($row) {
-                        return $row->office->office_short_name;
-                    })
-                    ->addColumn('action', function($row){
-                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm id__holder' data-id='".$row['plantilla_id']."'><i class='la la-pencil'></i></a>";
-                            return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
-        }
+        $year = Carbon::now()->format('Y') - 1;
+        $data = DB::table('plantillas')
+        ->join('offices', 'plantillas.office_code', '=', 'offices.office_code')
+        ->join('employees', 'plantillas.employee_id', '=', 'employees.employee_id')
+        ->join('plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
+        ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
+        ->select('plantilla_id', 'plantillas.item_no', 'positions.position_name', 'offices.office_name', 'plantillas.status', 'plantillas.year', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
+        ->where('plantillas.year' ,'=',  $year)
+        ->orderBy('plantilla_id', 'desc')
+        ->get();
+        return DataTables::of($data)
+        ->addColumn('action', function($row){
+            $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm id__holder' data-id='".$row->plantilla_id."'><i class='la la-pencil'></i></a>";
+                return $btn;
+        })
+        ->rawColumns(['action'])
+        ->make(true);
+        // if ($request->ajax()) {
+        //     $year = Carbon::now()->format('Y') - 1;
+        //     $data = Plantilla::select('plantilla_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->where('year' ,'=',  $year)->orderBy('plantilla_id', 'DESC');
+        //     return (new Datatables)->eloquent($data)
+        //             ->addIndexColumn()
+        //             ->addColumn('employee', function ($row) {
+        //                 return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
+        //             })
+        //             ->addColumn('plantillaPosition', function ($row) {
+        //                 return $row->plantillaPosition->position->position_name;
+        //             })
+        //             ->addColumn('office', function ($row) {
+        //                 return $row->office->office_short_name;
+        //             })
+        //             ->addColumn('action', function($row){
+        //                 $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm id__holder' data-id='".$row['plantilla_id']."'><i class='la la-pencil'></i></a>";
+        //                     return $btn;
+        //             })
+        //             ->rawColumns(['action'])
+        //             ->make(true);
+        // }
         return view('PlantillaOfSchedule.PlantillaOfSchedule');
     }
 
 
     public function adjustedlist(Request $request, $yearFilter)
     {
-        if ($request->ajax()) {
-            $data = PlantillaSchedule::select('ps_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->where('year', $yearFilter)->orderBy('plantilla_id', 'DESC');
-            return (new Datatables)->eloquent($data)
-                    ->addIndexColumn()
-                    ->addColumn('employee', function ($row) {
-                        return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
-                    })
-                    ->addColumn('plantillaPosition', function ($row) {
-                        return $row->plantillaPosition->position->position_name;
-                    })
-                    ->addColumn('office', function ($row) {
-                        return $row->office->office_short_name;
-                    })
-                    ->addColumn('action', function($row){
-                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-schedule.edit', $row->ps_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil'></i></a>";
-                            return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
-        }
+        $data = DB::table('plantilla_schedules')
+        ->join('offices', 'plantilla_schedules.office_code', '=', 'offices.office_code')
+        ->join('employees', 'plantilla_schedules.employee_id', '=', 'employees.employee_id')
+        ->join('plantilla_positions', 'plantilla_schedules.pp_id', '=', 'plantilla_positions.pp_id')
+        ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
+        ->select('ps_id', 'plantilla_schedules.item_no', 'positions.position_name', 'offices.office_name', 'plantilla_schedules.status', 'plantilla_schedules.year', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
+        ->where('plantilla_schedules.year', $yearFilter)
+        ->orderBy('plantilla_id', 'DESC')
+        ->get();
+        return DataTables::of($data)
+        ->addColumn('action', function($row){
+            $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-schedule.edit', $row->ps_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil'></i></a>";
+            return $btn;
+        })
+        ->rawColumns(['action'])
+        ->make(true);
+        // if ($request->ajax()) {
+        //     $data = PlantillaSchedule::select('ps_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id', 'year')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->where('year', $yearFilter)->orderBy('plantilla_id', 'DESC');
+        //     return (new Datatables)->eloquent($data)
+        //             ->addIndexColumn()
+        //             ->addColumn('employee', function ($row) {
+        //                 return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
+        //             })
+        //             ->addColumn('plantillaPosition', function ($row) {
+        //                 return $row->plantillaPosition->position->position_name;
+        //             })
+        //             ->addColumn('office', function ($row) {
+        //                 return $row->office->office_short_name;
+        //             })
+        //             ->addColumn('action', function($row){
+        //                 $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-schedule.edit', $row->ps_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil'></i></a>";
+        //                     return $btn;
+        //             })
+        //             ->rawColumns(['action'])
+        //             ->make(true);
+        // }
         return view('PlantillaOfSchedule.PlantillaOfSchedule');
     }
 
