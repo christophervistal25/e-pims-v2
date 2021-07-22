@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Account\Employee;
 use App\Office;
 use App\LeaveType;
 use Illuminate\Http\Request;
+use App\EmployeeLeaveApplication;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Repositories\LeaveTypeRepository;
@@ -44,6 +45,26 @@ class LeaveApplicationController extends Controller
 
     public function store(Request $request)
     {
+        
+        if($request->ajax()) {
+            // Validation with employee balance look-up
+            $employee = Auth::user()->employee;
 
+            EmployeeLeaveApplication::create([
+                'employee_id'           => $employee->employee_id,
+                'approved_by'           => $request->approvedBy,
+                'recommending_approval' => $request->recommendingApproval,
+                'commutation'           => $request->commutation,
+                'date_applied'          => $request->dateApply,
+                'date_from'             => $request->startDate,
+                'date_to'               => $request->endDate,
+                'incase_of'             => $request->inCaseOf,
+                'no_of_days'            => $request->noOfDays,
+                'leave_type_id'         => $request->typeOfLeave,
+            ]);
+
+            return response()->json(['success' => true, 'fullname' => $employee->lastname . ', ' .  $employee->firstname . ' ' . $employee->middlename . '.'], 201);
+        }
+        return response()->json(['success' => false], 404);
     }
 }

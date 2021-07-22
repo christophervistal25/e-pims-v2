@@ -309,6 +309,12 @@ class Employee extends Model
     {
         return $this->hasMany(EmployeeLeaveRecord::class, 'employee_id', 'employee_id');
     }
+
+    public function leave_files()
+    {
+        return $this->hasMany(EmployeeLeaveApplication::class, 'employee_id', 'employee_id');
+    }
+
     
     public function forwarded_leave_records()
     {

@@ -113,11 +113,13 @@ let holidayID = null;
             success: function (response) {
                 if (response.success) {
                     table.draw();
+                    calendar.destroy();
+                    calendar.refetchEvents();
+                    calendar.render();
                     swal("Good job!", "Sucessfully add new holiday.", "success");
                     $('#save-spinner').addClass('d-none');
                     $('#addNewHolidayModal').modal('toggle');
                 }
-               
             },
             error: function (response) {
                 $('#save-spinner').addClass('d-none');
@@ -174,16 +176,17 @@ let holidayID = null;
                 $('#update-spinner').addClass('d-none');
                 $('#editHolidayModal').modal('toggle');
                 table.draw();
+
+                calendar.destroy();
+                calendar.refetchEvents();
+                calendar.render();
+
                 swal({
                     title: "Good Job!",
                     text : "Successfully updated a holiday",
                     icon: "success",
-                })
-                .then((isClicked) => {
-                    if (isClicked) {
-                        location.reload();                                        
-                    } 
-                });  
+                });
+
             },
             error: function (response) {
                 $('#update-spinner').addClass('d-none');
@@ -219,15 +222,14 @@ let holidayID = null;
                             if(response.success) {
                                 table.draw();
                                 
+                                calendar.destroy();
+                                calendar.refetchEvents();
+                                calendar.render();
+
                                 swal({
                                     title: "Good Job!",
                                     text : "Successfully deleted a holiday",
                                     icon: "success",
-                                })
-                                .then((isClicked) => {
-                                    if (isClicked) {
-                                        location.reload();                                        
-                                    } 
                                 });  
                                 
                             }
@@ -285,7 +287,7 @@ let holidayID = null;
                     $.ajax({
                         url : `/holiday-by-date/${info.dateStr}`,
                         success : function (response) {
-                            // Append the button edit and trigger the click event to display the edit modal for holioday.
+                            // Append the button edit and trigger the click event to display the edit modal for holiday.
                             $('#cardBody').prepend(`
                                 <button class="holiday__edit d-none" id="custom-button-${response.id}"  data-id="${response.id}" 
                                         data-name="${response.name}" 

@@ -2,7 +2,7 @@
 @section('title', 'Welcome User')
 @prepend('page-css')
 {{-- CSS HERE --}}
-<link rel="stylesheet" href="assets/plugins/morris/morris.css">">
+<link rel="stylesheet" href="assets/plugins/morris/morris.css">
 <style>
     .btn-primary {
         background : #ff9b44 !important;
@@ -122,9 +122,9 @@
                         <div class="media align-items-center">
                             <img class="avatar" src="/storage/employee_images/{{ $employee->information->photo }}">
                             <div class="media-body">
-                                <div class="text-sm my-0">{{ $employee->fullname }}</div>
-                                <div class="text-sm my-0">{{ $employee->information->position->position_name }}</div>
-                                <div class="text-sm my-0">{{ $employee->information->office->office_short_name }}</div>
+                                <div class="text-sm my-0 font-weight-medium">{{ $employee->fullname }}</div>
+                                <div class="text-xs my-0 text-muted">{{ $employee->information->position->position_name }}</div>
+                                <div class="text-xs my-0 text-muted">{{ $employee->information->office->office_short_name }}</div>
                             </div>
                         </div>
                         <div class="row align-items-center mt-3">
@@ -152,9 +152,9 @@
                         <div class="media align-items-center">
                             <img class="avatar" src="/storage/employee_images/{{ $employee->information->photo }}">
                             <div class="media-body">
-                                <div class="text-sm my-0">{{ $employee->fullname }}</div>
-                                <div class="text-sm my-0">{{ $employee->information->position->position_name }}</div>
-                                <div class="text-sm my-0">{{ $employee->information->office->office_short_name }}</div>
+                                <div class="text-sm my-0 font-weight-medium">{{ $employee->fullname }}</div>
+                                <div class="text-xs my-0 text-muted">{{ $employee->information->position->position_name }}</div>
+                                <div class="text-xs my-0 text-muted">{{ $employee->information->office->office_short_name }}</div>
                             </div>
                         </div>
                         <div class="row align-items-center mt-3">
@@ -182,9 +182,9 @@
                         <div class="media align-items-center">
                             <img class="avatar" src="/storage/employee_images/{{ $employee->information->photo }}">
                             <div class="media-body">
-                                <div class="text-sm my-0">{{ $employee->fullname }}</div>
-                                <div class="text-sm my-0">{{ $employee->information->position->position_name }}</div>
-                                <div class="text-sm my-0">{{ $employee->information->office->office_short_name }}</div>
+                                <div class="text-sm my-0 font-weight-medium">{{ $employee->fullname }}</div>
+                                <div class="text-xs my-0 text-muted">{{ $employee->information->position->position_name }}</div>
+                                <div class="text-xs my-0 text-muted">{{ $employee->information->office->office_short_name }}</div>
                             </div>
                         </div>
                         <div class="row align-items-center mt-3">
