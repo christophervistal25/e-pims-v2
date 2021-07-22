@@ -33,13 +33,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <!-- Fontawesome CSS -->
-    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}">
     <!-- Lineawesome CSS -->
-    <link rel="stylesheet" href="assets/css/line-awesome.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/line-awesome.min.css') }}">
     <!-- Main CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     @stack('page-css')
     <style>
         body {
@@ -190,7 +190,7 @@
                                 href="#"><i class="la la-file-text"></i> <span>Personal Data Sheet</span></a>
                         </li>
                         <li class="submenu">
-                            <a href="#"><i class="la la-bus"></i> <span> Leaves</span> <span
+                            <a href="#"><i class="la la-suitcase"></i> <span> Leaves</span> <span
                                     class="menu-arrow"></span></a>
                             <ul style="display: none;">
                                 <li><a class=""
@@ -226,14 +226,14 @@
     </div>
     <!-- /Main Wrapper -->
     <!-- jQuery -->
-    <script src="assets/js/jquery-3.2.1.min.js"></script>
+    <script src="{{ asset('assets/js/jquery-3.2.1.min.js') }}"></script>
     <!-- Bootstrap Core JS -->
-    <script src="assets/js/popper.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="{{ asset('/assets/js/popper.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <!-- Slimscroll JS -->
-    <script src="assets/js/jquery.slimscroll.min.js"></script>
+    <script src="{{ asset('assets/js/jquery.slimscroll.min.js') }}"></script>
     <!-- Custom JS -->
-    <script src="assets/js/app.js"></script>
+    <script src="{{ asset('assets/js/app.js') }}"></script>
     @stack('page-scripts')
 </body>
 

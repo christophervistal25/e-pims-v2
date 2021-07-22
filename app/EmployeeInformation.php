@@ -18,4 +18,9 @@ class EmployeeInformation extends Model
     {
         return $this->hasOne(Office::class, 'office_code', 'office_code');
     }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'EmpIDNo', 'employee_id');
+    }
 }

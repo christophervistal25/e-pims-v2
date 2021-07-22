@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'LEAVE TYPES')
+@section('title', 'Leave Types')
 @prepend('page-css')
 <link rel="stylesheet" href="/assets/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="/assets/css/style.css">
@@ -77,8 +77,11 @@
 
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label for="">Code</label>
+                            <label for="">Code
+                                <span class='text-danger'>*</span>
+                            </label>
                             <input type="text" class='form-control' name="code">
+                            <span class='text-danger' id="code__error__element"></span>
                         </div>
                     </div>
                 </div>
@@ -175,7 +178,7 @@
             <div class="modal-body">
                 <form id="editLeaveTypeForm" method="POST">
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="form-group">
                             <label for="">Name 
                                 <span class='text-danger'>*</span>
@@ -185,12 +188,12 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-6">
+                    {{-- <div class="col-lg-6">
                         <div class="form-group">
                             <label for="">Code</label>
                             <input type="text" class='form-control' name="edit_code" id="edit_code">
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <div class="row">

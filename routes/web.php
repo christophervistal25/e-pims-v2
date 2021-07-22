@@ -156,4 +156,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@create')
                                         ->name('employee.leave.application.filling');
+    Route::post('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@store')
+                                        ->name('employee.leave.application.filling.submit');
 });

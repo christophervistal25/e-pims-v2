@@ -15,14 +15,14 @@ class CreateEmployeeLeaveApplicationsTable extends Migration
     {
         Schema::create('employee_leave_applications', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('employee_id');
+            $table->string('employee_id');
             $table->string('recommending_approval');
             $table->string('approved_by');
             $table->unsignedInteger('leave_type_id');
             $table->string('incase_of');
             $table->unsignedInteger('no_of_days');
             $table->enum('commutation', ['REQUESTED', 'NOT REQUESTED']);
-            $table->enum('approved_status', ['pending', 'reject', 'approved']);
+            $table->enum('approved_status', ['all', 'pending', 'reject', 'approved', 'on-going', 'enjoyed'])->default('pending');
             $table->date('date_approved')->nullable();
             $table->date('date_applied');
             $table->date('date_from');
