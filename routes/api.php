@@ -196,24 +196,40 @@ Route::post('/salary-adjustment-per-office', function () {
 
 // plantilla position
 Route::get('/plantilla/position/{officeCode}', function ($office_code) {
-    $data = PlantillaPosition::select('pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name', 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->where('office_code', $office_code)->get();
-    return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('position', function ($row) {
-                        return $row->position->position_name;
-                    })
-                    ->addColumn('office', function ($row) {
-                        return $row->office->office_name;
-                    })
-                    ->addColumn('action', function($row){
-
-                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-position.edit', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-                        $btn = $btn."<a title='Delete Position' id='delete' value='$row->pp_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+    $data = DB::table('plantilla_positions')
+    ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
+    ->join('offices', 'plantilla_positions.office_code', 'offices.office_code')
+    ->select('pp_id', 'positions.position_name', 'item_no', 'plantilla_positions.sg_no', 'plantilla_positions.office_code', 'offices.office_name', 'old_position_name', 'year')
+    ->where('plantilla_positions.office_code', $office_code)
+    ->get();
+    return DataTables::of($data)
+    ->addColumn('action', function($row){
+                        $btn = "<a title='Edit Plantilla Of Position' href='". route('plantilla-of-position.edit', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+                        $btn = $btn."<a title='Delete Plantilla Of Position' id='delete' value='$row->pp_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
                         ";
                             return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+    })
+    ->rawColumns(['action'])
+    ->make(true);
+    //old query
+    // $data = PlantillaPosition::select('pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name', 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->where('office_code', $office_code)->get();
+    // return Datatables::of($data)
+    //                 ->addIndexColumn()
+    //                 ->addColumn('position', function ($row) {
+    //                     return $row->position->position_name;
+    //                 })
+    //                 ->addColumn('office', function ($row) {
+    //                     return $row->office->office_name;
+    //                 })
+    //                 ->addColumn('action', function($row){
+
+    //                     $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-position.edit', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+    //                     $btn = $btn."<a title='Delete Position' id='delete' value='$row->pp_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+    //                     ";
+    //                         return $btn;
+    //                 })
+    //                 ->rawColumns(['action'])
+    //                 ->make(true);
 });
 
 // plantilla personnel
@@ -344,43 +360,78 @@ Route::post('/plantilla/schedule/adjust', function () {
 // plantilla position schedule
 Route::get('/plantilla/position/schedule/{officeCode}', function ($office_code) {
     $year = Carbon::now()->format('Y') - 1;
-    $data = PlantillaPosition::select('pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name', 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->where('office_code', $office_code)->where('year' ,'=',  $year)->get();
-    return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('position', function ($row) {
-                        return $row->position->position_name;
-                    })
-                    ->addColumn('office', function ($row) {
-                        return $row->office->office_name;
-                    })
-                    ->addColumn('action', function($row){
-
-                        $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-position.edit', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-                        $btn = $btn."<a title='Delete Position' id='delete' value='$row->pp_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
-                        ";
-                            return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+        $data = DB::table('plantilla_positions')
+        ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
+        ->join('offices', 'plantilla_positions.office_code', 'offices.office_code')
+        ->select('pp_id', 'positions.position_name', 'item_no', 'plantilla_positions.sg_no', 'plantilla_positions.office_code', 'offices.office_name', 'old_position_name', 'year')
+        ->where('plantilla_positions.office_code', $office_code)
+        ->where('year' ,'=',  $year)
+        ->get();
+        return DataTables::of($data)
+        ->addColumn('action', function($row){
+                $btn = "<a title='Edit Plantilla Of Position' href='". route('position-schedule.edits', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1 id__holder' data-id='".$row->pp_id."'><i class='la la-pencil'></i></a>";
+                return $btn;
+        })
+        ->rawColumns(['action'])
+        ->make(true);
+    //old query
+    // $year = Carbon::now()->format('Y') - 1;
+    // $data = PlantillaPosition::select('pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name', 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->where('office_code', $office_code)->where('year' ,'=',  $year)->get();
+    // return Datatables::of($data)
+    //                 ->addIndexColumn()
+    //                 ->addColumn('position', function ($row) {
+    //                     return $row->position->position_name;
+    //                 })
+    //                 ->addColumn('office', function ($row) {
+    //                     return $row->office->office_name;
+    //                 })
+    //                 ->addColumn('action', function($row){
+    //                     $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-position.edit', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+    //                     $btn = $btn."<a title='Delete Position' id='delete' value='$row->pp_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+    //                     ";
+    //                         return $btn;
+    //                 })
+    //                 ->rawColumns(['action'])
+    //                 ->make(true);
 });
-
-
 //  position schedule
 Route::get('/position/schedule/{officeCode}/{yearFilter}', function ($office_code, $yearFilter) {
     if($office_code == "All"){
-        $data = PositionSchedule::select('pos_id','pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name' , 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->where('year', $yearFilter)->orderBy('pp_id', 'DESC');
-      }else{
-        $data = PositionSchedule::select('pos_id','pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name' , 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->where('office_code', $office_code)->where('year', $yearFilter)->orderBy('pp_id', 'DESC')->get();
-     }
-    return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('position', function ($row) {
-                        return $row->position->position_name;
-                    })
-                    ->addColumn('office', function ($row) {
-                        return $row->office->office_name;
-                    })
-                    ->make(true);
+        $data = DB::table('position_schedules')
+        ->join('offices', 'position_schedules.office_code', '=', 'offices.office_code')
+        ->join('positions', 'position_schedules.position_id', '=', 'positions.position_id')
+        ->select('pos_id', 'pp_id', 'positions.position_name','item_no', 'position_schedules.sg_no', 'offices.office_name', 'old_position_name' , 'year')
+        ->where('year', $yearFilter)
+        ->orderBy('pos_id', 'DESC')
+        ->get();
+        }else{
+        $data = DB::table('position_schedules')
+        ->join('offices', 'position_schedules.office_code', '=', 'offices.office_code')
+        ->join('positions', 'position_schedules.position_id', '=', 'positions.position_id')
+        ->select('pos_id', 'pp_id', 'positions.position_name','item_no', 'position_schedules.sg_no', 'position_schedules.office_code' ,'offices.office_name', 'old_position_name' , 'year')
+        ->where('position_schedules.office_code', $office_code)
+        ->where('year', $yearFilter)
+        ->orderBy('pos_id', 'DESC')
+        ->get();
+        }
+        return DataTables::of($data)
+        ->make(true);
+
+    //old query
+    // if($office_code == "All"){
+    //     $data = PositionSchedule::select('pos_id','pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name' , 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->where('year', $yearFilter)->orderBy('pp_id', 'DESC');
+    //   }else{
+    //     $data = PositionSchedule::select('pos_id','pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name' , 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->where('office_code', $office_code)->where('year', $yearFilter)->orderBy('pp_id', 'DESC')->get();
+    //  }
+    // return Datatables::of($data)
+    //                 ->addIndexColumn()
+    //                 ->addColumn('position', function ($row) {
+    //                     return $row->position->position_name;
+    //                 })
+    //                 ->addColumn('office', function ($row) {
+    //                     return $row->office->office_name;
+    //                 })
+    //                 ->make(true);
 });
 
 Route::post('/position/schedule/adjust', function () {
