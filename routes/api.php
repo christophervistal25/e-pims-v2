@@ -20,23 +20,37 @@ Route::post('/addPosition' , 'Api\PlantillaController@addPosition');
 
 ///service record
 Route::get('/employee/service/records/{employeeId}', function ($employeeId) {
-    $data = service_record::select('id', 'employee_id', 'service_from_date', 'service_to_date', 'position_id', 'status', 'salary', 'office_code', 'leave_without_pay', 'separation_date', 'separation_cause')->with('office:office_code,office_name,office_address','position:position_id,position_name')->where('employee_id', $employeeId)->get();
-    return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('position', function ($row) {
-                            return $row->position->position_name;
-                        })
-                        ->addColumn('office', function ($row) {
-                            return $row->office->office_name . '' . $row->office->office_address;
-                        })
-                    ->addColumn('action', function($row){
-                        $btn = "<a title='Edit Service Record' href='". route('service-records.edit', $row->id) . "' class='rounded-circle edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-                        $btn = $btn."<a title='Delete Service Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
-                        ";
-                            return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+    $data = DB::table('service_records') ->
+    join('offices', 'service_records.office_code', '=', 'offices.office_code')
+    ->join('positions', 'service_records.position_id', '=', 'positions.position_id')
+    ->select('id', 'employee_id', 'service_from_date', 'service_to_date', 'positions.position_name', 'status', 'salary', 'offices.office_name', 'leave_without_pay', 'separation_date', 'separation_cause')
+    ->get();
+    return DataTables::of($data)
+    ->addColumn('action', function($row){
+        $btn = "<a title='Edit Service Record' href='". route('service-records.edit', $row->id) . "' class='rounded-circle edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+        $btn = $btn."<a title='Delete Service Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+        ";
+            return $btn;
+    })
+    ->rawColumns(['action'])
+    ->make(true);
+    // $data = service_record::select('id', 'employee_id', 'service_from_date', 'service_to_date', 'position_id', 'status', 'salary', 'office_code', 'leave_without_pay', 'separation_date', 'separation_cause')->with('office:office_code,office_name,office_address','position:position_id,position_name')->where('employee_id', $employeeId)->get();
+    // return Datatables::of($data)
+    //                 ->addIndexColumn()
+    //                 ->addColumn('position', function ($row) {
+    //                         return $row->position->position_name;
+    //                     })
+    //                     ->addColumn('office', function ($row) {
+    //                         return $row->office->office_name . '' . $row->office->office_address;
+    //                     })
+    //                 ->addColumn('action', function($row){
+    //                     $btn = "<a title='Edit Service Record' href='". route('service-records.edit', $row->id) . "' class='rounded-circle edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+    //                     $btn = $btn."<a title='Delete Service Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+    //                     ";
+    //                         return $btn;
+    //                 })
+    //                 ->rawColumns(['action'])
+    //                 ->make(true);
 });
 
 Route::get('step/{sg_no}/{step}' , function ($sgNo, $step) {
