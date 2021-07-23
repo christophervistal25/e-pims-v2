@@ -316,4 +316,13 @@ class Employee extends Model
     }
 
     
+    public function forwarded_leave_records()
+    {
+        return $this->hasOne(EmployeeLeaveRecord::class, 'employee_id', 'employee_id')->where('fb_as_of', '!=', NULL);
+    }
+
+    public function compensatory_leaves()
+    {
+        return $this->hasMany(CompensatoryLeave::class, 'employee_id', 'employee_id');
+    }
 }
