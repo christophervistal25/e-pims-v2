@@ -22,11 +22,11 @@ $(function() {
                 visible: false
             },
             {
-                data: "plantilla",
-                name: "plantilla.office_code",
+                data: "office_code",
+                name: "office_code",
                 visible: false
             },
-            { data: "employee", name: "employee", visible: false },
+            { data: "fullname", name: "fullname", visible: false },
             { data: "sg_no", name: "sg_no", visible: false },
             { data: "step_no", name: "step_no", visible: false },
             {
@@ -65,11 +65,11 @@ $(function() {
                         visible: false
                     },
                     {
-                        data: "plantilla",
-                        name: "plantilla.office_code",
+                        data: "office_code",
+                        name: "office_code",
                         visible: false
                     },
-                    { data: "employee", name: "employee", visible: false },
+                    { data: "fullname", name: "fullname", visible: false },
                     { data: "sg_no", name: "sg_no", visible: false },
                     { data: "step_no", name: "step_no", visible: false },
                     {
@@ -119,11 +119,11 @@ $(function() {
                         visible: true
                     },
                     {
-                        data: "plantilla",
-                        name: "plantilla.office_code",
+                        data: "office_code",
+                        name: "office_code",
                         visible: false
                     },
-                    { data: "employee", name: "employee", visible: true },
+                    { data: "fullname", name: "fullname", visible: true },
                     { data: "sg_no", name: "sg_no", visible: true },
                     { data: "step_no", name: "step_no", visible: true },
                     {
@@ -204,6 +204,11 @@ $(function() {
         serverSide: true,
         destroy: true,
         retrieve: true,
+        pagingType: "full_numbers",
+        language: {
+            processing:
+                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+        },
         ajax: {
             url: "/salary-adjustment-per-office-not-selected-list"
         },
@@ -215,11 +220,11 @@ $(function() {
                 orderable: false,
                 sortable: false
             },
-            { data: "employee", name: "employee", visible: true },
+            { data: "fullname", name: "fullname", visible: true },
             { data: "office_code", name: "office_code", visible: false },
             {
-                data: "plantillaPosition",
-                name: "plantillaPosition",
+                data: "position_name",
+                name: "position_name",
                 visible: true
             },
             { data: "sg_no", name: "sg_no", visible: true },
@@ -241,6 +246,11 @@ $(function() {
                 serverSide: true,
                 destroy: true,
                 retrieve: true,
+                pagingType: "full_numbers",
+                language: {
+                    processing:
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
                 ajax: {
                     url: "/salary-adjustment-per-office-not-selected-list"
                 },
@@ -253,15 +263,15 @@ $(function() {
                         sortable: false,
                         ordering: false
                     },
-                    { data: "employee", name: "employee", visible: true },
+                    { data: "fullname", name: "fullname", visible: true },
                     {
                         data: "office_code",
                         name: "office_code",
                         visible: false
                     },
                     {
-                        data: "plantillaPosition",
-                        name: "plantillaPosition",
+                        data: "position_name",
+                        name: "position_name",
                         visible: true
                     },
                     { data: "sg_no", name: "sg_no", visible: true },
@@ -281,6 +291,11 @@ $(function() {
                 serverSide: true,
                 destroy: true,
                 retrieve: true,
+                pagingType: "full_numbers",
+                language: {
+                    processing:
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                },
                 ajax: {
                     url: `/api/office/salary/adjustment/peroffice/notselected/${e.target.value}`
                 },
@@ -292,15 +307,15 @@ $(function() {
                         orderable: false,
                         sortable: false
                     },
-                    { data: "employee", name: "employee", visible: true },
+                    { data: "fullname", name: "fullname", visible: true },
                     {
                         data: "office_code",
                         name: "office_code",
                         visible: false
                     },
                     {
-                        data: "plantillaPosition",
-                        name: "plantillaPosition",
+                        data: "position_name",
+                        name: "position_name",
                         visible: true
                     },
                     { data: "sg_no", name: "sg_no", visible: true },

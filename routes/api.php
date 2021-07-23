@@ -90,65 +90,117 @@ Route::get('/salaryAdjustment/{sg_no}/{sg_step?}/{sg_year}' , 'Api\SalaryAdjustm
 Route::post('/printEditAdjustment' , 'Api\SalaryAdjustmentController@printEdit');
 //individual
 Route::get('/salary/adjustment/{year}', function ($year) {
-    $data = SalaryAdjustment::select('id','employee_id', 'date_adjustment', 'sg_no', 'step_no', 'salary_previous', 'salary_new', 'salary_diff')->with('employee:employee_id,firstname,middlename,lastname,extension')->whereYear('date_adjustment', '=', $year)->get();
-    return Datatables::of($data)
-                        ->addIndexColumn()
-                        ->addColumn('employee', function ($row) {
-                            return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
-                        })
-                        ->addColumn('action', function($row){
-                            $btn = "<a title='Edit Salary Adjustment' href='". route('salary-adjustment.edit', $row->id) . "' class='rounded-circle edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-                            $btn = $btn."<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
-                            ";
-                                return $btn;
-                        })
-                        ->rawColumns(['action'])
-                        ->make(true);
+    $data = DB::table('salary_adjustments')
+        ->join('employees', 'salary_adjustments.employee_id', 'employees.employee_id')
+        ->select('id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'date_adjustment', 'sg_no', 'step_no', 'salary_previous', 'salary_new', 'salary_diff')
+        ->whereYear('date_adjustment', '=', $year)
+        ->orderBy('date_adjustment', 'DESC')
+        ->whereNull('deleted_at')
+        ->orderBy('id', 'DESC')
+        ->get();
+        return DataTables::of($data)
+        ->addColumn('action', function($row){
+            $btn = "<a title='Edit Salary Adjustment' href='". route('salary-adjustment.edit', $row->id) . "' class='rounded-circle edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+            $btn = $btn."<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+            ";
+                return $btn;
+        })
+        ->rawColumns(['action'])
+        ->make(true);
+    //old query
+    // $data = SalaryAdjustment::select('id','employee_id', 'date_adjustment', 'sg_no', 'step_no', 'salary_previous', 'salary_new', 'salary_diff')->with('employee:employee_id,firstname,middlename,lastname,extension')->whereYear('date_adjustment', '=', $year)->get();
+    // return Datatables::of($data)
+    //                     ->addIndexColumn()
+    //                     ->addColumn('employee', function ($row) {
+    //                         return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
+    //                     })
+    //                     ->addColumn('action', function($row){
+    //                         $btn = "<a title='Edit Salary Adjustment' href='". route('salary-adjustment.edit', $row->id) . "' class='rounded-circle edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+    //                         $btn = $btn."<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+    //                         ";
+    //                             return $btn;
+    //                     })
+    //                     ->rawColumns(['action'])
+    //                     ->make(true);
 });
 
 //per office
 Route::get('/office/salary/adjustment/peroffice/{officeCode}', function ($office_code) {
-    $data = SalaryAdjustment::select('id','employee_id','item_no','pp_id', 'date_adjustment', 'sg_no', 'step_no', 'salary_previous','salary_new','salary_diff')->with(['plantillaPosition:pp_id,position_id','plantillaPosition', 'plantillaPosition.position','employee:employee_id,firstname,middlename,lastname,extension', 'plantilla:employee_id,office_code'])->whereHas('plantilla', function ($query) use ($office_code) {
-        $query->where('office_code', $office_code);
-    })->orderBy('id', 'DESC');
-    return (new Datatables)->eloquent($data)
-            ->addIndexColumn()
-            ->addColumn('employee', function ($row) {
-                return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
-            })
-            ->addColumn('plantilla', function ($row) {
-                return $row->plantilla->office_code;
-            })
-            ->addColumn('action', function($row){
-                $btn = "<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
-                ";
-                    return $btn;
-            })
-            ->editColumn('checkbox', function ($row) {
-                $checkbox = "<input style='transform:scale(1.3)' name='id[$row->id]' value='$row->id' type='checkbox' />";
-                return $checkbox;
-            })->rawColumns(['checkbox'])
-            ->rawColumns(['action'])
-            ->make(true);
+    $data = DB::table('salary_adjustments')
+    ->join('employees', 'salary_adjustments.employee_id', '=', 'employees.employee_id')
+    ->join('plantillas', 'salary_adjustments.employee_id', '=', 'plantillas.employee_id')
+    ->select('id',DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'),'salary_adjustments.item_no','salary_adjustments.pp_id', 'date_adjustment', 'salary_adjustments.sg_no', 'salary_adjustments.step_no', 'salary_adjustments.salary_previous','salary_new','salary_adjustments.salary_diff', 'plantillas.office_code')
+    ->where('plantillas.office_code', $office_code)
+    ->orderBy('id', 'DESC')
+    ->whereNull('deleted_at')
+    ->get();
+    return DataTables::of($data)
+    ->addColumn('action', function($row){
+        $btn = "<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+        ";
+            return $btn;
+    })
+    ->rawColumns(['action'])
+    ->make(true);
+
+
+    //old query
+    // $data = SalaryAdjustment::select('id','employee_id','item_no','pp_id', 'date_adjustment', 'sg_no', 'step_no', 'salary_previous','salary_new','salary_diff')->with(['plantillaPosition:pp_id,position_id','plantillaPosition', 'plantillaPosition.position','employee:employee_id,firstname,middlename,lastname,extension', 'plantilla:employee_id,office_code'])->whereHas('plantilla', function ($query) use ($office_code) {
+    //     $query->where('office_code', $office_code);
+    // })->orderBy('id', 'DESC');
+    // return (new Datatables)->eloquent($data)
+    //         ->addIndexColumn()
+    //         ->addColumn('employee', function ($row) {
+    //             return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
+    //         })
+    //         ->addColumn('plantilla', function ($row) {
+    //             return $row->plantilla->office_code;
+    //         })
+    //         ->addColumn('action', function($row){
+    //             $btn = "<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+    //             ";
+    //                 return $btn;
+    //         })
+    //         ->editColumn('checkbox', function ($row) {
+    //             $checkbox = "<input style='transform:scale(1.3)' name='id[$row->id]' value='$row->id' type='checkbox' />";
+    //             return $checkbox;
+    //         })->rawColumns(['checkbox'])
+    //         ->rawColumns(['action'])
+    //         ->make(true);
 });
 
 //per office not selected
 Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}', function ($office_code) {
     $salaryAdjustment = SalaryAdjustment::get()->pluck('employee_id')->toArray();
-    $data = Plantilla::select('plantilla_id','item_no', 'office_code', 'pp_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position','employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code)->whereNotIn('employee_id', $salaryAdjustment );
-    return (new Datatables)->eloquent($data)
-    ->addIndexColumn()
-    ->addColumn('employee', function ($row) {
-        return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
-    })
-    ->addColumn('plantillaPosition', function ($row) {
-        return $row->plantillaPosition->position->position_name;
-    })
+    $data = DB::table('plantillas')
+    ->join('employees', 'plantillas.employee_id', '=', 'employees.employee_id')
+    ->join('plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
+    ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
+    ->select('plantilla_id','plantillas.item_no', 'plantillas.office_code', 'positions.position_name', 'plantillas.sg_no', 'plantillas.step_no', 'plantillas.salary_amount', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
+    ->where('plantillas.office_code', $office_code)
+    ->whereNotIn('plantillas.employee_id', $salaryAdjustment)
+    ->get();
+    return DataTables::of($data)
     ->editColumn('checkbox', function ($row) {
-        $checkbox = "<input class='check-select' id='checkbox$row->plantilla_id' style='transform:scale(1.3)' value='$row->plantilla_id' type='checkbox' />";
+        $checkbox = "<input id='checkbox$row->plantilla_id' style='transform:scale(1.35)' value='$row->plantilla_id' type='checkbox' />";
         return $checkbox;
     })->rawColumns(['checkbox'])
     ->make(true);
+    // $salaryAdjustment = SalaryAdjustment::get()->pluck('employee_id')->toArray();
+    // $data = Plantilla::select('plantilla_id','item_no', 'office_code', 'pp_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position','employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code)->whereNotIn('employee_id', $salaryAdjustment );
+    // return (new Datatables)->eloquent($data)
+    // ->addIndexColumn()
+    // ->addColumn('employee', function ($row) {
+    //     return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
+    // })
+    // ->addColumn('plantillaPosition', function ($row) {
+    //     return $row->plantillaPosition->position->position_name;
+    // })
+    // ->editColumn('checkbox', function ($row) {
+    //     $checkbox = "<input class='check-select' id='checkbox$row->plantilla_id' style='transform:scale(1.3)' value='$row->plantilla_id' type='checkbox' />";
+    //     return $checkbox;
+    // })->rawColumns(['checkbox'])
+    // ->make(true);
 });
 
 
