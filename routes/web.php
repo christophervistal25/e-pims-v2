@@ -40,6 +40,7 @@ Route::get('/position-schedule-list-adjusted/{year}', 'PositionScheduleControlle
 Route::get('/plantilla-list', 'Plantillacontroller@list');
 // Route::post('/plantilla', 'PlantillaController@addPosition');
 Route::resource('/plantilla-of-personnel', 'PlantillaController');
+
 //plantilla of position
 Route::resource('/plantilla-of-position', 'PlantillaOfPositionController');
 Route::get('/plantilla-of-position-list', 'PlantillaOfPositionController@list');
