@@ -11,22 +11,22 @@ $(function() {
         ajax: "/plantilla-list",
         columns: [
             {
-                data: "employee",
-                name: "employee.firstname",
+                data: "fullname",
+                name: "fullname",
                 searchable: true,
                 sortable: false,
                 visible: true
             },
             {
-                data: "plantillaPosition",
-                name: "plantillaPosition",
+                data: "position_name",
+                name: "position_name",
                 searchable: true,
                 sortable: false,
                 visible: true
             },
             {
-                data: "office",
-                name: "office.office_short_name",
+                data: "office_name",
+                name: "office_name",
                 searchable: true,
                 sortable: false,
                 visible: true
@@ -61,22 +61,22 @@ $(function() {
                 },
                 columns: [
                     {
-                        data: "employee",
-                        name: "employee.firstname",
+                        data: "fullname",
+                        name: "fullname",
                         searchable: true,
                         sortable: false,
                         visible: true
                     },
                     {
-                        data: "plantillaPosition",
-                        name: "plantillaPosition",
+                        data: "position_name",
+                        name: "position_name",
                         searchable: true,
                         sortable: false,
                         visible: true
                     },
                     {
-                        data: "office",
-                        name: "office.office_short_name",
+                        data: "office_name",
+                        name: "office_name",
                         searchable: true,
                         sortable: false,
                         visible: true
@@ -109,22 +109,22 @@ $(function() {
                 },
                 columns: [
                     {
-                        data: "employee",
-                        name: "employee.firstname",
+                        data: "fullname",
+                        name: "fullname",
                         searchable: true,
                         sortable: false,
                         visible: true
                     },
                     {
-                        data: "plantillaPosition",
-                        name: "plantillaPosition",
+                        data: "position_name",
+                        name: "position_name",
                         searchable: true,
                         sortable: false,
                         visible: true
                     },
                     {
-                        data: "office",
-                        name: "office.office_short_name",
+                        data: "office_name",
+                        name: "office_name",
                         searchable: true,
                         sortable: false,
                         visible: true

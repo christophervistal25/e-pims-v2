@@ -111,13 +111,14 @@ Route::group(['prefix' => 'employee'], function () {
     Route::post('/exists/personal/{employee}/references', 'PersonalDataSheetController@existingEmployeeStoreReferences');
     Route::post('/exists/personal/issued/id', 'PersonalDataSheetController@existingEmployeeStoreIssuedID');
 
+    //  LEAVE-LIST APPLICATIONS //
+    Route::get('/leave-list/list', 'EmployeeLeave\LeaveListController@list');
+    Route::get('leave/leave-list', 'EmployeeLeave\LeaveListController@index')->name('leave.leave-list');
+    Route::get('/leave/leave-list/{edit}', 'EmployeeLeave\LeaveListController@edit')->name('leave-list.edit');
+    Route::delete('/leave-list/{id}', 'EmployeeLeave\LeaveListController@destroy')->name('leave-list.delete');
+
 
     Route::get('/leave/application', 'EmployeeLeave\LeaveController@show')->name('leave.application.filling');
-
-
-    Route::get('/leave-list/list', 'EmployeeLeave\LeaveListController@list');
-
-    Route::get('leave/leave-list', 'EmployeeLeave\LeaveListController@index')->name('leave.leave-list');
     Route::get('leave/leave-recall', 'EmployeeLeave\LeaveRecallController@index')->name('leave.leave-recall');
     Route::resource('leave-starting-balance', 'EmployeeLeave\LeaveStartingBalanceController');
     Route::resource('/leave-monitoring', 'EmployeeLeave\LeaveMonitoringController');
@@ -142,7 +143,6 @@ Route::get('holiday-by-date/{date}', function (string $date) {
 Route::get('holiday/list', 'HolidayController@list');
 Route::resource('holiday', HolidayController::class);
 
-// Route::resource('/print-increment', 'PrintIncrementController');
 Route::get('/profile', 'EmployeeController@profile');
 
 Route::get('/restore', 'RestoreController@index');
