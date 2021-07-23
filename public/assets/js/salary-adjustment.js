@@ -15,10 +15,9 @@ $(function() {
         columns: [
             { data: "date_adjustment", name: "date_adjustment" },
             {
-                data: "employee",
-                name: "employee.firstname",
-                searchable: true,
-                sortable: false
+                data: "fullname",
+                name: "fullname",
+                searchable: true
             },
             { data: "sg_no", name: "sg_no" },
             { data: "step_no", name: "step_no" },
@@ -49,10 +48,9 @@ $(function() {
                 columns: [
                     { data: "date_adjustment", name: "date_adjustment" },
                     {
-                        data: "employee",
-                        name: "employee.firstname",
-                        searchable: true,
-                        sortable: false
+                        data: "fullname",
+                        name: "fullname",
+                        searchable: true
                     },
                     { data: "sg_no", name: "sg_no" },
                     { data: "step_no", name: "step_no" },
@@ -81,10 +79,9 @@ $(function() {
                 columns: [
                     { data: "date_adjustment", name: "date_adjustment" },
                     {
-                        data: "employee",
-                        name: "employee.firstname",
-                        searchable: true,
-                        sortable: false
+                        data: "fullname",
+                        name: "fullname",
+                        searchable: true
                     },
                     { data: "sg_no", name: "sg_no" },
                     { data: "step_no", name: "step_no" },
