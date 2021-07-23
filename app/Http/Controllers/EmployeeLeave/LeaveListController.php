@@ -20,7 +20,15 @@ class LeaveListController extends Controller
         $data = DB::table('employee_leave_applications')
         ->leftJoin('employees', 'employees.employee_id', '=', 'employee_leave_applications.employee_id')
         ->leftJoin('leave_types', 'leave_types.id', '=', 'employee_leave_applications.leave_type_id')
-        ->select('employee_leave_applications.id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'recommending_approval', 'approved_by', 'leave_type_id', 'incase_of', 'commutation', 'approved_status', 'date_approved', 'date_applied', 'date_from', 'date_to', 'no_of_days', 'leave_types.id as leave_type_id', 'leave_types.name AS leave_type_name');
+        ->select('employee_leave_applications.id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'recommending_approval', 'approved_by', 'leave_type_id', 'incase_of', 'commutation', 'approved_status', 'date_approved', 'date_applied', 'date_from', 'date_to', 'no_of_days', 'leave_types.id as leave_type_id', 'leave_types.name AS leave_type_name')
+        ->where('employee_leave_applications.deleted_at', null)
+        ->get();
+
+        if($data->count() === 0){
+            $data = $data->where('deleted_at', null);
+        }
+
+
 
         return Datatables::of($data)
         ->addColumn('action', function($row)
@@ -62,5 +70,13 @@ class LeaveListController extends Controller
         $types = $data->employee;
         return view('leave.add-ons.edit', compact('data', 'types'));
         
+    }
+
+    public function destroy($id)
+    {
+        $leaveList = EmployeeLeaveApplication::find($id);
+        $leaveList->delete();
+
+        return response()->json(['success' => true]);
     }
 }

@@ -324,6 +324,7 @@
 <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
 <script src="/assets/js/jquery.dataTables.min.js"></script>
 <script src="/assets/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 
     $.ajaxSetup({
@@ -425,6 +426,44 @@
 
         $('.dataTables_filter').remove();
         $('#leaveListTable_length').remove();
+
+        
+
+        $(document).on('click', '.btnRemoveRecord', function () {
+            let id = $(this).attr('data-id');
+            let message = document.createElement('h3');
+            message.innerText = 'Are you sure you want to delete this row?';
+
+
+            swal({
+                    title: message.innerText,
+                    text: "Once you delete this row, it willl disappear on the table.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willSoftDelete) => {
+                    if (willSoftDelete) {
+                        $.ajax({
+                            url: `/employee/leave-list/${id}`, // /leave-list/ is a route
+                            method: 'DELETE',  // DELETE is from the route
+                            success: function (response) {
+                                if (response.success) {
+                                    let messageText = document.createElement('h3');
+                                    messageText.innerText = 'The row has been deleted.';
+                                    swal({
+                                        title: messageText.innerText,
+                                        icon: "success",
+                                    });
+
+                                    table.draw();
+                                }
+                            },
+                        });
+
+                    }
+                });
+        });
     
      });
 
@@ -447,6 +486,9 @@
         x.style.display = "none";
         y.style.display = "block";
     }
+
+
+   
 
 
    
