@@ -14,10 +14,16 @@ $(function() {
         },
         ajax: "/position-schedule-list",
         columns: [
-            { data: "position", name: "position" },
+            {
+                data: "position_name",
+                name: "position_name"
+            },
             { data: "item_no", name: "item_no" },
-            { data: "sg_no", name: "sg_no" },
-            { data: "office", name: "office" },
+            {
+                data: "sg_no",
+                name: "sg_no"
+            },
+            { data: "office_name", name: "office_name" },
             { data: "old_position_name", name: "old_position_name" },
             { data: "year", name: "year" },
             {
@@ -48,10 +54,16 @@ $(function() {
                     url: "/position-schedule-list"
                 },
                 columns: [
-                    { data: "position", name: "position" },
+                    {
+                        data: "position_name",
+                        name: "position_name"
+                    },
                     { data: "item_no", name: "item_no" },
-                    { data: "sg_no", name: "sg_no" },
-                    { data: "office", name: "office" },
+                    {
+                        data: "sg_no",
+                        name: "sg_no"
+                    },
+                    { data: "office_name", name: "office_name" },
                     { data: "old_position_name", name: "old_position_name" },
                     { data: "year", name: "year" },
                     {
@@ -80,10 +92,16 @@ $(function() {
                     url: `/api/plantilla/position/schedule/${e.target.value}`
                 },
                 columns: [
-                    { data: "position", name: "position" },
+                    {
+                        data: "position_name",
+                        name: "position_name"
+                    },
                     { data: "item_no", name: "item_no" },
-                    { data: "sg_no", name: "sg_no" },
-                    { data: "office", name: "office" },
+                    {
+                        data: "sg_no",
+                        name: "sg_no"
+                    },
+                    { data: "office_name", name: "office_name" },
                     { data: "old_position_name", name: "old_position_name" },
                     { data: "year", name: "year" },
                     {
@@ -99,7 +117,7 @@ $(function() {
 });
 
 $(function() {
-    let yearFilter = document.querySelector("#year").value - 1;
+    let yearFilter = document.querySelector("#yearFilter").value;
     let table = $("#positionSchedule").DataTable({
         processing: true,
         pagingType: "full_numbers",
@@ -113,10 +131,16 @@ $(function() {
         },
         ajax: `/position-schedule-list-adjusted/${yearFilter}`,
         columns: [
-            { data: "position", name: "position" },
+            {
+                data: "position_name",
+                name: "position_name"
+            },
             { data: "item_no", name: "item_no" },
-            { data: "sg_no", name: "sg_no" },
-            { data: "office", name: "office" },
+            {
+                data: "sg_no",
+                name: "sg_no"
+            },
+            { data: "office_name", name: "office_name" },
             { data: "old_position_name", name: "old_position_name" },
             { data: "year", name: "year" }
         ]
@@ -141,10 +165,16 @@ $(function() {
                     url: `/position-schedule-list-adjusted/${yearFilter}`
                 },
                 columns: [
-                    { data: "position", name: "position" },
+                    {
+                        data: "position_name",
+                        name: "position_name"
+                    },
                     { data: "item_no", name: "item_no" },
-                    { data: "sg_no", name: "sg_no" },
-                    { data: "office", name: "office" },
+                    {
+                        data: "sg_no",
+                        name: "sg_no"
+                    },
+                    { data: "office_name", name: "office_name" },
                     { data: "old_position_name", name: "old_position_name" },
                     { data: "year", name: "year" }
                 ]
@@ -166,10 +196,16 @@ $(function() {
                     url: `/api/position/schedule/${e.target.value}/${yearFilter}`
                 },
                 columns: [
-                    { data: "position", name: "position" },
+                    {
+                        data: "position_name",
+                        name: "position_name"
+                    },
                     { data: "item_no", name: "item_no" },
-                    { data: "sg_no", name: "sg_no" },
-                    { data: "office", name: "office" },
+                    {
+                        data: "sg_no",
+                        name: "sg_no"
+                    },
+                    { data: "office_name", name: "office_name" },
                     { data: "old_position_name", name: "old_position_name" },
                     { data: "year", name: "year" }
                 ]
@@ -196,10 +232,16 @@ $(function() {
                     url: `/position-schedule-list-adjusted/${e.target.value}`
                 },
                 columns: [
-                    { data: "position", name: "position" },
+                    {
+                        data: "position_name",
+                        name: "position_name"
+                    },
                     { data: "item_no", name: "item_no" },
-                    { data: "sg_no", name: "sg_no" },
-                    { data: "office", name: "office" },
+                    {
+                        data: "sg_no",
+                        name: "sg_no"
+                    },
+                    { data: "office_name", name: "office_name" },
                     { data: "old_position_name", name: "old_position_name" },
                     { data: "year", name: "year" }
                 ]
@@ -221,10 +263,16 @@ $(function() {
                     url: `/api/position/schedule/${yearFilter}/${e.target.value}`
                 },
                 columns: [
-                    { data: "position", name: "position" },
+                    {
+                        data: "position_name",
+                        name: "position_name"
+                    },
                     { data: "item_no", name: "item_no" },
-                    { data: "sg_no", name: "sg_no" },
-                    { data: "office", name: "office" },
+                    {
+                        data: "sg_no",
+                        name: "sg_no"
+                    },
+                    { data: "office_name", name: "office_name" },
                     { data: "old_position_name", name: "old_position_name" },
                     { data: "year", name: "year" }
                 ]
@@ -257,6 +305,7 @@ $(document).ready(function() {
 //get all ids
 function LockDepot() {
     let currentYear = document.querySelector("#year").value;
+    var yearValue = new Date().getFullYear() - 1;
     $("#saveBtn").attr("disabled", true);
     $("#loading").removeClass("d-none");
     let ids = [];
@@ -301,6 +350,15 @@ function LockDepot() {
                             $("#saveBtn").attr("disabled", false);
                             $("#loading").addClass("d-none");
                             ids = [];
+
+                            $("#yearFilter").append(
+                                "<option value=" +
+                                    yearValue +
+                                    ">" +
+                                    yearValue +
+                                    "</option>"
+                            );
+                            $("#yearFilter").selectpicker("refresh");
                         }
                     },
                     error: function(response) {}

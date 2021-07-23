@@ -38,23 +38,38 @@ class SalaryAdjustmentController extends Controller
 
     public function list(Request $request)
     {
-        if ($request->ajax()) {
-
-            $data = SalaryAdjustment::select('id','employee_id', 'date_adjustment', 'sg_no', 'step_no', 'salary_previous', 'salary_new', 'salary_diff')->with('employee:employee_id,firstname,middlename,lastname,extension')->orderBy('date_adjustment', 'DESC')->orderBy('id', 'DESC');
-            return (new Datatables)->eloquent($data)
-                    ->addIndexColumn()
-                    ->addColumn('employee', function ($row) {
-                        return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
-                    })
-                    ->addColumn('action', function($row){
-                        $btn = "<a title='Edit Salary Adjustment' href='". route('salary-adjustment.edit', $row->id) . "' class='rounded-circle edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-                        $btn = $btn."<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
-                        ";
-                            return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
-        }
+        $data = DB::table('salary_adjustments')
+        ->join('employees', 'salary_adjustments.employee_id', 'employees.employee_id')
+        ->select('id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'date_adjustment', 'sg_no', 'step_no', 'salary_previous', 'salary_new', 'salary_diff')
+        ->orderBy('date_adjustment', 'DESC')
+        ->whereNull('deleted_at')
+        ->orderBy('id', 'DESC')
+        ->get();
+        return DataTables::of($data)
+        ->addColumn('action', function($row){
+            $btn = "<a title='Edit Salary Adjustment' href='". route('salary-adjustment.edit', $row->id) . "' class='rounded-circle edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+            $btn = $btn."<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+            ";
+                return $btn;
+        })
+        ->rawColumns(['action'])
+        ->make(true);
+        // if ($request->ajax()) {
+        //     $data = SalaryAdjustment::select('id','employee_id', 'date_adjustment', 'sg_no', 'step_no', 'salary_previous', 'salary_new', 'salary_diff')->with('employee:employee_id,firstname,middlename,lastname,extension')->orderBy('date_adjustment', 'DESC')->orderBy('id', 'DESC');
+        //     return (new Datatables)->eloquent($data)
+        //             ->addIndexColumn()
+        //             ->addColumn('employee', function ($row) {
+        //                 return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
+        //             })
+        //             ->addColumn('action', function($row){
+        //                 $btn = "<a title='Edit Salary Adjustment' href='". route('salary-adjustment.edit', $row->id) . "' class='rounded-circle edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+        //                 $btn = $btn."<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+        //                 ";
+        //                     return $btn;
+        //             })
+        //             ->rawColumns(['action'])
+        //             ->make(true);
+        // }
         return view('SalaryAdjustment.SalaryAdjustment');
     }
 

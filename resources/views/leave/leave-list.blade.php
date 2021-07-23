@@ -1,6 +1,7 @@
 @extends('layouts.app-vue')
 @section('title', 'Leave Lists')
 @prepend('page-css')
+
 <script src="{{ asset('/js/app.js') }}" defer></script>
 <link rel="stylesheet"
     href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
@@ -8,17 +9,43 @@
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 @endprepend
 @section('content')
+
+<div class="col-12">
+    <div class="row">
+        <div class="card card-body col-2 text-center bg-light">
+            <h5 class="badge badge-info" style="justify-content: center">All</h5>
+        </div>
+        <div class="card card-body col-2 text-center bg-light">
+            <h5 class="badge badge-warning" style="justify-content: center">Pending</h5>
+        </div>
+        <div class="card card-body col-2 text-center bg-light">
+            <h5 class="badge badge-danger" style="justify-content: center">Reject</h5>
+        </div>
+        <div class="card card-body col-2 text-center bg-light">
+            <h5 class="badge badge-success" style="justify-content: center">Approved</h5>
+        </div>
+        <div class="card card-body col-2 text-center bg-light">
+            <h5 class="badge badge-secondary" style="justify-content: center">On-going</h5>
+        </div>
+        <div class="card card-body col-2 text-center bg-light">
+            <h5 class="badge badge-primary" style="justify-content: center">Enjoyed</h5>
+        </div>
+    </div>
+</div>
+
+{{-- LEAVE APPLICATION CARD --}}
 <div class="row">
     <div class="col-lg-12">
-        <div id="leaveApplicationList" class="card">
+        <div id="leaveApplicationList" class="card bg-light">
             <div class="card-body">
-                <div class="row mb-1">
+                <div class="row mt-1">
                     <div class="col-lg-4">
                         <label for="officelist" class="form-group has-float-label mb-0">
-                            <select name="officeList" type="text" id="officeList" class="form-control"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <option readonly selected>All Office</option>
-                                <option>Office Name I</option>
+                            <select class="form-control select-picker" name="officeList" type="text" id="officeList" data-live-search="true" data-size="4" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <option>All Office</option>
+                                @foreach($offices as $office)
+                                <option value="{{ $office->office_code }}">{{ $office->office_name }}</option>
+                                @endforeach
                             </select>
                             <span><strong>Filter Offices</strong></span>
                         </label>
@@ -40,9 +67,14 @@
                     <div class="col-lg-4">
                         <div class="row">
                             <div class="col-lg-10">
-                                <label for="empName" class="form-group has-float-label">
-                                    <input class="form-control" type="text" id="empName"
-                                        style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <label for="employeeName" class="form-group has-float-label">
+                                        <select class="form-control selectpicker" name="searchName" id="searchName" data-live-search="true"
+                                            style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                            <option>Select names...</option>
+                                                @foreach($employees as $employee)
+                                            <option value="{{ $employee->employee_id }}">{{ $employee->lastname }}, {{ $employee->firstname }} {{ $employee->middlename }}</option>
+                                                @endforeach
+                                        </select>
                                     <span><strong>Search by Employee</strong></span>
                                 </label>
                             </div>
@@ -80,68 +112,14 @@
                             </thead>
                         </table>
                     </div>
-
                 </div>
-
-
-                {{-- <div class="col-lg-12">
-                    <table class="table table-hover">
-                        <tr>
-                            <th class="text-center">Name of Employee</th>
-                            <th class="text-center">Date Filed</th>
-                            <th class="text-center">Control Number</th>
-                            <th class="text-center">Leave Type</th>
-                            <th class="text-center">Days</th>
-                            <th class="text-center">Status</th>
-                            <th class="text-center">Actions</th>
-                        </tr>
-                        <tbody>
-                            
-                            @foreach(range(1,5) as $v)
-                            <tr>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">{{ $v }}</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">
-                                    <div class="dropdown action-label">
-                                        <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#"
-                                            data-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i
-                                                    class="fa fa-dot-circle-o text-info"></i> Pending</a>
-                                            <a class="dropdown-item" href="#" data-toggle="modal"
-                                                data-target="#approve_leave"><i
-                                                    class="fa fa-dot-circle-o text-success"></i> Approved</a>
-                                            <a class="dropdown-item" href="#"><i
-                                                    class="fa fa-dot-circle-o text-danger"></i> Declined</a>
-                                            <a class="dropdown-item" href="#"><i
-                                                    class="fa fa-dot-circle-o text-primary"></i> On-going</a>
-                                            <a class="dropdown-item" href="#"><i
-                                                    class="fa fa-dot-circle-o text-purple"></i> Enjoyed</a>
-                                        </div>
-                                    </div>
-                                </td>
-                                </td>
-                                <td class="text-center">
-                                    <button class="btn btn-sm rounded-circle shadow btn-success" onclick="showLeaveApplication()"><i
-                                            class="fa fa-edit"></i></button>
-                                    &nbsp;
-                                    <button class="btn btn-danger btn-sm rounded-circle shadow"><i
-                                            class="fa fa-trash"></i></button>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div> --}}
             </div>
         </div>
+
+
+
+        
         <div id="leaveApplication" style="display:none;" class="card shadow">
-            
             <div class="card-body">
                 <div class="alert alert-secondary text-center font-weight-bold">LEAVE APPLICATION FILING</div>
                 <hr>
@@ -346,6 +324,7 @@
 <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
 <script src="/assets/js/jquery.dataTables.min.js"></script>
 <script src="/assets/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
 
     $.ajaxSetup({
@@ -355,6 +334,8 @@
         });
 
 
+
+      
     $(document).ready( ()=> {
         let table = $('#leaveListTable').DataTable({
             processing: true,
@@ -388,8 +369,8 @@
                     visible: true
                 },
                 {
-                    data: 'leave_type_id',
-                    name: 'leave_type_id',
+                    data: 'leave_type_name',
+                    name: 'leave_type_name',
                     searchable: true,
                     sortable: false,
                     visible: true
@@ -442,19 +423,59 @@
             ] 
 
         });
+
+        $('.dataTables_filter').remove();
+        $('#leaveListTable_length').remove();
+
+        
+
+        $(document).on('click', '.btnRemoveRecord', function () {
+            let id = $(this).attr('data-id');
+            let message = document.createElement('h3');
+            message.innerText = 'Are you sure you want to delete this row?';
+
+
+            swal({
+                    title: message.innerText,
+                    text: "Once you delete this row, it willl disappear on the table.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willSoftDelete) => {
+                    if (willSoftDelete) {
+                        $.ajax({
+                            url: `/employee/leave-list/${id}`, // /leave-list/ is a route
+                            method: 'DELETE',  // DELETE is from the route
+                            success: function (response) {
+                                if (response.success) {
+                                    let messageText = document.createElement('h3');
+                                    messageText.innerText = 'The row has been deleted.';
+                                    swal({
+                                        title: messageText.innerText,
+                                        icon: "success",
+                                    });
+
+                                    table.draw();
+                                }
+                            },
+                        });
+
+                    }
+                });
+        });
     
      });
 
 
-     $('#search').dataTable({
-         "searchig": false
-     });
+     
 
+    
 
 
     function showLeaveApplication() {
     var x = document.getElementById("leaveApplication");
-    var y = document.getElementById("leaveApplica,tionList");
+    var y = document.getElementById("leaveApplicationList");
         x.style.display = "block";
         y.style.display = "none";
     }
@@ -465,6 +486,12 @@
         x.style.display = "none";
         y.style.display = "block";
     }
+
+
+   
+
+
+   
 </script>
 @endpush
 @endsection

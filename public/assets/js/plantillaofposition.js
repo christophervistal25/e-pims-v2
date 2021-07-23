@@ -216,10 +216,16 @@ $(function() {
         },
         ajax: "/plantilla-of-position-list",
         columns: [
-            { data: "position", name: "position" },
+            {
+                data: "position_name",
+                name: "position_name"
+            },
             { data: "item_no", name: "item_no" },
-            { data: "sg_no", name: "sg_no" },
-            { data: "office", name: "office" },
+            {
+                data: "sg_no",
+                name: "sg_no"
+            },
+            { data: "office_name", name: "office_name" },
             { data: "old_position_name", name: "old_position_name" },
             { data: "year", name: "year" },
             {
@@ -251,10 +257,16 @@ $(function() {
                     url: "/plantilla-of-position-list"
                 },
                 columns: [
-                    { data: "position", name: "position" },
+                    {
+                        data: "position_name",
+                        name: "position_name"
+                    },
                     { data: "item_no", name: "item_no" },
-                    { data: "sg_no", name: "sg_no" },
-                    { data: "office", name: "office" },
+                    {
+                        data: "sg_no",
+                        name: "sg_no"
+                    },
+                    { data: "office_name", name: "office_name" },
                     { data: "old_position_name", name: "old_position_name" },
                     { data: "year", name: "year" },
                     {
@@ -283,10 +295,16 @@ $(function() {
                     url: `/api/plantilla/position/${e.target.value}`
                 },
                 columns: [
-                    { data: "position", name: "position" },
+                    {
+                        data: "position_name",
+                        name: "position_name"
+                    },
                     { data: "item_no", name: "item_no" },
-                    { data: "sg_no", name: "sg_no" },
-                    { data: "office", name: "officeoffice_code" },
+                    {
+                        data: "sg_no",
+                        name: "sg_no"
+                    },
+                    { data: "office_name", name: "office_name" },
                     { data: "old_position_name", name: "old_position_name" },
                     { data: "year", name: "year" },
                     {
