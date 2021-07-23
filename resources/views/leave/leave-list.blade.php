@@ -41,10 +41,11 @@
                 <div class="row mt-1">
                     <div class="col-lg-4">
                         <label for="officelist" class="form-group has-float-label mb-0">
-                            <select class="form-control" name="officeList" type="text" id="officeList" data-live-search="true" data-size="6" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                            <select class="form-control select-picker" name="officeList" type="text" id="officeList" data-live-search="true" data-size="4" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <option>All Office</option>
-                                @foreach($employees as $employeee)
-                                <option data-leave="{{ $employee->employee_leave_applications }}" value="{{ $employee->employee_id }}">{{ $employee->lastname }}, {{ $employee->firstname }} {{ $employee->middlename }}</option>
+                                @foreach($offices as $office)
+                                <option value="{{ $office->office_code }}">{{ $office->office_name }}</option>
+                                @endforeach
                             </select>
                             <span><strong>Filter Offices</strong></span>
                         </label>
@@ -66,9 +67,14 @@
                     <div class="col-lg-4">
                         <div class="row">
                             <div class="col-lg-10">
-                                <label for="empName" class="form-group has-float-label">
-                                    <input class="form-control" type="text" name="searchName" id="searchName" value=""
-                                        style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <label for="employeeName" class="form-group has-float-label">
+                                        <select class="form-control selectpicker" name="searchName" id="searchName" data-live-search="true"
+                                            style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                            <option>Select names...</option>
+                                                @foreach($employees as $employee)
+                                            <option value="{{ $employee->employee_id }}">{{ $employee->lastname }}, {{ $employee->firstname }} {{ $employee->middlename }}</option>
+                                                @endforeach
+                                        </select>
                                     <span><strong>Search by Employee</strong></span>
                                 </label>
                             </div>
@@ -106,68 +112,14 @@
                             </thead>
                         </table>
                     </div>
-
                 </div>
-
-
-                {{-- <div class="col-lg-12">
-                    <table class="table table-hover">
-                        <tr>
-                            <th class="text-center">Name of Employee</th>
-                            <th class="text-center">Date Filed</th>
-                            <th class="text-center">Control Number</th>
-                            <th class="text-center">Leave Type</th>
-                            <th class="text-center">Days</th>
-                            <th class="text-center">Status</th>
-                            <th class="text-center">Actions</th>
-                        </tr>
-                        <tbody>
-                            
-                            @foreach(range(1,5) as $v)
-                            <tr>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">{{ $v }}</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">1</td>
-                                <td class="text-center">
-                                    <div class="dropdown action-label">
-                                        <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#"
-                                            data-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i
-                                                    class="fa fa-dot-circle-o text-info"></i> Pending</a>
-                                            <a class="dropdown-item" href="#" data-toggle="modal"
-                                                data-target="#approve_leave"><i
-                                                    class="fa fa-dot-circle-o text-success"></i> Approved</a>
-                                            <a class="dropdown-item" href="#"><i
-                                                    class="fa fa-dot-circle-o text-danger"></i> Declined</a>
-                                            <a class="dropdown-item" href="#"><i
-                                                    class="fa fa-dot-circle-o text-primary"></i> On-going</a>
-                                            <a class="dropdown-item" href="#"><i
-                                                    class="fa fa-dot-circle-o text-purple"></i> Enjoyed</a>
-                                        </div>
-                                    </div>
-                                </td>
-                                </td>
-                                <td class="text-center">
-                                    <button class="btn btn-sm rounded-circle shadow btn-success" onclick="showLeaveApplication()"><i
-                                            class="fa fa-edit"></i></button>
-                                    &nbsp;
-                                    <button class="btn btn-danger btn-sm rounded-circle shadow"><i
-                                            class="fa fa-trash"></i></button>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div> --}}
             </div>
         </div>
+
+
+
+        
         <div id="leaveApplication" style="display:none;" class="card shadow">
-            
             <div class="card-body">
                 <div class="alert alert-secondary text-center font-weight-bold">LEAVE APPLICATION FILING</div>
                 <hr>
@@ -416,8 +368,8 @@
                     visible: true
                 },
                 {
-                    data: 'leave_type_id',
-                    name: 'leave_type_id',
+                    data: 'leave_type_name',
+                    name: 'leave_type_name',
                     searchable: true,
                     sortable: false,
                     visible: true

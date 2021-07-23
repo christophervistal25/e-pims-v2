@@ -35,4 +35,5 @@ class EmployeeLeaveApplication extends Model
     {
         return self::where('approved_status', $status)->count();
     }
+
 }

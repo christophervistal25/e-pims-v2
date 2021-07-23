@@ -29,24 +29,21 @@
 @endprepend
 @section('content')
 
-{{-- VIEW TABLE BUTTON IN FORM --}}
-<div class="float-right mr-3 d-none" id='btnViewTableContainer'>
-    <button class="btn btn-info shadow"><i class='la la-list'></i>&nbsp View Table</button>
-</div>
-{{-- <div class="clearfix"></div> --}}
-<br>
-<br>
 
- {{-- FORM AND TABLE --}}
 <div class="content container-fluid">
     <div class="kanban-board card mb-0 shadow">
         <div class="card-body">
-            <div id="addIncrement" class="page-header d-none">
+            <div class="page-header d-none" id="addForm" >
+            <div class="float-right" id='btnViewTableContainer'>
+                <button class="btn btn-primary shadow"><i class='la la-list'></i>&nbsp View Table</button>
+            </div>
+            <br>
+            <br>
+           
                 <form action="" method="POST" id="formStepIncrement">
                     @csrf
 
                     <div class="row">
-
                         <div class="col-12">
                             <div class="alert alert-secondary text-center font-weight-bold" role="alert">ADD STEP INCREMENT</div>
                         </div>
@@ -150,7 +147,6 @@
                         </div>
 
                         {{-- FORM THAT HAS TO BE INPUT --}}
-                        <!-- <div class="step-increment"> -->
                         <div class="card-body col-12 col-md-6 col-lg-6">
                             <div class="col-12 col-lg-12 mt-2">
                                 <label class="form-group has-float-label" for="">
@@ -203,7 +199,7 @@
 
             {{-- LIST OR DATA TABLES --}}
             <div id="stepIncrementTable" class="page-header">
-                <div class="row align-items-right mb-2 mt-4">
+                <div class="row align-items-right mb-2">
                     <div class="col-auto float-right ml-auto">
                         <button id="addBtn" type="button" class="btn btn-primary float-right shadow"><i class="fa fa-plus"></i>&nbsp
                             Add Step Increment </button>
@@ -247,15 +243,13 @@
 @push('page-scripts')
 
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
-{{-- <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script> --}}
 <script src="/assets/js/jquery.dataTables.min.js"></script>
 <script src="/assets/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 <script>
-
+x
 
     $.ajaxSetup({
         headers: {
@@ -374,9 +368,10 @@
 
         // TRANSITION OF FORM TO TABLE
         $('#addBtn').click( ()=> {
-            $('#addIncrement').attr("class", "page-header");
+            $('#addForm').attr("class", "page-header d-none");
             $('#stepIncrementTable').attr("class", "page-header d-none");
-            $('#btnViewTableContainer').removeClass('d-none');
+            // $('#btnViewTableContainer').removeClass('float-right d-none');
+            $('#addForm').removeClass('page-header d-none');
             $('#formStepIncrement').removeClass('d-none');
         });
 
@@ -385,6 +380,7 @@
             $('#stepIncrementTable').removeClass('d-none');
             $(this).addClass('d-none');
             $('#formStepIncrement').addClass('d-none');
+            $('#addForm').addClass('page-header d-none');
         });
 
         // SHOWS THE DATA VALUE IN INPUT

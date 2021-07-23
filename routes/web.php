@@ -113,6 +113,8 @@ Route::group(['prefix' => 'employee'], function () {
     //  LEAVE APPLICATIONS //
     Route::get('/leave-list/list', 'EmployeeLeave\LeaveListController@list');
     Route::get('leave/leave-list', 'EmployeeLeave\LeaveListController@index')->name('leave.leave-list');
+    Route::get('/leave/leave-list/{edit}', 'EmployeeLeave\LeaveListController@edit')->name('leave-list.edit');
+
 
     Route::get('/leave/application', 'EmployeeLeave\LeaveController@show')->name('leave.application.filling');
     Route::get('leave/leave-recall', 'EmployeeLeave\LeaveRecallController@index')->name('leave.leave-recall');
