@@ -35,7 +35,7 @@ class PlantillaController extends Controller
         $plantillaPositionID = Plantilla::get()->pluck('pp_id')->toArray();
         $plantillaPosition = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->with('position:position_id,position_name')->whereNotIn('pp_id', $plantillaPositionID )->get();
         $salarygrade = SalaryGrade::get(['sg_no']);
-        $status = ['Please Select', 'Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
+        $status = ['Casual','Coterminous','Permanent','Provisional','Temporary','Elected'];
         count($status) - 1;
         $areacode = ['Please Select', 'Region 1', 'Region 2','Region 3','Region 4','Region 5', 'Region 6', 'Region 7',  'Region 8', 'Region 9', 'Region 10', 'Region 11', 'Region 12','NCR', 'CAR', 'CARAGA', 'ARMM'];
         count($areacode) - 1;
@@ -108,7 +108,7 @@ class PlantillaController extends Controller
             'itemNo'                        => 'required',
             'positionTitle'                 => 'required',
             'employeeName'                  => 'required',
-            'salaryGrade'                   => 'required|in:' . implode(',',range(1, 33)),
+            // 'salaryGrade'                   => 'required|in:' . implode(',',range(1, 33)),
             'stepNo'                        => 'required|in:' . implode(',',range(1, 8)),
             'salaryAmount'                  => 'required|numeric',
             'currentSgyear'                          => 'required',
@@ -169,7 +169,7 @@ class PlantillaController extends Controller
         $plantillaPositionIDAll = Plantilla::where('plantilla_id','!=',$plantilla_id)->get()->pluck('pp_id')->toArray();
         $plantillaPositionAll = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->with('position:position_id,position_name')->whereNotIn('pp_id', $plantillaPositionIDAll )->get();
         $salarygrade = SalaryGrade::get(['sg_no']);
-        $status = ['Please Select', 'Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
+        $status = ['Casual','Coterminous','Permanent','Provisional','Temporary','Elected'];
         count($status) - 1;
         $areacode = ['Please Select', 'Region 1', 'Region 2','Region 3','Region 4','Region 5', 'Region 6', 'Region 7',  'Region 8', 'Region 9', 'Region 10', 'Region 11', 'Region 12','NCR', 'CAR', 'CARAGA', 'ARMM'];
         count($areacode) - 1;

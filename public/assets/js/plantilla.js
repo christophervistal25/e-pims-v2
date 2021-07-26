@@ -428,7 +428,6 @@ $(document).ready(function() {
                     $("#positionTitle").selectpicker("refresh");
                     // $("#currentSgyear").val("");
                     const select = [
-                        "#salaryGrade",
                         "#positionTitle",
                         "#currentStepno",
                         "#employeeName",
@@ -442,21 +441,19 @@ $(document).ready(function() {
                             .trigger("change");
                     });
                     const errorClass = [
-                        "#itemNo",
                         "#oldItemNo",
-                        "#positionTitle",
+                        ".positionTitle",
                         "#originalAppointment",
                         "#lastPromotion",
-                        "#status",
+                        ".status",
                         "#areaCode",
                         "#areaType",
                         "#areaLevel",
-                        "#employeeName",
-                        "#salaryGrade",
-                        "#stepNo",
+                        ".employeeName",
+                        ".stepNo",
                         "#currentSalaryamount",
-                        "#officeCode",
-                        "#divisionId"
+                        ".officeCode",
+                        ".divisionId"
                     ];
                     $.each(errorClass, function(index, value) {
                         $(`${value}`).removeClass("is-invalid");
@@ -500,16 +497,6 @@ $(document).ready(function() {
             error: function(response) {
                 if (response.status === 422) {
                     let errors = response.responseJSON.errors;
-                    if (errors.hasOwnProperty("itemNo")) {
-                        $("#itemNo").addClass("is-invalid");
-                        $("#item-no-error-message").html("");
-                        $("#item-no-error-message").append(
-                            `<span>${errors.itemNo[0]}</span>`
-                        );
-                    } else {
-                        $("#itemNo").removeClass("is-invalid");
-                        $("#item-no-error-message").html("");
-                    }
                     if (errors.hasOwnProperty("oldItemNo")) {
                         $("#oldItemNo").addClass("is-invalid");
                         $("#old_item-no-error-message").html("");
@@ -521,13 +508,13 @@ $(document).ready(function() {
                         $("#old_item-no-error-message").html("");
                     }
                     if (errors.hasOwnProperty("positionTitle")) {
-                        $("#positionTitle").addClass("is-invalid");
+                        $(".positionTitle").addClass("is-invalid");
                         $("#position-title-error-message").html("");
                         $("#position-title-error-message").append(
                             `<span>${errors.positionTitle[0]}</span>`
                         );
                     } else {
-                        $("#positionTitle").removeClass("is-invalid");
+                        $(".positionTitle").removeClass("is-invalid");
                         $("#position-title-error-message").html("");
                     }
                     if (errors.hasOwnProperty("originalAppointment")) {
@@ -551,13 +538,13 @@ $(document).ready(function() {
                         $("#last-promotion-error-message").html("");
                     }
                     if (errors.hasOwnProperty("status")) {
-                        $("#status").addClass("is-invalid");
+                        $(".status").addClass("is-invalid");
                         $("#status-error-message").html("");
                         $("#status-error-message").append(
                             `<span>${errors.status[0]}</span>`
                         );
                     } else {
-                        $("#status").removeClass("is-invalid");
+                        $(".status").removeClass("is-invalid");
                         $("#status-error-message").html("");
                     }
                     if (errors.hasOwnProperty("areaCode")) {
@@ -591,33 +578,23 @@ $(document).ready(function() {
                         $("#area-level-error-message").html("");
                     }
                     if (errors.hasOwnProperty("employeeName")) {
-                        $("#employeeName").addClass("is-invalid");
+                        $(".employeeName").addClass("is-invalid");
                         $("#employee-name-error-message").html("");
                         $("#employee-name-error-message").append(
                             `<span>${errors.employeeName[0]}</span>`
                         );
                     } else {
-                        $("#employeeName").removeClass("is-invalid");
+                        $(".employeeName").removeClass("is-invalid");
                         $("#employee-name-error-message").html("");
                     }
-                    if (errors.hasOwnProperty("salaryGrade")) {
-                        $("#salaryGrade").addClass("is-invalid");
-                        $("#salary-grade-error-message").html("");
-                        $("#salary-grade-error-message").append(
-                            `<span>${errors.salaryGrade[0]}</span>`
-                        );
-                    } else {
-                        $("#salaryGrade").removeClass("is-invalid");
-                        $("#salary-grade-error-message").html("");
-                    }
                     if (errors.hasOwnProperty("stepNo")) {
-                        $("#stepNo").addClass("is-invalid");
+                        $(".stepNo").addClass("is-invalid");
                         $("#steps-error-message").html("");
                         $("#steps-error-message").append(
                             `<span>${errors.stepNo[0]}</span>`
                         );
                     } else {
-                        $("#stepNo").removeClass("is-invalid");
+                        $(".stepNo").removeClass("is-invalid");
                         $("#steps-error-message").html("");
                     }
                     if (errors.hasOwnProperty("currentSalaryamount")) {
@@ -631,23 +608,23 @@ $(document).ready(function() {
                         $("#salary-amount-error-message").html("");
                     }
                     if (errors.hasOwnProperty("officeCode")) {
-                        $("#officeCode").addClass("is-invalid");
+                        $(".officeCode").addClass("is-invalid");
                         $("#office-error-message").html("");
                         $("#office-error-message").append(
                             `<span>${errors.officeCode[0]}</span>`
                         );
                     } else {
-                        $("#officeCode").removeClass("is-invalid");
+                        $(".officeCode").removeClass("is-invalid");
                         $("#office-error-message").html("");
                     }
                     if (errors.hasOwnProperty("divisionId")) {
-                        $("#divisionId").addClass("is-invalid");
+                        $(".divisionId").addClass("is-invalid");
                         $("#division-error-message").html("");
                         $("#division-error-message").append(
                             `<span>${errors.divisionId[0]}</span>`
                         );
                     } else {
-                        $("#divisionId").removeClass("is-invalid");
+                        $(".divisionId").removeClass("is-invalid");
                         $("#division-error-message").html("");
                     }
                     // Create an parent element
@@ -694,7 +671,6 @@ $(document).ready(function() {
 function myFunction() {
     $("input").val("");
     const select = [
-        "#salaryGrade",
         "#positionTitle",
         "#currentStepno",
         "#employeeName",
@@ -708,21 +684,19 @@ function myFunction() {
             .trigger("change");
     });
     const errorClass = [
-        "#itemNo",
         "#oldItemNo",
-        "#positionTitle",
+        ".positionTitle",
         "#originalAppointment",
         "#lastPromotion",
-        "#status",
+        ".status",
         "#areaCode",
         "#areaType",
         "#areaLevel",
-        "#employeeName",
-        "#salaryGrade",
-        "#stepNo",
+        ".employeeName",
+        ".stepNo",
         "#currentSalaryamount",
-        "#officeCode",
-        "#divisionId"
+        ".officeCode",
+        ".divisionId"
     ];
     $.each(errorClass, function(index, value) {
         $(`${value}`).removeClass("is-invalid");
