@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Service Records')
+@section('title', 'SERVICE RECORDS')
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 <link rel="stylesheet" href="{{ asset('/assets/css/dataTables.bootstrap4.min.css') }}">
@@ -61,7 +61,7 @@
         <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
 
             <div style='padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
-                <button id="cancelbutton" class="btn btn-primary submit-btn float-right"><i class="fa fa-list"></i>
+                <button id="cancelbutton" class="btn btn-primarys submit-btn float-right"><i class="fa fa-list"></i>
                     Service Records List</button>
             </div>
 
@@ -131,7 +131,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-12 col-lg-4">
+                    {{-- <div class="form-group col-12 col-lg-4">
                         <label class="font-weight-bold text-sm">STATUS<span class="text-danger">*</span></label>
                         <select value="" name="status" class="select {{ $errors->has('status')  ? 'is-invalid' : ''}}"
                             id="status">
@@ -145,10 +145,31 @@
                         </select>
                         <div id='status-error-message' class='text-danger text-sm'>
                         </div>
+                    </div> --}}
+
+                    <div class="form-group col-12 col-lg-4">
+                        <label class="has-float-label mb-0">
+                        <select value=""
+                            class="form-control selectpicker  {{ $errors->has('status')  ? 'is-invalid' : ''}}"
+                            name="status" data-live-search="true" id="status" data-size="4"
+                            data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                            <option></option>
+                            @foreach(range(0, 9) as $statuses)
+                            @if($status[$statuses] == old('status'))
+                            <option value="{{ $status[$statuses]}}" selected>{{ $status[$statuses] }}</option>
+                            @else
+                            <option value="{{ $status[$statuses]}}">{{ $status[$statuses] }}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                        <span class="font-weight-bold">STATUS<span class="text-danger">*</span></span>
+                    </label>
+                        <div id='status-error-message' class='text-danger text-sm'>
+                        </div>
                     </div>
 
                     <div class="form-group col-12 col-lg-4">
-                        <label class="font-weight-bold text-sm">POSITION<span class="text-danger">*</span></label>
+                        <label class="has-float-label mb-0">
                         <select value=""
                             class="form-control selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
                             name="positionTitle" data-live-search="true" id="positionTitle" data-size="5"
@@ -160,11 +181,32 @@
                                 value="{{ $positions->position_id}}">{{ $positions->position_name }}</option>
                             @endforeach
                         </select>
+                        <span class="font-weight-bold">POSITION<span class="text-danger">*</span></span>
+                        </label>
                         <div id='position-title-error-message' class='text-danger text-sm'>
                         </div>
                     </div>
 
+
                     <div class="form-group col-12 col-lg-4">
+                        <label class="has-float-label mb-0">
+                        <select value=""
+                            class="form-control selectpicker  {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
+                            name="officeCode" data-live-search="true" id="officeCode" data-size="4"
+                            data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                            <option></option>
+                            @foreach($office as $offices)
+                            <option style="width:350px;" {{ old('officeCode') == $offices->office_code ? 'selected' : '' }}
+                                value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
+                            @endforeach
+                        </select>
+                        <span class="font-weight-bold">OFFICE<span class="text-danger">*</span></span>
+                    </label>
+                        <div id='office-error-message' class='text-danger text-sm'>
+                        </div>
+                    </div>
+
+                    {{-- <div class="form-group col-12 col-lg-4">
                         <label class="font-weight-bold text-sm">OFFICE<span class="text-danger">*</span></label>
                         <select value="" name="officeCode"
                             class="select {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}" id="officeCode">
@@ -176,7 +218,7 @@
                         </select>
                         <div id='office-error-message' class='text-danger text-sm'>
                         </div>
-                    </div>
+                    </div> --}}
 
                         <div class="form-group col-12 col-lg-6">
                         <label class="has-float-label mb-0">

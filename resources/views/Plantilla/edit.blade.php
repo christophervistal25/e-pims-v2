@@ -53,29 +53,6 @@
                         </div>
 
                         <div class="form-group col-12 col-lg-6">
-                            <label>Item No<span class="text-danger">*</span></label>
-                            <input value="{{ old('itemNo') ?? $plantilla->item_no }}"
-                                class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" name="itemNo"
-                                id="num-only" type="text" placeholder="Item No.">
-                            @if($errors->has('itemNo'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('itemNo') }} </small>
-                            @endif
-                        </div>
-
-                        <div class="form-group col-12 col-lg-6">
-                            <label>Old Item No<span class="text-danger">*</span></label>
-                            <input value="{{ old('oldItemNo') ?? $plantilla->old_item_no }}"
-                                class="form-control {{ $errors->has ('oldItemNo')  ? 'is-invalid' : ''}}"
-                                name="oldItemNo" id="num-only" type="text" placeholder="Old Item No">
-                            @if($errors->has('oldItemNo'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('oldItemNo') }} </small>
-                            @endif
-                        </div>
-
-
-                        <div class="form-group col-12 col-lg-6">
                             <label>Office<span class="text-danger">*</span></label>
                             <select value=""
                                 class="form-control selectpicker {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
@@ -147,15 +124,44 @@
                             @endif
                         </div>
 
+                        <div class="form-group col-12 col-lg-6">
+                            <label>Item No<span class="text-danger">*</span></label>
+                            <input value="{{ old('itemNo') ?? $plantilla->item_no }}"
+                                class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" name="itemNo"
+                                id="num-only" type="text" placeholder="Item No." readonly>
+                            @if($errors->has('itemNo'))
+                            <small class="form-text text-danger">
+                                {{ $errors->first('itemNo') }} </small>
+                            @endif
+                        </div>
+
+                        <div class="form-group col-12 col-lg-6">
+                            <label>Old Item No<span class="text-danger">*</span></label>
+                            <input value="{{ old('oldItemNo') ?? $plantilla->old_item_no }}"
+                                class="form-control {{ $errors->has ('oldItemNo')  ? 'is-invalid' : ''}}"
+                                name="oldItemNo" id="num-only" type="text" placeholder="Old Item No">
+                            @if($errors->has('oldItemNo'))
+                            <small class="form-text text-danger">
+                                {{ $errors->first('oldItemNo') }} </small>
+                            @endif
+                        </div>
+
                         <div class="form-group col-12 col-lg-3">
                             <label>Current Salary Grade Year<span class="text-danger">*</span></label>
                                 <input value="{{ old('currentSgyear') ?? $plantilla->year }}"
                                 class="form-control {{ $errors->has('currentSgyear')  ? 'is-invalid' : ''}}" name="currentSgyear"
-                                id="num-only" type="text" placeholder="Item No." disabled>
+                                id="num-only" type="text" placeholder="Item No." readonly>
                             @if($errors->has('currentSgyear'))
                             <small class="form-text text-danger">
                                 {{ $errors->first('currentSgyear') }} </small>
                             @endif
+                        </div>
+
+                        <div class="form-group col-12 col-lg-3">
+                            <label>Salary Grade<span class="text-danger">*</span></label>
+                            <input value="{{ old('salaryGrade') ?? $plantilla->sg_no}}"
+                                class="form-control {{ $errors->has('')  ? 'is-invalid' : ''}}" name="salaryGrade"
+                                id="currentSalarygrade" type="text" readonly>
                         </div>
 
                         <div class="form-group col-12 col-lg-3">
@@ -172,13 +178,6 @@
                             <small class="form-text text-danger">
                                 {{ $errors->first('stepNo') }} </small>
                             @endif
-                        </div>
-
-                        <div class="form-group col-12 col-lg-3">
-                            <label>Salary Grade<span class="text-danger">*</span></label>
-                            <input value="{{ old('salaryGrade') ?? $plantilla->sg_no}}"
-                                class="form-control {{ $errors->has('')  ? 'is-invalid' : ''}}" name="salaryGrade"
-                                id="currentSalarygrade" type="text" readonly>
                         </div>
 
                         <div class="form-group col-12 col-lg-3">
@@ -272,7 +271,7 @@
                         <div class="form-group form-group submit-section col-12">
                             <button type="submit" class="btn btn-success submit-btn float-right shadow"><i
                                     class="fas fa-check"></i> Update</button>
-                            <a href="/plantilla-of-schedule"><button style="margin-right:10px;" type="button"
+                            <a href="/plantilla-of-personnel"><button style="margin-right:10px;" type="button"
                                     class="text-white btn btn-warning submit-btn float-right shadow"><i
                                     class="fas fa-arrow-left"></i> Back</button></a>
                         </div>

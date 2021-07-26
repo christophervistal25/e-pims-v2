@@ -24,6 +24,7 @@ Route::get('/employee/service/records/{employeeId}', function ($employeeId) {
     join('offices', 'service_records.office_code', '=', 'offices.office_code')
     ->join('positions', 'service_records.position_id', '=', 'positions.position_id')
     ->select('id', 'employee_id', 'service_from_date', 'service_to_date', 'positions.position_name', 'status', 'salary', 'offices.office_name', 'leave_without_pay', 'separation_date', 'separation_cause')
+    ->where('employee_id', $employeeId)
     ->get();
     return DataTables::of($data)
     ->addColumn('action', function($row){
@@ -304,7 +305,7 @@ Route::get('/plantilla/personnel/{officeCode}', function ($office_code) {
         ->join('employees', 'plantillas.employee_id', '=', 'employees.employee_id')
         ->join('plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
         ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
-        ->select('plantilla_id', 'plantillas.item_no', 'positions.position_name', 'plantillas.office_code', 'offices.office_name', 'plantillas.status', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
+        ->select('plantilla_id', 'plantillas.item_no', 'positions.position_name', 'plantillas.office_code', 'offices.office_name', 'plantillas.status', 'plantillas.year', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
         ->where('plantillas.office_code', $office_code)
         ->orderBy('plantilla_id', 'desc')
         ->get();

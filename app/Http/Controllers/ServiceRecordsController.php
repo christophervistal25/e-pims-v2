@@ -21,7 +21,7 @@ class ServiceRecordsController extends Controller
     public function index()
     {
         $office = Office::select('office_code', 'office_name')->get();
-        $status = ['Please Select', 'Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
+        $status = ['Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
         count($status) - 1;
         $position = Position::select('position_id', 'position_name')->get();
         $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->get();
@@ -128,7 +128,7 @@ class ServiceRecordsController extends Controller
     {
         $service_record = service_record::find($id);
         $office = Office::select('office_code', 'office_name')->get();
-        $status = ['Please Select', 'Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
+        $status = ['Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
         count($status) - 1;
         $position = Position::select('position_id', 'position_name')->get();
         $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->get();
@@ -147,11 +147,14 @@ class ServiceRecordsController extends Controller
     {
         $this->validate($request, [
             'fromDate'                    => 'required',
+            'toDate'                      => 'required',
             'positionTitle'               => 'required',
             'status'                      => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
             'salary'                      => 'required',
+            'leavePay'                    => 'required',
             'officeCode'                  => 'required|in:' . implode(',',range(10001, 10056)),
             'cause'                       => 'required',
+            'date'                        => 'required',
         ]);
         $service_record                         =  service_record::find($id);
         $service_record->employee_id            = $request['employeeId'];

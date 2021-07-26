@@ -54,6 +54,45 @@ $(function() {
         ]
     });
     $("#employeeName").change(function(e) {
+        $("input").val("");
+        $("#positionTitle")
+            .val("Please Select")
+            .trigger("change");
+        $("#officeCode")
+            .val("Please Select")
+            .trigger("change");
+        $("#status")
+            .val("Please Select")
+            .trigger("change");
+        const errorClass = [
+            "#fromDate",
+            "#toDate",
+            "#positionTitle",
+            "#status",
+            "#salary",
+            "#officeCode",
+            "#leavePay",
+            "#date",
+            "#cause"
+        ];
+        $.each(errorClass, function(index, value) {
+            $(`${value}`).removeClass("is-invalid");
+        });
+        const errorMessage = [
+            "#from-date-error-message",
+            "#to-date-error-message",
+            "#position-title-error-message",
+            "#status-error-message",
+            "#salary-error-message",
+            "#office-error-message",
+            "#leave-pay-error-message",
+            "#date-error-message",
+            "#cause-error-message"
+        ];
+        $.each(errorMessage, function(index, value) {
+            $(`${value}`).html("");
+        });
+
         if (e.target.value == "" || e.target.value == "") {
             table.destroy();
             table = $("#serviceRecords").DataTable({
@@ -268,12 +307,7 @@ $(document).ready(function() {
             data: data,
             success: function(response) {
                 if (response.success) {
-                    $("#fromDate").val("");
-                    $("#toDate").val("");
-                    $("#salary").val("");
-                    $("#leavePay").val("");
-                    $("#cause").val("");
-                    $("#date").val("");
+                    $("input").val("");
                     $("#positionTitle")
                         .val("Please Select")
                         .trigger("change");
@@ -442,10 +476,41 @@ $(document).ready(function() {
 });
 function myFunction() {
     $("input").val("");
-    const select = ["#positionTitle", "#status", "#officeCode"];
-    $.each(select, function(index, value) {
-        $(`${value}`)
-            .val("Please Select")
-            .trigger("change");
+    $("#positionTitle")
+        .val("Please Select")
+        .trigger("change");
+    $("#officeCode")
+        .val("Please Select")
+        .trigger("change");
+    $("#status")
+        .val("Please Select")
+        .trigger("change");
+    const errorClass = [
+        "#fromDate",
+        "#toDate",
+        "#positionTitle",
+        "#status",
+        "#salary",
+        "#officeCode",
+        "#leavePay",
+        "#date",
+        "#cause"
+    ];
+    $.each(errorClass, function(index, value) {
+        $(`${value}`).removeClass("is-invalid");
+    });
+    const errorMessage = [
+        "#from-date-error-message",
+        "#to-date-error-message",
+        "#position-title-error-message",
+        "#status-error-message",
+        "#salary-error-message",
+        "#office-error-message",
+        "#leave-pay-error-message",
+        "#date-error-message",
+        "#cause-error-message"
+    ];
+    $.each(errorMessage, function(index, value) {
+        $(`${value}`).html("");
     });
 }

@@ -164,9 +164,9 @@
             </div>
         </div>
 
-        <div class="form-group col-12 col-lg-3">
+        {{-- <div class="form-group col-12 col-lg-3">
             <label>Current Salary Grade Year<span class="text-danger">*</span></label>
-            <select name="currentSgyear" id="currentSgyear" value="" class="select floating">
+            <select name="currentSgyear" id="currentSgyear" value="" class="select floating" disabled>
                 {{ $year2 = date("Y",strtotime("-1  year")) }}
                 <option {{ old('sgYear') == $year2 ? 'selected' : '' }} value={{ $year2 }}>{{ $year2 }}
                 </option>
@@ -179,6 +179,14 @@
                 </option>
                 @endforeach
             </select>
+            <div id='year-error-message' class='text-danger text-sm'>
+            </div>
+        </div> --}}
+
+        <div class="form-group col-12 col-lg-3">
+            <label>Current Salary Grade Year<span class="text-danger">*</span></label>
+            <input value="{{ old('currentSgyear') ?? now()->year }}" class="form-control {{ $errors->has('currentSgyear')  ? 'is-invalid' : ''}}" name="currentSgyear"
+                id="currentSgyear" type="text" readonly>
             <div id='year-error-message' class='text-danger text-sm'>
             </div>
         </div>
@@ -319,6 +327,7 @@
                     <td scope="col" class="text-center">Office</td>
                     <td scope="col" class="text-center">Item No</td>
                     <td scope="col" class="text-center">Status</td>
+                    <td scope="col" class="text-center">Year</td>
                     <td scope="col" class="text-center">Action</td>
                 </tr>
             </thead>

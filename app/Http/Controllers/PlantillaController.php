@@ -52,7 +52,7 @@ class PlantillaController extends Controller
         ->join('employees', 'plantillas.employee_id', '=', 'employees.employee_id')
         ->join('plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
         ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
-        ->select('plantilla_id', 'plantillas.item_no', 'positions.position_name', 'offices.office_name', 'plantillas.status', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
+        ->select('plantilla_id', 'plantillas.item_no', 'positions.position_name', 'offices.office_name', 'plantillas.status', 'plantillas.year', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
         ->orderBy('plantilla_id', 'desc')
         ->get();
         return DataTables::of($data)

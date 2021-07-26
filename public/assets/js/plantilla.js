@@ -14,7 +14,6 @@ $(function() {
                 data: "fullname",
                 name: "fullname",
                 searchable: true,
-                sortable: false,
                 visible: true
             },
             {
@@ -28,11 +27,11 @@ $(function() {
                 data: "office_name",
                 name: "office_name",
                 searchable: true,
-                sortable: false,
                 visible: true
             },
             { data: "item_no", name: "item_no" },
             { data: "status", name: "status", sortable: false },
+            { data: "year", name: "year", sortable: false },
             {
                 data: "action",
                 name: "action",
@@ -83,6 +82,7 @@ $(function() {
                     },
                     { data: "item_no", name: "item_no" },
                     { data: "status", name: "status", sortable: false },
+                    { data: "year", name: "year", sortable: false },
                     {
                         data: "action",
                         name: "action",
@@ -112,7 +112,6 @@ $(function() {
                         data: "fullname",
                         name: "fullname",
                         searchable: true,
-                        sortable: false,
                         visible: true
                     },
                     {
@@ -126,11 +125,11 @@ $(function() {
                         data: "office_name",
                         name: "office_name",
                         searchable: true,
-                        sortable: false,
                         visible: true
                     },
                     { data: "item_no", name: "item_no" },
                     { data: "status", name: "status", sortable: false },
+                    { data: "year", name: "year", sortable: false },
                     {
                         data: "action",
                         name: "action",
@@ -427,8 +426,7 @@ $(document).ready(function() {
                         .find('[value="' + positionIds + '"]')
                         .remove();
                     $("#positionTitle").selectpicker("refresh");
-
-                    $("input").val("");
+                    // $("#currentSgyear").val("");
                     const select = [
                         "#salaryGrade",
                         "#positionTitle",
