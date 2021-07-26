@@ -149,7 +149,6 @@ $(function() {
         }
     });
 });
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 $(function() {
     let yearFilter = document.querySelector("#year").value - 1;
     let table = $("#plantillaOfSchedule").DataTable({
@@ -248,6 +247,7 @@ $(function() {
                 ]
             });
         } else {
+            document.getElementById("printPreviewA").setAttribute("href", "print-plantilla-of-schedule/" + e.target.value);
             table.destroy();
             let yearFilter = $("#yearFilter").val();
             table = $("#plantillaOfSchedule").DataTable({
@@ -298,6 +298,28 @@ $(function() {
                 ]
             });
         }
+        setTimeout(function() {
+            var table_data = $("#plantillaOfSchedule > tbody > tr > td").text();
+            if (table_data == "No data available in table") {
+                document
+                    .getElementById("printPreview")
+                    .setAttribute("style", "visibility:hidden;");
+                document
+                    .getElementById("printPreviewA")
+                    .removeAttribute("href");
+                document
+                    .getElementById("printPreview")
+                    .setAttribute("disabled", true);
+                    console.log('asd');
+            } else {
+                document
+                    .getElementById("printPreview")
+                    .setAttribute("style", "visibility:visible;");
+                document
+                    .getElementById("printPreview")
+                    .removeAttribute("disabled");
+            }
+        }, 2000);
     });
 
     $("#yearFilter").change(function(e) {

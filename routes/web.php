@@ -28,6 +28,8 @@ Route::get('/maintenance-division/{id}', 'MaintenanceDivisionController@destroy'
 Route::resource('/plantilla-of-schedule', 'PlantillaOfScheduleController');
 Route::get('/plantilla-of-schedule-list', 'PlantillaOfScheduleController@list');
 Route::get('/plantilla-of-schedule-adjustedlist/{yearFilter}', 'PlantillaOfScheduleController@adjustedlist');
+Route::get('/print-plantilla-of-schedule/{id}/previewed', 'PrintPlantillaOfScheduleController@print')->name('plantilla-of-schedule.previewed.print');
+Route::get('/print-plantilla-of-schedule/{id}', 'PrintPlantillaOfScheduleController@printList')->name('print-plantilla-of-schedule');
 
 //position of schedule
 // Route::get('/position-schedule-list-adjusted/{year?}', 'PositionScheduleController@adjustedlist')->name('position.schedule.list.adjusted');
