@@ -131,24 +131,8 @@
                         </div>
                     </div>
 
-                    {{-- <div class="form-group col-12 col-lg-4">
-                        <label class="font-weight-bold text-sm">STATUS<span class="text-danger">*</span></label>
-                        <select value="" name="status" class="select {{ $errors->has('status')  ? 'is-invalid' : ''}}"
-                            id="status">
-                            @foreach(range(0, 10) as $statuses)
-                            @if($status[$statuses] == old('status'))
-                            <option value="{{ $status[$statuses]}}" selected>{{ $status[$statuses] }}</option>
-                            @else
-                            <option value="{{ $status[$statuses]}}">{{ $status[$statuses] }}</option>
-                            @endif
-                            @endforeach
-                        </select>
-                        <div id='status-error-message' class='text-danger text-sm'>
-                        </div>
-                    </div> --}}
-
                     <div class="form-group col-12 col-lg-4">
-                        <label class="has-float-label mb-0">
+                        <label class="has-float-label mb-0 statuss">
                         <select value=""
                             class="form-control selectpicker  {{ $errors->has('status')  ? 'is-invalid' : ''}}"
                             name="status" data-live-search="true" id="status" data-size="4"
@@ -169,7 +153,7 @@
                     </div>
 
                     <div class="form-group col-12 col-lg-4">
-                        <label class="has-float-label mb-0">
+                        <label class="has-float-label mb-0 positionTitle">
                         <select value=""
                             class="form-control selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
                             name="positionTitle" data-live-search="true" id="positionTitle" data-size="5"
@@ -189,7 +173,7 @@
 
 
                     <div class="form-group col-12 col-lg-4">
-                        <label class="has-float-label mb-0">
+                        <label class="has-float-label mb-0 officeCode">
                         <select value=""
                             class="form-control selectpicker  {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
                             name="officeCode" data-live-search="true" id="officeCode" data-size="4"
@@ -205,20 +189,6 @@
                         <div id='office-error-message' class='text-danger text-sm'>
                         </div>
                     </div>
-
-                    {{-- <div class="form-group col-12 col-lg-4">
-                        <label class="font-weight-bold text-sm">OFFICE<span class="text-danger">*</span></label>
-                        <select value="" name="officeCode"
-                            class="select {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}" id="officeCode">
-                            <option>Please Select</option>
-                            @foreach($office as $offices)
-                            <option {{ old('officeCode') == $offices->office_code ? 'selected' : '' }}
-                                value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
-                            @endforeach
-                        </select>
-                        <div id='office-error-message' class='text-danger text-sm'>
-                        </div>
-                    </div> --}}
 
                         <div class="form-group col-12 col-lg-6">
                         <label class="has-float-label mb-0">
