@@ -10,28 +10,33 @@
 @endprepend
 @section('content')
 
-<div class="col-12">
+<section class="col">
     <div class="row">
-        <div class="card card-body col-2 text-center bg-light">
-            <h5 class="badge badge-info" style="justify-content: center">All</h5>
+        <div class="card card-body col-4 text-center bg-light" style="background: linear-gradient(0deg, rgba(93,183,204,1) 0%, rgba(6,102,251,1) 100%); height: 100px;">
+            <h5 class="text-white" style="margin: auto;">All</h5>
         </div>
-        <div class="card card-body col-2 text-center bg-light">
-            <h5 class="badge badge-warning" style="justify-content: center">Pending</h5>
+        <div class="card card-body col-4 text-center bg-light" style="background: linear-gradient(0deg, rgba(194,198,94,1) 0%, rgba(251,240,6,1) 100%);">
+            <h5 class="text-white" style="margin: auto;">Pending</h5>
         </div>
-        <div class="card card-body col-2 text-center bg-light">
-            <h5 class="badge badge-danger" style="justify-content: center">Reject</h5>
-        </div>
-        <div class="card card-body col-2 text-center bg-light">
-            <h5 class="badge badge-success" style="justify-content: center">Approved</h5>
-        </div>
-        <div class="card card-body col-2 text-center bg-light">
-            <h5 class="badge badge-secondary" style="justify-content: center">On-going</h5>
-        </div>
-        <div class="card card-body col-2 text-center bg-light">
-            <h5 class="badge badge-primary" style="justify-content: center">Enjoyed</h5>
+        <div class="card card-body col-4 text-center bg-light" style="background: linear-gradient(0deg, rgba(228,126,147,1) 0%, rgba(255,8,9,1) 100%);">
+            <h5 class="text-white" style="margin: auto;">Reject</h5>
         </div>
     </div>
-</div>
+</section>
+
+<section class="col">
+    <div class="row">
+        <div class="card card-body col-4 float-left text-center bg-light" style="background: linear-gradient(0deg, rgba(120,213,143,1) 0%, rgba(1,215,0,1) 100%); height: 100px;">
+            <h5 class="text-white" style="margin: auto;">Approved</h5>
+        </div>
+        <div class="card card-body col-4 mx-auto text-center bg-light" style="background: linear-gradient(0deg, rgba(128,117,119,1) 0%, rgba(0,0,0,1) 100%);">
+            <h5 class="text-white" style="margin: auto;">On-going</h5>
+        </div>
+        <div class="card card-body col-4 float-right text-center bg-light" style="background: linear-gradient(0deg, rgba(235,170,131,1) 0%, rgba(247,136,0,1) 100%);">
+            <h5 class="text-white" style="margin: auto;">Enjoyed</h5>
+        </div>
+    </div>
+</section>
 
 {{-- LEAVE APPLICATION CARD --}}
 <div class="row">
@@ -68,8 +73,7 @@
                         <div class="row">
                             <div class="col-lg-10">
                                 <label for="employeeName" class="form-group has-float-label">
-                                        <select class="form-control selectpicker" name="searchName" id="searchName" data-live-search="true"
-                                            style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                        <select class="form-control selectpicker" name="searchName" id="searchName" data-live-search="true">
                                             <option>Select names...</option>
                                                 @foreach($employees as $employee)
                                             <option value="{{ $employee->employee_id }}">{{ $employee->lastname }}, {{ $employee->firstname }} {{ $employee->middlename }}</option>

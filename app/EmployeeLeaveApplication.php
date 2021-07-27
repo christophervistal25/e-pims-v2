@@ -3,9 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EmployeeLeaveApplication extends Model
 {
+    use SoftDeletes;
+
+    protected $dates = ['deleted_at'];
     protected $fillable = [
         'employee_id',
         'recommending_approval',
@@ -19,6 +23,7 @@ class EmployeeLeaveApplication extends Model
         'date_applied',
         'date_from',
         'date_to',
+        'deleted_at'
     ];
 
     public function employee()
