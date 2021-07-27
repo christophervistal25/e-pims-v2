@@ -120,7 +120,7 @@
     </div>
         <div id="table" class="page-header ">
             <div class="row">
-                <div style="padding-left:35px;" class="col-4 mb-2">
+                <div style="padding-left:35px;" class="col-3 mb-2">
                     <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
                         name="officeCode" data-live-search="true" id="officeCode" data-size="5" >
                         <option value="All">All</option>
@@ -137,8 +137,9 @@
                     @endforeach
                     </select>
         </div>
-            <div class="col-6 mb-2">
+            <div class="col-7 mb-2">
                     <div style="padding-right:20px;" class="float-right">
+                        <a id="printPreviewA"><button class="btn btn-secondary" id="printPreview" disabled="true" style="visibility:hidden;"><i class="la la-print"></i>&nbsp; Print Preview</button></a>&nbsp;&nbsp;
                         <button id="addbutton" class="btn btn-primarys float-right" ><i class="fa fa-plus"></i> Create Plantilla Schedule</button>
                     </div>
                 </div>

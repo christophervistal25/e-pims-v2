@@ -9,7 +9,6 @@ $(function() {
         info: false,
         bFilter: false,
         pagingType: "full_numbers",
-
         language: {
             processing:
                 '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
@@ -32,10 +31,10 @@ $(function() {
                 name: "service_to_date",
                 visible: false
             },
-            { data: "position", name: "position", visible: false },
+            { data: "position_name", name: "position_name", visible: false },
             { data: "status", name: "status", visible: false },
             { data: "salary", name: "salary", visible: false },
-            { data: "office", name: "office", visible: false },
+            { data: "office_name", name: "office_name", visible: false },
             {
                 data: "leave_without_pay",
                 name: "leave_without_pay",
@@ -55,6 +54,45 @@ $(function() {
         ]
     });
     $("#employeeName").change(function(e) {
+        $("input, textarea").val("");
+        $("#positionTitle")
+            .val("Please Select")
+            .trigger("change");
+        $("#officeCode")
+            .val("Please Select")
+            .trigger("change");
+        $("#status")
+            .val("Please Select")
+            .trigger("change");
+        const errorClass = [
+            "#fromDate",
+            "#toDate",
+            ".positionTitle .dropdown",
+            ".statuss .dropdown",
+            "#salary",
+            ".officeCode .dropdown",
+            "#leavePay",
+            "#date",
+            "#cause"
+        ];
+        $.each(errorClass, function(index, value) {
+            $(`${value}`).removeClass("is-invalid");
+        });
+        const errorMessage = [
+            "#from-date-error-message",
+            "#to-date-error-message",
+            "#position-title-error-message",
+            "#status-error-message",
+            "#salary-error-message",
+            "#office-error-message",
+            "#leave-pay-error-message",
+            "#date-error-message",
+            "#cause-error-message"
+        ];
+        $.each(errorMessage, function(index, value) {
+            $(`${value}`).html("");
+        });
+
         if (e.target.value == "" || e.target.value == "") {
             table.destroy();
             table = $("#serviceRecords").DataTable({
@@ -92,15 +130,18 @@ $(function() {
                         name: "service_to_date",
                         visible: false
                     },
-                    { data: "position", name: "position", visible: false },
-                    { data: "status", name: "status", visible: false },
                     {
-                        data: "salary",
-                        name: "salary",
-                        visible: false,
-                        render: $.fn.dataTable.render.number(",", ".", 2)
+                        data: "position_name",
+                        name: "position_name",
+                        visible: false
                     },
-                    { data: "office", name: "office", visible: false },
+                    { data: "status", name: "status", visible: false },
+                    { data: "salary", name: "salary", visible: false },
+                    {
+                        data: "office_name",
+                        name: "office_name",
+                        visible: false
+                    },
                     {
                         data: "leave_without_pay",
                         name: "leave_without_pay",
@@ -145,14 +186,14 @@ $(function() {
                     },
                     { data: "service_from_date", name: "service_from_date" },
                     { data: "service_to_date", name: "service_to_date" },
-                    { data: "position", name: "position" },
+                    { data: "position_name", name: "position_name" },
                     { data: "status", name: "status" },
                     {
                         data: "salary",
                         name: "salary",
                         render: $.fn.dataTable.render.number(",", ".", 2)
                     },
-                    { data: "office", name: "office" },
+                    { data: "office_name", name: "office_name" },
                     { data: "leave_without_pay", name: "leave_without_pay" },
                     { data: "separation_date", name: "separation_date" },
                     {
@@ -162,8 +203,10 @@ $(function() {
                     { data: "action", name: "action" }
                 ]
             });
-            setTimeout(function() {
-                var table_data = $("#serviceRecords > tbody > tr > td").text();
+            let count = 1;
+            let interval = setInterval(printStatus, 1000);
+            function printStatus(){
+                let table_data = $("#serviceRecords > tbody > tr > td").text();
                 if (table_data == "No data available in table") {
                     document
                         .getElementById("printPreview")
@@ -182,10 +225,15 @@ $(function() {
                         .getElementById("printPreview")
                         .removeAttribute("disabled");
                 }
-            }, 1000);
+                if (count >= 20) {
+                    clearInterval(interval);
+                }
+                count++;
+            }
         }
     });
 });
+
 // code for show add form
 $(document).ready(function() {
     $("#addbutton").click(function() {
@@ -222,7 +270,7 @@ function ValidateDropDown(dd) {
             .setAttribute("href", "print-service-records/" + dd.value);
         document.getElementById("line").style.visibility = "hidden";
     }
-    $("input").val("");
+    $("input, textarea").val("");
     const select = ["#positionTitle", "#status", "#officeCode"];
     $.each(select, function(index, value) {
         $(`${value}`)
@@ -265,12 +313,7 @@ $(document).ready(function() {
             data: data,
             success: function(response) {
                 if (response.success) {
-                    $("#fromDate").val("");
-                    $("#toDate").val("");
-                    $("#salary").val("");
-                    $("#leavePay").val("");
-                    $("#cause").val("");
-                    $("#date").val("");
+                    $("input, textarea").val("");
                     $("#positionTitle")
                         .val("Please Select")
                         .trigger("change");
@@ -283,10 +326,10 @@ $(document).ready(function() {
                     const errorClass = [
                         "#fromDate",
                         "#toDate",
-                        "#positionTitle",
-                        "#status",
+                        ".positionTitle .dropdown",
+                        ".statuss .dropdown",
                         "#salary",
-                        "#officeCode",
+                        ".officeCode .dropdown",
                         "#leavePay",
                         "#date",
                         "#cause"
@@ -340,23 +383,23 @@ $(document).ready(function() {
                         $("#to-date-error-message").html("");
                     }
                     if (errors.hasOwnProperty("positionTitle")) {
-                        $("#positionTitle").addClass("is-invalid");
+                        $(".positionTitle .dropdown").addClass("is-invalid");
                         $("#position-title-error-message").html("");
                         $("#position-title-error-message").append(
                             `<span>${errors.positionTitle[0]}</span>`
                         );
                     } else {
-                        $("#positionTitle").removeClass("is-invalid");
+                        $(".positionTitle .dropdown").removeClass("is-invalid");
                         $("#position-title-error-message").html("");
                     }
                     if (errors.hasOwnProperty("status")) {
-                        $("#status").addClass("is-invalid");
+                        $(".statuss .dropdown").addClass("is-invalid");
                         $("#status-error-message").html("");
                         $("#status-error-message").append(
                             `<span>${errors.status[0]}</span>`
                         );
                     } else {
-                        $("#status").removeClass("is-invalid");
+                        $(".statuss .dropdown").removeClass("is-invalid");
                         $("#status-error-message").html("");
                     }
                     if (errors.hasOwnProperty("salary")) {
@@ -370,13 +413,13 @@ $(document).ready(function() {
                         $("#salary-error-message").html("");
                     }
                     if (errors.hasOwnProperty("officeCode")) {
-                        $("#officeCode").addClass("is-invalid");
+                        $(".officeCode .dropdown").addClass("is-invalid");
                         $("#office-error-message").html("");
                         $("#office-error-message").append(
                             `<span>${errors.officeCode[0]}</span>`
                         );
                     } else {
-                        $("#officeCode").removeClass("is-invalid");
+                        $(".officeCode .dropdown").removeClass("is-invalid");
                         $("#office-error-message").html("");
                     }
                     if (errors.hasOwnProperty("leavePay")) {
@@ -438,11 +481,42 @@ $(document).ready(function() {
     });
 });
 function myFunction() {
-    $("input").val("");
-    const select = ["#positionTitle", "#status", "#officeCode"];
-    $.each(select, function(index, value) {
-        $(`${value}`)
-            .val("Please Select")
-            .trigger("change");
+    $("input, textarea").val("");
+    $("#positionTitle")
+        .val("Please Select")
+        .trigger("change");
+    $("#officeCode")
+        .val("Please Select")
+        .trigger("change");
+    $("#status")
+        .val("Please Select")
+        .trigger("change");
+    const errorClass = [
+        "#fromDate",
+        "#toDate",
+        ".positionTitle .dropdown",
+        ".statuss .dropdown",
+        "#salary",
+        ".officeCode .dropdown",
+        "#leavePay",
+        "#date",
+        "#cause"
+    ];
+    $.each(errorClass, function(index, value) {
+        $(`${value}`).removeClass("is-invalid");
+    });
+    const errorMessage = [
+        "#from-date-error-message",
+        "#to-date-error-message",
+        "#position-title-error-message",
+        "#status-error-message",
+        "#salary-error-message",
+        "#office-error-message",
+        "#leave-pay-error-message",
+        "#date-error-message",
+        "#cause-error-message"
+    ];
+    $.each(errorMessage, function(index, value) {
+        $(`${value}`).html("");
     });
 }

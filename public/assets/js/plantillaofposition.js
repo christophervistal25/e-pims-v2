@@ -28,10 +28,10 @@ function myFunction() {
         .val("Please Select")
         .trigger("change");
     const errorClass = [
-        "#positionTitle",
+        ".positionTitle .dropdown",
         "#itemNo",
-        "#salaryGrade",
-        "#officeCode",
+        ".salaryGrade .dropdown",
+        ".officeCode .dropdown",
         "#positionOldName"
     ];
     $.each(errorClass, function(index, value) {
@@ -77,10 +77,10 @@ $(document).ready(function() {
                             .trigger("change");
                     });
                     const errorClass = [
-                        "#positionTitle",
+                        ".positionTitle .dropdown",
                         "#itemNo",
-                        "#salaryGrade",
-                        "#officeCode",
+                        ".salaryGrade .dropdown",
+                        ".officeCode .dropdown",
                         "#positionOldName"
                     ];
                     $.each(errorClass, function(index, value) {
@@ -108,7 +108,7 @@ $(document).ready(function() {
                 if (response.status === 422) {
                     let errors = response.responseJSON.errors;
                     if (errors.hasOwnProperty("positionTitle")) {
-                        $("#positionTitle").addClass("is-invalid");
+                        $(".positionTitle .dropdown").addClass("is-invalid");
                         $("#position-title-error-message").html("");
                         $("#position-title-error-message").append(
                             `<span>${errors.positionTitle[0]}</span>`
@@ -128,7 +128,7 @@ $(document).ready(function() {
                         $("#item-error-message").html("");
                     }
                     if (errors.hasOwnProperty("salaryGrade")) {
-                        $("#salaryGrade").addClass("is-invalid");
+                        $(".salaryGrade .dropdown").addClass("is-invalid");
                         $("#salary-grade-error-message").html("");
                         $("#salary-grade-error-message").append(
                             `<span>${errors.salaryGrade[0]}</span>`
@@ -138,7 +138,7 @@ $(document).ready(function() {
                         $("#salary-grade-error-message").html("");
                     }
                     if (errors.hasOwnProperty("officeCode")) {
-                        $("#officeCode").addClass("is-invalid");
+                        $(".officeCode .dropdown").addClass("is-invalid");
                         $("#office-error-message").html("");
                         $("#office-error-message").append(
                             `<span>${errors.officeCode[0]}</span>`
@@ -396,6 +396,7 @@ $(document).ready(function() {
                             $("#addPositionCode").removeClass("is-invalid");
                             $("#add-position-code-error-message").html("");
                         }
+
                         if (errors.hasOwnProperty("addPositionName")) {
                             $("#addPositionName").addClass("is-invalid");
                             $("#add-position-name-error-message").html("");

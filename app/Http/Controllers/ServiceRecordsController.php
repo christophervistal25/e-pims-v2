@@ -9,6 +9,7 @@ use App\Office;
 use App\Plantilla;
 use App\service_record;
 use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 class ServiceRecordsController extends Controller
 {
@@ -20,7 +21,7 @@ class ServiceRecordsController extends Controller
     public function index()
     {
         $office = Office::select('office_code', 'office_name')->get();
-        $status = ['Please Select', 'Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
+        $status = ['Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
         count($status) - 1;
         $position = Position::select('position_id', 'position_name')->get();
         $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->get();
@@ -39,23 +40,36 @@ class ServiceRecordsController extends Controller
     }
     public function list(Request $request)
     {
-        if ($request->ajax()) {
-            $data = service_record::select('employee_id', 'service_from_date', 'service_to_date', 'position_id', 'status', 'salary', 'office_code', 'leave_without_pay', 'separation_date', 'separation_cause')->with('office:office_code,office_name,office_address','position:position_id,position_name');
-            return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('position', function ($row) {
-                            return $row->position->position_name;
-                        })
-                        ->addColumn('office', function ($row) {
-                            return $row->office->office_name . '' . $row->office->office_address;
-                        })
-                    ->addColumn('action', function($row){
-                        $btn = "<a href='' class='edit btn btn-primary btn-sm'>Edit</a>";
-                            return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
-        }
+        $data = DB::table('service_records')
+        ->join('offices', 'service_records.office_code', '=', 'offices.office_code')
+        ->join('positions', 'service_records.position_id', '=', 'positions.position_id')
+        ->select( 'id', 'employee_id', 'service_from_date', 'service_to_date', 'positions.position_name', 'service_records.status', 'salary', 'offices.office_name', 'leave_without_pay', 'separation_date', 'separation_cause')
+        ->get();
+        return DataTables::of($data)
+        ->addColumn('action', function($row){
+            $btn = "<a href='' class='edit btn btn-primary btn-sm'>Edit</a>";
+                return $btn;
+        })
+        ->rawColumns(['action'])
+        ->make(true);
+        //old query
+        // if ($request->ajax()) {
+        //     $data = service_record::select('employee_id', 'service_from_date', 'service_to_date', 'position_id', 'status', 'salary', 'office_code', 'leave_without_pay', 'separation_date', 'separation_cause')->with('office:office_code,office_name,office_address','position:position_id,position_name');
+        //     return Datatables::of($data)
+        //             ->addIndexColumn()
+        //             ->addColumn('position', function ($row) {
+        //                     return $row->position->position_name;
+        //                 })
+        //                 ->addColumn('office', function ($row) {
+        //                     return $row->office->office_name . '' . $row->office->office_address;
+        //                 })
+        //             ->addColumn('action', function($row){
+        //                 $btn = "<a href='' class='edit btn btn-primary btn-sm'>Edit</a>";
+        //                     return $btn;
+        //             })
+        //             ->rawColumns(['action'])
+        //             ->make(true);
+        // }
         return view('ServiceRecords.ServiceRecords');
     }
 
@@ -114,7 +128,7 @@ class ServiceRecordsController extends Controller
     {
         $service_record = service_record::find($id);
         $office = Office::select('office_code', 'office_name')->get();
-        $status = ['Please Select', 'Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
+        $status = ['Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
         count($status) - 1;
         $position = Position::select('position_id', 'position_name')->get();
         $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->get();
@@ -133,11 +147,14 @@ class ServiceRecordsController extends Controller
     {
         $this->validate($request, [
             'fromDate'                    => 'required',
+            'toDate'                      => 'required',
             'positionTitle'               => 'required',
             'status'                      => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
             'salary'                      => 'required',
+            'leavePay'                    => 'required',
             'officeCode'                  => 'required|in:' . implode(',',range(10001, 10056)),
             'cause'                       => 'required',
+            'date'                        => 'required',
         ]);
         $service_record                         =  service_record::find($id);
         $service_record->employee_id            = $request['employeeId'];

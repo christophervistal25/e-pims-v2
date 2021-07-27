@@ -117,7 +117,7 @@ $(function() {
 });
 
 $(function() {
-    let yearFilter = document.querySelector("#yearFilter").value;
+    let yearFilter = document.querySelector("#year").value - 1;
     let table = $("#positionSchedule").DataTable({
         processing: true,
         pagingType: "full_numbers",
@@ -358,6 +358,7 @@ function LockDepot() {
                                     yearValue +
                                     "</option>"
                             );
+                            // location.reload();
                             $("#yearFilter").selectpicker("refresh");
                         }
                     },

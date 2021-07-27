@@ -28,13 +28,17 @@ Route::get('/maintenance-division/{id}', 'MaintenanceDivisionController@destroy'
 Route::resource('/plantilla-of-schedule', 'PlantillaOfScheduleController');
 Route::get('/plantilla-of-schedule-list', 'PlantillaOfScheduleController@list');
 Route::get('/plantilla-of-schedule-adjustedlist/{yearFilter}', 'PlantillaOfScheduleController@adjustedlist');
+Route::get('/print-plantilla-of-schedule/{id}/previewed', 'PrintPlantillaOfScheduleController@print')->name('plantilla-of-schedule.previewed.print');
+Route::get('/print-plantilla-of-schedule/{id}', 'PrintPlantillaOfScheduleController@printList')->name('print-plantilla-of-schedule');
 
 //position of schedule
+// Route::get('/position-schedule-list-adjusted/{year?}', 'PositionScheduleController@adjustedlist')->name('position.schedule.list.adjusted');
+Route::get('/position-schedule-list-adjusted/{year}', 'PositionScheduleController@adjustedlist')->name('position.schedule.list.adjusted');
 Route::resource('/position-schedule', 'PositionScheduleController');
 Route::get('/position-schedule/edit/{edit}', 'PositionScheduleController@edits')->name('position-schedule.edits');
 Route::put('/position-schedule/update/{edit}', 'PositionScheduleController@updates')->name('position-schedule.updates');
 Route::get('/position-schedule-list', 'PositionScheduleController@list');
-Route::get('/position-schedule-list-adjusted/{year}', 'PositionScheduleController@adjustedlist');
+
 
 //plantilla of personnel
 Route::get('/plantilla-list', 'Plantillacontroller@list');

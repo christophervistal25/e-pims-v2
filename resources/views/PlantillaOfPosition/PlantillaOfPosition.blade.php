@@ -72,9 +72,9 @@
                         </div>
 
                         <div class="form-group col-10 col-lg-7">
-                            <label class="has-float-label mb-0">
+                            <label class="has-float-label positionTitle mb-0">
                             <select value=""
-                                class="form-control selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
+                                class="form-control selectpicker"
                                 name="positionTitle" data-live-search="true" id="positionTitle" data-size="4"
                                 data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <option></option>
@@ -171,18 +171,18 @@
                         <div class="form-group col-12 col-lg-7">
                             <label class="has-float-label mb-0">
                             <input value="{{ old('positionOldName') }}"
-                                class="form-control {{ $errors->has('positionOldName')  ? 'is-invalid' : ''}}"
+                                class="form-control"
                                 name="positionOldName" id="positionOldName" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <span class="font-weight-bold">OLD POSITION NAME<span class="text-danger">*</span></span>
+                                <span class="font-weight-bold">OLD POSITION NAME</span>
                             </label>
                             <div id='old-position-name-error-message' class='text-danger text-sm'>
                             </div>
                         </div>
 
                         <div class="form-group col-12 col-md-6 col-lg-7">
-                            <label class="has-float-label mb-0">
+                            <label class="has-float-label salaryGrade mb-0">
                             <select value=""
-                                class="form-control selectpicker  {{ $errors->has('salaryGrade')  ? 'is-invalid' : ''}}"
+                                class="form-control selectpicker"
                                 name="salaryGrade" data-live-search="true" id="salaryGrade" data-size="4"
                                 data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <option></option>
@@ -198,9 +198,9 @@
                         </div>
 
                         <div class="form-group col-12 col-lg-7">
-                            <label class="has-float-label mb-0">
+                            <label class="has-float-label officeCode mb-0">
                             <select value=""
-                                class="form-control selectpicker  {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
+                                class="form-control selectpicker"
                                 name="officeCode" data-live-search="true" id="officeCode" data-size="4"
                                 data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <option></option>
