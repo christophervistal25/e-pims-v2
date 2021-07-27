@@ -81,7 +81,7 @@
                         </div>
 
                         <div class="form-group col-10 col-lg-7">
-                            <label class="has-float-label mb-0">
+                            <label class="has-float-label salaryGradeNo mb-0">
                             <select value=""
                                 class="form-control selectpicker  {{ $errors->has('salaryGradeNo')  ? 'is-invalid' : ''}}"
                                 name="salaryGradeNo" data-live-search="true" id="salaryGradeNo" data-size="4"
@@ -137,6 +137,7 @@
                 <table class="table table-bordered table-hover text-center" id="maintenancePosition" style="width:100%;">
                     <thead>
                         <tr>
+                            <td scope="col" class="text-center">Position Code</td>
                             <td scope="col" class="text-center">Position Name</td>
                             <td scope="col" class="text-center">Salary Grade</td>
                             <td scope="col" class="text-center">Position Short Name</td>

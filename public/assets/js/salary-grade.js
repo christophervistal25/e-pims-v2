@@ -68,6 +68,43 @@ let myTable = $("#myTable").DataTable({
 myTable.columns(9).search(year);
 myTable.draw();
 function filter_year() {
+    $("input").val("");
+    const select = ["#sgNo"];
+    $.each(select, function(index, value) {
+        $(`${value}`)
+            .val("Please Select")
+            .trigger("change");
+    });
+    const errorClass = [
+        ".sgNo .dropdown",
+        "#sgStep1",
+        "#sgStep2",
+        "#sgStep3",
+        "#sgStep4",
+        "#sgStep5",
+        "#sgStep6",
+        "#sgStep7",
+        "#sgStep8",
+        ".sgYear .dropdown"
+    ];
+    $.each(errorClass, function(index, value) {
+        $(`${value}`).removeClass("is-invalid");
+    });
+    const errorMessage = [
+        "#salary-grade-error-message",
+        "#salary-grade1-error-message",
+        "#salary-grade2-error-message",
+        "#salary-grade3-error-message",
+        "#salary-grade4-error-message",
+        "#salary-grade5-error-message",
+        "#salary-grade6-error-message",
+        "#salary-grade7-error-message",
+        "#salary-grade8-error-message",
+        "#salary-grade-year-error-message"
+    ];
+    $.each(errorMessage, function(index, value) {
+        $(`${value}`).html("");
+    });
     var filter_year = document.getElementById("filter_year").value;
     localStorage.setItem("salary_grade_filter_year", filter_year);
     var ls = localStorage.getItem("salary_grade_filter_year");
@@ -103,6 +140,43 @@ $(document).ready(function() {
     $("#cancelbutton1").click(function() {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
+        $("input").val("");
+        const select = ["#sgNo"];
+        $.each(select, function(index, value) {
+            $(`${value}`)
+                .val("Please Select")
+                .trigger("change");
+        });
+        const errorClass = [
+            ".sgNo .dropdown",
+            "#sgStep1",
+            "#sgStep2",
+            "#sgStep3",
+            "#sgStep4",
+            "#sgStep5",
+            "#sgStep6",
+            "#sgStep7",
+            "#sgStep8",
+            ".sgYear .dropdown"
+        ];
+        $.each(errorClass, function(index, value) {
+            $(`${value}`).removeClass("is-invalid");
+        });
+        const errorMessage = [
+            "#salary-grade-error-message",
+            "#salary-grade1-error-message",
+            "#salary-grade2-error-message",
+            "#salary-grade3-error-message",
+            "#salary-grade4-error-message",
+            "#salary-grade5-error-message",
+            "#salary-grade6-error-message",
+            "#salary-grade7-error-message",
+            "#salary-grade8-error-message",
+            "#salary-grade-year-error-message"
+        ];
+        $.each(errorMessage, function(index, value) {
+            $(`${value}`).html("");
+        });
     });
 });
 
@@ -134,7 +208,7 @@ $(document).ready(function() {
                             .trigger("change");
                     });
                     const errorClass = [
-                        "#sgNo",
+                        ".sgNo .dropdown",
                         "#sgStep1",
                         "#sgStep2",
                         "#sgStep3",
@@ -143,7 +217,7 @@ $(document).ready(function() {
                         "#sgStep6",
                         "#sgStep7",
                         "#sgStep8",
-                        "#sgYear"
+                        ".sgYear .dropdown"
                     ];
                     $.each(errorClass, function(index, value) {
                         $(`${value}`).removeClass("is-invalid");
@@ -175,13 +249,13 @@ $(document).ready(function() {
                 if (response.status === 422) {
                     let errors = response.responseJSON.errors;
                     if (errors.hasOwnProperty("sgNo")) {
-                        $("#sgNo").addClass("is-invalid");
+                        $(".sgNo .dropdown").addClass("is-invalid");
                         $("#salary-grade-error-message").html("");
                         $("#salary-grade-error-message").append(
                             `<span>${errors.sgNo[0]}</span>`
                         );
                     } else {
-                        $("#sgNo").removeClass("is-invalid");
+                        $(".sgNo .dropdown").removeClass("is-invalid");
                         $("#salary-grade-error-message").html("");
                     }
                     if (errors.hasOwnProperty("sgStep1")) {
@@ -265,13 +339,13 @@ $(document).ready(function() {
                         $("#salary-grade8-error-message").html("");
                     }
                     if (errors.hasOwnProperty("sgYear")) {
-                        $("#sgYear").addClass("is-invalid");
+                        $(".sgYear .dropdown").addClass("is-invalid");
                         $("#salary-grade-year-error-message").html("");
                         $("#salary-grade-year-error-message").append(
                             `<span>${errors.sgYear[0]}</span>`
                         );
                     } else {
-                        $("#sgYear").removeClass("is-invalid");
+                        $(".sgYear .dropdown").removeClass("is-invalid");
                         $("#salary-grade-year-error-message").html("");
                     }
                     // Create an parent element

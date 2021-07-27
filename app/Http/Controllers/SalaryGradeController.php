@@ -129,7 +129,6 @@ class SalaryGradeController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'sgNo'    => 'required|in:' . implode(',',range(1, 33)),
             'sgStep1' => 'required',
             'sgStep2' => 'required',
             'sgStep3' => 'required',
@@ -138,11 +137,9 @@ class SalaryGradeController extends Controller
             'sgStep6' => 'required',
             'sgStep7' => 'required',
             'sgStep8' => 'required',
-            'sgYear'  => 'required|date_format:Y',
         ]);
 
         $salarygrade           = SalaryGrade::find($id);
-        $salarygrade->sg_no    = $request['sgNo'];
         $salarygrade->sg_step1 = $request['sgStep1'];
         $salarygrade->sg_step2 = $request['sgStep2'];
         $salarygrade->sg_step3 = $request['sgStep3'];
@@ -151,7 +148,6 @@ class SalaryGradeController extends Controller
         $salarygrade->sg_step6 = $request['sgStep6'];
         $salarygrade->sg_step7 = $request['sgStep7'];
         $salarygrade->sg_step8 = $request['sgStep8'];
-        $salarygrade->sg_year  = $request['sgYear' ];
         $salarygrade->save();
         Session::flash('alert-success', 'Update Salary Grade Successfully');
         return back()->with('success','Updated Successfully');
