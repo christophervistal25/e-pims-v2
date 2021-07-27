@@ -298,9 +298,11 @@ $(function() {
                 ]
             });
         }
-        setTimeout(function() {
-            var table_data = $("#plantillaOfSchedule > tbody > tr > td").text();
-            if (table_data == "No data available in table") {
+        let count = 1;
+        let interval = setInterval(printStatus, 1000);
+        function printStatus(){
+            let table_data = $("#plantillaOfSchedule > tbody > tr > td").text();
+            if (table_data == "No data available in table" || table_data == '') {
                 document
                     .getElementById("printPreview")
                     .setAttribute("style", "visibility:hidden;");
@@ -310,7 +312,6 @@ $(function() {
                 document
                     .getElementById("printPreview")
                     .setAttribute("disabled", true);
-                    console.log('asd');
             } else {
                 document
                     .getElementById("printPreview")
@@ -319,7 +320,11 @@ $(function() {
                     .getElementById("printPreview")
                     .removeAttribute("disabled");
             }
-        }, 2000);
+            if (count >= 20) {
+                clearInterval(interval);
+            }
+            count++;
+        }
     });
 
     $("#yearFilter").change(function(e) {
