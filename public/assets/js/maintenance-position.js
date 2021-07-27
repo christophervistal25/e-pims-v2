@@ -16,6 +16,31 @@ $(document).ready(function() {
     $("#cancelbutton1").click(function() {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
+        $("#salaryGradeNo")
+            .val("Please Select")
+            .trigger("change");
+        const removeValue = ["#positionName", "#positionShortName"];
+        $.each(removeValue, function(index, value) {
+            $(`${value}`).val("");
+        });
+        const errorClass = [
+            "#positionCode",
+            "#positionName",
+            ".salaryGradeNo .dropdown",
+            "#positionShortName"
+        ];
+        $.each(errorClass, function(index, value) {
+            $(`${value}`).removeClass("is-invalid");
+        });
+        const errorMessage = [
+            "#position-code-error-message",
+            "#position-name-error-message",
+            "#salary-grade-no-error-message",
+            "#position-short-name-error-message"
+        ];
+        $.each(errorMessage, function(index, value) {
+            $(`${value}`).html("");
+        });
     });
 });
 
@@ -32,6 +57,7 @@ $(function() {
                 '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
         },
         columns: [
+            { data: "position_code", name: "position_code" },
             { data: "position_name", name: "position_name" },
             { data: "sg_no", name: "sg_no" },
             { data: "position_short_name", name: "position_short_name" },
@@ -50,6 +76,7 @@ $(document).ready(function() {
     $("#maintenancePositionForm").submit(function(e) {
         e.preventDefault();
         let data = $(this).serialize();
+        let positionCode = parseInt($("#positionCode").val()) + 1;
         $("#saveBtn").attr("disabled", true);
         $("#loading").removeClass("d-none");
         $.ajax({
@@ -65,7 +92,7 @@ $(document).ready(function() {
                     const errorClass = [
                         "#positionCode",
                         "#positionName",
-                        "#salaryGradeNo",
+                        ".salaryGradeNo .dropdown",
                         "#positionShortName"
                     ];
                     $.each(errorClass, function(index, value) {
@@ -86,6 +113,7 @@ $(document).ready(function() {
                     swal("Sucessfully Added!", "", "success");
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
+                    $("#positionCode").val(positionCode);
                 }
             },
             error: function(response) {
@@ -112,13 +140,13 @@ $(document).ready(function() {
                         $("#position-name-error-message").html("");
                     }
                     if (errors.hasOwnProperty("salaryGradeNo")) {
-                        $("#salaryGradeNo").addClass("is-invalid");
+                        $(".salaryGradeNo .dropdown").addClass("is-invalid");
                         $("#salary-grade-no-error-message").html("");
                         $("#salary-grade-no-error-message").append(
                             `<span>${errors.salaryGradeNo[0]}</span>`
                         );
                     } else {
-                        $("#salaryGradeNo").removeClass("is-invalid");
+                        $(".salaryGradeNo .dropdown").removeClass("is-invalid");
                         $("#salary-grade-no-error-message").html("");
                     }
                     if (errors.hasOwnProperty("positionShortName")) {
