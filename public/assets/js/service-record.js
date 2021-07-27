@@ -203,8 +203,10 @@ $(function() {
                     { data: "action", name: "action" }
                 ]
             });
-            setTimeout(function() {
-                var table_data = $("#serviceRecords > tbody > tr > td").text();
+            let count = 1;
+            let interval = setInterval(printStatus, 1000);
+            function printStatus(){
+                let table_data = $("#serviceRecords > tbody > tr > td").text();
                 if (table_data == "No data available in table") {
                     document
                         .getElementById("printPreview")
@@ -223,7 +225,11 @@ $(function() {
                         .getElementById("printPreview")
                         .removeAttribute("disabled");
                 }
-            }, 1000);
+                if (count >= 20) {
+                    clearInterval(interval);
+                }
+                count++;
+            }
         }
     });
 });
