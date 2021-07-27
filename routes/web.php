@@ -115,6 +115,9 @@ Route::group(['prefix' => 'employee'], function () {
     Route::get('leave/leave-list', 'EmployeeLeave\LeaveListController@index')->name('leave.leave-list');
     Route::get('/leave/leave-list/{edit}', 'EmployeeLeave\LeaveListController@edit')->name('leave-list.edit');
     Route::delete('/leave-list/{id}', 'EmployeeLeave\LeaveListController@destroy')->name('leave-list.delete');
+    Route::put('/leave/leave-list/{id}', 'EmployeeLeave\LeaveListController@update')->name('leave-list.update');
+
+    
 
 
     Route::get('/leave/application', 'EmployeeLeave\LeaveController@show')->name('leave.application.filling');

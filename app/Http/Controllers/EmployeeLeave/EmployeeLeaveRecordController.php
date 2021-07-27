@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\EmployeeLeave;
 
 use App\Employee;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\LeaveType;
 use App\EmployeeLeaveRecord;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Repositories\LeaveRecordRepository;
 
 class EmployeeLeaveRecordController extends Controller
 {
     public const SICK_LEAVE = 1;
     public const VACATION_LEAVE = 2;
+ 
+    
     /**
      * Display a listing of the resource.
      *
