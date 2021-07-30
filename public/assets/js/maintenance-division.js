@@ -20,7 +20,7 @@ $(document).ready(function() {
             .val("Please Select")
             .trigger("change");
         $("input").val("");
-        const errorClass = ["#divisionName", "#officeCode"];
+        const errorClass = ["#divisionName", ".officeCode .dropdown"];
         $.each(errorClass, function(index, value) {
             $(`${value}`).removeClass("is-invalid");
         });
@@ -127,7 +127,10 @@ $(document).ready(function() {
                         .val("Please Select")
                         .trigger("change");
                     $("input").val("");
-                    const errorClass = ["#divisionName", "#officeCode"];
+                    const errorClass = [
+                        "#divisionName",
+                        ".officeCode .dropdown"
+                    ];
                     $.each(errorClass, function(index, value) {
                         $(`${value}`).removeClass("is-invalid");
                     });
@@ -160,13 +163,13 @@ $(document).ready(function() {
                         $("#division-name-error-message").html("");
                     }
                     if (errors.hasOwnProperty("officeCode")) {
-                        $("#officeCode").addClass("is-invalid");
+                        $(".officeCode .dropdown").addClass("is-invalid");
                         $("#office-code-error-message").html("");
                         $("#office-code-error-message").append(
                             `<span>${errors.officeCode[0]}</span>`
                         );
                     } else {
-                        $("#officeCode").removeClass("is-invalid");
+                        $(".officeCode .dropdown").removeClass("is-invalid");
                         $("#office-code-error-message").html("");
                     }
                     // Create an parent element
