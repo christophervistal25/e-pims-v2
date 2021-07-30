@@ -65,7 +65,7 @@
                         </div>
 
                         <div class="form-group col-10 col-lg-7">
-                            <label class="has-float-label mb-0">
+                            <label class="has-float-label officeCode mb-0">
                             <select value=""
                                 class="form-control selectpicker  {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
                                 name="officeCode" data-live-search="true" id="officeCode" data-size="4"
