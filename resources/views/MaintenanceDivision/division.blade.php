@@ -169,7 +169,7 @@
                         }
                     });
                 } else {
-                    swal("Cancel!", "", "error");
+                    swal("Cancelled", "", "error");
                 }
             });
     });

@@ -318,12 +318,12 @@
                             var dataResult = JSON.parse(dataResult);
                             if (dataResult.statusCode == 200) {
                                 $('#plantillaofposition').DataTable().ajax.reload();
-                                swal("Successfully Deleted!", "", "success");
+                                swal("Successfully Deleted", "", "success");
                             }
                         }
                     });
                 } else {
-                    swal("Cancel!", "", "error");
+                    swal("Cancelled", "", "error");
                 }
             });
     });

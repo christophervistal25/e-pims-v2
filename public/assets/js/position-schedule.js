@@ -365,7 +365,7 @@ function LockDepot() {
                     error: function(response) {}
                 });
             } else {
-                swal("Cancel!", "", "error");
+                swal("Cancelled", "", "error");
                 $("#saveBtn").attr("disabled", false);
                 $("#loading").addClass("d-none");
             }
