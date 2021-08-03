@@ -215,7 +215,7 @@ input[type=number] {
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
-                                <button type="submit" class="text-white shadow btn btn-lg btn-success w-100 ml-1" id="btnSave"><i class="lar la-save"></i> Add
+                                <button type="submit" class="text-white shadow btn btn-lg btn-success w-100 ml-1" id="btnSave"><i class="la la-save"></i> Add
                                 Record</button>
                             </div>
                             <div class="col-lg-6">

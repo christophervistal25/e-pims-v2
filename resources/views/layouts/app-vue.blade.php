@@ -284,7 +284,7 @@
                                     </a>
                                 </li>
 								<li>
-                                    <a class='text-decoration-none mr-2' href="#">
+                                    <a class='text-decoration-none mr-2' href="{{  route('compensatory-build-up.index') }}">
                                         Compensatory Build-up
                                     </a>
                                 </li>

@@ -135,6 +135,7 @@ class EmployeeLeaveRecordController extends Controller
         foreach($leaveRecord as $leaverec){
             $leaverec->delete();
         }
+        
         return response()->json(['success' => true]);
     }
 }
