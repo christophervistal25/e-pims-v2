@@ -224,7 +224,7 @@ $(document).ready(function() {
         );
         //positionMetaData
         if (document.querySelectorAll('[id="positionMetaData"]')[1] == null) {
-            var metaData = documentsear
+            var metaData = document
                 .querySelectorAll('[id="positionMetaData"]')[0]
                 .content.replaceAll("|", '"');
         } else {
