@@ -201,7 +201,7 @@
             <div id="stepIncrementTable" class="page-header">
                 <div class="row align-items-right mb-2">
                     <div class="col-auto float-right ml-auto">
-                        <button id="addBtn" type="button" class="btn btn-primary float-right shadow"><i class="fa fa-plus"></i>&nbsp
+                        <button id="addBtn" type="button" class="btn btn-primary float-right shadow"><i class="fa fa-plus"></i>&nbsp;
                             Add Step Increment </button>
                     </div>
                 </div>

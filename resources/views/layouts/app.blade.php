@@ -216,11 +216,19 @@
 				<div id="sidebar-menu" class="sidebar-menu">
 					<ul>
 						<li class="menu-title">
+							<span>Dashboard</span>
+						</li>
+						<li class="menu-title">
 							<span>Personal Information Module</span>
 						</li>
                         <li>
                             <a class='text-decoration-none' href="{{ route('employee.index') }}">
                                 <i class="la la-users"></i> <span> Employees </span>
+                            </a>
+                        </li>
+						<li>
+                            <a class='text-decoration-none' href="{{ route('employee.index') }}">
+                                <i class="la la-birthday-cake"></i> <span> Employee's Birthday </span>
                             </a>
                         </li>
                         <li>
