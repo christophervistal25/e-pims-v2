@@ -1,53 +1,118 @@
-@extends('layouts.app-vue')
+@extends('layouts.app')
 @section('title', 'Leave Lists')
 @prepend('page-css')
 
-<script src="{{ asset('/js/app.js') }}" defer></script>
-<link rel="stylesheet"
-    href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+{{-- <script src="{{ asset('/js/app.js') }}" defer></script> --}}
+{{-- <link rel="stylesheet"
+    href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"> --}}
 <link rel="stylesheet"
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+    <link rel="stylesheet" href="/assets/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 @endprepend
 @section('content')
 
-<section class="col">
+<section class="mb-2">
     <div class="row">
-        <div class="card card-body col-4 text-center bg-light" style="background: linear-gradient(0deg, rgba(93,183,204,1) 0%, rgba(6,102,251,1) 100%); height: 100px;">
-            <h5 class="text-white" style="margin: auto;">All</h5>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4">
+            <div class="card dash-widget">
+                <div class="card-body">
+                    <span class="dash-widget-icon">
+                        <i class="fas fa-tasks text-dark"></i>
+                    </span>
+                    <div class="dash-widget-info">
+                        <h3>{{ $approved + $reject + $pending + $ongoing + $enjoy }}</h3>
+                        <span class="text-uppercase font Medium">ALL</span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card card-body col-4 text-center bg-light" style="background: linear-gradient(0deg, rgba(194,198,94,1) 0%, rgba(251,240,6,1) 100%);">
-            <h5 class="text-white" style="margin: auto;">Pending</h5>
+        
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4 ">
+            <div class="card dash-widget">
+                <div class="card-body">
+                    <span class="dash-widget-icon">
+                        <i class="far fa-thumbs-up text-success"></i>
+                    </span>
+                    <div class="dash-widget-info">
+                        <h3 class="">{{ $approved }}</h3>
+                        <span class="text-uppercase font Medium">APPROVED</span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card card-body col-4 text-center bg-light" style="background: linear-gradient(0deg, rgba(228,126,147,1) 0%, rgba(255,8,9,1) 100%);">
-            <h5 class="text-white" style="margin: auto;">Reject</h5>
+
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4 ">
+            <div class="card dash-widget">
+                <div class="card-body">
+                    <span class="dash-widget-icon">
+                        <i class="far fa-thumbs-down text-danger"></i>
+                    </span>
+                    <div class="dash-widget-info">
+                        <h3 class="">{{ $reject }}</h3>
+                        <span class="text-uppercase font Medium">DECLINED</span>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    
+
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4 ">
+            <div class="card dash-widget">
+                <div class="card-body">
+                    <span class="dash-widget-icon">
+                        <i class="fas fa-spinner text-warning"></i>
+                    </span>
+                    <div class="dash-widget-info">
+                        <h3>{{ $pending }}</h3>
+                        <span class="text-uppercase font Medium">PENDING</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4 ">
+            <div class="card dash-widget">
+                <div class="card-body">
+                    <span class="dash-widget-icon">
+                        <i class="fas fa-paper-plane " style="color :#84bee1;"></i>
+                    </span>
+                    <div class="dash-widget-info">
+                        <h3>{{ $ongoing }}</h3>
+                        <span class="text-uppercase font Medium">ON-GOING</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4 ">
+            <div class="card dash-widget">
+                <div class="card-body">
+                    <span class="dash-widget-icon">
+                        <i class="fas fa-smile-beam text-primary"></i>
+                    </span>
+                    <div class="dash-widget-info">
+                        <h3>{{ $enjoy }}</h3>
+                        <span class="text-uppercase font Medium">ENJOY</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
 </section>
 
-<section class="col">
-    <div class="row">
-        <div class="card card-body col-4 float-left text-center bg-light" style="background: linear-gradient(0deg, rgba(120,213,143,1) 0%, rgba(1,215,0,1) 100%); height: 100px;">
-            <h5 class="text-white" style="margin: auto;">Approved</h5>
-        </div>
-        <div class="card card-body col-4 mx-auto text-center bg-light" style="background: linear-gradient(0deg, rgba(128,117,119,1) 0%, rgba(0,0,0,1) 100%);">
-            <h5 class="text-white" style="margin: auto;">On-going</h5>
-        </div>
-        <div class="card card-body col-4 float-right text-center bg-light" style="background: linear-gradient(0deg, rgba(235,170,131,1) 0%, rgba(247,136,0,1) 100%);">
-            <h5 class="text-white" style="margin: auto;">Enjoyed</h5>
-        </div>
-    </div>
-</section>
 
 {{-- LEAVE APPLICATION CARD --}}
 <div class="row">
     <div class="col-lg-12">
-        <div id="leaveApplicationList" class="card bg-light">
-            <div class="card-body">
-                <div class="row mt-1">
-                    <div class="col-lg-4">
+        <div id="leaveApplicationList" class="card">
+            <div class="card-body mt-3">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-lg-4 col-xl-4 mt-3">
                         <label for="officelist" class="form-group has-float-label mb-0">
-                            <select class="form-control select-picker" name="officeList" type="text" id="officeList" data-live-search="true" data-size="4" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <option>All Office</option>
+                            <select class="form-control selectpicker" name="officeList" type="text" id="searchOffice" data-live-search="true" data-size="4" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <option>All</option>
                                 @foreach($offices as $office)
                                 <option value="{{ $office->office_code }}">{{ $office->office_name }}</option>
                                 @endforeach
@@ -55,9 +120,10 @@
                             <span><strong>Filter Offices</strong></span>
                         </label>
                     </div>
-                    <div class="col-lg-4">
+
+                    <div class="col-md-12 col-sm-12 col-lg-4 col-xl-4 mt-3">
                         <label for="filteropt" class="form-group has-float-label mb-0">
-                            <select name="filteropt" type="text" id="filteropt" class="form-control"
+                            <select name="filteropt" type="text" id="searchStatus" class="form-control selectpicker border border-primary" data-live-search="true"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <option readonly selected>All</option>
                                 <option>Pending</option>
@@ -69,20 +135,17 @@
                             <span><strong>Status</strong></span>
                         </label>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="row">
-                            <div class="col-lg-10">
-                                <label for="employeeName" class="form-group has-float-label">
-                                        <select class="form-control selectpicker" name="searchName" id="searchName" data-live-search="true">
-                                            <option>Select names...</option>
-                                                @foreach($employees as $employee)
-                                            <option value="{{ $employee->employee_id }}">{{ $employee->lastname }}, {{ $employee->firstname }} {{ $employee->middlename }}</option>
-                                                @endforeach
-                                        </select>
-                                    <span><strong>Search by Employee</strong></span>
-                                </label>
-                            </div>
-                        </div>
+
+                    <div class="col-md-12 col-sm-12 col-lg-4 col-xl-4 mt-3">
+                        <label for="employeeName" class="form-group has-float-label">
+                                <select class="form-control selectpicker" name="searchName" id="searchName" data-live-search="true">
+                                    <option>All</option>
+                                        @foreach($employees as $employee)
+                                    <option value="{{ $employee->employee_id }}">{{ $employee->lastname }}, {{ $employee->firstname }} {{ $employee->middlename }}</option>
+                                        @endforeach
+                                </select>
+                            <span><strong>Search by Employee</strong></span>
+                        </label>
                     </div>
                 </div>
 
@@ -101,12 +164,13 @@
                                     
                                     <th class="font-weight-bold align-middle text-center" rowspan="2">Commutation</th>   
                                     <th class="font-weight-bold align-middle text-center" rowspan="2">Status</th>
-                                    <th class="font-weight-bold align-middle text-center" rowspan="1" colspan="4">Date</th>
+                                    <th class="font-weight-bold align-middle text-center" rowspan="1" colspan="5">Date</th>
                                     <th class="font-weight-bold align-middle text-center" rowspan="2">No. of Days</th>
                                     <th class="font-weight-bold align-middle text-center" rowspan="2">Actions</th>
                                     <tr>
                                         <td class="font-weight-bold align-middle text-center">Applied</td>
                                         <td class="font-weight-bold align-middle text-center">Approved</td>
+                                        <td class="font-weight-bold align-middle text-center">Rejected</td>
                                         <td class="font-weight-bold align-middle text-center">From</td>
                                         <td class="font-weight-bold align-middle text-center">To</td>
                                     </tr>  
@@ -329,6 +393,7 @@
 <script src="/assets/js/jquery.dataTables.min.js"></script>
 <script src="/assets/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script>
 
     $.ajaxSetup({
@@ -352,13 +417,15 @@
                     processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
             },
             columns: [{
-                data: 'fullname',
-                name: 'fullname',
-                searchable: true,
-                sortable: false,
-                visible: true
+                    className : 'text-truncate',
+                    data: 'fullname',
+                    name: 'fullname',
+                    searchable: true,
+                    sortable: false,
+                    visible: true
                 },
                 {
+                    className : 'text-truncate',
                     data: 'recommending_approval',
                     name: 'recommending_approval',
                     searchable: true,
@@ -366,6 +433,7 @@
                     visible: true
                 },
                 {
+                    className : 'text-truncate',
                     data: 'approved_by',
                     name: 'approved_by',
                     searchable: true,
@@ -373,6 +441,7 @@
                     visible: true
                 },
                 {
+                    className: 'text-truncate',
                     data: 'leave_type_name',
                     name: 'leave_type_name',
                     searchable: true,
@@ -380,11 +449,15 @@
                     visible: true
                 },
                 {
+                    className: 'text-truncate',
                     data: 'incase_of',
                     name: 'incase_of',
                     searchable: true,
                     sortable: false,
-                    visible: true
+                    visible: true,
+                    render : function (data) {
+                        return data.replace('_', ' ').toUpperCase();
+                    }
                 },
                 {
                     data: 'commutation',
@@ -398,9 +471,23 @@
                     name: 'approved_status',
                     searchable: true,
                     sortable: false,
-                    visible: true
+                    visible: true,
+                    render : function(data){
+                        if(data == 'pending'){
+                            return `<span class='badge badge-warning text-white'>${data}</span>`;
+                        }else if (data == 'declined'){
+                            return `<span class='badge badge-danger'>${data}</span>`;
+                        }else if (data == 'approved'){
+                            return `<span class='badge badge-success'>${data}</span>`;
+                        }else if (data == 'on-going'){
+                            return `<span class='badge badge-info'>${data}</span>`;
+                        }else if (data == 'enjoyed'){
+                            return `<span class='badge badge-primary'>${data}</span>`;
+                        }
+                    }
                 },
                 {
+                    className: 'text-truncate',
                     data: 'date_applied',
                     name: 'date_applied'
                 },
@@ -409,14 +496,22 @@
                     name: 'date_approved'
                 },
                 {
+                    className: 'text-truncate',
+                    data: 'date_rejected',
+                    name: 'date_rejected'
+                },
+                {
+                    className: 'text-truncate',
                     data: 'date_from',
                     name: 'date_from'
                 },
                 {
+                    className: 'text-truncate',
                     data: 'date_to',
                     name: 'date_to'
                 },
                 {
+                    className: 'text-truncate',
                     data: 'no_of_days',
                     name: 'no_of_days'
                 },
@@ -472,10 +567,7 @@
      });
 
 
-     
-
     
-
 
     function showLeaveApplication() {
     var x = document.getElementById("leaveApplication");
@@ -491,11 +583,762 @@
         y.style.display = "block";
     }
 
+    
+    // SEARCH OFFICE //
+$(function() {
+    let leaveListTable = $('#leaveListTable').DataTable({
+        processing: true,
+        pagingType: "full_numbers",
+        stateSave: true,
+        serverSide: true,
+        destroy: true,
+        retrieve: true,
+        language: {
+            processing:
+            '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span>'
+        },
+        ajax: {
+            url: "/employee/leave/leave-list"
+        },
+        columns: [{
+                className : 'text-truncate',
+                data: 'fullname',
+                name: 'fullname',
+                searchable: true,
+                sortable: false,
+                visible: true
+            },
+            {
+                className : 'text-truncate',
+                data: 'recommending_approval',
+                name: 'recommending_approval',
+                searchable: true,
+                sortable: false,
+                visible: true
+            },
+            {
+                className : 'text-truncate',
+                data: 'approved_by',
+                name: 'approved_by',
+                searchable: true,
+                sortable: false,
+                visible: true
+            },
+            {
+                className: 'text-truncate',
+                data: 'leave_type_name',
+                name: 'leave_type_name',
+                searchable: true,
+                sortable: false,
+                visible: true
+            },
+            {
+                className: 'text-truncate',
+                data: 'incase_of',
+                name: 'incase_of',
+                searchable: true,
+                sortable: false,
+                visible: true,
+                render : function (data) {
+                    return data.replace('_', ' ').toUpperCase();
+                }
+            },
+            {
+                data: 'commutation',
+                name: 'commutation',
+                searchable: true,
+                sortable: false,
+                visible: true
+            },
+            {
+                data: 'approved_status',
+                name: 'approved_status',
+                searchable: true,
+                sortable: false,
+                visible: true,
+                render : function(data){
+                    if(data == 'pending'){
+                        return `<span class='badge badge-warning text-white'>${data}</span>`;
+                    }else if (data == 'declined'){
+                        return `<span class='badge badge-danger'>${data}</span>`;
+                    }else if (data == 'approved'){
+                        return `<span class='badge badge-success'>${data}</span>`;
+                    }else if (data == 'on-going'){
+                        return `<span class='badge badge-info'>${data}</span>`;
+                    }else if (data == 'enjoyed'){
+                        return `<span class='badge badge-primary'>${data}</span>`;
+                    }
+                }
+            },
+            {
+                className: 'text-truncate',
+                data: 'date_applied',
+                name: 'date_applied'
+            },
+            {
+                data: 'date_approved',
+                name: 'date_approved'
+            },
+            {
+                className: 'text-truncate',
+                data: 'date_rejected',
+                name: 'date_rejected'
+            },
+            {
+                className: 'text-truncate',
+                data: 'date_from',
+                name: 'date_from'
+            },
+            {
+                className: 'text-truncate',
+                data: 'date_to',
+                name: 'date_to'
+            },
+            {
+                className: 'text-truncate',
+                data: 'no_of_days',
+                name: 'no_of_days'
+            },
+            {
+                data: 'action',
+                name: 'action'
+            }
+        ] 
+    });
 
-   
+    $("#searchOffice").change(function(e) {
+        let officeID = e.target.value;
+
+            leaveListTable.destroy();
+            leaveListTable = $("#leaveListTable").DataTable({
+                processing: true,
+                pagingType: "full_numbers",
+                stateSave: true,
+                serverSide: true,
+                destroy: true,
+                retrieve: true,
+                language: {
+                    processing:
+                    '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span>'
+                },
+                ajax: {
+                    url: `/api/leave/leave-list/${officeID}`
+                },
+                columns: [{
+                        className : 'text-truncate',
+                        data: 'fullname',
+                        name: 'fullname',
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        className : 'text-truncate',
+                        data: 'recommending_approval',
+                        name: 'recommending_approval',
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        className : 'text-truncate',
+                        data: 'approved_by',
+                        name: 'approved_by',
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        className: 'text-truncate',
+                        data: 'leave_type_name',
+                        name: 'leave_type_name',
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        className: 'text-truncate',
+                        data: 'incase_of',
+                        name: 'incase_of',
+                        searchable: true,
+                        sortable: false,
+                        visible: true,
+                        render : function (data) {
+                            return data.replace('_', ' ').toUpperCase();
+                        }
+                    },
+                    {
+                        data: 'commutation',
+                        name: 'commutation',
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        data: 'approved_status',
+                        name: 'approved_status',
+                        searchable: true,
+                        sortable: false,
+                        visible: true,
+                        render : function(data){
+                            if(data == 'pending'){
+                                return `<span class='badge badge-warning text-white'>${data}</span>`;
+                            }else if (data == 'declined'){
+                                return `<span class='badge badge-danger'>${data}</span>`;
+                            }else if (data == 'approved'){
+                                return `<span class='badge badge-success'>${data}</span>`;
+                            }else if (data == 'on-going'){
+                                return `<span class='badge badge-info'>${data}</span>`;
+                            }else if (data == 'enjoyed'){
+                                return `<span class='badge badge-primary'>${data}</span>`;
+                            }
+                        }
+                    },
+                    {
+                        className: 'text-truncate',
+                        data: 'date_applied',
+                        name: 'date_applied'
+                    },
+                    {
+                        data: 'date_approved',
+                        name: 'date_approved'
+                    },
+                    {
+                        className: 'text-truncate',
+                        data: 'date_rejected',
+                        name: 'date_rejected'
+                    },
+                    {
+                        className: 'text-truncate',
+                        data: 'date_from',
+                        name: 'date_from'
+                    },
+                    {
+                        className: 'text-truncate',
+                        data: 'date_to',
+                        name: 'date_to'
+                    },
+                    {
+                        className: 'text-truncate',
+                        data: 'no_of_days',
+                        name: 'no_of_days'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action'
+                    }
+                ] 
+            });
+
+        $('.dataTables_filter').remove();
+        $('#leaveListTable_length').remove();
+    });
+});
 
 
-   
+    // SEARCH STATUS //
+$(function (){
+    let leaveTable = $('#leaveListTable').DataTable({
+        processing: true,
+        pagingType: "full_numbers",
+        stateSave: true,
+        serverSide: true,
+        destroy: true,
+        retrieve: true,
+        language: {
+            processing:
+            '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span>'
+        },
+        ajax: {
+            url: "/employee/leave/leave-list"
+        },
+        columns: [{
+                className : 'text-truncate',
+                data: 'fullname',
+                name: 'fullname',
+                searchable: true,
+                sortable: false,
+                visible: true
+            },
+            {
+                className : 'text-truncate',
+                data: 'recommending_approval',
+                name: 'recommending_approval',
+                searchable: true,
+                sortable: false,
+                visible: true
+            },
+            {
+                className : 'text-truncate',
+                data: 'approved_by',
+                name: 'approved_by',
+                searchable: true,
+                sortable: false,
+                visible: true
+            },
+            {
+                className: 'text-truncate',
+                data: 'leave_type_name',
+                name: 'leave_type_name',
+                searchable: true,
+                sortable: false,
+                visible: true
+            },
+            {
+                className: 'text-truncate',
+                data: 'incase_of',
+                name: 'incase_of',
+                searchable: true,
+                sortable: false,
+                visible: true,
+                render : function (data) {
+                    return data.replace('_', ' ').toUpperCase();
+                }
+            },
+            {
+                data: 'commutation',
+                name: 'commutation',
+                searchable: true,
+                sortable: false,
+                visible: true
+            },
+            {
+                data: 'approved_status',
+                name: 'approved_status',
+                searchable: true,
+                sortable: false,
+                visible: true,
+                render : function(data){
+                    if(data == 'pending'){
+                        return `<span class='badge badge-warning text-white'>${data}</span>`;
+                    }else if (data == 'declined'){
+                        return `<span class='badge badge-danger'>${data}</span>`;
+                    }else if (data == 'approved'){
+                        return `<span class='badge badge-success'>${data}</span>`;
+                    }else if (data == 'on-going'){
+                        return `<span class='badge badge-info'>${data}</span>`;
+                    }else if (data == 'enjoyed'){
+                        return `<span class='badge badge-primary'>${data}</span>`;
+                    }
+                }
+            },
+            {
+                className: 'text-truncate',
+                data: 'date_applied',
+                name: 'date_applied'
+            },
+            {
+                data: 'date_approved',
+                name: 'date_approved'
+            },
+            {
+                className: 'text-truncate',
+                data: 'date_rejected',
+                name: 'date_rejected'
+            },
+            {
+                className: 'text-truncate',
+                data: 'date_from',
+                name: 'date_from'
+            },
+            {
+                className: 'text-truncate',
+                data: 'date_to',
+                name: 'date_to'
+            },
+            {
+                className: 'text-truncate',
+                data: 'no_of_days',
+                name: 'no_of_days'
+            },
+            {
+                data: 'action',
+                name: 'action'
+            }
+        ] 
+    });
+
+    $("#searchStatus").change(function(e) {
+        let typeID = e.target.value;
+
+            leaveTable.destroy();
+            leaveTable = $("#leaveListTable").DataTable({
+                processing: true,
+                pagingType: "full_numbers",
+                stateSave: true,
+                serverSide: true,
+                destroy: true,
+                retrieve: true,
+                language: {
+                    processing:
+                    '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span>'
+                },
+                ajax: {
+                    url: `/api/leave/leave-list/status/${typeID}`
+                },
+                columns: [{
+                        className : 'text-truncate',
+                        data: 'fullname',
+                        name: 'fullname',
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        className : 'text-truncate',
+                        data: 'recommending_approval',
+                        name: 'recommending_approval',
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        className : 'text-truncate',
+                        data: 'approved_by',
+                        name: 'approved_by',
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        className: 'text-truncate',
+                        data: 'leave_type_name',
+                        name: 'leave_type_name',
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        className: 'text-truncate',
+                        data: 'incase_of',
+                        name: 'incase_of',
+                        searchable: true,
+                        sortable: false,
+                        visible: true,
+                        render : function (data) {
+                            return data.replace('_', ' ').toUpperCase();
+                        }
+                    },
+                    {
+                        data: 'commutation',
+                        name: 'commutation',
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        data: 'approved_status',
+                        name: 'approved_status',
+                        searchable: true,
+                        sortable: false,
+                        visible: true,
+                        render : function(data){
+                            if(data == 'pending'){
+                                return `<span class='badge badge-warning text-white'>${data}</span>`;
+                            }else if (data == 'declined'){
+                                return `<span class='badge badge-danger'>${data}</span>`;
+                            }else if (data == 'approved'){
+                                return `<span class='badge badge-success'>${data}</span>`;
+                            }else if (data == 'on-going'){
+                                return `<span class='badge badge-info'>${data}</span>`;
+                            }else if (data == 'enjoyed'){
+                                return `<span class='badge badge-primary'>${data}</span>`;
+                            }
+                        }
+                    },
+                    {
+                        className: 'text-truncate',
+                        data: 'date_applied',
+                        name: 'date_applied'
+                    },
+                    {
+                        data: 'date_approved',
+                        name: 'date_approved'
+                    },
+                    {
+                        className: 'text-truncate',
+                        data: 'date_rejected',
+                        name: 'date_rejected'
+                    },
+                    {
+                        className: 'text-truncate',
+                        data: 'date_from',
+                        name: 'date_from'
+                    },
+                    {
+                        className: 'text-truncate',
+                        data: 'date_to',
+                        name: 'date_to'
+                    },
+                    {
+                        className: 'text-truncate',
+                        data: 'no_of_days',
+                        name: 'no_of_days'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action'
+                    }
+                ] 
+            });
+
+        $('.dataTables_filter').remove();
+        $('#leaveListTable_length').remove();
+    
+    });
+});
+
+
+    // SEARCH NAME // 
+$(function (){
+    let leaveTable = $('#leaveListTable').DataTable({
+        processing: true,
+        pagingType: "full_numbers",
+        stateSave: true,
+        serverSide: true,
+        destroy: true,
+        retrieve: true,
+        language: {
+            processing:
+            '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span>'
+        },
+        ajax: {
+            url: "/employee/leave/leave-list"
+        },
+        columns: [{
+                className : 'text-truncate',
+                data: 'fullname',
+                name: 'fullname',
+                searchable: true,
+                sortable: false,
+                visible: true
+            },
+            {
+                className : 'text-truncate',
+                data: 'recommending_approval',
+                name: 'recommending_approval',
+                searchable: true,
+                sortable: false,
+                visible: true
+            },
+            {
+                className : 'text-truncate',
+                data: 'approved_by',
+                name: 'approved_by',
+                searchable: true,
+                sortable: false,
+                visible: true
+            },
+            {
+                className: 'text-truncate',
+                data: 'leave_type_name',
+                name: 'leave_type_name',
+                searchable: true,
+                sortable: false,
+                visible: true
+            },
+            {
+                className: 'text-truncate',
+                data: 'incase_of',
+                name: 'incase_of',
+                searchable: true,
+                sortable: false,
+                visible: true,
+                render : function (data) {
+                    return data.replace('_', ' ').toUpperCase();
+                }
+            },
+            {
+                data: 'commutation',
+                name: 'commutation',
+                searchable: true,
+                sortable: false,
+                visible: true
+            },
+            {
+                data: 'approved_status',
+                name: 'approved_status',
+                searchable: true,
+                sortable: false,
+                visible: true,
+                render : function(data){
+                    if(data == 'pending'){
+                        return `<span class='badge badge-warning text-white'>${data}</span>`;
+                    }else if (data == 'declined'){
+                        return `<span class='badge badge-danger'>${data}</span>`;
+                    }else if (data == 'approved'){
+                        return `<span class='badge badge-success'>${data}</span>`;
+                    }else if (data == 'on-going'){
+                        return `<span class='badge badge-info'>${data}</span>`;
+                    }else if (data == 'enjoyed'){
+                        return `<span class='badge badge-primary'>${data}</span>`;
+                    }
+                }
+            },
+            {
+                className: 'text-truncate',
+                data: 'date_applied',
+                name: 'date_applied'
+            },
+            {
+                data: 'date_approved',
+                name: 'date_approved'
+            },
+            {
+                className: 'text-truncate',
+                data: 'date_rejected',
+                name: 'date_rejected'
+            },
+            {
+                className: 'text-truncate',
+                data: 'date_from',
+                name: 'date_from'
+            },
+            {
+                className: 'text-truncate',
+                data: 'date_to',
+                name: 'date_to'
+            },
+            {
+                className: 'text-truncate',
+                data: 'no_of_days',
+                name: 'no_of_days'
+            },
+            {
+                data: 'action',
+                name: 'action'
+            }
+        ] 
+    });
+
+    $("#searchName").change(function(e) {
+        let employeeID = e.target.value;
+
+            leaveTable.destroy();
+            leaveTable = $("#leaveListTable").DataTable({
+                processing: true,
+                pagingType: "full_numbers",
+                stateSave: true,
+                serverSide: true,
+                destroy: true,
+                retrieve: true,
+                language: {
+                    processing:
+                    '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span>'
+                },
+                ajax: {
+                    url: `/api/leave/leave-list/employee/${employeeID}`
+                },
+                columns: [{
+                        className : 'text-truncate',
+                        data: 'fullname',
+                        name: 'fullname',
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        className : 'text-truncate',
+                        data: 'recommending_approval',
+                        name: 'recommending_approval',
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        className : 'text-truncate',
+                        data: 'approved_by',
+                        name: 'approved_by',
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        className: 'text-truncate',
+                        data: 'leave_type_name',
+                        name: 'leave_type_name',
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        className: 'text-truncate',
+                        data: 'incase_of',
+                        name: 'incase_of',
+                        searchable: true,
+                        sortable: false,
+                        visible: true,
+                        render : function (data) {
+                            return data.replace('_', ' ').toUpperCase();
+                        }
+                    },
+                    {
+                        data: 'commutation',
+                        name: 'commutation',
+                        searchable: true,
+                        sortable: false,
+                        visible: true
+                    },
+                    {
+                        data: 'approved_status',
+                        name: 'approved_status',
+                        searchable: true,
+                        sortable: false,
+                        visible: true,
+                        render : function(data){
+                            if(data == 'pending'){
+                                return `<span class='badge badge-warning text-white'>${data}</span>`;
+                            }else if (data == 'declined'){
+                                return `<span class='badge badge-danger'>${data}</span>`;
+                            }else if (data == 'approved'){
+                                return `<span class='badge badge-success'>${data}</span>`;
+                            }else if (data == 'on-going'){
+                                return `<span class='badge badge-info'>${data}</span>`;
+                            }else if (data == 'enjoyed'){
+                                return `<span class='badge badge-primary'>${data}</span>`;
+                            }
+                        }
+                    },
+                    {
+                        className: 'text-truncate',
+                        data: 'date_applied',
+                        name: 'date_applied'
+                    },
+                    {
+                        data: 'date_approved',
+                        name: 'date_approved'
+                    },
+                    {
+                        className: 'text-truncate',
+                        data: 'date_rejected',
+                        name: 'date_rejected'
+                    },
+                    {
+                        className: 'text-truncate',
+                        data: 'date_from',
+                        name: 'date_from'
+                    },
+                    {
+                        className: 'text-truncate',
+                        data: 'date_to',
+                        name: 'date_to'
+                    },
+                    {
+                        className: 'text-truncate',
+                        data: 'no_of_days',
+                        name: 'no_of_days'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action'
+                    }
+                ] 
+            });
+        $('.dataTables_filter').remove();
+        $('#leaveListTable_length').remove();    
+    });
+});
+    
 </script>
 @endpush
 @endsection

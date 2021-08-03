@@ -5,14 +5,15 @@ namespace App\Http\Controllers\EmployeeLeave;
 use DB;
 use App\Office;
 use App\Employee;
+use Carbon\Carbon;
 use App\EmployeeLeaveRecord;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use App\EmployeeLeaveApplication;
 use App\Http\Controllers\Controller;
-use App\Http\Repositories\LeaveRecordRepository;
-use App\Http\Repositories\LeaveTypeRepository;
 use Illuminate\Support\Facades\Session;
+use App\Http\Repositories\LeaveTypeRepository;
+use App\Http\Repositories\LeaveRecordRepository;
 
 
 class LeaveListController extends Controller
@@ -32,7 +33,8 @@ class LeaveListController extends Controller
         $data = DB::table('employee_leave_applications')
         ->leftJoin('employees', 'employees.employee_id', '=', 'employee_leave_applications.employee_id')
         ->leftJoin('leave_types', 'leave_types.id', '=', 'employee_leave_applications.leave_type_id')
-        ->select('employee_leave_applications.id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'recommending_approval', 'approved_by', 'leave_type_id', 'incase_of', 'commutation', 'approved_status', 'date_approved', 'date_applied', 'date_from', 'date_to', 'no_of_days', 'leave_types.id as leave_type_id', 'leave_types.name AS leave_type_name')
+        ->leftJoin('employee_informations', 'employee_informations.EmpIDNo', '=', 'employee_leave_applications.employee_id')
+        ->select('employee_leave_applications.id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'recommending_approval', 'approved_by', 'leave_type_id', 'incase_of', 'commutation', 'approved_status', 'date_approved', 'date_rejected', 'date_applied', 'date_from', 'date_to', 'no_of_days', 'leave_types.id as leave_type_id', 'leave_types.name AS leave_type_name')
 
         ->where('employee_leave_applications.deleted_at', null)
         ->get();
@@ -40,7 +42,6 @@ class LeaveListController extends Controller
         if($data->count() === 0){
             $data = $data->where('deleted_at', null);
         }
-
 
 
         return Datatables::of($data)
@@ -51,13 +52,13 @@ class LeaveListController extends Controller
 
 
             // DELETE FUNCTION IN YAJRA TABLE //
-            $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="'.$row->id.'"><i style="pointer-events:none;" class="la la-trash"></i></button>';
+            $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="'.$row->id.'" hidden><i style="pointer-events:none;" class="la la-trash"></i></button>';
 
 
             return $btnUpdate . "&nbsp" . $btnDelete;
         })->make(true);
     }
-
+ 
 
     // Leave List
     public function index()
@@ -65,11 +66,11 @@ class LeaveListController extends Controller
         $all = EmployeeLeaveApplication::recordByStatus('all');
         $pending = EmployeeLeaveApplication::recordByStatus('pending');
         $approved = EmployeeLeaveApplication::recordByStatus('approved');
-        $reject = EmployeeLeaveApplication::recordByStatus('reject');
-        $ongoing = EmployeeLeaveApplication::recordByStatus('ongoing');
-        $enjoy = EmployeeLeaveApplication::recordByStatus('enjoy');
+        $reject = EmployeeLeaveApplication::recordByStatus('declined');
+        $ongoing = EmployeeLeaveApplication::recordByStatus('on-going');
+        $enjoy = EmployeeLeaveApplication::recordByStatus('enjoyed  ');
         $offices = Office::select('office_code', 'office_name')->get();
-        $employees = Employee::select('employee_id', 'firstname', 'middlename', 'lastname')->get();
+        $employees = Employee::has('leave_files')->select('employee_id', 'firstname', 'middlename', 'lastname')->get();
 
 
         // leave.leave-list is the name of the file
@@ -101,7 +102,6 @@ class LeaveListController extends Controller
     public function update(Request $request, $id)
     {
         $leaveList = EmployeeLeaveApplication::find($id);
-        $leaveList->employee_id                 =       $request['employeeID'];
         $leaveList->date_applied                =       $request['dateApply'];
         $leaveList->leave_type_id               =       $request['selectedLeave'];
         $leaveList->incase_of                   =       $request['inCaseOfLeave'];
@@ -109,9 +109,11 @@ class LeaveListController extends Controller
         $leaveList->date_from                   =       $request['startDate'];
         $leaveList->date_to                     =       $request['endDate'];
         $leaveList->commutation                 =       $request['commutation'];
-        $leaveList->date_approved               =       $request['dateApproved'];
+        $leaveList->date_approved               =       Carbon::now()->format('Y-m-d');
+        $leaveList->date_rejected               =       Carbon::now()->format('Y-m-d');
         $leaveList->recommending_approval       =       $request['recommendingApproval'];
         $leaveList->approved_by                 =       $request['approvedBy'];
+        $leaveList->approved_status             =       $request['status'];
         $leaveList->save();
         
         // dd($leaveList);

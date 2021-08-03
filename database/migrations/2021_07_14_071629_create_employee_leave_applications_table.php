@@ -22,8 +22,9 @@ class CreateEmployeeLeaveApplicationsTable extends Migration
             $table->string('incase_of');
             $table->unsignedInteger('no_of_days');
             $table->enum('commutation', ['REQUESTED', 'NOT REQUESTED']);
-            $table->enum('approved_status', ['all', 'pending', 'reject', 'approved', 'on-going', 'enjoyed'])->default('pending');
+            $table->enum('approved_status', ['all', 'pending', 'declined', 'approved', 'on-going', 'enjoyed'])->default('pending');
             $table->date('date_approved')->nullable();
+            $table->date('date_rejected')->nullable();
             $table->date('date_applied');
             $table->date('date_from');
             $table->date('date_to');

@@ -27,7 +27,6 @@
                             <div class="col-lg-6 border border-bottom-0 border-left-0 border-top-0">
                                 <h6 class="text-sm text-left font-weight-medium">EMPLOYEE NAME</h6>
 
-                                <input type="number" name="employeeID" class="form-control" id="employeeId" value="{{ old('employeeID') ?? $types->employee_id }}" hidden>
 
                                 <label class="has-float-label" for="employeeName">
                                     <input type="text" name="employeeName" class="form-control" id="employeeName"
@@ -310,11 +309,14 @@
                             
                         </div>
                         <div class="row mt-2 float-right">
-                            <input type="date" name="dateApproved" id="dateApproved" class="form-control col-3 mr-3" value="{{ date('Y-m-d') }}" hidden>
+                            {{-- <input type="date" name="dateApproved" id="dateApproved" class="form-control col-3 mr-3" value="{{ date('Y-m-d') }}" hidden> --}}
+                            {{-- <input type="date" name="dateRejected" id="dateRejected" class="form-control col-3 mr-3" value="{{ date('Y-m-d') }}" hidden> --}}
 
-                            <a href="/employee/leave/leave-list" class="btn btn-lg mr-3" style="background-color: orange; color: white;"><i class="la la-list"></i> Go back to List</a>
-                            <button class="btn btn-danger btn-lg mr-3" id="btnReject"><i class="fas fa-thumbs-down"></i> Reject</button>
-                            <button type="submit" class="btn btn-success btn-lg mr-4" id="btnApproved"><i class="far fa-thumbs-up"></i> Approved</i></button>
+                            <a href="/employee/leave/leave-list" class="btn btn-md mr-3" style="background-color: orange; color: white;"><i class="la la-list"></i> Go back to List</a>
+                            
+                            <button class="btn btn-danger btn-md mr-3" id="btnReject"><i class="fas fa-thumbs-down"></i> Reject</button>
+
+                            <button type="submit" class="btn btn-success btn-md mr-4" id="btnApproved"><i class="far fa-thumbs-up"></i> Approved</i></button>
                         </div>
                         <div class="clearfix"></div>
                         </form>
@@ -331,6 +333,13 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
+     $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+
     const ROUTE = "{{ route('employee.leave.application.filling.submit') }}";
     const VACATION_LEAVE_EARNED = "{{ $vacationLeave }}";
     const SICK_LEAVE_EARNED = "{{ $sickLeaveEarned }}";
@@ -429,82 +438,167 @@
         });
     });
 
-    $('#apply__for__leave__form').submit(function (e) {
-        e.preventDefault();
-        
-        let data = {
-            dateApply : $('#dateApplied').val(),
-            typeOfLeave : $('#leaveTypes').val(),
-            inCaseOf : $('#incaseOf').val(),
-            noOfDays : $("#numberOfDays").val(),
-            startDate : $('#dateStarted').val(),
-            endDate : $('#dateEnded').val(),
-            earned : $('#earned').val(),
-            earnedLess : $('#lessEarned').val(),
-            earnedRemaining : $('#remainEarned').val(),
-            commutation : $('#commutation').val(),
-            recommendingApproval : $('#recommendingApproval').val(),
-            approvedBy : $('#approvedBy').val(),
-            fullname : '',
-        };
-
-        $.ajax({
-            url : ROUTE,
-            method : 'POST',
-            data : data,
-            success : function (response) {
-                if(response.success) {
-                    swal({
-                        title: "Good Job!",
-                        text: "Your leave application successfully submit plesae wait for the approval.",
-                        icon: "success",
-                        timer: 5000
-                    });
-
-                    data.fullname = response.fullname;
-
-                    socket.emit(`submit_application_for_leave`, data);
-                }
-            },
-        });
-
-    });
+    
 
 
+
+    // APPROVED BUTTON FOR A LEAVE REQUEST //
     let btnApproved = document.querySelector('#btnApproved');
 
     btnApproved.addEventListener('click', (e)=> {
         e.preventDefault();
+        let employeeId = $('#employeeId');
+        let recommendingApproval = $('#recommendingApproval');
+        let approvedBy = $('#approvedBy');
+        let leaveTypes = $('#leaveTypes');
+        let dateApplied = $('#dateApplied');
+        let commutation = $('#commutation');
+        let incaseOf = $('#incaseOf');
+        let numberOfDays = $('#numberOfDays');
+        let dateStarted = $('#dateStarted');
+        let dateEnded = $('#dateEnded');
+        // let dateApproved= $('#dateApproved');
+
+
         let id = "{{ $data->id }}";
 
-        let data = {
-                employeeID : document.querySelector('#employeeId').value,
-                recommendingApproval : document.querySelector('#recommendingApproval').value,
-                approvedBy : document.querySelector('#approvedBy').value,
-                selectedLeave : document.querySelector('#leaveTypes').value,
-                dateApply : document.querySelector('#dateApplied').value,
-                commutation : document.querySelector('#commutation').value,
-                inCaseOfLeave : document.querySelector('#incaseOf').value,
-                numberOfDays : document.querySelector('#numberOfDays').value,
-                startDate : document.querySelector('#dateStarted').value,
-                endDate: document.querySelector('#dateEnded').value,
-                dateApproved : document.querySelector('#dateApproved').value
-            };
+            swal({
+                    title: "Are you sure you want to approve this request?",
+                    text : "You are about to approve a leave request",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: false,
+                })
+                .then((ifApproved) => {
+                    if (ifApproved) {
+                        $.ajax({
+                        url: `/employee/leave/leave-list/${id}`,
+                        data: {
+                            employeeID : employeeId.val(),
+                            recommendingApproval : recommendingApproval.val(),
+                            approvedBy : approvedBy.val(),
+                            selectedLeave : leaveTypes.val(),
+                            dateApply : dateApplied.val(),
+                            commutation : commutation.val(),
+                            inCaseOfLeave : incaseOf.val(),
+                            numberOfDays : numberOfDays.val(),
+                            startDate : dateStarted.val(),
+                            endDate : dateEnded.val(),
+                            status : 'approved',
+                            // dateApproved : dateApproved.val()
+                            },
+                        method: 'PUT',
+                        success: function() {
+
+                            swal({
+                                    title: "Request has been approved!",
+                                    text : "You are also successfully updated a request",
+                                    icon: "success",
+                                });  
+
+                            },
+                            
+                        });
+                    }
+                });
+                
+                 // let data = {
+        //         employeeID : document.querySelector('#employeeId').value,
+        //         recommendingApproval : document.querySelector('#recommendingApproval').value,
+        //         approvedBy : document.querySelector('#approvedBy').value,
+        //         selectedLeave : document.querySelector('#leaveTypes').value,
+        //         dateApply : document.querySelector('#dateApplied').value,
+        //         commutation : document.querySelector('#commutation').value,
+        //         inCaseOfLeave : document.querySelector('#incaseOf').value,
+        //         numberOfDays : document.querySelector('#numberOfDays').value,
+        //         startDate : document.querySelector('#dateStarted').value,
+        //         endDate: document.querySelector('#dateEnded').value,
+        //         dateApproved : document.querySelector('#dateApproved').value
+        //     };
+
+
+        // fetch(`/employee/leave/leave-list/${id}`, {
+            //     method: 'PUT',
+            //     headers: {
+            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            //             'Content-Type': 'application/json',
+            //         },
+            //         body: JSON.stringify(data),
+            //         }).then(res => res.json())
+            //         .then((data) => {
+            // });
+
+            // swal("Request has been approved!", "You are also successfully updated the request.", "success");
+
+
+            
+    });
+
+
+    // REJECT BUTTON FOR A LEAVE REQUEST //
+    let btnReject = document.querySelector('#btnReject');
+
+    btnReject.addEventListener('click', (e)=> {
+        e.preventDefault();
+        let employeeId = $('#employeeId');
+        let recommendingApproval = $('#recommendingApproval');
+        let approvedBy = $('#approvedBy');
+        let leaveTypes = $('#leaveTypes');
+        let dateApplied = $('#dateApplied');
+        let commutation = $('#commutation');
+        let incaseOf = $('#incaseOf');
+        let numberOfDays = $('#numberOfDays');
+        let dateStarted = $('#dateStarted');
+        let dateEnded = $('#dateEnded');
+        // let dateRejected = $('#dateRejected');
+
+        let getId = "{{ $data->id }}";
 
         
-        fetch(`/employee/leave/leave-list/${id}`, {
-            method: 'PUT',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-                }).then(res => res.json())
-                .then((data) => {
-        });
+        swal({
+                title: "Are you sure you want to reject a request?",
+                text : "You are about to reject a leave request",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((isRejected) => {
+                if (isRejected) {
+                    $.ajax({
+                    url: `/employee/leave/leave-list/${getId}`,
+                    data: {
+                        employeeID : employeeId.val(),
+                        recommendingApproval : recommendingApproval.val(),
+                        approvedBy : approvedBy.val(),
+                        selectedLeave : leaveTypes.val(),
+                        dateApply : dateApplied.val(),
+                        commutation : commutation.val(),
+                        inCaseOfLeave : incaseOf.val(),
+                        numberOfDays : numberOfDays.val(),
+                        startDate : dateStarted.val(),
+                        endDate : dateEnded.val(),
+                        status : 'declined',
+                        // dateRejected : dateRejected.val()
+                        },
+                    method: 'PUT',
+                    success: function() {
 
-            swal("Good Job!", "You have successfully updated.", "success");
+                        swal({
+                                title: "Request has been rejected!",
+                                text : "You are rejected a leave request",
+                                icon: "error",
+                            });  
+
+                        },
+                        
+                    });
+                }
+            })
+
+           
     });
+
+
 
 </script>
 @endpush
