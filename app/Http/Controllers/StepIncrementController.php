@@ -47,7 +47,7 @@ class StepIncrementController extends Controller
                 // EDIT FUNCTION IN YAJRA TABLE //
 
                 ->addColumn('action', function($row) {
-                    $btnEdit = "<a href='". route('step-increment.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-info btn-sm'><i class='la la-edit' title='Edit'></i></a>";
+                    $btnEdit = "<a href='". route('step-increment.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil' title='Edit Step Increment'></i></a>";
 
 
                     // DELETE FUNCTION IN YAJRA TABLE //

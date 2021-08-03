@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Edit Leave Application Filing')
+@section('title', 'Update Leave Application Filing')
 @prepend('page-css')
 <link rel="stylesheet"
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />

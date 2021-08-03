@@ -35,7 +35,7 @@
         <div class="card-body">
             <div class="page-header d-none" id="addForm" >
             <div class="float-right" id='btnViewTableContainer'>
-                <button class="btn btn-primary shadow"><i class='la la-list'></i>&nbsp View Table</button>
+                <button class="btn btn-primary shadow"><i class='fa fa-list'></i>&nbsp; Personnel List</button>
             </div>
             <br>
             <br>
@@ -190,7 +190,7 @@
                                 <button type="submit" id="btnSave"
                                     class="form-control col-5 float-right btn btn-success mb-5 shadow" onclick="update()"><i class="fas fa-save"></i>&nbsp; Save</button>
                                 <button type="button" id="btnCancel" style="margin-right:10px"
-                                    class="form-control col-5 btn btn-warning float-right shadow text-light"><i class="fas fa-ban"></i>&nbsp; Cancel</button>
+                                    class="form-control col-5 btn btn-danger float-right shadow text-light"><i class="fas fa-ban"></i>&nbsp; Cancel</button>
                             </div>
                         </div>
                         <form>

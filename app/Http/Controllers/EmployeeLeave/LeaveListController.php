@@ -48,7 +48,7 @@ class LeaveListController extends Controller
         ->addColumn('action', function($row)
         {
             // route('leave.leave-list.edit', $row->id) is the name of the route on the web.php
-            $btnUpdate = "<a href='". route('leave-list.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-edit' title='Edit'></i></a>";
+            $btnUpdate = "<a href='". route('leave-list.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil' title='Update Leave Request'></i></a>";
 
 
             // DELETE FUNCTION IN YAJRA TABLE //
