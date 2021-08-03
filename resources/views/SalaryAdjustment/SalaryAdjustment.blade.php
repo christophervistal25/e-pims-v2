@@ -79,9 +79,9 @@
                     </div>
 
                     <div class="form-group col-12 col-lg-3">
-                        <label class="has-float-label mb-0" for="employeeName">
+                        <label class="has-float-label mb-0 employeeName " for="employeeName">
                             <select value=""
-                                class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}"
+                                class="form-control form-control-xs selectpicker"
                                 name="employeeName" data-live-search="true" id="employeeName" data-size="5"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <option></option>
@@ -328,7 +328,7 @@
                         }
                     });
                 } else {
-                    swal("Cancel!", "", "error");
+                    swal("Cancelled", "", "error");
                 }
             });
     });

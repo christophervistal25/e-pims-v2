@@ -40,7 +40,7 @@ class SalaryAdjustmentController extends Controller
     {
         $data = DB::table('salary_adjustments')
         ->join('employees', 'salary_adjustments.employee_id', 'employees.employee_id')
-        ->select('id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'date_adjustment', 'sg_no', 'step_no', 'salary_previous', 'salary_new', 'salary_diff')
+        ->select('id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), DB::raw("DATE_FORMAT(date_adjustment, '%m-%d-%Y') as date_adjustment"), 'sg_no', 'step_no', 'salary_previous', 'salary_new', 'salary_diff')
         ->orderBy('date_adjustment', 'DESC')
         ->whereNull('deleted_at')
         ->orderBy('id', 'DESC')

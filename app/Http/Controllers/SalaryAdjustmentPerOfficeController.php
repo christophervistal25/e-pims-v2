@@ -30,7 +30,7 @@ class SalaryAdjustmentPerOfficeController extends Controller
         $data = DB::table('salary_adjustments')
         ->join('employees', 'salary_adjustments.employee_id', '=', 'employees.employee_id')
         ->join('plantillas', 'salary_adjustments.employee_id', '=', 'plantillas.employee_id')
-        ->select('id',DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'),'salary_adjustments.item_no','salary_adjustments.pp_id', 'date_adjustment', 'salary_adjustments.sg_no', 'salary_adjustments.step_no', 'salary_adjustments.salary_previous','salary_new','salary_adjustments.salary_diff', 'plantillas.office_code')
+        ->select('id',DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'),'salary_adjustments.item_no','salary_adjustments.pp_id', DB::raw("DATE_FORMAT(date_adjustment, '%m-%d-%Y') as date_adjustment"), 'salary_adjustments.sg_no', 'salary_adjustments.step_no', 'salary_adjustments.salary_previous','salary_new','salary_adjustments.salary_diff', 'plantillas.office_code')
         ->whereNull('deleted_at')
         ->get();
         return DataTables::of($data)

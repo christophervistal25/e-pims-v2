@@ -3,6 +3,7 @@
 @prepend('page-css')
 <link rel="stylesheet"
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+<link rel="stylesheet" href="/assets/css/style.css">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 @endprepend
@@ -14,94 +15,91 @@
 <div class="p-3">
     <div class="row">
         <div class="col-lg-12">
-            <div class="card ">
+            <div class="card">
                     <div class="card-body">
-                        <form method="POST" id="apply__for__leave__form">
+                        <form action="{{ route('leave-list.update', $data->id) }}" method="POST" id="updateLeaveForm">
+                        @csrf
+                        @method('PUT')
+
                         <div class="alert alert-secondary text-center font-weight-bold">LEAVE APPLICATION FILING</div>
                         <hr>
                         <div class="row">
                             <div class="col-lg-6 border border-bottom-0 border-left-0 border-top-0">
-                                <h6 class="text-sm text-center">&nbsp;</h6>
+                                <h6 class="text-sm text-left font-weight-medium">EMPLOYEE NAME</h6>
+
+
+                                <label class="has-float-label" for="employeeName">
+                                    <input type="text" name="employeeName" class="form-control" id="employeeName"
+                                        value="{{ old('employeeName') ?? $types->lastname }}, {{ old('employeeName') ?? $types->firstname }} {{ old('employeeName') ?? $types->middlename }}" style="color: white; margin-bottom: 15px; background: linear-gradient(90deg, rgba(148,0,132,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%); font-weight: bold;"
+                                        readonly style="outline: none; box-shadow: 0px 0px 0px;">
+                                </label>
+
                                 <label for="date__apply" class="form-group has-float-label">
                                     <input 
                                         type="date" 
                                         name="dateApply" 
-                                        id="date__apply"
+                                        id="dateApplied"
                                         class="form-control"
-                                        value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
+                                        value="{{ old('dateApply') ?? $data->date_applied }}">
                                     <span>
                                         <strong>DATE APPLY
                                             <span class="text-danger">*</span>
                                         </strong>
                                     </span>
                                 </label>
-                                {{-- <label for="controlNo" class="form-group has-float-label">
-                            <input type="text" name="controlNo" id="controlNo" class="form-control"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>CONTROL NO.</strong></span>
-                        </label> --}}
-                        <label for="type__of__leave" class="form-group has-float-label">
-                            <select 
-                                class="form-control selectpicker border" 
-                                id="type__of__leave"
-                                name="selectedLeave"
-                                data-live-search="true">
-                                <option selected disabled value="">-------------------------</option>
-                                @foreach($types->groupBy('category') as $category => $type)
-                                <optgroup class="text-uppercase" label="{{ $category }}">
-                                    @foreach($type as $t)
-                                    <option data-code="{{  $t->code }}" value="{{ $t->id }}">{{ $t->name }}
-                                    </option>
-                                    @endforeach
-                                </optgroup>
-                                @endforeach
-                            </select>
-                            <span>
-                                <strong>TYPES OF LEAVE
-                                    <span class="text-danger">*</span>
-                                </strong>
-                            </span>
-                        </label>
-                        <br>
-                        <br>
-                        <br>
-                                {{-- <label for="typeOthers" class="form-group has-float-label">
-                            <input type="text" name="typeOthers" id="typeOthers" class="form-control">
-                            <span><strong>IF OTHERS IS SELECTED</strong></span>
-                        </label> --}}
-                                <label for="incase__of" class="form-group has-float-label">
+
+                
+                                <label for="type__of__leave" class="form-group has-float-label">
                                     <select 
-                                        class="form-control"
-                                        id="incase__of" 
-                                        name="inCaseOfLeave"
-                                        disabled>
+                                        class="form-control border" 
+                                        id="leaveTypes"
+                                        name="selectedLeave"
+                                        value=""
+                                        data-live-search="true">
+                                        {{-- <option selected disabled value="">-------------------------</option> --}}
+                                        @foreach($gender->groupBy('category') as $category => $type)
+                                        <optgroup class="text-uppercase" label="{{ $category }}" value="{{ old('selectedLeave') ?? $data->leave_type_id }}">
+                                            @foreach($type as $t)
+                                            <option data-code="{{  $t->code }}" value="{{ $t->id }}">{{ $t->name }}
+                                            </option>
+                                            @endforeach
+                                        </optgroup>
+                                        @endforeach
                                     </select>
-                                    <span id="in_case_of__label"><strong>IN CASE OF</strong></span>
+                                    <span>
+                                        <strong>TYPES OF LEAVE
+                                            <span class="text-danger">*</span>
+                                        </strong>
+                                    </span>
                                 </label>
+                        
+                                <label for="incase__of" class="form-group has-float-label">
+                                    <input class="form-control" id="incaseOf" name="inCaseOfLeave" value="{{ old('inCaseOfLeave') ?? $data->incase_of }}">
+                                    <span id="in__case__of__label"><strong>IN CASE OF<span class="text-danger">*</span></strong></span>
+                                </label>
+
                                 <label for="no__of__days" class="form-group has-float-label">
                                     <input 
                                     type="number" 
                                     class="form-control" 
-                                    id="no__of__days" 
+                                    id="numberOfDays" 
                                     name="numberOfDays"
+                                    value="{{ old('numberOfDays') ?? $data->no_of_days }}"
                                     readonly>
                                     <span><strong>NUMBER OF DAYS<span class="text-danger">*</span></strong></span>
                                 </label>
                                 <hr>
-                                {{-- <label for="specify" class="form-group has-float-label">
-                                <input type="text" class="form-control" name="specify" id="specify"
-                                    style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <span><strong>PLEASE SPECIFY:</strong></span>
-                            </label> --}}
+                            
                                 <div class="col-auto p-0">
                                     <label for="start__date" class="form-group has-float-label">
                                         <input 
                                         type="date" 
                                         class="form-control" 
-                                        id="start__date" 
+                                        id="dateStarted" 
                                         name="startDate"
+                                        value="{{ old('startDate') ?? $data->date_from }}"
                                         readonly>
-                                        <span id="start__date__label"><strong>START DATE</strong></span>
+                                        <span id="start__date__label"><strong>START DATE<span class="text-danger">*</span></strong></span>
                                     </label>
                                 </div>
 
@@ -110,8 +108,9 @@
                                         <input 
                                             type="date" 
                                             class="form-control" 
-                                            id="end__date" 
+                                            id="dateEnded" 
                                             name="endDate"
+                                            value="{{ old('endDate') ?? $data->date_to }}"
                                             readonly>
                                         <span id="end__date__Label"><strong>END DATE</strong></span>
                                     </label>
@@ -126,7 +125,8 @@
                                             type="text"
                                             id="earned"
                                             class="form-control"
-                                            name="earned"
+                                            name="earnedSickLeave"
+                                            value="{{ $sickLeaveEarned }}"
                                             readonly>
                                             <span id="earnedLabel"><strong>EARNED</strong></span>
                                         </label>
@@ -135,9 +135,10 @@
                                         <label for="earnedLess" class="form-group has-float-label">
                                             <input 
                                             type="text" 
-                                            id="earned__less" 
+                                            id="lessEarned" 
                                             class="form-control" 
                                             name="earned__less"
+                                            value="{{ old('earned_less') ?? $data->no_of_days }}"
                                             readonly>
                                             <span id="earnedLessLabel"><strong>LESS</strong></span>
                                         </label>
@@ -147,9 +148,10 @@
                                         <label for="earnedRemain" class="form-group has-float-label">
                                             <input
                                             type="text"
-                                            id="earned__remain"
+                                            id="remainEarned"
                                             class="form-control"
-                                            name="earnedRemain"
+                                            name="earnedRemaing"
+                                            value="{{ $sickLeaveEarned - $data->no_of_days }}"
                                             readonly>
                                             <span id="earnedRemainLabel"><strong>REMAINING</strong></span>
                                         </label>
@@ -163,11 +165,11 @@
                                         <label for="asOf" class="form-group has-float-label">
                                             <input 
                                                 type="date" 
-                                                id="asOf" 
+                                                id="dateAsOf" 
                                                 class="form-control" 
                                                 disabled
                                                 name="balanceAsOfDate"
-                                                value="">
+                                                value="{{ old('balanceAsOfDate') ?? $asOfDate }}">
                                             <span><strong>AS OF</strong></span>
                                         </label>
                                     </div>
@@ -176,10 +178,10 @@
                                             <input 
                                                 type="number" 
                                                 class="form-control" 
-                                                id="vacation__leave__earned"
+                                                id="vacationLeaveEarned"
                                                 disabled
                                                 name="vacationLeaveEarned"
-                                                value="">
+                                                value="{{ old('vacationLeaveEarned') ?? $vacationLeave }}">
                                             <span><strong>VL EARNED</strong></span>
                                         </label>
                                     </div>
@@ -188,10 +190,10 @@
                                             <input 
                                                 type="number" 
                                                 class="form-control" 
-                                                id="vacation__leave__used"
+                                                id="vacationLeaveUsed"
                                                 disabled 
                                                 name="vacationLeaveUsed"
-                                                value="">
+                                                value="{{ old('vacationLeaveUsed') ?? $vacationLeaveUsed }}">
                                             <span><strong>VL USED</strong></span>
                                         </label>
                                     </div>
@@ -200,10 +202,10 @@
                                             <input 
                                                 type="number" 
                                                 class="form-control" 
-                                                id="vacation__leave__balance"
+                                                id="vacationLeaveBalanced"
                                                 disabled
                                                 name="vacationLeaveBalance"
-                                                value="">
+                                                value="{{ $vacationLeave - $vacationLeaveUsed }}">
                                             <span><strong>VL BALANCE</strong></span>
                                         </label>
                                     </div>
@@ -216,11 +218,11 @@
                                         <label for="sick__leave__earned" class="form-group has-float-label">
                                             <input 
                                                 type="number" 
-                                                id="sick__leave__earned" 
+                                                id="sickLeaveEarned" 
                                                 class="form-control" 
                                                 disabled
                                                 name="sickLeaveEarned"
-                                                value="">
+                                                value="{{ $sickLeaveEarned }}">
                                             <span><strong>SL EARNED</strong></span>
                                         </label>
                                     </div>
@@ -229,10 +231,10 @@
                                             <input 
                                                 type="number" 
                                                 class="form-control" 
-                                                id="sick__leave__used" 
+                                                id="sickLeaveUsed" 
                                                 disabled
                                                 name="sickLeaveUsed"
-                                                value="">
+                                                value="{{ $sickLeaveUsed }}">
                                             <span><strong>SL USED</strong></span>
                                         </label>
                                     </div>
@@ -241,10 +243,10 @@
                                             <input 
                                                 type="number" 
                                                 class="form-control" 
-                                                id="sick__leave__balance" 
+                                                id="sickLeaveBalanced" 
                                                 disabled
                                                 name="sickLeaveBalance"
-                                                value="">
+                                                value="{{ $sickLeaveEarned - $sickLeaveUsed }}">
                                             <span><strong>SL BALANCE</strong></span>
                                         </label>
                                     </div>
@@ -254,10 +256,10 @@
                                             <input 
                                                 type="number" 
                                                 class="form-control" 
-                                                id="total__balance" 
+                                                id="totalLeaveBalance" 
                                                 disabled 
                                                 name="totalBalance"
-                                                value="">
+                                                value="{{ ($vacationLeave - $vacationLeaveUsed) }}">
                                             <span><strong>TOTAL BALANCE</strong></span>
                                         </label>
                                     </div>
@@ -267,8 +269,8 @@
                                     </div>
 
                                     <div class="col-lg-12">
-                                        <label for="sick__leave__balance" class="form-group has-float-label mt-4">
-                                            <input type="number" class="form-control" id="sick__leave__balance" disabled
+                                        <label for="mandatory__leave__balance" class="form-group has-float-label mt-4">
+                                            <input type="number" class="form-control" id="mandatoryLeaveBalance" disabled
                                                 value="5" name="mandatoryLeaveBalance">
                                             <span><strong>MANDATORY LEAVE</strong></span>
                                         </label>
@@ -281,8 +283,8 @@
                             <label for="commutation" class="form-group has-float-label">
                                 <select 
                                     class="form-control" 
-                                    id="commutation" 
-                                    name="communication">
+                                    id="commutation"
+                                    name="commutation">
                                     <option readonly selected value="REQUESTED">REQUESTED</option>
                                     <option value="NOT REQUESTED">NOT REQUESTED</option>
                                 </select>
@@ -292,27 +294,31 @@
                                 <input 
                                     class="form-control" 
                                     name="recommendingApproval" 
-                                    id="recommending__approval" 
-                                    disabled
-                                    value="">
+                                    id="recommendingApproval"
+                                    value="{{ old('recommendingApproval') ?? $data->recommending_approval }}">
                                 <span><strong>RECOMMENDING APPROVAL<span class="text-danger">*</span></strong></span>
                             </label>
-                            <label for="approveBy" class="form-group has-float-label">
+                            <label for="approvedBy" class="form-group has-float-label">
                                 <input 
                                     class="form-control" 
-                                    name="approveBy" 
-                                    id="approved__by" 
-                                    disabled
-                                    value="">
+                                    name="approvedBy" 
+                                    id="approvedBy" 
+                                    value="{{ old('approvedBy') ?? $data->approved_by }}">
                                 <span><strong>APPROVED BY<span class="text-danger">*</span></strong></span>
                             </label>
                             
                         </div>
-                        <div class="text-right">
-                            <button type="submit" class="text-white shadow btn btn-primary" id="btn__apply__for__leave">
-                                <i class="la la-user-plus"></i> Apply for Leave
-                            </button>
+                        <div class="row mt-2 float-right">
+                            {{-- <input type="date" name="dateApproved" id="dateApproved" class="form-control col-3 mr-3" value="{{ date('Y-m-d') }}" hidden> --}}
+                            {{-- <input type="date" name="dateRejected" id="dateRejected" class="form-control col-3 mr-3" value="{{ date('Y-m-d') }}" hidden> --}}
+
+                            <a href="/employee/leave/leave-list" class="btn btn-md mr-3" style="background-color: orange; color: white;"><i class="la la-list"></i> Go back to List</a>
+                            
+                            <button class="btn btn-danger btn-md mr-3" id="btnReject"><i class="fas fa-thumbs-down"></i> Reject</button>
+
+                            <button type="submit" class="btn btn-success btn-md mr-4" id="btnApproved"><i class="far fa-thumbs-up"></i> Approved</i></button>
                         </div>
+                        <div class="clearfix"></div>
                         </form>
                     </div>
             </div>
@@ -322,7 +328,277 @@
 
 
 @push('page-scripts')
+<script src="{{ asset('/assets/js/custom.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <script>
+     $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+
+    const ROUTE = "{{ route('employee.leave.application.filling.submit') }}";
+    const VACATION_LEAVE_EARNED = "{{ $vacationLeave }}";
+    const SICK_LEAVE_EARNED = "{{ $sickLeaveEarned }}";
+
+
+    let checkEarnedPoints = (period_days, earned_points) => new Promise((resolve, reject) => {
+        if (earned_points >= period_days) {
+            resolve({
+                earned_points,
+                period_days
+            });
+        }
+        reject(new Error('Insufficient earned points'));
+    });
+
+    $('#leaveTypes').change(function (e) {
+        let selectedLeaveTypeID = $(this).val();
+        let type = {};
+        let types = JSON.parse($('meta[name="holiday-types"]').attr('content'));
+
+        [type] = types.filter((leaveType) => leaveType.id == selectedLeaveTypeID);
+
+
+        if (type.code.toUpperCase() === 'SL') {
+            checkEarnedPoints(type.days_period, SICK_LEAVE_EARNED).then((data) => {
+                $('#in_case_of__label').text(`IN CASE OF ${type.name}`);
+
+                $('#numberOfDays').val(type.days_period);
+
+                $('#dateStarted').val(moment().format('YYYY-MM-DD'));
+
+                $('#dateEnded').val(moment($('#dateStarted').val()).add(type.days_period, 'days')
+                    .format(
+                        'YYYY-MM-DD'));
+
+                $('#incaseOf').attr('disabled', false)
+                    .append(`<option value="in_hospital">IN HOSPITAL</option>`)
+                    .append(`<option value="out_patient">OUT PATIENT</option>`);
+
+                $('#earned').val(data.earned_points);
+
+                $('#dateStarted, #dateEnded').attr('readonly', false);
+
+                $('#lessEarned').val(data.period_days);
+
+                $('#remainEarned').val(parseFloat(data.earned_points - data.period_days));
+            }).catch((fail) => {
+                $('#lessEarned').val(parseFloat(SICK_LEAVE_EARNED - type.days_period));
+                $('#remainEarned').val(0.000);
+            });
+        } else if (type.code.toUpperCase() === 'VL') {
+            $('#in_case_of__label').text(`IN CASE OF ${type.name}`);
+            $('#incaseOf')
+                .append(`<option value="within_the_philippines">WITHIN THE PHILIPPINES</option>`)
+                .append(`<option value="abroad">ABROAD</option>`);
+
+            $('#dateStarted').val(moment().add(5, 'days').format('YYYY-MM-DD'));
+
+            $('#earned').val(VACATION_LEAVE_EARNED);
+        } else {
+            $('#incaseOf').attr('readonly', true)
+                .children()
+                .remove();
+            $('#in_case_of__label').text(`IN CASE OF`);
+        }
+    });
+
+    $('#dateStarted').change(function () {
+        let startDate = moment($('#dateStarted').val())
+        let dateNow = moment();
+        let startDateMoreThanFiveDays = startDate.diff(dateNow, 'days') >= 5;
+
+        // if(!startDateMoreThanFiveDays) {
+        //     alert('You must select five days after file');
+        // }
+
+    });
+
+    $('#dateEnded').change(function () {
+        let startDate = $('#dateStarted').val();
+        let endDate = $('#dateEnded').val();
+
+        // Calculate no. of days ask for leave.
+        $('#numberOfDays').val(moment(endDate).diff(startDate, 'days'));
+
+        let period = $('#numberOfDays').val();
+
+        checkEarnedPoints(period, SICK_LEAVE_EARNED).then((data) => {
+            $('#dateStarted, #dateEnded').attr('readonly', false);
+            $('#lessEarned').val(parseFloat(SICK_LEAVE_EARNED - period));
+            let remaining = $('#earned').val() - $('#lessEarned').val();
+            $('#remainEarned').val(parseFloat(remaining));
+        }).catch((fail) => {
+            $('#lessEarned').val(parseFloat(SICK_LEAVE_EARNED - period));
+            $('#remainEarned').val(0.000);
+        });
+    });
+
+    
+
+
+
+    // APPROVED BUTTON FOR A LEAVE REQUEST //
+    let btnApproved = document.querySelector('#btnApproved');
+
+    btnApproved.addEventListener('click', (e)=> {
+        e.preventDefault();
+        let employeeId = $('#employeeId');
+        let recommendingApproval = $('#recommendingApproval');
+        let approvedBy = $('#approvedBy');
+        let leaveTypes = $('#leaveTypes');
+        let dateApplied = $('#dateApplied');
+        let commutation = $('#commutation');
+        let incaseOf = $('#incaseOf');
+        let numberOfDays = $('#numberOfDays');
+        let dateStarted = $('#dateStarted');
+        let dateEnded = $('#dateEnded');
+        // let dateApproved= $('#dateApproved');
+
+
+        let id = "{{ $data->id }}";
+
+            swal({
+                    title: "Are you sure you want to approve this request?",
+                    text : "You are about to approve a leave request",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: false,
+                })
+                .then((ifApproved) => {
+                    if (ifApproved) {
+                        $.ajax({
+                        url: `/employee/leave/leave-list/${id}`,
+                        data: {
+                            employeeID : employeeId.val(),
+                            recommendingApproval : recommendingApproval.val(),
+                            approvedBy : approvedBy.val(),
+                            selectedLeave : leaveTypes.val(),
+                            dateApply : dateApplied.val(),
+                            commutation : commutation.val(),
+                            inCaseOfLeave : incaseOf.val(),
+                            numberOfDays : numberOfDays.val(),
+                            startDate : dateStarted.val(),
+                            endDate : dateEnded.val(),
+                            status : 'approved',
+                            // dateApproved : dateApproved.val()
+                            },
+                        method: 'PUT',
+                        success: function() {
+
+                            swal({
+                                    title: "Request has been approved!",
+                                    text : "You are also successfully updated a request",
+                                    icon: "success",
+                                });  
+
+                            },
+                            
+                        });
+                    }
+                });
+                
+                 // let data = {
+        //         employeeID : document.querySelector('#employeeId').value,
+        //         recommendingApproval : document.querySelector('#recommendingApproval').value,
+        //         approvedBy : document.querySelector('#approvedBy').value,
+        //         selectedLeave : document.querySelector('#leaveTypes').value,
+        //         dateApply : document.querySelector('#dateApplied').value,
+        //         commutation : document.querySelector('#commutation').value,
+        //         inCaseOfLeave : document.querySelector('#incaseOf').value,
+        //         numberOfDays : document.querySelector('#numberOfDays').value,
+        //         startDate : document.querySelector('#dateStarted').value,
+        //         endDate: document.querySelector('#dateEnded').value,
+        //         dateApproved : document.querySelector('#dateApproved').value
+        //     };
+
+
+        // fetch(`/employee/leave/leave-list/${id}`, {
+            //     method: 'PUT',
+            //     headers: {
+            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            //             'Content-Type': 'application/json',
+            //         },
+            //         body: JSON.stringify(data),
+            //         }).then(res => res.json())
+            //         .then((data) => {
+            // });
+
+            // swal("Request has been approved!", "You are also successfully updated the request.", "success");
+
+
+            
+    });
+
+
+    // REJECT BUTTON FOR A LEAVE REQUEST //
+    let btnReject = document.querySelector('#btnReject');
+
+    btnReject.addEventListener('click', (e)=> {
+        e.preventDefault();
+        let employeeId = $('#employeeId');
+        let recommendingApproval = $('#recommendingApproval');
+        let approvedBy = $('#approvedBy');
+        let leaveTypes = $('#leaveTypes');
+        let dateApplied = $('#dateApplied');
+        let commutation = $('#commutation');
+        let incaseOf = $('#incaseOf');
+        let numberOfDays = $('#numberOfDays');
+        let dateStarted = $('#dateStarted');
+        let dateEnded = $('#dateEnded');
+        // let dateRejected = $('#dateRejected');
+
+        let getId = "{{ $data->id }}";
+
+        
+        swal({
+                title: "Are you sure you want to reject a request?",
+                text : "You are about to reject a leave request",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((isRejected) => {
+                if (isRejected) {
+                    $.ajax({
+                    url: `/employee/leave/leave-list/${getId}`,
+                    data: {
+                        employeeID : employeeId.val(),
+                        recommendingApproval : recommendingApproval.val(),
+                        approvedBy : approvedBy.val(),
+                        selectedLeave : leaveTypes.val(),
+                        dateApply : dateApplied.val(),
+                        commutation : commutation.val(),
+                        inCaseOfLeave : incaseOf.val(),
+                        numberOfDays : numberOfDays.val(),
+                        startDate : dateStarted.val(),
+                        endDate : dateEnded.val(),
+                        status : 'declined',
+                        // dateRejected : dateRejected.val()
+                        },
+                    method: 'PUT',
+                    success: function() {
+
+                        swal({
+                                title: "Request has been rejected!",
+                                text : "You are rejected a leave request",
+                                icon: "error",
+                            });  
+
+                        },
+                        
+                    });
+                }
+            })
+
+           
+    });
+
+
 
 </script>
 @endpush

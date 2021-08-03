@@ -117,7 +117,7 @@ $(function() {
 });
 
 $(function() {
-    let yearFilter = document.querySelector("#yearFilter").value;
+    let yearFilter = document.querySelector("#year").value - 1;
     let table = $("#positionSchedule").DataTable({
         processing: true,
         pagingType: "full_numbers",
@@ -358,13 +358,14 @@ function LockDepot() {
                                     yearValue +
                                     "</option>"
                             );
+                            // location.reload();
                             $("#yearFilter").selectpicker("refresh");
                         }
                     },
                     error: function(response) {}
                 });
             } else {
-                swal("Cancel!", "", "error");
+                swal("Cancelled", "", "error");
                 $("#saveBtn").attr("disabled", false);
                 $("#loading").addClass("d-none");
             }

@@ -16,7 +16,7 @@ class MaintenancePositionController extends Controller
      */
     public function index()
     {
-        $lastId = Position::latest('position_id')->first();
+        $lastId = Position::latest('position_code')->first();
         return view('MaintenancePosition.position', compact('lastId'));
     }
 
@@ -56,7 +56,7 @@ class MaintenancePositionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'positionCode'                 => 'required|unique:positions,position_id',
+            'positionCode'                 => 'required|unique:positions,position_code',
             'positionName'                 => 'required',
             'salaryGradeNo'                => 'required',
             'positionShortName'            => 'required',

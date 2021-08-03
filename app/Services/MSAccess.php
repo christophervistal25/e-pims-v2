@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Services;
 
 use PDO;
@@ -16,7 +16,10 @@ class MSAccess
     public function __construct(string $database_path = 'C:\\laragon\\www\\e-pims\\sample.mdb', string $user = '', string $password = '')
     {
         $this->isDatabaseFileExists($database_path);
+<<<<<<< HEAD
         $this->connection = [];
+=======
+>>>>>>> 725c2cb140e88b78b416a852ad19010c23c9b89e
 
         // $this->connection = DriverManager::getConnection([
         //     'user'        => $user,
@@ -29,9 +32,9 @@ class MSAccess
 
     private function isDatabaseFileExists(string $file)
     {
-        if(!file_exists($file))  {
-            throw new Error("Database not found.");
-        }
+        // if(!file_exists($file))  {
+        //     throw new Error("Database not found.");
+        // }
     }
 
     public function getConnection()
@@ -43,7 +46,7 @@ class MSAccess
     {
         $this->connection->query($query);
     }
-    
+
     public function deleteRecordsInTables(array $tables = [])
     {
         foreach($tables as $table) {

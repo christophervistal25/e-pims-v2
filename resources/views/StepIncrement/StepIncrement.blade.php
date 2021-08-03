@@ -273,6 +273,7 @@
                     name: 'date_step_increment'
                 },
                 {
+                    className: 'text-truncate',
                     data: 'fullname',
                     name: 'fullname',
                     searchable: true,
@@ -280,6 +281,7 @@
                     visible: true
                 },
                 {
+                    className: 'text-truncate',
                     data: 'position_name',
                     name: 'position_name',
                     searchable: true,
