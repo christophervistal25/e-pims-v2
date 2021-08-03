@@ -205,7 +205,7 @@ $(function() {
             });
             let count = 1;
             let interval = setInterval(printStatus, 1000);
-            function printStatus(){
+            function printStatus() {
                 let table_data = $("#serviceRecords > tbody > tr > td").text();
                 if (table_data == "No data available in table") {
                     document

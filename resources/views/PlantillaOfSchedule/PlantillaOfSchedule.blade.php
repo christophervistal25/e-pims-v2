@@ -199,12 +199,12 @@
 				if(dataResult.statusCode==200){
                     $('#salaryAdjustmentPerOffice').DataTable().ajax.reload();
                     $('#salaryAdjustmentPerOfficeList').DataTable().ajax.reload();
-                    swal("Successfully Deleted!", "", "success");
+                    swal("Successfully Deleted", "", "success");
 				}
 			}
 		});
             } else {
-                swal("Cancel!", "", "error");
+                swal("Cancelled", "", "error");
             }
             });
 	});

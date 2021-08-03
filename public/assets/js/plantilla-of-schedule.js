@@ -247,7 +247,12 @@ $(function() {
                 ]
             });
         } else {
-            document.getElementById("printPreviewA").setAttribute("href", "print-plantilla-of-schedule/" + e.target.value);
+            document
+                .getElementById("printPreviewA")
+                .setAttribute(
+                    "href",
+                    "print-plantilla-of-schedule/" + e.target.value
+                );
             table.destroy();
             let yearFilter = $("#yearFilter").val();
             table = $("#plantillaOfSchedule").DataTable({
@@ -300,9 +305,12 @@ $(function() {
         }
         let count = 1;
         let interval = setInterval(printStatus, 1000);
-        function printStatus(){
+        function printStatus() {
             let table_data = $("#plantillaOfSchedule > tbody > tr > td").text();
-            if (table_data == "No data available in table" || table_data == '') {
+            if (
+                table_data == "No data available in table" ||
+                table_data == ""
+            ) {
                 document
                     .getElementById("printPreview")
                     .setAttribute("style", "visibility:hidden;");
@@ -458,7 +466,7 @@ function LockDepot() {
         }
     });
     if (ids == "") {
-        swal("No Data Available on Table", "", "error");
+        swal("No Data Available on Table", "", "warning");
         $("#saveBtn").attr("disabled", false);
         $("#loading").addClass("d-none");
     } else {
@@ -506,7 +514,7 @@ function LockDepot() {
                     error: function(response) {}
                 });
             } else {
-                swal("Cancel!", "", "error");
+                swal("Cancelled", "", "error");
                 $("#saveBtn").attr("disabled", false);
                 $("#loading").addClass("d-none");
             }

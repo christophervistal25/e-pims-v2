@@ -43,7 +43,7 @@ class ServiceRecordsController extends Controller
         $data = DB::table('service_records')
         ->join('offices', 'service_records.office_code', '=', 'offices.office_code')
         ->join('positions', 'service_records.position_id', '=', 'positions.position_id')
-        ->select( 'id', 'employee_id', 'service_from_date', 'service_to_date', 'positions.position_name', 'service_records.status', 'salary', 'offices.office_name', 'leave_without_pay', 'separation_date', 'separation_cause')
+        ->select( 'id', 'employee_id', DB::raw("DATE_FORMAT(service_from_date, '%m-%d-%Y') as service_from_date"), DB::raw("DATE_FORMAT(service_to_date, '%m-%d-%Y') as service_to_date"), 'positions.position_name', 'service_records.status', 'salary', 'offices.office_name', 'leave_without_pay', DB::raw("DATE_FORMAT(separation_date, '%m-%d-%Y') as separation_date"), 'separation_cause')
         ->get();
         return DataTables::of($data)
         ->addColumn('action', function($row){

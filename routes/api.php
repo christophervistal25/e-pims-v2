@@ -24,7 +24,7 @@ Route::get('/employee/service/records/{employeeId}', function ($employeeId) {
     $data = DB::table('service_records') ->
     join('offices', 'service_records.office_code', '=', 'offices.office_code')
     ->join('positions', 'service_records.position_id', '=', 'positions.position_id')
-    ->select('id', 'employee_id', 'service_from_date', 'service_to_date', 'positions.position_name', 'status', 'salary', 'offices.office_name', 'leave_without_pay', 'separation_date', 'separation_cause')
+    ->select('id', 'employee_id', DB::raw("DATE_FORMAT(service_from_date, '%m-%d-%Y') as service_from_date"), DB::raw("DATE_FORMAT(service_to_date, '%m-%d-%Y') as service_to_date"), 'positions.position_name', 'status', 'salary', 'offices.office_name', 'leave_without_pay', DB::raw("DATE_FORMAT(separation_date, '%m-%d-%Y') as separation_date"), 'separation_cause')
     ->where('employee_id', $employeeId)
     ->get();
     return DataTables::of($data)
@@ -108,7 +108,7 @@ Route::post('/printEditAdjustment' , 'Api\SalaryAdjustmentController@printEdit')
 Route::get('/salary/adjustment/{year}', function ($year) {
     $data = DB::table('salary_adjustments')
         ->join('employees', 'salary_adjustments.employee_id', 'employees.employee_id')
-        ->select('id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'date_adjustment', 'sg_no', 'step_no', 'salary_previous', 'salary_new', 'salary_diff')
+        ->select('id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), DB::raw("DATE_FORMAT(date_adjustment, '%m-%d-%Y') as date_adjustment"), 'sg_no', 'step_no', 'salary_previous', 'salary_new', 'salary_diff')
         ->whereYear('date_adjustment', '=', $year)
         ->orderBy('date_adjustment', 'DESC')
         ->whereNull('deleted_at')
@@ -145,7 +145,7 @@ Route::get('/office/salary/adjustment/peroffice/{officeCode}', function ($office
     $data = DB::table('salary_adjustments')
     ->join('employees', 'salary_adjustments.employee_id', '=', 'employees.employee_id')
     ->join('plantillas', 'salary_adjustments.employee_id', '=', 'plantillas.employee_id')
-    ->select('id',DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'),'salary_adjustments.item_no','salary_adjustments.pp_id', 'date_adjustment', 'salary_adjustments.sg_no', 'salary_adjustments.step_no', 'salary_adjustments.salary_previous','salary_new','salary_adjustments.salary_diff', 'plantillas.office_code')
+    ->select('id',DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'),'salary_adjustments.item_no','salary_adjustments.pp_id', DB::raw("DATE_FORMAT(date_adjustment, '%m-%d-%Y') as date_adjustment"), 'salary_adjustments.sg_no', 'salary_adjustments.step_no', 'salary_adjustments.salary_previous','salary_new','salary_adjustments.salary_diff', 'plantillas.office_code')
     ->where('plantillas.office_code', $office_code)
     ->orderBy('id', 'DESC')
     ->whereNull('deleted_at')
