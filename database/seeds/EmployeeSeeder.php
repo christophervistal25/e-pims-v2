@@ -55643,7 +55643,7 @@ class EmployeeSeeder extends Seeder
         ];
 
         foreach($data as $key => $employee) {
-            if($key === 5) {
+            if($key === 20) {
                 break;
             }
 

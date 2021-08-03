@@ -16,13 +16,14 @@ class MSAccess
     public function __construct(string $database_path = 'C:\\laragon\\www\\e-pims\\sample.mdb', string $user = '', string $password = '')
     {
         $this->isDatabaseFileExists($database_path);
+        $this->connection = [];
 
-        $this->connection = DriverManager::getConnection([
-            'user'        => $user,
-            'password'    => $password,
-            'pdo'         => new PDO('odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};Dbq='. $database_path . ';'),
-            'driverClass' => 'Royopa\Doctrine\DBAL\Driver\MSAccess\Driver\Driver',
-        ], new Configuration());
+        // $this->connection = DriverManager::getConnection([
+        //     'user'        => $user,
+        //     'password'    => $password,
+        //     'pdo'         => new PDO('odbc:Driver={Microsoft Access Driver (*.mdb, *.accdb)};Dbq='. $database_path . ';'),
+        //     'driverClass' => 'Royopa\Doctrine\DBAL\Driver\MSAccess\Driver\Driver',
+        // ], new Configuration());
 
     }
 
