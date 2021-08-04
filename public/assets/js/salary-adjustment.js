@@ -1,4 +1,4 @@
-// display salary grade
+// display salary adjusmtent
 $(function() {
     let table = $("#salaryAdjustment").DataTable({
         processing: true,
@@ -21,9 +21,21 @@ $(function() {
             },
             { data: "sg_no", name: "sg_no" },
             { data: "step_no", name: "step_no" },
-            { data: "salary_previous", name: "salary_previous" },
-            { data: "salary_new", name: "salary_new" },
-            { data: "salary_diff", name: "salary_diff" },
+            {
+                data: "salary_previous",
+                name: "salary_previous",
+                render: $.fn.dataTable.render.number(",", ".", 2)
+            },
+            {
+                data: "salary_new",
+                name: "salary_new",
+                render: $.fn.dataTable.render.number(",", ".", 2)
+            },
+            {
+                data: "salary_diff",
+                name: "salary_diff",
+                render: $.fn.dataTable.render.number(",", ".", 2)
+            },
             { data: "action", name: "action" }
         ]
     });

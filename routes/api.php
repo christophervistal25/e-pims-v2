@@ -232,17 +232,37 @@ Route::post('/salary-adjustment-per-office', function () {
                             ->where('sg_year', request()->year)
                             ->first(['sg_year' ,'sg_step' .  $newAdjustment->step_no]);
         $salaryDiff = $getsalaryResult['sg_step' .  $newAdjustment->step_no] - $newAdjustment->salary_amount;
-        $salaryAdjustment= new SalaryAdjustment();
-        $salaryAdjustment->employee_id = $newAdjustment->employee_id;
-        $salaryAdjustment->item_no = $newAdjustment->item_no;
-        $salaryAdjustment->pp_id = $newAdjustment->pp_id;
-        $salaryAdjustment->date_adjustment = request()->date;
-        $salaryAdjustment->sg_no = $newAdjustment->sg_no;
-        $salaryAdjustment->step_no = $newAdjustment->step_no;
-        $salaryAdjustment->salary_previous = $newAdjustment->salary_amount;
-        $salaryAdjustment->salary_new =  $getsalaryResult['sg_step' .  $newAdjustment->step_no];
-        $salaryAdjustment->salary_diff = $salaryDiff;
-        $salaryAdjustment->save();
+
+        DB::table('salary_adjustments')->updateOrInsert(
+            [
+                'employee_id' => $newAdjustment->employee_id
+        ],
+        [
+            'employee_id'     => $newAdjustment->employee_id,
+            'item_no'         => $newAdjustment->item_no,
+            'pp_id'           => $newAdjustment->pp_id,
+            'date_adjustment' => request()->date,
+            'sg_no'           => $newAdjustment->sg_no,
+            'step_no'         => $newAdjustment->step_no,
+            'salary_previous' => $newAdjustment->salary_amount,
+            'salary_new'      => $getsalaryResult['sg_step' .  $newAdjustment->step_no],
+            'salary_diff'     => $salaryDiff,
+            'remarks'     =>  request()->remarks,
+            'created_at'     =>  Carbon::now(),
+            'deleted_at'      => null,
+        ]);
+        // $salaryAdjustment= new SalaryAdjustment();
+        // $salaryAdjustment->employee_id = $newAdjustment->employee_id;
+        // $salaryAdjustment->item_no = $newAdjustment->item_no;
+        // $salaryAdjustment->pp_id = $newAdjustment->pp_id;
+        // $salaryAdjustment->date_adjustment = request()->date;
+        // $salaryAdjustment->sg_no = $newAdjustment->sg_no;
+        // $salaryAdjustment->step_no = $newAdjustment->step_no;
+        // $salaryAdjustment->salary_previous = $newAdjustment->salary_amount;
+        // $salaryAdjustment->salary_new =  $getsalaryResult['sg_step' .  $newAdjustment->step_no];
+        // $salaryAdjustment->salary_diff = $salaryDiff;
+        // $salaryAdjustment->save();
+
         $service_record                         = new service_record;
         $service_record->employee_id            = $newAdjustment->employee_id;
         $service_record->service_from_date      = request()->date;
