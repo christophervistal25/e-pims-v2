@@ -315,7 +315,7 @@ class Employee extends Model
         return $this->hasMany(EmployeeLeaveApplication::class, 'employee_id', 'employee_id');
     }
 
-    
+
     public function forwarded_leave_records()
     {
         return $this->hasOne(EmployeeLeaveRecord::class, 'employee_id', 'employee_id')->where('fb_as_of', '!=', NULL);
