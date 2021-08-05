@@ -457,6 +457,7 @@
         let numberOfDays = $('#numberOfDays');
         let dateStarted = $('#dateStarted');
         let dateEnded = $('#dateEnded');
+        // let dateApproved = "${ leaveList->date_approved = Carbon::now()->format('Y-m-d') }";
         // let dateApproved= $('#dateApproved');
 
 
@@ -550,6 +551,7 @@
         let numberOfDays = $('#numberOfDays');
         let dateStarted = $('#dateStarted');
         let dateEnded = $('#dateEnded');
+        // let dateRejected = "${ leaveList->date_rejected = Carbon::now()->format('Y-m-d') }";
         // let dateRejected = $('#dateRejected');
 
         let getId = "{{ $data->id }}";

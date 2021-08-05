@@ -109,7 +109,7 @@
                                         value="{{ old('stepNoFrom') ?? $stepIncrement->step_no_from }}" id="stepNo"
                                         name="stepNoFrom" type="text" readonly
                                         style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                    <span class="font-weight-bold"></span>
+                                    <span class="font-weight-bold">STEP</span>
                                 </label>
                             </div>
                         </div>
