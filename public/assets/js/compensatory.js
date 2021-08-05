@@ -136,6 +136,8 @@ $(function() {
                     let curYear = getYear(new Date());  
                     if(totalEarned == 0 && totalAvailed == 0){
                         $('#forfeited').prop('disabled', true);
+                        $('#btnEarn').prop('disabled', false);
+                        $('#btnAvail').prop('disabled', false);
                     }else{
                         if($('#year_filter').val() < curYear){
                             $('#forfeited').prop('disabled', true);
