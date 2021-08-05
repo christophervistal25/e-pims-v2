@@ -167,7 +167,7 @@
 
                     <div class="form-group col-12 col-lg-3 mt-2">
                         <label class="has-float-label mb-0">
-                            <select name="currentSgyear" id="currentSgyear" value="" class="select floating">
+                            <select name="currentSgyear" id="currentSgyear" value="" class="select floating" disabled>
                                 {{ $year3 = date("Y",strtotime("-0 year")) }}
                                 <option value={{ $year3 }}>{{ $year3 }}</option>
                                 @foreach (range(1, 3) as $year)
@@ -252,10 +252,10 @@
                     <select value="" data-style="btn-primarys text-white"
                         class="form-control form-control-xs selectpicker yearAdjustment {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}"
                         name="yearAdjustment" data-live-search="true" id="yearAdjustment" data-size="5">
-                        <option value="">All</option>
-                        @foreach ($dates as $date)
-                        <option value={{ $date }}>{{ $date }}</option>
-                        @endforeach
+                            <option value={{ Carbon\Carbon::now()->format('Y') }}>{{ Carbon\Carbon::now()->format('Y') }}</option>
+                            @foreach ($dates as $date)
+                            <option value={{ $date }}>{{ $date }}</option>
+                            @endforeach
                     </select>
                 </div>
                 <div class="col-9 mb-2">

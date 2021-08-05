@@ -1,5 +1,6 @@
 // display salary adjusmtent
 $(function() {
+    let currentSgyear = document.getElementById("currentSgyear").value;
     let table = $("#salaryAdjustment").DataTable({
         processing: true,
         serverSide: true,
@@ -11,7 +12,7 @@ $(function() {
             processing:
                 '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
         },
-        ajax: "/salary-adjustment-list",
+        ajax: `/salary-adjustment-list/${currentSgyear}`,
         columns: [
             { data: "date_adjustment", name: "date_adjustment" },
             {
@@ -40,7 +41,6 @@ $(function() {
         ]
     });
     $("#yearAdjustment").change(function(e) {
-        console.log(e.target.value);
         if (e.target.value == "" || e.target.value == "") {
             table.destroy();
             table = $("#salaryAdjustment").DataTable({

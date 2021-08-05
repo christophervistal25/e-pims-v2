@@ -25,7 +25,7 @@ class SalaryAdjustmentController extends Controller
      */
     public function index()
     {
-        $dates = SalaryAdjustment::get('date_adjustment')->pluck('date_adjustment')->map(function ($date) {
+        $dates = SalaryAdjustment::select('date_adjustment')->whereYear('date_adjustment', '!=', Carbon::now()->format('Y'))->get()->pluck('date_adjustment')->map(function ($date) {
             return $date->format('Y');
         })->toArray();
         $dates = array_values(array_unique($dates));
@@ -45,11 +45,12 @@ class SalaryAdjustmentController extends Controller
         return view('SalaryAdjustment.SalaryAdjustment', compact('employee', 'position', 'dates', 'year'));
     }
 
-    public function list(Request $request)
+    public function list($currentSgyear)
     {
         $data = DB::table('salary_adjustments')
         ->join('employees', 'salary_adjustments.employee_id', 'employees.employee_id')
         ->select('id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), DB::raw("DATE_FORMAT(date_adjustment, '%m-%d-%Y') as date_adjustment"), 'sg_no', 'step_no', 'salary_previous', 'salary_new', 'salary_diff')
+        ->whereYear('date_adjustment',  '=' ,$currentSgyear)
         ->orderBy('date_adjustment', 'DESC')
         ->whereNull('deleted_at')
         ->orderBy('id', 'DESC')
