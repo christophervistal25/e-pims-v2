@@ -1,5 +1,6 @@
-// display salary grade
+// display salary adjusmtent
 $(function() {
+    let currentSgyear = document.getElementById("currentSgyear").value;
     let table = $("#salaryAdjustment").DataTable({
         processing: true,
         serverSide: true,
@@ -11,7 +12,7 @@ $(function() {
             processing:
                 '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
         },
-        ajax: "/salary-adjustment-list",
+        ajax: `/salary-adjustment-list/${currentSgyear}`,
         columns: [
             { data: "date_adjustment", name: "date_adjustment" },
             {
@@ -21,14 +22,25 @@ $(function() {
             },
             { data: "sg_no", name: "sg_no" },
             { data: "step_no", name: "step_no" },
-            { data: "salary_previous", name: "salary_previous" },
-            { data: "salary_new", name: "salary_new" },
-            { data: "salary_diff", name: "salary_diff" },
+            {
+                data: "salary_previous",
+                name: "salary_previous",
+                render: $.fn.dataTable.render.number(",", ".", 2)
+            },
+            {
+                data: "salary_new",
+                name: "salary_new",
+                render: $.fn.dataTable.render.number(",", ".", 2)
+            },
+            {
+                data: "salary_diff",
+                name: "salary_diff",
+                render: $.fn.dataTable.render.number(",", ".", 2)
+            },
             { data: "action", name: "action" }
         ]
     });
     $("#yearAdjustment").change(function(e) {
-        console.log(e.target.value);
         if (e.target.value == "" || e.target.value == "") {
             table.destroy();
             table = $("#salaryAdjustment").DataTable({

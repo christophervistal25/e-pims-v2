@@ -9,7 +9,6 @@ use DateTimeInterface;
 
 class SalaryAdjustment extends Model
 {
-
     use SoftDeletes;
     protected $dates = ['date_adjustment','deleted_at', 'date_adjustment'];
     protected $fillable = [
@@ -21,8 +20,17 @@ class SalaryAdjustment extends Model
         'step_no',
         'salary_previous',
         'salary_new',
-        'salary_diff'
+        'salary_diff',
     ];
+
+    protected $appends = [
+        'date_adjustment_year'
+    ];
+
+    public function getDateAdjustmentYearAttribute()
+    {
+        return $this->date_adjustment->format('Y');
+    }
 
     public function employee()
     {
@@ -38,8 +46,9 @@ class SalaryAdjustment extends Model
     }
     public function plantilla()
     {
-        return $this->hasOne(Plantilla::class, 'employee_id', 'employee_id');
+        return $this->belongsTo(Plantilla::class, 'employee_id', 'employee_id');
     }
+
     public function serializeDate(DateTimeInterface  $date)
     {
         return $date->format('Y-m-d');

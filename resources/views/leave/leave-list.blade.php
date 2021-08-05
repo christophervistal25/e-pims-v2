@@ -47,7 +47,7 @@
             <div class="card dash-widget">
                 <div class="card-body">
                     <span class="dash-widget-icon">
-                        <i class="far fa-thumbs-down text-danger"></i>
+                        <i class="fas fa-times text-danger"></i>
                     </span>
                     <div class="dash-widget-info">
                         <h3 class="">{{ $reject }}</h3>

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Edit Leave Application Filing')
+@section('title', 'Submitted Leave Application')
 @prepend('page-css')
 <link rel="stylesheet"
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
@@ -314,7 +314,7 @@
 
                             <a href="/employee/leave/leave-list" class="btn btn-md mr-3" style="background-color: orange; color: white;"><i class="la la-list"></i> Go back to List</a>
                             
-                            <button class="btn btn-danger btn-md mr-3" id="btnReject"><i class="fas fa-thumbs-down"></i> Reject</button>
+                            <button class="btn btn-danger btn-md mr-3" id="btnReject"><i class="fas fa-thumbs-down"></i> Decline</button>
 
                             <button type="submit" class="btn btn-success btn-md mr-4" id="btnApproved"><i class="far fa-thumbs-up"></i> Approved</i></button>
                         </div>

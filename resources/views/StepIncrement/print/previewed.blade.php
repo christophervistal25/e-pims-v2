@@ -21,8 +21,8 @@
     
 {{-- BUTTONS --}}
 <div id='action-buttons' class="float-right mt-3 mb-2">
-    <a href="" class="btn btn-outline-dark" onclick="window.print()" id="printBtn"><i class="la la-print"></i>&nbsp Print</a>
-    <a href="/step-increment" class="btn btn-info"><i class="la la-list"></i>&nbsp View Table</a>
+    <a href="" class="btn btn-info" onclick="window.print()" id="printBtn"><i class="fas fa-print"></i>&nbsp; Print</a>
+    <a href="/step-increment" class="btn btn-primary"><i class="fa fa-list"></i>&nbsp; Personnel List</a>
 </div>
 <div class="clearfix"></div>
 

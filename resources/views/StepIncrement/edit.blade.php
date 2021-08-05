@@ -4,6 +4,8 @@
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 <link rel="stylesheet"
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+<link rel="stylesheet" href="/assets/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="/assets/css/style.css">
 
 @endprepend
 @section('content')
@@ -12,9 +14,8 @@
 @endforeach
 {{-- VIEW TABLE BUTTON IN FORM --}}
 <div class="float-right mr-3 mb-2" id='btnViewTableContainer'>
-    <a href="{{ route('print-increment', $stepIncrement->id) }}" class="btn btn-secondary"><i
-            class="la la-print"></i>&nbsp; Print Preview</a>
-    <a href="/step-increment" class="btn btn-info"><i class="la la-list"></i>&nbsp; View List </a>
+    <a href="{{ route('print-increment', $stepIncrement->id) }}" class="btn btn-info"><i class="fas fa-print"></i>&nbsp; Print Preview</a>
+    <a href="/step-increment" class="btn btn-primary"><i class="fa fa-list"></i>&nbsp; Personnel List </a>
 </div>
 <div class="clearfix"></div>
 
@@ -177,9 +178,9 @@
                             </label>
                         </div>
 
-                        <div class="form-group col-12 col-lg-12" id="buttons">
+                        <div class="form-group col-xl-10 mx-auto" id="buttons">
                             <button type="submit" id="btnUpdate"
-                                class="form-control col-12 float-right btn btn-success mb-3 shadow"><i class="fas fa-check"></i> Update</button>
+                                class="form-control col-12 float-right btn btn-success mb-3 shadow"><i class="fas fa-save"></i> &nbsp; &nbsp;Save Changes</button>
                         </div>
                     </div>
                 </div>
