@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Employee;
 use App\Position;
 use App\Plantilla;
-use App\PlantillaPosition;
-use App\SalaryAdjustment;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 use App\SalaryGrade;
 use App\service_record;
+use App\SalaryAdjustment;
+use App\PlantillaPosition;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -24,23 +25,32 @@ class SalaryAdjustmentController extends Controller
      */
     public function index()
     {
-        $dates = SalaryAdjustment::get('date_adjustment')->pluck('date_adjustment')->map(function ($date) {
+        $dates = SalaryAdjustment::select('date_adjustment')->whereYear('date_adjustment', '!=', Carbon::now()->format('Y'))->get()->pluck('date_adjustment')->map(function ($date) {
             return $date->format('Y');
         })->toArray();
         $dates = array_values(array_unique($dates));
-        sort($dates);
+
         $year = SalaryGrade::select('sg_year')->distinct()->get();
+
         $position = Position::select('position_id', 'position_name')->get();
-        $salaryAdjustment = SalaryAdjustment::get()->pluck('employee_id')->toArray();
-        $employee = Plantilla::select('item_no', 'pp_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id', 'year', 'status', 'office_code')->with('employee:employee_id,firstname,middlename,lastname,extension','plantillaPosition', 'plantillaPosition.position','plantillaPosition:pp_id,position_id,office_code,item_no,sg_no')->whereNotIn('employee_id', $salaryAdjustment )->get();
+
+        $employee = Plantilla::select('item_no', 'pp_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id', 'year', 'status', 'office_code')
+                        ->with(['employee:employee_id,firstname,middlename,lastname,extension','plantillaPosition', 'plantillaPosition.position','plantillaPosition:pp_id,position_id,office_code,item_no,sg_no', 'salary_adjustment'])
+                            ->whereYear('year', date('Y'))
+                            ->get();
+                            $employee = $employee->filter(function ($record) {
+                               return !in_array(date('Y'), $record->salary_adjustment->pluck('date_adjustment_year')->toArray());
+                            });
+
         return view('SalaryAdjustment.SalaryAdjustment', compact('employee', 'position', 'dates', 'year'));
     }
 
-    public function list(Request $request)
+    public function list($currentSgyear)
     {
         $data = DB::table('salary_adjustments')
         ->join('employees', 'salary_adjustments.employee_id', 'employees.employee_id')
         ->select('id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), DB::raw("DATE_FORMAT(date_adjustment, '%m-%d-%Y') as date_adjustment"), 'sg_no', 'step_no', 'salary_previous', 'salary_new', 'salary_diff')
+        ->whereYear('date_adjustment',  '=' ,$currentSgyear)
         ->orderBy('date_adjustment', 'DESC')
         ->whereNull('deleted_at')
         ->orderBy('id', 'DESC')
@@ -120,7 +130,8 @@ class SalaryAdjustmentController extends Controller
         ]);
         DB::table('salary_adjustments')->updateOrInsert(
             [
-                'employee_id' => $request['employeeId']
+                'employee_id' => $request['employeeId'],
+                'date_adjustment' => $request['dateAdjustment']
         ],
         [
             'employee_id'     => $request['employeeId'],
@@ -135,20 +146,43 @@ class SalaryAdjustmentController extends Controller
             'remarks'     => $request['remarks'],
             'deleted_at'      => null,
         ]);
-        $service_record                         = new service_record;
-        $service_record->employee_id            = $request['employeeId'];
-        $service_record->service_from_date      = $request['dateAdjustment'];
-        $service_record->position_id            = $request['positionId'];
-        $service_record->status                 = $request['status'];
-        $service_record->salary                 = $request['salaryNew'];
-        $service_record->office_code            = $request['officeCode'];
+
+
         $dateCheck = $request['remarks'];
         if($dateCheck == ''){
-            $service_record->separation_cause       =  'Salary Adjust';
+            $remarks =  'Salary Adjust';
         }else{
-            $service_record->separation_cause       =  $request['remarks'];
+            $remarks =  $request['remarks'];
         }
-        $service_record->save();
+        DB::table('service_records')->updateOrInsert(
+            [
+                'employee_id' => $request['employeeId'],
+                'position_id' =>  $request['positionId'],
+        ],
+        [
+            'employee_id'               => $request['employeeId'],
+            'service_from_date'         => $request['dateAdjustment'],
+            'position_id'               =>  $request['positionId'],
+            'status'                    => $request['status'],
+            'salary'                    => $request['salaryNew'],
+            'office_code'               => $request['officeCode'],
+            'separation_cause'          => $remarks
+        ]);
+
+        // $service_record                         = new service_record;
+        // $service_record->employee_id            = $request['employeeId'];
+        // $service_record->service_from_date      = $request['dateAdjustment'];
+        // $service_record->position_id            = $request['positionId'];
+        // $service_record->status                 = $request['status'];
+        // $service_record->salary                 = $request['salaryNew'];
+        // $service_record->office_code            = $request['officeCode'];
+        // $dateCheck = $request['remarks'];
+        // if($dateCheck == ''){
+        //     $service_record->separation_cause       =  'Salary Adjust';
+        // }else{
+        //     $service_record->separation_cause       =  $request['remarks'];
+        // }
+        // $service_record->save();
         return response()->json(['success'=>true]);
     }
 

@@ -25,28 +25,33 @@
 <div class="card">
     <div class="card-body">
         <div class="float-right mb-2">
-            <button type="button" class="btn btn-primary shadow text-capitalize" data-toggle="modal" data-target="#addLeaveTypeModal">
+            <button type="button" class="btn btn-primary text-capitalize" data-toggle="modal" data-target="#addLeaveTypeModal">
                 <i class='la la-plus'></i>
                 add new leave type
             </button>
+            <a href="{{ route('leaveIncrement.index') }}" title="Leave Increments Settings" type="button" class="btn btn-outline-dark">
+                <i class='la la-cog la-lg'></i>
+            </a>
         </div>
         <div class="clearfix"></div>
-        <table class='table table-bordered table-hover ' id='leave-types-table' width="100%">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Code</th>
-                    {{-- <th>Description</th> --}}
-                    <th class='text-truncate'>Days Period</th>
-                    <th class='text-truncate'>Convertable to cash</th>
-                    <th class='text-truncate'>Applicable Gender</th>
-                    <th class='text-truncate'>Required Service Rendered</th>
-                    <th>Editable</th>
-                    <th class='text-center'>Actions</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <div class="table-responsive">
+            <table class='table table-bordered table-hover ' id='leave-types-table' width="100%">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Code</th>
+                        {{-- <th>Description</th> --}}
+                        <th class='text-truncate'>Days Period</th>
+                        <th class='text-truncate'>Convertable to cash</th>
+                        <th class='text-truncate'>Applicable Gender</th>
+                        <th class='text-truncate'>Required Service Rendered</th>
+                        <th>Editable</th>
+                        <th class='text-center'>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
 </div>
 

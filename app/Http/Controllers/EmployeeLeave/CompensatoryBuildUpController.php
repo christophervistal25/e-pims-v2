@@ -48,7 +48,8 @@ class CompensatoryBuildUpController extends Controller
                             return $rPerEmployee->first()->employee->fullname;
                         })
                         ->addColumn('date_added', function ($rPerEmployee) {
-                            return $rPerEmployee->sortBy('date_added')->last()->date_added;
+                            $dateadded = date("Y-m-d", strtotime($rPerEmployee->sortBy('date_added')->last()->date_added));
+                            return $dateadded;
                         })
                         ->addColumn('earned', function ($rPerEmployee) {
                             return $rPerEmployee->sum('earned');
@@ -222,7 +223,6 @@ class CompensatoryBuildUpController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
         //update
         $comRecords = CompensatoryLeave::where('id', $id)->get();
         foreach($comRecords as $comRecord){

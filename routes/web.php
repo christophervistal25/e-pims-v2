@@ -62,7 +62,7 @@ Route::resource('/print-increment', 'PrintIncrementController');
 //salary adjustment
 Route::get('/salary-adjustment/{id}', 'SalaryAdjustmentController@destroy')->name('salary-adjustment.delete');
 Route::resource('/salary-adjustment', 'SalaryAdjustmentController');
-Route::get('/salary-adjustment-list', 'SalaryAdjustmentController@list');
+Route::get('/salary-adjustment-list/{currentSgyear}', 'SalaryAdjustmentController@list');
 Route::get('/print-adjustment/{id}/previewed', 'PrintAdjustmentController@print')->name('salary-adjustment.previewed.print');
 Route::get('/print-adjustment/{id}', 'PrintAdjustmentController@printList')->name('print-adjustment');
 
@@ -122,7 +122,7 @@ Route::group(['prefix' => 'employee'], function () {
     Route::delete('/leave-list/{id}', 'EmployeeLeave\LeaveListController@destroy')->name('leave-list.delete');
     Route::put('/leave/leave-list/{id}', 'EmployeeLeave\LeaveListController@update')->name('leave-list.update');
 
-    
+
 
     Route::get('/leave/application', 'EmployeeLeave\LeaveController@show')->name('leave.application.filling');
     Route::get('/leave/leave-recall', 'EmployeeLeave\LeaveRecallController@index')->name('leave.leave-recall');
@@ -137,11 +137,12 @@ Route::group(['prefix' => 'employee'], function () {
     Route::get('/leave/compensatory-build-up/forfeited/{id}/{year}', 'EmployeeLeave\CompensatoryBuildUpController@forfeited');
     Route::get('/leave/compensatory-build-up/updateForfeited/{emloyeeID}/{year}', 'EmployeeLeave\CompensatoryBuildUpController@updateForfeited');
     Route::resource('/compensatory-build-up', 'EmployeeLeave\CompensatoryBuildUpController');
-    
+
 });
 
 Route::group(['prefix' => 'maintenance'], function () {
         Route::get('leave/list', 'Maintenance\LeaveController@list');
+        Route::resource('leaveIncrement', 'Maintenance\LeaveIncrementController');
         Route::resource('leave', 'Maintenance\LeaveController');
 });
 
