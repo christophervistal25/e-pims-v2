@@ -141,12 +141,13 @@ Route::get('/salary/adjustment/{year}', function ($year) {
 });
 
 //per office
-Route::get('/office/salary/adjustment/peroffice/{officeCode}', function ($office_code) {
+Route::get('/office/salary/adjustment/peroffice/{officeCode}/{filterYear}', function ($office_code, $filterYear) {
     $data = DB::table('salary_adjustments')
     ->join('employees', 'salary_adjustments.employee_id', '=', 'employees.employee_id')
     ->join('plantillas', 'salary_adjustments.employee_id', '=', 'plantillas.employee_id')
-    ->select('id',DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'),'salary_adjustments.item_no','salary_adjustments.pp_id', DB::raw("DATE_FORMAT(date_adjustment, '%m-%d-%Y') as date_adjustment"), 'salary_adjustments.sg_no', 'salary_adjustments.step_no', 'salary_adjustments.salary_previous','salary_new','salary_adjustments.salary_diff', 'plantillas.office_code')
+    ->select('id', 'salary_adjustments.date_adjustment', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'),'salary_adjustments.item_no','salary_adjustments.pp_id', DB::raw("DATE_FORMAT(date_adjustment, '%m-%d-%Y') as date_adjustment"), 'salary_adjustments.sg_no', 'salary_adjustments.step_no', 'salary_adjustments.salary_previous','salary_new','salary_adjustments.salary_diff', 'plantillas.office_code')
     ->where('plantillas.office_code', $office_code)
+    ->whereYear('salary_adjustments.date_adjustment', $filterYear)
     ->orderBy('id', 'DESC')
     ->whereNull('deleted_at')
     ->get();
@@ -632,7 +633,7 @@ Route::get('/leave/leave-list/employee/{employeeID}', function($employee_id) {
         ->leftJoin('leave_types', 'leave_types.id', '=', 'employee_leave_applications.leave_type_id')
         ->select('employee_leave_applications.id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'recommending_approval', 'approved_by', 'leave_type_id', 'incase_of', 'commutation', 'approved_status', 'date_approved', 'date_rejected', 'date_applied', 'date_from', 'date_to', 'no_of_days', 'leave_types.id as leave_type_id', 'leave_types.name AS leave_type_name')
         ->get();
-    } 
+    }
 
     return Datatables::of($data)
         ->addColumn('action', function($row)
@@ -699,11 +700,11 @@ Route::get('/leave/leave-list/{officeID}', function($officeCode) {
     if(strtolower($officeCode) !== 'all') {
 
         $data = DB::table('employee_leave_applications')
-            ->leftJoin('employees', 'employees.employee_id', '=', 'employee_leave_applications.employee_id')    
+            ->leftJoin('employees', 'employees.employee_id', '=', 'employee_leave_applications.employee_id')
             ->leftJoin('leave_types', 'leave_types.id', '=', 'employee_leave_applications.leave_type_id')
             ->leftJoin('employee_informations', 'employee_informations.EmpIDNo', '=', 'employee_leave_applications.employee_id')
             ->select('employee_leave_applications.id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'recommending_approval', 'approved_by', 'leave_type_id', 'incase_of', 'commutation', 'approved_status', 'date_approved', 'date_rejected', 'date_applied', 'date_from', 'date_to', 'no_of_days', 'leave_types.id as leave_type_id', 'leave_types.name AS leave_type_name')
-            
+
             ->where('employee_informations.office_code', $officeCode)
             ->get();
 

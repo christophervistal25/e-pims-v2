@@ -124,8 +124,18 @@
                         @endforeach
                         </select>
             </div>
+            <div class="col-2 mb-2">
+                <select value="" data-style="btn-primarys text-white"
+                        class="form-control form-control-xs selectpicker yearAdjustment"
+                        name="yearAdjustment" data-live-search="true" id="yearAdjustment" data-size="5">
+                            <option value={{ Carbon\Carbon::now()->format('Y') }}>{{ Carbon\Carbon::now()->format('Y') }}</option>
+                            @foreach ($dates as $date)
+                            <option value={{ $date }}>{{ $date }}</option>
+                            @endforeach
+                    </select>
+            </div>
 
-            <div class="col-7 mb-2">
+            <div class="col-5 mb-2">
                     <div style="padding-right:20px;" class="float-right">
                         <button id="addbutton" class="btn btn-primarys float-right" disabled><i class="fa fa-plus"></i> Adjust Salary</button>
                     </div>
