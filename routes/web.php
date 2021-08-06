@@ -167,4 +167,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('employee-personal-data-sheet', 'Account\Employee\PersonalDataSheetController@index')->name('employee.personal-data-sheet');
     Route::get('employee-personal-data-sheet/edit', 'Account\Employee\PersonalDataSheetController@edit')->name('employee.personal-data-sheet.edit');
+    Route::get('employee-personal-profile', 'Account\Employee\ProfileController@index')->name('employee.personal.profile');
+    Route::put('employee-update-account-information', 'Account\Employee\ProfileController@update')->name('employee.update.account.information');
+    
+    Route::get('employee-chat', 'Account\Employee\ChatController@index');
 });
