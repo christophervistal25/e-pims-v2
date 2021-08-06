@@ -5,10 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use App\Plantilla;
-use App\Office;
-use App\Position;
-use App\Employee;
-use App\PlantillaPosition;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\SalaryAdjustment;
 
@@ -22,7 +19,11 @@ class SalaryAdjustmentPerOfficeController extends Controller
     public function index()
     {
         $plantilla =  Plantilla::select('office_code')->with('office:office_code,office_short_name,office_name')->groupBy('office_code')->get();
-        return view('SalaryAdjustmentPerOffice.SalaryAdjustmentPerOffice', compact('plantilla'));
+        $dates = SalaryAdjustment::select('date_adjustment')->whereYear('date_adjustment', '!=', Carbon::now()->format('Y'))->get()->pluck('date_adjustment')->map(function ($date) {
+            return $date->format('Y');
+        })->toArray();
+        $dates = array_values(array_unique($dates));
+        return view('SalaryAdjustmentPerOffice.SalaryAdjustmentPerOffice', compact('plantilla', 'dates'));
     }
 
     public function list(Request $request)
