@@ -23,6 +23,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     @stack('page-css')
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
@@ -78,6 +79,40 @@
 			<a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
 			<!-- Header Menu -->
 			<ul class="nav user-menu">
+				<li class="nav-item dropdown">
+                    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-bell-o"></i> <span class="badge badge-pill" id="no_of_notifications"></span>
+                    </a>
+                    <div class="dropdown-menu notifications" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-247px, 60px, 0px);">
+                        <div class="topnav-dropdown-header">
+                            <span class="notification-title">Notifications</span>
+                            <a href="javascript:void(0)" class="clear-noti"> Clear All </a>
+                        </div>
+                        <div class="noti-content">
+                            <ul class="notification-list">
+                                {{-- <li class="notification-message">
+                                    <a href="activities.php">
+                                        <div class="media">
+                                            <span class="avatar">
+                                                <img alt="" src="assets/img/profiles/avatar-02.jpg">
+                                            </span>
+                                            <div class="media-body">
+                                                <p class="noti-details"><span class="noti-title">John Doe</span> added
+                                                    new task <span class="noti-title">Patient appointment booking</span>
+                                                </p>
+                                                <p class="noti-time"><span class="notification-time">4 mins ago</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li> --}}
+                            </ul>
+                        </div>
+                        <div class="topnav-dropdown-footer">
+                            <a href="activities.php">View all Notifications</a>
+                        </div>
+                    </div>
+                </li>
 				<!-- Message Notifications -->
 				<li class="nav-item dropdown">
 					<a href="#" class="dropdown-toggle nav-link d-none" data-toggle="dropdown">
@@ -407,7 +442,34 @@
 	<script src="{{ asset('/assets/js/moment.min.js') }}"></script>
 	<script src="{{ asset('/assets/js/bootstrap-datetimepicker.min.js') }}"></script>
 	<script src="{{ asset('/assets/js/app.js') }}"></script>
-	{{-- <script src="{{ asset('/assets/js/searchable.js') }}"></script> --}}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+	<script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>
+	<script>
+	const socket = io.connect("{{ env('MIX_SOCKET_IP') }}");
+
+    socket.on(`notify_administrator`, (data) => {
+		console.log(data);
+		toastr.options = {
+			"closeButton": false,
+			"debug": false,
+			"newestOnTop": false,
+			"progressBar": true,
+			"positionClass": "toast-bottom-right",
+			"preventDuplicates": false,
+			"onclick": null,
+			"showDuration": "1000",
+			"hideDuration": "3000",
+			"timeOut": "5000",
+			"extendedTimeOut": "1000",
+			"showEasing": "swing",
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			"hideMethod": "fadeOut"
+		}
+		toastr["info"](`${data.fullname} submit a leave application.`)
+	});
+
+	</script>
     @stack('page-scripts')
 </body>
 </html>

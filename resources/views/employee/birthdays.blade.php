@@ -43,12 +43,12 @@
     <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
         <div class="profile-widget">
             <div class="profile-img">
-                <img class="avatar" alt="" src="/assets/img/user.jpg">
+                <img class="avatar" alt="" src="/storage/employee_images/{{ $employee->information->photo }}">
             </div>
             <h4 class="user-name m-t-10 mb-0 text-ellipsis">{{ $employee->fullname  }}</h4>
-            <h5 class="user-name m-t-10 mb-0 text-ellipsis">{{  $employee->information->office->office_short_name  }}</h5>
+            <h5 class="user-name m-t-10 mb-0 text-ellipsis">{{ $employee->information->office->office_short_name }}</h5>
             <div class="small text-muted">{{ $employee->information->position->position_name }}</div>
-            <a class="btn btn-primary btn-block btn-sm m-t-10">{{ Carbon\Carbon::parse($employee->date_birth)->format('l jS F Y') }}</a>
+            <a href="javascript:;" class="btn btn-primary btn-block btn-sm m-t-10">{{ Carbon\Carbon::parse($employee->date_birth)->format('l jS F Y') }}</a>
         </div>
     </div>
     @endforeach
@@ -91,12 +91,12 @@
                                 <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
                                     <div class="profile-widget">
                                         <div class="profile-img">
-                                            <a href="#" class="avatar"><img alt="" src="/assets/img/user.jpg"></a>
+                                            <img class="avatar" alt="" src="/storage/employee_images/${employee.information.photo}">
                                         </div>
-                                        <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a href="">${employee.fullname}</a></h4>
-                                        <h5 class="user-name m-t-10 mb-0 text-ellipsis"><a href="">${employee.information.office.office_short_name}</a></h5>
-                                        <div class="small text-muted">${employee.information.position.position_name}</div>
-                                        <a href="" class="btn btn-primary btn-block btn-sm m-t-10">${moment(employee.date_birth).format('dddd Do MMMM YYYY')}</a>
+                                        <h4 class="user-name m-t-10 mb-0 text-ellipsis">${employee.fullname}</h4>
+                                        <h5 class="user-name m-t-10 mb-0 text-ellipsis">${(employee.information && employee.information.office ? employee.information.office.office_short_name : '')}</h5>
+                                        <div class="small text-muted">${(employee.information && employee.information.position) ? employee.information.position.position_name : '' }</div>
+                                        <a href="javascript:;" class="btn btn-primary btn-block btn-sm m-t-10">${moment(employee.date_birth).format('dddd Do MMMM YYYY')}</a>
                                     </div>
                                 </div>
                             `);

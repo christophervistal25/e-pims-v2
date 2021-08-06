@@ -10,6 +10,9 @@ use App\Division;
 use App\PositionSchedule;
 use Carbon\Carbon;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 
 Route::get('/salarySteplist/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@salarySteplist');
 Route::get('/dbmPrevious/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@dbmPrevious');
@@ -59,6 +62,7 @@ Route::get('step/{sg_no}/{step}' , function ($sgNo, $step) {
 });
 
 Route::group(['prefix' => 'employee'], function () {
+    Route::get('/find/ids/{employee_id?}', 'Api\EmployeeController@ids');
     Route::get('employees', 'Api\EmployeeController@list');
     Route::get('/search/{key}', 'Api\EmployeeController@search');
     Route::get('show/{employeeIdNumber}', 'Api\EmployeeController@show');

@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             OfficeSeeder::class,
             SalaryGradeSeeder::class,
-            LeaveRecordSeeder::class,
+            // LeaveRecordSeeder::class,
             PositionSeeder::class,
             ProvinceSeeder::class,
             CitySeeder::class,

@@ -1,10 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Leave Forwarded Balance')
 @prepend('page-css')
-{{-- <script src="{{ asset('/js/app.js') }}" defer></script> --}}
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" />
 <link rel="stylesheet" href="/assets/css/bootstrap-float-label.min.css" />
-<link rel="stylesheet" href="/assets/css/line-awesome.min.css">
 <link rel="stylesheet" href="/assets/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="/assets/css/style.css">
 <style>
@@ -110,7 +108,7 @@ input[type=number] {
                                 <div class="spinner-border spinner-border-sm text-light d-none" id="save-spinner" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>
-                                <img class="mb-5 rounded-circle img-thumbnail" id="empPhoto" src="/storage/employee_images/no-image.png" width="50%"/>
+                                <img class="mb-5 rounded-circle img-thumbnail" id="empPhoto" src="/storage/employee_images/no_image.png" width="50%"/>
                             </div>
                         </div>
                         <div class="row">
@@ -162,6 +160,7 @@ input[type=number] {
                                         </label>
                                         <label for="vlEnjoyed" class="form-group has-float-label">
                                             <input type="number" class="form-control" id="vlEnjoyed" name="vlEnjoyed"
+                                                value="0"
                                                 style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;" >
                                             <span><strong>VL ENJOYED</strong></span>
                                             <div id="vlEnjoyed-error-message" class="text-danger text-sm"></div>
@@ -182,6 +181,7 @@ input[type=number] {
                                         </label>
                                         <label for="slEnjoyed" class="form-group has-float-label">
                                             <input type="number" class="form-control" id="slEnjoyed" name="slEnjoyed"
+                                                value="0"
                                                 style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;" >
                                             <span><strong>SL ENJOYED</strong></span>
                                             <div id="slEnjoyed-error-message" class="text-danger text-sm"></div>
@@ -245,7 +245,7 @@ input[type=number] {
                                 <div class="spinner-border spinner-border-sm text-light d-none" id="save-spinner" role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>
-                                <img class="mb-3 rounded-circle img-thumbnail" id="update_empPhoto" src="/storage/employee_images/no-image.png" width="45%" />
+                                <img class="mb-3 rounded-circle img-thumbnail" id="update_empPhoto" src="/storage/employee_images/no_image.png" width="45%" />
                             </div>
                         </div>
                         <div class="row">
@@ -411,19 +411,19 @@ input[type=number] {
     vlEnjoyed.addEventListener("keyup", function(){
         vlBalance.value = parseFloat(vlEarned.value) - parseFloat(vlEnjoyed.value);
         slBalance.value = parseFloat(slEarned.value) - parseFloat(slEnjoyed.value);
-        total_lb.value = (parseFloat(vlBalance.value) + parseFloat(slBalance.value)).toFixed(3);
+        total_lb.value = ( (parseFloat(vlBalance.value) ) + (parseFloat(slBalance.value))).toFixed(3);
     })
 
     slEarned.addEventListener("keyup", function(){
         vlBalance.value = parseFloat(vlEarned.value) - parseFloat(vlEnjoyed.value);
         slBalance.value = parseFloat(slEarned.value) - parseFloat(slEnjoyed.value);
-        total_lb.value = (parseFloat(vlBalance.value) + parseFloat(slBalance.value).toFixed(3));
+        total_lb.value = (parseFloat(vlBalance.value) + parseFloat(slBalance.value)).toFixed(3);
     })
 
     slEnjoyed.addEventListener("keyup", function(){
         vlBalance.value = parseFloat(vlEarned.value) - parseFloat(vlEnjoyed.value);
         slBalance.value = parseFloat(slEarned.value) - parseFloat(slEnjoyed.value);
-        total_lb.value = (parseFloat(vlBalance.value) + parseFloat(slBalance.value)).toFixed(3);
+        total_lb.value = ( (parseFloat(vlBalance.value)) + (parseFloat(slBalance.value))).toFixed(3);
     })
 
     update_vlEarned.addEventListener("keyup", function(){
@@ -441,7 +441,7 @@ input[type=number] {
     update_slEarned.addEventListener("keyup", function(){
         update_vlBalance.value = parseFloat(update_vlEarned.value) - parseFloat(update_vlEnjoyed.value);
         update_slBalance.value = parseFloat(update_slEarned.value) - parseFloat(update_slEnjoyed.value);
-        update_total_lb.value = (parseFloat(update_vlBalance.value) + parseFloat(update_slBalance.value).toFixed(3));
+        update_total_lb.value = (parseFloat(update_vlBalance.value) + parseFloat(update_slBalance.value)).toFixed(3);
     })
 
     update_slEnjoyed.addEventListener("keyup", function(){

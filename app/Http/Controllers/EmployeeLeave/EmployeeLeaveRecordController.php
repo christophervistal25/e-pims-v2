@@ -7,11 +7,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\LeaveType;
 use App\EmployeeLeaveRecord;
+use Yajra\Datatables\Datatables;
 
 class EmployeeLeaveRecordController extends Controller
 {
-    public const SICK_LEAVE = 1;
-    public const VACATION_LEAVE = 2;
+    public const SICK_LEAVE = 10001;
+    public const VACATION_LEAVE = 10002;
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +20,10 @@ class EmployeeLeaveRecordController extends Controller
      */
     public function index()
     {
-        $employees = Employee::whereDoesntHave('forwarded_leave_records')->get();
+        $employees = Employee::has('information.office')
+                                    ->with(['information.office', 'information.position'])
+                                    ->whereDoesntHave('forwarded_leave_records')
+                                    ->get();
         $records = EmployeeLeaveRecord::where('fb_as_of', '!=', NULL)->with(['employee', 'type'])->get()->groupBy('employee.fullname');
         return view('leave.leave-forwarded-balance', compact('records', 'employees'));
     }
@@ -42,21 +46,25 @@ class EmployeeLeaveRecordController extends Controller
      */
     public function store(Request $request)
     {
-        $leaveTypes = array_column(LeaveType::where('code', 'VL')->orWhere('code', 'SL')->get(['id'])->toArray(), 'id');
+        // $leaveTypes = array_column(, 'id');
 
-        foreach($leaveTypes as $type) {
-           
+        $leaveTypes = LeaveType::where('code_number', self::VACATION_LEAVE)
+                                                ->orWhere('code_number', self::SICK_LEAVE)
+                                                ->get(['code_number', 'id']);
+        
+        $leaveTypes->each(function ($leaveType) use ($request) {
             // Insert Record with As of.
             $employeefbLeaveRecord = new EmployeeLeaveRecord;
             $employeefbLeaveRecord->employee_id                                 = $request['employeeID'];
-            $employeefbLeaveRecord->leave_type_id                               = $type;
+            $employeefbLeaveRecord->leave_type_id                               = $leaveType->id;
 
-            if($type == self::SICK_LEAVE){
+            if($leaveType->code_number === self::SICK_LEAVE){
                 $employeefbLeaveRecord->earned                                  = $request['slEarned'];
                 $employeefbLeaveRecord->used                                    = $request['slEnjoyed'];
                 $employeefbLeaveRecord->particular                              = 'Forwarded Leave credits balance for Sick Leave';
             }
-            if($type == self::VACATION_LEAVE){
+
+            if($leaveType->code_number === self::VACATION_LEAVE){
                 $employeefbLeaveRecord->earned                                  = $request['vlEarned'];
                 $employeefbLeaveRecord->used                                    = $request['vlEnjoyed'];
                 $employeefbLeaveRecord->particular                              = 'Forwarded Leave credits balance for Vacation Leave';
@@ -64,9 +72,8 @@ class EmployeeLeaveRecordController extends Controller
             
             $employeefbLeaveRecord->fb_as_of                                    = $request['asOf'];
             $employeefbLeaveRecord->save();
-        }
+        });
         return response()->json(['success' => true]);
-
     }
 
     /**
@@ -103,15 +110,19 @@ class EmployeeLeaveRecordController extends Controller
     public function update(Request $request, $id)
     {
         //update
-        $leaveRecord = EmployeeLeaveRecord::where('employee_id', $id)->whereNotNull('fb_as_of')->get();
+        $leaveRecord = EmployeeLeaveRecord::with('type')
+                                            ->where('employee_id', $id)
+                                            ->whereNotNull('fb_as_of')
+                                            ->get();
+
         foreach($leaveRecord as $leaverec){
             // Insert Record with As of.
-            if($leaverec->leave_type_id == self::SICK_LEAVE){
+            if($leaverec->type->code_number === self::SICK_LEAVE){
                 $leaverec->earned                                  = $request['update_slEarned'];
                 $leaverec->used                                    = $request['update_slEnjoyed'];
                 $leaverec->particular                              = 'Forwarded Leave credits balance for Sick Leave';
             }
-            if($leaverec->leave_type_id == self::VACATION_LEAVE){
+            if($leaverec->type->code_number === self::VACATION_LEAVE){
                 $leaverec->earned                                  = $request['update_vlEarned'];
                 $leaverec->used                                    = $request['update_vlEnjoyed'];
                 $leaverec->particular                              = 'Forwarded Leave credits balance for Vacation Leave';
