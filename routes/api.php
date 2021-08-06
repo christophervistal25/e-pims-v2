@@ -9,6 +9,7 @@ use App\PlantillaSchedule;
 use App\Division;
 use App\PositionSchedule;
 use Carbon\Carbon;
+use App\EmployeeLeaveApplication;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +27,8 @@ Route::get('/employee/service/records/{employeeId}', function ($employeeId) {
     $data = DB::table('service_records') ->
     join('offices', 'service_records.office_code', '=', 'offices.office_code')
     ->join('positions', 'service_records.position_id', '=', 'positions.position_id')
-    ->select('id', 'employee_id', 'service_from_date', 'service_to_date', 'positions.position_name', 'status', 'salary', 'offices.office_name', 'leave_without_pay', 'separation_date', 'separation_cause')
+    ->select('id', 'employee_id', DB::raw("DATE_FORMAT(service_from_date, '%m-%d-%Y') as service_from_date"), DB::raw("DATE_FORMAT(service_to_date, '%m-%d-%Y') as service_to_date"), 'positions.position_name', 'status', 'salary', 'offices.office_name', 'leave_without_pay', DB::raw("DATE_FORMAT(separation_date, '%m-%d-%Y') as separation_date"), 'separation_cause')
+    ->where('employee_id', $employeeId)
     ->get();
     return DataTables::of($data)
     ->addColumn('action', function($row){
@@ -110,7 +112,7 @@ Route::post('/printEditAdjustment' , 'Api\SalaryAdjustmentController@printEdit')
 Route::get('/salary/adjustment/{year}', function ($year) {
     $data = DB::table('salary_adjustments')
         ->join('employees', 'salary_adjustments.employee_id', 'employees.employee_id')
-        ->select('id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'date_adjustment', 'sg_no', 'step_no', 'salary_previous', 'salary_new', 'salary_diff')
+        ->select('id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), DB::raw("DATE_FORMAT(date_adjustment, '%m-%d-%Y') as date_adjustment"), 'sg_no', 'step_no', 'salary_previous', 'salary_new', 'salary_diff')
         ->whereYear('date_adjustment', '=', $year)
         ->orderBy('date_adjustment', 'DESC')
         ->whereNull('deleted_at')
@@ -147,7 +149,7 @@ Route::get('/office/salary/adjustment/peroffice/{officeCode}', function ($office
     $data = DB::table('salary_adjustments')
     ->join('employees', 'salary_adjustments.employee_id', '=', 'employees.employee_id')
     ->join('plantillas', 'salary_adjustments.employee_id', '=', 'plantillas.employee_id')
-    ->select('id',DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'),'salary_adjustments.item_no','salary_adjustments.pp_id', 'date_adjustment', 'salary_adjustments.sg_no', 'salary_adjustments.step_no', 'salary_adjustments.salary_previous','salary_new','salary_adjustments.salary_diff', 'plantillas.office_code')
+    ->select('id',DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'),'salary_adjustments.item_no','salary_adjustments.pp_id', DB::raw("DATE_FORMAT(date_adjustment, '%m-%d-%Y') as date_adjustment"), 'salary_adjustments.sg_no', 'salary_adjustments.step_no', 'salary_adjustments.salary_previous','salary_new','salary_adjustments.salary_diff', 'plantillas.office_code')
     ->where('plantillas.office_code', $office_code)
     ->orderBy('id', 'DESC')
     ->whereNull('deleted_at')
@@ -235,17 +237,37 @@ Route::post('/salary-adjustment-per-office', function () {
                             ->where('sg_year', request()->year)
                             ->first(['sg_year' ,'sg_step' .  $newAdjustment->step_no]);
         $salaryDiff = $getsalaryResult['sg_step' .  $newAdjustment->step_no] - $newAdjustment->salary_amount;
-        $salaryAdjustment= new SalaryAdjustment();
-        $salaryAdjustment->employee_id = $newAdjustment->employee_id;
-        $salaryAdjustment->item_no = $newAdjustment->item_no;
-        $salaryAdjustment->pp_id = $newAdjustment->pp_id;
-        $salaryAdjustment->date_adjustment = request()->date;
-        $salaryAdjustment->sg_no = $newAdjustment->sg_no;
-        $salaryAdjustment->step_no = $newAdjustment->step_no;
-        $salaryAdjustment->salary_previous = $newAdjustment->salary_amount;
-        $salaryAdjustment->salary_new =  $getsalaryResult['sg_step' .  $newAdjustment->step_no];
-        $salaryAdjustment->salary_diff = $salaryDiff;
-        $salaryAdjustment->save();
+
+        DB::table('salary_adjustments')->updateOrInsert(
+            [
+                'employee_id' => $newAdjustment->employee_id
+        ],
+        [
+            'employee_id'     => $newAdjustment->employee_id,
+            'item_no'         => $newAdjustment->item_no,
+            'pp_id'           => $newAdjustment->pp_id,
+            'date_adjustment' => request()->date,
+            'sg_no'           => $newAdjustment->sg_no,
+            'step_no'         => $newAdjustment->step_no,
+            'salary_previous' => $newAdjustment->salary_amount,
+            'salary_new'      => $getsalaryResult['sg_step' .  $newAdjustment->step_no],
+            'salary_diff'     => $salaryDiff,
+            'remarks'     =>  request()->remarks,
+            'created_at'     =>  Carbon::now(),
+            'deleted_at'      => null,
+        ]);
+        // $salaryAdjustment= new SalaryAdjustment();
+        // $salaryAdjustment->employee_id = $newAdjustment->employee_id;
+        // $salaryAdjustment->item_no = $newAdjustment->item_no;
+        // $salaryAdjustment->pp_id = $newAdjustment->pp_id;
+        // $salaryAdjustment->date_adjustment = request()->date;
+        // $salaryAdjustment->sg_no = $newAdjustment->sg_no;
+        // $salaryAdjustment->step_no = $newAdjustment->step_no;
+        // $salaryAdjustment->salary_previous = $newAdjustment->salary_amount;
+        // $salaryAdjustment->salary_new =  $getsalaryResult['sg_step' .  $newAdjustment->step_no];
+        // $salaryAdjustment->salary_diff = $salaryDiff;
+        // $salaryAdjustment->save();
+
         $service_record                         = new service_record;
         $service_record->employee_id            = $newAdjustment->employee_id;
         $service_record->service_from_date      = request()->date;
@@ -308,7 +330,7 @@ Route::get('/plantilla/personnel/{officeCode}', function ($office_code) {
         ->join('employees', 'plantillas.employee_id', '=', 'employees.employee_id')
         ->join('plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
         ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
-        ->select('plantilla_id', 'plantillas.item_no', 'positions.position_name', 'plantillas.office_code', 'offices.office_name', 'plantillas.status', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
+        ->select('plantilla_id', 'plantillas.item_no', 'positions.position_name', 'plantillas.office_code', 'offices.office_name', 'plantillas.status', 'plantillas.year', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
         ->where('plantillas.office_code', $office_code)
         ->orderBy('plantilla_id', 'desc')
         ->get();
@@ -591,3 +613,7 @@ Route::post('/position/schedule/adjust', function () {
     }
     return response()->json(['success'=>true]);
 });
+
+
+// Leave-List Office Search
+Route::get('/leave/leave-list/{officeID}/{status?}/{employeeID?}', 'EmployeeLeave\LeaveListController@search');

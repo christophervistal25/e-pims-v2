@@ -27,11 +27,12 @@
     <meta name="msapplication-TileImage" content="{{ asset('/assets/img/icons/ms-icon-144x144.png') }}">
     <meta name="theme-color" content="#ffffff">
     <title>@yield('title') | {{  config('app.name') }}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" />
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/css/line-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/assets/css/font-awesome.min.css') }}">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -69,7 +70,7 @@
             <!-- Logo -->
             <div class="header-left">
                 <a href="/" class="logo">
-                    <img src="{{ asset('/assets/img/logo.png') }}" alt="">
+                    <img src="{{ asset('/assets/img/province.png') }}" alt="" height="50" width="50">
                 </a>
             </div>
             <!-- /Logo -->
@@ -233,12 +234,22 @@
             <div class="sidebar-inner slimscroll">
                 <div id="sidebar-menu" class="sidebar-menu">
                     <ul>
-                        <li class="menu-title">
-                            <span>Personal Information Module</span>
+                        <li>
+                            <a class='text-decoration-none' href='http://127.0.0.1:8000/'>
+                                <i class="fa fa-chart-line"></i> <span> Dashboard</span>
+                            </a>
                         </li>
+                        <li class="menu-title">
+							<span>Personal Information Module</span>
+						</li>
                         <li>
                             <a class='text-decoration-none' href="{{ route('employee.index') }}">
                                 <i class="la la-users"></i> <span> Employees </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class='text-decoration-none' href="{{ route('employees-birthday.index') }}">
+                                <i class="la la-birthday-cake"></i> <span> Employee's Birthday </span>
                             </a>
                         </li>
                         <li>
@@ -285,7 +296,7 @@
                                     </a>
                                 </li>
 								<li>
-                                    <a class='text-decoration-none mr-2' href="#">
+                                    <a class='text-decoration-none mr-2' href="{{  route('compensatory-build-up.index') }}">
                                         Compensatory Build-up
                                     </a>
                                 </li>

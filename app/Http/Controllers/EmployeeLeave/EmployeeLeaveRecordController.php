@@ -3,16 +3,18 @@
 namespace App\Http\Controllers\EmployeeLeave;
 
 use App\Employee;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\LeaveType;
 use App\EmployeeLeaveRecord;
-use Yajra\Datatables\Datatables;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Repositories\LeaveRecordRepository;
 
 class EmployeeLeaveRecordController extends Controller
 {
-    public const SICK_LEAVE = 10001;
+       public const SICK_LEAVE = 10001;
     public const VACATION_LEAVE = 10002;
+ 
+    
     /**
      * Display a listing of the resource.
      *
@@ -146,6 +148,7 @@ class EmployeeLeaveRecordController extends Controller
         foreach($leaveRecord as $leaverec){
             $leaverec->delete();
         }
+        
         return response()->json(['success' => true]);
     }
 }

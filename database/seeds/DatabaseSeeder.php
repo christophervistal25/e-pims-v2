@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             // PlantillaSeeder::class,
             HolidaySeeder::class,
+            LeaveIncrementSeeder::class,
         ]);
     }
 }

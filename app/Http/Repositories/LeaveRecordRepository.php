@@ -53,4 +53,6 @@ class LeaveRecordRepository extends LeaveApplicationRepository
             'sick_leave_used' => 0.000,
         ];
     }
+
+
 }

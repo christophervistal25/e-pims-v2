@@ -159,8 +159,7 @@ input[type=number] {
                                             <div id="vlEarned-error-message" class="text-danger text-sm"></div>
                                         </label>
                                         <label for="vlEnjoyed" class="form-group has-float-label">
-                                            <input type="number" class="form-control" id="vlEnjoyed" name="vlEnjoyed"
-                                                value="0"
+                                            <input type="number" value="0" class="form-control" id="vlEnjoyed" name="vlEnjoyed"
                                                 style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;" >
                                             <span><strong>VL ENJOYED</strong></span>
                                             <div id="vlEnjoyed-error-message" class="text-danger text-sm"></div>
@@ -215,7 +214,7 @@ input[type=number] {
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
-                                <button type="submit" class="text-white shadow btn btn-lg btn-success w-100 ml-1" id="btnSave"><i class="lar la-save"></i> Add
+                                <button type="submit" class="text-white shadow btn btn-lg btn-success w-100 ml-1" id="btnSave"><i class="la la-save"></i> Add
                                 Record</button>
                             </div>
                             <div class="col-lg-6">
@@ -299,13 +298,13 @@ input[type=number] {
                                     <div class="col-lg-6">
                                         <h6 class="text-sm text-center">SICK LEAVE</h6>
                                         <label for="update_slEarned" class="form-group has-float-label">
-                                            <input type="number" id="update_slEarned" class="form-control" name="update_slEarned" step="any"
+                                            <input type="number"  id="update_slEarned" class="form-control" name="update_slEarned" step="any"
                                                 style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;" >
                                             <span><strong>SL EARNED</strong></span>
                                             <div id="update_slEarned-error-message" class="text-danger text-sm"></div>
                                         </label>
                                         <label for="update_slEnjoyed" class="form-group has-float-label">
-                                            <input type="number" class="form-control" id="update_slEnjoyed" name="update_slEnjoyed" step="any"
+                                            <input type="number"  class="form-control" id="update_slEnjoyed"  name="update_slEnjoyed" step="any"
                                                 style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;" >
                                             <span><strong>SL ENJOYED</strong></span>
                                             <div id="update_slEnjoyed-error-message" class="text-danger text-sm"></div>

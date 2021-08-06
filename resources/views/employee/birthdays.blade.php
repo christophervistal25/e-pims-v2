@@ -33,8 +33,8 @@
     </div>
     <div class="col-sm-6 col-md-2">
             <p></p>
-            <button href="#" id="searchBirthRange" class="mt-4 btn btn-sm btn-block btn-primary">Search</button>
-        </di>
+            <button href="#" id="searchBirthRange" class="mt-4 btn btn-sm btn-block btn-primary"><i class="fa fa-search-plus"></i>&nbsp;&nbsp; Search</button>
+        </div>
     </div>
 </div>
 

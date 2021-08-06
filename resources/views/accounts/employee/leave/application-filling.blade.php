@@ -263,9 +263,7 @@
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="{{ asset('/assets/js/custom/leave/leave.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.js"></script>
-<script src="https://cdn.socket.io/3.1.1/socket.io.min.js"
-    integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous">
-</script>
+{{-- <script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script> --}}
 <script>
     // const socket = io.connect("{{ env('MIX_SOCKET_IP') }}");
     const ROUTE = "{{ route('employee.leave.application.filling.submit') }}";
@@ -461,7 +459,7 @@
 
                     data.fullname = response.fullname;
 
-                    socket.emit(`submit_application_for_leave`, data);
+                    // socket.emit(`submit_application_for_leave`, data);
                 }
             },
             error: function (response) {

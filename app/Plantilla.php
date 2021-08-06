@@ -72,7 +72,8 @@ class Plantilla extends Model
     }
     public function salary_adjustment()
     {
-        return $this->hasOne(SalaryAdjustment::class, 'employee_id', 'employee_id');
+        $this->primaryKey = 'employee_id';
+        return $this->hasMany(SalaryAdjustment::class, 'employee_id', 'employee_id');
     }
     public function PlantillaSchedule()
     {

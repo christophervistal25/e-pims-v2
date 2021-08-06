@@ -33,8 +33,6 @@ class StepIncrementController extends Controller
             }
 
 
-
-
             return Datatables::of($data)
                 ->addColumn('salary_amount_from', function ($row) {
                     return '₱' . number_format($row->salary_amount_from, 2, '.', ',');
@@ -49,7 +47,7 @@ class StepIncrementController extends Controller
                 // EDIT FUNCTION IN YAJRA TABLE //
 
                 ->addColumn('action', function($row) {
-                    $btnEdit = "<a href='". route('step-increment.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-info btn-sm'><i class='la la-edit' title='Edit'></i></a>";
+                    $btnEdit = "<a href='". route('step-increment.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil' title='Edit Step Increment'></i></a>";
 
 
                     // DELETE FUNCTION IN YAJRA TABLE //
@@ -92,7 +90,7 @@ class StepIncrementController extends Controller
      */
 
 
-     //  POST FUNCTION //
+     //  POST METHOD //
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -152,7 +150,7 @@ class StepIncrementController extends Controller
      */
 
 
-    //  EDIT FUNCTION //
+    //  EDIT METHOD //
     public function edit($id)
     {
         $stepIncrement = StepIncrement::with(['employee:employee_id,firstname,middlename,lastname,extension', 'position:position_id,position_name'])->find($id);
@@ -170,7 +168,7 @@ class StepIncrementController extends Controller
      */
 
 
-    //  UPDATE FUNCTION //
+    //  UPDATE METHOD //
     public function update(Request $request, $id)
     {
             // $this->validate($request, [
@@ -209,7 +207,7 @@ class StepIncrementController extends Controller
      */
 
 
-    //  DELETE FUNCTION //
+    //  DELETE METHOD //
     public function destroy($id)
     {
         $stepIncrement = StepIncrement::find($id);

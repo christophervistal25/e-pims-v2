@@ -76,25 +76,25 @@
         <span style="font-size: 14px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is to certify that the employee named herein above actually rendered services in this office as shown by the service record below, each line of which is supported by appointment and other papers actually issued by this Office and approved by the authorities concerned.</span></div>
         <br><br>
         <table id="table" class="table table-bordered" style="border: 2px solid black;">
-            <thead style="background-color:rgb(205,205,205) !important;">
+            <thead>
                     <tr>
-                        <th style="padding: 0;border: 2px solid black !important;font-size: 18px;font-weight:bold;text-align:center;" colspan="2">SERVICE</th>
-                        <th style="padding: 0;border: 2px solid black !important;font-size: 18px;font-weight:bold;text-align:center;" colspan="3">RECORD OF APPOINTMENT</th>
-                        <th style="padding: 0;border: 2px solid black !important;font-size: 18px;font-weight:bold;text-align:center;" colspan="2">OFFICE ENTITY/DIVISION</th>
-                        <th style="padding: 0;border: 2px solid black !important;font-size: 18px;font-weight:bold;text-align:center;" colspan="2">SEPARATION</th>
+                        <th style="padding: 0;border: 2px solid black !important;font-size: 18px;font-weight:bold;text-align:center;background-color: #CDCDCD !important; -webkit-print-color-adjust: exact;" colspan="2">SERVICE</th>
+                        <th style="padding: 0;border: 2px solid black !important;font-size: 18px;font-weight:bold;text-align:center;background-color: #CDCDCD !important; -webkit-print-color-adjust: exact;" colspan="3">RECORD OF APPOINTMENT</th>
+                        <th style="padding: 0;border: 2px solid black !important;font-size: 18px;font-weight:bold;text-align:center;background-color: #CDCDCD !important; -webkit-print-color-adjust: exact;" colspan="2">OFFICE ENTITY/DIVISION</th>
+                        <th style="padding: 0;border: 2px solid black !important;font-size: 18px;font-weight:bold;text-align:center;background-color: #CDCDCD !important; -webkit-print-color-adjust: exact;" colspan="2">SEPARATION</th>
                     </tr>
                     <tr>
-                        <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;" colspan="2">(Inclusive Date)</th>
-                        <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;" class="align-middle" rowspan="2">Designation</th>
-                        <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;" class="align-middle" rowspan="2">Status</th>
-                        <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;" class="align-middle" rowspan="2">Salary</th>
-                        <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;" class="align-middle" rowspan="2">Station/Place<br>of Assignment</th>
-                        <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;" class="align-middle" rowspan="2">Leave<br>w/o Pay</th>
-                        <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;" class="align-middle" rowspan="2">Date</th>
-                        <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;" class="align-middle" rowspan="2">Cause</th>
+                        <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;background-color: #CDCDCD !important; -webkit-print-color-adjust: exact;" colspan="2">(Inclusive Date)</th>
+                        <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;background-color: #CDCDCD !important; -webkit-print-color-adjust: exact;" class="align-middle" rowspan="2">Designation</th>
+                        <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;background-color: #CDCDCD !important; -webkit-print-color-adjust: exact;" class="align-middle" rowspan="2">Status</th>
+                        <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;background-color: #CDCDCD !important; -webkit-print-color-adjust: exact;" class="align-middle" rowspan="2">Salary</th>
+                        <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;background-color: #CDCDCD !important; -webkit-print-color-adjust: exact;" class="align-middle" rowspan="2">Station/Place<br>of Assignment</th>
+                        <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;background-color: #CDCDCD !important; -webkit-print-color-adjust: exact;" class="align-middle" rowspan="2">Leave<br>w/o Pay</th>
+                        <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;background-color: #CDCDCD !important; -webkit-print-color-adjust: exact;" class="align-middle" rowspan="2">Date</th>
+                        <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;background-color: #CDCDCD !important; -webkit-print-color-adjust: exact;" class="align-middle" rowspan="2">Cause</th>
                     </tr>
-                    <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;">From</th>
-                    <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;">To</th>
+                    <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;background-color: #CDCDCD !important; -webkit-print-color-adjust: exact;">From</th>
+                    <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;background-color: #CDCDCD !important; -webkit-print-color-adjust: exact;">To</th>
                     
             </thead>
             <tbody>

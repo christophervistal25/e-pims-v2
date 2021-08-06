@@ -17,13 +17,13 @@
 	{{-- <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}"> --}}
 	<link rel="stylesheet" href="{{ asset('/assets/css/font-awesome.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('/assets/css/line-awesome.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 	<link rel="stylesheet" href="{{ asset('/assets/css/select2.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('/assets/css/bootstrap-datetimepicker.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+	{{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
     @stack('page-css')
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!--[if lt IE 9]>
@@ -250,12 +250,22 @@
 			<div class="sidebar-inner slimscroll">
 				<div id="sidebar-menu" class="sidebar-menu">
 					<ul>
+						<li>
+							<a class='text-decoration-none' href='http://127.0.0.1:8000/'>
+								<i class="fa fa-chart-line"></i> <span> Dashboard</span>
+							</a>
+						</li>
 						<li class="menu-title">
 							<span>Personal Information Module</span>
 						</li>
                         <li>
                             <a class='text-decoration-none' href="{{ route('employee.index') }}">
                                 <i class="la la-users"></i> <span> Employees </span>
+                            </a>
+                        </li>
+						<li>
+                            <a class='text-decoration-none' href="{{ route('employees-birthday.index') }}">
+                                <i class="la la-birthday-cake"></i> <span> Employee's Birthday </span>
                             </a>
                         </li>
                         <li>
@@ -299,7 +309,7 @@
                                     </a>
                                 </li>
 								<li>
-                                    <a class='text-decoration-none mr-2' href="#">
+                                    <a class='text-decoration-none mr-2' href="{{  route('compensatory-build-up.index') }}">
                                         Compensatory Build-up
                                     </a>
                                 </li>

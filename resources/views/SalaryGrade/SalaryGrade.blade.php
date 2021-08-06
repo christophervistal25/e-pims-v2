@@ -1,7 +1,8 @@
 @extends('layouts.app')
-@section('title', 'Salary Grade')
+@section('title', 'SALARY GRADE')
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('/assets/css/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/plug-ins/1.10.24/sorting/currency.js">
@@ -57,8 +58,26 @@
                 <div class="alert alert-secondary text-center font-weight-bold" role="alert">ADD NEW SALARY GRADE</div>
                 <form action="" method="POST" id="salaryGradeForm">
                     @csrf
-                    <div class="row">
-                        <div class="form-group col-12 col-lg-6">
+
+                    <div class="form-group col-12 col-lg-4">
+                        <label class="has-float-label sgNo mb-0">
+                        <select value=""
+                            class="form-control selectpicker  {{ $errors->has('sgNo')  ? 'is-invalid' : ''}}"
+                            name="sgNo" data-live-search="true" id="sgNo" data-size="4"
+                            data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                            <option></option>
+                            @foreach (range(1, 33) as $salarygrade)
+                            <option {{ old('sgNo') == $salarygrade ? 'selected' : '' }} value="{{ $salarygrade }}">
+                                {{ $salarygrade }}</option>
+                            @endforeach
+                        </select>
+                        <span class="font-weight-bold">SALARY GRADE<span class="text-danger">*</span></span>
+                    </label>
+                        <div id='salary-grade-error-message' class='text-danger text-sm'>
+                        </div>
+                    </div>
+
+                        {{-- <div class="form-group col-12 col-lg-4">
                             <label class="font-weight-bold text-sm">SALARY GRADE<span class="text-danger">*</span></label>
                             <select name="sgNo" value="{{ old('sgNo') }}" class="select floating" id="sgNo">
                                 <option selected>Please Select</option>s
@@ -69,10 +88,10 @@
                             </select>
                             <div id='salary-grade-error-message' class='text-danger'>
                             </div>
-                        </div>
-                    </div>
+                        </div> --}}
+
                         <div class="row">
-                            <div class="col-lg-4">
+                            <div class="col-12 col-md-4">
                             <div class="form-group input-group col-12 mb-0 mt-2">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep1">
@@ -87,7 +106,7 @@
                         </div>
 
 
-                        <div class="col-lg-4">
+                        <div class="col-12 col-md-4">
                             <div class="form-group input-group col-12 mb-0 mt-2">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep2">
@@ -101,7 +120,7 @@
                                 </div>
                         </div>
 
-                        <div class="col-lg-4">
+                        <div class="col-12 col-md-4">
                             <div class="form-group input-group col-12 mb-0 mt-2">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep3">
@@ -114,7 +133,7 @@
                                 </div>
                         </div>
 
-                        <div class="col-lg-4">
+                        <div class="col-12 col-md-4">
                             <div class="form-group input-group col-12 mb-0 mt-3">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep4">
@@ -129,7 +148,7 @@
                                 </div>
                         </div>
 
-                        <div class="col-lg-4">
+                        <div class="col-12 col-md-4">
                             <div class="form-group input-group col-12 mb-0 mt-3">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep5">
@@ -142,7 +161,7 @@
                                 </div>
                         </div>
 
-                        <div class="col-lg-4">
+                        <div class="col-12 col-md-4">
                             <div class="form-group input-group col-12 mb-0 mt-3">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep6">
@@ -156,7 +175,7 @@
                                 </div>
                         </div>
 
-                        <div class="col-lg-4">
+                        <div class="col-12 col-md-4">
                             <div class="form-group input-group col-12 mb-0 mt-3">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep7">
@@ -170,7 +189,7 @@
                                 </div>
                         </div>
 
-                        <div class="col-lg-4">
+                        <div class="col-12 col-md-4">
                             <div class="form-group input-group col-12 mb-0 mt-3">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label">
@@ -185,8 +204,33 @@
                         </div>
                         </div>
 
-                        <div class="row">
-                            <div class="form-group col-12 col-lg-6 mt-3">
+                        <div class="form-group col-12 col-lg-4 mt-4">
+                            <label class="has-float-label sgYear mb-0">
+                            <select value=""
+                                class="form-control selectpicker  {{ $errors->has('sgYear')  ? 'is-invalid' : ''}}"
+                                name="sgYear" data-live-search="true" id="sgYear" data-size="4"
+                                data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <option></option>
+                                {{ $year2 = date("Y",strtotime("-1 year")) }}
+                                <option {{ old('sgYear') == $year2 ? 'selected' : '' }} value={{ $year2 }}>{{ $year2 }}
+                                </option>
+                                {{ $year3 = date("Y",strtotime("-0 year")) }}
+                                <option {{ old('sgYear') == $year3 ? 'selected' : '' }} value={{ $year3 }}>{{ $year3 }}
+                                </option>
+                                @foreach (range(1, 5) as $year)
+                                {{ $year1 = date("Y",strtotime("$year year")) }}
+                                <option {{ old('sgYear') == $year1 ? 'selected' : '' }} value={{ $year1 }}>{{ $year1 }}
+                                </option>
+                                @endforeach
+                            </select>
+                            <span class="font-weight-bold">SALARY GRADE<span class="text-danger">*</span></span>
+                        </label>
+                            <div id='salary-grade-year-error-message' class='text-danger text-sm'>
+                            </div>
+                        </div>
+
+
+                            {{-- <div class="form-group col-12 col-lg-4">
                             <label class="font-weight-bold text-sm">SALARY GRADE YEAR<span class="text-danger">*</span></label>
                             <select id="sgYear" name="sgYear" value="{{ old('sgYear') }}" class="select floating">
                                 <option>Please Select</option>
@@ -204,8 +248,8 @@
                             </select>
                             <div id='salary-grade-year-error-message' class='text-danger'>
                             </div>
-                        </div>
-                        </div>
+                        </div> --}}
+
 
 
 
@@ -274,6 +318,7 @@
 
 @push('page-scripts')
 <script src="{{ asset('/assets/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="{{ asset('/assets/js/dataTables.bootstrap4.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>

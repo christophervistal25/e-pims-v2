@@ -21,7 +21,7 @@ class ServiceRecordsController extends Controller
     public function index()
     {
         $office = Office::select('office_code', 'office_name')->get();
-        $status = ['Please Select', 'Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
+        $status = ['Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
         count($status) - 1;
         $position = Position::select('position_id', 'position_name')->get();
         $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->get();
@@ -43,7 +43,7 @@ class ServiceRecordsController extends Controller
         $data = DB::table('service_records')
         ->join('offices', 'service_records.office_code', '=', 'offices.office_code')
         ->join('positions', 'service_records.position_id', '=', 'positions.position_id')
-        ->select( 'id', 'employee_id', 'service_from_date', 'service_to_date', 'positions.position_name', 'service_records.status', 'salary', 'offices.office_name', 'leave_without_pay', 'separation_date', 'separation_cause')
+        ->select( 'id', 'employee_id', DB::raw("DATE_FORMAT(service_from_date, '%m-%d-%Y') as service_from_date"), DB::raw("DATE_FORMAT(service_to_date, '%m-%d-%Y') as service_to_date"), 'positions.position_name', 'service_records.status', 'salary', 'offices.office_name', 'leave_without_pay', DB::raw("DATE_FORMAT(separation_date, '%m-%d-%Y') as separation_date"), 'separation_cause')
         ->get();
         return DataTables::of($data)
         ->addColumn('action', function($row){
@@ -128,7 +128,7 @@ class ServiceRecordsController extends Controller
     {
         $service_record = service_record::find($id);
         $office = Office::select('office_code', 'office_name')->get();
-        $status = ['Please Select', 'Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
+        $status = ['Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
         count($status) - 1;
         $position = Position::select('position_id', 'position_name')->get();
         $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->get();
@@ -147,11 +147,14 @@ class ServiceRecordsController extends Controller
     {
         $this->validate($request, [
             'fromDate'                    => 'required',
+            'toDate'                      => 'required',
             'positionTitle'               => 'required',
             'status'                      => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
             'salary'                      => 'required',
+            'leavePay'                    => 'required',
             'officeCode'                  => 'required|in:' . implode(',',range(10001, 10056)),
             'cause'                       => 'required',
+            'date'                        => 'required',
         ]);
         $service_record                         =  service_record::find($id);
         $service_record->employee_id            = $request['employeeId'];
