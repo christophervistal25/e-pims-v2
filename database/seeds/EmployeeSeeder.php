@@ -14,7 +14,7 @@ class EmployeeSeeder extends Seeder
     public function run()
     {
         $dataPosCode = [
-            '0460' => '30714,10030',
+         '0460' => '30714,10030',
         '0467' => '30371,10042',
         '0184' => '30660,10029',
         '1992' => '32769,10002',
@@ -55641,19 +55641,23 @@ class EmployeeSeeder extends Seeder
                 'zip_code' => '',
                 ],
         ];
+        $min = strtotime("jan 1st -47 years");
+        $max = strtotime("dec 31st -18 years");
+        $time = rand($min,$max);
 
         foreach($data as $key => $employee) {
-            if($key === 20) {
-                break;
-            }
-
-            Employee::create([
+            // if($key === 20) {
+                // break;
+            // }
+                
+        Employee::create([
                 'employee_id'          => $employee['employee_id'],
                 'lastname'             => $employee['last_name'],
                 'firstname'            => $employee['first_name'],
                 'middlename'           => $employee['middle_name'],
                 'extension'            => $employee['extension'],
                 'date_birth'           => Carbon\Carbon::parse($employee['date_birth']),
+                // 'date_birth'           => date("Y-m-d", $time),
                 'place_birth'          => $employee['birth_place'],
                 'sex'                  => trim(strtolower($employee['sex'])),
                 'civil_status'         => $employee['civil_status'],
@@ -55693,10 +55697,10 @@ class EmployeeSeeder extends Seeder
 
                 list($position, $office) = explode(',', $dataPosCode[$employee['employee_id']]);
                 EmployeeInformation::create([
-                    'EmpIDNo' => $employee['employee_id'],
-                    'pos_code' => $position,
+                    'EmpIDNo'     => $employee['employee_id'],
+                    'pos_code'    => $position,
                     'office_code' => $office,
-                    'photo' => $employee['employee_id'] . '_' . $employee['last_name'] . '.jpg'
+                    'photo'       => $employee['employee_id'] . '_' . $employee['last_name'] . '.jpg'
                 ]);
             }
 

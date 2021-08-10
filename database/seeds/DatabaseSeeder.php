@@ -1,6 +1,7 @@
 <?php
 
 use App\Holiday;
+use App\PlantillaSchedule;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,16 +16,18 @@ class DatabaseSeeder extends Seeder
         $this->call([
             LeaveTypeSeeder::class,
             RefNameExtensionSeeder::class,
-            RefStatusSeeder::class,
-            EmployeeSeeder::class,
-            UserSeeder::class,
-            OfficeSeeder::class,
             SalaryGradeSeeder::class,
-            // LeaveRecordSeeder::class,
+            OfficeSeeder::class,
             PositionSeeder::class,
-            ProvinceSeeder::class,
-            CitySeeder::class,
-            BarangaySeeder::class,
+            DivisionSeeder::class,
+            EmployeeSeeder::class,
+            RefStatusSeeder::class,
+            PlantillaScheduleSeeder::class,
+            UserSeeder::class,
+            // LeaveRecordSeeder::class,
+            // ProvinceSeeder::class,
+            // CitySeeder::class,
+            // BarangaySeeder::class,
             SettingSeeder::class,
             // PlantillaSeeder::class,
             HolidaySeeder::class,
