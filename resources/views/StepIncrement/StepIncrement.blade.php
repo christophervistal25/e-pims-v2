@@ -39,7 +39,7 @@
             </div>
             <br>
             <br>
-           
+
                 <form action="" method="POST" id="formStepIncrement">
                     @csrf
 
@@ -51,7 +51,7 @@
                         <div class="card-body col-12 col-md-6 col-lg-6">
                             <div class="col-12 col-lg-11 mt-2">
                                 <label class="form-group has-float-label mb-0" for="employeeName">
-                                <select class="form-control selectpicker" value="" data-live-search="true"
+                                <select class="form-control employeeName selectpicker" value="" data-live-search="true"
                                     name="employeeName" id="employeeName" data-size="6" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                     <option>Search name here</option>
                                     @foreach($employee as $employees)
@@ -130,7 +130,7 @@
 
                                 <div class="col-12 col-lg-5 ml-2">
                                     <label class="form-group has-float-label mb-0" for="stepNo">
-                                    <input class="form-control" value="" id="stepNo" name="stepNoFrom" type="text"
+                                    <input class="form-control"  value="" id="stepNo" name="stepNoFrom" type="text"
                                         readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                     <span><strong>STEP</strong></span>
                                     </label>
@@ -160,7 +160,7 @@
                             <div class="col-12 col-lg-12">
                                 <label class="form-group has-float-label mb-0" for="stepNo2">
                                 <select name="stepNo2" id="stepNo2" value="" style="outline: none; box-shadow: 0px 0px 0px transparent;"
-                                    class="form-control floating {{ $errors->has('stepNo2')  ? 'is-invalid' : ''}}">
+                                    class="form-control stepNo2 floating {{ $errors->has('stepNo2')  ? 'is-invalid' : ''}}">
                                     <option value="">Please Select</option>
                                 </select>
                                 <span><strong>STEP<span class="text-danger">*</span></strong></span>
@@ -457,21 +457,25 @@
 
             if (employeeName == "" || employeeName.toLowerCase() == 'search name here') {
                 $('#employeeName-error-message').html('');
+                $(".employeeName").addClass("is-invalid");
                 $('#employeeName-error-message').append(
                     `<span class="text-danger"> Employee name is required. </span>`);
                 errors.employee = true;
             } else {
                 $('#employeeName-error-message').html('');
+                $(".employeeName").removeClass("is-invalid");
                 errors.employee = false;
             }
 
 
             if (stepNo == "" || stepNo.toLowerCase() == 'please select') {
                 $('#stepNo2-error-message').html('');
+                $(".stepNo2").addClass("is-invalid");
                 $('#stepNo2-error-message').append(`<span> The step no. is required. </span>`);
                 errors.stepNo = true;
             } else {
                 $('#stepNo2-error-message').html('');
+                $(".stepNo2").removeClass("is-invalid");
                 errors.stepNo = false;
             }
 
