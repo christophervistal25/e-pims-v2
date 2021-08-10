@@ -43,11 +43,11 @@
     <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
         <div class="profile-widget">
             <div class="profile-img">
-                <img class="avatar" alt="" src="/storage/employee_images/{{ $employee->information->photo }}">
+                <img class="avatar" alt="" src="/storage/employee_images/{{ $employee->information ? $employee->information->photo : 'no_image.png' }}">
             </div>
             <h4 class="user-name m-t-10 mb-0 text-ellipsis">{{ $employee->fullname  }}</h4>
-            <h5 class="user-name m-t-10 mb-0 text-ellipsis">{{ $employee->information->office->office_short_name }}</h5>
-            <div class="small text-muted">{{ $employee->information->position->position_name }}</div>
+            <h5 class="user-name m-t-10 mb-0 text-ellipsis">{{ $employee->information ? $employee->information->office->office_short_name : '' }}</h5>
+            <div class="small text-muted">{{ $employee->information ? $employee->information->position->position_name : '' }}</div>
             <a href="javascript:;" class="btn btn-primary btn-block btn-sm m-t-10">{{ Carbon\Carbon::parse($employee->date_birth)->format('l jS F Y') }}</a>
         </div>
     </div>
@@ -60,6 +60,8 @@
         const VALIDATION_ERROR = 422;
 
         $('#searchBirthRange').click(function () {
+            $(this).attr('disabled', true);
+
             let fromDate = $('#fromDate').val();
             let toDate = $('#toDate').val();
 
@@ -80,36 +82,37 @@
             $.ajax({
                 url : `/employees-birthdays/${fromDate}/${toDate}`,
                 success : function (birthdates) {
+                    $('#fromDate').removeClass('is-invalid');
+                    $('#toDate').val('is-invalid');
+                    
                     // Response data is not empty.
+                    $('#searchBirthRange').removeAttr('disabled');
+                    $('#employeesBirthdateContainer').css('opacity', 1);
                     if(birthdates.length !== 0) {
                         // Clear the parent container
                         $('#employeesBirthdateContainer').html('');
-                        
-
-                        birthdates.forEach((employee) => {
+                        Object.values(birthdates).map((employee) => {
                             $('#employeesBirthdateContainer').append(`
                                 <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
                                     <div class="profile-widget">
                                         <div class="profile-img">
-                                            <img class="avatar" alt="" src="/storage/employee_images/${employee.information.photo}">
+                                            <img class="avatar" alt="" src="/storage/employee_images/${employee.information ? employee.information.photo : 'no_image.png'}">
                                         </div>
                                         <h4 class="user-name m-t-10 mb-0 text-ellipsis">${employee.fullname}</h4>
                                         <h5 class="user-name m-t-10 mb-0 text-ellipsis">${(employee.information && employee.information.office ? employee.information.office.office_short_name : '')}</h5>
                                         <div class="small text-muted">${(employee.information && employee.information.position) ? employee.information.position.position_name : '' }</div>
-                                        <a href="javascript:;" class="btn btn-primary btn-block btn-sm m-t-10">${moment(employee.date_birth).format('dddd Do MMMM YYYY')}</a>
+                                        <a href="javascript:;" class="btn btn-primary btn-block btn-sm m-t-10">${moment(employee.date_birth).format('dddd Do of MMMM')}</a>
                                     </div>
                                 </div>
                             `);
                         });
-
-                        // Set opacity to normal
-                        $('#employeesBirthdateContainer').css('opacity', 1);
                     } else {
                         $('#employeesBirthdateContainer').html('');
                         $('#employeesBirthdateContainer').css('opacity', 1);
                     }
                 },
                 error : function (response) {
+                    $('#searchBirthRange').removeAttr('disabled');
                     if(response.status === VALIDATION_ERROR) {
                         const FIRST_ERROR = 0;
 
