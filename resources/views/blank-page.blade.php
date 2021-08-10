@@ -120,11 +120,11 @@
                 @foreach($today as $key => $employee)
                     <div class="leave-info-box">
                         <div class="media align-items-center">
-                            <img class="avatar" src="/storage/employee_images/{{ $employee->information->photo }}">
+                            <img class="avatar" src="/storage/employee_images/{{ is_null($employee->information) ? 'no_image.png' : $employee->information->photo }}">
                             <div class="media-body">
                                 <div class="text-sm my-0 font-weight-medium">{{ $employee->fullname }}</div>
-                                <div class="text-xs my-0 text-muted">{{ $employee->information->position->position_name }}</div>
-                                <div class="text-xs my-0 text-muted">{{ $employee->information->office->office_short_name }}</div>
+                                <div class="text-xs my-0 text-muted">{{ is_null($employee->information) ? 'N/A' : $employee->information->position->position_name }}</div>
+                                <div class="text-xs my-0 text-muted">{{ is_null($employee->information) ? 'N/A' : $employee->information->office->office_short_name }}</div>
                             </div>
                         </div>
                         <div class="row align-items-center mt-3">
@@ -150,11 +150,11 @@
                 @foreach($tomorrow as $key => $employee)
                     <div class="leave-info-box">
                         <div class="media align-items-center">
-                            <img class="avatar" src="/storage/employee_images/{{ $employee->information->photo }}">
+                            <img class="avatar" src="/storage/employee_images/{{ is_null($employee->information) ? 'no_image.png' : $employee->information->photo }}">
                             <div class="media-body">
                                 <div class="text-sm my-0 font-weight-medium">{{ $employee->fullname }}</div>
-                                <div class="text-xs my-0 text-muted">{{ $employee->information->position->position_name }}</div>
-                                <div class="text-xs my-0 text-muted">{{ $employee->information->office->office_short_name }}</div>
+                                <div class="text-xs my-0 text-muted">{{ is_null($employee->information) ? 'N/A' : $employee->information->position->position_name }}</div>
+                                <div class="text-xs my-0 text-muted">{{ is_null($employee->information) ? 'N/A' : $employee->information->office->office_short_name }}</div>
                             </div>
                         </div>
                         <div class="row align-items-center mt-3">
@@ -180,11 +180,11 @@
                 @foreach($oneWeekBeforeBirthdays as $key => $employee)
                     <div class="leave-info-box">
                         <div class="media align-items-center">
-                            <img class="avatar" src="/storage/employee_images/{{ $employee->information->photo }}">
+                            <img class="avatar" src="/storage/employee_images/{{ is_null($employee->information) ? 'no_image.png' : $employee->information->photo }}">
                             <div class="media-body">
                                 <div class="text-sm my-0 font-weight-medium">{{ $employee->fullname }}</div>
-                                <div class="text-xs my-0 text-muted">{{ $employee->information->position->position_name }}</div>
-                                <div class="text-xs my-0 text-muted">{{ $employee->information->office->office_short_name }}</div>
+                                <div class="text-xs my-0 text-muted">{{ is_null($employee->information) ? 'N/A' : $employee->information->position->position_name }}</div>
+                                <div class="text-xs my-0 text-muted">{{ is_null($employee->information) ? 'N/A' : $employee->information->office->office_name }}</div>
                             </div>
                         </div>
                         <div class="row align-items-center mt-3">
