@@ -276,19 +276,19 @@ $(function() {
                 orderable: false,
                 sortable: false
             },
-            { data: "fullname", name: "fullname", visible: true },
+            { data: "fullname", name: "fullname", visible: false },
             { data: "office_code", name: "office_code", visible: false },
             {
                 data: "position_name",
                 name: "position_name",
-                visible: true
+                visible: false
             },
-            { data: "sg_no", name: "sg_no", visible: true },
-            { data: "step_no", name: "step_no", visible: true },
+            { data: "sg_no", name: "sg_no", visible: false },
+            { data: "step_no", name: "step_no", visible: false },
             {
                 data: "salary_amount",
                 name: "salary_amount",
-                visible: true,
+                visible: false,
                 render: $.fn.dataTable.render.number(",", ".", 2)
             }
         ]
@@ -353,7 +353,7 @@ $(function() {
                         '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
                 },
                 ajax: {
-                    url: `/api/office/salary/adjustment/peroffice/notselected/${e.target.value}`
+                    url: `/api/office/salary/adjustment/peroffice/notselected/${e.target.value}/query`
                 },
                 columns: [
                     {

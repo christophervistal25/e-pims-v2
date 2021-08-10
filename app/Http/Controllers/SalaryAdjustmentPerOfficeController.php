@@ -71,7 +71,6 @@ class SalaryAdjustmentPerOfficeController extends Controller
         ->join('plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
         ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
         ->select('plantilla_id','plantillas.item_no', 'plantillas.office_code', 'positions.position_name', 'plantillas.sg_no', 'plantillas.step_no', 'plantillas.salary_amount', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
-        ->whereNotIn('plantillas.employee_id', $salaryAdjustment)
         ->get();
         return DataTables::of($data)
         ->editColumn('checkbox', function ($row) {
