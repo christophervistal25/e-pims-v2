@@ -17,7 +17,7 @@
 	{{-- <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}"> --}}
 	<link rel="stylesheet" href="{{ asset('/assets/css/font-awesome.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('/assets/css/line-awesome.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+	<link rel="stylesheet" href="{{ asset('/assets/css/style.css') }}">
 	<link rel="stylesheet" href="{{ asset('/assets/css/select2.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('/assets/css/bootstrap-datetimepicker.min.css') }}">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -222,7 +222,7 @@
 							</a>
 						</li>
 						<li class="menu-title">
-							<span>Personal Information Module</span>
+							<span class="text-capitalize">Personal Information Module</span>
 						</li>
                         <li>
                             <a class='text-decoration-none' href="{{ route('employee.index') }}">
@@ -240,7 +240,7 @@
                             </a>
                         </li>
 						<li class="menu-title">
-							<span>Human Resource Module</span>
+							<span class="text-capitalize">Human Resource Module</span>
 						</li>
 						<li class="submenu">
 							<a href="#" class='text-decoration-none'><i class="la la-home"></i> <span> Leave Management </span> <span class="menu-arrow"></span></a>

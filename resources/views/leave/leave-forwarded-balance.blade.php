@@ -5,8 +5,9 @@
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" />
 <link rel="stylesheet" href="/assets/css/bootstrap-float-label.min.css" />
 <link rel="stylesheet" href="/assets/css/line-awesome.min.css">
-<link rel="stylesheet" href="/assets/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="/assets/css/responsive.bootstrap4.min.css">
 <style>
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -24,7 +25,7 @@ input[type=number] {
 @section('content')
 <div class="row">  
     <div class="col-lg-12">
-        <div  id="forwardedBalanceTable" class="card shadow">
+        <div  id="forwardedBalanceTable">
             <div class="card-body">
             {{-- LIST OR DATA TABLES --}}
                 <div class="page-header">
@@ -35,25 +36,21 @@ input[type=number] {
                         </div>
                     </div>
                     <hr>
-                    <div class="table-responsive">
-                        <table class="table table-condensed text-center" id="forwarded-balance-table" style="width:100%;">
+                    <div class="">
+                        <table class="responsive display nowrap table table-condensed" id="forwarded-balance-table" style="width:100%;">
                             <thead>
                                 <tr>
-                                    <th class="font-weight-bold align-middle text-center" rowspan="2" width="5%">Employee ID</th>
-                                    <th class="font-weight-bold align-middle text-center" rowspan="2">Employee Name</th>
-                                    <th class="font-weight-bold align-middle text-center" rowspan="2">As Of</th>
-                                    <th class="font-weight-bold align-middle text-center" rowspan="1 " colspan="3">Vacation Leave</th>
-                                    <th class="font-weight-bold align-middle text-center" rowspan="1" colspan="3">Sick Leave</th>
-                                    <th class="font-weight-bold align-middle text-center" rowspan="2" width="5%">Balance Leave Credits</th>
-                                    <th class="font-weight-bold align-middle text-center" rowspan="2" width="10%">Actions</th>
-                                </tr>
-                                <tr>
-                                    <th class="font-weight-bold align-middle text-center" width="5%">Earned</th>
-                                    <th class="font-weight-bold align-middle text-center" width="5%">Enjoyed</th>
-                                    <th class="font-weight-bold align-middle text-center" width="5%">Balance</th>
-                                    <th class="font-weight-bold align-middle text-center" width="5%">Earned</th>
-                                    <th class="font-weight-bold align-middle text-center" width="5%">Enjoyed</th>
-                                    <th class="font-weight-bold align-middle text-center" width="5%">Balance</th>
+                                    <th class="font-weight-bold align-middle text-center" width="10%">Employee ID</th>
+                                    <th class="font-weight-bold align-middle text-center" width="25%">Employee Name</th>
+                                    <th class="font-weight-bold align-middle text-center" width="15%">As Of</th>
+                                    <th class="font-weight-bold align-middle text-center" width="5%">VL Earned</th>
+                                    <th class="font-weight-bold align-middle text-center" width="5%">VL Enjoyed</th>
+                                    <th class="font-weight-bold align-middle text-center" width="5%">VL Balance</th>
+                                    <th class="font-weight-bold align-middle text-center" width="5%">SL Earned</th>
+                                    <th class="font-weight-bold align-middle text-center" width="5%">SL Enjoyed</th>
+                                    <th class="font-weight-bold align-middle text-center" width="5%">SL Balance</th>
+                                    <th class="font-weight-bold align-middle text-center" width="10%">Balance Leave Credits</th>
+                                    <th class="font-weight-bold align-middle text-center" width="10%">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -64,22 +61,22 @@ input[type=number] {
                                     $totalBalance = (float) $vlBalance + $slBAlance;
                                     @endphp
                                         <tr>
-                                            <td>{{ $record->first() ? $record[0]->employee_id : '' }}</td>
+                                            <td class="text-center">{{ $record->first() ? $record[0]->employee_id : '' }}</td>
                                             <td class="text-center">{{ $employeeFullname }}</td>
-                                            <td>{{ $record->first() ? $record[0]->fb_as_of : '' }}</td>
+                                            <td class="text-center">{{ $record->first() ? $record[0]->fb_as_of : '' }}</td>
                                             {{-- VACATION LEAVE --}}
-                                            <td>{{ $record->where('type.code', 'VL')->sum('earned') }}</td>
-                                            <td>{{ $record->where('type.code', 'VL')->sum('used') }}</td>
-                                            <td>{{ $vlBalance }}</td>
+                                            <td class="text-center">{{ $record->where('type.code', 'VL')->sum('earned') }}</td>
+                                            <td class="text-center">{{ $record->where('type.code', 'VL')->sum('used') }}</td>
+                                            <td class="text-center">{{ $vlBalance }}</td>
                                             {{-- END OF VACATION LEAVE --}}
                                             {{-- SICK LEAVE --}}
-                                            <td>{{ $record->where('type.code', 'SL')->sum('earned') }}</td>
-                                            <td>{{ $record->where('type.code', 'SL')->sum('used') }}</td>
-                                            <td>{{ $slBAlance }}</td>
+                                            <td class="text-center">{{ $record->where('type.code', 'SL')->sum('earned') }}</td>
+                                            <td class="text-center">{{ $record->where('type.code', 'SL')->sum('used') }}</td>
+                                            <td class="text-center">{{ $slBAlance }}</td>
                                             {{-- END OF SICK LEAVE --}}
 
-                                            <td><b>{{ $totalBalance }}</b></td>
-                                            <td>
+                                            <td class="text-center"><b>{{ $totalBalance }}</b></td>
+                                            <td class="text-center" >
                                                  <button class='btn btn-success btn-sm rounded-circle shadow edit__leave__type' data-id="{{ $record->first() ? $record[0]->employee_id : '' }}">
                                                     <i class='la la-pencil'></i>
                                                 </button>
@@ -115,7 +112,7 @@ input[type=number] {
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
-                                <label for="empName" class="form-group has-float-label">
+                                <label for="employeeName" class="form-group has-float-label">
                                     <select class="form-control selectpicker"  data-live-search="true"
                                         name="employeeName" id="employeeName" data-size="6" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                         <option>Search name here</option>
@@ -149,7 +146,7 @@ input[type=number] {
                         </div>
                     </div>
                     <div class="col-lg-9">
-                        <div class="card shadow">
+                        <div class="card">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -195,7 +192,6 @@ input[type=number] {
                                 </div>
                             </div>
                         </div>
-                        <hr>
                         <div class="row">
                             <div class="col-lg-6">
                                 <label for="asOf" class="form-group has-float-label">
@@ -215,11 +211,11 @@ input[type=number] {
                         </div>
                         <div class="row">
                             <div class="col-lg-6">
-                                <button type="submit" class="text-white shadow btn btn-lg btn-success w-100 ml-1" id="btnSave"><i class="la la-save"></i> Add
+                                <button type="submit" class="text-white shadow btn btn-lg btn-success w-100 ml-1 mt-2" id="btnSave"><i class="la la-save"></i> Add
                                 Record</button>
                             </div>
                             <div class="col-lg-6">
-                                <button type="button" class="text-white shadow btn btn-lg btn-primary w-100 ml-1" id="btnBack"><i class="la la-list"></i>
+                                <button type="button" class="text-white shadow btn btn-lg btn-primary w-100 ml-1 mt-2" id="btnBack"><i class="la la-list"></i>
                                     Go back to List
                                 </button>
                             </div>
@@ -320,7 +316,6 @@ input[type=number] {
                                  
                             </div>
                         </div>
-                        <hr>
                         <div class="row">
                             <div class="col-lg-6">
                                 <label for="update_asOf" class="form-group has-float-label">
@@ -329,12 +324,6 @@ input[type=number] {
                                     <span class="font-weight-bold">As of</span>
                                     <div id="update_asOf-error-message" class="text-danger text-sm"></div>
                                 </label>
-                                <button type="submit" class="text-white shadow btn btn-lg btn-success ml-1" id="btnUpdate"><i class="la la-save"></i>  
-                                    Save Changes
-                                </button>
-                                <button type="button" class="text-white shadow btn btn-lg btn-danger ml-1" id="update_btnDelete"><i class="la la-trash"></i>
-                                    Delete Record
-                                </button>
                             </div>
                             <div class="col-lg-6">
                                 <label for="update_total_lb" class="form-group has-float-label">
@@ -342,7 +331,23 @@ input[type=number] {
                                     style="outline: none; box-shadow: 0px 0px 0px transparent; height:70px; font-weight:bold; font-size:40px; text-align: right;" readonly>
                                     <span><strong>Total VL & SL</strong></span>
                                 </label>
-                                <button type="button" class="text-white shadow btn btn-lg btn-primary float-right ml-1" id="update_btnBack"><i class="la la-list"></i>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3 pl-1 pr-1">
+                                <button type="submit" class="text-white shadow btn btn-lg btn-success btn-block mt-2" id="btnUpdate"><i class="la la-save"></i>  
+                                    Save Changes
+                                </button>
+                            </div>
+                            <div class="col-lg-3 pl-1 pr-1">
+                                <button type="button" class="text-white shadow btn btn-lg btn-danger btn-block mt-2" id="update_btnDelete"><i class="la la-trash"></i>
+                                    Delete Record
+                                </button>
+                            </div>
+                            <div class="col-lg-3">
+                            </div>
+                            <div class="col-lg-3">
+                                <button type="button" class="text-white shadow btn btn-lg btn-primary btn-block float-right ml-1 mt-2" id="update_btnBack"><i class="la la-list"></i>
                                     Go back to List
                                 </button>
                             </div>
@@ -358,14 +363,18 @@ input[type=number] {
 @push('page-scripts')
 <script src="/assets/js/jquery.dataTables.min.js"></script>
 <script src="/assets/js/dataTables.bootstrap4.min.js"></script>
-<script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
+<script src="/assets/js/dataTables.responsive.min.js"></script>
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="/assets/js/sweetalert.min.js"></script>
 <script>
     $(document).ready( function () {
         $('#forwarded-balance-table').DataTable({
+            "responsive": true,
             "ordering": false,
-            "scrollX": true
+            "columnDefs": [
+                        { responsivePriority: 1, targets: [-1, 0] },
+                        { responsivePriority: 2, targets: 1 }
+                    ]
         });
         
     });
@@ -486,9 +495,11 @@ input[type=number] {
                 $('#employeeName-error-message').html('');
                 $('#employeeName-error-message').append(
                     `<span class="text-danger"> Employee name is required. </span>`);
+                $('#employeeName').addClass('border border-danger');
                 errors.employee = true;
             } else {
                 $('#employeeName-error-message').html('');
+                $('#employeeName').removeClass('border border-danger');
                 errors.employee = false;
             }
 
@@ -496,9 +507,11 @@ input[type=number] {
             if (asOf === "") {
                 $('#asOf-error-message').html('');
                 $('#asOf-error-message').append(`<span> Please select a date. </span>`);
+                $('#asOf').addClass('border border-danger');
                 errors.asOf = true;
             } else {
                 $('#asOf-error-message').html('');
+                $('#asOf').removeClass('border border-danger');
                 errors.asOf = false;
             }
 
@@ -506,9 +519,11 @@ input[type=number] {
             if (vlEarned === "") {
                 $('#vlEarned-error-message').html('');
                 $('#vlEarned-error-message').append(`<span> Vacation Leave Earned is required. </span>`);
+                $('#vlEarned').addClass('border border-danger');
                 errors.vlEarned = true;
             } else {
                 $('#vlEarned-error-message').html('');
+                $('#vlEarned').removeClass('border border-danger');
                 errors.vlEarned = false;
             }
 
@@ -516,9 +531,11 @@ input[type=number] {
             if (vlEnjoyed === "") {
                 $('#vlEnjoyed-error-message').html('');
                 $('#vlEnjoyed-error-message').append(`<span> Vacation Leave Enjoyed is required. </span>`);
+                $('#vlEnjoyed').addClass('border border-danger');
                 errors.vlEnjoyed = true;
             } else {
                 $('#vlEnjoyed-error-message').html('');
+                $('#vlEnjoyed').removeClass('border border-danger');
                 errors.vlEnjoyed = false;
             }
 
@@ -526,9 +543,11 @@ input[type=number] {
             if (slEarned === "") {
                 $('#slEarned-error-message').html('');
                 $('#slEarned-error-message').append(`<span> Sick Leave Earned is required. </span>`);
+                $('#slEarned').addClass('border border-danger');
                 errors.slEarned = true;
             } else {
                 $('#slEarned-error-message').html('');
+                $('#slEarned').removeClass('border border-danger');
                 errors.slEarned = false;
             }
 
@@ -536,9 +555,11 @@ input[type=number] {
             if (slEnjoyed === "") {
                 $('#slEnjoyed-error-message').html('');
                 $('#slEnjoyed-error-message').append(`<span> Sick Leave Enjoyed is required. </span>`);
+                $('#slEnjoyed').addClass('border border-danger');
                 errors.slEnjoyed = true;
             } else {
                 $('#slEnjoyed-error-message').html('');
+                $('#slEnjoyed').removeClass('border border-danger');
                 errors.slEnjoyed = false;
             }
 
@@ -580,6 +601,11 @@ input[type=number] {
             $('#vlEnjoyed-error-message').html('');
             $('#slEarned-error-message').html('');
             $('#slEnjoyed-error-message').html(''); 
+            $('#asOf').removeClass('border border-danger');
+            $('#vlEarned').removeClass('border border-danger');
+            $('#vlEnjoyed').removeClass('border border-danger');
+            $('#slEarned').removeClass('border border-danger');
+            $('#slEnjoyed').removeClass('border border-danger');
         });
 
         $('#btnBack').click( ()=> {
@@ -646,9 +672,11 @@ input[type=number] {
             if (update_asOf === "") {
                 $('#update_asOf-error-message').html('');
                 $('#update_asOf-error-message').append(`<span> Please select a date. </span>`);
+                $('#update_asOf').addClass('border border-danger');
                 errors.update_asOf = true;
             } else {
                 $('#update_asOf-error-message').html('');
+                $('#update_asOf').removeClass('border border-danger');
                 errors.update_asOf = false;
             }
 
@@ -656,9 +684,11 @@ input[type=number] {
             if (update_vlEarned === "") {
                 $('#update_vlEarned-error-message').html('');
                 $('#update_vlEarned-error-message').append(`<span> Vacation Leave Earned is required. </span>`);
+                $('#update_vlEarned').addClass('border border-danger');
                 errors.update_vlEarned = true;
             } else {
                 $('#update_vlEarned-error-message').html('');
+                $('#update_vlEarned').removeClass('border border-danger');
                 errors.update_vlEarned = false;
             }
 
@@ -666,9 +696,11 @@ input[type=number] {
             if (update_vlEnjoyed === "") {
                 $('#update_vlEnjoyed-error-message').html('');
                 $('#update_vlEnjoyed-error-message').append(`<span> Vacation Leave Enjoyed is required. </span>`);
+                $('#update_vlEnjoyed').addClass('border border-danger');
                 errors.update_vlEnjoyed = true;
             } else {
                 $('#update_vlEnjoyed-error-message').html('');
+                $('#update_vlEnjoyed').removeClass('border border-danger');
                 errors.update_vlEnjoyed = false;
             }
 
@@ -676,9 +708,11 @@ input[type=number] {
             if (update_slEarned === "") {
                 $('#update_slEarned-error-message').html('');
                 $('#update_slEarned-error-message').append(`<span> Sick Leave Earned is required. </span>`);
+                $('#update_slEarned').addClass('border border-danger');
                 errors.update_slEarned = true;
             } else {
                 $('#update_slEarned-error-message').html('');
+                $('#update_slEarned').removeClass('border border-danger');
                 errors.update_slEarned = false;
             }
 
@@ -686,9 +720,11 @@ input[type=number] {
             if (update_slEnjoyed === "") {
                 $('#update_slEnjoyed-error-message').html('');
                 $('#update_slEnjoyed-error-message').append(`<span> Sick Leave Enjoyed is required. </span>`);
+                $('#update_slEnjoyed').addClass('border border-danger');
                 errors.update_slEnjoyed = true;
             } else {
                 $('#update_slEnjoyed-error-message').html('');
+                $('#update_slEnjoyed').removeClass('border border-danger');
                 errors.update_slEnjoyed = false;
             }
 
