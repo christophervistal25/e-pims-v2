@@ -58,7 +58,8 @@ class Employee extends Model
         'telephone_no',
         'mobile_no',
         'email_address',
-        'status'
+        'status',
+        'first_day_of_service'
     ];
 
     protected $appends = [
@@ -269,6 +270,14 @@ class Employee extends Model
     }
 
     /**
+     * Get Login information of user.
+     */
+    public function loginAccount()
+    {
+        return $this->belongsTo(User::class, 'employee_id', 'employee_id');
+    }
+
+    /**
      * Get all employees with passed relation.
      */
     public static function getWithRelations(array $relations = [])
@@ -284,7 +293,7 @@ class Employee extends Model
     public static function fetchWithFullInformation(string $employeeId) :Employee
     {
         return self::with([
-            'family_background', 'spouse_child', 'educational_background', 'civil_service', 'work_experience', 'voluntary_work', 'program_attained','other_information','references', 'relevant_queries', 'issued_id', 'status', 'information.position'])->find($employeeId);
+            'family_background', 'spouse_child', 'educational_background', 'civil_service', 'work_experience', 'voluntary_work', 'program_attained','other_information','references', 'relevant_queries', 'issued_id', 'status', 'information.position', 'information.office', 'loginAccount'])->find($employeeId);
     }
 
     public function salary_adjustment()
