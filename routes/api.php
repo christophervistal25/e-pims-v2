@@ -192,14 +192,20 @@ Route::get('/office/salary/adjustment/peroffice/{officeCode}/{filterYear}', func
 
 //per office not selected
 Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}/query', function ($office_code) {
-    $salaryAdjustment = SalaryAdjustment::get()->pluck('employee_id')->toArray();
     $data = DB::table('plantillas')
     ->join('employees', 'plantillas.employee_id', '=', 'employees.employee_id')
     ->join('plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
     ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
-    ->select('plantilla_id','plantillas.item_no', 'plantillas.office_code', 'positions.position_name', 'plantillas.sg_no', 'plantillas.step_no', 'plantillas.salary_amount', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
+    ->leftJoin('salary_adjustments', 'plantillas.employee_id', '=', 'salary_adjustments.employee_id')
+    ->select('plantilla_id', 'plantillas.item_no', 'plantillas.office_code', 'positions.position_name', 'plantillas.sg_no', 'plantillas.step_no', 'plantillas.salary_amount', 'salary_adjustments.employee_id', 'salary_adjustments.date_adjustment', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
+    ->whereYear('plantillas.year', '=', date('Y'))
     ->where('plantillas.office_code',  '=' ,$office_code)
-    ->get();
+    ->get()->filter(function ($record) {
+        if(is_null($record->date_adjustment)) {
+            return true;
+        }
+        return Carbon::parse($record->date_adjustment)->format('Y') !== date('Y');
+    });
     return DataTables::of($data)
     ->editColumn('checkbox', function ($row) {
         $checkbox = "<input id='checkbox$row->plantilla_id' style='transform:scale(1.35)' value='$row->plantilla_id' type='checkbox' />";
