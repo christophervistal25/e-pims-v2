@@ -181,18 +181,6 @@
                         </div>
                     </div>
 
-                    {{-- <div class="form-group col-12 col-lg-3">
-                        <label>Steps<span class="text-danger">*</span></label>
-                        <select name="stepNo" value="" class="select floating"
-                            id="currentStepno">
-                            <option value="">Please Select</option>
-                            @foreach (range(1, 8) as $step_no)
-                            <option {{ old('stepNo') == $step_no ? 'selected' : '' }} value="{{ $step_no}}">{{ $step_no}}</option>
-                            @endforeach
-                        </select>
-                        <div id='steps-error-message' class='text-danger text-sm'>
-                        </div>
-                    </div> --}}
 
                     <div class="form-group col-12 col-lg-3">
                         <label>Steps<span class="text-danger">*</span></label>
@@ -237,9 +225,11 @@
 
                     <div class="form-group col-12 col-lg-4">
                         <label>Area Code<span class="text-danger">*</span></label>
-                        <select name="areaCode" value="" class="select floating {{ $errors->has('areaCode')  ? 'is-invalid' : ''}}"
-                            id="areaCode">
-                            @foreach(range(0, 16) as $areacodes)
+                        <select value=""
+                            class="form-control areaCode selectpicker"
+                            name="areaCode" data-live-search="true" id="areaCode" data-size="5">
+                            <option></option>
+                            @foreach(range(0, 15) as $areacodes)
                             @if($areacode[$areacodes] == 'CARAGA')
                             <option value="{{ $areacode[$areacodes]}}" selected>{{ $areacode[$areacodes] }}</option>
                             @else
@@ -251,11 +241,14 @@
                         </div>
                     </div>
 
-                    <div class="form-group form-group col-12 col-lg-4">
+
+                    <div class="form-group col-12 col-lg-4">
                         <label>Area Type<span class="text-danger">*</span></label>
-                        <select name="areaType" value="" class="select floating {{ $errors->has('areaType')  ? 'is-invalid' : ''}}"
-                            id="areaType">
-                            @foreach(range(0, 5) as $areatypes)
+                        <select value=""
+                            class="form-control areaType selectpicker"
+                            name="areaType" data-live-search="true" id="areaType" data-size="5">
+                            <option></option>
+                            @foreach(range(0, 4) as $areatypes)
                             @if($areatype[$areatypes] == 'Province')
                             <option value="{{ $areatype[$areatypes]}}" selected>{{ $areatype[$areatypes] }}</option>
                             @else
@@ -267,25 +260,30 @@
                         </div>
                     </div>
 
-                        <div class="form-group form-group col-12 col-lg-4">
-                            <label>Area Level<span class="text-danger">*</span></label>
-                            <select name="areaLevel" value="" class="select floating"
-                                id="areaLevel">
-                                @foreach(range(0, 4) as $arealevels)
-                                @if($arealevel[$arealevels] == 'A')
-                                <option value="{{ $arealevel[$arealevels]}}" selected>{{ $arealevel[$arealevels] }}</option>
-                                @else
-                                <option value="{{ $arealevel[$arealevels]}}">{{ $arealevel[$arealevels] }}</option>
-                                @endif
-                                @endforeach
-                            </select>
-                            <div id='area-level-error-message' class='text-danger text-sm'>
-                            </div>
+
+                    <div class="form-group col-12 col-lg-4">
+                        <label>Area Level<span class="text-danger">*</span></label>
+                        <select value=""
+                            class="form-control areaLevel selectpicker"
+                            name="areaLevel" data-live-search="true" id="areaLevel" data-size="5">
+                            <option></option>
+                            @foreach(range(0, 3) as $arealevels)
+                            @if($arealevel[$arealevels] == 'A')
+                            <option value="{{ $arealevel[$arealevels]}}" selected>{{ $arealevel[$arealevels] }}</option>
+                            @else
+                            <option value="{{ $arealevel[$arealevels]}}">{{ $arealevel[$arealevels] }}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                        <div id='area-level-error-message' class='text-danger text-sm'>
                         </div>
+                    </div>
+
+
                         <div class="form-group form-group submit-section col-12">
                             <button id="saveBtn" class="btn btn-primarys submit-btn float-right shadow" type="submit">
                                 <span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>
-                                <i class="fas fa-save"></i> Save
+                                <i class="fas fa-save"></i> <b id="saving">Save</b>
                             </button>
                             <button style="margin-right:10px;" type="button" id="cancelbutton1" onclick="myFunction()"
                                 class="text-white btn btn-danger submit-btn float-right shadow"><i class="fas fa-ban"></i> Cancel</button>

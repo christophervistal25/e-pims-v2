@@ -234,9 +234,11 @@
 
                         <div class="form-group col-12 col-lg-4">
                             <label>Area Code<span class="text-danger">*</span></label>
-                            <select name="areaCode" value="{{ old('areaCode') }}"
-                                class="select floating {{ $errors->has('areaCode')  ? 'is-invalid' : ''}}">
-                                @foreach(range(0, 16) as $areacodes)
+                            <select value="{{ old('areaCode') }}"
+                                class="form-control form-control-xs selectpicker {{ $errors->has('areaCode')  ? 'is-invalid' : ''}}"
+                                name="areaCode" data-live-search="true" id="areaCode" data-size="5">
+                                <option></option>
+                                @foreach(range(0, 15) as $areacodes)
                                 @if($areacode[$areacodes] == $plantilla->area_code)
                                 <option value="{{ $areacode[$areacodes]}}" selected>{{ $areacode[$areacodes] }}</option>
                                 @else
@@ -250,11 +252,13 @@
                             @endif
                         </div>
 
-                        <div class="form-group form-group col-12 col-lg-4">
+                        <div class="form-group col-12 col-lg-4">
                             <label>Area Type<span class="text-danger">*</span></label>
-                            <select name="areaType" value="{{ old('areaType') }}"
-                                class="select floating {{ $errors->has('areaType')  ? 'is-invalid' : ''}}">
-                                @foreach(range(0, 5) as $areatypes)
+                            <select value="{{ old('areaType') }}"
+                                class="form-control form-control-xs selectpicker {{ $errors->has('areaType')  ? 'is-invalid' : ''}}"
+                                name="areaType" data-live-search="true" id="areaType" data-size="5">
+                                <option></option>
+                                @foreach(range(0, 4) as $areatypes)
                                 @if($areatype[$areatypes] == $plantilla->area_type)
                                 <option value="{{ $areatype[$areatypes]}}" selected>{{ $areatype[$areatypes] }}</option>
                                 @else
@@ -268,11 +272,13 @@
                             @endif
                         </div>
 
-                        <div class="form-group form-group col-12 col-lg-4">
+                        <div class="form-group col-12 col-lg-4">
                             <label>Area Level<span class="text-danger">*</span></label>
-                            <select name="areaLevel" value="{{ old('areaLevel') }}"
-                                class="select floating {{ $errors->has('areaLevel')  ? 'is-invalid' : ''}}">
-                                @foreach(range(0, 4) as $arealevels)
+                            <select value="{{ old('areaLevel') }}"
+                                class="form-control form-control-xs selectpicker {{ $errors->has('areaLevel')  ? 'is-invalid' : ''}}"
+                                name="areaLevel" data-live-search="true" id="areaLevel" data-size="5">
+                                <option></option>
+                                @foreach(range(0, 3) as $arealevels)
                                 @if($arealevel[$arealevels] == $plantilla->area_level)
                                 <option value="{{ $arealevel[$arealevels]}}" selected>{{ $arealevel[$arealevels] }}
                                 </option>

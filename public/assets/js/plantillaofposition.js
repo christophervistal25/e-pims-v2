@@ -56,6 +56,7 @@ $(document).ready(function() {
         let data = $(this).serialize();
         $("#saveBtn").attr("disabled", true);
         $("#loading").removeClass("d-none");
+        document.getElementById("saving").innerHTML = "Saving . . .";
         $.ajax({
             type: "POST",
             url: "/plantilla-of-position",
@@ -102,6 +103,7 @@ $(document).ready(function() {
                     swal("Sucessfully Added!", "", "success");
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
+                    document.getElementById("saving").innerHTML = "Save";
                 }
             },
             error: function(response) {
@@ -173,6 +175,7 @@ $(document).ready(function() {
                     });
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
+                    document.getElementById("saving").innerHTML = "Save";
                 }
             }
         });
@@ -452,4 +455,24 @@ $(document).ready(function() {
             swal("Please Input Data", "", "warning");
         }
     });
+});
+
+document.getElementById("itemNo").addEventListener("keyup", function() {
+    $("#item-error-message").html("");
+    $("#itemNo").removeClass("is-invalid");
+});
+
+document.getElementById("salaryGrade").addEventListener("change", function() {
+    $("#salary-grade-error-message").html("");
+    $(".salaryGrade .dropdown").removeClass("is-invalid");
+});
+document.getElementById("positionTitle").addEventListener("change", function() {
+    $("#position-title-error-message").html("");
+    $(".positionTitle .dropdown").removeClass("is-invalid");
+    $("#salary-grade-error-message").html("");
+    $(".salaryGrade .dropdown").removeClass("is-invalid");
+});
+document.getElementById("officeCode").addEventListener("change", function() {
+    $("#office-error-message").html("");
+    $(".officeCode .dropdown").removeClass("is-invalid");
 });

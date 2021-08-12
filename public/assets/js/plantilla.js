@@ -411,6 +411,7 @@ $(document).ready(function() {
         let data = $(this).serialize();
         $("#saveBtn").attr("disabled", true);
         $("#loading").removeClass("d-none");
+        document.getElementById("saving").innerHTML = "Saving . . .";
         $.ajax({
             type: "POST",
             url: "/plantilla-of-personnel",
@@ -446,9 +447,9 @@ $(document).ready(function() {
                         "#originalAppointment",
                         "#lastPromotion",
                         ".status",
-                        "#areaCode",
-                        "#areaType",
-                        "#areaLevel",
+                        ".areaCode",
+                        ".areaType",
+                        ".areaLevel",
                         ".employeeName",
                         ".stepNo",
                         "#currentSalaryamount",
@@ -484,6 +485,7 @@ $(document).ready(function() {
                     swal("Sucessfully Added!", "", "success");
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
+                    document.getElementById("saving").innerHTML = "Save";
                     $(document).ready(function() {
                         $("#plantillaPositionMetaData").load(
                             "#plantillaPositionMetaData > #plantillaPositionMetaData"
@@ -548,33 +550,33 @@ $(document).ready(function() {
                         $("#status-error-message").html("");
                     }
                     if (errors.hasOwnProperty("areaCode")) {
-                        $("#areaCode").addClass("is-invalid");
+                        $(".areaCode").addClass("is-invalid");
                         $("#area-code-error-message").html("");
                         $("#area-code-error-message").append(
                             `<span>${errors.areaCode[0]}</span>`
                         );
                     } else {
-                        $("#areaCode").removeClass("is-invalid");
+                        $(".areaCode").removeClass("is-invalid");
                         $("#area-code-error-message").html("");
                     }
                     if (errors.hasOwnProperty("areaType")) {
-                        $("#areaType").addClass("is-invalid");
+                        $(".areaType").addClass("is-invalid");
                         $("#area-type-error-message").html("");
                         $("#area-type-error-message").append(
                             `<span>${errors.areaType[0]}</span>`
                         );
                     } else {
-                        $("#areaType").removeClass("is-invalid");
+                        $(".areaType").removeClass("is-invalid");
                         $("#area-type-error-message").html("");
                     }
                     if (errors.hasOwnProperty("areaLevel")) {
-                        $("#areaLevel").addClass("is-invalid");
+                        $(".areaLevel").addClass("is-invalid");
                         $("#area-level-error-message").html("");
                         $("#area-level-error-message").append(
                             `<span>${errors.areaLevel[0]}</span>`
                         );
                     } else {
-                        $("#areaLevel").removeClass("is-invalid");
+                        $(".areaLevel").removeClass("is-invalid");
                         $("#area-level-error-message").html("");
                     }
                     if (errors.hasOwnProperty("employeeName")) {
@@ -643,6 +645,7 @@ $(document).ready(function() {
                     });
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
+                    document.getElementById("saving").innerHTML = "Save";
                 }
             }
         });
@@ -689,9 +692,9 @@ function myFunction() {
         "#originalAppointment",
         "#lastPromotion",
         ".status",
-        "#areaCode",
-        "#areaType",
-        "#areaLevel",
+        ".areaCode",
+        ".areaType",
+        ".areaLevel",
         ".employeeName",
         ".stepNo",
         "#currentSalaryamount",
@@ -722,3 +725,50 @@ function myFunction() {
         $(`${value}`).html("");
     });
 }
+
+document.getElementById("employeeName").addEventListener("change", function() {
+    $("#employee-name-error-message").html("");
+    $(".employeeName").removeClass("is-invalid");
+});
+document.getElementById("officeCode").addEventListener("change", function() {
+    $("#office-error-message").html("");
+    $(".officeCode").removeClass("is-invalid");
+});
+document.getElementById("divisionId").addEventListener("change", function() {
+    $("#division-error-message").html("");
+    $(".divisionId").removeClass("is-invalid");
+});
+document.getElementById("positionTitle").addEventListener("change", function() {
+    $("#position-title-error-message").html("");
+    $(".positionTitle").removeClass("is-invalid");
+});
+document.getElementById("status").addEventListener("change", function() {
+    $("#status-error-message").html("");
+    $(".status").removeClass("is-invalid");
+});
+document.getElementById("currentStepno").addEventListener("change", function() {
+    $("#steps-error-message").html("");
+    $(".stepNo").removeClass("is-invalid");
+});
+document
+    .getElementById("originalAppointment")
+    .addEventListener("change", function() {
+        $("#original-appointment-error-message").html("");
+        $("#originalAppointment").removeClass("is-invalid");
+    });
+document.getElementById("lastPromotion").addEventListener("change", function() {
+    $("#last-promotion-error-message").html("");
+    $("#lastPromotion").removeClass("is-invalid");
+});
+document.getElementById("areaCode").addEventListener("change", function() {
+    $("#area-code-error-message").html("");
+    $(".areaCode").removeClass("is-invalid");
+});
+document.getElementById("areaType").addEventListener("change", function() {
+    $("#area-type-error-message").html("");
+    $(".areaType").removeClass("is-invalid");
+});
+document.getElementById("areaLevel").addEventListener("change", function() {
+    $("#area-level-error-message").html("");
+    $(".areaLevel").removeClass("is-invalid");
+});
