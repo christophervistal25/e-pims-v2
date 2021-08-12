@@ -17,6 +17,7 @@ class CreateLeaveTypesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('code')->nullable();
+            $table->integer('code_number')->nullable();
             $table->text('description')->nullable();
             $table->integer('days_period');
             $table->enum('convertible_to_cash', ['yes', 'no']);

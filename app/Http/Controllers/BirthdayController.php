@@ -33,7 +33,7 @@ class BirthdayController extends Controller
             'to' => ['date', 'required', 'after:from']
         ], [], ['from' => 'Start Date', 'to' => 'End Date']);
 
-        return $this->birthdayRepository->weekBeforeBirthdays($from, $to);
+        return $this->birthdayRepository->range($from, $to);
     }
     /**
      * Display a listing of the resource.
