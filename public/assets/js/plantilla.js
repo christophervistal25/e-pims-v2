@@ -411,6 +411,7 @@ $(document).ready(function() {
         let data = $(this).serialize();
         $("#saveBtn").attr("disabled", true);
         $("#loading").removeClass("d-none");
+        document.getElementById("saving").innerHTML = "Saving . . .";
         $.ajax({
             type: "POST",
             url: "/plantilla-of-personnel",
@@ -484,6 +485,7 @@ $(document).ready(function() {
                     swal("Sucessfully Added!", "", "success");
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
+                    document.getElementById("saving").innerHTML = "Save";
                     $(document).ready(function() {
                         $("#plantillaPositionMetaData").load(
                             "#plantillaPositionMetaData > #plantillaPositionMetaData"
@@ -643,6 +645,7 @@ $(document).ready(function() {
                     });
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
+                    document.getElementById("saving").innerHTML = "Save";
                 }
             }
         });
