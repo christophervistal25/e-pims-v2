@@ -446,9 +446,9 @@ $(document).ready(function() {
                         "#originalAppointment",
                         "#lastPromotion",
                         ".status",
-                        "#areaCode",
-                        "#areaType",
-                        "#areaLevel",
+                        ".areaCode",
+                        ".areaType",
+                        ".areaLevel",
                         ".employeeName",
                         ".stepNo",
                         "#currentSalaryamount",
@@ -548,33 +548,33 @@ $(document).ready(function() {
                         $("#status-error-message").html("");
                     }
                     if (errors.hasOwnProperty("areaCode")) {
-                        $("#areaCode").addClass("is-invalid");
+                        $(".areaCode").addClass("is-invalid");
                         $("#area-code-error-message").html("");
                         $("#area-code-error-message").append(
                             `<span>${errors.areaCode[0]}</span>`
                         );
                     } else {
-                        $("#areaCode").removeClass("is-invalid");
+                        $(".areaCode").removeClass("is-invalid");
                         $("#area-code-error-message").html("");
                     }
                     if (errors.hasOwnProperty("areaType")) {
-                        $("#areaType").addClass("is-invalid");
+                        $(".areaType").addClass("is-invalid");
                         $("#area-type-error-message").html("");
                         $("#area-type-error-message").append(
                             `<span>${errors.areaType[0]}</span>`
                         );
                     } else {
-                        $("#areaType").removeClass("is-invalid");
+                        $(".areaType").removeClass("is-invalid");
                         $("#area-type-error-message").html("");
                     }
                     if (errors.hasOwnProperty("areaLevel")) {
-                        $("#areaLevel").addClass("is-invalid");
+                        $(".areaLevel").addClass("is-invalid");
                         $("#area-level-error-message").html("");
                         $("#area-level-error-message").append(
                             `<span>${errors.areaLevel[0]}</span>`
                         );
                     } else {
-                        $("#areaLevel").removeClass("is-invalid");
+                        $(".areaLevel").removeClass("is-invalid");
                         $("#area-level-error-message").html("");
                     }
                     if (errors.hasOwnProperty("employeeName")) {
@@ -689,9 +689,9 @@ function myFunction() {
         "#originalAppointment",
         "#lastPromotion",
         ".status",
-        "#areaCode",
-        "#areaType",
-        "#areaLevel",
+        ".areaCode",
+        ".areaType",
+        ".areaLevel",
         ".employeeName",
         ".stepNo",
         "#currentSalaryamount",

@@ -37,18 +37,19 @@ class PlantillaController extends Controller
         $salarygrade = SalaryGrade::get(['sg_no']);
         $status = ['Casual','Coterminous','Permanent','Provisional','Temporary','Elected'];
         count($status) - 1;
-        $areacode = ['Please Select', 'Region 1', 'Region 2','Region 3','Region 4','Region 5', 'Region 6', 'Region 7',  'Region 8', 'Region 9', 'Region 10', 'Region 11', 'Region 12','NCR', 'CAR', 'CARAGA', 'ARMM'];
+        $areacode = ['Region 1', 'Region 2','Region 3','Region 4','Region 5', 'Region 6', 'Region 7',  'Region 8', 'Region 9', 'Region 10', 'Region 11', 'Region 12','NCR', 'CAR', 'CARAGA', 'ARMM'];
         count($areacode) - 1;
-        $areatype = ['Please Select','Region','Province','District','Municipality','Foreign Post'];
+        $areatype = ['Region','Province','District','Municipality','Foreign Post'];
         count($areatype) - 1;
-        $arealevel = ['Please Select','K','T','S','A'];
+        $arealevel = ['K','T','S','A'];
         count($arealevel) - 1;
         return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition', 'division'));
     }
 
     public function list(Request $request)
     {
-        $data = DB::table('plantillas')->join('offices', 'plantillas.office_code', '=', 'offices.office_code')
+        $data = DB::table('plantillas')
+        ->join('offices', 'plantillas.office_code', '=', 'offices.office_code')
         ->join('employees', 'plantillas.employee_id', '=', 'employees.employee_id')
         ->join('plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
         ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
@@ -171,11 +172,11 @@ class PlantillaController extends Controller
         $salarygrade = SalaryGrade::get(['sg_no']);
         $status = ['Casual','Coterminous','Permanent','Provisional','Temporary','Elected'];
         count($status) - 1;
-        $areacode = ['Please Select', 'Region 1', 'Region 2','Region 3','Region 4','Region 5', 'Region 6', 'Region 7',  'Region 8', 'Region 9', 'Region 10', 'Region 11', 'Region 12','NCR', 'CAR', 'CARAGA', 'ARMM'];
+        $areacode = ['Region 1', 'Region 2','Region 3','Region 4','Region 5', 'Region 6', 'Region 7',  'Region 8', 'Region 9', 'Region 10', 'Region 11', 'Region 12','NCR', 'CAR', 'CARAGA', 'ARMM'];
         count($areacode) - 1;
-        $areatype = ['Please Select','Region','Province','District','Municipality','Foreign Post'];
+        $areatype = ['Region','Province','District','Municipality','Foreign Post'];
         count($areatype) - 1;
-        $arealevel = ['Please Select','K','T','S','A'];
+        $arealevel = ['K','T','S','A'];
         count($arealevel) - 1;
         $plantilla = Plantilla::find($plantilla_id);
         $officeCode = $plantilla->office_code;
