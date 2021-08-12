@@ -251,7 +251,7 @@
 				<div id="sidebar-menu" class="sidebar-menu">
 					<ul>
 						<li>
-							<a class='text-decoration-none' href='http://127.0.0.1:8000/'>
+							<a class='text-decoration-none' href='/'>
 								<i class="fa fa-chart-line"></i> <span> Dashboard</span>
 							</a>
 						</li>
@@ -481,5 +481,18 @@
 
 	</script>
     @stack('page-scripts')
+	
+	<script>
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+
+		$.ajax({
+			url : '/leave-increment-job',
+			method : 'POST',
+		});
+	</script>
 </body>
 </html>

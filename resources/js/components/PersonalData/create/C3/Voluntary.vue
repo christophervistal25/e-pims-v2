@@ -51,6 +51,7 @@
           <tbody>
             <tr v-for="(volunOrg, index) in volunOrg" :key="index">
               <td
+                v-if="rowErrors.includes(`${index}.`)"
                 @click="
                   rowErrors.includes(`${index}.`) &&
                     displayRowErrorMessage(index)
@@ -61,13 +62,11 @@
                   rowErrors.includes(`${index}.`) ? 'bg-danger text-white' : ''
                 "
               >
-                <i
-                  v-if="rowErrors.includes(`${index}.`)"
-                  class="fa fa-exclamation-triangle"
-                  aria-hidden="true"
-                ></i>
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
               </td>
-
+              <td v-else class="text-center align-middle">
+                {{ index + 1 }}
+              </td>
               <td>
                 <input
                   type="text"
@@ -214,7 +213,7 @@ export default {
     },
   },
   methods: {
-    isKeyCombinationSave() {
+    isKeyCombinationSave(event) {
       if (
         !this.isComplete &&
         event.ctrlKey &&

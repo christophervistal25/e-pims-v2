@@ -2,17 +2,18 @@
 @section('title', 'Your Dashboard')
 @prepend('meta-data')
 <meta name="on-going--today" content="{{ $onGoingToday }}">
-    <meta name="on-going--tomorrow" content="{{ $onGoingTomorrow }}">
-    <meta name="on-going--seven--days" content="{{ $onGoingNextSevenDays }}">
+<meta name="on-going--tomorrow" content="{{ $onGoingTomorrow }}">
+<meta name="on-going--seven--days" content="{{ $onGoingNextSevenDays }}">
 @endprepend
 @prepend('page-css')
-    <link rel="stylesheet"
-        href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
-    <style>
-        .cursor-pointer {
-            cursor: pointer;
-        }
-    </style>
+<link rel="stylesheet"
+    href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+<style>
+    .cursor-pointer {
+        cursor: pointer;
+    }
+
+</style>
 @endprepend
 @section('content')
 <div class="content container-fluid">
@@ -29,6 +30,7 @@
             </div>
         </div>
     </div>
+
     <h1 class="dash-sec-title">YOUR LEAVE</h1>
 
     <div class="row">
@@ -79,41 +81,43 @@
         <div class="col-lg-8 col-md-8">
             <section class="dash-section">
                 <h1 class="dash-sec-title">Today</h1>
-                <div class="dash-sec-content" id="widget--today--leave">
+                <div class="dash-sec-content cursor-pointer" id="widget--today--leave">
                     <div class="dash-info-list">
-                        <div  class="dash-card">
+                        <div class="dash-card">
                             <div class="dash-card-container">
                                 <div class="dash-card-icon">
                                     <i class="fa fa-suitcase text-primary"></i>
                                 </div>
                                 <div class="dash-card-content">
                                     @empty($onGoingToday->count())
-                                    <p class='text-sm text-danger text-uppercase font-weight-bold'>no on-going leave for today</p>
+                                    <p class='text-sm text-danger text-uppercase font-weight-bold'>no on-going leave for
+                                        today</p>
                                     @else
-                                        @if($onGoingToday->count() <= 2)
-                                            <p class='text-sm'>{{ $onGoingToday->implode('employee.fullname', ', ') }}</p>
+                                    @if($onGoingToday->count() <= 2) <p class='text-sm'>
+                                        {{ $onGoingToday->implode('employee.fullname', ', ') }}</p>
                                         @elseif($onGoingToday->count() >= 3)
-                                            <p class='text-sm'>
-                                                <strong>{{ $onGoingToday->first()->employee->fullname  }}</strong> , 
-                                                <strong>{{ $onGoingToday->get(1)->employee->fullname  }}</strong> 
-                                                and <strong>{{ $onGoingToday->count() - 2 }}</strong> more.
-                                            </p>
+                                        <p class='text-sm'>
+                                            <strong>{{ $onGoingToday->first()->employee->fullname  }}</strong> ,
+                                            <strong>{{ $onGoingToday->get(1)->employee->fullname  }}</strong>
+                                            and <strong>{{ $onGoingToday->count() - 2 }}</strong> more.
+                                        </p>
                                         @endif
-                                    @endempty
+                                        @endempty
                                 </div>
                                 <div class="dash-card-avatars">
                                     @foreach($onGoingToday as $today)
-                                            @if($today->employee->information)
-                                                <div class="e-avatar">
-                                                    <img src="/storage/employee_images/{{ $today->employee->information->photo }}" alt="">
-                                                </div>
-                                            @endif
+                                    @if($today->employee->information)
+                                    <div class="e-avatar">
+                                        <img src="/storage/employee_images/{{ $today->employee->information->photo }}"
+                                            alt="">
+                                    </div>
+                                    @endif
                                     @endforeach
                                 </div>
                             </div>
-                        </a>
+                            </a>
+                        </div>
                     </div>
-                </div>
             </section>
             <section class="dash-section">
                 <h1 class="dash-sec-title">Tomorrow</h1>
@@ -124,28 +128,30 @@
                                 <div class="dash-card-icon">
                                     <i class="fa fa-suitcase text-primary"></i>
                                 </div>
-                                    <div class="dash-card-content">
-                                        @empty($onGoingTomorrow->count())
-                                            <p class='text-sm text-danger text-uppercase font-weight-bold'>no on-going leave for tomorrow</p>
-                                            @else
-                                            @if($onGoingTomorrow->count() <= 2)
-                                                    <p class='text-sm'>{{ $onGoingTomorrow->implode('employee.fullname', ', ') }}</p>
-                                                @elseif($onGoingTomorrow->count() >= 3)
-                                                    <p class='text-sm'>
-                                                        <strong>{{ $onGoingTomorrow->first()->employee->fullname  }}</strong> , 
-                                                        <strong>{{ $onGoingTomorrow->get(1)->employee->fullname  }}</strong> 
-                                                        and <strong>{{ $onGoingTomorrow->count() - 2 }}</strong> more.
-                                                    </p>
-                                                @endif
-                                        @endempty     
-                                    </div>
+                                <div class="dash-card-content">
+                                    @empty($onGoingTomorrow->count())
+                                    <p class='text-sm text-danger text-uppercase font-weight-bold'>no on-going leave for
+                                        tomorrow</p>
+                                    @else
+                                    @if($onGoingTomorrow->count() <= 2) <p class='text-sm'>
+                                        {{ $onGoingTomorrow->implode('employee.fullname', ', ') }}</p>
+                                        @elseif($onGoingTomorrow->count() >= 3)
+                                        <p class='text-sm'>
+                                            <strong>{{ $onGoingTomorrow->first()->employee->fullname  }}</strong> ,
+                                            <strong>{{ $onGoingTomorrow->get(1)->employee->fullname  }}</strong>
+                                            and <strong>{{ $onGoingTomorrow->count() - 2 }}</strong> more.
+                                        </p>
+                                        @endif
+                                        @endempty
+                                </div>
                                 <div class="dash-card-avatars">
                                     @foreach($onGoingTomorrow as $tomorrrow)
-                                            @if($tomorrrow->employee->information)
-                                                <div class="e-avatar">
-                                                    <img src="/storage/employee_images/{{ $tomorrrow->employee->information->photo }}" alt="">
-                                                </div>
-                                            @endif
+                                    @if($tomorrrow->employee->information)
+                                    <div class="e-avatar">
+                                        <img src="/storage/employee_images/{{ $tomorrrow->employee->information->photo }}"
+                                            alt="">
+                                    </div>
+                                    @endif
                                     @endforeach
                                 </div>
                             </div>
@@ -164,26 +170,28 @@
                                 </div>
                                 <div class="dash-card-content">
                                     @empty($onGoingNextSevenDays->count())
-                                        <p class='text-sm text-danger text-uppercase font-weight-bold'>no on-going leave for tomorrow</p>
+                                    <p class='text-sm text-danger text-uppercase font-weight-bold'>no on-going leave for
+                                        the next seven days</p>
                                     @else
-                                    @if($onGoingNextSevenDays->count() <= 2)
-                                            <p class='text-sm'>{{ $onGoingNextSevenDays->implode('employee.fullname', ', ') }}</p>
+                                    @if($onGoingNextSevenDays->count() <= 2) <p class='text-sm'>
+                                        {{ $onGoingNextSevenDays->implode('employee.fullname', ', ') }}</p>
                                         @elseif($onGoingNextSevenDays->count() >= 3)
-                                            <p class='text-sm'>
-                                                <strong>{{ $onGoingNextSevenDays->first()->employee->fullname  }}</strong> , 
-                                                <strong>{{ $onGoingNextSevenDays->get(1)->employee->fullname  }}</strong> 
-                                                and <strong>{{ $onGoingNextSevenDays->count() - 2 }}</strong> more.
-                                            </p>
+                                        <p class='text-sm'>
+                                            <strong>{{ $onGoingNextSevenDays->first()->employee->fullname  }}</strong> ,
+                                            <strong>{{ $onGoingNextSevenDays->get(1)->employee->fullname  }}</strong>
+                                            and <strong>{{ $onGoingNextSevenDays->count() - 2 }}</strong> more.
+                                        </p>
                                         @endif
-                                @endempty
+                                        @endempty
                                 </div>
                                 <div class="dash-card-avatars">
                                     @foreach($onGoingNextSevenDays as $nextSevenDays)
-                                            @if($nextSevenDays->employee->information)
-                                                <div class="e-avatar">
-                                                    <img src="/storage/employee_images/{{ $nextSevenDays->employee->information->photo }}" alt="">
-                                                </div>
-                                            @endif
+                                    @if($nextSevenDays->employee->information)
+                                    <div class="e-avatar">
+                                        <img src="/storage/employee_images/{{ $nextSevenDays->employee->information->photo }}"
+                                            alt="">
+                                    </div>
+                                    @endif
                                     @endforeach
                                 </div>
                             </div>
@@ -199,13 +207,14 @@
                     @forelse($holidays as $holiday)
                     <div class="card">
                         <div class="card-body text-center">
-                            <p class="holiday-title mb-0 font-weight-medium">{{  $holiday->dateString }} - {{  $holiday->name }}</p>
+                            <p class="text-dark mb-0 font-weight-medium">{{ $holiday->dateString }} -
+                                {{  $holiday->name }}</p>
                         </div>
                     </div>
                     @empty
                     <div class="card">
                         <div class="card-body text-center">
-                            <p class="holiday-title mb-0 text-danger">No holidays for this month</p>
+                            <p class="text-dark mb-0 text-danger">No holidays for this month</p>
                         </div>
                     </div>
                     @endforelse
@@ -213,8 +222,15 @@
             </div>
         </div>
 
+        
         <h1 class="dash-sec-title">LEAVE APPLICATIONS</h1>
-        <div class="col-lg-12 bg-white">
+            <div class="col-lg-12 bg-white">
+                {{-- <div class="alert alert-primary alert-dismissible fade show mt-3" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div> --}}
+
             <table class='table table-bordered mt-3 bg-white'>
                 <thead>
                     <tr>
@@ -236,7 +252,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($leaveApplications as $application)
+                    @forelse($leaveApplications as $application)
                     <tr>
                         <td class='text-center font-weight-bold'>{{ $application->recommending_approval }}</td>
                         <td class='text-center font-weight-bold'>{{ $application->approved_by }}</td>
@@ -263,15 +279,23 @@
                         <td class='text-center'>{{ $application->date_to }}</td>
                         <td class='text-center font-weight-bold'>{{ $application->no_of_days }}</td>
                     </tr>
-                    @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="11" class='text-center'>
+                            <i class='fa fa-warning fa-2x text-danger'></i>
+                            <h6 class="display-5 text-uppercase">no available data</h6>
+                        </td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
     </div>
 </div>
 
-    {{-- VIEW ON-GOING LEAVES MODAL --}}
-    <div class="modal fade" id="onGoingEmployeeLeavesModal" tabindex="-1" role="dialog" aria-labelledby="onGoingEmployeeLeavesModalTitle" aria-hidden="true">
+{{-- VIEW ON-GOING LEAVES MODAL --}}
+<div class="modal fade" id="onGoingEmployeeLeavesModal" tabindex="-1" role="dialog"
+    aria-labelledby="onGoingEmployeeLeavesModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -282,7 +306,7 @@
             </div>
             <div class="modal-body" id="content">
                 <div id="accordion">
-                    
+
                 </div>
             </div>
         </div>
@@ -290,16 +314,25 @@
     {{-- END OF ON-GOING LEAVES MODAL --}}
 </div>
 @push('page-scripts')
+<script src="{{ asset('/assets/js/moment.min.js') }}"></script>
 <script>
-    $('#onGoingEmployeeLeavesModal').modal({backdrop: 'static', keyboard: false, show : false});
+    $('#onGoingEmployeeLeavesModal').modal({
+        backdrop: 'static',
+        keyboard: false,
+        show: false
+    });
 
-    $('#widget--today--leave').click(function () {
+    $('#widget--today--leave').click(function (e) {
         let onGoingForToday = JSON.parse($('meta[name="on-going--today"]').attr('content'));
+
+        if (onGoingForToday.length === 0) {
+            return;
+        }
 
         $('#onGoingEmployeeLeavesModalTitle').text('ON-GOING FOR TODAY');
 
         $('#onGoingEmployeeLeavesModal').modal('toggle');
-        
+
         $('#accordion').html('');
 
         onGoingForToday.map((record) => {
@@ -334,8 +367,19 @@
                                                 type="text"
                                                 class="form-control" 
                                                 readonly
-                                                value="${record.date_from} - ${record.date_to}">
+                                                value="${moment(record.date_from).format('LL')} - ${moment(record.date_to).format('LL')}">
                                                 <span><strong>LEAVE PERIOD</strong></span>
+                                        </label>
+                                    </div>
+
+                                    <div class='col-lg-12 text-right'>
+                                        <label class="form-group has-float-label">
+                                            <input 
+                                                type="text"
+                                                class="form-control" 
+                                                readonly
+                                                value="${record.no_of_days}">
+                                                <span><strong>NO. OF DAYS</strong></span>
                                         </label>
                                     </div>
                                     
@@ -357,7 +401,7 @@
                                                 class="form-control" 
                                                 readonly
                                                 value="${record.employee.information.position.position_name}">
-                                                <span><strong>OFFICE</strong></span>
+                                                <span><strong>POSITION</strong></span>
                                         </label>
                                     </div>
 
@@ -372,13 +416,17 @@
 
     });
 
-    $('#widget--tomorrow--leave').click(function () {
+    $('#widget--tomorrow--leave').click(function (e) {
         let onGoingForTomorrow = JSON.parse($('meta[name="on-going--tomorrow"]').attr('content'));
+
+        if (onGoingForTomorrow.length === 0) {
+            return;
+        }
 
         $('#onGoingEmployeeLeavesModalTitle').text('ON-GOING FOR TOMORROW');
 
         $('#onGoingEmployeeLeavesModal').modal('toggle');
-        
+
         $('#accordion').html('');
 
         onGoingForTomorrow.map((record) => {
@@ -413,8 +461,19 @@
                                                 type="text"
                                                 class="form-control" 
                                                 readonly
-                                                value="${record.date_from} - ${record.date_to}">
+                                                value="${moment(record.date_from).format('LL')} - ${moment(record.date_to).format('LL')}">
                                                 <span><strong>LEAVE PERIOD</strong></span>
+                                        </label>
+                                    </div>
+
+                                    <div class='col-lg-12 text-right'>
+                                        <label class="form-group has-float-label">
+                                            <input 
+                                                type="text"
+                                                class="form-control" 
+                                                readonly
+                                                value="${record.no_of_days}">
+                                                <span><strong>NO. OF DAYS</strong></span>
                                         </label>
                                     </div>
                                     
@@ -436,7 +495,7 @@
                                                 class="form-control" 
                                                 readonly
                                                 value="${record.employee.information.position.position_name}">
-                                                <span><strong>OFFICE</strong></span>
+                                                <span><strong>POSITION</strong></span>
                                         </label>
                                     </div>
 
@@ -450,15 +509,19 @@
         });
     });
 
-    $('#widget--next--seven--days--leave').click(function () {
+    $('#widget--next--seven--days--leave').click(function (e) {
         let onGoingForNextSevenDays = JSON.parse($('meta[name="on-going--seven--days"]').attr('content'));
+
+        if (onGoingForNextSevenDays.length === 0) {
+            return;
+        }
 
         $('#onGoingEmployeeLeavesModalTitle').text('ON-GOING FOR NEXT SEVEN DAYS');
 
         $('#onGoingEmployeeLeavesModal').modal('toggle');
-        
+
         $('#accordion').html('');
-        
+
         onGoingForNextSevenDays.map((record) => {
             $('#accordion').append(`
                 <div class="card m-0 shadow-none rounded-0">
@@ -491,8 +554,19 @@
                                                 type="text"
                                                 class="form-control" 
                                                 readonly
-                                                value="${record.date_from} - ${record.date_to}">
+                                                value="${moment(record.date_from).format('LL')} - ${moment(record.date_to).format('LL')}">
                                                 <span><strong>LEAVE PERIOD</strong></span>
+                                        </label>
+                                    </div>
+
+                                    <div class='col-lg-12 text-right'>
+                                        <label class="form-group has-float-label">
+                                            <input 
+                                                type="text"
+                                                class="form-control" 
+                                                readonly
+                                                value="${record.no_of_days}">
+                                                <span><strong>NO. OF DAYS</strong></span>
                                         </label>
                                     </div>
                                     
@@ -514,7 +588,7 @@
                                                 class="form-control" 
                                                 readonly
                                                 value="${record.employee.information.position.position_name}">
-                                                <span><strong>OFFICE</strong></span>
+                                                <span><strong>POSITION</strong></span>
                                         </label>
                                     </div>
 
@@ -528,6 +602,7 @@
         });
 
     });
+
 </script>
 @endpush
 @endsection

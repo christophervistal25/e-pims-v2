@@ -10,7 +10,7 @@
         :data-toggle="isComplete ? 'collapse' : ''"
         :style="isComplete ? 'cursor : pointer;' : ''"
       >
-        <h5 class="mb-0 p-2">
+        <h5 class="mb-0 p-2 text-uppercase">
           <i v-if="isComplete" class="fa fa-check text-success"></i>
           IV. Civil Service Eligibility
           <i
@@ -63,6 +63,7 @@
             <tbody>
               <tr v-for="(civil, index) in civilService" :key="index">
                 <td
+                  v-if="rowErrors.includes(`${index}.`)"
                   @click="
                     rowErrors.includes(`${index}.`) &&
                       displayRowErrorMessage(index)
@@ -77,12 +78,9 @@
                       : ''
                   "
                 >
-                  <i
-                    v-if="rowErrors.includes(`${index}.`)"
-                    class="fa fa-exclamation-triangle"
-                    aria-hidden="true"
-                  ></i>
+                  <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                 </td>
+                <td v-else class="text-center align-middle">{{ index + 1 }}</td>
                 <td scope="row">
                   <input
                     type="text"

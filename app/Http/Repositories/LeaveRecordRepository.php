@@ -3,8 +3,9 @@ namespace App\Http\Repositories;
 
 use App\Employee;
 use App\EmployeeLeaveRecord;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 use App\Http\Repositories\LeaveApplicationRepository;
+use Carbon\Carbon;
 
 class LeaveRecordRepository extends LeaveApplicationRepository
 {
@@ -52,6 +53,19 @@ class LeaveRecordRepository extends LeaveApplicationRepository
             'sick_leave_earned'   => 0.000,
             'sick_leave_used' => 0.000,
         ];
+    }
+    
+    public static function employeesWithRecord(array $columns = ['*']) : Collection
+    {
+        return Employee::has('leave_records')
+                    ->whereHas('leave_records', function ($query) {
+                        $query->whereYear('created_at', date('Y'))->whereMonth('created_at', Carbon::now()->startOfMonth()->subMonthsNoOverflow()->format('m'));
+                })->get($columns);
+    }
+
+    public function increment(array $data = [])
+    {
+        return EmployeeLeaveRecord::create($data);
     }
 
 

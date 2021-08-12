@@ -55,6 +55,7 @@
                 type="text"
                 id="ebasicEduc"
                 class="form-control"
+                readonly
                 v-model="educationalBackground.ebasicEduc"
                 style="
                   text-transform: uppercase;
@@ -192,6 +193,7 @@
                 type="text"
                 id="sbasicEduc"
                 class="form-control"
+                readonly
                 v-model="educationalBackground.sbasicEduc"
                 style="text-transform:uppercase; outline; none; box-shadow: 0px 0px 0px transparent;"
               />
@@ -733,14 +735,14 @@ export default {
       educationalBackground: {
         employee_id: "",
         elementary: "",
-        ebasicEduc: "",
+        ebasicEduc: "PRIMARY",
         eperiodFrom: "",
         eperiodTo: "",
         eunitEarned: "",
         eyrGrad: "",
         escholarship: "",
         snameOfSchool: "",
-        sbasicEduc: "",
+        sbasicEduc: "HIGH SCHOOL",
         speriodFrom: "",
         speriodTo: "",
         sunitEarned: "",

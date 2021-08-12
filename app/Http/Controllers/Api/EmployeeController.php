@@ -5,17 +5,15 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Employee;
-use App\RefStatus;
-use App\EmployeeInformation;
 use Illuminate\Support\Facades\Cache;
 
 class EmployeeController extends Controller
 {
     public function list()
     {
-        // Cache::forget('employees');
-         return Cache::rememberForever('employees', function () {
-            return Employee::with(['information:EmpIDNo,pos_code,office_code,photo', 'information.office:office_code,office_name', 'information.position:position_code,position_name', 'status'])->get();
+        return Cache::rememberForever('employees', function () {
+            return Employee::with(['information:EmpIDNo,pos_code,office_code,photo', 'information.office:office_code,office_name', 'information.position:position_code,position_name', 'status'])
+                            ->get();
         });
     }
 
@@ -26,7 +24,7 @@ class EmployeeController extends Controller
                         ->orWhere('middlename', 'like', "%" . $key . "%")
                         ->orWhere('lastname', 'like', "%" . $key . "%")
                         ->orWhere('extension', 'like', "%" . $key . "%")
-                        ->get(['firstname', 'middlename', 'lastname', 'extension']);
+                        ->get();
     }
 
 
@@ -39,8 +37,13 @@ class EmployeeController extends Controller
     {
         return Employee::with(['information:EmpIDNo,pos_code,office_code,photo',
                                 'information.position:position_id,position_code,position_name',
-                                'information.office:office_code,office_name', 'status', 'step:employee_id,step_no_to,salary_amount_to'])
+                                'information.office:office_code,office_name', 'status', 'step:employee_id,step_no_to,salary_amount_to', 'loginAccount'])
                                     ->find($employeeIdNumber);
+    }
+
+    public function ids(string $employee_id = null) 
+    {
+        return Employee::where('employee_id', $employee_id)->get(['employee_id', 'firstname', 'middlename', 'lastname', 'extension']);
     }
 
     public function records()

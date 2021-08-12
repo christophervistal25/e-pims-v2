@@ -38,11 +38,16 @@ class NewEmployeeStoreRequest extends FormRequest
             'philhealthNo'                 => 'nullable',
             'sssNo'                        => 'nullable|unique:employees,sss_no',
             'tinNo'                        => 'nullable|unique:employees,tin_no',
+            'username'                     => 'required|unique:users,username',
+            'email'                        => 'required|unique:users,email',
+            'password'                     => 'required|min:6|max:16|same:retypePassword',
+            'retypePassword'               => 'required|min:6|max:16',
         ];
         
         if(request()->employmentStatus && request()->employmentStatus['status_name'] === 'PERMANENT') {
+            // Rule for first day of service as permanent.
+            $rules['firstDayOfService'] = 'required|date|before:' . date('Y-m-d');
             // Ignore rules if the user enter an asterisk (*)
-            echo request()->dbpAccountNo;
             if(request()->dbpAccountNo === '*') {
                 $rules['dbpAccountNo'] = 'required';
             } else {
@@ -67,7 +72,8 @@ class NewEmployeeStoreRequest extends FormRequest
             'designation.position_code'    => 'designation',
             'officeAssignment.office_code' => 'office',
             'lbpAccountNo' => 'LBP account no.',
-            'dbpAccountNo' => 'DBP account no.'
+            'dbpAccountNo' => 'DBP account no.',
+            'retypePassword' => 'password confirmation'
         ];
     }
 }

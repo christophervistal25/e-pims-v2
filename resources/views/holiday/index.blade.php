@@ -21,6 +21,10 @@
         border-collapse: collapse;
     }
 
+    .fc-daygrid-day {
+        cursor:pointer;    
+    }
+
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css">
 @endprepend
@@ -64,7 +68,7 @@
 
 
 <!-- SAVE Modal -->
-<div class="modal rounded-0 fade" id="addNewHolidayModal" data-keyboard="false" data-backdrop="static">
+<div class="modal rounded-0 fade " id="addNewHolidayModal" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog">
         <div class="modal-content">
 

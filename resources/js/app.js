@@ -32,7 +32,10 @@ Vue.component("assignmodal", require("./components/Employee/AssignModal.vue").de
 // );
 Vue.component("nameextmodal", require("./components/Employee/NameExtModal.vue").default);
 
-
+Vue.component(
+    "employee-personal-data-sheet",
+    require("./components/PersonalData/EmployeePersonalDataSheet.vue").default
+);
 
 
 // Personal Information Components
@@ -198,8 +201,92 @@ Vue.component(
 );
 
 Vue.component(
+    "login-information",
+    require("./components/Employee/LoginInformation.vue").default
+);
+
+Vue.component(
     "employee-pds-table",
     require("./components/PersonalData/EmployeePDSTable.vue").default
+);
+
+Vue.component(
+    "view-information-summary",
+    require("./components/PersonalData/Information/ViewInformationSummary.vue")
+        .default
+);
+
+
+Vue.component(
+    "view-personal-information",
+    require("./components/PersonalData/Information/ViewPersonalInformation.vue")
+        .default
+);
+
+Vue.component(
+    "view-person-address",
+    require("./components/PersonalData/Information/ViewAddresses.vue")
+        .default
+);
+
+Vue.component(
+    "view-family-background",
+    require("./components/PersonalData/Information/ViewFamilyBackground.vue")
+        .default
+);
+
+Vue.component(
+    "view-educational-background",
+    require("./components/PersonalData/Information/ViewEducationalBackground.vue")
+        .default
+);
+
+Vue.component(
+    "view-work-experience",
+    require("./components/PersonalData/Information/ViewWorkExperience.vue")
+        .default
+);
+
+Vue.component(
+    "view-civil-service",
+    require("./components/PersonalData/Information/ViewCivilService.vue")
+        .default
+);
+
+Vue.component(
+    "view-voluntary-work",
+    require("./components/PersonalData/Information/ViewVoluntaryWork.vue")
+        .default
+);
+
+Vue.component(
+    "view-learning-and-development",
+    require("./components/PersonalData/Information/ViewLearningAndDevelopment.vue")
+        .default
+);
+
+Vue.component(
+    "view-other-information",
+    require("./components/PersonalData/Information/ViewOtherInformation.vue")
+        .default
+);
+
+Vue.component(
+    "view-relevant-queries",
+    require("./components/PersonalData/Information/ViewRelevantQueries.vue")
+        .default
+);
+
+Vue.component(
+    "view-references",
+    require("./components/PersonalData/Information/ViewReferences.vue")
+        .default
+);
+
+Vue.component(
+    "view-government-accounts",
+    require("./components/PersonalData/Information/ViewGovernmentIDNumbers.vue")
+        .default
 );
 
 Vue.component(

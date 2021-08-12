@@ -224,14 +224,14 @@ class PersonalDataSheetController extends Controller
         ],[
             '*.government_service.in' => 'You can only type (Y,N) in goverment service.'
         ], [
-             '*.from'=> 'Inclusive date from',
-             '*.to'        => 'Inclusive date to',
-             '*.status_of_appointment' => 'Status of appointment',
-             '*.government_service'   => 'Government Service',
-             '*.dept'      => 'Department',
-             '*.position_title'  => 'Position',
-             '*.monthly_salary' => 'Monthly Salary',
-             '*.salary_job_pay_grade'  => 'Pay Grade',
+            '*.from'=> 'Inclusive date from',
+            '*.to'        => 'Inclusive date to',
+            '*.status_of_appointment' => 'Status of appointment',
+            '*.government_service'   => 'Government Service',
+            '*.dept'      => 'Department',
+            '*.position_title'  => 'Position',
+            '*.monthly_salary' => 'Monthly Salary',
+            '*.salary_job_pay_grade'  => 'Pay Grade',
         ]);
         return $this->employeeRepository->existingEmployeeAddWorkExperience($request->all(), $employeeId);
     }
@@ -396,8 +396,6 @@ class PersonalDataSheetController extends Controller
      */
     public function show($id)
     {
-        $employee = Employee::find($id);
-        return view('PersonalData.create', compact('employee'));
     }
 
     /**
@@ -408,7 +406,8 @@ class PersonalDataSheetController extends Controller
      */
     public function edit($id)
     {
-        //
+        $employee = Employee::find($id);
+        return view('PersonalData.create', compact('employee'));
     }
 
     /**

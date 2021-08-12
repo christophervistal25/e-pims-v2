@@ -16,5 +16,6 @@ class EmployeeWorkExperience extends Model
         'salary_job_pay_grade',
         'status_of_appointment',
         'government_service',
+        'is_present',
     ];
 }

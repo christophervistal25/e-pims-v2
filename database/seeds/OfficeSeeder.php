@@ -355,11 +355,387 @@ class OfficeSeeder extends Seeder
                "office_short_name"  => "TSP-EL",
                "office_head"   => "LIBRADO C. NAVARRO",
                "position_name" => "Provincial Vice Governor"
-            ]
+            ],
+            [
+               'office_code' =>  "10020" ,
+               'office_name' =>  "BISLIG DISTRICT HOSPITAL" ,
+               'office_short_name' =>  "BDH" ,
+               'office_head' =>  "ELENILA I. JAKOSALEM, M.D, MCH" ,
+               'position_name' =>  "CHIEF OF HOSPITAL
+               " ,
+               ],
+               [
+               'office_code' =>  "10026" ,
+               'office_name' =>  "CORTES MUNICIPAL HOSPITAL" ,
+               'office_short_name' =>  "CMH" ,
+               'office_head' =>  "LIBETH H. ONGAYO, M.D." ,
+               'position_name' =>  "OFFICER-IN-CHARGE
+               " ,
+               ],
+               [
+               'office_code' =>  "10043" ,
+               'office_name' =>  "DEPARTMENT OF EDUCATION" ,
+               'office_short_name' =>  "DEPED" ,
+               'office_head' =>  "ALEXANDER T. PIMENTEL." ,
+               'position_name' =>  "PROVINCIAL GOVERNOR
+               " ,
+               ],
+               [
+               'office_code' =>  "10021" ,
+               'office_name' =>  "HINATUAN DISTRICT HOSPITAL" ,
+               'office_short_name' =>  "HDH" ,
+               'office_head' =>  "DANILO J. VIOLA, M.D., MCH" ,
+               'position_name' =>  "CHIEF OF HOSPITAL 1
+               " ,
+               ],
+               [
+               'office_code' =>  "10044" ,
+               'office_name' =>  "ITU - INFORMATION TECHNOLOGY UNIT" ,
+               'office_short_name' =>  "ITU" ,
+               'office_head' =>  "ANDREW P. PATRIMONIO" ,
+               'position_name' =>  "IT OFFICER II
+               " ,
+               ],
+               [
+               'office_code' =>  "10022" ,
+               'office_name' =>  "LIANGA DISTRICT HOSPITAL" ,
+               'office_short_name' =>  "LDH" ,
+               'office_head' =>  "JOSENITA C. QUISIL, M.D. MCH" ,
+               'position_name' =>  "DEPARTMENT HEAD
+               " ,
+               ],
+               [
+               'office_code' =>  "10025" ,
+               'office_name' =>  "LINGIG MEDICARE COMMUNITY HOSPITAL" ,
+               'office_short_name' =>  "LMCH" ,
+               'office_head' =>  "JULIUS E. BASTILLADA, M.D." ,
+               'position_name' =>  "CHIEF OF HOSPITAL
+               " ,
+               ],
+               [
+               'office_code' =>  "10023" ,
+               'office_name' =>  "MADRID DISTRICT HOSPITAL" ,
+               'office_short_name' =>  "MDH" ,
+               'office_head' =>  "ALGERICO H. IRIZARI, M.D." ,
+               'position_name' =>  "CHIEF OF HOSPITAL
+               " ,
+               ],
+               [
+               'office_code' =>  "10024" ,
+               'office_name' =>  "MARIHATAG DISTRICT HOSPITAL" ,
+               'office_short_name' =>  "MARDH" ,
+               'office_head' =>  "EDMUND L. LAMELA,  MD,MDH" ,
+               'position_name' =>  "CHIEF OF  HOSPITAL I
+               " ,
+               ],
+               [
+               'office_code' =>  "10035" ,
+               'office_name' =>  "PEO - CONSTRUCTION AND MAINTENANCE DIVISION 1" ,
+               'office_short_name' =>  "PEOCMD" ,
+               'office_head' =>  "ENGR. ELEUTERIO S. CUBERO, JR." ,
+               'position_name' =>  "PROVINCIAL ENGINEER
+               " ,
+               ],
+               [
+               'office_code' =>  "10042" ,
+               'office_name' =>  "PEO - CONSTRUCTION AND MAINTENANCE DIVISION 2" ,
+               'office_short_name' =>  "PEOCMD" ,
+               'office_head' =>  "ENGR. ELEUTERIO S. CUBERO, JR." ,
+               'position_name' =>  "PROVINCIAL ENGINEER
+               " ,
+               ],
+               [
+               'office_code' =>  "10036" ,
+               'office_name' =>  "PEO - MOTORPOOL DIVISION" ,
+               'office_short_name' =>  "PEOMPD" ,
+               'office_head' =>  "ENGR. ELEUTERIO S. CUBERO, JR." ,
+               'position_name' =>  "PROVINCIAL ENGINEER
+               " ,
+               ],
+               [
+               'office_code' =>  "10029" ,
+               'office_name' =>  "PGO - NUTRITION DIVISION" ,
+               'office_short_name' =>  "PND" ,
+               'office_head' =>  "ERMELINDA C. ASCAREZ, RND" ,
+               'position_name' =>  "DEPARTMENT HEAD
+               " ,
+               ],
+               [
+               'office_code' =>  "10030" ,
+               'office_name' =>  "PGO - POPULATION MANAGEMENT DIVISION" ,
+               'office_short_name' =>  "POM" ,
+               'office_head' =>  "JOSE A. POLINAR" ,
+               'position_name' =>  "PP0 IV
+               " ,
+               ],
+               [
+               'office_code' =>  "10033" ,
+               'office_name' =>  "PGO - WARDEN BISLIG" ,
+               'office_short_name' =>  "PWB" ,
+               'office_head' =>  "ROGELIO M. PIMENTEL" ,
+               'position_name' =>  "PROVINCIAL WARDEN
+               " ,
+               ],
+               [
+               'office_code' =>  "10034" ,
+               'office_name' =>  "PGO - WARDEN CANTILAN" ,
+               'office_short_name' =>  "PWC" ,
+               'office_head' =>  "ROGELIO M. PIMENTEL" ,
+               'position_name' =>  "PROVINCIAL WARDEN
+               " ,
+               ],
+               [
+               'office_code' =>  "10032" ,
+               'office_name' =>  "PGO - WARDEN LIANGA" ,
+               'office_short_name' =>  "PWL" ,
+               'office_head' =>  "ROGELIO M. PIMENTEL" ,
+               'position_name' =>  "PROVINCIAL WARDEN
+               " ,
+               ],
+               [
+               'office_code' =>  "10031" ,
+               'office_name' =>  "PGO - WARDEN TANDAG" ,
+               'office_short_name' =>  "PWT" ,
+               'office_head' =>  "ROGELIO M. PIMENTEL" ,
+               'position_name' =>  "PROVINCIAL WARDEN
+               " ,
+               ],
+               [
+               'office_code' =>  "10005" ,
+               'office_name' =>  "PROVINCIAL ACCOUNTANT'S OFFICE" ,
+               'office_short_name' =>  "PAO" ,
+               'office_head' =>  "CONSUELO L. GARCIA" ,
+               'position_name' =>  "OIC-PROVINCIAL ACCOUNTANT
+               " ,
+               ],
+               [
+               'office_code' =>  "10004" ,
+               'office_name' =>  "PROVINCIAL ADMINISTRATOR'S OFFICE" ,
+               'office_short_name' =>  "PADMO" ,
+               'office_head' =>  "PEDRO M. TRINIDAD, JR." ,
+               'position_name' =>  "DEPARTMENT HEAD
+               " ,
+               ],
+               [
+               'office_code' =>  "10014" ,
+               'office_name' =>  "PROVINCIAL AGRICULTURIST'S OFFICE" ,
+               'office_short_name' =>  "PAGO" ,
+               'office_head' =>  "MARCOS M. QUICO" ,
+               'position_name' =>  "PROVINCIAL AGRICULTURIST
+               " ,
+               ],
+               [
+               'office_code' =>  "10007" ,
+               'office_name' =>  "PROVINCIAL ASSESSOR'S OFFICE" ,
+               'office_short_name' =>  "PASSO" ,
+               'office_head' =>  "SABINA C. NOGUERA, REA" ,
+               'position_name' =>  "ACTING PROVINCIAL ASSESSOR
+               " ,
+               ],
+               [
+               'office_code' =>  "10009" ,
+               'office_name' =>  "PROVINCIAL BUDGET OFFICE" ,
+               'office_short_name' =>  "PBO" ,
+               'office_head' =>  "JOSE GREGG O. BANDOY" ,
+               'position_name' =>  "PROVINCIAL BUDGET OFFICER
+               " ,
+               ],
+               [
+               'office_code' =>  "10046" ,
+               'office_name' =>  "PROVINCIAL DISASTER RISK REDUCTION & MNGT. OFFICE" ,
+               'office_short_name' =>  "PDRRMO" ,
+               'office_head' =>  "ABEL L. DE GUZMAN" ,
+               'position_name' =>  "PDRRM OFFICER
+               " ,
+               ],
+               [
+               'office_code' =>  "10013" ,
+               'office_name' =>  "PROVINCIAL ENGINEER'S OFFICE - ADMIN DIVISION" ,
+               'office_short_name' =>  "PEOADM" ,
+               'office_head' =>  "ENGR. ELEUTERIO S. CUBERO, JR." ,
+               'position_name' =>  "PROVINCIAL ENGINEER
+               " ,
+               ],
+               [
+               'office_code' =>  "10017" ,
+               'office_name' =>  "PROVINCIAL ENVIRONMENT AND NATURAL RESOURCES OFFICE" ,
+               'office_short_name' =>  "PENRO" ,
+               'office_head' =>  "THELMA S. ALCOBERES" ,
+               'position_name' =>  "PENRO - LGU
+               " ,
+               ],
+               [
+               'office_code' =>  "10016" ,
+               'office_name' =>  "PROVINCIAL FISHERIES AND AQUATIC RESOURCES OFFICE" ,
+               'office_short_name' =>  "PFARO" ,
+               'office_head' =>  "BERNESITA P. ROJAS" ,
+               'position_name' =>  "PROVINCIAL FISHERIES & AQUATIC RESOURCES OFFICER
+               " ,
+               ],
+               [
+               'office_code' =>  "10010" ,
+               'office_name' =>  "PROVINCIAL GENERAL SERVICES OFFICE - ADMIN" ,
+               'office_short_name' =>  "PGSO" ,
+               'office_head' =>  "PEDRITO M. SERRA" ,
+               'position_name' =>  "PROVINCIAL GOVERNMENT DEPARTMENT HEAD
+               " ,
+               ],
+               [
+               'office_code' =>  "10041" ,
+               'office_name' =>  "PROVINCIAL GENERAL SERVICES OFFICE - DETAILED" ,
+               'office_short_name' =>  "PGSO" ,
+               'office_head' =>  "PEDRITO M. SERRA" ,
+               'position_name' =>  "DEPARTMENT HEAD
+               " ,
+               ],
+               [
+               'office_code' =>  "10040" ,
+               'office_name' =>  "PROVINCIAL GENERAL SERVICES OFFICE - SECURITY" ,
+               'office_short_name' =>  "PGSO" ,
+               'office_head' =>  "PEDRITO M. SERRA" ,
+               'position_name' =>  "DEPARTMENT HEAD
+               " ,
+               ],
+               [
+               'office_code' =>  "10001" ,
+               'office_name' =>  "PROVINCIAL GOVERNOR'S OFFICE" ,
+               'office_short_name' =>  "PGO" ,
+               'office_head' =>  "ALEXANDER T. PIMENTEL" ,
+               'position_name' =>  "PROVINCIAL GOVERNOR
+               " ,
+               ],
+               [
+               'office_code' =>  "10019" ,
+               'office_name' =>  "PROVINCIAL HEALTH OFFICE" ,
+               'office_short_name' =>  "PHO" ,
+               'office_head' =>  "ERIC T. MONTESCLAROS,  M.D." ,
+               'position_name' =>  "PROVINCIAL HEALTH OFFICER II
+               " ,
+               ],
+               [
+               'office_code' =>  "10050" ,
+               'office_name' =>  "PROVINCIAL HUMAN RESOURCE MANAGEMENT OFFICE" ,
+               'office_short_name' =>  "PHRMO" ,
+               'office_head' =>  "ACE R. ORCULLO" ,
+               'position_name' =>  "PROVINCIAL GOVERNMENT DEPARTMENT HEAD
+               " ,
+               ],
+               [
+               'office_code' =>  "10011" ,
+               'office_name' =>  "PROVINCIAL LEGAL OFFICE" ,
+               'office_short_name' =>  "PLO" ,
+               'office_head' =>  "ATTY. LIMUEL L. AUZA" ,
+               'position_name' =>  "DEPARTMENT HEAD
+               " ,
+               ],
+               [
+               'office_code' =>  "10008" ,
+               'office_name' =>  "PROVINCIAL PLANNING AND DEVELOPMENT OFFICE" ,
+               'office_short_name' =>  "PPDO" ,
+               'office_head' =>  "MERLINDA O. BAURE" ,
+               'position_name' =>  "DEPARTMENT HEAD
+               " ,
+               ],
+               [
+               'office_code' =>  "10012" ,
+               'office_name' =>  "PROVINCIAL PROSECUTOR'S OFFICE" ,
+               'office_short_name' =>  "PPO" ,
+               'office_head' =>  "ATTY. VITO T. GOTOSTOS" ,
+               'position_name' =>  "OIC-PROVINCIAL PROSECUTOR
+               " ,
+               ],
+               [
+               'office_code' =>  "10039" ,
+               'office_name' =>  "PROVINCIAL SCHOOL BOARD" ,
+               'office_short_name' =>  "PSB" ,
+               'office_head' =>  "FE C. VALEROSO, CESO IV" ,
+               'position_name' =>  "SCHOOL DIVISION SUPERINTENDENT
+               " ,
+               ],
+               [
+               'office_code' =>  "10018" ,
+               'office_name' =>  "PROVINCIAL SOCIAL WELFARE AND DEVELOPMENT OFFICE" ,
+               'office_short_name' =>  "PSWDO" ,
+               'office_head' =>  "CHARLITA G. MONTENEGRO" ,
+               'position_name' =>  "PROVINCIAL GOVERNMENT HEAD
+               " ,
+               ],
+               [
+               'office_code' =>  "10028" ,
+               'office_name' =>  "PROVINCIAL TOURISM OFFICE" ,
+               'office_short_name' =>  "PPTO" ,
+               'office_head' =>  "MARY VIL C. CHAN" ,
+               'position_name' =>  "PROVINCIAL TOURISM OFFICER
+               " ,
+               ],
+               [
+               'office_code' =>  "10006" ,
+               'office_name' =>  "PROVINCIAL TREASURER'S OFFICE" ,
+               'office_short_name' =>  "PTO" ,
+               'office_head' =>  "FERMINA D. PALANGPANG" ,
+               'position_name' =>  "ACTING PROVINCIAL TREASURER
+               " ,
+               ],
+               [
+               'office_code' =>  "10015" ,
+               'office_name' =>  "PROVINCIAL VETERINARY OFFICE" ,
+               'office_short_name' =>  "PVO" ,
+               'office_head' =>  "DR. GERVACIO A. YPARRAGUIRRE" ,
+               'position_name' =>  "PROVINCIAL VETERINARIAN
+               " ,
+               ],
+               [
+               'office_code' =>  "10002" ,
+               'office_name' =>  "PROVINCIAL VICE GOVERNOR'S OFFICE" ,
+               'office_short_name' =>  "PVGO" ,
+               'office_head' =>  "LIBRADO C. NAVARRO" ,
+               'position_name' =>  "PROVINCIAL VICE GOVERNOR
+               " ,
+               ],
+               [
+               'office_code' =>  "10027" ,
+               'office_name' =>  "SAN MIGUEL COMMUNITY HOSPITAL" ,
+               'office_short_name' =>  "SMCH" ,
+               'office_head' =>  "SYLVA F. DIME, M,D." ,
+               'position_name' =>  "CHIEF OF HOSPITAL
+               " ,
+               ],
+               [
+               'office_code' =>  "10003" ,
+               'office_name' =>  "TANGGAPAN NG SANGGUNIANG PANLALAWIGAN - 1" ,
+               'office_short_name' =>  "TSP - 1" ,
+               'office_head' =>  "LIBRADO C. NAVARRO" ,
+               'position_name' =>  "PROVINCIAL VICE GOVERNOR
+               " ,
+               ],
+               [
+               'office_code' =>  "10055" ,
+               'office_name' =>  "TANGGAPAN NG SANGGUNIANG PANLALAWIGAN - 2" ,
+               'office_short_name' =>  "TSP - 2" ,
+               'office_head' =>  "LIBRADO C. NAVARRO" ,
+               'position_name' =>  "PROVINCIAL VICE GOVERNOR
+               " ,
+               ],
+               [
+               'office_code' =>  "10037" ,
+               'office_name' =>  "TSP - COTERMINOUS" ,
+               'office_short_name' =>  "TSP-CO" ,
+               'office_head' =>  "MANUEL O. ALAMEDA, SR." ,
+               'position_name' =>  "VICE GOVERNOR
+               " ,
+               ],
+               [
+               'office_code' =>  "10038" ,
+               'office_name' =>  "TSP - ELECTED" ,
+               'office_short_name' =>  "TSP-EL" ,
+               'office_head' =>  "LIBRADO C. NAVARRO" ,
+               'position_name' =>  "PROVINCIAL VICE GOVERNOR
+               " ,
+               ],
         ];
 
         foreach($offices as $office) {
-            Office::create([
+            Office::updateOrCreate(['office_code' => $office['office_code'] ],[
                 'office_code'          => $office['office_code'],
                 'office_name'          => $office['office_name'],
                 'office_short_name'    => $office['office_short_name'],

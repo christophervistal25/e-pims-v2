@@ -66,6 +66,7 @@
             <tbody>
               <tr v-for="(learnDev, index) in learnDev" :key="index">
                 <td
+                  v-if="rowErrors.includes(`${index}.`)"
                   @click="
                     rowErrors.includes(`${index}.`) &&
                       displayRowErrorMessage(index)
@@ -80,12 +81,9 @@
                       : ''
                   "
                 >
-                  <i
-                    v-if="rowErrors.includes(`${index}.`)"
-                    class="fa fa-exclamation-triangle"
-                    aria-hidden="true"
-                  ></i>
+                  <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                 </td>
+                <td v-else class="text-center align-middle">{{ index + 1 }}</td>
                 <td>
                   <input
                     type="text"

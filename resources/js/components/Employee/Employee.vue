@@ -123,9 +123,10 @@
       </div>
       <div class="col-lg-12" v-if="showAddEmployeeForm">
         <div class="card">
+          <div class="card-header">
+            <p>&nbsp;</p>
+          </div>
           <div class="card-body shadow">
-            <h4 class="mb-2">Employee Information</h4>
-            <hr />
             <ul class="nav nav-tabs">
               <li class="nav-item">
                 <a class="nav-link active" href="#basictab1" data-toggle="tab">
@@ -141,6 +142,15 @@
                   >Account Numbers
                   <i
                     v-if="sectionError.accountNumbers"
+                    class="fa fa-exclamation-triangle text-danger"
+                  ></i>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#basictab3" data-toggle="tab"
+                  >Login Information
+                  <i
+                    v-if="sectionError.loginInformation"
                     class="fa fa-exclamation-triangle text-danger"
                   ></i>
                 </a>
@@ -162,13 +172,19 @@
                   :errors="errors"
                 ></account-number>
               </div>
+              <div class="tab-pane" id="basictab3">
+                <login-information
+                  :employee="employee"
+                  :errors="errors"
+                ></login-information>
+              </div>
             </div>
             <hr />
             <div class="text-right">
               <button
                 class="btn btn-primary rounded shadow"
                 :class="
-                  showAddEmployeeForm && employee.employee_id
+                  showAddEmployeeForm && employee.action === 'update'
                     ? 'btn-success'
                     : 'btn-primary'
                 "
@@ -194,6 +210,7 @@
 <script>
 import BasicInformation from "./BasicInformation.vue";
 import AccountNumber from "./AccountNumber.vue";
+import LoginInformation from "./LoginInformation.vue";
 import swal from "sweetalert";
 import _ from "lodash";
 
@@ -212,39 +229,39 @@ export default {
         //   sortable: false,
         // },
         {
-          text: "Employee ID",
+          text: "EMPLOYEE ID",
           value: "employee_id",
         },
         {
-          text: "Firstname",
+          text: "FIRSTNAME",
           value: "firstname",
         },
         {
-          text: "Lastname",
+          text: "LASTNAME",
           value: "lastname",
         },
         {
-          text: "Middlename",
+          text: "MIDDLENAME",
           value: "middlename",
         },
         {
-          text: "Extension",
+          text: "EXTENSION",
           value: "extension",
         },
         {
-          text: "Position",
+          text: "POSITION",
           value: "information.position.position_name",
         },
         {
-          text: "Office",
+          text: "OFFICE",
           value: "information.office.office_name",
         },
         {
-          text: "Status",
+          text: "STATUS",
           value: "status.status_name",
         },
         {
-          text: "Actions",
+          text: "ACTIONS",
           value: "actions",
           sortable: false,
         },
@@ -252,6 +269,7 @@ export default {
       sectionError: {
         basicInformation: false,
         accountNumbers: false,
+        loginInformation: false,
       },
       accountNumberFields: [
         "pagibigMidNo",
@@ -276,12 +294,20 @@ export default {
         "employmentStatus.stat_code",
         "officeAssignment.office_code",
         "designation.position_code",
+        "firstDayOfService",
+      ],
+      loginInformationFields: [
+        "username",
+        "email",
+        "password",
+        "retypePassword",
       ],
       isComplete: false,
       isLoading: false,
       showAddEmployeeForm: false,
       employees: [],
       employee: {
+        employee_id: "",
         lastName: "",
         firstName: "",
         middleName: "",
@@ -303,6 +329,12 @@ export default {
         gsisPolicyNo: "",
         gsisBpNo: "",
         gsisIdNo: "",
+        firstDayOfService: "",
+        username: "",
+        password: "",
+        email: "",
+        retypePassword: "",
+        action: "",
       },
       employmentStatus: [],
       nameExtensions: [],
@@ -311,12 +343,13 @@ export default {
       errors: {},
       selectedEmploymentStatusForFilter: "",
       filteredEmployees: [],
-      message: "Loading employee's",
+      message: "LOADING EMPLOYEE'S",
     };
   },
   components: {
     BasicInformation,
     AccountNumber,
+    LoginInformation,
   },
   methods: {
     filterEmployees() {
@@ -355,6 +388,16 @@ export default {
           this.sectionError.basicInformation = true;
           return true;
         }
+
+        if (this.loginInformationFields.include(field)) {
+          this.sectionError.loginInformation = true;
+          return true;
+        }
+
+        if (this.accountNumberFields.include(field)) {
+          this.sectionError.accountNumbers = true;
+          return true;
+        }
       });
 
       // Check for account numbers
@@ -364,12 +407,19 @@ export default {
           return true;
         }
       });
+
+      // Check for login information
+      errorFields.some((field) => {
+        if (this.loginInformationFields.includes(field)) {
+          this.sectionError.loginInformation = true;
+          return true;
+        }
+      });
     },
     newEmployeeForm() {
       this.showAddEmployeeForm = !this.showAddEmployeeForm;
       if (this.showAddEmployeeForm) {
-        // Delete the employee_id property in employee object.
-        delete this.employee.employee_id;
+        this.employee.action = "insert";
         this.errors = {};
         // Clearning all data
         Object.keys(this.employee).map((key) => {
@@ -382,7 +432,10 @@ export default {
       }
     },
     submitEmployee() {
-      if (this.employee.hasOwnProperty("employee_id")) {
+      if (
+        this.employee.hasOwnProperty("action") &&
+        this.employee.action === "update"
+      ) {
         this.updateEmployee();
       } else {
         this.addNewEmployee();
@@ -392,6 +445,7 @@ export default {
       this.isLoading = true;
       this.sectionError.basicInformation = false;
       this.sectionError.accountNumbers = false;
+      this.sectionError.LoginInformation = false;
       window.axios
         .post("/employee/record/store", this.employee)
         .then((response) => {
@@ -426,6 +480,7 @@ export default {
       this.isLoading = true;
       this.sectionError.basicInformation = false;
       this.sectionError.accountNumbers = false;
+      this.sectionError.loginInformation = false;
       window.axios
         .put(
           `/employee/record/${this.employee.employee_id}/update`,
@@ -461,6 +516,15 @@ export default {
     fetchEmployeeData(employee_id) {
       window.axios.get(`/api/employee/find/${employee_id}`).then((response) => {
         if (response.status == 200) {
+          let loginInformationData = response.data;
+
+          this.employee.username = loginInformationData.login_account
+            ? loginInformationData.login_account.username
+            : "";
+          this.employee.email = loginInformationData.login_account
+            ? loginInformationData.login_account.email
+            : "";
+
           // Clear some fields.
           this.employee.step = "";
           this.employee.basicRate = "";
@@ -488,6 +552,7 @@ export default {
           this.employee.gsisPolicyNo = response.data.gsis_policy_no;
           this.employee.gsisBpNo = response.data.gsis_bp_no;
           this.employee.gsisIdNo = response.data.gsis_id_no;
+          this.employee.firstDayOfService = response.data.first_day_of_service;
 
           // Checking if the user has position and office
           if (response.data.information) {
@@ -517,6 +582,11 @@ export default {
             this.employee.image = "no_image.png";
           }
 
+          this.employee.action = "update";
+
+          this.sectionError.basicInformation = false;
+          this.sectionError.accountNumbers = false;
+          this.sectionError.loginInformation = false;
           this.showAddEmployeeForm = true;
         }
       });

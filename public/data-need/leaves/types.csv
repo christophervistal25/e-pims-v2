@@ -1,0 +1,13 @@
+SICK LEAVE,SL,granted on account of sicknes or disability of the employees or any member of their family.,-1,any,yes,0,yes
+VACATION LEAVE,VL,"granted to employee for personal reasons, the approval of which is contingent upon the necessities of the service.",-1,any,yes,0,yes
+MANDATORY LEAVE,FL,employees with ten (10) days or more vacation leave shall be required to go on vacation leave whether continuous or intermittent for a minimum of five (5) working days annually,5,any,no,0,no
+MATERNITY LEAVE,ML,"Every woman in the government service who has rendered an aggregate of two (2) or more years of service shall in addition to the vacation and sick leave granted her, be entitled to maternity leave of sixty (60) calendar days with full pay",60,female,no,730,no
+PATERNITY LEAVE,PL,Every married male employee is entitled to paternity leave of seven (7) working days for each of the first four (4) deliveries of his legitimate spouse,7,male,no,0,no
+PARENTAL LEAVE,SOLO PARENT ACT,ays leave of absencegranted to a parent who has the sole custody and responsibility of the child and who has rendered at least one (1) year of service regardless of employment status.,7,any,no,365,no
+REHABILITATION LEAVE,,"granted to employees for disability on account of injuries sustained while in the performance of duty.
+disability on account of injuries sustained while in the 
+performance of duty",183,any,no,0,no
+CHILDREN ACT OF 2004,,"ANY WOMAN EMPLOYEE IN THE GOVERNMENT SERVICE, REGARDLESS OF EMPLOYMENT STATUS AND/OR WHOSE CHILD IS A VICTIM OF VIOLENCE AND WHOSE AGE IS BELOW EIGHTEEN OR ABOVE EIGHTEEN, BUT UNABLE TO CARE OF ONESELF, IS ENTITLED TO AVAIL OF THE TEN DAYS LEAVE.",10,female,no,0,no
+SPECIAL LEAVE BENEFITS FOR WOMEN,,"Any female employee shall be entitled to special leave of a maximum of two (2) months with full pay base on her gross monthly compensation, provided she has rendered at least six (6) months aggregate service in any or various government agencies for the last  12 months prior to undergoing surgery for gynaecological disorder",,female,no,183,no
+STUDY LEAVE,,a time-off from work not exceeding six (6) months with pay for the purpose of assistince qualified employees to prepare for their bar or board examinations to complete their master's degree.,183,any,no,0,no
+SPECIAL EMERGENCY LEAVE ,,5 - day leave granted to those employees directly affected by natural calamities and disasters. (Office Order No. 2021-02),5,any,no,0,no

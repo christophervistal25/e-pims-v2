@@ -16,10 +16,6 @@ class MSAccess
     public function __construct(string $database_path = 'C:\\laragon\\www\\e-pims\\sample.mdb', string $user = '', string $password = '')
     {
         $this->isDatabaseFileExists($database_path);
-<<<<<<< HEAD
-        $this->connection = [];
-=======
->>>>>>> 725c2cb140e88b78b416a852ad19010c23c9b89e
 
         $this->connection = DriverManager::getConnection([
             'user'        => $user,

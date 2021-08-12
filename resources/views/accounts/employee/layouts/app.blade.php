@@ -37,7 +37,9 @@
     <!-- Fontawesome CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}">
     <!-- Lineawesome CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/line-awesome.min.css') }}">
+    <link rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    {{-- <link rel="stylesheet" href="{{ asset('assets/css/line-awesome.min.css') }}"> --}}
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     @stack('page-css')
@@ -45,6 +47,7 @@
         body {
             font-family: Inter, sans-serif
         }
+
     </style>
 </head>
 
@@ -141,13 +144,13 @@
                 <!-- /Notifications -->
                 <li class="nav-item dropdown has-arrow main-drop">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                        <span class="user-img"><img src="/storage/employee_images/{{ Auth::user()->employee->information->photo }}" alt="">
+                        <span class="user-img"><img
+                                src="/storage/employee_images/{{ Auth::user()->employee->information->photo }}" alt="">
                             <span class="status online"></span></span>
                         <span>{{  Auth::user()->employee->fullname }}</span>
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="profile.php">My Profile</a>
-                        <a class="dropdown-item" href="settings.php">Settings</a>
+                        <a class="dropdown-item" href="{{ route('employee.personal.profile') }}">My Profile</a>
                         <form action="{{  route('logout') }}" method="POST">
                             @csrf
                             <button class="dropdown-item" style="outline-none;" type="submit">Logout</button>
@@ -182,33 +185,31 @@
                             <span>Main</span>
                         </li>
                         <li>
-                            <a class=""
-                                href="{{  route('employee.dashboard') }}"><i class="la la-dashboard"></i> <span>Dashboard</span></a>
+                            <a class="" href="{{  route('employee.dashboard') }}"><i
+                                    class="las la-digital-tachograph"></i> <span>Dashboard</span></a>
                         </li>
                         <li>
-                            <a class=""
-                                href="#"><i class="la la-file-text"></i> <span>Personal Data Sheet</span></a>
+                            <a class="" href="{{ route('employee.personal-data-sheet') }}"><i
+                                    class="la la-file-signature"></i> <span>Personal Data Sheet</span></a>
                         </li>
                         <li class="submenu">
-                            <a href="#"><i class="la la-suitcase"></i> <span> Leaves</span> <span
+                            <a href="#"><i class="la la-suitcase-rolling"></i> <span> Leaves</span> <span
                                     class="menu-arrow"></span></a>
                             <ul style="display: none;">
-                                <li><a class=""
-                                        href="{{  route('employee.leave.application.filling') }}">Leave Application Filling</a></li>
+                                <li><a class="" href="{{ route('employee.leave.application.filling') }}">Leave
+                                        Application Filling</a></li>
                                 <li>
-                                    <a class=""
-                                        href="employee-dashboard">Leave Card</a>
+                                    <a class="" href="{{ route('employee.leave.card.index') }}">Leave Card</a>
                                 </li>
                                 <li>
-                                    <a 
-                                        href="">Certification
+                                    <a href="">Certification
                                     </a>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a class=""
-                                href="#"><i class="la la-comment"></i> <span>Chat</span></a>
+                            <a class="" href="{{ route('employee.chat') }}"><i class="lar la-comments"></i>
+                                <span>Chat</span></a>
                         </li>
                     </ul>
                 </div>
