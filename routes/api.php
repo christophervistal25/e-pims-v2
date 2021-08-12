@@ -192,20 +192,14 @@ Route::get('/office/salary/adjustment/peroffice/{officeCode}/{filterYear}', func
 
 //per office not selected
 Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}/query', function ($office_code) {
+    $salaryAdjustment = SalaryAdjustment::get()->pluck('employee_id')->toArray();
     $data = DB::table('plantillas')
     ->join('employees', 'plantillas.employee_id', '=', 'employees.employee_id')
     ->join('plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
     ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
-    ->leftJoin('salary_adjustments', 'plantillas.employee_id', '=', 'salary_adjustments.employee_id')
-    ->select('plantilla_id', 'plantillas.item_no', 'plantillas.office_code', 'positions.position_name', 'plantillas.sg_no', 'plantillas.step_no', 'plantillas.salary_amount', 'salary_adjustments.employee_id', 'salary_adjustments.date_adjustment', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
-    ->whereYear('plantillas.year', '=', date('Y'))
+    ->select('plantilla_id','plantillas.item_no', 'plantillas.office_code', 'positions.position_name', 'plantillas.sg_no', 'plantillas.step_no', 'plantillas.salary_amount', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
     ->where('plantillas.office_code',  '=' ,$office_code)
-    ->get()->filter(function ($record) {
-        if(is_null($record->date_adjustment)) {
-            return true;
-        }
-        return Carbon::parse($record->date_adjustment)->format('Y') !== date('Y');
-    });
+    ->get();
     return DataTables::of($data)
     ->editColumn('checkbox', function ($row) {
         $checkbox = "<input id='checkbox$row->plantilla_id' style='transform:scale(1.35)' value='$row->plantilla_id' type='checkbox' />";
@@ -620,124 +614,4 @@ Route::post('/position/schedule/adjust', function () {
     return response()->json(['success'=>true]);
 });
 
-
-
-// LEAVE-LIST SEARCH EMPLOYEE NAME //
-Route::get('/leave/leave-list/employee/{employeeID}', function($employee_id) {
-    $data = [];
-    if(strtolower($employee_id) !== 'all')
-    {
-        $data = DB::table('employee_leave_applications')
-        ->leftJoin('employees', 'employees.employee_id', '=', 'employee_leave_applications.employee_id')
-        ->leftJoin('leave_types', 'leave_types.id', '=', 'employee_leave_applications.leave_type_id')
-        ->select('employee_leave_applications.id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'recommending_approval', 'approved_by', 'leave_type_id', 'incase_of', 'commutation', 'approved_status', 'date_approved', 'date_rejected', 'date_applied', 'date_from', 'date_to', 'no_of_days', 'leave_types.id as leave_type_id', 'leave_types.name AS leave_type_name')
-
-        ->where('employees.employee_id', $employee_id)
-        ->get();
-
-    } else {
-
-        $data = DB::table('employee_leave_applications')
-        ->leftJoin('employees', 'employees.employee_id', '=', 'employee_leave_applications.employee_id')
-        ->leftJoin('leave_types', 'leave_types.id', '=', 'employee_leave_applications.leave_type_id')
-        ->select('employee_leave_applications.id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'recommending_approval', 'approved_by', 'leave_type_id', 'incase_of', 'commutation', 'approved_status', 'date_approved', 'date_rejected', 'date_applied', 'date_from', 'date_to', 'no_of_days', 'leave_types.id as leave_type_id', 'leave_types.name AS leave_type_name')
-        ->get();
-    }
-
-    return Datatables::of($data)
-        ->addColumn('action', function($row)
-        {
-            // route('leave.leave-list.edit', $row->id) is the name of the route on the web.php
-            $btnUpdate = "<a href='". route('leave-list.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-edit' title='Edit'></i></a>";
-
-
-            // DELETE FUNCTION IN YAJRA TABLE //
-            $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="'.$row->id.'" hidden><i style="pointer-events:none;" class="la la-trash"></i></button>';
-
-
-            return $btnUpdate . "&nbsp" . $btnDelete;
-        })->make(true);
-
-
-});
-
-
-
-
-
-// LEAVE-LIST SEARCH STATUS //
-Route::get('/leave/leave-list/status/{typeID}', function($pendingStatus) {
-    $data = [];
-    if(strtolower($pendingStatus) !== 'all') {
-        $data = DB::table('employee_leave_applications')
-            ->leftJoin('employees', 'employees.employee_id', '=', 'employee_leave_applications.employee_id')
-            ->leftJoin('leave_types', 'leave_types.id', '=', 'employee_leave_applications.leave_type_id')
-            ->select('employee_leave_applications.id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'recommending_approval', 'approved_by', 'leave_type_id', 'incase_of', 'commutation', 'approved_status', 'date_approved', 'date_rejected', 'date_applied', 'date_from', 'date_to', 'no_of_days', 'leave_types.id as leave_type_id', 'leave_types.name AS leave_type_name')
-
-            ->where('employee_leave_applications.approved_status', $pendingStatus)
-            ->get();
-
-    } else {
-        $data = DB::table('employee_leave_applications')
-            ->leftJoin('employees', 'employees.employee_id', '=', 'employee_leave_applications.employee_id')
-            ->leftJoin('leave_types', 'leave_types.id', '=', 'employee_leave_applications.leave_type_id')
-            ->select('employee_leave_applications.id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'recommending_approval', 'approved_by', 'leave_type_id', 'incase_of', 'commutation', 'approved_status', 'date_approved', 'date_rejected', 'date_applied', 'date_from', 'date_to', 'no_of_days', 'leave_types.id as leave_type_id', 'leave_types.name AS leave_type_name')
-            ->get();
-    }
-
-    return Datatables::of($data)
-        ->addColumn('action', function($row)
-        {
-            // route('leave.leave-list.edit', $row->id) is the name of the route on the web.php
-            $btnUpdate = "<a href='". route('leave-list.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-edit' title='Edit'></i></a>";
-
-
-            // DELETE FUNCTION IN YAJRA TABLE //
-            $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="'.$row->id.'" hidden><i style="pointer-events:none;" class="la la-trash"></i></button>';
-
-
-            return $btnUpdate . "&nbsp" . $btnDelete;
-        })->make(true);
-
-});
-
-
-
-// OFFICE SEARCH//
-Route::get('/leave/leave-list/{officeID}', function($officeCode) {
-    $data = [];
-    if(strtolower($officeCode) !== 'all') {
-
-        $data = DB::table('employee_leave_applications')
-            ->leftJoin('employees', 'employees.employee_id', '=', 'employee_leave_applications.employee_id')
-            ->leftJoin('leave_types', 'leave_types.id', '=', 'employee_leave_applications.leave_type_id')
-            ->leftJoin('employee_informations', 'employee_informations.EmpIDNo', '=', 'employee_leave_applications.employee_id')
-            ->select('employee_leave_applications.id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'recommending_approval', 'approved_by', 'leave_type_id', 'incase_of', 'commutation', 'approved_status', 'date_approved', 'date_rejected', 'date_applied', 'date_from', 'date_to', 'no_of_days', 'leave_types.id as leave_type_id', 'leave_types.name AS leave_type_name')
-
-            ->where('employee_informations.office_code', $officeCode)
-            ->get();
-
-        } else {
-            $data = DB::table('employee_leave_applications')
-                ->leftJoin('employees', 'employees.employee_id', '=', 'employee_leave_applications.employee_id')
-                ->leftJoin('leave_types', 'leave_types.id', '=', 'employee_leave_applications.leave_type_id')
-                ->leftJoin('employee_informations', 'employee_informations.EmpIDNo', '=', 'employee_leave_applications.employee_id')
-                ->select('employee_leave_applications.id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'recommending_approval', 'approved_by', 'leave_type_id', 'incase_of', 'commutation', 'approved_status', 'date_approved', 'date_rejected', 'date_applied', 'date_from', 'date_to', 'no_of_days', 'leave_types.id as leave_type_id', 'leave_types.name AS leave_type_name')
-                ->get();
-        }
-
-    return Datatables::of($data)
-        ->addColumn('action', function($row)
-        {
-            // route('leave.leave-list.edit', $row->id) is the name of the route on the web.php
-            $btnUpdate = "<a href='". route('leave-list.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-edit' title='Edit'></i></a>";
-
-
-            // DELETE FUNCTION IN YAJRA TABLE //
-            $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="'.$row->id.'" hidden><i style="pointer-events:none;" class="la la-trash"></i></button>';
-
-
-            return $btnUpdate . "&nbsp" . $btnDelete;
-        })->make(true);
-
-});
+Route::get('/leave/leave-list/{officeID}/{status?}/{employeeID?}', 'EmployeeLeave\LeaveListController@search'); 
