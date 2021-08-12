@@ -146,6 +146,9 @@ class SalaryAdjustmentController extends Controller
             'remarks'     => $request['remarks'],
             'deleted_at'      => null,
         ]);
+        // DB::table('plantilla')->update([
+        //     'salary_amount' => $request['salaryNew'],
+        // ]);
 
 
         $dateCheck = $request['remarks'];
