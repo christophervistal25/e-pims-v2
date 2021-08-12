@@ -147,7 +147,7 @@ $(function() {
     });
 
     $("#officeCode").change(function(e) {
-        let yearFilter = document.querySelector("#yearFilter").value;
+        let yearFilter = document.querySelector("#yearFilter").value - 1;
         if (e.target.value == "" || e.target.value == "") {
             table.destroy();
             table = $("#positionSchedule").DataTable({
