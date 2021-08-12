@@ -722,3 +722,50 @@ function myFunction() {
         $(`${value}`).html("");
     });
 }
+
+document.getElementById("employeeName").addEventListener("change", function() {
+    $("#employee-name-error-message").html("");
+    $(".employeeName").removeClass("is-invalid");
+});
+document.getElementById("officeCode").addEventListener("change", function() {
+    $("#office-error-message").html("");
+    $(".officeCode").removeClass("is-invalid");
+});
+document.getElementById("divisionId").addEventListener("change", function() {
+    $("#division-error-message").html("");
+    $(".divisionId").removeClass("is-invalid");
+});
+document.getElementById("positionTitle").addEventListener("change", function() {
+    $("#position-title-error-message").html("");
+    $(".positionTitle").removeClass("is-invalid");
+});
+document.getElementById("status").addEventListener("change", function() {
+    $("#status-error-message").html("");
+    $(".status").removeClass("is-invalid");
+});
+document.getElementById("currentStepno").addEventListener("change", function() {
+    $("#steps-error-message").html("");
+    $(".stepNo").removeClass("is-invalid");
+});
+document
+    .getElementById("originalAppointment")
+    .addEventListener("change", function() {
+        $("#original-appointment-error-message").html("");
+        $("#originalAppointment").removeClass("is-invalid");
+    });
+document.getElementById("lastPromotion").addEventListener("change", function() {
+    $("#last-promotion-error-message").html("");
+    $("#lastPromotion").removeClass("is-invalid");
+});
+document.getElementById("areaCode").addEventListener("change", function() {
+    $("#area-code-error-message").html("");
+    $(".areaCode").removeClass("is-invalid");
+});
+document.getElementById("areaType").addEventListener("change", function() {
+    $("#area-type-error-message").html("");
+    $(".areaType").removeClass("is-invalid");
+});
+document.getElementById("areaLevel").addEventListener("change", function() {
+    $("#area-level-error-message").html("");
+    $(".areaLevel").removeClass("is-invalid");
+});

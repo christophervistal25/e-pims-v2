@@ -243,7 +243,7 @@
 
 
                     <div class="form-group col-12 col-lg-4">
-                        <label>Area Code<span class="text-danger">*</span></label>
+                        <label>Area Type<span class="text-danger">*</span></label>
                         <select value=""
                             class="form-control areaType selectpicker"
                             name="areaType" data-live-search="true" id="areaType" data-size="5">
@@ -262,7 +262,7 @@
 
 
                     <div class="form-group col-12 col-lg-4">
-                        <label>Area Code<span class="text-danger">*</span></label>
+                        <label>Area Level<span class="text-danger">*</span></label>
                         <select value=""
                             class="form-control areaLevel selectpicker"
                             name="areaLevel" data-live-search="true" id="areaLevel" data-size="5">
