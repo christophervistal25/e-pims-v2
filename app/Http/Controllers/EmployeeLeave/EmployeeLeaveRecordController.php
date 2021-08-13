@@ -14,7 +14,6 @@ class EmployeeLeaveRecordController extends Controller
 {
     public const SICK_LEAVE = 10001;
     public const VACATION_LEAVE = 10002;
- 
     
     /**
      * Display a listing of the resource.
@@ -49,46 +48,30 @@ class EmployeeLeaveRecordController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'employeeName'          => 'required',
-            'vlEarned'              => 'required',
-            'vlEnjoyed'             => 'required',
-            'slEarned'              => 'required',
-            'slEnjoyed'             => 'required',
-            'asOf'                  => 'required|date',
-        ], [
-            'employeeName.required' => 'Please select an employee!',
-            'vlEarned.required'     => 'This field is required.',
-            'slEarned.required'     => 'This field is required.',
-            'vlEnjoyed.required'     => 'This field is required.',
-            'slEnjoyed.required'     => 'This field is required.',
-            'asOf.required'         => 'Please select a date.',
-        ]);
-
         $leaveTypes = LeaveType::where('code_number', self::VACATION_LEAVE)
                                                 ->orWhere('code_number', self::SICK_LEAVE)
                                                 ->get(['code_number', 'id']);
         
         $leaveTypes->each(function ($leaveType) use ($request) {
             // Insert Record with As of.
-            $employeefbLeaveRecord = new EmployeeLeaveRecord;
-            $employeefbLeaveRecord->employee_id                                 = $request['employeeName'];
-            $employeefbLeaveRecord->leave_type_id                               = $leaveType->id;
+            $employeeForwardedBalanceRecord = new EmployeeLeaveRecord;
+            $employeeForwardedBalanceRecord->employee_id                                 = $request['employeeID'];
+            $employeeForwardedBalanceRecord->leave_type_id                               = $leaveType->id;
 
             if($leaveType->code_number === self::SICK_LEAVE){
-                $employeefbLeaveRecord->earned                                  = $request['slEarned'];
-                $employeefbLeaveRecord->used                                    = $request['slEnjoyed'];
-                $employeefbLeaveRecord->particular                              = 'Forwarded Leave credits balance for Sick Leave';
+                $employeeForwardedBalanceRecord->earned                                  = $request['slEarned'];
+                $employeeForwardedBalanceRecord->used                                    = $request['slEnjoyed'];
+                $employeeForwardedBalanceRecord->particular                              = 'ENTRANCE';
             }
 
             if($leaveType->code_number === self::VACATION_LEAVE){
-                $employeefbLeaveRecord->earned                                  = $request['vlEarned'];
-                $employeefbLeaveRecord->used                                    = $request['vlEnjoyed'];
-                $employeefbLeaveRecord->particular                              = 'Forwarded Leave credits balance for Vacation Leave';
+                $employeeForwardedBalanceRecord->earned                                  = $request['vlEarned'];
+                $employeeForwardedBalanceRecord->used                                    = $request['vlEnjoyed'];
+                $employeeForwardedBalanceRecord->particular                              = 'ENTRANCE';
             }
             
-            $employeefbLeaveRecord->fb_as_of                                    = $request['asOf'];
-            $employeefbLeaveRecord->save();
+            $employeeForwardedBalanceRecord->fb_as_of                                    = $request['asOf'];
+            $employeeForwardedBalanceRecord->save();
         });
 
         return response()->json(['success' => true]);
