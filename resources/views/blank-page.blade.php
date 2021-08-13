@@ -14,6 +14,11 @@
     }
 </style>
 @endprepend
+
+@prepend('meta-data')
+<meta name="yearlyJo" content="{{ json_encode($yearlyJo) }}">
+<meta name="yearlyRegular" content="{{ json_encode($yearlyReg) }}">
+@endprepend
 @section('content')
 <div class="row">
     <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
@@ -21,7 +26,7 @@
             <div class="card-body">
                 <span class="dash-widget-icon"><i class="la la-list"></i></span>
                 <div class="dash-widget-info">
-                    <h3>112</h3>
+                    <h3>{{ $on_going_leave }}</h3>
                     <h5><a href="#" class="badge badge-pill badge-light">Leaves Today</a></h5>
                 </div>
             </div>
@@ -32,7 +37,7 @@
             <div class="card-body">
                 <span class="dash-widget-icon"><i class="la la-bookmark"></i></span>
                 <div class="dash-widget-info">
-                    <h3>44</h3>
+                    <h3>{{ $plantillas }}</h3>
                     <h5><a href="#" class="badge badge-pill badge-light">New Plantillas</a></h5>
                 </div>
             </div>
@@ -43,7 +48,7 @@
             <div class="card-body">
                 <span class="dash-widget-icon"><i class="fas fa-user-tie"></i></span>
                 <div class="dash-widget-info">
-                    <h3>37</h3>
+                    <h3>{{ $eligible }}</h3>
                     <h5><a href="#" class="badge badge-pill badge-light">Employees with Eligibility</a></h5>
                 </div>
             </div>
@@ -72,7 +77,7 @@
                             <span class="d-block">No. of Job Orders (Current)</span>
                         </div>
                         <div>
-                            <span class="text-success">{{ intval($no_of_jobOrder)/intval($allEmployees) * 100 }}%</span>
+                            <span class="text-success">{{ round(intval($no_of_jobOrder)/intval($allEmployees) * 100, 2) }}%</span>
                         </div>
                     </div>
                     <h3 class="mb-3">{{ $no_of_jobOrder }}</h3>
@@ -90,7 +95,7 @@
                             <span class="d-block">No. of Regular Employees (Current)</span>
                         </div>
                         <div>
-                            <span class="text-success">{{ intval($no_of_regular)/intval($allEmployees) * 100 }}%</span>
+                            <span class="text-success">{{ round(intval($no_of_regular)/intval($allEmployees) * 100, 2) }}%</span>
                         </div>
                     </div>
                     <h3 class="mb-3">{{ $no_of_regular }}</h3>
@@ -108,7 +113,7 @@
                             <span class="d-block">No. of Employees Promoted this year</span>
                         </div>
                         <div>
-                            <span class="text-success">{{ intval($no_of_promoted)/intval($allEmployees) * 100 }}%</span>
+                            <span class="text-success">{{ round(intval($no_of_promoted)/intval($allEmployees) * 100, 2) }}%</span>
                         </div>
                     </div>
                     <h3 class="mb-3">{{ $no_of_promoted }}</h3>
@@ -126,7 +131,7 @@
                             <span class="d-block">No. of Active Employees</span>
                         </div>
                         <div>
-                            <span class="text-success">{{ intval($no_of_active)/intval($allEmployees) * 100 }}%</span>
+                            <span class="text-success">{{ round(intval($no_of_active)/intval($allEmployees) * 100, 2) }}%</span>
                         </div>
                     </div>
                     <h3 class="mb-3">{{ $no_of_active }}</h3>
@@ -248,6 +253,7 @@
                         @break
                     @endif
                 @endforeach
+
             </div>
         </div>
     </div>
@@ -262,6 +268,53 @@
 
 <script src="/assets/plugins/morris/morris.min.js"></script>
 <script src="/assets/plugins/raphael/raphael.min.js"></script>
-<script src="/assets/js/chart.js"></script>
+
+{{-- Charts --}}
+<script>
+    $(document).ready(function() {
+        let yearlyJo = JSON.parse($('meta[name="yearlyJo"]').attr('content'));
+        let yearlyRegular = JSON.parse($('meta[name="yearlyRegular"]').attr('content'));
+
+        let data = [];
+
+        Object.keys(yearlyJo).map((year, index) => {
+            data.push({
+                y : year, 
+                a : yearlyJo[year],
+                b :  yearlyRegular[year]
+            });
+        });
+
+        // Bar Chart
+        
+        Morris.Bar({
+            element: 'bar-charts',
+            data: data,
+            xkey: 'y',
+            ykeys: ['a', 'b'],
+            labels: ['No. of Employees(Job Order)', 'No. of Employees(Regular)'],
+            lineColors: ['#ff9b44','#fc6075'],
+            lineWidth: '3px',
+            barColors: ['#ff9b44','#fc6075'],
+            resize: true,
+            redraw: true
+        });
+        
+        // Line Chart
+        
+        Morris.Line({
+            element: 'line-charts',
+            data: data,
+            xkey: 'y',
+            ykeys: ['a', 'b'],
+            labels: ['Total Sales', 'Total Revenue'],
+            lineColors: ['#ff9b44','#fc6075'],
+            lineWidth: '3px',
+            resize: true,
+            redraw: true
+        });
+            
+    });
+</script>
 @endpush
 @endsection

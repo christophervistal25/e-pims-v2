@@ -15,13 +15,14 @@
         crossorigin="anonymous" />
 	{{-- <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/assets/img/favicon.png') }}"> --}}
 	{{-- <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}"> --}}
+	{{-- <link rel="stylesheet" href="{{ asset('/assets/css/all.min.css') }}"> --}}
 	<link rel="stylesheet" href="{{ asset('/assets/css/font-awesome.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('/assets/css/line-awesome.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('/assets/css/style.css') }}">
 	<link rel="stylesheet" href="{{ asset('/assets/css/select2.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('/assets/css/bootstrap-datetimepicker.min.css') }}">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}">
+    {{-- <link rel="preconnect" href="https://fonts.gstatic.com"> --}}
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 	{{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
     @stack('page-css')
@@ -452,8 +453,9 @@
 	<script src="{{ asset('/assets/js/moment.min.js') }}"></script>
 	<script src="{{ asset('/assets/js/bootstrap-datetimepicker.min.js') }}"></script>
 	<script src="{{ asset('/assets/js/app.js') }}"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-	<script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>
+	<script src="{{ asset('/assets/js/toastr.min.js') }}"></script>
+	{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> --}}
+	{{-- <script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script> --}}
 	<script>
 	const socket = io.connect("{{ env('MIX_SOCKET_IP') }}");
 
