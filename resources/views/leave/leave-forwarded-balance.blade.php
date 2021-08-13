@@ -113,9 +113,9 @@ input[type=number] {
                         <div class="row">
                             <div class="col-lg-12">
                                 <label for="employeeName" class="form-group has-float-label">
-                                    <select class="form-control selectpicker"  data-live-search="true"
+                                    <select class="form-control selectpicker employeeName"  data-live-search="true"
                                         name="employeeName" id="employeeName" data-size="6" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                        <option>Search name here</option>
+                                        <option value="">Search name here</option>
                                         @foreach($employees as $employee)
                                         <option data-office="{{ $employee->information->office->office_name }}" 
                                                 data-position="{{ $employee->information->position->position_name }}" 
@@ -152,13 +152,13 @@ input[type=number] {
                                     <div class="col-lg-6">
                                         <h6 class="text-sm text-center">VACATION LEAVE</h6>
                                         <label for="vlEarned" class="form-group has-float-label">
-                                            <input type="number" class="form-control" id="vlEarned" name="vlEarned"
+                                            <input type="number" class="form-control vlEarned" id="vlEarned" name="vlEarned"
                                                 style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;" >
                                             <span><strong>VL EARNED</strong></span>
                                             <div id="vlEarned-error-message" class="text-danger text-sm"></div>
                                         </label>
                                         <label for="vlEnjoyed" class="form-group has-float-label">
-                                            <input type="number" value="0" class="form-control" id="vlEnjoyed" name="vlEnjoyed"
+                                            <input type="number" value="0" class="form-control vlEnjoyed" id="vlEnjoyed" name="vlEnjoyed"
                                                 style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;" >
                                             <span><strong>VL ENJOYED</strong></span>
                                             <div id="vlEnjoyed-error-message" class="text-danger text-sm"></div>
@@ -172,13 +172,13 @@ input[type=number] {
                                     <div class="col-lg-6">
                                         <h6 class="text-sm text-center">SICK LEAVE</h6>
                                         <label for="slEarned" class="form-group has-float-label">
-                                            <input type="number" id="slEarned" class="form-control" name="slEarned"
+                                            <input type="number" id="slEarned" class="form-control slEarned" name="slEarned"
                                                 style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;" >
                                             <span><strong>SL EARNED</strong></span>
                                             <div id="slEarned-error-message" class="text-danger text-sm"></div>
                                         </label>
                                         <label for="slEnjoyed" class="form-group has-float-label">
-                                            <input type="number" class="form-control" id="slEnjoyed" name="slEnjoyed"
+                                            <input type="number" class="form-control slEnjoyed" id="slEnjoyed" name="slEnjoyed"
                                                 value="0"
                                                 style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;" >
                                             <span><strong>SL ENJOYED</strong></span>
@@ -196,7 +196,7 @@ input[type=number] {
                         <div class="row">
                             <div class="col-lg-6">
                                 <label for="asOf" class="form-group has-float-label">
-                                    <input type="date" name="asOf" id="asOf" class="form-control" 
+                                    <input type="date" name="asOf" id="asOf" class="form-control asOf"  
                                     style="outline: none; box-shadow: 0px 0px 0px transparent; height:70px; font-weight:bold; font-size:30px;" >
                                     <span class="font-weight-bold">As of</span>
                                     <div id="asOf-error-message" class="text-danger text-sm"></div>
@@ -276,13 +276,13 @@ input[type=number] {
                                     <div class="col-lg-6">
                                         <h6 class="text-sm text-center">VACATION LEAVE</h6>
                                         <label for="update_vlEarned" class="form-group has-float-label">
-                                            <input type="number" class="form-control" id="update_vlEarned" name="update_vlEarned" step="any"
+                                            <input type="number" class="form-control update_vlEarned" id="update_vlEarned" name="update_vlEarned" step="any"
                                                 style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;" >
                                             <span><strong>VL EARNED</strong></span>
                                             <div id="update_vlEarned-error-message" class="text-danger text-sm"></div>
                                         </label>
                                         <label for="update_vlEnjoyed" class="form-group has-float-label">
-                                            <input type="number" class="form-control" id="update_vlEnjoyed" name="update_vlEnjoyed" step="any"
+                                            <input type="number" class="form-control update_vlEnjoyed" id="update_vlEnjoyed" name="update_vlEnjoyed" step="any"
                                                 style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;" >
                                             <span><strong>VL ENJOYED</strong></span>
                                             <div id="update_vlEnjoyed-error-message" class="text-danger text-sm"></div>
@@ -296,13 +296,13 @@ input[type=number] {
                                     <div class="col-lg-6">
                                         <h6 class="text-sm text-center">SICK LEAVE</h6>
                                         <label for="update_slEarned" class="form-group has-float-label">
-                                            <input type="number"  id="update_slEarned" class="form-control" name="update_slEarned" step="any"
+                                            <input type="number"  id="update_slEarned" class="form-control update_slEarned" name="update_slEarned" step="any"
                                                 style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;" >
                                             <span><strong>SL EARNED</strong></span>
                                             <div id="update_slEarned-error-message" class="text-danger text-sm"></div>
                                         </label>
                                         <label for="update_slEnjoyed" class="form-group has-float-label">
-                                            <input type="number"  class="form-control" id="update_slEnjoyed"  name="update_slEnjoyed" step="any"
+                                            <input type="number"  class="form-control update_slEnjoyed" id="update_slEnjoyed"  name="update_slEnjoyed" step="any"
                                                 style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;" >
                                             <span><strong>SL ENJOYED</strong></span>
                                             <div id="update_slEnjoyed-error-message" class="text-danger text-sm"></div>
@@ -320,7 +320,7 @@ input[type=number] {
                         <div class="row">
                             <div class="col-lg-6">
                                 <label for="update_asOf" class="form-group has-float-label">
-                                    <input type="date" name="update_asOf" id="update_asOf" class="form-control"
+                                    <input type="date" name="update_asOf" id="update_asOf" class="form-control update_asOf"
                                     style="outline: none; box-shadow: 0px 0px 0px transparent; height:70px; font-weight:bold; font-size:30px;" >
                                     <span class="font-weight-bold">As of</span>
                                     <div id="update_asOf-error-message" class="text-danger text-sm"></div>
@@ -380,435 +380,6 @@ input[type=number] {
         
     });
 </script>
-<script>
-
-     $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    let vlEarned = document.querySelector('#vlEarned');
-    let vlEnjoyed = document.querySelector('#vlEnjoyed');
-    let vlBalance = document.querySelector('#vlBalance');
-    let slEarned = document.querySelector('#slEarned');
-    let slEnjoyed = document.querySelector('#slEnjoyed');
-    let slBalance = document.querySelector('#slBalance');   
-    let total_lb = document.querySelector('#total_lb');
-
-    let update_vlEarned = document.querySelector('#update_vlEarned');
-    let update_vlEnjoyed = document.querySelector('#update_vlEnjoyed');
-    let update_vlBalance = document.querySelector('#update_vlBalance');
-    let update_slEarned = document.querySelector('#update_slEarned');
-    let update_slEnjoyed = document.querySelector('#update_slEnjoyed');
-    let update_slBalance = document.querySelector('#update_slBalance');   
-    let update_total_lb = document.querySelector('#update_total_lb');
- 
-    vlBalance.value = 0;
-    slBalance.value = 0;
-    total_lb.value = 0;
-
-    update_vlBalance.value = 0;
-    update_slBalance.value = 0;
-    update_total_lb.value = 0;
-
-    vlEarned.addEventListener("keyup", function(){
-        vlBalance.value = parseFloat(vlEarned.value) - parseFloat(vlEnjoyed.value);
-        slBalance.value = parseFloat(slEarned.value) - parseFloat(slEnjoyed.value);
-        total_lb.value = (parseFloat(vlBalance.value) + parseFloat(slBalance.value)).toFixed(3);
-    })
-
-    vlEnjoyed.addEventListener("keyup", function(){
-        vlBalance.value = parseFloat(vlEarned.value) - parseFloat(vlEnjoyed.value);
-        slBalance.value = parseFloat(slEarned.value) - parseFloat(slEnjoyed.value);
-        total_lb.value = ( (parseFloat(vlBalance.value) ) + (parseFloat(slBalance.value))).toFixed(3);
-    })
-
-    slEarned.addEventListener("keyup", function(){
-        vlBalance.value = parseFloat(vlEarned.value) - parseFloat(vlEnjoyed.value);
-        slBalance.value = parseFloat(slEarned.value) - parseFloat(slEnjoyed.value);
-        total_lb.value = (parseFloat(vlBalance.value) + parseFloat(slBalance.value)).toFixed(3);
-    })
-
-    slEnjoyed.addEventListener("keyup", function(){
-        vlBalance.value = parseFloat(vlEarned.value) - parseFloat(vlEnjoyed.value);
-        slBalance.value = parseFloat(slEarned.value) - parseFloat(slEnjoyed.value);
-        total_lb.value = ( (parseFloat(vlBalance.value)) + (parseFloat(slBalance.value))).toFixed(3);
-    })
-
-    update_vlEarned.addEventListener("keyup", function(){
-        update_vlBalance.value = parseFloat(update_vlEarned.value) - parseFloat(update_vlEnjoyed.value);
-        update_slBalance.value = parseFloat(update_slEarned.value) - parseFloat(update_slEnjoyed.value);
-        update_total_lb.value = (parseFloat(update_vlBalance.value) + parseFloat(update_slBalance.value)).toFixed(3);
-    })
-
-    update_vlEnjoyed.addEventListener("keyup", function(){
-        update_vlBalance.value = parseFloat(update_vlEarned.value) - parseFloat(update_vlEnjoyed.value);
-        update_slBalance.value = parseFloat(update_slEarned.value) - parseFloat(update_slEnjoyed.value);
-        update_total_lb.value = (parseFloat(update_vlBalance.value) + parseFloat(update_slBalance.value)).toFixed(3);
-    })
-
-    update_slEarned.addEventListener("keyup", function(){
-        update_vlBalance.value = parseFloat(update_vlEarned.value) - parseFloat(update_vlEnjoyed.value);
-        update_slBalance.value = parseFloat(update_slEarned.value) - parseFloat(update_slEnjoyed.value);
-        update_total_lb.value = (parseFloat(update_vlBalance.value) + parseFloat(update_slBalance.value)).toFixed(3);
-    })
-
-    update_slEnjoyed.addEventListener("keyup", function(){
-        update_vlBalance.value = parseFloat(update_vlEarned.value) - parseFloat(update_vlEnjoyed.value);
-        update_slBalance.value = parseFloat(update_slEarned.value) - parseFloat(update_slEnjoyed.value);
-        update_total_lb.value = (parseFloat(update_vlBalance.value) + parseFloat(update_slBalance.value)).toFixed(3);
-    })
-
-
-        // SHOWS THE DATA VALUE IN INPUT INCLUDING THE PHOTO OF THE EMPLOYEE
-        $('#employeeName').change( function (e) {
-            let employeeID = e.target.value;
-            let [selectedItem] = $("#employeeName option:selected");
-
-            let employeeOffice = selectedItem.getAttribute('data-office') || '';
-            let employeePosition = selectedItem.getAttribute('data-position') || '';
-            let photo = selectedItem.getAttribute('data-photo') || '';
-            let employeeId = selectedItem.getAttribute('data-employeeId') || '';
-
-                $('#office').val(employeeOffice);
-                $('#position').val(employeePosition);
-                $('#empPhoto').attr('src','/storage/employee_images/'+photo);
-                $('#employeeId').val(employeeId);
-
-            let employeeName = $('#employeeName').val();
-        });
-
-        $('#btnSave').click( (e)=> {
-            e.preventDefault();
-
-            let employeeName = $('#employeeName').val();
-            let asOf = $('#asOf').val();
-            let vlEarned = $('#vlEarned').val();
-            let vlEnjoyed = $('#vlEnjoyed').val();
-            let slEarned = $('#slEarned').val();
-            let slEnjoyed = $('#slEnjoyed').val();
-            let errors = {};
-            let filteredError = "";
-            
-            //EmployeeName required
-            if (employeeName == "" || employeeName.toLowerCase() == 'search name here') {
-                $('#employeeName-error-message').html('');
-                $('#employeeName-error-message').append(
-                    `<span class="text-danger"> Employee name is required. </span>`);
-                $('#employeeName').addClass('border border-danger');
-                errors.employee = true;
-            } else {
-                $('#employeeName-error-message').html('');
-                $('#employeeName').removeClass('border border-danger');
-                errors.employee = false;
-            }
-
-            //Date Asof required
-            if (asOf === "") {
-                $('#asOf-error-message').html('');
-                $('#asOf-error-message').append(`<span> Please select a date. </span>`);
-                $('#asOf').addClass('border border-danger');
-                errors.asOf = true;
-            } else {
-                $('#asOf-error-message').html('');
-                $('#asOf').removeClass('border border-danger');
-                errors.asOf = false;
-            }
-
-            //VL Earned required
-            if (vlEarned === "") {
-                $('#vlEarned-error-message').html('');
-                $('#vlEarned-error-message').append(`<span> Vacation Leave Earned is required. </span>`);
-                $('#vlEarned').addClass('border border-danger');
-                errors.vlEarned = true;
-            } else {
-                $('#vlEarned-error-message').html('');
-                $('#vlEarned').removeClass('border border-danger');
-                errors.vlEarned = false;
-            }
-
-            //VL Used required
-            if (vlEnjoyed === "") {
-                $('#vlEnjoyed-error-message').html('');
-                $('#vlEnjoyed-error-message').append(`<span> Vacation Leave Enjoyed is required. </span>`);
-                $('#vlEnjoyed').addClass('border border-danger');
-                errors.vlEnjoyed = true;
-            } else {
-                $('#vlEnjoyed-error-message').html('');
-                $('#vlEnjoyed').removeClass('border border-danger');
-                errors.vlEnjoyed = false;
-            }
-
-            //SL Earned required
-            if (slEarned === "") {
-                $('#slEarned-error-message').html('');
-                $('#slEarned-error-message').append(`<span> Sick Leave Earned is required. </span>`);
-                $('#slEarned').addClass('border border-danger');
-                errors.slEarned = true;
-            } else {
-                $('#slEarned-error-message').html('');
-                $('#slEarned').removeClass('border border-danger');
-                errors.slEarned = false;
-            }
-
-            //SL Used required
-            if (slEnjoyed === "") {
-                $('#slEnjoyed-error-message').html('');
-                $('#slEnjoyed-error-message').append(`<span> Sick Leave Enjoyed is required. </span>`);
-                $('#slEnjoyed').addClass('border border-danger');
-                errors.slEnjoyed = true;
-            } else {
-                $('#slEnjoyed-error-message').html('');
-                $('#slEnjoyed').removeClass('border border-danger');
-                errors.slEnjoyed = false;
-            }
-
-
-
-            filteredError = Object.values(errors).filter((error) => error);
-            // Check if the filtered error array variable has value or not.
-            // if the length of this array is 0 this means that there is no error
-            // or all fields that required is filled by the user.
-            if (filteredError.length === 0) {
-                $('#save-spinner').removeClass('d-none');
-                let data = $('#forwardedBalance').serialize();
-                $.ajax({
-                    url : '/employee/leave-forwarded-balance',
-                    method : 'POST',
-                    data : data,
-                    success : function (response) {
-                        if(response.success){
-                            $('#save-spinner').addClass('d-none');
-                            swal("Good job!", "Successfully added!", "success").then((isClicked) => {
-                                if(isClicked) {
-                                    location.reload();
-                                }
-                            })
-                        }
-                    },
-                });
-                
-            }
-        });
-
-         // TRANSITION OF FORM TO TABLE
-        $('#addBtn').click( ()=> {
-            $('#forwardedBalanceTable').addClass('d-none');
-            $('#forwardedBalanceCard').removeClass('d-none'); 
-            $('#employeeName-error-message').html('');
-            $('#asOf-error-message').html('');
-            $('#vlEarned-error-message').html('');
-            $('#vlEnjoyed-error-message').html('');
-            $('#slEarned-error-message').html('');
-            $('#slEnjoyed-error-message').html(''); 
-            $('#asOf').removeClass('border border-danger');
-            $('#vlEarned').removeClass('border border-danger');
-            $('#vlEnjoyed').removeClass('border border-danger');
-            $('#slEarned').removeClass('border border-danger');
-            $('#slEnjoyed').removeClass('border border-danger');
-        });
-
-        $('#btnBack').click( ()=> {
-            $('#forwardedBalanceTable').removeClass('d-none');
-            $('#forwardedBalanceCard').addClass('d-none'); 
-            $('#editForwardedBalanceCard').addClass('d-none'); 
-        });
-
-        $('#update_btnBack').click( ()=> {
-            $('#forwardedBalanceTable').removeClass('d-none');
-            $('#forwardedBalanceCard').addClass('d-none'); 
-            $('#editForwardedBalanceCard').addClass('d-none'); 
-        });
-
-        $(document).on('click', '.edit__leave__type', function () {
-            leaveID = $(this).attr('data-id');
-            let fbAsOF = $(this).attr('data-as-of-date');
-            $('#forwardedBalanceTable').addClass('d-none');
-            $('#editForwardedBalanceCard').removeClass('d-none'); 
-            $('#btnViewTableContainer').removeClass('d-none');
-            $('#empID').val(leaveID);
-
-            // Ajax request for fetching leave type data.
-            $.ajax({
-                url : `/employee/leave-forwarded-balance/${leaveID}/edit`,
-                success : function (leave) {
-                    // Collect data of form fields.
-                    $('#update_empPhoto').attr('src','/storage/employee_images/'+leave.employee_information.information.photo);
-                    $('#update_employeeName').val(leave.employee_information.fullname);
-                    $('#update_office').val(leave.employee_information.information.office.office_name);
-                    $('#update_position').val(leave.employee_information.information.position.position_name);
-                    leave.leaveRecord.forEach(function(data){
-                        $('#update_asOf').val(data.fb_as_of);
-                        if(data.leave_type_id == 2){
-                            $('#update_vlEarned').val(data.earned);
-                            $('#update_vlEnjoyed').val(data.used);
-                            vlBalanceVal = parseFloat(data.earned - data.used).toFixed(3);
-                            $('#update_vlBalance').val(vlBalanceVal);
-                        }else{
-                            $('#update_slEarned').val(data.earned);
-                            $('#update_slEnjoyed').val(data.used);
-                            slBalanceVal = parseFloat(data.earned - data.used).toFixed(3);
-                            $('#update_slBalance').val(slBalanceVal);
-                        }    
-                    })
-                     $('#update_total_lb').val((parseFloat(vlBalanceVal) + parseFloat(slBalanceVal)).toFixed(3));
-                },
-            });
-        });
-
-        $('#btnUpdate').click( (e)=> {
-            e.preventDefault();
-
-            employeeID = $('#empID').val();
-            let update_asOf = $('#update_asOf').val();
-            let update_vlEarned = $('#update_vlEarned').val();
-            let update_vlEnjoyed = $('#update_vlEnjoyed').val();
-            let update_slEarned = $('#update_slEarned').val();
-            let update_slEnjoyed = $('#update_slEnjoyed').val();
-            let errors = {};
-            let filteredError = "";
-
-            //Date Asof required
-            if (update_asOf === "") {
-                $('#update_asOf-error-message').html('');
-                $('#update_asOf-error-message').append(`<span> Please select a date. </span>`);
-                $('#update_asOf').addClass('border border-danger');
-                errors.update_asOf = true;
-            } else {
-                $('#update_asOf-error-message').html('');
-                $('#update_asOf').removeClass('border border-danger');
-                errors.update_asOf = false;
-            }
-
-            //VL Earned required
-            if (update_vlEarned === "") {
-                $('#update_vlEarned-error-message').html('');
-                $('#update_vlEarned-error-message').append(`<span> Vacation Leave Earned is required. </span>`);
-                $('#update_vlEarned').addClass('border border-danger');
-                errors.update_vlEarned = true;
-            } else {
-                $('#update_vlEarned-error-message').html('');
-                $('#update_vlEarned').removeClass('border border-danger');
-                errors.update_vlEarned = false;
-            }
-
-            //VL Used required
-            if (update_vlEnjoyed === "") {
-                $('#update_vlEnjoyed-error-message').html('');
-                $('#update_vlEnjoyed-error-message').append(`<span> Vacation Leave Enjoyed is required. </span>`);
-                $('#update_vlEnjoyed').addClass('border border-danger');
-                errors.update_vlEnjoyed = true;
-            } else {
-                $('#update_vlEnjoyed-error-message').html('');
-                $('#update_vlEnjoyed').removeClass('border border-danger');
-                errors.update_vlEnjoyed = false;
-            }
-
-            //SL Earned required
-            if (update_slEarned === "") {
-                $('#update_slEarned-error-message').html('');
-                $('#update_slEarned-error-message').append(`<span> Sick Leave Earned is required. </span>`);
-                $('#update_slEarned').addClass('border border-danger');
-                errors.update_slEarned = true;
-            } else {
-                $('#update_slEarned-error-message').html('');
-                $('#update_slEarned').removeClass('border border-danger');
-                errors.update_slEarned = false;
-            }
-
-            //SL Used required
-            if (update_slEnjoyed === "") {
-                $('#update_slEnjoyed-error-message').html('');
-                $('#update_slEnjoyed-error-message').append(`<span> Sick Leave Enjoyed is required. </span>`);
-                $('#update_slEnjoyed').addClass('border border-danger');
-                errors.update_slEnjoyed = true;
-            } else {
-                $('#update_slEnjoyed-error-message').html('');
-                $('#update_slEnjoyed').removeClass('border border-danger');
-                errors.update_slEnjoyed = false;
-            }
-
-
-
-            filteredError = Object.values(errors).filter((error) => error);
-
-            // Check if the filtered error array variable has value or not.
-            // if the length of this array is 0 this means that there is no error
-            // or all fields that required is filled by the user.
-            if (filteredError.length === 0) {
-                let data = $('#editForwardedBalance').serialize();
-                $.ajax({
-                    url : `/employee/leave-forwarded-balance/${employeeID}`,
-                    method : 'PUT',
-                    data : data,
-                    success : function (response) {
-                        if(response.success){
-                            swal("Good job!", "Successfully added!", "success").then((isClicked) => {
-                                if(isClicked) {
-                                    location.reload();
-                                }
-                            })
-                        }
-                    },
-                });
-                
-            }
-        });
-
-        $(document).on('click', '#update_btnDelete', function () {
-        leaveID = $('#empID').val();
-        let fbAsOF = $('#update_asOf').val();
-        swal({
-            title: "Are you sure?",
-            text : "You are about to delete a forwarded leave balance record",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-            }).then((willDelete) => {
-                if(willDelete) {
-                    $.ajax({
-                        url : `/employee/leave-forwarded-balance/${leaveID}`,
-                        data: { fb_as_of : fbAsOF },
-                        method : 'DELETE',
-                        success : function (response) {
-                             swal("Good job!", "Successfully delete a leave record.", "success").then((isClicked) => {
-                                if(isClicked) {
-                                    location.reload();
-                                }
-                            })
-                        }
-                    });
-                }
-            });
-        });
-
-        $(document).on('click', '.delete__leave__type', function () {
-        leaveID = $(this).attr('data-id');
-        let fbAsOF = $(this).attr('data-as-of-date');
-        swal({
-            title: "Are you sure?",
-            text : "You are about to delete a forwarded leave balance record",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-            }).then((willDelete) => {
-                if(willDelete) {
-                    $.ajax({
-                        url : `/employee/leave-forwarded-balance/${leaveID}`,
-                        data: { fb_as_of : fbAsOF },
-                        method : 'DELETE',
-                        success : function (response) {
-                             swal("Good job!", "Successfully delete a leave record.", "success").then((isClicked) => {
-                                if(isClicked) {
-                                    location.reload();
-                                }
-                            })
-                        }
-                    });
-                }
-            });
-        });
-</script>
+<script src="/assets/js/leaveforwardedBalance.js"></script>
 @endpush
 @endsection

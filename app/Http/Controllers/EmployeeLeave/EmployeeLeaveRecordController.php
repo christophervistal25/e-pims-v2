@@ -7,11 +7,12 @@ use App\LeaveType;
 use App\EmployeeLeaveRecord;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Repositories\LeaveRecordRepository;
 
 class EmployeeLeaveRecordController extends Controller
 {
-       public const SICK_LEAVE = 10001;
+    public const SICK_LEAVE = 10001;
     public const VACATION_LEAVE = 10002;
  
     
@@ -48,7 +49,21 @@ class EmployeeLeaveRecordController extends Controller
      */
     public function store(Request $request)
     {
-        // $leaveTypes = array_column(, 'id');
+        $this->validate($request, [
+            'employeeName'          => 'required',
+            'vlEarned'              => 'required',
+            'vlEnjoyed'             => 'required',
+            'slEarned'              => 'required',
+            'slEnjoyed'             => 'required',
+            'asOf'                  => 'required|date',
+        ], [
+            'employeeName.required' => 'Please select an employee!',
+            'vlEarned.required'     => 'This field is required.',
+            'slEarned.required'     => 'This field is required.',
+            'vlEnjoyed.required'     => 'This field is required.',
+            'slEnjoyed.required'     => 'This field is required.',
+            'asOf.required'         => 'Please select a date.',
+        ]);
 
         $leaveTypes = LeaveType::where('code_number', self::VACATION_LEAVE)
                                                 ->orWhere('code_number', self::SICK_LEAVE)
@@ -57,7 +72,7 @@ class EmployeeLeaveRecordController extends Controller
         $leaveTypes->each(function ($leaveType) use ($request) {
             // Insert Record with As of.
             $employeefbLeaveRecord = new EmployeeLeaveRecord;
-            $employeefbLeaveRecord->employee_id                                 = $request['employeeID'];
+            $employeefbLeaveRecord->employee_id                                 = $request['employeeName'];
             $employeefbLeaveRecord->leave_type_id                               = $leaveType->id;
 
             if($leaveType->code_number === self::SICK_LEAVE){
@@ -75,6 +90,7 @@ class EmployeeLeaveRecordController extends Controller
             $employeefbLeaveRecord->fb_as_of                                    = $request['asOf'];
             $employeefbLeaveRecord->save();
         });
+
         return response()->json(['success' => true]);
     }
 
@@ -111,6 +127,20 @@ class EmployeeLeaveRecordController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'update_vlEarned'              => 'required',
+            'update_vlEnjoyed'             => 'required',
+            'update_slEarned'              => 'required',
+            'update_slEnjoyed'             => 'required',
+            'update_asOf'                  => 'required|date',
+        ], [
+            'update_vlEarned.required'     => 'This field is required.',
+            'update_slEarned.required'     => 'This field is required.',
+            'update_vlEnjoyed.required'     => 'This field is required.',
+            'update_slEnjoyed.required'     => 'This field is required.',
+            'update_asOf.required'         => 'Please select a date.',
+        ]);
+
         //update
         $leaveRecord = EmployeeLeaveRecord::with('type')
                                             ->where('employee_id', $id)

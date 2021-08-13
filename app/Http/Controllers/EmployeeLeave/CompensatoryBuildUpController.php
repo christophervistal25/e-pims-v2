@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\EmployeeLeave;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Employee;
+use Carbon\Carbon;
 use App\CompensatoryLeave;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Rules\CompensatoryDateEarned;
 
 class CompensatoryBuildUpController extends Controller
 {
@@ -24,7 +27,7 @@ class CompensatoryBuildUpController extends Controller
      */
     public function index(Request $request)
     {
-        $employees = Employee::get();
+        $employees = Employee::has('information')->with(['information','information.office', 'information.position'])->get();
         $records = CompensatoryLeave::with('employee')->get()->groupBy('employee.fullname');
         
         $yearfilters = CompensatoryLeave::get('date_added')->groupBy(function ($data) {
@@ -103,32 +106,32 @@ class CompensatoryBuildUpController extends Controller
             ->get();
             return DataTables::of($data)
             ->addColumn('action', function($row) use($test) {
-                                    if(strtotime($test->date_added) > strtotime($row->date_added)) {
-                                        return '';
-                                    }
-                                    if($row->earned > 0){
-                                        if ($row->forfeited =='yes'){
-                                            $btn = '';
-                                            return $btn;
-                                        }else{
-                                            $btn = '<button type="button" title="Edit Earned" data-id="'.$row->id.'"  class="edit btn btn-success btn-sm rounded-circle shadow mr-1 btnEdit__earned__compensatory">
-                                            <i class="la la-edit"></i></button>';
-                                            $btn .= '<button type="button" data-id="'.$row->id.'"  class="delete btn btn-danger btn-sm rounded-circle shadow delete__compensatory">
-                                            <i class="la la-trash"></i></button>';
-                                            return $btn;
-                                        }
-                                    }else{
-                                        if ($row->forfeited =='yes'){
-                                            $btn = '';
-                                            return $btn;
-                                        }else{
-                                            $btn = '<button type="button" title="Edit Availed" data-id="'.$row->id.'"  class="edit btn btn-success btn-sm rounded-circle shadow mr-1 btnEdit__availed__compensatory">
-                                            <i class="la la-edit"></i></button>';
-                                            $btn .= '<button type="button" data-id="'.$row->id.'"  class="delete btn btn-danger btn-sm rounded-circle shadow delete__compensatory">
-                                            <i class="la la-trash"></i></button>';
-                                            return $btn;
-                                        }
-                                    }
+                    if(strtotime($test->date_added) > strtotime($row->date_added)) {
+                        return '';
+                    }
+                    if($row->earned > 0){
+                        if ($row->forfeited =='yes'){
+                            $btn = '';
+                            return $btn;
+                        }else{
+                            $btn = '<button type="button" title="Edit Earned" data-id="'.$row->id.'"  class="edit btn btn-success btn-sm rounded-circle shadow mr-1 btnEdit__earned__compensatory">
+                            <i class="la la-edit"></i></button>';
+                            $btn .= '<button type="button" data-id="'.$row->id.'"  class="delete btn btn-danger btn-sm rounded-circle shadow delete__compensatory">
+                            <i class="la la-trash"></i></button>';
+                            return $btn;
+                        }
+                    }else{
+                        if ($row->forfeited =='yes'){
+                            $btn = '';
+                            return $btn;
+                        }else{
+                            $btn = '<button type="button" title="Edit Availed" data-id="'.$row->id.'"  class="edit btn btn-success btn-sm rounded-circle shadow mr-1 btnEdit__availed__compensatory">
+                            <i class="la la-edit"></i></button>';
+                            $btn .= '<button type="button" data-id="'.$row->id.'"  class="delete btn btn-danger btn-sm rounded-circle shadow delete__compensatory">
+                            <i class="la la-trash"></i></button>';
+                            return $btn;
+                        }
+                    }
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -154,14 +157,49 @@ class CompensatoryBuildUpController extends Controller
     public function store(Request $request)
     {
         if($request->ajax()) {
-            $this->validate($request, [
-                'employee_id'               => 'required',
-                'overtime_type'             => 'nullable|in:weekdays,weekends/holidays',
-                'hours_rendered'            => 'nullable',
-                'date_added'                => 'required',
-                'remarks'                   => 'nullable',
-                'forfeited'                 => 'nullable',
-            ]);
+            $carbonYear=Carbon::parse($request->date_added)->format('Y');
+            $carbonMonth=Carbon::parse($request->date_added)->format('m');
+            if($request['action'] == 'earn'){
+                $this->validate($request, [
+                    'overtime_type'             => 'required|in:weekdays,weekends/holidays',
+                    'hours_rendered'            => 'required|numeric|min:0|not_in:0',
+                    'date_added'                =>  [
+                                                        'required',
+                                                        'date',
+                                                        'before_or_equal:today',
+                                                        'after:'.Carbon::parse($request->selected_date)->format('Y-m-d'),
+                                                        new CompensatoryDateEarned($carbonMonth, $carbonYear),
+                                                    ],
+                    'remarks'                   => 'required',
+                ], [
+                    'overtime_type.required'    => '',
+                    'hours_rendered.required'   => '<small>Please input a number.</small>',
+                    'hours_rendered.not_in'     => '<small>This should not be 0.</small>',
+                    'date_added.required'       => '<small>Please select a date.</small>',
+                    'date_added.before_or_equal'=> '<small>Date should not be greater than today.</small>',
+                    'date_added.after'          => '<small>Date should be greater than the last record.</small>',
+                    'remarks.required'          => '<small>You need to input remarks.</small>',
+                ]);
+            }
+            if($request['action'] == 'avail'){
+                $this->validate($request, [
+                    'availed'                   => 'required|numeric|min:0|not_in:0',
+                    'date_added'                =>  [
+                                                        'required',
+                                                        'date',
+                                                        'before_or_equal:today',
+                                                        'after:'.Carbon::parse($request->selected_date)->format('Y-m-d'),
+                                                    ],
+                    'remarks'                   => 'required',
+                ], [
+                    'availed.required'          => '<small>Please input a number.</small>',
+                    'availed.not_in'            => '<small>This should not be 0.</small>',
+                    'date_added.required'       => '<small>Please select a date.</small>',
+                    'date_added.before_or_equal'=> '<small>Date should not be greater than today.</small>',
+                    'date_added.after'          => '<small>Date should be greater than the last record.</small>',
+                    'remarks.required'          => '<small>You need to input remarks.</small>',
+                ]);
+            }
             
             if($request->availed == 0){
                 CompensatoryLeave::create([
@@ -172,7 +210,7 @@ class CompensatoryBuildUpController extends Controller
                     'availed' => 0,
                     'date_added' => $request->date_added,
                     'remarks' => $request->remarks,
-                    'forfeited' => $request->has('forfeited') ? 'yes' : 'no',
+                    'forfeited' => 'no',
                 ]);
             }else{
                 CompensatoryLeave::create([
@@ -183,11 +221,9 @@ class CompensatoryBuildUpController extends Controller
                     'availed' => $request->availed,
                     'date_added' => $request->date_added,
                     'remarks' => $request->remarks,
-                    'forfeited' => $request->has('forfeited') ? 'yes' : 'no',
+                    'forfeited' => 'no',
                 ]);
             }
-            
-
             return response()->json(['success' => true], 201);
         }
     }
