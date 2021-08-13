@@ -11,9 +11,8 @@ use App\Http\Repositories\LeaveRecordRepository;
 
 class EmployeeLeaveRecordController extends Controller
 {
-       public const SICK_LEAVE = 10001;
+    public const SICK_LEAVE = 10001;
     public const VACATION_LEAVE = 10002;
- 
     
     /**
      * Display a listing of the resource.
@@ -48,32 +47,30 @@ class EmployeeLeaveRecordController extends Controller
      */
     public function store(Request $request)
     {
-        // $leaveTypes = array_column(, 'id');
-
         $leaveTypes = LeaveType::where('code_number', self::VACATION_LEAVE)
                                                 ->orWhere('code_number', self::SICK_LEAVE)
                                                 ->get(['code_number', 'id']);
         
         $leaveTypes->each(function ($leaveType) use ($request) {
             // Insert Record with As of.
-            $employeefbLeaveRecord = new EmployeeLeaveRecord;
-            $employeefbLeaveRecord->employee_id                                 = $request['employeeID'];
-            $employeefbLeaveRecord->leave_type_id                               = $leaveType->id;
+            $employeeForwardedBalanceRecord = new EmployeeLeaveRecord;
+            $employeeForwardedBalanceRecord->employee_id                                 = $request['employeeID'];
+            $employeeForwardedBalanceRecord->leave_type_id                               = $leaveType->id;
 
             if($leaveType->code_number === self::SICK_LEAVE){
-                $employeefbLeaveRecord->earned                                  = $request['slEarned'];
-                $employeefbLeaveRecord->used                                    = $request['slEnjoyed'];
-                $employeefbLeaveRecord->particular                              = 'Forwarded Leave credits balance for Sick Leave';
+                $employeeForwardedBalanceRecord->earned                                  = $request['slEarned'];
+                $employeeForwardedBalanceRecord->used                                    = $request['slEnjoyed'];
+                $employeeForwardedBalanceRecord->particular                              = 'ENTRANCE';
             }
 
             if($leaveType->code_number === self::VACATION_LEAVE){
-                $employeefbLeaveRecord->earned                                  = $request['vlEarned'];
-                $employeefbLeaveRecord->used                                    = $request['vlEnjoyed'];
-                $employeefbLeaveRecord->particular                              = 'Forwarded Leave credits balance for Vacation Leave';
+                $employeeForwardedBalanceRecord->earned                                  = $request['vlEarned'];
+                $employeeForwardedBalanceRecord->used                                    = $request['vlEnjoyed'];
+                $employeeForwardedBalanceRecord->particular                              = 'ENTRANCE';
             }
             
-            $employeefbLeaveRecord->fb_as_of                                    = $request['asOf'];
-            $employeefbLeaveRecord->save();
+            $employeeForwardedBalanceRecord->fb_as_of                                    = $request['asOf'];
+            $employeeForwardedBalanceRecord->save();
         });
         return response()->json(['success' => true]);
     }
