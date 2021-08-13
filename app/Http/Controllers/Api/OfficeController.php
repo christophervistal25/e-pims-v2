@@ -41,7 +41,7 @@ class OfficeController extends Controller
             'head'          => 'required|unique:offices,office_head',
             'short_address' => 'required',
             'position_name' => 'required|exists:positions'
-        ], ['head.unique' => 'The office head is already belongs to an office.'], ['head' => 'office head']);
+        ], ['head.unique' => 'The office head already belongs to an office.'], ['head' => 'office head']);
 
         if($validator->fails()) {
             return response()->json($validator->errors(), 422);

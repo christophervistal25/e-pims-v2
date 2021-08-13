@@ -80,22 +80,27 @@ class Employee extends Model
         self::creating(function($employee) {
             $employee->trans_no = str_pad((self::count() + 1), 3, 0, STR_PAD_LEFT);
             Cache::forget('employees');
+            Cache::forget('employees_dashboard');
         });
 
         self::created(function() {
             Cache::forget('employees');
+            Cache::forget('employees_dashboard');
         });
 
         self::updated(function() {
             Cache::forget('employees');
+            Cache::forget('employees_dashboard');
         });
 
         self::saved(function() {
             Cache::forget('employees');
+            Cache::forget('employees_dashboard');
         });
 
         self::deleted(function() {
             Cache::forget('employees');
+            Cache::forget('employees_dashboard');
         });
     }
 

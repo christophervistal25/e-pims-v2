@@ -282,7 +282,7 @@
             data.push({
                 y : year, 
                 a : yearlyJo[year],
-                b :  yearlyRegular[year]
+                b : yearlyRegular[year]
             });
         });
 
