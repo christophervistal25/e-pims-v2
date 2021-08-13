@@ -54,7 +54,7 @@ class LeaveIncrementJob implements ShouldQueue
                     'leave_type_id' => 1,
                     'earned'        => LeaveIncrement::find(1, ['increment'])->increment,
                     'used'          => 0,
-                    'particular'    => 'Sick Leave Increment by 1.250',
+                    'particular'    => 'EL',
                 ]
             );
 
@@ -64,7 +64,7 @@ class LeaveIncrementJob implements ShouldQueue
                     'leave_type_id' => 2,
                     'earned'        => LeaveIncrement::find(2, ['increment'])->increment,
                     'used'          => 0,
-                    'particular'    => 'Vacation Leave Increment by 1.250',
+                    'particular'    => 'EL',
                 ]
             );
         }
