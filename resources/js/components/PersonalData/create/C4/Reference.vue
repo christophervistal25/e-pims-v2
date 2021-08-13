@@ -31,6 +31,7 @@
           <p>Indicate <strong>N/A </strong>if not applicable</p>
           <table class="table table-bordered">
             <tr class="text-center jumbotron text-sm">
+              <td></td>
               <td>NAME</td>
               <td>ADDRESS</td>
               <td colspan="2">TEL. NO</td>
@@ -38,6 +39,9 @@
 
             <tbody>
               <tr v-for="(references, index) in references" :key="index">
+                <td class="text-center align-middle">
+                  {{ index + 1 }}
+                </td>
                 <td>
                   <input
                     type="text"

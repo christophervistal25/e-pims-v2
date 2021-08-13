@@ -2,9 +2,12 @@
 namespace App\Http\Repositories;
 
 use App\User;
+use App\Employee;
+use App\LeaveType;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use App\EmployeeLeaveApplication;
-use Illuminate\Database\Eloquent\Collection;
+use App\EmployeeLeaveRecord;
 
 class LeaveApplicationRepository
 {
@@ -13,6 +16,49 @@ class LeaveApplicationRepository
     public function __construct()
     {
         $this->today = Carbon::now();
+    }
+
+    private function isGenderApplicable(string $gender, LeaveType $leaveType) : bool
+    {
+        return Str::contains($leaveType->applicable_gender, $gender);
+    }
+
+    private function isRequiredServiceEnough(int $employeeServiceDays, LeaveType $leaveType) : bool
+    {
+        return $employeeServiceDays >= $leaveType->required_rendered_service;
+    }
+
+    private function isEmployeePointsEnough(int $earned, LeaveType $leaveType) : bool
+    {
+        return $earned >= $leaveType->days_period;
+    }
+
+    
+
+    public function fileApplication(Employee $employee, LeaveType $leaveType)
+    {
+        // applicable_to_gender
+        if(!$this->isGenderApplicable($employee->sex, $leaveType)) {
+            return ['status' => false, 'message' => 'Something went wrong please refresh this page and check your gender is not applicable for this leave.'];
+        }
+
+        // calculate days of first_day_of_service
+        $noOfDaysInService = Carbon::now()->diffInDays(Carbon::parse($employee->first_day_of_service));
+        
+        // required_rendered_service
+        if(!$this->isRequiredServiceEnough($noOfDaysInService, $leaveType)) {
+            return ['status' => false, 'message' => 'Something went wrong please refresh this page and check your rendered service is not enough to apply for this leave.'];
+        }
+
+        $earned = EmployeeLeaveRecord::where(['leave_type_id' => $leaveType->id, 'employee_id' => $employee->employee_id])
+                                        ->get()
+                                        ->sum('earned');
+
+        if(!$this->isEmployeePointsEnough($earned, $leaveType)) {
+            return ['status' => false, 'message' => 'Something went wrong please refresh this page and check your leave points for this leave type.'];
+        }
+
+        return ['status' => true];
     }
 
     public function applicationFiles(User $user)

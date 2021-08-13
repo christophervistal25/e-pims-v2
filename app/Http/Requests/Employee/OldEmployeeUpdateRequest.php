@@ -40,9 +40,15 @@ class OldEmployeeUpdateRequest extends FormRequest
             'philhealthNo'                 => 'nullable',
             'sssNo'                        => 'nullable|unique:employees,sss_no,'. request('employee_id') . ',employee_id',
             'tinNo'                        => 'nullable|unique:employees,tin_no,'. request('employee_id') . ',employee_id',
+            'username'                     => 'required|unique:users,username,' . request('employee_id') . ',employee_id',
+            'email'                        => 'required|unique:users,email,' . request('employee_id') . ',employee_id',
+            'password'                     => 'nullable|min:6|max:16|same:retypePassword',
+            'retypePassword'               => 'nullable|min:6|max:16',
         ];
 
         if(!is_null(request()->employmentStatus) && request()->employmentStatus['status_name'] === 'PERMANENT') {
+                $rules['firstDayOfService'] = 'required|date|before_or_equal:' . date('Y-m-d');
+
                 if(request()->dbpAccountNo !== '*') {
                     $rules['dbpAccountNo'] = 'unique:employees,dbp_account_no,' . request()->employee_id . ',employee_id';
                 } else {
@@ -66,7 +72,8 @@ class OldEmployeeUpdateRequest extends FormRequest
             'employmentStatus.stat_code'   => 'employment status',
             'designation.position_code'    => 'designation',
             'officeAssignment.office_code' => 'office',
-            'lbpAccountNo' => 'account no.'
+            'lbpAccountNo'                 => 'account no.',
+            'retypePassword'               => 'password confirmation'
         ];
     }
 }

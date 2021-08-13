@@ -2,8 +2,35 @@
   <div>
     <div class="row">
       <div class="col-lg-7 ml-4">
+        <label for="employeeID" class="form-group has-float-label">
+          <v2-select
+            label="employee_id"
+            @input="onSetEmployeeID"
+            :value="employee.employee_id"
+            :options="employeeIDS"
+            @search="onSearchEmployeeID"
+          >
+            <template slot="no-options">&nbsp;</template>
+            <template #list-footer>
+              <li class="text-center text-danger text-sm">
+                {{ employeeIDMessage }}
+              </li>
+            </template>
+          </v2-select>
+          <span><strong>EMPLOYEE ID</strong></span>
+        </label>
+
         <label for="lastname" class="form-group has-float-label">
-          <input
+          <v2-select
+            label="fullname"
+            class="text-uppercase"
+            :value="employee.lastName"
+            :options="searchEmployees"
+            @search="onSearchEmployeeLastname"
+          >
+            <template slot="no-options">&nbsp;</template>
+          </v2-select>
+          <!-- <input
             type="text"
             name="lastname"
             id="lastname"
@@ -11,21 +38,22 @@
             class="form-control text-uppercase"
             v-model="employee.lastName"
             :class="errors.hasOwnProperty('lastName') ? 'is-invalid' : ''"
-          />
+          /> -->
           <span
             ><strong>LAST NAME<span class="text-danger">*</span></strong></span
           >
           <p class="text-danger text-sm">{{ errors.lastName }}</p>
         </label>
         <label for="firstname" class="form-group has-float-label">
-          <input
-            type="text"
-            id="firstname"
-            class="form-control text-uppercase"
-            style="outline: none; box-shadow: 0px 0px 0px transparent"
-            v-model="employee.firstName"
-            :class="errors.hasOwnProperty('firstName') ? 'is-invalid' : ''"
-          />
+          <v2-select
+            label="fullname"
+            class="text-uppercase"
+            :value="employee.firstName"
+            :options="searchEmployees"
+            @search="onSearchEmployeeFirstname"
+          >
+            <template slot="no-options">&nbsp;</template>
+          </v2-select>
           <span
             ><strong>FIRST NAME<span class="text-danger">*</span></strong></span
           >
@@ -34,14 +62,22 @@
           </p>
         </label>
         <label for="middlename" class="form-group has-float-label">
-          <input
+          <v2-select
+            label="fullname"
+            class="text-uppercase"
+            :value="employee.middleName"
+            :options="searchEmployees"
+            @search="onSearchEmployeeMiddleName"
+          >
+          </v2-select>
+          <!-- <input
             type="text"
             id="middlename"
             v-model="employee.middleName"
             :class="errors.hasOwnProperty('middleName') ? 'is-invalid' : ''"
             class="form-control text-uppercase"
             style="outline: none; box-shadow: 0px 0px 0px transparent"
-          />
+          /> -->
           <span><strong>MIDDLE NAME</strong></span>
           <p class="text-danger text-sm">
             {{ errors.middleName }}
@@ -119,18 +155,13 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-4">
-            <label
-              for="officeAssignment"
-              v-if="employee.employee_id"
-              class="form-group has-float-label"
-            >
+          <div class="col-lg-4" v-if="employee.action === 'update'">
+            <label for="officeAssignment" class="form-group has-float-label">
               <input
                 type="number"
                 id="officeAssignment"
                 class="form-control text-uppercase"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
-                v-if="employee.employee_id"
                 v-model="employee.step"
                 readonly
               />
@@ -140,7 +171,7 @@
           <div class="col-lg-4">
             <label
               for="basicRate"
-              v-if="employee.employee_id"
+              v-if="employee.action === 'update'"
               class="form-group has-float-label"
             >
               <input
@@ -149,7 +180,7 @@
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
                 readonly
                 v-model="employee.basicRate"
-                v-if="employee.employee_id"
+                v-if="employee.action === 'update'"
               />
               <span><strong>BASIC RATE</strong></span>
             </label>
@@ -158,14 +189,14 @@
             <label
               for="employeeID"
               class="form-group has-float-label"
-              v-if="employee.employee_id"
+              v-if="employee.action === 'update'"
             >
               <input
                 type="text"
                 id="employeeID"
                 class="form-control"
                 style="outline: none; box-shadow: 0px 0px 0px transparent"
-                v-if="employee.employee_id"
+                v-if="employee.action === 'update'"
                 readonly
                 v-model="employee.employee_id"
               />
@@ -192,7 +223,10 @@
 
         <div class="text-center mt-2">
           <div class="button-wrapper btn btn-info">
-            <span class="label"> Attach Photo </span>
+            <span class="label">
+              <i class="fa fa-paperclip mr-1"></i>
+              Attach Photo
+            </span>
 
             <input
               type="file"
@@ -234,6 +268,33 @@
 
       <div class="col-lg-1">
         <statmodal @status-modal-dismiss="closeStatusModal"></statmodal>
+      </div>
+
+      <div class="col-lg-9 ml-4">
+        <label for="dateOfBirth" class="form-group has-float-label">
+          <input
+            type="date"
+            v-model="employee.firstDayOfService"
+            :readonly="
+              employee.employmentStatus &&
+              !employee.employmentStatus.status_name.includes('PERMANENT')
+            "
+            :class="
+              errors.hasOwnProperty('firstDayOfService') ? 'is-invalid' : ''
+            "
+            class="form-control"
+            style="outline: none; box-shadow: 0px 0px 0px transparent"
+          />
+          <p class="text-danger text-sm">
+            {{ errors.firstDayOfService }}
+          </p>
+          <span
+            ><strong
+              >FIRST DAY OF SERVICE<span class="text-danger">*</span></strong
+            >
+            (date/month/year)</span
+          >
+        </label>
       </div>
     </div>
 
@@ -282,7 +343,7 @@
             @search="onSearchOffice"
           >
             <template slot="no-options">
-              Type atleast 1 word of office to search.
+              Type atleast 1 word of office to search
             </template>
           </v2-select>
           <p class="text-danger text-sm">
@@ -321,6 +382,9 @@ export default {
       isShowNameExtension: false,
       designations: [],
       offices: [],
+      employeeIDS: [],
+      searchEmployees: [],
+      employeeIDMessage: "",
     };
   },
   components: {
@@ -334,6 +398,41 @@ export default {
     },
   },
   methods: {
+    onSearchEmployeeLastname(search, loading) {
+      if (search.length) {
+        loading(true);
+        this.employee.lastName = search;
+        this.findEmployees(loading, search, this);
+      } else {
+        this.searchEmployees = [];
+      }
+    },
+    onSearchEmployeeFirstname(search, loading) {
+      if (search.length) {
+        loading(true);
+        this.employee.firstName = search;
+        this.findEmployees(loading, search, this);
+      } else {
+        this.searchEmployees = [];
+      }
+    },
+    onSearchEmployeeMiddleName(search, loading) {
+      if (search.length) {
+        loading(true);
+        this.employee.middleName = search;
+        this.findEmployees(loading, search, this);
+      } else {
+        this.searchEmployees = [];
+      }
+    },
+    onSearchEmployeeID(search, loading) {
+      if (search.length) {
+        loading(true);
+        this.searchEmployeeID(loading, search, this);
+      } else {
+        this.employeeIDS = [];
+      }
+    },
     onSearchOffice(search, loading) {
       if (search.length) {
         loading(true);
@@ -350,6 +449,27 @@ export default {
         this.designations = [];
       }
     },
+    findEmployees: _.debounce((loading, search, vm) => {
+      loading(true);
+      window.axios.get(`/api/employee/search/${search}`).then((response) => {
+        vm.searchEmployees = response.data;
+        loading(false);
+      });
+    }, 500),
+    searchEmployeeID: _.debounce((loading, search, vm) => {
+      loading(true);
+      window.axios.get(`/api/employee/find/ids/${search}`).then((response) => {
+        vm.employeeIDS = response.data;
+        vm.employeeIDMessage = "";
+        if (response.data.length === 0) {
+          vm.employee.employee_id = search;
+        } else {
+          vm.employee.employee_id = "";
+          vm.employeeIDMessage = "You enter an already exists Employee ID.";
+        }
+        loading(false);
+      });
+    }, 500),
     searchOffice: _.debounce((loading, search, vm) => {
       loading(true);
       window.axios.get(`/api/office/search/${search}`).then((response) => {
@@ -364,6 +484,11 @@ export default {
         loading(false);
       });
     }, 500),
+    onSetEmployeeID(employee_id) {
+      if (!this.employeeIDMessage) {
+        this.employee.employee_id = employee_id;
+      }
+    },
     onSetSelectStatus(status) {
       this.employee.employmentStatus = status;
     },

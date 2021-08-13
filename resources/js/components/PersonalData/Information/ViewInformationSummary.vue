@@ -37,7 +37,7 @@
 
                     <div class="staff-id">
                       Join :
-                      {{ employee.created_at }}
+                      {{ moment(employee.created_at).format("LLLL") }}
                     </div>
                   </div>
                 </div>
@@ -98,6 +98,11 @@ export default {
       required: true,
       type: Object,
     },
+  },
+  data() {
+    return {
+      moment: window.moment,
+    };
   },
 };
 </script>

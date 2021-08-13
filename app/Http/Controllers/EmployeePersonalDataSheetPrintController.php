@@ -45,20 +45,33 @@ class EmployeePersonalDataSheetPrintController extends Controller
         ];
 
         $columns = implode(',', $employee->getFillable());
-    
-        $values = "";
 
-        foreach($employee->getFillable() as $column) {
+        $items = explode(',', $columns);
+        
+        $key = array_search('first_day_of_service', $items);
+
+        unset($items[$key]);
+        
+        $values = "";
+        
+
+        foreach($items as $column) {
+            
+            if(Str::contains($column, 'first_day_of_service')) {
+                continue;
+            }
+
             if(in_array($column, $fieldsWithPostFix)) {
                 $column .= '_text';
             }
+
             $data = ($employee->$column !== '*' ? $employee->$column : '');
             $values .=  "'" . ($data  ?? '') . "',";
         }
 
         $values = rtrim($values, ',');
         
-        $sql = "INSERT INTO employees ($columns) VALUES ($values)";
+        $sql = "INSERT INTO employees (" . implode(',', $items) . ") VALUES ($values)";
 
         $this->database->execute($sql);
     }
@@ -377,7 +390,7 @@ class EmployeePersonalDataSheetPrintController extends Controller
             'model_name' => EmployeeWorkExperience::class,
             'relation' => 'work_experience',
             'table'    => 'employee_work_experiences',
-            'except'   => ['employee_id', 'created_at', 'updated_at', 'id'],
+            'except'   => ['employee_id', 'created_at', 'updated_at', 'id', 'is_present'],
             'alias'    => ['from' => 'from_date', 'to' => 'to_date'],
             'max' => 21,
             'continue_table' => 'work_experience_continue'

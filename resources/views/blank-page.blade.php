@@ -259,6 +259,7 @@
     </div>
 </div>
 
+
 @push('page-scripts')
 {{-- JS SCRIPTS HERE --}}
 <script src="/assets/js/popper.min.js"></script>

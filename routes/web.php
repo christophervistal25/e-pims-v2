@@ -167,22 +167,40 @@ Auth::routes();
 
 // EMPLOYEES ACCOUNT ROUTES.
 Route::group(['middleware' => 'auth'], function () {
+    // Route for Dashboard
     Route::get('employee-dashboard', 'Account\Employee\DashboardController')->name('employee.dashboard');
+    
     Route::get('employee-setting', function () {
 
     })->name('employee.setting');
 
-    Route::get('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@create')
+    Route::group(['middleware' => 'verify.application.submitted'], function () {
+        // Route for Leave Application filling.
+        Route::get('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@create')
                                         ->name('employee.leave.application.filling');
-    Route::post('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@store')
-                                        ->name('employee.leave.application.filling.submit');
+        Route::post('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@store')
+                                            ->name('employee.leave.application.filling.submit');
+    });
 
+    // Route for Employee Personal Data Sheet
     Route::get('employee-personal-data-sheet', 'Account\Employee\PersonalDataSheetController@index')->name('employee.personal-data-sheet');
     Route::get('employee-personal-data-sheet/edit', 'Account\Employee\PersonalDataSheetController@edit')->name('employee.personal-data-sheet.edit');
     Route::get('employee-personal-profile', 'Account\Employee\ProfileController@index')->name('employee.personal.profile');
     Route::put('employee-update-account-information', 'Account\Employee\ProfileController@update')->name('employee.update.account.information');
     
-    Route::get('employee-chat', 'Account\Employee\ChatController@index');
+    // Employee Leave Card
+    Route::get('employee-leave-card' , 'Account\Employee\LeaveCardController@index')->name('employee.leave.card.index');
+
+    //  Employee Chat
+    Route::get('employee-chat', 'Account\Employee\ChatController@index')->name('employee.chat');
 });
 
 
+
+Route::get('404', function () {
+    return view('errors.404');
+})->name('404-leave-application');
+
+
+// Jobs route.
+Route::post('leave-increment-job', 'LeaveIncrementJobController');

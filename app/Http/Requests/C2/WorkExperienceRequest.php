@@ -25,7 +25,7 @@ class WorkExperienceRequest extends FormRequest
     {
         return [
             '*.from'      => ['nullable', 'required_with:*.statOfApp', 'required_with:*.govServ', 'required_with:*.to', 'date', 'before:*.to'],
-            '*.to'        => ['nullable', 'required_with:*.statOfApp', 'required_with:*.govServ', 'required_with:*.from', 'date', 'after:*.from'],
+            '*.to'        => ['nullable', 'required_with:*.statOfApp', 'required_with:*.govServ', 'required_with:*.from', 'string', 'date', 'after:*.from'],
             '*.position'  => ['nullable', 'required_with:*.statOfApp', 'required_with:*.govServ', 'required_with:*.from', 'required_with:*.to'],
             '*.dept'      => ['nullable', 'required_with:*.statOfApp', 'required_with:*.govServ', 'required_with:*.position', 'string'],
             '*.monSalary' => ['nullable', 'required_with:*.statOfApp', 'required_with:*.govServ'],

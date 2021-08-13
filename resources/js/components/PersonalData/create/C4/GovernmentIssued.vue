@@ -36,6 +36,7 @@
               <tr>
                 <td
                   class="align-middle text-center bg-danger text-white"
+                  style="cursor: pointer"
                   v-if="Object.keys(errors).length !== 0"
                   @click="
                     Object.keys(errors).length !== 0 && displayErrorMessage()
@@ -43,6 +44,7 @@
                 >
                   <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                 </td>
+                <td v-else></td>
                 <td>
                   <input
                     type="text"

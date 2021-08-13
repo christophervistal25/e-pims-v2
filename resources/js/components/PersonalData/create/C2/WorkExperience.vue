@@ -67,6 +67,7 @@
           <tbody>
             <tr v-for="(workExperience, index) in workExperience" :key="index">
               <td
+                v-if="rowErrors.includes(`${index}.`)"
                 @click="
                   rowErrors.includes(`${index}.`) &&
                     displayRowErrorMessage(index)
@@ -77,12 +78,9 @@
                   rowErrors.includes(`${index}.`) ? 'bg-danger text-white' : ''
                 "
               >
-                <i
-                  v-if="rowErrors.includes(`${index}.`)"
-                  class="fa fa-exclamation-triangle"
-                  aria-hidden="true"
-                ></i>
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
               </td>
+              <td v-else class="text-center align-middle">{{ index + 1 }}</td>
               <td scope="row">
                 <input
                   type="date"
@@ -93,9 +91,6 @@
                   "
                   v-model="workExperience.from"
                 />
-                <!-- <p class="text-danger text-sm">
-                                    {{ errors[`${index}.from`] }}
-                                </p> -->
               </td>
               <td>
                 <input

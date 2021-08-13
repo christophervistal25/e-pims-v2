@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Repositories;
+use App\User;
 use App\Employee;
 use App\RefStatus;
 use App\EmployeeIssuedID;
@@ -725,25 +726,27 @@ class EmployeeRepository
         DB::beginTransaction();
         try {
             $fields = [
-                'employee_id'    => mt_rand(100000, 999999),
-                'date_birth'     => $data['dateOfBirth'],
-                'firstname'      => $data['firstName'],
-                'lastname'       => $data['lastName'],
-                'middlename'     => $data['middleName'],
-                'extension'      => $data['extension'],
-                'pag_ibig_no'    => $data['pagibigMidNo'],
-                'philhealth_no'  => $data['philhealthNo'],
-                'sss_no'         => $data['sssNo'],
-                'tin_no'         => $data['tinNo'],
-                'gsis_id_no'     => $data['gsisIdNo'],
-                'gsis_id_no'     => $data['gsisIdNo'],
-                'gsis_policy_no' => $data['gsisPolicyNo'],
-                'gsis_bp_no'     => $data['gsisBpNo'],
-                'status'         => $data['employmentStatus']['stat_code'],
+                'employee_id'          => mt_rand(100000, 999999),
+                'date_birth'           => $data['dateOfBirth'],
+                'firstname'            => $data['firstName'],
+                'lastname'             => $data['lastName'],
+                'middlename'           => $data['middleName'],
+                'extension'            => $data['extension'],
+                'pag_ibig_no'          => $data['pagibigMidNo'],
+                'philhealth_no'        => $data['philhealthNo'],
+                'sss_no'               => $data['sssNo'],
+                'tin_no'               => $data['tinNo'],
+                'gsis_id_no'           => $data['gsisIdNo'],
+                'gsis_id_no'           => $data['gsisIdNo'],
+                'gsis_policy_no'       => $data['gsisPolicyNo'],
+                'gsis_bp_no'           => $data['gsisBpNo'],
+                'status'               => $data['employmentStatus']['stat_code'],
+                'email_address'        => $data['email'],
             ];
 
-            if($status->id === 1 && strtoupper($status->status_name) === 'PERMANENT') {
+            if($status->id === 1 && (strtoupper($status->status_name) === 'PERMANENT' || strtoupper($status->status_name === 'REGULAR PERMANENT'))) {
                 $fields['dbp_account_no'] = $data['lbpAccountNo'];
+                $fields['first_day_of_service'] = $data['firstDayOfService'];
             } else {
                 $fields['lbp_account_no'] = $data['lbpAccountNo'];
             }
@@ -756,6 +759,13 @@ class EmployeeRepository
             $employeeInformation->photo       = $data['image'];
 
             $employee->information()->save($employeeInformation);
+
+            User::create([
+                'email'       => $data['email'],
+                'username'    => $data['username'],
+                'password'    => bcrypt($data['password']),
+                'employee_id' => $employee->employee_id,
+            ]);
 
             DB::commit();
             return [
@@ -782,22 +792,24 @@ class EmployeeRepository
 
         $employee = Employee::find($data['employee_id']);
 
-        $employee->date_birth     = $data['dateOfBirth'];
-        $employee->firstname      = $data['firstName'];
-        $employee->lastname       = $data['lastName'];
-        $employee->middlename     = $data['middleName'];
-        $employee->extension      = $data['extension'];
-        $employee->pag_ibig_no    = $data['pagibigMidNo'];
-        $employee->philhealth_no  = $data['philhealthNo'];
-        $employee->sss_no         = $data['sssNo'];
-        $employee->tin_no         = $data['tinNo'];
-        $employee->gsis_id_no     = $data['gsisIdNo'];
-        $employee->gsis_id_no     = $data['gsisIdNo'];
-        $employee->gsis_policy_no = $data['gsisPolicyNo'];
-        $employee->gsis_bp_no     = $data['gsisBpNo'];
-        $employee->dbp_account_no = $data['dbpAccountNo'];
-        $employee->lbp_account_no = $data['lbpAccountNo'];
-        $employee->status         = $data['employmentStatus']['stat_code'];
+        $employee->date_birth           = $data['dateOfBirth'];
+        $employee->firstname            = $data['firstName'];
+        $employee->lastname             = $data['lastName'];
+        $employee->middlename           = $data['middleName'];
+        $employee->extension            = $data['extension'];
+        $employee->pag_ibig_no          = $data['pagibigMidNo'];
+        $employee->philhealth_no        = $data['philhealthNo'];
+        $employee->sss_no               = $data['sssNo'];
+        $employee->tin_no               = $data['tinNo'];
+        $employee->gsis_id_no           = $data['gsisIdNo'];
+        $employee->gsis_id_no           = $data['gsisIdNo'];
+        $employee->gsis_policy_no       = $data['gsisPolicyNo'];
+        $employee->gsis_bp_no           = $data['gsisBpNo'];
+        $employee->dbp_account_no       = $data['dbpAccountNo'];
+        $employee->lbp_account_no       = $data['lbpAccountNo'];
+        $employee->status               = $data['employmentStatus']['stat_code'];
+        $employee->first_day_of_service = $data['firstDayOfService'];
+        $employee->email_address        = $data['email'];
 
         $information = EmployeeInformation::where('EmpIDNo', $data['employee_id'])->first() ?? new EmployeeInformation();
         
@@ -806,8 +818,15 @@ class EmployeeRepository
         $information->pos_code = $data['designation']['position_code'];
         $information->photo = $data['image'];
 
+        $user = User::firstOrNew(['employee_id' => $data['employee_id']]);
+
+        $user->username = $data['username'];
+        $user->email = $data['email'];
+        $user->password = is_null($data['password']) ? $user->password : bcrypt($data['password']);
+
         $employee->save();
         $information->save();
+        $user->save();
 
         return $data;
     }

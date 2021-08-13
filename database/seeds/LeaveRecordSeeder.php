@@ -13,14 +13,13 @@ class LeaveRecordSeeder extends Seeder
      */
     public function run()
     {
-        foreach(range(1, 10) as $range) {
+        foreach(range(1, 50) as $range) {
             EmployeeLeaveRecord::create([
-                'employee_id' => Employee::first()->employee_id,
+                'employee_id'   => Employee::first()->employee_id,
                 'leave_type_id' => rand(1, 2),
-                'earned' => 1.25,
-                'used' => 0,
-                'particular' => 'INCREMENT LEAVE RECORD',
-                
+                'earned'        => 1.25,
+                'used'          => 0,
+                'particular'    => 'INCREMENT LEAVE RECORD',
             ]);
         }
         

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\EmployeeLeave;
 
-use DB;
 use App\Office;
 use App\Employee;
 use Carbon\Carbon;
@@ -10,6 +9,7 @@ use App\EmployeeLeaveRecord;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use App\EmployeeLeaveApplication;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use App\Http\Repositories\LeaveTypeRepository;

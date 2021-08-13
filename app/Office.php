@@ -9,6 +9,7 @@ class Office extends Model
 {
 
     use SoftDeletes;
+    public const HR_OFFICE_CODE = 10050;
     protected $dates = ['deleted_at'];
 
     protected $primaryKey = 'office_code';

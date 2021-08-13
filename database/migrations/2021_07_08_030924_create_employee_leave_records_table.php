@@ -18,7 +18,7 @@ class CreateEmployeeLeaveRecordsTable extends Migration
             $table->string('employee_id'); 
             $table->unsignedInteger('leave_type_id');
             $table->decimal('earned', 5, 3);
-            $table->decimal('used', 5, 3);
+            $table->decimal('used', 5, 3)->default(0);
             $table->date('fb_as_of')->nullable();
             $table->text('particular');
             $table->decimal('absences_under_time_with_pay_balance', 5, 3)->default(0);

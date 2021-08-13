@@ -236,12 +236,14 @@
           <table class="table table-bordered">
             <thead>
               <tr>
+                <th></th>
                 <th class="font-weight-bold">NAME OF CHILDREN</th>
                 <th class="font-weight-bold">DATE OF BIRTH</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(spouse, index) in spouse" :key="index">
+                <td class="align-middle text-center">{{ index + 1 }}</td>
                 <td>
                   <input
                     type="text"
@@ -277,7 +279,7 @@
                     @click="removeField(index)"
                     class="btn btn-danger font-weight-bold rounded-circle"
                   >
-                    <i class="fas fa-times"></i>
+                    <i class="fa fa-times"></i>
                   </button>
                 </td>
                 <td class="text-center">
@@ -286,7 +288,7 @@
                     class="btn btn-primary rounded-circle"
                     @click="generateNewSpuseField"
                   >
-                    +
+                    <i class="fa fa-plus"></i>
                   </button>
                 </td>
               </tr>
