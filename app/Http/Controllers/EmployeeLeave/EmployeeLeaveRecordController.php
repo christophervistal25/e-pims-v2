@@ -48,6 +48,22 @@ class EmployeeLeaveRecordController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'employeeName'          => 'required',
+            'vlEarned'              => 'required',
+            'vlEnjoyed'             => 'required',
+            'slEarned'              => 'required',
+            'slEnjoyed'             => 'required',
+            'asOf'                  => 'required|date',
+        ], [
+            'employeeName.required' => 'This field is required.',
+            'vlEarned.required'     => 'This field is required.',
+            'slEarned.required'     => 'This field is required.',
+            'vlEnjoyed.required'    => 'This field is required.',
+            'slEnjoyed.required'    => 'This field is required.',
+            'asOf.required'         => 'Please select a date.',
+        ]);
+
         $leaveTypes = LeaveType::where('code_number', self::VACATION_LEAVE)
                                                 ->orWhere('code_number', self::SICK_LEAVE)
                                                 ->get(['code_number', 'id']);

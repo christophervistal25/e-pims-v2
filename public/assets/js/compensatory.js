@@ -319,15 +319,11 @@ $('#btnAvail').click( ()=> {
     } else{ 
         $('#employee_id').val(employeeID);
         $('#addCompensatoryLeave').modal('toggle');
-        $('.overtime_type').addClass('d-none');
-        $('.hours_rendered').addClass('d-none');
-        $('.earned').addClass('d-none');
+        $('.overtime_type, .hours_rendered, .earned, #btnSaveEarned').addClass('d-none');
         $('#availed').val('0');
-        $('.availed').removeClass('d-none');
+        $('.availed, #btnSaveAvailed').removeClass('d-none');
         $('.date-span').html(`Date Availed <span class='text-danger'>*</span>`);
         $('.modal-title').html(`Add Availed Compensatory Leave`);
-        $('#btnSaveEarned').addClass('d-none');
-        $('#btnSaveAvailed').removeClass('d-none');
         $('#action').val('avail');
     }
 });

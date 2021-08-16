@@ -159,47 +159,88 @@ class CompensatoryBuildUpController extends Controller
         if($request->ajax()) {
             $carbonYear=Carbon::parse($request->date_added)->format('Y');
             $carbonMonth=Carbon::parse($request->date_added)->format('m');
-            if($request['action'] == 'earn'){
-                $this->validate($request, [
-                    'overtime_type'             => 'required|in:weekdays,weekends/holidays',
-                    'hours_rendered'            => 'required|numeric|min:0|not_in:0',
-                    'date_added'                =>  [
-                                                        'required',
-                                                        'date',
-                                                        'before_or_equal:today',
-                                                        'after:'.Carbon::parse($request->selected_date)->format('Y-m-d'),
-                                                        new CompensatoryDateEarned($carbonMonth, $carbonYear),
-                                                    ],
-                    'remarks'                   => 'required',
-                ], [
-                    'overtime_type.required'    => '',
-                    'hours_rendered.required'   => '<small>Please input a number.</small>',
-                    'hours_rendered.not_in'     => '<small>This should not be 0.</small>',
-                    'date_added.required'       => '<small>Please select a date.</small>',
-                    'date_added.before_or_equal'=> '<small>Date should not be greater than today.</small>',
-                    'date_added.after'          => '<small>Date should be greater than the last record.</small>',
-                    'remarks.required'          => '<small>You need to input remarks.</small>',
-                ]);
+            if($request->selected_date == 'null' ){
+                if($request['action'] == 'earn'){
+                    $this->validate($request, [
+                        'overtime_type'             => 'required|in:weekdays,weekends/holidays',
+                        'hours_rendered'            => 'required|numeric|min:0|not_in:0',
+                        'date_added'                =>  [
+                                                            'required',
+                                                            'date',
+                                                            'before_or_equal:today',
+                                                            new CompensatoryDateEarned($carbonMonth, $carbonYear, $request->employee_id),
+                                                        ],
+                        'remarks'                   => 'required',
+                    ], [
+                        'overtime_type.required'    => '',
+                        'hours_rendered.required'   => '<small>Please input a number.</small>',
+                        'hours_rendered.not_in'     => '<small>This should not be 0.</small>',
+                        'date_added.required'       => '<small>Please select a date.</small>',
+                        'date_added.before_or_equal'=> '<small>Date should not be greater than today.</small>',
+                        'remarks.required'          => '<small>You need to input remarks.</small>',
+                    ]);
+                }
+                if($request['action'] == 'avail'){
+                    $this->validate($request, [
+                        'availed'                   => 'required|numeric|min:0|not_in:0',
+                        'date_added'                =>  [
+                                                            'required',
+                                                            'date',
+                                                            'before_or_equal:today',
+                                                        ],
+                        'remarks'                   => 'required',
+                    ], [
+                        'availed.required'          => '<small>Please input a number.</small>',
+                        'availed.not_in'            => '<small>This should not be 0.</small>',
+                        'date_added.required'       => '<small>Please select a date.</small>',
+                        'date_added.before_or_equal'=> '<small>Date should not be greater than today.</small>',
+                        'remarks.required'          => '<small>You need to input remarks.</small>',
+                    ]);
+                }
+            }else{
+                if($request['action'] == 'earn'){
+                    $this->validate($request, [
+                        'overtime_type'             => 'required|in:weekdays,weekends/holidays',
+                        'hours_rendered'            => 'required|numeric|min:0|not_in:0',
+                        'date_added'                =>  [
+                                                            'required',
+                                                            'date',
+                                                            'before_or_equal:today',
+                                                            'after:'.Carbon::parse($request->selected_date)->format('Y-m-d'),
+                                                            new CompensatoryDateEarned($carbonMonth, $carbonYear, $request->employee_id),
+                                                        ],
+                        'remarks'                   => 'required',
+                    ], [
+                        'overtime_type.required'    => '',
+                        'hours_rendered.required'   => '<small>Please input a number.</small>',
+                        'hours_rendered.not_in'     => '<small>This should not be 0.</small>',
+                        'date_added.required'       => '<small>Please select a date.</small>',
+                        'date_added.before_or_equal'=> '<small>Date should not be greater than today.</small>',
+                        'date_added.after'          => '<small>Date should be greater than the last record.</small>',
+                        'remarks.required'          => '<small>You need to input remarks.</small>',
+                    ]);
+                }
+                if($request['action'] == 'avail'){
+                    $this->validate($request, [
+                        'availed'                   => 'required|numeric|min:0|not_in:0',
+                        'date_added'                =>  [
+                                                            'required',
+                                                            'date',
+                                                            'before_or_equal:today',
+                                                            'after:'.Carbon::parse($request->selected_date)->format('Y-m-d'),
+                                                        ],
+                        'remarks'                   => 'required',
+                    ], [
+                        'availed.required'          => '<small>Please input a number.</small>',
+                        'availed.not_in'            => '<small>This should not be 0.</small>',
+                        'date_added.required'       => '<small>Please select a date.</small>',
+                        'date_added.before_or_equal'=> '<small>Date should not be greater than today.</small>',
+                        'date_added.after'          => '<small>Date should be greater than the last record.</small>',
+                        'remarks.required'          => '<small>You need to input remarks.</small>',
+                    ]);
+                }
             }
-            if($request['action'] == 'avail'){
-                $this->validate($request, [
-                    'availed'                   => 'required|numeric|min:0|not_in:0',
-                    'date_added'                =>  [
-                                                        'required',
-                                                        'date',
-                                                        'before_or_equal:today',
-                                                        'after:'.Carbon::parse($request->selected_date)->format('Y-m-d'),
-                                                    ],
-                    'remarks'                   => 'required',
-                ], [
-                    'availed.required'          => '<small>Please input a number.</small>',
-                    'availed.not_in'            => '<small>This should not be 0.</small>',
-                    'date_added.required'       => '<small>Please select a date.</small>',
-                    'date_added.before_or_equal'=> '<small>Date should not be greater than today.</small>',
-                    'date_added.after'          => '<small>Date should be greater than the last record.</small>',
-                    'remarks.required'          => '<small>You need to input remarks.</small>',
-                ]);
-            }
+            
             
             if($request->availed == 0){
                 CompensatoryLeave::create([

@@ -9,15 +9,17 @@ class CompensatoryDateEarned implements Rule
 {
     public $month;
     public $year;
+    public $id;
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct($month, $year)
+    public function __construct($month, $year, $id)
     {
         $this->month = $month;
         $this->year = $year;
+        $this->id = $id;
     }
 
     /**
@@ -29,7 +31,7 @@ class CompensatoryDateEarned implements Rule
      */
     public function passes($attribute, $value)
     {
-        return !CompensatoryLeave::whereMonth('date_added', $this->month)->whereYear('date_added', $this->year)->exists();                                                                                                                                                 
+        return !CompensatoryLeave::where('employee_id', $this->id)->whereMonth('date_added', $this->month)->whereYear('date_added', $this->year)->exists();                                                                                                                                                 
     }
 
     /**
