@@ -224,6 +224,7 @@ input[type=number] {
                         <div class="form-group">
                             <input type="hidden" class='form-control' name="employee_id" id="employee_id">
                             <input type="hidden" class='form-control' name="action" id="action">
+                            <input type="hidden" class='form-control' name="totalComBalance" id="totalComBalance">
                         </div>
                     </div>
                 </div>
@@ -334,6 +335,9 @@ input[type=number] {
                         <div class="form-group">
                             <input type="hidden" class='form-control' name="edit_id" id="edit_id">
                             <input type="hidden" class='form-control' name="edit_employee_id" id="edit_employee_id">
+                            <input type="hidden" class='form-control' name="edit_action" id="edit_action">
+                            <input type="hidden" class='form-control' name="edit_totalComBalance" id="edit_totalComBalance">
+                            <input type="hidden" class='form-control' name="prev_availment" id="prev_availment">
                         </div>
                     </div>
                 </div>
@@ -348,7 +352,6 @@ input[type=number] {
                             </select>
                             <span class="font-weight-bold">OVERTIME TYPE <span class='text-danger'>*</span></span>
                         </label>
-                        <div class='text-danger' id="edit_overtimeType__error__element"></div>
                     </div>
                     <div class="col-lg-6">
                         <label for="edit_date_added" class="form-group has-float-label">
@@ -363,10 +366,10 @@ input[type=number] {
                 <div class="row">
                     <div class="col-lg-6">
                         <label for="edit_hours_rendered" class="form-group has-float-label edit_hours_rendered">
-                            <input type="number" name="edit_hours_rendered" id="edit_hours_rendered" class="form-control" value="0"
+                            <input type="number" name="edit_hours_rendered" id="edit_hours_rendered" class="form-control edit_hours_rendered" value="0"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent; height: 100px; font-size:75px; font-family:Century Gothic; text-align:right; ">
                             <span class="font-weight-bold">HOURS RENDERED<span class='text-danger'>*</span></span>
-                            <div class='text-danger' id="edit_hours_rendered__error__element"></div>
+                            <div class='text-danger' id="edit_hours_rendered-error-message"></div>
                         </label>
                     </div>
 
@@ -382,10 +385,10 @@ input[type=number] {
                 <div class="row">
                     <div class="col-lg-12">
                         <label for="edit_availed" class="form-group has-float-label edit_availed">
-                            <input type="number" name="edit_availed" id="edit_availed" class="form-control" value="0"
+                            <input type="number" name="edit_availed" id="edit_availed" class="form-control edit_availed" value="0"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent; height: 100px; font-size:75px; font-family:Century Gothic; text-align:right; ">
                             <span class="font-weight-bold">Availment(hours)<span class='text-danger'>*</span></span>
-                            <div class='text-danger' id="edit_availed__error__element"></div>
+                            <div class='text-danger' id="edit_availed-error-message"></div>
                         </label>
                     </div>
                 </div>
@@ -393,9 +396,9 @@ input[type=number] {
                 <div class="row">
                     <div class="col-lg-12">
                         <label for="edit_remarks" class="form-group has-float-label">
-                            <textarea id="edit_remarks" name="edit_remarks" rows="6" class="w-100 form-control" placeholder="Write your remarks here"></textarea>
+                            <textarea id="edit_remarks" name="edit_remarks" rows="6" class="w-100 form-control edit_remarks" placeholder="Write your remarks here"></textarea>
                             <span class="font-weight-bold">REMARKS <span class='text-danger'>*</span></span>
-                            <div class='text-danger' id="edit_remarks__error__element"></div>
+                            <div class='text-danger' id="edit_remarks-error-message"></div>
                         </label>
                     </div>
                 </div>

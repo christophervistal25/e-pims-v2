@@ -25,9 +25,8 @@ $(function() {
         let employeePosition = selectedItem.getAttribute('data-position') || '';
         let photo = selectedItem.getAttribute('data-photo') || '';
         let employeeId = selectedItem.getAttribute('data-employeeId') || '';
-        $('.year_filter').removeClass('d-none');
-        $('.forfeited').removeClass('d-none');
-
+        $('.year_filter, .forfeited').removeClass('d-none');
+    
         $('#office').val(employeeOffice);
         $('#position').val(employeePosition);
         if(empID == ''){
@@ -136,17 +135,12 @@ $(function() {
                     let curYear = getYear(new Date());  
                     if(totalEarned == 0 && totalAvailed == 0){
                         $('#forfeited').prop('disabled', true);
-                        $('#btnEarn').prop('disabled', false);
-                        $('#btnAvail').prop('disabled', false);
+                        $('#btnEarn, #btnAvail').prop('disabled', false);
                     }else{
                         if($('#year_filter').val() < curYear){
-                            $('#forfeited').prop('disabled', true);
-                            $('#btnEarn').prop('disabled', true);
-                            $('#btnAvail').prop('disabled', true);
+                            $('#forfeited, #btnEarn, #btnAvail').prop('disabled', true);
                         }else{
-                            $('#forfeited').prop('disabled', false);
-                            $('#btnEarn').prop('disabled', false);
-                            $('#btnAvail').prop('disabled', false);
+                            $('#forfeited, #btnEarn, #btnAvail').prop('disabled', false);
                         }
                     }
                 }
@@ -171,8 +165,7 @@ function forfeited(id, year){
                 $('#forfeited').prop('checked', false);
             }else{
                 $('#forfeited').prop('checked', true);
-                $('#btnEarn').prop('disabled', true);
-                $('#btnAvail').prop('disabled', true);
+                $('#btnEarn, #btnAvail').prop('disabled', true);
             }
         }
     });
@@ -244,16 +237,12 @@ edit_hours_rendered.addEventListener("keyup", function(){
 $('#addBtn').click( ()=> {
     let employeeID = '';
     $('#employeeName').val(employeeID).trigger('change');
-    $('#compensatoryleavesTable').addClass('d-none');
-    $('#selectEmployee').removeClass('d-none');
-    $('#compensatoryLeaveCard').removeClass('d-none'); 
+    $('#compensatoryleavesTable, .year_filter, .forfeited').addClass('d-none');
+    $('#selectEmployee, #compensatoryLeaveCard').removeClass('d-none');
     $('#totalComBal').val('0');
-    $('.year_filter').addClass('d-none');
-    $('.forfeited').addClass('d-none');
 });
 
 $(document).on('click', '.btn__edit__view__compensatory', function (e) {
-    let curYear = getYear(new Date());
     let employeeID = $(this).attr('data-id');
     if(employeeID) {
         $('#employeeName').val(employeeID).trigger('change');
@@ -264,22 +253,14 @@ $(document).on('click', '.btn__edit__view__compensatory', function (e) {
 
 $('#editCompensatoryLeave').on('hidden.bs.modal', function () {
     $('#editCompensatoryLeaveForm').trigger('reset');
-    $('#edit_overtimeType__error__element').html('');
-    $('#edit_hours_rendered__error__element').html('');
-    $('#edit_availed__error__element').html('');
-    $('#edit_remarks__error__element').html('');
+    $('#edit_hours_rendered-error-message, #edit_availed-error-message, #edit_remarks-error-message').html('');
+    $('.edit_hours_rendered, .edit_availed, .edit_remarks').removeClass('is-invalid');
 })
 
 $('#addCompensatoryLeave').on('hidden.bs.modal', function () {
     $('#addCompensatoryLeaveForm').trigger('reset');
-    $(`.hours_rendered`).removeClass('is-invalid');
-    $(`#hours_rendered-error-message`).html("");
-    $(`.availed`).removeClass('is-invalid');
-    $(`#availed-error-message`).html("");
-    $(`.date_added`).removeClass('is-invalid');
-    $(`#date_added-error-message`).html("");
-    $(`.remarks`).removeClass('is-invalid');
-    $(`#remarks-error-message`).html("");
+    $(`.hours_rendered, .availed, .date_added, .remarks`).removeClass('is-invalid');
+    $(`#hours_rendered-error-message, #availed-error-message, #date_added-error-message, #remarks-error-message`).html("");
 })
 
 $('#btnBack').click( ()=> {
@@ -290,20 +271,15 @@ $('#btnBack').click( ()=> {
 $('#btnEarn').click( ()=> {
     let employeeID = $('#employeeName').val();
     if(employeeID == ''){
-        swal("Please select an employee!", "", "warning");
+        swal("Please select an employee!", "", "warning", {closeOnClickOutside: false});
     }else{
         $('#employee_id').val(employeeID);
         $('#addCompensatoryLeave').modal('toggle');
-        $('.overtime_type').removeClass('d-none');
-        $('.hours_rendered').removeClass('d-none');
-        $('#hours_rendered').val('0');
-        $('.earned').removeClass('d-none');
-        $('#earned').val('0');
-        $('.availed').addClass('d-none');
+        $('.overtime_type, .hours_rendered, .earned, #btnSaveEarned').removeClass('d-none');
+        $('#hours_rendered, #earned').val('0');
+        $('.availed, #btnSaveAvailed').addClass('d-none');
         $('.date-span').html(`Date Earned <span class='text-danger'>*</span>`);
         $('.modal-title').html(`Add Earned Compensatory Leave`);
-        $('#btnSaveEarned').removeClass('d-none');
-        $('#btnSaveAvailed').addClass('d-none');
         $('#action').val('earn');
     }
     
@@ -313,11 +289,12 @@ $('#btnAvail').click( ()=> {
     let employeeID = $('#employeeName').val();
     let totalComBal = $('#totalComBal').val();
     if(employeeID == ''){
-        swal("Please select an employee!", "", "warning");
+        swal("Please select an employee!", "", "warning", {closeOnClickOutside: false});
     } else if(totalComBal == 0){
             swal("", "Balance should greater than 0.", "info");
     } else{ 
         $('#employee_id').val(employeeID);
+        $('#totalComBalance').val(totalComBal);
         $('#addCompensatoryLeave').modal('toggle');
         $('.overtime_type, .hours_rendered, .earned, #btnSaveEarned').addClass('d-none');
         $('#availed').val('0');
@@ -358,14 +335,14 @@ $('#btnSaveEarned').click( (e)=> {
                 let comtable = $('#compensatoryleaves').DataTable();
                 if(comtable.rows().count() <= 0){
                     $('#save-spinner').addClass('d-none');
-                    swal("Good job!", "Successfully added!", "success").then((isClicked) => {
+                    swal("Good job!", "Successfully added!", "success", {closeOnClickOutside: false}).then((isClicked) => {
                         if(isClicked) {
                             location.reload();
                         }
                     })
                 }else{
                     $('#save-spinner').addClass('d-none');
-                    swal("Good job!", "Successfully added!", "success").then((isClicked) => {
+                    swal("Good job!", "Successfully added!", "success", {closeOnClickOutside: false}).then((isClicked) => {
                         if(isClicked) {
                             $('#addCompensatoryLeave').modal('toggle');
                             $('#employeeName').val(employee_id).trigger('change');
@@ -432,7 +409,7 @@ $('#btnSaveAvailed').click( (e)=> {
         success : function (response) {
             if(response.success){
                 $('#save-spinner').addClass('d-none');
-                swal("Good job!", "Successfully added!", "success").then((isClicked) => {
+                swal("Good job!", "Successfully added!", "success", {closeOnClickOutside: false}).then((isClicked) => {
                     if(isClicked) {
                         $('#addCompensatoryLeave').modal('toggle');
                         $('#employeeName').val(employee_id).trigger('change');
@@ -471,14 +448,11 @@ $('#btnSaveAvailed').click( (e)=> {
 $(document).on('click', '.btnEdit__earned__compensatory', function () {
     compensatoryID = $(this).attr('data-id');
     $('#editCompensatoryLeave').modal('toggle');
-    $('.edit_overtime_type').removeClass('d-none');
-    $('.edit_hours_rendered').removeClass('d-none');
-    $('.edit_earned').removeClass('d-none');
-    $('.edit_availed').addClass('d-none');
+    $('.edit_overtime_type, .edit_hours_rendered, .edit_earned, #btnUpdateEarned').removeClass('d-none');
+    $('.edit_availed, #btnUpdateAvailed').addClass('d-none');
     $('.edit_date-span').html(`Date Earned <span class='text-danger'>*</span>`);
     $('.modal-title').html(`View/Edit Earned Compensatory Leave`);
-    $('#btnUpdateEarned').removeClass('d-none');
-    $('#btnUpdateAvailed').addClass('d-none');
+    $('#edit_action').val('earn');
     // Ajax request for fetching leave type data.
     $.ajax({
         url : `/employee/compensatory-build-up/${compensatoryID}/edit`,
@@ -501,98 +475,64 @@ $(document).on('click', '.btnEdit__earned__compensatory', function () {
 $('#btnUpdateEarned').click( (e)=> {
     e.preventDefault();
 
-    let table = $('#compensatory-leave-table').DataTable();
-
-    let x = table.rows( function (idx, data, node) {
-        let date = table.cell(idx, 0).data();
-        let earn = table.cell(idx, 1).data();
-        if (earn > 0){
-            let arr = [date];
-            jQuery.each( arr, function( i, val ) {
-                let tDateEarned = new Date(val);
-                console.log(tDateEarned);
-            });
-        }
-    });
-
     let comID = $('#edit_id').val();
     let employee_id = $('#edit_employee_id').val();
-    let overtimeType = $('#edit_overtime_type').val();
-    let hours_rendered = $('#edit_hours_rendered').val();
-    let remarks = $('#edit_remarks').val();
-    let errors = {};
-    let filteredError = "";
 
-    //overtimeType required
-    if (overtimeType === "") {
-        $('#edit_overtimeType__error__element').html('');
-        $('#edit_overtimeType__error__element').append(`<span> <small> This field is required. </small> </span>`);
-        errors.overtimeType = true;
-    } else {
-        $('#edit_overtimeType__error__element').html('');
-        errors.overtimeType = false;
-    }
+    $('#save-spinner').removeClass('d-none');
+    let data = $('#editCompensatoryLeaveForm').serialize();
+    $.ajax({
+        url : `/employee/compensatory-build-up/${comID}`,
+        method : 'PUT',
+        data : data,
+        success : function (response) {
+            if(response.success){
+                $('#save-spinner').addClass('d-none');
+                swal("Good job!", "Successfully added!", "success", {closeOnClickOutside: false}).then((isClicked) => {
+                    if(isClicked) {
+                        $('#editCompensatoryLeave').modal('toggle');
+                        $('#employeeName').val(employee_id).trigger('change');
+                        $('#compensatoryleaves').DataTable().ajax.reload();
+                    }
+                })
+            }
+        },
+        error: function(response) {
+            if (response.status === 422) {
+                let errors = response.responseJSON.errors;
+                const inputNames = [
+                    "edit_overtime_type",
+                    "edit_hours_rendered",
+                    "edit_remarks"
+                ];
+                $.each(inputNames, function(index, value) {
+                    if (errors.hasOwnProperty(value)) {
+                        $(`.${value}`).addClass('is-invalid');
+                        $(`#${value}-error-message`).html("");
+                        $(`#${value}-error-message`).append(
+                            `${errors[value][0]}`
+                        );
+                    } else {
+                        $(`.${value}`).removeClass("is-invalid");
+                        $(`#${value}-error-message`).html("");
+                    }
+                });
+            }
+        }
         
-    //Hours Rendered required
-    if (hours_rendered === "" || hours_rendered === "0" )  {
-        $('#edit_hours_rendered__error__element').html('');
-        $('#edit_hours_rendered__error__element').append(`<span> <small> This field should not be 0. </small> </span>`);
-        errors.hours_rendered = true;
-    } else {
-        $('#edit_hours_rendered__error__element').html('');
-        errors.hours_rendered = false;
-    }
-
-    //Remarks required
-    if (remarks === "" || remarks === "")  {
-        $('#edit_remarks__error__element').html('');
-        $('#edit_remarks__error__element').append(`<span> <small> This field is required. </small> </span>`);
-        errors.remarks = true;
-    } else {
-        $('#edit_remarks__error__element').html('');
-        errors.remarks = false;
-    }
-
-    filteredError = Object.values(errors).filter((error) => error);
-    // Check if the filtered error array variable has value or not.
-    // if the length of this array is 0 this means that there is no error
-    // or all fields that required is filled by the user.
-    if (filteredError.length === 0) {
-        $('#save-spinner').removeClass('d-none');
-        let data = $('#editCompensatoryLeaveForm').serialize();
-        $.ajax({
-            url : `/employee/compensatory-build-up/${comID}`,
-            method : 'PUT',
-            data : data,
-            success : function (response) {
-                if(response.success){
-                    $('#save-spinner').addClass('d-none');
-                    swal("Good job!", "Successfully added!", "success").then((isClicked) => {
-                        if(isClicked) {
-                            $('#editCompensatoryLeave').modal('toggle');
-                            $('#employeeName').val(employee_id).trigger('change');
-                            $('#compensatoryleaves').DataTable().ajax.reload();
-                        }
-                    })
-                }
-            },
-        });
-    }
+    });
 });
 //END OF UPDATE earned COMPENSATORY
 
 //UPDATE availed Compensatory Leave
 $(document).on('click', '.btnEdit__availed__compensatory', function () {
     compensatoryID = $(this).attr('data-id');
+    let totalComBal = $('#totalComBal').val();
     $('#editCompensatoryLeave').modal('toggle');
-    $('.edit_overtime_type').addClass('d-none');
-    $('.edit_hours_rendered').addClass('d-none');
-    $('.edit_earned').addClass('d-none');
-    $('.edit_availed').removeClass('d-none');
+    $('.edit_overtime_type, .edit_hours_rendered, .edit_earned, #btnUpdateEarned').addClass('d-none');
+    $('.edit_availed, #btnUpdateAvailed').removeClass('d-none');
     $('.edit_date-span').html(`Date Availed <span class='text-danger'>*</span>`);
     $('.modal-title').html(`View/Edit Availed Compensatory Leave`);
-    $('#btnUpdateEarned').addClass('d-none');
-    $('#btnUpdateAvailed').removeClass('d-none');
+    $('#edit_action').val('avail');
     // Ajax request for fetching leave type data.
     $.ajax({
         url : `/employee/compensatory-build-up/${compensatoryID}/edit`,
@@ -607,6 +547,8 @@ $(document).on('click', '.btnEdit__availed__compensatory', function () {
             $('#edit_hours_rendered').val(comRecord.hours_rendered);
             $('#edit_earned').val(comRecord.earned);
             $('#edit_availed').val(comRecord.availed);
+            $('#edit_totalComBalance').val(totalComBal);
+            $('#prev_availment').val(comRecord.availed);
             $('#edit_remarks').val(comRecord.remarks);
         },
     });
@@ -617,62 +559,46 @@ $('#btnUpdateAvailed').click( (e)=> {
 
     let comID = $('#edit_id').val();
     let employee_id = $('#edit_employee_id').val();
-    let availed = $('#edit_availed').val();
-    let remarks = $('#edit_remarks').val();
-    let totalearned = $('#totalearned').text();
-    let errors = {};
-    let filteredError = "";
-    
-    //Availed required
-    if (availed === "" || availed === "0" )  {
-        $('#edit_hours_availed__error__element').html('');
-        $('#edit_hours_availed__error__element').append(`<span> <small> This field should not be 0. </small> </span>`);
-        errors.availed = true;
-    } else if (parseFloat(availed) > parseFloat(totalearned)){
-        $('#edit_availed__error__element').html('');
-        $('#edit_availed__error__element').append(`<span> <small> Insufficient balance! </small> </span>`);
-        errors.availed = true;
-    }else {
-        $('#edit_availed__error__element').html('');
-        errors.availed = false;
-    }
-
-    //Remarks required
-    if (remarks === "" || remarks === "")  {
-        $('#edit_remarks__error__element').html('');
-        $('#edit_remarks__error__element').append(`<span> <small> This field is required. </small> </span>`);
-        errors.remarks = true;
-    } else {
-        $('#edit_remarks__error__element').html('');
-        errors.remarks = false;
-    }
-
-
-    filteredError = Object.values(errors).filter((error) => error);
-    // Check if the filtered error array variable has value or not.
-    // if the length of this array is 0 this means that there is no error
-    // or all fields that required is filled by the user.
-    if (filteredError.length === 0) {
-        $('#save-spinner').removeClass('d-none');
-        let data = $('#editCompensatoryLeaveForm').serialize();
-        $.ajax({
-            url : `/employee/compensatory-build-up/${comID}`,
-            method : 'PUT',
-            data : data,
-            success : function (response) {
-                if(response.success){
-                    $('#save-spinner').addClass('d-none');
-                    swal("Good job!", "Successfully added!", "success").then((isClicked) => {
-                        if(isClicked) {
-                            $('#editCompensatoryLeave').modal('toggle');
-                            $('#employeeName').val(employee_id).trigger('change');
-                            $('#compensatoryleaves').DataTable().ajax.reload();
-                        }
-                    })
-                }
-            },
-        });
-    }
+    $('#save-spinner').removeClass('d-none');
+    let data = $('#editCompensatoryLeaveForm').serialize();
+    $.ajax({
+        url : `/employee/compensatory-build-up/${comID}`,
+        method : 'PUT',
+        data : data,
+        success : function (response) {
+            if(response.success){
+                $('#save-spinner').addClass('d-none');
+                swal("Good job!", "Successfully added!", "success", {closeOnClickOutside: false}).then((isClicked) => {
+                    if(isClicked) {
+                        $('#editCompensatoryLeave').modal('toggle');
+                        $('#employeeName').val(employee_id).trigger('change');
+                        $('#compensatoryleaves').DataTable().ajax.reload();
+                    }
+                })
+            }
+        },
+        error: function(response) {
+            if (response.status === 422) {
+                let errors = response.responseJSON.errors;
+                const inputNames = [
+                    "edit_availed",
+                    "edit_remarks"
+                ];
+                $.each(inputNames, function(index, value) {
+                    if (errors.hasOwnProperty(value)) {
+                        $(`.${value}`).addClass('is-invalid');
+                        $(`#${value}-error-message`).html("");
+                        $(`#${value}-error-message`).append(
+                            `${errors[value][0]}`
+                        );
+                    } else {
+                        $(`.${value}`).removeClass("is-invalid");
+                        $(`#${value}-error-message`).html("");
+                    }
+                });
+            }
+        }
+    });
 });
 //END OF UPDATE availed COMPENSATORY
 
@@ -685,6 +611,7 @@ swal({
     icon: "warning",
     buttons: true,
     dangerMode: true,
+    closeOnClickOutside: false,
     }).then((willDelete) => {
         if(willDelete) {
             $.ajax({
@@ -692,7 +619,7 @@ swal({
                 data: { delete_All : deleteAll },
                 method : 'DELETE',
                 success : function (response) {
-                        swal("Good job!", "Successfully deleted all compensatory leave records.", "success").then((isClicked) => {
+                        swal("Good job!", "Successfully deleted all compensatory leave records.", "success", {closeOnClickOutside: false}).then((isClicked) => {
                         if(isClicked) {
                             $('#compensatoryleaves').DataTable().ajax.reload();
                         }
@@ -713,6 +640,7 @@ $(document).on('click', '.delete__compensatory', function () {
         icon: "warning",
         buttons: true,
         dangerMode: true,
+        closeOnClickOutside: false,
         }).then((willDelete) => {
             if(willDelete) {
                 $.ajax({
@@ -720,7 +648,7 @@ $(document).on('click', '.delete__compensatory', function () {
                     data: { delete_All : deleteAll },
                     method : 'DELETE',
                     success : function (response) {
-                            swal("Good job!", "Successfully deleted compensatory leave record.", "success").then((isClicked) => {
+                            swal("Good job!", "Successfully deleted compensatory leave record.", "success", {closeOnClickOutside: false}).then((isClicked) => {
                             if(isClicked) {
                                 $('#employeeName').val(employeeID).trigger('change');
                                 $('#compensatoryleaves').DataTable().ajax.reload(); 
@@ -736,7 +664,6 @@ $('#forfeited').change(function() {
     let employeeID = $('#employeeName').val();
     let yearFilter = year_filter.value;
     let forfeit = $('#forfeited').prop('checked');
-    console.log(forfeit);
     if(this.checked) {
         swal({
             title: "Are you sure?",
@@ -744,6 +671,7 @@ $('#forfeited').change(function() {
             icon: "warning",
             buttons: true,
             dangerMode: true,
+            closeOnClickOutside: false,
             }).then((willForfeit) => {
                 if(willForfeit) {
                     isChecked = 1;
@@ -754,7 +682,7 @@ $('#forfeited').change(function() {
                         success : function (response) {
                             if(response.success){
                                 $('#save-spinner').addClass('d-none');
-                                swal("", "Earned Compensatory has been forfeited.", "success").then((isClicked) => {
+                                swal("", "Earned Compensatory has been forfeited.", "success", {closeOnClickOutside: false}).then((isClicked) => {
                                     if(isClicked) {
                                         $('#employeeName').val(employeeID).trigger('change');
                                         $('#compensatoryleaves').DataTable().ajax.reload();
@@ -776,7 +704,7 @@ $('#forfeited').change(function() {
             success : function (response) {
                 if(response.success){
                     $('#save-spinner').addClass('d-none');
-                    swal("", "Changes Saved.", "success").then((isClicked) => {
+                    swal("", "Changes Saved.", "success", {closeOnClickOutside: false}).then((isClicked) => {
                         if(isClicked) {
                             $('#employeeName').val(employeeID).trigger('change');
                             $('#compensatoryleaves').DataTable().ajax.reload();
