@@ -8,6 +8,8 @@
 	<meta name="author" content="DreamguysBootstrap Admin Template">
 	<meta name="robots" content="noindex, nofollow">
 	<meta name="csrf-token" content="{{ csrf_token() }}">
+	<meta name="leave-list-route" content="{{ route('leave.leave-list') }}">
+	
 	@stack('meta-data')
 	<title>@yield('title') |  {{  config('app.name') }}</title>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
@@ -452,31 +454,24 @@
 	<script src="{{ asset('/assets/js/moment.min.js') }}"></script>
 	<script src="{{ asset('/assets/js/bootstrap-datetimepicker.min.js') }}"></script>
 	<script src="{{ asset('/assets/js/app.js') }}"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 	<script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>
 	<script>
 	const socket = io.connect("{{ env('MIX_SOCKET_IP') }}");
 
     socket.on(`notify_administrator`, (data) => {
-		console.log(data);
-		toastr.options = {
-			"closeButton": false,
-			"debug": false,
-			"newestOnTop": false,
-			"progressBar": true,
-			"positionClass": "toast-bottom-right",
-			"preventDuplicates": false,
-			"onclick": null,
-			"showDuration": "1000",
-			"hideDuration": "3000",
-			"timeOut": "5000",
-			"extendedTimeOut": "1000",
-			"showEasing": "swing",
-			"hideEasing": "linear",
-			"showMethod": "fadeIn",
-			"hideMethod": "fadeOut"
-		}
-		toastr["info"](`${data.fullname} submit a leave application.`)
+		if (!("Notification" in window)) {
+			alert("This browser does not support desktop notification");
+		} else if (Notification.permission === "granted") {
+			// If it's okay let's create a notification
+			let notification = new Notification('Leave Application Filling', {
+				body : `${data.fullname} submit a leave application please kindly review.`,
+				icon : 'http://localhost:8001/assets/img/main-logo.png'
+			});
+
+			notification.onclick = () => window.open(`${$('meta[name="leave-list-route"]').attr('content')}`);
+
+		}	
+		
 	});
 
 	</script>

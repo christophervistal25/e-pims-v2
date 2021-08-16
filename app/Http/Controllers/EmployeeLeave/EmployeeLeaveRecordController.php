@@ -70,6 +70,7 @@ class EmployeeLeaveRecordController extends Controller
             }
             
             $employeeForwardedBalanceRecord->fb_as_of                                    = $request['asOf'];
+            $employeeForwardedBalanceRecord->record_type                                 = EmployeeLeaveRecord::TYPES['FORWARD'];
             $employeeForwardedBalanceRecord->save();
         });
         return response()->json(['success' => true]);
