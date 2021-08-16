@@ -105,23 +105,40 @@ class LeaveListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $leaveList = EmployeeLeaveApplication::find($id);
-        $leaveList->date_applied                =       $request['dateApply'];
-        $leaveList->leave_type_id               =       $request['selectedLeave'];
-        $leaveList->incase_of                   =       $request['inCaseOfLeave'];
-        $leaveList->no_of_days                  =       $request['numberOfDays'];
-        $leaveList->date_from                   =       $request['startDate'];
-        $leaveList->date_to                     =       $request['endDate'];
-        $leaveList->commutation                 =       $request['commutation'];
-        $leaveList->date_approved               =       Carbon::now()->format('Y-m-d');
-        $leaveList->date_rejected               =       Carbon::now()->format('Y-m-d');
-        $leaveList->recommending_approval       =       $request['recommendingApproval'];
-        $leaveList->approved_by                 =       $request['approvedBy'];
-        $leaveList->approved_status             =       $request['status'];
+        $leaveList                        = EmployeeLeaveApplication::find($id);
+        $leaveList->date_applied          = $request['dateApply'];
+        $leaveList->leave_type_id         = $request['selectedLeave'];
+        $leaveList->incase_of             = $request['inCaseOfLeave'];
+        $leaveList->no_of_days            = $request['numberOfDays'];
+        $leaveList->date_from             = $request['startDate'];
+        $leaveList->date_to               = $request['endDate'];
+        $leaveList->commutation           = $request['commutation'];
+        $leaveList->recommending_approval = $request['recommendingApproval'];
+        $leaveList->approved_by           = $request['approvedBy'];
+        $leaveList->approved_status       = $request['status'];
+
+        if($request->status === 'approved') {
+            $leaveList->date_approved = Carbon::now()->format('Y-m-d');
+            $leaveList->date_rejected = null;
+        } else {
+            $leaveList->date_rejected = Carbon::now()->format('Y-m-d');
+            $leaveList->date_approved = null;
+        }
+        
         $leaveList->save();
+
+
+        EmployeeLeaveRecord::create([
+            'employee_id' => $leaveList->employee_id,
+            'particular' => ($leaveList->type->code) . '(' . $request->numberOfDays . '-0' . '-0' . ')',
+            'leave_type_id' => $request->selectedLeave,
+            'earned' => 0.000,
+            'used' => $request->numberOfDays,
+        ]);
+
         
         Session::flash('success', true);
-        return response()->json(['succcess' => true]);
+        return response()->json(['success' => true]);
     }
     
     /**

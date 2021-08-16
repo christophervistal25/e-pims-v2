@@ -544,17 +544,17 @@ let table = $('#leaveListTable').DataTable({
             searchable: true,
             sortable: false,
             visible: true,
-            render : function(data){
+            render : function(data, _, row, _){
                 if(data == 'pending'){
-                    return `<span class='badge badge-warning text-white'>${data}</span>`;
+                    return `<span class='badge badge-warning text-white text-uppercase'>${data}</span>`;
                 }else if (data == 'declined'){
-                    return `<span class='badge badge-danger'>${data}</span>`;
+                    return `<span class='badge badge-danger text-uppercase'>${data}</span>`;
                 }else if (data == 'approved'){
-                    return `<span class='badge badge-success'>${data}</span>`;
+                    return `<span class='badge badge-success text-uppercase'>${data}</span>`;
                 }else if (data == 'on-going'){
-                    return `<span class='badge badge-info'>${data}</span>`;
+                    return `<span class='badge badge-info text-uppercase'>${data}</span>`;
                 }else if (data == 'enjoyed'){
-                    return `<span class='badge badge-primary'>${data}</span>`;
+                    return `<span class='badge badge-primary text-uppercase'>${data}</span>`;
                 }
             }
         },
@@ -565,12 +565,13 @@ let table = $('#leaveListTable').DataTable({
         },
         {
             data: 'date_approved',
-            name: 'date_approved'
+            name: 'date_approved',
+            defaultContent : '',
         },
         {
             className: 'text-truncate',
             data: 'date_rejected',
-            name: 'date_rejected'
+            name: 'date_rejected',
         },
         {
             className: 'text-truncate',
@@ -737,15 +738,15 @@ $(document).on('click', '.btnRemoveRecord', function () {
                         visible: true,
                         render : function(data){
                             if(data == 'pending'){
-                                return `<span class='badge badge-warning text-white'>${data}</span>`;
+                                return `<span class='badge badge-warning text-white text-uppercase'>${data}</span>`;
                             }else if (data == 'declined'){
-                                return `<span class='badge badge-danger'>${data}</span>`;
+                                return `<span class='badge badge-danger text-uppercase'>${data}</span>`;
                             }else if (data == 'approved'){
-                                return `<span class='badge badge-success'>${data}</span>`;
+                                return `<span class='badge badge-success text-uppercase'>${data}</span>`;
                             }else if (data == 'on-going'){
-                                return `<span class='badge badge-info'>${data}</span>`;
+                                return `<span class='badge badge-info text-uppercase'>${data}</span>`;
                             }else if (data == 'enjoyed'){
-                                return `<span class='badge badge-primary'>${data}</span>`;
+                                return `<span class='badge badge-primary text-uppercase'>${data}</span>`;
                             }
                         }
                     },
