@@ -180,23 +180,6 @@ class CompensatoryBuildUpController extends Controller
                         'remarks.required'          => '<small>You need to input remarks.</small>',
                     ]);
                 }
-                if($request['action'] == 'avail'){
-                    $this->validate($request, [
-                        'availed'                   => 'required|numeric|min:0|not_in:0',
-                        'date_added'                =>  [
-                                                            'required',
-                                                            'date',
-                                                            'before_or_equal:today',
-                                                        ],
-                        'remarks'                   => 'required',
-                    ], [
-                        'availed.required'          => '<small>Please input a number.</small>',
-                        'availed.not_in'            => '<small>This should not be 0.</small>',
-                        'date_added.required'       => '<small>Please select a date.</small>',
-                        'date_added.before_or_equal'=> '<small>Date should not be greater than today.</small>',
-                        'remarks.required'          => '<small>You need to input remarks.</small>',
-                    ]);
-                }
             }else{
                 if($request['action'] == 'earn'){
                     $this->validate($request, [
@@ -222,7 +205,7 @@ class CompensatoryBuildUpController extends Controller
                 }
                 if($request['action'] == 'avail'){
                     $this->validate($request, [
-                        'availed'                   => 'required|numeric|min:0|not_in:0',
+                        'availed'                   => 'required|numeric|min:0|not_in:0|lte:'.$request->totalComBalance,
                         'date_added'                =>  [
                                                             'required',
                                                             'date',
@@ -233,6 +216,7 @@ class CompensatoryBuildUpController extends Controller
                     ], [
                         'availed.required'          => '<small>Please input a number.</small>',
                         'availed.not_in'            => '<small>This should not be 0.</small>',
+                        'availed.lte'               => '<small>Insufficient balance.</small>',
                         'date_added.required'       => '<small>Please select a date.</small>',
                         'date_added.before_or_equal'=> '<small>Date should not be greater than today.</small>',
                         'date_added.after'          => '<small>Date should be greater than the last record.</small>',
@@ -300,19 +284,43 @@ class CompensatoryBuildUpController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //update
-        $comRecords = CompensatoryLeave::where('id', $id)->get();
-        foreach($comRecords as $comRecord){
-            // Insert Record with As of.
-            $comRecord->overtime_type = $request['edit_overtime_type'];
-            $comRecord->date_added = $request['edit_date_added'];
-            $comRecord->hours_rendered = $request['edit_hours_rendered'];
-            $comRecord->earned = $request['edit_earned'];
-            $comRecord->availed = $request['edit_availed'];
-            $comRecord->remarks = $request['edit_remarks'];
-            $comRecord->save();
+        if($request->ajax()) {
+            if($request['edit_action'] == 'earn'){
+                $this->validate($request, [
+                    'edit_hours_rendered'            => 'required|numeric|min:0|not_in:0',
+                    'edit_remarks'                   => 'required',
+                ], [
+                    'edit_hours_rendered.required'   => '<small>Please input a number.</small>',
+                    'edit_hours_rendered.not_in'     => '<small>This should not be 0.</small>',
+                    'edit_remarks.required'          => '<small>You need to input remarks.</small>',
+                ]);
+            }
+            if($request['edit_action'] == 'avail'){
+                $totalbal = floatval($request->edit_totalComBalance) + floatval($request->prev_availment);  
+                $this->validate($request, [
+                    'edit_availed'                   => 'required|numeric|min:0|not_in:0|lte:'.$totalbal,
+                    'edit_remarks'                   => 'required',
+                ], [
+                    'edit_availed.required'          => '<small>Please input a number.</small>',
+                    'edit_availed.not_in'            => '<small>This should not be 0.</small>',
+                    'edit_availed.lte'               => '<small>Insufficient balance.</small>',
+                    'edit_remarks.required'          => '<small>You need to input remarks.</small>',
+                ]);
+            }
+            //update
+            $comRecords = CompensatoryLeave::where('id', $id)->get();
+            foreach($comRecords as $comRecord){
+                // Insert Record with As of.
+                $comRecord->overtime_type = $request['edit_overtime_type'];
+                $comRecord->date_added = $request['edit_date_added'];
+                $comRecord->hours_rendered = $request['edit_hours_rendered'];
+                $comRecord->earned = $request['edit_earned'];
+                $comRecord->availed = $request['edit_availed'];
+                $comRecord->remarks = $request['edit_remarks'];
+                $comRecord->save();
+            }
+            return response()->json(['success' => true]);
         }
-        return response()->json(['success' => true]);
     }
 
     public function updateForfeited(Request $request, $id, $year)
