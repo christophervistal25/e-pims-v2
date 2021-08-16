@@ -7,6 +7,7 @@ use App\LeaveType;
 use App\EmployeeLeaveRecord;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Repositories\LeaveRecordRepository;
 
 class EmployeeLeaveRecordController extends Controller
@@ -47,6 +48,22 @@ class EmployeeLeaveRecordController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'employeeName'          => 'required',
+            'vlEarned'              => 'required',
+            'vlEnjoyed'             => 'required',
+            'slEarned'              => 'required',
+            'slEnjoyed'             => 'required',
+            'asOf'                  => 'required|date',
+        ], [
+            'employeeName.required' => 'This field is required.',
+            'vlEarned.required'     => 'This field is required.',
+            'slEarned.required'     => 'This field is required.',
+            'vlEnjoyed.required'    => 'This field is required.',
+            'slEnjoyed.required'    => 'This field is required.',
+            'asOf.required'         => 'Please select a date.',
+        ]);
+
         $leaveTypes = LeaveType::where('code_number', self::VACATION_LEAVE)
                                                 ->orWhere('code_number', self::SICK_LEAVE)
                                                 ->get(['code_number', 'id']);
@@ -73,6 +90,7 @@ class EmployeeLeaveRecordController extends Controller
             $employeeForwardedBalanceRecord->record_type                                 = EmployeeLeaveRecord::TYPES['FORWARD'];
             $employeeForwardedBalanceRecord->save();
         });
+
         return response()->json(['success' => true]);
     }
 
@@ -109,6 +127,20 @@ class EmployeeLeaveRecordController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'update_vlEarned'              => 'required',
+            'update_vlEnjoyed'             => 'required',
+            'update_slEarned'              => 'required',
+            'update_slEnjoyed'             => 'required',
+            'update_asOf'                  => 'required|date',
+        ], [
+            'update_vlEarned.required'     => 'This field is required.',
+            'update_slEarned.required'     => 'This field is required.',
+            'update_vlEnjoyed.required'     => 'This field is required.',
+            'update_slEnjoyed.required'     => 'This field is required.',
+            'update_asOf.required'         => 'Please select a date.',
+        ]);
+
         //update
         $leaveRecord = EmployeeLeaveRecord::with('type')
                                             ->where('employee_id', $id)

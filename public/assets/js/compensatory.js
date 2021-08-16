@@ -30,7 +30,7 @@ $(function() {
 
         $('#office').val(employeeOffice);
         $('#position').val(employeePosition);
-        if(photo == ''){
+        if(empID == ''){
             $('#empPhoto').attr('src','/storage/employee_images/no-image.png');
         }else{
             $('#empPhoto').attr('src','/storage/employee_images/'+photo);
@@ -158,6 +158,8 @@ $(function() {
     });
 });
 
+let selectedDate = null;
+
 function forfeited(id, year){
     $.ajax({
         url: 'leave/compensatory-build-up/forfeited/' + id + '/' + year,
@@ -241,7 +243,6 @@ edit_hours_rendered.addEventListener("keyup", function(){
 // TRANSITION OF FORM TO TABLE
 $('#addBtn').click( ()=> {
     let employeeID = '';
-    let curYear = getYear(new Date());
     $('#employeeName').val(employeeID).trigger('change');
     $('#compensatoryleavesTable').addClass('d-none');
     $('#selectEmployee').removeClass('d-none');
@@ -249,7 +250,6 @@ $('#addBtn').click( ()=> {
     $('#totalComBal').val('0');
     $('.year_filter').addClass('d-none');
     $('.forfeited').addClass('d-none');
-    $('#year_filter').val(curYear);
 });
 
 $(document).on('click', '.btn__edit__view__compensatory', function (e) {
@@ -259,7 +259,6 @@ $(document).on('click', '.btn__edit__view__compensatory', function (e) {
         $('#employeeName').val(employeeID).trigger('change');
         $('#compensatoryleavesTable').addClass('d-none');
         $('#compensatoryLeaveCard').removeClass('d-none'); 
-        $('#year_filter').val(curYear);
     }
 });
 
@@ -273,139 +272,98 @@ $('#editCompensatoryLeave').on('hidden.bs.modal', function () {
 
 $('#addCompensatoryLeave').on('hidden.bs.modal', function () {
     $('#addCompensatoryLeaveForm').trigger('reset');
-    $('#overtimeType__error__element').html('');
-    $('#dateEarned__error__element').html('');
-    $('#hours_rendered__error__element').html('');
-    $('#availed__error__element').html('');
-    $('#remarks__error__element').html('');
+    $(`.hours_rendered`).removeClass('is-invalid');
+    $(`#hours_rendered-error-message`).html("");
+    $(`.availed`).removeClass('is-invalid');
+    $(`#availed-error-message`).html("");
+    $(`.date_added`).removeClass('is-invalid');
+    $(`#date_added-error-message`).html("");
+    $(`.remarks`).removeClass('is-invalid');
+    $(`#remarks-error-message`).html("");
 })
+
+$('#btnBack').click( ()=> {
+    $('#compensatoryleavesTable').removeClass('d-none');
+    $('#compensatoryLeaveCard').addClass('d-none'); 
+});
+
+$('#btnEarn').click( ()=> {
+    let employeeID = $('#employeeName').val();
+    if(employeeID == ''){
+        swal("Please select an employee!", "", "warning");
+    }else{
+        $('#employee_id').val(employeeID);
+        $('#addCompensatoryLeave').modal('toggle');
+        $('.overtime_type').removeClass('d-none');
+        $('.hours_rendered').removeClass('d-none');
+        $('#hours_rendered').val('0');
+        $('.earned').removeClass('d-none');
+        $('#earned').val('0');
+        $('.availed').addClass('d-none');
+        $('.date-span').html(`Date Earned <span class='text-danger'>*</span>`);
+        $('.modal-title').html(`Add Earned Compensatory Leave`);
+        $('#btnSaveEarned').removeClass('d-none');
+        $('#btnSaveAvailed').addClass('d-none');
+        $('#action').val('earn');
+    }
+    
+});
+
+$('#btnAvail').click( ()=> {
+    let employeeID = $('#employeeName').val();
+    let totalComBal = $('#totalComBal').val();
+    if(employeeID == ''){
+        swal("Please select an employee!", "", "warning");
+    } else if(totalComBal == 0){
+            swal("", "Balance should greater than 0.", "info");
+    } else{ 
+        $('#employee_id').val(employeeID);
+        $('#addCompensatoryLeave').modal('toggle');
+        $('.overtime_type, .hours_rendered, .earned, #btnSaveEarned').addClass('d-none');
+        $('#availed').val('0');
+        $('.availed, #btnSaveAvailed').removeClass('d-none');
+        $('.date-span').html(`Date Availed <span class='text-danger'>*</span>`);
+        $('.modal-title').html(`Add Availed Compensatory Leave`);
+        $('#action').val('avail');
+    }
+});
 
 //Save Earned Compensatory Leave
 $('#btnSaveEarned').click( (e)=> {
     e.preventDefault();
-
     let employee_id = $('#employee_id').val();
-    let overtimeType = $('#overtime_type').val();
-    let dateEarned = $('#date_added').val();
-    let hours_rendered = $('#hours_rendered').val();
-    let remarks = $('#remarks').val();
-    let errors = {};
-    let filteredError = "";
-    
-    let todayDate = new Date().toISOString().slice(0, 10);;
-    let newDateEarned = new Date(dateEarned);
-    let newTodayDate = new Date(todayDate);
-    let shouldSkip = false;
-
-    //overtimeType required
-    if (overtimeType === "") {
-        $('#overtimeType__error__element').html('');
-        $('#overtimeType__error__element').append(`<span> <small> This field is required. </small> </span>`);
-        errors.overtimeType = true;
-    } else {
-        $('#overtimeType__error__element').html('');
-        errors.overtimeType = false;
-    }
-
-    //Date Errors 
     let table = $('#compensatory-leave-table').DataTable();
-    if ( ! table.data().count() ){
-        if (newDateEarned.getTime() > newTodayDate.getTime()) {
-            $('#dateEarned__error__element').html('');
-            $('#dateEarned__error__element').append(`<span> <small> Date should not be greater than today. </small> </span>`);
-            errors.dateEarned = true;
-        } else if (dateEarned === "") {
-            $('#dateEarned__error__element').html('');
-            $('#dateEarned__error__element').append(`<span> <small> Please select a date. </small> </span>`);
-            errors.dateEarned = true;
-        } else {
-            $('#dateEarned__error__element').html('');
-            errors.dateEarned = false;
+
+    let x = table.rows( function (idx, data, node) {
+        let date = table.cell(idx, 0).data();
+        let earn = table.cell(idx, 1).data();
+        let arr = [date];
+        if (earn > 0){
+            jQuery.each( arr, function( i, val ) {
+                let tDateEarned = new Date(val);
+                selectedDate = `${tDateEarned.getFullYear()}-${tDateEarned.getMonth()+1}-${tDateEarned.getDate()}`;
+            });
         }
-    }else{
-        let x = table.rows( function (idx, data, node) {
-            let date = table.cell(idx, 0).data();
-            let earn = table.cell(idx, 1).data();
-            let arr = [date];
-            if (earn > 0){
-                jQuery.each( arr, function( i, val ) {
-                    let tDateEarned = new Date(val);
-                    if (shouldSkip) {
-                        return;
-                    }
-                    if (newDateEarned.getTime() > newTodayDate.getTime()) {
-                        $('#dateEarned__error__element').html('');
-                        $('#dateEarned__error__element').append(`<span> <small> Date should not be greater than today. </small> </span>`);
-                        errors.dateEarned = true;
-                    } else if (dateEarned === "") {
-                        $('#dateEarned__error__element').html('');
-                        $('#dateEarned__error__element').append(`<span> <small> Please select a date. </small> </span>`);
-                        errors.dateEarned = true;
-                        shouldSkip = true;
-                        return;
-                    } else if (newDateEarned.getMonth() === tDateEarned.getMonth() && newDateEarned.getFullYear() === tDateEarned.getFullYear()) {
-                        $('#dateEarned__error__element').html('');
-                        $('#dateEarned__error__element').append(`<span> <small> Compensatory is given monthly. </small> </span>`);
-                        errors.dateEarned = true;
-                        shouldSkip = true;
-                        return;
-                    } else {
-                        $('#dateEarned__error__element').html('');
-                        errors.dateEarned = false;
-                    }
-                });
-            }else{
-                jQuery.each( arr, function( i, val ) {
-                    let lastDateAvailed = new Date(val);
-                    if (shouldSkip) {
-                        return;
-                    }
-                    if (newDateEarned.getTime() <= lastDateAvailed.getTime()) {
-                        $('#dateEarned__error__element').html('');
-                        $('#dateEarned__error__element').append(`<span> <small> Date should be greater than the last record. </small> </span>`);
-                        errors.dateEarned = true;
-                    } else {
-                        $('#dateEarned__error__element').html('');
-                        errors.dateEarned = false;
-                    }
-                });
-            }
-        }); 
-    }
-        
-    //Hours Rendered required
-    if (hours_rendered === "" || hours_rendered === "0" )  {
-        $('#hours_rendered__error__element').html('');
-        $('#hours_rendered__error__element').append(`<span> <small> This field should not be 0. </small> </span>`);
-        errors.hours_rendered = true;
-    } else {
-        $('#hours_rendered__error__element').html('');
-        errors.hours_rendered = false;
-    }
+    }); 
 
-    //Remarks required
-    if (remarks === "" || remarks === "")  {
-        $('#remarks__error__element').html('');
-        $('#remarks__error__element').append(`<span> <small> This field is required. </small> </span>`);
-        errors.remarks = true;
-    } else {
-        $('#remarks__error__element').html('');
-        errors.remarks = false;
-    }
-
-    filteredError = Object.values(errors).filter((error) => error);
-    // Check if the filtered error array variable has value or not.
-    // if the length of this array is 0 this means that there is no error
-    // or all fields that required is filled by the user.
-    if (filteredError.length === 0) {
-        $('#save-spinner').removeClass('d-none');
-        let data = $('#addCompensatoryLeaveForm').serialize();
-        $.ajax({
-            url : '/employee/compensatory-build-up',
-            method : 'POST',
-            data : data,
-            success : function (response) {
-                if(response.success){
+    $('#save-spinner').removeClass('d-none');
+    let data = $('#addCompensatoryLeaveForm').serialize();
+    data = data.concat(`&selected_date=${selectedDate}`);
+    $.ajax({
+        url : '/employee/compensatory-build-up',
+        method : 'POST',
+        data : data,
+        success : function (response) {
+            if(response.success){
+                let comtable = $('#compensatoryleaves').DataTable();
+                if(comtable.rows().count() <= 0){
+                    $('#save-spinner').addClass('d-none');
+                    swal("Good job!", "Successfully added!", "success").then((isClicked) => {
+                        if(isClicked) {
+                            location.reload();
+                        }
+                    })
+                }else{
                     $('#save-spinner').addClass('d-none');
                     swal("Good job!", "Successfully added!", "success").then((isClicked) => {
                         if(isClicked) {
@@ -415,10 +373,33 @@ $('#btnSaveEarned').click( (e)=> {
                         }
                     })
                 }
-            },
-        });
-        
-    }
+                
+            }
+        },
+        error: function(response) {
+            if (response.status === 422) {
+                let errors = response.responseJSON.errors;
+                const inputNames = [
+                    "overtime_type",
+                    "hours_rendered",
+                    "date_added",
+                    "remarks"
+                ];
+                $.each(inputNames, function(index, value) {
+                    if (errors.hasOwnProperty(value)) {
+                        $(`.${value}`).addClass('is-invalid');
+                        $(`#${value}-error-message`).html("");
+                        $(`#${value}-error-message`).append(
+                            `${errors[value][0]}`
+                        );
+                    } else {
+                        $(`.${value}`).removeClass("is-invalid");
+                        $(`#${value}-error-message`).html("");
+                    }
+                });
+            }
+        }
+    });
 });
 //END OF SAVED earned NEW DATA
 
@@ -426,96 +407,63 @@ $('#btnSaveEarned').click( (e)=> {
 $('#btnSaveAvailed').click( (e)=> {
     e.preventDefault();
 
-    let totalComBal = $('#totalComBal').val();
     let employee_id = $('#employee_id').val();
-    let dateEarned = $('#date_added').val();
-    let comAvailed = $('#availed').val();
-    let remarks = $('#remarks').val();
-    let errors = {};
-    let filteredError = "";
-
-    let newDateEarned = new Date(dateEarned);
-    let shouldSkip = false;
-
-    //Date Errors 
     let table = $('#compensatory-leave-table').DataTable();
+
     let x = table.rows( function (idx, data, node) {
         let date = table.cell(idx, 0).data();
+        let earn = table.cell(idx, 1).data();
         let arr = [date];
-        jQuery.each( arr, function( i, val ) {
-            let lastDateAvailed = new Date(val);
-            console.log(lastDateAvailed);
-            if (shouldSkip) {
-                return;
-            }
-            if (newDateEarned.getTime() <= lastDateAvailed.getTime()) {
-                $('#dateEarned__error__element').html('');
-                $('#dateEarned__error__element').append(`<span> <small> Date should be greater than the last record. </small> </span>`);
-                errors.dateEarned = true;
-            } else if (dateEarned === "") {
-                $('#dateEarned__error__element').html('');
-                $('#dateEarned__error__element').append(`<span> <small> Please select a date. </small> </span>`);
-                errors.dateEarned = true;
-                shouldSkip = true;
-                return;
-            } else {
-                $('#dateEarned__error__element').html('');
-                errors.dateEarned = false;
-            }
-        });
+        if (earn > 0){
+            jQuery.each( arr, function( i, val ) {
+                let tDateEarned = new Date(val);
+                selectedDate = `${tDateEarned.getFullYear()}-${tDateEarned.getMonth()+1}-${tDateEarned.getDate()}`;
+            });
+        }
     }); 
 
-
-    //Availed Insufficient
-    if (comAvailed === "" || comAvailed === "0" )  {
-        $('#availed__error__element').html('');
-        $('#availed__error__element').append(`<span> <small> This field should not be 0. </small> </span>`);
-        errors.availed = true;
-    } else if (parseFloat(comAvailed) > parseFloat(totalComBal)){
-        $('#availed__error__element').html('');
-        $('#availed__error__element').append(`<span> <small> Insufficient balance! </small> </span>`);
-        errors.availed = true;
-    } else {
-        $('#availed__error__element').html('');
-        errors.availed = false;
-    }
-
-    //Remarks required
-    if (remarks === "" || remarks === "")  {
-        $('#remarks__error__element').html('');
-        $('#hremarks__error__element').append(`<span> <small> This field is required. </small> </span>`);
-        errors.remarks = true;
-    } else {
-        $('#remarks__error__element').html('');
-        errors.remarks = false;
-    }
-
-    filteredError = Object.values(errors).filter((error) => error);
-    // Check if the filtered error array variable has value or not.
-    // if the length of this array is 0 this means that there is no error
-    // or all fields that required is filled by the user.
-    if (filteredError.length === 0) {
-        $('#save-spinner').removeClass('d-none');
-        let data = $('#addCompensatoryLeaveForm').serialize();
-        $.ajax({
-            url : '/employee/compensatory-build-up',
-            method : 'POST',
-            data : data,
-            success : function (response) {
-                if(response.success){
-                    $('#save-spinner').addClass('d-none');
-                    swal("Good job!", "Successfully added!", "success").then((isClicked) => {
-                        if(isClicked) {
-                            $('#addCompensatoryLeave').modal('toggle');
-                            $('#employeeName').val(employee_id).trigger('change');
-                            $('#compensatoryleaves').DataTable().ajax.reload();
-                        }
-                    })
-                }
-            },
-        });
-        
-    }
+    $('#save-spinner').removeClass('d-none');
+    let data = $('#addCompensatoryLeaveForm').serialize();
+    data = data.concat(`&selected_date=${selectedDate}`);
+    $.ajax({
+        url : '/employee/compensatory-build-up',
+        method : 'POST',
+        data : data,
+        success : function (response) {
+            if(response.success){
+                $('#save-spinner').addClass('d-none');
+                swal("Good job!", "Successfully added!", "success").then((isClicked) => {
+                    if(isClicked) {
+                        $('#addCompensatoryLeave').modal('toggle');
+                        $('#employeeName').val(employee_id).trigger('change');
+                        $('#compensatoryleaves').DataTable().ajax.reload();
+                    }
+                })
+            }
+        },
+        error: function(response) {
+            if (response.status === 422) {
+                let errors = response.responseJSON.errors;
+                const inputNames = [
+                    "availed",
+                    "date_added",
+                    "remarks"
+                ];
+                $.each(inputNames, function(index, value) {
+                    if (errors.hasOwnProperty(value)) {
+                        $(`.${value}`).addClass('is-invalid');
+                        $(`#${value}-error-message`).html("");
+                        $(`#${value}-error-message`).append(
+                            `${errors[value][0]}`
+                        );
+                    } else {
+                        $(`.${value}`).removeClass("is-invalid");
+                        $(`#${value}-error-message`).html("");
+                    }
+                });
+            }
+        }
+    });
 });
 //END OF SAVED availed NEW DATA
 
@@ -782,54 +730,6 @@ $(document).on('click', '.delete__compensatory', function () {
                 });
             }
         });
-});
-
-$('#btnBack').click( ()=> {
-    $('#compensatoryleavesTable').removeClass('d-none');
-    $('#compensatoryLeaveCard').addClass('d-none'); 
-});
-
-$('#btnEarn').click( ()=> {
-    let employeeID = $('#employeeName').val();
-    if(employeeID == ''){
-        swal("Please select an employee!", "", "warning");
-    }else{
-        $('#employee_id').val(employeeID);
-        $('#addCompensatoryLeave').modal('toggle');
-        $('.overtime_type').removeClass('d-none');
-        $('.hours_rendered').removeClass('d-none');
-        $('#hours_rendered').val('0');
-        $('.earned').removeClass('d-none');
-        $('#earned').val('0');
-        $('.availed').addClass('d-none');
-        $('.date-span').html(`Date Earned <span class='text-danger'>*</span>`);
-        $('.modal-title').html(`Add Earned Compensatory Leave`);
-        $('#btnSaveEarned').removeClass('d-none');
-        $('#btnSaveAvailed').addClass('d-none');
-    }
-    
-});
-
-$('#btnAvail').click( ()=> {
-    let employeeID = $('#employeeName').val();
-    let totalComBal = $('#totalComBal').val();
-    if(employeeID == ''){
-        swal("Please select an employee!", "", "warning");
-    } else if(totalComBal == 0){
-            swal("", "Balance should greater than 0.", "info");
-    } else{ 
-        $('#employee_id').val(employeeID);
-        $('#addCompensatoryLeave').modal('toggle');
-        $('.overtime_type').addClass('d-none');
-        $('.hours_rendered').addClass('d-none');
-        $('.earned').addClass('d-none');
-        $('#availed').val('0');
-        $('.availed').removeClass('d-none');
-        $('.date-span').html(`Date Availed <span class='text-danger'>*</span>`);
-        $('.modal-title').html(`Add Availed Compensatory Leave`);
-        $('#btnSaveEarned').addClass('d-none');
-        $('#btnSaveAvailed').removeClass('d-none');
-    }
 });
 
 $('#forfeited').change(function() {

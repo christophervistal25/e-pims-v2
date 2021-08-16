@@ -5,6 +5,7 @@ use App\Division;
 use App\Employee;
 use App\Position;
 use App\Plantilla;
+use App\RefStatus;
 use App\SalaryGrade;
 use App\PlantillaPosition;
 use App\PlantillaSchedule;
@@ -48,7 +49,7 @@ class PlantillaScheduleSeeder extends Seeder
                 'date_last_promotion' => date('Y-m-d'),
                 'office_code' => Office::get()->random()->office_code,
                 'division_id' => Division::get()->random()->division_id,
-                'status' => 'CASUAL',
+                'status' => RefStatus::get()->random()->stat_code,
                 'year' => rand(2015, 2020),
             ]);
 
@@ -67,7 +68,7 @@ class PlantillaScheduleSeeder extends Seeder
                 'date_last_promotion' => date('Y-m-d'),
                 'office_code' => Office::get()->random()->office_code,
                 'division_id' => Division::get()->random()->division_id,
-                'status' => 'CASUAL',
+                'status' => RefStatus::get()->random()->stat_code,
                 'year' => rand(2015, 2020),
             ]);
 

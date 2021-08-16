@@ -17,13 +17,14 @@
         crossorigin="anonymous" />
 	{{-- <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/assets/img/favicon.png') }}"> --}}
 	{{-- <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}"> --}}
+	{{-- <link rel="stylesheet" href="{{ asset('/assets/css/all.min.css') }}"> --}}
 	<link rel="stylesheet" href="{{ asset('/assets/css/font-awesome.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('/assets/css/line-awesome.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+	<link rel="stylesheet" href="{{ asset('/assets/css/style.css') }}">
 	<link rel="stylesheet" href="{{ asset('/assets/css/select2.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('/assets/css/bootstrap-datetimepicker.min.css') }}">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}">
+    {{-- <link rel="preconnect" href="https://fonts.gstatic.com"> --}}
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 	{{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
     @stack('page-css')
@@ -258,7 +259,7 @@
 							</a>
 						</li>
 						<li class="menu-title">
-							<span>Personal Information Module</span>
+							<span class="text-capitalize">Personal Information Module</span>
 						</li>
                         <li>
                             <a class='text-decoration-none' href="{{ route('employee.index') }}">
@@ -276,7 +277,7 @@
                             </a>
                         </li>
 						<li class="menu-title">
-							<span>Human Resource Module</span>
+							<span class="text-capitalize">Human Resource Module</span>
 						</li>
 						<li class="submenu">
 							<a href="#" class='text-decoration-none'><i class="la la-home"></i> <span> Leave Management </span> <span class="menu-arrow"></span></a>

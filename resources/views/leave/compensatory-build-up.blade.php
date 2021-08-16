@@ -2,11 +2,12 @@
 @section('title', 'Compensatory Build Up')
 @prepend('page-css')
 {{-- <script src="{{ asset('/js/app.js') }}" defer></script> --}}
-<link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" />
+<link rel="stylesheet" href="/assets/css/custom.css" />
 <link rel="stylesheet" href="/assets/css/bootstrap-float-label.min.css" />
 <link rel="stylesheet" href="/assets/css/line-awesome.min.css">
-<link rel="stylesheet" href="/assets/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="/assets/css/responsive.bootstrap4.min.css">
 <style>
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -19,9 +20,6 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
-
-.tableFixHead          { overflow: auto; height: 100px; }
-.tableFixHead thead th { background: white; position: sticky; top: 0; z-index: 1; }
 
 .modal-header {
     background: rgb(255,190,36);
@@ -37,8 +35,8 @@ input[type=number] {
 @section('content')
 <div class="row">  
     <div class="col-lg-12">
-        <div  id="compensatoryleavesTable" class="card shadow">
-            <div class="card-body">
+        <div id="compensatoryleavesTable">
+            <div>
             {{-- LIST OR DATA TABLES --}}
                 <div class="page-header">
                     <div class="row align-items-right mb-2 ">
@@ -49,23 +47,19 @@ input[type=number] {
                     </div>
                     <hr>
                     <div class="table-responsive">
-                        <table class="table table-compact text-center" id="compensatoryleaves" style="width:100%;">
+                        <table class="table table-condensed responsive display nowrap" id="compensatoryleaves" style="width:100%;">
                             <thead>
                                 <tr>
-                                    <th class="font-weight-bold align-middle text-center" rowspan="2" width="8%">Employee ID</th>
-                                    <th class="font-weight-bold align-middle text-center" rowspan="2">Employee Name</th>
-                                    <th class="font-weight-bold align-middle text-center" rowspan="2">As of</th>
-                                    <th class="font-weight-bold align-middle text-center" rowspan="1 " colspan="3">Compensatory Leave</th>
-                                    <th class="font-weight-bold align-middle text-center" rowspan="2" width="10%">Actions</th>
-                                </tr>
-                                <tr>
-                                    <th class="font-weight-bold align-middle text-center" width="10%">Earned</th>
-                                    <th class="font-weight-bold align-middle text-center" width="10%">Availed</th>
-                                    <th class="font-weight-bold align-middle text-center" width="10%">Balance</th>
+                                    <th class="font-weight-bold align-middle" >Employee ID</th>
+                                    <th class="font-weight-bold align-middle" >Employee Name</th>
+                                    <th class="font-weight-bold align-middle" >As of</th>
+                                    <th class="font-weight-bold align-middle" >CL Earned</th>
+                                    <th class="font-weight-bold align-middle" >CL Availed</th>
+                                    <th class="font-weight-bold align-middle" >CL Balance</th>
+                                    <th class="font-weight-bold align-middle" >Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                
                             </tbody>
                         </table>
                     </div>
@@ -74,7 +68,7 @@ input[type=number] {
         </div>
     </div>
     <div class="col-lg-12">
-        <div class="card shadow d-none" id="compensatoryLeaveCard">
+        <div class="card d-none" id="compensatoryLeaveCard">
             <div class="card-body">
             <form action="" method="POST" id="compensatoryLeave">
                     @csrf
@@ -189,10 +183,16 @@ input[type=number] {
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-md-12">
-                                <button type="button" class="text-white shadow btn btn-lg btn-success ml-1" id="btnEarn"><i class="la la-plus-circle"></i> Earn Compensatory</button>
-                                <button type="button" class="text-white shadow btn btn-lg btn-info ml-1" id="btnAvail"><i class="la la-cart-arrow-down"></i> Avail Compensatory</button>
-                                <button type="button" class="text-white shadow btn btn-lg btn-primary ml-1 float-right" id="btnBack"><i class="la la-list"></i>
+                            <div class="col-md-3 pr-1 pl-1">
+                                <button type="button" class="text-white shadow btn btn-lg btn-success btn-block mt-1" id="btnEarn"><i class="la la-plus-circle"></i> Earn Compensatory</button>
+                            </div>
+                            <div class="col-md-3 pr-1 pl-1">
+                                <button type="button" class="text-white shadow btn btn-lg btn-info btn-block mt-1" id="btnAvail"><i class="la la-cart-arrow-down"></i> Avail Compensatory</button>
+                            </div>
+                            <div class="col-md-3">
+                            </div>
+                            <div class="col-md-3">
+                                <button type="button" class="text-white shadow btn btn-lg btn-primary btn-block mt-1" id="btnBack"><i class="la la-list"></i>
                                     Go back to List
                                 </button>
                             </div>
@@ -223,6 +223,7 @@ input[type=number] {
                     <div class="col-lg-12">
                         <div class="form-group">
                             <input type="hidden" class='form-control' name="employee_id" id="employee_id">
+                            <input type="hidden" class='form-control' name="action" id="action">
                         </div>
                     </div>
                 </div>
@@ -230,21 +231,21 @@ input[type=number] {
                 <div class="row">
                     <div class="col-lg-6">
                         <label for="overtime_type" class="form-group has-float-label overtime_type">
-                            <select name="overtime_type" class="form-control" id="overtime_type"
+                            <select name="overtime_type" class="form-control overtime_type" id="overtime_type"
                                  style="outline: none; box-shadow: 0px 0px 0px transparent; height: 50px; font-size:18px; font-family:Century Gothic; text-align:right; ">
                                 <option value="weekdays">Week Days</option>
                                 <option value="weekends/holidays">Weekends / Holidays</option>
                             </select>
                             <span class="font-weight-bold">OVERTIME TYPE <span class='text-danger'>*</span></span>
                         </label>
-                        <div class='text-danger' id="overtimeType__error__element"></div>
+                        <div class='text-danger' id="overtime_type-error-message"></div>
                     </div>
                     <div class="col-lg-6">
                         <label for="date_added" class="form-group has-float-label">
-                            <input type="date" name="date_added" id="date_added" class="form-control"
+                            <input type="date" name="date_added" id="date_added" class="form-control date_added"
                              style="outline: none; box-shadow: 0px 0px 0px transparent; height: 50px; font-size:18px; font-family:Century Gothic; text-align:right; ">
                             <span class="font-weight-bold date-span"></span>
-                            <div class='text-danger' id="dateEarned__error__element"></div>
+                            <div class='text-danger' id="date_added-error-message"></div>
                         </label>
                         
                     </div>
@@ -253,16 +254,16 @@ input[type=number] {
                 <div class="row">
                     <div class="col-lg-6">
                         <label for="hours_rendered" class="form-group has-float-label hours_rendered">
-                            <input type="number" name="hours_rendered" id="hours_rendered" class="form-control" value="0"
+                            <input type="number" name="hours_rendered" id="hours_rendered" class="form-control hours_rendered" value="0"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent; height: 100px; font-size:75px; font-family:Century Gothic; text-align:right; ">
                             <span class="font-weight-bold">HOURS RENDERED<span class='text-danger'>*</span></span>
-                            <div class='text-danger' id="hours_rendered__error__element"></div>
+                            <div class='text-danger' id="hours_rendered-error-message"></div>
                         </label>
                     </div>
 
                     <div class="col-lg-6">
                         <label for="earned" class="form-group has-float-label earned">
-                            <input type="number" name="earned" id="earned" class="form-control" value="0"
+                            <input type="number" name="earned" id="earned" class="form-control earned" value="0"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent; height: 100px; font-size:75px; font-family:Century Gothic; text-align:right; " readonly>
                             <span class="font-weight-bold">LEAVE EARNINGS </span>
                         </label>
@@ -272,10 +273,10 @@ input[type=number] {
                 <div class="row">
                     <div class="col-lg-12">
                         <label for="availed" class="form-group has-float-label availed">
-                            <input type="number" name="availed" id="availed" class="form-control" value="0"
+                            <input type="number" name="availed" id="availed" class="form-control availed" value="0"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent; height: 100px; font-size:75px; font-family:Century Gothic; text-align:right; ">
                             <span class="font-weight-bold">Availment(hours)<span class='text-danger'>*</span></span>
-                            <div class='text-danger' id="availed__error__element"></div>
+                            <div class='text-danger' id="availed-error-message"></div>
                         </label>
                     </div>
                 </div>
@@ -283,9 +284,9 @@ input[type=number] {
                 <div class="row">
                     <div class="col-lg-12">
                         <label for="remarks" class="form-group has-float-label">
-                            <textarea id="remarks" name="remarks" rows="6" class="w-100 form-control" placeholder="Write your remarks here"></textarea>
+                            <textarea id="remarks" name="remarks" rows="6" class="w-100 form-control remarks" placeholder="Write your remarks here"></textarea>
                             <span class="font-weight-bold">REMARKS <span class='text-danger'>*</span></span>
-                            <div class='text-danger' id="remarks__error__element"></div>
+                            <div class='text-danger' id="remarks-error-message"></div>
                         </label>
                     </div>
                 </div>
@@ -434,10 +435,12 @@ $.ajaxSetup({
 $(document).ready( function () {
     const ROUTE = "{{ route('compensatory-build-up.list') }}";
     let table = $('#compensatoryleaves').DataTable({
+                responsive: true,
                 processing: true,
                 serverSide: true,
                 ordering: false,
                 paging: true,
+                pagingType: "full_numbers",
                 info: true,
                 searching: true,
                 language: {
@@ -459,13 +462,17 @@ $(document).ready( function () {
                         sortable: false
                     }
                 ],
+                columnDefs: [
+                        { responsivePriority: 1, targets: [0, 1] },
+                        { responsivePriority: 2, targets: 1 }
+                    ]
             });
 });
 
 </script>
 <script src="/assets/js/jquery.dataTables.min.js"></script>
 <script src="/assets/js/dataTables.bootstrap4.min.js"></script>
-<script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
+<script src="/assets/js/dataTables.responsive.min.js"></script>
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="/assets/js/sweetalert.min.js"></script>
 <script src="{{ asset('/assets/js/compensatory.js') }}"></script>
