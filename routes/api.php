@@ -192,19 +192,25 @@ Route::get('/office/salary/adjustment/peroffice/{officeCode}/{filterYear}', func
 
 //per office not selected
 Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}/query', function ($office_code) {
+    $records = collect([]);
     $data = DB::table('plantillas')
     ->join('employees', 'plantillas.employee_id', '=', 'employees.employee_id')
     ->join('plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
     ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
-    ->leftJoin('salary_adjustments', 'plantillas.employee_id', '=', 'salary_adjustments.employee_id')
+    ->join('salary_adjustments', 'plantillas.employee_id', '=', 'salary_adjustments.employee_id')
     ->select('plantilla_id', 'plantillas.item_no', 'plantillas.office_code', 'positions.position_name', 'plantillas.sg_no', 'plantillas.step_no', 'plantillas.salary_amount', 'salary_adjustments.employee_id', 'salary_adjustments.date_adjustment', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
     ->whereYear('plantillas.year', '=', date('Y'))
     ->where('plantillas.office_code',  '=' ,$office_code)
-    ->get()->filter(function ($record) {
+    ->get()->filter(function ($record) use ($records) {
         if(is_null($record->date_adjustment)) {
+            return false;
+        }
+
+        if(Carbon::parse($record->date_adjustment)->format('Y') !== date('Y') && !$records->contains($record->employee_id)) {
+            $records->push($record->employee_id);
             return true;
         }
-        return Carbon::parse($record->date_adjustment)->format('Y') !== date('Y');
+        return false;
     });
     return DataTables::of($data)
     ->editColumn('checkbox', function ($row) {
@@ -246,7 +252,8 @@ Route::post('/salary-adjustment-per-office', function () {
 
         DB::table('salary_adjustments')->updateOrInsert(
             [
-                'employee_id' => $newAdjustment->employee_id
+                'employee_id' => $newAdjustment->employee_id,
+                'date_adjustment' => request()->date
         ],
         [
             'employee_id'     => $newAdjustment->employee_id,

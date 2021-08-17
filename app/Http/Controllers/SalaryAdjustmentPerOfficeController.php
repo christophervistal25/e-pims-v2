@@ -65,7 +65,7 @@ class SalaryAdjustmentPerOfficeController extends Controller
     }
 
     public function NotSelectedlist(Request $request){
-        $salaryAdjustment = SalaryAdjustment::get()->pluck('employee_id')->toArray();
+        // $salaryAdjustment = SalaryAdjustment::get()->pluck('employee_id')->toArray();
         $data = DB::table('plantillas')
         ->join('employees', 'plantillas.employee_id', '=', 'employees.employee_id')
         ->join('plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')

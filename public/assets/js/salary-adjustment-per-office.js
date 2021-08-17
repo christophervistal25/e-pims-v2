@@ -400,10 +400,12 @@ function LockDepot() {
     let remarks = document.querySelector("#remarks").value;
     $("#saveBtn").attr("disabled", true);
     $("#loading").removeClass("d-none");
+    document.getElementById("saving").innerHTML = "Saving . . .";
     if (selectedItemInAdjustmentPerOffice == "") {
         swal("Please Select Employee", "", "error");
         $("#saveBtn").attr("disabled", false);
         $("#loading").addClass("d-none");
+        document.getElementById("saving").innerHTML = "Save";
     } else {
         $.ajax({
             type: "POST",
@@ -425,6 +427,7 @@ function LockDepot() {
                         .ajax.reload();
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
+                    document.getElementById("saving").innerHTML = "Save";
                     $("#selectAll").prop("checked", false);
                     $("#remarks").val("");
                     selectedItemInAdjustmentPerOffice = [];

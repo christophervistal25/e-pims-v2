@@ -204,10 +204,10 @@
 
 
                     <div class="form-group form-group submit-section col-12">
-                        <button id="saveBtn" class="btn btn-primarys submit-btn float-right" type="submit"><i class="fas fa-save"></i>
+                        <button id="saveBtn" class="btn btn-primarys submit-btn float-right" type="submit">
                             <span id="loading" class="spinner-border spinner-border-sm d-none" role="status"
-                                aria-hidden="false"></span>
-                            Save
+                                aria-hidden="false"></span> <i class="fas fa-save"></i>
+                            <b id="saving">Save</b>
                         </button>
                         <button style="margin-right:10px;" type="button" onclick="myFunction()" id="cancelbutton1"
                             class="text-white btn btn-danger submit-btn float-right"><i class="fas fa-ban"></i> Cancel</button>

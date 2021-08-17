@@ -307,6 +307,7 @@ $(document).ready(function() {
         let data = $(this).serialize();
         $("#saveBtn").attr("disabled", true);
         $("#loading").removeClass("d-none");
+        document.getElementById("saving").innerHTML = "Saving . . .";
         $.ajax({
             type: "POST",
             url: "/service-records",
@@ -357,6 +358,7 @@ $(document).ready(function() {
                     swal("Sucessfully Added!", "", "success");
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
+                    document.getElementById("saving").innerHTML = "Save";
                 }
             },
             error: function(response) {
@@ -468,6 +470,7 @@ $(document).ready(function() {
                     });
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
+                    document.getElementById("saving").innerHTML = "Save";
                 }
             }
         });
