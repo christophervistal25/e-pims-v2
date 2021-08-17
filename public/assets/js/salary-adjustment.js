@@ -259,16 +259,6 @@ $(document).ready(function() {
             error: function(response) {
                 console.log(response);
                 if (response.status === 422) {
-                    // if (errors.hasOwnProperty("dateAdjustment")) {
-                    //     $("#dateAdjustment").addClass("is-invalid");
-                    //     $("#date-adjustment-error-message").html("");
-                    //     $("#date-adjustment-error-message").append(
-                    //         `<span>${errors.dateAdjustment[0]}</span>`
-                    //     );
-                    // } else {
-                    //     $("#dateAdjustment").removeClass("is-invalid");
-                    //     $("#date-adjustment-error-message").html("");
-                    // }
                     let errors = response.responseJSON.errors;
                     if (errors.hasOwnProperty("employeeName")) {
                         $(".employeeName .dropdown").addClass("is-invalid");
@@ -424,4 +414,11 @@ function myFunction() {
     $("#employeeName")
         .val("Please Select")
         .trigger("change");
+}
+
+function clickme() {
+    $("#employee-error-message").html("");
+    $(".employeeName .dropdown").removeClass("is-invalid");
+    $("#salary-new-error-message").html("");
+    $("#salaryNew").removeClass("is-invalid");
 }
