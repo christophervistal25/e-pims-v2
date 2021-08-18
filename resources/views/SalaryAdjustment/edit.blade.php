@@ -40,7 +40,7 @@
                     <label class="has-float-label mb-0">
                         <input style="outline: none; box-shadow: 0px 0px 0px transparent;"
                             class="form-control {{ $errors->has('dateAdjustment')  ? 'is-invalid' : ''}}"
-                            value="{{ $salaryAdjustment->date_adjustment }}"
+                            value="{{ $salaryAdjustment->date_adjustment->format('m-d-Y') }}"
                             name="dateAdjustment" id="dateAdjustment" type="text">
                         <span class="font-weight-bold">DATE ADJUSTMENT<span class="text-danger">*</span></span>
                     </label>

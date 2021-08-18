@@ -459,6 +459,7 @@ function LockDepot() {
     let coveredYear = document.querySelector("#year").value;
     $("#saveBtn").attr("disabled", true);
     $("#loading").removeClass("d-none");
+    document.getElementById("post").innerHTML = "Posting . . .";
     let ids = [];
     $(".id__holder").each(function(key, element) {
         if (element.getAttribute("data-id")) {
@@ -469,6 +470,7 @@ function LockDepot() {
         swal("No Data Available on Table", "", "warning");
         $("#saveBtn").attr("disabled", false);
         $("#loading").addClass("d-none");
+        document.getElementById("post").innerHTML = "Post";
     } else {
         swal({
             title: "Are you sure you want to Post?",
@@ -500,6 +502,7 @@ function LockDepot() {
                                 .ajax.reload();
                             $("#saveBtn").attr("disabled", false);
                             $("#loading").addClass("d-none");
+                            document.getElementById("post").innerHTML = "Post";
                             ids = [];
                             $("#yearFilter").append(
                                 "<option value=" +
@@ -517,6 +520,7 @@ function LockDepot() {
                 swal("Cancelled", "", "error");
                 $("#saveBtn").attr("disabled", false);
                 $("#loading").addClass("d-none");
+                document.getElementById("post").innerHTML = "Post";
             }
         });
     }

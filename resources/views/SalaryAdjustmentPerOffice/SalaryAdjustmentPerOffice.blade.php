@@ -104,7 +104,7 @@
 
             <button style="margin-top:10px;" id="saveBtn" class="btn btn-primarys submit-btn float-right" onclick="LockDepot()" type="submit">
                 <span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>
-                Submit
+                <b id="saving">Submit</b>
             </button>
 
 

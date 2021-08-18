@@ -10,7 +10,7 @@ use DateTimeInterface;
 class SalaryAdjustment extends Model
 {
     use SoftDeletes;
-    protected $dates = ['date_adjustment','deleted_at', 'date_adjustment'];
+    protected $dates = ['date_adjustment','deleted_at'];
     protected $fillable = [
         'employee_id',
         'item_no',
