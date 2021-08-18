@@ -489,13 +489,15 @@
                             // dateApproved : dateApproved.val()
                             },
                         method: 'PUT',
-                        success: function() {
-
-                            swal({
-                                    title: "Request has been approved!",
-                                    text : "You are also successfully updated a request",
-                                    icon: "success",
-                                });  
+                        success: function(response) {
+                            if(response.success) {
+                                swal({
+                                        title: "Request has been approved!",
+                                        text : "You are also successfully updated a request",
+                                        icon: "success",
+                                });
+                            }
+                            
 
                             },
                             

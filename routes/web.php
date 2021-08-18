@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\MSAccess;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -191,6 +192,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Employee Leave Card
     Route::get('employee-leave-card' , 'Account\Employee\LeaveCardController@index')->name('employee.leave.card.index');
 
+
+    Route::get('leave-certification-print', 'Account\Employee\LeaveCertificationController@index')->name('print-leave-certification');
+
     //  Employee Chat
     Route::get('employee-chat', 'Account\Employee\ChatController@index')->name('employee.chat');
 });
@@ -198,8 +202,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 Route::get('404', function () {
-    return view('errors.404');
-})->name('404-leave-application');
+    return view('errors.423');
+})->name('423-leave-application');
 
 
 // Jobs route.

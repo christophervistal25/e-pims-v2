@@ -40,7 +40,7 @@
                     <span class="dash-widget-icon"><i class="fa fa-bus"></i></span>
                     <div class="dash-widget-info">
                         <h3>{{ $vacationLeave['vacation_leave_earned'] }}</h3>
-                        <span class='text-uppercase font-medium'>vacation</span>
+                        <span class='text-uppercase font-weight-medium'>vacation</span>
                     </div>
                 </div>
             </div>
@@ -51,7 +51,7 @@
                     <span class="dash-widget-icon"><i class="fa fa-thermometer-half"></i></span>
                     <div class="dash-widget-info">
                         <h3>{{ $sickLeave['sick_leave_earned'] }}</h3>
-                        <span class='text-uppercase font-medium'>sick</span>
+                        <span class='text-uppercase font-weight-medium'>sick</span>
                     </div>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                     <span class="dash-widget-icon"><i class="fa fa-asterisk"></i></span>
                     <div class="dash-widget-info">
                         <h3>5</h3>
-                        <span class='text-uppercase font-medium'>mandatory</span>
+                        <span class='text-uppercase font-weight-medium'>mandatory</span>
                     </div>
                 </div>
             </div>
