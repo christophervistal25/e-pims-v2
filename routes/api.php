@@ -1,16 +1,18 @@
 <?php
+use App\Division;
+use App\Employee;
+use App\Plantilla;
+use Carbon\Carbon;
 use App\SalaryGrade;
 use App\service_record;
-use App\SalaryAdjustment;
-use Yajra\Datatables\Datatables;
-use App\PlantillaPosition;
-use App\Plantilla;
-use App\PlantillaSchedule;
-use App\Division;
 use App\PositionSchedule;
-use Carbon\Carbon;
-use App\EmployeeLeaveApplication;
+use App\SalaryAdjustment;
+use App\PlantillaPosition;
+use App\PlantillaSchedule;
+use Yajra\Datatables\Datatables;
 
+use App\EmployeeLeaveApplication;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -191,48 +193,19 @@ Route::get('/office/salary/adjustment/peroffice/{officeCode}/{filterYear}', func
 });
 
 //per office not selected
-Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}/query', function ($office_code) {
-    $records = collect([]);
-    $data = DB::table('plantillas')
-    ->join('employees', 'plantillas.employee_id', '=', 'employees.employee_id')
-    ->join('plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
-    ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
-    ->join('salary_adjustments', 'plantillas.employee_id', '=', 'salary_adjustments.employee_id')
-    ->select('plantilla_id', 'plantillas.item_no', 'plantillas.office_code', 'positions.position_name', 'plantillas.sg_no', 'plantillas.step_no', 'plantillas.salary_amount', 'salary_adjustments.employee_id', 'salary_adjustments.date_adjustment', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
-    ->whereYear('plantillas.year', '=', date('Y'))
-    ->where('plantillas.office_code',  '=' ,$office_code)
-    ->get()->filter(function ($record) use ($records) {
-        if(is_null($record->date_adjustment)) {
-            return false;
-        }
+Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}/query', function ($officeCode) {
+    
+    $data = Employee::has('plantilla')->with(['plantilla', 'plantilla.position', 'salary_adjustment' => function ($query) {
+        $query->whereYear('date_adjustment', '!=', date('Y'));
+    }])->whereDoesntHave('salary_adjustment')
+    ->get(['employee_id', 'firstname', 'middlename', 'lastname', 'extension']);
 
-        if(Carbon::parse($record->date_adjustment)->format('Y') !== date('Y') && !$records->contains($record->employee_id)) {
-            $records->push($record->employee_id);
-            return true;
-        }
-        return false;
-    });
     return DataTables::of($data)
-    ->editColumn('checkbox', function ($row) {
-        $checkbox = "<input id='checkbox$row->plantilla_id' style='transform:scale(1.35)' value='$row->plantilla_id' type='checkbox' />";
-        return $checkbox;
-    })->rawColumns(['checkbox'])
-    ->make(true);
-    // $salaryAdjustment = SalaryAdjustment::get()->pluck('employee_id')->toArray();
-    // $data = Plantilla::select('plantilla_id','item_no', 'office_code', 'pp_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position','employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code);
-    // return (new Datatables)->eloquent($data)
-    // ->addIndexColumn()
-    // ->addColumn('employee', function ($row) {
-    //     return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
-    // })
-    // ->addColumn('plantillaPosition', function ($row) {
-    //     return $row->plantillaPosition->position->position_name;
-    // })
-    // ->editColumn('checkbox', function ($row) {
-    //     $checkbox = "<input class='check-select' id='checkbox$row->plantilla_id' style='transform:scale(1.3)' value='$row->plantilla_id' type='checkbox' />";
-    //     return $checkbox;
-    // })->rawColumns(['checkbox'])
-    // ->make(true);
+                ->editColumn('checkbox', function ($row) {
+                    $checkbox = "<input id='checkbox{$row->plantilla->plantilla_id}' class='not-select-checkbox' style='transform:scale(1.35)' value='{$row->plantilla->plantilla_id}' type='checkbox' />";
+                    return $checkbox;
+                })->rawColumns(['checkbox'])
+                ->make(true);
 });
 
 

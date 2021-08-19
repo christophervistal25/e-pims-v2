@@ -56,14 +56,14 @@
         <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
 
             <div style='padding-top:20px; padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
-                <button id="cancelbutton" class="btn submit-btn btn-primarys float-right"><i class="fa fa-list"></i> Salary Adjustment List</button>
+                <button id="cancelButton" class="btn submit-btn btn-primarys float-right"><i class="fa fa-list"></i> Salary Adjustment List</button>
             </div>
             <div class="row">
             <div class="col-12">
                 <div class="alert alert-secondary text-center font-weight-bold" role="alert" >
                         <div class="row">
                             <div class="col-12 col-md-12">
-                        <p class="float-center" id="officeAdjustment"></p>
+                            <p class="float-center" id="officeAdjustment"></p>
                         </div>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
             </div>
         </div>
 
-            <button style="margin-top:10px;" id="saveBtn" class="btn btn-primarys submit-btn float-right" onclick="LockDepot()" type="submit">
+            <button style="margin-top:10px;" id="saveBtn" class="btn btn-primarys submit-btn float-right" type="submit">
                 <span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>
                 <b id="saving">Submit</b>
             </button>
@@ -137,7 +137,7 @@
 
             <div class="col-5 mb-2">
                     <div style="padding-right:20px;" class="float-right">
-                        <button id="addbutton" class="btn btn-primarys float-right" disabled><i class="fa fa-plus"></i> Adjust Salary</button>
+                        <button id="addButton" class="btn btn-primarys float-right" disabled><i class="fa fa-plus"></i> Adjust Salary</button>
                     </div>
                 </div>
             </div>
@@ -157,7 +157,6 @@
                     </tr>
                     </thead>
                 </table>
-                <p style="visibility: visible;" id="line" class="text-center">Please Select Office</p>
             </div>
         </div>
 

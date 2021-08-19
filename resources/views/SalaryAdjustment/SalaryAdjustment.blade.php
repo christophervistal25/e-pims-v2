@@ -245,7 +245,7 @@
                     <select value="" data-style="btn-primarys text-white"
                         class="form-control form-control-xs selectpicker yearAdjustment {{ $errors->has('yearAdjustment')  ? 'is-invalid' : ''}}"
                         name="yearAdjustment" data-live-search="true" id="yearAdjustment" data-size="5">
-                            <option value={{ Carbon\Carbon::now()->format('Y') }}>{{ Carbon\Carbon::now()->format('Y') }}</option>
+                            <option value="{{ Carbon\Carbon::now()->format('Y') }}">{{ Carbon\Carbon::now()->format('Y') }}</option>
                             @foreach ($dates as $date)
                             <option value={{ $date }}>{{ $date }}</option>
                             @endforeach

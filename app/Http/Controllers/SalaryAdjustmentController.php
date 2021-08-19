@@ -25,21 +25,34 @@ class SalaryAdjustmentController extends Controller
      */
     public function index()
     {
-        $dates = SalaryAdjustment::select('date_adjustment')->whereYear('date_adjustment', '!=', Carbon::now()->format('Y'))->get()->pluck('date_adjustment')->map(function ($date) {
-            return $date->format('Y');
-        })->toArray();
+        $dates = SalaryAdjustment::select('date_adjustment')
+                                    ->whereYear('date_adjustment', '!=', Carbon::now()->format('Y'))
+                                    ->get()
+                                    ->pluck('date_adjustment')
+                                    ->map(function ($date) {
+                                            return $date->format('Y');
+                                    })->toArray();
+
+                                    
         $dates = array_values(array_unique($dates));
 
         $year = SalaryGrade::select('sg_year')->distinct()->get();
 
         $position = Position::select('position_id', 'position_name')->get();
 
+        $currentYear = date('Y');
+
         $employee = Plantilla::select('item_no', 'pp_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id', 'year', 'status', 'office_code')
-                        ->with(['employee:employee_id,firstname,middlename,lastname,extension','plantillaPosition', 'plantillaPosition.position','plantillaPosition:pp_id,position_id,office_code,item_no,sg_no', 'salary_adjustment'])
-                            ->whereYear('year', date('Y'))
-                            ->get();
-                            $employee = $employee->filter(function ($record) {
-                               return !in_array(date('Y'), $record->salary_adjustment->pluck('date_adjustment_year')->toArray());
+                        ->with(['employee:employee_id,firstname,middlename,lastname,extension', 'plantillaPosition', 'plantillaPosition.position',
+                                'plantillaPosition:pp_id,position_id,office_code,item_no,sg_no', 'salary_adjustment'])
+                            ->where('plantillas.year', $currentYear)
+                            ->get()
+                            ->filter(function ($record) use($currentYear) {
+                                    $haystack = $record->salary_adjustment
+                                                        ->pluck('date_adjustment_year')
+                                                        ->toArray();
+
+                                    return !in_array($currentYear, $haystack);
                             });
 
         return view('SalaryAdjustment.SalaryAdjustment', compact('employee', 'position', 'dates', 'year'));

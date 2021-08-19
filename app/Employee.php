@@ -303,7 +303,7 @@ class Employee extends Model
 
     public function salary_adjustment()
     {
-        return $this->belongsTo(SalaryAdjustment::class, 'office_code', 'office_code');
+        return $this->belongsTo(SalaryAdjustment::class, 'employee_id', 'employee_id');
     }
 
 
