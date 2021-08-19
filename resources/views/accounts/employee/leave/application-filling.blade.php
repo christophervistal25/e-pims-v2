@@ -49,7 +49,7 @@
                             <span><strong>CONTROL NO.</strong></span>
                         </label> --}}
                                 <label for="typeOfLeave" class="form-group has-float-label">
-                                    <select class="form-control selectpicker border" id="typeOfLeave"
+                                    <select class="form-control selectpicker border type-of-leave" id="typeOfLeave"
                                         name="selectedLeave" data-live-search="true">
                                         <option selected disabled value="">-------------------------</option>
                                         @foreach($types->groupBy('category') as $category => $type)
@@ -67,15 +67,19 @@
                                         </strong>
                                     </span>
                                 </label>
-                                {{-- <label for="typeOthers" class="form-group has-float-label">
-                            <input type="text" name="typeOthers" id="typeOthers" class="form-control">
-                            <span><strong>IF OTHERS IS SELECTED</strong></span>
-                        </label> --}}
-                                <label for="inCaseOf" class="form-group has-float-label">
-                                    <select class="form-control" id="inCaseOf" name="inCaseOfLeave"></select>
-                                    <span id="in_case_of__label"><strong>IN CASE OF <span
-                                                class='text-danger'>*</span></strong></span>
-                                </label>
+
+
+                                <div id="inCaseOfContainer">
+                                    <label for="inCaseOf" class="form-group has-float-label">
+                                        <select class="form-control" id="inCaseOf" name="inCaseOfLeave"></select>
+                                            <span id="in_case_of__label">
+                                                <strong>IN CASE OF 
+                                                    <span class='text-danger'>*</span>
+                                                </strong>
+                                            </span>
+                                    </label>
+                                </div>
+                                
                                 <div class="col-auto p-0">
                                     <label for="startDate" class="form-group has-float-label">
                                         <input type="date" class="form-control" id="startDate" name="startDate"
@@ -103,26 +107,32 @@
                                 <hr>
 
                                 <div class="row">
-                                    <div class="col-4">
-                                        <label for="earned" class="form-group has-float-label">
-                                            <input type="text" id="earned" class="form-control" name="earned" >
-                                            <span id="earnedLabel"><strong>EARNED</strong></span>
-                                        </label>
-                                    </div>
-                                    <div class="col-4">
+                                    <div class="col-6">
                                         <label for="earnedLess" class="form-group has-float-label">
-                                            <input type="text" id="earnedLess" class="form-control" name="earnedLess"
-                                                >
+                                            <input type="text" id="earnedLess" class="form-control" name="earnedLess" readonly>
                                             <span id="earnedLessLabel"><strong>LESS</strong></span>
                                         </label>
 
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-6">
                                         <label for="earnedRemain" class="form-group has-float-label">
-                                            <input type="text" id="earnedRemaining" class="form-control"
-                                                name="earnedRemain" >
+                                            <input type="text" id="earnedRemaining" class="form-control" name="earnedRemain" readonly>
                                             <span id="earnedRemainLabel"><strong>REMAINING</strong></span>
                                         </label>
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <div class="float-right">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="leave_has_pay" id="withPay" value="with_pay" disabled>
+                                                <label class="form-check-label text-sm" for="withPay">W/ PAY</label>
+                                            </div>
+
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="leave_has_pay" id="withoutPay" value="without_pay" disabled>
+                                                <label class="form-check-label text-sm" for="withoutPay">W/O PAY</label>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="col-lg-12">
@@ -204,8 +214,8 @@
                                     </div>
 
                                     <div class="col-lg-12">
-                                        <label for="sick__leave__balance" class="form-group has-float-label mt-4">
-                                            <input type="number" class="form-control" id="sick__leave__balance" disabled
+                                        <label for="mandatory__leave__balance" class="form-group has-float-label mt-4">
+                                            <input type="number" class="form-control" id="mandatory__leave__balance" disabled
                                                 value="5" name="mandatoryLeaveBalance">
                                             <span><strong>MANDATORY LEAVE</strong></span>
                                         </label>
@@ -263,164 +273,178 @@
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="{{ asset('/assets/js/custom/leave/leave.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.js"></script>
-{{-- <script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script> --}}
+<script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>
 <script>
-    // const socket = io.connect("{{ env('MIX_SOCKET_IP') }}");
+    const socket = io.connect("{{ env('MIX_SOCKET_IP') }}");
     const ROUTE = "{{ route('employee.leave.application.filling.submit') }}";
     const VACATION_LEAVE_EARNED = "{{ $vacationLeaveEarned }}";
     const SICK_LEAVE_EARNED = "{{ $sickLeaveEarned }}";
-
+    
+    const vacationLeaveIncaseOf = ['WITHIN THE PHILIPPINES', 'ABROAD'];
+    const sickLeaveIncaseOf = ['IN HOSPITAL', 'OUT PATIENT'];
+    
     let types = $('meta[name="leave-types"]').attr('content');
+    let hasError = [];
+
+    
+    $('#inCaseOf').children().remove();
+    $('#earnedLess').val(0);
+    $('#earnedRemaining').val(0);
+    $('#inCaseOfContainer').addClass('d-none');
 
 
     $('#typeOfLeave').change(function (e) {
         let selectedType = $(this).val();
         let [type] = JSON.parse(types).filter((type) => type.code_number == selectedType);
-
-        $('#inCaseOf').children().remove();
-
-        $('#earned').val(0);
-        $('#earnedLess').val(0);
-        $('#earnedRemaining').val(0);
+        let incaseOf = [];
+                        
 
         switch (type.code_number) {
+            // Mandatory Leave
             case 10003:
-                $('#endDate').val(moment().add(5, 'days').format('YYYY-MM-DD'));
+                $('#inCaseOfContainer').addClass('d-none');
+                $('#withPay, #withoutPay').attr('disabled', true);
                 break;
 
+            // Vacation Leave
             case 10002:
-                
-                $('#inCaseOf').attr('disabled', false)
-                            .append(
-                                `<option value="within_the_philippines">WITHIN THE PHILIPPINES</option>`)
-                            .append(`<option value="abroad">ABROAD</option>`);
-
-                LeaveApplicationHelper.points(type.days_period, VACATION_LEAVE_EARNED)
-                    .then((data) => {
-                        $('#error_message_for_points').html('');
-
-                        // Set data for earned, less, and remaining.
-                        $('#earned').val(data.earned_points);
-                        $('#earnedLess').val(data.period_days);
-                        $('#earnedRemaining').val(parseFloat(data.earned_points - data.period_days));
-
-                        // Insert values for in case of, by type.
-                        $('#in_case_of__label').text(`IN CASE OF ${type.name}`);
-                    });
-
-                    // .catch((fail) => {
-                    //     // Disabled date fields and in case of.
-                    //     $('#startDate, #endDate').attr('readonly', true);
-                    //     $('#inCaseOf').attr('disabled', true);
-
-                    //     // Remove values for in case of, by type.
-                    //     $('#in_case_of__label').text(`IN CASE OF`);
-                    //     $('#inCaseOf').children().remove();
-                    // })
+                incaseOf = vacationLeaveIncaseOf;
+                $('#inCaseOfContainer').removeClass('d-none');
                 break;
 
+            // Sick Leave
             case 10001:
-                $('#inCaseOf').attr('disabled', false)
-                            .append(`<option value="in_hospital">IN HOSPITAL</option>`)
-                            .append(`<option value="out_patient">OUT PATIENT</option>`);
-
-                LeaveApplicationHelper.points(type.days_period, SICK_LEAVE_EARNED)
-                    .then((data) => {
-                        $('#error_message_for_points').html('');
-                        // Set data for earned, less, and remaining.
-                        $('#earned').val(data.earned_points);
-                        $('#earnedLess').val(data.period_days);
-                        $('#earnedRemaining').val(parseFloat(data.earned_points - data.period_days));
-                        
-                        // Insert values for in case of, by type.
-                        $('#in_case_of__label').text(`IN CASE OF ${type.name}`);
-                    });
+                incaseOf = sickLeaveIncaseOf;
+                $('#inCaseOfContainer').removeClass('d-none');
+                $('#withPay, #withoutPay').attr('disabled', false);
                 break;
-
-            default:
-
         }
 
-
-
+        // Dynamically insert value for incase of.
+        $('#inCaseOf').children().remove();
+        incaseOf.map((data) => $('#inCaseOf').append(`<option value="${data}">${data}</option>`));
+        $('.type-of-leave').removeClass('is-invalid');
+        if($("#startDate").val().length !== 0 && $('#endDate').val().length !== 0) {
+            $('#startDate, #endDate').trigger('change')
+        }
     });
 
     $('#startDate').change(function () {
-        let startDate = $('#startDate').val()
-        let endDate = $('#endDate').val();
-
-        let dateNow = moment();
-
-        let startDateDay = moment(startDate);
-        let endDateDay = moment(endDate);
-
-        $('#noOfDays').val(endDateDay.diff(startDateDay, 'days'));
+        let fiveDaysAdvance = moment().add(5, 'days').format('YYYY-MM-DD');
+        let startDate = $('#startDate').val();
+        let endDate = $("#endDate").val();
+        let selectedLeaveType = $('#typeOfLeave').val();
 
 
-        let period = $('#noOfDays').val();
+        if(moment(startDate).isBefore(fiveDaysAdvance, 'day')) {
+            $('#startDate').addClass('is-invalid');
+            hasError = true;
+        } else if(moment(startDate).isSame(endDate, 'day')) {
+            $('#startDate').addClass('is-invalid');
+            hasError = true;
+        } else if(moment(startDate).isAfter(endDate)) {
+            $('#startDate').addClass('is-invalid'); 
+            hasError = true;
+        } else {
+            hasError = false;
+            $('#startDate').removeClass('is-invalid')
+                        .addClass('is-valid');
+        }
 
-        LeaveApplicationHelper.points(period, VACATION_LEAVE_EARNED).then((data) => {
-            $('#earnedLess').val(parseFloat(data.period_days));
+        if(!selectedLeaveType) {
+            $('.type-of-leave').addClass('is-invalid');
+            hasError = true;
+        } else {
+            let [type] = JSON.parse(types).filter((type) => type.code_number == selectedLeaveType);
 
-            let remaining = $('#earned').val() - $('#earnedLess').val();
+            switch (type.code_number) {
+                case 10003:
+                    points = 5;
+                    break;
 
-            $('#earnedRemaining').val(parseFloat(remaining));
-        }).catch((fail) => {
-            let need = parseFloat(fail.earned_points - fail.period_days);
-            $('#earnedLess').val(0.000);
-            $('#earnedRemaining').val(0.000);
-            if (need <= 0) {
-                $('#error_message_for_points').html('').html(
-                    `<p class='text-danger font-weight-bold'>${fail.message} you need ${Math.abs(need)} or more points.</p>`
-                    );
+                case 10002:
+                    points = VACATION_LEAVE_EARNED;
+                    break;
+
+                case 10001:
+                    points = SICK_LEAVE_EARNED;
+                    break;
             }
-        });
 
+            // Calculate no. of days ask for leave.
+            let noOfDays = moment(endDate).diff(startDate, 'days');
+            if(!hasError) {
+                $('#noOfDays').val(noOfDays >= 0 ? noOfDays : '');
+            }
+
+            if(noOfDays >= 1 && !hasError) {
+                $('#earnedLess').val(noOfDays);
+                $('#earnedRemaining').val(points - noOfDays);
+            } else {
+                $('#earnedLess').val('');
+                $('#earnedRemaining').val('');
+            }
+
+        }
     });
 
     $('#endDate').change(function () {
-        let startDate = $('#startDate').val();
-        let endDate = $('#endDate').val();
+        let startDate         = $('#startDate').val();
+        let endDate           = $('#endDate').val();
         let selectedLeaveType = $('#typeOfLeave').val();
-        let points = 0;
+        let points            = 0;
+        
+        if(!selectedLeaveType) {
+            hasError = true;
+            $('.type-of-leave').addClass('is-invalid');
+        } else {
+            let [type] = JSON.parse(types).filter((type) => type.code_number == selectedLeaveType);
+            let fiveDaysAdvance = moment().add(5, 'days').format('YYYY-MM-DD');
 
-        let [type] = JSON.parse(types).filter((type) => type.code_number == selectedLeaveType);
+            if(moment(endDate).isBefore(startDate, 'day')) {
+                hasError = true;
+                $('#endDate').addClass('is-invalid');
+            } else if(moment(endDate).isSame(startDate, 'day')) {
+                hasError = true;
+                $('#endDate').addClass('is-invalid');
+            } else if(moment(endDate).isBefore(fiveDaysAdvance, 'day')) {
+                hasError = true;
+                $('#endDate').addClass('is-invalid');
+            } else {
+                hasError = false;
+                $('#endDate').removeClass('is-invalid')
+                            .addClass('is-valid');
+            }
 
-        switch (type.code_number) {
-            case 10003:
-                points = 5;
-                break;
+            switch (type.code_number) {
+                case 10003:
+                    points = 5;
+                    break;
 
-            case 10002:
-                points = VACATION_LEAVE_EARNED;
-                break;
+                case 10002:
+                    points = VACATION_LEAVE_EARNED;
+                    break;
 
-            case 10001:
-                points = SICK_LEAVE_EARNED;
-                break;
+                case 10001:
+                    points = SICK_LEAVE_EARNED;
+                    break;
+            }
+
+
+            // Calculate no. of days ask for leave.
+            let noOfDays = moment(endDate).diff(startDate, 'days');
+            if(!hasError) {
+                $('#noOfDays').val(noOfDays >= 0 ? noOfDays : '');
+            }
+            
+            if(noOfDays >= 1 && !hasError) {
+                $('#earnedLess').val(noOfDays);
+                $('#earnedRemaining').val(points - noOfDays);
+            } else {
+                $('#earnedLess').val('');
+                $('#earnedRemaining').val('');
+            }
         }
-
-
-        // Calculate no. of days ask for leave.
-        $('#noOfDays').val(moment(endDate).diff(startDate, 'days'));
-
-        let period = $('#noOfDays').val();
-
-        LeaveApplicationHelper.points(period, points).then((data) => {
-            $('#error_message_for_points').html('');
-            $('#earnedLess').val(parseFloat(data.period_days));
-
-            let remaining = $('#earned').val() - $('#earnedLess').val();
-
-            $('#earnedRemaining').val(parseFloat(remaining));
-        }).catch((fail) => {
-            let need = parseFloat(fail.earned_points - fail.period_days);
-            $('#earnedLess').val(0.000);
-            $('#earnedRemaining').val(0.000);
-            $('#error_message_for_points').html('').html(
-                `<p class='text-danger font-weight-bold'>${fail.message} you need ${Math.abs(need)} or more points.</p>`
-                );
-        });
     });
 
     $('#apply--for--leave--form').submit(function (e) {
@@ -459,7 +483,7 @@
 
                     data.fullname = response.fullname;
 
-                    // socket.emit(`submit_application_for_leave`, data);
+                    socket.emit(`submit_application_for_leave`, data);
                 }
             },
             error: function (response) {

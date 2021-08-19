@@ -28,14 +28,14 @@ class LeaveApplicationRepository
         return $employeeServiceDays >= $leaveType->required_rendered_service;
     }
 
-    private function isEmployeePointsEnough(int $earned, LeaveType $leaveType) : bool
+    private function isEmployeePointsEnough(int $earned, int $noOfDays) : bool
     {
-        return $earned >= $leaveType->days_period;
+        return $earned >= $noOfDays;
     }
 
     
 
-    public function fileApplication(Employee $employee, LeaveType $leaveType)
+    public function fileApplication(Employee $employee, LeaveType $leaveType, int $noOfDays)
     {
         // applicable_to_gender
         if(!$this->isGenderApplicable($employee->sex, $leaveType)) {
@@ -53,8 +53,8 @@ class LeaveApplicationRepository
         $earned = EmployeeLeaveRecord::where(['leave_type_id' => $leaveType->id, 'employee_id' => $employee->employee_id])
                                         ->get()
                                         ->sum('earned');
-
-        if(!$this->isEmployeePointsEnough($earned, $leaveType)) {
+        
+        if(!$this->isEmployeePointsEnough($earned, $noOfDays)) {
             return ['status' => false, 'message' => 'Something went wrong please refresh this page and check your leave points for this leave type.'];
         }
 

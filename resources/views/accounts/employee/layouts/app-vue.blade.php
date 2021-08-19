@@ -228,7 +228,7 @@
         </div>
         <!-- /Header -->
         <!-- Sidebar -->
-         <div class="sidebar" id="sidebar">
+        <div class="sidebar" id="sidebar">
             <div class="sidebar-inner slimscroll">
                 <div id="sidebar-menu" class="sidebar-menu">
                     <ul>
@@ -236,33 +236,31 @@
                             <span>Main</span>
                         </li>
                         <li>
-                            <a class=""
-                                href="{{  route('employee.dashboard') }}"><i class="la la-dashboard"></i> <span>Dashboard</span></a>
+                            <a class="" href="{{  route('employee.dashboard') }}"><i
+                                    class="las la-digital-tachograph"></i> <span>Dashboard</span></a>
                         </li>
                         <li>
-                            <a class=""
-                                href="{{ route('employee.personal-data-sheet') }}"><i class="la la-file-text"></i> <span>Personal Data Sheet</span></a>
+                            <a class="" href="{{ route('employee.personal-data-sheet') }}"><i
+                                    class="la la-file-signature"></i> <span>Personal Data Sheet</span></a>
                         </li>
                         <li class="submenu">
-                            <a href="#"><i class="la la-suitcase"></i> <span> Leaves</span> <span
+                            <a href="#"><i class="la la-suitcase-rolling"></i> <span> Leaves</span> <span
                                     class="menu-arrow"></span></a>
                             <ul style="display: none;">
-                                <li><a class=""
-                                        href="{{  route('employee.leave.application.filling') }}">Leave Application Filling</a></li>
+                                <li><a class="" href="{{ route('employee.leave.application.filling') }}">Leave
+                                        Application Filling</a></li>
                                 <li>
-                                    <a class=""
-                                        href="employee-dashboard">Leave Card</a>
+                                    <a class="" href="{{ route('employee.leave.card.index') }}">Leave Card</a>
                                 </li>
                                 <li>
-                                    <a 
-                                        href="">Certification
+                                    <a href="">Certification
                                     </a>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a class=""
-                                href="#"><i class="la la-comment"></i> <span>Chat</span></a>
+                            <a class="" href="{{ route('employee.chat') }}"><i class="lar la-comments"></i>
+                                <span>Chat</span></a>
                         </li>
                     </ul>
                 </div>

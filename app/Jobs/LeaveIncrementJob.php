@@ -55,6 +55,7 @@ class LeaveIncrementJob implements ShouldQueue
                     'earned'        => LeaveIncrement::find(1, ['increment'])->increment,
                     'used'          => 0,
                     'particular'    => 'EL',
+                    'record_type'          => EmployeeLeaveRecord::TYPES['INCREMENT'],
                 ]
             );
 
@@ -65,6 +66,7 @@ class LeaveIncrementJob implements ShouldQueue
                     'earned'        => LeaveIncrement::find(2, ['increment'])->increment,
                     'used'          => 0,
                     'particular'    => 'EL',
+                    'record_type'          => EmployeeLeaveRecord::TYPES['INCREMENT'],
                 ]
             );
         }

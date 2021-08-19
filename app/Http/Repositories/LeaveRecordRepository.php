@@ -19,9 +19,41 @@ class LeaveRecordRepository extends LeaveApplicationRepository
 
     public function getAsOfDate(string $employeeID) : string
     {
-        return EmployeeLeaveRecord::where('employee_id', $employeeID)
+        return EmployeeLeaveRecord::with('type')
+                                ->where('employee_id', $employeeID)
                                 ->whereNotNull('fb_as_of')
+                                ->where('record_type', 'F')
                                 ->first()['fb_as_of'] ?? '';
+    }
+
+    
+    public function getForwardedRecord(string $employeeID) : Collection
+    {
+        return EmployeeLeaveRecord::with('type')
+                                ->where('employee_id', $employeeID)
+                                ->whereNotNull('fb_as_of')
+                                ->where('record_type', 'F')
+                                ->orderBy('created_at', 'ASC')
+                                ->get();
+    }
+
+    public function getSickLeaveInForwarded(Collection $data)
+    {
+        return $data->where('type.code_number', self::SICK_LEAVE_CODE_NUMBER)->first();
+    }
+
+    public function getVacationLeaveInForwarded(Collection $data)
+    {
+        return $data->where('type.code_number', self::VACATION_LEAVE_CODE_NUMBER)->first();
+    }
+
+    public function getRecordsWithoutForwarded(string $employeeID) : Collection
+    {
+        return EmployeeLeaveRecord::with('type')
+                                ->where('employee_id', $employeeID)
+                                ->where('record_type', 'I')
+                                ->orWhere('record_type', 'D')
+                                ->get();
     }
 
     private function getRecordByLeaveCode(int $codeNumber, string $employeeID) : Collection

@@ -79,11 +79,11 @@
                     </div>
 
                     <div class="form-group col-12 col-lg-3">
-                        <label class="has-float-label mb-0 employeeName " for="employeeName">
+                        <label class="has-float-label mb-0 employeeName" for="employeeName">
                             <select value=""
                                 class="form-control form-control-xs selectpicker"
                                 name="employeeName" data-live-search="true" id="employeeName" data-size="5"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                style="outline: none; box-shadow: 0px 0px 0px transparent;" onchange="clickme()">
                                 <option></option>
                                 @foreach($employee as $employees)
                                 <option data-plantilla="{{ $employees }}"
@@ -167,15 +167,8 @@
 
                     <div class="form-group col-12 col-lg-3 mt-2">
                         <label class="has-float-label mb-0">
-                            <select name="currentSgyear" id="currentSgyear" value="" class="select floating" disabled>
-                                {{ $year3 = date("Y",strtotime("-0 year")) }}
-                                <option value={{ $year3 }}>{{ $year3 }}</option>
-                                @foreach (range(1, 3) as $year)
-                                {{ $year1 = date("Y",strtotime("$year year")) }}
-                                <option {{ old('sgYear') == $year1 ? 'selected' : '' }} value={{ $year1 }}>{{ $year1 }}
-                                </option>
-                                @endforeach
-                            </select>
+                            <input class="form-control" value="{{ Carbon\Carbon::now()->format('Y') }}" name="currentSgyear" id="currentSgyear" type="text"
+                            readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
                         <span class="font-weight-bold">CURRENT YEAR</span>
                     </label>
                         <div id='previous-year-error-message' class='text-danger text-sm'>
@@ -231,10 +224,10 @@
                     </div>
 
                     <div class="form-group form-group submit-section col-12">
-                        <button id="saveBtn" class="btn btn-primarys submit-btn float-right shadow" type="submit"><i class="fas fa-save"></i>
+                        <button id="saveBtn" class="btn btn-primarys submit-btn float-right shadow" type="submit">
                             <span id="loading" class="spinner-border spinner-border-sm d-none" role="status"
-                                aria-hidden="false"></span>
-                            Save
+                                aria-hidden="false"></span> <i class="fas fa-save"></i>
+                            <b id="saving">Save</b>
                         </button>
                         <button style="margin-right:10px;" type="button" onclick="myFunction()" id="cancelbutton1"
                             class="text-white btn btn-danger submit-btn float-right shadow"><i class="fas fa-ban"></i> Cancel</button>
@@ -250,7 +243,7 @@
             <div class="row">
                 <div class="col-3 mb-2">
                     <select value="" data-style="btn-primarys text-white"
-                        class="form-control form-control-xs selectpicker yearAdjustment {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}"
+                        class="form-control form-control-xs selectpicker yearAdjustment {{ $errors->has('yearAdjustment')  ? 'is-invalid' : ''}}"
                         name="yearAdjustment" data-live-search="true" id="yearAdjustment" data-size="5">
                             <option value={{ Carbon\Carbon::now()->format('Y') }}>{{ Carbon\Carbon::now()->format('Y') }}</option>
                             @foreach ($dates as $date)

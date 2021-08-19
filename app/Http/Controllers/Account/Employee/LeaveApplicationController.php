@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Account\Employee;
 
 use App\Office;
 use App\LeaveType;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\EmployeeLeaveApplication;
 use App\Http\Controllers\Controller;
@@ -60,16 +61,18 @@ class LeaveApplicationController extends Controller
 
             if($hasPendingLeave) {
                 return response()->json(['success' => false, 'message' => 'You already have a pending request please wait for the approval before filing new application.'], 423);
-            } 
-            
+            }
+
+            $startDate = Carbon::now()->addDays(5);
+
             // Validation with employee balance look-up
             $this->validate($request, [
                 'approvedBy'           => ['required'],
                 'recommendingApproval' => ['required'],
                 'commutation'          => ['required'],
                 'dateApply'            => ['required'],
-                'startDate'            => ['required'],
-                'endDate'              => ['required'],
+                'startDate'            => ['required', 'after:' . $startDate->format('Y-m-d')],
+                'endDate'              => ['required', 'after:' . $startDate->format('Y-m-d')],
                 'inCaseOf'             => ['required'],
                 'noOfDays'             => ['required'],
                 'typeOfLeave'          => ['required'],
@@ -79,7 +82,7 @@ class LeaveApplicationController extends Controller
 
 
             $response = $this->leaveRecordRepository
-                            ->fileApplication($employee->first(['first_day_of_service', 'sex', 'employee_id']), $leaveType);
+                            ->fileApplication($employee->first(['first_day_of_service', 'sex', 'employee_id']), $leaveType, $request->noOfDays);
 
             if(!$response['status']) {
                 return response()->json(['success' => false, 'message' => $response['message']], 424);

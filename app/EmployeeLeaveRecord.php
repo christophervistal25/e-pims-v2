@@ -17,7 +17,11 @@ class EmployeeLeaveRecord extends Model
         'particular',
         'absences_under_time_with_pay_balance',
         'absences_under_time_without_pay_balance',
+        'record_type',
     ];
+
+    public const TYPES = ['FORWARD' => 'F', 'INCREMENT' => 'I', 'DECREMENT' => 'D'];
+    
     public function type()
     {
         return $this->hasOne(LeaveType::class, 'id', 'leave_type_id');

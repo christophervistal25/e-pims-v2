@@ -55646,9 +55646,9 @@ class EmployeeSeeder extends Seeder
         $time = rand($min,$max);
 
         foreach($data as $key => $employee) {
-            // if($key === 20) {
-                // break;
-            // }
+            if($key === 5) {
+                break;
+            }
                 
         Employee::create([
                 'employee_id'          => $employee['employee_id'],

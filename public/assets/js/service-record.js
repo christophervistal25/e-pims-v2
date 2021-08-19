@@ -307,6 +307,7 @@ $(document).ready(function() {
         let data = $(this).serialize();
         $("#saveBtn").attr("disabled", true);
         $("#loading").removeClass("d-none");
+        document.getElementById("saving").innerHTML = "Saving . . .";
         $.ajax({
             type: "POST",
             url: "/service-records",
@@ -357,6 +358,7 @@ $(document).ready(function() {
                     swal("Sucessfully Added!", "", "success");
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
+                    document.getElementById("saving").innerHTML = "Save";
                 }
             },
             error: function(response) {
@@ -468,6 +470,7 @@ $(document).ready(function() {
                     });
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
+                    document.getElementById("saving").innerHTML = "Save";
                 }
             }
         });
@@ -520,3 +523,49 @@ function myFunction() {
         $(`${value}`).html("");
     });
 }
+$(document).ready(function() {
+    $("#fromDate").keyup(function() {
+        $("#fromDate").removeClass("is-invalid");
+        $("#from-date-error-message").html("");
+    });
+
+    $("#toDate").keyup(function() {
+        $("#toDate").removeClass("is-invalid");
+        $("#to-date-error-message").html("");
+    });
+
+    $("#positionTitle").change(function() {
+        $(".positionTitle .dropdown").removeClass("is-invalid");
+        $("#position-title-error-message").html("");
+    });
+
+    $("#status").change(function() {
+        $(".statuss .dropdown").removeClass("is-invalid");
+        $("#status-error-message").html("");
+    });
+
+    $("#salary").keyup(function() {
+        $("#salary").removeClass("is-invalid");
+        $("#salary-error-message").html("");
+    });
+
+    $("#officeCode").change(function() {
+        $(".officeCode .dropdown").removeClass("is-invalid");
+        $("#office-error-message").html("");
+    });
+
+    $("#leavePay").keyup(function() {
+        $("#leavePay").removeClass("is-invalid");
+        $("#leave-pay-error-message").html("");
+    });
+
+    $("#date").keyup(function() {
+        $("#date").removeClass("is-invalid");
+        $("#date-error-message").html("");
+    });
+
+    $("#cause").keyup(function() {
+        $("#cause").removeClass("is-invalid");
+        $("#cause-error-message").html("");
+    });
+});
