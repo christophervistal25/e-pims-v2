@@ -195,10 +195,25 @@ Route::get('/office/salary/adjustment/peroffice/{officeCode}/{filterYear}', func
 //per office not selected
 Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}/query', function ($officeCode) {
     
-    $data = Employee::has('plantilla')->with(['plantilla', 'plantilla.position', 'salary_adjustment' => function ($query) {
-        $query->whereYear('date_adjustment', '!=', date('Y'));
-    }])->whereDoesntHave('salary_adjustment')
-    ->get(['employee_id', 'firstname', 'middlename', 'lastname', 'extension']);
+    $dataWithLateSalaryAdjustment = Employee::has('plantilla')->with(['plantilla' => function ($query) use($officeCode) {
+                $query->where('office_code', $officeCode)->where('year', date('Y'));
+            }, 'plantilla.position', 'salary_adjustment'])
+            ->has('salary_adjustment')
+            ->get(['employee_id', 'firstname', 'middlename', 'lastname', 'extension'])
+            ->filter(function ($record) {
+                return !in_array(date('Y'), $record->salary_adjustment->pluck('date_adjustment_year')->toArray());
+            });
+        
+
+    $dataWithNoSalaryAdjustment = Employee::whereHas('plantilla', function($query) use ($officeCode) {
+                                            $query->where('office_code', $officeCode)->where('year', date('Y'));
+                                        })
+                                        ->with(['plantilla', 'plantilla.position'])
+                                        ->doesntHave('salary_adjustment')
+                                        ->get(['employee_id', 'firstname', 'middlename', 'lastname', 'extension']);
+
+
+    $data = $dataWithLateSalaryAdjustment->merge($dataWithNoSalaryAdjustment);
 
     return DataTables::of($data)
                 ->editColumn('checkbox', function ($row) {
