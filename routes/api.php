@@ -241,6 +241,7 @@ Route::post('/salary-adjustment-per-office', function () {
     $data = Plantilla::with('plantillaPosition', 'plantillaPosition.position')->whereIn('plantilla_id', $plantillaIds)->get();
     $newAdjustment = $data->toArray();
     foreach($data as $newAdjustment){
+
         $newAdjustment->plantilla_id;
         $newAdjustment->sg_no;
         $newAdjustment->step_no;
