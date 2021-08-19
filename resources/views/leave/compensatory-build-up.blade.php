@@ -76,9 +76,6 @@ input[type=number] {
                     <div class="col-lg-3">
                         <div class="row">
                             <div class="col-lg-12 text-center">
-                                <div class="spinner-border spinner-border-sm text-light d-none" id="save-spinner" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
                                 <img class="mb-5 rounded-circle img-thumbnail" id="empPhoto" src="/storage/employee_images/no-image.png" width="50%"/>
                             </div>
                         </div>
@@ -98,7 +95,6 @@ input[type=number] {
                                         @endforeach
                                     </select>   
                                     <span><strong>EMPLOYEE NAME</strong></span>
-                                    <div id="employeeName-error-message" class="text-danger text-sm"></div>
                                 </label>
                                 
                                 <label for="office" class="form-group has-float-label">

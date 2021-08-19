@@ -128,7 +128,7 @@
                 data : data,
                 success : function (response) {
                     if(response.success){
-                        swal("Good job!", "Successfully added!", "success").then((isClicked) => {
+                        swal("Good job!", "Successfully added!", "success", {closeOnClickOutside: false}).then((isClicked) => {
                             if(isClicked) {
                                 location.reload();
                             }
@@ -175,7 +175,7 @@
                 data : data,
                 success : function (response) {
                     if(response.success){
-                        swal("Good job!", "Successfully added!", "success").then((isClicked) => {
+                        swal("Good job!", "Successfully added!", "success", {closeOnClickOutside: false}).then((isClicked) => {
                             if(isClicked) {
                                 location.reload();
                             }
@@ -296,6 +296,7 @@
             icon: "warning",
             buttons: true,
             dangerMode: true,
+            closeOnClickOutside: false,
             }).then((willDelete) => {
                 if(willDelete) {
                     $.ajax({
@@ -303,7 +304,7 @@
                         data: { fb_as_of : fbAsOF },
                         method : 'DELETE',
                         success : function (response) {
-                             swal("Good job!", "Successfully delete a leave record.", "success").then((isClicked) => {
+                             swal("Good job!", "Successfully delete a leave record.", "success", {closeOnClickOutside: false}).then((isClicked) => {
                                 if(isClicked) {
                                     location.reload();
                                 }
@@ -323,6 +324,7 @@
             icon: "warning",
             buttons: true,
             dangerMode: true,
+            closeOnClickOutside: false,
             }).then((willDelete) => {
                 if(willDelete) {
                     $.ajax({
@@ -330,7 +332,7 @@
                         data: { fb_as_of : fbAsOF },
                         method : 'DELETE',
                         success : function (response) {
-                             swal("Good job!", "Successfully delete a leave record.", "success").then((isClicked) => {
+                             swal("Good job!", "Successfully delete a leave record.", "success", {closeOnClickOutside: false}).then((isClicked) => {
                                 if(isClicked) {
                                     location.reload();
                                 }
