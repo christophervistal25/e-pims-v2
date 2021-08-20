@@ -30,7 +30,7 @@
         </div>
     </div>
     <div class="row bg-light">
-        <div class="col-lg-5">
+        <div class="col-lg-6">
             <label for="startDate" class="form-group has-float-label">
                 <input type="date" id="startDate" class="form-control">
                     <span>
@@ -38,7 +38,7 @@
                     </span>
             </label>
         </div>
-        <div class="col-lg-5">
+        <div class="col-lg-6">
             <label for="endDate" class="form-group has-float-label">
                 <input type="date" id="endDate" class="form-control">
                     <span>
@@ -46,14 +46,14 @@
                     </span>
             </label>
         </div>
+    </div>
 
-        <div class="col-lg-2">
-            <button class='btn btn-primary btn-block' id="btnPrint">
+    <div class="float-righr">
+            <button class='btn btn-primary text-uppercase shadow-sm mb-2' id="btnPrint">
                 <i class='la la-print'></i>
-                PRINT
+                print
             </button>
         </div>
-    </div>
     
     <div class="row">
         <div class="col-md-12">
@@ -98,7 +98,7 @@
                                     <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
                                     <td
                                         class='text-center align-middle text-sm text-uppercase font-weight-bold'>
-                                        {{ number_format($forwardedSickLeave->earned, 3, '.', '') }}</td>
+                                        {{ $forwardedSickLeave->earned }}</td>
                                     <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
 
                                     {{-- VACATION LEAVE TABLE DATA --}}
@@ -106,12 +106,12 @@
                                     <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
                                     <td
                                         class='text-center align-middle text-sm text-uppercase font-weight-bold'>
-                                        {{ number_format($forwardedVacationLeave->earned, 3, '.', '')  }}</td>
+                                        {{ $forwardedVacationLeave->earned  }}</td>
                                     <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
 
                                     <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
                                     <td class='text-center align-middle text-sm text-uppercase font-weight-bold'>
-                                        {{  $overAllTotal = number_format($totalOfForwardedBalance, 3, '.', '')  }}</td>
+                                        {{  $overAllTotal = $totalOfForwardedBalance }}</td>
                                 </tr>
                                 @foreach($recordsWithoutForwarded as $type => $record)
                                 <tr>
@@ -129,17 +129,17 @@
                                             <tr>
                                                 {{-- VACATION LEAVE DATA --}}
                                                 <td class='text-sm font-weight-bold text-center'>{{ $period }}</td>
-                                                <td class='text-sm font-weight-medium text-center'>{{ $vacationLeaveIncrement->particular }}</td>
-                                                <td class='text-sm font-weight-bold text-center'>{{ $vacationLeaveIncrement->earned }}</td>
-                                                <td class='text-sm font-weight-bold text-center'>{{ $vacationLeaveIncrement->absences_under_time_with_pay_balance }}</td>
-                                                <td class='text-sm font-weight-bold text-center'>{{ $forwardedVacationLeave->earned += $vacationLeaveIncrement->earned }}</td>
-                                                <td class='text-sm font-weight-bold text-center'>{{ $vacationLeaveIncrement->absences_under_time_without_pay_balance }}</td>
+                                                <td class='text-sm font-weight-medium text-center'>{{ $vacationLeaveIncrement->particular ?? 'EL' }}</td>
+                                                <td class='text-sm font-weight-bold text-center'>{{ @$vacationLeaveIncrement->earned }}</td>
+                                                <td class='text-sm font-weight-bold text-center'>{{ @$vacationLeaveIncrement->absences_under_time_with_pay_balance }}</td>
+                                                <td class='text-sm font-weight-bold text-center'>{{ @$forwardedVacationLeave->earned += $vacationLeaveIncrement->earned }}</td>
+                                                <td class='text-sm font-weight-bold text-center'>{{ @$vacationLeaveIncrement->absences_under_time_without_pay_balance }}</td>
 
                                                 {{-- SICK LEAVE DATA --}}
-                                                <td class='text-sm font-weight-bold text-center'>{{ $sickLeaveIncrement->earned }}</td>
-                                                <td class='text-sm font-weight-bold text-center'>{{ $sickLeaveIncrement->absences_under_time_with_pay_balance }}</td>
-                                                <td class='text-sm font-weight-bold text-center'>{{ $forwardedSickLeave->earned += $sickLeaveIncrement->earned }}</td>
-                                                <td class='text-sm font-weight-bold text-center'>{{ $sickLeaveIncrement->absences_under_time_without_pay_balance }}</td>
+                                                <td class='text-sm font-weight-bold text-center'>{{ @$sickLeaveIncrement->earned }}</td>
+                                                <td class='text-sm font-weight-bold text-center'>{{ @$sickLeaveIncrement->absences_under_time_with_pay_balance }}</td>
+                                                <td class='text-sm font-weight-bold text-center'>{{ @$forwardedSickLeave->earned += $sickLeaveIncrement->earned }}</td>
+                                                <td class='text-sm font-weight-bold text-center'>{{ @$sickLeaveIncrement->absences_under_time_without_pay_balance }}</td>
 
                                                 {{-- DATE & ACTION  --}}
                                                 <td class='text-sm font-weight-bold text-center'></td>
@@ -154,7 +154,7 @@
                                                     {{-- VACATION LEAVE DATA --}}
                                                     @if($data->type->code_number === $VACATION_LEAVE_CODE_NUMBER)
                                                         <td class='bg-light'></td>
-                                                        <td class='bg-light text-sm text-center font-weight-bold'>{{ number_format($data->used, 3, '.', '') }}</td>
+                                                        <td class='bg-light text-sm text-center font-weight-bold'>{{ $data->used }}</td>
                                                         <td class='bg-light text-sm text-center font-weight-bold'>{{ $forwardedVacationLeave->earned = ($forwardedVacationLeave->earned - $data->used) }}</td>
                                                         <td class='bg-light'></td>
                                                         

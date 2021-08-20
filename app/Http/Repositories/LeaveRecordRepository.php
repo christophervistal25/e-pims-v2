@@ -50,6 +50,7 @@ class LeaveRecordRepository extends LeaveApplicationRepository
     public function getRecordsWithoutForwarded(string $employeeID) : Collection
     {
         return EmployeeLeaveRecord::with('type')
+                                ->orderBy('created_at')
                                 ->where('employee_id', $employeeID)
                                 ->where('record_type', 'I')
                                 ->orWhere('record_type', 'D')
