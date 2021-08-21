@@ -31,7 +31,7 @@
         </div>
     </div>
     <div class="row bg-light">
-        <div class="col-lg-5">
+        <div class="col-lg-4">
             <label for="startDate" class="form-group has-float-label">
                 <input type="date" id="startDate" class="form-control" value="{{ $startDate ? Carbon\Carbon::parse($startDate)->format('Y-m-d') : '' }}">
                     <span>
@@ -48,14 +48,21 @@
             </label>
         </div>
         <div class="col-lg-1">
-            <button class='btn btn-info btn-block shadow-sm' id="btnFilter">
+            <button class='btn btn-info shadow-sm btn-block' id="btnFilter">
                 <i class='la la-filter'></i>
                 Filter
             </button>
         </div>
 
         <div class="col-lg-1">
-            <button class='btn btn-primary btn-block shadow-sm' id="btnFilter">
+            <button class='btn btn-warning text-white shadow-sm btn-block' id="btnReset">
+                <i class='la la-times'></i>
+                Reset
+            </button>
+        </div>
+
+        <div class="col-lg-1">
+            <button class='btn btn-primary shadow-sm btn-block' id="btnPrint">
                 <i class='la la-print'></i>
                 Print
             </button>
@@ -200,7 +207,7 @@
                             </tbody>
                             <tfoot>
                                 <td colspan="12" class="text-center text-sm bg-light">
-                                    Showing {{ ($recordsWithoutForwarded->count() + $forwardedBalance->count()) - 1 }} Leave Records
+                                    &nbsp;
                                 </td>
                             </tfoot>
                         </table>
@@ -221,6 +228,11 @@
             } else {
                 swal("Oops!", "Start & End Date must have a value", "error");
             }
+        });
+
+        $('#btnReset').click(function () {
+            $('#startDate, #endDate').val('');
+            window.location.href = '/employee-leave-card';
         });
     </script>
 @endpush

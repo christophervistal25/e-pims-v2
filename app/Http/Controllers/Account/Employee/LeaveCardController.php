@@ -63,7 +63,7 @@ class LeaveCardController extends Controller
         $totalOfForwardedBalance = $forwardedBalance->sum('earned');
 
         $recordsWithoutForwarded = $this->leaveRecordRepository->getRecordsWithoutForwarded($employeeID, $start, $end)->groupBy('record_type');
-
+        
         return view('accounts.employee.leave.leave-card', [
             'employee'                   => $employee,
             'forwardedBalance'           => $forwardedBalance,

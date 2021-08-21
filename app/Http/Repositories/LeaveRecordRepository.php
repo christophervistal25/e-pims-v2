@@ -54,12 +54,11 @@ class LeaveRecordRepository extends LeaveApplicationRepository
                                 ->where('employee_id', $employeeID);
 
         if($start && $end) {
-            $start = Carbon::parse($start);
-            $end   = Carbon::parse($end);
+            $startDate = Carbon::createFromFormat('Y-m-d', $start);
+            $endDate  = Carbon::createFromFormat('Y-m-d', $end);
             
-            return $query->where('created_at', '>=', $start->toDateTimeString())
-                        ->where('created_at', '<=', $end->toDateTimeString())
-                        ->where(['record_type' => 'I', 'record_type' => 'D'])
+            return $query->whereDate('created_at', '>=', $startDate)
+                        ->whereDate('created_at', '<=', $endDate)
                         ->get();
         } else {
             return $query->where('record_type', 'I')
