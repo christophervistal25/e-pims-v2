@@ -1,6 +1,7 @@
 @extends('accounts.employee.layouts.app')
 @section('title', 'Your Leave Card')
 @prepend('page-css')
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link rel="stylesheet"
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 <style>
@@ -30,31 +31,37 @@
         </div>
     </div>
     <div class="row bg-light">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <label for="startDate" class="form-group has-float-label">
-                <input type="date" id="startDate" class="form-control">
+                <input type="date" id="startDate" class="form-control" value="{{ $startDate ? Carbon\Carbon::parse($startDate)->format('Y-m-d') : '' }}">
                     <span>
                         <strong>START DATE</strong>
                     </span>
             </label>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-5">
             <label for="endDate" class="form-group has-float-label">
-                <input type="date" id="endDate" class="form-control">
+                <input type="date" id="endDate" class="form-control" value="{{ $endDate ? Carbon\Carbon::parse($endDate)->format('Y-m-d') : '' }}">
                     <span>
                         <strong>END DATE</strong>
                     </span>
             </label>
         </div>
-    </div>
-
-    <div class="float-righr">
-            <button class='btn btn-primary text-uppercase shadow-sm mb-2' id="btnPrint">
-                <i class='la la-print'></i>
-                print
+        <div class="col-lg-1">
+            <button class='btn btn-info btn-block shadow-sm' id="btnFilter">
+                <i class='la la-filter'></i>
+                Filter
             </button>
         </div>
-    
+
+        <div class="col-lg-1">
+            <button class='btn btn-primary btn-block shadow-sm' id="btnFilter">
+                <i class='la la-print'></i>
+                Print
+            </button>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-12">
             <div class="card mb-0 rounded-0 shadow-sm">
@@ -205,16 +212,14 @@
 </div>
 @push('page-scripts')
     <script>
-        $('#btnPrint').click(function () {
+        $('#btnFilter').click(function () {
             let startDate = $('#startDate').val();
             let endDate = $('#endDate').val();
 
-            if(!startDate && !endDate) {
-                alert('print all');
-            } else if(startDate && endDate) {
-                alert('print all with range.');
+            if(startDate && endDate) {
+                window.location.href = `/employee-leave-card/${startDate}/${endDate}`;
             } else {
-                alert('Error please check both start and end date');
+                swal("Oops!", "Start & End Date must have a value", "error");
             }
         });
     </script>
