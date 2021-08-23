@@ -26,8 +26,9 @@ class LeaveCardController extends Controller
         $forwardedBalance       = $this->leaveRecordRepository->getForwardedRecord($employeeID);
         $forwardedVacationLeave = $this->leaveRecordRepository->getVacationLeaveInForwarded($forwardedBalance);
         $forwardedSickLeave     = $this->leaveRecordRepository->getSickLeaveInForwarded($forwardedBalance);
+        
 
-        $totalOfForwardedBalance = $forwardedBalance->sum('earned');
+        $totalOfForwardedBalance = $forwardedBalance->sum('earned') - $forwardedBalance->sum('used');
 
         $recordsWithoutForwarded = $this->leaveRecordRepository->getRecordsWithoutForwarded($employeeID)->groupBy('record_type');
 
@@ -60,7 +61,7 @@ class LeaveCardController extends Controller
         $forwardedVacationLeave = $this->leaveRecordRepository->getVacationLeaveInForwarded($forwardedBalance);
         $forwardedSickLeave     = $this->leaveRecordRepository->getSickLeaveInForwarded($forwardedBalance);
 
-        $totalOfForwardedBalance = $forwardedBalance->sum('earned');
+        $totalOfForwardedBalance = $forwardedBalance->sum('earned') - $forwardedBalance->sum('used');
 
         $recordsWithoutForwarded = $this->leaveRecordRepository->getRecordsWithoutForwarded($employeeID, $start, $end)->groupBy('record_type');
         
