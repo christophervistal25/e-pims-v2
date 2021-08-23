@@ -38,4 +38,9 @@ class EmployeeLeaveRecord extends Model
     {
         return $this->hasOne(EmployeeLeaveUndertime::class, 'id', 'undertime_id');
     }
+    
+    public function leave_file_application()
+    {
+        return $this->belongsTo(EmployeeLeaveApplication::class, 'leave_application_id', 'id');
+    }
 }
