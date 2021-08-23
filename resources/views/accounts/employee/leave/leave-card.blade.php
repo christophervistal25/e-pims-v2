@@ -163,7 +163,7 @@
                                     @elseif($type === $TYPES['DECREMENT'])
                                             @foreach($record as $data)
                                                 <tr>
-                                                    <td class='text-sm text-center font-weight-bold'>{{ $data->created_at->format('F d, Y') }}</td>
+                                                    <td class='text-sm text-center font-weight-bold'>{{ $data->used > 1 ? $data->created_at->format('F d,') . ' - ' . $data->created_at->addDays($data->used)->format('F d, Y') : $data->created_at->format('F d, Y') }}</td>
                                                     <td class='bg-light text-sm text-center font-weight-medium'>{{ $data->particular }}</td>
                                                     {{-- VACATION LEAVE DATA --}}
                                                     @if($data->type->code_number === $VACATION_LEAVE_CODE_NUMBER)
