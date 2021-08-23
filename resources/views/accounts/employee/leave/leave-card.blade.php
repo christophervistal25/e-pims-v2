@@ -112,7 +112,7 @@
                                     <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
                                     <td
                                         class='text-center align-middle text-sm text-uppercase font-weight-bold'>
-                                        {{ $forwardedSickLeave->earned }}</td>
+                                        {{ $forwardedVacationLeave->earned }}</td>
                                     <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
 
                                     {{-- VACATION LEAVE TABLE DATA --}}
@@ -120,7 +120,7 @@
                                     <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
                                     <td
                                         class='text-center align-middle text-sm text-uppercase font-weight-bold'>
-                                        {{ $forwardedVacationLeave->earned  }}</td>
+                                        {{ $forwardedSickLeave->earned  }}</td>
                                     <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
 
                                     <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
@@ -180,7 +180,7 @@
 
                                                         {{-- DATE & ACTION --}}
                                                         <td class='text-sm text-center font-weight-bold'>{{ $data->used }}</td>
-                                                        <td class='text-sm text-center font-weight-bold'>{{  ($forwardedVacationLeave->earned + $forwardedSickLeave->earned) - $data->used }}</td>
+                                                        <td class='text-sm text-center font-weight-bold'>{{ $overAllTotal = $overAllTotal - $data->used }}</td>
                                                     @endif
                                                     @if($data->type->code_number === $SICK_LEAVE_CODE_NUMBER)
                                                         {{-- VACATION LEAVE DATA --}}
@@ -197,7 +197,7 @@
 
                                                         {{-- DATE & ACTION --}}
                                                         <td class='text-sm text-center font-weight-bold'>{{ $data->used }}</td>
-                                                        <td class='text-sm text-center font-weight-bold'>{{  ($forwardedVacationLeave->earned + $forwardedSickLeave->earned) - $data->used }}</td>
+                                                        <td class='text-sm text-center font-weight-bold'>{{ $overAllTotal = $overAllTotal - $data->used }}</td>
                                                     @endif
                                                 </tr>
                                             @endforeach
