@@ -18,6 +18,8 @@ class EmployeeLeaveRecord extends Model
         'absences_under_time_with_pay_balance',
         'absences_under_time_without_pay_balance',
         'record_type',
+        'leave_application_id',
+        'undertime_id',
     ];
 
     public const TYPES = ['FORWARD' => 'F', 'INCREMENT' => 'I', 'DECREMENT' => 'D'];
@@ -30,5 +32,10 @@ class EmployeeLeaveRecord extends Model
     public function employee()
     {
         return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
+    }
+
+    public function undertime()
+    {
+        return $this->hasOne(EmployeeLeaveUndertime::class, 'id', 'undertime_id');
     }
 }
