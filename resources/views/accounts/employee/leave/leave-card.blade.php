@@ -1,6 +1,7 @@
 @extends('accounts.employee.layouts.app')
 @section('title', 'Your Leave Card')
 @prepend('page-css')
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link rel="stylesheet"
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 <style>
@@ -30,9 +31,9 @@
         </div>
     </div>
     <div class="row bg-light">
-        <div class="col-lg-5">
+        <div class="col-lg-4">
             <label for="startDate" class="form-group has-float-label">
-                <input type="date" id="startDate" class="form-control">
+                <input type="date" id="startDate" class="form-control" value="{{ $startDate ? Carbon\Carbon::parse($startDate)->format('Y-m-d') : '' }}">
                     <span>
                         <strong>START DATE</strong>
                     </span>
@@ -40,21 +41,34 @@
         </div>
         <div class="col-lg-5">
             <label for="endDate" class="form-group has-float-label">
-                <input type="date" id="endDate" class="form-control">
+                <input type="date" id="endDate" class="form-control" value="{{ $endDate ? Carbon\Carbon::parse($endDate)->format('Y-m-d') : '' }}">
                     <span>
                         <strong>END DATE</strong>
                     </span>
             </label>
         </div>
+        <div class="col-lg-1">
+            <button class='btn btn-info shadow-sm btn-block' id="btnFilter">
+                <i class='la la-filter'></i>
+                Filter
+            </button>
+        </div>
 
-        <div class="col-lg-2">
-            <button class='btn btn-primary btn-block' id="btnPrint">
+        <div class="col-lg-1">
+            <button class='btn btn-warning text-white shadow-sm btn-block' id="btnReset">
+                <i class='la la-times'></i>
+                Reset
+            </button>
+        </div>
+
+        <div class="col-lg-1">
+            <button class='btn btn-primary shadow-sm btn-block' id="btnPrint">
                 <i class='la la-print'></i>
-                PRINT
+                Print
             </button>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col-md-12">
             <div class="card mb-0 rounded-0 shadow-sm">
@@ -98,7 +112,7 @@
                                     <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
                                     <td
                                         class='text-center align-middle text-sm text-uppercase font-weight-bold'>
-                                        {{ number_format($forwardedSickLeave->earned, 3, '.', '') }}</td>
+                                        {{ $forwardedSickLeave->earned }}</td>
                                     <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
 
                                     {{-- VACATION LEAVE TABLE DATA --}}
@@ -106,12 +120,12 @@
                                     <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
                                     <td
                                         class='text-center align-middle text-sm text-uppercase font-weight-bold'>
-                                        {{ number_format($forwardedVacationLeave->earned, 3, '.', '')  }}</td>
+                                        {{ $forwardedVacationLeave->earned  }}</td>
                                     <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
 
                                     <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
                                     <td class='text-center align-middle text-sm text-uppercase font-weight-bold'>
-                                        {{  $overAllTotal = number_format($totalOfForwardedBalance, 3, '.', '')  }}</td>
+                                        {{  $overAllTotal = $totalOfForwardedBalance }}</td>
                                 </tr>
                                 @foreach($recordsWithoutForwarded as $type => $record)
                                 <tr>
@@ -129,17 +143,17 @@
                                             <tr>
                                                 {{-- VACATION LEAVE DATA --}}
                                                 <td class='text-sm font-weight-bold text-center'>{{ $period }}</td>
-                                                <td class='text-sm font-weight-medium text-center'>{{ $vacationLeaveIncrement->particular }}</td>
-                                                <td class='text-sm font-weight-bold text-center'>{{ $vacationLeaveIncrement->earned }}</td>
-                                                <td class='text-sm font-weight-bold text-center'>{{ $vacationLeaveIncrement->absences_under_time_with_pay_balance }}</td>
-                                                <td class='text-sm font-weight-bold text-center'>{{ $forwardedVacationLeave->earned += $vacationLeaveIncrement->earned }}</td>
-                                                <td class='text-sm font-weight-bold text-center'>{{ $vacationLeaveIncrement->absences_under_time_without_pay_balance }}</td>
+                                                <td class='text-sm font-weight-medium text-center'>{{ $vacationLeaveIncrement->particular ?? 'EL' }}</td>
+                                                <td class='text-sm font-weight-bold text-center'>{{ @$vacationLeaveIncrement->earned }}</td>
+                                                <td class='text-sm font-weight-bold text-center'>{{ @$vacationLeaveIncrement->absences_under_time_with_pay_balance }}</td>
+                                                <td class='text-sm font-weight-bold text-center'>{{ @$forwardedVacationLeave->earned += $vacationLeaveIncrement->earned }}</td>
+                                                <td class='text-sm font-weight-bold text-center'>{{ @$vacationLeaveIncrement->absences_under_time_without_pay_balance }}</td>
 
                                                 {{-- SICK LEAVE DATA --}}
-                                                <td class='text-sm font-weight-bold text-center'>{{ $sickLeaveIncrement->earned }}</td>
-                                                <td class='text-sm font-weight-bold text-center'>{{ $sickLeaveIncrement->absences_under_time_with_pay_balance }}</td>
-                                                <td class='text-sm font-weight-bold text-center'>{{ $forwardedSickLeave->earned += $sickLeaveIncrement->earned }}</td>
-                                                <td class='text-sm font-weight-bold text-center'>{{ $sickLeaveIncrement->absences_under_time_without_pay_balance }}</td>
+                                                <td class='text-sm font-weight-bold text-center'>{{ @$sickLeaveIncrement->earned }}</td>
+                                                <td class='text-sm font-weight-bold text-center'>{{ @$sickLeaveIncrement->absences_under_time_with_pay_balance }}</td>
+                                                <td class='text-sm font-weight-bold text-center'>{{ @$forwardedSickLeave->earned += $sickLeaveIncrement->earned }}</td>
+                                                <td class='text-sm font-weight-bold text-center'>{{ @$sickLeaveIncrement->absences_under_time_without_pay_balance }}</td>
 
                                                 {{-- DATE & ACTION  --}}
                                                 <td class='text-sm font-weight-bold text-center'></td>
@@ -154,7 +168,7 @@
                                                     {{-- VACATION LEAVE DATA --}}
                                                     @if($data->type->code_number === $VACATION_LEAVE_CODE_NUMBER)
                                                         <td class='bg-light'></td>
-                                                        <td class='bg-light text-sm text-center font-weight-bold'>{{ number_format($data->used, 3, '.', '') }}</td>
+                                                        <td class='bg-light text-sm text-center font-weight-bold'>{{ $data->used }}</td>
                                                         <td class='bg-light text-sm text-center font-weight-bold'>{{ $forwardedVacationLeave->earned = ($forwardedVacationLeave->earned - $data->used) }}</td>
                                                         <td class='bg-light'></td>
                                                         
@@ -193,7 +207,7 @@
                             </tbody>
                             <tfoot>
                                 <td colspan="12" class="text-center text-sm bg-light">
-                                    Showing {{ ($recordsWithoutForwarded->count() + $forwardedBalance->count()) - 1 }} Leave Records
+                                    &nbsp;
                                 </td>
                             </tfoot>
                         </table>
@@ -205,17 +219,20 @@
 </div>
 @push('page-scripts')
     <script>
-        $('#btnPrint').click(function () {
+        $('#btnFilter').click(function () {
             let startDate = $('#startDate').val();
             let endDate = $('#endDate').val();
 
-            if(!startDate && !endDate) {
-                alert('print all');
-            } else if(startDate && endDate) {
-                alert('print all with range.');
+            if(startDate && endDate) {
+                window.location.href = `/employee-leave-card/${startDate}/${endDate}`;
             } else {
-                alert('Error please check both start and end date');
+                swal("Oops!", "Start & End Date must have a value", "error");
             }
+        });
+
+        $('#btnReset').click(function () {
+            $('#startDate, #endDate').val('');
+            window.location.href = '/employee-leave-card';
         });
     </script>
 @endpush

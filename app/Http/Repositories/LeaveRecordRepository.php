@@ -47,13 +47,24 @@ class LeaveRecordRepository extends LeaveApplicationRepository
         return $data->where('type.code_number', self::VACATION_LEAVE_CODE_NUMBER)->first();
     }
 
-    public function getRecordsWithoutForwarded(string $employeeID) : Collection
+    public function getRecordsWithoutForwarded(string $employeeID, string $start = null, string $end = null) : Collection
     {
-        return EmployeeLeaveRecord::with('type')
-                                ->where('employee_id', $employeeID)
-                                ->where('record_type', 'I')
-                                ->orWhere('record_type', 'D')
-                                ->get();
+        $query = EmployeeLeaveRecord::with('type')
+                                ->orderBy('created_at')
+                                ->where('employee_id', $employeeID);
+
+        if($start && $end) {
+            $startDate = Carbon::createFromFormat('Y-m-d', $start);
+            $endDate  = Carbon::createFromFormat('Y-m-d', $end);
+            
+            return $query->whereDate('created_at', '>=', $startDate)
+                        ->whereDate('created_at', '<=', $endDate)
+                        ->get();
+        } else {
+            return $query->where('record_type', 'I')
+                        ->orWhere('record_type', 'D')
+                        ->get();
+        }
     }
 
     private function getRecordByLeaveCode(int $codeNumber, string $employeeID) : Collection
