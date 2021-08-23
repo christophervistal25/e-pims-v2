@@ -49,9 +49,10 @@ class LeaveRecordRepository extends LeaveApplicationRepository
 
     public function getRecordsWithoutForwarded(string $employeeID, string $start = null, string $end = null) : Collection
     {
-        $query = EmployeeLeaveRecord::with('type')
-                                ->orderBy('created_at')
-                                ->where('employee_id', $employeeID);
+        $query = EmployeeLeaveRecord::with(['type', 'leave_file_application' => function ($query) {
+            $query->where('approved_status', 'approved');
+        }])->orderBy('created_at')
+            ->where('employee_id', $employeeID);
 
         if($start && $end) {
             $startDate = Carbon::createFromFormat('Y-m-d', $start);

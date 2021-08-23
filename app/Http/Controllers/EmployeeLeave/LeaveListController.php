@@ -129,11 +129,12 @@ class LeaveListController extends Controller
 
 
         EmployeeLeaveRecord::create([
-            'employee_id' => $leaveList->employee_id,
-            'particular' => ($leaveList->type->code) . '(' . $request->numberOfDays . '-0' . '-0' . ')',
-            'leave_type_id' => $request->selectedLeave,
-            'earned' => 0.000,
-            'used' => $request->numberOfDays,
+            'employee_id'          => $leaveList->employee_id,
+            'particular'           => ($leaveList->type->code) . '(' . $request->numberOfDays . '-0' . '-0' . ')',
+            'leave_type_id'        => $request->selectedLeave,
+            'earned'               => 0.000,
+            'used'                 => $request->numberOfDays,
+            'leave_application_id' => $id,
         ]);
 
         
