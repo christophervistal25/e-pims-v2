@@ -140,7 +140,9 @@ $(document).ready(function() {
                 plantilla.plantilla_position.position.position_name
             );
             $("#status").val(plantilla.status);
-            $("#positionId").val(plantilla.pp_id);
+            $("#positionId").val(
+                plantilla.plantilla_position.position.position_id
+            );
             $("#itemNo").val(plantilla.item_no);
             $("#salaryGrade").val(plantilla.sg_no);
             $("#stepNo").val(plantilla.step_no);
