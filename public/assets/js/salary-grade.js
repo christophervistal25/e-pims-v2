@@ -3,7 +3,7 @@ $.ajaxSetup({
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
     }
 });
-
+//filter salary grade
 let date = new Date();
 let year = date.getFullYear();
 let myTable = $("#myTable").DataTable({
@@ -67,15 +67,8 @@ let myTable = $("#myTable").DataTable({
 });
 myTable.columns(9).search(year);
 myTable.draw();
-function filter_year() {
-    $("input").val("");
-    const select = ["#sgNo"];
-    $.each(select, function(index, value) {
-        $(`${value}`)
-            .val("Please Select")
-            .trigger("change");
-    });
-    const errorClass = [
+$(document).ready(function() {
+    let errorClass = [
         ".sgNo .dropdown",
         "#sgStep1",
         "#sgStep2",
@@ -87,10 +80,7 @@ function filter_year() {
         "#sgStep8",
         ".sgYear .dropdown"
     ];
-    $.each(errorClass, function(index, value) {
-        $(`${value}`).removeClass("is-invalid");
-    });
-    const errorMessage = [
+    let errorMessage = [
         "#salary-grade-error-message",
         "#salary-grade1-error-message",
         "#salary-grade2-error-message",
@@ -102,17 +92,13 @@ function filter_year() {
         "#salary-grade8-error-message",
         "#salary-grade-year-error-message"
     ];
-    $.each(errorMessage, function(index, value) {
-        $(`${value}`).html("");
+    let select = ["#sgNo"];
+    // code for show add form
+    $("#addButton").click(function() {
+        $("#add").attr("class", "page-header");
+        $("#table").attr("class", "page-header d-none");
     });
-    var filter_year = document.getElementById("filter_year").value;
-    localStorage.setItem("salary_grade_filter_year", filter_year);
-    var ls = localStorage.getItem("salary_grade_filter_year");
-    myTable.columns(9).search(ls);
-    myTable.draw();
-}
-// code for number only
-$(function() {
+    // code for number only
     $("input").on("input", function(e) {
         $(this).val(
             $(this)
@@ -120,78 +106,57 @@ $(function() {
                 .replace(/[^0-9.]/g, "")
         );
     });
-});
-// code for show add form
-$(document).ready(function() {
-    $("#addbutton").click(function() {
-        $("#add").attr("class", "page-header");
-        $("#table").attr("class", "page-header d-none");
-    });
-});
-// code for show table
-$(document).ready(function() {
-    $("#cancelbutton").click(function() {
+    // code for show table
+    $("#showList").click(function() {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
     });
-});
 
-$(document).ready(function() {
-    $("#cancelbutton1").click(function() {
-        $("#add").attr("class", "page-header d-none");
-        $("#table").attr("class", "page-header");
+    document.querySelector("#filter_year").onchange = function() {
         $("input").val("");
-        const select = ["#sgNo"];
         $.each(select, function(index, value) {
             $(`${value}`)
                 .val("Please Select")
                 .trigger("change");
         });
-        const errorClass = [
-            ".sgNo .dropdown",
-            "#sgStep1",
-            "#sgStep2",
-            "#sgStep3",
-            "#sgStep4",
-            "#sgStep5",
-            "#sgStep6",
-            "#sgStep7",
-            "#sgStep8",
-            ".sgYear .dropdown"
-        ];
         $.each(errorClass, function(index, value) {
             $(`${value}`).removeClass("is-invalid");
         });
-        const errorMessage = [
-            "#salary-grade-error-message",
-            "#salary-grade1-error-message",
-            "#salary-grade2-error-message",
-            "#salary-grade3-error-message",
-            "#salary-grade4-error-message",
-            "#salary-grade5-error-message",
-            "#salary-grade6-error-message",
-            "#salary-grade7-error-message",
-            "#salary-grade8-error-message",
-            "#salary-grade-year-error-message"
-        ];
+        $.each(errorMessage, function(index, value) {
+            $(`${value}`).html("");
+        });
+        var filter_year = document.getElementById("filter_year").value;
+        localStorage.setItem("salary_grade_filter_year", filter_year);
+        var ls = localStorage.getItem("salary_grade_filter_year");
+        myTable.columns(9).search(ls);
+        myTable.draw();
+    };
+    //cancel button function
+    $("#cancelButton").click(function() {
+        $("#add").attr("class", "page-header d-none");
+        $("#table").attr("class", "page-header");
+        $("input").val("");
+        $.each(select, function(index, value) {
+            $(`${value}`)
+                .val("Please Select")
+                .trigger("change");
+        });
+        $.each(errorClass, function(index, value) {
+            $(`${value}`).removeClass("is-invalid");
+        });
         $.each(errorMessage, function(index, value) {
             $(`${value}`).html("");
         });
     });
-});
-
-$(document).ready(function() {
-    $("#addbutton").click(function() {
+    //hide salary list
+    $("#addButton").click(function() {
         $("#message").attr("class", "page-header d-none");
     });
-});
 
-//// add new salary grade
-$(document).ready(function() {
+    // add new salary grade
     $("#salaryGradeForm").submit(function(e) {
         e.preventDefault();
         let data = $(this).serialize();
-        console.log(data);
         $("#saveBtn").attr("disabled", true);
         $("#loading").removeClass("d-none");
         $.ajax({
@@ -201,39 +166,14 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.success) {
                     $("input").val("");
-                    const select = ["#sgNo"];
                     $.each(select, function(index, value) {
                         $(`${value}`)
                             .val("Please Select")
                             .trigger("change");
                     });
-                    const errorClass = [
-                        ".sgNo .dropdown",
-                        "#sgStep1",
-                        "#sgStep2",
-                        "#sgStep3",
-                        "#sgStep4",
-                        "#sgStep5",
-                        "#sgStep6",
-                        "#sgStep7",
-                        "#sgStep8",
-                        ".sgYear .dropdown"
-                    ];
                     $.each(errorClass, function(index, value) {
                         $(`${value}`).removeClass("is-invalid");
                     });
-                    const errorMessage = [
-                        "#salary-grade-error-message",
-                        "#salary-grade1-error-message",
-                        "#salary-grade2-error-message",
-                        "#salary-grade3-error-message",
-                        "#salary-grade4-error-message",
-                        "#salary-grade5-error-message",
-                        "#salary-grade6-error-message",
-                        "#salary-grade7-error-message",
-                        "#salary-grade8-error-message",
-                        "#salary-grade-year-error-message"
-                    ];
                     $.each(errorMessage, function(index, value) {
                         $(`${value}`).html("");
                     });
