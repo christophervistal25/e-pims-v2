@@ -210,17 +210,16 @@
                                 </option>
                                 @endforeach
                             </select>
-                            <span class="font-weight-bold">SALARY GRADE<span class="text-danger">*</span></span>
+                            <span class="font-weight-bold">SALARY YEAR<span class="text-danger">*</span></span>
                         </label>
                             <div id='salary-grade-year-error-message' class='text-danger text-sm'>
                             </div>
                         </div>
 
                         <div class="form-group submit-section col-12">
-                            <button id="saveBtn" class="btn btn-primarys submit-btn float-right shadow" type="submit"><i class="fas fa-save"></i>
-                                <span id="loading" class="spinner-border spinner-border-sm d-none" role="status"
-                                    aria-hidden="false"></span>
-                                Save
+                            <button id="saveBtn" class="btn btn-primarys submit-btn float-right shadow" type="submit"><span id="loading" class="spinner-border spinner-border-sm d-none" role="status"
+                                aria-hidden="false"></span> <i class="fas fa-save"></i>
+                                <b id="saving">Save</b>
                             </button>
                             <button style="margin-right:10px;" type="button" id="cancelButton"
                                 class="btn text-white btn-danger submit-btn float-right shadow"><i class="fas fa-ban"></i> Cancel</button>

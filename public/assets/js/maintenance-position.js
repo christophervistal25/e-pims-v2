@@ -1,50 +1,45 @@
-// code for show add form
 $(document).ready(function() {
+    let errorMessage = [
+        "#position-code-error-message",
+        "#position-name-error-message",
+        "#salary-grade-no-error-message",
+        "#position-short-name-error-message"
+    ];
+    let errorClass = [
+        "#positionCode",
+        "#positionName",
+        ".salaryGradeNo .dropdown",
+        "#positionShortName"
+    ];
+    let removeValue = ["#positionName", "#positionShortName"];
+    // code for show add form
     $("#addbutton").click(function() {
         $("#add").attr("class", "page-header");
         $("#table").attr("class", "page-header d-none");
     });
-});
-// {{-- code for show table --}}
-$(document).ready(function() {
+    // code for show table
     $("#cancelbutton").click(function() {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
     });
-});
-$(document).ready(function() {
+    // cancel
     $("#cancelbutton1").click(function() {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
         $("#salaryGradeNo")
             .val("Please Select")
             .trigger("change");
-        const removeValue = ["#positionName", "#positionShortName"];
         $.each(removeValue, function(index, value) {
             $(`${value}`).val("");
         });
-        const errorClass = [
-            "#positionCode",
-            "#positionName",
-            ".salaryGradeNo .dropdown",
-            "#positionShortName"
-        ];
         $.each(errorClass, function(index, value) {
             $(`${value}`).removeClass("is-invalid");
         });
-        const errorMessage = [
-            "#position-code-error-message",
-            "#position-name-error-message",
-            "#salary-grade-no-error-message",
-            "#position-short-name-error-message"
-        ];
         $.each(errorMessage, function(index, value) {
             $(`${value}`).html("");
         });
     });
-});
-
-$(function() {
+    //display list of position
     $("#maintenancePosition").DataTable({
         processing: true,
         pagingType: "full_numbers",
@@ -69,16 +64,14 @@ $(function() {
             }
         ]
     });
-});
-
-//// add position
-$(document).ready(function() {
+    // add new position
     $("#maintenancePositionForm").submit(function(e) {
         e.preventDefault();
         let data = $(this).serialize();
         let positionCode = parseInt($("#positionCode").val()) + 1;
         $("#saveBtn").attr("disabled", true);
         $("#loading").removeClass("d-none");
+        $("#saving").html("Saving . . .");
         $.ajax({
             type: "POST",
             url: "/maintenance-position",
@@ -89,21 +82,9 @@ $(document).ready(function() {
                         .val("Please Select")
                         .trigger("change");
                     $("input").val("");
-                    const errorClass = [
-                        "#positionCode",
-                        "#positionName",
-                        ".salaryGradeNo .dropdown",
-                        "#positionShortName"
-                    ];
                     $.each(errorClass, function(index, value) {
                         $(`${value}`).removeClass("is-invalid");
                     });
-                    const errorMessage = [
-                        "#position-code-error-message",
-                        "#position-name-error-message",
-                        "#salary-grade-no-error-message",
-                        "#position-short-name-error-message"
-                    ];
                     $.each(errorMessage, function(index, value) {
                         $(`${value}`).html("");
                     });
@@ -113,6 +94,7 @@ $(document).ready(function() {
                     swal("Sucessfully Added!", "", "success");
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
+                    $("#saving").html("Save");
                     $("#positionCode").val(positionCode);
                 }
             },
@@ -175,8 +157,26 @@ $(document).ready(function() {
                     });
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
+                    $("#saving").html("Save");
                 }
             }
         });
+    });
+    //remove error if put value
+    $("#positionCode").keyup(function() {
+        $("#positionCode").removeClass("is-invalid");
+        $("#position-code-error-message").html("");
+    });
+    $("#positionName").keyup(function() {
+        $("#positionName").removeClass("is-invalid");
+        $("#position-name-error-message").html("");
+    });
+    $("#salaryGradeNo").change(function() {
+        $(".salaryGradeNo .dropdown").removeClass("is-invalid");
+        $("#salary-grade-no-error-message").html("");
+    });
+    $("#positionShortName").keyup(function() {
+        $("#positionShortName").removeClass("is-invalid");
+        $("#position-short-name-error-message").html("");
     });
 });
