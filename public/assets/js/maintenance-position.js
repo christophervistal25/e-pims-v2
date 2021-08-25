@@ -13,17 +13,17 @@ $(document).ready(function() {
     ];
     let removeValue = ["#positionName", "#positionShortName"];
     // code for show add form
-    $("#addbutton").click(function() {
+    $("#addButton").click(function() {
         $("#add").attr("class", "page-header");
         $("#table").attr("class", "page-header d-none");
     });
     // code for show table
-    $("#cancelbutton").click(function() {
+    $("#showListPosition").click(function() {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
     });
     // cancel
-    $("#cancelbutton1").click(function() {
+    $("#cancelButton").click(function() {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
         $("#salaryGradeNo")

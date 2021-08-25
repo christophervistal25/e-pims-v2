@@ -1,40 +1,35 @@
-// code for show add form
 $(document).ready(function() {
-    $("#addbutton").click(function() {
+    let errorMessage = [
+        "#division-name-error-message",
+        "#office-code-error-message"
+    ];
+    let errorClass = ["#divisionName", ".officeCode .dropdown"];
+    // code for show add form
+    $("#addButton").click(function() {
         $("#add").attr("class", "page-header");
         $("#table").attr("class", "page-header d-none");
     });
-});
-// {{-- code for show table --}}
-$(document).ready(function() {
-    $("#cancelbutton").click(function() {
+    // code for show table
+    $("#showListDivision").click(function() {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
     });
-});
-$(document).ready(function() {
-    $("#cancelbutton1").click(function() {
+    // cancel
+    $("#cancelButton").click(function() {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
         $("#officeCode")
             .val("Please Select")
             .trigger("change");
         $("input").val("");
-        const errorClass = ["#divisionName", ".officeCode .dropdown"];
         $.each(errorClass, function(index, value) {
             $(`${value}`).removeClass("is-invalid");
         });
-        const errorMessage = [
-            "#division-name-error-message",
-            "#office-code-error-message"
-        ];
         $.each(errorMessage, function(index, value) {
             $(`${value}`).html("");
         });
     });
-});
-
-$(function() {
+    //show list of division
     let table = $("#maintenanceDivision").DataTable({
         pagingType: "full_numbers",
         serverSide: true,
@@ -56,9 +51,8 @@ $(function() {
             }
         ]
     });
-
     $("#maintenanceDivisionOffice").change(function(e) {
-        if (e.target.value == "" || e.target.value == "") {
+        if (e.target.value == "") {
             table.destroy();
             table = $("#maintenanceDivision").DataTable({
                 pagingType: "full_numbers",
@@ -108,10 +102,7 @@ $(function() {
             });
         }
     });
-});
-
-//// add division
-$(document).ready(function() {
+    // add new division
     $("#maintenanceDivisionForm").submit(function(e) {
         e.preventDefault();
         let data = $(this).serialize();
