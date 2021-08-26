@@ -24,7 +24,7 @@ Route::get('/cscPrevious/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaControlle
 Route::get('/positionSalaryGrade/{positionTitle}' , 'Api\PlantillaController@positionSalaryGrade');
 Route::post('/addPosition' , 'Api\PlantillaController@addPosition');
 
-///service record
+// service record
 Route::get('/employee/service/records/{employeeId}', function ($employeeId) {
     $data = DB::table('service_records') ->
     join('offices', 'service_records.office_code', '=', 'offices.office_code')
@@ -107,10 +107,10 @@ Route::post('/employment/status/store', 'Api\ReferenceStatusController@store');
 Route::get('name/extensions', 'Api\ReferenceNameExtensionController@index');
 Route::post('name/extensions/store', 'Api\ReferenceNameExtensionController@store');
 
-/////// salary adjustment
+// salary adjustment
 Route::get('/salaryAdjustment/{sg_no}/{sg_step?}/{sg_year}' , 'Api\SalaryAdjustmentController@salaryAdjustment');
 Route::post('/printEditAdjustment' , 'Api\SalaryAdjustmentController@printEdit');
-//individual
+// salary adjustment individual
 Route::get('/salary/adjustment/{year}', function ($year) {
     $data = DB::table('salary_adjustments')
         ->join('employees', 'salary_adjustments.employee_id', 'employees.employee_id')
@@ -146,7 +146,7 @@ Route::get('/salary/adjustment/{year}', function ($year) {
     //                     ->make(true);
 });
 
-//per office
+// salary adjustment per office
 Route::get('/office/salary/adjustment/peroffice/{officeCode}/{filterYear}', function ($office_code, $filterYear) {
     $data = DB::table('salary_adjustments')
     ->join('employees', 'salary_adjustments.employee_id', '=', 'employees.employee_id')
@@ -191,10 +191,8 @@ Route::get('/office/salary/adjustment/peroffice/{officeCode}/{filterYear}', func
     //         ->rawColumns(['action'])
     //         ->make(true);
 });
-
-//per office not selected
+// salary adjustment per office not selected
 Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}/query', function ($officeCode) {
-
     $dataWithLateSalaryAdjustment = Employee::has('plantilla')->with(['plantilla' => function ($query) use($officeCode) {
                 $query->where('office_code', $officeCode)->where('year', date('Y'));
             }, 'plantilla.position', 'salary_adjustment'])
@@ -203,18 +201,13 @@ Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}/query',
             ->filter(function ($record) {
                 return !in_array(date('Y'), $record->salary_adjustment->pluck('date_adjustment_year')->toArray());
             });
-
-
     $dataWithNoSalaryAdjustment = Employee::whereHas('plantilla', function($query) use ($officeCode) {
                                             $query->where('office_code', $officeCode)->where('year', date('Y'));
                                         })
                                         ->with(['plantilla', 'plantilla.plantillaPosition.position','plantilla.position'])
                                         ->doesntHave('salary_adjustment')
                                         ->get(['employee_id', 'firstname', 'middlename', 'lastname', 'extension']);
-
-
     $data = $dataWithLateSalaryAdjustment->merge($dataWithNoSalaryAdjustment);
-
     return DataTables::of($data)
                 ->editColumn('checkbox', function ($row) {
                     $checkbox = "<input id='checkbox{$row->plantilla->plantilla_id}' class='not-select-checkbox' style='transform:scale(1.35)' value='{$row->plantilla->plantilla_id}' type='checkbox' />";
@@ -222,14 +215,12 @@ Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}/query',
                 })->rawColumns(['checkbox'])
                 ->make(true);
 });
-
-
+// salary adjustment per office multiple save
 Route::post('/salary-adjustment-per-office', function () {
     $plantillaIds = explode(',', request()->ids);
     $data = Plantilla::with('plantillaPosition', 'plantillaPosition.position')->whereIn('plantilla_id', $plantillaIds)->get();
     $newAdjustment = $data->toArray();
     foreach($data as $newAdjustment){
-
         $newAdjustment->plantilla_id;
         $newAdjustment->sg_no;
         $newAdjustment->step_no;
@@ -238,7 +229,6 @@ Route::post('/salary-adjustment-per-office', function () {
                             ->where('sg_year', request()->year)
                             ->first(['sg_year' ,'sg_step' .  $newAdjustment->step_no]);
         $salaryDiff = $getsalaryResult['sg_step' .  $newAdjustment->step_no] - $newAdjustment->salary_amount;
-
         DB::table('salary_adjustments')->updateOrInsert(
         [
             'employee_id' => $newAdjustment->employee_id,
@@ -270,6 +260,7 @@ Route::post('/salary-adjustment-per-office', function () {
         // $salaryAdjustment->salary_diff = $salaryDiff;
         // $salaryAdjustment->save();
 
+        // salary adjustment per office save to service record
         DB::table('service_records')->updateOrInsert(
             [
                 'employee_id' => $newAdjustment->employee_id,
@@ -302,7 +293,7 @@ Route::post('/salary-adjustment-per-office', function () {
     return response()->json(['success'=>true]);
 });
 
-// plantilla position
+// plantilla position filter
 Route::get('/plantilla/position/{officeCode}', function ($office_code) {
     $data = DB::table('plantilla_positions')
     ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
@@ -340,7 +331,7 @@ Route::get('/plantilla/position/{officeCode}', function ($office_code) {
     //                 ->make(true);
 });
 
-// plantilla personnel
+// plantilla personnel filter
 Route::get('/plantilla/personnel/{officeCode}', function ($office_code) {
     $data = DB::table('plantillas')->join('offices', 'plantillas.office_code', '=', 'offices.office_code')
         ->join('employees', 'plantillas.employee_id', '=', 'employees.employee_id')
@@ -379,7 +370,7 @@ Route::get('/plantilla/personnel/{officeCode}', function ($office_code) {
 });
 
 
-// plantilla schedule list
+// plantilla schedule list filter
 Route::get('/plantilla/list/{officeCode}', function ($office_code) {
     $year = Carbon::now()->format('Y') - 1;
         $data = DB::table('plantillas')->join('offices', 'plantillas.office_code', '=', 'offices.office_code')
@@ -421,7 +412,7 @@ Route::get('/plantilla/list/{officeCode}', function ($office_code) {
     //                 ->rawColumns(['action'])
     //                 ->make(true);
 });
-
+// plantilla schedule filter
 Route::get('/plantilla/schedule/{officeCode}/{filterYear}', function ($office_code, $filterYear) {
     if($office_code == "All"){
         $data = DB::table('plantilla_schedules')
@@ -476,7 +467,7 @@ Route::get('/plantilla/schedule/{officeCode}/{filterYear}', function ($office_co
             //         ->make(true);
 });
 
-// maintenance division
+// maintenance division  filter
 Route::get('/maintenance/division/{officeCode}', function ($office_code) {
     $data = Division::select('division_id','division_name', 'office_code')->with('offices:office_code,office_name,office_short_name')->where('office_code', $office_code)->get();
     return Datatables::of($data)
@@ -529,7 +520,7 @@ Route::post('/plantilla/schedule/adjust', function () {
     return response()->json(['success'=>true]);
 });
 
-// plantilla position schedule
+// plantilla position schedule filter
 Route::get('/plantilla/position/schedule/{officeCode}', function ($office_code) {
     $year = Carbon::now()->format('Y') - 1;
         $data = DB::table('plantilla_positions')
@@ -566,7 +557,7 @@ Route::get('/plantilla/position/schedule/{officeCode}', function ($office_code) 
     //                 ->rawColumns(['action'])
     //                 ->make(true);
 });
-//  position schedule
+//  position schedule filter
 Route::get('/position/schedule/{officeCode}/{yearFilter}', function ($office_code, $yearFilter) {
     if($office_code == "All"){
         $data = DB::table('position_schedules')
@@ -606,6 +597,7 @@ Route::get('/position/schedule/{officeCode}/{yearFilter}', function ($office_cod
     //                 ->make(true);
 });
 
+// position schedule multiple save
 Route::post('/position/schedule/adjust', function () {
     $PlantillaPositionIds = explode(',', request()->ids);
     $data = PlantillaPosition::whereIn('pp_id', $PlantillaPositionIds)->get();

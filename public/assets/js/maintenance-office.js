@@ -1,25 +1,43 @@
-// code for show add form
 $(document).ready(function() {
-    $("#addbutton").click(function() {
+    let errorMessage = [
+        "#office-code-error-message",
+        "#office-name-error-message",
+        "#office-short-name-error-message",
+        "#office-address-error-messagee",
+        "#office-short-address-error-message",
+        "#office-head-error-message",
+        "#position-name-error-message"
+    ];
+    let errorClass = [
+        "#officeCode",
+        "#officeName",
+        "#officeShortName",
+        "#officeHead",
+        "#positionName"
+    ];
+    // code for show add form
+    $("#addButton").click(function() {
         $("#add").attr("class", "page-header");
         $("#table").attr("class", "page-header d-none");
     });
-});
-// {{-- code for show table --}}
-$(document).ready(function() {
-    $("#cancelbutton").click(function() {
+    // code for show table
+    $("#showListOffice").click(function() {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
     });
-});
-$(document).ready(function() {
-    $("#cancelbutton1").click(function() {
+    // cancel
+    $("#cancelButton").click(function() {
+        $("input").val("");
+        $.each(errorClass, function(index, value) {
+            $(`${value}`).removeClass("is-invalid");
+        });
+        $.each(errorMessage, function(index, value) {
+            $(`${value}`).html("");
+        });
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
     });
-});
-
-$(function() {
+    //show list of office
     $("#maintenanceOffice").DataTable({
         pagingType: "full_numbers",
         stateSave: true,
@@ -48,15 +66,13 @@ $(function() {
             }
         ]
     });
-});
-
-//// add position
-$(document).ready(function() {
+    // add new office
     $("#maintenanceOfficeForm").submit(function(e) {
         e.preventDefault();
         let data = $(this).serialize();
         $("#saveBtn").attr("disabled", true);
         $("#loading").removeClass("d-none");
+        $("#saving").html("Saving . . .");
         $.ajax({
             type: "POST",
             url: "/maintenance-office",
@@ -64,25 +80,9 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.success) {
                     $("input").val("");
-                    const errorClass = [
-                        "#officeCode",
-                        "#officeName",
-                        "#officeShortName",
-                        "#officeHead",
-                        "#positionName"
-                    ];
                     $.each(errorClass, function(index, value) {
                         $(`${value}`).removeClass("is-invalid");
                     });
-                    const errorMessage = [
-                        "#office-code-error-message",
-                        "#office-name-error-message",
-                        "#office-short-name-error-message",
-                        "#office-address-error-messagee",
-                        "#office-short-address-error-message",
-                        "#office-head-error-message",
-                        "#position-name-error-message"
-                    ];
                     $.each(errorMessage, function(index, value) {
                         $(`${value}`).html("");
                     });
@@ -92,6 +92,7 @@ $(document).ready(function() {
                     swal("Sucessfully Added!", "", "success");
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
+                    $("#saving").html("Save");
                 }
             },
             error: function(response) {
@@ -185,8 +186,29 @@ $(document).ready(function() {
                     });
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
+                    $("#saving").html("Save");
                 }
             }
         });
+    });
+    $("#officeCode").keyup(function() {
+        $("#officeCode").removeClass("is-invalid");
+        $("#office-code-error-message").html("");
+    });
+    $("#officeName").keyup(function() {
+        $("#officeName").removeClass("is-invalid");
+        $("#office-name-error-message").html("");
+    });
+    $("#officeShortName").keyup(function() {
+        $("#officeShortName").removeClass("is-invalid");
+        $("#office-short-name-error-message").html("");
+    });
+    $("#officeHead").keyup(function() {
+        $("#officeHead").removeClass("is-invalid");
+        $("#office-head-error-message").html("");
+    });
+    $("#positionName").keyup(function() {
+        $("#positionName").removeClass("is-invalid");
+        $("#position-name-error-message").html("");
     });
 });
