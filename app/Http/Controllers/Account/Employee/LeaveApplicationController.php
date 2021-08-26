@@ -76,7 +76,14 @@ class LeaveApplicationController extends Controller
                 'inCaseOf'             => ['required'],
                 'noOfDays'             => ['required'],
                 'typeOfLeave'          => ['required'],
-            ], [], ['typeOfLeave' => 'leave type']);
+            ], [], [
+                    'startDate'   => 'Start Date',
+                    'endDate'     => 'End Date',
+                    'inCaseOf'    => 'In case of',
+                    'typeOfLeave' => 'Leave type',
+                    'noOfDays'    => 'No. of days',
+                    'typeOfLeave' => 'Leave type',
+                ]);
 
             $leaveType = LeaveType::where('code_number', $request->typeOfLeave)->first();
 

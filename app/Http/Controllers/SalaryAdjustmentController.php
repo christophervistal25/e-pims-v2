@@ -33,7 +33,7 @@ class SalaryAdjustmentController extends Controller
                                             return $date->format('Y');
                                     })->toArray();
 
-                                    
+
         $dates = array_values(array_unique($dates));
 
         $year = SalaryGrade::select('sg_year')->distinct()->get();
@@ -144,7 +144,7 @@ class SalaryAdjustmentController extends Controller
         DB::table('salary_adjustments')->updateOrInsert(
             [
                 'employee_id' => $request['employeeId'],
-                'date_adjustment' => $request['dateAdjustment']
+                'salary_new' => $request['salaryNew'],
         ],
         [
             'employee_id'     => $request['employeeId'],

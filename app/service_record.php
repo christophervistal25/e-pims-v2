@@ -9,6 +9,12 @@ class service_record extends Model
 {
     use SoftDeletes;
     protected $dates = ['deleted_at'];
+
+    protected $appends = [
+        'service_from_date_year'
+    ];
+
+
     protected $fillable = [
         'employee_id',
         'service_from_date',

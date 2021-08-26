@@ -26,9 +26,14 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
+            <div class="alert alert-danger d-none" role="alert" id="formErrors">
+                
+            </div>
+        </div>
+        <div class="col-lg-12">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <form method="POST" id="apply--for--leave--form">
+                    <form method="POST" id="submitLeaveFileButton">
                         {{-- <div class="alert alert-secondary text-center font-weight-bold">LEAVE APPLICATION FILING</div> --}}
                         {{-- <hr> --}}
                         <div class="row">
@@ -273,197 +278,120 @@
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="{{ asset('/assets/js/custom/leave/leave.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.js"></script>
-<script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>
 <script>
-    const socket = io.connect("{{ env('MIX_SOCKET_IP') }}");
-    const ROUTE = "{{ route('employee.leave.application.filling.submit') }}";
-    const VACATION_LEAVE_EARNED = "{{ $vacationLeaveEarned }}";
-    const SICK_LEAVE_EARNED = "{{ $sickLeaveEarned }}";
-    
-    const vacationLeaveIncaseOf = ['WITHIN THE PHILIPPINES', 'ABROAD'];
-    const sickLeaveIncaseOf = ['IN HOSPITAL', 'OUT PATIENT'];
-    
-    let types = $('meta[name="leave-types"]').attr('content');
-    let hasError = [];
+    const ROUTE                        = "{{ route('employee.leave.application.filling.submit') }}";
+    const VACATION_LEAVE_EARNED        = "{{ $vacationLeaveEarned }}";
+    const SICK_LEAVE_EARNED            = "{{ $sickLeaveEarned }}";
+    const vacationLeaveIncaseOf        = ['WITHIN THE PHILIPPINES', 'ABROAD'];
+    const sickLeaveIncaseOf            = ['IN HOSPITAL', 'OUT PATIENT'];
+    const ALREADY_HAVE_PENDING_FILE    = 423;
+    const CANNOT_ACCESS_SELECTED_LEAVE = 424;
+    const SPACE                        = new RegExp(/\s+/, "ig");
+    const LEAVE_TYPES                  = new Map([]);
 
-    
-    $('#inCaseOf').children().remove();
-    $('#earnedLess').val(0);
-    $('#earnedRemaining').val(0);
-    $('#inCaseOfContainer').addClass('d-none');
+    let types                   = JSON.parse($('meta[name="leave-types"]').attr('content'));
 
+    types.forEach((type) => LEAVE_TYPES.set(type.name.replace(SPACE, '_'), type.code_number));
 
+    let getSelectedLeaveTypeData = (types, selectedType) => types.find(type => type.code_number == selectedType);
+
+    // When user select a type of leave.
     $('#typeOfLeave').change(function (e) {
-        let selectedType = $(this).val();
-        let [type] = JSON.parse(types).filter((type) => type.code_number == selectedType);
+        let selectedType = $('#typeOfLeave').val();
+
+        let type = getSelectedLeaveTypeData(types, selectedType);
+
+        // Initialize value of Incase of.
         let incaseOf = [];
-                        
 
         switch (type.code_number) {
-            // Mandatory Leave
-            case 10003:
-                $('#inCaseOfContainer').addClass('d-none');
-                $('#withPay, #withoutPay').attr('disabled', true);
+            case LEAVE_TYPES.get('MANDATORY_LEAVE'):
+                    $('#inCaseOfContainer').addClass('d-none');
+                    $('#withPay, #withoutPay').attr('disabled', true);
                 break;
 
-            // Vacation Leave
-            case 10002:
-                incaseOf = vacationLeaveIncaseOf;
-                $('#inCaseOfContainer').removeClass('d-none');
+            case LEAVE_TYPES.get('VACATION_LEAVE'):
+                    incaseOf = vacationLeaveIncaseOf;
+                    $('#inCaseOfContainer').removeClass('d-none');
                 break;
 
-            // Sick Leave
-            case 10001:
-                incaseOf = sickLeaveIncaseOf;
-                $('#inCaseOfContainer').removeClass('d-none');
-                $('#withPay, #withoutPay').attr('disabled', false);
+            case LEAVE_TYPES.get('SICK_LEAVE'):
+                    incaseOf = sickLeaveIncaseOf;
+                    $('#inCaseOfContainer').removeClass('d-none');
+                    $('#withPay, #withoutPay').attr('disabled', false);
                 break;
         }
 
-        // Dynamically insert value for incase of.
+        // Remove options of in case of select element
         $('#inCaseOf').children().remove();
+        
+        // Dynamically insert value for incase of.
         incaseOf.map((data) => $('#inCaseOf').append(`<option value="${data}">${data}</option>`));
-        $('.type-of-leave').removeClass('is-invalid');
-        if($("#startDate").val().length !== 0 && $('#endDate').val().length !== 0) {
-            $('#startDate, #endDate').trigger('change')
-        }
     });
 
+
     $('#startDate').change(function () {
-        let fiveDaysAdvance = moment().add(5, 'days').format('YYYY-MM-DD');
-        let startDate = $('#startDate').val();
-        let endDate = $("#endDate").val();
-        let selectedLeaveType = $('#typeOfLeave').val();
+        let period = moment($('#endDate').val()).diff($('#startDate').val(), 'days');
+        let POINTS = 0;
+
+        $('#noOfDays').val(period);
 
 
-        if(moment(startDate).isBefore(fiveDaysAdvance, 'day')) {
-            $('#startDate').addClass('is-invalid');
-            hasError = true;
-        } else if(moment(startDate).isSame(endDate, 'day')) {
-            $('#startDate').addClass('is-invalid');
-            hasError = true;
-        } else if(moment(startDate).isAfter(endDate)) {
-            $('#startDate').addClass('is-invalid'); 
-            hasError = true;
-        } else {
-            hasError = false;
-            $('#startDate').removeClass('is-invalid')
-                        .addClass('is-valid');
+        let type = getSelectedLeaveTypeData(types, $('#typeOfLeave').val());
+
+        if(type.code_number === LEAVE_TYPES.get('MANDATORY_LEAVE')) {
+            POINTS = 5;
+        } else if(LEAVE_TYPES.get('VACATION_LEAVE')) {
+            POINTS = VACATION_LEAVE_EARNED;
+        } else if(LEAVE_TYPES.get('SICK_LEAVE')) {
+            POINTS = SICK_LEAVE_EARNED;
         }
 
-        if(!selectedLeaveType) {
-            $('.type-of-leave').addClass('is-invalid');
-            hasError = true;
-        } else {
-            let [type] = JSON.parse(types).filter((type) => type.code_number == selectedLeaveType);
-
-            switch (type.code_number) {
-                case 10003:
-                    points = 5;
-                    break;
-
-                case 10002:
-                    points = VACATION_LEAVE_EARNED;
-                    break;
-
-                case 10001:
-                    points = SICK_LEAVE_EARNED;
-                    break;
-            }
-
-            // Calculate no. of days ask for leave.
-            let noOfDays = moment(endDate).diff(startDate, 'days');
-            if(!hasError) {
-                $('#noOfDays').val(noOfDays >= 0 ? noOfDays : '');
-            }
-
-            if(noOfDays >= 1 && !hasError) {
-                $('#earnedLess').val(noOfDays);
-                $('#earnedRemaining').val(points - noOfDays);
-            } else {
-                $('#earnedLess').val('');
-                $('#earnedRemaining').val('');
-            }
-
-        }
+        $('#earnedLess').val(period);
+        $('#earnedRemaining').val(POINTS - period);
     });
 
     $('#endDate').change(function () {
-        let startDate         = $('#startDate').val();
-        let endDate           = $('#endDate').val();
-        let selectedLeaveType = $('#typeOfLeave').val();
-        let points            = 0;
-        
-        if(!selectedLeaveType) {
-            hasError = true;
-            $('.type-of-leave').addClass('is-invalid');
-        } else {
-            let [type] = JSON.parse(types).filter((type) => type.code_number == selectedLeaveType);
-            let fiveDaysAdvance = moment().add(5, 'days').format('YYYY-MM-DD');
+        let period = moment($('#endDate').val()).diff($('#startDate').val(), 'days');
+        let POINTS = 0;
 
-            if(moment(endDate).isBefore(startDate, 'day')) {
-                hasError = true;
-                $('#endDate').addClass('is-invalid');
-            } else if(moment(endDate).isSame(startDate, 'day')) {
-                hasError = true;
-                $('#endDate').addClass('is-invalid');
-            } else if(moment(endDate).isBefore(fiveDaysAdvance, 'day')) {
-                hasError = true;
-                $('#endDate').addClass('is-invalid');
-            } else {
-                hasError = false;
-                $('#endDate').removeClass('is-invalid')
-                            .addClass('is-valid');
-            }
-
-            switch (type.code_number) {
-                case 10003:
-                    points = 5;
-                    break;
-
-                case 10002:
-                    points = VACATION_LEAVE_EARNED;
-                    break;
-
-                case 10001:
-                    points = SICK_LEAVE_EARNED;
-                    break;
-            }
+        $('#noOfDays').val(period);
 
 
-            // Calculate no. of days ask for leave.
-            let noOfDays = moment(endDate).diff(startDate, 'days');
-            if(!hasError) {
-                $('#noOfDays').val(noOfDays >= 0 ? noOfDays : '');
-            }
-            
-            if(noOfDays >= 1 && !hasError) {
-                $('#earnedLess').val(noOfDays);
-                $('#earnedRemaining').val(points - noOfDays);
-            } else {
-                $('#earnedLess').val('');
-                $('#earnedRemaining').val('');
-            }
+        let type = getSelectedLeaveTypeData(types, $('#typeOfLeave').val());
+
+        if(type.code_number === LEAVE_TYPES.get('MANDATORY_LEAVE')) {
+            POINTS = 5;
+        } else if(LEAVE_TYPES.get('VACATION_LEAVE')) {
+            POINTS = VACATION_LEAVE_EARNED;
+        } else if(LEAVE_TYPES.get('SICK_LEAVE')) {
+            POINTS = SICK_LEAVE_EARNED;
         }
+
+        $('#earnedLess').val(period);
+        $('#earnedRemaining').val(POINTS - period);
     });
 
-    $('#apply--for--leave--form').submit(function (e) {
+
+    $('#submitLeaveFileButton').submit(function (e) {
         e.preventDefault();
+
         $('#apply-spinner').removeClass('d-none');
         $('#apply-button-icon').addClass('d-none');
+
         let data = {
-            dateApply: $('#dateApply').val(),
-            typeOfLeave: $('#typeOfLeave').val(),
-            inCaseOf: $('#inCaseOf').val(),
-            noOfDays: $("#noOfDays").val(),
-            startDate: $('#startDate').val(),
-            endDate: $('#endDate').val(),
-            earned: $('#earned').val(),
-            earnedLess: $('#earnedLess').val(),
-            earnedRemaining: $('#earnedRemaining').val(),
-            commutation: $('#commutation').val(),
+            dateApply           : $('#dateApply').val(),
+            typeOfLeave         : $('#typeOfLeave').val(),
+            inCaseOf            : $('#inCaseOf').val(),
+            noOfDays            : $("#noOfDays").val(),
+            startDate           : $('#startDate').val(),
+            endDate             : $('#endDate').val(),
+            earned              : $('#earned').val(),
+            earnedLess          : $('#earnedLess').val(),
+            earnedRemaining     : $('#earnedRemaining').val(),
+            commutation         : $('#commutation').val(),
             recommendingApproval: $('#recommendingApproval').val(),
-            approvedBy: $('#approvedBy').val(),
+            approvedBy          : $('#approvedBy').val(),
         };
 
         $.ajax({
@@ -471,16 +399,23 @@
             method: 'POST',
             data: data,
             success: function (response) {
+                $('#formErrors').addClass('d-none').html('');
                 $('#apply-spinner').addClass('d-none');
                 $('#apply-button-icon').removeClass('d-none');
+
                 if (response.success) {
+
+                    Object.keys(data).map((elementID) => {
+                        $(`${elementID}`).removeClass('is-invalid');
+                    });
+
                     swal({
                         title: "Good Job!",
                         text: "Your leave application successfully submit plesae wait for the approval.",
                         icon: "success",
                         timer: 5000
                     });
-
+    
                     data.fullname = response.fullname;
 
                     socket.emit(`submit_application_for_leave`, data);
@@ -491,9 +426,13 @@
                 $('#apply-button-icon').removeClass('d-none');
 
                 if (response.status == 422) {
+                    Object.keys(data).map((elementID) => {
+                        $(`${elementID}`).removeClass('d-none');
+                    });
+
+                    $('#formErrors').removeClass('d-none').html('');
                     Object.keys(response.responseJSON.errors).map((fieldID) => {
                         let [message] = response.responseJSON.errors[fieldID];
-
                         if (fieldID.includes('typeOf')) {
                             // Select field with select picker.
                             $('button[data-id="typeOfLeave"]').addClass(
@@ -501,14 +440,17 @@
                         } else {
                             $(`#${fieldID}`).addClass('is-invalid');
                         }
+                        
+                        $('#formErrors').append(`<span>${message}</span> <br>`);
                     });
-                } else if (response.status == 423) {
+                } else if (response.status == ALREADY_HAVE_PENDING_FILE) {
                     swal('Oops!', response.responseJSON.message, 'error');
-                } else if(response.status === 424) {
+                } else if(response.status === CANNOT_ACCESS_SELECTED_LEAVE) {
                     swal('Oops!', response.responseJSON.message, 'error');
                 }
             }
         });
+
 
     });
 

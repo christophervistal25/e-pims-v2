@@ -68,7 +68,6 @@
 
                     <div class="form-group col-12 col-lg-3">
                         <label for="dateAdjustment" class="has-float-label">
-                            {{-- Carbon\Carbon::now()->format('Y-m-d') --}}
                             <input class="form-control" value="{{ Carbon\Carbon::now()->toDateString() }}"
                                 name="dateAdjustment" id="dateAdjustment" type="date"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -113,7 +112,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-12 mt-2 d-none">
+                    <div class="form-group col-2 mt-2 d-none">
                         <input class="form-control " value="" id="positionId" name="positionId" type="text" readonly>
                     </div>
 
