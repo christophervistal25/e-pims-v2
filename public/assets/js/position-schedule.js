@@ -55,7 +55,10 @@ $(document).ready(function() {
                                     "",
                                     "success"
                                 );
-                                $("#positionSchedule,#positionList")
+                                $("#positionSchedule")
+                                    .DataTable()
+                                    .ajax.reload();
+                                $("#positionList")
                                     .DataTable()
                                     .ajax.reload();
                                 $("#saveBtn").attr("disabled", false);
@@ -86,11 +89,11 @@ $(document).ready(function() {
     // position schedule list
     let checker = document.querySelector("#yearFilter").value;
     if (!checker) {
-        var yearFilter = new Date().getFullYear();
+        var yearFilterSelectedOffice = new Date().getFullYear();
     } else {
-        var yearFilter = document.querySelector("#yearFilter").value;
+        var yearFilterSelectedOffice = document.querySelector("#yearFilter")
+            .value;
     }
-    let yearFilterSelected = document.querySelector("#year").value - 1;
     let table = $("#positionSchedule").DataTable({
         processing: true,
         pagingType: "full_numbers",
@@ -102,7 +105,7 @@ $(document).ready(function() {
             processing:
                 '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
         },
-        ajax: `/position-schedule-list-adjusted/${yearFilterSelected}`,
+        ajax: `/position-schedule-list-adjusted/${yearFilterSelectedOffice}`,
         columns: [
             {
                 data: "position_name",
@@ -120,8 +123,6 @@ $(document).ready(function() {
     });
 
     $("#officeCode").change(function(e) {
-        let yearFilterSelectedOffice =
-            document.querySelector("#yearFilter").value - 1;
         if (e.target.value == "") {
             table.destroy();
             table = $("#positionSchedule").DataTable({
@@ -255,8 +256,6 @@ $(document).ready(function() {
         }
     });
     // list to be adjusted in position schedule
-    // display position
-
     let tableToBeSelect = $("#positionList").DataTable({
         processing: true,
         pagingType: "full_numbers",
