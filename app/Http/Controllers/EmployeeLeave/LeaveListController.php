@@ -120,20 +120,25 @@ class LeaveListController extends Controller
         if($request->status === 'approved') {
             $leaveList->date_approved = Carbon::now()->format('Y-m-d');
             $leaveList->date_rejected = null;
+            $leaveList->approved_for = $request['approvedFor'];
+            $leaveList->disapproved_due_to = null;
         } else {
             $leaveList->date_rejected = Carbon::now()->format('Y-m-d');
             $leaveList->date_approved = null;
+            $leaveList->disapproved_due_to = $request['reason'];
+            $leaveList->approved_for = null;
         }
         
         $leaveList->save();
 
 
         EmployeeLeaveRecord::create([
-            'employee_id' => $leaveList->employee_id,
-            'particular' => ($leaveList->type->code) . '(' . $request->numberOfDays . '-0' . '-0' . ')',
-            'leave_type_id' => $request->selectedLeave,
-            'earned' => 0.000,
-            'used' => $request->numberOfDays,
+            'employee_id'          => $leaveList->employee_id,
+            'particular'           => ($leaveList->type->code) . '(' . $request->numberOfDays . '-0' . '-0' . ')',
+            'leave_type_id'        => $request->selectedLeave,
+            'earned'               => 0.000,
+            'used'                 => $request->numberOfDays,
+            'leave_application_id' => $id,
         ]);
 
         

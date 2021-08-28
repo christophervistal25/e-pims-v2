@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -23,18 +24,25 @@ class EmployeeLeaveApplication extends Model
         'date_applied',
         'date_from',
         'date_to',
-        'deleted_at'
+        'deleted_at',
+        'disapproved_due_to',
+        'approved_for',
     ];
 
-    protected $appends = [
-        'in_case_of_text',
-    ];
+    // protected $appends = [
+    //     'in_case_of_text',
+    // ];
     
     public function employee()
     {
         return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
     }
 
+    public function leave_records()
+    {
+        return $this->hasMany(EmployeeLeaveRecord::class, 'leave_application_id', 'id');
+    }
+    
     public function type()
     {
         return $this->hasOne(LeaveType::class, 'id', 'leave_type_id');
@@ -47,7 +55,7 @@ class EmployeeLeaveApplication extends Model
 
     public function getAttributeInCaseOfText($value)
     {
-        return Str::upper(str_replace('_', ' ', $this->attributes['incase_of']));
+        return Str::upper(str_replace('_', ' ', $value));
     }
 
 }

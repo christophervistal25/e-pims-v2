@@ -52,7 +52,7 @@
 
             <div id="add" class="page-header {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
                 <div style='padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
-                    <button id="cancelbutton" class="btn btn-primarys submit-btn float-right shadow"><i class="fa fa-list"></i>
+                    <button id="showList" class="btn btn-primarys submit-btn float-right shadow"><i class="fa fa-list"></i>
                         Salary Grade List</button>
                 </div>
                 <div class="alert alert-secondary text-center font-weight-bold" role="alert">ADD NEW SALARY GRADE</div>
@@ -76,19 +76,6 @@
                         <div id='salary-grade-error-message' class='text-danger text-sm'>
                         </div>
                     </div>
-
-                        {{-- <div class="form-group col-12 col-lg-4">
-                            <label class="font-weight-bold text-sm">SALARY GRADE<span class="text-danger">*</span></label>
-                            <select name="sgNo" value="{{ old('sgNo') }}" class="select floating" id="sgNo">
-                                <option selected>Please Select</option>s
-                                @foreach (range(1, 33) as $salarygrade)
-                                <option {{ old('sgNo') == $salarygrade ? 'selected' : '' }} value="{{ $salarygrade }}">
-                                    {{ $salarygrade }}</option>
-                                @endforeach
-                            </select>
-                            <div id='salary-grade-error-message' class='text-danger'>
-                            </div>
-                        </div> --}}
 
                         <div class="row">
                             <div class="col-12 col-md-4">
@@ -223,43 +210,18 @@
                                 </option>
                                 @endforeach
                             </select>
-                            <span class="font-weight-bold">SALARY GRADE<span class="text-danger">*</span></span>
+                            <span class="font-weight-bold">SALARY YEAR<span class="text-danger">*</span></span>
                         </label>
                             <div id='salary-grade-year-error-message' class='text-danger text-sm'>
                             </div>
                         </div>
 
-
-                            {{-- <div class="form-group col-12 col-lg-4">
-                            <label class="font-weight-bold text-sm">SALARY GRADE YEAR<span class="text-danger">*</span></label>
-                            <select id="sgYear" name="sgYear" value="{{ old('sgYear') }}" class="select floating">
-                                <option>Please Select</option>
-                                {{ $year2 = date("Y",strtotime("-1 year")) }}
-                                <option {{ old('sgYear') == $year2 ? 'selected' : '' }} value={{ $year2 }}>{{ $year2 }}
-                                </option>
-                                {{ $year3 = date("Y",strtotime("-0 year")) }}
-                                <option {{ old('sgYear') == $year3 ? 'selected' : '' }} value={{ $year3 }}>{{ $year3 }}
-                                </option>
-                                @foreach (range(1, 5) as $year)
-                                {{ $year1 = date("Y",strtotime("$year year")) }}
-                                <option {{ old('sgYear') == $year1 ? 'selected' : '' }} value={{ $year1 }}>{{ $year1 }}
-                                </option>
-                                @endforeach
-                            </select>
-                            <div id='salary-grade-year-error-message' class='text-danger'>
-                            </div>
-                        </div> --}}
-
-
-
-
                         <div class="form-group submit-section col-12">
-                            <button id="saveBtn" class="btn btn-primarys submit-btn float-right shadow" type="submit"><i class="fas fa-save"></i>
-                                <span id="loading" class="spinner-border spinner-border-sm d-none" role="status"
-                                    aria-hidden="false"></span>
-                                Save
+                            <button id="saveBtn" class="btn btn-primarys submit-btn float-right shadow" type="submit"><span id="loading" class="spinner-border spinner-border-sm d-none" role="status"
+                                aria-hidden="false"></span> <i class="fas fa-save"></i>
+                                <b id="saving">Save</b>
                             </button>
-                            <button style="margin-right:10px;" type="button" id="cancelbutton1"
+                            <button style="margin-right:10px;" type="button" id="cancelButton"
                                 class="btn text-white btn-danger submit-btn float-right shadow"><i class="fas fa-ban"></i> Cancel</button>
                         </div>
 
@@ -287,7 +249,7 @@
                         </div>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <button id="addbutton" class="btn btn-primarys submit-btn float-right"><i class="fa fa-plus"></i>
+                        <button id="addButton" class="btn btn-primarys submit-btn float-right"><i class="fa fa-plus"></i>
                             Add Salary Grade</button>
                     </div>
                 </div>

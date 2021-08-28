@@ -191,6 +191,7 @@ Route::group(['middleware' => 'auth'], function () {
     
     // Employee Leave Card
     Route::get('employee-leave-card' , 'Account\Employee\LeaveCardController@index')->name('employee.leave.card.index');
+    Route::get('employee-leave-card/{start?}/{end?}' , 'Account\Employee\LeaveCardController@withRange')->name('employee.leave.card.with.range.index');
 
 
     Route::get('leave-certification-print', 'Account\Employee\LeaveCertificationController@index')->name('print-leave-certification');

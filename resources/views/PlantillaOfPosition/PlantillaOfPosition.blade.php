@@ -49,7 +49,7 @@
     <div class="card-body">
         <div id="add" class="page-header {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
             <div style='padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
-                <button id="cancelbutton" class="btn btn-primarys submit-btn float-right shadow"><i
+                <button id="showListPlantillaPosition" class="btn btn-primarys submit-btn float-right shadow"><i
                         class="fa fa-list"></i> Position List</button>
             </div>
             <form action="/plantilla-of-position" method="post" id="plantillaOfPositionForm">
@@ -235,7 +235,7 @@
                                     aria-hidden="false"></span>
                                 <i class="fas fa-save"></i> <b id="saving">Save</b>
                             </button>
-                            <button style="margin-right:10px;" type="button" id="cancelbutton1" onclick="myFunction()"
+                            <button style="margin-right:10px;" type="button" id="cancelButton"
                                 class="text-white btn btn-danger submit-btn float-right shadow"><i
                                     class="fas fa-ban"></i> Cancel</button>
                         </div>
@@ -259,7 +259,7 @@
 
 
                 <div class="col-7 float-right mb-10">
-                    <button id="addbutton" class="btn btn-primarys submit-btn float-right"><i class="fa fa-plus"></i> Add
+                    <button id="addButton" class="btn btn-primarys submit-btn float-right"><i class="fa fa-plus"></i> Add
                         New Position</button>
                 </div>
         </div>
