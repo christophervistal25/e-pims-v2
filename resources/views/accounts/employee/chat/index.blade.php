@@ -60,61 +60,7 @@
                     <div class="chat-content-wrap" id="chatContents">
                         <div class="chat-wrap-inner">
                             <div class="chat-box">
-                                <div class="chats">
-                                    <div class="chat chat-right">
-                                        <div class="chat-body">
-                                            <div class="chat-bubble">
-                                                {{-- <div class="chat-content">
-                                                    <p>Hello. What can I do for you?</p>
-                                                    <span class="chat-time">8:30 am</span>
-                                                </div> --}}
-                                                <div class="chat-action-btns">
-                                                    <ul>
-                                                        <li><a href="#" class="share-msg" title="Share"><i
-                                                                    class="fa fa-share-alt"></i></a></li>
-                                                        <li><a href="#" class="edit-msg"><i
-                                                                    class="fa fa-pencil"></i></a></li>
-                                                        <li><a href="#" class="del-msg"><i
-                                                                    class="fa fa-trash-o"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                   
-                                    <div class="chat chat-left" id="chatLeft">
-                                        {{-- <div class="chat-avatar">
-                                            <a href="profile.html" class="avatar">
-                                                <img alt="" src="assets/img/profiles/avatar-05.jpg">
-                                            </a>
-                                        </div> --}}
-                                        <div class="chat-body" id="chatBody">
-                                            <div class="chat-bubble">
-                                                <div class="chat-content">
-                                                    <p>Welcome to chat message</p>
-                                                    <span class="chat-time">{{ date('h:i A', time()) }}</span>
-                                                </div>
-                                                <div class="chat-action-btns">
-                                                    <ul>
-                                                        <li><a href="#" class="share-msg" title="Share"><i
-                                                                    class="fa fa-share-alt"></i></a></li>
-                                                        <li><a href="#" class="edit-msg"><i
-                                                                    class="fa fa-pencil"></i></a></li>
-                                                        <li><a href="#" class="del-msg"><i
-                                                                    class="fa fa-trash-o"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>                                            
-                                        </div>
-                                    </div>
-
-
-                                    {{-- Appendchild for every chat message has been sent --}}
-                                    <div class="chat chat-right" id="chatRight"> 
-                                    </div>
-                                    
-                                    
+                                <div class="chats" id="chat__content__parent">
 
                                 </div>
                             </div>
@@ -156,18 +102,32 @@
                     <div class="content-full tab-pane" id="calls_tab">
                         <div class="chat-wrap-inner">
                             <div class="chats">
-                                <div class="chat chat-left">
+                                <div class="chat chat-left" id="active__user__{{ Auth::user()->employee_id }}" data-attribute="active_user">
                                     <div class="chat-box">
                                         <div class="user-img">
-                                            <a href="profile.html" class="avatar">
+                                            <a href="javascript:;" class="avatar">
                                                 <img src="/storage/employee_images/{{ Auth::user()->employee->information->photo }}" alt="">
                                             <span class="status online"></span>
                                             </a>
-                                            <a href="#" class="h6">{{  Auth::user()->employee->fullname }}</a>
+                                            <a href="javascript:;" class="h6">{{  Auth::user()->employee->fullname }}</a>
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="chat chat-left" id="active__user__0460" data-sender="{{ Auth::user()->employee_id }}" data-receiver="0460">
+                                    <div class="chat-box" data-sender="{{ Auth::user()->employee_id }}" data-receiver="0460">
+                                        <div class="user-img" data-sender="{{ Auth::user()->employee_id }}" data-receiver="0460">
+                                            <a class="avatar" data-sender="{{ Auth::user()->employee_id }}" data-receiver="0460">
+                                                <img data-sender="{{ Auth::user()->employee_id }}" src="/storage/employee_images/{{ Auth::user()->employee->information->photo }}" data-receiver="0460">
+                                            <span class="status online" data-sender="{{ Auth::user()->employee_id }}" data-receiver="0460"></span>
+                                            </a>
+                                            <a href="#" class="h6" data-sender="{{ Auth::user()->employee_id }}" data-receiver="0460">Dummy User</a>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
+                            
                         </div>
                     </div>
                     <div class="content-full tab-pane show active" id="profile_tab">
@@ -320,13 +280,17 @@
     const officeName = '{{ $account->office }}'
     const time = new Date();
 
+    let receiver = 0, sender = ID;
+
+    let roomReverse = false;
+
     let chatContent = document.querySelector('#chatContent');
     
 
 
 
     // join chat room //
-    const socket = io.connect("{{ env('MIX_SOCKET_IP') }}");
+    // const socket = io.connect("{{ env('MIX_SOCKET_IP') }}");
     socket.emit('joinRoom', { userName, officeName, messageChat });
 
 
@@ -338,68 +302,37 @@
     });
 
     
-
-   
-
-    socket.on('message', message => {
-        console.log(message);
-
-        // outputMessage(message);
-
-        
+    socket.on('message_sent', function (message) {
     });
-
-
 
     messageChat.addEventListener('keyup', (e) => {
         e.preventDefault();
-        
-        console.log(messageChat.value);
     });
 
 
     btnSubmit.addEventListener('click', (e) => {
         e.preventDefault();
         const msgInput = messageChat.value;
-        // alert('clicking...')
-        // outputMessage(message);
-        
+        if(msgInput) {
+            socket.emit('send_message', {
+                sender,
+                receiver,
+                roomReverse,
+                message : msgInput,
+            });
 
-        let div = document.createElement('div');
-        div.classList.add('message');
-        div.innerHTML = ` <div class="chat chat-right">
-                                        <div class="chat-body">
-                                            <div class="chat-bubble">
-                                                <div class="chat-content">
-                                                    <p>${msgInput}</p>
-                                                    <span class="chat-time">${ time.toLocaleTimeString() }</span>
-                                                </div>
-                                                <div class="chat-action-btns">
-                                                    <ul>
-                                                        <li><a href="#" class="share-msg" title="Share"><i class="fa fa-share-alt"></i></a></li>
-                                                        <li><a href="#" class="edit-msg"><i class="fa fa-pencil"></i></a></li>
-                                                        <li><a href="#" class="del-msg"><i class="fa fa-trash-o"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>`;
-        document.querySelector('#chatRight').appendChild(div); 
+            messageChat.value = '';
+            messageChat.focus();
 
-
-        // socket.emit('chatMessage', msgInput);
-
-        messageChat.value = '';
-        messageChat.focus();
-
-        chatContent.scrollTop = chatContent.scrollHeight;
+            chatContent.scrollTop = chatContent.scrollHeight;
+        }
         
     });
 
 
     
 
-    function outputMessage(messageChat) {
+    function outputMessage(data) {
         let div = document.createElement('div');
         div.classList.add('message');
         div.innerHTML = `<div class="chat chat-left">
@@ -411,10 +344,10 @@
                                 <div class="chat-body" id="chatBody">
                                     <div class="chat-bubble">
                                         <div class="chat-content">
-                                            <p>${msgInput}</p>
+                                            <p>${data.message}</p>
                                             <span class="chat-time">8:30 am</span>
 
-                                            <p class="meta">${messageChat.username}</p>
+                                            <p class="meta">${data.username}</p>
                                             
 
                                         </div>
@@ -433,10 +366,57 @@
         document.querySelector('#chatLeft').appendChild(div); 
     }
 
+
+    $(document).on('click', function (event) {
+        if(event.target.getAttribute('data-receiver')) {
+            receiver = String(event.target.getAttribute('data-receiver'));
+            sender = String(event.target.getAttribute('data-sender'));
+            let data = { sender, receiver };
+
+            socket.emit(`request_conversation`, data);
+        }
+    });
     
 
+    socket.on(`invite_${ID}`, function (data) {
+        if(data.sender != ID) {
+            roomReverse = true;
+        }
+        receiver = data.sender;
+        socket.emit('join', data);
+    });
 
+    socket.on(`send_to_receiver`, function (data) {
+        let chatPositionClass = "right";
+        
+        if(data.sender !== ID) {
+            chatPositionClass = "left";
+        }
 
+        $('#chat__content__parent').append(`
+            <div class="chat chat-${chatPositionClass}">
+                <div class="chat-body">
+                    <div class="chat-bubble">
+                        <div class="chat-content">
+                            <p>${data.message}</p>
+                            <span class="chat-time">{{ date('h:i A', time()) }}</span>
+                        </div>
+                        <div class="chat-action-btns">
+                            <ul>
+                                <li><a href="#" class="share-msg" title="Share"><i
+                                            class="fa fa-share-alt"></i></a></li>
+                                <li><a href="#" class="edit-msg"><i
+                                            class="fa fa-pencil"></i></a></li>
+                                <li><a href="#" class="del-msg"><i
+                                            class="fa fa-trash-o"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `);
+
+    });
 
 </script>
     
