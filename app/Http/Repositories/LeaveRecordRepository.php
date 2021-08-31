@@ -49,7 +49,7 @@ class LeaveRecordRepository extends LeaveApplicationRepository
 
     public function getRecordsWithoutForwarded(string $employeeID, string $start = null, string $end = null) : Collection
     {
-        $query = EmployeeLeaveRecord::with(['type', 'leave_file_application' => function ($query) {
+        $query = EmployeeLeaveRecord::with(['type', 'undertime', 'leave_file_application' => function ($query) {
             $query->where('approved_status', 'approved');
         }])->orderBy('created_at')
             ->where('employee_id', $employeeID);

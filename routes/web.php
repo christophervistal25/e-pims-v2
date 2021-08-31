@@ -133,6 +133,9 @@ Route::group(['prefix' => 'employee'], function () {
     Route::get('/leave-monitoring/{id}', 'EmployeeLeave\LeaveMonitoringController@list');
     Route::resource('/leave-monitoring', 'EmployeeLeave\LeaveMonitoringController');
 
+    // LATE & UNDERTIME //
+    Route::resource('/late-undertime', 'EmployeeLeave\LeaveUndertimeController');
+
     // COMPENSATORY LEAVE //
     Route::get('/leave/compensatory-build-up', 'EmployeeLeave\CompensatoryBuildUpController@list')->name('compensatory-build-up.list');
     Route::get('/leave/compensatory-build-up/{id}/{year}', 'EmployeeLeave\CompensatoryBuildUpController@listComLeaveByYear');

@@ -76,7 +76,7 @@ $(function() {
                 select: 'multi',
                 language: {
                     processing:
-                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                        '<i style="color:#FF9B44" class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
                 },
                 ajax: {
                     url: `/employee/leave/compensatory-build-up/${empID}/${year_filter}`
@@ -540,7 +540,7 @@ $(document).on('click', '.btnEdit__availed__compensatory', function () {
             //format date_added to string
             let date_added = formatDate(comRecord.date_added);
             // Collect data of form fields.
-           $("#edit_id").val(comRecord.id);
+            $("#edit_id").val(comRecord.id);
             $("#edit_employee_id").val(comRecord.employee_id);
             $('#edit_overtime_type').val(comRecord.overtime_type);
             $('#edit_date_added').val(date_added);

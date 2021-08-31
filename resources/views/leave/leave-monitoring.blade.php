@@ -1,221 +1,394 @@
-@extends('layouts.app-vue')
+@extends('layouts.app')
 @section('title', 'Leave Monitoring Index')
 @prepend('page-css')
-<script src="{{ asset('/js/app.js') }}" defer></script>
-<link rel="stylesheet"
-    href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+{{-- <script src="{{ asset('/js/app.js') }}" defer></script> --}}
+<link rel="stylesheet" href="/assets/css/custom.css" />
+<link rel="stylesheet" href="/assets/css/bootstrap-float-label.min.css" />
+<link rel="stylesheet" href="/assets/css/line-awesome.min.css">
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="/assets/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    .modal-header {
+        background: rgb(255, 190, 36);
+        background: linear-gradient(90deg, rgba(255, 190, 36, 1) 0%, rgba(255, 126, 5, 1) 75%, rgba(255, 72, 0, 1) 100%);
+    }
+
+    .swal-text {
+        text-align: center;
+    }
+
+    table {
+        border: 1px solid black;
+        font-size: 14px;
+        margin: 10px 0;
+        position: relative;
+    }
+
+    thead tr th {
+        background-color: white;
+        position: sticky;
+        top: -2px;
+    }
+
+    thead {
+        border: 1px solid black;
+        line-height: 1.25;
+        overflow: hidden;
+    }
+
+
+    .table {
+        border-collapse: collapse;
+    }
+
+    .sticky-table thead th {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        box-shadow:  inset 0 -2px 0 gray;
+    }
+
+    .material-icons.md-18 { font-size: 18px; }
+    .material-icons.md-24 { font-size: 24px; }
+    .material-icons.md-36 { font-size: 36px; }
+    .material-icons.md-48 { font-size: 48px; }
+</style>
 @endprepend
 @section('content')
 <div class="row">
-    <div class="col-lg-3">
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title text-center text-sm">Search Option</h3>
-                <div class="checkbox">
-                    <label class="checkbox-inline no_indent text-sm">
-                        <input type="checkbox" name="individual" id="individual"
-                            style="transform: scale(1.2)">Individual
-                    </label>
-                </div>
-                <div class="checkbox">
-                    <label class="checkbox-inline no_indent text-sm">
-                        <input type="checkbox" name="officename" id="officename" style="transform: scale(1.2)">Office /
-                        Department
-                    </label>
-                </div>
-                <hr class="mt-1">
-                <label for="officelist" class="form-group has-float-label mb-0">
-                    <select name="officelist" type="text" id="officelist" class="form-control form-control-sm"
-                        style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                        <option readonly selected>Select Office Name</option>
-                        <option>Office Name I</option>
-                    </select>
-                    <span>Office Name</span>
-                </label>
-                <hr>
-                <label for="filteropt" class="form-group has-float-label mb-0">
-                    <select name="filteropt" type="text" id="filteropt" class="form-control form-control-sm"
-                        style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                        <option readonly selected>Active</option>
-                        <option>Active</option>
-                    </select>
-                    <span>Filter Option</span>
-                </label>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <div class="card-title text-center text-sm mb-4">Search Employee</div>
-                <div class="row">
-                    <div class="col-lg-10 pr-0">
-                        <label for="empName" class="form-group has-float-label">
-                            <input class="form-control" type="text" id="empName"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>Name of Employee</strong></span>
-                        </label>
+    <div class="d-flex col-lg-3">
+        <div class="flex-fill">
+            <div class="card h-100">
+                <div class="card-body pb-0">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <img class="mb-3 rounded-circle img-thumbnail" id="empPhoto"
+                                src="/storage/employee_images/no_image.png" width="50%" />
+                        </div>
                     </div>
-                    <div class="col-lg-2 pl-0">
-                        <button class="btn btn-outline-light"><i class="las la-search text-dark"></i></button>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label for="empName" class="form-group has-float-label bg-light">
+                                <select class="form-control selectpicker" data-live-search="true" name="employeeName"
+                                    id="employeeName" data-size="6"
+                                    style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                    <option value="">Search name here</option>
+                                    @foreach($employees as $employee)
+                                    <option data-office="{{ $employee->information->office->office_name }}"
+                                        data-position="{{ $employee->information->position->position_name }}"
+                                        data-photo="{{ $employee->information->photo }}"
+                                        data-employeeId="{{ $employee->information->EmpIDNo }}"
+                                        value="{{ $employee->employee_id }}">{{ $employee->lastname }},
+                                        {{ $employee->firstname }} {{ $employee->middlename }} </option>
+                                    @endforeach
+                                </select>
+                                <span><strong>EMPLOYEE NAME</strong></span>
+                            </label>
+
+                            <label for="office" class="form-group has-float-label">
+                                <input type="text" name="office" id="office" class="form-control bg-light"
+                                    style="outline: none; box-shadow: 0px 0px 0px transparent;" readonly>
+                                <span class="font-weight-bold">OFFICE</span>
+                            </label>
+                            <label for="position" class="form-group has-float-label">
+                                <input type="text" name="position" id="position" class="form-control bg-light"
+                                    style="outline: none; box-shadow: 0px 0px 0px transparent;" readonly>
+                                <span class="font-weight-bold">POSITION</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <hr class="mt-1 bg-secondary">
+                            <div class="alert alert-dark text-center">
+                                <strong>LEAVE BALANCES</strong>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label for="vlBal" class="form-group has-float-label">
+                                        <input type="text"
+                                            class="form-control text-right text-secondary font-weight-bold bg-light" id="vlBal"
+                                            style="outline: none; box-shadow: 0px 0px 0px transparent; font-size: 20px"
+                                            readonly>
+                                        <span><strong>VL BALANCE</strong></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label for="slBal" class="form-group has-float-label">
+                                        <input type="text"
+                                            class="form-control text-right text-secondary font-weight-bold bg-light" id="slBal"
+                                            style="outline: none; box-shadow: 0px 0px 0px transparent; font-size: 20px"
+                                            readonly>
+                                        <span><strong>SL BALANCE</strong></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <hr class="mt-0">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label for="totalBalance" class="form-group has-float-label">
+                                        <input type="text"
+                                            class="form-control text-center text-primary font-weight-bold bg-light" id="totalBalance"
+                                            style="outline: none; box-shadow: 0px 0px 0px transparent; height: 100px; font-size: 75px"
+                                            readonly>
+                                        <span><strong>TOTAL LEAVE BALANCE</strong></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-9">
-        <div class="card shadow">
-            <div class="card-body">
-                <div class="alert alert-secondary text-center"><strong>LEAVE MONITORING INDEX</strong></div>
-                <hr>
-                <h6 class="text-sm ml-3">LEAVE INDEX INFORMATION</h6>
-                <div class="row">
-                    <div class="col-lg-3">
-                        <label for="transID" class="form-group has-float-label mt-3">
-                            <input type="text" id="transID" class="form-control"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>TRANSACTION ID<span class="text-danger">*</span></strong></span>
-                        </label>
-                        <label for="period" class="form-group has-float-label">
-                            <input type="text" class="form-control"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>PERIOD<span class="text-danger">*</span></strong></span>
-                        </label>
-                        <label for="particular" class="form-group has-float-label">
-                            <input type="text" id="particular" class="form-control"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>PARTICULAR<span class="text-danger">*</span></strong></span>
-                        </label>
-                        <label for="leaveApp" class="form-group has-float-label">
-                            <input type="text" id="leaveApp" style="outline:none; box-shadow: 0px 0px 0px transparent;"
-                                class="form-control">
-                            <span><strong>LEAVE APPLICATION ID<span class="text-danger">*</span></strong></span>
-                        </label>
-                        <label for="ordering" class="form-group has-float-label">
-                            <input type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;"
-                                class="form-control" disabled>
-                            <span><strong>ORDERING</strong></span>
-                        </label>
+    <div class="d-flex col-lg-9">
+        <div class="flex-fill">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="alert alert-warning text-center">
+                        <strong>LEAVE MONITORING INDEX</strong>
                     </div>
-                    <div class="col-lg-9">
-                        <div class="card shadow mt-3">
-                            <div class="card-body">
-                                <h3 class="card-title mb-4">BALANCES</h3>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <label for="vlEarned" class="form-group has-float-label">
-                                            <input type="text" class="form-control" id="vlEarned"
-                                                style="outline: none; box-shadfow: 0px 0px 0px transparent;">
-                                            <span><strong>VL EARNED</strong></span>
-                                        </label>
-                                        <label for="vlEnjoyedWP" class="form-group has-float-label">
-                                            <input type="text" class="form-control"
-                                                style="outline: none; box-shadow: 0px 0px 0px transparent;"
-                                                id="vlEnjoyedWP">
-                                            <span><strong>VL ENJOYED (WP)</strong></span>
-                                        </label>
-                                        <label for="vlEnjoyedWOP" class="form-group has-float-label">
-                                            <input type="text" class="form-control"
-                                                style="outline: none; box-shadow: 0px 0px 0px transparent;"
-                                                id="vlEnjoyedWOP">
-                                            <span><strong>VL ENJOYED (WOP)</strong></span>
-                                        </label>
-                                        <label for="vlBal" class="form-group has-float-label">
-                                            <input type="text" class="form-control"
-                                                style="outline: none; box-shadow: 0px 0px 0px transparent;" id="vlBal">
-                                            <span><strong>VL BALANCE</strong></span>
-                                        </label>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <label for="slEarned" class="form-group has-float-label">
-                                            <input type="text" class="form-control" id="slEarned"
-                                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                            <span><strong>SL EARNED</strong></span>
-                                        </label>
-                                        <label for="slEnjoyedWP" class="form-group has-float-label">
-                                            <input type="text" id="slEnjoyedWP" class="form-control"
-                                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                            <span><strong>SL ENJOYED (WP)</strong></span>
-                                        </label>
-                                        <label for="slEnjoyedWOP" class="form-group has-float-label">
-                                            <input type="text" id="slEnjoyed"
-                                                style="outline: none; box-shadow: 0px 0px 0px transparent;"
-                                                class="form-control">
-                                            <span><strong>SL ENJOYED (WOP)</strong></span>
-                                        </label>
-                                        <label for="slBal" class="form-group has-float-label">
-                                            <input type="text" id="slBal" class="form-control"
-                                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                            <span><strong>SL BALANCE</strong></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <label for="yearFilter" class="form-group has-float-label yearFilter">
+                                <select class="form-control selectpicker" name="yearFilter" type="text"
+                                    id="yearFilter" data-size="4"
+                                    style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                    <option>All</option>
+                                    <option value="2021">2021</option>
+                                    <option value="2020">2020</option>
+                                    <option value="2019">2019</option>
+                                </select>
+                                <span><strong>Filter Year</strong></span>
+                            </label>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                            </div>
-                            <div class="col-lg-6">
-                                <label for="leaveOpt" class="form-group has-float-label mr-3">
-                                    <select name="" id="" class="custom-select"
-                                        style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                        <option value="">-----</option>
-                                    </select>
-                                    <span><strong>Leave Index Options</strong></span>
-                                </label>
-                                <div class="text-right mr-3">
-                                    <button class="btn btn-primary shadow rounded-circle text-white" title="New Record" type="button"><i
-                                            class="las la-user-plus"></i> </button>
-                                    <button class="btn btn-success shadow rounded-circle text-white" title="Save Changes" type="button"><i
-                                            class="lar la-save"></i> </button>
-                                    <button class="btn btn-danger text-white shadow rounded-circle" type="button" title="Cancel Record"><i
-                                            class="las la-ban"></i> </button>
+                        <div class="col-lg-4">
+                            <label for="particularFilter" class="form-group has-float-label particularFilter">
+                                <select class="form-control selectpicker" name="particularFilter" type="text"
+                                    id="particularFilter" data-size="4"
+                                    style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                    <option>All</option>
+                                    <option value="Earned">Earned</option>
+                                    <option value="Availed">Availed</option>
+                                    <option value="WP">Late/Undertime</option>
+                                    <option value="WOP">Leave Without Pay</option>
+                                </select>
+                                <span><strong>Filter Particulars</strong></span>
+                            </label>
+                        </div>
+                        <div class="col-lg-1">
+
+                        </div>
+                        <div class="col-lg-3">
+                            <button title="Add Undertime" type="button" class="btn btn-primary btn-block shadow"
+                                id="btnUndertime">
+                                Add Late or Undertime
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-responsive" data-simplebar data-simplebar-lg style="height: 55vh;">
+                        <table class="table table-bordered text-center mt-2 sticky-table" width="100%" id="leave_card"
+                            >
+                            <thead>
+                                <tr>
+                                    <th class="font-weight-bold align-middle text-center" rowspan="2" width="27%">Period
+                                    </th>
+                                    <th class="font-weight-bold align-middle text-center" rowspan="2" width="9%">Particular
+                                    </th>
+                                    <th class="font-weight-bold align-middle text-center" colspan="4">VACATION LEAVE</th>
+                                    <th class="font-weight-bold align-middle text-center" colspan="4">SICK LEAVE</th>
+                                    <th class="font-weight-bold align-middle text-center" rowspan="2" width="8%">Bal</th>
+                                    <th class="font-weight-bold align-middle text-center" rowspan="2" width="8%">View
+                                        Details</th>
+                                </tr>
+                                <tr>
+                                    <th class="align-middle text-center text-xs" width="6%">Earned</th>
+                                    <th class="align-middle text-center text-xs" width="6%">WP</th>
+                                    <th class="align-middle text-center text-xs" width="6%">Balance</th>
+                                    <th class="align-middle text-center text-xs" width="6%">WOP</th>
+                                    <th class="align-middle text-center text-xs" width="6%">Earned</th>
+                                    <th class="align-middle text-center text-xs" width="6%">WP</th>
+                                    <th class="align-middle text-center text-xs" width="6%">Balance</th>
+                                    <th class="align-middle text-center text-xs" width="6%">WOP</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                            <tfoot>
+                                <td colspan="12" class="text-center text-sm bg-light">
+                                    &nbsp;
+                                </td>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- ADD LATE OR UNDERTIME MODAL -->
+                    <div class="modal rounded-0 fade" id="addUndertime" data-keyboard="false" data-backdrop="static">
+                        <div class="modal-dialog modal-md modal-dialog-centered">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title text-capitalize">Add Late or Undertime</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <form id="addUndertimeForm" method="POST">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <input type="hidden" class='form-control' name="employee_id" id="employee_id">
+                                                    <input type="hidden" class='form-control' name="undertime_id" id="undertime_id">
+                                                </div>
+                                                <div class='alert alert-danger d-none' id="equivalent-error-message"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-12 mt-0">
+                                                <label for="hours" class="h4">
+                                                    LATE:
+                                                </label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label for="hoursLate"
+                                                    class="form-group has-float-label hoursLate">
+                                                    <input type="number" name="hoursLate" id="hoursLate"
+                                                        class="form-control hoursLate" value="0"
+                                                        style="outline: none; box-shadow: 0px 0px 0px transparent; height: 75px; font-size:50px; font-family:Century Gothic; text-align:left; ">
+                                                    <span class="font-weight-bold">Hours </span>
+                                                    <div class='text-danger' id="hoursLate-error-message"></div>
+                                                </label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label for="minsLate" class="form-group has-float-label minsLate">
+                                                    <input type="number" name="minsLate" id="minsLate"
+                                                        class="form-control minsLate" value="0"
+                                                        style="outline: none; box-shadow: 0px 0px 0px transparent; height: 75px; font-size:50px; font-family:Century Gothic; text-align:left; ">
+                                                    <span class="font-weight-bold">Minutes </span>
+                                                    <div class='text-danger' id="minsLate-error-message"></div>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <label for="hours" class="h4">
+                                                    UNDERTIME:
+                                                </label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label for="hoursUndertime"
+                                                    class="form-group has-float-label hoursUndertime">
+                                                    <input type="number" name="hoursUndertime" id="hoursUndertime"
+                                                        class="form-control hoursUndertime" value="0"
+                                                        style="outline: none; box-shadow: 0px 0px 0px transparent; height: 75px; font-size:50px; font-family:Century Gothic; text-align:left; ">
+                                                    <span class="font-weight-bold">Hours </span>
+                                                    <div class='text-danger' id="hoursUndertime-error-message"></div>
+                                                </label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label for="minsUndertime" class="form-group has-float-label minsUndertime">
+                                                    <input type="number" name="minsUndertime" id="minsUndertime"
+                                                        class="form-control minsUndertime" value="0"
+                                                        style="outline: none; box-shadow: 0px 0px 0px transparent; height: 75px; font-size:50px; font-family:Century Gothic; text-align:left; ">
+                                                    <span class="font-weight-bold">Minutes </span>
+                                                    <div class='text-danger' id="minsUndertime-error-message"></div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <hr class="bg-primary mb-4 mt-1 pt-1">
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <label for="date_added" class="form-group has-float-label">
+                                                    <input type="month" name="date_added" id="date_added"
+                                                        class="form-control date_added"
+                                                        style="outline: none; box-shadow: 0px 0px 0px transparent; height: 75px; font-size:20px; font-family:Century Gothic; text-align:left; ">
+                                                    <span class="font-weight-bold date-span"></span>
+                                                    <div class='text-danger' id="date_added-error-message"></div>
+                                                    <span class="font-weight-bold">DATE <span
+                                                            class='text-danger'>*</span></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <label for="equivalent"
+                                                    class="form-group has-float-label equivalent">
+                                                    <input type="number" name="equivalent" id="equivalent"
+                                                        class="form-control equivalent" value="0"
+                                                        style="outline: none; box-shadow: 0px 0px 0px transparent; height: 75px; font-size:50px; font-family:Century Gothic; text-align:left; "
+                                                        readonly>
+                                                    <span class="font-weight-bold"> EQUIVALENT LEAVE </span>
+                                                </label>
+                                            </div>
+                                        </div>
 
                                 </div>
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary shadow" id="btnAddUndertime">
+                                        <div class="spinner-border spinner-border-sm text-light d-none"
+                                            id="save-spinner" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                        Add
+                                    </button>
+                                    <button type="button" class="btn btn-primary shadow d-none" id="btnUpdateUndertime">
+                                        <div class="spinner-border spinner-border-sm text-light d-none"
+                                            id="save-spinner" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                        Save Changes
+                                    </button>
+                                    </form>
+                                    <button type="button" class="btn btn-danger shadow"
+                                        data-dismiss="modal">Close</button>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th class="text-center">Particular</th>
-                            <th class="text-center">Period</th>
-                            <th class="text-center">VL Earned</th>
-                            <th class="text-center">VL WP</th>
-                            <th class="text-center">VL WOP</th>
-                            <th class="text-center">VL Bal</th>
-                            <th class="text-center">SL Earned</th>
-                            <th class="text-center">Order</th>
-                            <th class="text-center">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th class="text-center">1</th>
-                            <th class="text-center">1</th>
-                            <th class="text-center">1</th>
-                            <th class="text-center">1</th>
-                            <th class="text-center">1</th>
-                            <th class="text-center">1</th>
-                            <th class="text-center">1</th>
-                            <th class="text-center">1</th>
-                            <th class="text-center">
-                                <button class="btn btn-sm rounded-circle shadow btn-success"><i
-                                        class="fa fa-edit"></i></button>
-                                &nbsp;
-                                <button class="btn btn-danger btn-sm rounded-circle shadow"><i
-                                        class="fa fa-trash"></i></button></th>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
 </div>
+
 @push('page-scripts')
-<script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
+<script src="/assets/js/jquery.dataTables.min.js"></script>
+<script src="/assets/js/dataTables.bootstrap4.min.js"></script>
+<script src="/assets/js/dataTables.responsive.min.js"></script>
+<script src="{{ asset('/assets/js/custom.js') }}"></script>
+<script src="/assets/js/sweetalert.min.js"></script>
+<script src="/assets/js/leaveMonitoring.js"></script>
+<script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
+<script>
+    var tableHeaderTop = document.querySelector('.sticky-table thead').getBoundingClientRect().top;
+    var ths = document.querySelectorAll('.sticky-table thead th')
+
+    for (var i = 0; i < ths.length; i++) {
+        var th = ths[i];
+        th.style.top = th.getBoundingClientRect().top - tableHeaderTop + "px";
+    }
+
+</script>
 @endpush
 @endsection
