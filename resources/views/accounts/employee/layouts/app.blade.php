@@ -93,7 +93,7 @@
                 <!-- Notifications -->
                 <li class="nav-item dropdown">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                        <i class="fa fa-bell-o"></i> <span class="badge badge-pill">3</span>
+                        <i class="fa fa-bell-o"></i> <span class="badge badge-pill">{{ $notifications->count() }}</span>
                     </a>
                     <div class="dropdown-menu notifications">
                         <div class="topnav-dropdown-header">
@@ -102,38 +102,23 @@
                         </div>
                         <div class="noti-content">
                             <ul class="notification-list">
-                                <li class="notification-message">
-                                    <a href="activities.php">
-                                        <div class="media">
-                                            <span class="avatar">
-                                                <img alt="" src="assets/img/profiles/avatar-02.jpg">
-                                            </span>
-                                            <div class="media-body">
-                                                <p class="noti-details"><span class="noti-title">John Doe</span> added
-                                                    new task <span class="noti-title">Patient appointment booking</span>
-                                                </p>
-                                                <p class="noti-time"><span class="notification-time">4 mins ago</span>
-                                                </p>
+                                @foreach($notifications as $notification)
+                                    <li class="notification-message">
+                                        <a href="activities.php">
+                                            <div class="media">
+                                                <span class="avatar">
+                                                    <img alt="" src="assets/img/profiles/avatar-03.jpg">
+                                                </span>
+                                                <div class="media-body">
+                                                    <p class="noti-details"><span class="noti-title"><strong>{{ $notification->title }}</strong> - </span>
+                                                        <span class="noti-title">{{ $notification->description }}</span></p>
+                                                    <p class="noti-time"><span class="notification-time">6 mins ago</span>
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="notification-message">
-                                    <a href="activities.php">
-                                        <div class="media">
-                                            <span class="avatar">
-                                                <img alt="" src="assets/img/profiles/avatar-03.jpg">
-                                            </span>
-                                            <div class="media-body">
-                                                <p class="noti-details"><span class="noti-title">Tarah Shropshire</span>
-                                                    changed the task name <span class="noti-title">Appointment booking
-                                                        with payment gateway</span></p>
-                                                <p class="noti-time"><span class="notification-time">6 mins ago</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
+                                        </a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                         <div class="topnav-dropdown-footer">
@@ -147,7 +132,7 @@
                         <span class="user-img"><img
                                 src="/storage/employee_images/{{ Auth::user()->employee->information->photo }}" alt="">
                             <span class="status online"></span></span>
-                        <span>{{  Auth::user()->employee->fullname }}</span>
+                        <span id="employee--fullname">{{  Auth::user()->employee->fullname }}</span>
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ route('employee.personal.profile') }}">My Profile</a>
@@ -239,8 +224,18 @@
 	<script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>
     <script>
         const socket = io.connect("{{ env('MIX_SOCKET_IP') }}");
-        $('#print--certification').click(() => socket.emit('preview_leave_certification'));
-
+        $('#print--certification').click(() => {
+            $.ajax({
+                url : '/leave-certification-print',
+                success : function (response) {
+                    const window_title = "LEAVE_CERTIFICATE";
+                    let fullname = document.querySelector('#employee--fullname').innerText;
+                        if(response.success) {
+                            socket.emit('preview_leave_certification', { arguments : `${fullname}|${window_title}` })
+                        }
+                }
+            });
+        });
     </script>
 </body>
 

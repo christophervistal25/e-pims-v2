@@ -278,6 +278,12 @@
                         <td class='text-center'>{{ $application->date_from }}</td>
                         <td class='text-center'>{{ $application->date_to }}</td>
                         <td class='text-center font-weight-bold'>{{ $application->no_of_days }}</td>
+                        <td class='text-sm'>
+                            <button data-source="{{ $application->id }}" class='btn btn-primary btn-sm btn-rounded shadow btnPrintLeaveApplicationFilling'
+                            >
+                                <i class='la la-print' style="pointer-events:none;"></i>
+                            </button>
+                        </td>
                     </tr>
                     @empty
                     <tr>
@@ -602,7 +608,17 @@
         });
 
     });
-
+    
+    $(document).on('click', '.btnPrintLeaveApplicationFilling', function (e) {
+        let applicationID = $(e.target).attr('data-source');
+        $.ajax({
+            url : `/employee-leave-application-print/${applicationID}`,
+            success : function (response) {
+                let FULLNAME = "{{ $employee->fullname }}";
+                socket.emit('preview_application_filling_form', { arguments : `${FULLNAME}|REQUEST_APPLICATION_FILLING_FORM`});
+            }
+        });
+    })
 </script>
 @endpush
 @endsection

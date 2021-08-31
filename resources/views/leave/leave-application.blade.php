@@ -252,16 +252,6 @@
     </div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
 @push('page-scripts')
 <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
 @endpush
