@@ -126,7 +126,7 @@
                                         </label>
                                     </div>
 
-                                    <div class="col-lg-12">
+                                    {{-- <div class="col-lg-12">
                                         <div class="float-right">
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="leave_has_pay" id="withPay" value="with_pay" disabled>
@@ -138,7 +138,7 @@
                                                 <label class="form-check-label text-sm" for="withoutPay">W/O PAY</label>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="col-lg-12">
                                         <div id="error_message_for_points"></div>
@@ -204,8 +204,9 @@
                                             <span><strong>SL BALANCE</strong></span>
                                         </label>
                                     </div>
-
+                                    
                                     <div class="col-lg-12">
+                                        <hr>
                                         <label for="total__balance" class="form-group has-float-label">
                                             <input type="number" class="form-control" id="total__balance" disabled
                                                 name="totalBalance"
@@ -276,8 +277,8 @@
 
 </script>
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
-<script src="{{ asset('/assets/js/custom/leave/leave.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.js"></script>
+<script src="{{ asset('/assets/js/custom/leave/leave.js') }}"></script>
 <script>
     const ROUTE                        = "{{ route('employee.leave.application.filling.submit') }}";
     const VACATION_LEAVE_EARNED        = "{{ $vacationLeaveEarned }}";
@@ -289,11 +290,28 @@
     const SPACE                        = new RegExp(/\s+/, "ig");
     const LEAVE_TYPES                  = new Map([]);
 
-    let types                   = JSON.parse($('meta[name="leave-types"]').attr('content'));
+    let types = JSON.parse($('meta[name="leave-types"]').attr('content'));
 
+    // Function to create a key value pair Map for leave types.
     types.forEach((type) => LEAVE_TYPES.set(type.name.replace(SPACE, '_'), type.code_number));
 
+    // Function to get the other information of selected leave type.
     let getSelectedLeaveTypeData = (types, selectedType) => types.find(type => type.code_number == selectedType);
+    
+    // Function to calculate the # of weekends by range.
+    let getNoOfWeekendInRange = (periodStart, periodEnd) => {
+        let i = 0;
+        let noOfWeekEnds = 0;
+        while (i < moment(periodEnd).diff(periodStart, 'days')) {
+            let date = moment(periodStart).add(i, 'days');
+            if(date.format('dddd').toLowerCase() === 'saturday' || date.format('dddd').toLowerCase() === 'sunday') {
+                noOfWeekEnds++;
+            }
+            i++;
+        }
+
+        return noOfWeekEnds;
+    };
 
     // When user select a type of leave.
     $('#typeOfLeave').change(function (e) {
@@ -347,16 +365,30 @@
             POINTS = SICK_LEAVE_EARNED;
         }
 
-        $('#earnedLess').val(period);
-        $('#earnedRemaining').val(POINTS - period);
+        $('#insufficient_points_error').remove();
+        if(POINTS <= Math.abs(period)) {
+            $('#formErrors').prepend(`<span id="insufficient_points_error">- Insufficient Leave points <br></span>`);
+        } else {
+            $('#earnedLess').val(period || 0);
+            $('#earnedRemaining').val((POINTS - period) || 0);
+        }
     });
 
     $('#endDate').change(function () {
-        let period = moment($('#endDate').val()).diff($('#startDate').val(), 'days');
+        let rangePeriod = {
+            start : moment($('#startDate').val()),
+            end : moment($('#endDate').val()),
+        };
+
+        if(rangePeriod.end.format('dddd').toLowerCase() === 'saturday' || rangePeriod.end.format('dddd').toLowerCase() === 'sunday') {
+            return '';
+        }
+        
+        let period = (moment(rangePeriod.end).diff(rangePeriod.start, 'days') - getNoOfWeekendInRange(rangePeriod.start, rangePeriod.end)) +1;
+
         let POINTS = 0;
 
         $('#noOfDays').val(period);
-
 
         let type = getSelectedLeaveTypeData(types, $('#typeOfLeave').val());
 
@@ -368,13 +400,19 @@
             POINTS = SICK_LEAVE_EARNED;
         }
 
-        $('#earnedLess').val(period);
-        $('#earnedRemaining').val(POINTS - period);
+        $('#insufficient_points_error').remove();
+        if(POINTS <= Math.abs(period)) {
+            $('#formErrors').prepend(`<span id="insufficient_points_error">- Insufficient Leave points <br></span>`);
+        } else {
+            $('#earnedLess').val(period || 0);
+            $('#earnedRemaining').val((POINTS - period) || 0);
+        }
     });
 
 
     $('#submitLeaveFileButton').submit(function (e) {
         e.preventDefault();
+
 
         $('#apply-spinner').removeClass('d-none');
         $('#apply-button-icon').addClass('d-none');
@@ -418,7 +456,9 @@
     
                     data.fullname = response.fullname;
 
-                    socket.emit(`submit_application_for_leave`, data);
+                    // socket.emit(`submit_application_for_leave`, data);
+                    // socket.emit('notify_administrator', { arguments : `${response.fullname}|NOTIFY_ADMINISTRATOR`});
+                    socket.emit('service_notify_administrator', { arguments : `${response.fullname}|NOTIFY_ADMINISTRATOR`});
                 }
             },
             error: function (response) {
@@ -441,7 +481,7 @@
                             $(`#${fieldID}`).addClass('is-invalid');
                         }
                         
-                        $('#formErrors').append(`<span>${message}</span> <br>`);
+                        $('#formErrors').append(`<span>- ${message}</span> <br>`);
                     });
                 } else if (response.status == ALREADY_HAVE_PENDING_FILE) {
                     swal('Oops!', response.responseJSON.message, 'error');
@@ -450,8 +490,6 @@
                 }
             }
         });
-
-
     });
 
 </script>

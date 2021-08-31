@@ -54,14 +54,12 @@ class EmployeeLeaveRecordController extends Controller
             'vlEnjoyed'             => 'required',
             'slEarned'              => 'required',
             'slEnjoyed'             => 'required',
-            'asOf'                  => 'required|date',
         ], [
-            'employeeName.required' => 'This field is required.',
+            'employeeName.required' => 'Please select an employee.',
             'vlEarned.required'     => 'This field is required.',
             'slEarned.required'     => 'This field is required.',
             'vlEnjoyed.required'    => 'This field is required.',
             'slEnjoyed.required'    => 'This field is required.',
-            'asOf.required'         => 'Please select a date.',
         ]);
 
         $leaveTypes = LeaveType::where('code_number', self::VACATION_LEAVE)
@@ -127,18 +125,17 @@ class EmployeeLeaveRecordController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         $this->validate($request, [
             'update_vlEarned'              => 'required',
             'update_vlEnjoyed'             => 'required',
             'update_slEarned'              => 'required',
             'update_slEnjoyed'             => 'required',
-            'update_asOf'                  => 'required|date',
         ], [
             'update_vlEarned.required'     => 'This field is required.',
             'update_slEarned.required'     => 'This field is required.',
             'update_vlEnjoyed.required'     => 'This field is required.',
             'update_slEnjoyed.required'     => 'This field is required.',
-            'update_asOf.required'         => 'Please select a date.',
         ]);
 
         //update

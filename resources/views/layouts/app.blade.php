@@ -19,6 +19,8 @@
 	{{-- <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}"> --}}
 	{{-- <link rel="stylesheet" href="{{ asset('/assets/css/all.min.css') }}"> --}}
 	<link rel="stylesheet" href="{{ asset('/assets/css/font-awesome.min.css') }}">
+	<link rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 	<link rel="stylesheet" href="{{ asset('/assets/css/line-awesome.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('/assets/css/style.css') }}">
 	<link rel="stylesheet" href="{{ asset('/assets/css/select2.min.css') }}">
@@ -255,7 +257,7 @@
 					<ul>
 						<li>
 							<a class='text-decoration-none' href='/'>
-								<i class="fa fa-chart-line"></i> <span> Dashboard</span>
+								<i class="las la-digital-tachograph"></i> <span>Dashboard</span></a>
 							</a>
 						</li>
 						<li class="menu-title">
@@ -284,18 +286,18 @@
 							<ul style="display: none;">
 								<li>
                                     <a class='text-decoration-none mr-2' href="{{ route('leave.application.filling') }}">
-                                        Leave Application Filling</a>
+                                        Leave Application Filing</a>
                                 </li>
 								<li>
                                     <a class='text-decoration-none mr-2' href="{{ route('leave.leave-list') }}">
                                         Leave List
                                     </a>
                                 </li>
-								<li>
+								{{-- <li>
                                     <a class='text-decoration-none mr-2' href="{{  route('leave-recall.index') }}">
                                         Leave Recall, Cancel or Transfer
                                     </a>
-                                </li>
+                                </li> --}}
 								<li>
                                     <a class='text-decoration-none mr-2' href="{{  route('leave-monitoring.index') }}">
                                         Leave Monitoring Index
@@ -455,24 +457,33 @@
 	<script src="{{ asset('/assets/js/moment.min.js') }}"></script>
 	<script src="{{ asset('/assets/js/bootstrap-datetimepicker.min.js') }}"></script>
 	<script src="{{ asset('/assets/js/app.js') }}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.8/push.min.js" integrity="sha512-eiqtDDb4GUVCSqOSOTz/s/eiU4B31GrdSb17aPAA4Lv/Cjc8o+hnDvuNkgXhSI5yHuDvYkuojMaQmrB5JB31XQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>
 	<script>
 	const socket = io.connect("{{ env('MIX_SOCKET_IP') }}");
 
     socket.on(`notify_administrator`, (data) => {
-		if (!("Notification" in window)) {
-			alert("This browser does not support desktop notification");
-		} else if (Notification.permission === "granted") {
-			// If it's okay let's create a notification
-			let notification = new Notification('Leave Application Filling', {
-				body : `${data.fullname} submit a leave application please kindly review.`,
-				icon : 'http://localhost:8001/assets/img/main-logo.png'
-			});
+		Push.create("Hello world!", {
+			body: "How's it hangin'?",
+			icon: '/icon.png',
+			timeout: 4000,
+			onClick: function () {
+				window.focus();
+				this.close();
+			}
+		});
 
-			notification.onclick = () => window.open(`${$('meta[name="leave-list-route"]').attr('content')}`);
+		// if (!("Notification" in window)) {
+		// 	alert("This browser does not support desktop notification");
+		// } else if (Notification.permission === "granted") {
+		// 	// If it's okay let's create a notification
+		// 	let notification = new Notification('Leave Application Filling', {
+		// 		body : `${data.fullname} submit a leave application please kindly review.`,
+		// 		icon : 'http://localhost:8001/assets/img/main-logo.png'
+		// 	});
 
-		}	
-		
+		// 	notification.onclick = () => window.open(`${$('meta[name="leave-list-route"]').attr('content')}`);
+		// }	
 	});
 
 	</script>

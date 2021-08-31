@@ -35,7 +35,6 @@ class LeaveListController extends Controller
         ->leftJoin('leave_types', 'leave_types.id', '=', 'employee_leave_applications.leave_type_id')
         ->leftJoin('employee_informations', 'employee_informations.EmpIDNo', '=', 'employee_leave_applications.employee_id')
         ->select('employee_leave_applications.id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'recommending_approval', 'approved_by', 'leave_type_id', 'incase_of', 'commutation', 'approved_status', 'date_approved', 'date_rejected', 'date_applied', 'date_from', 'date_to', 'no_of_days', 'leave_types.id as leave_type_id', 'leave_types.name AS leave_type_name')
-
         ->where('employee_leave_applications.deleted_at', null)
         ->get();
 
@@ -105,7 +104,7 @@ class LeaveListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $leaveList                        = EmployeeLeaveApplication::find($id);
+        $leaveList                        = EmployeeLeaveApplication::with('leave_records')->find($id);
         $leaveList->date_applied          = $request['dateApply'];
         $leaveList->leave_type_id         = $request['selectedLeave'];
         $leaveList->incase_of             = $request['inCaseOfLeave'];
@@ -120,6 +119,22 @@ class LeaveListController extends Controller
         if($request->status === 'approved') {
             $leaveList->date_approved = Carbon::now()->format('Y-m-d');
             $leaveList->date_rejected = null;
+
+            EmployeeLeaveRecord::create([
+                'employee_id'          => $leaveList->employee_id,
+                'particular'           => ($leaveList->type->code) . '(' . $request->numberOfDays . '-0' . '-0' . ')',
+                'leave_type_id'        => $request->selectedLeave,
+                'earned'               => 0.000,
+                'used'                 => $request->numberOfDays,
+                'leave_application_id' => $id,
+            ]);
+        } elseif($request->status === 'declined'){
+            $leaveList->date_rejected = Carbon::now()->format('Y-m-d');
+            $leaveList->date_approved = null;
+
+            $leaveList->leave_records()->delete();
+            // $leaveList->leave_records->delete();
+        }else {
             $leaveList->approved_for = $request['approvedFor'];
             $leaveList->disapproved_due_to = null;
         } else {
@@ -130,16 +145,6 @@ class LeaveListController extends Controller
         }
         
         $leaveList->save();
-
-
-        EmployeeLeaveRecord::create([
-            'employee_id'          => $leaveList->employee_id,
-            'particular'           => ($leaveList->type->code) . '(' . $request->numberOfDays . '-0' . '-0' . ')',
-            'leave_type_id'        => $request->selectedLeave,
-            'earned'               => 0.000,
-            'used'                 => $request->numberOfDays,
-            'leave_application_id' => $id,
-        ]);
 
         
         Session::flash('success', true);

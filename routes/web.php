@@ -116,6 +116,12 @@ Route::group(['prefix' => 'employee'], function () {
     Route::post('/exists/personal/{employee}/references', 'PersonalDataSheetController@existingEmployeeStoreReferences');
     Route::post('/exists/personal/issued/id', 'PersonalDataSheetController@existingEmployeeStoreIssuedID');
 
+
+    Route::get('/leave/application', 'EmployeeLeave\LeaveController@show')->name('leave.application.filling');
+    Route::get('/leave/leave-recall', 'EmployeeLeave\LeaveRecallController@index')->name('leave.leave-recall');
+    Route::resource('/leave-recall', 'EmployeeLeave\LeaveRecallController');
+    Route::resource('/leave-forwarded-balance', 'EmployeeLeave\EmployeeLeaveRecordController');
+ 
     //  LEAVE-LIST APPLICATIONS //
     Route::get('/leave-list/list', 'EmployeeLeave\LeaveListController@list');
     Route::get('leave/leave-list', 'EmployeeLeave\LeaveListController@index')->name('leave.leave-list');
@@ -123,14 +129,12 @@ Route::group(['prefix' => 'employee'], function () {
     Route::delete('/leave-list/{id}', 'EmployeeLeave\LeaveListController@destroy')->name('leave-list.delete');
     Route::put('/leave/leave-list/{id}', 'EmployeeLeave\LeaveListController@update')->name('leave-list.update');
 
-
-
-    Route::get('/leave/application', 'EmployeeLeave\LeaveController@show')->name('leave.application.filling');
-    Route::get('/leave/leave-recall', 'EmployeeLeave\LeaveRecallController@index')->name('leave.leave-recall');
-    Route::resource('leave-starting-balance', 'EmployeeLeave\LeaveStartingBalanceController');
+    // LEAVE MONITORING INDEX //
+    Route::get('/leave-monitoring/{id}', 'EmployeeLeave\LeaveMonitoringController@list');
     Route::resource('/leave-monitoring', 'EmployeeLeave\LeaveMonitoringController');
-    Route::resource('/leave-recall', 'EmployeeLeave\LeaveRecallController');
-    Route::resource('/leave-forwarded-balance', 'EmployeeLeave\EmployeeLeaveRecordController');
+
+    // LATE & UNDERTIME //
+    Route::resource('/late-undertime', 'EmployeeLeave\LeaveUndertimeController');
 
     // COMPENSATORY LEAVE //
     Route::get('/leave/compensatory-build-up', 'EmployeeLeave\CompensatoryBuildUpController@list')->name('compensatory-build-up.list');
@@ -175,6 +179,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     })->name('employee.setting');
 
+    Route::get('employee-leave-application-print/{id}', 'Account\Employee\LeaveApplicationController@print')
+                                        ->name('employee.leave.application.filling');
+
     Route::group(['middleware' => 'verify.application.submitted'], function () {
         // Route for Leave Application filling.
         Route::get('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@create')
@@ -192,6 +199,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Employee Leave Card
     Route::get('employee-leave-card' , 'Account\Employee\LeaveCardController@index')->name('employee.leave.card.index');
     Route::get('employee-leave-card/{start?}/{end?}' , 'Account\Employee\LeaveCardController@withRange')->name('employee.leave.card.with.range.index');
+    Route::post('employee-leave-card-print', 'Account\Employee\LeaveCardController@print')->name('employee.leave.card.print');
 
 
     Route::get('leave-certification-print', 'Account\Employee\LeaveCertificationController@index')->name('print-leave-certification');

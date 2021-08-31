@@ -339,4 +339,5 @@ class Employee extends Model
     {
         return $this->hasMany(CompensatoryLeave::class, 'employee_id', 'employee_id');
     }
+
 }

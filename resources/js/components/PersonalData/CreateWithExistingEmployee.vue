@@ -149,9 +149,13 @@ export default {
       window.axios.get(`/print/pds/${employee_id}`).then(() => {
         if (!this.socket.connected) {
           this.socket = io.connect(process.env.MIX_SOCKET_IP);
-          this.socket.emit("preview_personal_data_sheet");
+          this.socket.emit("preview_personal_data_sheet", {
+            arguments: `${this.employee.fullname}|PERSONAL_DATA_SHEET`,
+          });
         } else {
-          this.socket.emit("preview_personal_data_sheet");
+          this.socket.emit("preview_personal_data_sheet", {
+            arguments: `${this.employee.fullname}|PERSONAL_DATA_SHEET`,
+          });
         }
       });
     },

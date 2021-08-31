@@ -27,15 +27,15 @@ class LeaveCertificationController extends Controller
         list('vacation_leave_earned' => $vacationLeave) = $this->leaveRecordRepository->getVacationLeave($employee->employee_id);
         list('sick_leave_earned' => $sickLeave) = $this->leaveRecordRepository->getSickLeave($employee->employee_id);
 
+        $total = number_format($vacationLeave + $sickLeave, 3, '.', '');
+
         $forwardedBalanceAsOf = $this->leaveRecordRepository->getAsOfDate($employee->employee_id);
         $office = $employee->information->office;
-
-        $total = $vacationLeave + $sickLeave;
 
         $columns = ['head', 'vl_balance', 'sl_valance', 'total', 'cert_day', 'lastname', 'position', 'office', 'fullname', 'fb_as_of'];
 
         $values = [
-            $office->office_head, $vacationLeave, $sickLeave, $total, Carbon::now()->format('jS \d\a\y \o\f F, Y \a\t \T\a\n\d\a\g \C\i\t\y'), $employee->lastname, 
+            $office->office_head, number_format($vacationLeave, 3, '.', ''), number_format($sickLeave, 3, '.', ''), $total, Carbon::now()->format('jS \d\a\y \o\f F, Y \a\t \T\a\n\d\a\g \C\i\t\y'), $employee->lastname, 
             $employee->information->position->position_name . ', ', $office->office_name . ', ', $employee->fullname . ' ,', $forwardedBalanceAsOf,
         ];
         
@@ -44,14 +44,10 @@ class LeaveCertificationController extends Controller
         $values = "('" .  implode("','", $values) . "')";
         
 
-        try {
-            $this->database->execute("DELETE * FROM leave_certification");
-            $this->database->execute("INSERT INTO leave_certification ${columns} VALUES ${values}");
-        } catch (\Exception $e) {   
-            dd($e->getMessage());
-        }
+        $this->database->execute("DELETE * FROM leave_certification");
+        $this->database->execute("INSERT INTO leave_certification ${columns} VALUES ${values}");
 
-        return view('accounts.employee.print.leave-certification');
+        return response()->json(['success' => true]);
     }
 
 }

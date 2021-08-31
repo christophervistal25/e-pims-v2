@@ -502,7 +502,7 @@
                                                 icon: "success",
                                         });
                                         // Notify the employee by sending SMS
-                                        // socket.emit('notify_employee_leave_status', { fullname : 'Testing', phone_number : 'tesing', message : 'message' });
+                                        socket.emit('notify_employee_leave_status', { fullname : 'Christopher Vistal Platino', phone_number : '09193693499', message : 'This is just a sample message'});
                                         // Notify the employee by sending notification to it's account.
                                     }
                                     },
