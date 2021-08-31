@@ -175,6 +175,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     })->name('employee.setting');
 
+    Route::get('employee-leave-application-print/{id}', 'Account\Employee\LeaveApplicationController@print')
+                                        ->name('employee.leave.application.filling');
+
     Route::group(['middleware' => 'verify.application.submitted'], function () {
         // Route for Leave Application filling.
         Route::get('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@create')
@@ -192,6 +195,7 @@ Route::group(['middleware' => 'auth'], function () {
     // Employee Leave Card
     Route::get('employee-leave-card' , 'Account\Employee\LeaveCardController@index')->name('employee.leave.card.index');
     Route::get('employee-leave-card/{start?}/{end?}' , 'Account\Employee\LeaveCardController@withRange')->name('employee.leave.card.with.range.index');
+    Route::post('employee-leave-card-print', 'Account\Employee\LeaveCardController@print')->name('employee.leave.card.print');
 
 
     Route::get('leave-certification-print', 'Account\Employee\LeaveCertificationController@index')->name('print-leave-certification');

@@ -127,6 +127,7 @@ class EmployeeLeaveRecordController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         $this->validate($request, [
             'update_vlEarned'              => 'required',
             'update_vlEnjoyed'             => 'required',
