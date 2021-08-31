@@ -24,7 +24,9 @@ class EmployeeLeaveApplication extends Model
         'date_applied',
         'date_from',
         'date_to',
-        'deleted_at'
+        'deleted_at',
+        'disapproved_due_to',
+        'approved_for',
     ];
 
     // protected $appends = [

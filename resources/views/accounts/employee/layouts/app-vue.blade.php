@@ -27,15 +27,14 @@
     <meta name="msapplication-TileImage" content="{{ asset('/assets/img/icons/ms-icon-144x144.png') }}">
     <meta name="theme-color" content="#ffffff">
     <title>@yield('title') | {{  config('app.name') }}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="{{ asset('/assets/css/line-awesome.min.css') }}">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}">
+    <!-- Lineawesome CSS -->
+    <link rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <style>
@@ -50,7 +49,7 @@
 </head>
 {{-- mini-sidebar --}}
 
-<body class="" onbeforeunload="return exitConfirmation()">
+<body class="">
     <div id="loader-wrapper">
         <div id="loader">
             <div class="loader-ellips">
@@ -253,8 +252,7 @@
                                     <a class="" href="{{ route('employee.leave.card.index') }}">Leave Card</a>
                                 </li>
                                 <li>
-                                    <a href="">Certification
-                                    </a>
+                                    <a href="javascript:;" onclick="printCertificate()">Certification</a>
                                 </li>
                             </ul>
                         </li>
@@ -303,7 +301,30 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.min.js" integrity="sha512-fB746S+jyTdN2LSWbYSGP2amFYId226wpOeV4ApumcDpIttPxvk1ZPOgnwqwQziRAtZkiFJVx9F64GLAtoIlCQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        const fullname = "{{ Auth::user()->employee->fullname }}";
+        const ID = "{{ Auth::user()->employee_id }}";
+
+        let socket = io.connect("{{ env('MIX_SOCKET_IP') }}", { query : `id=${ID}&fullName=${fullname}` });
+        
+        let printCertificate = () => {
+            const window_title = "LEAVE_CERTIFICATE";
+            let fullname = "Christopher P. Vistal";
+
+            $.ajax({
+                url : '/leave-certification-print',
+                success : function (response) {
+                    if(response.success) {
+                        socket.emit('preview_leave_certification', { arguments : `${fullname}|${window_title}` })
+                    }
+                }
+            });
+        }
+    </script>
     @stack('page-scripts')
+
 </body>
+
 
 </html>

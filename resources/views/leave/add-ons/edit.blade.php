@@ -306,7 +306,6 @@
                                     value="{{ old('approvedBy') ?? $data->approved_by }}">
                                 <span><strong>APPROVED BY<span class="text-danger">*</span></strong></span>
                             </label>
-                            
                         </div>
                         <div class="row mt-2 float-right">
                             {{-- <input type="date" name="dateApproved" id="dateApproved" class="form-control col-3 mr-3" value="{{ date('Y-m-d') }}" hidden> --}}
@@ -457,9 +456,6 @@
         let numberOfDays = $('#numberOfDays');
         let dateStarted = $('#dateStarted');
         let dateEnded = $('#dateEnded');
-        // let dateApproved = "${ leaveList->date_approved = Carbon::now()->format('Y-m-d') }";
-        // let dateApproved= $('#dateApproved');
-
 
         let id = "{{ $data->id }}";
 
@@ -472,35 +468,45 @@
                 })
                 .then((ifApproved) => {
                     if (ifApproved) {
-                        $.ajax({
-                        url: `/employee/leave/leave-list/${id}`,
-                        data: {
-                            employeeID : employeeId.val(),
-                            recommendingApproval : recommendingApproval.val(),
-                            approvedBy : approvedBy.val(),
-                            selectedLeave : leaveTypes.val(),
-                            dateApply : dateApplied.val(),
-                            commutation : commutation.val(),
-                            inCaseOfLeave : incaseOf.val(),
-                            numberOfDays : numberOfDays.val(),
-                            startDate : dateStarted.val(),
-                            endDate : dateEnded.val(),
-                            status : 'approved',
-                            // dateApproved : dateApproved.val()
-                            },
-                        method: 'PUT',
-                        success: function(response) {
-                            if(response.success) {
-                                swal({
-                                        title: "Request has been approved!",
-                                        text : "You are also successfully updated a request",
-                                        icon: "success",
-                                });
-                            }
-                            
-
-                            },
-                            
+                        swal({
+                        text: 'Enter the reason why you approved this application.',
+                        content: "input",
+                        button: {
+                            text: "Submit",
+                            closeModal: false,
+                        },
+                        })
+                        .then(approvedFor => {
+                            $.ajax({
+                                url: `/employee/leave/leave-list/${id}`,
+                                data: {
+                                    employeeID : employeeId.val(),
+                                    recommendingApproval : recommendingApproval.val(),
+                                    approvedBy : approvedBy.val(),
+                                    selectedLeave : leaveTypes.val(),
+                                    dateApply : dateApplied.val(),
+                                    commutation : commutation.val(),
+                                    inCaseOfLeave : incaseOf.val(),
+                                    numberOfDays : numberOfDays.val(),
+                                    startDate : dateStarted.val(),
+                                    endDate : dateEnded.val(),
+                                    status : 'approved',
+                                    approvedFor,
+                                },
+                                method: 'PUT',
+                                success: function(response) {
+                                    if(response.success) {
+                                        swal({
+                                                title: "Request has been approved!",
+                                                text : "You are also successfully updated a request",
+                                                icon: "success",
+                                        });
+                                        // Notify the employee by sending SMS
+                                        // socket.emit('notify_employee_leave_status', { fullname : 'Testing', phone_number : 'tesing', message : 'message' });
+                                        // Notify the employee by sending notification to it's account.
+                                    }
+                                    },
+                            });
                         });
                     }
                 });
@@ -553,53 +559,58 @@
         let numberOfDays = $('#numberOfDays');
         let dateStarted = $('#dateStarted');
         let dateEnded = $('#dateEnded');
-        // let dateRejected = "${ leaveList->date_rejected = Carbon::now()->format('Y-m-d') }";
-        // let dateRejected = $('#dateRejected');
 
         let getId = "{{ $data->id }}";
-
         
         swal({
                 title: "Are you sure you want to reject a request?",
                 text : "You are about to reject a leave request",
-                icon: "warning",
+                icon: "error",
                 buttons: true,
                 dangerMode: true,
             })
             .then((isRejected) => {
                 if (isRejected) {
-                    $.ajax({
-                    url: `/employee/leave/leave-list/${getId}`,
-                    data: {
-                        employeeID : employeeId.val(),
-                        recommendingApproval : recommendingApproval.val(),
-                        approvedBy : approvedBy.val(),
-                        selectedLeave : leaveTypes.val(),
-                        dateApply : dateApplied.val(),
-                        commutation : commutation.val(),
-                        inCaseOfLeave : incaseOf.val(),
-                        numberOfDays : numberOfDays.val(),
-                        startDate : dateStarted.val(),
-                        endDate : dateEnded.val(),
-                        status : 'declined',
-                        // dateRejected : dateRejected.val()
+                    swal({
+                        text: 'Enter the reason why you disapproved this application.',
+                        content: "input",
+                        button: {
+                            text: "Submit",
+                            closeModal: false,
                         },
-                    method: 'PUT',
-                    success: function() {
-
-                        swal({
-                                title: "Request has been rejected!",
-                                text : "You are rejected a leave request",
-                                icon: "error",
-                            });  
-
-                        },
-                        
-                    });
+                        })
+                        .then(reason => {
+                            if (!reason) throw null;
+                            
+                            $.ajax({
+                                url: `/employee/leave/leave-list/${getId}`,
+                                data: {
+                                    employeeID : employeeId.val(),
+                                    recommendingApproval : recommendingApproval.val(),
+                                    approvedBy : approvedBy.val(),
+                                    selectedLeave : leaveTypes.val(),
+                                    dateApply : dateApplied.val(),
+                                    commutation : commutation.val(),
+                                    inCaseOfLeave : incaseOf.val(),
+                                    numberOfDays : numberOfDays.val(),
+                                    startDate : dateStarted.val(),
+                                    endDate : dateEnded.val(),
+                                    status : 'declined',
+                                    reason,
+                                },
+                                method: 'PUT',
+                                success: function() {
+                                    swal.stopLoading()
+                                    swal({
+                                        title: "Request has been rejected!",
+                                        text : "You are rejected a leave request",
+                                        icon: "success",
+                                    });  
+                                },
+                            });
+                        });
                 }
-            })
-
-           
+            });
     });
 
 

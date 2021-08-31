@@ -61,7 +61,7 @@
                             @csrf
                             <div class="form-group">
                                 <label>Email Address or Username</label>
-                                <input autofocus class="form-control {{ $errors->any() ? 'is-invalid' : '' }}" type="text" name="email" value="{{  old('email') }}">
+                                <input autofocus class="form-control {{ $errors->any() ? 'is-invalid' : '' }}" type="text" name="email" value="{{  old('email') }}" id="username">
                             </div>
                             <div class="form-group">
                                 <div class="row">
@@ -69,7 +69,7 @@
                                         <label>Password</label>
                                     </div>
                                 </div>
-                                <input class="form-control {{ $errors->any() ? 'is-invalid' : '' }}" type="password" name="password">
+                                <input class="form-control {{ $errors->any() ? 'is-invalid' : '' }}" type="password" name="password" id="password">
                             </div>
                             <div class="form-group text-center">
                                 <button class="btn btn-primary account-btn btn-sm" type="submit">

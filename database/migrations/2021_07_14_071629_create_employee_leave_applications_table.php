@@ -28,6 +28,8 @@ class CreateEmployeeLeaveApplicationsTable extends Migration
             $table->date('date_applied');
             $table->date('date_from');
             $table->date('date_to');
+            $table->string('disapproved_due_to')->nullable();
+            $table->string('approved_for')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -136,8 +136,13 @@ class LeaveListController extends Controller
             $leaveList->leave_records()->delete();
             // $leaveList->leave_records->delete();
         }else {
+            $leaveList->approved_for = $request['approvedFor'];
+            $leaveList->disapproved_due_to = null;
+        } else {
             $leaveList->date_rejected = Carbon::now()->format('Y-m-d');
             $leaveList->date_approved = null;
+            $leaveList->disapproved_due_to = $request['reason'];
+            $leaveList->approved_for = null;
         }
         
         $leaveList->save();
