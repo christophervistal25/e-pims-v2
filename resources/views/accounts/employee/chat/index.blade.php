@@ -118,10 +118,11 @@
                                     <div class="chat-box" data-sender="{{ Auth::user()->employee_id }}" data-receiver="0460">
                                         <div class="user-img" data-sender="{{ Auth::user()->employee_id }}" data-receiver="0460">
                                             <a class="avatar" data-sender="{{ Auth::user()->employee_id }}" data-receiver="0460">
-                                                <img data-sender="{{ Auth::user()->employee_id }}" src="/storage/employee_images/{{ Auth::user()->employee->information->photo }}" data-receiver="0460">
+                                                {{-- <img data-sender="{{ Auth::user()->employee_id }}" src="/storage/employee_images/{{ Auth::user()->employee->information->photo }}" data-receiver="0460"> --}}
+                                                <img data-sender="{{ Auth::user()->employee_id }}" src="/storage/employee_images/0460_Arreza.jpg" data-receiver="0460">
                                             <span class="status online" data-sender="{{ Auth::user()->employee_id }}" data-receiver="0460"></span>
                                             </a>
-                                            <a href="#" class="h6" data-sender="{{ Auth::user()->employee_id }}" data-receiver="0460">Dummy User</a>
+                                            <a href="#" class="h6" data-sender="{{ Auth::user()->employee_id }}" data-receiver="0460">MILLAGROS LAVILLA ARREZA</a>
                                         </div>
                                     </div>
                                 </div>
@@ -260,7 +261,8 @@
 
 @push('page-scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.10.1/qs.min.js"></script>
-<script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>
+{{-- <script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.min.js" integrity="sha512-fB746S+jyTdN2LSWbYSGP2amFYId226wpOeV4ApumcDpIttPxvk1ZPOgnwqwQziRAtZkiFJVx9F64GLAtoIlCQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
 
@@ -275,9 +277,9 @@
 
     let messageChat = document.querySelector('#textArea');
     const btnSubmit = document.querySelector('#btnSubmit');
-    const chatBox = document.querySelector('.chat-box');
-    const userName = '{{ $account->username }}';
-    const officeName = '{{ $account->office }}'
+    // const chatBox = document.querySelector('.chat-box');
+    // const userName = '{{ $account->username }}';
+    // const officeName = '{{ $account->office }}'
     const time = new Date();
 
     let receiver = 0, sender = ID;
@@ -291,23 +293,26 @@
 
     // join chat room //
     // const socket = io.connect("{{ env('MIX_SOCKET_IP') }}");
-    socket.emit('joinRoom', { userName, officeName, messageChat });
+    // socket.emit('joinRoom', { userName, officeName, messageChat });
 
 
 
 
      // get username and office from URL //
-     const { username, office, messageInput } = Qs.parse(location.search, {
-      ignoreQueryPrefix: true
-    });
+    //  const { username, office, messageInput } = Qs.parse(location.search, {
+    //   ignoreQueryPrefix: true
+    // });
 
-    
+
+
     socket.on('message_sent', function (message) {
     });
 
-    messageChat.addEventListener('keyup', (e) => {
-        e.preventDefault();
-    });
+
+    // messageChat.addEventListener('keyup', (e) => {
+    //     e.preventDefault();
+    // });
+
 
 
     btnSubmit.addEventListener('click', (e) => {
@@ -332,39 +337,39 @@
 
     
 
-    function outputMessage(data) {
-        let div = document.createElement('div');
-        div.classList.add('message');
-        div.innerHTML = `<div class="chat chat-left">
-                                <div class="chat-avatar">
-                                    <a href="profile.html" class="avatar">
-                                        <img alt="" src="assets/img/profiles/avatar-05.jpg">
-                                    </a>
-                                </div>
-                                <div class="chat-body" id="chatBody">
-                                    <div class="chat-bubble">
-                                        <div class="chat-content">
-                                            <p>${data.message}</p>
-                                            <span class="chat-time">8:30 am</span>
+    // function outputMessage(data) {
+    //     let div = document.createElement('div');
+    //     div.classList.add('message');
+    //     div.innerHTML = `<div class="chat chat-left">
+    //                             <div class="chat-avatar">
+    //                                 <a href="profile.html" class="avatar">
+    //                                     <img alt="" src="assets/img/profiles/avatar-05.jpg">
+    //                                 </a>
+    //                             </div>
+    //                             <div class="chat-body" id="chatBody">
+    //                                 <div class="chat-bubble">
+    //                                     <div class="chat-content">
+    //                                         <p>${data.message}</p>
+    //                                         <span class="chat-time">8:30 am</span>
 
-                                            <p class="meta">${data.username}</p>
+    //                                         <p class="meta">${data.username}</p>
                                             
 
-                                        </div>
-                                        <div class="chat-action-btns">
-                                            <ul>
-                                                <li><a href="#" class="share-msg" title="Share"><i
-                                                            class="fa fa-share-alt"></i></a></li>
-                                                <li><a href="#" class="edit-msg"><i
-                                                            class="fa fa-pencil"></i></a></li>
-                                                <li><a href="#" class="del-msg"><i class="fa fa-trash-o"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>`;
-        document.querySelector('#chatLeft').appendChild(div); 
-    }
+    //                                     </div>
+    //                                     <div class="chat-action-btns">
+    //                                         <ul>
+    //                                             <li><a href="#" class="share-msg" title="Share"><i
+    //                                                         class="fa fa-share-alt"></i></a></li>
+    //                                             <li><a href="#" class="edit-msg"><i
+    //                                                         class="fa fa-pencil"></i></a></li>
+    //                                             <li><a href="#" class="del-msg"><i class="fa fa-trash-o"></i></a></li>
+    //                                         </ul>
+    //                                     </div>
+    //                                 </div>
+    //                             </div>
+    //                         </div>`;
+    //     document.querySelector('#chatLeft').appendChild(div); 
+    // }
 
 
     $(document).on('click', function (event) {
@@ -378,6 +383,7 @@
     });
     
 
+
     socket.on(`invite_${ID}`, function (data) {
         if(data.sender != ID) {
             roomReverse = true;
@@ -385,6 +391,8 @@
         receiver = data.sender;
         socket.emit('join', data);
     });
+
+
 
     socket.on(`send_to_receiver`, function (data) {
         let chatPositionClass = "right";
