@@ -63,28 +63,38 @@ class LeaveApplicationController extends Controller
             if($hasPendingLeave) {
                 return response()->json(['success' => false, 'message' => 'You already have a pending request please wait for the approval before filing new application.'], 423);
             }
+            
+            $startDate = Carbon::parse($request->startDate);
 
-            $startDate = Carbon::now()->addDays(5);
+            if($request->typeOfLeave != '10001') {
+                $startDate = $startDate->addDays(5);
+                $rules['startDate'][] = 'before_or_equal:' . Carbon::parse($request->endDate)->format('Y-m-d');
+            }
 
             // Validation with employee balance look-up
-            $this->validate($request, [
+            $rules = [
                 'approvedBy'           => ['required'],
                 'recommendingApproval' => ['required'],
                 'commutation'          => ['required'],
                 'dateApply'            => ['required'],
-                'startDate'            => ['required', 'after:' . $startDate->format('Y-m-d'), 'before:' . Carbon::parse($request->endDate)->format('Y-m-d')],
-                'endDate'              => ['required', 'after:' . $startDate->format('Y-m-d')],
+                'startDate'            => ['required'],
+                'endDate'              => ['required', 'after_or_equal:' . $startDate->format('Y-m-d')],
                 'inCaseOf'             => ['required'],
                 'noOfDays'             => ['required'],
                 'typeOfLeave'          => ['required'],
-            ], [], [
+            ];
+            
+            
+
+
+            $this->validate($request, $rules , [], [
                     'startDate'   => 'Start Date',
                     'endDate'     => 'End Date',
                     'inCaseOf'    => 'In case of',
                     'typeOfLeave' => 'Leave type',
                     'noOfDays'    => 'No. of days',
                     'typeOfLeave' => 'Leave type',
-                ]);
+            ]);
 
             $leaveType = LeaveType::where('code_number', $request->typeOfLeave)->first();
 

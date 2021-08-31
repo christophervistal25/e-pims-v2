@@ -24,6 +24,7 @@ let endDateMustBeAfterStart = () => {
 
 let startDateMustBeFiveAdvancedFiveDays = () => {
     let startPeriod = moment($('#startDate').val());
+
     if(startPeriod.isBefore(FIVE_DAYS_ADVANCE, 'day')) {
         // Display error message.
         $('#formErrors').removeClass('d-none').prepend(`<span id='start_date_advanced_error'>- Filling of leave must be 5 days advanced from the current date<br></span>`);
@@ -57,7 +58,10 @@ $('#startDate').change(function () {
     $('#startDate').removeClass('is-invalid');
     
     endDateMustBeAfterStart();
-    startDateMustBeFiveAdvancedFiveDays();
+
+    if(!LEAVE_TYPES.get("SICK_LEAVE")) {
+        startDateMustBeFiveAdvancedFiveDays();
+    }
 
     $("#start_date_weekend_error").remove();
     
