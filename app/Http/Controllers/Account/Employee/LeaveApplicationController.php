@@ -98,9 +98,8 @@ class LeaveApplicationController extends Controller
 
             $leaveType = LeaveType::where('code_number', $request->typeOfLeave)->first();
 
-
             $response = $this->leaveRecordRepository
-                            ->fileApplication($employee->first(['first_day_of_service', 'sex', 'employee_id']), $leaveType, $request->noOfDays);
+                            ->fileApplication($employee->only(['employee_id', 'sex', 'first_day_of_service']), $leaveType, $request->noOfDays);
 
             if(!$response['status']) {
                 return response()->json(['success' => false, 'message' => $response['message']], 424);
@@ -119,8 +118,7 @@ class LeaveApplicationController extends Controller
                 'leave_type_id'         => $leaveType->id,
             ]);
 
-            
-            
+
             return response()->json(['success' => true, 'fullname' => $employee->fullname ], 201);
         }
         return response()->json(['success' => false], 404);

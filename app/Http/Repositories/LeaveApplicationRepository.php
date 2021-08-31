@@ -35,27 +35,30 @@ class LeaveApplicationRepository
 
     
 
-    public function fileApplication(Employee $employee, LeaveType $leaveType, int $noOfDays)
+    public function fileApplication(array $employee = [], LeaveType $leaveType, int $noOfDays)
     {
+
         // applicable_to_gender
-        if(!$this->isGenderApplicable($employee->sex, $leaveType)) {
-            return ['status' => false, 'message' => 'Something went wrong please refresh this page and check your gender is not applicable for this leave.'];
+        if(!$this->isGenderApplicable($employee['sex'], $leaveType)) {
+            return ['status' => false, 'message' => 'This leave type is not applicable to your gender'];
         }
 
         // calculate days of first_day_of_service
-        $noOfDaysInService = Carbon::now()->diffInDays(Carbon::parse($employee->first_day_of_service));
+        $noOfDaysInService = Carbon::now()->diffInDays(Carbon::parse($employee['first_day_of_service']));
         
         // required_rendered_service
         if(!$this->isRequiredServiceEnough($noOfDaysInService, $leaveType)) {
-            return ['status' => false, 'message' => 'Something went wrong please refresh this page and check your rendered service is not enough to apply for this leave.'];
+            return ['status' => false, 'message' => 'Required rendered service'];
         }
 
-        $earned = EmployeeLeaveRecord::where(['leave_type_id' => $leaveType->id, 'employee_id' => $employee->employee_id])
+        $earned = EmployeeLeaveRecord::where(['leave_type_id' => $leaveType->id, 'employee_id' => $employee['employee_id']])
                                         ->get()
                                         ->sum('earned');
+
+                                        
         
         if(!$this->isEmployeePointsEnough($earned, $noOfDays)) {
-            return ['status' => false, 'message' => 'Something went wrong please refresh this page and check your leave points for this leave type.'];
+            return ['status' => false, 'message' => 'Insufficient leave points'];
         }
 
         return ['status' => true];

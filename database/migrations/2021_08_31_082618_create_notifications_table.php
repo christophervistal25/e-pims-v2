@@ -18,6 +18,8 @@ class CreateNotificationsTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('employee_id');
+            $table->string('from_employee_id');
+            $table->string('link');
             $table->tinyInteger('view');
             $table->timestamps();
         });
