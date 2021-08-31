@@ -26,6 +26,7 @@ class CreateEmployeeLeaveRecordsTable extends Migration
             $table->enum('record_type', ['D', 'I', 'F']);
             $table->unsignedInteger('leave_application_id')->nullable();
             $table->unsignedInteger('undertime_id')->nullable();
+            $table->date('date_record');
             $table->timestamps();
         });     
     }
