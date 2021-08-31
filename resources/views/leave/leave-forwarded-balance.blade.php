@@ -152,7 +152,7 @@ input[type=number] {
                                     <div class="col-lg-6">
                                         <h6 class="text-sm text-center">VACATION LEAVE</h6>
                                         <label for="vlEarned" class="form-group has-float-label">
-                                            <input type="number" class="form-control vlEarned" id="vlEarned" name="vlEarned"
+                                            <input type="number" class="form-control vlEarned" id="vlEarned" name="vlEarned" 
                                                 style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;" >
                                             <span><strong>VL EARNED</strong></span>
                                             <div id="vlEarned-error-message" class="text-danger text-sm"></div>

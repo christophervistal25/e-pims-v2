@@ -74,13 +74,13 @@
             <table class="table table-bordered table-hover text-center" id="salaryAdjustmentPerOfficeList" style="width:100%;">
                 <thead>
                 <tr>
-                    <td style="margin-top:10px;" scope="col" class="text-center font-weight-bold"><input style='transform:scale(1.3); margin-top:18px;' name="selectAll" value="selectAll" id="selectAll" type="checkbox" /></td>
-                    <td scope="col" class="text-center">Employee Name</td>
-                    <td scope="col" class="text-center d-none">Office Code</td>
-                    <td scope="col" class="text-center">Position</td>
-                    <td scope="col" class="text-center">Salary Grade</td>
-                    <td scope="col" class="text-center">Step Number</td>
-                    <td scope="col" class="text-center">Current Salary</td>
+                    <th style="margin-top:10px;" scope="col" class="text-center font-weight-bold"><input style='transform:scale(1.3); margin-top:18px;' name="selectAll" value="selectAll" id="selectAll" type="checkbox" /></th>
+                    <th scope="col" class="text-center">Employee Name</th>
+                    <th scope="col" class="text-center d-none">Office Code</th>
+                    <th scope="col" class="text-center">Position</th>
+                    <th scope="col" class="text-center">Salary Grade</th>
+                    <th scope="col" class="text-center">Step Number</th>
+                    <th scope="col" class="text-center">Current Salary</th>
                 </tr>
                 </thead>
             </table>

@@ -7,13 +7,15 @@ use App\EmployeeLeaveRecord;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\LeaveRecordRepository;
+use App\Services\MSAccess;
 use Illuminate\Support\Facades\Auth;
 
 class LeaveCardController extends Controller
 {
-    public function __construct(LeaveRecordRepository $leaveRecordRepository)
+    public function __construct(LeaveRecordRepository $leaveRecordRepository, MSAccess $database)
     {
         $this->leaveRecordRepository = $leaveRecordRepository;
+        $this->database = $database;
     }
 
     public function index()
@@ -29,7 +31,7 @@ class LeaveCardController extends Controller
         
 
         $totalOfForwardedBalance = $forwardedBalance->sum('earned') - $forwardedBalance->sum('used');
-
+        
         $recordsWithoutForwarded = $this->leaveRecordRepository->getRecordsWithoutForwarded($employeeID)->groupBy('record_type');
 
 
@@ -63,8 +65,9 @@ class LeaveCardController extends Controller
 
         $totalOfForwardedBalance = $forwardedBalance->sum('earned') - $forwardedBalance->sum('used');
 
-        $recordsWithoutForwarded = $this->leaveRecordRepository->getRecordsWithoutForwarded($employeeID, $start, $end)->groupBy('record_type');
         
+        $recordsWithoutForwarded = $this->leaveRecordRepository->getRecordsWithoutForwarded($employeeID, $start, $end)->groupBy('record_type');
+
         return view('accounts.employee.leave.leave-card', [
             'employee'                   => $employee,
             'forwardedBalance'           => $forwardedBalance,
@@ -79,5 +82,55 @@ class LeaveCardController extends Controller
             'startDate'                  => $start,
             'endDate'                    => $end
         ]);
+    }
+
+    public function print(Request $request)
+    {
+        $data = $request->data;
+        $this->database->execute("DELETE * FROM leave_card");
+
+        $columns = ['period',
+                    'particular',
+                    'vl_earned',
+                    'vl_absences_under_time_with_pay',
+                    'vl_balance',
+                    'vl_absences_under_time_without_pay',
+                    'sl_earned',
+                    'sl_absences_under_time_with_pay',
+                    'sl_balance',
+                    'sl_absences_under_time_without_pay',
+                    'taken',
+                    'date_action_for_leave_application'
+        ];
+
+        $columns = "(" .  implode(",", $columns) . ")";
+
+        foreach($data as $record) {
+            extract($record);
+
+            $period ?? ' ';
+            $particular ?? ' ';
+            $vacation_earned ?? ' ';
+            $vacation_absences_under_time_with_pay ?? ' ';
+            $vacation_balance ?? ' ';
+            $vacation_absences_under_time_without_pay ?? ' ';
+            $sick_earned ?? ' ';
+            $sick_absences_under_time_with_pay ?? ' ';
+            $sick_balance ?? ' ';
+            $sick_absences_under_time_without_pay ?? ' ';
+            $taken ?? ' ';
+            $over_all_total ?? ' ';
+
+            $values = [
+                $period, $particular, $vacation_earned, $vacation_absences_under_time_with_pay, $vacation_balance, $vacation_absences_under_time_without_pay, $sick_earned, $sick_absences_under_time_with_pay, $sick_balance, $sick_absences_under_time_without_pay, $taken, $over_all_total
+            ];
+
+
+            $values = "('" .  implode("','", $values) . "')";
+
+            $this->database->execute("INSERT INTO leave_card ${columns} VALUES ${values}");
+        }
+        
+        return response()->json(['success' => true]);
     }
 }

@@ -33,4 +33,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Employee::class, 'employee_id', 'employee_id');
     }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'employee_id', 'employee_id');
+    }
 }

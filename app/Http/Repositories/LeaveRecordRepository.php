@@ -2,10 +2,11 @@
 namespace App\Http\Repositories;
 
 use App\Employee;
+use Carbon\Carbon;
 use App\EmployeeLeaveRecord;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use App\Http\Repositories\LeaveApplicationRepository;
-use Carbon\Carbon;
 
 class LeaveRecordRepository extends LeaveApplicationRepository
 {
@@ -49,22 +50,26 @@ class LeaveRecordRepository extends LeaveApplicationRepository
 
     public function getRecordsWithoutForwarded(string $employeeID, string $start = null, string $end = null) : Collection
     {
-        $query = EmployeeLeaveRecord::with(['type', 'leave_file_application' => function ($query) {
-            $query->where('approved_status', 'approved');
-        }])->orderBy('created_at')
-            ->where('employee_id', $employeeID);
-
         if($start && $end) {
-            $startDate = Carbon::createFromFormat('Y-m-d', $start);
-            $endDate  = Carbon::createFromFormat('Y-m-d', $end);
-            
-            return $query->whereDate('created_at', '>=', $startDate)
-                        ->whereDate('created_at', '<=', $endDate)
-                        ->get();
+            $startDate = Carbon::parse($start);
+            $endDate  = Carbon::parse($end);
+
+            return EmployeeLeaveRecord::with(['type', 'leave_file_application'])->whereHas('leave_file_application', function ($query) use ($startDate, $endDate) {
+                $query->where('approved_status', 'approved');
+            })->orderBy('created_at')
+            ->where('employee_id', $employeeID)
+            ->get()->filter(function ($record) use ($startDate, $endDate) {
+                return Carbon::parse($record->leave_file_application->date_from)
+                                ->between($startDate, $endDate) or Carbon::parse($record->leave_file_application->date_to)->between($startDate, $endDate);
+            });
         } else {
-            return $query->where('record_type', 'I')
-                        ->orWhere('record_type', 'D')
-                        ->get();
+            return EmployeeLeaveRecord::with(['type', 'leave_file_application' => function ($query) {
+                    $query->where('approved_status', 'approved');
+                }])->orderBy('created_at')
+                    ->where('employee_id', $employeeID)
+                    ->where('record_type', 'I')
+                    ->orWhere('record_type', 'D')
+                    ->get();
         }
     }
 

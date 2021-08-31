@@ -145,15 +145,15 @@
                                                 <td class='text-sm font-weight-bold text-center' data-label="period">{{ $period }}</td>
                                                 <td class='text-sm font-weight-medium text-center' data-label="particular">{{ $vacationLeaveIncrement->particular ?? 'EL' }}</td>
                                                 <td class='text-sm font-weight-bold text-center' data-label="vacation_earned">{{ @$vacationLeaveIncrement->earned }}</td>
-                                                <td class='text-sm font-weight-bold text-center' data-label="vacation_absences_with_pay">{{ @$vacationLeaveIncrement->absences_under_time_with_pay_balance }}</td>
+                                                <td class='text-sm font-weight-bold text-center' data-label=absences_with_pay">{{ @$vacationLeaveIncrement->absences_under_time_with_pay_balance }}</td>
                                                 <td class='text-sm font-weight-bold text-center' data-label="vacation_balance">{{ @$forwardedVacationLeave->earned += $vacationLeaveIncrement->earned }}</td>
-                                                <td class='text-sm font-weight-bold text-center' data-label="vacation_absences_without_pay">{{ @$vacationLeaveIncrement->absences_under_time_without_pay_balance }}</td>
+                                                <td class='text-sm font-weight-bold text-center' data-label="absences_without_pay">{{ @$vacationLeaveIncrement->absences_under_time_without_pay_balance }}</td>
 
                                                 {{-- SICK LEAVE DATA --}}
                                                 <td class='text-sm font-weight-bold text-center' data-label="sick_earned">{{ @$sickLeaveIncrement->earned }}</td>
-                                                <td class='text-sm font-weight-bold text-center' data-label="sick_absences_with_pay">{{ @$sickLeaveIncrement->absences_under_time_with_pay_balance }}</td>
+                                                <td class='text-sm font-weight-bold text-center' data-label="absences_with_pay">{{ @$sickLeaveIncrement->absences_under_time_with_pay_balance }}</td>
                                                 <td class='text-sm font-weight-bold text-center' data-label="sick_balance">{{ @$forwardedSickLeave->earned += $sickLeaveIncrement->earned }}</td>
-                                                <td class='text-sm font-weight-bold text-center' data-label="sick_absences_without_pay">{{ @$sickLeaveIncrement->absences_under_time_without_pay_balance }}</td>
+                                                <td class='text-sm font-weight-bold text-center' data-label="absences_without_pay">{{ @$sickLeaveIncrement->absences_under_time_without_pay_balance }}</td>
 
                                                 {{-- DATE & ACTION  --}}
                                                 <td class='text-sm font-weight-bold text-center'></td>
@@ -163,11 +163,15 @@
                                     @elseif($type === $TYPES['DECREMENT'])
                                             @foreach($record as $data)
                                                 <tr>
-                                                    <td class='text-sm text-center font-weight-bold' data-label="period">
-                                                        {{
-                                                            Carbon\Carbon::parse($data->leave_file_application->date_from)->format('F d')  . ' - ' .  Carbon\Carbon::parse($data->leave_file_application->date_to)->format('F d, Y')
-                                                        }}
-                                                    </td>
+                                                    @if($data->leave_file_application)
+                                                        <td class='text-sm text-center font-weight-bold' data-label="period">
+                                                            {{
+                                                                Carbon\Carbon::parse($data->leave_file_application->date_from)->format('F d')  . ' - ' .  Carbon\Carbon::parse($data->leave_file_application->date_to)->format('F d, Y')
+                                                            }}
+                                                        </td>
+                                                        @else
+                                                        <td></td>
+                                                    @endif
                                                     <td class='bg-light text-sm text-center font-weight-medium' data-label="particular">{{ $data->particular }}</td>
                                                     {{-- VACATION LEAVE DATA --}}
                                                     @if($data->type->code_number === $VACATION_LEAVE_CODE_NUMBER)
@@ -223,6 +227,17 @@
 </div>
 @push('page-scripts')
     <script>
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    </script>
+
+    <script>
+        let data = [];
+        const MAX_ITEM_PER_ROW = 12;
+
         $('#btnFilter').click(function () {
             let startDate = $('#startDate').val();
             let endDate = $('#endDate').val();
@@ -240,14 +255,35 @@
         });
 
         $('#btnPrint').click(function () {
-            const MAX_ITEM_PER_ROW = 12;
-            let data = [];
+            data = [];
             $('#leave-card-body > tr').each(function (index, row) {
                 let tableRow = $(row).children();
                 if(tableRow.length === MAX_ITEM_PER_ROW) {
-                    tableRow.each(function (i, data) {
-                        console.log(data);
+                    data.push({
+                        period                                  : tableRow[0].innerText,
+                        particular                              : tableRow[1].innerText,
+                        vacation_earned                         : tableRow[2].innerText,
+                        vacation_absences_under_time_with_pay   : tableRow[3].innerText,
+                        vacation_balance                        : tableRow[4].innerText,
+                        vacation_absences_under_time_without_pay: tableRow[5].innerText,
+                        sick_earned                             : tableRow[6].innerText,
+                        sick_absences_under_time_with_pay       : tableRow[7].innerText,
+                        sick_balance                            : tableRow[8].innerText,
+                        sick_absences_under_time_without_pay    : tableRow[9].innerText,
+                        taken                                   : tableRow[10].innerText,
+                        over_all_total                          : tableRow[11].innerText,
                     });
+                }
+            });
+            $.ajax({
+                url : '/employee-leave-card-print',
+                method : 'POST',
+                data : { data },
+                success : function (response) {
+                    if(response.success) {
+                        socket.emit('preview_leave_card', { arguments : `${fullname}|${window_title}`});
+                        // socket.emit('preview_leave_certification', { arguments : `${fullname}|${window_title}` })
+                    }
                 }
             });
         });

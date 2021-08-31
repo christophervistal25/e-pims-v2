@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Account\Employee;
 use App\Office;
 use App\LeaveType;
 use Carbon\Carbon;
+use App\Services\MSAccess;
 use Illuminate\Http\Request;
 use App\EmployeeLeaveApplication;
 use App\Http\Controllers\Controller;
@@ -71,7 +72,7 @@ class LeaveApplicationController extends Controller
                 'recommendingApproval' => ['required'],
                 'commutation'          => ['required'],
                 'dateApply'            => ['required'],
-                'startDate'            => ['required', 'after:' . $startDate->format('Y-m-d')],
+                'startDate'            => ['required', 'after:' . $startDate->format('Y-m-d'), 'before:' . Carbon::parse($request->endDate)->format('Y-m-d')],
                 'endDate'              => ['required', 'after:' . $startDate->format('Y-m-d')],
                 'inCaseOf'             => ['required'],
                 'noOfDays'             => ['required'],
@@ -108,8 +109,69 @@ class LeaveApplicationController extends Controller
                 'leave_type_id'         => $leaveType->id,
             ]);
 
+            
+            
             return response()->json(['success' => true, 'fullname' => $employee->fullname ], 201);
         }
         return response()->json(['success' => false], 404);
+    }
+
+    public function print(int $applicationID)
+    {
+        $application = EmployeeLeaveApplication::find($applicationID);
+        $employee = Auth::user()->employee;
+        $database = new MSAccess();
+
+        $vacationLeave = $this->leaveRecordRepository->getVacationLeave($employee->employee_id);
+        $sickLeave     = $this->leaveRecordRepository->getSickLeave($employee->employee_id);
+        
+        $fullName           = $employee->fullname;
+        $office             = $employee->information->office->office_name;
+        $officeHead         = $employee->information->office->office_head;
+
+        $position           = $employee->information->position->position_name;
+        $positionSGNo       = $employee->information->position->sg_no;
+        $dateOfFill         = $application->date_applied;
+        $salary             = $employee->plantilla ? number_format($employee->plantilla->salary_amount, 2, '.', ',') : 0;
+        $leaveType          = $application->type->name;
+        $incaseOf           = $application->incase_of;
+        $inclusiveDates     = "";
+        $commutation        = $application->commutation;
+
+        $tardiness          = 0;
+        $under_time         = 0;
+
+        
+        $vacationEarn       = $vacationLeave['vacation_leave_earned'];
+        $vacationLess       = $vacationLeave['vacation_leave_used'];
+        $sickEarn           = $sickLeave['sick_leave_earned'];
+        $sickLess           = $sickLeave['sick_leave_used'];
+        $earnTotal          = $vacationLeave['vacation_leave_earned'] + $sickLeave['sick_leave_earned'];
+        $lessTotal          = $vacationLeave['vacation_leave_used'] + $sickLeave['sick_leave_used'];
+        $vacationTotal      = $vacationEarn - $vacationLess;
+        $sickTotal          = $sickEarn - $sickLess;
+        $recommendation     = $application->recommending_approval;
+        $approvedFor        = $application->approved_for;
+        $disapproved_due_to = $application->disapproved_due_to;
+
+        $columns = [
+            'office'          => $office,
+            'fullname'        => $fullName,
+            'date_of_filling' => $dateOfFill,
+            'position'        => $position,
+            'salary'          => $salary,
+            'type_of_leave'   => $application->type->name,
+        ];
+        if($application->type->code_number === 10001) {
+            // sick leave
+        } else {
+            // vacation leave
+        }
+        // 'in_case_of_sick_leave' => $incaseOf,
+
+        $database->execute("DELETE * FROM application_filling_form");
+        $database->execute("INSERT INTO leave_certification ${columns} VALUES ${values}");
+
+        return response()->json(['success' => true]);
     }
 }
