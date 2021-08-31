@@ -330,12 +330,6 @@ $(document).ready(function() {
                 ]
             });
         } else {
-            document
-                .getElementById("printPreviewA")
-                .setAttribute(
-                    "href",
-                    "print-plantilla-of-schedule/" + e.target.value
-                );
             tableadjusted.destroy();
             let yearFilter = $("#yearFilter").val();
             tableadjusted = $("#plantillaOfSchedule").DataTable({
@@ -345,6 +339,31 @@ $(document).ready(function() {
                 retrieve: true,
                 pagingType: "full_numbers",
                 stateSave: true,
+                initComplete : function (settings, json) {
+                    let table_data = json['recordsTotal'];
+                    let printPreview = document.getElementById("printPreview");
+                    let printPreviewA = document.getElementById("printPreviewA");
+                    printPreviewA
+                        .setAttribute(
+                            "href",
+                            "print-plantilla-of-schedule/" + e.target.value
+                        );
+                    if (
+                        table_data == "0" || e.target.value == "All"
+                    ) {
+                        printPreview
+                            .setAttribute("style", "visibility:hidden;");
+                        printPreviewA
+                            .removeAttribute("href");
+                        printPreview
+                            .setAttribute("disabled", true);
+                    } else {
+                        printPreview
+                            .setAttribute("style", "visibility:visible;");
+                        printPreview
+                            .removeAttribute("disabled");
+                    }
+                },
                 language: {
                     processing:
                         '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
@@ -385,36 +404,6 @@ $(document).ready(function() {
                     }
                 ]
             });
-        }
-        let count = 1;
-        let interval = setInterval(printStatus, 1000);
-        function printStatus() {
-            let table_data = $("#plantillaOfSchedule > tbody > tr > td").text();
-            if (
-                table_data == "No data available in table" ||
-                table_data == ""
-            ) {
-                document
-                    .getElementById("printPreview")
-                    .setAttribute("style", "visibility:hidden;");
-                document
-                    .getElementById("printPreviewA")
-                    .removeAttribute("href");
-                document
-                    .getElementById("printPreview")
-                    .setAttribute("disabled", true);
-            } else {
-                document
-                    .getElementById("printPreview")
-                    .setAttribute("style", "visibility:visible;");
-                document
-                    .getElementById("printPreview")
-                    .removeAttribute("disabled");
-            }
-            if (count >= 20) {
-                clearInterval(interval);
-            }
-            count++;
         }
     });
 

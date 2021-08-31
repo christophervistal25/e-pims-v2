@@ -203,33 +203,6 @@ $(function() {
                     { data: "action", name: "action" }
                 ]
             });
-            let count = 1;
-            let interval = setInterval(printStatus, 1000);
-            function printStatus() {
-                let table_data = $("#serviceRecords > tbody > tr > td").text();
-                if (table_data == "No data available in table") {
-                    document
-                        .getElementById("printPreview")
-                        .setAttribute("style", "visibility:hidden;");
-                    document
-                        .getElementById("printPreviewA")
-                        .removeAttribute("href");
-                    document
-                        .getElementById("printPreview")
-                        .setAttribute("disabled", true);
-                } else {
-                    document
-                        .getElementById("printPreview")
-                        .setAttribute("style", "visibility:visible;");
-                    document
-                        .getElementById("printPreview")
-                        .removeAttribute("disabled");
-                }
-                if (count >= 20) {
-                    clearInterval(interval);
-                }
-                count++;
-            }
         }
     });
 });
@@ -257,17 +230,23 @@ function ValidateDropDown(dd) {
     var input = document.getElementById("addbutton");
     if (dd.value == "") input.disabled = true;
     else input.disabled = false;
+    let printPreview = document.getElementById("printPreview");
+    let printPreviewA = document.getElementById("printPreviewA");
     if (dd.value == "") {
-        document.getElementById("line").style.visibility = "visible";
-        document
-            .getElementById("printPreview")
+        printPreview
             .setAttribute("style", "visibility:hidden;");
-        document.getElementById("printPreviewA").removeAttribute("href");
-        document.getElementById("printPreview").setAttribute("disabled", true);
+        printPreviewA
+            .removeAttribute("href");
+        printPreview
+            .setAttribute("disabled", true);
+        document.getElementById("line").style.visibility = "visible";
     } else {
-        document
-            .getElementById("printPreviewA")
+        printPreviewA
             .setAttribute("href", "print-service-records/" + dd.value);
+        printPreview
+            .setAttribute("style", "visibility:visible;");
+        printPreview
+            .removeAttribute("disabled");
         document.getElementById("line").style.visibility = "hidden";
     }
     $("input, textarea").val("");
