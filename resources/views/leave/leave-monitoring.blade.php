@@ -180,18 +180,6 @@
                             </label>
                         </div>
                         <div class="col-lg-4">
-                            <label for="particularFilter" class="form-group has-float-label particularFilter">
-                                <select class="form-control selectpicker" name="particularFilter" type="text"
-                                    id="particularFilter" data-size="4"
-                                    style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                    <option>All</option>
-                                    <option value="Earned">Earned</option>
-                                    <option value="Availed">Availed</option>
-                                    <option value="WP">Late/Undertime</option>
-                                    <option value="WOP">Leave Without Pay</option>
-                                </select>
-                                <span><strong>Filter Particulars</strong></span>
-                            </label>
                         </div>
                         <div class="col-lg-1">
 
@@ -381,6 +369,12 @@
 <script src="/assets/js/leaveMonitoring.js"></script>
 <script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
 <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     var tableHeaderTop = document.querySelector('.sticky-table thead').getBoundingClientRect().top;
     var ths = document.querySelectorAll('.sticky-table thead th')
 

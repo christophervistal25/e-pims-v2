@@ -1,4 +1,9 @@
 //PAGE ON LOAD
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }   
+});
 $( document ).ready(function() {
     $('#asOf').val(dateNow());
 });
@@ -130,7 +135,8 @@ $('#btnSave').click( (e)=> {
             if(response.success){
                 swal("Good job!", "Successfully added!", "success", {closeOnClickOutside: false}).then((isClicked) => {
                     if(isClicked) {
-                        location.reload();
+                        $('#btnBack').trigger('click');
+                        $('#forwarded-balance-table').DataTable().ajax.reload();
                     }
                 })
             }
@@ -177,7 +183,8 @@ $('#btnUpdate').click( (e)=> {
             if(response.success){
                 swal("Good job!", "Successfully updated!", "success", {closeOnClickOutside: false}).then((isClicked) => {
                     if(isClicked) {
-                        location.reload();
+                        $('#update_btnBack').trigger('click');
+                        $('#forwarded-balance-table').DataTable().ajax.reload();
                     }
                 })
             }
@@ -283,11 +290,12 @@ $(document).on('click', '#update_btnDelete', function () {
                 $.ajax({
                     url : `/employee/leave-forwarded-balance/${leaveID}`,
                     data: { fb_as_of : fbAsOF },
-                    method : 'DELETE',
+                    method : 'POST',
                     success : function (response) {
                             swal("Good job!", "Successfully delete a leave record.", "success", {closeOnClickOutside: false}).then((isClicked) => {
                             if(isClicked) {
-                                location.reload();
+                                $('#update_btnBack').trigger('click');
+                                $('#forwarded-balance-table').DataTable().ajax.reload();
                             }
                         })
                     }
@@ -311,13 +319,16 @@ $(document).on('click', '.delete__leave__type', function () {
                 $.ajax({
                     url : `/employee/leave-forwarded-balance/${leaveID}`,
                     data: { fb_as_of : fbAsOF },
-                    method : 'DELETE',
+                    method : 'POST',
                     success : function (response) {
                             swal("Good job!", "Successfully delete a leave record.", "success", {closeOnClickOutside: false}).then((isClicked) => {
                             if(isClicked) {
-                                location.reload();
+                                $('#forwarded-balance-table').DataTable().ajax.reload();
                             }
                         })
+                    }, 
+                    error : function (response) {
+                        console.log(response);
                     }
                 });
             }

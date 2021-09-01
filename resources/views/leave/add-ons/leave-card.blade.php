@@ -103,7 +103,8 @@
                                     <div class="dropdown dropdown-action">
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons md-18">more_vert</i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item font-weight-bold" href="/employee/leave/leave-list/{{ $data->leave_application_id }}"><i class="fa fa-pencil m-r-5" id="edit"></i> View Leave Application</a>
+                                            <a class="dropdown-item" href="/employee/leave/leave-list/{{ $data->leave_application_id }}"><i class="fa fa-pencil m-r-5  font-weight-bold" id="viewLA"></i> View Leave Application</a>
+                                            <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-print m-r-5 font-weight-bold" id="printLA"></i> Print Certification</a>
                                         </div>
                                     </div>
                                 </td>
@@ -125,8 +126,8 @@
                                     <div class="dropdown dropdown-action">
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons md-18">more_vert</i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <button class="dropdown-item font-weight-bold" type="button" id="editUndertime" data-id="{{ $data->undertime_id }}"><i class="fa fa-pencil m-r-5" ></i> Edit</button>
-                                            <button class="dropdown-item text-danger" type="button" id="deleteUndertime" data-id="{{ $data->undertime_id }}"><i class="fa fa-trash-o m-r-5"></i> Delete</button>
+                                            <button class="dropdown-item text-secondary" type="button" id="editUndertime" data-id="{{ $data->undertime_id }}"><i class="fa fa-pencil m-r-5 font-weight-bold" ></i> Edit</button>
+                                            <button class="dropdown-item text-danger" type="button" id="deleteUndertime" data-id="{{ $data->undertime_id }}"><i class="fa fa-trash-o m-r-5 font-weight-bold"></i> Delete</button>
                                         </div>
                                     </div>
                                 </td>
@@ -151,7 +152,8 @@
                                 <div class="dropdown dropdown-action">
                                     <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons md-18">more_vert</i></a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item font-weight-bold" href="/employee/leave/leave-list/{{ $data->leave_application_id }}"><i class="fa fa-pencil m-r-5"></i> View Leave Application</a>
+                                        <a class="dropdown-item" href="/employee/leave/leave-list/{{ $data->leave_application_id }}"><i class="fa fa-pencil m-r-5  font-weight-bold" id="viewLA"></i> View Leave Application</a>
+                                        <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-print m-r-5 font-weight-bold" id="printLA"></i> Print Certification</a>
                                     </div>
                                 </div>
                             </td>

@@ -1,9 +1,3 @@
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-
 //PAGE ON LOAD
 $( document ).ready(function() {
     $('.yearFilter, .particularFilter, #btnUndertime').addClass('d-none');

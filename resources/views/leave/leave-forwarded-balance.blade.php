@@ -57,43 +57,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($records as $employeeFullname => $record)
-                                @php
-                                $vlBalance = (float) $record->where('type.code', 'VL')->sum('earned') -
-                                $record->where('type.code', 'VL')->sum('used');
-                                $slBAlance = (float) $record->where('type.code', 'SL')->sum('earned') -
-                                $record->where('type.code', 'SL')->sum('used');
-                                $totalBalance = (float) $vlBalance + $slBAlance;
-                                @endphp
-                                <tr>
-                                    <td class="text-center">{{ $record->first() ? $record[0]->employee_id : '' }}</td>
-                                    <td class="text-center">{{ $employeeFullname }}</td>
-                                    <td class="text-center">{{ $record->first() ? $record[0]->fb_as_of : '' }}</td>
-                                    {{-- VACATION LEAVE --}}
-                                    <td class="text-center">{{ $record->where('type.code', 'VL')->sum('earned') }}</td>
-                                    <td class="text-center">{{ $record->where('type.code', 'VL')->sum('used') }}</td>
-                                    <td class="text-center">{{ $vlBalance }}</td>
-                                    {{-- END OF VACATION LEAVE --}}
-                                    {{-- SICK LEAVE --}}
-                                    <td class="text-center">{{ $record->where('type.code', 'SL')->sum('earned') }}</td>
-                                    <td class="text-center">{{ $record->where('type.code', 'SL')->sum('used') }}</td>
-                                    <td class="text-center">{{ $slBAlance }}</td>
-                                    {{-- END OF SICK LEAVE --}}
-
-                                    <td class="text-center"><b>{{ $totalBalance }}</b></td>
-                                    <td class="text-center">
-                                        <button class='btn btn-success btn-sm rounded-circle shadow edit__leave__type'
-                                            data-id="{{ $record->first() ? $record[0]->employee_id : '' }}">
-                                            <i class='la la-pencil'></i>
-                                        </button>
-                                        <button class='btn btn-danger btn-sm rounded-circle shadow delete__leave__type'
-                                            data-id="{{ $record->first() ? $record[0]->employee_id : '' }}"
-                                            data-as-of-date="{{ $record[0]->fb_as_of }} ">
-                                            <i class='la la-trash'></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -412,30 +375,88 @@
 <script src="/assets/js/dataTables.responsive.min.js"></script>
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="/assets/js/sweetalert.min.js"></script>
-<script src="/assets/js/leaveforwardedBalance.js"></script>
 <script>
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }   
-    });
-    
+ 
     $(document).ready(function () {
-        $('#forwarded-balance-table').DataTable({
-            "responsive": true,
-            "ordering": false,
-            "columnDefs": [{
+        const ROUTE = "{{ route('leave-forwarded-balance.list') }}";
+        let table = $('#forwarded-balance-table').DataTable({
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            ordering: false,
+            paging: true,
+            pagingType: "full_numbers",
+            info: true,
+            searching: true,
+            language: {
+                processing: '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+            },
+            ajax: ROUTE,
+            columns: [{
+                    data: "employee_id",
+                    name: "employee_id",
+                    defaultContent: ''
+                },
+                {
+                    data: "fullname",
+                    name: "fullname",
+                    defaultContent: ''
+                },
+                {
+                    data: "fb_as_of",
+                    name: "fb_as_of"
+                },
+                {
+                    data: "vl_earned",
+                    name: "vl_earned"
+                },
+                {
+                    data: "vl_used",
+                    name: "vl_used"
+                },
+                {
+                    data: "vl_balance",
+                    name: "vl_balance"
+                },
+                {
+                    data: "sl_earned",
+                    name: "sl_earned"
+                },
+                {
+                    data: "sl_used",
+                    name: "sl_used"
+                },
+                {
+                    data: "sl_balance",
+                    name: "sl_balance"
+                },
+                {
+                    data: "leave_balance",
+                    name: "leave_balance"
+                },
+                {
+                    data: "action",
+                    name: "action",
+                    searchable: false,
+                    sortable: false
+                }
+            ],
+            columnDefs: [{
                     responsivePriority: 1,
-                    targets: [-1, 0]
+                    targets: [0, 1]
                 },
                 {
                     responsivePriority: 2,
                     targets: 1
-                }
+                },
+                {
+                    className: "text-center",
+                    targets: [0,2,3,4,5,6,7,8,9], 
+                },
             ]
         });
-
     });
 </script>
+<script src="/assets/js/leaveforwardedBalance.js"></script>
 @endpush
 @endsection

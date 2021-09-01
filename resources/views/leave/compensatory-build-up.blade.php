@@ -4,7 +4,6 @@
 {{-- <script src="{{ asset('/js/app.js') }}" defer></script> --}}
 <link rel="stylesheet" href="/assets/css/custom.css" />
 <link rel="stylesheet" href="/assets/css/bootstrap-float-label.min.css" />
-<link rel="stylesheet" href="/assets/css/line-awesome.min.css">
 <link rel="stylesheet" href="/assets/css/style.css">
 <link rel="stylesheet" href="/assets/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="/assets/css/responsive.bootstrap4.min.css">
@@ -461,7 +460,6 @@
 <script src="/assets/js/dataTables.responsive.min.js"></script>
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="/assets/js/sweetalert.min.js"></script>
-<script src="/assets/js/compensatory.js"></script>
 <script>
     $.ajaxSetup({
         headers: {
@@ -528,7 +526,7 @@
             ]
         });
     });
-
 </script>
+<script src="/assets/js/compensatory.js"></script>
 @endpush
 @endsection
