@@ -38,6 +38,17 @@ class LeaveRecordRepository extends LeaveApplicationRepository
                                 ->get();
     }
 
+    public function getForwardedRecordWithRange(string $employeeID, string $fromDate, string $toDate) : Collection
+    {
+        $fromDate = Carbon::parse($fromDate);
+        $toDate  = Carbon::parse($toDate);
+
+        return $this->getForwardedRecord($employeeID)
+                    ->filter(function ($record) use ($fromDate, $toDate) {
+                        return Carbon::parse($record->fb_as_of)->between($fromDate, $toDate) or Carbon::parse($record->fb_as_of)->between($fromDate, $toDate);
+                    });
+    }
+
     public function getSickLeaveInForwarded(Collection $data)
     {
         return $data->where('type.code_number', self::SICK_LEAVE_CODE_NUMBER)->first();
@@ -48,32 +59,27 @@ class LeaveRecordRepository extends LeaveApplicationRepository
         return $data->where('type.code_number', self::VACATION_LEAVE_CODE_NUMBER)->first();
     }
 
-    public function getRecordsWithoutForwarded(string $employeeID, string $start = null, string $end = null) : Collection
+    public function getRecordsWithoutForwarded(string $employeeID) : Collection
     {
-        $query = EmployeeLeaveRecord::with(['type', 'undertime', 'leave_file_application' => function ($query) {
+        return EmployeeLeaveRecord::whereHas('employee', function ($query) use($employeeID) {
+            return $query->where('employee_id', $employeeID);
+        })->with(['type', 'undertime', 'leave_file_application' => function ($query) {
             $query->where('approved_status', 'approved');
-        }])->orderBy('date_record')
-            ->where('employee_id', $employeeID);
-
-        if($start && $end) {
-            $startDate = Carbon::parse($start);
-            $endDate  = Carbon::parse($end);
-
-            return EmployeeLeaveRecord::with(['type', 'leave_file_application'])->whereHas('leave_file_application', function ($query) {
-                $query->where('approved_status', 'approved');
-            })->orderBy('created_at')
-            ->where('employee_id', $employeeID)
-            ->get()->filter(function ($record) use ($startDate, $endDate) {
-                return Carbon::parse($record->leave_file_application->date_from)
-                                ->between($startDate, $endDate) or Carbon::parse($record->leave_file_application->date_to)->between($startDate, $endDate);
+        }])->orderBy('date_record', 'ASC')
+            ->get()
+            ->filter(function ($query) {
+                return $query->record_type === 'I' || $query->record_type === 'D'; 
             });
-        } else {
-        return EmployeeLeaveRecord::with(['type', 'undertime', 'leave_file_application' => function ($query) {
-                    $query->where('approved_status', 'approved');
-                }])
-                    ->where(['record_type' => 'I', 'record_type' => 'D', 'employee_id' => $employeeID])
-                    ->orderBy('date_record', 'ASC')->get();
-        }
+    }
+
+    public function getRecordsWithoutForwardedByRange(string $employeeID, string $fromDate, string $toDate) : Collection
+    {
+        $fromDate = Carbon::parse($fromDate);
+        $toDate  = Carbon::parse($toDate);
+
+        $this->getRecordsWithoutForwarded($employeeID)->filter(function ($record) use ($fromDate, $toDate) {
+                return Carbon::parse($record->date_record)->between($fromDate, $toDate) or Carbon::parse($record->date_record)->between($fromDate, $toDate);
+            });
     }
 
     private function getRecordByLeaveCode(int $codeNumber, string $employeeID) : Collection
@@ -87,7 +93,7 @@ class LeaveRecordRepository extends LeaveApplicationRepository
     {
         $records = $this->getRecordByLeaveCode(self::VACATION_LEAVE_CODE_NUMBER, $employeeID);
         return ($records->count() !== 0) ? [
-                'vacation_leave_earned' => $records->sum('earned'),
+                'vacation_leave_earned' => $records->sum('earned') - $records->sum('used'),
                 'vacation_leave_used'   => $records->sum('used'),
         ] : [
             'vacation_leave_earned' => 0.000,
@@ -99,7 +105,7 @@ class LeaveRecordRepository extends LeaveApplicationRepository
     {
         $records = $this->getRecordByLeaveCode(self::SICK_LEAVE_CODE_NUMBER, $employeeID);
         return ($records->count() !== 0) ? [
-                'sick_leave_earned' => $records->sum('earned'),
+                'sick_leave_earned' => $records->sum('earned') - $records->sum('used'),
                 'sick_leave_used'   => $records->sum('used'),
         ] : [
             'sick_leave_earned'   => 0.000,
