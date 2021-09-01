@@ -22,6 +22,7 @@ class LeaveForwardSeeder extends Seeder
             'particular'  => 'ENTRANCE',
             'fb_as_of'    => Carbon  ::now(),
             'record_type' => 'F',
+            'date_record' => Carbon::now(),
         ]);
 
         EmployeeLeaveRecord::create([
@@ -30,8 +31,9 @@ class LeaveForwardSeeder extends Seeder
             'earned'      => 50,
             'used'        => 0,
             'particular'  => 'ENTRANCE',
-            'fb_as_of'    => Carbon  ::now(),
+            'fb_as_of'    => Carbon::now(),
             'record_type' => 'F',
+            'date_record' => Carbon::now(),
         ]);
     }
 }
