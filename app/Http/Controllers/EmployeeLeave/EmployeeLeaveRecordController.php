@@ -48,6 +48,7 @@ class EmployeeLeaveRecordController extends Controller
      */
     public function store(Request $request)
     {
+        
         $this->validate($request, [
             'employeeName'          => 'required',
             'vlEarned'              => 'required',
@@ -86,6 +87,7 @@ class EmployeeLeaveRecordController extends Controller
             
             $employeeForwardedBalanceRecord->fb_as_of                                    = $request['asOf'];
             $employeeForwardedBalanceRecord->record_type                                 = EmployeeLeaveRecord::TYPES['FORWARD'];
+            $employeeForwardedBalanceRecord->date_record                                 = $request['asOf'];
             $employeeForwardedBalanceRecord->save();
         });
 
@@ -125,7 +127,6 @@ class EmployeeLeaveRecordController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
         $this->validate($request, [
             'update_vlEarned'              => 'required',
             'update_vlEnjoyed'             => 'required',
@@ -158,6 +159,7 @@ class EmployeeLeaveRecordController extends Controller
             }
             
             $leaverec->fb_as_of                                    = $request['update_asOf'];
+            $leaverec->date_record                                 = $request['update_asOf'];
             $leaverec->save();
         }
         return response()->json(['success' => true]);

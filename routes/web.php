@@ -4,6 +4,8 @@ use App\Services\MSAccess;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+Route::resource('notifications', 'NotificationController');
+
 Route::get('/print/pds/{employeeId}', 'EmployeePersonalDataSheetPrintController');
 
 
@@ -125,7 +127,9 @@ Route::group(['prefix' => 'employee'], function () {
     //  LEAVE-LIST APPLICATIONS //
     Route::get('/leave-list/list', 'EmployeeLeave\LeaveListController@list');
     Route::get('leave/leave-list', 'EmployeeLeave\LeaveListController@index')->name('leave.leave-list');
+    
     Route::get('/leave/leave-list/{edit}', 'EmployeeLeave\LeaveListController@edit')->name('leave-list.edit');
+
     Route::delete('/leave-list/{id}', 'EmployeeLeave\LeaveListController@destroy')->name('leave-list.delete');
     Route::put('/leave/leave-list/{id}', 'EmployeeLeave\LeaveListController@update')->name('leave-list.update');
 
