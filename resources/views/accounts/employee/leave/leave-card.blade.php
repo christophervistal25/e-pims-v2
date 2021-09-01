@@ -33,7 +33,7 @@
     <div class="row bg-light">
         <div class="col-lg-4">
             <label for="startDate" class="form-group has-float-label">
-                <input type="date" id="startDate" class="form-control" value="{{ $startDate ? Carbon\Carbon::parse($startDate)->format('Y-m-d') : '' }}">
+                <input type="date" id="startDate" class="form-control" value="{{ @$startDate ? Carbon\Carbon::parse($startDate)->format('Y-m-d') : '' }}">
                     <span>
                         <strong>START DATE</strong>
                     </span>
@@ -41,7 +41,7 @@
         </div>
         <div class="col-lg-5">
             <label for="endDate" class="form-group has-float-label">
-                <input type="date" id="endDate" class="form-control" value="{{ $endDate ? Carbon\Carbon::parse($endDate)->format('Y-m-d') : '' }}">
+                <input type="date" id="endDate" class="form-control" value="{{ @$endDate ? Carbon\Carbon::parse($endDate)->format('Y-m-d') : '' }}">
                     <span>
                         <strong>END DATE</strong>
                     </span>
@@ -78,9 +78,9 @@
                             <thead>
                                 <tr>
                                     <th rowspan="2" class='text-center align-middle font-weight-bold'>PERIOD</th>
-                                    <th colspan="5" class='text-center align-middle font-weight-bold'>VACATION LEAVE
+                                    <th colspan="5" class='text-center align-middle font-weight-bold'>VACATION
                                     </th>
-                                    <th colspan="4" class='text-center align-middle font-weight-bold'>SICK LEAVE</th>
+                                    <th colspan="4" class='text-center align-middle font-weight-bold'>SICK</th>
                                     <th rowspan="2" colspan="2"
                                         class='text-center align-middle text-xs font-weight-bold'>DATE & ACTION TAKEN
                                         ON APPLICATION FOR LEAVE</th>
@@ -97,127 +97,114 @@
                                     <th class='text-xs text-center align-middle'>ABSENCES UNDER TIME W/O PAY</th>
                                 </tr>
                             </thead>
-                            <tbody id="leave-card-body">
-                                <tr>
-                                    {{-- VACATION LEAVE TABLE DATA --}}
-                                    <td class='text-truncate text-center font-weight-bold' data-label="period">
-                                        Bal. forwaded as of
-                                        <span class='align-middle'>
-                                            {{ Carbon\Carbon::parse($forwardedBalance->first()->fb_as_of)->format('F d, Y') }}
-                                        </span>
-                                    </td>
-                                    <td class='text-center align-middle text-sm text-uppercase font-weight-medium' data-label="particular">
-                                        Entrance</td>
-                                    <td class='text-center align-middle text-xs text-uppercase font-weight-bold' data-label="earned"></td>
-                                    <td class='text-center align-middle text-xs text-uppercase font-weight-bold' data-label="absences_with_pay"></td>   
-                                    <td
-                                        class='text-center align-middle text-sm text-uppercase font-weight-bold' data-label="vacation_balance">
-                                        {{ $forwardedVacationLeave->earned = $forwardedVacationLeave->earned  - $forwardedVacationLeave->used }}</td>
-                                    <td class='text-center align-middle text-xs text-uppercase font-weight-bold' data-label="absences_without_pay"></td>
+                            <tbody>
+                                    {{-- DATA FOR FORWARDED BALANCE --}}
+                                    {{-- VACATION LEAVE --}}
+                                    <tr>                                                              
+                                        <td class='text-truncate align-middle'>{{ Carbon\Carbon::parse($forwardedVacationLeave->fb_as_of)->format('F Y') }}</td>
+                                        <td class='text-truncate text-center bg-light'>ENTRANCE</td>
+                                        <td class='text-truncate text-center'></td>
+                                        <td class='text-truncate text-center'></td>
+                                        <td class='text-truncate text-center bg-light'>{{ number_format($forwardedVacationLeave->earned - $forwardedVacationLeave->used, 3, '.', '') }}</td>
+                                        <td class='text-truncate text-center'></td>
 
-                                    {{-- SICK LEAVE TABLE DATA --}}
-                                    <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
-                                    <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
-                                    <td
-                                        class='text-center align-middle text-sm text-uppercase font-weight-bold' data-label="sick_balance">
-                                        {{ $forwardedSickLeave->earned = $forwardedSickLeave->earned - $forwardedSickLeave->used  }}</td>
-                                    <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
+                                        {{-- SICK LEAVE --}}
+                                        <td class='text-truncate text-center'></td>
+                                        <td class='text-truncate text-center'></td>
+                                        <td class='text-truncate text-center bg-light'>{{ number_format($forwardedSickLeave->earned - $forwardedSickLeave->used, 3, '.', '') }}</td>
+                                        <td class='text-truncate text-center'></td>
 
-                                    <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
-                                    <td class='text-center align-middle text-sm text-uppercase font-weight-bold' data-label="over_all_total">
-                                        {{  $overAllTotal = $totalOfForwardedBalance }}</td>
-                                </tr>
-                                @foreach($recordsWithoutForwarded as $type => $record)
-                                <tr>
-                                    @if($type === $TYPES['INCREMENT'])
-                                        @php
-                                            $recordGroupByMonth = $record->groupBy(function ($record) {
-                                                return $record->created_at->format('F - Y');
-                                            });
-                                        @endphp
-                                        @foreach($recordGroupByMonth as $period => $data)
-                                        @php
-                                            $sickLeaveIncrement = $data->where('type.code_number', $SICK_LEAVE_CODE_NUMBER)->first();
-                                            $vacationLeaveIncrement = $data->where('type.code_number', $VACATION_LEAVE_CODE_NUMBER)->first();
-                                        @endphp
+                                        {{-- TOTAL --}}
+                                        <td class='text-truncate text-center bg-light'>{{ number_format(($forwardedVacationLeave->earned - $forwardedVacationLeave->used) + ($forwardedSickLeave->earned - $forwardedSickLeave->used), 3, '.', '') }}</td>
+                                    </tr>
+
+                                    @foreach($recordsWithoutForwarded as $monthWithType => $record)
+                                    @php
+                                        list($date, $type) = explode('-', $monthWithType)
+                                    @endphp
+                                
+                                        @if($type == $TYPES['INCREMENT'])
                                             <tr>
                                                 {{-- VACATION LEAVE DATA --}}
-                                                <td class='text-sm font-weight-bold text-center' data-label="period">{{ $period }}</td>
-                                                <td class='text-sm font-weight-medium text-center' data-label="particular">{{ $vacationLeaveIncrement->particular ?? 'EL' }}</td>
-                                                <td class='text-sm font-weight-bold text-center' data-label="vacation_earned">{{ @$vacationLeaveIncrement->earned }}</td>
-                                                <td class='text-sm font-weight-bold text-center' data-label=absences_with_pay">{{ @$vacationLeaveIncrement->absences_under_time_with_pay_balance }}</td>
-                                                <td class='text-sm font-weight-bold text-center' data-label="vacation_balance">{{ @$forwardedVacationLeave->earned += $vacationLeaveIncrement->earned }}</td>
-                                                <td class='text-sm font-weight-bold text-center' data-label="absences_without_pay">{{ @$vacationLeaveIncrement->absences_under_time_without_pay_balance }}</td>
+                                                <td class='text-truncate align-middle'>{{ $record[0]->date_record->format('F Y') }}</td>
+                                                <td class='text-truncate text-center align-middle bg-light'>{{ $record[0]->particular }}</td>
+                                                <td class='text-truncate text-center align-middle bg-light'>{{ $record[0]->earned }}</td>
+                                                <td class='text-truncate text-center align-middle'></td>
+                                                <td class='text-truncate text-center align-middle bg-light'>{{ $forwardedVacationLeave->earned += $record[0]->earned }}</td>
+                                                <td class='text-truncate text-center align-middle'></td>
+
 
                                                 {{-- SICK LEAVE DATA --}}
-                                                <td class='text-sm font-weight-bold text-center' data-label="sick_earned">{{ @$sickLeaveIncrement->earned }}</td>
-                                                <td class='text-sm font-weight-bold text-center' data-label="absences_with_pay">{{ @$sickLeaveIncrement->absences_under_time_with_pay_balance }}</td>
-                                                <td class='text-sm font-weight-bold text-center' data-label="sick_balance">{{ @$forwardedSickLeave->earned += $sickLeaveIncrement->earned }}</td>
-                                                <td class='text-sm font-weight-bold text-center' data-label="absences_without_pay">{{ @$sickLeaveIncrement->absences_under_time_without_pay_balance }}</td>
+                                                <td class='text-truncate text-center align-middle bg-light'>{{ $record[1]->earned }}</td>
+                                                <td class='text-truncate text-center align-middle'></td>
+                                                <td class='text-truncate text-center align-middle bg-light'>{{ $forwardedSickLeave->earned += $record[1]->earned }}</td>
+                                                <td class='text-truncate text-center align-middle'></td>
 
-                                                {{-- DATE & ACTION  --}}
-                                                <td class='text-sm font-weight-bold text-center'></td>
-                                                <td class='text-sm font-weight-bold text-center' data-label="over_all_total">{{ $overAllTotal = $forwardedVacationLeave->earned + $forwardedSickLeave->earned }}</td>
+                                                <td class='text-truncate text-center align-middle bg-light'>{{ ($forwardedVacationLeave->earned + $forwardedSickLeave->earned) }}</td>
                                             </tr>
-                                        @endforeach
-                                    @elseif($type === $TYPES['DECREMENT'])
+                                        @elseif($type == $TYPES['DECREMENT'])
                                             @foreach($record as $data)
-                                                <tr>
-                                                    @if($data->leave_file_application)
-                                                        <td class='text-sm text-center font-weight-bold' data-label="period">
-                                                            {{
-                                                                Carbon\Carbon::parse($data->leave_file_application->date_from)->format('F d')  . ' - ' .  Carbon\Carbon::parse($data->leave_file_application->date_to)->format('F d, Y')
-                                                            }}
-                                                        </td>
-                                                        @else
-                                                        <td></td>
-                                                    @endif
-                                                    <td class='bg-light text-sm text-center font-weight-medium' data-label="particular">{{ $data->particular }}</td>
-                                                    {{-- VACATION LEAVE DATA --}}
-                                                    @if($data->type->code_number === $VACATION_LEAVE_CODE_NUMBER)
-                                                        <td class='bg-light'></td>
-                                                        <td class='bg-light text-sm text-center font-weight-bold' data-label="vacation_absences_with_pay">{{ $data->used }}</td>
-                                                        <td class='bg-light text-sm text-center font-weight-bold' data-label="vacation_balance">{{ $forwardedVacationLeave->earned = ($forwardedVacationLeave->earned - $data->used) }}</td>
-                                                        <td class='bg-light'></td>
-                                                        
-                                                        {{-- SICK LEAVE DATA --}}
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td class='text-sm text-center font-weight-medium' data-label="sick_balance">{{ $forwardedSickLeave->earned = $forwardedSickLeave->earned - 0 }}</td>
-                                                        <td></td>
-
-                                                        {{-- DATE & ACTION --}}
-                                                        <td class='text-sm text-center font-weight-bold' data-label="taken">{{ $data->used }}</td>
-                                                        <td class='text-sm text-center font-weight-bold' data-label="over_all_total">{{ $overAllTotal = $overAllTotal - $data->used }}</td>
-                                                    @endif
-                                                    @if($data->type->code_number === $SICK_LEAVE_CODE_NUMBER)
+                                                @if(!is_null($data->leave_application_id))
+                                                    <tr>
                                                         {{-- VACATION LEAVE DATA --}}
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td class='text-sm text-center font-weight-medium' data-label="sick_balance">{{ $forwardedVacationLeave->earned = $forwardedVacationLeave->earned - 0 }}</td>
-                                                        <td></td>
+                                                        <td class='text-truncate align-middle'>
+                                                            {{ $data->date_record->format('F d') }} - {{ $data->leave_file_application->date_to->format('F d, Y') }}
+                                                        </td>
+                                                        <td class='text-truncate text-center bg-light'>{{ $data->particular }}</td>
+                                                        <td class='text-truncate text-center' data-label="vacation_earned"></td>
+                                                        <td class='text-truncate text-center' data-label="vacation_absences_under_time_with_pay"></td>
+                                                        @if($data->type->code_number === $VACATION_LEAVE_CODE_NUMBER)
+                                                            <td class='text-truncate text-center bg-light' data-label="">{{ number_format($forwardedVacationLeave->earned -= $data->used, 3, '.', '') }}</td>
+                                                            @else
+                                                            <td class='text-truncate text-center' data-label="">{{ number_format($forwardedVacationLeave->earned, 3, '.', '') }}</td>
+                                                        @endif
+                                                        <td data-label="vacation_absences_under_time_without_pay"></td>
 
                                                         {{-- SICK LEAVE DATA --}}
-                                                        <td class='bg-light'></td>
-                                                        <td class='bg-light text-sm text-center font-weight-bold' data-label="sick_absences_with_pay">{{ $data->used }}</td>
-                                                        <td class='bg-light text-sm text-center font-weight-bold' data-label="sick_balance">{{ $forwardedSickLeave->earned = ($forwardedSickLeave->earned - $data->used) }}</td>
-                                                        <td class='bg-light'></td>
+                                                        <td data-label="sick_earned"></td>
+                                                        <td data-label="sick_absences_under_time_with_pay"></td>
+                                                        @if($data->type->code_number === $SICK_LEAVE_CODE_NUMBER)
+                                                            <td class='text-truncate text-center bg-light' data-label="">{{ number_format($forwardedSickLeave->earned -= $data->used, 3, '.', '')  }}</td>
+                                                            @else
+                                                            <td class='text-truncate text-center' data-label="">{{ number_format($forwardedSickLeave->earned, 3, '.', '') }}</td>
+                                                        @endif
+                                                        <td></td>
 
-                                                        {{-- DATE & ACTION --}}
-                                                        <td class='text-sm text-center font-weight-bold' data-label="taken">{{ $data->used }}</td>
-                                                        <td class='text-sm text-center font-weight-bold' data-label="over_all_total">{{ $overAllTotal = $overAllTotal - $data->used }}</td>
-                                                    @endif
-                                                </tr>
+                                                        <td class='text-truncate text-center bg-light'>{{ number_format($forwardedVacationLeave->earned + $forwardedSickLeave->earned, 3, '.', '') }}</td>
+                                                    </tr>
+                                                @elseif(!is_null($data->undertime_id))
+                                                    <tr>
+                                                        {{-- VACATION LEAVE DATA --}}
+                                                        <td class='text-truncate align-middle'>
+                                                            {{ $data->undertime->month_year->format('F d, Y') }}
+                                                        </td>
+                                                        <td class='text-truncate text-center bg-light'>{{ $data->particular }}</td>
+                                                        <td class='text-truncate text-center' data-label="vacation_earned"></td>
+                                                        <td class='text-truncate text-center' data-label="vacation_absences_under_time_with_pay"></td>
+                                                        @if($data->type->code_number === $VACATION_LEAVE_CODE_NUMBER)
+                                                            <td class='text-truncate text-center bg-light' data-label="">{{ number_format($forwardedVacationLeave->earned -= $data->undertime->equivalent, 3, '.', '') }}</td>
+                                                            @else
+                                                            <td>{{ number_format($forwadedVacationLeave->earned, 3, '.', '') }}</td>
+                                                        @endif
+                                                        <td data-label="vacation_absences_under_time_without_pay"></td>
+
+                                                        {{-- SICK LEAVE DATA --}}
+                                                        <td data-label="sick_earned"></td>
+                                                        <td data-label="sick_absences_under_time_with_pay"></td>
+                                                        @if($data->type->code_number === $SICK_LEAVE_CODE_NUMBER)
+                                                            <td class='text-truncate text-center bg-light' data-label="">{{ number_format($forwardedSickLeave->earned -= $data->undertime->equivalent, 3, '.', '') }}</td>
+                                                            @else
+                                                            <td class='text-truncate text-center'>{{ number_format($forwardedSickLeave->earned, 3, '.', '') }}</td>
+                                                        @endif
+                                                        <td></td>
+
+                                                        <td class='text-truncate text-center bg-light'>{{ number_format($forwardedVacationLeave->earned + $forwardedSickLeave->earned, 3, '.', '') }}</td>
+                                                    </tr>
+                                                @endif
                                             @endforeach
-                                    @endif
-                                    </tr>
-                                @endforeach
+                                        @endif
+                                    @endforeach
                             </tbody>
-                            <tfoot>
-                                <td colspan="12" class="text-center text-sm bg-light">
-                                    &nbsp;
-                                </td>
-                            </tfoot>
                         </table>
                     </div>
                 </div>

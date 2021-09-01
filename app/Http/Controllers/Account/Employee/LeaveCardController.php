@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Account\Employee;
 
 use App\Employee;
+use Carbon\Carbon;
+use App\Services\MSAccess;
 use App\EmployeeLeaveRecord;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Repositories\LeaveRecordRepository;
-use App\Services\MSAccess;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Repositories\LeaveRecordRepository;
 
 class LeaveCardController extends Controller
 {
@@ -22,65 +24,66 @@ class LeaveCardController extends Controller
     {
         $employeeID = Auth::user()->employee_id;
         $employee = Employee::with(['information', 'information.office', 'information.position'])->find($employeeID);
-        
 
-        // Forwarded Balance
-        $forwardedBalance       = $this->leaveRecordRepository->getForwardedRecord($employeeID);
+        // // Forwarded Balance
+        $forwardedBalance  = $this->leaveRecordRepository->getForwardedRecord($employeeID);
+
         $forwardedVacationLeave = $this->leaveRecordRepository->getVacationLeaveInForwarded($forwardedBalance);
         $forwardedSickLeave     = $this->leaveRecordRepository->getSickLeaveInForwarded($forwardedBalance);
-        
 
-        $totalOfForwardedBalance = $forwardedBalance->sum('earned') - $forwardedBalance->sum('used');
-        
-        $recordsWithoutForwarded = $this->leaveRecordRepository->getRecordsWithoutForwarded($employeeID)->groupBy('record_type');
+        $recordsWithoutForwarded = $this->leaveRecordRepository->getRecordsWithoutForwarded($employeeID);
 
+        $recordsWithoutForwarded = $recordsWithoutForwarded->groupBy(function ($data) {
+            return $data->date_record->format('F d, Y') . '-' . $data->record_type;
+        });
 
         return view('accounts.employee.leave.leave-card', [
             'employee'                   => $employee,
             'forwardedBalance'           => $forwardedBalance,
-            'recordsWithoutForwarded'    => $recordsWithoutForwarded,
-            'totalOfForwardedBalance'    => $totalOfForwardedBalance,
-            'forwardedSickLeave'         => $forwardedSickLeave,
             'forwardedVacationLeave'     => $forwardedVacationLeave,
+            'forwardedSickLeave'         => $forwardedSickLeave,
+            'recordsWithoutForwarded'    => $recordsWithoutForwarded,
+            // 'employee'                => $employee,
+            // 'forwardedBalance'        => $forwardedBalance,
+            // 'forwardedSickLeave'      => $forwardedSickLeave,
+            // 'forwardedVacationLeave'  => $forwardedVacationLeave,
             'TYPES'                      => EmployeeLeaveRecord::TYPES,
             'SICK_LEAVE_CODE_NUMBER'     => 10001,
             'VACATION_LEAVE_CODE_NUMBER' => 10002,
-            'overAllTotal'               => 0,
-            'startDate'                  => null,
-            'endDate'                    => null
+            // 'overAllTotal'            => 0,
+            // 'startDate'               => null,
+            // 'endDate'                 => null
         ]);
     }
     
     public function withRange(string $start = null, string $end = null)
     {
-
         $employeeID = Auth::user()->employee_id;
         $employee = Employee::with(['information', 'information.office', 'information.position'])->find($employeeID);
-        
 
-        // Forwarded Balance
-        $forwardedBalance       = $this->leaveRecordRepository->getForwardedRecord($employeeID);
+        // // Forwarded Balance
+        $forwardedBalance  = $this->leaveRecordRepository->getForwardedRecord($employeeID);
+
         $forwardedVacationLeave = $this->leaveRecordRepository->getVacationLeaveInForwarded($forwardedBalance);
         $forwardedSickLeave     = $this->leaveRecordRepository->getSickLeaveInForwarded($forwardedBalance);
 
-        $totalOfForwardedBalance = $forwardedBalance->sum('earned') - $forwardedBalance->sum('used');
+        $recordsWithoutForwarded = $this->leaveRecordRepository->getRecordsWithoutForwarded($employeeID, $start, $end);
 
-        
-        $recordsWithoutForwarded = $this->leaveRecordRepository->getRecordsWithoutForwarded($employeeID, $start, $end)->groupBy('record_type');
+        $recordsWithoutForwarded = $recordsWithoutForwarded->groupBy(function ($data) {
+            return $data->date_record->format('F d, Y') . '-' . $data->record_type;
+        });
 
         return view('accounts.employee.leave.leave-card', [
             'employee'                   => $employee,
             'forwardedBalance'           => $forwardedBalance,
-            'recordsWithoutForwarded'    => $recordsWithoutForwarded,
-            'totalOfForwardedBalance'    => $totalOfForwardedBalance,
-            'forwardedSickLeave'         => $forwardedSickLeave,
             'forwardedVacationLeave'     => $forwardedVacationLeave,
+            'forwardedSickLeave'         => $forwardedSickLeave,
+            'recordsWithoutForwarded'    => $recordsWithoutForwarded,
             'TYPES'                      => EmployeeLeaveRecord::TYPES,
             'SICK_LEAVE_CODE_NUMBER'     => 10001,
             'VACATION_LEAVE_CODE_NUMBER' => 10002,
-            'overAllTotal'               => 0,
-            'startDate'                  => $start,
-            'endDate'                    => $end
+            'startDate'               => $start,
+            'endDate'                 => $end
         ]);
     }
 

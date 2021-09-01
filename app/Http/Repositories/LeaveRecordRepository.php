@@ -52,14 +52,14 @@ class LeaveRecordRepository extends LeaveApplicationRepository
     {
         $query = EmployeeLeaveRecord::with(['type', 'undertime', 'leave_file_application' => function ($query) {
             $query->where('approved_status', 'approved');
-        }])->orderBy('created_at')
+        }])->orderBy('date_record')
             ->where('employee_id', $employeeID);
 
         if($start && $end) {
             $startDate = Carbon::parse($start);
             $endDate  = Carbon::parse($end);
 
-            return EmployeeLeaveRecord::with(['type', 'leave_file_application'])->whereHas('leave_file_application', function ($query) use ($startDate, $endDate) {
+            return EmployeeLeaveRecord::with(['type', 'leave_file_application'])->whereHas('leave_file_application', function ($query) {
                 $query->where('approved_status', 'approved');
             })->orderBy('created_at')
             ->where('employee_id', $employeeID)
@@ -68,13 +68,11 @@ class LeaveRecordRepository extends LeaveApplicationRepository
                                 ->between($startDate, $endDate) or Carbon::parse($record->leave_file_application->date_to)->between($startDate, $endDate);
             });
         } else {
-            return EmployeeLeaveRecord::with(['type', 'leave_file_application' => function ($query) {
+        return EmployeeLeaveRecord::with(['type', 'undertime', 'leave_file_application' => function ($query) {
                     $query->where('approved_status', 'approved');
-                }])->orderBy('created_at')
-                    ->where('employee_id', $employeeID)
-                    ->where('record_type', 'I')
-                    ->orWhere('record_type', 'D')
-                    ->get();
+                }])
+                    ->where(['record_type' => 'I', 'record_type' => 'D', 'employee_id' => $employeeID])
+                    ->orderBy('date_record', 'ASC')->get();
         }
     }
 
