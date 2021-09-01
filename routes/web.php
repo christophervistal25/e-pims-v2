@@ -120,6 +120,8 @@ Route::group(['prefix' => 'employee'], function () {
     Route::get('/leave/application', 'EmployeeLeave\LeaveController@show')->name('leave.application.filling');
     Route::get('/leave/leave-recall', 'EmployeeLeave\LeaveRecallController@index')->name('leave.leave-recall');
     Route::resource('/leave-recall', 'EmployeeLeave\LeaveRecallController');
+    Route::get('/leave/leave-forwarded-balance', 'EmployeeLeave\EmployeeLeaveRecordController@list')->name('leave-forwarded-balance.list');
+    Route::post('/leave-forwarded-balance/{id}', 'EmployeeLeave\EmployeeLeaveRecordController@destroy');
     Route::resource('/leave-forwarded-balance', 'EmployeeLeave\EmployeeLeaveRecordController');
  
     //  LEAVE-LIST APPLICATIONS //
@@ -141,6 +143,7 @@ Route::group(['prefix' => 'employee'], function () {
     Route::get('/leave/compensatory-build-up/{id}/{year}', 'EmployeeLeave\CompensatoryBuildUpController@listComLeaveByYear');
     Route::get('/leave/compensatory-build-up/forfeited/{id}/{year}', 'EmployeeLeave\CompensatoryBuildUpController@forfeited');
     Route::get('/leave/compensatory-build-up/updateForfeited/{emloyeeID}/{year}', 'EmployeeLeave\CompensatoryBuildUpController@updateForfeited');
+    Route::post('/compensatory-build-up/{id}', 'EmployeeLeave\CompensatoryBuildUpController@destroy');
     Route::resource('/compensatory-build-up', 'EmployeeLeave\CompensatoryBuildUpController');
 
 });

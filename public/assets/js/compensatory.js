@@ -617,7 +617,7 @@ swal({
             $.ajax({
                 url : `/employee/compensatory-build-up/${employeeID}`,
                 data: { delete_All : deleteAll },
-                method : 'DELETE',
+                method : 'POST',
                 success : function (response) {
                         swal("Good job!", "Successfully deleted all compensatory leave records.", "success", {closeOnClickOutside: false}).then((isClicked) => {
                         if(isClicked) {
@@ -638,7 +638,7 @@ $(document).on('click', '.delete__compensatory', function () {
         title: "Are you sure?",
         text : "You are about to delete compensatory leave of this employee.",
         icon: "warning",
-        buttons: true,
+        buttons: true,  
         dangerMode: true,
         closeOnClickOutside: false,
         }).then((willDelete) => {
@@ -646,7 +646,7 @@ $(document).on('click', '.delete__compensatory', function () {
                 $.ajax({
                     url : `/employee/compensatory-build-up/${compensatoryID}`,
                     data: { delete_All : deleteAll },
-                    method : 'DELETE',
+                    method : 'POST',
                     success : function (response) {
                             swal("Good job!", "Successfully deleted compensatory leave record.", "success", {closeOnClickOutside: false}).then((isClicked) => {
                             if(isClicked) {

@@ -6,6 +6,8 @@ use App\Employee;
 use App\LeaveType;
 use App\EmployeeLeaveRecord;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Repositories\LeaveRecordRepository;
@@ -28,6 +30,59 @@ class EmployeeLeaveRecordController extends Controller
                                     ->get();
         $records = EmployeeLeaveRecord::where('fb_as_of', '!=', NULL)->with(['employee', 'type'])->get()->groupBy('employee.fullname');
         return view('leave.leave-forwarded-balance', compact('records', 'employees'));
+    }
+
+    public function list(Request $request)
+    {
+        if ($request->ajax()) {
+            $rPerEmployee = EmployeeLeaveRecord::where('record_type', 'F')->with(['employee', 'type'])->get()->groupBy('employee.fullname');
+                return Datatables::of($rPerEmployee)
+                        ->addColumn('employee_id', function ($rPerEmployee) {
+                            return $rPerEmployee->first()->employee_id;
+                        })  
+                        ->addColumn('fullname', function ($rPerEmployee) {
+                            return $rPerEmployee->first()->employee->fullname;
+                        })
+                        ->addColumn('fb_as_of', function ($rPerEmployee) {
+                            return $rPerEmployee->first()->fb_as_of;
+                        })
+                        ->addColumn('vl_earned', function ($rPerEmployee) {
+                            return $rPerEmployee->where('type.code', 'VL')->sum('earned');
+                        })
+                        ->addColumn('vl_used', function ($rPerEmployee) {
+                            return $rPerEmployee->where('type.code', 'VL')->sum('used');
+                        })
+                        ->addColumn('vl_balance', function ($rPerEmployee) {
+                            return (float) $rPerEmployee->where('type.code', 'VL')->sum('earned') - $rPerEmployee->where('type.code', 'VL')->sum('used');
+                        })
+                        ->addColumn('sl_earned', function ($rPerEmployee) {
+                            return $rPerEmployee->where('type.code', 'SL')->sum('earned');
+                        })
+                        ->addColumn('sl_used', function ($rPerEmployee) {
+                            return $rPerEmployee->where('type.code', 'SL')->sum('used');
+                        })
+                        ->addColumn('sl_balance', function ($rPerEmployee) {
+                            return (float) $rPerEmployee->where('type.code', 'SL')->sum('earned') - $rPerEmployee->where('type.code', 'SL')->sum('used');
+                        })
+                        ->addColumn('leave_balance', function ($rPerEmployee) {
+                            return (float) ($rPerEmployee->where('type.code', 'VL')->sum('earned') - $rPerEmployee->where('type.code', 'VL')->sum('used')) 
+                            + ($rPerEmployee->where('type.code', 'SL')->sum('earned') - $rPerEmployee->where('type.code', 'SL')->sum('used'));
+                        })
+                        ->addcolumn('action', function($rPerEmployee){
+                        $button = ' <button type="button" class="btn btn-success btn-sm rounded-circle shadow edit__leave__type" 
+                                        data-id="'.$rPerEmployee[0]->employee_id.'">
+                                        <i class="la la-pencil"></i>
+                                    </button>';
+                        $button .= '<button class="btn btn-danger btn-sm rounded-circle shadow delete__leave__type ml-1"
+                                        data-id="'.$rPerEmployee[0]->employee_id.'" data-as-of-date="'.$rPerEmployee[0]->fb_as_of.' ">
+                                        <i class="la la-trash"></i>
+                                    </button>';
+                    
+                        return $button;
+                    })
+                    ->make(true);
+        }
+        
     }
 
     /**
@@ -175,7 +230,8 @@ class EmployeeLeaveRecordController extends Controller
         foreach($leaveRecord as $leaverec){
             $leaverec->delete();
         }
+        return response()
+            ->json(['success' => true]);
         
-        return response()->json(['success' => true]);
     }
 }
