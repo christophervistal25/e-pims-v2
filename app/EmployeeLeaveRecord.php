@@ -20,10 +20,13 @@ class EmployeeLeaveRecord extends Model
         'record_type',
         'leave_application_id',
         'undertime_id',
+        'date_record',
     ];
 
     public const TYPES = ['FORWARD' => 'F', 'INCREMENT' => 'I', 'DECREMENT' => 'D'];
     
+    protected $dates = ['created_at', 'updated_at', 'date_record'];
+
     public function type()
     {
         return $this->hasOne(LeaveType::class, 'id', 'leave_type_id');
@@ -41,6 +44,6 @@ class EmployeeLeaveRecord extends Model
     
     public function leave_file_application()
     {
-        return $this->belongsTo(EmployeeLeaveApplication::class, 'leave_application_id', 'id');
+        return $this->belongsTo(EmployeeLeaveApplication::class, 'leave_application_id', 'id')->withDefault();
     }
 }
