@@ -68,7 +68,7 @@ class LeaveApplicationController extends Controller
             $startDate = Carbon::parse($request->startDate);
 
             if($request->typeOfLeave != '10001') {
-                $startDate = $startDate->addDays(5);
+                // $startDate = $startDate->addDays(5);
                 $rules['startDate'][] = 'before_or_equal:' . Carbon::parse($request->endDate)->format('Y-m-d');
             }
 
@@ -78,15 +78,13 @@ class LeaveApplicationController extends Controller
                 'recommendingApproval' => ['required'],
                 'commutation'          => ['required'],
                 'dateApply'            => ['required'],
-                'startDate'            => ['required'],
+                'startDate'            => ['required', 'after:' . Carbon::now()->addDays(4)->format('F d, Y')],
                 'endDate'              => ['required', 'after_or_equal:' . $startDate->format('Y-m-d')],
                 'inCaseOf'             => ['required'],
                 'noOfDays'             => ['required'],
                 'typeOfLeave'          => ['required'],
             ];
             
-            
-
 
             $this->validate($request, $rules , [], [
                     'startDate'   => 'Start Date',

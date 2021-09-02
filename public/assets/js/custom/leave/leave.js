@@ -57,10 +57,10 @@ $('#startDate').change(function () {
     $('#start_date_advanced_error').remove();
     $('#startDate').removeClass('is-invalid');
     
-    endDateMustBeAfterStart();
+    // endDateMustBeAfterStart();
 
     if(!LEAVE_TYPES.get("SICK_LEAVE")) {
-        startDateMustBeFiveAdvancedFiveDays();
+        // startDateMustBeFiveAdvancedFiveDays();
     }
 
     $("#start_date_weekend_error").remove();
@@ -80,7 +80,7 @@ $('#startDate').change(function () {
 $('#endDate').change(function () {
     let endPeriod = moment($('#endDate').val());
     
-    endDateMustBeAfterStart();
+  //  endDateMustBeAfterStart();
 
     $('#end_date_weekend_error').remove();
     

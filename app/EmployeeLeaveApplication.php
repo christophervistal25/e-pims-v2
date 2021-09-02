@@ -28,7 +28,7 @@ class EmployeeLeaveApplication extends Model
         'approved_for',
     ];
 
-    public $dates = ['date_from', 'date_to', 'date_applied', 'deleted_at'];
+    public $dates = ['date_from', 'date_to', 'date_applied', 'date_approved', 'deleted_at'];
 
     // protected $appends = [
     //     'in_case_of_text',
