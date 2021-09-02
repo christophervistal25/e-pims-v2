@@ -34,6 +34,13 @@
     <h1 class="dash-sec-title">YOUR LEAVE</h1>
 
     <div class="row">
+        <div class="col-lg-12">
+            @if(Session::has('message'))
+                <div class="alert alert-danger" role="alert">
+                    {{ Session::get('message') }}
+                </div>
+            @endif
+        </div>
         <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
             <div class="card dash-widget">
                 <div class="card-body">
@@ -203,7 +210,7 @@
         <div class="col-lg-4 col-md-4">
             <div class="dash-sidebar">
                 <section>
-                    <h5 class="dash-title">Upcoming Holiday</h5>
+                    <h5 class="dash-title">Holidays for this {{ date('F', time()) }}</h5>
                     @forelse($holidays as $holiday)
                     <div class="card">
                         <div class="card-body text-center">
@@ -214,7 +221,7 @@
                     @empty
                     <div class="card">
                         <div class="card-body text-center">
-                            <p class="text-dark mb-0 text-danger">No holidays for this month</p>
+                            <p class="text-dark mb-0 text-danger">No holidays for this {{ date('F', time()) }}</p>
                         </div>
                     </div>
                     @endforelse
@@ -223,7 +230,7 @@
         </div>
 
         
-        <h1 class="dash-sec-title">LEAVE APPLICATIONS</h1>
+        <h1 class="dash-sec-title">PENDING LEAVE APPLICATIONS</h1>
             <div class="col-lg-12 bg-white">
                 {{-- <div class="alert alert-primary alert-dismissible fade show mt-3" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
