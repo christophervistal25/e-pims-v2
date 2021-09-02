@@ -77,9 +77,9 @@ class LeaveRecordRepository extends LeaveApplicationRepository
         $fromDate = Carbon::parse($fromDate);
         $toDate  = Carbon::parse($toDate);
 
-        $this->getRecordsWithoutForwarded($employeeID)->filter(function ($record) use ($fromDate, $toDate) {
-                return Carbon::parse($record->date_record)->between($fromDate, $toDate) or Carbon::parse($record->date_record)->between($fromDate, $toDate);
-            });
+       return $this->getRecordsWithoutForwarded($employeeID)->filter(function ($record) use ($fromDate, $toDate) {
+            return Carbon::parse($record->date_record)->between($fromDate, $toDate) or Carbon::parse($record->date_record)->between($fromDate, $toDate);
+        });
     }
 
     private function getRecordByLeaveCode(int $codeNumber, string $employeeID) : Collection

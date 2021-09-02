@@ -66,12 +66,13 @@ class LeaveCardController extends Controller
 
         $forwardedVacationLeave = $this->leaveRecordRepository->getVacationLeaveInForwarded($forwardedBalance);
         $forwardedSickLeave     = $this->leaveRecordRepository->getSickLeaveInForwarded($forwardedBalance);
-
-        $recordsWithoutForwarded = $this->leaveRecordRepository->getRecordsWithoutForwarded($employeeID, $start, $end);
+        $recordsWithoutForwarded = $this->leaveRecordRepository->getRecordsWithoutForwardedByRange($employeeID, $start, $end);
+        
 
         $recordsWithoutForwarded = $recordsWithoutForwarded->groupBy(function ($data) {
             return $data->date_record->format('F d, Y') . '-' . $data->record_type;
         });
+
 
         return view('accounts.employee.leave.leave-card', [
             'employee'                   => $employee,
@@ -89,10 +90,14 @@ class LeaveCardController extends Controller
 
     public function print(Request $request)
     {
-        $data = $request->data;
-        $this->database->execute("DELETE * FROM leave_card");
 
-        $columns = ['period',
+        $data = $request->leaveCardData;
+
+        $this->database->execute("DELETE * FROM leave_card");
+        $this->database->execute("DELETE * FROM leave_card_information");
+
+        $columns = [
+                    'period',
                     'particular',
                     'vl_earned',
                     'vl_absences_under_time_with_pay',
@@ -122,10 +127,10 @@ class LeaveCardController extends Controller
             $sick_balance ?? ' ';
             $sick_absences_under_time_without_pay ?? ' ';
             $taken ?? ' ';
-            $over_all_total ?? ' ';
+            $total ?? ' ';
 
             $values = [
-                $period, $particular, $vacation_earned, $vacation_absences_under_time_with_pay, $vacation_balance, $vacation_absences_under_time_without_pay, $sick_earned, $sick_absences_under_time_with_pay, $sick_balance, $sick_absences_under_time_without_pay, $taken, $over_all_total
+                $period, $particular, $vacation_earned, $vacation_absences_under_time_with_pay, $vacation_balance, $vacation_absences_under_time_without_pay, $sick_earned, $sick_absences_under_time_with_pay, $sick_balance, $sick_absences_under_time_without_pay, $taken, $total
             ];
 
 
@@ -133,6 +138,13 @@ class LeaveCardController extends Controller
 
             $this->database->execute("INSERT INTO leave_card ${columns} VALUES ${values}");
         }
+
+        $employee = Auth::user()->employee;
+        $fullName = $employee->fullname;
+        $position = $employee->information->position->position_name;
+        $office = $employee->information->office->office_name;
+
+        $this->database->execute("INSERT INTO leave_card_information (employee_name, office, position) VALUES('$fullName', '$office', '$office')");
         
         return response()->json(['success' => true]);
     }
