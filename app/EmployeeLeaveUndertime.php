@@ -19,6 +19,9 @@ class EmployeeLeaveUndertime extends Model
         'month_year',
     ];
 
+    public $dates = ['month_year'];
+    
+
     public function employee()
     {
         return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');

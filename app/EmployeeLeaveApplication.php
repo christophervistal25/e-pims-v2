@@ -10,7 +10,6 @@ class EmployeeLeaveApplication extends Model
 {
     use SoftDeletes;
 
-    protected $dates = ['deleted_at'];
     protected $fillable = [
         'employee_id',
         'recommending_approval',
@@ -28,6 +27,8 @@ class EmployeeLeaveApplication extends Model
         'disapproved_due_to',
         'approved_for',
     ];
+
+    public $dates = ['date_from', 'date_to', 'date_applied', 'deleted_at'];
 
     // protected $appends = [
     //     'in_case_of_text',
