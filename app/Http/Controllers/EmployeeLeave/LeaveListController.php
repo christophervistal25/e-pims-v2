@@ -122,6 +122,7 @@ class LeaveListController extends Controller
             $leaveList->approved_for = $request['approvedFor'];
             $leaveList->disapproved_due_to = null;
 
+
             EmployeeLeaveRecord::updateOrCreate(
                 [
                     'date_record' => $request['startDate'],
@@ -144,6 +145,8 @@ class LeaveListController extends Controller
             $leaveList->date_approved = null;
             $leaveList->disapproved_due_to = $request['reason'];
 
+
+
             $leaveList->leave_records()->delete();
             // $leaveList->leave_records->delete();
         } else {
@@ -151,6 +154,8 @@ class LeaveListController extends Controller
             $leaveList->date_approved = null;
             $leaveList->disapproved_due_to = $request['reason'];
             $leaveList->approved_for = null;
+            $leaveList->date_applied = null;
+
         }
         
         $leaveList->save();

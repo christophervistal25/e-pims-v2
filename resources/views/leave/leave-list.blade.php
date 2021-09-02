@@ -591,12 +591,12 @@ let table = $('#leaveListTable').DataTable({
         {
             data: 'action',
             name: 'action',
-            defaultContent : '',
-            render : function (data, _, row, _) {
-                if(row.date_from != new Date().toISOString().split('T')[0]) {
-                    return data;
-                } 
-            }
+            // defaultContent : '',
+            // render : function (data, _, row, _) {
+            //     if(row.date_from != new Date().toISOString().split('T')[0]) {
+            //         return data;
+            //     } 
+            // }
         }
     ] 
 });
