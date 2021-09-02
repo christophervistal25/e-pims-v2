@@ -37,8 +37,7 @@
     <!-- Fontawesome CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}">
     <!-- Lineawesome CSS -->
-    <link rel="stylesheet"
-        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     {{-- <link rel="stylesheet" href="{{ asset('assets/css/line-awesome.min.css') }}"> --}}
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
@@ -104,15 +103,15 @@
                             <ul class="notification-list">
                                 @foreach($notifications as $notification)
                                     <li class="notification-message">
-                                        <a href="activities.php">
+                                        <a href="/">
                                             <div class="media">
                                                 <span class="avatar">
                                                     <img alt="" src="assets/img/profiles/avatar-03.jpg">
                                                 </span>
                                                 <div class="media-body">
                                                     <p class="noti-details"><span class="noti-title"><strong>{{ $notification->title }}</strong> - </span>
-                                                        <span class="noti-title">{{ $notification->description }}</span></p>
-                                                    <p class="noti-time"><span class="notification-time">6 mins ago</span>
+                                                        <span class="noti-title">{{ Str::limit($notification->description, 80) }}</span></p>
+                                                    <p class="noti-time"><span class="notification-time">{{ $notification->created_at->diffForHumans() }}</span>
                                                     </p>
                                                 </div>
                                             </div>

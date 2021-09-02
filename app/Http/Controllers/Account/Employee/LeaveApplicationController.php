@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Account\Employee;
 use App\Office;
 use App\LeaveType;
 use Carbon\Carbon;
+use App\Notification;
 use App\Services\MSAccess;
 use Illuminate\Http\Request;
 use App\EmployeeLeaveApplication;
@@ -118,6 +119,13 @@ class LeaveApplicationController extends Controller
                 'leave_type_id'         => $leaveType->id,
             ]);
 
+            Notification::create([
+                'title'            => 'Leave Application Filling',
+                'description'      => 'Your leave application is now under review please wait',
+                'employee_id'      => $employee->employee_id,
+                'from_employee_id' => '',
+                'link'             => '/notifications/{id}/show',
+            ]);
 
             return response()->json(['success' => true, 'fullname' => $employee->fullname ], 201);
         }
@@ -147,7 +155,7 @@ class LeaveApplicationController extends Controller
         $commutation        = $application->commutation;
 
         $tardiness          = 0;
-        $under_time         = 0;
+        $underTime         = 0;
 
         
         $vacationEarn       = $vacationLeave['vacation_leave_earned'];
@@ -160,25 +168,48 @@ class LeaveApplicationController extends Controller
         $sickTotal          = $sickEarn - $sickLess;
         $recommendation     = $application->recommending_approval;
         $approvedFor        = $application->approved_for;
-        $disapproved_due_to = $application->disapproved_due_to;
+        $disApprovedDueTo = $application->disapproved_due_to;
 
-        $columns = [
+        $data = [
             'office'          => $office,
             'fullname'        => $fullName,
             'date_of_filling' => $dateOfFill,
             'position'        => $position,
             'salary'          => $salary,
             'type_of_leave'   => $application->type->name,
+            'inclusive_dates' => '',
+            'commutation' => $commutation,
+            'tardiness' => $tardiness,
+            'under_time' => $underTime,
+            'vacation_earn' => $vacationEarn,
+            'vacation_less' => $vacationLess,
+            'sick_earn' => $sickEarn,
+            'sick_less' => $sickLess,
+            'earn_total' => $earnTotal,
+            'less_total' => $lessTotal,
+            'sick_total' => $sickTotal,
+            'vacation_total' => $vacationTotal,
+            'over_all_total' => $sickEarn + $vacationEarn,
+            'reccomendation' => $recommendation,
+            'approved_for' => $approvedFor,
+            'disapproved_due_to' => $disApprovedDueTo,
         ];
-        if($application->type->code_number === 10001) {
-            // sick leave
-        } else {
-            // vacation leave
-        }
-        // 'in_case_of_sick_leave' => $incaseOf,
+        
 
-        $database->execute("DELETE * FROM application_filling_form");
-        $database->execute("INSERT INTO leave_certification ${columns} VALUES ${values}");
+
+        if($application->type->code_number === 10001) {
+            $data['in_case_of_sick_leave'] = $incaseOf;
+            $data['in_case_of_vacation_leave'] = ''; 
+        } else {
+            $data['in_case_of_sick_leave'] = '';
+            $data['in_case_of_vacation_leave'] = $incaseOf; 
+        }
+
+
+
+
+        // $database->execute("DELETE * FROM application_filling_form");
+        // $database->execute("INSERT INTO leave_certification ${columns} VALUES ${values}");
 
         return response()->json(['success' => true]);
     }
