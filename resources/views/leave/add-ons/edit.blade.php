@@ -40,7 +40,7 @@
                                         name="dateApply" 
                                         id="dateApplied"
                                         class="form-control"
-                                        value="{{ old('dateApply') ?? $data->date_applied }}">
+                                        value="{{ old('dateApply') ?? $data->date_applied->format('Y-m-d') }}">
                                     <span>
                                         <strong>DATE APPLY
                                             <span class="text-danger">*</span>
@@ -97,7 +97,7 @@
                                         class="form-control" 
                                         id="dateStarted" 
                                         name="startDate"
-                                        value="{{ old('startDate') ?? $data->date_from }}"
+                                        value="{{ old('startDate') ?? $data->date_from->format('Y-m-d') }}"
                                         readonly>
                                         <span id="start__date__label"><strong>START DATE<span class="text-danger">*</span></strong></span>
                                     </label>
@@ -110,7 +110,7 @@
                                             class="form-control" 
                                             id="dateEnded" 
                                             name="endDate"
-                                            value="{{ old('endDate') ?? $data->date_to }}"
+                                            value="{{ old('endDate') ?? $data->date_to->format('Y-m-d') }}"
                                             readonly>
                                         <span id="end__date__Label"><strong>END DATE</strong></span>
                                     </label>
@@ -444,7 +444,7 @@
     // APPROVED BUTTON FOR A LEAVE REQUEST //
     let btnApproved = document.querySelector('#btnApproved');
 
-    btnApproved.addEventListener('click', (e)=> {
+    btnApproved.addEventListener('click', (e) => {
         e.preventDefault();
         let employeeId = $('#employeeId');
         let recommendingApproval = $('#recommendingApproval');
@@ -469,12 +469,12 @@
                 .then((ifApproved) => {
                     if (ifApproved) {
                         swal({
-                        text: 'Enter the reason why you approved this application.',
-                        content: "input",
-                        button: {
-                            text: "Submit",
-                            closeModal: false,
-                        },
+                            text: 'Enter the reason why you approved this application.',
+                            content: "input",
+                            button: {
+                                text: "Submit",
+                                closeModal: false,
+                            },
                         })
                         .then(approvedFor => {
                             $.ajax({
@@ -501,46 +501,13 @@
                                                 text : "You are also successfully updated a request",
                                                 icon: "success",
                                         });
-                                        // Notify the employee by sending SMS
                                         socket.emit('notify_employee_leave_status', { fullname : 'Christopher Vistal Platino', phone_number : '09193693499', message : 'This is just a sample message'});
-                                        // Notify the employee by sending notification to it's account.
                                     }
-                                    },
+                                },
                             });
                         });
-                    }
+                    } 
                 });
-                
-                 // let data = {
-        //         employeeID : document.querySelector('#employeeId').value,
-        //         recommendingApproval : document.querySelector('#recommendingApproval').value,
-        //         approvedBy : document.querySelector('#approvedBy').value,
-        //         selectedLeave : document.querySelector('#leaveTypes').value,
-        //         dateApply : document.querySelector('#dateApplied').value,
-        //         commutation : document.querySelector('#commutation').value,
-        //         inCaseOfLeave : document.querySelector('#incaseOf').value,
-        //         numberOfDays : document.querySelector('#numberOfDays').value,
-        //         startDate : document.querySelector('#dateStarted').value,
-        //         endDate: document.querySelector('#dateEnded').value,
-        //         dateApproved : document.querySelector('#dateApproved').value
-        //     };
-
-
-        // fetch(`/employee/leave/leave-list/${id}`, {
-            //     method: 'PUT',
-            //     headers: {
-            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            //             'Content-Type': 'application/json',
-            //         },
-            //         body: JSON.stringify(data),
-            //         }).then(res => res.json())
-            //         .then((data) => {
-            // });
-
-            // swal("Request has been approved!", "You are also successfully updated the request.", "success");
-
-
-            
     });
 
 
