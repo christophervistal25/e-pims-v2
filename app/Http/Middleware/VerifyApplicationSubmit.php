@@ -22,7 +22,8 @@ class VerifyApplicationSubmit
 
         // Has pending application
         if(EmployeeLeaveApplication::where(['employee_id' => $loggedInUser, 'approved_status' => 'pending'])->count() > 0) {
-            return redirect()->route('423-leave-application');
+            // return redirect()->route('423-leave-application');
+            return redirect()->route('employee.dashboard')->with('message', 'You already filled an leave application please wait for the review of Administrator or Office Head.');
         }
 
         return $next($request);
