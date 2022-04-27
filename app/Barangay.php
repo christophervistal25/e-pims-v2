@@ -8,7 +8,7 @@ use App\Scopes\BarangayScope;
 class Barangay extends Model
 {
 
-    public    $incrementing = false;
+    public $incrementing = false;
     protected $primaryKey   = 'code';
     protected $fillable = ['name', 'code', 'status'];
 

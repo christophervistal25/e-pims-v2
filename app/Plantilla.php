@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use App\Office;
 class Plantilla extends Model
 {
+    public $connection = 'E_PIMS_CONNECTION';
+
     public const REGIONS = [
         'Region 1',
         'Region 2',
@@ -24,6 +26,7 @@ class Plantilla extends Model
         'CARAGA',
         'ARMM',
     ];
+    
     protected $fillable = [
         'plantilla_id',
         'old_item_no',

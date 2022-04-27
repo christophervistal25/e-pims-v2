@@ -18,22 +18,18 @@
 	{{-- <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/assets/img/favicon.png') }}"> --}}
 	{{-- <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}"> --}}
 	{{-- <link rel="stylesheet" href="{{ asset('/assets/css/all.min.css') }}"> --}}
-	{{-- <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"> --}}
+	<link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 	<link rel="stylesheet" href="{{ asset('/assets/css/font-awesome.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('/assets/css/line-awesome.min.css') }}">
+	{{-- <link rel="stylesheet" href="{{ asset('/assets/css/line-awesome.min.css') }}"> --}}
 	<link rel="stylesheet" href="{{ asset('/assets/css/style.css') }}">
 	<link rel="stylesheet" href="{{ asset('/assets/css/select2.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('/assets/css/bootstrap-datetimepicker.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}">
     {{-- <link rel="preconnect" href="https://fonts.gstatic.com"> --}}
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-	{{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
+	<link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @stack('page-css')
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-			<script src="assets/js/html5shiv.min.js"></script>
-			<script src="assets/js/respond.min.js"></script>
-		<![endif]-->
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -42,7 +38,7 @@
 </head>
 
 {{-- mini-sidebar --}}
-<body>
+<body class="{{ $class ?? '' }}">
 	<div id="loader-wrapper">
         <div id="loader">
             <div class="loader-ellips">
@@ -256,7 +252,7 @@
 					<ul>
 						<li>
 							<a class='text-decoration-none' href='/'>
-								<i class="las la-digital-tachograph"></i> <span>Dashboard</span></a>
+								<i class="las la-tachometer-alt"></i> <span>Dashboard</span></a>
 							</a>
 						</li>
 						<li class="menu-title">
@@ -269,7 +265,7 @@
                         </li>
 						<li>
                             <a class='text-decoration-none' href="{{ route('employees-birthday.index') }}">
-                                <i class="la la-birthday-cake"></i> <span> Employee's Birthday </span>
+                                <i class="las la-birthday-cake"></i> <span> Employee's Birthday </span>
                             </a>
                         </li>
                         <li>
@@ -289,7 +285,12 @@
                                 </li>
 								<li>
                                     <a class='text-decoration-none mr-2' href="{{ route('leave.leave-list') }}">
-                                        Leave List
+                                        Leave List 
+										@if($no_of_pending_leave_list !== 0)
+											<div class="float-right">
+												<span class='badge badge-danger'>{{ $no_of_pending_leave_list }}</span>
+											</div>
+										@endif
                                     </a>
                                 </li>
 								{{-- <li>
@@ -462,8 +463,7 @@
 
 	</script>
     @stack('page-scripts')
-	
-	<script>
+	{{-- <script>
 		$.ajaxSetup({
 			headers: {
 				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -474,6 +474,6 @@
 			url : '/leave-increment-job',
 			method : 'POST',
 		});
-	</script>
+	</script> --}}
 </body>
 </html>

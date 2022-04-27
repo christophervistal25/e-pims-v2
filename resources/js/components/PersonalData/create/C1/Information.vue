@@ -585,7 +585,7 @@
             class="alert alert-secondary text-center font-weight-bold"
             role="alert"
           >
-            RESIDENTIAL ADDRESS
+            CURRENT ADDRESS
           </div>
         </div>
         <div class="row pl-3 pr-3">

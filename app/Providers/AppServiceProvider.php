@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Notification;
 use App\LeaveIncrement;
 use App\EmployeeLeaveRecord;
+use App\EmployeeLeaveApplication;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -36,6 +37,11 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer(['accounts.employee.layouts.app'], function ($view) {
             $view->with('notifications', Auth::user()->notifications);
+        });
+
+        View::composer(['layouts.app'], function ($view) {
+            // $no_of_pending_leave_list = EmployeeLeaveApplication::where('approved_status', 'pending')->count();
+            $view->with('no_of_pending_leave_list', 0);
         });
     }
 }

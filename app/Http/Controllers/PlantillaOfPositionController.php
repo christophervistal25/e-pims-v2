@@ -39,28 +39,6 @@ class PlantillaOfPositionController extends Controller
         })
         ->rawColumns(['action'])
         ->make(true);
-        //old query
-        // if ($request->ajax()) {
-        //     $data = PlantillaPosition::select('pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name' , 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->orderBy('pp_id', 'DESC');
-        //     return Datatables::of($data)
-        //             ->addIndexColumn()
-        //             ->addColumn('position', function ($row) {
-        //                 return $row->position->position_name;
-        //             })
-        //             ->addColumn('office', function ($row) {
-        //                 return $row->office->office_name;
-        //             })
-        //             ->addColumn('action', function($row){
-
-        //                 $btn = "<a title='Edit Plantilla Of Position' href='". route('plantilla-of-position.edit', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-        //                 $btn = $btn."<a title='Delete Plantilla Of Position' id='delete' value='$row->pp_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
-        //                 ";
-        //                     return $btn;
-        //             })
-        //             ->rawColumns(['action'])
-        //             ->make(true);
-        // }
-        return view('PlantillaOfPosition.PlantillaOfPosition');
     }
 
     /**

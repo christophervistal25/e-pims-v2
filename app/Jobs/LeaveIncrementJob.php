@@ -43,7 +43,6 @@ class LeaveIncrementJob implements ShouldQueue
                                             ->groupBy('employee_id');
 
         foreach($records as $employeeID => $record) {
-            
             if(Carbon::parse($record->first()->created_at)->format('m') === date('m')) {
                 continue;
             }
@@ -55,7 +54,8 @@ class LeaveIncrementJob implements ShouldQueue
                     'earned'        => LeaveIncrement::find(1, ['increment'])->increment,
                     'used'          => 0,
                     'particular'    => 'EL',
-                    'record_type'          => EmployeeLeaveRecord::TYPES['INCREMENT'],
+                    'record_type'   => EmployeeLeaveRecord::TYPES['INCREMENT'],
+                    'date_record'  => Carbon::now(),
                 ]
             );
 
@@ -67,6 +67,7 @@ class LeaveIncrementJob implements ShouldQueue
                     'used'          => 0,
                     'particular'    => 'EL',
                     'record_type'          => EmployeeLeaveRecord::TYPES['INCREMENT'],
+                    'date_record'  => Carbon::now(),
                 ]
             );
         }

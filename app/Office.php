@@ -1,65 +1,45 @@
 <?php
 
 namespace App;
+use App\Office2;
 use App\Plantilla;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Office extends Model
 {
 
-    use SoftDeletes;
-    public const HR_OFFICE_CODE = 10050;
-    protected $dates = ['deleted_at'];
-
-    protected $primaryKey = 'office_code';
-
     public $incrementing = false;
-
+    public const HR_OFFICE_CODE = 10050;
+    protected $primaryKey = 'OfficeCode';
     protected $keyType = 'string';
+    public $table = 'Office';
+    public $connection = 'DTR_PAYROLL_CONNECTION';
 
     protected $fillable = [
-        'office_code',
-        'office_name',
-        'office_short_name',
-        'office_head',
-        'position_name',
-        'office_address',
-        'office_short_address',
+        'OfficeCode',
+        'Description',
+        'DepartmentCode',
+        'OfficeCode2',
+        // 'office_short_name',
+        // 'office_head',
+        // 'position_name',
+        // 'office_address',
+        // 'office_short_address',
     ];
 
     public const ID_PREFIX = '1';
 
-    public static function boot()
-    {
-        parent::boot();
-
-        self::creating(function ($office) {
-            $maxOfficeCode         = self::max('office_code');
-            $code                  = self::ID_PREFIX . str_pad(($maxOfficeCode + 1), 4, '0', STR_PAD_LEFT);
-            // $office->office_code = $code;
-        });
-
-        self::created(function() {
-            Cache::forget('offices');
-        });
-
-        self::updated(function() {
-            Cache::forget('offices');
-        });
-
-        self::saved(function() {
-            Cache::forget('offices');
-        });
-
-        self::deleted(function() {
-            Cache::forget('offices');
-        });
-    }
 
     public function office()
     {
         return $this->belongsTo(Plantilla::class, 'office_code', 'office_code');
+    }
+
+    public function desc()
+    {
+        return $this->hasOne(Office2::class, 'OfficeCode2', 'OfficeCode2');
     }
 
     public function PlantillaSchedule()
@@ -90,6 +70,4 @@ class Office extends Model
     {
         return $this->belongsTo(PositionSchedule::class, 'office_code', 'office_code');
     }
-
-
 }

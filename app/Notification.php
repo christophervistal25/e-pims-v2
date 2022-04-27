@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Notification extends Model
 {
-    protected $fillable = ['title', 'description', 'employee_id', 'view'];
+    protected $fillable = ['title', 'description', 'employee_id', 'from_employee_id', 'link', 'view'];
 
     public function employee()
     {

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BirthdayController;
+use App\Position;
 use App\Services\MSAccess;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -82,11 +84,12 @@ Route::get('/service-records-list', 'ServiceRecordsController@list');
 Route::get('/print-service-records/{id}/previewed', 'PrintServiceRecordsController@print')->name('service-records.previewed.print');
 Route::get('/print-service-records/{id}', 'PrintServiceRecordsController@printList')->name('print-service-records');
 
-Route::get('employees-birthdays/{from}/{to}', 'BirthdayController@range');
+Route::get('employees-birthdays/{from}/{to}', [BirthdayController::class, 'range']);
 Route::resource('employees-birthday', 'BirthdayController');
 
+Route::get('employees', 'EmployeeController@index')->name('employee.index');
+
 Route::group(['prefix' => 'employee'], function () {
-    Route::get('/record', 'EmployeeController@index')->name('employee.index');
     Route::post('/record/store', 'EmployeeController@store')->name('employee.store');
     Route::put('/record/{employeeId}/update', 'EmployeeController@update')->name('employee.update');
 
@@ -125,11 +128,11 @@ Route::group(['prefix' => 'employee'], function () {
     Route::get('/leave/leave-forwarded-balance', 'EmployeeLeave\EmployeeLeaveRecordController@list')->name('leave-forwarded-balance.list');
     Route::post('/leave-forwarded-balance/{id}', 'EmployeeLeave\EmployeeLeaveRecordController@destroy');
     Route::resource('/leave-forwarded-balance', 'EmployeeLeave\EmployeeLeaveRecordController');
- 
+
     //  LEAVE-LIST APPLICATIONS //
     Route::get('/leave-list/list', 'EmployeeLeave\LeaveListController@list');
     Route::get('leave/leave-list', 'EmployeeLeave\LeaveListController@index')->name('leave.leave-list');
-    
+
     Route::get('/leave/leave-list/{edit}', 'EmployeeLeave\LeaveListController@edit')->name('leave-list.edit');
 
     Route::delete('/leave-list/{id}', 'EmployeeLeave\LeaveListController@destroy')->name('leave-list.delete');
@@ -181,7 +184,7 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     // Route for Dashboard
     Route::get('employee-dashboard', 'Account\Employee\DashboardController')->name('employee.dashboard');
-    
+
     Route::get('employee-setting', function () {
 
     })->name('employee.setting');
@@ -200,9 +203,11 @@ Route::group(['middleware' => 'auth'], function () {
     // Route for Employee Personal Data Sheet
     Route::get('employee-personal-data-sheet', 'Account\Employee\PersonalDataSheetController@index')->name('employee.personal-data-sheet');
     Route::get('employee-personal-data-sheet/edit', 'Account\Employee\PersonalDataSheetController@edit')->name('employee.personal-data-sheet.edit');
+
+    Route::get('employee-leave-history/list', 'Account\Employee\ProfileController@list')->name('employee.leave.history.list');
     Route::get('employee-personal-profile', 'Account\Employee\ProfileController@index')->name('employee.personal.profile');
     Route::put('employee-update-account-information', 'Account\Employee\ProfileController@update')->name('employee.update.account.information');
-    
+
     // Employee Leave Card
     Route::get('employee-leave-card' , 'Account\Employee\LeaveCardController@index')->name('employee.leave.card.index');
     Route::get('employee-leave-card/{start?}/{end?}' , 'Account\Employee\LeaveCardController@withRange')->name('employee.leave.card.with.range.index');
@@ -224,3 +229,8 @@ Route::get('404', function () {
 
 // Jobs route.
 Route::post('leave-increment-job', 'LeaveIncrementJobController');
+
+
+Route::get('create-employee', function () {
+    return view('employee.create');
+});

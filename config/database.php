@@ -92,6 +92,32 @@ return [
             'prefix_indexes' => true,
         ],
 
+        'DTR_PAYROLL_CONNECTION' => [
+            'driver' => 'sqlsrv',
+            'url' => '',
+            'host' => 'ITU-SERVER',
+            'port' => '',
+            'database' => 'DTRPayroll',
+            'username' => 'sa',
+            'password' => 'nicole',
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+        ],
+
+        'E_PIMS_CONNECTION' => [
+            'driver' => 'sqlsrv',
+            'url' => '',
+            'host' => 'ITU-SERVER',
+            'port' => '',
+            'database' => 'E_PIMS',
+            'username' => 'sa',
+            'password' => 'nicole',
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+        ],
+
     ],
 
     /*

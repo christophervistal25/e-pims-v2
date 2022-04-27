@@ -11,6 +11,8 @@ class Holiday extends Model
 {
     use SoftDeletes;
 
+    public $connection = 'E_PIMS_CONNECTION';
+    
     public const TYPES = ['REGULAR', 'SPECIAL NON-WORKING', 'SPECIAL WORKING'];
     
     protected $fillable = ['name', 'date',  'type'];

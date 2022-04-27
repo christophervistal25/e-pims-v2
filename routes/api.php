@@ -15,6 +15,9 @@ use App\EmployeeLeaveApplication;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\OfficeController;
+use App\Http\Controllers\Api\EmployeeController;
+use App\Http\Controllers\Api\PositionController;
 
 
 Route::get('/salarySteplist/{sg_no}/{sg_step?}/{sg_year}' , 'Api\PlantillaController@salarySteplist');
@@ -65,23 +68,32 @@ Route::get('step/{sg_no}/{step}' , function ($sgNo, $step) {
     return $salaryGrade;
 });
 
-Route::group(['prefix' => 'employee'], function () {
-    Route::get('/find/ids/{employee_id?}', 'Api\EmployeeController@ids');
-    Route::get('employees', 'Api\EmployeeController@list');
-    Route::get('/search/{key}', 'Api\EmployeeController@search');
-    Route::get('show/{employeeIdNumber}', 'Api\EmployeeController@show');
-    Route::get('find/{employeeIdNumber}', 'Api\EmployeeController@find');
-    Route::post('image/upload', 'Api\EmployeeController@onUploadImage');
+    Route::group(['prefix' => 'employee', 'namespace' => 'Api'], function () {
+        Route::get('list/{charging?}/{assignment?}/{status?}/{active?}', [EmployeeController::class, 'list']);
+        Route::post('store', [EmployeeController::class, 'store']);
+        Route::get('find/{employeeID}', [EmployeeController::class, 'show']);
+        Route::put('{employeeID}/update', [EmployeeController::class, 'update']);
+        Route::get('find/ids/{employee_id?}', [EmployeeController::class, 'ids']);
 
-    Route::get('/employment/status', 'Api\ReferenceStatusController@status');
+        Route::get('/search/{key}', 'Api\EmployeeController@search');
+        Route::get('show/{employeeIdNumber}', 'Api\EmployeeController@show');
+        Route::post('image/upload', 'Api\EmployeeController@onUploadImage');
+
+        Route::get('/employment/status', 'Api\ReferenceStatusController@status');
+    });
+
+Route::group(['namespace' => 'Api'], function() {
+    Route::get('offices', [OfficeController::class, 'list']);
 });
-
-Route::get('offices', 'Api\OfficeController@list');
 Route::get('office/search/head/{key}', 'Api\OfficeController@searchOfficeHead');
 Route::get('office/search/{key}', 'Api\OfficeController@search');
 Route::post('office/store', 'Api\OfficeController@store');
 
-Route::get('positions', 'Api\PositionController@list');
+Route::group(['namespace' => 'Api'], function () {
+    Route::get('positions', [PositionController::class, 'list']);
+    Route::get('position/lookup', [PositionController::class, 'lookup']);
+});
+
 Route::post('position/store', 'Api\PositionController@store');
 Route::get('position/search/{key}', 'Api\PositionController@search');
 

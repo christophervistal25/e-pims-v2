@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Employees birthday')
+@section('title', 'Employees Birthday')
 @prepend('page-css')
 {{-- CSS HERE --}}
 <link rel="stylesheet" href="assets/plugins/morris/morris.css">">
@@ -11,6 +11,10 @@
 
     .bg-primary {
         background: #ff9b44 !important;
+    }
+
+    #employeesBirthdateContainer {
+       overflow-y:'hidden';  
     }
 
 </style>
@@ -27,7 +31,7 @@
     <div class="col-sm-6 col-md-5">
         <label class="">End Date</label>
         <div class="form-group">
-            <input type="date" id="toDate" class="form-control" value="{{  $currentDatePlusOneWeek->format('Y-m-d') }}">
+            <input type="date" id="toDate" class="form-control" value="{{ $currentDate->format('Y-m-d') }}">
             <span class='text-danger text-sm' id="toDateErrorMessage"></span>
         </div>
     </div>
@@ -38,20 +42,7 @@
     </div>
 </div>
 
-<div class="row" id="employeesBirthdateContainer">
-    @foreach($birthdates as $employee)
-    <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-        <div class="profile-widget">
-            <div class="profile-img">
-                <img class="avatar" alt="" src="/storage/employee_images/{{ $employee->information ? $employee->information->photo : 'no_image.png' }}">
-            </div>
-            <h4 class="user-name m-t-10 mb-0 text-ellipsis">{{ $employee->fullname  }}</h4>
-            <h5 class="user-name m-t-10 mb-0 text-ellipsis">{{ $employee->information ? $employee->information->office->office_short_name : '' }}</h5>
-            <div class="small text-muted">{{ $employee->information ? $employee->information->position->position_name : '' }}</div>
-            <a href="javascript:;" class="btn btn-primary btn-block btn-sm m-t-10">{{ Carbon\Carbon::parse($employee->date_birth)->format('l jS F Y') }}</a>
-        </div>
-    </div>
-    @endforeach
+<div class="row p-3" id="employeesBirthdateContainer">
 </div>
 
 @push('page-scripts')
@@ -83,7 +74,7 @@
                 url : `/employees-birthdays/${fromDate}/${toDate}`,
                 success : function (birthdates) {
                     $('#fromDate').removeClass('is-invalid');
-                    $('#toDate').val('is-invalid');
+                    $('#toDate').removeClass('is-invalid');
                     
                     // Response data is not empty.
                     $('#searchBirthRange').removeAttr('disabled');
@@ -91,17 +82,18 @@
                     if(birthdates.length !== 0) {
                         // Clear the parent container
                         $('#employeesBirthdateContainer').html('');
+
                         Object.values(birthdates).map((employee) => {
                             $('#employeesBirthdateContainer').append(`
-                                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-                                    <div class="profile-widget">
+                                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3 rounded-0">
+                                    <div class="profile-widget rounded-0">
                                         <div class="profile-img">
-                                            <img class="avatar" alt="" src="/storage/employee_images/${employee.information ? employee.information.photo : 'no_image.png'}">
+                                            <img class='img-fluid' alt="" src="/storage/employee_images/${employee.profile ? employee.profile : 'no_image.png'}">
                                         </div>
-                                        <h4 class="user-name m-t-10 mb-0 text-ellipsis">${employee.fullname}</h4>
-                                        <h5 class="user-name m-t-10 mb-0 text-ellipsis">${(employee.information && employee.information.office ? employee.information.office.office_short_name : '')}</h5>
-                                        <div class="small text-muted">${(employee.information && employee.information.position) ? employee.information.position.position_name : '' }</div>
-                                        <a href="javascript:;" class="btn btn-primary btn-block btn-sm m-t-10">${moment(employee.date_birth).format('dddd Do of MMMM')}</a>
+                                        <p class="user-name  text-ellipsis">${employee.LastName}, ${employee.FirstName} ${employee.MiddleName.substr(0, 1)}. ${employee.Suffix || ''}</p>
+                                        <p clas='text-sm'>${employee.position_name}</p>
+                                        <p clas='text-sm'>${employee.Description}</p>
+                                        <button class='btn btn-primary btn-block mt-2'>${moment(employee.BirthDate).format('MMMM DD, YYYY')}</button>
                                     </div>
                                 </div>
                             `);

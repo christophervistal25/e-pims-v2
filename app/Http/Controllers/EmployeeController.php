@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Employee;
-use Illuminate\Http\Request;
+use App\Services\OfficeService;
+use App\Http\Controllers\Controller;
 use App\Http\Repositories\EmployeeRepository;
 use App\Http\Requests\Employee\NewEmployeeStoreRequest;
 use App\Http\Requests\Employee\OldEmployeeUpdateRequest;
-use Maatwebsite\Excel\Facades\Excel;
+use App\Services\EmployeeService;
 
 class EmployeeController extends Controller
 {
-    public function __construct(EmployeeRepository $employeeRepo)
-    {
-        $this->employeeRepository = $employeeRepo;
-    }
+    public function __construct(public EmployeeService $employeeService, public OfficeService $officeService)
+    {}
 
     /**
      * Display a listing of the resource.
@@ -23,7 +21,13 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return view('employee.index');
+        $offices = $this->officeService->get();
+
+        return view('employee.index', [
+            'class'     => 'mini-sidebar',
+            'offices' => $offices,
+            'lastEmployeeID' => $this->employeeService->getLastId(),
+        ]);
     }
 
     public function profile()
@@ -88,7 +92,7 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(OldEmployeeUpdateRequest $request)
+    public function update(UpdateEmployeeRequest $request)
     {
         return $this->employeeRepository->updateEmployee($request->all());
     }

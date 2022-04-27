@@ -2,19 +2,49 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Employee;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Services\EmployeeService;
+use App\Http\Controllers\Controller;
+use Freshbitsweb\Laratables\Laratables;
+use Illuminate\Database\Eloquent\Builder;
+use App\Http\Requests\StoreEmployeeRequest;
+use App\Http\Requests\Employee\UpdateEmployeeRequest;
+use App\Http\Requests\Employee\OldEmployeeUpdateRequest;
 
 class EmployeeController extends Controller
 {
-    public function list()
+
+    public function __construct(public EmployeeService $employeeService)
+    {}
+
+    public function list(string $charging = '*', string $assignment = '*', $status = '*', $active = '1')
     {
-        return Cache::rememberForever('employees', function () {
-            return Employee::with(['information:EmpIDNo,pos_code,office_code,photo', 'information.office:office_code,office_name', 'information.position:position_code,position_name', 'status'])
-                            ->get();
+        return Laratables::recordsOf(Employee::class, function($filter) use ($charging, $assignment, $status, $active)
+        {
+            $query = $filter->query();
+            $active === '*' ?: $query->where('isActive', $active);
+            $charging === '*' ?: $query->where('OfficeCode', $charging);
+            $assignment === '*' ?: $query->where('OfficeCode2', $assignment);
+            $status === '*' ?: $query->where('Work_Status', 'like', '%' . $status . '%');
+            return $query;
         });
+    }
+
+    public function store(StoreEmployeeRequest $request)
+    {
+        dd($request->all());
+    }
+
+    public function update(UpdateEmployeeRequest $request, string $employeeID) : Employee
+    {
+        return $this->employeeService->updateInformation($request->all(), Employee::find($employeeID));
+    }
+
+    public function show(string $employeeID) :Employee
+    {
+        return $this->employeeService->findByEmployeeID($employeeID);
     }
 
 
@@ -25,20 +55,6 @@ class EmployeeController extends Controller
                         ->orWhere('lastname', 'like', "%" . $key . "%")
                         ->orWhere('extension', 'like', "%" . $key . "%")
                         ->get();
-    }
-
-
-    public function show(string $employeeIdNumber) :Employee
-    {
-        return Employee::fetchWithFullInformation($employeeIdNumber);
-    }
-
-    public function find(string $employeeIdNumber) :Employee
-    {
-        return Employee::with(['information:EmpIDNo,pos_code,office_code,photo',
-                                'information.position:position_id,position_code,position_name',
-                                'information.office:office_code,office_name', 'status', 'step:employee_id,step_no_to,salary_amount_to', 'loginAccount'])
-                                    ->find($employeeIdNumber);
     }
 
     public function ids(string $employee_id = null) 

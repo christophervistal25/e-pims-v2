@@ -26,6 +26,7 @@ class EmployeeLeaveApplication extends Model
         'deleted_at',
         'disapproved_due_to',
         'approved_for',
+        'no_of_working_days'
     ];
 
     public $dates = ['date_from', 'date_to', 'date_applied', 'date_approved', 'deleted_at'];

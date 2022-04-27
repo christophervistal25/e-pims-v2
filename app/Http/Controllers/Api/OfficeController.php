@@ -6,11 +6,14 @@ use App\Office;
 use App\Employee;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\OfficeService;
 use Illuminate\Support\Facades\Cache;
 
 
 class OfficeController extends Controller
 {
+    public function __construct(public OfficeService $officeService)
+    {}
 
     public function searchOfficeHead(string $key)
     {
@@ -29,7 +32,7 @@ class OfficeController extends Controller
 
     public function list()
     {
-        return Office::get(['office_code', 'office_name','office_short_name']);
+        return response()->json(['office' => $this->officeService->get(), 'office2' => $this->officeService->office2()]);
     }
 
     public function store(Request $request)

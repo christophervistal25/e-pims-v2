@@ -9,39 +9,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Position extends Model
 {
     use SoftDeletes;
-    protected $dates = ['deleted_at'];
+    public $connection = 'E_PIMS_CONNECTION';
+    public $incrementing  = false;
+    public $table = 'positions';
+    public $primaryKey = 'position_code';
     protected $fillable = ['position_id', 'position_code' ,'position_name', 'sg_no' ,'position_short_name'];
-
-    protected $primaryKey = 'position_id';
-
-
-    public static function boot()
-    {
-        parent::boot();
-        self::creating(function ($position) {
-            $maxPositionCode       = self::max('position_code');
-            $code                  = str_pad(($maxPositionCode + 1), 4, '0', STR_PAD_LEFT);
-            // $position->position_code = $code;
-            Cache::forget('positions');
-        });
-
-        self::created(function() {
-            Cache::forget('positions');
-        });
-
-        self::updated(function() {
-            Cache::forget('positions');
-        });
-
-        self::saved(function() {
-            Cache::forget('positions');
-        });
-
-        self::deleted(function() {
-            Cache::forget('positions');
-        });
-    }
-
 
     public function getPositionNameAttribute($value)
     {

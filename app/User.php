@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use Notifiable;
-
+    public $connection = 'E_PIMS_CONNECTION';
     /**
      * The attributes that are mass assignable.
      *
@@ -31,7 +31,7 @@ class User extends Authenticatable
 
     public function employee()
     {
-        return $this->hasOne(Employee::class, 'employee_id', 'employee_id');
+        return $this->hasOne(Employee::class, 'Employee_id', 'employee_id');
     }
 
     public function notifications()

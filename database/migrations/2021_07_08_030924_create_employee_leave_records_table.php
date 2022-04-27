@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateEmployeeLeaveRecordsTable extends Migration
 {
@@ -26,7 +28,7 @@ class CreateEmployeeLeaveRecordsTable extends Migration
             $table->enum('record_type', ['D', 'I', 'F']);
             $table->unsignedInteger('leave_application_id')->nullable();
             $table->unsignedInteger('undertime_id')->nullable();
-            $table->date('date_record')->useCurrent();
+            $table->date('date_record');
             $table->timestamps();
         });     
     }

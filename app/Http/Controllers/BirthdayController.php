@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Repositories\BirthdayRepository;
+use App\Employee;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
+use App\Http\Repositories\BirthdayRepository;
+use App\Services\EmployeeBirthdayService;
 
 class BirthdayController extends Controller
 {
-    public function __construct(BirthdayRepository $birthdayRepo)
-    {
-        $this->birthdayRepository = $birthdayRepo;
-    }
+    public function __construct(public EmployeeBirthdayService $birthdayService)
+    {}
 
     /**
      * Get all employees birthdays by range
@@ -29,11 +31,11 @@ class BirthdayController extends Controller
         ]);
 
         $this->validate($request, [
-            'from' => ['date', 'required', 'before:to'],
-            'to' => ['date', 'required', 'after:from']
+            'from' => ['date', 'required', 'before_or_equal:to'],
+            'to' => ['date', 'required', 'after_or_equal:from']
         ], [], ['from' => 'Start Date', 'to' => 'End Date']);
-
-        return $this->birthdayRepository->range($from, $to);
+        
+        return $this->birthdayService->getByRange($from, $to);
     }
     /**
      * Display a listing of the resource.
@@ -43,9 +45,11 @@ class BirthdayController extends Controller
     public function index()
     {
         $currentDate = Carbon::now();
-        $currentDatePlusOneWeek = ($currentDate->copy())->addDay(7);
-        $birthdates = $this->birthdayRepository->weekBeforeBirthdays();
-        return view('employee.birthdays', compact('currentDate', 'currentDatePlusOneWeek', 'birthdates'));
+
+        return view('employee.birthdays', [
+            'currentDate' => $currentDate,
+            'class' => 'mini-sidebar'
+        ]);
     }
 
     /**

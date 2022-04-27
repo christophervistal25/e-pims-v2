@@ -2,204 +2,107 @@
 
 namespace App;
 
-use App\Province;
-use Carbon\Carbon;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Cache;
+use App\Position;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\EmployeeLaraTablesAction;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Employee extends Model
 {
-    public $incrementing = false;
-    protected $primaryKey = 'employee_id';
-
+    use EmployeeLaraTablesAction;
+    
+    public $incrementing  = false;
+    protected $primaryKey = 'Employee_id';
+    public $connection    = 'DTR_PAYROLL_CONNECTION';
+    public $with = ['position', 'office_charging', 'office_assignment', 'office_charging.desc'];
+    
     protected $fillable = [
-        'trans_no',
-        'employee_id',
-        'lastname',
-        'firstname',
-        'middlename',
-        'extension',
-        'date_birth',
-        'place_birth',
-        'sex',
-        'civil_status',
-        'civil_status_others',
-        'height',
-        'weight',
-        'blood_type',
-        'gsis_id_no',
-        'gsis_policy_no',
-        'gsis_bp_no',
-        'pag_ibig_no',
-        'philhealth_no',
-        'sss_no',
-        'tin_no',
-        'lbp_account_no',
-        'dbp_account_no',
-        'agency_employee_no',
-        'citizenship',
-        'citizenship_by',
-        'indicate_country',
-        'residential_house_no',
-        'residential_street',
-        'residential_village',
-        'residential_barangay',
-        'residential_city',
-        'residential_province',
-        'residential_zip_code',
-        'permanent_house_no',
-        'permanent_street',
-        'permanent_village',
-        'permanent_barangay',
-        'permanent_city',
-        'permanent_province',
-        'permanent_zip_code',
-        'telephone_no',
-        'mobile_no',
-        'email_address',
-        'status',
-        'first_day_of_service'
+        "Employee_id",
+        "LastName",
+        "FirstName",
+        "MiddleName",
+        "Suffix",
+        "OfficeCode",
+        "OfficeCode2",
+        "PosCode",
+        "Designation",
+        "Gender",
+        "CivilStatus",
+        "Birthdate",
+        "Address",
+        "ContactNumber",
+        "TimeCode",
+        "ImagePhoto",
+        "isActive",
+        "isHead",
+        "Work_Status",
+        "pagibig_no",
+        "philhealth_no",
+        "sss_no",
+        "tin_no",
+        "lbp_account_no",
+        "employment_from",
+        "employment_to",
+        "gsis_no",
+        "dbp_account_no",
+        "Email",
+        "BirthPlace",
+        "sg_no",
+        "step",
+        "salary_rate",
+        "notes",
+        "temp_id",
+        "created_at",
+        "updated_at",
+        "profile",
     ];
 
-    protected $appends = [
-        'fullname',
-        'permanent_full_address',
-        'residential_province_text',
-        'residential_city_text',
-        'residential_barangay_text',
-        'permanent_province_text',
-        'permanent_city_text',
-        'permanent_barangay_text',
-    ];
+    public const ACTIVE = 1;
+    public const IN_ACTIVE = 0;
+
+    public $hidden = ['ImagePhoto'];
 
 
-    public static function boot()
-    {
-        parent::boot();
-        self::creating(function($employee) {
-            $employee->trans_no = str_pad((self::count() + 1), 3, 0, STR_PAD_LEFT);
-            Cache::forget('employees');
-            Cache::forget('employees_dashboard');
-        });
-
-        self::created(function() {
-            Cache::forget('employees');
-            Cache::forget('employees_dashboard');
-        });
-
-        self::updated(function() {
-            Cache::forget('employees');
-            Cache::forget('employees_dashboard');
-        });
-
-        self::saved(function() {
-            Cache::forget('employees');
-            Cache::forget('employees_dashboard');
-        });
-
-        self::deleted(function() {
-            Cache::forget('employees');
-            Cache::forget('employees_dashboard');
-        });
-    }
-
-    /**
-     * Get the employee's full concatenated name.
-     */
     public function getFullnameAttribute()
     {
-        return Str::upper("{$this->firstname} {$this->middlename} {$this->lastname} {$this->extension}");
+        return "{$this->LastName}, {$this->FirstName} " . substr($this->MiddleName, 0, 1) . "." . " {$this->Suffix}";
     }
 
-    public function getResidentialProvinceTextAttribute()
+    protected function FirstName(): Attribute
     {
-       return Province::find($this->residential_province, 'name')->name ?? 'N/A';
+        return Attribute::make(
+            get: fn ($value) => mb_strtoupper($value),
+            set: fn ($value) => mb_strtoupper($value),
+        );
     }
 
-    public function getResidentialCityTextAttribute()
+    protected function MiddleName(): Attribute
     {
-       return City::find($this->residential_city, 'name')->name ?? 'N/A';
+        return Attribute::make(
+            get: fn ($value) => mb_strtoupper($value),
+            set: fn ($value) => mb_strtoupper($value),
+        );
     }
 
-    public function getResidentialBarangayTextAttribute()
+    protected function LastName(): Attribute
     {
-       return Barangay::find($this->residential_barangay, 'name')->name ?? 'N/A';
+        return Attribute::make(
+            get: fn ($value) => mb_strtoupper($value),
+            set: fn ($value) => mb_strtoupper($value),
+        );
     }
 
-
-    public function getPermanentProvinceTextAttribute()
+    protected function Suffix(): Attribute
     {
-       return Province::find($this->permanent_province, 'name')->name ?? 'N/A';
+        return Attribute::make(
+            get: fn ($value) => mb_strtoupper($value),
+            set: fn ($value) => mb_strtoupper($value),
+        );
     }
-
-    public function getPermanentCityTextAttribute()
-    {
-       return City::find($this->permanent_city, 'name')->name ?? 'N/A';
-    }
-
-    public function getPermanentBarangayTextAttribute()
-    {
-       return Barangay::find($this->permanent_barangay, 'name')->name ?? 'N/A';
-    }
-
-    public function getPermanentFullAddressAttribute()
-    {
-        $provinceName = Province::find($this->permanent_province, 'name')->name ?? 'N/A';
-        $cityName = City::find($this->permanent_city, 'name')->name ?? 'N/A';
-        $barangayName = Barangay::find($this->permanent_barangay, 'name')->name ?? 'N/A';
-
-        $completeAddress = $this->permanent_house_no . ' ' .  $this->permanent_stress . ' ' .  $this->permanent_village . ' ' .   $barangayName . ' ' .  $cityName . ' ' . $provinceName . ' ' . $this->permanent_zip_code;
-
-        return Str::upper($completeAddress);
-    }
-
-    public function getFirstnameAttribute($value)
-    {
-        return Str::upper($value);
-    }
-
-    public function getMiddlenameAttribute($value)
-    {
-        return Str::upper($value);
-    }
-
-    public function getLastnameAttribute($value)
-    {
-        return Str::upper($value);
-    }
-
-    public function getExtensionAttribute($value)
-    {
-        return Str::upper($value);
-    }
-
-    /**
-     * Set the firstname of employee to uppercase
-     */
-    public function setFirstNameAttribute($value)
-    {
-        $this->attributes['firstname'] = Str::upper($value);
-    }
-
-    public function setMiddleNameAttribute($value)
-    {
-        $this->attributes['middlename'] = Str::upper($value);
-    }
-
-    public function setLastNameAttribute($value)
-    {
-        $this->attributes['lastname'] = Str::upper($value);
-    }
-
-    public function setExtensionAttribute($value)
-    {
-        $this->attributes['extension'] = Str::upper($value);
-    }
-
+    
     public function plantilla()
     {
-        return $this->hasOne(Plantilla::class, 'employee_id', 'employee_id');
+        return $this->hasOne(Plantilla::class, 'employee_id', 'Employee_id');
     }
 
     public function PlantillaSchedule()
@@ -213,7 +116,6 @@ class Employee extends Model
         return $this->hasOne(EmployeeFamilyBackground::class, 'employee_id', 'employee_id');
     }
 
-
     public function spouse_child()
     {
         return $this->hasMany(EmployeeSpouseChildren::class, 'employee_id', 'employee_id');
@@ -226,7 +128,7 @@ class Employee extends Model
 
     public function civil_service()
     {
-        return $this->hasMany(EmployeeCivilService::class, 'employee_id', 'employee_id');
+        return $this->hasMany(EmployeeCivilService::class, 'employee_id', 'Employee_id');
     }
 
     public function work_experience()
@@ -274,26 +176,46 @@ class Employee extends Model
         return $this->hasOne(RefStatus::class, 'id', 'status');
     }
 
-    /**
-     * Get Login information of user.
-     */
     public function loginAccount()
     {
         return $this->belongsTo(User::class, 'employee_id', 'employee_id');
     }
 
-    /**
-     * Get all employees with passed relation.
-     */
     public static function getWithRelations(array $relations = [])
     {
         return self::with($relations)->get();
     }
 
-    public static function fetchWithRelations(array $relations = [], string $employeeId) :Employee
+    public function position()
     {
-        return self::with($relations)->find($employeeId);
+        return $this->hasOne(Position::class, 'position_code', 'PosCode');
     }
+
+    public function scopeActive($query)
+    {
+        return $query->where('isActive', self::ACTIVE);
+    }
+
+    public function scopeInActive($query)
+    {
+        return $query->where('isActive', self::IN_ACTIVE);
+    }
+
+    public function scopeExtender($query)
+    {
+        return $query->where('isActive', self::IN_ACTIVE)->where('isActive', self::ACTIVE);
+    }
+    
+    public function office_charging()
+    {
+        return $this->hasOne(Office::class, 'OfficeCode', 'OfficeCode');
+    }
+    
+    public function office_assignment()
+    {
+        return $this->hasOne(Office2::class, 'OfficeCode2', 'OfficeCode2');
+    }
+    
 
     public static function fetchWithFullInformation(string $employeeId) :Employee
     {

@@ -2,24 +2,33 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Position;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Http\Request;
+use App\Services\PositionService;
+use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\Collection;
 
 class PositionController extends Controller
 {
+
+    public function __construct(public PositionService $positionService)
+    {
+
+    }
+
+    public function lookup()
+    {
+        return Position::where('position_name', 'like', '%' . request()->search . '%')->get();
+    }
 
     public function search(string $key)
     {
         return Position::where('position_name', 'like',  '%' . $key . '%')->get();
     }
 
-    public function list()
+    public function list() : Collection
     {
-        // return Cache::rememberForever('positions', function () {
-            return Position::get();
-        // });
+        return $this->positionService->get();
     }
 
     public function store(Request $request)

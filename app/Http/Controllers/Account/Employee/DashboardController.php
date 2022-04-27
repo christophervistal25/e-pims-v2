@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Account\Employee;
 
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Repositories\HolidayRepository;
@@ -25,11 +26,12 @@ class DashboardController extends Controller
         $holidays = $this->holidayRepository->upcoming();
 
         $employee = $user->employee;
-
-        $vacationLeave = $this->leaveRecordRepository->getVacationLeave($employee->employee_id);
-        $sickLeave     = $this->leaveRecordRepository->getSickLeave($employee->employee_id);
+        $vacationLeave = $this->leaveRecordRepository->getVacationLeave($employee->Employee_id);
+        $sickLeave     = $this->leaveRecordRepository->getSickLeave($employee->Employee_id);
 
         $leaveApplications = $this->leaveApplicationRepository->applicationFiles($user);
+                                    // ->where('approved_status', '!=', 'approved');
+
 
         $onGoingToday         = $this->leaveApplicationRepository->onGoingToday();
         $onGoingTomorrow      = $this->leaveApplicationRepository->onGoingForTomorrow();

@@ -60,15 +60,16 @@ class LeaveUndertimeController extends Controller
 
             if($employeeUndertime) {
                 $employeeLeaveRecord = EmployeeLeaveRecord::create([
-                    'employee_id'                                   => $request->employee_id,
-                    'leave_type_id'                                 => 2,
-                    'earned'                                        => 0,
-                    'used'                                          => 0,
-                    'particular'                                    => 'T(0-'.$request->hoursLate.'-'.$request->minsLate.') / U(0-'.$request->hoursUndertime.'-'.$request->minsUndertime.')',
-                    'absences_under_time_with_pay_balance'          => $request->equivalent,
-                    'absences_under_time_without_pay_balance'       => 0,
-                    'record_type'                                   => EmployeeLeaveRecord::TYPES['DECREMENT'],
-                    'undertime_id'                                  => $employeeUndertime->id,
+                        'employee_id'                             => $request->employee_id,
+                        'leave_type_id'                           => 2,
+                        'earned'                                  => 0,
+                        'used'                                    => 0,
+                        'particular'                              => 'T(0-'.$request->hoursLate.'-'.$request->minsLate.') / U(0-'.$request->hoursUndertime.'-'.$request->minsUndertime.')',
+                        'absences_under_time_with_pay_balance'    => $request->equivalent,
+                        'absences_under_time_without_pay_balance' => 0,
+                        'record_type'                             => EmployeeLeaveRecord::TYPES['DECREMENT'],
+                        'date_record'                             => $carbonDate,
+                        'undertime_id'                            => $employeeUndertime->id,
                 ]);
             }
             
@@ -130,6 +131,7 @@ class LeaveUndertimeController extends Controller
 
                 $undertimeRecord->leave_records->particular = 'T(0-'.$request->hoursLate.'-'.$request->minsLate.') / U(0-'.$request->hoursUndertime.'-'.$request->minsUndertime.')';
                 $undertimeRecord->leave_records->absences_under_time_with_pay_balance = $request->equivalent;
+                $undertimeRecord->date_record = $carbonDate;
                 $undertimeRecord->leave_records->save();
             }
             return response()->json(['success' => true]);

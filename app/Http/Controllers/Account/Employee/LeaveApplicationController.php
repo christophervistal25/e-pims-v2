@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Account\Employee;
 
 use App\Office;
+use App\Holiday;
 use App\LeaveType;
 use Carbon\Carbon;
 use App\Notification;
@@ -68,7 +69,6 @@ class LeaveApplicationController extends Controller
             $startDate = Carbon::parse($request->startDate);
 
             if($request->typeOfLeave != '10001') {
-                // $startDate = $startDate->addDays(5);
                 $rules['startDate'][] = 'before_or_equal:' . Carbon::parse($request->endDate)->format('Y-m-d');
             }
 
@@ -103,6 +103,11 @@ class LeaveApplicationController extends Controller
             if(!$response['status']) {
                 return response()->json(['success' => false, 'message' => $response['message']], 424);
             }
+            $holidays = Holiday::get()->pluck('date')->toArray();
+
+            $noOfWorkingDays = Carbon::parse($request->startDate)->diffInDaysFiltered(function (Carbon $date) use ($holidays) {
+                return strtolower($date->format('l')) !== 'saturday' && strtolower($date->format('l')) !== 'sunday' || in_array($date->format('Y-m-d'), $holidays);
+            }, Carbon::parse($request->endDate)->addDay(1));
 
             EmployeeLeaveApplication::create([
                 'employee_id'           => $employee->employee_id,
@@ -115,6 +120,7 @@ class LeaveApplicationController extends Controller
                 'incase_of'             => $request->inCaseOf,
                 'no_of_days'            => $request->noOfDays,
                 'leave_type_id'         => $leaveType->id,
+                'no_of_working_days'    => $noOfWorkingDays,
             ]);
 
             Notification::create([
@@ -156,41 +162,43 @@ class LeaveApplicationController extends Controller
         $underTime         = 0;
 
         
-        $vacationEarn       = $vacationLeave['vacation_leave_earned'];
-        $vacationLess       = $vacationLeave['vacation_leave_used'];
-        $sickEarn           = $sickLeave['sick_leave_earned'];
-        $sickLess           = $sickLeave['sick_leave_used'];
-        $earnTotal          = $vacationLeave['vacation_leave_earned'] + $sickLeave['sick_leave_earned'];
-        $lessTotal          = $vacationLeave['vacation_leave_used'] + $sickLeave['sick_leave_used'];
-        $vacationTotal      = $vacationEarn - $vacationLess;
-        $sickTotal          = $sickEarn - $sickLess;
-        $recommendation     = $application->recommending_approval;
-        $approvedFor        = $application->approved_for;
+        $vacationEarn     = $vacationLeave['vacation_leave_earned'];
+        $vacationLess     = $vacationLeave['vacation_leave_used'];
+        $sickEarn         = $sickLeave['sick_leave_earned'];
+        $sickLess         = $sickLeave['sick_leave_used'];
+        $earnTotal        = $vacationLeave['vacation_leave_earned'] + $sickLeave['sick_leave_earned'];
+        $lessTotal        = $vacationLeave['vacation_leave_used'] + $sickLeave['sick_leave_used'];
+        $vacationTotal    = $vacationEarn - $vacationLess;
+        $sickTotal        = $sickEarn - $sickLess;
+        $recommendation   = $application->recommending_approval;
+        $approvedFor      = $application->approved_for;
         $disApprovedDueTo = $application->disapproved_due_to;
+        $status           = $application->approved_status;
 
         $data = [
-            'office'          => $office,
-            'fullname'        => $fullName,
-            'date_of_filling' => $dateOfFill,
-            'position'        => $position,
-            'salary'          => $salary,
-            'type_of_leave'   => $application->type->name,
-            'inclusive_dates' => '',
-            'commutation' => $commutation,
-            'tardiness' => $tardiness,
-            'under_time' => $underTime,
-            'vacation_earn' => $vacationEarn,
-            'vacation_less' => $vacationLess,
-            'sick_earn' => $sickEarn,
-            'sick_less' => $sickLess,
-            'earn_total' => $earnTotal,
-            'less_total' => $lessTotal,
-            'sick_total' => $sickTotal,
-            'vacation_total' => $vacationTotal,
+            'office'          => $office ?? ' ',
+            'fullname'        => $fullName ?? ' ',
+            'date_of_fill' => $dateOfFill ?? ' ',
+            'position'        => $position ?? ' ',
+            'salary'          => $salary ?? ' ',
+            'type_of_leave'   => $application->type->name ?? ' ',
+            'inclusive_dates' => ' ',
+            'commutation' => $commutation ?? ' ',
+            'tardiness' => $tardiness ?? 0,
+            'under_time' => $underTime ?? 0,
+            'vacation_earn' => $vacationEarn ?? 0,
+            'vacation_less' => $vacationLess ?? 0,
+            'sick_earn' => $sickEarn ?? 0,
+            'sick_less' => $sickLess ?? 0,
+            'earn_total' => $earnTotal ?? 0,
+            'less_total' => $lessTotal ?? 0,
+            'sick_total' => $sickTotal ?? 0,
+            'vacation_total' => $vacationTotal ?? ' ',
             'over_all_total' => $sickEarn + $vacationEarn,
-            'reccomendation' => $recommendation,
-            'approved_for' => $approvedFor,
-            'disapproved_due_to' => $disApprovedDueTo,
+            'reccomendation' => $recommendation ?? ' ',
+            'approved_for' => $approvedFor ?? ' ',
+            'disapproved_due_to' => $disApprovedDueTo ?? ' ',
+            'status' => $status,
         ];
         
 
@@ -204,10 +212,14 @@ class LeaveApplicationController extends Controller
         }
 
 
+        
+        $columns =   implode(",", array_keys($data));
+
+        $values =  "('" . implode("','", array_values($data)) . "')";
 
 
-        // $database->execute("DELETE * FROM application_filling_form");
-        // $database->execute("INSERT INTO leave_certification ${columns} VALUES ${values}");
+        $database->execute("DELETE * FROM application_filling_form");
+        $database->execute("INSERT INTO application_filling_form(${columns}) VALUES ${values}");
 
         return response()->json(['success' => true]);
     }

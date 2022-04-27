@@ -1,10 +1,10 @@
 @extends('accounts.employee.layouts.app')
 @section('title', 'Your Profile')
 @prepend('page-css')
-<link rel="stylesheet"
-    href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
-<link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
+<link rel="stylesheet" href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+<link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}"> 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="stylesheet" href="{{ asset('/assets/css/dataTables.bootstrap4.min.css') }}">
 @endprepend
 @section('content')
 <div class="content container-fluid">
@@ -51,13 +51,12 @@
                                 <div class="col-md-7">
                                     <ul class="personal-info">
                                         <li>
-                                            <div class="title">Phone:</div>
-                                            <div class="text"><a
-                                                    href="">{{  $account->employee->mobile_no ?? 'N/A' }}</a></div>
+                                            <div class="title">Email:</div>
+                                            <div class="text"><a href="" id="email_text">{{  $account->email }}</a></div>
                                         </li>
                                         <li>
-                                            <div class="title">Email:</div>
-                                            <div class="text"><a href="">{{  $account->email }}</a></div>
+                                            <div class="title">Phone:</div>
+                                            <div class="text">{{ $account->employee->mobile_no ?? 'N/A' }}</div>
                                         </li>
                                         <li>
                                             <div class="title">Birthday:</div>
@@ -87,10 +86,11 @@
         <div class="row user-tabs">
             <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
                 <ul class="nav nav-tabs nav-tabs-bottom">
-                    <li class="nav-item"><a href="#emp_profile" data-toggle="tab" class="nav-link active">Account
-                            Informations</a>
+                    <li class="nav-item">
+                        <a href="#emp_profile" data-toggle="tab" class="nav-link font-weight-bold active">Account Informations</a>
                     </li>
-                    <li class="nav-item"><a href="#leave_logs" data-toggle="tab" class="nav-link">Leave History</a>
+                    <li class="nav-item">
+                        <a href="#leave_logs" data-toggle="tab" class="nav-link font-weight-bold">Leave History  <span class='badge badge-primary rounded-circle px-2 py-1'>{{ $noOfLeaveHistory }}</span></a>
                     </li>
                 </ul>
             </div>
@@ -117,7 +117,7 @@
                                 <hr>
                                 <li>
                                     <div class="title">Email</div>
-                                    <div class="text">{{  $account->email }}</div>
+                                    <div class="text" id="email__field">{{  $account->email }}</div>
                                 </li>
                                 <hr>
                                 <li>
@@ -135,287 +135,27 @@
         <!-- Leave Logs Tab -->
         <div class="tab-pane fade" id="leave_logs">
             <div class="row">
-                <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
+                <div class="col-lg -12">
                     <div class="card">
                         <div class="card-body">
-                            <div class="dropdown profile-action">
-                                <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle"
-                                    href="#"><i class="material-icons">more_vert</i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a data-target="#edit_project" data-toggle="modal" href="#" class="dropdown-item"><i
-                                            class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a data-target="#delete_project" data-toggle="modal" href="#"
-                                        class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-                            </div>
-                            <h4 class="project-title"><a href="project-view.php">Office Management</a></h4>
-                            <small class="block text-ellipsis m-b-15">
-                                <span class="text-xs">1</span> <span class="text-muted">open tasks, </span>
-                                <span class="text-xs">9</span> <span class="text-muted">tasks completed</span>
-                            </small>
-                            <p class="text-muted">Lorem Ipsum is simply dummy text of the printing and
-                                typesetting industry. When an unknown printer took a galley of type and
-                                scrambled it...
-                            </p>
-                            <div class="pro-deadline m-b-15">
-                                <div class="sub-title">
-                                    Deadline:
-                                </div>
-                                <div class="text-muted">
-                                    17 Apr 2019
-                                </div>
-                            </div>
-                            <div class="project-members m-b-15">
-                                <div>Project Leader :</div>
-                                <ul class="team-members">
-                                    <li>
-                                        <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt=""
-                                                src="assets/img/profiles/avatar-16.jpg"></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="project-members m-b-15">
-                                <div>Team :</div>
-                                <ul class="team-members">
-                                    <li>
-                                        <a href="#" data-toggle="tooltip" title="John Doe"><img alt=""
-                                                src="assets/img/profiles/avatar-02.jpg"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt=""
-                                                src="assets/img/profiles/avatar-09.jpg"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" data-toggle="tooltip" title="John Smith"><img alt=""
-                                                src="assets/img/profiles/avatar-10.jpg"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt=""
-                                                src="assets/img/profiles/avatar-05.jpg"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="all-users">+15</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <p class="m-b-5">Progress <span class="text-success float-right">40%</span></p>
-                            <div class="progress progress-xs mb-0">
-                                <div style="width: 40%" title="" data-toggle="tooltip" role="progressbar"
-                                    class="progress-bar bg-success" data-original-title="40%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="dropdown profile-action">
-                                <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle"
-                                    href="#"><i class="material-icons">more_vert</i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a data-target="#edit_project" data-toggle="modal" href="#" class="dropdown-item"><i
-                                            class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a data-target="#delete_project" data-toggle="modal" href="#"
-                                        class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-                            </div>
-                            <h4 class="project-title"><a href="project-view.php">Project Management</a></h4>
-                            <small class="block text-ellipsis m-b-15">
-                                <span class="text-xs">2</span> <span class="text-muted">open tasks, </span>
-                                <span class="text-xs">5</span> <span class="text-muted">tasks completed</span>
-                            </small>
-                            <p class="text-muted">Lorem Ipsum is simply dummy text of the printing and
-                                typesetting industry. When an unknown printer took a galley of type and
-                                scrambled it...
-                            </p>
-                            <div class="pro-deadline m-b-15">
-                                <div class="sub-title">
-                                    Deadline:
-                                </div>
-                                <div class="text-muted">
-                                    17 Apr 2019
-                                </div>
-                            </div>
-                            <div class="project-members m-b-15">
-                                <div>Project Leader :</div>
-                                <ul class="team-members">
-                                    <li>
-                                        <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt=""
-                                                src="assets/img/profiles/avatar-16.jpg"></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="project-members m-b-15">
-                                <div>Team :</div>
-                                <ul class="team-members">
-                                    <li>
-                                        <a href="#" data-toggle="tooltip" title="John Doe"><img alt=""
-                                                src="assets/img/profiles/avatar-02.jpg"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt=""
-                                                src="assets/img/profiles/avatar-09.jpg"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" data-toggle="tooltip" title="John Smith"><img alt=""
-                                                src="assets/img/profiles/avatar-10.jpg"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt=""
-                                                src="assets/img/profiles/avatar-05.jpg"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="all-users">+15</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <p class="m-b-5">Progress <span class="text-success float-right">40%</span></p>
-                            <div class="progress progress-xs mb-0">
-                                <div style="width: 40%" title="" data-toggle="tooltip" role="progressbar"
-                                    class="progress-bar bg-success" data-original-title="40%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="dropdown profile-action">
-                                <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle"
-                                    href="#"><i class="material-icons">more_vert</i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a data-target="#edit_project" data-toggle="modal" href="#" class="dropdown-item"><i
-                                            class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a data-target="#delete_project" data-toggle="modal" href="#"
-                                        class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-                            </div>
-                            <h4 class="project-title"><a href="project-view.php">Video Calling App</a></h4>
-                            <small class="block text-ellipsis m-b-15">
-                                <span class="text-xs">3</span> <span class="text-muted">open tasks, </span>
-                                <span class="text-xs">3</span> <span class="text-muted">tasks completed</span>
-                            </small>
-                            <p class="text-muted">Lorem Ipsum is simply dummy text of the printing and
-                                typesetting industry. When an unknown printer took a galley of type and
-                                scrambled it...
-                            </p>
-                            <div class="pro-deadline m-b-15">
-                                <div class="sub-title">
-                                    Deadline:
-                                </div>
-                                <div class="text-muted">
-                                    17 Apr 2019
-                                </div>
-                            </div>
-                            <div class="project-members m-b-15">
-                                <div>Project Leader :</div>
-                                <ul class="team-members">
-                                    <li>
-                                        <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt=""
-                                                src="assets/img/profiles/avatar-16.jpg"></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="project-members m-b-15">
-                                <div>Team :</div>
-                                <ul class="team-members">
-                                    <li>
-                                        <a href="#" data-toggle="tooltip" title="John Doe"><img alt=""
-                                                src="assets/img/profiles/avatar-02.jpg"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt=""
-                                                src="assets/img/profiles/avatar-09.jpg"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" data-toggle="tooltip" title="John Smith"><img alt=""
-                                                src="assets/img/profiles/avatar-10.jpg"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt=""
-                                                src="assets/img/profiles/avatar-05.jpg"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="all-users">+15</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <p class="m-b-5">Progress <span class="text-success float-right">40%</span></p>
-                            <div class="progress progress-xs mb-0">
-                                <div style="width: 40%" title="" data-toggle="tooltip" role="progressbar"
-                                    class="progress-bar bg-success" data-original-title="40%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="dropdown profile-action">
-                                <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle"
-                                    href="#"><i class="material-icons">more_vert</i></a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a data-target="#edit_project" data-toggle="modal" href="#" class="dropdown-item"><i
-                                            class="fa fa-pencil m-r-5"></i> Edit</a>
-                                    <a data-target="#delete_project" data-toggle="modal" href="#"
-                                        class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                </div>
-                            </div>
-                            <h4 class="project-title"><a href="project-view.php">Hospital Administration</a></h4>
-                            <small class="block text-ellipsis m-b-15">
-                                <span class="text-xs">12</span> <span class="text-muted">open tasks, </span>
-                                <span class="text-xs">4</span> <span class="text-muted">tasks completed</span>
-                            </small>
-                            <p class="text-muted">Lorem Ipsum is simply dummy text of the printing and
-                                typesetting industry. When an unknown printer took a galley of type and
-                                scrambled it...
-                            </p>
-                            <div class="pro-deadline m-b-15">
-                                <div class="sub-title">
-                                    Deadline:
-                                </div>
-                                <div class="text-muted">
-                                    17 Apr 2019
-                                </div>
-                            </div>
-                            <div class="project-members m-b-15">
-                                <div>Project Leader :</div>
-                                <ul class="team-members">
-                                    <li>
-                                        <a href="#" data-toggle="tooltip" title="Jeffery Lalor"><img alt=""
-                                                src="assets/img/profiles/avatar-16.jpg"></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="project-members m-b-15">
-                                <div>Team :</div>
-                                <ul class="team-members">
-                                    <li>
-                                        <a href="#" data-toggle="tooltip" title="John Doe"><img alt=""
-                                                src="assets/img/profiles/avatar-02.jpg"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" data-toggle="tooltip" title="Richard Miles"><img alt=""
-                                                src="assets/img/profiles/avatar-09.jpg"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" data-toggle="tooltip" title="John Smith"><img alt=""
-                                                src="assets/img/profiles/avatar-10.jpg"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" data-toggle="tooltip" title="Mike Litorus"><img alt=""
-                                                src="assets/img/profiles/avatar-05.jpg"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="all-users">+15</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <p class="m-b-5">Progress <span class="text-success float-right">40%</span></p>
-                            <div class="progress progress-xs mb-0">
-                                <div style="width: 40%" title="" data-toggle="tooltip" role="progressbar"
-                                    class="progress-bar bg-success" data-original-title="40%"></div>
-                            </div>
+                            <div class="card-title">Leave History</div>
+                            <hr>
+                            <table class='table table-bordered' id='leave-history-table' width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>DATE APPLIED</th>
+                                        <th>LEAVE</th>
+                                        <th>NO. OF DAYS</th>
+                                        <th>DATE FROM</th>
+                                        <th>DATE TO</th>
+                                        <th>APPROVED BY</th>
+                                        <th class='text-center'>APPROVED FOR</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -669,6 +409,18 @@
                             </span>
                         </label>
                     </div>
+
+                    <div class="col-md-12">
+                        <label for="email" class="form-group has-float-label">
+                            <input type="text" name="email" id="email" class="form-control"
+                                value="{{ $account->email }}">
+                            <span>
+                                <strong>EMAIL
+                                    <span class="text-danger">*</span>
+                                </strong>
+                            </span>
+                        </label>
+                    </div>
 				</div>
 				<div class='row'>
                     <div class="col-md-6">
@@ -682,7 +434,7 @@
                     </div>
                     <div class="col-md-6">
                         <label for="password_confirmation" class="form-group has-float-label">
-                            <input type="password_confirmation" name="password_confirmation" id="password_confirmation"
+                            <input type="password" name="password_confirmation" id="password_confirmation"
                                 class="form-control">
                             <span>
                                 <strong>RE-TYPE PASSWORD</strong>
@@ -701,6 +453,9 @@
     </div>
 </diva>
 @push('page-scripts')
+<script src="{{ asset('/assets/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('/assets/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('/assets/js/moment.min.js') }}"></script>
 <script>
     $.ajaxSetup({
         headers: {
@@ -708,12 +463,15 @@
         }
     });
 
+
+
 </script>
 <script>
     $('#btn__update__account__information').click(function () {
         let data = {
             username: $('#username').val(),
             password: $('#password').val(),
+            email : $('#email').val(),
             retypePassword: $('#password_confirmation').val(),
         };
 
@@ -727,6 +485,8 @@
             success: function (response) {
 				if(response.success) {
 					$('#username__field').text(data.username);
+                    $('#email__field').text(data.email);
+                    $('#email_text').text(data.email);
 					$('#account__info__modal').modal('toggle');
 					swal("Good Job!", "Successfully update your account information.", "success");
 				}
@@ -742,6 +502,65 @@
 				}
             }
         });
+    });
+
+
+    let table = $('#leave-history-table').DataTable({
+        serverSide: true,
+        stateSave: true,
+        ajax: `/employee-leave-history/list`,
+        processing: true,
+        language: {
+                    processing: '<i class="text-primary fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
+        },
+        pagingType: "full_numbers",
+        columns: [
+            {
+                data : "date_applied",
+                name : "date_applied",
+                className : 'text-center font-weight-bold',
+                render : function (data) {
+                    return moment(data).format('MMMM DD, YYYY')
+                }
+            },
+            {
+                data: "type.name",
+                name: "leave_type_id",
+                className : 'text-center'
+            },
+            {
+                data: "no_of_days",
+                name: "no_of_days",
+                className : 'text-center'
+            },
+            {
+                data: "date_from",
+                type: "date_from",
+                className : 'text-center',
+                render : function (data) {
+                    return moment(data).format('YYYY-MM-DD');
+                }
+            },
+            {
+                data : "date_to",
+                name : "date_to",
+                className : 'text-center',
+                render : function (data) {
+                    return moment(data).format('YYYY-MM-DD');
+                }
+            },
+            {
+                data : "approved_by",
+                name : "approved_by",
+                className : 'text-center',
+            },
+            {
+                data : "approved_for",
+                name : "approved_for",
+                className : 'text-center',
+            },
+            
+        ],
     });
 
 </script>

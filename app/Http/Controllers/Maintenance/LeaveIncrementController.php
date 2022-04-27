@@ -77,14 +77,14 @@ class LeaveIncrementController extends Controller
         //update for sick .
 
         $increments = LeaveIncrement::where('id', $id)->get();
-        if($id == 1){
+        if($id == 1) {
             foreach($increments as $increment){
                 // Insert Record with As of.
                 $increment->increment = $request['sick_increment'];
                 $increment->description = $request['sick_description'];
                 $increment->save();
             }
-        }elseif($id == 2){
+        } elseif($id == 2) {
             foreach($increments as $increment){
                 // Insert Record with As of.
                 $increment->increment = $request['vacation_increment'];
@@ -93,7 +93,7 @@ class LeaveIncrementController extends Controller
             }
         }
             
-       return response()->json(['success' => true]);
+        return response()->json(['success' => true]);
     }
 
     /**
