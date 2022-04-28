@@ -19,8 +19,7 @@ class LeaveMonitoringController extends Controller
     
     public function index(Request $request)
     {
-        $employees = Employee::has('information')->with(['information','information.office', 'information.position'])->get();
-
+        $employees = Employee::get();
         return view('leave.leave-monitoring', compact('employees'));
         
     }

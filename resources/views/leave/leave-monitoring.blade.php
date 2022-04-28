@@ -89,12 +89,11 @@
                                     style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                     <option value="">Search name here</option>
                                     @foreach($employees as $employee)
-                                    <option data-office="{{ $employee->information->office->office_name }}"
-                                        data-position="{{ $employee->information->position->position_name }}"
-                                        data-photo="{{ $employee->information->photo }}"
-                                        data-employeeId="{{ $employee->information->EmpIDNo }}"
-                                        value="{{ $employee->employee_id }}">{{ $employee->lastname }},
-                                        {{ $employee->firstname }} {{ $employee->middlename }} </option>
+                                    <option data-office="{{ $employee->office_charging->office_name }}"
+                                        data-position="{{ $employee?->position?->position_name }}"
+                                        data-employeeId="{{ $employee->Employee_id }}"
+                                        value="{{ $employee->Employee_id }}">{{ $employee->LastName }},
+                                        {{ $employee->FirstName }} {{ $employee->MiddleName }} </option>
                                     @endforeach
                                 </select>
                                 <span><strong>EMPLOYEE NAME</strong></span>
