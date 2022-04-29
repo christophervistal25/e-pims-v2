@@ -21,10 +21,10 @@
         <div class="col-md-12">
             <div class="welcome-box">
                 <div class="welcome-img e-avatar">
-                    <img alt="" src="/storage/employee_images/{{ $user->employee->information->photo }}">
+                    <img alt="" src="/storage/employee_images/{{ $user->profile }}">
                 </div>
                 <div class="welcome-det">
-                    <h3>Welcome, {{ Auth::user()->employee->fullname }}</h3>
+                    <h3>Welcome, {{ $user->fullname }}</h3>
                     <p>{{ Carbon\Carbon::now()->format('l jS \of F Y') }}</p>
                 </div>
             </div>
@@ -42,7 +42,7 @@
             @endif
         </div>
         <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-            <div class="card dash-widget">
+            <div class="card dash-widget shadow-none">
                 <div class="card-body">
                     <span class="dash-widget-icon"><i class="fa fa-bus"></i></span>
                     <div class="dash-widget-info">
@@ -53,7 +53,7 @@
             </div>
         </div>
         <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-            <div class="card dash-widget">
+            <div class="card dash-widget shadow-none">
                 <div class="card-body">
                     <span class="dash-widget-icon"><i class="fa fa-thermometer-half"></i></span>
                     <div class="dash-widget-info">
@@ -64,7 +64,7 @@
             </div>
         </div>
         <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-            <div class="card dash-widget">
+            <div class="card dash-widget shadow-none">
                 <div class="card-body">
                     <span class="dash-widget-icon"><i class="fa fa-asterisk"></i></span>
                     <div class="dash-widget-info">
@@ -75,7 +75,7 @@
             </div>
         </div>
         <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-            <div class="card dash-widget">
+            <div class="card dash-widget shadow-none">
                 <div class="card-body">
                     <span class="dash-widget-icon"><i class="fa fa-plus"></i></span>
                     <div class="dash-widget-info">
@@ -113,9 +113,9 @@
                                 </div>
                                 <div class="dash-card-avatars">
                                     @foreach($onGoingToday as $today)
-                                    @if($today->employee->information)
+                                    @if($today->employee)
                                     <div class="e-avatar">
-                                        <img src="/storage/employee_images/{{ $today->employee->information->photo }}"
+                                        <img src="/storage/employee_images/{{ $user->profile }}"
                                             alt="">
                                     </div>
                                     @endif
@@ -153,9 +153,9 @@
                                 </div>
                                 <div class="dash-card-avatars">
                                     @foreach($onGoingTomorrow as $tomorrrow)
-                                    @if($tomorrrow->employee->information)
+                                    @if($tomorrrow->employee)
                                     <div class="e-avatar">
-                                        <img src="/storage/employee_images/{{ $tomorrrow->employee->information->photo }}"
+                                        <img src="/storage/employee_images/{{ $tomorrrow->employee }}"
                                             alt="">
                                     </div>
                                     @endif
@@ -193,9 +193,9 @@
                                 </div>
                                 <div class="dash-card-avatars">
                                     @foreach($onGoingNextSevenDays as $nextSevenDays)
-                                    @if($nextSevenDays->employee->information)
+                                    @if($nextSevenDays->employee)
                                     <div class="e-avatar">
-                                        <img src="/storage/employee_images/{{ $nextSevenDays->employee->information->photo }}"
+                                        <img src="/storage/employee_images/{{ $nextSevenDays->employee }}"
                                             alt="">
                                     </div>
                                     @endif
@@ -210,7 +210,7 @@
         <div class="col-lg-4 col-md-4">
             <div class="dash-sidebar">
                 <section>
-                    <h5 class="dash-title">Holidays for this {{ date('F', time()) }}</h5>
+                    <h1 class="dash-sec-title">Holidays for this {{ date('F', time()) }}</h5>
                     @forelse($holidays as $holiday)
                     <div class="card">
                         <div class="card-body text-center">
@@ -230,15 +230,9 @@
         </div>
 
         
-        <h1 class="dash-sec-title">PENDING LEAVE APPLICATIONS</h1>
+        <p class="fw-medium dash-sec-title mb-1">PENDING LEAVE APPLICATIONS</p>
             <div class="col-lg-12 bg-white">
-                {{-- <div class="alert alert-primary alert-dismissible fade show mt-3" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div> --}}
-
-            <table class='table table-bordered mt-3 bg-white'>
+            <table class='table table-bordered mt-2 bg-white'>
                 <thead>
                     <tr>
                         <th class="align-middle text-center" rowspan="2">Recommending Approval
@@ -349,7 +343,7 @@
         $('#accordion').html('');
 
         onGoingForToday.map((record) => {
-            $('#accordion').append(`
+            {{-- $('#accordion').append(`
                 <div class="card m-0 shadow-none rounded-0">
                         <div class="card-header" id="heading--${record.employee.employee_id}">
                             <h5 class="mb-0">
@@ -425,7 +419,7 @@
                         </div>
                     </div>
             `);
-        });
+        }); --}}
 
     });
 
@@ -621,7 +615,7 @@
         $.ajax({
             url : `/employee-leave-application-print/${applicationID}`,
             success : function (response) {
-                let FULLNAME = "{{ $employee->fullname }}";
+                let FULLNAME = "{{ $user->fullname }}";
                 socket.emit('preview_application_filling_form', { arguments : `${FULLNAME}|REQUEST_APPLICATION_FILLING_FORM`});
             }
         });

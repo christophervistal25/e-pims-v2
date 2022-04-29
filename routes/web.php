@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\BirthdayController;
 use App\Position;
 use App\Services\MSAccess;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BirthdayController;
+use App\Http\Controllers\EmployeeLeave\LeaveListController;
 
 Route::resource('notifications', 'NotificationController');
 
@@ -130,8 +131,8 @@ Route::group(['prefix' => 'employee'], function () {
     Route::resource('/leave-forwarded-balance', 'EmployeeLeave\EmployeeLeaveRecordController');
 
     //  LEAVE-LIST APPLICATIONS //
-    Route::get('/leave-list/list', 'EmployeeLeave\LeaveListController@list');
-    Route::get('leave/leave-list', 'EmployeeLeave\LeaveListController@index')->name('leave.leave-list');
+    Route::get('leave-list/list', [LeaveListController::class, 'list']);
+    Route::get('leave-list', [LeaveListController::class, 'index'])->name('leave.leave-list');
 
     Route::get('/leave/leave-list/{edit}', 'EmployeeLeave\LeaveListController@edit')->name('leave-list.edit');
 

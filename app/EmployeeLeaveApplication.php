@@ -3,12 +3,16 @@
 namespace App;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EmployeeLeaveApplication extends Model
 {
     use SoftDeletes;
+
+    public $connection = 'E_PIMS_CONNECTION';
+    public $table = 'employee_leave_applications';
 
     protected $fillable = [
         'employee_id',

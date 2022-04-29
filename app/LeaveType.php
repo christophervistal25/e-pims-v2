@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class LeaveType extends Model
 {
+    public $connection = 'E_PIMS_CONNECTION';
     protected $fillable = [
         'name',
         'code',

@@ -239,12 +239,12 @@
                             </label>
                             <label for="recoApproval" class="form-group has-float-label">
                                 <input class="form-control" name="recommendingApproval" id="recommendingApproval"
-                                    disabled value="{{ $hrOfficeHead }}">
+                                    disabled value="4994">
                                 <span><strong>RECOMMENDING APPROVAL<span class="text-danger">*</span></strong></span>
                             </label>
                             <label for="approveBy" class="form-group has-float-label">
                                 <input class="form-control" name="approveBy" id="approvedBy" disabled
-                                    value="{{ $approvedBy }}">
+                                    value="{{ $approvedBy->OfficeHead }}">
                                 <span><strong>APPROVED BY<span class="text-danger">*</span></strong></span>
                             </label>
                         </div>

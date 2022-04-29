@@ -21,7 +21,6 @@ class LeaveMonitoringController extends Controller
     {
         $employees = Employee::get();
         return view('leave.leave-monitoring', compact('employees'));
-        
     }
 
     public function list(Request $request, $id)

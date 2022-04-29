@@ -1,10 +1,6 @@
 @extends('layouts.app')
 @section('title', 'Leave Lists')
 @prepend('page-css')
-
-{{-- <script src="{{ asset('/js/app.js') }}" defer></script> --}}
-{{-- <link rel="stylesheet"
-    href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"> --}}
 <link rel="stylesheet"
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
     <link rel="stylesheet" href="/assets/css/dataTables.bootstrap4.min.css">
@@ -85,18 +81,15 @@
 
 </style>
 
-
-
-<section class="mb-2">
-    <div class="row">
-        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4">
-            <div class="card dash-widget">
+<div class="row">
+        <div class="col-md-6 col-sm-6 col-lg-3 col-xl-4 ">
+            <div class="card dash-widget shadow-none">
                 <div class="card-body">
                     <span class="dash-widget-icon">
                         <i class="fas fa-tasks text-dark"></i>
                     </span>
                     <div class="dash-widget-info">
-                        <h3>{{ $approved + $reject + $pending + $ongoing + $enjoy }}</h3>
+                        <h3>{{ array_sum($statuses) }}</h3>
                         <span class="text-uppercase font Medium">ALL</span>
                     </div>
                 </div>
@@ -104,13 +97,13 @@
         </div>
         
         <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4 ">
-            <div class="card dash-widget">
+            <div class="card dash-widget shadow-none">
                 <div class="card-body">
                     <span class="dash-widget-icon">
                         <i class="far fa-thumbs-up text-success" id="approvedIcon"></i>
                     </span>
                     <div class="dash-widget-info">
-                        <h3 class="">{{ $approved }}</h3>
+                        <h3 class="">{{ $statuses['approved'] }}</h3>
                         <span class="text-uppercase font Medium">APPROVED</span>
                     </div>
                 </div>
@@ -118,13 +111,13 @@
         </div>
 
         <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4 ">
-            <div class="card dash-widget">
+            <div class="card dash-widget shadow-none">
                 <div class="card-body">
                     <span class="dash-widget-icon">
                         <i class="fas fa-times text-danger" id="declinedIcon"></i>
                     </span>
                     <div class="dash-widget-info">
-                        <h3 class="">{{ $reject }}</h3>
+                        <h3 class="">{{ $statuses['declined'] }}</h3>
                         <span class="text-uppercase font Medium">DECLINED</span>
                     </div>
                 </div>
@@ -133,13 +126,13 @@
     
 
         <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4 ">
-            <div class="card dash-widget">
+            <div class="card dash-widget shadow-none">
                 <div class="card-body">
                     <span class="dash-widget-icon">
                         <i class="fas fa-spinner text-warning"  id="pendingIcon"></i>
                     </span>
                     <div class="dash-widget-info">
-                        <h3>{{ $pending }}</h3>
+                        <h3>{{ $statuses['pending'] }}</h3>
                         <span class="text-uppercase font Medium">PENDING</span>
                     </div>
                 </div>
@@ -147,13 +140,13 @@
         </div>
         
         <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4 ">
-            <div class="card dash-widget">
+            <div class="card dash-widget shadow-none">
                 <div class="card-body">
                     <span class="dash-widget-icon">
                         <i class="fas fa-paper-plane" style="color :#84bee1;"  id="ongoingIcon"></i>
                     </span>
                     <div class="dash-widget-info">
-                        <h3>{{ $ongoing }}</h3>
+                        <h3>{{ $statuses['on-going'] }}</h3>
                         <span class="text-uppercase font Medium">ON-GOING</span>
                     </div>
                 </div>
@@ -161,20 +154,19 @@
         </div>
 
         <div class="col-md-6 col-sm-6 col-lg-6 col-xl-4 ">
-            <div class="card dash-widget">
+            <div class="card dash-widget shadow-none">
                 <div class="card-body">
                     <span class="dash-widget-icon">
                         <i class="fas fa-smile-beam text-primary" id="enjoyIcon"></i>
                     </span>
                     <div class="dash-widget-info">
-                        <h3>{{ $enjoy }}</h3>
+                        <h3>{{ $statuses['enjoyed'] }}</h3>
                         <span class="text-uppercase font Medium">ENJOY</span>
                     </div>
                 </div>
             </div>
         </div>
-    </div>    
-</section>
+    </div>
 
 
 {{-- LEAVE APPLICATION CARD --}}
@@ -188,7 +180,7 @@
                             <select class="form-control selectpicker" name="officeList" type="text" id="searchOffice" data-live-search="true" data-size="4" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <option>All</option>
                                 @foreach($offices as $office)
-                                <option value="{{ $office->office_code }}">{{ $office->office_name }}</option>
+                                <option value="{{ $office->OfficeCode }}">{{ $office->Description }}</option>
                                 @endforeach
                             </select>
                             <span><strong>Filter Offices</strong></span>
@@ -199,12 +191,9 @@
                         <label for="filteropt" class="form-group has-float-label mb-0">
                             <select name="filteropt" type="text" id="searchStatus" class="form-control selectpicker border border-primary" data-live-search="true"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <option readonly selected value="all">All</option>
-                                <option value="pending">Pending</option>
-                                <option value="approved">Approved</option>
-                                <option value="declined">Declined</option>
-                                <option value="on-going">On-going</option>
-                                <option value="enjoyed">Enjoyed</option>
+                                @foreach($statuses as $status => $count)
+                                    <option value="{{ $count }}">{{ Str::upper($status) }} - {{ $count }}</option>
+                                @endforeach
                             </select>
                             <span><strong>Status</strong></span>
                         </label>

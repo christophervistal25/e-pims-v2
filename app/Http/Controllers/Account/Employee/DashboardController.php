@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Account\Employee;
 
+use App\Employee;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -21,15 +22,16 @@ class DashboardController extends Controller
 
     public function __invoke()
     {
-        $user = Auth::user();
+        $employeeID = Auth::user()->employee_id;
+        
+        $user = Employee::without(['office_charging', 'office_assignment', 'office_charging.desc', 'position'])
+                        ->find($employeeID);
 
         $holidays = $this->holidayRepository->upcoming();
+        $vacationLeave = $this->leaveRecordRepository->getVacationLeave($user->Employee_id);
+        $sickLeave     = $this->leaveRecordRepository->getSickLeave($user->Employee_id);
 
-        $employee = $user->employee;
-        $vacationLeave = $this->leaveRecordRepository->getVacationLeave($employee->Employee_id);
-        $sickLeave     = $this->leaveRecordRepository->getSickLeave($employee->Employee_id);
-
-        $leaveApplications = $this->leaveApplicationRepository->applicationFiles($user);
+        $leaveApplications = $this->leaveApplicationRepository->applicationFiles(Auth::user());
                                     // ->where('approved_status', '!=', 'approved');
 
 
@@ -37,6 +39,6 @@ class DashboardController extends Controller
         $onGoingTomorrow      = $this->leaveApplicationRepository->onGoingForTomorrow();
         $onGoingNextSevenDays = $this->leaveApplicationRepository->onGoingForNextSevenDays();
 
-        return view('accounts.employee.dashboard', compact('user', 'holidays', 'vacationLeave', 'sickLeave', 'leaveApplications', 'onGoingToday', 'onGoingTomorrow', 'onGoingNextSevenDays', 'employee'));
+        return view('accounts.employee.dashboard', compact('user', 'holidays', 'vacationLeave', 'sickLeave', 'leaveApplications', 'onGoingToday', 'onGoingTomorrow', 'onGoingNextSevenDays'));
     }
 }

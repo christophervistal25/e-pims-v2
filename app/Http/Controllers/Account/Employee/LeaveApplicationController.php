@@ -32,23 +32,22 @@ class LeaveApplicationController extends Controller
     {
         $employee = Auth::user()->employee;
 
-        $approvedBy = $employee->information->office->office_head;
+        $approvedBy = $employee?->office_charging?->desc;
         
-        $hrOfficeHead = Office::where('office_code', Office::HR_OFFICE_CODE)
-                                    ->first()['office_head'];
+        $hrOfficeHead = Office::with('desc')->where('OfficeCode', Office::HR_OFFICE_CODE)
+                                    ->first()['OfficeHead'];
 
         [
             'vacation_leave_earned' => $vacationLeaveEarned,
             'vacation_leave_used'   => $vacationLeaveUsed
-        ] = $this->leaveRecordRepository->getVacationLeave($employee->employee_id);
+        ] = $this->leaveRecordRepository->getVacationLeave($employee->Employee_id);
         [
             'sick_leave_earned' => $sickLeaveEarned,
             'sick_leave_used'   => $sickLeaveUsed
-        ] = $this->leaveRecordRepository->getSickLeave($employee->employee_id);
+        ] = $this->leaveRecordRepository->getSickLeave($employee->Employee_id);
         
-        $forwardBalanceAsOfDate = $this->leaveRecordRepository->getAsOfDate($employee->employee_id);
-        
-        $types = $this->leaveTypeRepository->getLeaveTypesApplicableToGender($employee->sex);
+        $forwardBalanceAsOfDate = $this->leaveRecordRepository->getAsOfDate($employee->Employee_id);
+        $types = $this->leaveTypeRepository->getLeaveTypesApplicableToGender();
 
         return view('accounts.employee.leave.application-filling', compact('types', 'vacationLeaveEarned', 'vacationLeaveUsed', 'sickLeaveEarned', 'sickLeaveUsed', 'forwardBalanceAsOfDate', 'approvedBy', 'hrOfficeHead'));
     }

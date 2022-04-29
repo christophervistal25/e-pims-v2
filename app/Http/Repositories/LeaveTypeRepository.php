@@ -11,10 +11,8 @@ class LeaveTypeRepository
 
     public const GOOD_FOR_BOTH_GENDER = 'female/male';
 
-    public function getLeaveTypesApplicableToGender(string $gender = 'male') : Collection
+    public function getLeaveTypesApplicableToGender() : Collection
     {
-        return LeaveType::where('applicable_gender', $gender)
-                            ->orWhere('applicable_gender', self::GOOD_FOR_BOTH_GENDER)
-                            ->get(['id', 'name', 'code', 'code_number', 'description', 'days_period', 'required_rendered_service', 'applicable_gender', 'category']);
+        return LeaveType::get(['id', 'name', 'code', 'code_number', 'description', 'days_period', 'required_rendered_service', 'applicable_gender', 'category']);
     }
 }

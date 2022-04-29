@@ -7,6 +7,7 @@ use App\Employee;
 use Carbon\Carbon;
 use App\EmployeeLeaveRecord;
 use Illuminate\Http\Request;
+use App\Services\LeaveService;
 use Yajra\Datatables\Datatables;
 use App\EmployeeLeaveApplication;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +22,7 @@ class LeaveListController extends Controller
 
     private $leaveRecordRepository;
     
-    public function __construct(LeaveRecordRepository $leaveRecordRepository, LeaveTypeRepository $leaveTypeRepository)
+    public function __construct(public LeaveService $leaveService, LeaveRecordRepository $leaveRecordRepository, LeaveTypeRepository $leaveTypeRepository)
     {
         $this->leaveRecordRepository = $leaveRecordRepository;
         $this->leaveTypeRepository = $leaveTypeRepository;
@@ -30,13 +31,12 @@ class LeaveListController extends Controller
     // FETCH DATA IN YAJRA TABLES //
     public function list()
     {
-        $data = DB::table('employee_leave_applications')
-        ->leftJoin('employees', 'employees.employee_id', '=', 'employee_leave_applications.employee_id')
-        ->leftJoin('leave_types', 'leave_types.id', '=', 'employee_leave_applications.leave_type_id')
-        ->leftJoin('employee_informations', 'employee_informations.EmpIDNo', '=', 'employee_leave_applications.employee_id')
-        ->select('employee_leave_applications.id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'recommending_approval', 'approved_by', 'leave_type_id', 'incase_of', 'commutation', 'approved_status', 'date_approved', 'date_rejected', 'date_applied', 'date_from', 'date_to', 'no_of_days', 'leave_types.id as leave_type_id', 'leave_types.name AS leave_type_name')
-        ->where('employee_leave_applications.deleted_at', null)
-        ->get();
+        $data = EmployeeLeaveApplication::get();
+        // $data = DB::table('E_PIMS_CONNECTION.employee_leave_applications')
+        //             ->leftJoin('DTR_PAYROLL_CONNECTION.Employees', 'DTR_PAYROLL_CONNECTION.Employees.Employee_id', '=', 'E_PIMS_CONNECTION.employee_leave_applications.employee_id')
+        //             ->leftJoin('leave_types', 'leave_types.id', '=', 'E_PIMS_CONNECTION.employee_leave_applications.leave_type_id')
+        //             ->leftJoin('employee_informations', 'employee_informations.EmpIDNo', '=', 'E_PIMS_CONNECTION.employee_leave_applications.employee_id')
+        //             ->get();
 
         if($data->count() === 0){
             $data = $data->where('deleted_at', null);
@@ -62,18 +62,16 @@ class LeaveListController extends Controller
     // Leave List
     public function index()
     {
-        $all = EmployeeLeaveApplication::recordByStatus('all');
-        $pending = EmployeeLeaveApplication::recordByStatus('pending');
-        $approved = EmployeeLeaveApplication::recordByStatus('approved');
-        $reject = EmployeeLeaveApplication::recordByStatus('declined');
-        $ongoing = EmployeeLeaveApplication::recordByStatus('on-going');
-        $enjoy = EmployeeLeaveApplication::recordByStatus('enjoyed  ');
-        $offices = Office::select('office_code', 'office_name')->get();
-        $employees = Employee::has('leave_files')->select('employee_id', 'firstname', 'middlename', 'lastname')->get();
+        $statuses =  $this->leaveService->countAllStatus();
+        
+        $offices = Office::select('OfficeCode', 'Description')->get();
+        
+        $employeeIds = $this->leaveService->getEmployeeApplied();
+        
+        $employees = Employee::without(['position', 'office_charging', 'office_assignemnt', 'office_charging.desc'])
+                                ->whereIn('Employee_id', $employeeIds);
 
-
-        // leave.leave-list is the name of the file
-        return view('leave.leave-list', compact('all', 'pending', 'approved', 'reject', 'ongoing', 'enjoy', 'offices', 'employees'));
+        return view('leave.leave-list', compact('statuses', 'offices', 'employees'));
     }
 
 

@@ -92,6 +92,7 @@ class LeaveRecordRepository extends LeaveApplicationRepository
     public function getVacationLeave(string $employeeID) :array
     {
         $records = $this->getRecordByLeaveCode(self::VACATION_LEAVE_CODE_NUMBER, $employeeID);
+        
         return ($records->count() !== 0) ? [
                 'vacation_leave_earned' => $records->sum('earned') - $records->sum('used'),
                 'vacation_leave_used'   => $records->sum('used'),

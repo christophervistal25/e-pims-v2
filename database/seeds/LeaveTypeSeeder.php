@@ -1,7 +1,10 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\LeaveType;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class LeaveTypeSeeder extends Seeder
 {
@@ -12,6 +15,7 @@ class LeaveTypeSeeder extends Seeder
      */
     public function run()
     {
+        
         $data = [
             [
                 'name' => 'SICK LEAVE',
@@ -151,7 +155,6 @@ class LeaveTypeSeeder extends Seeder
             ],
         ];
         foreach($data as $index => $type) {
-            
             LeaveType::create([
                 'name'                      => $type['name'],
                 'code'                      => $type['code'],

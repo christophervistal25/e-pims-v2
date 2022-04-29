@@ -128,8 +128,9 @@
                 <!-- /Notifications -->
                 <li class="nav-item dropdown has-arrow main-drop">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                        <span class="user-img"><img
-                                src="/storage/employee_images/{{ Auth::user()->employee->information->photo }}" alt="">
+                        <span class="user-img">
+                        {{-- <img
+                                src="/storage/employee_images/{{ Auth::user()->employee->information->photo }}" alt=""> --}}
                             <span class="status online"></span></span>
                         <span id="employee--fullname">{{  Auth::user()->employee->fullname }}</span>
                     </a>

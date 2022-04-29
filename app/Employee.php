@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+    
 use App\Position;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\EmployeeLaraTablesAction;
@@ -243,12 +243,12 @@ class Employee extends Model
 
     public function leave_records()
     {
-        return $this->hasMany(EmployeeLeaveRecord::class, 'employee_id', 'employee_id');
+        return $this->hasMany(EmployeeLeaveRecord::class, 'employee_id', 'employee_id')->withDefault();
     }
 
     public function leave_files()
     {
-        return $this->hasMany(EmployeeLeaveApplication::class, 'employee_id', 'employee_id');
+        return $this->hasMany(EmployeeLeaveApplication::class, 'employee_id', 'Employee_id');
     }
 
 
