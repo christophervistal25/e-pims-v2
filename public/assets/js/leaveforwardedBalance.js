@@ -138,15 +138,18 @@ $('#btnSave').click( (e)=> {
                         $('#btnBack').trigger('click');
                         $('#forwarded-balance-table').DataTable().ajax.reload();
                     }
+
                 })
             }
-        },
+
+    },
         error: function(response) {
             if (response.status === 422) {
                 let errors = response.responseJSON.errors;
                 const inputNames = [
                     "employeeName",
                     "vlEarned",
+ 
                     "slEarned",
                     "vlEnjoyed",
                     "slEnjoyed",
@@ -252,10 +255,12 @@ $(document).on('click', '.edit__leave__type', function () {
         url : `/employee/leave-forwarded-balance/${leaveID}/edit`,
         success : function (leave) {
             // Collect data of form fields.
-            $('#update_empPhoto').attr('src','/storage/employee_images/'+leave.employee_information.information.photo);
-            $('#update_employeeName').val(leave.employee_information.fullname);
-            $('#update_office').val(leave.employee_information.information.office.office_name);
-            $('#update_position').val(leave.employee_information.information.position.position_name);
+            console.log(leave.employee_information);
+            $('#update_empPhoto').attr('src','/storage/employee_images/logo.png');
+            $('#update_employeeName').val(`${leave.employee_information.LastName}, ${leave.employee_information.FirstName} ${leave.employee_information.MiddleName} ${leave.employee_information.Suffix}`);
+            $('#update_office').val(leave.employee_information.OfficeDescription);
+            $('#update_position').val(leave.employee_information.position_name);
+            
             leave.leaveRecord.forEach(function(data){
                 $('#update_asOf').val(data.fb_as_of);
                 if(data.leave_type_id == 2){
@@ -268,7 +273,8 @@ $(document).on('click', '.edit__leave__type', function () {
                     $('#update_slEnjoyed').val(data.used);
                     slBalanceVal = parseFloat(data.earned - data.used).toFixed(3);
                     $('#update_slBalance').val(slBalanceVal);
-                }    
+                }
+                
             })
                 $('#update_total_lb').val((parseFloat(vlBalanceVal) + parseFloat(slBalanceVal)).toFixed(3));
         },

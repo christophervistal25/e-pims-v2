@@ -30,8 +30,8 @@
 
                                 <label class="has-float-label" for="employeeName">
                                     <input type="text" name="employeeName" class="form-control" id="employeeName"
-                                        value="{{ old('employeeName') ?? $types->lastname }}, {{ old('employeeName') ?? $types->firstname }} {{ old('employeeName') ?? $types->middlename }}" style="color: white; margin-bottom: 15px; background: linear-gradient(90deg, rgba(148,0,132,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%); font-weight: bold;"
-                                        readonly style="outline: none; box-shadow: 0px 0px 0px;">
+                                        value="{{ old('employeeName') ?? $types->LastName }}, {{ old('employeeName') ?? $types->FirstName }} {{ old('employeeName') ?? $types->MiddleName }}" style="color: white; margin-bottom: 15px; background: linear-gradient(90deg, rgba(148,0,132,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%); font-weight: bold;"
+                                        readonly >
                                 </label>
 
                                 <label for="date__apply" class="form-group has-float-label">
@@ -308,14 +308,11 @@
                             </label>
                         </div>
                         <div class="row mt-2 float-right">
-                            {{-- <input type="date" name="dateApproved" id="dateApproved" class="form-control col-3 mr-3" value="{{ date('Y-m-d') }}" hidden> --}}
-                            {{-- <input type="date" name="dateRejected" id="dateRejected" class="form-control col-3 mr-3" value="{{ date('Y-m-d') }}" hidden> --}}
-
                             <a href="/employee/leave/leave-list" class="btn btn-md mr-3" style="background-color: orange; color: white;"><i class="la la-list"></i> Go back to List</a>
                             
                             <button class="btn btn-danger btn-md mr-3" id="btnReject"><i class="fas fa-thumbs-down"></i> Decline</button>
 
-                            <button type="submit" class="btn btn-success btn-md mr-4" id="btnApproved"><i class="far fa-thumbs-up"></i> Approved</i></button>
+                            <button type="submit" class="btn btn-success text-white btn-md mr-4" id="btnApproved"><i class="far fa-thumbs-up"></i> Approved</i></button>
                         </div>
                         <div class="clearfix"></div>
                         </form>

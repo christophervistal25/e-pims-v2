@@ -124,7 +124,11 @@ class LeaveRecordRepository extends LeaveApplicationRepository
 
     public function increment(array $data = [])
     {
-        return EmployeeLeaveRecord::create($data);
+        try {
+            EmployeeLeaveRecord::create($data);
+        } catch(\Exception $exception) {
+            dd($exception->getMessage());
+        }
     }
 
 

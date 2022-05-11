@@ -3,10 +3,12 @@
 namespace App\Jobs;
 
 use Error;
+use Exception;
 use Carbon\Carbon;
 use App\LeaveIncrement;
 use App\EmployeeLeaveRecord;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -16,18 +18,17 @@ use App\Http\Repositories\LeaveRecordRepository;
 class LeaveIncrementJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    public $tries = 3;
-    private $employeeIDS = [];
+    // public $tries = 3;
+    private $employees;
     private $leaveRecordRepository;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($employeeIDS)
+    public function __construct($employees)
     {
-        $this->employeeIDS = $employeeIDS;
-        $this->leaveRecordRepository = new LeaveRecordRepository();
+        $this->employees = $employees;
     }
 
     /**
@@ -37,39 +38,47 @@ class LeaveIncrementJob implements ShouldQueue
      */
     public function handle()
     {
-        $records = EmployeeLeaveRecord::whereIn('employee_id', $this->employeeIDS)
-                                            ->orderBy('created_at', 'DESC')
-                                            ->get()
-                                            ->groupBy('employee_id');
+        $this->employees->each(function($employee) {
+            $insertRecord = true;
 
-        foreach($records as $employeeID => $record) {
-            if(Carbon::parse($record->first()->created_at)->format('m') === date('m')) {
-                continue;
+            if($employee->leave_records?->count() == 0) {
+                $insertRecord = true;
+            } else {
+                $recordYearAndMonth = $employee->leave_records?->pluck('date_record')
+                                                    ->last()
+                                                    ->format('Y-m');
+                $insertRecord = ($recordYearAndMonth != date('Y-m')) ? true : false; 
             }
 
-            $this->leaveRecordRepository->increment(
-                [
-                    'employee_id'   => $employeeID,
+            if($insertRecord) {
+                $data[] = [
+                    'employee_id'   => $employee->Employee_id,
                     'leave_type_id' => 1,
-                    'earned'        => LeaveIncrement::find(1, ['increment'])->increment,
+                    'earned'        => 1.25,
                     'used'          => 0,
                     'particular'    => 'EL',
                     'record_type'   => EmployeeLeaveRecord::TYPES['INCREMENT'],
                     'date_record'  => Carbon::now(),
-                ]
-            );
-
-            $this->leaveRecordRepository->increment(
-                [
-                    'employee_id'   => $employeeID,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ];
+    
+                $data[] = [
+                    'employee_id'   => $employee->Employee_id,
                     'leave_type_id' => 2,
-                    'earned'        => LeaveIncrement::find(2, ['increment'])->increment,
+                    'earned'        => 1.25,
                     'used'          => 0,
                     'particular'    => 'EL',
-                    'record_type'          => EmployeeLeaveRecord::TYPES['INCREMENT'],
+                    'record_type'   => EmployeeLeaveRecord::TYPES['INCREMENT'],
                     'date_record'  => Carbon::now(),
-                ]
-            );
-        }
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ];
+    
+                DB::connection('E_PIMS_CONNECTION')
+                    ->table('employee_leave_records')
+                    ->insert($data);
+            }
+        });
     }
 }

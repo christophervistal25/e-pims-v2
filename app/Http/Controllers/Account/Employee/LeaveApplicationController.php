@@ -34,8 +34,10 @@ class LeaveApplicationController extends Controller
 
         $approvedBy = $employee?->office_charging?->desc;
         
-        $hrOfficeHead = Office::with('desc')->where('OfficeCode', Office::HR_OFFICE_CODE)
-                                    ->first()['OfficeHead'];
+        $office = Office::with('desc')->where('OfficeCode', Office::HR_OFFICE_CODE)
+                                    ->first();
+        
+        $hrOffice = $office->desc;
 
         [
             'vacation_leave_earned' => $vacationLeaveEarned,
@@ -49,21 +51,22 @@ class LeaveApplicationController extends Controller
         $forwardBalanceAsOfDate = $this->leaveRecordRepository->getAsOfDate($employee->Employee_id);
         $types = $this->leaveTypeRepository->getLeaveTypesApplicableToGender();
 
-        return view('accounts.employee.leave.application-filling', compact('types', 'vacationLeaveEarned', 'vacationLeaveUsed', 'sickLeaveEarned', 'sickLeaveUsed', 'forwardBalanceAsOfDate', 'approvedBy', 'hrOfficeHead'));
+        return view('accounts.employee.leave.application-filling', compact('types', 'vacationLeaveEarned', 'vacationLeaveUsed', 'sickLeaveEarned', 'sickLeaveUsed', 'forwardBalanceAsOfDate', 'approvedBy', 'hrOffice'));
     }
 
     public function store(Request $request)
     {
         
         if($request->ajax()) {
-            $employee = Auth::user()->employee;
+            
+            $employee = Auth::user()->employee_id;
 
             // Check if employee already request a leave.
-            $hasPendingLeave = $employee->leave_files->where('approved_status', 'pending')->count();
+            // $hasPendingLeave = $employee->leave_files->where('approved_status', 'pending')->count();
 
-            if($hasPendingLeave) {
-                return response()->json(['success' => false, 'message' => 'You already have a pending request please wait for the approval before filing new application.'], 423);
-            }
+            // if($hasPendingLeave) {
+            //     return response()->json(['success' => false, 'message' => 'You already have a pending request please wait for the approval before filing new application.'], 423);
+            // }
             
             $startDate = Carbon::parse($request->startDate);
 
@@ -96,12 +99,13 @@ class LeaveApplicationController extends Controller
 
             $leaveType = LeaveType::where('code_number', $request->typeOfLeave)->first();
 
-            $response = $this->leaveRecordRepository
-                            ->fileApplication($employee->only(['employee_id', 'sex', 'first_day_of_service']), $leaveType, $request->noOfDays);
+            // $response = $this->leaveRecordRepository
+            //                 ->fileApplication($employee->only(['employee_id', 'sex', 'first_day_of_service']), $leaveType, $request->noOfDays);
 
-            if(!$response['status']) {
-                return response()->json(['success' => false, 'message' => $response['message']], 424);
-            }
+            // if(!$response['status']) {
+            //     return response()->json(['success' => false, 'message' => $response['message']], 424);
+            // }
+
             $holidays = Holiday::get()->pluck('date')->toArray();
 
             $noOfWorkingDays = Carbon::parse($request->startDate)->diffInDaysFiltered(function (Carbon $date) use ($holidays) {
@@ -109,7 +113,7 @@ class LeaveApplicationController extends Controller
             }, Carbon::parse($request->endDate)->addDay(1));
 
             EmployeeLeaveApplication::create([
-                'employee_id'           => $employee->employee_id,
+                'employee_id'           => $employee,
                 'approved_by'           => $request->approvedBy,
                 'recommending_approval' => $request->recommendingApproval,
                 'commutation'           => $request->commutation,
@@ -122,15 +126,15 @@ class LeaveApplicationController extends Controller
                 'no_of_working_days'    => $noOfWorkingDays,
             ]);
 
-            Notification::create([
-                'title'            => 'Leave Application Filling',
-                'description'      => 'Your leave application is now under review please wait',
-                'employee_id'      => $employee->employee_id,
-                'from_employee_id' => '',
-                'link'             => '/notifications/{id}/show',
-            ]);
+            // Notification::create([
+            //     'title'            => 'Leave Application Filling',
+            //     'description'      => 'Your leave application is now under review please wait',
+            //     'employee_id'      => $employee->employee_id,
+            //     'from_employee_id' => '',
+            //     'link'             => '/notifications/{id}/show',
+            // ]);
 
-            return response()->json(['success' => true, 'fullname' => $employee->fullname ], 201);
+            return response()->json(['success' => true], 201);
         }
         return response()->json(['success' => false], 404);
     }
@@ -139,7 +143,6 @@ class LeaveApplicationController extends Controller
     {
         $application = EmployeeLeaveApplication::find($applicationID);
         $employee = Auth::user()->employee;
-        $database = new MSAccess();
 
         $vacationLeave = $this->leaveRecordRepository->getVacationLeave($employee->employee_id);
         $sickLeave     = $this->leaveRecordRepository->getSickLeave($employee->employee_id);

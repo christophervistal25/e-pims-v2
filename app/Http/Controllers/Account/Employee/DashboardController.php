@@ -39,6 +39,16 @@ class DashboardController extends Controller
         $onGoingTomorrow      = $this->leaveApplicationRepository->onGoingForTomorrow();
         $onGoingNextSevenDays = $this->leaveApplicationRepository->onGoingForNextSevenDays();
 
-        return view('accounts.employee.dashboard', compact('user', 'holidays', 'vacationLeave', 'sickLeave', 'leaveApplications', 'onGoingToday', 'onGoingTomorrow', 'onGoingNextSevenDays'));
+        return view('accounts.employee.dashboard', [
+            'user' => $user,
+            'holidays' => $holidays,
+            'vacationLeave' => $vacationLeave,
+            'sickLeave' => $sickLeave,
+            'leaveApplications' => $leaveApplications,
+            'onGoingToday' => $onGoingToday,
+            'onGoingTomorrow' => $onGoingTomorrow,
+            'onGoingNextSevenDays' => $onGoingNextSevenDays,
+            'class' => 'mini-sidebar'
+        ]);
     }
 }

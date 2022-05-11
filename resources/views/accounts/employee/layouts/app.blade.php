@@ -50,7 +50,7 @@
     </style>
 </head>
 
-<body>
+<body class="{{ $class ?? '' }}">
     <!-- Main Wrapper -->
     <div class="main-wrapper">
         <!-- Loader -->

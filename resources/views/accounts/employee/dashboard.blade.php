@@ -235,20 +235,20 @@
             <table class='table table-bordered mt-2 bg-white'>
                 <thead>
                     <tr>
-                        <th class="align-middle text-center" rowspan="2">Recommending Approval
+                        <th class="align-middle text-center text-uppercase" rowspan="2">Recommending Approval
                         </th>
-                        <th class="align-middle text-center font-weight-medium" rowspan="2">Approved By</th>
-                        <th class="align-middle text-center font-weight-medium" rowspan="2">Leave</th>
-                        <th class="align-middle text-center font-weight-medium" rowspan="2">Incase of.</th>
-                        <th class="align-middle text-center font-weight-medium" rowspan="2">Commutation</th>
-                        <th class="align-middle text-center font-weight-medium" rowspan="2">Status</th>
-                        <th class="align-middle text-center font-weight-medium" rowspan="1" colspan="4">Date</th>
-                        <th class="align-middle text-center font-weight-medium" rowspan="2">No. of Days</th>
+                        <th class="align-middle text-center font-weight-medium text-uppercase" rowspan="2">Approved By</th>
+                        <th class="align-middle text-center font-weight-medium text-uppercase" rowspan="2">Leave</th>
+                        <th class="align-middle text-center font-weight-medium text-uppercase" rowspan="2">Incase of.</th>
+                        <th class="align-middle text-center font-weight-medium text-uppercase" rowspan="2">Commutation</th>
+                        <th class="align-middle text-center font-weight-medium text-uppercase" rowspan="2">Status</th>
+                        <th class="align-middle text-center font-weight-medium text-uppercase" rowspan="1" colspan="4">Date</th>
+                        <th class="align-middle text-center font-weight-medium text-uppercase" rowspan="2">No. of Days</th>
                     <tr>
-                        <td class="align-middle text-center font-weight-medium">Applied</td>
-                        <td class="align-middle text-center font-weight-medium">Approved</td>
-                        <td class="align-middle text-center font-weight-medium">FROM</td>
-                        <td class="align-middle text-center font-weight-medium">TO</td>
+                        <td class="align-middle text-center font-weight-medium text-uppercase">Applied</td>
+                        <td class="align-middle text-center font-weight-medium text-uppercase">Approved</td>
+                        <td class="align-middle text-center font-weight-medium text-uppercase">FROM</td>
+                        <td class="align-middle text-center font-weight-medium text-uppercase">TO</td>
                     </tr>
                     </tr>
                 </thead>
@@ -274,10 +274,10 @@
                                 class="badge badge-purple text-uppercase text-white">{{  $application->approved_status }}</span>
                             @endif
                         </td>
-                        <td class='text-center'>{{ $application->date_applied }}</td>
-                        <td>{{ $application->date_approved }}</td>
-                        <td class='text-center'>{{ $application->date_from }}</td>
-                        <td class='text-center'>{{ $application->date_to }}</td>
+                        <td class='text-center'>{{ $application->date_applied->format('F d, Y h:i A') }}</td>
+                        <td>{{ $application->date_approved?->format('F d, Y h:i A') }}</td>
+                        <td class='text-center'>{{ $application->date_from->format('F d, Y') }}</td>
+                        <td class='text-center'>{{ $application->date_to->format('F d, Y') }}</td>
                         <td class='text-center font-weight-bold'>{{ $application->no_of_days }}</td>
                         <td class='text-sm'>
                             <button data-source="{{ $application->id }}" class='btn btn-primary btn-sm btn-rounded shadow btnPrintLeaveApplicationFilling'

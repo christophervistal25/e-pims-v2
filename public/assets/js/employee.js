@@ -133,7 +133,7 @@ $(document).on("click", ".btn-edit-employee", function() {
     $.ajax({
         url: `/api/employee/find/${employeeID}`,
         success: function(employee) {
-            position = employee.position.position_name;
+            position = employee.position?.position_name || employee.Work_Status;
             $("#employeeID").val(employee.Employee_id);
             $("#lastname").val(employee.LastName);
             $("#firstname").val(employee.FirstName);
@@ -402,7 +402,7 @@ $('#submitNewEmployee').click(function (e) {
                     response.responseJSON.errors
                 )) {
                     $(`[name='${field}']`).addClass("is-invalid");
-                    $(`#${field}`).text(error.join(', '));
+                    $(`#${field}-error`).text(error.join(', '));
                 }
             }
         }

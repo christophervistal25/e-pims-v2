@@ -3,6 +3,7 @@
 namespace App;
     
 use App\Position;
+use App\EmployeeLeaveRecord;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\EmployeeLaraTablesAction;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -13,9 +14,52 @@ class Employee extends Model
     
     public $incrementing  = false;
     protected $primaryKey = 'Employee_id';
-    public $connection    = 'DTR_PAYROLL_CONNECTION';
+    protected $connection = 'DTR_PAYROLL_CONNECTION';
+    protected $table = 'Employees';
     public $with = ['position', 'office_charging', 'office_assignment', 'office_charging.desc'];
-    
+
+    protected $columns =  [
+        "Employee_id",
+        "LastName",
+        "FirstName",
+        "MiddleName",
+        "Suffix",
+        "OfficeCode",
+        "OfficeCode2",
+        "PosCode",
+        "Designation",
+        "Gender",
+        "CivilStatus",
+        "Birthdate",
+        "Address",
+        "ContactNumber",
+        "TimeCode",
+        "ImagePhoto",
+        "isActive",
+        "isHead",
+        "Work_Status",
+        "pagibig_no",
+        "philhealth_no",
+        "sss_no",
+        "tin_no",
+        "lbp_account_no",
+        "employment_from",
+        "employment_to",
+        "gsis_no",
+        "dbp_account_no",
+        "Email",
+        "BirthPlace",
+        "sg_no",
+        "step",
+        "salary_rate",
+        "notes",
+        "temp_id",
+        "created_at",
+        "updated_at",
+        "profile",
+        "sg_year",
+    ];
+
     protected $fillable = [
         "Employee_id",
         "LastName",
@@ -60,7 +104,8 @@ class Employee extends Model
     public const ACTIVE = 1;
     public const IN_ACTIVE = 0;
 
-    public $hidden = ['ImagePhoto'];
+    public $hidden = ['ImagePhoto', 'Profile'];
+    protected $visible = ['ImagePhoto', 'Profile'];
 
 
     public function getFullnameAttribute()
@@ -188,7 +233,7 @@ class Employee extends Model
 
     public function position()
     {
-        return $this->hasOne(Position::class, 'position_code', 'PosCode');
+        return $this->hasOne(Position::class, 'position_code', 'PosCode')->withDefault();
     }
 
     public function scopeActive($query)
@@ -196,15 +241,23 @@ class Employee extends Model
         return $query->where('isActive', self::ACTIVE);
     }
 
+    public function scopeExclude($query, array $value = [])
+    {
+        return $query->select(array_diff($this->columns, $value));
+    }
+
     public function scopeInActive($query)
     {
         return $query->where('isActive', self::IN_ACTIVE);
     }
 
-    public function scopeExtender($query)
+    public function scopePermanent($query)
     {
-        return $query->where('isActive', self::IN_ACTIVE)->where('isActive', self::ACTIVE);
+        return $query->where('Work_Status', 'not like', '%' . 'JOB ORDER' . '%')
+                        ->where('Work_Status', 'not like', '%' . 'CONTRACT OF SERVICE' . '%')
+                        ->where('Work_Status', '!=', '');
     }
+
     
     public function office_charging()
     {
@@ -243,7 +296,7 @@ class Employee extends Model
 
     public function leave_records()
     {
-        return $this->hasMany(EmployeeLeaveRecord::class, 'employee_id', 'employee_id')->withDefault();
+        return $this->hasMany(EmployeeLeaveRecord::class, 'employee_id', 'Employee_id');
     }
 
     public function leave_files()
@@ -254,7 +307,7 @@ class Employee extends Model
 
     public function forwarded_leave_records()
     {
-        return $this->hasOne(EmployeeLeaveRecord::class, 'employee_id', 'employee_id')->where('fb_as_of', '!=', NULL);
+        return $this->hasOne(EmployeeLeaveRecord::class, 'employee_id', 'Employee_id')->where('fb_as_of', '!=', NULL);
     }
 
     public function compensatory_leaves()

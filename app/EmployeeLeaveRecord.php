@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class EmployeeLeaveRecord extends Model
 {
     protected $primaryKey = 'id';
-    public $connection = 'E_PIMS_CONNECTION';
+    protected $connection = 'E_PIMS_CONNECTION';
+    public $table = 'employee_leave_records';
     
     protected $fillable = [
         'employee_id',
@@ -35,7 +36,9 @@ class EmployeeLeaveRecord extends Model
 
     public function employee()
     {
-        return $this->belongsTo(Employee::class, 'employee_id', 'employee_id')->withDefault();
+        return $this->belongsTo(Employee::class, 'employee_id', 'Employee_id')
+                    ->select('Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode', 'PosCode')
+                    ->withDefault();
     }
 
     public function undertime()

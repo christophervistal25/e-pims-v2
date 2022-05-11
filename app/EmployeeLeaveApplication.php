@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Employee;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,7 @@ class EmployeeLeaveApplication extends Model
 {
     use SoftDeletes;
 
+    public $with = ['employee'];
     public $connection = 'E_PIMS_CONNECTION';
     public $table = 'employee_leave_applications';
 
@@ -41,7 +43,7 @@ class EmployeeLeaveApplication extends Model
     
     public function employee()
     {
-        return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
+        return $this->belongsTo(Employee::class, 'employee_id', 'Employee_id')->select('Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode')->withDefault();
     }
 
     public function leave_records()

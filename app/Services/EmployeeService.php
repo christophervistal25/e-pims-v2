@@ -89,6 +89,11 @@ class EmployeeService
         return Employee::max('employee_id') + 1;
     }
 
+    public function getEmployeeIDS()
+    {
+        return Employee::get(['Employee_id'])->pluck('Employee_id');
+    }
+
     public function updateInformation(array $data, Employee $employee) : Employee
     {
         return tap($employee, function ($employee) use($data) {

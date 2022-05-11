@@ -279,10 +279,10 @@
 						<li class="submenu">
 							<a href="#" class='text-decoration-none'><i class="la la-home"></i> <span> Leave Management </span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
-								<li>
+								{{-- <li>
                                     <a class='text-decoration-none mr-2' href="{{ route('leave.application.filling') }}">
                                         Leave Application Filing</a>
-                                </li>
+                                </li> --}}
 								<li>
                                     <a class='text-decoration-none mr-2' href="{{ route('leave.leave-list') }}">
                                         Leave List 

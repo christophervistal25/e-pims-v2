@@ -2,8 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Position extends Model
@@ -17,7 +18,7 @@ class Position extends Model
 
     public function getPositionNameAttribute($value)
     {
-        return strtoupper($value);
+        return Str::upper($value);
     }
 
     public function plantillas()
