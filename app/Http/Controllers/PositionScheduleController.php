@@ -21,7 +21,7 @@ class PositionScheduleController extends Controller
      */
     public function index()
     {
-        $office = Office::select('office_code', 'office_name')->get();
+        $office = Office::select('OfficeCode', 'Description')->get();
         $PositionScheduleYear = PositionSchedule::select('year')->orderBy('year', 'DESC')->distinct()->get();
         return view('PositionSchedule.PositionSchedule', compact('office', 'PositionScheduleYear'));
     }
@@ -29,12 +29,13 @@ class PositionScheduleController extends Controller
     public function list(Request $request)
     {
         $year = Carbon::now()->format('Y') - 1;
-        $data = DB::table('plantilla_positions')
-        ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
-        ->join('offices', 'plantilla_positions.office_code', '=', 'offices.office_code')
-        ->select('pp_id', 'positions.position_name', 'item_no', 'plantilla_positions.sg_no', 'offices.office_name', 'old_position_name', 'year')
-        ->where('year' ,'=',  $year)
-        ->get();
+        $data = DB::connection('E_PIMS_CONNECTION')->table('plantilla_positions')
+                ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
+                ->join('offices', 'plantilla_positions.office_code', '=', 'offices.office_code')
+                ->select('pp_id', 'positions.position_name', 'item_no', 'plantilla_positions.sg_no', 'offices.office_name', 'old_position_name', 'year')
+                ->where('year' ,'=',  $year)
+                ->get();
+
         return DataTables::of($data)
         ->addColumn('action', function($row){
                 $btn = "<a title='Edit Plantilla Of Position' href='". route('position-schedule.edits', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1 id__holder' data-id='".$row->pp_id."'><i class='la la-pencil'></i></a>";
@@ -68,13 +69,15 @@ class PositionScheduleController extends Controller
     // public function adjustedlist(Request $request, $year = null)
     public function adjustedlist(Request $request, $year)
     {
-        $data = DB::table('position_schedules')
-        ->join('offices', 'position_schedules.office_code', '=', 'offices.office_code')
-        ->join('positions', 'position_schedules.position_id', '=', 'positions.position_id')
-        ->select('pos_id', 'pp_id', 'positions.position_name','item_no', 'position_schedules.sg_no', 'offices.office_name', 'old_position_name' , 'position_schedules.year')
-        ->where('position_schedules.year', $year)
-        ->orderBy('pos_id', 'DESC')
-        ->get();
+        $data = DB::connection('E_PIMS_CONNECTION')
+                    ->table('position_schedules')
+                    ->join('offices', 'position_schedules.office_code', '=', 'offices.office_code')
+                    ->join('positions', 'position_schedules.position_id', '=', 'positions.position_id')
+                    ->select('pos_id', 'pp_id', 'positions.position_name','item_no', 'position_schedules.sg_no', 'offices.office_name', 'old_position_name' , 'position_schedules.year')
+                    ->where('position_schedules.year', $year)
+                    ->orderBy('pos_id', 'DESC')
+                    ->get();
+
         return DataTables::of($data)
         ->make(true);
         //old query

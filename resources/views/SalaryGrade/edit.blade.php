@@ -18,15 +18,15 @@
                     @csrf
                     @method('PUT')
                     <div class="row">
-                        <div class="form-group col-6 col-lg-6">
+                        <div class="form-group col-12 col-lg-12">
                             <label class="font-weight-bold text-sm">SALARY GRADE<span class="text-danger">*</span></label>
                             <select name="sgNo" value="{{ old('sgNo')}}"
                                 class="select floating {{ $errors->has('sgNo')  ? 'is-invalid' : ''}}" id="sgNo"
                                 disabled>
                                 <option selected>Please Select</option>
                                 @foreach (range(1, 33) as $salarygrade)
-                                <option {{ $salaryGrade->sg_no == $salarygrade ? 'selected' : '' }}
-                                    value="{{ $salarygrade }}">{{ $salarygrade }}</option>
+                                    <option {{ $salaryGrade->sg_no == $salarygrade ? 'selected' : '' }}
+                                        value="{{ $salarygrade }}">{{ $salarygrade }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('sgNo'))
@@ -183,7 +183,7 @@
                     </div>
 
                         <div class="row">
-                            <div class="form-group col-12 col-lg-6 mb-0 mt-2">
+                            <div class="form-group col-12 col-lg-12 mb-0 mt-2">
                             <label class="font-weight-bold text-sm">SALARY GRADE YEAR<span class="text-danger">*</span></label>
                             <select name="sgYear" value="{{ old('sgYear') }}" class="select floating" disabled>
                                 <option>Please Select</option>
@@ -207,7 +207,7 @@
                         </div>
 
                         <div class="form-group submit-section col-12">
-                            <button type="submit" class="btn btn-success submit-btn float-right shadow"><i
+                            <button type="submit" class="btn btn-success text-white submit-btn float-right shadow"><i
                                     class="fas fa-check"></i> Update</button>
                             <a href="/salary-grade"><button style="margin-right:10px;" type="button" id="cancelbutton"
                                     class="btn btn-warning submit-btn float-right text-white shadow"><i

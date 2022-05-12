@@ -112,8 +112,8 @@
                                             <option></option>
                                             @foreach($office as $offices)
                                             <option
-                                                {{ $plantillaofposition->office_code == $offices->office_code ? 'selected' : '' }}
-                                                value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
+                                                {{ $plantillaofposition->office_code == $offices->OfficeCode ? 'selected' : '' }}
+                                                value="{{ $offices->OfficeCode }}">{{ $offices->Description }}</option>
                                             @endforeach
                                         </select>
                                         <span class="font-weight-bold">OFFICE<span class="text-danger">*</span></span>

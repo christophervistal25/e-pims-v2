@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'MAINTENANCE OFFICE')
+@section('title', 'Office')
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('/assets/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
@@ -45,7 +45,7 @@
 </style>
 @endprepend
 @section('content')
-<div class="kanban-board card shadow mb-0">
+<div class="kanban-board card">
     <div class="card-body">
         <div id="add" class="page-header {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
             <div style='padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
@@ -61,8 +61,8 @@
                         <div class="form-group col-12 col-md-6 col-lg-7">
                             <label class="has-float-label mb-0">
                             <input value="{{ old('officeCode') }}"
-                                class="form-control {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}" name="officeCode"
-                                id="officeCode" type="number" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                class="form-control {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}" name="officeCode" maxlength="4"
+                                id="officeCode" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <span class="font-weight-bold">Office Code<span class="text-danger">*</span></span>
                             </label>
                             <div id='office-code-error-message' class='text-danger text-sm'>
@@ -73,7 +73,7 @@
                             <label class="has-float-label mb-0">
                             <input value="{{ old('officeName') }}"
                                 class="form-control {{ $errors->has('officeName')  ? 'is-invalid' : ''}}" name="officeName"
-                                id="officeName" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                id="officeName" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <span class="font-weight-bold">Office Name<span class="text-danger">*</span></span>
                             </label>
                             <div id='office-name-error-message' class='text-danger text-sm'>
@@ -135,6 +135,20 @@
                             </div>
                         </div>
 
+                        <div class="form-group col-12 col-lg-7">
+                            <label class="has-float-label mb-0">
+                            <input value="{{ old('departmentCode') }}"
+                                class="form-control {{ $errors->has('departmentCode')  ? 'is-invalid' : ''}}"
+                                name="departmentCode" id="departmentCode" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <span class="font-weight-bold">Department Code</span>
+                            </label>
+                            <div id='department-code-error-message' class='text-danger text-sm'>
+                                @error('departmentCode')
+                                    {{ $errors->first('departmentCode') }}
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="form-group form-group submit-section col-12">
                             <button id="saveBtn" class="btn btn-primarys submit-btn float-right shadow" type="submit">
                                 <span id="loading" class="spinner-border spinner-border-sm d-none" role="status"
@@ -160,18 +174,17 @@
                 </div>
             </div>
 
-            <div class="table" style="overflow-x:auto;">
+            <div class="table">
                 <table class="table table-bordered table-hover text-center" id="maintenanceOffice" style="width:100%;">
                     <thead>
                         <tr>
-                            <td scope="col" class="text-center">Office Code</td>
-                            <td scope="col" class="text-center">Office Name</td>
-                            <td scope="col" class="text-center">Office Short Name</td>
-                            <td scope="col" class="text-center">Office Address</td>
-                            <td scope="col" class="text-center">Office Short Address</td>
-                            <td scope="col" class="text-center">Office Head</td>
-                            <td scope="col" class="text-center">Position Name</td>
-                            <td scope="col" class="text-center">Action</td>
+                            <td  class="text-center text-uppercase h6">Office Code</td>
+                            <td  class="text-center text-uppercase h6">Office Name</td>
+                             <td  class="text-center text-uppercase h6">Office Head</td>
+                             <td  class="text-center text-uppercase h6">Short Name</td>
+                            <td  class="text-center text-uppercase h6">Position Name</td>
+                            <td  class="text-center text-uppercase h6">Department Code</td>
+                            <td  class="text-center text-uppercase h6">Action</td>
                         </tr>
                     </thead>
                 </table>

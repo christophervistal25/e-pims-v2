@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Edit Maintenance Position')
+@section('title', 'Edit Position')
 @prepend('page-css')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
@@ -15,10 +15,10 @@
 @endprepend
 @section('content')
 @include('Plantilla.add-ons.success')
-<div class="kanban-board card shadow mb-0">
+<div class="kanban-board card shadow-none">
     <div class="card-body">
         <div id="add" class="page-header">
-            <form action="{{ route('maintenance-position.update', $position->position_id) }}" method="post" id="maintenancePositionEditForm">
+            <form action="{{ route('maintenance-position.update', $position->position_id) }}" method="POST" id="maintenancePositionEditForm">
                 @csrf
                 @method('PUT')
                     <div class="alert alert-secondary text-center font-weight-bold" role="alert">EDIT POSITION</div>
@@ -76,7 +76,7 @@
                         </div>
 
                         <div class="form-group form-group submit-section col-12">
-                            <button type="submit" class="btn btn-success submit-btn float-right shadow"><i
+                            <button type="submit" class="btn btn-success text-white submit-btn float-right shadow"><i
                                 class="fas fa-check"></i> Update</button>
                         <a href="/maintenance-position"><button style="margin-right:10px;" type="button"
                                 class="text-white btn btn-warning submit-btn float-right shadow"><i

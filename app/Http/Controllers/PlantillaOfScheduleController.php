@@ -26,7 +26,7 @@ class PlantillaOfScheduleController extends Controller
     {
         $plantillaYear = Plantilla::select('year')->distinct()->get();
         $PlantillaOfScheduleYear = PlantillaSchedule::select('year')->orderBy('year', 'desc')->distinct()->get();
-        $office = Office::select('office_code', 'office_name')->get();
+        $office = Office::select('OfficeCode', 'Description')->get();
         return view('PlantillaOfSchedule.PlantillaOfSchedule', compact('office', 'plantillaYear', 'PlantillaOfScheduleYear'));
     }
 
@@ -38,12 +38,13 @@ class PlantillaOfScheduleController extends Controller
     public function list(Request $request)
     {
         $year = Carbon::now()->format('Y') - 1;
-        $data = DB::table('plantillas')
-        ->join('offices', 'plantillas.office_code', '=', 'offices.office_code')
-        ->join('employees', 'plantillas.employee_id', '=', 'employees.employee_id')
+        $data = DB::connection('E_PIMS_CONNECTION')->table('plantillas')
+        ->join('DTRPayroll.dbo.Office', 'plantillas.office_code', '=', 'DTRPayroll.dbo.Office.OfficeCode')
+        ->join('DTRPayroll.dbo.Employees', 'plantillas.employee_id', '=', 'DTRPayroll.dbo.Employees.Employee_id')
         ->join('plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
         ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
-        ->select('plantilla_id', 'plantillas.item_no', 'positions.position_name', 'offices.office_name', 'plantillas.status', 'plantillas.year', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
+        ->select('plantilla_id', 'plantillas.item_no', 'positions.position_name', 'Office.Description as office_name', 'plantillas.status', 'plantillas.year', DB::raw("CONCAT(FirstName, '
+         ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"))
         ->where('plantillas.year' ,'=',  $year)
         ->orderBy('plantilla_id', 'desc')
         ->get();
@@ -81,15 +82,16 @@ class PlantillaOfScheduleController extends Controller
 
     public function adjustedlist(Request $request, $yearFilter)
     {
-        $data = DB::table('plantilla_schedules')
-        ->join('offices', 'plantilla_schedules.office_code', '=', 'offices.office_code')
-        ->join('employees', 'plantilla_schedules.employee_id', '=', 'employees.employee_id')
-        ->join('plantilla_positions', 'plantilla_schedules.pp_id', '=', 'plantilla_positions.pp_id')
-        ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
-        ->select('ps_id', 'plantilla_schedules.item_no', 'positions.position_name', 'offices.office_name', 'plantilla_schedules.status', 'plantilla_schedules.year', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
-        ->where('plantilla_schedules.year', $yearFilter)
-        ->orderBy('plantilla_id', 'DESC')
-        ->get();
+        $data = DB::connection('E_PIMS_CONNECTION')->table('plantilla_schedules')
+                ->join('DTRPayroll.dbo.Office', 'plantilla_schedules.office_code', '=', 'DTRPayroll.dbo.Office.OfficeCode')
+                ->join('DTRPayroll.dbo.Employees', 'plantilla_schedules.employee_id', '=', 'Employees.Employee_id')
+                ->join('plantilla_positions', 'plantilla_schedules.pp_id', '=', 'plantilla_positions.pp_id')
+                ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
+                ->select('ps_id', 'plantilla_schedules.item_no', 'positions.position_name', 'Office.Description', 'plantilla_schedules.status', 'plantilla_schedules.year', DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"))
+                ->where('plantilla_schedules.year', $yearFilter)
+                ->orderBy('plantilla_id', 'DESC')
+                ->get();
+
         return DataTables::of($data)
         ->addColumn('action', function($row){
             $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-schedule.edit', $row->ps_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil'></i></a>";

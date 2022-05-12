@@ -97,8 +97,8 @@
                             name="officeCode" data-live-search="true" id="officeCode" data-size="5">
                             <option></option>
                             @foreach($office as $offices)
-                            <option {{ old('officeCode') == $offices->office_code ? 'selected' : '' }} value="{{ $offices->office_code}}">
-                                {{ $offices->office_name }}</option>
+                            <option {{ old('officeCode') == $offices->OfficeCode ? 'selected' : '' }} value="{{ $offices->OfficeCode }}">
+                                {{ $offices->Description }}</option>
                             @endforeach
                         </select>
                         <div id='office-error-message' class='text-danger text-sm'>
@@ -299,7 +299,7 @@
                                     name="employeeOffice" data-live-search="true" id="employeeOffice" data-size="5">
                                     <option value="">All</option>
                                     @foreach($office as $offices){
-                                        <option value="{{ $offices->office_code }}">{{ $offices->office_name }}</option>
+                                        <option value="{{ $offices->OfficeCode }}">{{ $offices->Description }}</option>
                                     }
                                     @endforeach
                                     </select>

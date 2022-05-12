@@ -18,18 +18,19 @@ class PlantillaOfPositionController extends Controller
      */
     public function index()
     {
-        $office = Office::select('office_code', 'office_name')->get();
+        $office = Office::select('OfficeCode', 'Description')->get();
         $position = Position::select('position_id', 'position_name', 'sg_no')->get();
         return view('PlantillaOfPosition.PlantillaOfPosition', compact('position', 'office'));
     }
 
     public function list(Request $request)
     {
-        $data = DB::table('plantilla_positions')
+        $data = DB::connection('E_PIMS_CONNECTION')->table('plantilla_positions')
         ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
-        ->join('offices', 'plantilla_positions.office_code', 'offices.office_code')
-        ->select('pp_id', 'positions.position_name', 'item_no', 'plantilla_positions.sg_no', 'offices.office_name', 'old_position_name', 'year')
+        ->join('DTRPayroll.dbo.Office', 'plantilla_positions.office_code', 'DTRPayroll.dbo.Office.OfficeCode')
+        ->select('pp_id', 'positions.position_name', 'item_no', 'plantilla_positions.sg_no', 'DTRPayroll.dbo.Office.Description as office_name', 'old_position_name', 'year')
         ->get();
+
         return DataTables::of($data)
         ->addColumn('action', function($row){
                             $btn = "<a title='Edit Plantilla Of Position' href='". route('plantilla-of-position.edit', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
@@ -65,6 +66,7 @@ class PlantillaOfPositionController extends Controller
             'salaryGrade'                   => 'required | in:' . implode(',',range(1, 33)),
             'officeCode'                    => 'required',
         ]);
+        
         $plantillaposition = new PlantillaPosition;
         $plantillaposition->position_id                       = $request['positionTitle'];
         $plantillaposition->item_no                           = $request['itemNo'];
@@ -95,7 +97,7 @@ class PlantillaOfPositionController extends Controller
      */
     public function edit($pp_id)
     {
-        $office = Office::select('office_code', 'office_name')->get();
+        $office = Office::select('OfficeCode', 'Description')->get();
         $position = Position::select('position_id', 'position_name', 'sg_no')->get();
         $plantillaofposition = PlantillaPosition::find($pp_id);
         return view('PlantillaOfPosition.edit', compact('plantillaofposition','position', 'office'));

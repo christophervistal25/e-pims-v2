@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class PlantillaSchedule extends Model
 {
+    public $connection = 'E_PIMS_CONNECTION';
+    
     protected $fillable = [
         'ps_id',
         'plantilla_id',

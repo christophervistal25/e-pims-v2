@@ -77,9 +77,9 @@
                                 name="officeCode" data-live-search="true" id="officeCode" data-size="5">
                                 <option></option>
                                 @foreach($office as $offices)
-                                <option {{ $plantilla->office_code == $offices->office_code ? 'selected' : '' }}
-                                    value="{{ $offices->office_code}}">
-                                    {{ $offices->office_name }}</option>
+                                <option {{ $plantilla->office_code == $offices->OfficeCode ? 'selected' : '' }}
+                                    value="{{ $offices->OfficeCode }}">
+                                    {{ $offices->Description }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('officeCode'))

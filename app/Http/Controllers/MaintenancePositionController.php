@@ -56,7 +56,7 @@ class MaintenancePositionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'positionCode'                 => 'required|unique:positions,position_code',
+            'positionCode'                 => 'required|unique:E_PIMS_CONNECTION.positions,position_code',
             'positionName'                 => 'required',
             'salaryGradeNo'                => 'required',
             'positionShortName'            => 'required',
@@ -90,7 +90,7 @@ class MaintenancePositionController extends Controller
      */
     public function edit($position_id)
     {
-        $position = Position::find($position_id);
+        $position = Position::where('position_id', $position_id)->first();
         return view('MaintenancePosition.edit', compact('position'));
     }
 
@@ -109,7 +109,8 @@ class MaintenancePositionController extends Controller
             'salaryGradeNo'                  => 'required',
             'positionShortName'              => 'required',
         ]);
-        $position                               = Position::find($position_id);
+        $position                               = Position::where('position_id', $position_id)->first();
+
         $position->position_code                = $request['positionCode'];
         $position->position_name                = $request['positionName'];
         $position->sg_no                        = $request['salaryGradeNo'];
@@ -127,8 +128,8 @@ class MaintenancePositionController extends Controller
      */
     public function destroy($id)
     {
-        Position::find($id)->delete();
-        return json_encode(array('statusCode'=>200));
+        Position::where('position_id', $id)->delete();
+        return response()->json(['statusCode' => 200]);
     }
 
     public function delete($id)

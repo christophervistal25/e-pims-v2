@@ -17,8 +17,8 @@ class MaintenanceDivisionController extends Controller
      */
     public function index()
     {
-        $office = Office::select('office_code', 'office_name')->get();
-        return view('MaintenanceDivision.division', compact('office'));
+        $offices = Office::get(['OfficeCode', 'Description']);
+        return view('MaintenanceDivision.division', compact('offices'));
     }
 
     /**
@@ -59,11 +59,11 @@ class MaintenanceDivisionController extends Controller
     public function list(Request $request)
     {
         if ($request->ajax()) {
-            $data = Division::select('division_id','division_name', 'office_code')->with('offices:office_code,office_name,office_short_name')->get();
+            $data = Division::select('division_id','division_name', 'office_code')->with(['offices', 'offices.desc'])->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('offices', function ($row) {
-                        return $row->offices->office_name;
+                        return $row->offices?->Description;
                     })
                     ->addColumn('action', function($row){
                         $btn = "<a title='Edit Division' href='". route('maintenance-division.edit', $row->division_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
@@ -89,11 +89,11 @@ class MaintenanceDivisionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($division_id)
+    public function edit($divisionID)
     {
-        $office = Office::select('office_code', 'office_name')->get();
-        $division = Division::find($division_id);
-        return view('MaintenanceDivision.edit', compact('division', 'office'));
+        $offices = Office::get(['OfficeCode', 'Description']);
+        $division = Division::find($divisionID);
+        return view('MaintenanceDivision.edit', compact('division', 'offices'));
     }
 
     /**

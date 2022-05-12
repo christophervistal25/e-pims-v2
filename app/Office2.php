@@ -9,6 +9,7 @@ class Office2 extends Model
     protected $keyType = 'string';
     public $table = 'Office2';
     public $connection = 'DTR_PAYROLL_CONNECTION';
+    public $timestamps = false;
 
     protected $fillable = [
         'OfficeCode2',

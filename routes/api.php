@@ -307,13 +307,15 @@ Route::post('/salary-adjustment-per-office', function () {
 
 // plantilla position filter
 Route::get('/plantilla/position/{officeCode}', function ($office_code) {
-    $data = DB::table('plantilla_positions')
-    ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
-    ->join('offices', 'plantilla_positions.office_code', 'offices.office_code')
-    ->select('pp_id', 'positions.position_name', 'item_no', 'plantilla_positions.sg_no', 'plantilla_positions.office_code', 'offices.office_name', 'old_position_name', 'year')
-    ->where('plantilla_positions.office_code', $office_code)
-    ->get();
+    $data = DB::connection('E_PIMS_CONNECTION')
+            ->table('plantilla_positions')
+            ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
+            ->join('offices', 'plantilla_positions.office_code', 'offices.office_code')
+            ->select('pp_id', 'positions.position_name', 'item_no', 'plantilla_positions.sg_no', 'plantilla_positions.office_code', 'offices.office_name', 'old_position_name', 'year')
+            ->where('plantilla_positions.office_code', $office_code)
+            ->get();
     return DataTables::of($data)
+
     ->addColumn('action', function($row){
                         $btn = "<a title='Edit Plantilla Of Position' href='". route('plantilla-of-position.edit', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
                         $btn = $btn."<a title='Delete Plantilla Of Position' id='delete' value='$row->pp_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
@@ -385,15 +387,17 @@ Route::get('/plantilla/personnel/{officeCode}', function ($office_code) {
 // plantilla schedule list filter
 Route::get('/plantilla/list/{officeCode}', function ($office_code) {
     $year = Carbon::now()->format('Y') - 1;
-        $data = DB::table('plantillas')->join('offices', 'plantillas.office_code', '=', 'offices.office_code')
-        ->join('employees', 'plantillas.employee_id', '=', 'employees.employee_id')
-        ->join('plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
-        ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
-        ->select('plantilla_id', 'plantillas.item_no', 'positions.position_name', 'plantillas.office_code', 'offices.office_name', 'plantillas.status', 'plantillas.year', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
-        ->where('plantillas.year' ,'=',  $year)
-        ->where('plantillas.office_code', $office_code)
-        ->orderBy('plantilla_id', 'desc')
-        ->get();
+        $data = DB::connection('E_PIMS_CONNECTION')->table('plantillas')
+                ->join('DTRPayroll.dbo.Office', 'plantillas.office_code', '=', 'Office.OfficeCode')
+                ->join('DTRPayroll.dbo.Employees', 'plantillas.employee_id', '=', 'Employees.Employee_id')
+                ->join('plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
+                ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
+                ->select('plantilla_id', 'plantillas.item_no', 'positions.position_name', 'plantillas.office_code', 'Office.Description as office_name', 'plantillas.status', 'plantillas.year', DB::raw("CONCAT(FirstName, ' ' , MiddleName, ' ' , LastName, ' ' , Suffix) AS fullname"))
+                ->where('plantillas.year' ,'=',  $year)
+                ->where('plantillas.office_code', $office_code)
+                ->orderBy('plantilla_id', 'desc')
+                ->get();
+
         return DataTables::of($data)
         ->addColumn('action', function($row){
             $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm id__holder' data-id='".$row->plantilla_id."'><i class='la la-pencil'></i></a>";
@@ -427,26 +431,29 @@ Route::get('/plantilla/list/{officeCode}', function ($office_code) {
 // plantilla schedule filter
 Route::get('/plantilla/schedule/{officeCode}/{filterYear}', function ($office_code, $filterYear) {
     if($office_code == "All"){
-        $data = DB::table('plantilla_schedules')
-        ->join('offices', 'plantilla_schedules.office_code', '=', 'offices.office_code')
-        ->join('employees', 'plantilla_schedules.employee_id', '=', 'employees.employee_id')
-        ->join('plantilla_positions', 'plantilla_schedules.pp_id', '=', 'plantilla_positions.pp_id')
-        ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
-        ->select('ps_id', 'plantilla_schedules.item_no', 'positions.position_name', 'offices.office_name', 'plantilla_schedules.status', 'plantilla_schedules.year', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
-        ->where('plantilla_schedules.year', $filterYear)
-        ->orderBy('plantilla_id', 'DESC')
-        ->get();
+        $data = DB::connection('E_PIMS_CONNECTION')
+                ->table('plantilla_schedules')
+                ->join('offices', 'plantilla_schedules.office_code', '=', 'offices.office_code')
+                ->join('employees', 'plantilla_schedules.employee_id', '=', 'employees.employee_id')
+                ->join('plantilla_positions', 'plantilla_schedules.pp_id', '=', 'plantilla_positions.pp_id')
+                ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
+                ->select('ps_id', 'plantilla_schedules.item_no', 'positions.position_name', 'offices.office_name', 'plantilla_schedules.status', 'plantilla_schedules.year', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
+                ->where('plantilla_schedules.year', $filterYear ?? 0)
+                ->orderBy('plantilla_id', 'DESC')
+                ->get();
      }else{
-        $data = DB::table('plantilla_schedules')
-        ->join('offices', 'plantilla_schedules.office_code', '=', 'offices.office_code')
-        ->join('employees', 'plantilla_schedules.employee_id', '=', 'employees.employee_id')
-        ->join('plantilla_positions', 'plantilla_schedules.pp_id', '=', 'plantilla_positions.pp_id')
-        ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
-        ->select('ps_id', 'plantilla_schedules.item_no', 'positions.position_name', 'plantilla_schedules.office_code' ,'offices.office_name', 'plantilla_schedules.status', 'plantilla_schedules.year', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
-        ->where('plantilla_schedules.year', $filterYear)
-        ->where('plantilla_schedules.office_code', $office_code)
-        ->orderBy('plantilla_id', 'DESC')
-        ->get();
+        $filterYear = $filterYear == 'null' ? 0000 : $filterYear;
+        $data = DB::connection('E_PIMS_CONNECTION')
+                    ->table('plantilla_schedules')
+                    ->join('DTRPayroll.dbo.Office', 'plantilla_schedules.office_code', '=', 'Office.OfficeCode')
+                    ->join('DTRPayroll.dbo.Employees', 'plantilla_schedules.employee_id', '=', 'Employees.Employee_id')
+                    ->join('plantilla_positions', 'plantilla_schedules.pp_id', '=', 'plantilla_positions.pp_id')
+                    ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
+                    ->select('ps_id', 'plantilla_schedules.item_no', 'positions.position_name', 'plantilla_schedules.office_code' ,'Office.Description as office_name', 'plantilla_schedules.status', 'plantilla_schedules.year', DB::raw("CONCAT(FirstName, ' ' , MIddleName , ' ' , lastName, ' ' , Suffix) AS fullname"))
+                    ->where('plantilla_schedules.year', $filterYear)
+                    ->where('plantilla_schedules.office_code', $office_code)
+                    ->orderBy('plantilla_id', 'DESC')
+                    ->get();
     }
         return DataTables::of($data)
         ->addColumn('action', function($row){
@@ -479,14 +486,19 @@ Route::get('/plantilla/schedule/{officeCode}/{filterYear}', function ($office_co
             //         ->make(true);
 });
 
-// maintenance division  filter
+// Maintenance Division Filter
 Route::get('/maintenance/division/{officeCode}', function ($office_code) {
-    $data = Division::select('division_id','division_name', 'office_code')->with('offices:office_code,office_name,office_short_name')->where('office_code', $office_code)->get();
+
+    $data = Division::select('division_id', 'division_name', 'office_code')
+                ->with(['offices', 'offices.desc'])
+                ->where('office_code', $office_code)
+                ->get();
+
     return Datatables::of($data)
-    ->addIndexColumn()
-    ->addColumn('offices', function ($row) {
-        return $row->offices->office_name;
-    })
+        ->addIndexColumn()
+        ->addColumn('offices', function ($row) {
+            return $row->offices->Description;
+        })
     ->addColumn('action', function($row){
         $btn = "<a title='Edit Division' href='". route('maintenance-division.edit', $row->division_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
         $btn = $btn."<a title='Delete Division' id='delete' value='$row->division_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
@@ -535,13 +547,14 @@ Route::post('/plantilla/schedule/adjust', function () {
 // plantilla position schedule filter
 Route::get('/plantilla/position/schedule/{officeCode}', function ($office_code) {
     $year = Carbon::now()->format('Y') - 1;
-        $data = DB::table('plantilla_positions')
+        $data = DB::connection('E_PIMS_CONNECTION')->table('plantilla_positions')
         ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
-        ->join('offices', 'plantilla_positions.office_code', 'offices.office_code')
-        ->select('pp_id', 'positions.position_name', 'item_no', 'plantilla_positions.sg_no', 'plantilla_positions.office_code', 'offices.office_name', 'old_position_name', 'year')
+        ->join('DTRPayroll.dbo.Office', 'plantilla_positions.office_code', 'DTRPayroll.dbo.Office.OfficeCode')
+        ->select('pp_id', 'positions.position_name', 'item_no', 'plantilla_positions.sg_no', 'plantilla_positions.office_code', 'DTRPayroll.dbo.Office.Description as office_name', 'old_position_name', 'year')
         ->where('plantilla_positions.office_code', $office_code)
         ->where('year' ,'=',  $year)
         ->get();
+
         return DataTables::of($data)
         ->addColumn('action', function($row){
                 $btn = "<a title='Edit Plantilla Of Position' href='". route('position-schedule.edits', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1 id__holder' data-id='".$row->pp_id."'><i class='la la-pencil'></i></a>";
@@ -580,14 +593,14 @@ Route::get('/position/schedule/{officeCode}/{yearFilter}', function ($office_cod
         ->orderBy('pos_id', 'DESC')
         ->get();
         }else{
-        $data = DB::table('position_schedules')
-        ->join('offices', 'position_schedules.office_code', '=', 'offices.office_code')
-        ->join('positions', 'position_schedules.position_id', '=', 'positions.position_id')
-        ->select('pos_id', 'pp_id', 'positions.position_name','item_no', 'position_schedules.sg_no', 'position_schedules.office_code' ,'offices.office_name', 'old_position_name' , 'year')
-        ->where('position_schedules.office_code', $office_code)
-        ->where('year', $yearFilter)
-        ->orderBy('pos_id', 'DESC')
-        ->get();
+        $data = DB::connection('E_PIMS_CONNECTION')->table('position_schedules')
+                        ->join('DTRPayroll.dbo.Office', 'position_schedules.office_code', '=', 'DTRPayroll.dbo.Office.OfficeCode')
+                        ->join('positions', 'position_schedules.position_id', '=', 'positions.position_id')
+                        ->select('pos_id', 'pp_id', 'positions.position_name','item_no', 'position_schedules.sg_no', 'position_schedules.office_code' ,'DTRPayroll.dbo.Office.Description as office_name', 'old_position_name' , 'year')
+                        ->where('position_schedules.office_code', $office_code)
+                        ->where('year', $yearFilter)
+                        ->orderBy('pos_id', 'DESC')
+                        ->get();
         }
         return DataTables::of($data)
         ->make(true);

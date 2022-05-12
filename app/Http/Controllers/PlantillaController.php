@@ -30,30 +30,38 @@ class PlantillaController extends Controller
         $division = Division::select('division_id', 'division_name', 'office_code')->get();
         $plantillaEmp = Plantilla::get()->pluck('employee_id')->toArray();
         $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->whereNotIn('employee_id', $plantillaEmp)->get();
-        $office = Office::select('office_code', 'office_name')->get();
+        $office = Office::select('OfficeCode', 'Description')->get();
+
         $position = Position::select('position_id', 'position_name')->get();
+
         $plantillaPositionID = Plantilla::get()->pluck('pp_id')->toArray();
+
         $plantillaPosition = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->with('position:position_id,position_name')->whereNotIn('pp_id', $plantillaPositionID )->get();
         $salarygrade = SalaryGrade::get(['sg_no']);
+
         $status = ['Casual','Coterminous','Permanent','Provisional','Temporary','Elected'];
+
         count($status) - 1;
         $areacode = ['Region 1', 'Region 2','Region 3','Region 4','Region 5', 'Region 6', 'Region 7',  'Region 8', 'Region 9', 'Region 10', 'Region 11', 'Region 12','NCR', 'CAR', 'CARAGA', 'ARMM'];
+
         count($areacode) - 1;
         $areatype = ['Region','Province','District','Municipality','Foreign Post'];
+
         count($areatype) - 1;
         $arealevel = ['K','T','S','A'];
+
         count($arealevel) - 1;
         return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition', 'division'));
     }
 
     public function list(Request $request)
     {
-        $data = DB::table('plantillas')
+        $data = DB::connection('E_PIMS_CONNECTION')->table('plantillas')
         ->join('offices', 'plantillas.office_code', '=', 'offices.office_code')
-        ->join('employees', 'plantillas.employee_id', '=', 'employees.employee_id')
+        ->join('DTRPayroll.dbo.Employees', 'plantillas.employee_id', '=', 'DTRPayroll.dbo.Employees.Employee_id')
         ->join('plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
         ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
-        ->select('plantilla_id', 'plantillas.item_no', 'positions.position_name', 'offices.office_name', 'plantillas.status', 'plantillas.year', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
+        ->select('plantilla_id', 'plantillas.item_no', 'positions.position_name', 'offices.office_name', 'plantillas.status', 'plantillas.year', DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"))
         ->orderBy('plantilla_id', 'desc')
         ->get();
         return DataTables::of($data)
@@ -165,7 +173,7 @@ class PlantillaController extends Controller
     {
         $division = Division::select('division_id', 'division_name', 'office_code')->get();
         $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->get();
-        $office = Office::select('office_code', 'office_name')->get();
+        $office = Office::select('OfficeCode', 'Description')->get();
         $position = Position::select('position_id', 'position_name')->get();
         $plantillaPositionIDAll = Plantilla::where('plantilla_id','!=',$plantilla_id)->get()->pluck('pp_id')->toArray();
         $plantillaPositionAll = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->with('position:position_id,position_name')->whereNotIn('pp_id', $plantillaPositionIDAll )->get();

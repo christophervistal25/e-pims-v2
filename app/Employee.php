@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-    
+
 use App\Position;
 use App\EmployeeLeaveRecord;
 use Illuminate\Database\Eloquent\Model;
@@ -11,14 +11,14 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 class Employee extends Model
 {
     use EmployeeLaraTablesAction;
-    
-    public $incrementing  = false;
+
+    public $incrementing = false;
     protected $primaryKey = 'Employee_id';
     protected $connection = 'DTR_PAYROLL_CONNECTION';
     protected $table = 'Employees';
     public $with = ['position', 'office_charging', 'office_assignment', 'office_charging.desc'];
 
-    protected $columns =  [
+    protected $columns = [
         "Employee_id",
         "LastName",
         "FirstName",
@@ -116,35 +116,35 @@ class Employee extends Model
     protected function FirstName(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => mb_strtoupper($value),
-            set: fn ($value) => mb_strtoupper($value),
+            get: fn($value) => mb_strtoupper($value),
+            set: fn($value) => mb_strtoupper($value),
         );
     }
 
     protected function MiddleName(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => mb_strtoupper($value),
-            set: fn ($value) => mb_strtoupper($value),
+            get: fn($value) => mb_strtoupper($value),
+            set: fn($value) => mb_strtoupper($value),
         );
     }
 
     protected function LastName(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => mb_strtoupper($value),
-            set: fn ($value) => mb_strtoupper($value),
+            get: fn($value) => mb_strtoupper($value),
+            set: fn($value) => mb_strtoupper($value),
         );
     }
 
     protected function Suffix(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => mb_strtoupper($value),
-            set: fn ($value) => mb_strtoupper($value),
+            get: fn($value) => mb_strtoupper($value),
+            set: fn($value) => mb_strtoupper($value),
         );
     }
-    
+
     public function plantilla()
     {
         return $this->hasOne(Plantilla::class, 'employee_id', 'Employee_id');
@@ -254,26 +254,26 @@ class Employee extends Model
     public function scopePermanent($query)
     {
         return $query->where('Work_Status', 'not like', '%' . 'JOB ORDER' . '%')
-                        ->where('Work_Status', 'not like', '%' . 'CONTRACT OF SERVICE' . '%')
-                        ->where('Work_Status', '!=', '');
+            ->where('Work_Status', 'not like', '%' . 'CONTRACT OF SERVICE' . '%')
+            ->where('Work_Status', '!=', '');
     }
 
-    
+
     public function office_charging()
     {
         return $this->hasOne(Office::class, 'OfficeCode', 'OfficeCode');
     }
-    
+
     public function office_assignment()
     {
         return $this->hasOne(Office2::class, 'OfficeCode2', 'OfficeCode2');
     }
-    
 
-    public static function fetchWithFullInformation(string $employeeId) :Employee
+
+    public static function fetchWithFullInformation(string $employeeId): Employee
     {
         return self::with([
-            'family_background', 'spouse_child', 'educational_background', 'civil_service', 'work_experience', 'voluntary_work', 'program_attained','other_information','references', 'relevant_queries', 'issued_id', 'status', 'information.position', 'information.office', 'loginAccount'])->find($employeeId);
+            'family_background', 'spouse_child', 'educational_background', 'civil_service', 'work_experience', 'voluntary_work', 'program_attained', 'other_information', 'references', 'relevant_queries', 'issued_id', 'status', 'information.position', 'information.office', 'loginAccount'])->find($employeeId);
     }
 
     public function salary_adjustment()

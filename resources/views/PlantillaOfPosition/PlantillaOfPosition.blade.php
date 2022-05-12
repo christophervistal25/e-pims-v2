@@ -205,8 +205,8 @@
                                 data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <option></option>
                                 @foreach($office as $offices)
-                                    <option {{ old('officeCode') == $offices->office_code ? 'selected' : '' }} value="{{ $offices->office_code}}">
-                                        {{ $offices->office_name }}</option>
+                                    <option {{ old('officeCode') == $offices->OfficeCode ? 'selected' : '' }} value="{{ $offices->OfficeCode}}">
+                                        {{ $offices->Description }}</option>
                                 @endforeach
                             </select>
                             <span class="font-weight-bold">OFFICE<span class="text-danger">*</span></span>
@@ -250,9 +250,8 @@
                 <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}"
                     name="employeeOffice" data-live-search="true" id="employeeOffice" data-size="5">
                     <option value="">All</option>
-                    @foreach($office as $offices){
-                        <option value="{{ $offices->office_code }}">{{ $offices->office_name }}</option>
-                    }
+                    @foreach($office as $offices)
+                        <option value="{{ $offices->OfficeCode }}">{{ $offices->Description }}</option>
                     @endforeach
                     </select>
             </div>

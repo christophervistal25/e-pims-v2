@@ -6,7 +6,7 @@
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 @prepend('page-css')
-<script src="{{ asset('/js/app.js') }}" defer></script>
+{{-- <script src="{{ asset('/js/app.js') }}" defer></script> --}}
 @endprepend
 <style>
     .swal-content ul{
@@ -70,7 +70,7 @@
                                 name="officePlantillaList" data-live-search="true" id="officePlantillaList" data-size="5">
                                 <option value="">All</option>
                                 @foreach($office as $offices)
-                                <option data-plantilla="{{ $offices->office_name }}" value="{{ $offices->office_code }}">{{ $offices->office_name }}</option>
+                                <option data-plantilla="{{ $offices->Description }}" value="{{ $offices->OfficeCode }}">{{ $offices->Description }}</option>
                                 @endforeach
                                 </select>
                     </div>
@@ -125,7 +125,7 @@
                         name="officeCode" data-live-search="true" id="officeCode" data-size="5" >
                         <option value="All">All</option>
                         @foreach($office as $offices)
-                        <option data-plantilla="{{ $offices->office_name }}" value="{{ $offices->office_code }}">{{ $offices->office_name }}</option>
+                        <option data-plantilla="{{ $offices->Description }}" value="{{ $offices->OfficeCode }}">{{ $offices->Description }}</option>
                         @endforeach
                         </select>
             </div>
