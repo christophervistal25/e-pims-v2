@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
 
 class SalaryAdjustmentController extends Controller
@@ -43,7 +44,7 @@ class SalaryAdjustmentController extends Controller
         $currentYear = date('Y');
 
         $employee = Plantilla::select('item_no', 'pp_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id', 'year', 'status', 'office_code')
-                        ->with(['employee:employee_id,firstname,middlename,lastname,extension', 'plantillaPosition', 'plantillaPosition.position',
+                        ->with(['employee:Employee_id,FirstName,MiddleName,LastName,Suffix', 'plantillaPosition', 'plantillaPosition.position',
                                 'plantillaPosition:pp_id,position_id,office_code,item_no,sg_no', 'salary_adjustment'])
                             ->where('plantillas.year', $currentYear)
                             ->get()
@@ -60,14 +61,19 @@ class SalaryAdjustmentController extends Controller
 
     public function list($currentSgyear)
     {
-        $data = DB::table('salary_adjustments')
-        ->join('employees', 'salary_adjustments.employee_id', 'employees.employee_id')
-        ->select('id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), DB::raw("DATE_FORMAT(date_adjustment, '%m-%d-%Y') as date_adjustment"), 'sg_no', 'step_no', 'salary_previous', 'salary_new', 'salary_diff')
-        ->whereYear('date_adjustment',  '=' ,$currentSgyear)
-        ->orderBy('date_adjustment', 'DESC')
-        ->whereNull('deleted_at')
-        ->orderBy('id', 'DESC')
-        ->get();
+        $data = DB::connection('E_PIMS_CONNECTION')
+                        ->table('salary_adjustments')
+                        ->join('DTRPayroll.dbo.Employees', 'salary_adjustments.employee_id', 'Employees.Employee_id')
+                        ->select(
+                            'id', 'Employees.Employee_id', DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"), 
+                            DB::raw("FORMAT(date_adjustment, '%m-%d-%Y') as date_adjustment"), 'salary_adjustments.sg_no', 'step_no', 'salary_previous', 'salary_new', 'salary_diff'
+                        )
+                        ->whereYear('date_adjustment', $currentSgyear)
+                        ->orderBy('date_adjustment', 'DESC')
+                        ->whereNull('deleted_at')
+                        ->orderBy('id', 'DESC')
+                        ->get();
+
         return DataTables::of($data)
         ->addColumn('action', function($row){
             $btn = "<a title='Edit Salary Adjustment' href='". route('salary-adjustment.edit', $row->id) . "' class='rounded-circle edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
@@ -117,20 +123,20 @@ class SalaryAdjustmentController extends Controller
         $this->validate($request, [
             'employeeName'  => [
                 'required',
-                    Rule::unique('salary_adjustments','employee_id')->where(function ($query) use ($request) {
-                    return $query
-                    ->where('employee_id', $request->employeeId)
-                    ->where('item_no', $request->itemNo)
-                    ->where('pp_id', $request->positionId)
-                    ->where('date_adjustment', $request->dateAdjustment)
-                    ->where('sg_no', $request->salaryGrade)
-                    ->where('step_no', $request->stepNo)
-                    ->where('salary_previous', $request->salaryPrevious)
-                    ->where('salary_new', $request->salaryNew)
-                    ->where('salary_diff', $request->salaryDifference)
-                    ->where('deleted_at', '=', null)
-                    ->get();
-                }),
+                //     Rule::unique('salary_adjustments', 'employee_id')->where(function ($query) use ($request) {
+                //     return $query
+                //                 ->where('employee_id', $request->employeeId)
+                //                 ->where('item_no', $request->itemNo)
+                //                 ->where('pp_id', $request->positionId)
+                //                 ->where('date_adjustment', $request->dateAdjustment)
+                //                 ->where('sg_no', $request->salaryGrade)
+                //                 ->where('step_no', $request->stepNo)
+                //                 ->where('salary_previous', $request->salaryPrevious)
+                //                 ->where('salary_new', $request->salaryNew)
+                //                 ->where('salary_diff', $request->salaryDifference)
+                //                 ->where('deleted_at', '=', null)
+                //                 ->get();
+                // }),
             ],
             'itemNo'                              => 'required',
             'positionId'                          => 'required',
@@ -141,7 +147,8 @@ class SalaryAdjustmentController extends Controller
             'salaryNew'                           => 'required|numeric',
             'salaryDifference'                    => 'required|numeric',
         ]);
-        DB::table('salary_adjustments')->updateOrInsert(
+        DB::connection('E_PIMS_CONNECTION')
+            ->table('salary_adjustments')->updateOrInsert(
             [
                 'employee_id' => $request['employeeId'],
                 'salary_new' => $request['salaryNew'],
@@ -167,10 +174,11 @@ class SalaryAdjustmentController extends Controller
         $dateCheck = $request['remarks'];
         if($dateCheck == ''){
             $remarks =  'Salary Adjust';
-        }else{
+        } else{
             $remarks =  $request['remarks'];
         }
-        DB::table('service_records')->updateOrInsert(
+
+        DB::connection('E_PIMS_CONNECTION')->table('service_records')->updateOrInsert(
             [
                 'employee_id' => $request['employeeId'],
                 'position_id' =>  $request['positionId'],
@@ -185,20 +193,6 @@ class SalaryAdjustmentController extends Controller
             'separation_cause'          => $remarks
         ]);
 
-        // $service_record                         = new service_record;
-        // $service_record->employee_id            = $request['employeeId'];
-        // $service_record->service_from_date      = $request['dateAdjustment'];
-        // $service_record->position_id            = $request['positionId'];
-        // $service_record->status                 = $request['status'];
-        // $service_record->salary                 = $request['salaryNew'];
-        // $service_record->office_code            = $request['officeCode'];
-        // $dateCheck = $request['remarks'];
-        // if($dateCheck == ''){
-        //     $service_record->separation_cause       =  'Salary Adjust';
-        // }else{
-        //     $service_record->separation_cause       =  $request['remarks'];
-        // }
-        // $service_record->save();
         return response()->json(['success'=>true]);
     }
 

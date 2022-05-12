@@ -60,9 +60,9 @@
             <p class="date">{{ Carbon\Carbon::parse($salaryAdjustment->date_adjustment)->format('F d, Y') }}</p>
             <br>
             {{-- NAME --}}
-            <h4>{{ $salaryAdjustment->employee->firstname }} {{ $salaryAdjustment->employee->middlename }}.
-                {{ $salaryAdjustment->employee->lastname }}</h4>
-            <p>{{ $salaryAdjustment->employee->plantilla->office->office_name }}</p>
+            <h4>{{ $salaryAdjustment->employee->FirstName }} {{ $salaryAdjustment->employee->MiddleName }}.
+                {{ $salaryAdjustment->employee->LastName }}</h4>
+            <p>{{ $salaryAdjustment->plantilla->office->Description }}</p>
             <br>
             <br>
 
@@ -70,7 +70,7 @@
             <p class="text text-md mb-4">Sir/Madam:</p>
 
             {{-- BODY --}}
-            <i class="la la-pencil h4" data-toggle="modal" data-target="#editbtnFirstParagraphBtn" id="editbtnFirstParagraph" style="cursor: pointer;"></i><span class="text text-md ml-4 pl-4" id="spanFirstParagraph">{{ $setting->key_value }}</span>
+            <i class="la la-pencil" data-toggle="modal" data-target="#editbtnFirstParagraphBtn" id="editbtnFirstParagraph" style="cursor: pointer;"></i><span class="text text-md ml-4 pl-4" id="spanFirstParagraph">{{ $setting->key_value }}</span>
             <br>
             <br>
                 <span class="text text-md ml-4 pl-5">&nbsp 1. Adjusted monthly basic salary effective {{ 'January 1, '.Carbon\Carbon::now('Y')->format('Y') }},</span><span class="col-3 offset-1 float-right">&#8369

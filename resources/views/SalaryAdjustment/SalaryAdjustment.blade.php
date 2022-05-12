@@ -86,9 +86,9 @@
                                 <option></option>
                                 @foreach($employee as $employees)
                                 <option data-plantilla="{{ $employees }}"
-                                    value="{{ $employees->employee->employee_id }}">
-                                    {{ $employees->employee->lastname }}, {{ $employees->employee->firstname }}
-                                    {{ $employees->employee->middlename }}</option>
+                                    value="{{ $employees->employee->Employee_id }}">
+                                    {{ $employees->employee->LastName }}, {{ $employees->employee->FirstName }}
+                                    {{ $employees->employee->MiddleName }}</option>
                                 @endforeach
                             </select>
                             <span class="font-weight-bold">EMPLOYEE NAME<span class="text-danger">*</span></span>

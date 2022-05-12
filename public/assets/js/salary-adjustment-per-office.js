@@ -105,12 +105,14 @@ $(document).ready(function() {
                     {
                         data: "fullname",
                         name: "fullname",
-                        visible: true
+                        visible: true,
+                        defaultContent : 'test',
                     },
                     {
                         data: "plantilla.office_code",
                         name: "office_code",
-                        visible: false
+                        visible: false,
+                        defaultContent : 'test',
                     },
                     {
                         data:
@@ -120,17 +122,20 @@ $(document).ready(function() {
                     },
                     {
                         data: "plantilla.sg_no",
-                        name: "sg_no"
+                        name: "sg_no",
+                        defaultContent : 'test',
                     },
                     {
                         data: "plantilla.step_no",
-                        name: "step_no"
+                        name: "step_no",
+                        defaultContent : 'test',
                     },
                     {
                         data: "plantilla.salary_amount",
                         name: "salary_amount",
                         visible: true,
-                        render: $.fn.dataTable.render.number(",", ".", 2)
+                        render: $.fn.dataTable.render.number(",", ".", 2),
+                        defaultContent : 'test',
                     }
                 ]
             });
