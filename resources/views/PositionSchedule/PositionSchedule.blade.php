@@ -86,7 +86,7 @@
                     <div class="form-group col-4">
                     <button id="saveBtn" class="btn btn-danger submit-btn float-right" type="submit" onclick="LockDepot()">
                         <span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>
-                        <b id="post">Post</b>
+                        <b style="color:white;" id="post">Post</b>
                     </button>
                 </div>
 
@@ -200,6 +200,81 @@
             }
             });
 	});
+
+
+
+    //get all ids and save all data
+    $("#saveBtn").click(function() {
+        let currentYear = document.querySelector("#year").value;
+        let yearValue = new Date().getFullYear() - 1;
+        $("#saveBtn").attr("disabled", true);
+        $("#loading").removeClass("d-none");
+        $("#post").html("Posting . . .");
+        let ids = [];
+        $(".id__holder").each(function(key, element) {
+            if (element.getAttribute("data-id")) {
+                ids.push($(element).attr("data-id"));
+            }
+        });
+        if (ids == "") {
+            swal("No Data Available on Table", "", "error");
+            $("#saveBtn").attr("disabled", false);
+            $("#loading").addClass("d-none");
+            $("#post").html("Post");
+        } else {
+            swal({
+                title: "Are you sure you want to Post?",
+                text: "Once posted, you will not be able to undo the process!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+            }).then(willPost => {
+                if (willPost) {
+                    $.ajax({
+                        type: "POST",
+                        url: `/api/position/schedule/adjust`,
+                        data: {
+                            ids: ids.toString(),
+                            currentYear: currentYear
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                swal(
+                                    "Position Schedule Added Successfully",
+                                    "",
+                                    "success"
+                                );
+                                $("#positionSchedule")
+                                    .DataTable()
+                                    .ajax.reload();
+                                $("#positionList")
+                                    .DataTable()
+                                    .ajax.reload();
+                                $("#saveBtn").attr("disabled", false);
+                                $("#loading").addClass("d-none");
+                                $("#post").html("Post");
+                                ids = [];
+                                $("#yearFilter").append(
+                                    "<option value=" +
+                                        yearValue +
+                                        ">" +
+                                        yearValue +
+                                        "</option>"
+                                );
+                                $("#yearFilter").selectpicker("refresh");
+                            }
+                        },
+                        error: function(response) {}
+                    });
+                } else {
+                    swal("Cancelled", "", "error");
+                    $("#saveBtn").attr("disabled", false);
+                    $("#loading").addClass("d-none");
+                    $("#post").html("Post");
+                }
+            });
+        }
+    });
 </script>
 @endpush
 @endsection

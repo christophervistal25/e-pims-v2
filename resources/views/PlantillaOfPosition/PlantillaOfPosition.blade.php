@@ -47,8 +47,11 @@
 @section('content')
 <div class="kanban-board card shadow mb-0">
     <div class="card-body">
+
+
+
         <div id="add" class="page-header {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
-            <div style='padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
+            <div style='padding-bottom:50px;'>
                 <button id="showListPlantillaPosition" class="btn btn-primarys submit-btn float-right shadow"><i
                         class="fa fa-list"></i> Position List</button>
             </div>
@@ -59,8 +62,8 @@
 
                 <div class="container">
                     <div class="row justify-content-center align-items-center">
-
-                        <div class="form-group col-12 col-md-6 col-lg-7">
+                        <div class="row">
+                        <div class=" col-6 col-md-6 col-lg-6">
                             <label class="has-float-label mb-0">
                             <input value="{{ old('itemNo') }}"
                                 class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" name="itemNo"
@@ -71,7 +74,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-10 col-lg-7">
+                        <div class="col-5 col-lg-5">
                             <label class="has-float-label positionTitle mb-0">
                             <select value=""
                                 class="form-control selectpicker"
@@ -90,7 +93,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="col-1 col-lg-1">
                         <button type="button" class="btn btn-primarys" data-toggle="modal" data-target="#exampleModalCenter">
                             <i class="fa fa-list"></i>
                           </button>
@@ -108,7 +111,7 @@
                                 </div>
                                 <div class="modal-body">
 
-                                    <div class="form-group col-12 col-md-6 col-lg-12">
+                                    <div class=" col-12 col-md-6 col-lg-12">
                                         <label class="has-float-label mb-0">
                                         <input value="{{ old('addPositionCode') }}"
                                             class="form-control {{ $errors->has('addPositionCode')  ? 'is-invalid' : ''}}" name="addPositionCode"
@@ -119,7 +122,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group col-12 col-md-6 col-lg-12">
+                                    <div class=" col-12 col-md-6 col-lg-12">
                                         <label class="has-float-label mb-0">
                                         <input value="{{ old('addPositionName') }}"
                                             class="form-control {{ $errors->has('addPositionName')  ? 'is-invalid' : ''}}" name="addPositionName"
@@ -130,7 +133,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group col-12 col-md-6 col-lg-12">
+                                    <div class=" col-12 col-md-6 col-lg-12">
                                         <label class="has-float-label mb-0">
                                         <select value=""
                                             class="form-control selectpicker  {{ $errors->has('addSalaryGrade')  ? 'is-invalid' : ''}}"
@@ -148,7 +151,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group col-12 col-md-6 col-lg-12">
+                                    <div class=" col-12 col-md-6 col-lg-12">
                                         <label class="has-float-label mb-0">
                                         <input value="{{ old('addPositionShortName') }}"
                                             class="form-control {{ $errors->has('addPositionShortName')  ? 'is-invalid' : ''}}" name="addPositionShortName"
@@ -161,14 +164,17 @@
 
                                 </div>
                                 <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" id="btnPosition" class="btn btn-primary">Save changes</button>
+                                <button style="color:white;" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button style="color:white;" type="button" id="btnPosition" class="btn btn-primarys submit-btn float-right shadow">
+                                    <i class="fas fa-save"></i>
+                                    Save
+                                </button>
                                 </div>
                             </div>
                             </div>
                         </div>
 
-                        <div class="form-group col-12 col-lg-7">
+                        <div class="col-6 col-md-6 col-lg-6">
                             <label class="has-float-label mb-0">
                             <input value="{{ old('positionOldName') }}"
                                 class="form-control"
@@ -179,7 +185,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-12 col-md-6 col-lg-7">
+                        <div class=" col-6 col-md-6 col-lg-6">
                             <label class="has-float-label salaryGrade mb-0">
                             <select value=""
                                 class="form-control selectpicker"
@@ -197,7 +203,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-12 col-lg-7">
+                        <div class=" col-6 col-md-6 col-lg-6">
                             <label class="has-float-label officeCode mb-0">
                             <select value=""
                                 class="form-control selectpicker"
@@ -216,7 +222,7 @@
                         </div>
 
 
-                        <div class="form-group col-12 col-lg-7">
+                        <div class="col-6 col-md-6 col-lg-6">
                             <label class="has-float-label mb-0">
                             <input value="{{ Carbon\Carbon::now()->format('Y') }}"
                                 class="form-control {{ $errors->has('year')  ? 'is-invalid' : ''}}" name="year"
@@ -226,10 +232,10 @@
                             <div id='year-error-message' class='text-danger text-sm'>
                             </div>
                         </div>
+                    </div>
 
 
-
-                        <div class="form-group submit-section col-12">
+                        <div class=" submit-section col-12">
                             <button id="saveBtn" class="btn btn-primarys submit-btn float-right shadow" type="submit">
                                 <span id="loading" class="spinner-border spinner-border-sm d-none" role="status"
                                     aria-hidden="false"></span>
@@ -243,6 +249,10 @@
                 </div>
         </form>
         </div>
+
+
+
+
 
         <div id="table" class="page-header {{  count($errors->all()) == 0 ? '' : 'd-none' }}">
             <div class="row">
@@ -264,7 +274,8 @@
         </div>
 
 
-            <div class="table" style="overflow-x:auto;">
+            <div class="table">
+            {{-- <div class="table" style="overflow-x:auto;"> --}}
                 <table class="table table-bordered table-hover text-center" id="plantillaofposition" style="width:100%;">
                     <thead>
                         <tr>
