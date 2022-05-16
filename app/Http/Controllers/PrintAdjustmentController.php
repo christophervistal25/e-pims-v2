@@ -18,13 +18,13 @@ class PrintAdjustmentController extends Controller
     }
     public function print($id)
     {
-        $salaryAdjustment = SalaryAdjustment::with(['employee:employee_id,firstname,middlename,lastname,extension', 'employee.information:EmpIDNo,office_code,pos_code', 'employee.information.office', 'employee.information.position'])->find($id);
+        $salaryAdjustment = SalaryAdjustment::with(['employee:employee_id,FirstName,MiddleName,LastName,Suffix'])->find($id);
         $setting = Setting::find(1);
         return view('salaryAdjustment.print.previewed', compact('salaryAdjustment', 'setting'));
     }
     public function printList($id)
     {
-        $salaryAdjustment = SalaryAdjustment::with(['plantilla', 'plantilla.position', 'plantilla.office'], ['position', 'position.position_name'])->find($id);
+        $salaryAdjustment = SalaryAdjustment::with(['plantilla', 'plantilla.position', 'plantilla.office', 'position', 'position.position_name'])->find($id);
         $setting = Setting::find(1);
         return view('salaryAdjustment.print.printAdjustment', compact('salaryAdjustment', 'id', 'setting'));
     }

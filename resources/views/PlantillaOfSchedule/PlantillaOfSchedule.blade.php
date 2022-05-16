@@ -90,7 +90,7 @@
 
 
                     <div class="form-group col-4">
-                    <button id="saveBtn" class="btn btn-danger submit-btn float-right" type="submit" onclick="LockDepot()">
+                    <button id="saveBtn" class="btn btn-danger submit-btn float-right" type="submit">
                         <span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>
                         <b id='post'>Post</b>
                     </button>

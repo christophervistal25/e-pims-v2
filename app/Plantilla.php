@@ -2,12 +2,15 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Office;
+use App\Employee;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
+
 class Plantilla extends Model
 {
     public $connection = 'E_PIMS_CONNECTION';
-
+    public $table = 'plantillas';
     public const REGIONS = [
         'Region 1',
         'Region 2',
@@ -50,15 +53,22 @@ class Plantilla extends Model
 
     protected $primaryKey = 'plantilla_id';
 
+<<<<<<< HEAD
 
+=======
+    public function __construct() {
+        $this->table = DB::connection($this->connection)->getDatabaseName() . '.dbo.' . $this->getTable();
+    }
+    
+>>>>>>> 28d8afb9a0f3ad2e13bf2b113374fb83153baf59
     public function employee()
     {
-        return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
+        return $this->belongsTo(Employee::class, 'employee_id', 'Employee_id');
     }
 
     public function office()
     {
-        return $this->hasOne(Office::class, 'office_code', 'office_code');
+        return $this->hasOne(Office::class, 'OfficeCode', 'office_code');
     }
 
     public function positions()

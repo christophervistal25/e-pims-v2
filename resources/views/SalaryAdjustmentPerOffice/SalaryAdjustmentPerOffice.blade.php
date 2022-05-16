@@ -120,7 +120,7 @@
                         name="employeeOffice" data-live-search="true" id="employeeOffice" data-size="5" onchange="ValidateDropDown(this)">
                         <option></option>
                         @foreach($plantilla as $plantillas)
-                        <option data-plantilla="{{ $plantillas->office->office_name }}" value="{{ $plantillas->office->office_code }}">{{ $plantillas->office->office_name }}</option>
+                            <option data-plantilla="{{ $plantillas->office->Description }}" value="{{ $plantillas->office->OfficeCode }}">{{ $plantillas->office->Description }}</option>
                         @endforeach
                         </select>
             </div>

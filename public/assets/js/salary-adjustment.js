@@ -311,8 +311,8 @@ $(document).ready(function() {
 //  position display salary grade
 $(document).ready(function() {
     $("#employeeName").change(function() {
-        let salaryGrade = $("#salaryGrade").val();
-        let stepNo = $("#stepNo").val();
+        let salaryGrade = $("#currentSalarygrade").val();
+        let stepNo = $("#currentStepno").val();
         let currentSgyear = $("#currentSgyear").val();
         $.ajax({
             url: `/api/salaryAdjustment/${salaryGrade}/${stepNo}/${currentSgyear}`,

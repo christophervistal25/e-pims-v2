@@ -53,9 +53,9 @@
             <p class="date">{{ Carbon\Carbon::parse($salaryAdjustment->date_adjustment)->format('F d, Y' ) }}</p>
             <br>
             {{-- NAME --}}
-            <h4>{{ $salaryAdjustment->employee->firstname }} {{ $salaryAdjustment->employee->middlename }}.
-                {{ $salaryAdjustment->employee->lastname }}</h4>
-            <p>{{ $salaryAdjustment->employee->plantilla->office->office_name }}</p>
+            <h4>{{ $salaryAdjustment->employee->FirstName }} {{ $salaryAdjustment->employee->MiddleName }}.
+                {{ $salaryAdjustment->employee->LastName }}</h4>
+            <p>{{ $salaryAdjustment->employee->plantilla?->office->Description }}</p>
             <br>
             <br>
 

@@ -101,6 +101,10 @@ class Employee extends Model
         "profile",
     ];
 
+    public $appends = [
+        'fullname'
+    ];
+
     public const ACTIVE = 1;
     public const IN_ACTIVE = 0;
 
@@ -112,6 +116,7 @@ class Employee extends Model
     {
         return "{$this->LastName}, {$this->FirstName} " . substr($this->MiddleName, 0, 1) . "." . " {$this->Suffix}";
     }
+
 
     protected function FirstName(): Attribute
     {

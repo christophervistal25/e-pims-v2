@@ -2,14 +2,16 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 use DateTimeInterface;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SalaryAdjustment extends Model
 {
     use SoftDeletes;
+    public $connection = 'E_PIMS_CONNECTION';
     protected $dates = ['date_adjustment','deleted_at'];
     protected $fillable = [
         'employee_id',
@@ -26,6 +28,10 @@ class SalaryAdjustment extends Model
     protected $appends = [
         'date_adjustment_year'
     ];
+
+    public function __construct() {
+        $this->table = DB::connection($this->connection)->getDatabaseName() . '.dbo.' . $this->getTable();
+    }
 
     public function getDateAdjustmentYearAttribute()
     {

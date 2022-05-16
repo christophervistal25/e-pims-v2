@@ -99,7 +99,11 @@ return [
             'port' => '',
             'database' => 'DTRPayroll',
             'username' => 'sa',
+<<<<<<< HEAD
             'password' => 'user',
+=======
+            'password' => 'nicole',
+>>>>>>> 28d8afb9a0f3ad2e13bf2b113374fb83153baf59
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
@@ -112,7 +116,11 @@ return [
             'port' => '',
             'database' => 'E_PIMS',
             'username' => 'sa',
+<<<<<<< HEAD
             'password' => 'user',
+=======
+            'password' => 'nicole',
+>>>>>>> 28d8afb9a0f3ad2e13bf2b113374fb83153baf59
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
