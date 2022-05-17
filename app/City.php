@@ -9,6 +9,7 @@ class City extends Model
 {
     public    $incrementing = false;
     protected $primaryKey   = 'code';
+    public $keyType = 'string';
     protected $fillable     = ['name', 'status', 'province_code', 'code'];
 
     public function province()
@@ -20,7 +21,4 @@ class City extends Model
     {
         return $this->hasMany('App\Barangay', 'city_code', 'code');
     }
-
-
-
 }

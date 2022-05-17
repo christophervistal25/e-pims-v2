@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PositionSchedule extends Model
 {
-    public $connection = 'E_PIMS_CONNECTION';
+    public $connection = 'DTR_PAYROLL_CONNECTION';
     protected $dates = ['deleted_at'];
     protected $fillable = ['pos_id', 'pp_id', 'position_id' ,'item_no', 'sg_no' ,'office_code', 'old_position_name', 'year'];
 

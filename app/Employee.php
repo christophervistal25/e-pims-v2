@@ -3,7 +3,9 @@
 namespace App;
 
 use App\Position;
+use Illuminate\Support\Str;
 use App\EmployeeLeaveRecord;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\EmployeeLaraTablesAction;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -17,6 +19,7 @@ class Employee extends Model
     protected $connection = 'DTR_PAYROLL_CONNECTION';
     protected $table = 'Employees';
     public $with = ['position', 'office_charging', 'office_assignment', 'office_charging.desc'];
+    public $keyType = 'string';
 
     protected $columns = [
         "Employee_id",
@@ -101,16 +104,12 @@ class Employee extends Model
         "profile",
     ];
 
-    public $appends = [
-        'fullname'
-    ];
-
     public const ACTIVE = 1;
     public const IN_ACTIVE = 0;
 
-    public $hidden = ['ImagePhoto', 'Profile'];
-    protected $visible = ['ImagePhoto', 'Profile'];
-
+    public $appends = [
+        'fullname'
+    ];
 
     public function getFullnameAttribute()
     {
@@ -121,32 +120,40 @@ class Employee extends Model
     protected function FirstName(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => mb_strtoupper($value),
-            set: fn($value) => mb_strtoupper($value),
+            get: fn ($value) => Str::upper($value),
+            set: fn ($value) => Str::upper($value),
         );
     }
 
     protected function MiddleName(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => mb_strtoupper($value),
-            set: fn($value) => mb_strtoupper($value),
+            get: fn ($value) => Str::upper($value),
+            set: fn ($value) => Str::upper($value),
         );
     }
 
     protected function LastName(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => mb_strtoupper($value),
-            set: fn($value) => mb_strtoupper($value),
+            get: fn ($value) => Str::upper($value),
+            set: fn ($value) => Str::upper($value),
         );
     }
 
     protected function Suffix(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => mb_strtoupper($value),
-            set: fn($value) => mb_strtoupper($value),
+            get: fn ($value) => Str::upper($value),
+            set: fn ($value) => Str::upper($value),
+        );
+    }
+
+    protected function gender(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => Str::upper($value),
+            set: fn ($value) => Str::upper($value),
         );
     }
 
@@ -238,7 +245,7 @@ class Employee extends Model
 
     public function position()
     {
-        return $this->hasOne(Position::class, 'position_code', 'PosCode')->withDefault();
+        return $this->hasOne(Position::class, 'PosCode', 'position_code')->withDefault();
     }
 
     public function scopeActive($query)
@@ -278,7 +285,8 @@ class Employee extends Model
     public static function fetchWithFullInformation(string $employeeId): Employee
     {
         return self::with([
-            'family_background', 'spouse_child', 'educational_background', 'civil_service', 'work_experience', 'voluntary_work', 'program_attained', 'other_information', 'references', 'relevant_queries', 'issued_id', 'status', 'information.position', 'information.office', 'loginAccount'])->find($employeeId);
+            'family_background', 'spouse_child', 'educational_background', 'civil_service', 'work_experience', 'voluntary_work', 'program_attained', 'other_information', 'references', 'relevant_queries', 'issued_id', 'status', 'information.position', 'information.office', 'loginAccount'
+        ])->find($employeeId);
     }
 
     public function salary_adjustment()
@@ -319,5 +327,4 @@ class Employee extends Model
     {
         return $this->hasMany(CompensatoryLeave::class, 'employee_id', 'employee_id');
     }
-
 }

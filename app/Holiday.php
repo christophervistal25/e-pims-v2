@@ -11,7 +11,7 @@ class Holiday extends Model
 {
     use SoftDeletes;
 
-    public $connection = 'E_PIMS_CONNECTION';
+    public $connection = 'DTR_PAYROLL_CONNECTION';
     
     public const TYPES = ['REGULAR', 'SPECIAL NON-WORKING', 'SPECIAL WORKING'];
     
