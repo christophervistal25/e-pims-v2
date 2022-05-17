@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'DTR_PAYROLL_CONNECTION'),
 
     /*
     |--------------------------------------------------------------------------
@@ -96,9 +96,11 @@ return [
             'driver' => 'sqlsrv',
             'url' => '',
             'host' => 'SERVER-PC',
+            'host' => '',
             'port' => '',
             'database' => 'DTRPayroll',
             'username' => 'sa',
+            'password' => 'user',
             'password' => 'nicole',
             'charset' => 'utf8',
             'prefix' => '',
@@ -109,9 +111,11 @@ return [
             'driver' => 'sqlsrv',
             'url' => '',
             'host' => 'SERVER-PC',
+            'host' => '',
             'port' => '',
             'database' => 'E_PIMS',
             'username' => 'sa',
+            'password' => 'user',
             'password' => 'nicole',
             'charset' => 'utf8',
             'prefix' => '',

@@ -157,6 +157,7 @@ class Employee extends Model
         );
     }
 
+    // PLANTILLA //
     public function plantilla()
     {
         return $this->hasOne(Plantilla::class, 'employee_id', 'Employee_id');

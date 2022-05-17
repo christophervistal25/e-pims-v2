@@ -53,11 +53,12 @@ class Plantilla extends Model
 
     protected $primaryKey = 'plantilla_id';
 
+
     public function __construct()
     {
         $this->table = DB::connection($this->connection)->getDatabaseName() . '.dbo.' . $this->getTable();
     }
-
+    
     public function employee()
     {
         return $this->belongsTo(Employee::class, 'employee_id', 'Employee_id');
@@ -82,17 +83,22 @@ class Plantilla extends Model
     {
         return $this->hasOne('App\Position', 'position_id', 'pp_id');
     }
+
     public function plantillaPosition()
     {
-        return $this->hasOne('App\PlantillaPosition', 'pp_id', 'pp_id');
+        return $this->hasOne('App\PlantillaPosition', 'position_id', 'pp_id');
     }
-    public function salary_adjustment()
+
+    public function salary_adjustment() 
     {
         $this->primaryKey = 'employee_id';
         return $this->hasMany(SalaryAdjustment::class, 'employee_id', 'employee_id');
     }
+
     public function PlantillaSchedule()
     {
         return $this->belongsTo(PlantillaSchedule::class, 'plantilla_id', 'plantilla_id');
     }
+
+    
 }

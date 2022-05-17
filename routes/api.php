@@ -658,4 +658,16 @@ Route::post('/position/schedule/adjust', function () {
     return response()->json(['success' => true]);
 });
 
+
+
+// NOTICE OF STEP INCREMENT ---FETCH SALARY GRADE //
+Route::get('step/{sg_no}/{step}', function ($sgNo, $step) {
+    $salaryGrade = SalaryGrade::where('sg_no', $sgNo)->first(['sg_step' . $step]);
+    // dd($salaryGrade);
+
+    return $salaryGrade;
+});
+
+
+// LEAVE LIST //
 Route::get('/leave/leave-list/{officeID}/{status?}/{employeeID?}', 'EmployeeLeave\LeaveListController@search');
