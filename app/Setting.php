@@ -6,9 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model
 {
-    protected $fillable = [    
-        'key_id',
-        'key_value',
+    protected $fillable = [
+        'Keyname',
+        'Keyvalue',
     ];
-    protected $primaryKey = 'key_id';
+
+    public $timestamps = false;
+    public $incrementing = false;
+    public $primaryKey = 'Keyname';
 }

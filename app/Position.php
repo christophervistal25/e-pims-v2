@@ -13,9 +13,9 @@ class Position extends Model
     use SoftDeletes;
     public $connection = 'DTR_PAYROLL_CONNECTION';
     public $incrementing  = false;
-    public $table = 'position';
+    public $table = 'Position';
     public $primaryKey = 'PosCode';
-    protected $fillable = ['PosCode', 'Description', 'SalaryGrade', 'ShortName'];
+    protected $fillable = ['position_id', 'PosCode', 'Description', 'sg_no', 'position_short_name'];
 
     public function __construct()
     {

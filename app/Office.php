@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+
 use App\Office2;
 use App\Plantilla;
 use Illuminate\Support\Facades\Cache;
