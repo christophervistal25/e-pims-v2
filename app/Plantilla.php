@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Plantilla extends Model
 {
-    public $connection = 'E_PIMS_CONNECTION';
+    public $connection = 'DTR_PAYROLL_CONNECTION';
     public $table = 'plantillas';
     public const REGIONS = [
         'Region 1',
@@ -29,7 +29,7 @@ class Plantilla extends Model
         'CARAGA',
         'ARMM',
     ];
-    
+
     protected $fillable = [
         'plantilla_id',
         'old_item_no',
@@ -53,13 +53,20 @@ class Plantilla extends Model
 
     protected $primaryKey = 'plantilla_id';
 
-    public function __construct() {
+
+    public function __construct()
+    {
         $this->table = DB::connection($this->connection)->getDatabaseName() . '.dbo.' . $this->getTable();
     }
     
     public function employee()
     {
         return $this->belongsTo(Employee::class, 'employee_id', 'Employee_id');
+    }
+
+    public function employee_record()
+    {
+        return $this->hasOne(Employee::class, 'Employee_id', 'employee_id');
     }
 
     public function office()

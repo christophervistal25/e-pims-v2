@@ -94,6 +94,7 @@ Route::resource('employees-birthday', 'BirthdayController');
 Route::get('employees', 'EmployeeController@index')->name('employee.index');
 
 Route::group(['prefix' => 'employee'], function () {
+
     Route::post('/record/store', 'EmployeeController@store')->name('employee.store');
     Route::put('/record/{employeeId}/update', 'EmployeeController@update')->name('employee.update');
 
@@ -156,16 +157,15 @@ Route::group(['prefix' => 'employee'], function () {
     Route::get('/leave/compensatory-build-up/updateForfeited/{emloyeeID}/{year}', 'EmployeeLeave\CompensatoryBuildUpController@updateForfeited');
     Route::post('/compensatory-build-up/{id}', 'EmployeeLeave\CompensatoryBuildUpController@destroy');
     Route::resource('/compensatory-build-up', 'EmployeeLeave\CompensatoryBuildUpController');
-
 });
 
 Route::group(['prefix' => 'maintenance'], function () {
-        Route::get('leave/list', 'Maintenance\LeaveController@list');
-        Route::resource('leaveIncrement', 'Maintenance\LeaveIncrementController');
-        Route::resource('leave', 'Maintenance\LeaveController');
+    Route::get('leave/list', 'Maintenance\LeaveController@list');
+    Route::resource('leaveIncrement', 'Maintenance\LeaveIncrementController');
+    Route::resource('leave', 'Maintenance\LeaveController');
 });
 
-Route::get('holiday/attribute', function() {
+Route::get('holiday/attribute', function () {
     return App\Holiday::get();
 });
 
@@ -190,18 +190,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('employee-dashboard', 'Account\Employee\DashboardController')->name('employee.dashboard');
 
     Route::get('employee-setting', function () {
-
     })->name('employee.setting');
 
     Route::get('employee-leave-application-print/{id}', 'Account\Employee\LeaveApplicationController@print')
-                                        ->name('employee.leave.application.filling');
+        ->name('employee.leave.application.filling');
 
     Route::group(['middleware' => 'verify.application.submitted'], function () {
         // Route for Leave Application filling.
         Route::get('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@create')
-                                        ->name('employee.leave.application.filling');
+            ->name('employee.leave.application.filling');
         Route::post('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@store')
-                                            ->name('employee.leave.application.filling.submit');
+            ->name('employee.leave.application.filling.submit');
     });
 
     // Route for Employee Personal Data Sheet
@@ -213,8 +212,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('employee-update-account-information', 'Account\Employee\ProfileController@update')->name('employee.update.account.information');
 
     // Employee Leave Card
-    Route::get('employee-leave-card' , 'Account\Employee\LeaveCardController@index')->name('employee.leave.card.index');
-    Route::get('employee-leave-card/{start?}/{end?}' , 'Account\Employee\LeaveCardController@withRange')->name('employee.leave.card.with.range.index');
+    Route::get('employee-leave-card', 'Account\Employee\LeaveCardController@index')->name('employee.leave.card.index');
+    Route::get('employee-leave-card/{start?}/{end?}', 'Account\Employee\LeaveCardController@withRange')->name('employee.leave.card.with.range.index');
     Route::post('employee-leave-card-print', 'Account\Employee\LeaveCardController@print')->name('employee.leave.card.print');
 
 
@@ -238,3 +237,7 @@ Route::post('leave-increment-job', 'LeaveIncrementJobController');
 Route::get('create-employee', function () {
     return view('employee.create');
 });
+
+Route::get('personal-data-sheet/{idNumber}', function (string $idNumber) {
+    return view('employee.personal-data-sheet.edit')->with('employeeID', $idNumber);
+})->name('employee.personal-data-sheet.edit');

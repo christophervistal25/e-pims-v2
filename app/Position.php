@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,11 +11,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Position extends Model
 {
     use SoftDeletes;
-    public $connection = 'E_PIMS_CONNECTION';
+    public $connection = 'DTR_PAYROLL_CONNECTION';
     public $incrementing  = false;
-    public $table = 'positions';
-    public $primaryKey = 'position_code';
-    protected $fillable = ['position_id', 'position_code' ,'position_name', 'sg_no' ,'position_short_name'];
+    public $table = 'Position';
+    public $primaryKey = 'PosCode';
+    protected $fillable = ['position_id', 'PosCode', 'Description', 'sg_no', 'position_short_name'];
+
+    public function __construct()
+    {
+        $this->table = DB::connection($this->connection)->getDatabaseName() . '.dbo.' . $this->getTable();
+    }
 
     public function getPositionNameAttribute($value)
     {
@@ -52,8 +58,4 @@ class Position extends Model
     {
         return $this->belongsTo(PositionSchedule::class, 'position_id', 'position_id');
     }
-
-
 }
-
-

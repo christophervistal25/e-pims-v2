@@ -95,11 +95,11 @@ return [
         'DTR_PAYROLL_CONNECTION' => [
             'driver' => 'sqlsrv',
             'url' => '',
-            'host' => '',
+            'host' => 'SERVER-PC',
             'port' => '',
             'database' => 'DTRPayroll',
             'username' => 'sa',
-            'password' => 'user',
+            'password' => 'nicole',
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
@@ -108,11 +108,11 @@ return [
         'E_PIMS_CONNECTION' => [
             'driver' => 'sqlsrv',
             'url' => '',
-            'host' => '',
+            'host' => 'SERVER-PC',
             'port' => '',
             'database' => 'E_PIMS',
             'username' => 'sa',
-            'password' => 'user',
+            'password' => 'nicole',
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
@@ -150,7 +150,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [

@@ -16,25 +16,25 @@ class MaintenancePositionController extends Controller
      */
     public function index()
     {
-        $lastId = Position::latest('position_code')->first();
+        $lastId = Position::latest('PosCode')->first();
         return view('MaintenancePosition.position', compact('lastId'));
     }
 
     public function list(Request $request)
     {
         if ($request->ajax()) {
-            $data = Position::select('position_id','position_code', 'position_name', 'sg_no', 'position_short_name')->get();
+            $data = Position::select('position_id', 'PosCode', 'Description', 'sg_no', 'position_short_name')->get();
             return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action', function($row){
-                        $btn = "<a title='Edit Position' href='". route('maintenance-position.edit', $row->position_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-                        $btn = $btn."<a title='Delete Position' id='delete' value='$row->position_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = "<a title='Edit Position' href='" . route('maintenance-position.edit', $row->position_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+                    $btn = $btn . "<a title='Delete Position' id='delete' value='$row->position_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
                         ";
-                            return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
-                    return view('MaintenancePosition.position');
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+            return view('MaintenancePosition.position');
         }
     }
     /**
@@ -63,12 +63,13 @@ class MaintenancePositionController extends Controller
 
         ]);
         $position = new Position;
-        $position->position_code                = $request['positionCode'];
-        $position->position_name                = $request['positionName'];
-        $position->sg_no                        = $request['salaryGradeNo'];
-        $position->position_short_name          = $request['positionShortName'];
+        $position->position_id = Position::latest('position_id')->first()->position_id + 1 ?? 1;
+        $position->PosCode             = $request['positionCode'];
+        $position->Description         = $request['positionName'];
+        $position->sg_no               = $request['salaryGradeNo'];
+        $position->position_short_name = $request['positionShortName'];
         $position->save();
-        return response()->json(['success'=>true]);
+        return response()->json(['success' => true]);
     }
 
     /**
@@ -111,13 +112,14 @@ class MaintenancePositionController extends Controller
         ]);
         $position                               = Position::where('position_id', $position_id)->first();
 
-        $position->position_code                = $request['positionCode'];
-        $position->position_name                = $request['positionName'];
+        $position->PosCode                = $request['positionCode'];
+        $position->Description                = $request['positionName'];
         $position->sg_no                        = $request['salaryGradeNo'];
         $position->position_short_name          = $request['positionShortName'];
         $position->save();
+
         Session::flash('alert-success', 'Position Updated Successfully');
-        return back()->with('success','Updated Successfully');
+        return back();
     }
 
     /**
@@ -135,6 +137,6 @@ class MaintenancePositionController extends Controller
     public function delete($id)
     {
         Position::find($id)->delete();
-        return json_encode(array('statusCode'=>200));
+        return json_encode(array('statusCode' => 200));
     }
 }
