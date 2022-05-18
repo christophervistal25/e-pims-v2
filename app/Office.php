@@ -10,29 +10,22 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Office extends Model
 {
-
     public $incrementing = false;
-    public const HR_OFFICE_CODE = 10050;
-    protected $primaryKey = 'OfficeCode';
+
+    protected $primaryKey = 'office_code';
     protected $keyType = 'string';
-    public $table = 'Office';
+    public $table = 'Offices';
     public $connection = 'DTR_PAYROLL_CONNECTION';
     public $timestamps = false;
 
     protected $fillable = [
-        'OfficeCode',
-        'Description',
-        'DepartmentCode',
-        'OfficeCode2',
-        // 'office_short_name',
-        // 'office_head',
-        // 'position_name',
-        // 'office_address',
-        // 'office_short_address',
+        'office_code',
+        'office_name',
+        'office_short_name',
+        'office_address',
+        'office_short_address',
+        'position_name',
     ];
-
-    public const ID_PREFIX = '1';
-
 
     public function office()
     {
