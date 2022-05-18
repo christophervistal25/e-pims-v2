@@ -13,7 +13,8 @@ class CreateDivisionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('divisions', function (Blueprint $table) {
+        Schema::create('divisions', function (Blueprint $table)
+        {
             $table->id('division_id');
             $table->string('division_name');
             $table->string('office_code');
