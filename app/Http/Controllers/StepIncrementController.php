@@ -19,28 +19,28 @@ class StepIncrementController extends Controller
     //  SHOW DATA IN YAJRA TABLE //
     public function list()
     {
-
-        $data = DB::connection('E_PIMS_CONNECTION')->table('step_increments')
-
-            ->leftJoin('DTRPayroll.dbo.Employees', 'step_increments.employee_id', '=', 'DTRPayroll.dbo.Employees.Employee_id')
-            ->leftJoin('positions', 'step_increments.position_id', '=', 'positions.position_id')
-            ->select('id', 'date_step_increment', DB::raw('CONCAT(FirstName, " " , MiddleName , " " , LastName, " " , Suffix) AS fullname'), 'position_name', 'item_no', 'date_latest_appointment',
-            DB::raw('CONCAT(sg_no_from, "-" , step_no_from) AS sg_from_and_step_from'), 'salary_amount_from', DB::raw('CONCAT(sg_no_to, "-" , step_no_to) AS sg_to_and_step_to'), 'salary_amount_to', 'salary_diff')
+        $data = DB::table('Step_increments')
+            ->leftJoin('Employees', 'Step_increments.employee_id', '=', 'Employees.Employee_id')
+            ->leftJoin('Position', 'Step_increments.position_id', '=', 'Position.PosCode')
+            ->select('id', 'date_step_increment', DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"), 'Description', 'item_no', 'last_latest_appointment',
+            DB::raw("CONCAT(sg_no_from, '-' , step_no_from) AS sg_from_and_step_from"), 'salary_amount_from', DB::raw("CONCAT(sg_no_to, '-' , step_no_to) AS sg_to_and_step_to"), 'salary_amount_to', 'salary_diff')
             
 
-            ->where('step_increments.deleted_at', null)
+            ->where('Step_increments.deleted_at', null)
             ->get();
 
-        dd($data);
+        // dd($data);
+
+    
 
 
         if($data->count() === 0)
         {
-            $data = $data->where('delete_at', null);
+            $data = $data->where('deleted_at', null);
         }
 
 
-            return Datatables::of($data)
+            return DataTables::of($data)
                 ->addColumn('salary_amount_from', function ($row) {
                     return '₱' . number_format($row->salary_amount_from, 2, '.', ',');
                 })
@@ -75,12 +75,7 @@ class StepIncrementController extends Controller
     {
         
         $employees = Employee::whereDoesntHave('step')->with(['plantilla'])->get();
-        // $employees = DB::connection('E_PIMS_CONNECTION')->table('plantillas')
-        //     ->join('DTRPayroll.dbo.Employees', 'plantillas.employee_id', '=', 'DTRPayroll.dbo.Employees.Employee_id')
-        //     ->join('positions', 'plantillas.pp_id', '=', 'positions.position_code')
-        //     ->select('DTRPayroll.dbo.Employees.Employee_id', 'plantillas.plantilla_id', 'plantillas.item_no', 'plantillas.pp_id', 'plantillas.sg_no', 'plantillas.salary_amount', 'plantillas.date_last_promotion', DB::raw("CONCAT(FirstName, ' ' , MiddleName, ' ' , LastName, ' ', Suffix) AS fullname"))
-        //     ->get();
-        // dd($employees);
+    
 
         return view('StepIncrement.create', compact('employees'));
 
@@ -107,6 +102,7 @@ class StepIncrementController extends Controller
      //  POST METHOD //
     public function store(Request $request)
     {
+      
         $this->validate($request, [
                 'employeeName'      => 'required',
                 'dateStepIncrement' => 'required',
@@ -114,12 +110,12 @@ class StepIncrementController extends Controller
         ]);
 
 
-        $step_increments = DB::connection('E_PIMS_CONNECTION')->table('step_increments')->insert([
+        $step_increments = DB::table('Step_increments')->insert([
                 'employee_id'               => $request->employeeID,
                 'item_no'                   => $request->itemNoFrom,
                 'position_id'               => $request->positionID,
                 'date_step_increment'       => $request->dateStepIncrement,
-                'date_latest_appointment'   => $request->datePromotion,
+                'last_latest_appointment'   => $request->datePromotion,
                 'sg_no_from'                => $request->sgNoFrom,
                 'step_no_from'              => $request->stepNoFrom,
                 'salary_amount_from'        => $request->amountFrom,

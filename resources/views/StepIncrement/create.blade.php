@@ -302,8 +302,8 @@
                 },
                 {
                     className: 'text-truncate',
-                    data: 'position_name',
-                    name: 'position_name',
+                    data: 'Description',
+                    name: 'Description',
                     searchable: true,
                     sortable: false,
                     visible: true
@@ -316,8 +316,8 @@
                     visible: true
                 },
                 {
-                    data: 'date_latest_appointment',
-                    name: 'date_latest_appointment',
+                    data: 'last_latest_appointment',
+                    name: 'last_latest_appointment',
                     searchable: true,
                     sortable: false,
                     visible: true

@@ -53,14 +53,10 @@ class Plantilla extends Model
 
     protected $primaryKey = 'plantilla_id';
 
-<<<<<<< HEAD
-
-=======
     public function __construct() {
         $this->table = DB::connection($this->connection)->getDatabaseName() . '.dbo.' . $this->getTable();
     }
     
->>>>>>> 28d8afb9a0f3ad2e13bf2b113374fb83153baf59
     public function employee()
     {
         return $this->belongsTo(Employee::class, 'employee_id', 'Employee_id');

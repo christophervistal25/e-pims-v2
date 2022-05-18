@@ -9,7 +9,7 @@ use App\Employee;
 use App\SalaryGrade;
 use App\Office;
 use App\Position;
-use App\PlantillaPosition;
+use App\PlantillaPosition;  
 use App\Division;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
