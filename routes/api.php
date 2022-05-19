@@ -316,46 +316,6 @@ Route::post('/salary-adjustment-per-office', function () {
     return response()->json(['success' => true]);
 });
 
-// plantilla position filter
-Route::get('/plantilla/position/{officeCode}', function ($office_code) {
-    $data = DB::connection('E_PIMS_CONNECTION')
-        ->table('plantilla_positions')
-        ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
-        ->join('offices', 'plantilla_positions.office_code', 'offices.office_code')
-        ->select('pp_id', 'positions.position_name', 'item_no', 'plantilla_positions.sg_no', 'plantilla_positions.office_code', 'offices.office_name', 'old_position_name', 'year')
-        ->where('plantilla_positions.office_code', $office_code)
-        ->get();
-    return DataTables::of($data)
-
-        ->addColumn('action', function ($row) {
-            $btn = "<a title='Edit Plantilla Of Position' href='" . route('plantilla-of-position.edit', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-            $btn = $btn . "<a title='Delete Plantilla Of Position' id='delete' value='$row->pp_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
-                        ";
-            return $btn;
-        })
-        ->rawColumns(['action'])
-        ->make(true);
-    //old query
-    // $data = PlantillaPosition::select('pp_id', 'position_id','item_no', 'sg_no', 'office_code', 'old_position_name', 'year')->with('position:position_id,position_name', 'office:office_code,office_name')->where('office_code', $office_code)->get();
-    // return Datatables::of($data)
-    //                 ->addIndexColumn()
-    //                 ->addColumn('position', function ($row) {
-    //                     return $row->position->position_name;
-    //                 })
-    //                 ->addColumn('office', function ($row) {
-    //                     return $row->office->office_name;
-    //                 })
-    //                 ->addColumn('action', function($row){
-
-    //                     $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-position.edit', $row->pp_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-    //                     $btn = $btn."<a title='Delete Position' id='delete' value='$row->pp_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
-    //                     ";
-    //                         return $btn;
-    //                 })
-    //                 ->rawColumns(['action'])
-    //                 ->make(true);
-});
-
 // plantilla personnel filter
 Route::get('/plantilla/personnel/{officeCode}', function ($office_code) {
     $data = DB::table('plantillas')->join('offices', 'plantillas.office_code', '=', 'offices.office_code')

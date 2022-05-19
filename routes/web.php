@@ -55,8 +55,9 @@ Route::resource('/plantilla-of-personnel', 'PlantillaController');
 
 //plantilla of position
 Route::resource('/plantilla-of-position', 'PlantillaOfPositionController');
-Route::get('/plantilla-of-position-list', 'PlantillaOfPositionController@list');
-Route::get('/plantilla-of-position/{id}', 'PlantillaOfPositionController@destroy')->name('plantilla-of-position.delete');
+Route::get('/plantilla-of-position-list/{office_code?}', 'PlantillaOfPositionController@list');
+Route::get('/plantilla-of-position/{id}', 'PlantillaOfPositionController@destroy')->name('plantilla-of-position.destroy');
+Route::put('/plantilla-of-position/{id}', 'PlantillaOfPositionController@update');
 
 // Step-Increment //
 Route::get('/step-increment/list', 'StepIncrementController@list');
