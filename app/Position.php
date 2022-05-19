@@ -15,7 +15,7 @@ class Position extends Model
     public $incrementing  = false;
     public $table = 'Position';
     public $primaryKey = 'PosCode';
-    protected $fillable = ['Description', 'sg_no' ,'position_short_name'];
+    protected $fillable = ['PosCode', 'Description', 'sg_no', 'position_short_name'];
 
     public function getPositionNameAttribute($value)
     {
