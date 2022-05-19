@@ -63,6 +63,27 @@
                 <div class="container">
                     <div class="row justify-content-center align-items-center">
                         <div class="row">
+
+                            <div class=" col-6 col-md-6 col-lg-6">
+                                <label class="has-float-label officeCode mb-0">
+                                <select value=""
+                                    class="form-control selectpicker"
+                                    name="officeCode" data-live-search="true" id="officeCode" data-size="4"
+                                    data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                    <option></option>
+                                    @foreach($office as $offices)
+                                        <option {{ old('office_code') == $offices->office_code ? 'selected' : '' }} value="{{ $offices->office_code}}">
+                                            {{ $offices->office_name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="font-weight-bold">OFFICE<span class="text-danger">*</span></span>
+                            </label>
+                                <div id='office-error-message' class='text-danger text-sm'>
+                                </div>
+                            </div>
+
+
+
                         <div class=" col-6 col-md-6 col-lg-6">
                             <label class="has-float-label mb-0">
                             <input value="{{ old('itemNo') }}"
@@ -77,14 +98,14 @@
                         <div class="col-5 col-lg-5">
                             <label class="has-float-label positionTitle mb-0">
                             <select value=""
-                                class="form-control selectpicker"
+                                class="form-control form-control-xs selectpicker"
                                 name="positionTitle" data-live-search="true" id="positionTitle" data-size="4"
                                 data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <option></option>
                                 @foreach($position as $positions)
                                 <option data-position="{{ $positions }}" style="width:350px;"
-                                    {{ old('positionTitle') == $positions->position_id ? 'selected' : '' }}
-                                    value="{{ $positions->position_id}}">{{ $positions->position_name }}</option>
+                                    {{ old('positionTitle') == $positions->PosCode ? 'selected' : '' }}
+                                    value="{{ $positions->PosCode}}">{{ $positions->Description }}</option>
                                 @endforeach
                             </select>
                             <span class="font-weight-bold">POSITION<span class="text-danger">*</span></span>
@@ -134,9 +155,9 @@
                                     </div>
 
                                     <div class=" col-12 col-md-6 col-lg-12">
-                                        <label class="has-float-label mb-0">
+                                        <label class="has-float-label addSalaryGrade mb-0">
                                         <select value=""
-                                            class="form-control selectpicker  {{ $errors->has('addSalaryGrade')  ? 'is-invalid' : ''}}"
+                                            class="form-control form-control-xs selectpicker  {{ $errors->has('addSalaryGrade')  ? 'is-invalid' : ''}}"
                                             name="addSalaryGrade" data-live-search="true" id="addSalaryGrade" data-size="4"
                                             data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                             <option></option>
@@ -203,23 +224,7 @@
                             </div>
                         </div>
 
-                        <div class=" col-6 col-md-6 col-lg-6">
-                            <label class="has-float-label officeCode mb-0">
-                            <select value=""
-                                class="form-control selectpicker"
-                                name="officeCode" data-live-search="true" id="officeCode" data-size="4"
-                                data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <option></option>
-                                @foreach($office as $offices)
-                                    <option {{ old('officeCode') == $offices->OfficeCode ? 'selected' : '' }} value="{{ $offices->OfficeCode}}">
-                                        {{ $offices->Description }}</option>
-                                @endforeach
-                            </select>
-                            <span class="font-weight-bold">OFFICE<span class="text-danger">*</span></span>
-                        </label>
-                            <div id='office-error-message' class='text-danger text-sm'>
-                            </div>
-                        </div>
+
 
 
                         <div class="col-6 col-md-6 col-lg-6">
@@ -261,7 +266,7 @@
                     name="employeeOffice" data-live-search="true" id="employeeOffice" data-size="5">
                     <option value="">All</option>
                     @foreach($office as $offices)
-                        <option value="{{ $offices->OfficeCode }}">{{ $offices->Description }}</option>
+                        <option value="{{ $offices->office_code }}">{{ $offices->office_name }}</option>
                     @endforeach
                     </select>
             </div>
@@ -304,10 +309,10 @@
     });
 
     $(document).on("click", ".delete", function () {
-        let $ele = $(this).parent().parent();
-        let id = $(this).attr("value");;
+        // let $ele = $(this).parent().parent();
+        let id = $(this).attr("value");
         let url = /plantilla-of-position/;
-        let dltUrl = url + id;
+        let deleteUrl = url + id;
         swal({
                 title: "Are you sure you want to delete?",
                 text: "Once deleted, you will not be able to recover this record!",
@@ -318,7 +323,7 @@
             .then((willDelete) => {
                 if (willDelete) {
                     $.ajax({
-                        url: dltUrl,
+                        url: deleteUrl,
                         type: "DELETE",
                         cache: false,
                         data: {
