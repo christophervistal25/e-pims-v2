@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class LeaveType extends Model
 {
-    public $connection = 'E_PIMS_CONNECTION';
-    public $table = 'leave_types';
+    public $connection = 'DTR_PAYROLL_CONNECTION';
+    public $table = 'Leave_type';
     
     protected $fillable = [
-        'name',
-        'code',
+        'leave_type_id',
         'description',
+        'description2',
         'days_period',
         'convertible_to_cash',
         'applicable_gender',

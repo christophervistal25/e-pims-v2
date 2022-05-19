@@ -47,7 +47,7 @@ class Employee extends Model
         "employment_to",
         "gsis_no",
         "dbp_account_no",
-        "Email",
+        "Email_address",
         "BirthPlace",
         "sg_no",
         "step",
@@ -89,7 +89,7 @@ class Employee extends Model
         "employment_to",
         "gsis_no",
         "dbp_account_no",
-        "Email",
+        "Email_address",
         "BirthPlace",
         "sg_no",
         "step",
@@ -239,7 +239,7 @@ class Employee extends Model
 
     public function position()
     {
-        return $this->hasOne(Position::class, 'position_code', 'PosCode')->withDefault();
+        return $this->hasOne(Position::class, 'PosCode', 'PosCode')->withDefault();
     }
 
     public function scopeActive($query)
