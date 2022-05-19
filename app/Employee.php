@@ -22,86 +22,141 @@ class Employee extends Model
     public $keyType = 'string';
 
     protected $columns = [
-        "Employee_id",
-        "LastName",
-        "FirstName",
-        "MiddleName",
-        "Suffix",
-        "OfficeCode",
-        "OfficeCode2",
-        "PosCode",
-        "Designation",
-        "Gender",
-        "CivilStatus",
-        "Birthdate",
-        "Address",
-        "ContactNumber",
-        "TimeCode",
-        "ImagePhoto",
-        "isActive",
-        "isHead",
-        "Work_Status",
-        "pagibig_no",
-        "philhealth_no",
-        "sss_no",
-        "tin_no",
-        "lbp_account_no",
-        "employment_from",
-        "employment_to",
-        "gsis_no",
-        "dbp_account_no",
-        "Email",
-        "BirthPlace",
-        "sg_no",
-        "step",
-        "salary_rate",
-        "notes",
-        "temp_id",
-        "created_at",
-        "updated_at",
-        "profile",
-        "sg_year",
+        'Employee_id',
+        'LastName',
+        'FirstName',
+        'MiddleName',
+        'Suffix',
+        'OfficeCode',
+        'OfficeCode2',
+        'PosCode',
+        'Designation',
+        'Gender',
+        'CivilStatus',
+        'Birthdate',
+        'Address',
+        'ContactNumber',
+        'TimeCode',
+        'ImagePhoto',
+        'isActive',
+        'isHead',
+        'Work_Status',
+        'pagibig_no',
+        'philhealth_no',
+        'sss_no',
+        'tin_no',
+        'lbp_account_no',
+        'employment_from',
+        'employment_to',
+        'gsis_no',
+        'dbp_account_no',
+        'Email_address',
+        'BirthPlace',
+        'sg_no',
+        'step',
+        'salary_rate',
+        'notes',
+        'temp_id',
+        'profile',
+        'sg_year',
+        'created_at',
+        'updated_at',
+        'civil_status_others',
+        'height',
+        'weight',
+        'blood_type',
+        'gsis_policy_no',
+        'gsis_bp_no',
+        'agency_employee_no',
+        'citizenship',
+        'citizenship_by',
+        'indicate_country',
+        'residential_house_no',
+        'residential_street',
+        'residential_village',
+        'residential_barangay',
+        'residential_city',
+        'residential_province',
+        'residential_zip_code',
+        'permanent_house_no',
+        'permanent_street',
+        'permanent_village',
+        'permanent_barangay',
+        'permanent_city',
+        'permanent_province',
+        'permanent_zip_code',
+        'telephone_no',
+        'first_day_of_service',
+        'office_code',
     ];
 
     protected $fillable = [
-        "Employee_id",
-        "LastName",
-        "FirstName",
-        "MiddleName",
-        "Suffix",
-        "OfficeCode",
-        "OfficeCode2",
-        "PosCode",
-        "Designation",
-        "Gender",
-        "CivilStatus",
-        "Birthdate",
-        "Address",
-        "ContactNumber",
-        "TimeCode",
-        "ImagePhoto",
-        "isActive",
-        "isHead",
-        "Work_Status",
-        "pagibig_no",
-        "philhealth_no",
-        "sss_no",
-        "tin_no",
-        "lbp_account_no",
-        "employment_from",
-        "employment_to",
-        "gsis_no",
-        "dbp_account_no",
-        "Email",
-        "BirthPlace",
-        "sg_no",
-        "step",
-        "salary_rate",
-        "notes",
-        "temp_id",
-        "created_at",
-        "updated_at",
-        "profile",
+        'Employee_id',
+        'LastName',
+        'FirstName',
+        'MiddleName',
+        'Suffix',
+        'OfficeCode',
+        'OfficeCode2',
+        'PosCode',
+        'Designation',
+        'Gender',
+        'CivilStatus',
+        'Birthdate',
+        'Address',
+        'ContactNumber',
+        'TimeCode',
+        'ImagePhoto',
+        'isActive',
+        'isHead',
+        'Work_Status',
+        'pagibig_no',
+        'philhealth_no',
+        'sss_no',
+        'tin_no',
+        'lbp_account_no',
+        'employment_from',
+        'employment_to',
+        'gsis_no',
+        'dbp_account_no',
+        'Email_address',
+        'BirthPlace',
+        'sg_no',
+        'step',
+        'salary_rate',
+        'notes',
+        'temp_id',
+        'profile',
+        'sg_year',
+        'created_at',
+        'updated_at',
+        'civil_status_others',
+        'height',
+        'weight',
+        'blood_type',
+        'gsis_policy_no',
+        'gsis_bp_no',
+        'agency_employee_no',
+        'citizenship',
+        'citizenship_by',
+        'indicate_country',
+        'residential_house_no',
+        'residential_street',
+        'residential_village',
+        'residential_barangay',
+        'residential_city',
+        'residential_province',
+        'residential_zip_code',
+        'permanent_house_no',
+        'permanent_street',
+        'permanent_village',
+        'permanent_barangay',
+        'permanent_city',
+        'permanent_province',
+        'permanent_zip_code',
+        'telephone_no',
+        'first_day_of_service',
+        'office_code',
     ];
 
     public const ACTIVE = 1;
@@ -110,6 +165,37 @@ class Employee extends Model
     public $appends = [
         'fullname'
     ];
+
+    public function residential_province()
+    {
+        return $this->hasOne(Province::class, 'province_code', 'residential_province')->select('province_code', 'name');
+    }
+
+    public function residential_city()
+    {
+        return $this->hasOne(City::class, 'city_code', 'residential_city')->select('province_code', 'city_code', 'name');
+    }
+
+    public function residential_barangay()
+    {
+        return $this->hasOne(Barangay::class, 'barangay_code', 'residential_barangay')->select('barangay_code', 'province_code', 'city_code', 'name');
+    }
+
+    public function permanent_province()
+    {
+        return $this->hasOne(Province::class, 'province_code', 'permanent_province')->select('province_code', 'name');
+    }
+
+    public function permanent_city()
+    {
+        return $this->hasOne(City::class, 'city_code', 'permanent_city')->select('province_code', 'city_code', 'name');
+    }
+
+    public function permanent_barangay()
+    {
+        return $this->hasOne(Barangay::class, 'barangay_code', 'permanent_barangay')->select('barangay_code', 'province_code', 'city_code', 'name');
+    }
+
 
     public function getFullnameAttribute()
     {
@@ -149,6 +235,8 @@ class Employee extends Model
         );
     }
 
+
+
     protected function gender(): Attribute
     {
         return Attribute::make(
@@ -157,12 +245,12 @@ class Employee extends Model
         );
     }
 
-    // PLANTILLA //
+
     public function plantilla()
     {
         return $this->hasOne(Plantilla::class, 'employee_id', 'Employee_id');
     }
-
+    
     public function PlantillaSchedule()
     {
         return $this->hasOne(PlantillaSchedule::class, 'employee_id', 'employee_id');
@@ -246,7 +334,7 @@ class Employee extends Model
 
     public function position()
     {
-        return $this->hasOne(Position::class, 'PosCode', 'position_code')->withDefault();
+        return $this->hasOne(Position::class, 'PosCode', 'PosCode')->withDefault();
     }
 
     public function scopeActive($query)
@@ -274,12 +362,12 @@ class Employee extends Model
 
     public function office_charging()
     {
-        return $this->hasOne(Office::class, 'OfficeCode', 'OfficeCode');
+        return $this->hasOne(Office::class, 'office_code', 'OfficeCode')->withDefault();
     }
 
     public function office_assignment()
     {
-        return $this->hasOne(Office2::class, 'OfficeCode2', 'OfficeCode2');
+        return $this->hasOne(Office2::class, 'OfficeCode2', 'OfficeCode2')->withDefault();
     }
 
 
