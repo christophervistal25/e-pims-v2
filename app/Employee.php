@@ -274,7 +274,7 @@ class Employee extends Model
 
     public function office_charging()
     {
-        return $this->hasOne(Office::class, 'OfficeCode', 'OfficeCode');
+        return $this->hasOne(Office::class, 'office_code', 'OfficeCode');
     }
 
     public function office_assignment()
@@ -299,7 +299,7 @@ class Employee extends Model
     // STEP-INCREMENT //
     public function step()
     {
-        return $this->hasOne(StepIncrement::class, 'employee_id', 'employee_id');
+        return $this->hasOne(StepIncrement::class, 'employee_id', 'Employee_id');
     }
 
     // LEAVE BALANCE //
