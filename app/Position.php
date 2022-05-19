@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -52,8 +53,4 @@ class Position extends Model
     {
         return $this->belongsTo(PositionSchedule::class, 'position_id', 'PosCode');
     }
-
-
 }
-
-

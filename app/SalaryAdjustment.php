@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class SalaryAdjustment extends Model
 {
     use SoftDeletes;
-    public $connection = 'E_PIMS_CONNECTION';
+    public $connection = 'DTR_PAYROLL_CONNECTION';
     protected $dates = ['date_adjustment','deleted_at'];
     protected $fillable = [
         'employee_id',

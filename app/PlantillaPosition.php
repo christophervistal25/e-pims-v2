@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class PlantillaPosition extends Model
 {
     // use SoftDeletes;
-    public $connection = 'E_PIMS_CONNECTION';
+    public $connection = 'DTR_PAYROLL_CONNECTION';
     
     protected $dates = ['deleted_at'];
     protected $fillable = ['pp_id', 'position_id' ,'item_no', 'sg_no' ,'office_code', 'old_position_name', 'year'];

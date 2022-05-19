@@ -92,6 +92,7 @@ return [
             'prefix_indexes' => true,
         ],
 
+       
         'DTR_PAYROLL_CONNECTION' => [
             'driver' => 'sqlsrv',
             'url' => '',
@@ -104,20 +105,6 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
         ],
-
-        'E_PIMS_CONNECTION' => [
-            'driver' => 'sqlsrv',
-            'url' => '',
-            'host' => '',
-            'port' => '',
-            'database' => 'E_PIMS',
-            'username' => 'sa',
-            'password' => 'nicole',
-            'charset' => 'utf8',
-            'prefix' => '',
-            'prefix_indexes' => true,
-        ],
-
     ],
 
     /*
@@ -150,7 +137,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [

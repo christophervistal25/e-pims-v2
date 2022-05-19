@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Division extends Model
 {
     use SoftDeletes;
-    public $connection = 'E_PIMS_CONNECTION';
+    public $connection = 'DTR_PAYROLL_CONNECTION';
     public $table = 'divisions';
     protected $dates = ['deleted_at'];
     protected $fillable = ['division_id', 'division_name', 'office_code'];

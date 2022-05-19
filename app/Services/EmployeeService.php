@@ -42,7 +42,7 @@ class EmployeeService
 
     private function getPromotedEmployeesByYear(string $year) : Collection
     {
-        return Employee::without(['position', 'office'])->where('isActive', self::ACTIVE)
+        return Employee::without(['position'])->where('isActive', self::ACTIVE)
                 ->whereHas('step', function ($query) use($year) {
                     $query->whereYear('date_step_increment', $year);
                 })->get();

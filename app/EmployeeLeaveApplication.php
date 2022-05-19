@@ -13,7 +13,7 @@ class EmployeeLeaveApplication extends Model
     use SoftDeletes;
 
     public $with = ['employee'];
-    public $connection = 'E_PIMS_CONNECTION';
+    public $connection = 'DTR_PAYROLL_CONNECTION';
     public $table = 'employee_leave_applications';
 
     protected $fillable = [

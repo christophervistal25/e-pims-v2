@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Office;
 use App\Office2;
+use App\Setting;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
@@ -11,6 +12,8 @@ use Illuminate\Support\Facades\Session;
 
 class MaintenanceOfficeController extends Controller
 {
+    public const DISPLAY = 1;
+    public const HIDE = 0;
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +21,8 @@ class MaintenanceOfficeController extends Controller
      */
     public function index()
     {
-        return view('MaintenanceOffice.office');
+        $officeCode = Office2::latest('OfficeCode2')->first()->OfficeCode2 + 1 ?? 1;
+        return view('MaintenanceOffice.office', compact('officeCode'));
     }
 
     /**
@@ -35,28 +39,28 @@ class MaintenanceOfficeController extends Controller
     {
         if ($request->ajax()) {
             $data = Office::with('desc')
-                        ->select('OfficeCode','Description', 'OfficeCode2', 'DepartmentCode')
-                        ->get();
+                ->select('OfficeCode', 'Description', 'OfficeCode2', 'DepartmentCode')
+                ->get();
 
             return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('OfficeHead', function ($row) {
-                        return $row->desc->OfficeHead ?? '-';
-                    })
-                    ->addColumn('OfficeShortName', function ($row) {
-                        return $row->desc->OfficeShort ?? '-';
-                    })
-                    ->addColumn('OfficeHeadPosition', function ($row) {
-                        return $row->desc->PositionName ?? '-';
-                    })
-                    ->addColumn('action', function($row){
-                        $btn = "<a title='Edit Office' href='". route('maintenance-office.edit', $row->OfficeCode) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-                        $btn = $btn."<a title='Delete Office' id='delete' value='$row->OfficeCode' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                ->addIndexColumn()
+                ->addColumn('OfficeHead', function ($row) {
+                    return $row->desc->OfficeHead ?? '-';
+                })
+                ->addColumn('OfficeShortName', function ($row) {
+                    return $row->desc->OfficeShort ?? '-';
+                })
+                ->addColumn('OfficeHeadPosition', function ($row) {
+                    return $row->desc->PositionName ?? '-';
+                })
+                ->addColumn('action', function ($row) {
+                    $btn = "<a title='Edit Office' href='" . route('maintenance-office.edit', $row->OfficeCode) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+                    $btn = $btn . "<a title='Delete Office' id='delete' value='$row->OfficeCode' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
                         ";
-                            return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
     }
 
@@ -69,7 +73,6 @@ class MaintenanceOfficeController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'officeCode'      => 'required|numeric|unique:DTR_PAYROLL_CONNECTION.Office,OfficeCode',
             'officeName'      => 'required',
             'officeShortName' => 'required',
             'officeHead'      => 'required',
@@ -78,27 +81,31 @@ class MaintenanceOfficeController extends Controller
         ]);
 
 
-        DB::transaction(function () use($request) {
+        DB::transaction(function () use ($request) {
             $office = new Office;
             $officeDescripton = new Office2;
-            
-            $office->OfficeCode                = $request['officeCode'];
-            $office->Description                = $request['officeName'];
-            $office->OfficeCode2                = $request['officeCode'];
-            $office->DepartmentCode             = $request['departmentCode'];
 
-            // $officeDescripton->office_short_address       = $request['officeShortAddress'];
-            // $officeDescripton->office_address             = $request['officeAddress'];
-            $officeDescripton->OfficeCode2  = $request['officeCode'];
+            $officeIncrement = tap(Setting::find('OFFICE'))->increment('Keyvalue');
+            $officeIncrement2 = tap(Setting::find('OFFICE2'))->increment('Keyvalue');
+
+            $office->OfficeCode                = $officeIncrement->Keyvalue;
+            $office->Description                = $request['officeName'];
+            $office->OfficeCode2                = $officeIncrement2->Keyvalue;
+            $office->DepartmentCode             = $request['departmentCode'];
+            $office->OfficeCode2 = $officeIncrement2->Keyvalue;
+
+            $officeDescripton->OfficeCode2  = $officeIncrement2->Keyvalue;
+            $officeDescripton->Description = $request['officeName'];
             $officeDescripton->OfficeShort  = $request['officeShortName'];
             $officeDescripton->OfficeHead   = $request['officeHead'];
             $officeDescripton->PositionName = $request['positionName'];
+            $officeDescripton->Display = 1;
 
-            $office->save();
             $officeDescripton->save();
+            $office->save();
         });
-        
-        return response()->json(['success'=> true]);
+
+        return response()->json(['success' => true]);
     }
 
     /**
@@ -134,7 +141,6 @@ class MaintenanceOfficeController extends Controller
     public function update(Request $request, $OfficeCode)
     {
         $this->validate($request, [
-            'officeCode'      => 'required|numeric',
             'officeName'      => 'required',
             'officeAddress'   => 'nullable|min:5',
             'officeShortName' => 'required',
@@ -143,25 +149,23 @@ class MaintenanceOfficeController extends Controller
             'departmentCode'  => 'nullable|min:5',
         ]);
 
-        DB::transaction(function () use($request, $OfficeCode) {
-            $office              = Office::with('desc')->find($OfficeCode);
-            $office->OfficeCode     = $request['officeCode'];
+        DB::transaction(function () use ($request, $OfficeCode) {
+
+            $office = Office::with('desc')->find($OfficeCode);
             $office->Description    = $request['officeName'];
-            $office->OfficeCode2    = $request['officeCode'];
             $office->DepartmentCode = $request['departmentCode'];
 
             $office->desc->OfficeShort  = $request['officeShortName'];
             $office->desc->OfficeHead   = $request['officeHead'];
             $office->desc->PositionName = $request['positionName'];
-            // $office->office_short_address       = $request['officeShortAddress'];
-            // $office->office_address             = $request['officeAddress'];
+            $office->desc->Description = $request['officeName'];
 
             $office->save();
             $office->desc->save();
         });
 
         Session::flash('alert-success', 'Office Updated Successfully');
-        return back()->with('success','Updated Successfully');
+        return back()->with('success', 'Updated Successfully');
     }
 
     /**
@@ -174,12 +178,12 @@ class MaintenanceOfficeController extends Controller
     {
         Office::find($id)->delete();
         Office2::where('OfficeCode2', $id)->delete();
-        return json_encode(array('statusCode'=>200));
+        return json_encode(array('statusCode' => 200));
     }
 
     public function delete($id)
     {
         Office::find($id)->delete();
-        return json_encode(array('statusCode'=>200));
+        return json_encode(array('statusCode' => 200));
     }
 }

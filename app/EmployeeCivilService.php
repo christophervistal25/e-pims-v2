@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class EmployeeCivilService extends Model
 {
-    public $connection = 'E_PIMS_CONNECTION';
+    public $connection = 'DTR_PAYROLL_CONNECTION';
     public $table = 'employee_civil_services';
     protected $fillable = [
         'employee_id',
