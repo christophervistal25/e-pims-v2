@@ -15,7 +15,7 @@ class Position extends Model
     public $incrementing  = false;
     public $table = 'Position';
     public $primaryKey = 'PosCode';
-    protected $fillable = ['position_id', 'PosCode', 'Description', 'sg_no', 'position_short_name'];
+    protected $fillable = ['PosCode', 'Description', 'sg_no', 'position_short_name'];
 
     public function __construct()
     {
@@ -27,35 +27,35 @@ class Position extends Model
         return Str::upper($value);
     }
 
-    public function plantillas()
-    {
-        return $this->belongsTo(Plantilla::class, 'position_id', 'position_id');
-    }
+    // public function plantillas()
+    // {
+    //     return $this->belongsTo(Plantilla::class, 'position_id', 'position_id');
+    // }
 
-    public function salary_grade()
-    {
-        return $this->hasOne(SalaryGrade::class, 'sg_no', 'sg_no');
-    }
-    public function service_record()
-    {
-        return $this->belongsTo(service_record::class, 'position_id', 'position_id');
-    }
-    public function salary_adjustment()
-    {
-        return $this->hasOne(SalaryAdjustment::class, 'position_id', 'position_id');
-    }
-    public function plantilla_positions()
-    {
-        return $this->belongsTo(PlantillaPosition::class, 'position_id', 'position_id');
-    }
+    // public function salary_grade()
+    // {
+    //     return $this->hasOne(SalaryGrade::class, 'sg_no', 'sg_no');
+    // }
+    // public function service_record()
+    // {
+    //     return $this->belongsTo(service_record::class, 'position_id', 'position_id');
+    // }
+    // public function salary_adjustment()
+    // {
+    //     return $this->hasOne(SalaryAdjustment::class, 'position_id', 'position_id');
+    // }
+    // public function plantilla_positions()
+    // {
+    //     return $this->belongsTo(PlantillaPosition::class, 'position_id', 'position_id');
+    // }
 
-    public function PlantillaSchedule()
-    {
-        return $this->belongsTo(PlantillaSchedule::class, 'position_id', 'position_id');
-    }
+    // public function PlantillaSchedule()
+    // {
+    //     return $this->belongsTo(PlantillaSchedule::class, 'position_id', 'position_id');
+    // }
 
-    public function PositionSchedule()
-    {
-        return $this->belongsTo(PositionSchedule::class, 'position_id', 'position_id');
-    }
+    // public function PositionSchedule()
+    // {
+    //     return $this->belongsTo(PositionSchedule::class, 'position_id', 'position_id');
+    // }
 }

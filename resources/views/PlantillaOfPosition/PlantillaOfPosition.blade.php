@@ -120,7 +120,11 @@
                           </button>
                         </div>
 
-                        <!-- Modal -->
+
+
+
+                        <!-- start Modal -->
+
                         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
@@ -134,7 +138,7 @@
 
                                     <div class=" col-12 col-md-6 col-lg-12">
                                         <label class="has-float-label mb-0">
-                                        <input value="{{ old('addPositionCode') }}"
+                                        <input value="{{ old('addPositionCode') ?? $lastId->PosCode + 1 }}"
                                             class="form-control {{ $errors->has('addPositionCode')  ? 'is-invalid' : ''}}" name="addPositionCode"
                                             id="addPositionCode" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                             <span class="font-weight-bold">Position Code<span class="text-danger">*</span></span>
@@ -194,6 +198,10 @@
                             </div>
                             </div>
                         </div>
+
+                        {{-- end of modal --}}
+
+
 
                         <div class="col-6 col-md-6 col-lg-6">
                             <label class="has-float-label mb-0">
