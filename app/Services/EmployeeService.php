@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Employee;
@@ -13,70 +14,72 @@ class EmployeeService
     public const INACTIVE = 0;
     public const ACTIVE = 1;
 
-    public function getJobOrdersCount() :int
+    public function getJobOrdersCount(): int
     {
         return Cache::rememberForever('JOB_ORDERS_COUNT', function () {
             return Employee::without(['position', 'office'])
-                        ->where('isActive', self::ACTIVE)
-                        ->where('Work_Status', 'LIKE' , '%JOB ORDER%')
-                        ->orWhere('Work_Status', 'LIKE', '%CONTRACT OF SERVICE%')
-                        ->count();
+                ->where('isActive', self::ACTIVE)
+                ->where('Work_Status', 'LIKE', '%JOB ORDER%')
+                ->orWhere('Work_Status', 'LIKE', '%CONTRACT OF SERVICE%')
+                ->count();
         });
     }
 
-    public function findByEmployeeID(string $employeeID) : Employee
+    public function findByEmployeeID(string $employeeID): Employee
     {
-        return Employee::find($employeeID);
+        $employeeID = str_pad($employeeID, 4, 0, STR_PAD_LEFT);
+        return Employee::with(['residential_province', 'residential_city', 'residential_barangay', 'permanent_province', 'permanent_city', 'permanent_barangay'])
+            ->exclude(['ImagePhoto'])->find($employeeID);
     }
 
-    public function getRegularsCount() : int
+    public function getRegularsCount(): int
     {
         return Cache::rememberForever('REGULARS_COUNT', function () {
             return Employee::without(['position', 'office'])
-                    ->where('isActive', self::ACTIVE)
-                    ->where('Work_Status', 'NOT LIKE' , '%JOB ORDER%')
-                    ->orWhere('Work_Status', 'NOT LIKE', '%CONTRACT OF SERVICE%')
-                    ->count();
-        }); 
+                ->where('isActive', self::ACTIVE)
+                ->where('Work_Status', 'NOT LIKE', '%JOB ORDER%')
+                ->orWhere('Work_Status', 'NOT LIKE', '%CONTRACT OF SERVICE%')
+                ->count();
+        });
     }
 
-    private function getPromotedEmployeesByYear(string $year) : Collection
+    private function getPromotedEmployeesByYear(string $year): Collection
     {
         return Employee::without(['position', 'office'])->where('isActive', self::ACTIVE)
-                ->whereHas('step', function ($query) use($year) {
-                    $query->whereYear('date_step_increment', $year);
-                })->get();
+            ->whereHas('step', function ($query) use ($year) {
+                $query->whereYear('date_step_increment', $year);
+            })->get();
     }
 
-    public function getNoOfPromotedEmployees(string $year) : int
+    public function getNoOfPromotedEmployees(string $year): int
     {
         return $this->getPromotedEmployeesByYear($year)->count();
     }
 
-    public function getActiveEmployees() : int
+    public function getActiveEmployees(): int
     {
         return Employee::without(['position', 'office'])
-                        ->where('isActive', self::ACTIVE)
-                        ->count();
+            ->where('isActive', self::ACTIVE)
+            ->count();
     }
 
-    public function getInActiveEmployees() : int
+    public function getInActiveEmployees(): int
     {
         return Cache::rememberForever('IN_ACTIVE_EMPLOYEES', function () {
             return Employee::without(['position', 'office'])
-                        ->where('isActive', self::INACTIVE)
-                        ->count();
+                ->where('isActive', self::INACTIVE)
+                ->count();
         });
     }
 
-    public function getNoOfEmployeesWithEligibility() : int
+    public function getNoOfEmployeesWithEligibility(): int
     {
         return Cache::rememberForever('EMPLOYEES_WITH_CIVIL_SERVICE', function () {
             return EmployeeCivilService::has('employee')->count();
         });
     }
 
-    public function getNoOfEmployeesWithNewPlantilla() : int
+    public function getNoOfEmployeesWithNewPlantilla(): int
     {
         return Cache::rememberForever('EMPLOYEES_WITH_NEW_PLANTILLA', function () {
             $currentYear = date('Y');
@@ -84,7 +87,7 @@ class EmployeeService
         });
     }
 
-    public function getLastId() : int
+    public function getLastId(): int
     {
         return Employee::max('employee_id') + 1;
     }
@@ -94,9 +97,9 @@ class EmployeeService
         return Employee::get(['Employee_id'])->pluck('Employee_id');
     }
 
-    public function updateInformation(array $data, Employee $employee) : Employee
+    public function updateInformation(array $data, Employee $employee): Employee
     {
-        return tap($employee, function ($employee) use($data) {
+        return tap($employee, function ($employee) use ($data) {
             $employee['FirstName'] = $data['firstname'];
             $employee['LastName'] = $data['lastname'];
             $employee['MiddleName'] = $data['middlename'];
@@ -118,16 +121,15 @@ class EmployeeService
             $employee['dbp_account_no'] = $data['dbp_account_no'];
             $employee['lbp_account_no'] = $data['lbp_account_no'];
 
-            if(array_key_exists('salary_grade', $data)) {
+            if (array_key_exists('salary_grade', $data)) {
                 $employee['sg_no'] = $data['salary_grade'];
             }
 
-            if(array_key_exists('step_increment', $data)) {
+            if (array_key_exists('step_increment', $data)) {
                 $employee['step'] = $data['step_increment'];
             }
 
             $employee->save();
         });
     }
-
 }
