@@ -92,6 +92,7 @@ return [
             'prefix_indexes' => true,
         ],
 
+       
         'DTR_PAYROLL_CONNECTION' => [
             'driver' => 'sqlsrv',
             'url' => '',
@@ -104,20 +105,6 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
         ],
-
-        'E_PIMS_CONNECTION' => [
-            'driver' => 'sqlsrv',
-            'url' => '',
-            'host' => 'SERVER-PC',
-            'port' => '',
-            'database' => 'E_PIMS',
-            'username' => 'sa',
-            'password' => 'nicole',
-            'charset' => 'utf8',
-            'prefix' => '',
-            'prefix_indexes' => true,
-        ],
-
     ],
 
     /*

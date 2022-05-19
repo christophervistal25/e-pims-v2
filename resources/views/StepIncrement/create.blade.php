@@ -409,9 +409,8 @@
         $('#employeeName').change( (e)=> {
             let employeeID = e.target.value;
             let plantilla = $($("#employeeName option:selected")[0]).attr('data-plantilla');
-            console.log(plantilla);
+            console.log(employeeID);
             /*let moneyFormat = toLocalString("ph", {maximumFractionDigits:2}) + '.00';*/
-
             
 
             if (plantilla) {
@@ -419,7 +418,7 @@
 
                 $('#employeeId').val(plantilla.employee_id);
                 $('#plantillaId').val(plantilla.plantilla_id);
-                $('#officeCode').val(plantilla.office_code);
+                // $('#officeCode').val(plantilla.office_code);
                 $('#status').val(plantilla.status);
                 $('#positionName').val(plantilla.position_name);
                 $('#positionId').val(plantilla.pp_id);
@@ -443,7 +442,7 @@
                 }
 
             } else {
-                $('#officeCode').val('');
+                // $('#officeCode').val('');
                 $('#status').val('');
                 $('#positionName').val('');
                 $('#itemNo').val('');

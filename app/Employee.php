@@ -250,7 +250,7 @@ class Employee extends Model
     {
         return $this->hasOne(Plantilla::class, 'employee_id', 'Employee_id');
     }
-    
+
     public function PlantillaSchedule()
     {
         return $this->hasOne(PlantillaSchedule::class, 'employee_id', 'employee_id');
@@ -387,7 +387,7 @@ class Employee extends Model
     // STEP-INCREMENT //
     public function step()
     {
-        return $this->hasOne(StepIncrement::class, 'employee_id', 'employee_id');
+        return $this->hasOne(StepIncrement::class, 'employee_id', 'Employee_id');
     }
 
     // LEAVE BALANCE //

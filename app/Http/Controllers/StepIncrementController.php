@@ -81,6 +81,7 @@ class StepIncrementController extends Controller
     public function index()
     {
 
+
         $employees = Employee::whereDoesntHave('step')->has('plantilla')->with(['plantilla'])->get();
 
 
@@ -130,6 +131,20 @@ class StepIncrementController extends Controller
             'salary_amount_to'          => $request->amount2,
             'salary_diff'               => $request->monthlyDifference
         ]);
+
+        // $service_record = new service_record;
+        // $service_record->employee_id            = $request['employeeID'];
+        // $service_record->service_from_date      = $request['dateStepIncrement'];
+        // $service_record->position_id            = $request['positionID'];
+        // $service_record->status                 = $request['status'];
+        // $service_record->salary                 = $request['amountFrom'];
+        // $service_record->office_code            = $request['officeCode'];
+        // $service_record->separation_cause       = 'Step '.$request['stepNo2'];
+        // $service_record->save();
+        // $step_increments->plantilla->update([
+        //     'step_no' => $request['stepNo2'],
+        //     'salary_amount' => $request['amount2']
+        // ]);
 
 
         return redirect('/step-increment')->with('success', true);
