@@ -1,9 +1,21 @@
-@extends('layouts.app-vue')
+@php
+    $layouts = '';
+    if (request()->winbox == 1) {
+        $layouts = 'layouts.app-winbox';
+    } else {
+        $layouts = 'layouts.app';
+    }
+@endphp
+@extends($layouts)
 @section('title', 'Leave Application Filing')
 @prepend('page-css')
 <script src="{{ asset('/js/app.js') }}" defer></script>
 <link rel="stylesheet"
     href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+<link rel="stylesheet" href="/assets/css/custom.css" />
+<link rel="stylesheet" href="/assets/css/style.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <style>
     @media only screen and (max-width: 700px) {
     #button_group {
@@ -19,240 +31,543 @@
 }
 </style>
 @endprepend
+@prepend('meta-data')
+<meta name="leave-types" content="{{ $types->toJson() }}">
+@endprepend
 @section('content')
 <div class="row">
-    <div class="col-lg-3">
-        <div class="card">
-            <div class="card-body">
-                <h3 class="card-title text-center text-sm">Filters</h3>
-                <label for="officelist" class="form-group has-float-label mb-0">
-                    <select name="officelist" type="text" id="officelist" class="form-control"
-                        style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                        <option readonly selected>All Office</option>
-                        <option>Office Name I</option>
-                    </select>
-                    <span>Offices</span>
-                </label>
-                <hr>
-                <div class="row">
-                    <div class="col-lg-10 pr-0">
-                        <label for="empName" class="form-group has-float-label">
-                            <input class="form-control" type="text" id="empName"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>Search by Employee</strong></span>
-                        </label>
+    <div class="d-flex col-lg-3">
+        <div class="flex-fill">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <img class="mb-3 rounded-circle img-thumbnail" id="empPhoto"
+                                src="" width="50%" />
+                        </div>
                     </div>
-                    <div class="col-lg-2 pl-0">
-                        <button class="btn btn-outline-light"><i class="las la-search text-dark"></i></button>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label for="empName" class="form-group has-float-label bg-light">
+                                <select class="form-control selectpicker" data-live-search="true" name="employeeName"
+                                    id="employeeName" data-size="6"
+                                    style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                    <option value="">Search name here</option>
+                                    @foreach($employees as $employee)
+                                    <option data-office="{{ $employee->office_charging->Description }}"
+                                        data-position="{{ $employee?->position?->Description }}"
+                                        data-employeeId="{{ $employee->Employee_id }}"
+                                        value="{{ $employee->Employee_id }}">{{ $employee->LastName }},
+                                        {{ $employee->FirstName }} {{ $employee->MiddleName }} </option>
+                                    @endforeach
+                                </select>
+                                <span><strong>EMPLOYEE NAME</strong></span>
+                            </label>
+
+                            <label for="office" class="form-group has-float-label">
+                                <input type="text" name="office" id="office" class="form-control bg-light"
+                                    style="outline: none; box-shadow: 0px 0px 0px transparent;" readonly>
+                                <span class="font-weight-bold">OFFICE</span>
+                            </label>
+                            <label for="position" class="form-group has-float-label">
+                                <input type="text" name="position" id="position" class="form-control bg-light"
+                                    style="outline: none; box-shadow: 0px 0px 0px transparent;" readonly>
+                                <span class="font-weight-bold">POSITION</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <hr class="mt-1 bg-secondary">
+                            <div class="alert alert-warning text-center">
+                                <strong>LEAVE BALANCES</strong>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label for="vlBal" class="form-group has-float-label">
+                                        <input type="text"
+                                            class="form-control text-right text-secondary font-weight-bold bg-light" id="vlBal"
+                                            style="outline: none; box-shadow: 0px 0px 0px transparent; font-size: 20px"
+                                            readonly>
+                                        <span><strong>VL BALANCE</strong></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label for="slBal" class="form-group has-float-label">
+                                        <input type="text"
+                                            class="form-control text-right text-secondary font-weight-bold bg-light" id="slBal"
+                                            style="outline: none; box-shadow: 0px 0px 0px transparent; font-size: 20px"
+                                            readonly>
+                                        <span><strong>SL BALANCE</strong></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <hr class="mt-0">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label for="totalBalance" class="form-group has-float-label">
+                                        <input type="text"
+                                            class="form-control text-center text-primary font-weight-bold bg-light" id="totalBalance"
+                                            style="outline: none; box-shadow: 0px 0px 0px transparent; height: 100px; font-size: 75px"
+                                            readonly>
+                                        <span><strong>TOTAL LEAVE BALANCE</strong></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-lg-9">
-        <div id="leaveApplication" class="card shadow">
-            
-            <div class="card-body">
-                <div class="alert alert-secondary text-center font-weight-bold">LEAVE APPLICATION FILING</div>
-                <hr>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <h6 class="text-sm text-center">&nbsp;</h6>
-                        <label for="dateApply" class="form-group has-float-label">
-                            <input type="date" name="dateApply" id="dateApply" class="form-control form-control"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>DATE APPLY<span class="text-danger">*</span></strong></span>
-                        </label>
-                        <label for="controlNo" class="form-group has-float-label">
+    <div class="d-flex col-lg-9">
+        <div class="flex-fill">
+            <div class="alert alert-danger d-none" role="alert" id="formErrors"></div>
+            <div class="card h-100">
+                <div class="card-body">
+                    <form method="POST" id="submitLeaveFileButton">
+                        {{-- <div class="alert alert-secondary text-center font-weight-bold">LEAVE APPLICATION FILING</div> --}}
+                        {{-- <hr> --}}
+                        <div class="row">
+                            <div class="col-lg-6 border border-bottom-0 border-left-0 border-top-0">
+                                <h6 class="text-sm text-center">&nbsp;</h6>
+                                <label for="dateApply" class="form-group has-float-label">
+                                    <input type="date" name="dateApply" id="dateApply" class="form-control"
+                                        value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
+                                    <span>
+                                        <strong>DATE APPLY
+                                            <span class="text-danger">*</span>
+                                        </strong>
+                                    </span>
+                                </label>
+                                {{-- <label for="controlNo" class="form-group has-float-label">
                             <input type="text" name="controlNo" id="controlNo" class="form-control"
                                 style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <span><strong>CONTROL NO.</strong></span>
-                        </label>
-                        <label for="leaveOpt" class="form-group has-float-label">
-                            <select name="leaveOpt" id="leaveOpt"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;" class="form-control">
-                                <option selected value="" readonly>SELECT LEAVE OPTION</option>
-                                <option value="leaveApp">LEAVE APPLICATION</option>
-                            </select>
-                            <span><strong>LEAVE OPTION<span class="text-danger">*</span></strong></span>
-                        </label>
-                        <label for="typeOfLeave" class="form-group has-float-label">
-                            <select class="form-control" for="typeOfLeave"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <option readonly selected value="">SELECT TYPE OF LEAVE</option>
-                                <option value="vacLeave">VACATION LEAVE</option>
-                                <option value="mpLeave">MATERNITY/PATERNITY LEAVE</option>
-                                <option value="sLeave">SICK LEAVE</option>
-                                <option value="sEmpLeave">TO SEEK EMPLOYMENT</option>
-                                <option value="others">OTHERS</option>
-                            </select>
-                            <span><strong>TYPE OF LEAVE<span class="text-danger">*</span></strong></span>
-                        </label>
-                        <label for="typeOthers" class="form-group has-float-label">
-                            <input type="text" name="typeOthers" id="typeOthers" class="form-control">
-                            <span><strong>IF OTHERS IS SELECTED</strong></span>
-                        </label>
-                        <label for="noOfDays" class="form-group has-float-label">
-                            <input type="number" class="form-control" id="noOfDays"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>NUMBER OF DAYS<span class="text-danger">*</span></strong></span>
-                        </label>
-                        <label for="caseOfVl" class="form-group has-float-label">
-                            <select class="form-control" id="caseOfVl"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <option readonly selected value="outPatient">OUT PATIENT</option>
-                                <option readonly value="inHosp">IN HOSPITAL</option>
-                                <option readonly value="withinPhil">WITHIN THE PHILIPPINES</option>
-                                <option readonly value="abroad">ABROAD</option>
-                            </select>
-                            <span><strong>IN CASE OF VACATION LEAVE</strong></span>
-                        </label>
-                        <hr>
-                        <label for="specify" class="form-group has-float-label">
-                            <input type="text" class="form-control" name="specify" id="specify"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>PLEASE SPECIFY:</strong></span>
-                        </label>
-                    </div>
-                    <div class="col-lg-4">
-                        <h6 class="text-sm text-center">Leave Balance</h6>
-                        <label for="asOf" class="form-group has-float-label">
-                            <input type="date" id="asOf" class="form-control"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;" disabled>
-                            <span><strong>AS OF</strong></span>
-                        </label>
-                        <label for="vlEarned" class="form-group has-float-label">
-                            <input type="number" class="form-control" id="vlEarned"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;" disabled>
-                            <span><strong>VL EARNED</strong></span>
-                        </label>
-                        <label for="vlEnjoyed" class="form-group has-float-label">
-                            <input type="number" class="form-control" id="vlEnjoyed"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;" disabled>
-                            <span><strong>VL ENJOYED</strong></span>
-                        </label>
-                        <label for="vlBalance" class="form-group has-float-label">
-                            <input type="number" class="form-control" id="vlBalance"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;" disabled>
-                            <span><strong>VL BALANCE</strong></span>
-                        </label>
-                        <label for="slEarned" class="form-group has-float-label">
-                            <input type="number" id="slEarned" class="form-control"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;" disabled>
-                            <span><strong>SL EARNED</strong></span>
-                        </label>
-                        <label for="slEnjoyed" class="form-group has-float-label">
-                            <input type="number" class="form-control" id="slEnjoyed"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;" disabled>
-                            <span><strong>SL ENJOYED</strong></span>
-                        </label>
-                        <label for="slBalance" class="form-group has-float-label">
-                            <input type="number" class="form-control" id="slBalance"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;" disabled>
-                            <span><strong>SL BALANCE</strong></span>
-                        </label>
-                        <hr>
-                        <label for="total" class="form-group has-float-label">
-                            <input type="number" name="total" id="total" class="form-control"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;" disabled>
-                            <span><strong>Total VL - SL</strong></span>
-                        </label>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="card mt-5 shadow">
-                            <div class="card-body">
-                                <h6 class="text-center mt-3">Inclusive Dates</h6>
-                                <div class="checkbox">
-                                    <label class="checkbox-inline no_indent text-sm" for="incWeekends">
-                                        <input type="checkbox" name="incWeekends" id="incWeekends"
-                                            style="transform: scale(1.2)">Include Weekends
-                                    </label>
-                                </div>
-                                <div class="checkbox">
-                                    <label class="checkbox-inline no_indent text-sm" for="incHolidays">
-                                        <input type="checkbox" name="incHolidays" id="incHolidays"
-                                            style="transform: scale(1.2)">Include Holidays
-                                    </label>
-                                </div>
-                                <hr class="mt-1 mb-1">
-                                <div class="checkbox">
-                                    <label class="checkbox-inline no_indent text-sm" for="populateDate">
-                                        <input type="checkbox" name="populateDate" id="populateDate" disabled
-                                            style="transform: scale(1.2)">Populate Dates
-                                    </label>
-                                </div>
-                                <h6 class="text-sm text-center">Date to Apply</h6>
-                                <label for="dateApply" class="form-group has-float-label">
-                                    <input type="date" name="dateApply" id="dateApply" class="form-control"
-                                        style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                    <span><strong>SELECT DATE<span class="text-danger">*</span></strong></span>
+                        </label> --}}
+                                <label for="typeOfLeave" class="form-group has-float-label">
+                                    <select class="form-control selectpicker border type-of-leave" id="typeOfLeave"
+                                        name="selectedLeave" data-live-search="true">
+                                        <option selected disabled value="">-------------------------</option>
+                                        @foreach($types->groupBy('category') as $category => $type)
+                                        <optgroup class="text-uppercase" label="{{ $category }}">
+                                            @foreach($type as $t)
+                                                <option value="{{ $t->leave_type_id }}">{{ $t->description }}
+                                                </option>
+                                            @endforeach
+                                        </optgroup>
+                                        @endforeach
+                                    </select>
+                                    <span>
+                                        <strong>TYPES OF LEAVE
+                                            <span class="text-danger">*</span>
+                                        </strong>
+                                    </span>
                                 </label>
-                                <select name="" id="" class="form-control">
-                                    <option value="wholeDay">WHOLE DAY</option>
-                                    <option value="halfDay">HALF DAY</option>
-                                </select>
+
+
+                                <div id="inCaseOfContainer">
+                                    <label for="inCaseOf" class="form-group has-float-label">
+                                        <select class="form-control" id="inCaseOf" name="inCaseOfLeave"></select>
+                                            <span id="in_case_of__label">
+                                                <strong>IN CASE OF 
+                                                    <span class='text-danger'>*</span>
+                                                </strong>
+                                            </span>
+                                    </label>
+                                </div>
+                                
+                                <div class="col-auto p-0">
+                                    <label for="startDate" class="form-group has-float-label">
+                                        <input type="date" class="form-control" id="startDate" name="startDate"
+                                            >
+                                        <span id="start__date__label"><strong>START DATE <span
+                                                    class='text-danger'>*</span></strong></span>
+                                    </label>
+                                </div>
+
+                                <div class="col-auto p-0">
+                                    <label for="endDate" class="form-group has-float-label">
+                                        <input type="date" class="form-control" id="endDate" name="endDate" >
+                                        <span id="end__date__Label"><strong>END DATE <span
+                                                    class='text-danger'>*</span></strong></span>
+                                    </label>
+                                </div>
+
+                                <div class="col-auto p-0">
+                                    <label for="noOfDays" class="form-group has-float-label">
+                                        <input type="number" class="form-control" id="noOfDays" name="numberOfDays" readonly>
+                                        <span><strong>NUMBER OF DAYS<span class="text-danger">*</span></strong></span>
+                                    </label>
+                                </div>
+
                                 <hr>
-                                <div class="text-center">
-                                    <button type="button" class="text-white btn btn-primary px-5 shadow"><i
-                                            class="las la-calendar-plus"></i> Add
-                                        Days</button>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <label for="earnedLess" class="form-group has-float-label">
+                                            <input type="text" id="earnedLess" class="form-control" name="earnedLess" readonly>
+                                            <span id="earnedLessLabel"><strong>LESS</strong></span>
+                                        </label>
+
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="earnedRemain" class="form-group has-float-label">
+                                            <input type="text" id="earnedRemaining" class="form-control" name="earnedRemain" readonly>
+                                            <span id="earnedRemainLabel"><strong>REMAINING</strong></span>
+                                        </label>
+                                    </div>
+
+                                    {{-- <div class="col-lg-12">
+                                        <div class="float-right">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="leave_has_pay" id="withPay" value="with_pay" disabled>
+                                                <label class="form-check-label text-sm" for="withPay">W/ PAY</label>
+                                            </div>
+
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio" name="leave_has_pay" id="withoutPay" value="without_pay" disabled>
+                                                <label class="form-check-label text-sm" for="withoutPay">W/O PAY</label>
+                                            </div>
+                                        </div>
+                                    </div> --}}
+
+                                    <div class="col-lg-12">
+                                        <div id="error_message_for_points"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <h6 class="text-sm text-center font-weight-medium">LEAVE CREDITS <br><small>(will be applied upon approval of this leave application)</small></h6>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <label for="asOf" class="form-group has-float-label">
+                                            <input type="date" id="asOf" class="form-control" disabled
+                                                name="balanceAsOfDate" value="">
+                                            <span><strong>AS OF</strong></span>
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="vacation__leave__earned" class="form-group has-float-label">
+                                            <input type="number" class="form-control" id="vacation__leave__earned"
+                                                disabled name="vacationLeaveEarned" value="">
+                                            <span><strong>VL EARNED</strong></span>
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="vacation__leave__used" class="form-group has-float-label">
+                                            <input type="number" class="form-control" id="vacation__leave__used"
+                                                disabled name="vacationLeaveUsed" value="">
+                                            <span><strong>VL USED</strong></span>
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label for="vacation__leave__balance" class="form-group has-float-label">
+                                            <input type="number" class="form-control" id="vacation__leave__balance"
+                                                disabled name="vacationLeaveBalance"
+                                                value="">
+                                            <span><strong>VL BALANCE</strong></span>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-lg-12 m-0 p-0">
+                                        <hr>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <label for="sick__leave__earned" class="form-group has-float-label">
+                                            <input type="number" id="sick__leave__earned" class="form-control" disabled
+                                                name="sickLeaveEarned" value="">
+                                            <span><strong>SL EARNED</strong></span>
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label for="sick__leave__used" class="form-group has-float-label">
+                                            <input type="number" class="form-control" id="sick__leave__used" disabled
+                                                name="sickLeaveUsed" value="">
+                                            <span><strong>SL USED</strong></span>
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <label for="sick__leave__balance" class="form-group has-float-label">
+                                            <input type="number" class="form-control" id="sick__leave__balance" disabled
+                                                name="sickLeaveBalance"
+                                                value="">
+                                            <span><strong>SL BALANCE</strong></span>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="col-lg-12">
+                                        <hr>
+                                        <label for="total__balance" class="form-group has-float-label">
+                                            <input type="number" class="form-control" id="total__balance" disabled
+                                                name="totalBalance"
+                                                value="">
+                                            <span><strong>TOTAL BALANCE</strong></span>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-lg-12 p-0 m-0">
+                                        <hr>
+                                    </div>
+
+                                    <div class="col-lg-12">
+                                        <label for="mandatory__leave__balance" class="form-group has-float-label mt-4">
+                                            <input type="number" class="form-control" id="mandatory__leave__balance" disabled
+                                                value="5" name="mandatoryLeaveBalance">
+                                            <span><strong>MANDATORY LEAVE</strong></span>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-12 col-sm-12 pl-0 pt-0">
+                            <label for="commutation" class="form-group has-float-label">
+                                <select class="form-control" id="commutation" name="communication">
+                                    <option readonly selected value="NOT REQUESTED">NOT REQUESTED</option>
+                                    <option value="REQUESTED">REQUESTED</option>
+                                </select>
+                                <span><strong>COMMUTATION<span class="text-danger">*</span></strong></span>
+                            </label>
+                            <label for="recoApproval" class="form-group has-float-label">
+                                <input class="form-control" name="recommendingApproval" id="recommendingApproval"
+                                    disabled value="">
+                                <span><strong>RECOMMENDING APPROVAL<span class="text-danger">*</span></strong></span>
+                            </label>
+                            <label for="approveBy" class="form-group has-float-label">
+                                <input class="form-control" name="approveBy" id="approvedBy" disabled
+                                    value="">
+                                <span><strong>APPROVED BY<span class="text-danger">*</span></strong></span>
+                            </label>
+                        </div>
+                        <div class="text-right">
+                            <button type="submit" class="text-white shadow btn btn-primary" id="btn--apply--for--leave">
+                                <div class="spinner-border spinner-border-sm text-light d-none" id="apply-spinner"
+                                    role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                <i class="la la-user-plus" id="apply-button-icon"></i>
 
-                    </div>
+                                Apply for Leave
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div class="row">
-                    <div class="col-lg-8">
-                        <label for="commutation" class="form-group has-float-label">
-                            <select class="form-control" id="commutation"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <option readonly selected value="">REQUESTED</option>
-                                <option value="">NOT REQUESTED</option>
-                            </select>
-                            <span><strong>COMMUTATION<span class="text-danger">*</span></strong></span>
-                        </label>
-                        <label for="recoApproval" class="form-group has-float-label">
-                            <select class="custom-select" name="recoApproval" id="recoApproval"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <option value="">-----</option>
-                            </select>
-                            <span><strong>RECOMMENDING APPROVAL<span class="text-danger">*</span></strong></span>
-                        </label>
-                        <label for="approveBy" class="form-group has-float-label">
-                            <select class="custom-select" name="approveBy" id="approveBy"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <option value="">-----</option>
-                            </select>
-                            <span><strong>APPROVED BY<span class="text-danger">*</span></strong></span>
-                        </label>
-                        <label for="appStatus" class="form-group has-float-label">
-                            <select name="appStatus" class="custom-select" id="appStatus"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <option value="approved">APPROVED</option>
-                                <option value="pending">PENDING</option>
-                            </select>
-                            <span><strong>APPLICATION STATUS<span class="text-danger">*</span></strong></span>
-                        </label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-auto" id="button_group">
-                        <button type="button" class="text-white shadow btn btn-primary"><i
-                            class="las la-user-plus"></i> New Application</button>
-                            <button type="button" class="text-white shadow btn btn-success"><i class="lar la-save"></i> Save
-                        Changes</button>
-                            <button type="button" class="text-white shadow btn btn-dark px-5"><i class="las la-print">
-                        </i> Print</button>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
 </div>
 
 @push('page-scripts')
-<script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('/assets/js/custom.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.js"></script>
+<script src="{{ asset('/assets/libs/winbox/winbox.bundle.js') }}"></script>
+<script>
+$(function () {
+    // SHOWS THE DATA VALUE IN INPUT INCLUDING THE PHOTO OF THE EMPLOYEE AND THE LEAVE RECORDS OF THE EMPLOYEE
+    $('#employeeName').change(function (e) {
+        let empID = e.target.value;
+        let [selectedItem] = $("#employeeName option:selected");
+
+        let employeeOffice = selectedItem.getAttribute('data-office') || '';
+        let employeePosition = selectedItem.getAttribute('data-position') || '';
+        let photo = selectedItem.getAttribute('data-photo') || '';
+
+        $('#office').val(employeeOffice);
+        $('#position').val(employeePosition);
+        $('table tbody').html('');
+    });
+    const ROUTE                        = "{{ route('employee.leave.application.filling.submit') }}";
+    const vacationLeaveIncaseOf        = ['WITHIN THE PHILIPPINES', 'ABROAD'];
+    const sickLeaveIncaseOf            = ['IN HOSPITAL', 'OUT PATIENT'];
+    const ALREADY_HAVE_PENDING_FILE    = 423;
+    const CANNOT_ACCESS_SELECTED_LEAVE = 424;
+    const SPACE                        = new RegExp(/\s+/, "ig");
+    const LEAVE_TYPES                  = new Map([]);
+
+    // When user select a type of leave.
+    $('#typeOfLeave').change(function (e) {
+        let selectedType = $('#typeOfLeave').val();
+
+        let type = getSelectedLeaveTypeData(types, selectedType);
+
+        // Initialize value of Incase of.
+        let incaseOf = [];
+
+        switch (type.code_number) {
+            case LEAVE_TYPES.get('MANDATORY_LEAVE'):
+                    $('#inCaseOfContainer').addClass('d-none');
+                    $('#withPay, #withoutPay').attr('disabled', true);
+                break;
+
+            case LEAVE_TYPES.get('VACATION_LEAVE'):
+                    incaseOf = vacationLeaveIncaseOf;
+                    $('#inCaseOfContainer').removeClass('d-none');
+                break;
+
+            case LEAVE_TYPES.get('SICK_LEAVE'):
+                    incaseOf = sickLeaveIncaseOf;
+                    $('#inCaseOfContainer').removeClass('d-none');
+                    $('#withPay, #withoutPay').attr('disabled', false);
+                break;
+        }
+
+        // Remove options of in case of select element
+        $('#inCaseOf').children().remove();
+        
+        // Dynamically insert value for incase of.
+        incaseOf.map((data) => $('#inCaseOf').append(`<option value="${data}">${data}</option>`));
+    });
+
+
+    $('#startDate').change(function () {
+        let period = moment($('#endDate').val()).diff($('#startDate').val(), 'days');
+        let POINTS = 0;
+
+        $('#noOfDays').val(period);
+
+
+        let type = getSelectedLeaveTypeData(types, $('#typeOfLeave').val());
+
+        if(type.code_number === LEAVE_TYPES.get('MANDATORY_LEAVE')) {
+            POINTS = 5;
+        } else if(LEAVE_TYPES.get('VACATION_LEAVE')) {
+            POINTS = VACATION_LEAVE_EARNED;
+        } else if(LEAVE_TYPES.get('SICK_LEAVE')) {
+            POINTS = SICK_LEAVE_EARNED;
+        }
+
+        $('#insufficient_points_error').remove();
+        if(POINTS <= Math.abs(period)) {
+            $('#formErrors').prepend(`<span id="insufficient_points_error">- Insufficient Leave points <br></span>`);
+        } else {
+            $('#earnedLess').val(period || 0);
+            $('#earnedRemaining').val((POINTS - period) || 0);
+        }
+    });
+
+    $('#endDate').change(function () {
+        let rangePeriod = {
+            start : moment($('#startDate').val()),
+            end : moment($('#endDate').val()),
+        };
+
+        if(rangePeriod.end.format('dddd').toLowerCase() === 'saturday' || rangePeriod.end.format('dddd').toLowerCase() === 'sunday') {
+            return '';
+        }
+        
+        let period = (moment(rangePeriod.end).diff(rangePeriod.start, 'days') - getNoOfWeekendInRange(rangePeriod.start, rangePeriod.end)) +1;
+
+        let POINTS = 0;
+
+        $('#noOfDays').val(period);
+
+        let type = getSelectedLeaveTypeData(types, $('#typeOfLeave').val());
+
+        if(type.code_number === LEAVE_TYPES.get('MANDATORY_LEAVE')) {
+            POINTS = 5;
+        } else if(LEAVE_TYPES.get('VACATION_LEAVE')) {
+            POINTS = VACATION_LEAVE_EARNED;
+        } else if(LEAVE_TYPES.get('SICK_LEAVE')) {
+            POINTS = SICK_LEAVE_EARNED;
+        }
+
+        $('#insufficient_points_error').remove();
+        if(POINTS <= Math.abs(period)) {
+            $('#formErrors').prepend(`<span id="insufficient_points_error">- Insufficient Leave points <br></span>`);
+        } else {
+            $('#earnedLess').val(period || 0);
+            $('#earnedRemaining').val((POINTS - period) || 0);
+        }
+    });
+
+
+    $('#submitLeaveFileButton').submit(function (e) {
+        e.preventDefault();
+
+
+        $('#apply-spinner').removeClass('d-none');
+        $('#apply-button-icon').addClass('d-none');
+
+        let data = {
+            dateApply           : $('#dateApply').val(),
+            typeOfLeave         : $('#typeOfLeave').val(),
+            inCaseOf            : $('#inCaseOf').val(),
+            noOfDays            : $("#noOfDays").val(),
+            startDate           : $('#startDate').val(),
+            endDate             : $('#endDate').val(),
+            earned              : $('#earned').val(),
+            earnedLess          : $('#earnedLess').val(),
+            earnedRemaining     : $('#earnedRemaining').val(),
+            commutation         : $('#commutation').val(),
+            recommendingApproval: $('#recommendingApproval').val(),
+            approvedBy          : $('#approvedBy').val(),
+        };
+
+        $.ajax({
+            url: ROUTE,
+            method: 'POST',
+            data: data,
+            success: function (response) {
+                $('#formErrors').addClass('d-none').html('');
+                $('#apply-spinner').addClass('d-none');
+                $('#apply-button-icon').removeClass('d-none');
+
+                if (response.success) {
+
+                    Object.keys(data).map((elementID) => {
+                        $(`${elementID}`).removeClass('is-invalid');
+                    });
+
+                    swal({
+                        title: "Good Job!",
+                        text: "Your leave application successfully submit plesae wait for the approval.",
+                        icon: "success",
+                        timer: 5000
+                    });
+    
+                    data.fullname = response.fullname;
+
+                    // socket.emit(`submit_application_for_leave`, data);
+                    // socket.emit('notify_administrator', { arguments : `${response.fullname}|NOTIFY_ADMINISTRATOR`});
+                    socket.emit('service_notify_administrator', { arguments : `${response.fullname}|NOTIFY_ADMINISTRATOR`});
+                }
+            },
+            error: function (response) {
+                $('#apply-spinner').addClass('d-none');
+                $('#apply-button-icon').removeClass('d-none');
+
+                if (response.status == 422) {
+                    Object.keys(data).map((elementID) => {
+                        $(`${elementID}`).removeClass('d-none');
+                    });
+
+                    $('#formErrors').removeClass('d-none').html('');
+                    Object.keys(response.responseJSON.errors).map((fieldID) => {
+                        let [message] = response.responseJSON.errors[fieldID];
+                        if (fieldID.includes('typeOf')) {
+                            // Select field with select picker.
+                            $('button[data-id="typeOfLeave"]').addClass(
+                                'border border-danger');
+                        } else {
+                            $(`#${fieldID}`).addClass('is-invalid');
+                        }
+                        
+                        $('#formErrors').append(`<span>- ${message}</span> <br>`);
+                    });
+                } else if (response.status == ALREADY_HAVE_PENDING_FILE) {
+                    swal('Oops!', response.responseJSON.message, 'error');
+                } else if(response.status === CANNOT_ACCESS_SELECTED_LEAVE) {
+                    swal('Oops!', response.responseJSON.message, 'error');
+                }
+            }
+        });
+    });
+
+});
+
+</script>
 @endpush
 @endsection

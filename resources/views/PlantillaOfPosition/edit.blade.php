@@ -19,7 +19,8 @@
 <div class="kanban-board shadow card mb-0">
     <div class="card-body">
         <div id="add" class="page-header {{  count($errors->all())  !== 0 ?  '' : '' }}">
-            <form action="{{ route('plantilla-of-position.update', $plantillaofposition->pp_id) }}" method="post">
+            {{-- <form action="{{ route('plantilla-of-position.update', $plantillaofposition->pp_id) }}" method="post"> --}}
+            <form id="editPlantillaPosition">
                 @csrf
                 @method('PUT')
 
@@ -27,62 +28,76 @@
                     <div class="alert alert-secondary text-center font-weight-bold" role="alert">EDIT POSITION</div>
                 </div>
                 <div class="container">
+                    <div class="row justify-content-center align-items-center">
                     <div class="row">
-                        <div class="container">
+                        <input type="text" value="{{ $plantillaofposition->pp_id }}" id="editId" class="d-none" disabled>
+                        <div class="col-6 col-md-6 col-lg-6">
+                            <label class="has-float-label officeCode">
+                                <select value=""
+                                    class="form-control selectpicker "
+                                    name="officeCode" data-live-search="true" id="officeCode" data-size="4"
+                                    data-width="100%"
+                                    style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                    <option></option>
+                                    @foreach($office as $offices)
+                                    <option
+                                        {{ $plantillaofposition->office_code == $offices->office_code ? 'selected' : '' }}
+                                        value="{{ $offices->office_code }}">{{ $offices->office_name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="font-weight-bold">OFFICE<span class="text-danger">*</span></span>
+                            </label>
+                            <div id='office-error-message' class='text-danger text-sm'>
+                            </div>
+                        </div>
 
-                            <div class="row justify-content-center align-items-center">
-
-                                <div class="form-group col-12 col-md-6 col-lg-7">
+                                <div class="col-6 col-md-6 col-lg-6">
                                     <label class="has-float-label mb-0">
                                         <input value="{{ old('itemNo') ??  $plantillaofposition->item_no}}"
-                                            class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}"
+                                            class="form-control"
                                             name="itemNo" id="itemNo" type="text"
                                             style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                         <span class="font-weight-bold">ITEM NO<span class="text-danger">*</span></span>
                                     </label>
-                                    @if($errors->has('itemNo'))
-                                    <small class="form-text text-danger">
-                                        {{ $errors->first('itemNo') }} </small>
-                                    @endif
+                                    <div id='item-error-message' class='text-danger text-sm'>
+                                    </div>
                                 </div>
 
-                                <div class="form-group col-12 col-lg-7">
-                                    <label class="font-weight-bold text-sm">POSITION<span
-                                            class="text-danger">*</span></label>
-                                    <select name="positionTitle" value=""
-                                        class="select floating {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}"
-                                        id="positionTitle" disabled @foreach($position as $positions) <option
-                                        {{ $plantillaofposition->position_id == $positions->position_id ? 'selected' : '?? $plantillaofposition->position_id' }}
-                                        value="{{ $positions->position_id}}">{{ $positions->position_name }}
+                                <div class="col-6 col-md-6 col-lg-6">
+                                    <label class="has-float-label positionTitle mb-0">
+                                        <select name="positionTitle" value=""
+                                        class="form-control form-control-xs selectpicker"
+                                        id="positionTitle" disabled @foreach($position as $positions)
+                                        <option
+                                        {{ $plantillaofposition->PosCode == $positions->PosCode ? 'selected' : '?? $plantillaofposition->PosCode' }}
+                                        value="{{ $positions->PosCode}}">{{ $positions->Description }}
                                         </option>
                                         @endforeach
                                     </select>
-                                    @if($errors->has('positionTitle'))
-                                    <small class="form-text text-danger">
-                                        {{ $errors->first('positionTitle') }} </small>
-                                    @endif
+                                        <span class="font-weight-bold">POSITION<span class="text-danger">*</span></span>
+                                    </label>
+                                    <div id='position-title-error-message' class='text-danger text-sm'>
+                                    </div>
                                 </div>
 
-                                <div class="form-group col-12 col-md-6 col-lg-7">
+                                <div class="col-6 col-md-6 col-lg-6">
                                     <label class="has-float-label mb-0">
                                         <input
                                             value="{{ old('positionOldName') ?? $plantillaofposition->old_position_name }}"
-                                            class="form-control {{ $errors->has('positionOldName')  ? 'is-invalid' : ''}}"
+                                            class="form-control"
                                             name="positionOldName" id="positionOldName" type="text" placeholder=""
                                             style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                         <span class="font-weight-bold">OLD POSITION NAME<span
                                                 class="text-danger">*</span></span>
                                     </label>
-                                    @if($errors->has('positionOldName'))
-                                    <small class="form-text text-danger">
-                                        {{ $errors->first('positionOldName') }} </small>
-                                    @endif
+                                    <div id='old-position-name-error-message' class='text-danger text-sm'>
+                                    </div>
                                 </div>
 
-                                <div class="form-group col-12 col-md-6 col-lg-7">
-                                    <label class="has-float-label">
+                                <div class="col-6 col-md-6 col-lg-6">
+                                    <label class="has-float-label salaryGrade">
                                         <select value=""
-                                            class="form-control selectpicker  {{ $errors->has('salaryGrade')  ? 'is-invalid' : ''}}"
+                                            class="form-control selectpicker"
                                             name="salaryGrade" data-live-search="true" id="salaryGrade" data-size="4"
                                             data-width="100%"
                                             style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -96,37 +111,16 @@
                                         <span class="font-weight-bold">SALARY GRADE<span
                                                 class="text-danger">*</span></span>
                                     </label>
-                                    @if($errors->has('salaryGrade'))
-                                    <small class="form-text text-danger">
-                                        {{ $errors->first('salaryGrade') }} </small>
-                                    @endif
+                                    <div id='salary-grade-error-message' class='text-danger text-sm'>
+                                    </div>
                                 </div>
 
-                                <div class="form-group col-12 col-lg-7">
-                                    <label class="has-float-label">
-                                        <select value=""
-                                            class="form-control selectpicker  {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
-                                            name="officeCode" data-live-search="true" id="officeCode" data-size="4"
-                                            data-width="100%"
-                                            style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                            <option></option>
-                                            @foreach($office as $offices)
-                                            <option
-                                                {{ $plantillaofposition->office_code == $offices->OfficeCode ? 'selected' : '' }}
-                                                value="{{ $offices->OfficeCode }}">{{ $offices->Description }}</option>
-                                            @endforeach
-                                        </select>
-                                        <span class="font-weight-bold">OFFICE<span class="text-danger">*</span></span>
-                                    </label>
-                                    @if($errors->has('officeCode'))
-                                    <small class="form-text text-danger">
-                                        {{ $errors->first('officeCode') }} </small>
-                                    @endif
-                                </div>
-                                <div class="form-group col-12 col-lg-7">
+
+
+                                <div class="col-6 col-md-6 col-lg-6">
                                     <label class="has-float-label mb-0">
                                     <input value="{{ old('year') ??  $plantillaofposition->year  }}"
-                                        class="form-control {{ $errors->has('year')  ? 'is-invalid' : ''}}" name="year"
+                                        class="form-control" name="year"
                                         id="year" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;" readonly>
                                         <span class="font-weight-bold">CURRENT YEAR<span class="text-danger">*</span></span>
                                     </label>
@@ -141,14 +135,13 @@
                                 <button id="saveBtn" class="btn btn-success submit-btn float-right" type="submit">
                                     <span id="loading" class="spinner-border spinner-border-sm d-none" role="status"
                                         aria-hidden="false"></span>
-                                    <i class="fas fa-save"></i> Save
+                                        <i style="color:white;" class="fas fa-save"></i> <b style="color:white;" id="saving">Save</b>
                                 </button>
                                 <a href="/plantilla-of-position"><button style="margin-right:10px;" type="button"
                                         class="text-white btn btn-warning submit-btn float-right"><i
                                             class="fas fa-arrow-left"></i>
                                         Back</button></a>
                             </div>
-                        </div>
                     </div>
             </form>
         </div>
@@ -161,6 +154,115 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    $("#editPlantillaPosition").submit(function (e) {
+        e.preventDefault();
+        let editId = $('#editId').val();
+        let data = $(this).serialize();
+        $("#saveBtn").attr("disabled", true);
+        $("#loading").removeClass("d-none");
+        $("#saving").html("Saving . . .");
+        $.ajax({
+            type: "PUT",
+            url: `/plantilla-of-position/${editId}`,
+            data: data,
+            success: function (response) {
+                if (response.success) {
+                    $("#plantillaofposition").DataTable().ajax.reload();
+                    swal("Sucessfully Saved!", "", "success");
+                    $("#saveBtn").attr("disabled", false);
+                    $("#loading").addClass("d-none");
+                    document.getElementById("saving").innerHTML = "Save";
+                    $("#saving").html("Save");
+                    let errorClass = [
+                        "#itemNo",
+                        "#positionOldName",
+                    ];
+                    $.each(errorClass, function (index, value) {
+                            $(`${value}`).removeClass("is-invalid");
+                    });
+                    let errorMessage = [
+                        "#office-error-message",
+                        "#item-error-message",
+                        "#old-position-name-error-message",
+                        "#salary-grade-error-message",
+                    ];
+                    $.each(errorMessage, function (index, value) {
+                            $(`${value}`).html("");
+                        });
+                }
+            },
+            error: function (response) {
+                if (response.status === 422) {
+                    let errors = response.responseJSON.errors;
+                    if (errors.hasOwnProperty("itemNo")) {
+                        $("#itemNo").addClass("is-invalid");
+                        $("#item-error-message").html("");
+                        $("#item-error-message").append(
+                            `<span>${errors.itemNo[0]}</span>`
+                        );
+                    } else {
+                        $("#itemNo").removeClass("is-invalid");
+                        $("#item-error-message").html("");
+                    }
+                    if (errors.hasOwnProperty("salaryGrade")) {
+                        $(".salaryGrade .dropdown").addClass("is-invalid");
+                        $("#salary-grade-error-message").html("");
+                        $("#salary-grade-error-message").append(
+                            `<span>${errors.salaryGrade[0]}</span>`
+                        );
+                    } else {
+                        $("#salaryGrade").removeClass("is-invalid");
+                        $("#salary-grade-error-message").html("");
+                    }
+                    if (errors.hasOwnProperty("officeCode")) {
+                        $(".officeCode .dropdown").addClass("is-invalid");
+                        $("#office-error-message").html("");
+                        $("#office-error-message").append(
+                            `<span>${errors.officeCode[0]}</span>`
+                        );
+                    } else {
+                        $("#officeCode").removeClass("is-invalid");
+                        $("#office-error-message").html("");
+                    }
+                    if (errors.hasOwnProperty("positionOldName")) {
+                        $("#positionOldName").addClass("is-invalid");
+                        $("#old-position-name-error-message").html("");
+                        $("#old-position-name-error-message").append(
+                            `<span>${errors.positionOldName[0]}</span>`
+                        );
+                    } else {
+                        $("#positionOldName").removeClass("is-invalid");
+                        $("#old-position-name-error-message").html("");
+                    }
+                    // Create an parent element
+                    let parentElement = document.createElement("ul");
+                    let errorss = response.responseJSON.errors;
+                    $.each(errorss, function (key, value) {
+                        let errorMessage = document.createElement("li");
+                        let [error] = value;
+                        errorMessage.innerHTML = error;
+                        parentElement.appendChild(errorMessage);
+                    });
+                    swal({
+                        title: "The given data was invalid!",
+                        icon: "error",
+                        content: parentElement,
+                    });
+                    $("#saveBtn").attr("disabled", false);
+                    $("#loading").addClass("d-none");
+                    $("#saving").html("Save");
+                }
+            },
+        });
+    });
+
+
+
+
+
+
+
 
 </script>
 <script src="{{ asset('/assets/js/custom.js') }}"></script>

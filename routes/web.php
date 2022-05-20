@@ -60,8 +60,9 @@ Route::resource('/plantilla-of-personnel', 'PlantillaController');
 
 //plantilla of position
 Route::resource('/plantilla-of-position', 'PlantillaOfPositionController');
-Route::get('/plantilla-of-position-list', 'PlantillaOfPositionController@list');
-Route::get('/plantilla-of-position/{id}', 'PlantillaOfPositionController@destroy')->name('plantilla-of-position.delete');
+Route::get('/plantilla-of-position-list/{office_code?}', 'PlantillaOfPositionController@list');
+Route::get('/plantilla-of-position/{id}', 'PlantillaOfPositionController@destroy')->name('plantilla-of-position.destroy');
+Route::put('/plantilla-of-position/{id}', 'PlantillaOfPositionController@update');
 
 // Step-Increment //
 Route::get('/step-increment/list', 'StepIncrementController@list');
@@ -140,9 +141,11 @@ Route::group(['prefix' => 'employee'], function () {
     Route::get('/leave/application', 'EmployeeLeave\LeaveController@show')->name('leave.application.filling');
     Route::get('/leave/leave-recall', 'EmployeeLeave\LeaveRecallController@index')->name('leave.leave-recall');
     Route::resource('/leave-recall', 'EmployeeLeave\LeaveRecallController');
-    Route::get('/leave/leave-forwarded-balance', 'EmployeeLeave\EmployeeLeaveRecordController@list')->name('leave-forwarded-balance.list');
-    Route::post('/leave-forwarded-balance/{id}', 'EmployeeLeave\EmployeeLeaveRecordController@destroy');
-    Route::resource('/leave-forwarded-balance', 'EmployeeLeave\EmployeeLeaveRecordController');
+    Route::get('/list/leave-forwarded-balance', 'EmployeeLeave\LeaveForwardedBalanceController@list')->name('leave-forwarded-balance.list');
+    Route::post('/leave-forwarded-balance/{id}', 'EmployeeLeave\LeaveForwardedBalanceController@destroy');
+    Route::get('/leave-forwarded-balance/{id}/edit', 'EmployeeLeave\LeaveForwardedBalanceController@edit');
+    Route::put('/leave-forwarded-balance/{id}', 'EmployeeLeave\LeaveForwardedBalanceController@update');
+    Route::resource('/leave-forwarded-balance', 'EmployeeLeave\LeaveForwardedBalanceController');
 
     //  LEAVE-LIST APPLICATIONS //
     Route::get('leave-list/list', [LeaveListController::class, 'list']);

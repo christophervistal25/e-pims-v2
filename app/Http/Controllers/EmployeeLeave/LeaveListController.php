@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\EmployeeLeave;
 
 use App\Office;
+use App\Office2;
 use App\Employee;
 use Carbon\Carbon;
 use App\EmployeeLeaveRecord;
@@ -10,12 +11,12 @@ use Illuminate\Http\Request;
 use App\Services\LeaveService;
 use Yajra\Datatables\Datatables;
 use App\EmployeeLeaveApplication;
+use App\Services\EmployeeService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use App\Http\Repositories\LeaveTypeRepository;
 use App\Http\Repositories\LeaveRecordRepository;
-use App\Services\EmployeeService;
 
 class LeaveListController extends Controller
 {
@@ -31,11 +32,7 @@ class LeaveListController extends Controller
     // FETCH DATA IN YAJRA TABLES //
     public function list()
     {
-        $data = DB::connection('E_PIMS_CONNECTION')->table('employee_leave_applications')
-                                            ->join('DTRPayroll.dbo.Employees', 'DTRPayroll.dbo.Employees.Employee_id', '=', 'employee_leave_applications.employee_id')
-                                            ->join('leave_types', 'leave_types.id', '=', 'employee_leave_applications.leave_type_id')
-                                            ->select('Employees.Employee_id', 'Employees.FirstName', 'Employees.MiddleName', 'Employees.LastName', 'Employees.Suffix', 'Employees.OfficeCode', 'employee_leave_applications.*', 'leave_types.id as leave_type_id' ,'leave_types.name as leave_type_name')
-                                            ->get();
+        $data = EmployeeLeaveApplication::get();
 
         if($data->count() === 0) {
             $data = $data->where('deleted_at', null);
@@ -44,12 +41,6 @@ class LeaveListController extends Controller
         return Datatables::of($data)
                     ->addColumn('applied', function ($row) {
                         return $row->date_applied;
-                    })
-                    ->addColumn('from', function ($row) {
-                        return $row->date_from;
-                    })
-                    ->addColumn('to', function ($row) {
-                        return $row->date_to;
                     })
                     ->addColumn('action', function($row)
                     {
@@ -71,7 +62,7 @@ class LeaveListController extends Controller
     {
         $statuses =  $this->leaveService->countAllStatus();
         
-        $offices = Office::select('OfficeCode', 'Description')->get();
+        $offices = Office2::select('OfficeCode2', 'Description')->get();
         
         $employeeIds = $this->leaveService->getEmployeeApplied();
 

@@ -4,8 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Office2 extends Model
+class Office extends Model
 {
+    public $incrementing = false;
+
     protected $primaryKey = 'OfficeCode';
     protected $keyType = 'string';
     public $table = 'Office';

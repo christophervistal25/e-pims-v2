@@ -10,32 +10,30 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EmployeeLeaveApplication extends Model
 {
-    use SoftDeletes;
+    // use SoftDeletes;
 
     public $with = ['employee'];
     public $connection = 'DTR_PAYROLL_CONNECTION';
     public $table = 'employee_leave_applications';
 
     protected $fillable = [
-        'employee_id',
-        'recommending_approval',
-        'approved_by',
+        'Employee_id',
         'leave_type_id',
         'incase_of',
         'no_of_days',
         'commutation',
-        'approved_status',
+        'status',
         'date_approved',
+        'date_rejected',
         'date_applied',
         'date_from',
         'date_to',
         'deleted_at',
-        'disapproved_due_to',
-        'approved_for',
-        'no_of_working_days'
-    ];
+        'recommendation',
+    ]; 
 
-    public $dates = ['date_from', 'date_to', 'date_applied', 'date_approved', 'deleted_at'];
+    // public $timestamp = false;
+    public $dates = ['date_from', 'date_to', 'date_applied', 'date_approved'];
 
     // protected $appends = [
     //     'in_case_of_text',
@@ -43,7 +41,7 @@ class EmployeeLeaveApplication extends Model
     
     public function employee()
     {
-        return $this->belongsTo(Employee::class, 'employee_id', 'Employee_id')->select('Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode')->withDefault();
+        return $this->belongsTo(Employee::class, 'employee_id', 'Employee_id')->select('Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode', 'OfficeCode2')->withDefault();
     }
 
     public function leave_records()

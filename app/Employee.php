@@ -360,9 +360,14 @@ class Employee extends Model
     }
 
 
-    public function office_charging()
+    public function offices()
     {
         return $this->hasOne(Office::class, 'office_code', 'OfficeCode')->withDefault();
+    }
+
+    public function office_charging()
+    {
+        return $this->hasOne(OfficeCharging::class, 'OfficeCode', 'OfficeCode')->withDefault();
     }
 
     public function office_assignment()
