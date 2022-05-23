@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\StepIncrement;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
@@ -29,7 +30,7 @@ class Position extends Model
 
     public function plantillas()
     {
-        return $this->belongsTo(Plantilla::class, 'position_id', 'position_id');
+        return $this->belongsTo(Plantilla::class, 'PosCode', 'pp_id');
     }
 
     public function salary_grade()
@@ -44,6 +45,7 @@ class Position extends Model
     {
         return $this->hasOne(SalaryAdjustment::class, 'position_id', 'position_id');
     }
+    
     public function plantilla_positions()
     {
         return $this->belongsTo(PlantillaPosition::class, 'position_id', 'position_id');
@@ -58,4 +60,11 @@ class Position extends Model
     {
         return $this->belongsTo(PositionSchedule::class, 'position_id', 'position_id');
     }
+
+    public function step()
+    {
+        return $this->hasOne(StepIncrement::class, 'PosCode', 'position_id');
+    }
+
+
 }

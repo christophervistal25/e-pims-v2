@@ -26,10 +26,10 @@
 </div>
 <div class="clearfix"></div>
 
-<div class="col-12 card" id="main-container">
+<div class="card col-lg-12 col-md-12 p-4" id="main-container">
     <div class="card-header pl-5 pr-5" id="headingOne" contenteditable="true">
         {{-- HEADING --}}
-        <div class="body-container row">
+        <div class="col-lg-12 col-md-12 row">
             {{-- LOGO --}}
             <div class="w-25">
                 <img src="/assets/img/sdslogo.jpg" width="165px" style="margin-right: 100px">
@@ -53,9 +53,9 @@
             <p class="date">{{ Carbon\Carbon::parse($stepIncrement->date_step_increment)->format('F d, Y' ) }}</p>
             <br>
             {{-- NAME --}}
-            <h4>{{ $stepIncrement->employee->firstname }} {{ $stepIncrement->employee->middlename }}.
+            {{-- <h4>{{ $stepIncrement->employee->firstname }} {{ $stepIncrement->employee->middlename }}.
                 {{ $stepIncrement->employee->lastname }}</h4>
-            <p>{{ $stepIncrement->employee->plantilla->office->office_name }}</p>
+            <p>{{ $stepIncrement->employee->plantilla->office->office_name }}</p> --}}
             <br>
             <br>
 
@@ -63,13 +63,13 @@
             <p class="text text-md mb-4">Sir/Madam:</p>
 
             {{-- BODY --}}
-            <span class="text text-md ml-4 pl-5">&nbsp Pursuant to Joint Civil Service Commission (CSC) and Department
+            {{-- <span class="text text-md ml-4 pl-5">&nbsp Pursuant to Joint Civil Service Commission (CSC) and Department
                 of Budget and Management (DBM) Circular No. 1 series 1990, implementing Section 13 (c) of RA 6758, your
                 salary as {{ $stepIncrement->employee->plantilla->position->position_name }},
                 SG-{{ $stepIncrement->sg_no_to }}, in the Office of
                 {{ $stepIncrement->employee->plantilla->office->office_name }} is hereby adjusted effective
                 {{ Carbon\Carbon::parse($stepIncrement->date_step_increment)->format( 'F d, Y' ) }} as shown
-                below:</span>
+                below:</span> --}}
             <br>
             <br>
             <span class="text text-md mt-3 pl-5">Basic Salary as of

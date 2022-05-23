@@ -96,11 +96,11 @@
 
                             <div class="form-group">
                                 <input type="hidden" name="status" id="status" class="">
-                            </div>
+                            </div> --}}
 
                             <div class="form-group">
                                 <input type="hidden" name="officeCode" id="officeCode" class="">
-                            </div> --}}
+                            </div>
 
 
                             <div class="form-group col-12 col-lg-11">
@@ -219,7 +219,7 @@
             <div id="stepIncrementTable" class="page-header">
                 <div class="row align-items-right mb-2">
                     <div class="col-auto float-right ml-auto">
-                        <button id="addBtn" type="button" class="btn btn-primary float-right shadow"><i class="fa fa-plus"></i>&nbsp;
+                        <button id="addBtn" type="button" class="btn btn-primary float-right shadow text-white"><i class="fa fa-plus"></i>&nbsp;
                             Add Step Increment </button>
                     </div>
                 </div>
@@ -237,15 +237,14 @@
                                 </th>
                                 <th class="font-weight-bold align-middle text-center" rowspan="1 " colspan="2">From</th>
                                 <th class="font-weight-bold align-middle text-center" rowspan="1" colspan="2">To</th>
-                                <th class="font-weight-bold align-middle text-center" rowspan="2">Monthly Difference
-                                </th>
+                                <th class="font-weight-bold align-middle text-center" rowspan="2">Monthly Difference</th>
                                 <th class="font-weight-bold align-middle text-center" rowspan="2">Action</th>
-                            <tr>
-                                <td class="font-weight-bold align-middle text-center">SG/Step</td>
-                                <td class="font-weight-bold align-middle text-center">Salary Rate</td>
-                                <td class="font-weight-bold align-middle text-center">SG/Step</td>
-                                <td class="font-weight-bold align-middle text-center">Salary Rate</td>
-                            </tr>
+                                <tr>
+                                    <td class="font-weight-bold align-middle text-center">SG/Step</td>
+                                    <td class="font-weight-bold align-middle text-center">Salary Rate</td>
+                                    <td class="font-weight-bold align-middle text-center">SG/Step</td>
+                                    <td class="font-weight-bold align-middle text-center">Salary Rate</td>
+                                </tr>
                             </tr>
                         </thead>
                     </table>
@@ -323,24 +322,43 @@
                     visible: true
                 },
                 {
+                    className: 'text-truncate',
                     data: 'sg_from_and_step_from',
-                    name: 'sg_from_and_step_from'
+                    name: 'sg_from_and_step_from',
+                    searchable: true,
+                    sortable: false,
+                    visible: true
                 },
                 {
+                    className: 'text-truncate',
                     data: 'salary_amount_from',
-                    name: 'salary_amount_from'
+                    name: 'salary_amount_from',
+                    searchable: true,
+                    sortable: false,
+                    visible: true
                 },
                 {
+                    className: 'text-truncate',
                     data: 'sg_to_and_step_to',
-                    name: 'sg_to_and_step_to'
+                    name: 'sg_to_and_step_to',
+                    searchable: true,
+                    sortable: false,
+                    visible: true
                 },
                 {
+                    className: 'text-truncate',
                     data: 'salary_amount_to',
-                    name: 'salary_amount_to'
+                    name: 'salary_amount_to',
+                    searchable: true,
+                    sortable: false,
+                    visible: true
                 },
                 {
                     data: 'salary_diff',
-                    name: 'salary_diff'
+                    name: 'salary_diff',
+                    searchable: true,
+                    sortable: false,
+                    visible: true
                 },
                 {
                     data: 'action',
@@ -418,7 +436,7 @@
 
                 $('#employeeId').val(plantilla.employee_id);
                 $('#plantillaId').val(plantilla.plantilla_id);
-                // $('#officeCode').val(plantilla.office_code);
+                $('#officeCode').val(plantilla.office_code);
                 $('#status').val(plantilla.status);
                 $('#positionName').val(plantilla.position_name);
                 $('#positionId').val(plantilla.pp_id);
@@ -442,7 +460,7 @@
                 }
 
             } else {
-                // $('#officeCode').val('');
+                $('#officeCode').val('');
                 $('#status').val('');
                 $('#positionName').val('');
                 $('#itemNo').val('');
@@ -465,10 +483,7 @@
                 url: `/api/step/${$('#sgNo2').val()}/${valueSelected}`,
                 success: function (response) {
                     $('#amount2').val(`${response['sg_step' + valueSelected]}`)
-                //  let amount2 = $('#amount2');
 
-                //  console.log(amount2)
-                    
 
                     let amount = parseFloat($('#amount').val());
                     let amount2 = parseFloat($('#amount2').val());

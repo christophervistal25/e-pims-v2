@@ -5,13 +5,14 @@ use App\Employee;
 use App\Plantilla;
 use Carbon\Carbon;
 use App\SalaryGrade;
+use App\StepIncrement;
 use App\service_record;
 use App\PositionSchedule;
 use App\SalaryAdjustment;
 use App\PlantillaPosition;
 use App\PlantillaSchedule;
-use Yajra\Datatables\Datatables;
 
+use Yajra\Datatables\Datatables;
 use App\EmployeeLeaveApplication;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -519,7 +520,7 @@ Route::get('/maintenance/division/{officeCode}', function ($office_code) {
         ->rawColumns(['action'])
         ->make(true);
 });
-
+    
 
 Route::post('/plantilla/schedule/adjust', function () {
     $plantillaIds = explode(',', request()->ids);
@@ -656,7 +657,7 @@ Route::post('/position/schedule/adjust', function () {
             ->update(['year' => $newYear]);
     }
     return response()->json(['success' => true]);
-});
+}); 
 
 
 
@@ -667,6 +668,32 @@ Route::get('step/{sg_no}/{step}', function ($sgNo, $step) {
 
     return $salaryGrade;
 });
+
+
+Route::post('step-increment/update/{stepId}', function () {
+    $request = request()->all();
+    $stepId = $request['stepID'];
+
+    $step_increments = StepIncrement::find($stepId);
+    $step_increments->date_step_increment = $request['dateStepIncrement'];
+    $step_increments->employee_id = $request['employeeID'];
+    $step_increments->item_no = $request['itemNoFrom'];
+    $step_increments->last_latest_appointment = $request['datePromotion'];
+    $step_increments->sg_no_from = $request['sgNoFrom'];
+    $step_increments->step_no_from = $request['stepNoFrom'];
+    $step_increments->salary_amount_from = $request['amountFrom'];
+    $step_increments->sg_no_to = $request['sgNo2'];
+    $step_increments->step_no_to = $request['stepNo2'];
+    $step_increments->salary_amount_to = $request['amount2'];
+    $step_increments->salary_diff = $request['monthlyDifference'];
+    $step_increments->update();
+
+
+    return response()->json(['success' => true]);
+
+});
+
+
 
 
 // LEAVE LIST //

@@ -2,6 +2,10 @@
 
 namespace App;
 
+use App\Office;
+use App\Employee;
+use App\Position;
+use App\Plantilla;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -25,7 +29,9 @@ class StepIncrement extends Model
         'salary_amount_to',
         'salary_diff',
         'office_code',
-        'deleted_at'
+        'deleted_at',
+        'created_at',
+        'updated_at'
     ];
 
      public static function boot()
@@ -54,22 +60,27 @@ class StepIncrement extends Model
 
     public function employee()
     {
-        return $this->belongsTo('App\Employee', 'employee_id', 'employee_id');
+        return $this->belongsTo(Employee::class, 'employee_id', 'Employee_id');
     }
 
     public function position()
     {
-        return $this->belongsTo('App\Position', 'position_id', 'position_id');
+        return $this->belongsTo(Position::class, 'position_id', 'PosCode');
     }
 
     public function plantilla()
     {
-        return $this->hasOne('App\Plantilla', 'employee_id', 'employee_id');
+        return $this->hasOne(Plantilla::class, 'employee_id', 'employee_id');
     }
 
     public function service_record()
     {
         return $this->hasOne('App\service_record', 'employee_id', 'employee_id');
+    }
+
+    public function office()
+    {
+        return $this->belongsTo(Office::class, 'office_code', 'office_code');
     }
 
 }

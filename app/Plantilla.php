@@ -71,7 +71,7 @@ class Plantilla extends Model
 
     public function office()
     {
-        return $this->hasOne(Office::class, 'OfficeCode', 'office_code');
+        return $this->belongsTo(Office::class, 'office_code', 'office_code');
     }
 
     public function positions()
@@ -81,7 +81,7 @@ class Plantilla extends Model
 
     public function position()
     {
-        return $this->hasOne('App\Position', 'position_id', 'pp_id');
+        return $this->hasOne('App\Position', 'PosCode', 'pp_id');
     }
 
     public function plantillaPosition()

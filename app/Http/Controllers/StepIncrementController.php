@@ -22,7 +22,7 @@ class StepIncrementController extends Controller
         $data = DB::table('Step_increments')
             ->leftJoin('Employees', 'Step_increments.employee_id', '=', 'Employees.Employee_id')
             ->leftJoin('Position', 'Step_increments.position_id', '=', 'Position.PosCode')
-            ->select('id', 'date_step_increment', DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"), 'Description', 'item_no', 'last_latest_appointment',
+            ->select('id', 'date_step_increment', DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"), 'Description', 'item_no', ('last_latest_appointment'),
             DB::raw("CONCAT(sg_no_from, '-' , step_no_from) AS sg_from_and_step_from"), 'salary_amount_from', DB::raw("CONCAT(sg_no_to, '-' , step_no_to) AS sg_to_and_step_to"), 'salary_amount_to', 'salary_diff')
             
 
@@ -69,7 +69,7 @@ class StepIncrementController extends Controller
 
 
 
-
+    // SHOW //
     public function index()
     {
         
@@ -82,20 +82,6 @@ class StepIncrementController extends Controller
 
 
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
 
 
      //  POST METHOD //
@@ -112,7 +98,8 @@ class StepIncrementController extends Controller
         $step_increments = DB::table('Step_increments')->insert([
                 'employee_id'               => $request->employeeID,
                 'item_no'                   => $request->itemNoFrom,
-                'position_id'               => $request->positionID,
+                'office_code'               => $request->officeCode,
+                'PosCode'                   => $request->positionID,
                 'date_step_increment'       => $request->dateStepIncrement,
                 'last_latest_appointment'   => $request->datePromotion,
                 'sg_no_from'                => $request->sgNoFrom,
@@ -140,44 +127,22 @@ class StepIncrementController extends Controller
 
           
         return redirect('/step-increment')->with('success', true);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
+    } 
+   
+    
 
 
     //  EDIT METHOD //
     public function edit($id)
     {
 
-        $stepIncrement = StepIncrement::with(['employee:employee_id,firstname,middlename,lastname,extension', 'position:position_id,position_name'])->find($id);
+        $stepIncrement = StepIncrement::with(['employee:Employee_id,FirstName,MiddleName,LastName,Suffix', 'position'])->find($id);
         $employee = $stepIncrement->employee;
         $position = $stepIncrement->position;
-
         
         return view ('stepIncrement.edit', compact('stepIncrement', 'employee', 'position'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
 
 
 
@@ -193,9 +158,9 @@ class StepIncrementController extends Controller
             $step_increments = StepIncrement::find($id);
             $step_increments->employee_id             = $request['employeeID'];
             $step_increments->item_no                 = $request['itemNoFrom'];
-            $step_increments->position_id             = $request['positionID'];
+            // $step_increments->office_code             = $request['officeCode'];
             $step_increments->date_step_increment     = $request['dateStepIncrement'];
-            $step_increments->date_latest_appointment = $request['datePromotion'];
+            $step_increments->last_latest_appointment = $request['datePromotion'];
             $step_increments->sg_no_from              = $request['sgNoFrom'];
             $step_increments->step_no_from            = $request['stepNoFrom'];
             $step_increments->salary_amount_from      = $request['amountFrom'];
@@ -212,12 +177,6 @@ class StepIncrementController extends Controller
             // return redirect()->to(route('step-increment.edit', $step_increments->id));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
 
 
     //  DELETE METHOD //

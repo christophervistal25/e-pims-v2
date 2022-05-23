@@ -25,31 +25,36 @@
 @section('content')
 
 {{-- BUTTONS --}}
+<div class="container col-lg-10">
 <div id='action-buttons' class="float-right mb-2">
     <a class="btn btn-info" href="{{ route('step-increment.previewed.print', $id) }}" id="printBtn"><i class="fas fa-print"></i>&nbsp; Print</a>
     <a href="/step-increment" class="btn btn-primary"><i class="fa fa-list"></i>&nbsp; Personnel List</a>
 </div>
 <div class="clearfix"></div>
 
-<div class="card" id='main-container' contenteditable="true">  {{-- contenteditable is it can able to edit inside of the page --}}
+<div class="card col-lg-12 col-md-12" id='main-container' contenteditable="true">  {{-- contenteditable is it can able to edit inside of the page --}}
     <div class="card-header pl-5 pr-5" id="headingOne">
+
         {{-- HEADING --}}
-        <div class="body-container row">
+        <div class="col-lg-12 col-md-12 row mt-5">
             {{-- LOGO --}}
-            <div class="w-25">
-                <img src="/assets/img/sdslogo.jpg" width="165px" style="margin-right: 100px">
+            <div class="col-lg-1 w-25" style="2rem">
+                <img src="/assets/img/sdslogo.jpg" width="155px" style="margin-right: 100px">
             </div>
-            <div class="offset-1 ml-5 pl-4">
-                <span class="h4">Republic of the Philippines</span>
+            {{-- END LOGO --}}
+
+            <div class="col-lg-10 text-center">
+                <h4>Republic of the Philippines</h4>
                 <h3>PROVINCE OF SURIGAO DEL SUR</h3>
-                <h4>TANDAG</h4>
-                <br>
+                <h4>TANDAG CITY</h4>
                 <h1>Office of the Governor</h1>
             </div>
-            <hr size="8" width="88%" style="border: solid black;">
-            <br>
+            <hr size="8" width="100%" style="border: solid black;">
         </div>
+        
         <div class="text-center">
+            
+
             <h4>NOTICE OF STEP INCREMENT</h4>
         </div>
         
@@ -58,9 +63,12 @@
             <p class="date">{{ Carbon\Carbon::parse($stepIncrement->date_step_increment)->format('F d, Y') }}</p>
             <br>
             {{-- NAME --}}
-            <h4>{{ $stepIncrement->employee->firstname }} {{ $stepIncrement->employee->middlename }}.
-                {{ $stepIncrement->employee->lastname }}</h4>
-            <p>{{ $stepIncrement->employee->plantilla->office->office_name }}</p>
+            <h4>{{ $stepIncrement->employee->FirstName }} {{ $stepIncrement->employee->MiddleName }}.
+                {{ $stepIncrement->employee->LastName }}</h4>
+
+            {{-- <h4>{{ $stepIncrement->plantilla->office_code }}</h4> --}}
+                
+            {{-- <p>{{ $stepIncrement->employee->plantilla->office->office_name }}</p> --}}
             <br>
             <br>
 
@@ -68,11 +76,18 @@
             <p class="text text-md mb-4">Sir/Madam:</p>
 
             {{-- BODY --}}
-            <span class="text text-md ml-4 pl-5">&nbsp Pursuant to Joint Civil Service Commission (CSC) and Department
+            {{-- <span class="text text-md ml-4 pl-5">&nbsp Pursuant to Joint Civil Service Commission (CSC) and Department
                 of Budget and Management (DBM) Circular No. 1 series 1990, implementing Section 13 (c) of RA 6758, your
                 salary as {{ $stepIncrement->employee->plantilla->position->position_name }},
                 SG-{{ $stepIncrement->sg_no_to }}, in the Office of
                 {{ $stepIncrement->employee->plantilla->office->office_name }} is hereby adjusted effective
+                {{ Carbon\Carbon::parse($stepIncrement->date_step_increment)->format( 'F d, Y') }} as shown
+                below:</span> --}}
+            <span class="text text-md ml-4 pl-5">&nbsp Pursuant to Joint Civil Service Commission (CSC) and Department
+                of Budget and Management (DBM) Circular No. 1 series 1990, implementing Section 13 (c) of RA 6758, your
+                salary as {{ $position->Description }},
+                SG-{{ $stepIncrement->sg_no_to }}, in the Office of {{$office->office_code}}
+                 is hereby adjusted effective
                 {{ Carbon\Carbon::parse($stepIncrement->date_step_increment)->format( 'F d, Y') }} as shown
                 below:</span>
             <br>
@@ -113,6 +128,7 @@
 
         </div>
     </div>
+</div>
 </div>
 
 @push('page-scripts')
