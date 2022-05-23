@@ -64,7 +64,7 @@ class PlantillaController extends Controller
         ->join('employees', 'plantillas.employee_id', '=', 'employees.Employee_id')
         ->join('plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
         ->join('Position', 'plantilla_positions.PosCode', '=', 'Position.PosCode')
-        ->select('plantilla_id', 'plantillas.item_no as item_no', 'plantillas.employee_id as employee_id', 'offices.office_name as office_name', 'plantillas.status as status', 'plantillas.year as year', 'Position.Description' ,DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"))
+        ->select('plantilla_id', 'plantillas.item_no as item_no', 'plantillas.employee_id as employee_id', 'offices.office_name as office_name', 'plantillas.status as status', 'plantillas.year as year', 'Position.Description' ,DB::raw("CONCAT(LastName, ', ' , FirstName , ' ' , MiddleName, ' ' , Suffix) AS fullname"))
         ->orderBy('plantilla_id', 'desc');
         if (request()->ajax()) {
             $PlantillaData = ($office != '*') ? $data->where('plantillas.office_code', $office)->get()
@@ -162,7 +162,7 @@ class PlantillaController extends Controller
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('PosCode', 'Description')->get();
         $plantillaPositionIDAll = Plantilla::where('plantilla_id','!=',$plantilla_id)->get()->pluck('pp_id')->toArray();
-        $plantillaPositionAll = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->with('position:position_id,position_name')->whereNotIn('pp_id', $plantillaPositionIDAll )->get();
+        $plantillaPositionAll = PlantillaPosition::select('pp_id', 'PosCode', 'office_code')->with('position:PosCode,Description')->whereNotIn('pp_id', $plantillaPositionIDAll )->get();
         $salarygrade = SalaryGrade::get(['sg_no']);
         $status = ['Casual','Coterminous','Permanent','Provisional','Temporary','Elected'];
         count($status) - 1;
@@ -175,7 +175,7 @@ class PlantillaController extends Controller
         $plantilla = Plantilla::find($plantilla_id);
         $officeCode = $plantilla->office_code;
         $plantillaPositionID = Plantilla::where('plantilla_id','!=',$plantilla_id)->get()->pluck('pp_id')->toArray();
-        $plantillaPosition = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->with('position:position_id,position_name')->where('office_code',$officeCode)->whereNotIn('pp_id', $plantillaPositionID )->get();
+        $plantillaPosition = PlantillaPosition::select('pp_id', 'PosCode', 'office_code')->with('position:PosCode,Description')->where('office_code',$officeCode)->whereNotIn('pp_id', $plantillaPositionID )->get();
         return view ('Plantilla.edit', compact('division', 'plantilla','employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition', 'plantillaPositionAll'));
     }
 
@@ -205,26 +205,25 @@ class PlantillaController extends Controller
             'areaType'                      => 'required|in:Region,Province,District,Municipality,Foreign Post',
             'areaLevel'                     => 'required|in:K,T,S,A',
         ]);
-        $plantilla                         = Plantilla::find($plantilla_id);
-        $plantilla->item_no                = $request['itemNo'];
-        $plantilla->old_item_no            = $request['oldItemNo'];
-        $plantilla->pp_id                  = $request['positionTitle'];
-        $plantilla->employee_id            = $request['employeeId'];
-        $plantilla->sg_no                  = $request['salaryGrade'];
-        $plantilla->step_no                = $request['stepNo'];
-        $plantilla->salary_amount          = $request['salaryAmount'];
-        $plantilla->office_code            = $request['officeCode'];
-        $plantilla->division_id            = $request['divisionId'];
-        $plantilla->date_original_appointment = $request['originalAppointment'];
-        $plantilla->date_last_promotion    = $request['lastPromotion'];
-        $plantilla->status                 = $request['status'];
-        $plantilla->area_code              = $request['areaCode'];
-        $plantilla->area_type              = $request['areaType'];
-        $plantilla->area_level             = $request['areaLevel'];
-        $plantilla->year             = $request['currentSgyear'];
+        $plantilla                              = Plantilla::find($plantilla_id);
+        $plantilla->item_no                     = $request->itemNo;
+        $plantilla->old_item_no                 = $request->oldItemNo;
+        $plantilla->pp_id                       = $request->positionTitle;
+        $plantilla->employee_id                 = $request->employeeId;
+        $plantilla->sg_no                       = $request->salaryGrade;
+        $plantilla->step_no                     = $request->stepNo;
+        $plantilla->salary_amount               = $request->salaryAmount;
+        $plantilla->office_code                 = $request->officeCode;
+        $plantilla->division_id                 = $request->divisionId;
+        $plantilla->date_original_appointment   = $request->originalAppointment;
+        $plantilla->date_last_promotion         = $request->lastPromotion;
+        $plantilla->status                      = $request->status;
+        $plantilla->area_code                   = $request->areaCode;
+        $plantilla->area_type                   = $request->areaType;
+        $plantilla->area_level                  = $request->areaLevel;
+        $plantilla->year                        = $request->currentSgyear;
         $plantilla->save();
-        Session::flash('alert-success', 'Plantilla of Personnel Record Updated Successfully');
-        return back()->with('success','Updated Successfully');
+        return response()->json(['success'=>true]);
     }
 
     /**
