@@ -331,44 +331,6 @@ Route::post('/salary-adjustment-per-office', function () {
     return response()->json(['success' => true]);
 });
 
-// plantilla personnel filter
-Route::get('/plantilla/personnel/{officeCode}', function ($office_code) {
-    $data = DB::table('plantillas')->join('offices', 'plantillas.office_code', '=', 'offices.office_code')
-        ->join('employees', 'plantillas.employee_id', '=', 'employees.employee_id')
-        ->join('plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
-        ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
-        ->select('plantilla_id', 'plantillas.item_no', 'positions.position_name', 'plantillas.office_code', 'offices.office_name', 'plantillas.status', 'plantillas.year', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'))
-        ->where('plantillas.office_code', $office_code)
-        ->orderBy('plantilla_id', 'desc')
-        ->get();
-    return DataTables::of($data)
-        ->addColumn('action', function ($row) {
-            $btn = "<a title='Edit Plantilla' href='" . route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil'></i></a>";
-            return $btn;
-        })
-        ->rawColumns(['action'])
-        ->make(true);
-    //old query
-    // $data = Plantilla::select('plantilla_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id')->with('office:office_code,office_short_name','plantillaPosition:pp_id,position_id', 'employee:employee_id,firstname,middlename,lastname,extension')->where('office_code', $office_code)->orderBy('plantilla_id', 'DESC')->get();
-    // return Datatables::of($data)
-    //                 ->addIndexColumn()
-    //                 ->addColumn('employee', function ($row) {
-    //                     return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
-    //                 })
-    //                 ->addColumn('plantillaPosition', function ($row) {
-    //                     return $row->plantillaPosition->position->position_name;
-    //                 })
-    //                 ->addColumn('office', function ($row) {
-    //                     return $row->office->office_short_name;
-    //                 })
-    //                 ->addColumn('action', function($row){
-    //                     $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil'></i></a>";
-    //                         return $btn;
-    //                 })
-    //                 ->rawColumns(['action'])
-    //                 ->make(true);
-});
-
 
 // plantilla schedule list filter
 Route::get('/plantilla/list/{officeCode}', function ($office_code) {

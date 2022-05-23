@@ -54,8 +54,7 @@ Route::get('/position-schedule-list', 'PositionScheduleController@list');
 
 
 //plantilla of personnel
-Route::get('/plantilla-list', 'Plantillacontroller@list');
-// Route::post('/plantilla', 'PlantillaController@addPosition');
+Route::get('/plantilla-list/{office?}', 'Plantillacontroller@list');
 Route::resource('/plantilla-of-personnel', 'PlantillaController');
 
 //plantilla of position

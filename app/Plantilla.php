@@ -34,8 +34,7 @@ class Plantilla extends Model
         'plantilla_id',
         'old_item_no',
         'item_no',
-        'position_id',
-        'position_ext',
+        'pp_id',
         'sg_no',
         'step_no',
         'salary_amount',
@@ -58,7 +57,7 @@ class Plantilla extends Model
     {
         $this->table = DB::connection($this->connection)->getDatabaseName() . '.dbo.' . $this->getTable();
     }
-    
+
     public function employee()
     {
         return $this->belongsTo(Employee::class, 'Employee_id', 'employee_id');
@@ -71,25 +70,25 @@ class Plantilla extends Model
 
     public function office()
     {
-        return $this->hasOne(Office::class, 'OfficeCode', 'office_code');
+        return $this->hasOne(Office::class, 'office_code', 'office_code');
     }
 
-    public function positions()
+    public function plantilla_positions()
     {
-        return $this->hasOne(Position::class, 'position_id', 'position_id');
+        return $this->hasOne(PlantillaPosition::class, 'pp_id', 'pp_id');
     }
 
-    public function position()
-    {
-        return $this->hasOne('App\Position', 'position_id', 'pp_id');
-    }
+    // public function position()
+    // {
+    //     return $this->hasOne('App\Position', 'position_id', 'pp_id');
+    // }
 
-    public function plantillaPosition()
-    {
-        return $this->hasOne('App\PlantillaPosition', 'position_id', 'pp_id');
-    }
+    // public function plantillaPosition()
+    // {
+    //     return $this->hasOne('App\PlantillaPosition', 'position_id', 'pp_id');
+    // }
 
-    public function salary_adjustment() 
+    public function salary_adjustment()
     {
         $this->primaryKey = 'employee_id';
         return $this->hasMany(SalaryAdjustment::class, 'employee_id', 'employee_id');
@@ -100,5 +99,5 @@ class Plantilla extends Model
         return $this->belongsTo(PlantillaSchedule::class, 'plantilla_id', 'plantilla_id');
     }
 
-    
+
 }
