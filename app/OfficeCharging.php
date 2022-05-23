@@ -2,20 +2,18 @@
 
 namespace App;
 
-use App\Office2;
-use App\Plantilla;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Office extends Model
+class OfficeCharging extends Model
 {
+    use HasFactory;
+
     public $incrementing = false;
 
-    protected $primaryKey = 'OfficeCode';
+    protected $primaryKey = 'office_code';
     protected $keyType = 'string';
     public $table = 'Office';
     public $connection = 'DTR_PAYROLL_CONNECTION';
     public $timestamps = false;
-
 }
