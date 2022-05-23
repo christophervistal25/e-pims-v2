@@ -1,13 +1,18 @@
 <?php
 
+use App\Contracts\PersonalDataSheetC1;
+use App\Office;
 use App\Employee;
 use App\Position;
+use Hashids\Hashids;
 use App\Services\MSAccess;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BirthdayController;
+use App\Http\Controllers\PersonalDataSheetController;
 use App\Http\Controllers\EmployeeLeave\LeaveListController;
+use Faker\Provider\ar_JO\Person;
 
 Route::resource('notifications', 'NotificationController');
 
@@ -103,8 +108,13 @@ Route::group(['prefix' => 'employee'], function () {
     Route::get('/create/personal/data/sheet', 'PersonalDataSheetController@create')->name('data.create');
     Route::get('/create/{idNumber}/personal/data/sheet', 'PersonalDataSheetController@createWithEmployee');
 
-    Route::post('/personal/information/store', 'PersonalDataSheetController@storePersonInformation');
-    Route::post('/personal/family/background/store', 'PersonalDataSheetController@storePersonFamilyBackground');
+
+
+
+
+
+    Route::post('/personal/family/background/store', [PersonalDataSheetController::class, 'existingEmployeeStoreFamilyBackground']);
+
     Route::post('/personal/educational/background/store', 'PersonalDataSheetController@storeEducationalBackground');
     Route::post('/personal/civil/service', 'PersonalDataSheetController@storeCivilService');
     Route::post('/personal/work/experience', 'PersonalDataSheetController@storeWorkExperience');
@@ -242,5 +252,6 @@ Route::get('create-employee', function () {
 });
 
 Route::get('personal-data-sheet/{idNumber}', function (string $idNumber) {
+    [$idNumber] = (new Hashids())->decode($idNumber);
     return view('employee.personal-data-sheet.edit')->with('employeeID', $idNumber);
 })->name('employee.personal-data-sheet.edit');

@@ -22,7 +22,8 @@ class PlantillaOfPositionController extends Controller
     {
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('PosCode', 'Description', 'sg_no')->get();
-        return view('PlantillaOfPosition.PlantillaOfPosition', compact('position', 'office'));
+        $lastId = Position::latest('PosCode')->first();
+        return view('PlantillaOfPosition.PlantillaOfPosition', compact('position', 'office', 'lastId'));
     }
 
     public function list(string $office = '*')

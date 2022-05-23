@@ -11,6 +11,7 @@ use App\SalaryAdjustment;
 use App\PlantillaPosition;
 use App\PlantillaSchedule;
 use Yajra\Datatables\Datatables;
+use App\EmployeeFamilyBackground;
 
 use App\EmployeeLeaveApplication;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +22,7 @@ use App\Http\Controllers\Api\OfficeController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\PositionController;
 use App\Http\Controllers\Api\ProvinceController;
+use App\Http\Controllers\PersonalDataSheetController;
 
 Route::get('/salarySteplist/{sg_no}/{sg_step?}/{sg_year}', 'Api\PlantillaController@salarySteplist');
 Route::get('/dbmPrevious/{sg_no}/{sg_step?}/{sg_year}', 'Api\PlantillaController@dbmPrevious');
@@ -69,6 +71,7 @@ Route::get('step/{sg_no}/{step}', function ($sgNo, $step) {
     return $salaryGrade;
 });
 
+
 Route::group(['prefix' => 'employee', 'namespace' => 'Api'], function () {
     Route::get('list/{charging?}/{assignment?}/{status?}/{active?}', [EmployeeController::class, 'list']);
     Route::post('store', [EmployeeController::class, 'store']);
@@ -83,9 +86,21 @@ Route::group(['prefix' => 'employee', 'namespace' => 'Api'], function () {
     Route::get('/employment/status', 'Api\ReferenceStatusController@status');
 });
 
+Route::group(['prefix' => 'personal-data-sheet'], function () {
+
+
+    Route::controller(PersonalDataSheetController::class)->group(function () {
+        Route::post('personal-information/update/{idNumber}', 'updatePersonalInformation');
+
+        Route::get('family-background/fetch/{idNumber}', 'getFamilyBackground');
+        Route::post('family-background/update/{idNumber}', 'updateFamilyBackground');
+    });
+});
+
 Route::group(['namespace' => 'Api'], function () {
     Route::get('offices', [OfficeController::class, 'list']);
 });
+
 Route::get('office/search/head/{key}', 'Api\OfficeController@searchOfficeHead');
 Route::get('office/search/{key}', 'Api\OfficeController@search');
 Route::post('office/store', 'Api\OfficeController@store');
@@ -106,7 +121,7 @@ Route::group(['prefix' => 'province', 'namespace' => 'Api'], function () {
     Route::get('all', [ProvinceController::class, 'all']);
 
     Route::get('/{code}', 'ProvinceController@show');
-    Route::get('/cities/by/{code}', 'ProvinceController@citiesByProvince');
+    Route::get('/cities/by/{code}', [ProvinceController::class, 'citiesByProvince']);
 });
 
 Route::group(['prefix' => 'city', 'namespace' => 'Api'], function () {
