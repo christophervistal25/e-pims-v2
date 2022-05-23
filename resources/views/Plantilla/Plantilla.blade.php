@@ -48,8 +48,8 @@
 @endprepend
 
 @prepend('meta-data')
-<meta id="plantillaPositionMetaData" content="@foreach($plantillaPosition as $plantillaPositions){ |officeCode|:|{{ $plantillaPositions->office_code }}|, |positionId|:|{{ $plantillaPositions->position_id }}|, |ppId|:|{{ $plantillaPositions->pp_id }}|}, @endforeach">
-<meta id="positionMetaData" content="@foreach($position as $positions){ |positionId|:|{{ $positions->position_id }}|, |positionName|:|{{ $positions->position_name }}|}, @endforeach">
+<meta id="plantillaPositionMetaData" content="@foreach($plantillaPosition as $plantillaPositions){ |officeCode|:|{{ $plantillaPositions->office_code }}|, |positionId|:|{{ $plantillaPositions->PosCode }}|, |ppId|:|{{ $plantillaPositions->pp_id }}|}, @endforeach">
+<meta id="positionMetaData" content="@foreach($position as $positions){ |positionId|:|{{ $positions->PosCode }}|, |positionName|:|{{ $positions->Description }}|}, @endforeach">
 <meta id="divisionMetaData" content="@foreach($division as $divisions){ |officeCode|:|{{ $divisions->office_code }}|, |divisionId|:|{{ $divisions->division_id }}|, |divisionName|:|{{ $divisions->division_name }}|}, @endforeach">
 @endprepend
 @section('content')
@@ -73,10 +73,9 @@
                             name="employeeName" data-live-search="true" id="employeeName" data-size="5">
                             <option></option>
                             @foreach($employee as $employees)
-                            <option data-plantilla="{{ $employees->employee_id }}"
-                                {{ old('employeeName') == $employees->employee_id ? 'selected' : '' }}
-                                value="{{ $employees->employee_id }}"> {{ $employees->firstname }}
-                                {{ $employees->middlename }} {{ $employees->lastname }}</option>
+                            <option data-plantilla="{{ $employees->Employee_id }}"
+                                {{ old('employeeName') == $employees->Employee_id ? 'selected' : '' }}
+                                value="{{ $employees->Employee_id }}"> {{ $employees->fullname }}</option>
                             @endforeach
                         </select>
                         <div id='employee-name-error-message' class='text-danger text-sm'>
@@ -97,8 +96,8 @@
                             name="officeCode" data-live-search="true" id="officeCode" data-size="5">
                             <option></option>
                             @foreach($office as $offices)
-                            <option {{ old('officeCode') == $offices->OfficeCode ? 'selected' : '' }} value="{{ $offices->OfficeCode }}">
-                                {{ $offices->Description }}</option>
+                            <option {{ old('officeCode') == $offices->office_code ? 'selected' : '' }} value="{{ $offices->office_code }}">
+                                {{ $offices->office_name }}</option>
                             @endforeach
                         </select>
                         <div id='office-error-message' class='text-danger text-sm'>
@@ -299,7 +298,7 @@
                                     name="employeeOffice" data-live-search="true" id="employeeOffice" data-size="5">
                                     <option value="">All</option>
                                     @foreach($office as $offices){
-                                        <option value="{{ $offices->OfficeCode }}">{{ $offices->Description }}</option>
+                                        <option value="{{ $offices->office_code }}">{{ $offices->office_name }}</option>
                                     }
                                     @endforeach
                                     </select>
@@ -311,7 +310,7 @@
                     </div>
                 </div>
 
-                    <div class="table" style="overflow-x:auto;">
+                    <div class="table">
                         <table class="table table-bordered table-hover text-center" id="plantilla" style="width:100%;">
                             <thead>
                                 <tr>

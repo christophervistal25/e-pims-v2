@@ -1,13 +1,18 @@
 <?php
 
+use App\Contracts\PersonalDataSheetC1;
+use App\Office;
 use App\Employee;
 use App\Position;
+use Hashids\Hashids;
 use App\Services\MSAccess;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BirthdayController;
+use App\Http\Controllers\PersonalDataSheetController;
 use App\Http\Controllers\EmployeeLeave\LeaveListController;
+use Faker\Provider\ar_JO\Person;
 
 Route::resource('notifications', 'NotificationController');
 
@@ -49,14 +54,14 @@ Route::get('/position-schedule-list', 'PositionScheduleController@list');
 
 
 //plantilla of personnel
-Route::get('/plantilla-list', 'Plantillacontroller@list');
-// Route::post('/plantilla', 'PlantillaController@addPosition');
+Route::get('/plantilla-list/{office?}', 'Plantillacontroller@list');
 Route::resource('/plantilla-of-personnel', 'PlantillaController');
 
 //plantilla of position
 Route::resource('/plantilla-of-position', 'PlantillaOfPositionController');
-Route::get('/plantilla-of-position-list', 'PlantillaOfPositionController@list');
-Route::get('/plantilla-of-position/{id}', 'PlantillaOfPositionController@destroy')->name('plantilla-of-position.delete');
+Route::get('/plantilla-of-position-list/{office_code?}', 'PlantillaOfPositionController@list');
+Route::get('/plantilla-of-position/{id}', 'PlantillaOfPositionController@destroy')->name('plantilla-of-position.destroy');
+Route::put('/plantilla-of-position/{id}', 'PlantillaOfPositionController@update');
 
 // Step-Increment //
 Route::get('/step-increment/list', 'StepIncrementController@list');
@@ -102,8 +107,13 @@ Route::group(['prefix' => 'employee'], function () {
     Route::get('/create/personal/data/sheet', 'PersonalDataSheetController@create')->name('data.create');
     Route::get('/create/{idNumber}/personal/data/sheet', 'PersonalDataSheetController@createWithEmployee');
 
-    Route::post('/personal/information/store', 'PersonalDataSheetController@storePersonInformation');
-    Route::post('/personal/family/background/store', 'PersonalDataSheetController@storePersonFamilyBackground');
+
+
+
+
+
+    Route::post('/personal/family/background/store', [PersonalDataSheetController::class, 'existingEmployeeStoreFamilyBackground']);
+
     Route::post('/personal/educational/background/store', 'PersonalDataSheetController@storeEducationalBackground');
     Route::post('/personal/civil/service', 'PersonalDataSheetController@storeCivilService');
     Route::post('/personal/work/experience', 'PersonalDataSheetController@storeWorkExperience');
@@ -130,9 +140,11 @@ Route::group(['prefix' => 'employee'], function () {
     Route::get('/leave/application', 'EmployeeLeave\LeaveController@show')->name('leave.application.filling');
     Route::get('/leave/leave-recall', 'EmployeeLeave\LeaveRecallController@index')->name('leave.leave-recall');
     Route::resource('/leave-recall', 'EmployeeLeave\LeaveRecallController');
-    Route::get('/leave/leave-forwarded-balance', 'EmployeeLeave\EmployeeLeaveRecordController@list')->name('leave-forwarded-balance.list');
-    Route::post('/leave-forwarded-balance/{id}', 'EmployeeLeave\EmployeeLeaveRecordController@destroy');
-    Route::resource('/leave-forwarded-balance', 'EmployeeLeave\EmployeeLeaveRecordController');
+    Route::get('/list/leave-forwarded-balance', 'EmployeeLeave\LeaveForwardedBalanceController@list')->name('leave-forwarded-balance.list');
+    Route::post('/leave-forwarded-balance/{id}', 'EmployeeLeave\LeaveForwardedBalanceController@destroy');
+    Route::get('/leave-forwarded-balance/{id}/edit', 'EmployeeLeave\LeaveForwardedBalanceController@edit');
+    Route::put('/leave-forwarded-balance/{id}', 'EmployeeLeave\LeaveForwardedBalanceController@update');
+    Route::resource('/leave-forwarded-balance', 'EmployeeLeave\LeaveForwardedBalanceController');
 
     //  LEAVE-LIST APPLICATIONS //
     Route::get('leave-list/list', [LeaveListController::class, 'list']);
@@ -239,5 +251,6 @@ Route::get('create-employee', function () {
 });
 
 Route::get('personal-data-sheet/{idNumber}', function (string $idNumber) {
+    [$idNumber] = (new Hashids())->decode($idNumber);
     return view('employee.personal-data-sheet.edit')->with('employeeID', $idNumber);
 })->name('employee.personal-data-sheet.edit');

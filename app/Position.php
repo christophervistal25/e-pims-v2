@@ -16,22 +16,17 @@ class Position extends Model
     public $incrementing  = false;
     public $table = 'Position';
     public $primaryKey = 'PosCode';
-    protected $fillable = ['position_id', 'PosCode', 'Description', 'sg_no', 'position_short_name'];
-
-    public function __construct()
-    {
-        $this->table = DB::connection($this->connection)->getDatabaseName() . '.dbo.' . $this->getTable();
-    }
+    protected $fillable = ['PosCode', 'Description', 'sg_no', 'position_short_name'];
 
     public function getPositionNameAttribute($value)
     {
         return Str::upper($value);
     }
 
-    public function plantillas()
-    {
-        return $this->belongsTo(Plantilla::class, 'PosCode', 'pp_id');
-    }
+    // public function plantillas()
+    // {
+    //     return $this->belongsTo(Plantilla::class, 'pp_id', 'pp_id');
+    // }
 
     public function salary_grade()
     {
@@ -39,26 +34,26 @@ class Position extends Model
     }
     public function service_record()
     {
-        return $this->belongsTo(service_record::class, 'position_id', 'position_id');
+        return $this->belongsTo(service_record::class, 'position_id', 'PosCode');
     }
     public function salary_adjustment()
     {
-        return $this->hasOne(SalaryAdjustment::class, 'position_id', 'position_id');
+        return $this->hasOne(SalaryAdjustment::class, 'position_id', 'PosCode');
     }
     
     public function plantilla_positions()
     {
-        return $this->belongsTo(PlantillaPosition::class, 'position_id', 'position_id');
+        return $this->belongsTo(PlantillaPosition::class, 'PosCode', 'PosCode');
     }
 
     public function PlantillaSchedule()
     {
-        return $this->belongsTo(PlantillaSchedule::class, 'position_id', 'position_id');
+        return $this->belongsTo(PlantillaSchedule::class, 'position_id', 'PosCode');
     }
 
     public function PositionSchedule()
     {
-        return $this->belongsTo(PositionSchedule::class, 'position_id', 'position_id');
+        return $this->belongsTo(PositionSchedule::class, 'position_id', 'PosCode');
     }
 
     public function step()

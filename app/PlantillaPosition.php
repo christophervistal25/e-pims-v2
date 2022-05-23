@@ -10,9 +10,9 @@ class PlantillaPosition extends Model
 {
     // use SoftDeletes;
     public $connection = 'DTR_PAYROLL_CONNECTION';
-    
+
     protected $dates = ['deleted_at'];
-    protected $fillable = ['pp_id', 'position_id' ,'item_no', 'sg_no' ,'office_code', 'old_position_name', 'year'];
+    protected $fillable = ['position_id' ,'item_no', 'sg_no' ,'office_code', 'old_position_name', 'year'];
 
     protected $primaryKey = 'pp_id';
 
@@ -22,8 +22,9 @@ class PlantillaPosition extends Model
     }
     public function position()
     {
-        return $this->hasOne('App\Position', 'position_id', 'position_id');
+        return $this->hasOne(Position::class, 'PosCode', 'PosCode');
     }
+
     public function office()
     {
         return $this->hasOne('App\Office', 'OfficeCode', 'office_code');
@@ -40,4 +41,13 @@ class PlantillaPosition extends Model
     {
         return $this->belongsTo(PlantillaSchedule::class, 'pp_id', 'pp_id');
     }
+
+    // protected static function boot()
+    // {
+    //     parent::boot();
+    //     static::creating(function($record) {
+    //         $record->pp_id = self::count() + 1;
+    //         $record->pp_id = Setting::find('PP_id')->increment('Keyvalue');
+    //     });
+    // }
 }

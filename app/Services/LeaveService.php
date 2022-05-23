@@ -19,20 +19,18 @@ class LeaveService
 
     public function getEmployeeApplied() : array
     {
-        return EmployeeLeaveApplication::get(['employee_id'])
-                                ->pluck('employee_id')
+        return EmployeeLeaveApplication::get(['Employee_id'])
+                                ->pluck('Employee_id')
                                 ->toArray();
     }
 
     public function countAllStatus() : array
     {
         $data = [];
-
+ 
         foreach(self::STATUS as $status) {
-            $data[$status] = EmployeeLeaveApplication::where('approved_status', $status)
-                                                    ->count();
-        }
-
+            $data[$status] =  EmployeeLeaveApplication::where('status', $status)->count();
+        }   
         return $data;
     }
 

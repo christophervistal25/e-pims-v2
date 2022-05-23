@@ -31,40 +31,37 @@ class StepIncrementController extends Controller
 
         // dd($data);
 
-    
 
 
-        if($data->count() === 0)
-        {
+
+        if ($data->count() === 0) {
             $data = $data->where('deleted_at', null);
         }
 
 
-            return DataTables::of($data)
-                ->addColumn('salary_amount_from', function ($row) {
-                    return '₱' . number_format($row->salary_amount_from, 2, '.', ',');
-                })
-                ->addColumn('salary_amount_to', function ($row) {
-                    return '₱' . number_format($row->salary_amount_to, 2, '.', ',');
-                })
-                ->addColumn('salary_diff', function ($row) {
-                    return '₱' . number_format($row->salary_diff, 2, '.', ',');
-                })
+        return DataTables::of($data)
+            ->addColumn('salary_amount_from', function ($row) {
+                return '₱' . number_format($row->salary_amount_from, 2, '.', ',');
+            })
+            ->addColumn('salary_amount_to', function ($row) {
+                return '₱' . number_format($row->salary_amount_to, 2, '.', ',');
+            })
+            ->addColumn('salary_diff', function ($row) {
+                return '₱' . number_format($row->salary_diff, 2, '.', ',');
+            })
 
 
-                // EDIT FUNCTION IN YAJRA TABLE //
-                ->addColumn('action', function($row) {
-                    $btnEdit = "<a href='". route('step-increment.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil' title='Edit Step Increment'></i></a>";
+            // EDIT FUNCTION IN YAJRA TABLE //
+            ->addColumn('action', function ($row) {
+                $btnEdit = "<a href='" . route('step-increment.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil' title='Edit Step Increment'></i></a>";
 
 
-                    // DELETE FUNCTION IN YAJRA TABLE //
-                    $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="'.$row->id.'"><i style="pointer-events:none;" class="la la-trash"></i></button>';
+                // DELETE FUNCTION IN YAJRA TABLE //
+                $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="' . $row->id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
 
 
                 return $btnEdit . "&nbsp" . $btnDelete;
-
             })->make(true);
-
     }
 
 
@@ -72,26 +69,26 @@ class StepIncrementController extends Controller
     // SHOW //
     public function index()
     {
-        
+
+
         $employees = Employee::whereDoesntHave('step')->has('plantilla')->with(['plantilla'])->get();
 
 
         return view('StepIncrement.create', compact('employees'));
-
     }
 
 
 
 
 
-     //  POST METHOD //
+    //  POST METHOD //
     public function store(Request $request)
     {
-      
+
         $this->validate($request, [
-                'employeeName'      => 'required',
-                'dateStepIncrement' => 'required',
-                'stepNo2'           => 'required',
+            'employeeName'      => 'required',
+            'dateStepIncrement' => 'required',
+            'stepNo2'           => 'required',
         ]);
 
 
@@ -125,7 +122,7 @@ class StepIncrementController extends Controller
         //     'salary_amount' => $request['amount2']
         // ]);
 
-          
+
         return redirect('/step-increment')->with('success', true);
     } 
    

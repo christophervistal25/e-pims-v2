@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Office;
+use App\Setting;
+use App\Division;
+use App\Employee;
+use App\Position;
+use App\Plantilla;
+use App\SalaryGrade;
+use App\PlantillaPosition;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
-use App\Plantilla;
-use App\Employee;
-use App\SalaryGrade;
-use App\Office;
-use App\Position;
-use App\PlantillaPosition;  
-use App\Division;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+
 class PlantillaController extends Controller
 {
 
@@ -29,14 +31,14 @@ class PlantillaController extends Controller
     {
         $division = Division::select('division_id', 'division_name', 'office_code')->get();
         $plantillaEmp = Plantilla::get()->pluck('employee_id')->toArray();
-        $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->whereNotIn('employee_id', $plantillaEmp)->get();
-        $office = Office::select('OfficeCode', 'Description')->get();
+        $employee = Employee::select('Employee_id', 'LastName', 'FirstName', 'MiddleName')->whereNotIn('Employee_id', $plantillaEmp)->orderBy('LastName', 'ASC')->get();
+        $office = Office::select('office_code', 'office_name')->get();
 
-        $position = Position::select('position_id', 'position_name')->get();
+        $position = Position::select('PosCode', 'Description')->get();
 
         $plantillaPositionID = Plantilla::get()->pluck('pp_id')->toArray();
 
-        $plantillaPosition = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->with('position:position_id,position_name')->whereNotIn('pp_id', $plantillaPositionID )->get();
+        $plantillaPosition = PlantillaPosition::select('pp_id', 'PosCode', 'office_code')->with('position:PosCode,Description')->whereNotIn('pp_id', $plantillaPositionID )->get();
         $salarygrade = SalaryGrade::get(['sg_no']);
 
         $status = ['Casual','Coterminous','Permanent','Provisional','Temporary','Elected'];
@@ -54,46 +56,27 @@ class PlantillaController extends Controller
         return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition', 'division'));
     }
 
-    public function list(Request $request)
+
+
+    public function list(string $office = '*')
     {
-        $data = DB::connection('E_PIMS_CONNECTION')->table('plantillas')
-        ->join('offices', 'plantillas.office_code', '=', 'offices.office_code')
-        ->join('DTRPayroll.dbo.Employees', 'plantillas.employee_id', '=', 'DTRPayroll.dbo.Employees.Employee_id')
+        $data = DB::table('plantillas')->join('offices', 'plantillas.office_code', '=', 'offices.office_code')
+        ->join('employees', 'plantillas.employee_id', '=', 'employees.Employee_id')
         ->join('plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
-        ->join('positions', 'plantilla_positions.position_id', '=', 'positions.position_id')
-        ->select('plantilla_id', 'plantillas.item_no', 'positions.position_name', 'offices.office_name', 'plantillas.status', 'plantillas.year', DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"))
-        ->orderBy('plantilla_id', 'desc')
-        ->get();
-        return DataTables::of($data)
-        ->addColumn('action', function($row){
-            $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil'></i></a>";
-                return $btn;
-        })
+        ->join('Position', 'plantilla_positions.PosCode', '=', 'Position.PosCode')
+        ->select('plantilla_id', 'plantillas.item_no as item_no', 'plantillas.employee_id as employee_id', 'offices.office_name as office_name', 'plantillas.status as status', 'plantillas.year as year', 'Position.Description' ,DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"))
+        ->orderBy('plantilla_id', 'desc');
+        if (request()->ajax()) {
+            $PlantillaData = ($office != '*') ? $data->where('plantillas.office_code', $office)->get()
+                : $data->get();
+            return DataTables::of($PlantillaData)
+            ->addColumn('action', function($row){
+                $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil'></i></a>";
+                    return $btn;
+            })
         ->rawColumns(['action'])
         ->make(true);
-
-        //old query
-        // if ($request->ajax()) {
-        //     $data = Plantilla::select('plantilla_id', 'item_no', 'pp_id', 'office_code', 'status', 'employee_id')->with('office:office_code,office_short_name','plantillaPosition', 'plantillaPosition.position', 'employee:employee_id,firstname,middlename,lastname,extension')->orderBy('plantilla_id', 'DESC');
-        //     return (new Datatables)->eloquent($data)
-        //             ->addIndexColumn()
-        //             ->addColumn('employee', function ($row) {
-        //                 return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
-        //             })
-        //             ->addColumn('plantillaPosition', function ($row) {
-        //                 return $row->plantillaPosition->position->position_name;
-        //             })
-        //             ->addColumn('office', function ($row) {
-        //                 return $row->office->office_short_name;
-        //             })
-        //             ->addColumn('action', function($row){
-        //                 $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil'></i></a>";
-        //                     return $btn;
-        //             })
-        //             ->rawColumns(['action'])
-        //             ->make(true);
-        // }
-        return view('SalaryGrade.SalaryGrade');
+    }
     }
 
     /**
@@ -120,7 +103,7 @@ class PlantillaController extends Controller
             // 'salaryGrade'                   => 'required|in:' . implode(',',range(1, 33)),
             'stepNo'                        => 'required|in:' . implode(',',range(1, 8)),
             'salaryAmount'                  => 'required|numeric',
-            'currentSgyear'                          => 'required',
+            'currentSgyear'                 => 'required',
             'officeCode'                    => 'required|in:' . implode(',',range(10001, 10056)),
             'divisionId'                    => 'required',
             'originalAppointment'           => 'required',
@@ -129,9 +112,11 @@ class PlantillaController extends Controller
             'areaCode'                      => 'required|in:' . implode(',', Plantilla::REGIONS),
             'areaType'                      => 'required|in:Region,Province,District,Municipality,Foreign Post',
             'areaLevel'                     => 'required|in:K,T,S,A',
-
         ]);
+        $data = DB::table('settings')->where('Keyname', 'AUTONUMBER2')->first();
+        $id = (int)$data->Keyvalue;
         $plantilla = new Plantilla;
+        $plantilla->plantilla_id           = $id;
         $plantilla->item_no                = $request['itemNo'];
         $plantilla->old_item_no            = $request['oldItemNo'];
         $plantilla->pp_id                  = $request['positionTitle'];
@@ -149,6 +134,7 @@ class PlantillaController extends Controller
         $plantilla->area_level             = $request['areaLevel'];
         $plantilla->year                   = $request['currentSgyear'];
         $plantilla->save();
+        Setting::find('AUTONUMBER2')->increment('Keyvalue');
         return response()->json(['success'=>true]);
     }
 
@@ -172,9 +158,9 @@ class PlantillaController extends Controller
     public function edit($plantilla_id)
     {
         $division = Division::select('division_id', 'division_name', 'office_code')->get();
-        $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->get();
-        $office = Office::select('OfficeCode', 'Description')->get();
-        $position = Position::select('position_id', 'position_name')->get();
+        $employee = Employee::select('Employee_id', 'LastName', 'FirstName', 'MiddleName')->get();
+        $office = Office::select('office_code', 'office_name')->get();
+        $position = Position::select('PosCode', 'Description')->get();
         $plantillaPositionIDAll = Plantilla::where('plantilla_id','!=',$plantilla_id)->get()->pluck('pp_id')->toArray();
         $plantillaPositionAll = PlantillaPosition::select('pp_id', 'position_id', 'office_code')->with('position:position_id,position_name')->whereNotIn('pp_id', $plantillaPositionIDAll )->get();
         $salarygrade = SalaryGrade::get(['sg_no']);

@@ -1,49 +1,50 @@
-$(document).ready(function() {
+$(document).ready(function () {
     let valueE = ["#itemNo", "#positionOldName"];
     let errorClass = [
         ".positionTitle .dropdown",
         "#itemNo",
         ".salaryGrade .dropdown",
         ".officeCode .dropdown",
-        "#positionOldName"
+        "#positionOldName",
     ];
     let errorMessage = [
         "#position-title-error-message",
         "#item-error-message",
         "#salary-grade-error-message",
         "#office-error-message",
-        "#old-position-name-error-message"
+        "#old-position-name-error-message",
     ];
     let select = ["#positionTitle", "#salaryGrade", "#officeCode"];
     // code for show add form
-    $("#addButton").click(function() {
+    $("#addButton").click(function () {
         $("#add").attr("class", "page-header");
         $("#table").attr("class", "page-header d-none");
     });
     // code for show table
-    $("#showListPlantillaPosition").click(function() {
+    $("#showListPlantillaPosition").click(function () {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
     });
     // cancel button
-    $("#cancelButton").click(function() {
+    $("#cancelButton").click(function () {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
-        $.each(valueE, function(index, value) {
+        $.each(valueE, function (index, value) {
             $(`${value}`).val("");
         });
-        $("#positionTitle,#salaryGrade,#officeCode")
+        $("#positionTitle,#addSalaryGrade,#officeCode")
             .val("Please Select")
             .trigger("change");
-        $.each(errorClass, function(index, value) {
+        $.each(errorClass, function (index, value) {
             $(`${value}`).removeClass("is-invalid");
         });
-        $.each(errorMessage, function(index, value) {
+        $.each(errorMessage, function (index, value) {
             $(`${value}`).html("");
         });
     });
+
     // add new plantilla of position
-    $("#plantillaOfPositionForm").submit(function(e) {
+    $("#plantillaOfPositionForm").submit(function (e) {
         e.preventDefault();
         let data = $(this).serialize();
         $("#saveBtn").attr("disabled", true);
@@ -53,26 +54,15 @@ $(document).ready(function() {
             type: "POST",
             url: "/plantilla-of-position",
             data: data,
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
-                    const valueE = ["#itemNo", "#positionOldName"];
-                    $.each(valueE, function(index, value) {
+                    $.each(valueE, function (index, value) {
                         $(`${value}`).val("");
                     });
-                    $.each(select, function(index, value) {
-                        $(`${value}`)
-                            .val("Please Select")
-                            .trigger("change");
-                    });
-                    $.each(errorClass, function(index, value) {
-                        $(`${value}`).removeClass("is-invalid");
-                    });
-                    $.each(errorMessage, function(index, value) {
-                        $(`${value}`).html("");
-                    });
-                    $("#plantillaofposition")
-                        .DataTable()
-                        .ajax.reload();
+                    $("#positionTitle,#officeCode,#salaryGrade")
+                        .val("Please Select")
+                        .selectpicker("refresh");
+                    $("#plantillaofposition").DataTable().ajax.reload();
                     swal("Sucessfully Added!", "", "success");
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
@@ -80,7 +70,7 @@ $(document).ready(function() {
                     $("#saving").html("Save");
                 }
             },
-            error: function(response) {
+            error: function (response) {
                 if (response.status === 422) {
                     let errors = response.responseJSON.errors;
                     if (errors.hasOwnProperty("positionTitle")) {
@@ -136,7 +126,7 @@ $(document).ready(function() {
                     // Create an parent element
                     let parentElement = document.createElement("ul");
                     let errorss = response.responseJSON.errors;
-                    $.each(errorss, function(key, value) {
+                    $.each(errorss, function (key, value) {
                         let errorMessage = document.createElement("li");
                         let [error] = value;
                         errorMessage.innerHTML = error;
@@ -145,56 +135,50 @@ $(document).ready(function() {
                     swal({
                         title: "The given data was invalid!",
                         icon: "error",
-                        content: parentElement
+                        content: parentElement,
                     });
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
                     $("#saving").html("Save");
                 }
-            }
+            },
         });
     });
+
     // get value of employees sg, sn, sp
-    $("#positionTitle").change(function(e) {
-        let employeeID = e.target.value;
+    $("#positionTitle").change(function (e) {
         let position = $($("#positionTitle option:selected")[0]).attr(
             "data-position"
         );
-        console.log(position);
-        if (position) {
+        if (position != "") {
             position = JSON.parse(position);
-            $("#salaryGrade")
-                .val(position.sg_no)
-                .change();
+            $("#salaryGrade").val(position.sg_no).change();
         } else {
-            $("#salaryGrade")
-                .val("")
-                .change();
+            $("#salaryGrade").val("").change();
         }
     });
+
     // display plantilla of position
-    let table = $("#plantillaofposition").DataTable({
+    let PlantillaPositiontable = $("#plantillaofposition").DataTable({
         processing: true,
         pagingType: "full_numbers",
-        stateSave: true,
-        serverSide: true,
         destroy: true,
         retrieve: true,
         columnDefs: [{ width: "10%", targets: 5 }],
         language: {
             processing:
-                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
         },
         ajax: "/plantilla-of-position-list",
         columns: [
             {
-                data: "position_name",
-                name: "position_name"
+                data: "Description",
+                name: "Description",
             },
             { data: "item_no", name: "item_no" },
             {
                 data: "sg_no",
-                name: "sg_no"
+                name: "sg_no",
             },
             { data: "office_name", name: "office_name" },
             { data: "old_position_name", name: "old_position_name" },
@@ -203,91 +187,19 @@ $(document).ready(function() {
                 data: "action",
                 name: "action",
                 searchable: false,
-                sortable: false
-            }
-        ]
+                sortable: false,
+            },
+        ],
     });
-    $("#employeeOffice").change(function(e) {
-        if (e.target.value == "") {
-            table.destroy();
-            table = $("#plantillaofposition").DataTable({
-                processing: true,
-                serverSide: true,
-                pagingType: "full_numbers",
-                stateSave: true,
-                columnDefs: [{ width: "10%", targets: 5 }],
-                destroy: true,
-                retrieve: true,
-                language: {
-                    processing:
-                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
-                },
-                ajax: {
-                    url: "/plantilla-of-position-list"
-                },
-                columns: [
-                    {
-                        data: "position_name",
-                        name: "position_name"
-                    },
-                    { data: "item_no", name: "item_no" },
-                    {
-                        data: "sg_no",
-                        name: "sg_no"
-                    },
-                    { data: "office_name", name: "office_name" },
-                    { data: "old_position_name", name: "old_position_name" },
-                    { data: "year", name: "year" },
-                    {
-                        data: "action",
-                        name: "action",
-                        searchable: false,
-                        sortable: false
-                    }
-                ]
-            });
-        } else {
-            table.destroy();
-            table = $("#plantillaofposition").DataTable({
-                processing: true,
-                serverSide: true,
-                pagingType: "full_numbers",
-                stateSave: true,
-                columnDefs: [{ width: "10%", targets: 5 }],
-                destroy: true,
-                retrieve: true,
-                language: {
-                    processing:
-                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
-                },
-                ajax: {
-                    url: `/api/plantilla/position/${e.target.value}`
-                },
-                columns: [
-                    {
-                        data: "position_name",
-                        name: "position_name"
-                    },
-                    { data: "item_no", name: "item_no" },
-                    {
-                        data: "sg_no",
-                        name: "sg_no"
-                    },
-                    { data: "office_name", name: "office_name" },
-                    { data: "old_position_name", name: "old_position_name" },
-                    { data: "year", name: "year" },
-                    {
-                        data: "action",
-                        name: "action",
-                        searchable: false,
-                        sortable: false
-                    }
-                ]
-            });
-        }
+    //filter office
+    $("#employeeOffice").change(function (e) {
+        PlantillaPositiontable.ajax
+            .url(`/plantilla-of-position-list/${e.target.value}`)
+            .load();
     });
-    // add position only
-    $("#btnPosition").click(function(e) {
+
+    // start add new position modal
+    $("#btnPosition").click(function (e) {
         let addPositionCode = $("#addPositionCode").val();
         let addPositionName = $("#addPositionName").val();
         let addSalaryGrade = $("#addSalaryGrade").val();
@@ -305,11 +217,11 @@ $(document).ready(function() {
                     addPositionCode: addPositionCode,
                     addPositionName: addPositionName,
                     addSalaryGrade: addSalaryGrade,
-                    addPositionShortName: addPositionShortName
+                    addPositionShortName: addPositionShortName,
                 },
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
-                        $(".modal").each(function() {
+                        $(".modal").each(function () {
                             $(this).modal("hide");
                         });
                         swal("Sucessfully Added!", "", "success");
@@ -317,41 +229,40 @@ $(document).ready(function() {
                         $("#addSalaryGrade")
                             .val("Please Select")
                             .trigger("change");
-
                         $("#positionTitle").append(
                             "<option value=" +
-                                response.position_id +
+                                response.PosCode +
                                 ">" +
                                 addPositionName +
                                 "</option>"
                         );
+
                         const errorClass = [
                             "#addPositionCode",
                             "#addPositionName",
                             "#addSalaryGrade",
-                            "#addPositionShortName"
+                            "#addPositionShortName",
                         ];
-                        $.each(errorClass, function(index, value) {
+                        $.each(errorClass, function (index, value) {
                             $(`${value}`).removeClass("is-invalid");
                         });
                         const errorMessage = [
                             "#add-position-code-error-message",
                             "#add-position-name-error-message",
                             "#add-salary-grade-error-message",
-                            "#add-position-short-name-error-message"
+                            "#add-position-short-name-error-message",
                         ];
-                        $.each(errorMessage, function(index, value) {
+                        $.each(errorMessage, function (index, value) {
                             $(`${value}`).html("");
                         });
                         $("#positionTitle").selectpicker("refresh");
                     }
                 },
-                error: function(response) {
+                error: function (response) {
                     if (response.status === 422) {
                         // Create an parent element
                         let parentElement = document.createElement("ul");
                         let errors = response.responseJSON.errors;
-
                         if (errors.hasOwnProperty("addPositionCode")) {
                             $("#addPositionCode").addClass("is-invalid");
                             $("#add-position-code-error-message").html("");
@@ -362,7 +273,6 @@ $(document).ready(function() {
                             $("#addPositionCode").removeClass("is-invalid");
                             $("#add-position-code-error-message").html("");
                         }
-
                         if (errors.hasOwnProperty("addPositionName")) {
                             $("#addPositionName").addClass("is-invalid");
                             $("#add-position-name-error-message").html("");
@@ -399,8 +309,7 @@ $(document).ready(function() {
                                 ""
                             );
                         }
-
-                        $.each(errors, function(key, value) {
+                        $.each(errors, function (key, value) {
                             let errorMessage = document.createElement("li");
                             let [error] = value;
                             errorMessage.innerHTML = error;
@@ -409,33 +318,35 @@ $(document).ready(function() {
                         swal({
                             title: "The given data was invalid!",
                             icon: "error",
-                            content: parentElement
+                            content: parentElement,
                         });
                     }
-                }
+                },
             });
         } else {
             swal("Please Input Data", "", "warning");
         }
     });
-});
 
-$("#itemNo").keyup(function() {
-    $("#item-error-message").html("");
-    $("#itemNo").removeClass("is-invalid");
-});
+    // end add new position modal
 
-$("#salaryGrade").change(function() {
-    $("#salary-grade-error-message").html("");
-    $(".salaryGrade .dropdown").removeClass("is-invalid");
-});
-$("#positionTitle").change(function() {
-    $("#position-title-error-message").html("");
-    $(".positionTitle .dropdown").removeClass("is-invalid");
-    $("#salary-grade-error-message").html("");
-    $(".salaryGrade .dropdown").removeClass("is-invalid");
-});
-$("#officeCode").change(function() {
-    $("#office-error-message").html("");
-    $(".officeCode .dropdown").removeClass("is-invalid");
+    $("#itemNo").keyup(function () {
+        $("#item-error-message").html("");
+        $("#itemNo").removeClass("is-invalid");
+    });
+
+    $("#salaryGrade").change(function () {
+        $("#salary-grade-error-message").html("");
+        $(".salaryGrade .dropdown").removeClass("is-invalid");
+    });
+    $("#positionTitle").change(function () {
+        $("#position-title-error-message").html("");
+        $(".positionTitle .dropdown").removeClass("is-invalid");
+        $("#salary-grade-error-message").html("");
+        $(".salaryGrade .dropdown").removeClass("is-invalid");
+    });
+    $("#officeCode").change(function () {
+        $("#office-error-message").html("");
+        $(".officeCode .dropdown").removeClass("is-invalid");
+    });
 });

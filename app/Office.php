@@ -28,7 +28,7 @@ class Office extends Model
         'position_name',
     ];
 
-    public function office()
+    public function plantilla()
     {
         return $this->belongsTo(Plantilla::class, 'office_code', 'office_code');
     }
@@ -53,10 +53,10 @@ class Office extends Model
         return $this->belongsTo(PlantillaPosition::class, 'office_code', 'office_code');
     }
 
-    public function plantilla()
-    {
-        return $this->hasOne(Plantilla::class, 'office_code', 'office_code');
-    }
+    // public function plantilla()
+    // {
+    //     return $this->hasOne(Plantilla::class, 'office_code', 'office_code');
+    // }
 
     public function divisions()
     {

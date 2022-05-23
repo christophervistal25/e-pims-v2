@@ -41,7 +41,7 @@ $(document).ready(function () {
         "#division-error-message",
     ];
     // filter list office
-    let table = $("#plantilla").DataTable({
+    let PlantillaTable = $("#plantilla").DataTable({
         processing: true,
         serverSide: true,
         pagingType: "full_numbers",
@@ -59,8 +59,8 @@ $(document).ready(function () {
                 visible: true,
             },
             {
-                data: "position_name",
-                name: "position_name",
+                data: "Description",
+                name: "Description",
                 searchable: true,
                 sortable: false,
                 visible: true,
@@ -84,104 +84,9 @@ $(document).ready(function () {
     });
 
     $("#employeeOffice").change(function (e) {
-        if (e.target.value == "") {
-            table.destroy();
-            table = $("#plantilla").DataTable({
-                processing: true,
-                pagingType: "full_numbers",
-                stateSave: true,
-                serverSide: true,
-                destroy: true,
-                retrieve: true,
-                language: {
-                    processing:
-                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
-                },
-                ajax: {
-                    url: "/plantilla-list",
-                },
-                columns: [
-                    {
-                        data: "fullname",
-                        name: "fullname",
-                        searchable: true,
-                        sortable: false,
-                        visible: true,
-                    },
-                    {
-                        data: "position_name",
-                        name: "position_name",
-                        searchable: true,
-                        sortable: false,
-                        visible: true,
-                    },
-                    {
-                        data: "office_name",
-                        name: "office_name",
-                        searchable: true,
-                        sortable: false,
-                        visible: true,
-                    },
-                    { data: "item_no", name: "item_no" },
-                    { data: "status", name: "status", sortable: false },
-                    { data: "year", name: "year", sortable: false },
-                    {
-                        data: "action",
-                        name: "action",
-                        searchable: false,
-                        sortable: false,
-                    },
-                ],
-            });
-        } else {
-            table.destroy();
-            table = $("#plantilla").DataTable({
-                processing: true,
-                serverSide: true,
-                pagingType: "full_numbers",
-                stateSave: true,
-                destroy: true,
-                retrieve: true,
-                language: {
-                    processing:
-                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
-                },
-                ajax: {
-                    url: `/api/plantilla/personnel/${e.target.value}`,
-                },
-                columns: [
-                    {
-                        data: "fullname",
-                        name: "fullname",
-                        searchable: true,
-                        visible: true,
-                    },
-                    {
-                        data: "position_name",
-                        name: "position_name",
-                        searchable: true,
-                        sortable: false,
-                        visible: true,
-                    },
-                    {
-                        data: "office_name",
-                        name: "office_name",
-                        searchable: true,
-                        visible: true,
-                    },
-                    { data: "item_no", name: "item_no" },
-                    { data: "status", name: "status", sortable: false },
-                    { data: "year", name: "year", sortable: false },
-                    {
-                        data: "action",
-                        name: "action",
-                        searchable: false,
-                        sortable: false,
-                    },
-                ],
-            });
-        }
+        PlantillaTable.ajax.url(`/plantilla-list/${e.target.value}`).load();
     });
+
     // code for show add form
     $("#addButton").click(function () {
         $("#add").attr("class", "page-header");
