@@ -19,7 +19,6 @@
 <div class="kanban-board shadow card mb-0">
     <div class="card-body">
         <div id="add" class="page-header {{  count($errors->all())  !== 0 ?  '' : '' }}">
-            {{-- <form action="{{ route('plantilla-of-position.update', $plantillaofposition->pp_id) }}" method="post"> --}}
             <form id="editPlantillaPosition">
                 @csrf
                 @method('PUT')
