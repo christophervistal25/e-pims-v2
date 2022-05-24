@@ -30,15 +30,16 @@ class PrintIncrementController extends Controller
     
     public function printList($id)
     {
+
         // $stepIncrement = StepIncrement::with(['plantilla', 'plantilla.position', 'plantilla.office', 'plantilla.employee'])->find($id);
-        // $stepIncrement = StepIncrement::with(['position'])->find($id);
+        // $stepIncrement = StepIncrement::has('plantilla')->with(['plantilla'])->without('office_charging')->find($id);
         $data = StepIncrement::with(['office:office_code,office_name'])->find($id);
         // $position = $stepIncrement->position;
         $office = $data->office;
 
-        dd($data);
+        // dd($data);
 
-        return view('stepIncrement.print.printIncrement', compact('stepIncrement', 'position', 'office', 'id'));
+        return view('stepIncrement.print.printIncrement', compact('stepIncrement', 'office', 'id'));
 
     }
 

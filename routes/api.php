@@ -14,7 +14,6 @@ use App\PlantillaSchedule;
 use Yajra\Datatables\Datatables;
 use App\EmployeeFamilyBackground;
 
-use Yajra\Datatables\Datatables;
 use App\EmployeeLeaveApplication;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;

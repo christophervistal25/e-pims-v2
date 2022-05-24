@@ -21,7 +21,7 @@ class StepIncrementController extends Controller
     {
         $data = DB::table('Step_increments')
             ->leftJoin('Employees', 'Step_increments.employee_id', '=', 'Employees.Employee_id')
-            ->leftJoin('Position', 'Step_increments.position_id', '=', 'Position.PosCode')
+            ->leftJoin('Position', 'Step_increments.PosCode', '=', 'Position.PosCode')
             ->select('id', 'date_step_increment', DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"), 'Description', 'item_no', ('last_latest_appointment'),
             DB::raw("CONCAT(sg_no_from, '-' , step_no_from) AS sg_from_and_step_from"), 'salary_amount_from', DB::raw("CONCAT(sg_no_to, '-' , step_no_to) AS sg_to_and_step_to"), 'salary_amount_to', 'salary_diff')
             
@@ -70,11 +70,14 @@ class StepIncrementController extends Controller
     public function index()
     {
 
-
-        $employees = Employee::whereDoesntHave('step')->has('plantilla')->with(['plantilla'])->get();
+        // $employees = Employee::whereDoesntHave('step')->has('plantilla')->with(['plantilla'])->get();
+    
+        $employees = Employee::has('plantilla')->with(['plantilla', 'plantilla.plantilla_positions', 'plantilla.plantilla_positions.position'])
+                    ->without(['office_charging'])->get();
 
 
         return view('StepIncrement.create', compact('employees'));
+
     }
 
 
@@ -105,7 +108,7 @@ class StepIncrementController extends Controller
                 'sg_no_to'                  => $request->sgNo2,
                 'step_no_to'                => $request->stepNo2,
                 'salary_amount_to'          => $request->amount2,
-                'salary_diff'               => $request->monthlyDifference
+                'salary_diff'               => $request->monthlyDifferencee
             ]);
 
         // $service_record = new service_record;
@@ -136,6 +139,8 @@ class StepIncrementController extends Controller
         $stepIncrement = StepIncrement::with(['employee:Employee_id,FirstName,MiddleName,LastName,Suffix', 'position'])->find($id);
         $employee = $stepIncrement->employee;
         $position = $stepIncrement->position;
+
+        // dd($position);
         
         return view ('stepIncrement.edit', compact('stepIncrement', 'employee', 'position'));
     }

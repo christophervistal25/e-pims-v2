@@ -54,7 +54,7 @@
                                 <label class="form-group has-float-label mb-0" for="employeeName">
                                 <select class="form-control employeeName selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" data-live-search="true"
                                     name="employeeName" id="employeeName" data-size="6" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                    <option>Search name here</option>
+                                    <option disabled>Search name here</option>
 
                                     @foreach($employees as $employee)
                                     <option data-plantilla="{{ $employee->plantilla }}"
@@ -70,6 +70,7 @@
                                     <small id="employeeName-error-message" class="text-danger text-sm"></small>
                             </div>
 
+        
                             <div class="col-12 col-lg-4">
                                 <label class="form-group has-float-label" for="employeeId">
                                 <input  type="text" class="form-control" id="employeeId" name="employeeID"
@@ -86,17 +87,6 @@
                                 </label>
                             </div>
 
-                            {{-- <div class="form-group col-12 col-lg-11">
-                                <input class="form-control" id="employeeId" name="employeeID" readonly>
-                            </div>
-
-                            <div class="form-group">
-                                <input type="hidden" name="plantillaID" id="plantillaId" class="">
-                            </div>
-
-                            <div class="form-group">
-                                <input type="hidden" name="status" id="status" class="">
-                            </div> --}}
 
                             <div class="form-group">
                                 <input type="hidden" name="officeCode" id="officeCode" class="">
@@ -110,7 +100,7 @@
 
                             <div class="col-12 col-lg-11">
                                 <label for="positionName" class="form-group has-float-label">
-                                <input class="form-control" id="positionName" name="positionName" type="text"
+                                <input class="form-control" id="positionName" data-position="" name="positionName" type="text"
                                     readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                     <span><strong>POSITION</strong></span>
                                 </label>
@@ -427,19 +417,21 @@
         $('#employeeName').change( (e)=> {
             let employeeID = e.target.value;
             let plantilla = $($("#employeeName option:selected")[0]).attr('data-plantilla');
-            console.log(employeeID);
-            /*let moneyFormat = toLocalString("ph", {maximumFractionDigits:2}) + '.00';*/
-            
+
 
             if (plantilla) {
                 plantilla = JSON.parse(plantilla);
+                
 
+                let {plantilla_positions} = plantilla;
+                let {position} = plantilla_positions;
+                
+                
                 $('#employeeId').val(plantilla.employee_id);
                 $('#plantillaId').val(plantilla.plantilla_id);
                 $('#officeCode').val(plantilla.office_code);
-                $('#status').val(plantilla.status);
-                $('#positionName').val(plantilla.position_name);
-                $('#positionId').val(plantilla.pp_id);
+                $('#positionId').val(position?.PosCode);
+                $('#positionName').val(position?.Description || 'NO POSITION');
                 $('#itemNo').val(plantilla.item_no);
                 $('#lastAppointment').val(plantilla.date_last_promotion);
                 $('#salaryGrade').val(plantilla.sg_no);

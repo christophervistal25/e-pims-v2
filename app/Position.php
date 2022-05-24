@@ -58,7 +58,7 @@ class Position extends Model
 
     public function step()
     {
-        return $this->hasOne(StepIncrement::class, 'PosCode', 'position_id');
+        return $this->hasOne(StepIncrement::class, 'PosCode', 'PosCode');
     }
 
 

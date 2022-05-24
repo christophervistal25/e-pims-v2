@@ -65,12 +65,12 @@ class StepIncrement extends Model
 
     public function position()
     {
-        return $this->belongsTo(Position::class, 'position_id', 'PosCode');
+        return $this->belongsTo(Position::class, 'PosCode', 'PosCode');
     }
 
     public function plantilla()
     {
-        return $this->hasOne(Plantilla::class, 'employee_id', 'employee_id');
+        return $this->belongsTo(Plantilla::class, 'employee_id', 'employee_id');
     }
 
     public function service_record()

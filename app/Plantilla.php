@@ -4,6 +4,7 @@ namespace App;
 
 use App\Office;
 use App\Employee;
+use App\StepIncrement;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
@@ -99,5 +100,10 @@ class Plantilla extends Model
         return $this->belongsTo(PlantillaSchedule::class, 'plantilla_id', 'plantilla_id');
     }
 
+
+    public function step()
+    {
+        return $this->hasOne(StepIncrement::class, 'employee_id', 'employee_id');
+    }
 
 }
