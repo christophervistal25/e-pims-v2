@@ -53,7 +53,7 @@ class StepIncrement extends Model
             Cache::forget('step_increment_records');
         });
 
-        self::deleted(function() {
+        self::deleted(function() {  
             Cache::forget('step_increment_records');
         });
     }

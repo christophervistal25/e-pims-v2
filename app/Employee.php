@@ -19,7 +19,8 @@ class Employee extends Model
     protected $primaryKey = 'Employee_id';
     protected $connection = 'DTR_PAYROLL_CONNECTION';
     protected $table = 'Employees';
-    public $with = ['position', 'office_charging', 'office_assignment', 'office_charging.desc'];
+    public $with = ['position', 'office_charging', 'office_assignment'];
+    // 'office_charging.desc'
     public $keyType = 'string';
 
     protected $columns = [

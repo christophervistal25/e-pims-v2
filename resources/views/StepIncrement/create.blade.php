@@ -214,26 +214,26 @@
                     </div>
                 </div>
                 <div class="table" style="overflow-x:auto;">
-                    <table class="table table-bordered text-center" id="step-increment-table" style="width:100%;">
+                    <table class="table table-bordered" id="step-increment-table" style="width:100%;">
                         <thead>
                             <tr>
                                 <th class="font-weight-bold align-middle text-center" rowspan="2">Date of Step Increment
                                 </th>
                                 <th class="font-weight-bold align-middle text-center" rowspan="2">Name</th>
                                 <th class="font-weight-bold align-middle text-center" rowspan="2">Position</th>
-                                <th class="font-weight-bold align-middle text-center" rowspan="2">Item No.</th>
-                                <th class="font-weight-bold align-middle text-center" rowspan="2">Date of Last
+                                <th class="font-weight-bold align-middle" rowspan="2">Item No.</th>
+                                <th class="font-weight-bold align-middle" rowspan="2">Date of Last
                                     Appointment
                                 </th>
                                 <th class="font-weight-bold align-middle text-center" rowspan="1 " colspan="2">From</th>
                                 <th class="font-weight-bold align-middle text-center" rowspan="1" colspan="2">To</th>
-                                <th class="font-weight-bold align-middle text-center" rowspan="2">Monthly Difference</th>
-                                <th class="font-weight-bold align-middle text-center" rowspan="2">Action</th>
+                                <th class="font-weight-bold align-middle" rowspan="2">Monthly Difference</th>
+                                <th class="font-weight-bold align-middle" rowspan="2">Action</th>
                                 <tr>
-                                    <td class="font-weight-bold align-middle text-center">SG/Step</td>
-                                    <td class="font-weight-bold align-middle text-center">Salary Rate</td>
-                                    <td class="font-weight-bold align-middle text-center">SG/Step</td>
-                                    <td class="font-weight-bold align-middle text-center">Salary Rate</td>
+                                    <td class="font-weight-bold align-middle">SG/Step</td>
+                                    <td class="font-weight-bold align-middle">Salary Rate</td>
+                                    <td class="font-weight-bold align-middle">SG/Step</td>
+                                    <td class="font-weight-bold align-middle">Salary Rate</td>
                                 </tr>
                             </tr>
                         </thead>
@@ -283,11 +283,13 @@
                 },
                 {
                     className: 'text-truncate',
-                    data: 'fullname',
-                    name: 'fullname',
+                    data: null,
                     searchable: true,
                     sortable: false,
-                    visible: true
+                    visible: true,
+                    render: function ( data, type, row ) {
+                        return row.FirstName +' '+ row.MiddleName[0] +'. '+ row.LastName;
+                    }
                 },
                 {
                     className: 'text-truncate',

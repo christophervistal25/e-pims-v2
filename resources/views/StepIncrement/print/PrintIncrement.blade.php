@@ -63,12 +63,9 @@
             <p class="date">{{ Carbon\Carbon::parse($stepIncrement->date_step_increment)->format('F d, Y') }}</p>
             <br>
             {{-- NAME --}}
-            <h4>{{ $stepIncrement->employee->FirstName }} {{ $stepIncrement->employee->MiddleName }}.
-                {{ $stepIncrement->employee->LastName }}</h4>
-
-            {{-- <h4>{{ $stepIncrement->plantilla->office_code }}</h4> --}}
+            <h4>{{ $stepIncrement->employee->FirstName }} {{ $stepIncrement->employee->MiddleName[0] }}. {{ $stepIncrement->employee->LastName }}</h4>
+            <p>{{ $stepIncrement->employee->office_charging->Description }}</p>
                 
-            {{-- <p>{{ $stepIncrement->employee->plantilla->office->office_name }}</p> --}}
             <br>
             <br>
 
@@ -76,40 +73,44 @@
             <p class="text text-md mb-4">Sir/Madam:</p>
 
             {{-- BODY --}}
-            {{-- <span class="text text-md ml-4 pl-5">&nbsp Pursuant to Joint Civil Service Commission (CSC) and Department
-                of Budget and Management (DBM) Circular No. 1 series 1990, implementing Section 13 (c) of RA 6758, your
-                salary as {{ $stepIncrement->employee->plantilla->position->position_name }},
-                SG-{{ $stepIncrement->sg_no_to }}, in the Office of
-                {{ $stepIncrement->employee->plantilla->office->office_name }} is hereby adjusted effective
-                {{ Carbon\Carbon::parse($stepIncrement->date_step_increment)->format( 'F d, Y') }} as shown
-                below:</span> --}}
-            <span class="text text-md ml-4 pl-5">&nbsp Pursuant to Joint Civil Service Commission (CSC) and Department
-                of Budget and Management (DBM) Circular No. 1 series 1990, implementing Section 13 (c) of RA 6758, your
-                salary as {{ $position->Description }},
-                SG-{{ $stepIncrement->sg_no_to }}, in the Office of {{$office->office_code}}
-                 is hereby adjusted effective
-                {{ Carbon\Carbon::parse($stepIncrement->date_step_increment)->format( 'F d, Y') }} as shown
-                below:</span>
-            <br>
-            <br>
+           <div class="col-lg-12 mb-3 row">
+                <p class="text text-justify">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Pursuant to Joint Civil Service Commission (CSC) and Department
+                    of Budget and Management (DBM) Circular No. 1 series 1990, implementing Section 13 (c) of RA 6758, your
+                    salary as {{$stepIncrement->position->Description}},
+                    SG-{{ $stepIncrement->sg_no_to }}, in the Office of {{$stepIncrement->employee->office_charging->Description}}
+                    is hereby adjusted effective
+                    {{ Carbon\Carbon::parse($stepIncrement->date_step_increment)->format( 'F d, Y') }} as shown
+                    below:
+                </p>
+            </div>
+
+
             <span class="text text-md mt-3 pl-5">Basic Salary as of
                 {{ Carbon\Carbon::parse($stepIncrement->date_step_increment)->format( 'F d, Y' ) }}</span><span
                 class="col-12 offset-2 text text-md">&#8369; {{ number_format($stepIncrement->salary_amount_from, 2, ".", ",") }}</span>
             <p class="text text-md pl-5">Salary Adjustment:</p>
             <span style="padding-left: 100px">a) Merit &nbsp &nbsp &nbsp &nbsp( &nbsp</span><span class="boxing">&nbsp &nbsp &nbsp &nbsp</span><span>Step/s)</span>
+
             <br>
+
             <span style="padding-left: 100px">b) Length of Service {{ $stepIncrement->sg_no_to }} /
                 {{ $stepIncrement->step_no_to }} Step/s</span><span class="col-12 offset-1">&nbsp; &#8369;
                 {{ number_format($stepIncrement->salary_diff, 2, ".", ",") }}</span>
+
             <br>
             <br>
+
             <span class="text text-md pl-5">Adjusted Salary effective
                 {{ Carbon\Carbon::parse($stepIncrement->date_step_increment)->format( 'F d, Y' ) }}</span><span
                 style="padding-left: 122px; text-decoration: underline">&#8369; {{ number_format($stepIncrement->salary_amount_to, 2, ".", ",") }}</span>
-            <br>
-            <br>
-            <span class="text text-md pl-5">This Step Increment is subject for review and post-audit by the Department
-                of Budget and Management and to re-adjustment and refund if not in order.</span>
+
+            <div class="col-lg-12 mt-5 row">
+                <p class="text text-justify">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    This Step Increment is subject for review and post-audit by the Department
+                    of Budget and Management and to re-adjustment and refund if not in order.
+                </p>
+            </div>
 
             {{-- CLOSING, SIGNATURE --}}
             <br><br><br><br>
