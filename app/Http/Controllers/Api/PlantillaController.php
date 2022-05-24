@@ -37,9 +37,11 @@ class PlantillaController extends Controller
                             ->first(['sg_year' ,'sg_step' . $sg_step]);
     }
     //position display sg
-    public function positionSalaryGrade($position_id)
+    public function positionSalaryGrade($pp_id, $sg_year)
     {
-        return PlantillaPosition::with('salary_grade')->find($position_id);
+        return PlantillaPosition::with(["salary_grade"=> function($q) use ($sg_year) {
+            $q->where('sg_year', $sg_year);
+        }])->find($pp_id);
     }
 
     // add position function

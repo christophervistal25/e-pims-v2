@@ -13,8 +13,6 @@ use App\PlantillaPosition;
 use App\PlantillaSchedule;
 use Yajra\Datatables\Datatables;
 use App\EmployeeFamilyBackground;
-
-use Yajra\Datatables\Datatables;
 use App\EmployeeLeaveApplication;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +28,7 @@ Route::get('/salarySteplist/{sg_no}/{sg_step?}/{sg_year}', 'Api\PlantillaControl
 Route::get('/dbmPrevious/{sg_no}/{sg_step?}/{sg_year}', 'Api\PlantillaController@dbmPrevious');
 Route::get('/dbmCurrent/{sg_no}/{sg_step?}/{sg_year}', 'Api\PlantillaController@dbmCurrent');
 Route::get('/cscPrevious/{sg_no}/{sg_step?}/{sg_year}', 'Api\PlantillaController@cscPrevious');
-Route::get('/positionSalaryGrade/{positionTitle}', 'Api\PlantillaController@positionSalaryGrade');
+Route::get('/positionSalaryGrade/{positionTitle}/{currentYear}', 'Api\PlantillaController@positionSalaryGrade');
 Route::post('/addPosition', 'Api\PlantillaController@addPosition');
 
 // service record
@@ -458,7 +456,7 @@ Route::get('/maintenance/division/{officeCode}', function ($office_code) {
         ->rawColumns(['action'])
         ->make(true);
 });
-    
+
 
 Route::post('/plantilla/schedule/adjust', function () {
     $plantillaIds = explode(',', request()->ids);
@@ -595,7 +593,7 @@ Route::post('/position/schedule/adjust', function () {
             ->update(['year' => $newYear]);
     }
     return response()->json(['success' => true]);
-}); 
+});
 
 
 

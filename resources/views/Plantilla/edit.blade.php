@@ -154,7 +154,7 @@
                             <label>Current Salary Grade Year<span class="text-danger">*</span></label>
                                 <input value="{{ old('currentSgyear') ?? $plantilla->year }}"
                                 class="form-control {{ $errors->has('currentSgyear')  ? 'is-invalid' : ''}}" name="currentSgyear"
-                                id="num-only" type="text" placeholder="Item No." readonly>
+                                id="currentSgyear" type="text" placeholder="" readonly>
                                 <div id='year-error-message' class='text-danger text-sm'>
                                 </div>
                         </div>
