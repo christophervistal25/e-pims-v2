@@ -56,7 +56,7 @@
 <div class="kanban-board card shadow mb-0">
     <div class="card-body">
         <div id="add" class="page-header {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
-            <div style='padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
+            <div style='padding-bottom:50px;'>
                 <button id="displayListPlantilla" class="btn btn-primarys submit-btn float-right shadow"><i
                         class="fa fa-list"></i>
                     Personnel List</button>
