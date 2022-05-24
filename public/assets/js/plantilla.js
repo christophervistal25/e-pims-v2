@@ -7,6 +7,15 @@ $(document).ready(function () {
         "#divisionId",
         "#status",
     ];
+    let inputs = [
+        "#oldItemNo",
+        "#itemNo",
+        "#currentSalarygrade",
+        "#currentSalaryamount",
+        "#employeeID",
+        "#originalAppointment",
+        "#lastPromotion",
+    ];
     let errorClass = [
         "#oldItemNo",
         ".positionTitle",
@@ -53,7 +62,6 @@ $(document).ready(function () {
         ajax: "/plantilla-list",
         columns: [
             {
-                // class: "font-weight-bold",
                 data: "fullname",
                 name: "fullname",
                 searchable: true,
@@ -118,7 +126,9 @@ $(document).ready(function () {
     $("#cancelButton").click(function () {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
-        $("input").val("");
+        $.each(inputs, function (index, value) {
+            $(`${value}`).val("");
+        });
         $.each(select, function (index, value) {
             $(`${value}`).val("Please Select").trigger("change");
         });
@@ -133,20 +143,22 @@ $(document).ready(function () {
     $("#positionTitle").change(function () {
         let positionTitle = $("#positionTitle").val();
         let currentStepno = $("#currentStepno").val();
+        let currentSgyear = $("#currentSgyear").val();
         $.ajax({
-            url: `/api/positionSalaryGrade/${positionTitle}`,
+            url: `/api/positionSalaryGrade/${positionTitle}/${currentSgyear}`,
             success: (response) => {
                 if (response == "") {
                     $("#currentSalarygrade").val("");
                     $("#itemNo").val("");
                     $("#currentSalaryamount").val("");
                 } else {
-                    let currentSalaryGrade = response.salary_grade.sg_no;
+                    console.log(response);
+                    let currentSalaryGrade = response.salary_grade[0].sg_no;
                     $("#currentSalarygrade").val(currentSalaryGrade);
                     let currentItemNo = response.item_no;
                     $("#itemNo").val(currentItemNo);
                     let currentSalaryAmount =
-                        response.salary_grade["sg_step" + currentStepno];
+                        response.salary_grade[0]["sg_step" + currentStepno];
                     $("#currentSalaryamount").val(currentSalaryAmount);
                 }
             },
@@ -339,7 +351,9 @@ $(document).ready(function () {
                         .find('[value="' + empIds + '"]')
                         .remove();
                     $("#employeeName").selectpicker("refresh");
-
+                    $.each(inputs, function (index, value) {
+                        $(`${value}`).val("");
+                    });
                     $("#positionTitle")
                         .find('[value="' + positionIds + '"]')
                         .remove();
@@ -588,7 +602,7 @@ $("#plantillaEditForm").submit(function (e) {
                 $("#plantillaUpdate").attr("disabled", false);
                 $("#loading").addClass("d-none");
                 document.getElementById("saving").innerHTML = "Update";
-                $("#saving").html("Save");
+                $("#saving").html("Update");
                 $.each(select, function (index, value) {
                     $(`${value}`).val("Please Select").trigger("change");
                 });
@@ -749,7 +763,7 @@ $("#plantillaEditForm").submit(function (e) {
                 });
                 $("#plantillaUpdate").attr("disabled", false);
                 $("#loading").addClass("d-none");
-                $("#saving").html("Save");
+                $("#saving").html("Update");
             }
         },
     });
