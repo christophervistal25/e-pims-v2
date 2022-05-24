@@ -22,7 +22,8 @@ class StepIncrementController extends Controller
         $data = DB::table('Step_increments')
             ->leftJoin('Employees', 'Step_increments.employee_id', '=', 'Employees.Employee_id')
             ->leftJoin('Position', 'Step_increments.PosCode', '=', 'Position.PosCode')
-            ->select('id', 'date_step_increment', DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"), 'Description', 'item_no', ('last_latest_appointment'),
+            ->select('id', 'date_step_increment', 'FirstName', 'MiddleName', 'LastName', 'Description', 'item_no', ('last_latest_appointment'),
+            // DB::raw("CONCAT(FirstName, ' ' , MiddleName, ' ' , LastName, ' ' , Suffix) AS fullname")
             DB::raw("CONCAT(sg_no_from, '-' , step_no_from) AS sg_from_and_step_from"), 'salary_amount_from', DB::raw("CONCAT(sg_no_to, '-' , step_no_to) AS sg_to_and_step_to"), 'salary_amount_to', 'salary_diff')
             
 
@@ -108,7 +109,7 @@ class StepIncrementController extends Controller
                 'sg_no_to'                  => $request->sgNo2,
                 'step_no_to'                => $request->stepNo2,
                 'salary_amount_to'          => $request->amount2,
-                'salary_diff'               => $request->monthlyDifferencee
+                'salary_diff'               => $request->monthlyDifference
             ]);
 
         // $service_record = new service_record;
