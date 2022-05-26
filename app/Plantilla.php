@@ -59,9 +59,9 @@ class Plantilla extends Model
         $this->table = DB::connection($this->connection)->getDatabaseName() . '.dbo.' . $this->getTable();
     }
 
-    public function employee()
+    public function Employee()
     {
-        return $this->belongsTo(Employee::class, 'Employee_id', 'employee_id');
+        return $this->belongsTo(Employee::class, 'employee_id', 'Employee_id');
     }
 
     public function employee_record()

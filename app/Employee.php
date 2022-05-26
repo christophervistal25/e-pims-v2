@@ -394,7 +394,7 @@ class Employee extends Model
 
     public function salary_adjustment()
     {
-        return $this->hasMany(SalaryAdjustment::class, 'employee_id', 'employee_id');
+        return $this->hasMany(SalaryAdjustment::class, 'employee_id', 'Employee_id');
     }
 
 
