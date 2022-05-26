@@ -20,6 +20,11 @@
         height:auto;
     }
 }
+
+
+    .text-indent {
+        text-indent: 50px;
+    }
 </style>
 @endprepend
 @section('content')
@@ -76,7 +81,7 @@
 
                 {{-- First Paragraph --}}
             <div class="col-lg-12 mb-3 row">
-                    <p class="text text-justify">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <p class="text text-justify text-indent">
                         Pursuant to Joint Civil Service Commission (CSC) and Department
                         of Budget and Management (DBM) Circular No. 1 series 1990, implementing Section 13 (c) of RA 6758, your
                         salary as {{$stepIncrement->position->Description}},
@@ -132,7 +137,7 @@
 
                 {{-- Third Paragraph --}}
                 <div class="col-lg-12 mt-5 row">
-                    <p class="text text-justify">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <p class="text text-justify text-indent">
                         This Step Increment is subject for review and post-audit by the Department
                         of Budget and Management and to re-adjustment and refund if not in order.
                     </p>
