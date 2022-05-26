@@ -1,5 +1,8 @@
 <?php
+
 namespace App\Traits;
+
+use Hashids\Hashids;
 
 trait EmployeeLaraTablesAction
 {
@@ -15,6 +18,8 @@ trait EmployeeLaraTablesAction
 
     public static function laratablesCustomAction($user)
     {
-        return view('employee.actions', compact('user'))->render();
+        $id = (new HashIds)->encode($user->Employee_id);
+        $employee_id = $user->Employee_id;
+        return view('employee.actions', compact('id', 'employee_id'))->render();
     }
 }

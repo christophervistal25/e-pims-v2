@@ -24,68 +24,43 @@ class EducationalBackgroundRequest extends FormRequest
     public function rules()
     {
         return [
-            'elementary'    => [],
-            'ebasicEduc'    => [],
-            'eperiodFrom'   => ['nullable', 'required_with:elementary', 'date', 'before:eperiodTo'],
-            'eperiodTo'     => ['nullable', 'required_with:eperiodFrom', 'date', 'after:eperiodFrom'],
-            'eunitEarned'   => [],
-            'eyrGrad'       => ['required_with:eunitEarned'],
-            'escholarship'  => [],
-            'snameOfSchool' => [],
-            'sbasicEduc'    => [],
-            'speriodFrom'   => ['nullable', 'required_with:snameOfSchool', 'date', 'before:speriodTo'],
-            'speriodTo'     => ['nullable', 'required_with:speriodFrom', 'date', 'after:speriodFrom'],
-            'sunitEarned'   => [],
-            'syrGrad'       => ['required_with:sunitEarned'],
-            'sscholarship'  => [],
-            'vnameOfVoc'    => [],
-            'vbasicEduc'    => [],
-            'vperiodFrom'   => ['nullable', 'required_with:vnameOfVoc', 'date', 'before:vperiodTo'],
-            'vperiodTo'     => ['nullable', 'required_with:vperiodFrom', 'date', 'after:vperiodFrom'],
-            'vunitEarned'   => [],
-            'vyrGrad'       => ['required_with:vunitEarned'],
-            'vscholarship'  => [],
-            'cnameOfSchool' => [],
-            'cbasicEduc'    => [],
-            'cperiodFrom'   => ['nullable', 'required_with:cnameOfSchool', 'date', 'before:cperiodTo'],
-            'cperiodTo'     => ['nullable', 'required_with:cperiodFrom', 'date', 'after:cperiodFrom'],
-            'cunitEarned'   => [],
-            'cyrGrad'       => ['required_with:cunitEarned'],
-            'cscholarship'  => [],
-            'gnameOfSchool' => [],
-            'gbasicEduc'    => [],
-            'gperiodFrom'   => ['nullable', 'required_with:gnameOfSchool', 'date', 'before:gperiodTo'],
-            'gperiodTo'     => ['nullable', 'required_with:gperiodFrom', 'date', 'after:gperiodFrom'],
-            'gunitEarned'   => [],
-            'gyrGrad'       => ['required_with:gunitEarned'],
-            'gscholarship'  => []
-        ];
-    }
+            'elementary_name'                                    => [],
+            'elementary_education'                               => [],
+            'elementary_period_from'                             => ['nullable', 'numeric', 'required_with:elementary_name', 'digits:4', 'before:elementary_period_to'],
+            'elementary_period_to'                               => ['nullable', 'numeric', 'required_with:elementary_name', 'required_with:elementary_period_from', 'digits:4', 'after:elementary_period_from'],
+            'elementary_highest_level_units_earned'              => [],
+            'elementary_year_graduated'                          => ['nullable', 'numeric', 'digits:4'],
+            'elementary_scholarship'                             => [],
 
-    public function attributes()
-    {
-        return [
-            'eperiodFrom' => 'Period of attendance (FROM)',
-            'eperiodTo'   => 'Period of attendance (TO)',
-            'eyrGrad'     => 'Year Graduated',
+            'secondary_name'                                     => [],
+            'secondary_education'                                => [],
+            'secondary_period_from'                              => ['nullable', 'numeric', 'required_with:secondary_name', 'digits:4', 'before:secondary_period_to'],
+            'secondary_period_to'                                => ['nullable', 'numeric', 'required_with:secondary_name', 'required_with:secondary_period_from', 'digits:4', 'after:secondary_period_from'],
+            'secondary_highest_level_units_earned'               => [],
+            'secondary_year_graduated'                           => ['nullable', 'numeric', 'digits:4'],
+            'secondary_scholarship'                              => [],
 
-            'speriodFrom' => 'Period of attendance (FROM)',
-            'speriodTo'   => 'Period of attendance (TO)',
-            'syrGrad'     => 'Year Graduated',
+            'vocational_trade_course_name'                       => [],
+            'vocational_education'                               => [],
+            'vocational_trade_course_period_from'                => ['nullable', 'numeric', 'required_with:vocational_trade_course_name', 'required_with:vocational_education', 'digits:4'],
+            'vocational_trade_course_period_to'                  => ['nullable', 'numeric', 'required_with:vocational_trade_course_name', 'required_with:vocational_education', 'required_with:vocational_trade_course_period_from', 'digits:4', 'after:vocational_trade_course_period_from',],
+            'vocational_trade_course_highest_level_units_earned' => [],
+            'vocational_trade_course_year_graduated'             => ['nullable', 'numeric', 'digits:4'],
+            'vocational_trade_course_scholarship'                => [],
 
-            'vperiodFrom' => 'Period of attendance (FROM)',
-            'vperiodTo'   => 'Period of attendance (TO)',
-            'vyrGrad'     => 'Year Graduated',
+            'college_name'                                       => [],
+            'college_education'                                  => ['nullable', 'required_with:college_name'],
+            'college_period_from'                                => ['nullable', 'numeric', 'required_with:college_name', 'digits:4'],
+            'college_highest_level_units_earned'                 => [],
+            'college_year_graduated'                             => ['nullable', 'numeric', 'digits:4'],
+            'college_scholarship'                                => [],
 
-            'cperiodFrom' => 'Period of attendance (FROM)',
-            'cperiodTo'   => 'Period of attendance (TO)',
-            'cyrGrad'     => 'Year Graduated',
-
-            'gperiodFrom' => 'Period of attendance (FROM)',
-            'gperiodTo'   => 'Period of attendance (TO)',
-            'gyrGrad'     => 'Year Graduated',
-
-
+            'graduate_studies_name'                              => [],
+            'graduate_studies_education'                         => [],
+            'graduate_studies_period_from'                       => ['nullable', 'numeric', 'required_with:graduate_studies_name', 'digits:4', 'before:graduate_studies_period_to'],
+            'graduate_studies_highest_level_units_earned'        => [],
+            'graduate_studies_year_graduated'                    => ['nullable', 'numeric', 'digits:4'],
+            'graduate_studies_scholarship'                       => []
         ];
     }
 }

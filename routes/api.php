@@ -23,6 +23,7 @@ use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\PositionController;
 use App\Http\Controllers\Api\ProvinceController;
 use App\Http\Controllers\PersonalDataSheetController;
+use App\Http\Controllers\DownloadPersonalDataSheetController;
 
 Route::get('/salarySteplist/{sg_no}/{sg_step?}/{sg_year}', 'Api\PlantillaController@salarySteplist');
 Route::get('/dbmPrevious/{sg_no}/{sg_step?}/{sg_year}', 'Api\PlantillaController@dbmPrevious');
@@ -87,14 +88,54 @@ Route::group(['prefix' => 'employee', 'namespace' => 'Api'], function () {
 });
 
 Route::group(['prefix' => 'personal-data-sheet'], function () {
-
-
     Route::controller(PersonalDataSheetController::class)->group(function () {
-        Route::post('personal-information/update/{idNumber}', 'updatePersonalInformation');
+        // BEGINNING OF C1 ROUTES
+        Route::get('information/fetch/{idNumber}', 'getPersonalInformation');
+        Route::post('information/update/{idNumber}', 'updatePersonalInformation');
 
         Route::get('family-background/fetch/{idNumber}', 'getFamilyBackground');
         Route::post('family-background/update/{idNumber}', 'updateFamilyBackground');
+
+        Route::get('educational-background/fetch/{idNumber}', 'getEducationalBackground');
+        Route::post('educational-background/update/{idNumber}', 'updateEducationalBackground');
+        // END OF C1 ROUTES
+
+        // BEGINNING OF C2 ROUTES
+        Route::get('civil-service-eligibility/fetch/{idNumber}', 'getCivilServiceEligibility');
+        Route::post('civil-service-eligibility/update/{idNumber}', 'updateCivilServiceEligibility');
+
+        Route::get('work-experience/fetch/{idNumber}', 'getWorkExperience');
+        Route::post('work-experience/update/{idNumber}', 'updateWorkExperience');
+        // END OF C2 ROUTES
+
+        // BEGINNING OF C3 ROUTES
+        Route::get('voluntary-work/fetch/{idNumber}', 'getVoluntaryWork');
+        Route::post('voluntary-work/update/{idNumber}', 'updateVoluntaryWork');
+
+        Route::get('learning-and-development/fetch/{idNumber}', 'getLearningAndDevelopment');
+        Route::post('learning-and-development/update/{idNumber}', 'updateLearningAndDevelopment');
+
+        Route::get('other-information/fetch/{idNumber}', 'getOtherInformation');
+        Route::post('other-information/update/{idNumber}', 'updateOtherInformation');
+        // END OF C3 ROUTES
+
+        // BEGINNING OF C4 ROUTES
+        Route::get('relevant-queries/fetch/{idNumber}', 'getRelevantQueries');
+        Route::post('relevant-queries/update/{idNumber}', 'updateRelevantQueries');
+
+        Route::get('references/fetch/{idNumber}', 'getReferences');
+        Route::post('references/update/{idNumber}', 'updateReferences');
+
+        Route::get('government-issued-id/fetch/{idNumber}', 'getGovernmentIssuedID');
+        Route::post('government-issued-id/update/{idNumber}', 'updateGovernmentIssuedID');
+        // END OF C4 ROUTES
+
+
+        // DOWNLOAD PERSONAL DATA SHEET
     });
+    Route::get('download/{idNumber}', [DownloadPersonalDataSheetController::class, 'generate']);
+    Route::get('download/excel/{fileName}', [DownloadPersonalDataSheetController::class, 'downloadExcel']);
+    Route::get('download/pdf/{fileName}', [DownloadPersonalDataSheetController::class, 'downloadPDF']);
 });
 
 Route::group(['namespace' => 'Api'], function () {

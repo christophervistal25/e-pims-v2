@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Services\OfficeService;
+use App\Services\EmployeeService;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\EmployeeRepository;
+use App\Http\Requests\Employee\UpdateEmployeeRequest;
 use App\Http\Requests\Employee\NewEmployeeStoreRequest;
 use App\Http\Requests\Employee\OldEmployeeUpdateRequest;
-use App\Services\EmployeeService;
 
 class EmployeeController extends Controller
 {
@@ -45,11 +46,6 @@ class EmployeeController extends Controller
         //
     }
 
-
-    public function validateData(NewEmployeeStoreRequest $request)
-    {
-        return response()->json(['success' => true], 201);
-    }
     /**
      * Store a newly created resource in storage.
      *

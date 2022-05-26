@@ -4,7 +4,7 @@ const ACTIVE = 1;
 const FORM_VALIDATION_ERROR = 422;
 
 $("#showEmployee").hide();
-$('#showAddEmployee').hide();
+$("#showAddEmployee").hide();
 $(".select2").select2();
 $(".office_charging").select2();
 $(".office_assignment").select2();
@@ -17,123 +17,122 @@ let table = $("#employees-table").DataTable({
     order: [[1, "asc"]],
     language: {
         processing:
-            '<i class="text-primary fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span>'
+            '<i class="text-primary fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span>',
     },
-    initComplete: function() {},
+    initComplete: function () {},
     columns: [
         {
             name: "Employee_id",
-            class: "align-middle text-center"
+            class: "align-middle text-center",
         },
         {
             name: "LastName",
-            class: "align-middle text-truncate"
+            class: "align-middle text-truncate",
         },
         {
             name: "FirstName",
-            class: "align-middle text-truncate"
+            class: "align-middle text-truncate",
         },
         {
             name: "MiddleName",
-            class: "align-middle text-truncate"
+            class: "align-middle text-truncate",
         },
         {
             name: "Suffix",
-            class: "align-middle text-center"
+            class: "align-middle text-center",
         },
         {
             name: "position.position_short_name",
             class: "align-middle text-uppercase text-sm text-truncate",
             orderable: false,
-            searchable: false
+            searchable: false,
         },
         {
-            name: "office_charging.desc",
+            name: "office_charging.office_name",
+            defaultContent: "",
             class: "align-middle text-uppercase",
             orderable: false,
             searchable: false,
-            render: function(rawData, _, data, row) {
-                return data[OFFICE_INDEX].Description;
-            }
         },
         {
             name: "office_assignment.Description",
             class: "align-middle text-uppercase",
             orderable: false,
-            searchable: false
+            searchable: false,
         },
         {
             name: "Work_Status",
             class: "align-middle text-center text-truncate",
-            orderable: false
+            orderable: false,
         },
         {
             name: "isActive",
             class: "align-middle text-center text-truncate",
             orderable: false,
-            render: function(rawData, _, data, row) {
+            render: function (rawData, _, data, row) {
                 if (data[ACTIVE_STATUS_INDEX] == ACTIVE) {
                     return `<span class="badge badge-primary text-uppercase">Active</span>`;
                 } else {
                     return `<span class="badge badge-danger text-uppercase">In-active</span>`;
                 }
-            }
+            },
+        },
+        {
+            name: "Employee_id",
+            class: "align-middle text-center text-truncate",
+            orderable: false,
+            defaultContent: "",
+            render: function () {
+                return ``;
+            },
         },
         {
             name: "action",
             class: "text-truncate align-middle",
             searchable: false,
-            orderable: false
-        }
-    ]
+            orderable: false,
+        },
+    ],
 });
 
-$("#employees-table tfoot th").each(function() {
+$("#employees-table tfoot th").each(function () {
     var title = $(this).text();
     $(this).html('<input type="text" placeholder="Search ' + title + '" />');
 });
 
-$(document).on("click", ".btn-edit-employee", function() {
+$(document).on("click", ".btn-edit-employee", function () {
     $("#loader-wrapper, #loader").show();
     const employeeID = $(this).attr("data-employee-id");
     let position = "";
 
-    $("#showEmployee")
-        .fadeIn()
-        .show();
+    $("#showEmployee").fadeIn().show();
 
-    $("#employees-data-table")
-        .fadeOut()
-        .hide();
+    $("#employees-data-table").fadeOut().hide();
 
     $.ajax({
         url: "/api/offices",
-        success: function(response) {
-            $("#office_charging")
-                .children()
-                .remove();
-            $("#office_assignment")
-                .children()
-                .remove();
+        success: function (response) {
+            $("#office_charging").children().remove();
+            $("#office_assignment").children().remove();
 
-            response.office.forEach(office => {
+            response.office.forEach((office) => {
                 $("#office_charging").append(`
                         <option value="${office.OfficeCode}">${office.Description}</option>
                     `);
             });
 
-            response.office2.forEach(office => {
+            response.office2.forEach((office) => {
                 $("#office_assignment").append(`
                         <option value="${office.OfficeCode2}">${office.Description}</option>
                     `);
             });
-        }
+        },
     });
 
     $.ajax({
         url: `/api/employee/find/${employeeID}`,
-        success: function(employee) {
-            position = employee.position?.position_name || employee.Work_Status;
+        success: function (employee) {
+            position = employee.position?.Description || employee.Work_Status;
             $("#employeeID").val(employee.Employee_id);
             $("#lastname").val(employee.LastName);
             $("#firstname").val(employee.FirstName);
@@ -142,7 +141,7 @@ $(document).on("click", ".btn-edit-employee", function() {
             $("#birthdate").val(employee.Birthdate);
             $("#birthplace").val(employee.BirthPlace);
             $("#gender").val(employee.Gender?.toUpperCase());
-            $("#civil_status").val(employee.CivilStatus.toUpperCase());
+            $("#civil_status").val(employee.CivilStatus?.toUpperCase());
             $("#address").val(employee.Address);
             $("#contact_no").val(employee.ContactNumber);
             $("#active_status").val(employee.isActive);
@@ -162,8 +161,8 @@ $(document).on("click", ".btn-edit-employee", function() {
                 "data-employee-id",
                 employee.Employee_id
             );
-        }
-    }).done(function() {
+        },
+    }).done(function () {
         let AJAX_SELECT_CONFIGURATION = {
             placeholder: `${position}`,
             ajax: {
@@ -171,29 +170,29 @@ $(document).on("click", ".btn-edit-employee", function() {
                 dataType: "json",
                 delay: 250,
                 quietMills: 50,
-                data: function(params) {
+                data: function (params) {
                     return {
-                        search: params.term
+                        search: params.term,
                     };
                 },
-                processResults: function(data, params) {
+                processResults: function (data, params) {
                     var positions = [];
-                    data.forEach(value => {
+                    data.forEach((value) => {
                         positions.push(value);
                     });
 
                     return {
-                        results: $.map(positions, function(item) {
+                        results: $.map(positions, function (item) {
                             return {
                                 text: `${item.position_name.toUpperCase()}`,
-                                id: item.position_code
+                                id: item.position_code,
                             };
-                        })
+                        }),
                     };
                 },
-                cache: true
+                cache: true,
             },
-            minimumInputLength: 2
+            minimumInputLength: 2,
         };
 
         $("#position").select2(AJAX_SELECT_CONFIGURATION);
@@ -201,28 +200,19 @@ $(document).on("click", ".btn-edit-employee", function() {
     });
 });
 
-$("#btn-back").click(function() {
-    $("#showEmployee")
-        .fadeOut()
-        .hide();
+$("#btn-back").click(function () {
+    $("#showEmployee").fadeOut().hide();
 
-    $("#employees-data-table")
-        .fadeIn()
-        .show();
+    $("#employees-data-table").fadeIn().show();
 });
 
+$("#btn-add-back").click(function () {
+    $("#showAddEmployee").fadeOut().hide();
 
-$("#btn-add-back").click(function() {
-    $('#showAddEmployee')
-        .fadeOut()
-        .hide();
-
-    $("#employees-data-table")
-        .fadeIn()
-        .show();
+    $("#employees-data-table").fadeIn().show();
 });
 
-$("#officeChargingSelect").change(function(e) {
+$("#officeChargingSelect").change(function (e) {
     let charging = e.target.value;
     let assignment = $("#officeAssignmentSelect").val();
     let status = $("#employeeStatus").val();
@@ -232,7 +222,7 @@ $("#officeChargingSelect").change(function(e) {
         .load();
 });
 
-$("#officeAssignmentSelect").change(function(e) {
+$("#officeAssignmentSelect").change(function (e) {
     let charging = $("#officeChargingSelect").val();
     let assignment = e.target.value;
     let status = $("#employeeStatus").val();
@@ -242,7 +232,7 @@ $("#officeAssignmentSelect").change(function(e) {
         .load();
 });
 
-$("#employeeStatus").change(function(e) {
+$("#employeeStatus").change(function (e) {
     let charging = $("#officeChargingSelect").val();
     let assignment = $("#officeAssignmentSelect").val();
     let status = e.target.value;
@@ -252,7 +242,7 @@ $("#employeeStatus").change(function(e) {
         .load();
 });
 
-$("#activeStatus").change(function(e) {
+$("#activeStatus").change(function (e) {
     let charging = $("#officeChargingSelect").val();
     let assignment = $("#officeAssignmentSelect").val();
     let status = $("#employeeStatus").val();
@@ -262,7 +252,7 @@ $("#activeStatus").change(function(e) {
         .load();
 });
 
-$("#btnUpdateEmployee").click(function(e) {
+$("#btnUpdateEmployee").click(function (e) {
     e.preventDefault();
     let employeeID = $(this).attr("data-employee-id");
     let data = $("#updateEmployeeForm").serialize();
@@ -274,18 +264,18 @@ $("#btnUpdateEmployee").click(function(e) {
         url: `/api/employee/${employeeID}/update`,
         method: "PUT",
         data,
-        success: function(response) {
+        success: function (response) {
             $("#btnUpdateEmployee").removeAttr("disabled");
             $("#btnUpdateSpinner").addClass("d-none");
             swal({
                 text: "You successfully update employee information",
                 icon: "success",
                 buttons: false,
-                timer: 1500
+                timer: 1500,
             });
             table.ajax.reload(null, false);
         },
-        error: function(response) {
+        error: function (response) {
             $("#btnUpdateEmployee").removeAttr("disabled");
             $("#btnUpdateSpinner").addClass("d-none");
             if (response.status === FORM_VALIDATION_ERROR) {
@@ -296,28 +286,21 @@ $("#btnUpdateEmployee").click(function(e) {
                     $(`#${field}-error`).text(error);
                 }
             }
-        }
+        },
     });
 });
 
-$('#addNewEmployee').click(function () {
+$("#addNewEmployee").click(function () {
     $("#loader-wrapper, #loader").show();
 
-    $("#employees-data-table")
-        .fadeOut()
-        .hide();
+    $("#employees-data-table").fadeOut().hide();
 
     $.ajax({
         url: "/api/offices",
-        success: function(response) {
+        success: function (response) {
+            $("#add_form_office_charging").children().remove();
 
-            $("#add_form_office_charging")
-                .children()
-                .remove();
-
-            $("#add_form_office_assignment")
-                .children()
-                .remove();
+            $("#add_form_office_assignment").children().remove();
 
             $("#add_form_office_charging").append(`
                 <option value="">-</option>
@@ -327,18 +310,18 @@ $('#addNewEmployee').click(function () {
                 <option value="">-</option>
             `);
 
-            response.office.forEach(office => {
+            response.office.forEach((office) => {
                 $("#add_form_office_charging").append(`
                     <option value="${office.OfficeCode}">${office.Description}</option>
                 `);
             });
 
-            response.office2.forEach(office => {
+            response.office2.forEach((office) => {
                 $("#add_form_office_assignment").append(`
                     <option value="${office.OfficeCode2}">${office.Description}</option>
                 `);
             });
-        }
+        },
     });
 
     let AJAX_SELECT_CONFIGURATION = {
@@ -348,53 +331,50 @@ $('#addNewEmployee').click(function () {
             dataType: "json",
             delay: 250,
             quietMills: 50,
-            data: function(params) {
+            data: function (params) {
                 return {
-                    search: params.term
+                    search: params.term,
                 };
             },
-            processResults: function(data, params) {
+            processResults: function (data, params) {
                 var positions = [];
-                data.forEach(value => {
+                data.forEach((value) => {
                     positions.push(value);
                 });
 
                 return {
-                    results: $.map(positions, function(item) {
+                    results: $.map(positions, function (item) {
                         return {
                             text: `${item.position_name.toUpperCase()}`,
-                            id: item.position_code
+                            id: item.position_code,
                         };
-                    })
+                    }),
                 };
             },
-            cache: true
+            cache: true,
         },
-        minimumInputLength: 2
+        minimumInputLength: 2,
     };
 
     $("#add_form_position").select2(AJAX_SELECT_CONFIGURATION);
 
-    $('#showAddEmployee').fadeIn().show();
+    $("#showAddEmployee").fadeIn().show();
     $("#loader-wrapper, #loader").hide();
 });
 
-
-$('#submitNewEmployee').click(function (e) {
+$("#submitNewEmployee").click(function (e) {
     e.preventDefault();
-    let data = $('#addEmployeeForm').serialize();
+    let data = $("#addEmployeeForm").serialize();
     $('[name="*"]').each(function (index, element) {
         console.log(element);
     });
 
     $.ajax({
-        url : '/api/employee/store',
-        method : 'POST',
-        data : data,
-        success : function(response) {
-
-        },
-        error: function(response) {
+        url: "/api/employee/store",
+        method: "POST",
+        data: data,
+        success: function (response) {},
+        error: function (response) {
             $("#btnUpdateEmployee").removeAttr("disabled");
             $("#btnUpdateSpinner").addClass("d-none");
             if (response.status === FORM_VALIDATION_ERROR) {
@@ -402,9 +382,39 @@ $('#submitNewEmployee').click(function (e) {
                     response.responseJSON.errors
                 )) {
                     $(`[name='${field}']`).addClass("is-invalid");
-                    $(`#${field}-error`).text(error.join(', '));
+                    $(`#${field}-error`).text(error.join(", "));
                 }
             }
-        }
+        },
     });
+});
+
+let downloadID = 0;
+$(document).on("click", ".btn-download-pds", function () {
+    downloadID = $(this).attr("data-id");
+    $("#downloadPDSModal").modal("toggle");
+});
+
+$("#downloadPdf").click(function () {
+    $(this).attr("data-id", downloadID);
+    $.ajax({
+        url: `/api/personal-data-sheet/download/${downloadID}`,
+        success: function (response) {
+            if (response.success) {
+                socket.emit("PRINT_PDF", {
+                    fileName: `${downloadID}-E-PDS`,
+                    id: downloadID,
+                });
+            }
+        },
+    });
+
+    socket.on(`PUBLISH_DONE_${downloadID}`, (data) => {
+        window.open(`/api/personal-data-sheet/download/pdf/${data.fileName}`);
+        $("#downloadPDSModal").modal("toggle");
+    });
+});
+
+$("#downloadExcel").click(function () {
+    window.open(`/api/personal-data-sheet/download/excel/${downloadID}`);
 });

@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class EmployeeFamilyBackground extends Model
 {
     protected $fillable = [
+        'id',
         'employee_id',
         'spouse_firstname',
         'spouse_lastname',
@@ -28,63 +30,24 @@ class EmployeeFamilyBackground extends Model
         'mother_extension',
     ];
 
-    // protected $appends = ['mother_fullname', 'father_fullname', 'spouse_fullname'];
+    protected $appends = ['has_spouse'];
+
+
+
+    protected function hasSpouse(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => !empty($this->spouse_firstname) ? true : false,
+        );
+    }
 
     public function employee()
     {
         return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
     }
 
-    public function setSpouseFirstnameAttribute($value)
+    public function spouse()
     {
-        return $this->attributes['spouse_firstname'] = Str::upper($value);
+        return $this->hasMany(EmployeeSpouseChildren::class, 'employee_id', 'employee_id');
     }
-    public function setSpouseLastnameAttribute($value)
-    {
-        return $this->attributes['spouse_lastname'] = Str::upper($value);
-    }
-    public function setSpouseMiddlenameAttribute($value)
-    {
-        return $this->attributes['spouse_middlename'] = Str::upper($value);
-    }
-    public function setSpousExtensionAttribute($value)
-    {
-        return $this->attributes['spouse_extension'] = Str::upper($value);
-    }
-
-    public function setFatherFirstnameAttribute($value)
-    {
-        return $this->attributes['father_firstname'] = Str::upper($value);
-    }
-
-    public function setFatherLastnameAttribute($value)
-    {
-        return $this->attributes['father_lastname'] = Str::upper($value);
-    }
-
-    public function setFatherMiddlenameAttribute($value)
-    {
-        return $this->attributes['father_middlename'] = Str::upper($value);
-    }
-
-    public function setFatherExtensionAttribute($value)
-    {
-        return $this->attributes['father_extension'] = Str::upper($value);
-    }
-
-    public function setMotherLastnameAttribute($value)
-    {
-        return $this->attributes['mother_lastname'] = Str::upper($value);
-    }
-
-    public function setMotherFirstnameAttribute($value)
-    {
-        return $this->attributes['mother_firstname'] = Str::upper($value);
-    }
-
-    public function setMotherMiddlenameAttribute($value)
-    {
-        return $this->attributes['mother_middlename'] = Str::upper($value);
-    }
-
 }

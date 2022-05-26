@@ -8,17 +8,18 @@ use App\Scopes\CityScope;
 class City extends Model
 {
     public    $incrementing = false;
-    protected $primaryKey   = 'code';
+    protected $primaryKey   = 'city_code';
     public $keyType = 'string';
-    protected $fillable     = ['name', 'status', 'province_code', 'code'];
+    public $table = 'Cities';
+    protected $fillable     = ['name', 'status', 'province_code', 'city_code'];
 
     public function province()
     {
-        return $this->belongsTo('App\Province', 'province_code', 'code');
+        return $this->belongsTo(Province::class, 'province_code', 'code');
     }
 
     public function barangays()
     {
-        return $this->hasMany('App\Barangay', 'city_code', 'code');
+        return $this->hasMany(Barangay::class, 'city_code', 'city_code');
     }
 }
