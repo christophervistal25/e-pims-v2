@@ -4,6 +4,7 @@ namespace App;
 
 use App\Position;
 use App\OfficeCharging;
+use App\StepIncrement;
 use Illuminate\Support\Str;
 use App\EmployeeLeaveRecord;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +21,7 @@ class Employee extends Model
     protected $connection = 'DTR_PAYROLL_CONNECTION';
     protected $table = 'Employees';
     public $with = ['position', 'office_charging', 'office_assignment'];
+    // 'office_charging.desc'
     public $keyType = 'string';
 
     protected $columns = [
@@ -249,8 +251,15 @@ class Employee extends Model
 
     public function plantilla()
     {
+        return $this->hasOne(Plantilla::class, 'Employee_id', 'employee_id');
+    }
+
+
+    public function plantillaForStep()
+    {
         return $this->hasOne(Plantilla::class, 'employee_id', 'Employee_id');
     }
+    
 
     public function PlantillaSchedule()
     {
@@ -386,7 +395,7 @@ class Employee extends Model
 
     public function salary_adjustment()
     {
-        return $this->hasMany(SalaryAdjustment::class, 'employee_id', 'employee_id');
+        return $this->hasMany(SalaryAdjustment::class, 'employee_id', 'Employee_id');
     }
 
 

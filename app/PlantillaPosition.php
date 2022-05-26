@@ -22,8 +22,9 @@ class PlantillaPosition extends Model
     }
     public function position()
     {
-        return $this->hasOne('App\Position', 'position_id', 'position_id');
+        return $this->hasOne(Position::class, 'PosCode', 'PosCode');
     }
+
     public function office()
     {
         return $this->hasOne('App\Office', 'OfficeCode', 'office_code');
@@ -34,7 +35,7 @@ class PlantillaPosition extends Model
     }
     public function salary_grade()
     {
-        return $this->hasOne(SalaryGrade::class, 'sg_no', 'sg_no');
+        return $this->hasMany(SalaryGrade::class, 'sg_no', 'sg_no');
     }
     public function PlantillaSchedule()
     {

@@ -23,8 +23,8 @@
 </style>
 @endprepend
 @prepend('meta-data')
-<meta id="plantillaPositionMetaData" content="@foreach($plantillaPositionAll as $plantillaPositionAlls){ |officeCode|:|{{ $plantillaPositionAlls->office_code }}|, |positionId|:|{{ $plantillaPositionAlls->position_id }}|, |ppId|:|{{ $plantillaPositionAlls->pp_id }}|}, @endforeach">
-<meta id="positionMetaData" content="@foreach($position as $positions){ |positionId|:|{{ $positions->position_id }}|, |positionName|:|{{ $positions->position_name }}|}, @endforeach">
+<meta id="plantillaPositionMetaData" content="@foreach($plantillaPosition as $plantillaPositions){ |officeCode|:|{{ $plantillaPositions->office_code }}|, |positionId|:|{{ $plantillaPositions->PosCode }}|, |ppId|:|{{ $plantillaPositions->pp_id }}|}, @endforeach">
+<meta id="positionMetaData" content="@foreach($position as $positions){ |positionId|:|{{ $positions->PosCode }}|, |positionName|:|{{ $positions->Description }}|}, @endforeach">
 <meta id="divisionMetaData" content="@foreach($division as $divisions){ |officeCode|:|{{ $divisions->office_code }}|, |divisionId|:|{{ $divisions->division_id }}|, |divisionName|:|{{ $divisions->division_name }}|}, @endforeach">
 @endprepend
 @section('content')
@@ -34,8 +34,7 @@
     <div class="kanban-board card mb-0">
         <div class="card-body">
             <div id="add" class="page-header {{  count($errors->all())  !== 0 }}">
-                <form action="{{ route('plantilla-of-personnel.update', $plantilla->plantilla_id) }}" method="post"
-                    id="plantillaEditForm">
+                <form id="plantillaEditForm">
                     @csrf
                     @method('PUT')
                     <div class="row">
@@ -45,6 +44,8 @@
                                 OF PERSONNEL</div>
                         </div>
 
+                        <input type="text" value="{{ $plantilla->plantilla_id  }}" id="plantillaId" class="d-none">
+
                         <div class="form-group col-12 col-lg-10">
                             <label>Employee Name<span class="text-danger">*</span></label>
                             <select value="{{ old('employeeName') }}"
@@ -52,15 +53,12 @@
                                 name="employeeName" data-live-search="true" id="employeeName" data-size="5" disabled>
                                 <option></option>
                                 @foreach($employee as $employees)
-                                <option {{ $plantilla->employee_id == $employees->employee_id ? 'selected' : '' }}
-                                    value="{{ $employees->employee_id }}"> {{ $employees->lastname }},
-                                    {{ $employees->firstname }} {{ $employees->middlename }}</option>
+                                <option {{ $plantilla->employee_id == $employees->Employee_id ? 'selected' : '' }}
+                                    value="{{ $employees->employee_id }}">{{ $employees->fullname }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('employeeName'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('employeeName') }} </small>
-                            @endif
+                            <div id='employee-name-error-message' class='text-danger text-sm'>
+                            </div>
                         </div>
 
                         <div class="form-group col-12 col-lg-2">
@@ -77,15 +75,13 @@
                                 name="officeCode" data-live-search="true" id="officeCode" data-size="5">
                                 <option></option>
                                 @foreach($office as $offices)
-                                <option {{ $plantilla->office_code == $offices->OfficeCode ? 'selected' : '' }}
-                                    value="{{ $offices->OfficeCode }}">
-                                    {{ $offices->Description }}</option>
+                                <option {{ $plantilla->office_code == $offices->office_code ? 'selected' : '' }}
+                                    value="{{ $offices->office_code }}">
+                                    {{ $offices->office_name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('officeCode'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('officeCode') }} </small>
-                            @endif
+                            <div id='office-error-message' class='text-danger text-sm'>
+                            </div>
                         </div>
 
                         <div class="form-group col-12 col-lg-6">
@@ -99,10 +95,8 @@
                                     value="{{ $divisions->division_id }}">{{ $divisions->division_name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('divisionId'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('divisionId') }} </small>
-                            @endif
+                            <div id='division-error-message' class='text-danger text-sm'>
+                            </div>
                         </div>
 
                         <div class="form-group col-12 col-lg-6">
@@ -113,13 +107,11 @@
                                 <option></option>
                                 @foreach($plantillaPosition as $plantillaPositions)
                                 <option {{ $plantilla->pp_id == $plantillaPositions->pp_id ? 'selected' : '' }} value="{{ $plantillaPositions->pp_id }}">
-                                    {{ $plantillaPositions->position->position_name }}</option>
+                                    {{ $plantillaPositions->position->Description }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('positionTitle'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('positionTitle') }} </small>
-                            @endif
+                            <div id='position-title-error-message' class='text-danger text-sm'>
+                            </div>
                         </div>
 
                         <div class="form-group col-12 col-lg-6">
@@ -136,10 +128,8 @@
                                 @endif
                                 @endforeach
                             </select>
-                            @if($errors->has('status'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('status') }} </small>
-                            @endif
+                            <div id='status-error-message' class='text-danger text-sm'>
+                            </div>
                         </div>
 
                         <div class="form-group col-12 col-lg-6">
@@ -147,10 +137,8 @@
                             <input value="{{ old('itemNo') ?? $plantilla->item_no }}"
                                 class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" name="itemNo"
                                 id="num-only" type="text" placeholder="Item No." readonly>
-                            @if($errors->has('itemNo'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('itemNo') }} </small>
-                            @endif
+                                <div id='item-no-error-message' class='text-danger text-sm'>
+                                </div>
                         </div>
 
                         <div class="form-group col-12 col-lg-6">
@@ -158,21 +146,17 @@
                             <input value="{{ old('oldItemNo') ?? $plantilla->old_item_no }}"
                                 class="form-control {{ $errors->has ('oldItemNo')  ? 'is-invalid' : ''}}"
                                 name="oldItemNo" id="num-only" type="text" placeholder="Old Item No">
-                            @if($errors->has('oldItemNo'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('oldItemNo') }} </small>
-                            @endif
+                                <div id='old_item-no-error-message' class='text-danger'>
+                                </div>
                         </div>
 
                         <div class="form-group col-12 col-lg-3">
                             <label>Current Salary Grade Year<span class="text-danger">*</span></label>
                                 <input value="{{ old('currentSgyear') ?? $plantilla->year }}"
                                 class="form-control {{ $errors->has('currentSgyear')  ? 'is-invalid' : ''}}" name="currentSgyear"
-                                id="num-only" type="text" placeholder="Item No." readonly>
-                            @if($errors->has('currentSgyear'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('currentSgyear') }} </small>
-                            @endif
+                                id="currentSgyear" type="text" placeholder="" readonly>
+                                <div id='year-error-message' class='text-danger text-sm'>
+                                </div>
                         </div>
 
                         <div class="form-group col-12 col-lg-3">
@@ -193,10 +177,8 @@
                                     {{ $step_no}}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('stepNo'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('stepNo') }} </small>
-                            @endif
+                            <div id='steps-error-message' class='text-danger text-sm'>
+                            </div>
                         </div>
 
                         <div class="form-group col-12 col-lg-3">
@@ -204,10 +186,8 @@
                             <input value="{{ old('salaryAmount') ?? $plantilla->salary_amount}}"
                                 class="form-control {{ $errors->has('salaryAmount')  ? 'is-invalid' : ''}}"
                                 name="salaryAmount" id="currentSalaryamount" type="text" readonly>
-                            @if($errors->has('salaryAmount'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('salaryAmount') }} </small>
-                            @endif
+                                <div id='salary-amount-error-message' class='text-danger text-sm'>
+                                </div>
                         </div>
 
                         <div class="form-group col-12 col-lg-6">
@@ -215,10 +195,8 @@
                             <input value="{{ old('originalAppointment') ?? $plantilla->date_original_appointment }}"
                                 class="form-control {{ $errors->has('originalAppointment')  ? 'is-invalid' : ''}}"
                                 name="originalAppointment" type="date">
-                            @if($errors->has('originalAppointment'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('originalAppointment') }} </small>
-                            @endif
+                                <div id='original-appointment-error-message' class='text-danger text-sm'>
+                                </div>
                         </div>
 
                         <div class="form-group col-12 col-lg-6">
@@ -226,10 +204,8 @@
                             <input value="{{ old('lastPromotion') ?? $plantilla->date_last_promotion }}"
                                 class="form-control {{ $errors->has('lastPromotion')  ? 'is-invalid' : ''}}"
                                 name="lastPromotion" type="date">
-                            @if($errors->has('lastPromotion'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('lastPromotion') }} </small>
-                            @endif
+                                <div id='last-promotion-error-message' class='text-danger text-sm'>
+                                </div>
                         </div>
 
                         <div class="form-group col-12 col-lg-4">
@@ -246,10 +222,8 @@
                                 @endif
                                 @endforeach
                             </select>
-                            @if($errors->has('areaCode'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('areaCode') }} </small>
-                            @endif
+                            <div id='area-code-error-message' class='text-danger text-sm'>
+                            </div>
                         </div>
 
                         <div class="form-group col-12 col-lg-4">
@@ -266,10 +240,8 @@
                                 @endif
                                 @endforeach
                             </select>
-                            @if($errors->has('areaType'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('areaType') }} </small>
-                            @endif
+                            <div id='area-type-error-message' class='text-danger text-sm'>
+                            </div>
                         </div>
 
                         <div class="form-group col-12 col-lg-4">
@@ -287,15 +259,14 @@
                                 @endif
                                 @endforeach
                             </select>
-                            @if($errors->has('areaLevel'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('areaLevel') }} </small>
-                            @endif
+                            <div id='area-level-error-message' class='text-danger text-sm'>
+                            </div>
                         </div>
 
                         <div class="form-group form-group submit-section col-12">
-                            <button type="submit" class="btn btn-primarys submit-btn float-right shadow"><i
-                                    class="fas fa-check"></i> Update</button>
+                            <button id="plantillaUpdate" type="submit" class="btn btn-primarys submit-btn float-right shadow"><span id="loading" class="spinner-border spinner-border-sm d-none" role="status"
+                                aria-hidden="false"></span>
+                                <i style="color:white;" class="fas fa-save"></i> <b style="color:white;" id="saving">Update</b>
                             <a href="/plantilla-of-personnel"><button style="margin-right:10px;" type="button"
                                     class="text-white btn btn-danger submit-btn float-right shadow"><i
                                     class="fas fa-arrow-left"></i> Back</button></a>
@@ -306,7 +277,6 @@
         </div>
     </div>
 </div>
-@include('Plantilla.add-ons.plantillamodal')
 @push('page-scripts')
 <script>
     $.ajaxSetup({

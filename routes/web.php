@@ -54,9 +54,9 @@ Route::get('/position-schedule-list', 'PositionScheduleController@list');
 
 
 //plantilla of personnel
-Route::get('/plantilla-list', 'Plantillacontroller@list');
-// Route::post('/plantilla', 'PlantillaController@addPosition');
+Route::get('/plantilla-list/{office?}', 'Plantillacontroller@list');
 Route::resource('/plantilla-of-personnel', 'PlantillaController');
+Route::put('/plantilla-of-personnel/{id}', 'PlantillaController@update');
 
 //plantilla of position
 Route::resource('/plantilla-of-position', 'PlantillaOfPositionController');
@@ -68,8 +68,8 @@ Route::put('/plantilla-of-position/{id}', 'PlantillaOfPositionController@update'
 Route::get('/step-increment/list', 'StepIncrementController@list');
 Route::delete('/step-increment/{id}', 'StepIncrementController@destroy')->name('step-increment.delete');
 Route::post('/', 'StepIncrementController@store')->name('create.step');
+Route::put('/step-increment/{id}', 'StepIncrementController@update')->name('step-increment.update');
 Route::resource('/step-increment', 'StepIncrementController');
-
 Route::get('/print-increment/{id}/previewed', 'PrintIncrementController@print')->name('step-increment.previewed.print');
 Route::get('/print-increment/{id}', 'PrintIncrementController@printList')->name('print-increment');
 Route::resource('/print-increment', 'PrintIncrementController');

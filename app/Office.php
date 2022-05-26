@@ -4,6 +4,7 @@ namespace App;
 
 use App\Office2;
 use App\Plantilla;
+use App\StepIncrement;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -27,7 +28,7 @@ class Office extends Model
         'position_name',
     ];
 
-    public function office()
+    public function plantilla()
     {
         return $this->belongsTo(Plantilla::class, 'office_code', 'office_code');
     }
@@ -51,6 +52,12 @@ class Office extends Model
     {
         return $this->belongsTo(PlantillaPosition::class, 'office_code', 'office_code');
     }
+
+    // public function plantilla()
+    // {
+    //     return $this->hasOne(Plantilla::class, 'office_code', 'office_code');
+    // }
+
     public function divisions()
     {
         return $this->belongsTo(Division::class, 'office_code', 'office_code');
@@ -64,5 +71,10 @@ class Office extends Model
     public function PositionSchedule()
     {
         return $this->belongsTo(PositionSchedule::class, 'office_code', 'office_code');
+    }
+
+    public function step()
+    {
+        return $this->hasOne(StepIncrement::class, 'office_code', 'office_code');
     }
 }
