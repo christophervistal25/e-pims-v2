@@ -52,7 +52,6 @@ class SalaryAdjustmentController extends Controller
                                     $haystack = $record->salary_adjustment
                                                         ->pluck('date_adjustment_year')
                                                         ->toArray();
-
                                     return !in_array($currentYear, $haystack);
                             });
 
@@ -205,8 +204,8 @@ class SalaryAdjustmentController extends Controller
     public function edit($id)
     {
 
-        $employee = Employee::select('employee_id', 'firstname', 'lastname', 'middlename')->get();
-        $plantillaPosition = PlantillaPosition::select('pp_id','position_id','item_no','sg_no','office_code', 'old_position_name')->with('position:position_id,position_name')->get();
+        $employee = Employee::select('Employee_id', 'Firstname', 'Lastname', 'Middlename')->get();
+        $plantillaPosition = PlantillaPosition::select('pp_id','PosCode','item_no','sg_no','office_code', 'old_position_name')->with('position:PosCode,Description')->get();
         $salaryAdjustment = SalaryAdjustment::find($id);
         return view('SalaryAdjustment.edit', compact('salaryAdjustment','employee', 'plantillaPosition'));
     }
@@ -232,19 +231,18 @@ class SalaryAdjustmentController extends Controller
             'salaryDifference'                    => 'required|numeric',
         ]);
         $salaryAdjustment                  = SalaryAdjustment::find($id);
-        $salaryAdjustment->employee_id     = $request['employeeName'];
-        $salaryAdjustment->item_no         = $request['itemNo'];
-        $salaryAdjustment->pp_id           = $request['position'];
-        $salaryAdjustment->date_adjustment = $request['dateAdjustment'];
-        $salaryAdjustment->sg_no           = $request['salaryGrade'];
-        $salaryAdjustment->step_no         = $request['stepNo'];
-        $salaryAdjustment->salary_previous = $request['salaryPrevious'];
-        $salaryAdjustment->salary_new      = $request['salaryNew'];
-        $salaryAdjustment->salary_diff     = $request['salaryDifference'];
-        $salaryAdjustment->remarks     = $request['remarks'];
+        $salaryAdjustment->employee_id     = $request->employeeName;
+        $salaryAdjustment->item_no         = $request->itemNo;
+        $salaryAdjustment->pp_id           = $request->position;
+        $salaryAdjustment->date_adjustment = $request->dateAdjustment2;
+        $salaryAdjustment->sg_no           = $request->salaryGrade;
+        $salaryAdjustment->step_no         = $request->stepNo;
+        $salaryAdjustment->salary_previous = $request->salaryPrevious;
+        $salaryAdjustment->salary_new      = $request->salaryNew;
+        $salaryAdjustment->salary_diff     = $request->salaryDifference;
+        $salaryAdjustment->remarks     = $request->remarks;
         $salaryAdjustment->save();
-        Session::flash('alert-success', 'Update Salary Adjustment Successfully');
-        return back()->with('success','Updated Successfully');
+        return response()->json(['success'=>true]);
     }
 
     /**

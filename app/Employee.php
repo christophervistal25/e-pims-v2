@@ -268,7 +268,7 @@ class Employee extends Model
 
 
     public function family_background()
-    {
+    {           
         return $this->hasOne(EmployeeFamilyBackground::class, 'employee_id', 'employee_id');
     }
 

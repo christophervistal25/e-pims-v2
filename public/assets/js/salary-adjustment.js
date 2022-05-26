@@ -80,9 +80,7 @@ $(document).ready(function () {
                 plantilla.plantilla_positions.position.Description
             );
             $("#status").val(plantilla.status);
-            $("#positionId").val(
-                plantilla.plantilla_positions.position.PosCode
-            );
+            $("#positionId").val(plantilla.pp_id);
             $("#itemNo").val(plantilla.item_no);
             $("#salaryGrade").val(plantilla.sg_no);
             $("#stepNo").val(plantilla.step_no);

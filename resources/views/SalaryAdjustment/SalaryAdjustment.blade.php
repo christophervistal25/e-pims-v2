@@ -315,6 +315,7 @@
                             var dataResult = JSON.parse(dataResult);
                             if (dataResult.statusCode == 200) {
                                 swal("Successfully Deleted!", "", "success");
+                                // $('#salaryAdjustment').DataTable().ajax.reload();
                                  location.reload();
                             }
                         }
