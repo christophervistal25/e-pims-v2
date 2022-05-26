@@ -52,8 +52,8 @@ $(document).ready(function() {
                 '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
         },
         columns: [
-            { data: "position_code", name: "position_code" },
-            { data: "position_name", name: "position_name" },
+            { data: "PosCode", name: "PosCode" },
+            { data: "Description", name: "Description" },
             { data: "sg_no", name: "sg_no" },
             { data: "position_short_name", name: "position_short_name" },
             {

@@ -9,9 +9,9 @@ class Barangay extends Model
 {
 
     public $incrementing = false;
-    protected $primaryKey   = 'code';
-    protected $fillable = ['name', 'code', 'status'];
-
+    protected $primaryKey   = 'barangay_code';
+    public $table = 'Barangays';
+    protected $fillable = ['barangay_code', 'province_code', 'city_code', 'name', 'type', 'population', 'status'];
 
     public function province()
     {
@@ -22,5 +22,4 @@ class Barangay extends Model
     {
         return $this->belongsTo('App\City');
     }
-
 }

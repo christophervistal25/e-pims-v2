@@ -24,24 +24,24 @@ class LearningRequest extends FormRequest
     public function rules()
     {
         return [
-            '*.nameOfTraining' => ['required'],
-            '*.from'           => ['nullable', 'required_with:*.nameOfTraining', 'date', 'before:*.to'],
-            '*.to'             => ['nullable', 'required_with:*.nameOfTraining', 'date', 'after:*.from'],
-            '*.noOfHours'      => ['nullable', 'required_with:*.nameOfTraining', 'numeric'],
-            '*.typeOfLD'       => ['nullable', 'required_with:*.nameOfTraining'],
-            '*.conducted'      => ['nullable', 'required_with:*.nameOfTraining'],
+            '*.title' => ['required'],
+            '*.date_of_attendance_from'           => ['nullable', 'required_with:*.title', 'date', 'before:*.date_of_attendance_to'],
+            '*.date_of_attendance_to'             => ['nullable', 'required_with:*.title', 'date', 'after:*.date_of_attendance_from'],
+            '*.number_of_hours'      => ['nullable', 'required_with:*.title', 'numeric'],
+            '*.type_of_id'       => ['nullable', 'required_with:*.title'],
+            '*.sponsored_by'      => ['nullable', 'required_with:*.title'],
         ];
     }
 
     public function attributes()
     {
         return [
-            '*.nameOfTraining' => 'Name of training',
-            '*.from'           => 'Inclusive date FROM',
-            '*.to'             => 'Inclusive date TO',
-            '*.noOfHours'      => 'No. of hours',
-            '*.typeOfLD'       => 'type of LD',
-            '*.conducted'      => 'Conducted/Sponsored',
+            '*.title' => 'Name of training',
+            '*.date_of_attendance_from'           => 'Inclusive date From',
+            '*.date_of_attendance_to'             => 'Inclusive date To',
+            '*.number_of_hours'      => 'No. of hours',
+            '*.type_of_id'       => 'type of LD',
+            '*.sponsored_by'      => 'Conducted/Sponsored',
         ];
     }
 }

@@ -20,13 +20,19 @@ class ServiceRecordsController extends Controller
      */
     public function index()
     {
-        $office = Office::select('office_code', 'office_name')->get();
+        $office = Office::select('OfficeCode', 'Description')->get();
+        
         $status = ['Casual', 'Contractual','Coterminous','Coterminous-Temporary','Permanent','Provisional','Regular Permanent','Substitute','Temporary','Elected'];
+        
         count($status) - 1;
+
         $position = Position::select('position_id', 'position_name')->get();
-        $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename')->get();
-        $plantilla = Plantilla::select('plantilla_id','employee_id')->with('employee:employee_id,firstname,middlename,lastname,extension')->get();
-        return view('ServiceRecords.ServiceRecords', compact('employee', 'position', 'status', 'office', 'plantilla'));
+
+        $employee = Employee::select('Employee_id', 'LastName', 'FirstName', 'MiddleName', 'Suffix')->get();
+
+        $plantillas = Plantilla::with(['employee', 'employee_record'])->get(['employee_id', 'plantilla_id']);
+
+        return view('ServiceRecords.ServiceRecords', compact('employee', 'position', 'status', 'office', 'plantillas'));
     }
 
     /**
@@ -43,8 +49,9 @@ class ServiceRecordsController extends Controller
         $data = DB::table('service_records')
         ->join('offices', 'service_records.office_code', '=', 'offices.office_code')
         ->join('positions', 'service_records.position_id', '=', 'positions.position_id')
-        ->select( 'id', 'employee_id', DB::raw("DATE_FORMAT(service_from_date, '%m-%d-%Y') as service_from_date"), DB::raw("DATE_FORMAT(service_to_date, '%m-%d-%Y') as service_to_date"), 'positions.position_name', 'service_records.status', 'salary', 'offices.office_name', 'leave_without_pay', DB::raw("DATE_FORMAT(separation_date, '%m-%d-%Y') as separation_date"), 'separation_cause')
+        ->select( 'id', 'employee_id', DB::raw("FORMAT(service_from_date, '%m-%d-%Y') as service_from_date"), DB::raw("FORMAT(service_to_date, '%m-%d-%Y') as service_to_date"), 'positions.position_name', 'service_records.status', 'salary', 'offices.office_name', 'leave_without_pay', DB::raw("FORMAT(separation_date, '%m-%d-%Y') as separation_date"), 'separation_cause')
         ->get();
+
         return DataTables::of($data)
         ->addColumn('action', function($row){
             $btn = "<a href='' class='edit btn btn-primary btn-sm'>Edit</a>";

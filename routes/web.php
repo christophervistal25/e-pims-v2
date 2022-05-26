@@ -251,7 +251,4 @@ Route::get('create-employee', function () {
     return view('employee.create');
 });
 
-Route::get('personal-data-sheet/{idNumber}', function (string $idNumber) {
-    [$idNumber] = (new Hashids())->decode($idNumber);
-    return view('employee.personal-data-sheet.edit')->with('employeeID', $idNumber);
-})->name('employee.personal-data-sheet.edit');
+Route::get('personal-data-sheet/{idNumber}', [PersonalDataSheetController::class, 'edit'])->name('employee.personal-data-sheet.edit');

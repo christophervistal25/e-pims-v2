@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class EmployeeEducationalBackground extends Model
 {
     protected $fillable = [
+        'id',
         'employee_id',
-
         'elementary_name',
         'elementary_education',
         'elementary_period_from',
@@ -50,5 +50,4 @@ class EmployeeEducationalBackground extends Model
         'graduate_studies_scholarship',
 
     ];
-
 }

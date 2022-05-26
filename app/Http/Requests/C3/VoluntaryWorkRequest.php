@@ -24,21 +24,21 @@ class VoluntaryWorkRequest extends FormRequest
     public function rules()
     {
         return [
-            '*.nameOfOrg' => ['required'],
-            '*.from'      => ['nullable', 'required_with:*.nameOfOrg', 'date', 'before:*.to'],
-            '*.to'        => ['nullable', 'required_with:*.nameOfOrg', 'date', 'after:*.from'],
-            '*.noOfHrs'   => ['nullable', 'required_with:*.nameOfOrg'],
-            '*.position'  => ['nullable', 'required_with:*.nameOfOrg'],
+            '*.name_and_address' => ['required'],
+            '*.inclusive_date_from'      => ['nullable', 'required_with:*.name_and_address', 'date', 'before:*.inclusive_date_to'],
+            '*.inclusive_date_to'        => ['nullable', 'required_with:*.name_and_address', 'date', 'after:*.inclusive_date_from'],
+            '*.no_of_hours'   => ['nullable', 'required_with:*.name_and_address'],
+            '*.position'  => ['nullable', 'required_with:*.name_and_address'],
         ];
     }
 
     public function attributes()
     {
         return [
-            '*.nameOfOrg' => 'Name & Address Organization',
-            '*.from'      => 'Inclusive Date FROM',
-            '*.to'        => 'Inclusive Date TO',
-            '*.noOfHrs'   => 'Number of Hours',
+            '*.name_and_address' => 'Name & Address Organization',
+            '*.inclusive_date_from'      => 'Inclusive Date From',
+            '*.inclusive_date_to'        => 'Inclusive Date to',
+            '*.no_of_hours'   => 'Number of Hours',
             '*.position'  => 'Position',
         ];
     }
