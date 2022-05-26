@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\IPDSDownloadType;
 use Carbon\Carbon;
 use App\Employee;
 use Illuminate\Support\Str;
@@ -17,7 +18,7 @@ use App\EmployeeOtherInformation;
 use App\EmployeeTrainingAttained;
 use App\EmployeeEducationalBackground;
 
-class DownloadPersonalDataSheetController extends Controller
+class DownloadPersonalDataSheetController extends Controller implements IPDSDownloadType
 {
     private function relevantQueriesCheckbox($text, $isCheck)
     {
@@ -30,7 +31,9 @@ class DownloadPersonalDataSheetController extends Controller
 
     private function generatePDS(string $id)
     {
-        $employee = Employee::with(['province_residential', 'city_residential', 'barangay_residential', 'province_permanent', 'city_permanent', 'barangay_permanent'])->where('Employee_id', $id)->first();
+        $employee = Employee::with(['province_residential', 'city_residential', 'barangay_residential', 'province_permanent', 'city_permanent', 'barangay_permanent'])
+            ->where('Employee_id', $id)
+            ->first();
 
         $familyBackground = EmployeeFamilyBackground::where('employee_id', $id)->first();
 
@@ -407,13 +410,13 @@ class DownloadPersonalDataSheetController extends Controller
         return $this->generatePDS($id);
     }
 
-    public function downloadExcel(string $id)
+    public function excel(string $id)
     {
         $this->generate($id);
         return response()->download(storage_path() . '\\generated_pds\\' . $id . '-E-PDS' . ".xls");
     }
 
-    public function downloadPDF(string $fileName)
+    public function pdf(string $fileName)
     {
         $file = storage_path() . '\\generated_pds\\' . $fileName . ".pdf";
         return response()->download($file);

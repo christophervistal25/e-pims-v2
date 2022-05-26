@@ -9,7 +9,7 @@ use App\City;
 
 class CityController extends Controller
 {
-    public function barangaysByCode(string $code): Collection
+    public function getBarangays(string $code): Collection
     {
         $city = City::with(['barangays:city_code,barangay_code,name'])->find($code);
         return $city->barangays;

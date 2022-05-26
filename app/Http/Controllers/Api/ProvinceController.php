@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Cache;
 
 class ProvinceController extends Controller
 {
-    public function all(): Collection
+    public function provinces(): Collection
     {
         return Province::orderBy('name')->get(['province_code', 'name']);
     }
@@ -36,7 +36,7 @@ class ProvinceController extends Controller
         return Province::with('cities:code,province_code,name')->get(['code', 'name']);
     }
 
-    public function citiesByProvince(string $code): Collection
+    public function getCities(string $code): Collection
     {
         $province = Province::with(['cities'])->find($code);
         return $province->cities;

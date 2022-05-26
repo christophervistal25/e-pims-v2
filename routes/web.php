@@ -1,22 +1,15 @@
 <?php
 
-use App\Contracts\PersonalDataSheetC1;
-use App\Office;
-use App\Employee;
-use App\Position;
-use Hashids\Hashids;
-use App\Services\MSAccess;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BirthdayController;
 use App\Http\Controllers\PersonalDataSheetController;
 use App\Http\Controllers\EmployeeLeave\LeaveListController;
-use Faker\Provider\ar_JO\Person;
+
+Route::get('personal-data-sheet/{idNumber}', [PersonalDataSheetController::class, 'edit'])->name('employee.personal-data-sheet.edit');
+
 
 Route::resource('notifications', 'NotificationController');
-
-Route::get('/print/pds/{employeeId}', 'EmployeePersonalDataSheetPrintController');
 
 
 Route::get('/', 'DashboardController@index');
@@ -65,11 +58,12 @@ Route::get('/plantilla-of-position/{id}', 'PlantillaOfPositionController@destroy
 Route::put('/plantilla-of-position/{id}', 'PlantillaOfPositionController@update');
 
 // Step-Increment //
-Route::get('/step-increment/list', 'StepIncrementController@list');
-Route::delete('/step-increment/{id}', 'StepIncrementController@destroy')->name('step-increment.delete');
+Route::get('step-increment/list', 'StepIncrementController@list');
+Route::delete('step-increment/{id}', 'StepIncrementController@destroy')->name('step-increment.delete');
 Route::post('/', 'StepIncrementController@store')->name('create.step');
-Route::put('/step-increment/{id}', 'StepIncrementController@update')->name('step-increment.update');
-Route::resource('/step-increment', 'StepIncrementController');
+Route::put('step-increment/{id}', 'StepIncrementController@update')->name('step-increment.update');
+Route::resource('step-increment', 'StepIncrementController');
+
 Route::get('/print-increment/{id}/previewed', 'PrintIncrementController@print')->name('step-increment.previewed.print');
 Route::get('/print-increment/{id}', 'PrintIncrementController@printList')->name('print-increment');
 Route::resource('/print-increment', 'PrintIncrementController');
@@ -100,44 +94,6 @@ Route::resource('employees-birthday', 'BirthdayController');
 Route::get('employees', 'EmployeeController@index')->name('employee.index');
 
 Route::group(['prefix' => 'employee'], function () {
-
-    Route::post('/record/store', 'EmployeeController@store')->name('employee.store');
-    Route::put('/record/{employeeId}/update', 'EmployeeController@update')->name('employee.update');
-
-    Route::get('/generate/personal/data/sheet', 'PersonalDataSheetController@index')->name('data.index');
-    Route::get('/create/personal/data/sheet', 'PersonalDataSheetController@create')->name('data.create');
-    Route::get('/create/{idNumber}/personal/data/sheet', 'PersonalDataSheetController@createWithEmployee');
-
-
-
-
-
-
-    Route::post('/personal/family/background/store', [PersonalDataSheetController::class, 'existingEmployeeStoreFamilyBackground']);
-
-    Route::post('/personal/educational/background/store', 'PersonalDataSheetController@storeEducationalBackground');
-    Route::post('/personal/civil/service', 'PersonalDataSheetController@storeCivilService');
-    Route::post('/personal/work/experience', 'PersonalDataSheetController@storeWorkExperience');
-    Route::post('/personal/voluntary/', 'PersonalDataSheetController@storeVoluntary');
-    Route::post('/personal/learning/', 'PersonalDataSheetController@storeLearning');
-    Route::post('/personal/other/information', 'PersonalDataSheetController@storeOtherInformation');
-    Route::post('/personal/relevant/queries/', 'PersonalDataSheetController@storeRelevantQueries');
-    Route::post('/personal/references', 'PersonalDataSheetController@storeReferences');
-    Route::post('/personal/issued/id', 'PersonalDataSheetController@storeIssuedID');
-
-    Route::post('/exists/personal/information/store', 'PersonalDataSheetController@existingEmployeeStoreInformation');
-    Route::post('/exists/personal/family/background/store', 'PersonalDataSheetController@existingEmployeeStoreFamilyBackground');
-    Route::post('/exists/personal/educational/background/store', 'PersonalDataSheetController@existingEmployeeStoreEducationalBackground');
-    Route::post('/exists/personal/{employee}/civil/service/store', 'PersonalDataSheetController@existingEmployeeStoreCivilService');
-    Route::post('/exists/personal/{employee}/work/experience', 'PersonalDataSheetController@existingEmployeeStoreWorkExperience');
-    Route::post('/exists/personal/{employee}/voluntary', 'PersonalDataSheetController@existingEmployeeStoreVoluntary');
-    Route::post('/exists/personal/{employee}/learning', 'PersonalDataSheetController@existingEmployeeStoreLearning');
-    Route::post('/exists/personal/{employee}/other/information', 'PersonalDataSheetController@existingEmployeeStoreOtherInformation');
-    Route::post('/exists/personal/relevant/queries', 'PersonalDataSheetController@existingEmployeeStoreRelevantQueries');
-    Route::post('/exists/personal/{employee}/references', 'PersonalDataSheetController@existingEmployeeStoreReferences');
-    Route::post('/exists/personal/issued/id', 'PersonalDataSheetController@existingEmployeeStoreIssuedID');
-
-
     Route::get('/leave/application', 'EmployeeLeave\LeaveController@show')->name('leave.application.filling');
     Route::get('/leave/leave-recall', 'EmployeeLeave\LeaveRecallController@index')->name('leave.leave-recall');
     Route::resource('/leave-recall', 'EmployeeLeave\LeaveRecallController');
@@ -216,10 +172,6 @@ Route::group(['middleware' => 'auth'], function () {
             ->name('employee.leave.application.filling.submit');
     });
 
-    // Route for Employee Personal Data Sheet
-    Route::get('employee-personal-data-sheet', 'Account\Employee\PersonalDataSheetController@index')->name('employee.personal-data-sheet');
-    Route::get('employee-personal-data-sheet/edit', 'Account\Employee\PersonalDataSheetController@edit')->name('employee.personal-data-sheet.edit');
-
     Route::get('employee-leave-history/list', 'Account\Employee\ProfileController@list')->name('employee.leave.history.list');
     Route::get('employee-personal-profile', 'Account\Employee\ProfileController@index')->name('employee.personal.profile');
     Route::put('employee-update-account-information', 'Account\Employee\ProfileController@update')->name('employee.update.account.information');
@@ -245,10 +197,3 @@ Route::get('404', function () {
 
 // Jobs route.
 Route::post('leave-increment-job', 'LeaveIncrementJobController');
-
-
-Route::get('create-employee', function () {
-    return view('employee.create');
-});
-
-Route::get('personal-data-sheet/{idNumber}', [PersonalDataSheetController::class, 'edit'])->name('employee.personal-data-sheet.edit');

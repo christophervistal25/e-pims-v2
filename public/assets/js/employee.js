@@ -184,8 +184,8 @@ $(document).on("click", ".btn-edit-employee", function () {
                     return {
                         results: $.map(positions, function (item) {
                             return {
-                                text: `${item.position_name.toUpperCase()}`,
-                                id: item.position_code,
+                                text: `${item.Description.toUpperCase()}`,
+                                id: item.PosCode,
                             };
                         }),
                     };
@@ -345,8 +345,8 @@ $("#addNewEmployee").click(function () {
                 return {
                     results: $.map(positions, function (item) {
                         return {
-                            text: `${item.position_name.toUpperCase()}`,
-                            id: item.position_code,
+                            text: `${item.Description.toUpperCase()}`,
+                            id: item.PosCode,
                         };
                     }),
                 };
