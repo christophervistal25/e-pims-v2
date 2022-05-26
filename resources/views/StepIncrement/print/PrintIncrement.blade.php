@@ -147,7 +147,7 @@
                 {{-- CLOSING, SIGNATURE --}}
                 <div class="mr-5 float-right" style="margin-top: 70px">
                     <p class="mb-5">Very truly yours,</p>
-                    <h4 class="mt-5"><b>ALEXANDER T. PIMENTEL</b></h4>
+                    <h4 class="mt-5"><b>ALEXANDER T. PIMENTEL</b></h4> 
                     <h5 class="ml-5">&nbsp Provincial Governor</h5>
                 </div>
 
@@ -159,19 +159,8 @@
 
             </div>
         </div>
-    </div>
+    </div> 
 </div>
 
-@push('page-scripts')
-    <script src="{{ asset('/assets/js/custom.js') }}"></script>
 
-    <script>
-        $(document).ready( ()=> {
-            $(document).click( ()=> {
-                console.log("Hello World");
-            });
-        });
-    </script>
-
-    @endpush
 @endsection

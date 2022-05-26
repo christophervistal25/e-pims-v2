@@ -163,26 +163,28 @@ class StepIncrementController extends Controller
                 'stepNo2'           => 'required',
             ]);
 
-            $step_increments = StepIncrement::find($id);
-            $step_increments->employee_id             = $request['employeeID'];
-            $step_increments->item_no                 = $request['itemNoFrom'];
-            // $step_increments->office_code             = $request['officeCode'];
-            $step_increments->date_step_increment     = $request['dateStepIncrement'];
+            $request = request()->all();
+            $stepId = $request['stepID'];
+        
+            $step_increments = StepIncrement::find($stepId);
+            $step_increments->date_step_increment = $request['dateStepIncrement'];
+            $step_increments->employee_id = $request['employeeID'];
+            $step_increments->item_no = $request['itemNoFrom'];
             $step_increments->last_latest_appointment = $request['datePromotion'];
-            $step_increments->sg_no_from              = $request['sgNoFrom'];
-            $step_increments->step_no_from            = $request['stepNoFrom'];
-            $step_increments->salary_amount_from      = $request['amountFrom'];
-            $step_increments->sg_no_to                = $request['sgNo2'];
-            $step_increments->step_no_to              = $request['stepNo2'];
-            $step_increments->salary_amount_to        = $request['amount2'];
-            $step_increments->salary_diff             = $request['monthlyDifference'];
-            $step_increments->save();
-
+            $step_increments->sg_no_from = $request['sgNoFrom'];
+            $step_increments->step_no_from = $request['stepNoFrom'];
+            $step_increments->salary_amount_from = $request['amountFrom'];
+            $step_increments->sg_no_to = $request['sgNo2'];
+            $step_increments->step_no_to = $request['stepNo2'];
+            $step_increments->salary_amount_to = $request['amount2'];
+            $step_increments->salary_diff = $request['monthlyDifference'];
+            $step_increments->update();
+        
 
             Session::flash('success', true);
+        
             return response()->json(['success' => true]);
-
-            // return redirect()->to(route('step-increment.edit', $step_increments->id));
+        
     }
 
 
