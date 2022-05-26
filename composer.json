@@ -9,9 +9,13 @@
     "license": "MIT",
     "require": {
         "php": "^8.1.4",
+        "barryvdh/laravel-snappy": "^1.0",
         "freshbitsweb/laratables": "^2.5",
         "fruitcake/laravel-cors": "^3.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "h4cc/wkhtmltoimage-amd64": "0.12.x",
+        "h4cc/wkhtmltopdf-amd64": "0.12.x",
+        "knplabs/knp-snappy": "^1.4",
         "laravel/framework": "^9.0.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0.0",

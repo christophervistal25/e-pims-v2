@@ -8,13 +8,16 @@ use App\Plantilla;
 use App\StepIncrement;
 use App\PrintIncrement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class PrintIncrementController extends Controller
 {
    
     public function index()
     {
+
         return view('stepIncrement.print.printIncrement');
+
     }
 
 
@@ -22,22 +25,18 @@ class PrintIncrementController extends Controller
     {
        
         $stepIncrement = StepIncrement::with(['employee:Employee_id,FirstName,MiddleName,LastName,OfficeCode'])->find($id);
-        // $office = $stepIncrement->employee->office_charging->Description;
-        // dd($office);
+        $pdf = App::make('snappy.pdf.wrapper');
+        $pdf->loadView('stepIncrement.print.previewed', compact('stepIncrement', 'id'))->setPaper('letter')->setOrientation('portrait');
 
 
-        return view('stepIncrement.print.previewed', compact('stepIncrement', 'id'));
+        return $pdf->inline();
     }
 
-    
+    // PREVIEW //
     public function printList($id)
     {
 
         $stepIncrement = StepIncrement::with(['employee:Employee_id,FirstName,MiddleName,LastName,OfficeCode'])->find($id);
-
-        // $office = $stepIncrement->employee->office_charging->Description;
-        // dd($stepIncrement);
-
 
         return view('stepIncrement.print.printIncrement', compact('stepIncrement', 'id'));
 

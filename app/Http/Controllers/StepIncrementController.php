@@ -54,14 +54,18 @@ class StepIncrementController extends Controller
 
             // EDIT FUNCTION IN YAJRA TABLE //
             ->addColumn('action', function ($row) {
-                $btnEdit = "<a href='" . route('step-increment.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil' title='Edit Step Increment'></i></a>";
+                $btnEdit = "<a href='" . route('step-increment.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil' title='Edit'></i></a>";
 
 
                 // DELETE FUNCTION IN YAJRA TABLE //
                 $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="' . $row->id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
+                
+                // PRINT FUNCTION IN YAJRA TABLE //
+                $btnPrint = "<a href='" . route('print-increment', $row->id) . "' class='rounded-circle text-white btn btn-primary btn-sm' title='Print'><i style='pointer-events:none;' class='la la-print'></i></a>";
 
 
-                return $btnEdit . "&nbsp" . $btnDelete;
+                return $btnEdit . "&nbsp" . $btnDelete . "&nbsp" . $btnPrint;
+                // return $btnEdit . "&nbsp" . $btnPrint;
             })->make(true);
     }
 
@@ -73,9 +77,10 @@ class StepIncrementController extends Controller
 
         // $employees = Employee::whereDoesntHave('step')->has('plantilla')->with(['plantilla'])->get();
     
-        $employees = Employee::has('plantilla')->with(['plantilla', 'plantilla.plantilla_positions', 'plantilla.plantilla_positions.position'])
+        $employees = Employee::has('plantillaForStep')->with(['plantillaForStep', 'plantillaForStep.plantilla_positions', 'plantillaForStep.plantilla_positions.position'])
                     ->without(['office_charging'])->get();
 
+        // dd($employees);
 
         return view('StepIncrement.create', compact('employees'));
 

@@ -57,7 +57,7 @@
                                     <option disabled>Search name here</option>
 
                                     @foreach($employees as $employee)
-                                    <option data-plantilla="{{ $employee->plantilla }}"
+                                    <option data-plantilla="{{ $employee->plantillaForStep }}"
                                         value="{{ $employee->Employee_id }}"> {{ $employee->fullname }} </option>
                                     @endforeach
 
@@ -353,6 +353,7 @@
                     visible: true
                 },
                 {
+                    className: 'text-truncate',
                     data: 'action',
                     name: 'action'
                 },
