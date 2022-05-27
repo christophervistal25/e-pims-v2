@@ -7,6 +7,15 @@ $(document).ready(function () {
         "#divisionId",
         "#status",
     ];
+    let inputs = [
+        "#oldItemNo",
+        "#itemNo",
+        "#currentSalarygrade",
+        "#currentSalaryamount",
+        "#employeeID",
+        "#originalAppointment",
+        "#lastPromotion",
+    ];
     let errorClass = [
         "#oldItemNo",
         ".positionTitle",
@@ -41,7 +50,7 @@ $(document).ready(function () {
         "#division-error-message",
     ];
     // filter list office
-    let table = $("#plantilla").DataTable({
+    let PlantillaTable = $("#plantilla").DataTable({
         processing: true,
         serverSide: true,
         pagingType: "full_numbers",
@@ -59,8 +68,8 @@ $(document).ready(function () {
                 visible: true,
             },
             {
-                data: "position_name",
-                name: "position_name",
+                data: "Description",
+                name: "Description",
                 searchable: true,
                 sortable: false,
                 visible: true,
@@ -84,104 +93,9 @@ $(document).ready(function () {
     });
 
     $("#employeeOffice").change(function (e) {
-        if (e.target.value == "") {
-            table.destroy();
-            table = $("#plantilla").DataTable({
-                processing: true,
-                pagingType: "full_numbers",
-                stateSave: true,
-                serverSide: true,
-                destroy: true,
-                retrieve: true,
-                language: {
-                    processing:
-                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
-                },
-                ajax: {
-                    url: "/plantilla-list",
-                },
-                columns: [
-                    {
-                        data: "fullname",
-                        name: "fullname",
-                        searchable: true,
-                        sortable: false,
-                        visible: true,
-                    },
-                    {
-                        data: "position_name",
-                        name: "position_name",
-                        searchable: true,
-                        sortable: false,
-                        visible: true,
-                    },
-                    {
-                        data: "office_name",
-                        name: "office_name",
-                        searchable: true,
-                        sortable: false,
-                        visible: true,
-                    },
-                    { data: "item_no", name: "item_no" },
-                    { data: "status", name: "status", sortable: false },
-                    { data: "year", name: "year", sortable: false },
-                    {
-                        data: "action",
-                        name: "action",
-                        searchable: false,
-                        sortable: false,
-                    },
-                ],
-            });
-        } else {
-            table.destroy();
-            table = $("#plantilla").DataTable({
-                processing: true,
-                serverSide: true,
-                pagingType: "full_numbers",
-                stateSave: true,
-                destroy: true,
-                retrieve: true,
-                language: {
-                    processing:
-                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
-                },
-                ajax: {
-                    url: `/api/plantilla/personnel/${e.target.value}`,
-                },
-                columns: [
-                    {
-                        data: "fullname",
-                        name: "fullname",
-                        searchable: true,
-                        visible: true,
-                    },
-                    {
-                        data: "position_name",
-                        name: "position_name",
-                        searchable: true,
-                        sortable: false,
-                        visible: true,
-                    },
-                    {
-                        data: "office_name",
-                        name: "office_name",
-                        searchable: true,
-                        visible: true,
-                    },
-                    { data: "item_no", name: "item_no" },
-                    { data: "status", name: "status", sortable: false },
-                    { data: "year", name: "year", sortable: false },
-                    {
-                        data: "action",
-                        name: "action",
-                        searchable: false,
-                        sortable: false,
-                    },
-                ],
-            });
-        }
+        PlantillaTable.ajax.url(`/plantilla-list/${e.target.value}`).load();
     });
+
     // code for show add form
     $("#addButton").click(function () {
         $("#add").attr("class", "page-header");
@@ -212,7 +126,9 @@ $(document).ready(function () {
     $("#cancelButton").click(function () {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
-        $("input").val("");
+        $.each(inputs, function (index, value) {
+            $(`${value}`).val("");
+        });
         $.each(select, function (index, value) {
             $(`${value}`).val("Please Select").trigger("change");
         });
@@ -227,20 +143,22 @@ $(document).ready(function () {
     $("#positionTitle").change(function () {
         let positionTitle = $("#positionTitle").val();
         let currentStepno = $("#currentStepno").val();
+        let currentSgyear = $("#currentSgyear").val();
         $.ajax({
-            url: `/api/positionSalaryGrade/${positionTitle}`,
+            url: `/api/positionSalaryGrade/${positionTitle}/${currentSgyear}`,
             success: (response) => {
                 if (response == "") {
                     $("#currentSalarygrade").val("");
                     $("#itemNo").val("");
                     $("#currentSalaryamount").val("");
                 } else {
-                    let currentSalaryGrade = response.salary_grade.sg_no;
+                    console.log(response);
+                    let currentSalaryGrade = response.salary_grade[0].sg_no;
                     $("#currentSalarygrade").val(currentSalaryGrade);
                     let currentItemNo = response.item_no;
                     $("#itemNo").val(currentItemNo);
                     let currentSalaryAmount =
-                        response.salary_grade["sg_step" + currentStepno];
+                        response.salary_grade[0]["sg_step" + currentStepno];
                     $("#currentSalaryamount").val(currentSalaryAmount);
                 }
             },
@@ -249,6 +167,8 @@ $(document).ready(function () {
     // filter position by office
     $("#officeCode").change(function (e) {
         //plantillaPositionMetaData
+        $("#currentSalarygrade").val("");
+        $("#itemNo").val("");
         if (
             document.querySelectorAll('[id="plantillaPositionMetaData"]')[1] ==
             null
@@ -431,7 +351,9 @@ $(document).ready(function () {
                         .find('[value="' + empIds + '"]')
                         .remove();
                     $("#employeeName").selectpicker("refresh");
-
+                    $.each(inputs, function (index, value) {
+                        $(`${value}`).val("");
+                    });
                     $("#positionTitle")
                         .find('[value="' + positionIds + '"]')
                         .remove();
@@ -660,4 +582,189 @@ $("#areaType").change(function () {
 $("#areaType").change(function () {
     $("#area-level-error-message").html("");
     $(".areaLevel").removeClass("is-invalid");
+});
+
+// edit page
+$("#plantillaEditForm").submit(function (e) {
+    e.preventDefault();
+    let plantillaId = $("#plantillaId").val();
+    let data = $(this).serialize();
+    $("#plantillaUpdate").attr("disabled", true);
+    $("#loading").removeClass("d-none");
+    $("#saving").html("Updating . . .");
+    $.ajax({
+        type: "PUT",
+        url: `/plantilla-of-personnel/${plantillaId}`,
+        data: data,
+        success: function (response) {
+            if (response.success) {
+                swal("Sucessfully Saved!", "", "success");
+                $("#plantillaUpdate").attr("disabled", false);
+                $("#loading").addClass("d-none");
+                document.getElementById("saving").innerHTML = "Update";
+                $("#saving").html("Update");
+                $.each(select, function (index, value) {
+                    $(`${value}`).val("Please Select").trigger("change");
+                });
+                $.each(errorClass, function (index, value) {
+                    $(`${value}`).removeClass("is-invalid");
+                });
+                $.each(errorMessage, function (index, value) {
+                    $(`${value}`).html("");
+                });
+            }
+        },
+        error: function (response) {
+            if (response.status === 422) {
+                let errors = response.responseJSON.errors;
+                if (errors.hasOwnProperty("oldItemNo")) {
+                    $("#oldItemNo").addClass("is-invalid");
+                    $("#old_item-no-error-message").html("");
+                    $("#old_item-no-error-message").append(
+                        `<span>${errors.oldItemNo[0]}</span>`
+                    );
+                } else {
+                    $("#oldItemNo").removeClass("is-invalid");
+                    $("#old_item-no-error-message").html("");
+                }
+                if (errors.hasOwnProperty("positionTitle")) {
+                    $(".positionTitle").addClass("is-invalid");
+                    $("#position-title-error-message").html("");
+                    $("#position-title-error-message").append(
+                        `<span>${errors.positionTitle[0]}</span>`
+                    );
+                } else {
+                    $(".positionTitle").removeClass("is-invalid");
+                    $("#position-title-error-message").html("");
+                }
+                if (errors.hasOwnProperty("originalAppointment")) {
+                    $("#originalAppointment").addClass("is-invalid");
+                    $("#original-appointment-error-message").html("");
+                    $("#original-appointment-error-message").append(
+                        `<span>${errors.originalAppointment[0]}</span>`
+                    );
+                } else {
+                    $("#originalAppointment").removeClass("is-invalid");
+                    $("#original-appointment-error-message").html("");
+                }
+                if (errors.hasOwnProperty("lastPromotion")) {
+                    $("#lastPromotion").addClass("is-invalid");
+                    $("#last-promotion-error-message").html("");
+                    $("#last-promotion-error-message").append(
+                        `<span>${errors.lastPromotion[0]}</span>`
+                    );
+                } else {
+                    $("#lastPromotion").removeClass("is-invalid");
+                    $("#last-promotion-error-message").html("");
+                }
+                if (errors.hasOwnProperty("status")) {
+                    $(".status").addClass("is-invalid");
+                    $("#status-error-message").html("");
+                    $("#status-error-message").append(
+                        `<span>${errors.status[0]}</span>`
+                    );
+                } else {
+                    $(".status").removeClass("is-invalid");
+                    $("#status-error-message").html("");
+                }
+                if (errors.hasOwnProperty("areaCode")) {
+                    $(".areaCode").addClass("is-invalid");
+                    $("#area-code-error-message").html("");
+                    $("#area-code-error-message").append(
+                        `<span>${errors.areaCode[0]}</span>`
+                    );
+                } else {
+                    $(".areaCode").removeClass("is-invalid");
+                    $("#area-code-error-message").html("");
+                }
+                if (errors.hasOwnProperty("areaType")) {
+                    $(".areaType").addClass("is-invalid");
+                    $("#area-type-error-message").html("");
+                    $("#area-type-error-message").append(
+                        `<span>${errors.areaType[0]}</span>`
+                    );
+                } else {
+                    $(".areaType").removeClass("is-invalid");
+                    $("#area-type-error-message").html("");
+                }
+                if (errors.hasOwnProperty("areaLevel")) {
+                    $(".areaLevel").addClass("is-invalid");
+                    $("#area-level-error-message").html("");
+                    $("#area-level-error-message").append(
+                        `<span>${errors.areaLevel[0]}</span>`
+                    );
+                } else {
+                    $(".areaLevel").removeClass("is-invalid");
+                    $("#area-level-error-message").html("");
+                }
+                if (errors.hasOwnProperty("employeeName")) {
+                    $(".employeeName").addClass("is-invalid");
+                    $("#employee-name-error-message").html("");
+                    $("#employee-name-error-message").append(
+                        `<span>${errors.employeeName[0]}</span>`
+                    );
+                } else {
+                    $(".employeeName").removeClass("is-invalid");
+                    $("#employee-name-error-message").html("");
+                }
+                if (errors.hasOwnProperty("stepNo")) {
+                    $(".stepNo").addClass("is-invalid");
+                    $("#steps-error-message").html("");
+                    $("#steps-error-message").append(
+                        `<span>${errors.stepNo[0]}</span>`
+                    );
+                } else {
+                    $(".stepNo").removeClass("is-invalid");
+                    $("#steps-error-message").html("");
+                }
+                if (errors.hasOwnProperty("currentSalaryamount")) {
+                    $("#currentSalaryamount").addClass("is-invalid");
+                    $("#salary-amount-error-message").html("");
+                    $("#salary-amount-error-message").append(
+                        `<span>${errors.salaryAmount[0]}</span>`
+                    );
+                } else {
+                    $("#currentSalaryamount").removeClass("is-invalid");
+                    $("#salary-amount-error-message").html("");
+                }
+                if (errors.hasOwnProperty("officeCode")) {
+                    $(".officeCode").addClass("is-invalid");
+                    $("#office-error-message").html("");
+                    $("#office-error-message").append(
+                        `<span>${errors.officeCode[0]}</span>`
+                    );
+                } else {
+                    $(".officeCode").removeClass("is-invalid");
+                    $("#office-error-message").html("");
+                }
+                if (errors.hasOwnProperty("divisionId")) {
+                    $(".divisionId").addClass("is-invalid");
+                    $("#division-error-message").html("");
+                    $("#division-error-message").append(
+                        `<span>${errors.divisionId[0]}</span>`
+                    );
+                } else {
+                    $(".divisionId").removeClass("is-invalid");
+                    $("#division-error-message").html("");
+                }
+                // Create an parent element
+                let parentElement = document.createElement("ul");
+                let errorss = response.responseJSON.errors;
+                $.each(errorss, function (key, value) {
+                    let errorMessage = document.createElement("li");
+                    let [error] = value;
+                    errorMessage.innerHTML = error;
+                    parentElement.appendChild(errorMessage);
+                });
+                swal({
+                    title: "The given data was invalid!",
+                    icon: "error",
+                    content: parentElement,
+                });
+                $("#plantillaUpdate").attr("disabled", false);
+                $("#loading").addClass("d-none");
+                $("#saving").html("Update");
+            }
+        },
+    });
 });

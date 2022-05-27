@@ -2,25 +2,26 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Province;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use App\Province;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 
 class ProvinceController extends Controller
 {
-    public function all() :Collection
+    public function provinces(): Collection
     {
-        return Province::orderBy('name')->get(['code', 'name']);
+        return Province::orderBy('name')->get(['province_code', 'name']);
     }
 
-    public function show(string $code):Province
+    public function show(string $code): Province
     {
         return Province::find($code);
     }
 
-    public function allWithCityAndBarangay() :Collection
+    public function allWithCityAndBarangay(): Collection
     {
         return Province::with(['cities:code,province_code,name', 'barangay:code,province_code,city_code,name'])->get(['code', 'name']);
     }
@@ -35,10 +36,9 @@ class ProvinceController extends Controller
         return Province::with('cities:code,province_code,name')->get(['code', 'name']);
     }
 
-    public function citiesByProvince(string $code):Collection
+    public function getCities(string $code): Collection
     {
-        $province = Province::with(['cities:code,province_code,name'])->find($code);
+        $province = Province::with(['cities'])->find($code);
         return $province->cities;
     }
-
 }

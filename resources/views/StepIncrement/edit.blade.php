@@ -26,7 +26,6 @@
             <form action="{{ route('step-increment.update', $stepIncrement->id ) }}" method="POST"
                 id="formStepIncrement">
                 @csrf
-                @method('PUT')
                 <div class="row">
                     <div class="col-12">
                         <div class="alert alert-secondary text-center font-weight-bold" role="alert">EDIT STEP INCREMENT</div>
@@ -41,6 +40,8 @@
                                 <span class="font-weight-bold">DATE</span>
                             </label>
                         </div>
+                        
+                        <input type="hidden" value="{{ $stepIncrement->id }}" id="stepId" name="stepID">
 
                         <div class="form-group col-12 col-lg-11">
                             <input class="form-control" value="{{ $stepIncrement->employee_id }}" id="employeeId"
@@ -50,7 +51,7 @@
                         <div class="form-group col-12 col-lg-11">
                             <label class="has-float-label" for="employeeName">
                                 <input type="text" name="employeeName" class="form-control" id="employeeName"
-                                    value="{{ old('employeeName') ?? $employee->lastname }}, {{ old('employeeName') ?? $employee->firstname }} {{ old('employeeName') ?? $employee->middlename }}"
+                                    value="{{ old('employeeName') ?? $employee->LastName }}, {{ old('employeeName') ?? $employee->FirstName }} {{ old('employeeName') ?? $employee->MiddleName }}"
                                     readonly style="outline: none; box-shadow: 0px 0px 0px ">
                                 <span class="font-weight-bold">EMPLOYEE NAME</span>
                             </label>
@@ -58,15 +59,15 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-12 col-lg-11">
-                            <input class="form-control" value="{{ $position->position_id }}" id="positionID"
+                        {{-- <div class="form-group col-12 col-lg-11">
+                            <input class="form-control" value="{{ $position->PosCode }}" id="positionID"
                                 name="positionID" type="hidden" readonly>
-                        </div>
+                        </div> --}}
 
                         <div class="form-group col-12 col-lg-11">
                             <label class="has-float-label" for="positionName">
                                 <input class="form-control"
-                                    value="{{ old('positionName') ?? $position->position_name }}" id="positionName"
+                                    value="{{ old('positionName') ?? $position->Description }}" id="positionName"
                                     name="positionName" type="text" readonly
                                     style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <span class="font-weight-bold">POSITION</span>
@@ -85,7 +86,7 @@
                         <div class="form-group col-12 col-lg-11">
                             <label class="has-float-label" for="lastAppointment">
                                 <input class="form-control"
-                                    value="{{ old('datePromotion') ?? $stepIncrement->date_latest_appointment }}"
+                                    value="{{ old('datePromotion') ?? $stepIncrement->last_latest_appointment }}"
                                     id="lastAppointment" name="datePromotion" type="text" readonly
                                     style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <span class="font-weight-bold">DATE OF LAST APPOINTMENT</span>
@@ -199,69 +200,111 @@
     {{-- Javascript Function --}}
     <script>
 
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     // GET THE VALUE OF INPUT //
 
-     $(document).ready( (e)=> {
+    $(document).ready( (e)=> {
          
-                $('#stepNo2').change( (e)=> {
-                    let valueSelected = e.target.value;
-                    $.ajax({
-                        url : `/api/step/${$('#sgNo2').val()}/${valueSelected}`,
-                        success : function (response) {
-                            $('#amountTo').val(`${response['sg_step' + valueSelected]}`)
-                            var amountFrom = parseFloat($('#amountFrom').val());
-                            var amountTo = parseFloat($('#amountTo').val());
-                            var amountDifference = parseFloat(((amountTo - amountFrom) || ''));                            
-                            $('#monthlyDifference').val(amountDifference);
-                        }
-                    });
-                });
-
-                $('#btnCancel').click( (e)=> {
-                    location.reload();
-                })
+        $('#stepNo2').change( (e)=> {
+            let valueSelected = e.target.value;
+            $.ajax({
+                url : `/api/step/${$('#sgNo2').val()}/${valueSelected}`,
+                success : function (response) {
+                    $('#amountTo').val(`${response['sg_step' + valueSelected]}`)
+                    var amountFrom = parseFloat($('#amountFrom').val());
+                    var amountTo = parseFloat($('#amountTo').val());
+                    var amountDifference = parseFloat(((amountTo - amountFrom) || ''));                            
+                    $('#monthlyDifference').val(amountDifference);
+                }
             });
+        });
+
+        $('#btnCancel').click( (e)=> {
+            location.reload();
+        })
+    });
 
         
+
         // UPDATE FUNCTION //
+        // let btnUpdate = document.querySelector('#btnUpdate');
 
-        document.querySelector('#btnUpdate').addEventListener('click', (e)=> {
-            e.preventDefault();
-            let getId = "{{ $stepIncrement->id }}";
+        // btnUpdate.addEventListener('click', (e)=> {
+        //     e.preventDefault();
+        //     let getId = "{{ $stepIncrement->id }}";
+        //     console.log(getId)
 
-            // Prepare data
-            let data = {
-                employeeID : document.querySelector('#employeeId').value,
-                itemNoFrom : document.querySelector('#itemNo').value,
-                positionID : document.querySelector('#positionID').value,
-                dateStepIncrement : document.querySelector('#dateIncrement').value,
-                datePromotion : document.querySelector('#lastAppointment').value,
-                sgNoFrom : document.querySelector('#salaryGrade').value,
-                stepNoFrom : document.querySelector('#stepNo').value,
-                amountFrom : document.querySelector('#amountFrom').value,
-                sgNo2 : document.querySelector('#sgNo2').value,
-                stepNo2 : document.querySelector('#stepNo2').value,
-                amount2 : document.querySelector('#amountTo').value,
-                monthlyDifference : document.querySelector('#monthlyDifference').value,
-            };
+        //     // Prepare data
+        //     let data = {
+        //         employeeID : document.querySelector('#employeeId').value,
+        //         itemNoFrom : document.querySelector('#itemNo').value,
+        //         // positionID : document.querySelector('#positionID').value,
+        //         dateStepIncrement : document.querySelector('#dateIncrement').value,
+        //         datePromotion : document.querySelector('#lastAppointment').value,
+        //         sgNoFrom : document.querySelector('#salaryGrade').value,
+        //         stepNoFrom : document.querySelector('#stepNo').value,
+        //         amountFrom : document.querySelector('#amountFrom').value,
+        //         sgNo2 : document.querySelector('#sgNo2').value,
+        //         stepNo2 : document.querySelector('#stepNo2').value,
+        //         amount2 : document.querySelector('#amountTo').value,
+        //         monthlyDifference : document.querySelector('#monthlyDifference').value,
+        //     };
 
 
-            // Ajax Request for sweet alert function //
 
-            fetch(`/step-increment/${getId}`, {
-                method: 'PUT',
-                headers :  {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-                }).then(res => res.json())
-                .then((data) => {
+
+        //     // Ajax Request for sweet alert function //
+
+        //     fetch(`/api/step-increment/${getId}`, {
+        //         method: 'PUT',
+        //         headers :  {
+        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify(data),
+        //         }).then(res => res.json())
+        //         .then((data) => {
                 
-            });
-            swal("Good Job!", "You have successfully updated.", "success");
+        //     });
+        //     swal("Good Job!", "You have successfully updated the data.", "success");
             
-        });
+        // });
+
+
+        $('#btnUpdate').on('click', function(e) {
+            e.preventDefault()
+            
+            // let stepId = $('#stepId').val();
+            // let employeeID = $('#employeeId');
+            // let itemNo = $('#itemNo').val();
+            // let dateIncrement = $('#dateIncrement').val();
+            // let datePromotion = $('#lastAppointment').val();
+            // let sgNoFrom = $('#salaryGrade').val();
+            // let stepNoFrom = $('#stepNo');
+            // let amountFrom = $('#amountFrom');
+            // let sgNo2 = $('#sgNo2').val();
+            // let stepNo2 = $('#stepNo2').val();
+            // let amount2 = $('#amount2').val();
+            // let monthlyDifference = $('#monthlyDifference').val();
+
+            $.ajax({
+                url: `/api/step-increment/update/${stepId}`,
+                type: "POST",
+                data: $('#formStepIncrement').serialize(),
+
+                success : function (response) {
+
+                }
+            });
+
+            swal("Good Job!", "You have successfully updated the data.", "success");
+
+        })
 
     </script>
     @endpush

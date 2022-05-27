@@ -5,6 +5,7 @@ namespace App;
 use App\Office;
 use App\Position;
 use App\OfficeCharging;
+use App\StepIncrement;
 use Illuminate\Support\Str;
 use App\EmployeeLeaveRecord;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +22,7 @@ class Employee extends Model
     protected $connection = 'DTR_PAYROLL_CONNECTION';
     protected $table = 'Employees';
     public $with = ['position', 'office_charging', 'office_assignment'];
+    // 'office_charging.desc'
     public $keyType = 'string';
 
     protected $columns = [
@@ -168,32 +170,32 @@ class Employee extends Model
         'fullname'
     ];
 
-    public function residential_province()
+    public function province_residential()
     {
         return $this->hasOne(Province::class, 'province_code', 'residential_province')->select('province_code', 'name');
     }
 
-    public function residential_city()
+    public function city_residential()
     {
         return $this->hasOne(City::class, 'city_code', 'residential_city')->select('province_code', 'city_code', 'name');
     }
 
-    public function residential_barangay()
+    public function barangay_residential()
     {
         return $this->hasOne(Barangay::class, 'barangay_code', 'residential_barangay')->select('barangay_code', 'province_code', 'city_code', 'name');
     }
 
-    public function permanent_province()
+    public function province_permanent()
     {
         return $this->hasOne(Province::class, 'province_code', 'permanent_province')->select('province_code', 'name');
     }
 
-    public function permanent_city()
+    public function city_permanent()
     {
         return $this->hasOne(City::class, 'city_code', 'permanent_city')->select('province_code', 'city_code', 'name');
     }
 
-    public function permanent_barangay()
+    public function barangay_permanent()
     {
         return $this->hasOne(Barangay::class, 'barangay_code', 'permanent_barangay')->select('barangay_code', 'province_code', 'city_code', 'name');
     }
@@ -250,8 +252,15 @@ class Employee extends Model
 
     public function plantilla()
     {
+        return $this->hasOne(Plantilla::class, 'Employee_id', 'employee_id');
+    }
+
+
+    public function plantillaForStep()
+    {
         return $this->hasOne(Plantilla::class, 'employee_id', 'Employee_id');
     }
+    
 
     public function PlantillaSchedule()
     {
@@ -260,7 +269,7 @@ class Employee extends Model
 
 
     public function family_background()
-    {
+    {           
         return $this->hasOne(EmployeeFamilyBackground::class, 'employee_id', 'employee_id');
     }
 
@@ -387,7 +396,7 @@ class Employee extends Model
 
     public function salary_adjustment()
     {
-        return $this->hasMany(SalaryAdjustment::class, 'employee_id', 'employee_id');
+        return $this->hasMany(SalaryAdjustment::class, 'employee_id', 'Employee_id');
     }
 
 

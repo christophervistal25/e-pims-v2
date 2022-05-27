@@ -9,6 +9,7 @@ class EmployeeCivilService extends Model
     public $connection = 'DTR_PAYROLL_CONNECTION';
     public $table = 'employee_civil_services';
     protected $fillable = [
+        'id',
         'employee_id',
         'career_service',
         'rating',

@@ -51,7 +51,7 @@
 <div class="kanban-board card mb-0">
     <div class="card-body">
         <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
-            <div style='padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
+            <div style='padding-bottom:50px'>
                 <button id="cancelbutton" class="btn btn-primarys submit-btn float-right shadow"><i
                         class="fa fa-list"></i>
                     Salary Adjusment List</button>
@@ -259,7 +259,7 @@
                 </div>
             </div>
 
-            <div class="table" style="overflow-x:auto;">
+            <div class="table">
                 <table class="table table-bordered table-hover text-center" id="salaryAdjustment" style="width:100%;">
                     <thead>
                         <tr>
@@ -315,6 +315,7 @@
                             var dataResult = JSON.parse(dataResult);
                             if (dataResult.statusCode == 200) {
                                 swal("Successfully Deleted!", "", "success");
+                                // $('#salaryAdjustment').DataTable().ajax.reload();
                                  location.reload();
                             }
                         }

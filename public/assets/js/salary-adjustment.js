@@ -1,16 +1,14 @@
 // display salary adjusmtent
-$(function() {
+$(function () {
     let currentSgyear = document.getElementById("currentSgyear").value;
-    let table = $("#salaryAdjustment").DataTable({
+    let SalaryGradeTable = $("#salaryAdjustment").DataTable({
         processing: true,
-        serverSide: true,
         destroy: true,
         retrieve: true,
         pagingType: "full_numbers",
-        stateSave: true,
         language: {
             processing:
-                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
         },
         ajax: `/salary-adjustment-list/${currentSgyear}`,
         columns: [
@@ -18,98 +16,39 @@ $(function() {
             {
                 data: "fullname",
                 name: "fullname",
-                searchable: true
+                searchable: true,
             },
             { data: "sg_no", name: "sg_no" },
             { data: "step_no", name: "step_no" },
             {
                 data: "salary_previous",
                 name: "salary_previous",
-                render: $.fn.dataTable.render.number(",", ".", 2)
+                render: $.fn.dataTable.render.number(",", ".", 2),
             },
             {
                 data: "salary_new",
                 name: "salary_new",
-                render: $.fn.dataTable.render.number(",", ".", 2)
+                render: $.fn.dataTable.render.number(",", ".", 2),
             },
             {
                 data: "salary_diff",
                 name: "salary_diff",
-                render: $.fn.dataTable.render.number(",", ".", 2)
+                render: $.fn.dataTable.render.number(",", ".", 2),
             },
-            { data: "action", name: "action" }
-        ]
+            { data: "action", name: "action" },
+        ],
     });
-    $("#yearAdjustment").change(function(e) {
-        if (e.target.value == "" || e.target.value == "") {
-            table.destroy();
-            table = $("#salaryAdjustment").DataTable({
-                processing: true,
-                serverSide: true,
-                destroy: true,
-                retrieve: true,
-                pagingType: "full_numbers",
-                stateSave: true,
-                language: {
-                    processing:
-                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
-                },
-                ajax: {
-                    url: "/salary-adjustment-list"
-                },
-                columns: [
-                    { data: "date_adjustment", name: "date_adjustment" },
-                    {
-                        data: "fullname",
-                        name: "fullname",
-                        searchable: true
-                    },
-                    { data: "sg_no", name: "sg_no" },
-                    { data: "step_no", name: "step_no" },
-                    { data: "salary_previous", name: "salary_previous" },
-                    { data: "salary_new", name: "salary_new" },
-                    { data: "salary_diff", name: "salary_diff" },
-                    { data: "action", name: "action" }
-                ]
-            });
-        } else {
-            table.destroy();
-            table = $("#salaryAdjustment").DataTable({
-                processing: true,
-                serverSide: true,
-                destroy: true,
-                retrieve: true,
-                pagingType: "full_numbers",
-                stateSave: true,
-                language: {
-                    processing:
-                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
-                },
-                ajax: {
-                    url: `/api/salary/adjustment/${e.target.value}`
-                },
-                columns: [
-                    { data: "date_adjustment", name: "date_adjustment" },
-                    {
-                        data: "fullname",
-                        name: "fullname",
-                        searchable: true
-                    },
-                    { data: "sg_no", name: "sg_no" },
-                    { data: "step_no", name: "step_no" },
-                    { data: "salary_previous", name: "salary_previous" },
-                    { data: "salary_new", name: "salary_new" },
-                    { data: "salary_diff", name: "salary_diff" },
-                    { data: "action", name: "action" }
-                ]
-            });
-        }
+
+    $("#yearAdjustment").change(function (e) {
+        SalaryGradeTable.ajax
+            .url(`/salary-adjustment-list/${e.target.value}`)
+            .load();
     });
 });
 
 // number only
-$(function() {
-    $("input[id='salaryNew']").on("input", function(e) {
+$(function () {
+    $("input[id='salaryNew']").on("input", function (e) {
         $(this).val(
             $(this)
                 .val()
@@ -117,8 +56,8 @@ $(function() {
         );
     });
 });
-$(function() {
-    $("input[id='itemNo']").on("input", function(e) {
+$(function () {
+    $("input[id='itemNo']").on("input", function (e) {
         $(this).val(
             $(this)
                 .val()
@@ -127,22 +66,21 @@ $(function() {
     });
 });
 // get value of employees sg, sn, sp
-$(document).ready(function() {
-    $("#employeeName").change(function(e) {
+$(document).ready(function () {
+    $("#employeeName").change(function (e) {
         let employeeID = e.target.value;
         let plantilla = $($("#employeeName option:selected")[0]).attr(
             "data-plantilla"
         );
         if (plantilla) {
             plantilla = JSON.parse(plantilla);
+            console.log(plantilla);
             $("#employeeId").val(plantilla.employee_id);
             $("#positionName").val(
-                plantilla.plantilla_position.position.position_name
+                plantilla.plantilla_positions.position.Description
             );
             $("#status").val(plantilla.status);
-            $("#positionId").val(
-                plantilla.plantilla_position.position.position_id
-            );
+            $("#positionId").val(plantilla.pp_id);
             $("#itemNo").val(plantilla.item_no);
             $("#salaryGrade").val(plantilla.sg_no);
             $("#stepNo").val(plantilla.step_no);
@@ -165,30 +103,28 @@ $(document).ready(function() {
 });
 
 // code for show add form
-$(document).ready(function() {
-    $("#addbutton").click(function() {
+$(document).ready(function () {
+    $("#addbutton").click(function () {
         $("#add").attr("class", "page-header");
         $("#table").attr("class", "page-header d-none");
     });
 });
 // {{-- code for show table --}}
-$(document).ready(function() {
-    $("#cancelbutton").click(function() {
+$(document).ready(function () {
+    $("#cancelbutton").click(function () {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
     });
 });
 
 function reset() {
-    $("#employeeName")
-        .val("Please Select")
-        .trigger("change");
+    $("#employeeName").val("Please Select").trigger("change");
     $("input").val("");
 }
 
 //// add salary adjustment
-$(document).ready(function() {
-    $("#salaryAdjustmentForm").submit(function(e) {
+$(document).ready(function () {
+    $("#salaryAdjustmentForm").submit(function (e) {
         let empIds = $("#employeeName").val();
         e.preventDefault();
         let data = $(this).serialize();
@@ -199,7 +135,7 @@ $(document).ready(function() {
             type: "POST",
             url: "/salary-adjustment",
             data: data,
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     let dateAdjustment = new Date($("#dateAdjustment").val());
                     let year = dateAdjustment.getFullYear();
@@ -220,9 +156,7 @@ $(document).ready(function() {
                         .remove();
                     $("#employeeName").selectpicker("refresh");
                     $("input").val("");
-                    $("#employeeName")
-                        .val("Please Select")
-                        .trigger("change");
+                    $("#employeeName").val("Please Select").trigger("change");
                     const errorClass = [
                         "#dateAdjustment",
                         ".employeeName  .dropdown",
@@ -232,9 +166,9 @@ $(document).ready(function() {
                         "#stepNo",
                         "#salaryPrevious",
                         "#salaryNew",
-                        "#salaryDifference"
+                        "#salaryDifference",
                     ];
-                    $.each(errorClass, function(index, value) {
+                    $.each(errorClass, function (index, value) {
                         $(`${value}`).removeClass("is-invalid");
                     });
                     const errorMessage = [
@@ -246,21 +180,19 @@ $(document).ready(function() {
                         "#step-no-error-message",
                         "#salary-previous-error-message",
                         "#salary-new-error-message",
-                        "#salary-difference-error-message"
+                        "#salary-difference-error-message",
                     ];
-                    $.each(errorMessage, function(index, value) {
+                    $.each(errorMessage, function (index, value) {
                         $(`${value}`).html("");
                     });
-                    $("#salaryAdjustment")
-                        .DataTable()
-                        .ajax.reload();
+                    $("#salaryAdjustment").DataTable().ajax.reload();
                     swal("Sucessfully Added!", "", "success");
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
                     document.getElementById("saving").innerHTML = "Save";
                 }
             },
-            error: function(response) {
+            error: function (response) {
                 console.log(response);
                 if (response.status === 422) {
                     let errors = response.responseJSON.errors;
@@ -288,7 +220,7 @@ $(document).ready(function() {
                     // Create an parent element
                     let parentElement = document.createElement("ul");
                     let errorss = response.responseJSON.errors;
-                    $.each(errorss, function(key, value) {
+                    $.each(errorss, function (key, value) {
                         let errorMessage = document.createElement("li");
                         let [error] = value;
                         errorMessage.innerHTML = error;
@@ -297,26 +229,26 @@ $(document).ready(function() {
                     swal({
                         title: "The given data was invalid!",
                         icon: "error",
-                        content: parentElement
+                        content: parentElement,
                     });
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
                     document.getElementById("saving").innerHTML = "Save";
                 }
-            }
+            },
         });
     });
 });
 
 //  position display salary grade
-$(document).ready(function() {
-    $("#employeeName").change(function() {
+$(document).ready(function () {
+    $("#employeeName").change(function () {
         let salaryGrade = $("#currentSalarygrade").val();
         let stepNo = $("#currentStepno").val();
         let currentSgyear = $("#currentSgyear").val();
         $.ajax({
             url: `/api/salaryAdjustment/${salaryGrade}/${stepNo}/${currentSgyear}`,
-            success: response => {
+            success: (response) => {
                 if (response == "") {
                     $("#salaryNew").val("");
                 } else {
@@ -327,19 +259,19 @@ $(document).ready(function() {
                     var amountDifference = amount2 - amount;
                     $("#salaryDifference").val(amountDifference.toFixed(2));
                 }
-            }
+            },
         });
     });
 });
 
-$(document).ready(function() {
-    $("#currentSgyear").change(function() {
+$(document).ready(function () {
+    $("#currentSgyear").change(function () {
         let salaryGrade = $("#salaryGrade").val();
         let stepNo = $("#stepNo").val();
         let currentSgyear = $("#currentSgyear").val();
         $.ajax({
             url: `/api/salaryAdjustment/${salaryGrade}/${stepNo}/${currentSgyear}`,
-            success: response => {
+            success: (response) => {
                 if (response == "") {
                     $("#salaryNew").val("");
                 } else {
@@ -351,26 +283,24 @@ $(document).ready(function() {
                     var amountDifference = amount2 - amount;
                     $("#salaryDifference").val(amountDifference.toFixed(2));
                 }
-            }
+            },
         });
     });
 });
 
-$(document).keyup(function() {
+$(document).keyup(function () {
     var salaryPrevious = parseFloat($("#salaryPrevious").val());
     var salaryNew = parseFloat($("#salaryNew").val());
     let total = salaryNew - salaryPrevious;
     $("#salaryDifference").val(total.toFixed(2));
 });
 
-$(document).ready(function() {
-    $("#cancelbutton1").click(function() {
+$(document).ready(function () {
+    $("#cancelbutton1").click(function () {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
         $("input").val("");
-        $("#employeeName")
-            .val("Please Select")
-            .trigger("change");
+        $("#employeeName").val("Please Select").trigger("change");
         const errorClass = [
             "#dateAdjustment",
             ".employeeName .dropdown",
@@ -380,9 +310,9 @@ $(document).ready(function() {
             "#stepNo",
             "#salaryPrevious",
             "#salaryNew",
-            "#salaryDifference"
+            "#salaryDifference",
         ];
-        $.each(errorClass, function(index, value) {
+        $.each(errorClass, function (index, value) {
             $(`${value}`).removeClass("is-invalid");
         });
         const errorMessage = [
@@ -394,9 +324,9 @@ $(document).ready(function() {
             "#step-no-error-message",
             "#salary-previous-error-message",
             "#salary-new-error-message",
-            "#salary-difference-error-message"
+            "#salary-difference-error-message",
         ];
-        $.each(errorMessage, function(index, value) {
+        $.each(errorMessage, function (index, value) {
             $(`${value}`).html("");
         });
     });
@@ -411,14 +341,12 @@ function myFunction() {
         "#stepNo",
         "#salaryPrevious",
         "#salaryNew",
-        "#salaryDifference"
+        "#salaryDifference",
     ];
-    $.each(select, function(index, value) {
+    $.each(select, function (index, value) {
         $(`${value}`).val("");
     });
-    $("#employeeName")
-        .val("Please Select")
-        .trigger("change");
+    $("#employeeName").val("Please Select").trigger("change");
 }
 
 function clickme() {

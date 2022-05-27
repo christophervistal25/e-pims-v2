@@ -54,10 +54,10 @@
                                 <label class="form-group has-float-label mb-0" for="employeeName">
                                 <select class="form-control employeeName selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" data-live-search="true"
                                     name="employeeName" id="employeeName" data-size="6" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                    <option>Search name here</option>
+                                    <option disabled>Search name here</option>
 
                                     @foreach($employees as $employee)
-                                    <option data-plantilla="{{ $employee->plantilla }}"
+                                    <option data-plantilla="{{ $employee->plantillaForStep }}"
                                         value="{{ $employee->Employee_id }}"> {{ $employee->fullname }} </option>
                                     @endforeach
 
@@ -70,6 +70,7 @@
                                     <small id="employeeName-error-message" class="text-danger text-sm"></small>
                             </div>
 
+        
                             <div class="col-12 col-lg-4">
                                 <label class="form-group has-float-label" for="employeeId">
                                 <input  type="text" class="form-control" id="employeeId" name="employeeID"
@@ -86,21 +87,10 @@
                                 </label>
                             </div>
 
-                            {{-- <div class="form-group col-12 col-lg-11">
-                                <input class="form-control" id="employeeId" name="employeeID" readonly>
-                            </div>
-
-                            <div class="form-group">
-                                <input type="hidden" name="plantillaID" id="plantillaId" class="">
-                            </div>
-
-                            <div class="form-group">
-                                <input type="hidden" name="status" id="status" class="">
-                            </div>
 
                             <div class="form-group">
                                 <input type="hidden" name="officeCode" id="officeCode" class="">
-                            </div> --}}
+                            </div>
 
 
                             <div class="form-group col-12 col-lg-11">
@@ -110,7 +100,7 @@
 
                             <div class="col-12 col-lg-11">
                                 <label for="positionName" class="form-group has-float-label">
-                                <input class="form-control" id="positionName" name="positionName" type="text"
+                                <input class="form-control" id="positionName" data-position="" name="positionName" type="text"
                                     readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                     <span><strong>POSITION</strong></span>
                                 </label>
@@ -219,33 +209,32 @@
             <div id="stepIncrementTable" class="page-header">
                 <div class="row align-items-right mb-2">
                     <div class="col-auto float-right ml-auto">
-                        <button id="addBtn" type="button" class="btn btn-primary float-right shadow"><i class="fa fa-plus"></i>&nbsp;
+                        <button id="addBtn" type="button" class="btn btn-primary float-right shadow text-white"><i class="fa fa-plus"></i>&nbsp;
                             Add Step Increment </button>
                     </div>
                 </div>
                 <div class="table" style="overflow-x:auto;">
-                    <table class="table table-bordered text-center" id="step-increment-table" style="width:100%;">
+                    <table class="table table-bordered" id="step-increment-table" style="width:100%;">
                         <thead>
                             <tr>
                                 <th class="font-weight-bold align-middle text-center" rowspan="2">Date of Step Increment
                                 </th>
                                 <th class="font-weight-bold align-middle text-center" rowspan="2">Name</th>
                                 <th class="font-weight-bold align-middle text-center" rowspan="2">Position</th>
-                                <th class="font-weight-bold align-middle text-center" rowspan="2">Item No.</th>
-                                <th class="font-weight-bold align-middle text-center" rowspan="2">Date of Last
+                                <th class="font-weight-bold align-middle" rowspan="2">Item No.</th>
+                                <th class="font-weight-bold align-middle" rowspan="2">Date of Last
                                     Appointment
                                 </th>
                                 <th class="font-weight-bold align-middle text-center" rowspan="1 " colspan="2">From</th>
                                 <th class="font-weight-bold align-middle text-center" rowspan="1" colspan="2">To</th>
-                                <th class="font-weight-bold align-middle text-center" rowspan="2">Monthly Difference
-                                </th>
-                                <th class="font-weight-bold align-middle text-center" rowspan="2">Action</th>
-                            <tr>
-                                <td class="font-weight-bold align-middle text-center">SG/Step</td>
-                                <td class="font-weight-bold align-middle text-center">Salary Rate</td>
-                                <td class="font-weight-bold align-middle text-center">SG/Step</td>
-                                <td class="font-weight-bold align-middle text-center">Salary Rate</td>
-                            </tr>
+                                <th class="font-weight-bold align-middle" rowspan="2">Monthly Difference</th>
+                                <th class="font-weight-bold align-middle" rowspan="2">Action</th>
+                                <tr>
+                                    <td class="font-weight-bold align-middle">SG/Step</td>
+                                    <td class="font-weight-bold align-middle">Salary Rate</td>
+                                    <td class="font-weight-bold align-middle">SG/Step</td>
+                                    <td class="font-weight-bold align-middle">Salary Rate</td>
+                                </tr>
                             </tr>
                         </thead>
                     </table>
@@ -294,11 +283,13 @@
                 },
                 {
                     className: 'text-truncate',
-                    data: 'fullname',
-                    name: 'fullname',
+                    data: null,
                     searchable: true,
                     sortable: false,
-                    visible: true
+                    visible: true,
+                    render: function ( data, type, row ) {
+                        return row.FirstName +' '+ row.MiddleName[0] +'. '+ row.LastName;
+                    }
                 },
                 {
                     className: 'text-truncate',
@@ -323,26 +314,46 @@
                     visible: true
                 },
                 {
+                    className: 'text-truncate',
                     data: 'sg_from_and_step_from',
-                    name: 'sg_from_and_step_from'
+                    name: 'sg_from_and_step_from',
+                    searchable: true,
+                    sortable: false,
+                    visible: true
                 },
                 {
+                    className: 'text-truncate',
                     data: 'salary_amount_from',
-                    name: 'salary_amount_from'
+                    name: 'salary_amount_from',
+                    searchable: true,
+                    sortable: false,
+                    visible: true
                 },
                 {
+                    className: 'text-truncate',
                     data: 'sg_to_and_step_to',
-                    name: 'sg_to_and_step_to'
+                    name: 'sg_to_and_step_to',
+                    searchable: true,
+                    sortable: false,
+                    visible: true
                 },
                 {
+                    className: 'text-truncate',
                     data: 'salary_amount_to',
-                    name: 'salary_amount_to'
+                    name: 'salary_amount_to',
+                    searchable: true,
+                    sortable: false,
+                    visible: true
                 },
                 {
                     data: 'salary_diff',
-                    name: 'salary_diff'
+                    name: 'salary_diff',
+                    searchable: true,
+                    sortable: false,
+                    visible: true
                 },
                 {
+                    className: 'text-truncate',
                     data: 'action',
                     name: 'action'
                 },
@@ -409,19 +420,21 @@
         $('#employeeName').change( (e)=> {
             let employeeID = e.target.value;
             let plantilla = $($("#employeeName option:selected")[0]).attr('data-plantilla');
-            console.log(employeeID);
-            /*let moneyFormat = toLocalString("ph", {maximumFractionDigits:2}) + '.00';*/
-            
+
 
             if (plantilla) {
                 plantilla = JSON.parse(plantilla);
+                
 
+                let {plantilla_positions} = plantilla;
+                let {position} = plantilla_positions;
+                
+                
                 $('#employeeId').val(plantilla.employee_id);
                 $('#plantillaId').val(plantilla.plantilla_id);
-                // $('#officeCode').val(plantilla.office_code);
-                $('#status').val(plantilla.status);
-                $('#positionName').val(plantilla.position_name);
-                $('#positionId').val(plantilla.pp_id);
+                $('#officeCode').val(plantilla.office_code);
+                $('#positionId').val(position?.PosCode);
+                $('#positionName').val(position?.Description || 'NO POSITION');
                 $('#itemNo').val(plantilla.item_no);
                 $('#lastAppointment').val(plantilla.date_last_promotion);
                 $('#salaryGrade').val(plantilla.sg_no);
@@ -442,7 +455,7 @@
                 }
 
             } else {
-                // $('#officeCode').val('');
+                $('#officeCode').val('');
                 $('#status').val('');
                 $('#positionName').val('');
                 $('#itemNo').val('');
@@ -465,10 +478,7 @@
                 url: `/api/step/${$('#sgNo2').val()}/${valueSelected}`,
                 success: function (response) {
                     $('#amount2').val(`${response['sg_step' + valueSelected]}`)
-                //  let amount2 = $('#amount2');
 
-                //  console.log(amount2)
-                    
 
                     let amount = parseFloat($('#amount').val());
                     let amount2 = parseFloat($('#amount2').val());

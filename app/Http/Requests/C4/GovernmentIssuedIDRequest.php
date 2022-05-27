@@ -24,18 +24,18 @@ class GovernmentIssuedIDRequest extends FormRequest
     public function rules()
     {
         return [
-            "nameOfGovId"    => ['required'],
-            "idNo"           => ['required', 'unique:employee_issued_i_d_s,id_no'],
-            "dateOfIssuance" => 'required',
+            "id_type"    => ['required'],
+            "id_no"           => ['required', 'unique:employee_issued_i_d_s,id_no,' . request()->employee_id . ',employee_id'],
+            "date" => 'required',
         ];
     }
 
     public function attributes()
     {
         return [
-            'nameOfGovId'    => 'Government Issued ID',
-            'idNo'           => 'ID/License/Passport No.',
-            'dateOfIssuance' => 'Date/Place of Issuance'
+            'id_type'    => 'Government Issued ID',
+            'id_no'           => 'ID/License/Passport No.',
+            'date' => 'Date/Place of Issuance'
         ];
     }
 }

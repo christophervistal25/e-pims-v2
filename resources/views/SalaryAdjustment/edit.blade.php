@@ -14,19 +14,18 @@
 </style>
 @endprepend
 @section('content')
-@include('SalaryAdjustment.add-ons.success')
 {{-- VIEW TABLE BUTTON IN FORM --}}
 <div class="float-right mr-3 mb-2" id='btnViewTableContainer'>
-    <a href="{{ route('print-adjustment', $salaryAdjustment->id) }}" class="btn btn-secondary"><i
+    {{-- <a href="{{ route('print-adjustment', $salaryAdjustment->id) }}" class="btn btn-secondary"><i
             class="la la-print"></i>&nbsp; Print Preview</a>
-    <a href="/salary-adjustment" class="btn btn-info"><i class="la la-list"></i>&nbsp; View List </a>
+    <a href="/salary-adjustment" class="btn btn-info"><i class="la la-list"></i>&nbsp; View List </a> --}}
 </div>
 <div class="clearfix"></div>
 
 {{-- FORM AND TABLE --}}
 <div class="kanban-board card mb-0">
     <div class="card-body">
-        <form action="{{ route('salary-adjustment.update', $salaryAdjustment->id) }}" method="post">
+        <form id="saveEditSalaryAdjustment">
             @csrf
             @method('PUT')
             <div class="row">
@@ -36,12 +35,15 @@
                     </div>
                 </div>
 
+
+                <input id="idSalaryAdjustment" type="text" value={{ $salaryAdjustment->id }} class="form-control d-none">
+
                 <div class="form-group col-12 col-lg-4">
                     <label class="has-float-label mb-0">
                         <input style="outline: none; box-shadow: 0px 0px 0px transparent;"
                             class="form-control {{ $errors->has('dateAdjustment')  ? 'is-invalid' : ''}}"
                             value="{{ $salaryAdjustment->date_adjustment->format('m-d-Y') }}"
-                            name="dateAdjustment" id="dateAdjustment" type="text">
+                            name="dateAdjustment" id="dateAdjustment" type="text" readonly>
                         <span class="font-weight-bold">DATE ADJUSTMENT<span class="text-danger">*</span></span>
                     </label>
                     <div id='date-adjustment-error-message' class='text-danger'>
@@ -52,6 +54,16 @@
                     @endif
                 </div>
 
+                <div class="form-group col-12 col-lg-4 d-none">
+                    <label class="has-float-label mb-0">
+                        <input style="outline: none; box-shadow: 0px 0px 0px transparent;"
+                            class="form-control {{ $errors->has('dateAdjustment2')  ? 'is-invalid' : ''}}"
+                            value="{{ $salaryAdjustment->date_adjustment }}"
+                            name="dateAdjustment2" id="dateAdjustment2" type="text">
+                        <span class="font-weight-bold">DATE ADJUSTMENT<span class="text-danger">*</span></span>
+                    </label>
+                </div>
+
                 <div class="form-group col-12 col-lg-4">
                     <label class="has-float-label">
                         <select value=""
@@ -60,9 +72,9 @@
                             style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <option></option>
                             @foreach($employee as $employees)
-                            <option {{ $salaryAdjustment->employee_id == $employees->employee_id ? 'selected' : '' }}
-                                value="{{ $employees->employee_id }}">{{ $employees->lastname }},
-                                {{ $employees->firstname }} {{ $employees->middlename }}</option>
+                            <option {{ $salaryAdjustment->employee_id == $employees->Employee_id ? 'selected' : '' }}
+                                value="{{ $employees->Employee_id }}">{{ $employees->Lastname }},
+                                {{ $employees->Firstname }} {{ $employees->Middlename }}</option>
                             @endforeach
                         </select>
                         <span class="font-weight-bold">EMPLOYEE NAME</span>
@@ -103,7 +115,7 @@
                             @foreach($plantillaPosition as $plantillaPositions)
                             <option style="width:350px;"
                                 {{ $salaryAdjustment->pp_id == $plantillaPositions->pp_id ? 'selected' : '' }}
-                                value="{{ $plantillaPositions->pp_id}}">{{ $plantillaPositions->position->position_name }}</option>
+                                value="{{ $plantillaPositions->pp_id}}">{{ $plantillaPositions->position->Description }}</option>
                             @endforeach
                         </select>
                         <span class="font-weight-bold">POSITION</span>
@@ -193,10 +205,8 @@
                                 id="salaryNew" type="text" placeholder="Input New Salary" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <span class="font-weight-bold">SALARY NEW<span class="text-danger">*</span></span>
                             </label>
-                        @if($errors->has('salaryNew'))
-                        <small class="form-text text-danger">
-                            {{ $errors->first('salaryNew') }} </small>
-                        @endif
+                    </div>
+                    <div id='salary-new-error-message' class='text-danger text-sm text-center'>
                     </div>
                 </div>
 
@@ -227,8 +237,11 @@
                 </div>
 
                 <div class="form-group form-group submit-section col-12">
-                    <button type="submit" class="btn btn-success submit-btn float-right shadow"><i
-                            class="fas fa-check"></i> Update</button>
+                    <button id="saveBtn" class="btn btn-success submit-btn float-right" type="submit">
+                        <span id="loading" class="spinner-border spinner-border-sm d-none" role="status"
+                            aria-hidden="false"></span>
+                            <i style="color:white;" class="fas fa-save"></i> <b style="color:white;" id="saving">Update</b>
+                    </button>
                     <a href="/salary-adjustment"><button style="margin-right:10px;" type="button"
                             class="shadow text-white btn btn-warning submit-btn float-right"><i
                                 class="fas fa-arrow-left"></i> Back</button></a>
@@ -237,7 +250,6 @@
             </div>
 
             <form>
-                {{-- </div> --}}
 
     </div>
 </div>
@@ -251,6 +263,69 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+
+
+    $("#saveEditSalaryAdjustment").submit(function (e) {
+        e.preventDefault();
+        let id = $('#idSalaryAdjustment').val();
+        let data = $(this).serialize();
+        $("#saveBtn").attr("disabled", true);
+        $("#loading").removeClass("d-none");
+        $("#saving").html("Updating . . .");
+        $.ajax({
+            type: "PUT",
+            url: `/salary-adjustment/update/${id}`,
+            data: data,
+            success: function (response) {
+                if (response.success) {
+                    swal("Sucessfully Saved!", "", "success");
+                    $("#saveBtn").attr("disabled", false);
+                    $("#loading").addClass("d-none");
+                    document.getElementById("saving").innerHTML = "Update";
+                    $("#saving").html("Update");
+                    $(`#salaryNew`).removeClass("is-invalid");
+                    $('#salary-grade-error-message').html("");
+                }
+            },
+            error: function (response) {
+                if (response.status === 422) {
+                    let errors = response.responseJSON.errors;
+                    if (errors.hasOwnProperty("itemNo")) {
+                        $("#itemNo").addClass("is-invalid");
+                        $("#item-error-message").html("");
+                        $("#item-error-message").append(
+                            `<span>${errors.itemNo[0]}</span>`
+                        );
+                    } else {
+                        $("#itemNo").removeClass("is-invalid");
+                        $("#item-error-message").html("");
+                    }
+                    // Create an parent element
+                    let parentElement = document.createElement("ul");
+                    let errorss = response.responseJSON.errors;
+                    $.each(errorss, function (key, value) {
+                        let errorMessage = document.createElement("li");
+                        let [error] = value;
+                        errorMessage.innerHTML = error;
+                        parentElement.appendChild(errorMessage);
+                    });
+                    swal({
+                        title: "The given data was invalid!",
+                        icon: "error",
+                        content: parentElement,
+                    });
+                    $("#saveBtn").attr("disabled", false);
+                    $("#loading").addClass("d-none");
+                    $("#saving").html("Update");
+                }
+            },
+        });
+    });
+
+
+
+
 
 </script>
 @endpush

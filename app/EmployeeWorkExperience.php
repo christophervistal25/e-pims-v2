@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class EmployeeWorkExperience extends Model
 {
     protected $fillable = [
+        'id',
         'employee_id',
         'from',
         'to',

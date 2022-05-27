@@ -2,7 +2,8 @@ const mix = require("laravel-mix");
 const path = require("path");
 
 mix.alias({
-    "@core": path.join(__dirname, "resources/js/core")
+    "@core": path.join(__dirname, "resources/js/core"),
+    ziggy: path.resolve("vendor/tightenco/ziggy/dist/vue")
 });
 
 mix.override(config => {

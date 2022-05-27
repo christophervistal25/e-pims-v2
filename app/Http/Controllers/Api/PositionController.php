@@ -13,12 +13,11 @@ class PositionController extends Controller
 
     public function __construct(public PositionService $positionService)
     {
-
     }
 
     public function lookup()
     {
-        return Position::where('position_name', 'like', '%' . request()->search . '%')->get();
+        return Position::where('Description', 'like', '%' . request()->search . '%')->get();
     }
 
     public function search(string $key)
@@ -26,7 +25,7 @@ class PositionController extends Controller
         return Position::where('position_name', 'like',  '%' . $key . '%')->get();
     }
 
-    public function list() : Collection
+    public function list(): Collection
     {
         return $this->positionService->get();
     }
@@ -39,7 +38,7 @@ class PositionController extends Controller
             'short_name'   => 'required|unique:positions,position_short_name|regex:/^[a-zA-Z ].+$/u',
         ], ['name.unique' => 'The position already exists.']);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
