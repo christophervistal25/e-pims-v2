@@ -25,7 +25,7 @@ class StepIncrementController extends Controller
             ->select('id', 'date_step_increment', 'FirstName', 'MiddleName', 'LastName', 'Description', 'item_no', ('last_latest_appointment'),
             // DB::raw("CONCAT(FirstName, ' ' , MiddleName, ' ' , LastName, ' ' , Suffix) AS fullname")
             DB::raw("CONCAT(sg_no_from, '-' , step_no_from) AS sg_from_and_step_from"), 'salary_amount_from', DB::raw("CONCAT(sg_no_to, '-' , step_no_to) AS sg_to_and_step_to"), 'salary_amount_to', 'salary_diff')
-            
+
 
             ->where('Step_increments.deleted_at', null)
             ->get();
@@ -59,7 +59,7 @@ class StepIncrementController extends Controller
 
                 // DELETE FUNCTION IN YAJRA TABLE //
                 $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="' . $row->id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
-                
+
                 // PRINT FUNCTION IN YAJRA TABLE //
                 $btnPrint = "<a href='" . route('print-increment', $row->id) . "' class='rounded-circle text-white btn btn-primary btn-sm' title='Print'><i style='pointer-events:none;' class='la la-print'></i></a>";
 
@@ -76,7 +76,7 @@ class StepIncrementController extends Controller
     {
 
         // $employees = Employee::whereDoesntHave('step')->has('plantilla')->with(['plantilla'])->get();
-    
+
         $employees = Employee::has('plantillaForStep')->with(['plantillaForStep', 'plantillaForStep.plantilla_positions', 'plantillaForStep.plantilla_positions.position'])
                     ->without(['office_charging'])->get();
 
@@ -118,13 +118,13 @@ class StepIncrementController extends Controller
             ]);
 
         // $service_record = new service_record;
-        // $service_record->employee_id            = $request['employeeID'];
-        // $service_record->service_from_date      = $request['dateStepIncrement'];
-        // $service_record->position_id            = $request['positionID'];
+        // $service_record->employee_id            = $request->employeeID;
+        // $service_record->service_from_date      =  $request->dateStepIncrement;
+        // $service_record->position_id            = $request->positionID;
         // $service_record->status                 = $request['status'];
-        // $service_record->salary                 = $request['amountFrom'];
-        // $service_record->office_code            = $request['officeCode'];
-        // $service_record->separation_cause       = 'Step '.$request['stepNo2'];
+        // $service_record->salary                 = $request->amountFrom;
+        // $service_record->office_code            = $request->officeCode;
+        // $service_record->separation_cause       = 'Step '.$request->sgNo2;
         // $service_record->save();
         // $step_increments->plantilla->update([
         //     'step_no' => $request['stepNo2'],
@@ -133,9 +133,9 @@ class StepIncrementController extends Controller
 
 
         return redirect('/step-increment')->with('success', true);
-    } 
-   
-    
+    }
+
+
 
 
     //  EDIT METHOD //
@@ -147,7 +147,7 @@ class StepIncrementController extends Controller
         $position = $stepIncrement->position;
 
         // dd($position);
-        
+
         return view ('stepIncrement.edit', compact('stepIncrement', 'employee', 'position'));
     }
 
@@ -165,7 +165,7 @@ class StepIncrementController extends Controller
 
             $request = request()->all();
             $stepId = $request['stepID'];
-        
+
             $step_increments = StepIncrement::find($stepId);
             $step_increments->date_step_increment = $request['dateStepIncrement'];
             $step_increments->employee_id = $request['employeeID'];
@@ -179,12 +179,12 @@ class StepIncrementController extends Controller
             $step_increments->salary_amount_to = $request['amount2'];
             $step_increments->salary_diff = $request['monthlyDifference'];
             $step_increments->update();
-        
+
 
             Session::flash('success', true);
-        
+
             return response()->json(['success' => true]);
-        
+
     }
 
 

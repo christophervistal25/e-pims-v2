@@ -140,6 +140,7 @@ class SalaryAdjustmentController extends Controller
             'id'              => $id,
             'employee_id'     => $request->employeeId,
             'item_no'         => $request->itemNo,
+            'office_code'     => $request->officeCode,
             'pp_id'           => $request->positionId,
             'date_adjustment' => $request->dateAdjustment,
             'sg_no'           => $request->salaryGrade,
@@ -147,16 +148,15 @@ class SalaryAdjustmentController extends Controller
             'salary_previous' => $request->salaryPrevious,
             'salary_new'      => $request->salaryNew,
             'salary_diff'     => $request->salaryDifference,
-            'remarks'     => $request->remarks,
+            'remarks'         => $request->remarks,
             'deleted_at'      => null,
         ]);
         Setting::find('AUTONUMBER2')->increment('Keyvalue');
 
 
-
-        // DB::table('plantilla')->update([
-        //     'salary_amount' => $request['salaryNew'],
-        // ]);
+        DB::table('plantillas')->where('employee_id', $request->employeeId)
+            ->update(['salary_amount' => $request->salaryNew
+        ]);
 
 
         // $dateCheck = $request->remarks;

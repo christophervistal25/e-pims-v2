@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Plantilla extends Model
 {
-    public $connection = 'DTR_PAYROLL_CONNECTION';
+    // public $connection = 'DTR_PAYROLL_CONNECTION';
     public $table = 'plantillas';
     public const REGIONS = [
         'Region 1',
