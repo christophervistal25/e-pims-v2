@@ -10,6 +10,7 @@ use App\Notification;
 use App\Services\MSAccess;
 use Illuminate\Http\Request;
 use App\EmployeeLeaveApplication;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Repositories\LeaveTypeRepository;
@@ -54,12 +55,91 @@ class LeaveApplicationController extends Controller
         return view('accounts.employee.leave.application-filling', compact('types', 'vacationLeaveEarned', 'vacationLeaveUsed', 'sickLeaveEarned', 'sickLeaveUsed', 'forwardBalanceAsOfDate', 'approvedBy', 'hrOffice'));
     }
 
+    public function storeByAdmin(Request $request)
+    {   
+        if($request->ajax()) {
+            $startDate = Carbon::parse($request->date_from);
+
+            if($request->leave_type_id == 'SL') {
+                $rules['date_from'][] = 'before_or_equal:' . Carbon::parse($request->date_to)->format('Y-m-d');
+            }else{
+                 // Validation with employee balance look-up
+                $rules = [
+                    'commutation'          => ['required'],
+                    'date_applied'         => ['required'],
+                    'date_from'            => ['required', 'after:' . Carbon::now()->addDays(4)->format('F d, Y')],
+                    'date_to'              => ['required', 'after_or_equal:' . $startDate->format('Y-m-d')],
+                    'inCaseOf'             => ['required'],
+                    'no_of_days'           => ['required'],
+                    'leave_type_id'        => ['required'],
+                ];
+            }
+
+            $this->validate($request, $rules , [], [
+                    'date_from'     => 'Start Date',
+                    'date_to'       => 'End Date',
+                    'inCaseOf'      => 'In case of',
+                    'leave_type_id' => 'Leave type',
+                    'no_of_days'      => 'No. of days',
+            ]);
+
+            // $response = $this->leaveRecordRepository
+            //                 ->fileApplication($employee->only(['employee_id', 'sex', 'first_day_of_service']), $leaveType, $request->noOfDays);
+
+            // if(!$response['status']) {
+            //     return response()->json(['success' => false, 'message' => $response['message']], 424);
+            // }
+
+            // $holidays = Holiday::get()->pluck('date')->toArray();
+
+            // $noOfWorkingDays = Carbon::parse($request->startDate)->diffInDaysFiltered(function (Carbon $date) use ($holidays) {
+            //     return strtolower($date->format('l')) !== 'saturday' && strtolower($date->format('l')) !== 'sunday' || in_array($date->format('Y-m-d'), $holidays);
+            // }, Carbon::parse($request->endDate)->addDay(1));
+            $employeeID = $request->employeeName;
+
+            $lastID = DB::table('Settings')->where('Keyname', 'AUTONUMBER2')->first();
+
+            $convertedID = (int)$lastID->Keyvalue;
+            
+            EmployeeLeaveApplication::create([
+                'application_id'        => $convertedID,
+                'Employee_id'           => $employeeID,
+                'commutation'           => $request->commutation,
+                'status'                => 'pending',
+                'incase_of'             => $request->inCaseOf,
+                'specify'               => $request->specify,
+                'date_applied'          => $request->date_applied,
+                'date_from'             => $request->date_from,
+                'date_to'               => $request->date_to,
+                'no_of_days'            => $request->no_of_days,
+                'leave_type_id'         => $request->leave_type_id,
+            ]);
+
+            $nextID = $convertedID + 1;
+            DB::table('Settings')->where('Keyname', 'AUTONUMBER2')->update([ 'Keyvalue' => (string)$nextID ]);
+
+            // Notification::create([
+            //     'title'            => 'Leave Application Filling',
+            //     'description'      => 'Your leave application is now under review please wait',
+            //     'employee_id'      => $employee->employee_id,
+            //     'from_employee_id' => '',
+            //     'link'             => '/notifications/{id}/show',
+            // ]);
+
+            return response()->json(['success' => true], 201);
+        }
+        
+        return response()->json(['success' => false], 404);
+    }
+
     public function store(Request $request)
     {
         
         if($request->ajax()) {
             
-            $employee = Auth::user()->employee_id;
+            // $employee = Auth::user()->Employee_id;
+
+            $employeeID = $request->employeeName;
 
             // Check if employee already request a leave.
             // $hasPendingLeave = $employee->leave_files->where('approved_status', 'pending')->count();
@@ -70,7 +150,7 @@ class LeaveApplicationController extends Controller
             
             $startDate = Carbon::parse($request->startDate);
 
-            if($request->typeOfLeave != '10001') {
+            if($request->leave_type_id != 'SL') {
                 $rules['startDate'][] = 'before_or_equal:' . Carbon::parse($request->endDate)->format('Y-m-d');
             }
 
@@ -79,25 +159,24 @@ class LeaveApplicationController extends Controller
                 'approvedBy'           => ['required'],
                 'recommendingApproval' => ['required'],
                 'commutation'          => ['required'],
-                'dateApply'            => ['required'],
+                'date_applied'         => ['required'],
                 'startDate'            => ['required', 'after:' . Carbon::now()->addDays(4)->format('F d, Y')],
                 'endDate'              => ['required', 'after_or_equal:' . $startDate->format('Y-m-d')],
                 'inCaseOf'             => ['required'],
                 'noOfDays'             => ['required'],
-                'typeOfLeave'          => ['required'],
+                'leave_type_id'        => ['required'],
             ];
             
 
             $this->validate($request, $rules , [], [
-                    'startDate'   => 'Start Date',
-                    'endDate'     => 'End Date',
-                    'inCaseOf'    => 'In case of',
-                    'typeOfLeave' => 'Leave type',
-                    'noOfDays'    => 'No. of days',
-                    'typeOfLeave' => 'Leave type',
+                    'startDate'     => 'Start Date',
+                    'endDate'       => 'End Date',
+                    'inCaseOf'      => 'In case of',
+                    'leave_type_id' => 'Leave type',
+                    'noOfDays'      => 'No. of days',
             ]);
 
-            $leaveType = LeaveType::where('code_number', $request->typeOfLeave)->first();
+            $leaveType = LeaveType::where('code_number', $request->leave_type_id)->first();
 
             // $response = $this->leaveRecordRepository
             //                 ->fileApplication($employee->only(['employee_id', 'sex', 'first_day_of_service']), $leaveType, $request->noOfDays);
@@ -117,7 +196,7 @@ class LeaveApplicationController extends Controller
                 'approved_by'           => $request->approvedBy,
                 'recommending_approval' => $request->recommendingApproval,
                 'commutation'           => $request->commutation,
-                'date_applied'          => $request->dateApply,
+                'date_applied'          => $request->date_applied,
                 'date_from'             => $request->startDate,
                 'date_to'               => $request->endDate,
                 'incase_of'             => $request->inCaseOf,

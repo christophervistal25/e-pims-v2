@@ -300,26 +300,29 @@
             },
             {
                 className: 'text-truncate',
-                data: 'FirstName',
-                name: 'FirstName',
+                data: 'Employee_id',
+                name: 'Employee_id',
                 searchable: true,
                 sortable: false,
                 visible: true,
                 render: function (rawData, _, row) {
-                    return `${row.LastName}, ${row.FirstName} ${row.MiddleName} ${row.Suffix}`;
+                    return `${row.employee.fullname}`;
                 }
             },
             {
                 className: 'text-truncate',
-                data: 'leave_type_name',
-                name: 'leave_type_name',
+                data: 'leave_type_id',
+                name: 'leave_type_id',
                 searchable: true,
                 sortable: false,
                 visible: true,
+                render: function (rawData, _, row) {
+                    return `${row.type.description}`;
+                }
             },
             {
-                data: 'approved_status',
-                name: 'approved_status',
+                data: 'status',
+                name: 'status',
                 searchable: true,
                 sortable: false,
                 visible: true,
@@ -427,7 +430,7 @@
         let pendingStatus = $('#searchStatus').val();
         let employeeID = $('#searchName').val();
 
-
+        console.log(officeCode, pendingStatus, employeeID);
         table.destroy();
         table = $("#leaveListTable").DataTable({
             processing: true,
@@ -450,26 +453,26 @@
                 },
                 {
                     className: 'text-truncate',
-                    data: 'employee_id',
-                    name: 'employee_id',
+                    data: 'Employee_id',
+                    name: 'Employee_id',
                     searchable: true,
                     sortable: false,
                     visible: true,
                     render: function (_, a, row) {
-                        return `${row.LastName}, ${row.FirstName} ${row.MiddleName} ${row.Suffix}`;
+                        return `${row.employee.fullname}`;
                     }
                 },
                 {
                     className: 'text-truncate',
-                    data: 'leave_type_name',
-                    name: 'leave_type_name',
+                    data: 'leave_type_id',
+                    name: 'leave_type_id',
                     searchable: true,
                     sortable: false,
                     visible: true
                 },
                 {
-                    data: 'approved_status',
-                    name: 'approved_status',
+                    data: 'status',
+                    name: 'status',
                     searchable: true,
                     sortable: false,
                     visible: true,

@@ -10,8 +10,6 @@ use App\Http\Repositories\LeaveApplicationRepository;
 
 class LeaveRecordRepository extends LeaveApplicationRepository
 {
-    public const SICK_LEAVE_CODE_NUMBER = 10001;
-    public const VACATION_LEAVE_CODE_NUMBER = 10002;
 
     public function records(Employee $employee) : Collection
     {

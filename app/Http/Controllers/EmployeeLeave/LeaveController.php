@@ -19,10 +19,11 @@ class LeaveController extends Controller
     
     public function show()
     {
-        $employees = Employee::orderBy('LastName')
-                        ->permanent()
+        $employees = Employee::orderBy('LastName', 'ASC')
                         ->active()
-                        ->get();
+                        ->permanent()
+                        ->without(['office_assignemnt', 'office_charging.desc'])
+                        ->get(['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'Work_Status', 'PosCode', 'OfficeCode']);
         $types = $this->leaveTypeRepository->getLeaveTypesApplicableToGender();
 
         return view('leave.leave-application', compact('types','employees'));

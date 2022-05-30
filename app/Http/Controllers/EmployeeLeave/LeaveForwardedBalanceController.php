@@ -11,6 +11,22 @@ use App\EmployeeLeaveForwardedBalance;
 
 class LeaveForwardedBalanceController extends Controller
 {
+
+    // public function getApplicationID(string $keyName, bool $isCreated){
+
+    //     $lastID = DB::table('Settings')->where('Keyname', $keyName)->first();
+
+    //     $convertedID = (int)$lastID->Keyvalue;
+
+    //     if ($isCreated == true){
+    //         $nextID = $convertedID + 1;
+    //         DB::table('Settings')->where('Keyname', $keyName)->update([ 'Keyvalue' => (string)$nextID ]);
+    //         return $convertedID;
+    //     }else{
+
+    //     }
+    // }
+
     public function index()
     {
         $employees = Employee::exclude(['ImagePhoto'])
@@ -155,7 +171,7 @@ class LeaveForwardedBalanceController extends Controller
         $leaveRecord = EmployeeLeaveForwardedBalance::with('employee')->find($id);
 
         $employeeFullname = $leaveRecord->employee->fullname;
-        $office = $leaveRecord->employee->office_assignment->Description;
+        $office = $leaveRecord->employee->office_charging->Description;
         $position = $leaveRecord->employee->position->Description;
 
         return response()

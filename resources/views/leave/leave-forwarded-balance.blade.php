@@ -94,7 +94,7 @@
                                             style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                             <option value="">Search name here</option>
                                             @foreach($employees as $employee)
-                                            <option data-office="{{ $employee->office_assignment->Description }}"
+                                            <option data-office="{{ $employee->office_charging->Description }}"
                                                 data-position="{{ $employee->position->Description }}" data-photo=""
                                                 data-employeeId="{{ $employee->Employee_id }}"
                                                 value="{{ $employee->Employee_id }}">{{ $employee->fullname }} </option>

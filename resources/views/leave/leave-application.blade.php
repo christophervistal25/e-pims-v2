@@ -15,7 +15,6 @@
 <link rel="stylesheet" href="/assets/css/custom.css" />
 <link rel="stylesheet" href="/assets/css/style.css">
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
 <style>
     @media only screen and (max-width: 700px) {
     #button_group {
@@ -133,8 +132,8 @@
                         <div class="row">
                             <div class="col-lg-6 border border-bottom-0 border-left-0 border-top-0">
                                 <h6 class="text-sm text-center">&nbsp;</h6>
-                                <label for="dateApply" class="form-group has-float-label">
-                                    <input type="date" name="dateApply" id="dateApply" class="form-control"
+                                <label for="date_applied" class="form-group has-float-label">
+                                    <input type="date" name="date_applied" id="date_applied" class="form-control"
                                         value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
                                     <span>
                                         <strong>DATE APPLY
@@ -142,13 +141,13 @@
                                         </strong>
                                     </span>
                                 </label>
-                                {{-- <label for="controlNo" class="form-group has-float-label">
-                            <input type="text" name="controlNo" id="controlNo" class="form-control"
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span><strong>CONTROL NO.</strong></span>
-                        </label> --}}
-                                <label for="typeOfLeave" class="form-group has-float-label">
-                                    <select class="form-control selectpicker border type-of-leave" id="typeOfLeave"
+                                        {{-- <label for="controlNo" class="form-group has-float-label">
+                                    <input type="text" name="controlNo" id="controlNo" class="form-control"
+                                        style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                    <span><strong>CONTROL NO.</strong></span>
+                                </label> --}}
+                                <label for="leave_type_id" class="form-group has-float-label">
+                                    <select class="form-control selectpicker border type-of-leave" id="leave_type_id"
                                         name="selectedLeave" data-live-search="true">
                                         <option selected disabled value="">-------------------------</option>
                                         @foreach($types->groupBy('category') as $category => $type)
@@ -177,11 +176,16 @@
                                                 </strong>
                                             </span>
                                     </label>
+                                    <label for="specify" class="form-group has-float-label">
+                                        <input type="text" class="form-control" id="specify" name="specify">
+                                        <span id="specify__label"><strong>SPECIFY<span
+                                                    class='text-danger'>*</span></strong></span>
+                                    </label>
                                 </div>
                                 
                                 <div class="col-auto p-0">
-                                    <label for="startDate" class="form-group has-float-label">
-                                        <input type="date" class="form-control" id="startDate" name="startDate"
+                                    <label for="date_from" class="form-group has-float-label">
+                                        <input type="date" class="form-control" id="date_from" name="date_from"
                                             >
                                         <span id="start__date__label"><strong>START DATE <span
                                                     class='text-danger'>*</span></strong></span>
@@ -189,16 +193,16 @@
                                 </div>
 
                                 <div class="col-auto p-0">
-                                    <label for="endDate" class="form-group has-float-label">
-                                        <input type="date" class="form-control" id="endDate" name="endDate" >
+                                    <label for="date_to" class="form-group has-float-label">
+                                        <input type="date" class="form-control" id="date_to" name="date_to" >
                                         <span id="end__date__Label"><strong>END DATE <span
                                                     class='text-danger'>*</span></strong></span>
                                     </label>
                                 </div>
 
                                 <div class="col-auto p-0">
-                                    <label for="noOfDays" class="form-group has-float-label">
-                                        <input type="number" class="form-control" id="noOfDays" name="numberOfDays" readonly>
+                                    <label for="no_of_days" class="form-group has-float-label">
+                                        <input type="number" class="form-control" id="no_of_days" name="numberOfDays" readonly>
                                         <span><strong>NUMBER OF DAYS<span class="text-danger">*</span></strong></span>
                                     </label>
                                 </div>
@@ -326,8 +330,8 @@
                         <div class="col-lg-12 col-sm-12 pl-0 pt-0">
                             <label for="commutation" class="form-group has-float-label">
                                 <select class="form-control" id="commutation" name="communication">
-                                    <option readonly selected value="NOT REQUESTED">NOT REQUESTED</option>
-                                    <option value="REQUESTED">REQUESTED</option>
+                                    <option readonly selected value="0">NOT REQUESTED</option>
+                                    <option value="1">REQUESTED</option>
                                 </select>
                                 <span><strong>COMMUTATION<span class="text-danger">*</span></strong></span>
                             </label>
@@ -379,7 +383,8 @@ $(function () {
         $('#position').val(employeePosition);
         $('table tbody').html('');
     });
-    const ROUTE                        = "{{ route('employee.leave.application.filling.submit') }}";
+
+    const ROUTE                        = "{{ route('employee.leave.application.filling.admin.create') }}";
     const vacationLeaveIncaseOf        = ['WITHIN THE PHILIPPINES', 'ABROAD'];
     const sickLeaveIncaseOf            = ['IN HOSPITAL', 'OUT PATIENT'];
     const ALREADY_HAVE_PENDING_FILE    = 423;
@@ -387,27 +392,49 @@ $(function () {
     const SPACE                        = new RegExp(/\s+/, "ig");
     const LEAVE_TYPES                  = new Map([]);
 
+    let types = JSON.parse($('meta[name="leave-types"]').attr('content'));
+
+    // Function to create a key value pair Map for leave types.
+    types.forEach((type) => LEAVE_TYPES.set(type.leave_type_id, type.leave_type_id));
+    // Function to get the other information of selected leave type.
+    let getSelectedLeaveTypeData = (types, selectedType) => types.find(type => type.leave_type_id === selectedType);
+
+    // Function to calculate the # of weekends by range.
+    let getNoOfWeekendInRange = (periodStart, periodEnd) => {
+        let i = 0;
+        let noOfWeekEnds = 0;
+        while (i < moment(periodEnd).diff(periodStart, 'days')) {
+            let date = moment(periodStart).add(i, 'days');
+            if(date.format('dddd').toLowerCase() === 'saturday' || date.format('dddd').toLowerCase() === 'sunday') {
+                noOfWeekEnds++;
+            }
+            i++;
+        }
+
+        return noOfWeekEnds;
+    };
+
     // When user select a type of leave.
-    $('#typeOfLeave').change(function (e) {
-        let selectedType = $('#typeOfLeave').val();
+    $('#leave_type_id').change(function (e) {
+        let selectedType = $('#leave_type_id').val();
 
         let type = getSelectedLeaveTypeData(types, selectedType);
 
         // Initialize value of Incase of.
         let incaseOf = [];
 
-        switch (type.code_number) {
-            case LEAVE_TYPES.get('MANDATORY_LEAVE'):
+        switch (selectedType) {
+            case LEAVE_TYPES.get('FL'):
                     $('#inCaseOfContainer').addClass('d-none');
                     $('#withPay, #withoutPay').attr('disabled', true);
                 break;
 
-            case LEAVE_TYPES.get('VACATION_LEAVE'):
+            case LEAVE_TYPES.get('VL'):
                     incaseOf = vacationLeaveIncaseOf;
                     $('#inCaseOfContainer').removeClass('d-none');
                 break;
 
-            case LEAVE_TYPES.get('SICK_LEAVE'):
+            case LEAVE_TYPES.get('SL'):
                     incaseOf = sickLeaveIncaseOf;
                     $('#inCaseOfContainer').removeClass('d-none');
                     $('#withPay, #withoutPay').attr('disabled', false);
@@ -422,20 +449,20 @@ $(function () {
     });
 
 
-    $('#startDate').change(function () {
-        let period = moment($('#endDate').val()).diff($('#startDate').val(), 'days');
+    $('#date_from').change(function () {
+        let period = moment($('#date_to').val()).diff($('#date_from').val(), 'days');
         let POINTS = 0;
 
-        $('#noOfDays').val(period);
+        $('#no_of_days').val(period);
 
 
-        let type = getSelectedLeaveTypeData(types, $('#typeOfLeave').val());
+        let type = getSelectedLeaveTypeData(types, $('#leave_type_id').val());
 
-        if(type.code_number === LEAVE_TYPES.get('MANDATORY_LEAVE')) {
+        if(type.leave_type_id === LEAVE_TYPES.get('FL')) {
             POINTS = 5;
-        } else if(LEAVE_TYPES.get('VACATION_LEAVE')) {
+        } else if(LEAVE_TYPES.get('VL')) {
             POINTS = VACATION_LEAVE_EARNED;
-        } else if(LEAVE_TYPES.get('SICK_LEAVE')) {
+        } else if(LEAVE_TYPES.get('SL')) {
             POINTS = SICK_LEAVE_EARNED;
         }
 
@@ -448,10 +475,10 @@ $(function () {
         }
     });
 
-    $('#endDate').change(function () {
+    $('#date_to').change(function () {
         let rangePeriod = {
-            start : moment($('#startDate').val()),
-            end : moment($('#endDate').val()),
+            start : moment($('#date_from').val()),
+            end : moment($('#date_to').val()),
         };
 
         if(rangePeriod.end.format('dddd').toLowerCase() === 'saturday' || rangePeriod.end.format('dddd').toLowerCase() === 'sunday') {
@@ -462,15 +489,15 @@ $(function () {
 
         let POINTS = 0;
 
-        $('#noOfDays').val(period);
+        $('#no_of_days').val(period);
 
-        let type = getSelectedLeaveTypeData(types, $('#typeOfLeave').val());
+        let type = getSelectedLeaveTypeData(types, $('#leave_type_id').val());
 
-        if(type.code_number === LEAVE_TYPES.get('MANDATORY_LEAVE')) {
+        if(type.leave_type_id === LEAVE_TYPES.get('FL')) {
             POINTS = 5;
-        } else if(LEAVE_TYPES.get('VACATION_LEAVE')) {
+        } else if(LEAVE_TYPES.get('VL')) {
             POINTS = VACATION_LEAVE_EARNED;
-        } else if(LEAVE_TYPES.get('SICK_LEAVE')) {
+        } else if(LEAVE_TYPES.get('SL')) {
             POINTS = SICK_LEAVE_EARNED;
         }
 
@@ -486,84 +513,92 @@ $(function () {
 
     $('#submitLeaveFileButton').submit(function (e) {
         e.preventDefault();
+        
+        if ($('#employeeName').val() == ''){
+            swal({
+                text: "Select first Employee.",
+                icon: "warning",
+                timer: 2000
+            });
+        }else{
+            $('#apply-spinner').removeClass('d-none');
+            $('#apply-button-icon').addClass('d-none');
 
+            let data = {
+                date_applied        : $('#date_applied').val(),
+                employeeName        : $('#employeeName').val(),
+                leave_type_id       : $('#leave_type_id').val(),
+                inCaseOf            : $('#inCaseOf').val(),
+                specify             : $('#specify').val(),
+                no_of_days          : $("#no_of_days").val(),
+                date_from           : $('#date_from').val(),
+                date_to             : $('#date_to').val(),
+                earned              : $('#earned').val(),
+                earnedLess          : $('#earnedLess').val(),
+                earnedRemaining     : $('#earnedRemaining').val(),
+                commutation         : $('#commutation').val(),
+                recommendingApproval: $('#recommendingApproval').val(),
+                approvedBy          : $('#approvedBy').val(),
+            };
+            
+            $.ajax({
+                url: ROUTE,
+                method: 'POST',
+                data: data,
+                success: function (response) {
+                    $('#formErrors').addClass('d-none').html('');
+                    $('#apply-spinner').addClass('d-none');
+                    $('#apply-button-icon').removeClass('d-none');
 
-        $('#apply-spinner').removeClass('d-none');
-        $('#apply-button-icon').addClass('d-none');
+                    if (response.success) {
 
-        let data = {
-            dateApply           : $('#dateApply').val(),
-            typeOfLeave         : $('#typeOfLeave').val(),
-            inCaseOf            : $('#inCaseOf').val(),
-            noOfDays            : $("#noOfDays").val(),
-            startDate           : $('#startDate').val(),
-            endDate             : $('#endDate').val(),
-            earned              : $('#earned').val(),
-            earnedLess          : $('#earnedLess').val(),
-            earnedRemaining     : $('#earnedRemaining').val(),
-            commutation         : $('#commutation').val(),
-            recommendingApproval: $('#recommendingApproval').val(),
-            approvedBy          : $('#approvedBy').val(),
-        };
+                        Object.keys(data).map((elementID) => {
+                            $(`${elementID}`).removeClass('is-invalid');
+                        });
 
-        $.ajax({
-            url: ROUTE,
-            method: 'POST',
-            data: data,
-            success: function (response) {
-                $('#formErrors').addClass('d-none').html('');
-                $('#apply-spinner').addClass('d-none');
-                $('#apply-button-icon').removeClass('d-none');
+                        swal({
+                            title: "Good Job!",
+                            text: "Your leave application successfully submit plesae wait for the approval.",
+                            icon: "success",
+                            timer: 5000
+                        });
+        
+                        data.fullname = response.fullname;
+                        // socket.emit(`submit_application_for_leave`, data);
+                        // socket.emit('notify_administrator', { arguments : `${response.fullname}|NOTIFY_ADMINISTRATOR`});
+                        // socket.emit('service_notify_administrator', { arguments : `${response.fullname}|NOTIFY_ADMINISTRATOR`});
+                    }
+                },
+                error: function (response) {
+                    $('#apply-spinner').addClass('d-none');
+                    $('#apply-button-icon').removeClass('d-none');
 
-                if (response.success) {
+                    if (response.status == 422) {
+                        Object.keys(data).map((elementID) => {
+                            $(`${elementID}`).removeClass('d-none');
+                        });
 
-                    Object.keys(data).map((elementID) => {
-                        $(`${elementID}`).removeClass('is-invalid');
-                    });
-
-                    swal({
-                        title: "Good Job!",
-                        text: "Your leave application successfully submit plesae wait for the approval.",
-                        icon: "success",
-                        timer: 5000
-                    });
-    
-                    data.fullname = response.fullname;
-
-                    // socket.emit(`submit_application_for_leave`, data);
-                    // socket.emit('notify_administrator', { arguments : `${response.fullname}|NOTIFY_ADMINISTRATOR`});
-                    socket.emit('service_notify_administrator', { arguments : `${response.fullname}|NOTIFY_ADMINISTRATOR`});
+                        $('#formErrors').removeClass('d-none').html('');
+                        Object.keys(response.responseJSON.errors).map((fieldID) => {
+                            let [message] = response.responseJSON.errors[fieldID];
+                            if (fieldID.includes('typeOf')) {
+                                // Select field with select picker.
+                                $('button[data-id="leave_type_id"]').addClass(
+                                    'border border-danger');
+                            } else {
+                                $(`#${fieldID}`).addClass('is-invalid');
+                            }
+                            
+                            $('#formErrors').append(`<span>- ${message}</span> <br>`);
+                        });
+                    } else if (response.status == ALREADY_HAVE_PENDING_FILE) {
+                        swal('Oops!', response.responseJSON.message, 'error');
+                    } else if(response.status === CANNOT_ACCESS_SELECTED_LEAVE) {
+                        swal('Oops!', response.responseJSON.message, 'error');
+                    }
                 }
-            },
-            error: function (response) {
-                $('#apply-spinner').addClass('d-none');
-                $('#apply-button-icon').removeClass('d-none');
-
-                if (response.status == 422) {
-                    Object.keys(data).map((elementID) => {
-                        $(`${elementID}`).removeClass('d-none');
-                    });
-
-                    $('#formErrors').removeClass('d-none').html('');
-                    Object.keys(response.responseJSON.errors).map((fieldID) => {
-                        let [message] = response.responseJSON.errors[fieldID];
-                        if (fieldID.includes('typeOf')) {
-                            // Select field with select picker.
-                            $('button[data-id="typeOfLeave"]').addClass(
-                                'border border-danger');
-                        } else {
-                            $(`#${fieldID}`).addClass('is-invalid');
-                        }
-                        
-                        $('#formErrors').append(`<span>- ${message}</span> <br>`);
-                    });
-                } else if (response.status == ALREADY_HAVE_PENDING_FILE) {
-                    swal('Oops!', response.responseJSON.message, 'error');
-                } else if(response.status === CANNOT_ACCESS_SELECTED_LEAVE) {
-                    swal('Oops!', response.responseJSON.message, 'error');
-                }
-            }
-        });
+            });
+        }
     });
 
 });

@@ -6,6 +6,7 @@ use App\Office;
 use App\Office2;
 use App\Employee;
 use Carbon\Carbon;
+use App\OfficeCharging;
 use App\EmployeeLeaveRecord;
 use Illuminate\Http\Request;
 use App\Services\LeaveService;
@@ -47,9 +48,9 @@ class LeaveListController extends Controller
                         $btnUpdate = null;
                         $btnDelete = null;
                         // route('leave.leave-list.edit', $row->id) is the name of the route on the web.php
-                        if($row->approved_status !== 'approved') {
-                            $btnUpdate = "<a href='". route('leave-list.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil' title='Update Leave Request'></i></a>";
-                            $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="'.$row->id.'" hidden><i style="pointer-events:none;" class="la la-trash"></i></button>';
+                        if($row->status !== 'approved') {
+                            $btnUpdate = "<a href='". route('leave-list.edit', $row->application_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil' title='Update Leave Request'></i></a>";
+                            $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="'.$row->application_id.'"><i style="pointer-events:none;" class="la la-trash"></i></button>';
                         }
                         return $btnUpdate . "&nbsp" . $btnDelete;
                     })
@@ -62,7 +63,7 @@ class LeaveListController extends Controller
     {
         $statuses =  $this->leaveService->countAllStatus();
         
-        $offices = Office2::select('OfficeCode2', 'Description')->get();
+        $offices = OfficeCharging::select('OfficeCode', 'Description')->get();
         
         $employeeIds = $this->leaveService->getEmployeeApplied();
 
@@ -181,43 +182,38 @@ class LeaveListController extends Controller
     /**
      * Seach in leave list records.
      */
-    public function search($officeCode, $pendingStatus = 'all', $employee_id = 'all')
+    public function search($officeCode, $status = 'ALL', $employee_id = 'ALL')
     {
-        $query = DB::connection('E_PIMS_CONNECTION')->table('employee_leave_applications')
-                        ->join('DTRPayroll.dbo.Employees', 'DTRPayroll.dbo.Employees.Employee_id', '=', 'employee_leave_applications.employee_id')
-                        ->join('leave_types', 'leave_types.id', '=', 'employee_leave_applications.leave_type_id')
-                        ->select('Employees.Employee_id', 'Employees.FirstName', 'Employees.MiddleName', 'Employees.LastName', 'Employees.Suffix', 'Employees.OfficeCode', 'employee_leave_applications.*', 'leave_types.id as leave_type_id' ,'leave_types.name as leave_type_name');
+        $query = EmployeeLeaveApplication::get();
         
         if(strtoupper($officeCode) !== 'ALL') {
-            $query->where('Employees.OfficeCode', $officeCode);
+            $query->where('Employee.OfficeCode', $officeCode);
         }
 
-        if(strtoupper($pendingStatus) !== 'ALL') {
-            $query->where('employee_leave_applications.approved_status', $pendingStatus);
+        if(strtoupper($status) !== 'ALL') {
+            $query->where('employee_leave_applications.status', $status);
         }
 
         if(strtoupper($employee_id) !== 'ALL') {
             $query->where('Employees.Employee_id', $employee_id);
         }
 
-        return Datatables::of($query->get())
+        if($query->count() === 0) {
+            $query = $query->where('deleted_at', null);
+        }
+
+        return Datatables::of($query)
             ->addColumn('applied', function ($row) {
                 return $row->date_applied;
-            })
-            ->addColumn('from', function ($row) {
-                return $row->date_from;
-            })
-            ->addColumn('to', function ($row) {
-                return $row->date_to;
             })
             ->addColumn('action', function($row)
             {
                 $btnUpdate = null;
                 $btnDelete = null;
                 // route('leave.leave-list.edit', $row->id) is the name of the route on the web.php
-                if($row->approved_status !== 'approved') {
-                    $btnUpdate = "<a href='". route('leave-list.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil' title='Update Leave Request'></i></a>";
-                    $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="'.$row->id.'" hidden><i style="pointer-events:none;" class="la la-trash"></i></button>';
+                if($row->status !== 'approved') {
+                    $btnUpdate = "<a href='". route('leave-list.edit', $row->application_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil' title='Update Leave Request'></i></a>";
+                    $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="'.$row->application_id.'" hidden><i style="pointer-events:none;" class="la la-trash"></i></button>';
                 }
                 return $btnUpdate . "&nbsp" . $btnDelete;
             })->make(true);
