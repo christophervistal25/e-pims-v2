@@ -57,4 +57,13 @@ class DashboardController extends Controller
     }
     
 
+    public function notif()
+    {
+        $data = StepIncrement::get();
+
+
+        dd($data);
+
+    }
+
 }
