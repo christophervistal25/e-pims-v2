@@ -16,10 +16,10 @@ class LeaveMonitoringController extends Controller
     {
         $this->leaveRecordRepository = $leaveRecordRepository;
     }
-    
+
     public function index(Request $request)
     {
-        $employees = Employee::get();
+        $employees = Employee::permanent()->get(['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode', 'OfficeCode2', 'PosCode']);
         return view('leave.leave-monitoring', compact('employees'));
     }
 
@@ -27,23 +27,22 @@ class LeaveMonitoringController extends Controller
     {
         if ($request->ajax()) {
 
-            $employee = Employee::with(['information', 'information.office', 'information.position'])->find($id);
+            $employee = Employee::permanent()->find($id, ['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode', 'OfficeCode2', 'PosCode']);
+
             // Forwarded Balance
             $forwardedBalance       = $this->leaveRecordRepository->getForwardedRecord($id);
-            $forwardedVacationLeave = $this->leaveRecordRepository->getVacationLeaveInForwarded($forwardedBalance);
-            $forwardedSickLeave     = $this->leaveRecordRepository->getSickLeaveInForwarded($forwardedBalance);
-            
-            $totalOfForwardedBalance = $forwardedBalance->sum('earned') - $forwardedBalance->sum('used');
+            $totalOfForwardedBalance = ($forwardedBalance->sum('vl_earned') + $forwardedBalance->sum('sl_earned')) - ($forwardedBalance->sum('sl_earned') + $forwardedBalance->sum('vl_earned'));
+            // $recordsWithoutForwarded = $this->leaveRecordRepository->getRecordsWithoutForwarded($id)->groupBy('record_type');
+            $recordsWithoutForwarded = [];
 
-            $recordsWithoutForwarded = $this->leaveRecordRepository->getRecordsWithoutForwarded($id)->groupBy('record_type');
-        
             return view('leave.add-ons.leave-card', [
                 'employee'                   => $employee,
                 'forwardedBalance'           => $forwardedBalance,
                 'recordsWithoutForwarded'    => $recordsWithoutForwarded,
                 'totalOfForwardedBalance'    => $totalOfForwardedBalance,
-                'forwardedSickLeave'         => $forwardedSickLeave,
-                'forwardedVacationLeave'     => $forwardedVacationLeave,
+                // 'forwardedSickLeave'         => $forwardedSickLeave,
+                // 'forwardedVacationLeave'     => $forwardedVacationLeave,
+                'forwardedBalance' => $forwardedBalance,
                 'TYPES'                      => EmployeeLeaveRecord::TYPES,
                 'SICK_LEAVE_CODE_NUMBER'     => 10001,
                 'VACATION_LEAVE_CODE_NUMBER' => 10002,
@@ -51,7 +50,6 @@ class LeaveMonitoringController extends Controller
                 'startDate'                  => null,
                 'endDate'                    => null
             ]);
-        }   
+        }
     }
 }
-?>
