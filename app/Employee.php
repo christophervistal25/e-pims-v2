@@ -260,7 +260,7 @@ class Employee extends Model
     {
         return $this->hasOne(Plantilla::class, 'employee_id', 'Employee_id');
     }
-    
+
 
     public function PlantillaSchedule()
     {
@@ -269,7 +269,7 @@ class Employee extends Model
 
 
     public function family_background()
-    {           
+    {
         return $this->hasOne(EmployeeFamilyBackground::class, 'employee_id', 'employee_id');
     }
 

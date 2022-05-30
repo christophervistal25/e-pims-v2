@@ -19,13 +19,13 @@ class SalaryAdjustmentPerOfficeController extends Controller
     public function index()
     {
         $plantilla =  Plantilla::select('office_code')->with(['office', 'office.desc'])
-                                ->groupBy('office_code')
-                                ->get();
+                        ->groupBy('office_code')
+                        ->get();
 
         $dates = SalaryAdjustment::select('date_adjustment')->whereYear('date_adjustment', '!=', Carbon::now()->format('Y'))->get()->pluck('date_adjustment')->map(function ($date) {
             return $date->format('Y');
         })->toArray();
-        
+
         $dates = array_values(array_unique($dates));
 
         return view('SalaryAdjustmentPerOffice.SalaryAdjustmentPerOffice', compact('plantilla', 'dates'));

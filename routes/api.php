@@ -166,11 +166,10 @@ Route::get('/salary/adjustment/{year}', function ($year) {
 
 // salary adjustment per office
 Route::get('/office/salary/adjustment/peroffice/{officeCode}/{filterYear}', function ($office_code, $filterYear) {
-    $data = DB::connection('E_PIMS_CONNECTION')
-        ->table('salary_adjustments')
-        ->join('DTRpayroll.dbo.Employees', 'salary_adjustments.employee_id', '=', 'Employees.Employee_id')
+    $data = DB::table('salary_adjustments')
+        ->join('Employees', 'salary_adjustments.employee_id', '=', 'Employees.Employee_id')
         ->join('plantillas', 'salary_adjustments.employee_id', '=', 'plantillas.employee_id')
-        ->select('id', 'salary_adjustments.date_adjustment', DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"), 'salary_adjustments.item_no', 'salary_adjustments.pp_id', DB::raw("FORMAT(date_adjustment, '%m-%d-%Y') as date_adjustment"), 'salary_adjustments.sg_no', 'salary_adjustments.step_no', 'salary_adjustments.salary_previous', 'salary_new', 'salary_adjustments.salary_diff', 'plantillas.office_code')
+        ->select('id', 'salary_adjustments.date_adjustment', DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"), 'salary_adjustments.item_no', 'salary_adjustments.pp_id', DB::raw("FORMAT(date_adjustment, 'M/d/y') as date_adjustment"), 'salary_adjustments.sg_no', 'salary_adjustments.step_no', 'salary_adjustments.salary_previous', 'salary_new', 'salary_adjustments.salary_diff', 'plantillas.office_code')
         ->where('plantillas.office_code', $office_code)
         ->whereYear('salary_adjustments.date_adjustment', $filterYear)
         ->orderBy('id', 'DESC')
@@ -186,29 +185,42 @@ Route::get('/office/salary/adjustment/peroffice/{officeCode}/{filterYear}', func
         ->rawColumns(['action'])
         ->make(true);
 });
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> adds
 // salary adjustment per office not selected
 Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}/query', function ($officeCode) {
-    $dataWithLateSalaryAdjustment = Employee::with(['plantilla' => function ($query) use ($officeCode) {
-        $query->where('office_code', $officeCode)->where('year', date('Y'));
-    }, 'plantilla.position', 'salary_adjustment'])
+    $dataWithLateSalaryAdjustment = Employee::with(['plantilla' => function ($query) use ($officeCode)
+            {
+                    $query->where('office_code', $officeCode);
+            }
+        , 'plantilla.pp_id', 'salary_adjustment'])
         ->has('salary_adjustment')
-        ->get(['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix'])
+        ->get(['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode', 'OfficeCode2'])
         ->filter(function ($record) {
             return !in_array(date('Y'), $record->salary_adjustment->pluck('date_adjustment_year')->toArray());
         });
+
+
 
     $dataWithNoSalaryAdjustment = Employee::whereHas('plantilla', function ($query) use ($officeCode) {
         $query->where('office_code', $officeCode)->where('year', date('Y'));
     })
         ->with(['plantilla', 'plantilla.plantillaPosition.position', 'plantilla.position'])
         ->doesntHave('salary_adjustment')
-        ->get(['Employee_id', 'FirstName', 'Middlename', 'LastName', 'Suffix']);
+        ->get(['Employee_id', 'FirstName', 'Middlename', 'LastName', 'Suffix', 'PosCode', 'OfficeCode', 'OfficeCode2']);
+
 
     $data = $dataWithLateSalaryAdjustment->merge($dataWithNoSalaryAdjustment);
 
+
+
     return DataTables::of($data)
         ->editColumn('checkbox', function ($row) {
-            $checkbox = "<input id='checkbox{$row->plantilla->plantilla_id}' class='not-select-checkbox' style='transform:scale(1.35)' value='{$row->plantilla->plantilla_id}' type='checkbox' />";
+            // $checkbox = "<input id='checkbox{$row->plantilla->plantilla_id}' class='not-select-checkbox' style='transform:scale(1.35)' value='{$row->plantilla->plantilla_id}' type='checkbox' />";
+            $checkbox = "<input id='checkbox{$row}' class='not-select-checkbox' style='transform:scale(1.35)' value='' type='checkbox' />";
             return $checkbox;
         })->rawColumns(['checkbox'])
         ->make(true);

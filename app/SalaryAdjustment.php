@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SalaryAdjustment extends Model
 {
-    public $connection = 'DTR_PAYROLL_CONNECTION';
+    // public $connection = 'DTR_PAYROLL_CONNECTION';
     protected $dates = ['date_adjustment'];
     protected $fillable = [
         'employee_id',
