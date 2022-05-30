@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
+use App\StepIncrement;
 use App\PlantillaSchedule;
 use App\Services\EmployeeService;
 use Illuminate\Support\Collection;
@@ -65,5 +66,14 @@ class DashboardController extends Controller
             'plantillas'             => $employeesWithNewPlantillas,
             'eligible'               => $employeesWithEligibility,
         ]);
+    }
+
+
+    public function notif()
+    {
+        $data = StepIncrement::get();
+
+
+        dd($data);
     }
 }

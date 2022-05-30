@@ -15,6 +15,19 @@
 </style>
 @endprepend
 @section('content')
+<div class="card d-block" data-notif="" id="notification">
+    <div class="alert alert-warning">
+        These are the names of employees that have an upcoming step-increment. To see more details, cliick the button below.
+        <i class="fas fa-close text-danger float-right pr-2 mt-2" id="closeIcon"></i>
+    </div>
+
+    <h1 class="p-4">Employee Names</h1>
+
+    <div class="col-lg-12 text-center">
+        <a href="/" class="btn btn-primary col-lg-12"><i class="fas fa-list">&nbsp; See More</i></a>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
         <div class="card dash-widget">
@@ -253,7 +266,19 @@
 
 {{-- Charts --}}
 <script>
+     document.addEventListener('click', function(e) {
+        btnClose = e.target.getAttribute('class');
+
+        if(btnClose && btnClose.includes('fa-close'))
+        {
+            setTimeout(() => {
+                document.querySelector('#notification').remove();
+            }, 1000);
+        }
+    })
 
 </script>
+
+
 @endpush
 @endsection

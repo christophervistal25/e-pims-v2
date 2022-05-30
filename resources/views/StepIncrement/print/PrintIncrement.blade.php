@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 
 <style>
+
    @media print{
     .header,.sidebar, #action-buttons,.breadcrumb {
         display: none !important;
