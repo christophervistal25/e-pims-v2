@@ -185,11 +185,6 @@ Route::get('/office/salary/adjustment/peroffice/{officeCode}/{filterYear}', func
         ->rawColumns(['action'])
         ->make(true);
 });
-<<<<<<< HEAD
-=======
-
-
->>>>>>> adds
 // salary adjustment per office not selected
 Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}/query', function ($officeCode) {
     $dataWithLateSalaryAdjustment = Employee::with(['plantilla' => function ($query) use ($officeCode)
