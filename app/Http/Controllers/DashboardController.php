@@ -36,19 +36,15 @@ class DashboardController extends Controller
 
         $on_going_leave = 0;
 
-        $promotionInSixMonths = Employee::where('Employee_id', '2227')
-            ->permanent()
-            ->get(['Employee_id', 'first_day_of_service', 'last_step_increment'])->each(function ($employee) {
+        $promotionInSixMonths = Employee::permanent()
+            ->where('last_step_increment', '!=', null)
+            ->get(['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'PosCode', 'OfficeCode', 'first_day_of_service', 'last_step_increment'])
+            ->each(function ($employee) {
                 $lastStepIncrementPlusThreeYears = $employee->last_step_increment->addYears(3);
                 $sixMonthRange = $lastStepIncrementPlusThreeYears->copy();
                 $employee->in_range_of_six_months = $employee->last_step_increment->between($sixMonthRange->subMonths(6), $lastStepIncrementPlusThreeYears) ? true : false;
             });
-
-
-        // $on_going_leave = Employee::whereHas('leave_files', function ($query) {
-        //     $query->where('approved_status', 'on-going');
-        // })->count();
-
+        $promotionInSixMonths = $promotionInSixMonths->where('in_range_of_six_months', true);
 
 
         return view('blank-page', [
@@ -65,6 +61,7 @@ class DashboardController extends Controller
             'on_going_leave'         => $on_going_leave,
             'plantillas'             => $employeesWithNewPlantillas,
             'eligible'               => $employeesWithEligibility,
+            'promotionInSixMonths' => $promotionInSixMonths,
         ]);
     }
 
