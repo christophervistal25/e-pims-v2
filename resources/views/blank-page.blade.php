@@ -12,16 +12,28 @@
         background: #ff9b44 !important;
     }
 
+    #notification {
+        position: sticky;
+        width: 100%;
+        height: 300px;
+        overflow-x: scroll;
+        white-space: nowrap;
+    }   
+
 </style>
 @endprepend
 @section('content')
 <div class="card d-block" data-notif="" id="notification">
-    <div class="alert alert-warning">
+    <div class="alert alert-warning" id="header-warning">
         These are the names of employees that have an upcoming step-increment. To see more details, cliick the button below.
         <i class="fas fa-close text-danger float-right pr-2 mt-2" id="closeIcon"></i>
     </div>
+    
 
-    <h1 class="p-4">Employee Names</h1>
+    <h1 class="p-4" id="employees">Employee Names</h1>
+
+    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus nemo autem nam ea blanditiis unde quo voluptas eum a natus! Eligendi suscipit ducimus iste dignissimos harum. Dolores et, consequuntur aperiam perspiciatis fugit eligendi deleniti provident debitis incidunt quod minus quibusdam voluptates molestias minima non, omnis molestiae a, officiis suscipit? Cum, fugit debitis nobis minus aperiam quod ad ducimus eum sapiente fugiat! Molestias laboriosam, reprehenderit libero quo fuga officia! Non magni tempore est aspernatur aliquid delectus illo, incidunt ratione esse! Sit repellat excepturi nihil! Dolorem aspernatur, molestiae ratione in, dolores, aperiam architecto dolor eligendi culpa pariatur quam voluptas maxime accusantium distinctio.</p>
+  
 
     <div class="col-lg-12 text-center">
         <a href="/" class="btn btn-primary col-lg-12"><i class="fas fa-list">&nbsp; See More</i></a>
@@ -264,17 +276,13 @@
 <script src="/assets/plugins/morris/morris.min.js"></script>
 <script src="/assets/plugins/raphael/raphael.min.js"></script>
 
-{{-- Charts --}}
-<script>
-     document.addEventListener('click', function(e) {
-        btnClose = e.target.getAttribute('class');
 
-        if(btnClose && btnClose.includes('fa-close'))
-        {
-            setTimeout(() => {
-                document.querySelector('#notification').remove();
-            }, 1000);
-        }
+<script>
+  
+    $('#closeIcon').on('click', function() {
+        $('#notification').fadeOut(1000, function() {
+            $('#notification').remove();
+        });
     })
 
 </script>
