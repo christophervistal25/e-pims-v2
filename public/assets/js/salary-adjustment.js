@@ -74,7 +74,6 @@ $(document).ready(function () {
         );
         if (plantilla) {
             plantilla = JSON.parse(plantilla);
-            console.log(plantilla);
             $("#employeeId").val(plantilla.employee_id);
             $("#positionName").val(
                 plantilla.plantilla_positions.position.Description

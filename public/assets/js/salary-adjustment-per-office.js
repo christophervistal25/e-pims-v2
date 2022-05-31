@@ -6,7 +6,7 @@ function ValidateDropDown(dropDown) {
     line.visibility = !dropDown.value;
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     // Initialization of Datatables to display "No data available in table".
     let salaryAdjustmentPerOfficeSelected = $(
         "#salaryAdjustmentPerOffice"
@@ -15,7 +15,7 @@ $(document).ready(function() {
         "#salaryAdjustmentPerOfficeList"
     ).DataTable();
 
-    $("#employeeOffice").change(function(e) {
+    $("#employeeOffice").change(function (e) {
         let filterYear = $("#yearAdjustment").val();
         let employeeOffice = $("#employeeOffice").val();
         const FIRST_ELEMENT_OF_SELECT = 0;
@@ -36,21 +36,21 @@ $(document).ready(function() {
                 pagingType: "full_numbers",
                 language: {
                     processing:
-                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
                 },
                 ajax: {
-                    url: `/api/office/salary/adjustment/peroffice/${employeeOffice}/${filterYear}`
+                    url: `/api/office/salary/adjustment/peroffice/${employeeOffice}/${filterYear}`,
                 },
                 columns: [
                     {
                         data: "date_adjustment",
                         name: "date_adjustment",
-                        visible: true
+                        visible: true,
                     },
                     {
                         data: "office_code",
                         name: "office_code",
-                        visible: false
+                        visible: false,
                     },
                     { data: "fullname", name: "fullname", visible: true },
                     { data: "sg_no", name: "sg_no", visible: true },
@@ -59,25 +59,25 @@ $(document).ready(function() {
                         data: "salary_previous",
                         name: "salary_previous",
                         visible: true,
-                        render: $.fn.dataTable.render.number(",", ".", 2)
+                        render: $.fn.dataTable.render.number(",", ".", 2),
                     },
                     {
                         data: "salary_new",
                         name: "salary_new",
                         visible: true,
-                        render: $.fn.dataTable.render.number(",", ".", 2)
+                        render: $.fn.dataTable.render.number(",", ".", 2),
                     },
                     {
                         data: "salary_diff",
                         name: "salary_diff",
                         visible: true,
-                        render: $.fn.dataTable.render.number(",", ".", 2)
+                        render: $.fn.dataTable.render.number(",", ".", 2),
                     },
-                    { data: "action", name: "action", visible: true }
-                ]
+                    { data: "action", name: "action", visible: true },
+                ],
             });
 
-            // Salary adjustment list (NOT SELECTED)
+            // Salary adjustment list (NOT SELECTED, to be adjust)
             salaryAdjustmentPerOfficeNotSelected.destroy();
             salaryAdjustmentPerOfficeNotSelected = $(
                 "#salaryAdjustmentPerOfficeList"
@@ -89,10 +89,10 @@ $(document).ready(function() {
                 pagingType: "full_numbers",
                 language: {
                     processing:
-                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
                 },
                 ajax: {
-                    url: `/api/office/salary/adjustment/peroffice/notselected/${employeeOffice}/query`
+                    url: `/api/office/salary/adjustment/peroffice/notselected/${employeeOffice}/query`,
                 },
                 columns: [
                     {
@@ -100,61 +100,56 @@ $(document).ready(function() {
                         name: "checkbox",
                         searchable: false,
                         orderable: false,
-                        sortable: false
+                        sortable: false,
                     },
                     {
                         data: "fullname",
                         name: "fullname",
                         visible: true,
-                        defaultContent : 'test',
                     },
                     {
                         data: "plantilla.office_code",
                         name: "office_code",
                         visible: false,
-                        defaultContent : 'test',
                     },
                     {
-                        data:
-                            "plantilla.plantilla_position.position.position_name",
+                        data: "plantilla.pp_id",
+                        // data: "plantilla.plantilla_position.position.position_name",
                         name: "position_name",
-                        defaultContent: ""
+                        defaultContent: "",
                     },
                     {
                         data: "plantilla.sg_no",
                         name: "sg_no",
-                        defaultContent : 'test',
                     },
                     {
                         data: "plantilla.step_no",
                         name: "step_no",
-                        defaultContent : 'test',
                     },
                     {
                         data: "plantilla.salary_amount",
                         name: "salary_amount",
                         visible: true,
                         render: $.fn.dataTable.render.number(",", ".", 2),
-                        defaultContent : 'test',
-                    }
-                ]
+                    },
+                ],
             });
         } else {
             // Clear the data
         }
     });
 
-    $("#addButton").click(function() {
+    $("#addButton").click(function () {
         $("#add").attr("class", "page-header");
         $("#table").attr("class", "page-header d-none");
     });
 
-    $("#cancelButton").click(function() {
+    $("#cancelButton").click(function () {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
     });
 
-    $("#selectAll").click(function(e) {
+    $("#selectAll").click(function (e) {
         // Get all rows with search applied
         let rows = salaryAdjustmentPerOfficeNotSelected
             .rows({ search: "applied" })
@@ -163,7 +158,7 @@ $(document).ready(function() {
         $('input[type="checkbox"]', rows).prop("checked", this.checked);
     });
 
-    $("#saveBtn").click(function() {
+    $("#saveBtn").click(function () {
         let date = $("#dateAdjustment").val();
         let currentYear = $("#year").val();
         let remarks = $("#remarks").val();
@@ -173,7 +168,7 @@ $(document).ready(function() {
         $("#loading").removeClass("d-none");
         $("#saving").html("Saving . . . ");
 
-        $(".not-select-checkbox").each(function(index, element) {
+        $(".not-select-checkbox").each(function (index, element) {
             if (element.checked == true) {
                 selectedRecordIDS.push(element.value);
             }
@@ -192,9 +187,9 @@ $(document).ready(function() {
                     ids: selectedRecordIDS.toString(),
                     date: date,
                     year: currentYear,
-                    remarks: remarks
+                    remarks: remarks,
                 },
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
                         swal("Successfully Added!", "", "success");
                         salaryAdjustmentPerOfficeSelected.ajax.reload();
@@ -205,7 +200,7 @@ $(document).ready(function() {
                         $("#selectAll").prop("checked", false);
                         $("#remarks").val("");
                     }
-                }
+                },
             });
         }
     });
