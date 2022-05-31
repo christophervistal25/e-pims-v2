@@ -43,6 +43,7 @@ class DashboardController extends Controller
                 $lastStepIncrementPlusThreeYears = $employee->last_step_increment->addYears(3);
                 $sixMonthRange = $lastStepIncrementPlusThreeYears->copy();
                 $employee->in_range_of_six_months = $employee->last_step_increment->between($sixMonthRange->subMonths(6), $lastStepIncrementPlusThreeYears) ? true : false;
+                $employee->in_range_of_six_months = true;
             });
         $promotionInSixMonths = $promotionInSixMonths->where('in_range_of_six_months', true);
 
