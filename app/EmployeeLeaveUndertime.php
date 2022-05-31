@@ -7,14 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class EmployeeLeaveUndertime extends Model
 {
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'undertime_id';
+    protected $connection = 'DTR_PAYROLL_CONNECTION';
+    protected $table = 'employee_leave_undertime';
 
     protected $fillable = [
-        'employee_id',
-        'hoursLate',
-        'minsLate',
-        'hoursUndertime',
-        'minsUndertime',
+        'undertime_id',
+        'Employee_id',
+        'hours_late',
+        'mins_late',
+        'hours_undertime',
+        'mins_undertime',
         'equivalent',
         'month_year',
     ];
