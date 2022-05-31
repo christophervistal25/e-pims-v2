@@ -17,10 +17,7 @@ class LeaveController extends Controller
     public function list()
     {
         if (request()->ajax()) {
-            
-            $types = LeaveType::select('id', 'name', 'code', 'description', 'days_period', 'convertible_to_cash', 'applicable_gender', 'required_rendered_service', 'editable')
-                    ->orderBy('created_at', 'DESC');
-
+            $types = LeaveType::query();
             return (new Datatables)->eloquent($types)
                     ->make(true);
                     
@@ -58,9 +55,9 @@ class LeaveController extends Controller
         if($request->ajax()) {
             $this->validate($request, [
                 'name'                      => 'required',
-                'code'                      => 'required|unique:leave_types,code|max:10',
+                'code'                      => 'required|unique:Leave_type,leave_type_id|max:10',
                 'description'               => 'nullable|string',
-                'days_period'               => 'required',
+                'days_period'               => 'nullable',
                 'convertible_to_cash'       => 'nullable',
                 'applicable_gender'         => 'required|in:male,female,female/male',
                 'required_rendered_service' => 'required',
@@ -69,13 +66,13 @@ class LeaveController extends Controller
 
             LeaveType::create([
                 'name' => $request->name,
-                'code' => $request->code,
+                'leave_type_id' => $request->code,
                 'description' => $request->description,
                 'days_period' => $request->days_period,
-                'convertible_to_cash' => $request->has('convertible_to_cash') ? 'yes' : 'no',
+                'convertible_to_cash' => $request->has('convertible_to_cash') ? 1 : 0,
                 'applicable_gender' => $request->applicable_gender,
                 'required_rendered_service' => $request->required_rendered_service,
-                'editable' => $request->has('editable') ? 'yes' : 'no',
+                'editable' => $request->has('editable') ? 1 : 0,
             ]);
 
             return response()->json(['success' => true], 201);
@@ -136,14 +133,14 @@ class LeaveController extends Controller
 
             $leaveType = LeaveType::findOrFail($id);
             
-            $leaveType->name = $request->edit_name;
-            $leaveType->code = $request->edit_code;
-            $leaveType->description = $request->edit_description;
+            $leaveType->leave_type_id = $request->edit_code;
+            $leaveType->description = $request->edit_name;
+            $leaveType->description2 = $request->edit_description;
             $leaveType->days_period = $request->edit_days_period;
-            $leaveType->convertible_to_cash = $request->has('edit_convertible_to_cash') ? 'yes' : 'no';
+            $leaveType->convertible_to_cash = $request->has('edit_convertible_to_cash') ? 1 : 0;
             $leaveType->applicable_gender = $request->edit_applicable_gender;
             $leaveType->required_rendered_service = $request->edit_required_rendered_service;
-            $leaveType->editable = $request->has('edit_editable') ? 'yes' : 'no';
+            $leaveType->editable = $request->has('edit_editable') ? 1 : 0;
 
             $leaveType->save();
 
@@ -161,7 +158,7 @@ class LeaveController extends Controller
      */
     public function destroy($id)
     {
-        $leaveType = LeaveType::findOrFail($id);
+        $leaveType = LeaveType::where('leave_type_id', $id)->first();
         return response()->json(['success' => $leaveType->delete()]);
     }
 }
