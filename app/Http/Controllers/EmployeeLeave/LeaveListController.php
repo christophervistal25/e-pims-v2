@@ -48,10 +48,12 @@ class LeaveListController extends Controller
                 $btnDelete = null;
                 // route('leave.leave-list.edit', $row->id) is the name of the route on the web.php
                 if ($row->status !== 'approved') {
-                    $btnUpdate = "<a href='" . route('leave-list.edit', $row->application_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil' title='Update Leave Request'></i></a>";
+                    $btnApprove = '<button type="button" class="rounded-circle text-white btnApprove btn btn-success btn-sm" title="Approved Request" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="fa fa-thumbs-up"></i></button>';
+                    $btnDecline = '<button type="button" class="rounded-circle text-white btnDecline btn btn-danger btn-sm" title="Decline Request" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="fa fa-thumbs-down"></i></button>';
+                    $btnUpdate = '<button type="button" class="rounded-circle text-white edit btn btn-info btn-sm" onclick="editLeaveApplication('.$row->application_id.')"><i class="la la-eye" title="Update Leave Request"></i></button>';
                     $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
                 }
-                return $btnUpdate . "&nbsp" . $btnDelete;
+                return  $btnApprove . "&nbsp" . $btnDecline . "&nbsp &nbsp &nbsp" . $btnUpdate . "&nbsp" . $btnDelete;
             })
             ->make(true);
     }
@@ -79,19 +81,19 @@ class LeaveListController extends Controller
     {
         $data = EmployeeLeaveApplication::find($id);
 
-        ['vacation_leave_earned' => $vacationLeave, 'vacation_leave_used' => $vacationLeaveUsed] =
-            $this->leaveRecordRepository->getVacationLeave($data->employee_id);
+        // ['vacation_leave_earned' => $vacationLeave, 'vacation_leave_used' => $vacationLeaveUsed] =
+        //     $this->leaveRecordRepository->getVacationLeave($data->employee_id);
 
-        $asOfDate = $this->leaveRecordRepository->getAsOfDate($data->employee_id);
+        // $asOfDate = $this->leaveRecordRepository->getAsOfDate($data->employee_id);
 
-        ['sick_leave_earned' => $sickLeaveEarned, 'sick_leave_used' => $sickLeaveUsed] =
-            $this->leaveRecordRepository->getSickLeave($data->employee_id);
+        // ['sick_leave_earned' => $sickLeaveEarned, 'sick_leave_used' => $sickLeaveUsed] =
+        //     $this->leaveRecordRepository->getSickLeave($data->employee_id);
 
-        $gender = $this->leaveTypeRepository->getLeaveTypesApplicableToGender($data->id);
+        $types = $this->leaveTypeRepository->getLeaveTypesApplicableToGender($data->application_id);
 
-        $types = $data->employee;
+        $employee = $data->employee;
 
-        return view('leave.add-ons.edit', compact('data', 'types', 'asOfDate', 'gender', 'vacationLeave', 'vacationLeaveUsed', 'sickLeaveEarned', 'sickLeaveUsed'));
+        return view('leave.leave-application-edit', compact('data', 'types', 'employee'));
     }
 
 
@@ -110,7 +112,7 @@ class LeaveListController extends Controller
         $leaveList->date_to               = $request['endDate'];
         $leaveList->commutation           = $request['commutation'];
         $leaveList->recommending_approval = $request['recommendingApproval'];
-        $leaveList->approved_by           = $request['approvedBy'];
+        $leaveList->approved_by           = $request['approvedBy']; 
         $leaveList->approved_status       = $request['status'];
 
         if ($request->status === 'approved') {
@@ -210,10 +212,12 @@ class LeaveListController extends Controller
                 $btnDelete = null;
                 // route('leave.leave-list.edit', $row->id) is the name of the route on the web.php
                 if ($row->status !== 'approved') {
-                    $btnUpdate = "<a href='" . route('leave-list.edit', $row->application_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil' title='Update Leave Request'></i></a>";
-                    $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="' . $row->application_id . '" hidden><i style="pointer-events:none;" class="la la-trash"></i></button>';
+                    $btnApprove = '<button type="button" class="rounded-circle text-white btnApprove btn btn-success btn-sm" title="Approved Request" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="fa fa-thumbs-up"></i></button>';
+                    $btnDecline = '<button type="button" class="rounded-circle text-white btnDecline btn btn-danger btn-sm" title="Decline Request" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="fa fa-thumbs-down"></i></button>';
+                    $btnUpdate = '<button type="button" class="rounded-circle text-white edit btn btn-info btn-sm" onclick="editLeaveApplication('.$row->application_id.')"><i class="la la-eye" title="Update Leave Request"></i></button>';
+                    $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
                 }
-                return $btnUpdate . "&nbsp" . $btnDelete;
+                return  $btnApprove . "&nbsp" . $btnDecline . "&nbsp &nbsp &nbsp" . $btnUpdate . "&nbsp" . $btnDelete;
             })->make(true);
     }
 }

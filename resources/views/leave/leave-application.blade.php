@@ -56,6 +56,8 @@
                                     <option data-office="{{ $employee->office_charging->Description }}"
                                         data-position="{{ $employee?->position?->Description }}"
                                         data-employeeId="{{ $employee->Employee_id }}"
+                                        data-vlBalance="{{ $employee->forwarded_leave_records?->vl_earned - $employee->forwarded_leave_records?->vl_used }}"
+                                        data-slBalance="{{ $employee->forwarded_leave_records?->sl_earned - $employee->forwarded_leave_records?->sl_used }}"
                                         value="{{ $employee->Employee_id }}">{{ $employee->LastName }},
                                         {{ $employee->FirstName }} {{ $employee->MiddleName }} </option>
                                     @endforeach
@@ -115,6 +117,7 @@
                                     </label>
                                 </div>
                             </div>
+                            <div class="alert alert-danger d-none" role="alert" id="formErrors"></div>
                         </div>
                     </div>
                 </div>
@@ -123,7 +126,6 @@
     </div>
     <div class="d-flex col-lg-9">
         <div class="flex-fill">
-            <div class="alert alert-danger d-none" role="alert" id="formErrors"></div>
             <div class="card h-100">
                 <div class="card-body">
                     <form method="POST" id="submitLeaveFileButton">
@@ -377,11 +379,16 @@ $(function () {
 
         let employeeOffice = selectedItem.getAttribute('data-office') || '';
         let employeePosition = selectedItem.getAttribute('data-position') || '';
+        let vlBalance = selectedItem.getAttribute('data-vlBalance') || '';
+        let slBalance = selectedItem.getAttribute('data-slBalance') || '';
         let photo = selectedItem.getAttribute('data-photo') || '';
-
+        let totBalance = parseInt(vlBalance) + parseInt(slBalance);
         $('#office').val(employeeOffice);
         $('#position').val(employeePosition);
         $('table tbody').html('');
+        $('#vlBal').val(vlBalance);
+        $('#slBal').val(slBalance);
+        $('#totalBalance').val(totBalance);
     });
 
     const ROUTE                        = "{{ route('employee.leave.application.filling.admin.create') }}";

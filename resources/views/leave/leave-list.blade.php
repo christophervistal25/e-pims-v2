@@ -354,15 +354,14 @@
     $(document).on('click', '.btnRemoveRecord', function () {
         let id = $(this).attr('data-id');
         let message = document.createElement('h3');
-        message.innerText = 'Are you sure you want to delete this row?';
-
+        message.innerText = 'Delete this?';
 
         swal({
                 title: message.innerText,
-                text: "Once you delete this row, it willl disappear on the table.",
+                text: "Click OK to confirm this action.",
                 icon: "warning",
                 buttons: true,
-                dangerMode: true,
+                dangerMode: true,   
             })
             .then((willSoftDelete) => {
                 if (willSoftDelete) {
@@ -402,6 +401,28 @@
                 class: ["no-min", "no-full", "no-resize", "no-max", "no-move"],
                 title : "Deductions",
                 url: `/employee/leave/application?winbox=1`,
+                index: 999999,
+                background: "#2a3042",
+                width: window.innerWidth - 230,
+                height: window.innerHeight,
+                x: 230,
+                y: 60,
+                onclose: function(force){
+                    $(document.documentElement).attr('style', 'overflow:auto;');
+                    filter();
+                }
+            });
+    }
+
+    function editLeaveApplication(application_id) {
+        $(document.documentElement).attr('style', 'overflow:hidden;');
+        let ROUTE = `leave/leave-list/`+application_id+`?winbox=1`;
+        // window.open('/employee/leave/application');
+        new WinBox(`LEAVE APPLICATION`, {
+                root: document.querySelector('.page-content'),
+                class: ["no-min", "no-full", "no-resize", "no-max", "no-move"],
+                title : "Deductions",
+                url: ROUTE,
                 index: 999999,
                 background: "#2a3042",
                 width: window.innerWidth - 230,
@@ -468,7 +489,10 @@
                     name: 'leave_type_id',
                     searchable: true,
                     sortable: false,
-                    visible: true
+                    visible: true,
+                    render: function (rawData, _, row) {
+                        return `${row.type.description}`;
+                    }
                 },
                 {
                     data: 'status',
