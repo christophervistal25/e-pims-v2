@@ -6,29 +6,20 @@ function ValidateDropDown(dropDown) {
     line.visibility = !dropDown.value;
 }
 
-$(document).ready(function() {
-    // Initialization of Datatables to display "No data available in table".
-    let salaryAdjustmentPerOfficeSelected = $(
-        "#salaryAdjustmentPerOffice"
-    ).DataTable();
-    let salaryAdjustmentPerOfficeNotSelected = $(
-        "#salaryAdjustmentPerOfficeList"
-    ).DataTable();
+$(document).ready(function () {
 
-    $("#employeeOffice").change(function(e) {
-        let filterYear = $("#yearAdjustment").val();
-        let employeeOffice = $("#employeeOffice").val();
+    $("#employeeOffice").change(function (e) {
         const FIRST_ELEMENT_OF_SELECT = 0;
+        let year = $("#yearAdjustment").val();
+        let office = $("#employeeOffice").val();
+
         let plantilla = $("#employeeOffice option:selected")[
             FIRST_ELEMENT_OF_SELECT
         ].getAttribute("data-plantilla");
         $("#officeAdjustment").html(plantilla || "");
 
         if (employeeOffice) {
-            salaryAdjustmentPerOfficeSelected.destroy();
-            salaryAdjustmentPerOfficeSelected = $(
-                "#salaryAdjustmentPerOffice"
-            ).DataTable({
+            $("#salaryAdjustmentPerOffice").DataTable({
                 processing: true,
                 serverSide: true,
                 destroy: true,
@@ -36,52 +27,86 @@ $(document).ready(function() {
                 pagingType: "full_numbers",
                 language: {
                     processing:
-                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
                 },
                 ajax: {
-                    url: `/api/office/salary/adjustment/peroffice/${employeeOffice}/${filterYear}`
+                    url: `/api/salary-adjustment-per-office/plantilla-with-adjustment/${office}/${year}`,
                 },
                 columns: [
                     {
                         data: "date_adjustment",
                         name: "date_adjustment",
-                        visible: true
+                        render : function (_,_,row) {
+                            let [adjustment] = row.salary_adjustment;
+                            return adjustment.date_adjustment;
+                        },
                     },
                     {
                         data: "office_code",
                         name: "office_code",
-                        visible: false
+                        visible: false,
                     },
-                    { data: "fullname", name: "fullname", visible: true },
-                    { data: "sg_no", name: "sg_no", visible: true },
-                    { data: "step_no", name: "step_no", visible: true },
+                    { 
+                        data: "fullname",
+                        name: "fullname",
+                        render : function (_, _, row) {
+                            return row.employee.fullname;
+                        },
+                    },
+                    { 
+                        data: "sg_no",
+                        name: "sg_no",
+                        render : function (_, _, row) {
+                            let [adjustment] = row.salary_adjustment;
+                            return adjustment.sg_no;
+                        }
+                    },
+                    {
+                         data: "step_no", 
+                         name: "step_no",
+                         render : function (_, _, row) {
+                            let [adjustment] = row.salary_adjustment;
+                            return adjustment.step_no;
+                        }
+                    },
                     {
                         data: "salary_previous",
                         name: "salary_previous",
-                        visible: true,
-                        render: $.fn.dataTable.render.number(",", ".", 2)
+                        render : function (_, _, row) {
+                            let [adjustment] = row.salary_adjustment;
+                            return adjustment.salary_previous;
+                        }
                     },
                     {
                         data: "salary_new",
                         name: "salary_new",
-                        visible: true,
-                        render: $.fn.dataTable.render.number(",", ".", 2)
+                        render : function (_, _, row) {
+                            let [adjustment] = row.salary_adjustment;
+                            return adjustment.salary_new;
+                        }
                     },
                     {
                         data: "salary_diff",
                         name: "salary_diff",
-                        visible: true,
-                        render: $.fn.dataTable.render.number(",", ".", 2)
+                        render : function (_, _, row) {
+                            let [adjustment] = row.salary_adjustment;
+                            return adjustment.salary_diff;
+                        }
                     },
-                    { data: "action", name: "action", visible: true }
-                ]
+                ],
             });
 
-            // Salary adjustment list (NOT SELECTED)
-            salaryAdjustmentPerOfficeNotSelected.destroy();
-            salaryAdjustmentPerOfficeNotSelected = $(
-                "#salaryAdjustmentPerOfficeList"
-            ).DataTable({
+            
+        }
+    });
+
+    $("#addButton").click(function () {
+        let year = $("#yearAdjustment").val();
+        let office = $("#employeeOffice").val();
+
+        $("#add").attr("class", "page-header");
+        $("#table").attr("class", "page-header d-none");
+            $("#salaryAdjustmentPerOfficeList").DataTable({
                 processing: true,
                 serverSide: true,
                 destroy: true,
@@ -89,10 +114,10 @@ $(document).ready(function() {
                 pagingType: "full_numbers",
                 language: {
                     processing:
-                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
                 },
                 ajax: {
-                    url: `/api/office/salary/adjustment/peroffice/notselected/${employeeOffice}/query`
+                    url: `/api/salary-adjustment-per-office/plantilla-without-adjustment/${office}/${year}`,
                 },
                 columns: [
                     {
@@ -100,61 +125,53 @@ $(document).ready(function() {
                         name: "checkbox",
                         searchable: false,
                         orderable: false,
-                        sortable: false
+                        sortable: false,
                     },
                     {
                         data: "fullname",
                         name: "fullname",
                         visible: true,
-                        defaultContent : 'test',
+                        render : function (_, _, row) {
+                            return row.employee.fullname;
+                        },
                     },
                     {
-                        data: "plantilla.office_code",
-                        name: "office_code",
+                        data: "office.office_code",
+                        name: "office.office_code",
                         visible: false,
-                        defaultContent : 'test',
                     },
                     {
-                        data:
-                            "plantilla.plantilla_position.position.position_name",
+                        data: "plantilla.pp_id",
                         name: "position_name",
-                        defaultContent: ""
+                        render : function (_, _, row) {
+                            let { plantilla_positions } = row;
+                            return plantilla_positions.position.Description;
+                         }
                     },
                     {
-                        data: "plantilla.sg_no",
+                        data: "sg_no",
                         name: "sg_no",
-                        defaultContent : 'test',
                     },
                     {
-                        data: "plantilla.step_no",
+                        data: "step_no",
                         name: "step_no",
-                        defaultContent : 'test',
                     },
                     {
-                        data: "plantilla.salary_amount",
+                        data: "salary_amount",
                         name: "salary_amount",
                         visible: true,
                         render: $.fn.dataTable.render.number(",", ".", 2),
-                        defaultContent : 'test',
-                    }
-                ]
+                    },
+                ],
             });
-        } else {
-            // Clear the data
-        }
     });
 
-    $("#addButton").click(function() {
-        $("#add").attr("class", "page-header");
-        $("#table").attr("class", "page-header d-none");
-    });
-
-    $("#cancelButton").click(function() {
+    $("#cancelButton").click(function () {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
     });
 
-    $("#selectAll").click(function(e) {
+    $("#selectAll").click(function (e) {
         // Get all rows with search applied
         let rows = salaryAdjustmentPerOfficeNotSelected
             .rows({ search: "applied" })
@@ -163,7 +180,7 @@ $(document).ready(function() {
         $('input[type="checkbox"]', rows).prop("checked", this.checked);
     });
 
-    $("#saveBtn").click(function() {
+    $("#saveBtn").click(function () {
         let date = $("#dateAdjustment").val();
         let currentYear = $("#year").val();
         let remarks = $("#remarks").val();
@@ -173,7 +190,7 @@ $(document).ready(function() {
         $("#loading").removeClass("d-none");
         $("#saving").html("Saving . . . ");
 
-        $(".not-select-checkbox").each(function(index, element) {
+        $(".not-select-checkbox").each(function (index, element) {
             if (element.checked == true) {
                 selectedRecordIDS.push(element.value);
             }
@@ -192,9 +209,9 @@ $(document).ready(function() {
                     ids: selectedRecordIDS.toString(),
                     date: date,
                     year: currentYear,
-                    remarks: remarks
+                    remarks: remarks,
                 },
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
                         swal("Successfully Added!", "", "success");
                         salaryAdjustmentPerOfficeSelected.ajax.reload();
@@ -205,7 +222,7 @@ $(document).ready(function() {
                         $("#selectAll").prop("checked", false);
                         $("#remarks").val("");
                     }
-                }
+                },
             });
         }
     });

@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Plantilla extends Model
 {
-    public $connection = 'DTR_PAYROLL_CONNECTION';
+    // public $connection = 'DTR_PAYROLL_CONNECTION';
     public $table = 'plantillas';
     public const REGIONS = [
         'Region 1',
@@ -61,7 +61,7 @@ class Plantilla extends Model
 
     public function Employee()
     {
-        return $this->belongsTo(Employee::class, 'employee_id', 'Employee_id');
+        return $this->belongsTo(Employee::class, 'employee_id', 'Employee_id')->select('Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode');
     }
 
     public function employee_record()

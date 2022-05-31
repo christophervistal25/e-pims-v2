@@ -22,6 +22,7 @@ class Employee extends Model
     protected $connection = 'DTR_PAYROLL_CONNECTION';
     protected $table = 'Employees';
     public $with = ['position', 'office_charging', 'office_assignment'];
+    public $dates = ['first_day_of_service', 'last_step_increment'];
     // 'office_charging.desc'
     public $keyType = 'string';
 
@@ -92,6 +93,7 @@ class Employee extends Model
         'telephone_no',
         'first_day_of_service',
         'office_code',
+        'last_step_increment'
     ];
 
     protected $fillable = [
@@ -161,6 +163,7 @@ class Employee extends Model
         'telephone_no',
         'first_day_of_service',
         'office_code',
+        'last_step_increment'
     ];
 
     public const ACTIVE = 1;
@@ -168,7 +171,7 @@ class Employee extends Model
 
     public $appends = [
         'fullname'
-    ];
+    ];  
 
     public function province_residential()
     {
@@ -260,7 +263,7 @@ class Employee extends Model
     {
         return $this->hasOne(Plantilla::class, 'employee_id', 'Employee_id');
     }
-    
+
 
     public function PlantillaSchedule()
     {
@@ -269,7 +272,7 @@ class Employee extends Model
 
 
     public function family_background()
-    {           
+    {
         return $this->hasOne(EmployeeFamilyBackground::class, 'employee_id', 'employee_id');
     }
 

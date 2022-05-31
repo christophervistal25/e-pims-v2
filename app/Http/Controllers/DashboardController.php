@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
+use App\StepIncrement;
 use App\PlantillaSchedule;
 use App\Services\EmployeeService;
 use Illuminate\Support\Collection;
@@ -13,7 +14,8 @@ use App\Http\Repositories\BirthdayRepository;
 class DashboardController extends Controller
 {
     public function __construct(public EmployeeBirthdayService $employeeBirthdayService, public EmployeeService $employeeService)
-    {}
+    {
+    }
 
     public function index()
     {
@@ -33,12 +35,19 @@ class DashboardController extends Controller
         $employeesWithNewPlantillas = $this->employeeService->getNoOfEmployeesWithNewPlantilla();
 
         $on_going_leave = 0;
-        // $on_going_leave = Employee::whereHas('leave_files', function ($query) {
-        //     $query->where('approved_status', 'on-going');
-        // })->count();
+
+        $promotionInSixMonths = Employee::permanent()
+            ->where('last_step_increment', '!=', null)
+            ->get(['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'PosCode', 'OfficeCode', 'first_day_of_service', 'last_step_increment'])
+            ->each(function ($employee) {
+                $lastStepIncrementPlusThreeYears = $employee->last_step_increment->addYears(3);
+                $sixMonthRange = $lastStepIncrementPlusThreeYears->copy();
+                $employee->in_range_of_six_months = $employee->last_step_increment->between($sixMonthRange->subMonths(6), $lastStepIncrementPlusThreeYears) ? true : false;
+                $employee->in_range_of_six_months = true;
+            });
+        $promotionInSixMonths = $promotionInSixMonths->where('in_range_of_six_months', true);
 
 
-    
         return view('blank-page', [
             'today'                  => $today,
             'tomorrow'               => $tomorrow,
@@ -53,8 +62,16 @@ class DashboardController extends Controller
             'on_going_leave'         => $on_going_leave,
             'plantillas'             => $employeesWithNewPlantillas,
             'eligible'               => $employeesWithEligibility,
-        ]);   
+            'promotionInSixMonths' => $promotionInSixMonths,
+        ]);
     }
-    
 
+
+    public function notif()
+    {
+        $data = StepIncrement::get();
+
+
+        dd($data);
+    }
 }

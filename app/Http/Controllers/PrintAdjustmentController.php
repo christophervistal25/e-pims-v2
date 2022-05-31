@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\SalaryAdjustment;
 use App\Setting;
+use App\Employee;
 class PrintAdjustmentController extends Controller
 {
     /**
@@ -24,8 +25,8 @@ class PrintAdjustmentController extends Controller
     }
     public function printList($id)
     {
-        $salaryAdjustment = SalaryAdjustment::with(['plantilla', 'plantilla.position', 'plantilla.office', 'position', 'position.position_name'])->find($id);
-        $setting = Setting::find(1);
+        $salaryAdjustment = SalaryAdjustment::with(['employee','plantilla', 'plantilla.plantilla_positions.position', 'plantilla.office'])->find($id);
+        $setting = Setting::find('SALARYADPRINT');
         return view('salaryAdjustment.print.printAdjustment', compact('salaryAdjustment', 'id', 'setting'));
     }
     /**
