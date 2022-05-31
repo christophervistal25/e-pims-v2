@@ -12,9 +12,34 @@
           background: #ff9b44 !important;
      }
 
+    #notification {
+        position: sticky;
+        width: 100%;
+        height: 300px;
+        overflow-x: scroll;
+        white-space: nowrap;
+    }   
+
 </style>
 @endprepend
 @section('content')
+<div class="card d-block" data-notif="" id="notification">
+    <div class="alert alert-warning" id="header-warning">
+        These are the names of employees that have an upcoming step-increment. To see more details, cliick the button below.
+        <i class="fas fa-close text-danger float-right pr-2 mt-2" id="closeIcon"></i>
+    </div>
+    
+
+    <h1 class="p-4" id="employees">Employee Names</h1>
+
+    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus nemo autem nam ea blanditiis unde quo voluptas eum a natus! Eligendi suscipit ducimus iste dignissimos harum. Dolores et, consequuntur aperiam perspiciatis fugit eligendi deleniti provident debitis incidunt quod minus quibusdam voluptates molestias minima non, omnis molestiae a, officiis suscipit? Cum, fugit debitis nobis minus aperiam quod ad ducimus eum sapiente fugiat! Molestias laboriosam, reprehenderit libero quo fuga officia! Non magni tempore est aspernatur aliquid delectus illo, incidunt ratione esse! Sit repellat excepturi nihil! Dolorem aspernatur, molestiae ratione in, dolores, aperiam architecto dolor eligendi culpa pariatur quam voluptas maxime accusantium distinctio.</p>
+  
+
+    <div class="col-lg-12 text-center">
+        <a href="/" class="btn btn-primary col-lg-12"><i class="fas fa-list">&nbsp; See More</i></a>
+    </div>
+</div>
+
 <div class="row">
      <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
           <div class="card dash-widget">
@@ -276,6 +301,16 @@
 
      <script src="/assets/js/jquery.slimscroll.min.js"></script>
 
+<<<<<<< HEAD
+
+<script>
+  
+    $('#closeIcon').on('click', function() {
+        $('#notification').fadeOut(1000, function() {
+            $('#notification').remove();
+        });
+    })
+=======
      <script src="/assets/plugins/morris/morris.min.js"></script>
      <script src="/assets/plugins/raphael/raphael.min.js"></script>
 
@@ -286,6 +321,7 @@
                                    $('#notification').remove();
                               }
                          });
+>>>>>>> 4726173be1a3c44c3a51c8df5d3525f3cd9de2c3
 
      </script>
 
