@@ -44,8 +44,10 @@ class LeaveListController extends Controller
                 return $row->date_applied;
             })
             ->addColumn('action', function ($row) {
+                $btnApprove = null;
                 $btnUpdate = null;
                 $btnDelete = null;
+                $btnDecline = null;
                 // route('leave.leave-list.edit', $row->id) is the name of the route on the web.php
                 if ($row->status !== 'approved') {
                     $btnApprove = '<button type="button" class="rounded-circle text-white btnApprove btn btn-success btn-sm" title="Approved Request" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="fa fa-thumbs-up"></i></button>';
@@ -103,42 +105,41 @@ class LeaveListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $leaveList = EmployeeLeaveApplication::with('leave_records')->find($id);
-        $leaveList->date_applied          = $request['dateApply'];
-        $leaveList->leave_type_id         = $request['selectedLeave'];
-        $leaveList->incase_of             = $request['inCaseOfLeave'];
-        $leaveList->no_of_days            = $request['numberOfDays'];
-        $leaveList->date_from             = $request['startDate'];
-        $leaveList->date_to               = $request['endDate'];
-        $leaveList->commutation           = $request['commutation'];
-        $leaveList->recommending_approval = $request['recommendingApproval'];
-        $leaveList->approved_by           = $request['approvedBy']; 
-        $leaveList->approved_status       = $request['status'];
+        $leaveList = EmployeeLeaveApplication::where('application_id', $id)->first();
+        // $leaveList->date_applied          = $request['dateApply'];
+        // $leaveList->leave_type_id         = $request['selectedLeave'];
+        // $leaveList->incase_of             = $request['inCaseOfLeave'];
+        // $leaveList->no_of_days            = $request['numberOfDays'];
+        // $leaveList->date_from             = $request['startDate'];
+        // $leaveList->date_to               = $request['endDate'];
+        // $leaveList->commutation           = $request['commutation'];
+        // $leaveList->recommending_approval = $request['recommendingApproval'];
+        // $leaveList->approved_by           = $request['approvedBy']; 
+        // $leaveList->approved_status       = $request['status'];
 
         if ($request->status === 'approved') {
             $leaveList->date_approved = Carbon::now()->format('Y-m-d');
             $leaveList->date_rejected = null;
-            $leaveList->approved_for = $request['approvedFor'];
-            $leaveList->disapproved_due_to = null;
+            $leaveList->status = 'approved';
+            $leaveList->save();
 
-
-            EmployeeLeaveRecord::updateOrCreate(
-                [
-                    'date_record' => $request['startDate'],
-                    'employee_id' => $leaveList->employee_id,
-                    'leave_application_id' => $id,
-                ],
-                [
-                    'employee_id'          => $leaveList->employee_id,
-                    'particular'           => ($leaveList->type->code) . '(' . $request->numberOfDays . '-0' . '-0' . ')',
-                    'leave_type_id'        => $request->selectedLeave,
-                    'earned'               => 0.000,
-                    'used'                 => $request->numberOfDays,
-                    'leave_application_id' => $id,
-                    'date_record'          => $request['startDate'],
-                    'record_type'          => 'D',
-                ]
-            );
+            // EmployeeLeaveRecord::updateOrCreate(
+            //     [
+            //         'date_record' => $request['startDate'],
+            //         'employee_id' => $leaveList->employee_id,
+            //         'leave_application_id' => $id,
+            //     ],
+            //     [
+            //         'employee_id'          => $leaveList->employee_id,
+            //         'particular'           => ($leaveList->type->code) . '(' . $request->numberOfDays . '-0' . '-0' . ')',
+            //         'leave_type_id'        => $request->selectedLeave,
+            //         'earned'               => 0.000,
+            //         'used'                 => $request->numberOfDays,
+            //         'leave_application_id' => $id,
+            //         'date_record'          => $request['startDate'],
+            //         'record_type'          => 'D',
+            //     ]
+            // );
         } elseif ($request->status === 'declined') {
             $leaveList->date_rejected = Carbon::now()->format('Y-m-d');
             $leaveList->approved_for = null;
@@ -208,6 +209,7 @@ class LeaveListController extends Controller
                 return $row->date_applied;
             })
             ->addColumn('action', function ($row) {
+                $btnApprove = null;
                 $btnUpdate = null;
                 $btnDelete = null;
                 // route('leave.leave-list.edit', $row->id) is the name of the route on the web.php
@@ -216,7 +218,7 @@ class LeaveListController extends Controller
                     $btnDecline = '<button type="button" class="rounded-circle text-white btnDecline btn btn-danger btn-sm" title="Decline Request" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="fa fa-thumbs-down"></i></button>';
                     $btnUpdate = '<button type="button" class="rounded-circle text-white edit btn btn-info btn-sm" onclick="editLeaveApplication('.$row->application_id.')"><i class="la la-eye" title="Update Leave Request"></i></button>';
                     $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
-                }
+                } 
                 return  $btnApprove . "&nbsp" . $btnDecline . "&nbsp &nbsp &nbsp" . $btnUpdate . "&nbsp" . $btnDelete;
             })->make(true);
     }
