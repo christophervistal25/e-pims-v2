@@ -7,28 +7,19 @@ function ValidateDropDown(dropDown) {
 }
 
 $(document).ready(function () {
-    // Initialization of Datatables to display "No data available in table".
-    let salaryAdjustmentPerOfficeSelected = $(
-        "#salaryAdjustmentPerOffice"
-    ).DataTable();
-    let salaryAdjustmentPerOfficeNotSelected = $(
-        "#salaryAdjustmentPerOfficeList"
-    ).DataTable();
 
     $("#employeeOffice").change(function (e) {
-        let filterYear = $("#yearAdjustment").val();
-        let employeeOffice = $("#employeeOffice").val();
         const FIRST_ELEMENT_OF_SELECT = 0;
+        let year = $("#yearAdjustment").val();
+        let office = $("#employeeOffice").val();
+
         let plantilla = $("#employeeOffice option:selected")[
             FIRST_ELEMENT_OF_SELECT
         ].getAttribute("data-plantilla");
         $("#officeAdjustment").html(plantilla || "");
 
         if (employeeOffice) {
-            salaryAdjustmentPerOfficeSelected.destroy();
-            salaryAdjustmentPerOfficeSelected = $(
-                "#salaryAdjustmentPerOffice"
-            ).DataTable({
+            $("#salaryAdjustmentPerOffice").DataTable({
                 processing: true,
                 serverSide: true,
                 destroy: true,
@@ -39,49 +30,83 @@ $(document).ready(function () {
                         '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
                 },
                 ajax: {
-                    url: `/api/office/salary/adjustment/peroffice/${employeeOffice}/${filterYear}`,
+                    url: `/api/salary-adjustment-per-office/plantilla-with-adjustment/${office}/${year}`,
                 },
                 columns: [
                     {
                         data: "date_adjustment",
                         name: "date_adjustment",
-                        visible: true,
+                        render : function (_,_,row) {
+                            let [adjustment] = row.salary_adjustment;
+                            return adjustment.date_adjustment;
+                        },
                     },
                     {
                         data: "office_code",
                         name: "office_code",
                         visible: false,
                     },
-                    { data: "fullname", name: "fullname", visible: true },
-                    { data: "sg_no", name: "sg_no", visible: true },
-                    { data: "step_no", name: "step_no", visible: true },
+                    { 
+                        data: "fullname",
+                        name: "fullname",
+                        render : function (_, _, row) {
+                            return row.employee.fullname;
+                        },
+                    },
+                    { 
+                        data: "sg_no",
+                        name: "sg_no",
+                        render : function (_, _, row) {
+                            let [adjustment] = row.salary_adjustment;
+                            return adjustment.sg_no;
+                        }
+                    },
+                    {
+                         data: "step_no", 
+                         name: "step_no",
+                         render : function (_, _, row) {
+                            let [adjustment] = row.salary_adjustment;
+                            return adjustment.step_no;
+                        }
+                    },
                     {
                         data: "salary_previous",
                         name: "salary_previous",
-                        visible: true,
-                        render: $.fn.dataTable.render.number(",", ".", 2),
+                        render : function (_, _, row) {
+                            let [adjustment] = row.salary_adjustment;
+                            return adjustment.salary_previous;
+                        }
                     },
                     {
                         data: "salary_new",
                         name: "salary_new",
-                        visible: true,
-                        render: $.fn.dataTable.render.number(",", ".", 2),
+                        render : function (_, _, row) {
+                            let [adjustment] = row.salary_adjustment;
+                            return adjustment.salary_new;
+                        }
                     },
                     {
                         data: "salary_diff",
                         name: "salary_diff",
-                        visible: true,
-                        render: $.fn.dataTable.render.number(",", ".", 2),
+                        render : function (_, _, row) {
+                            let [adjustment] = row.salary_adjustment;
+                            return adjustment.salary_diff;
+                        }
                     },
-                    { data: "action", name: "action", visible: true },
                 ],
             });
 
-            // Salary adjustment list (NOT SELECTED, to be adjust)
-            salaryAdjustmentPerOfficeNotSelected.destroy();
-            salaryAdjustmentPerOfficeNotSelected = $(
-                "#salaryAdjustmentPerOfficeList"
-            ).DataTable({
+            
+        }
+    });
+
+    $("#addButton").click(function () {
+        let year = $("#yearAdjustment").val();
+        let office = $("#employeeOffice").val();
+
+        $("#add").attr("class", "page-header");
+        $("#table").attr("class", "page-header d-none");
+            $("#salaryAdjustmentPerOfficeList").DataTable({
                 processing: true,
                 serverSide: true,
                 destroy: true,
@@ -92,7 +117,7 @@ $(document).ready(function () {
                         '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
                 },
                 ajax: {
-                    url: `/api/office/salary/adjustment/peroffice/notselected/${employeeOffice}/query`,
+                    url: `/api/salary-adjustment-per-office/plantilla-without-adjustment/${office}/${year}`,
                 },
                 columns: [
                     {
@@ -106,42 +131,39 @@ $(document).ready(function () {
                         data: "fullname",
                         name: "fullname",
                         visible: true,
+                        render : function (_, _, row) {
+                            return row.employee.fullname;
+                        },
                     },
                     {
-                        data: "plantilla.office_code",
-                        name: "office_code",
+                        data: "office.office_code",
+                        name: "office.office_code",
                         visible: false,
                     },
                     {
                         data: "plantilla.pp_id",
-                        // data: "plantilla.plantilla_position.position.position_name",
                         name: "position_name",
-                        defaultContent: "",
+                        render : function (_, _, row) {
+                            let { plantilla_positions } = row;
+                            return plantilla_positions.position.Description;
+                         }
                     },
                     {
-                        data: "plantilla.sg_no",
+                        data: "sg_no",
                         name: "sg_no",
                     },
                     {
-                        data: "plantilla.step_no",
+                        data: "step_no",
                         name: "step_no",
                     },
                     {
-                        data: "plantilla.salary_amount",
+                        data: "salary_amount",
                         name: "salary_amount",
                         visible: true,
                         render: $.fn.dataTable.render.number(",", ".", 2),
                     },
                 ],
             });
-        } else {
-            // Clear the data
-        }
-    });
-
-    $("#addButton").click(function () {
-        $("#add").attr("class", "page-header");
-        $("#table").attr("class", "page-header d-none");
     });
 
     $("#cancelButton").click(function () {

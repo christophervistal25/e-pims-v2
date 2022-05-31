@@ -17,10 +17,12 @@ use App\Http\Controllers\Api\OfficeController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\PositionController;
 use App\Http\Controllers\Api\ProvinceController;
+use App\Http\Controllers\Api\SalaryAdjustmentPerOfficeController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\StepIncrementController;
 use App\Http\Controllers\PersonalDataSheetController;
 use App\Http\Controllers\DownloadPersonalDataSheetController;
+use App\SalaryAdjustment;
 
 Route::group(['prefix' => 'personal-data-sheet'], function () {
 
@@ -185,41 +187,47 @@ Route::get('/office/salary/adjustment/peroffice/{officeCode}/{filterYear}', func
         ->rawColumns(['action'])
         ->make(true);
 });
+
 // salary adjustment per office not selected
-Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}/query', function ($officeCode) {
-    $dataWithLateSalaryAdjustment = Employee::with(['plantilla' => function ($query) use ($officeCode)
-            {
-                    $query->where('office_code', $officeCode);
-            }
-        , 'plantilla.pp_id', 'salary_adjustment'])
-        ->has('salary_adjustment')
-        ->get(['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode', 'OfficeCode2'])
-        ->filter(function ($record) {
-            return !in_array(date('Y'), $record->salary_adjustment->pluck('date_adjustment_year')->toArray());
-        });
-
-
-
-    $dataWithNoSalaryAdjustment = Employee::whereHas('plantilla', function ($query) use ($officeCode) {
-        $query->where('office_code', $officeCode)->where('year', date('Y'));
-    })
-        ->with(['plantilla', 'plantilla.plantillaPosition.position', 'plantilla.position'])
-        ->doesntHave('salary_adjustment')
-        ->get(['Employee_id', 'FirstName', 'Middlename', 'LastName', 'Suffix', 'PosCode', 'OfficeCode', 'OfficeCode2']);
-
-
-    $data = $dataWithLateSalaryAdjustment->merge($dataWithNoSalaryAdjustment);
-
-
-
-    return DataTables::of($data)
-        ->editColumn('checkbox', function ($row) {
-            // $checkbox = "<input id='checkbox{$row->plantilla->plantilla_id}' class='not-select-checkbox' style='transform:scale(1.35)' value='{$row->plantilla->plantilla_id}' type='checkbox' />";
-            $checkbox = "<input id='checkbox{$row}' class='not-select-checkbox' style='transform:scale(1.35)' value='' type='checkbox' />";
-            return $checkbox;
-        })->rawColumns(['checkbox'])
-        ->make(true);
+Route::group(['prefix' => 'salary-adjustment-per-office'], function () {
+    Route::get('plantilla-with-adjustment/{office}/{year?}', [SalaryAdjustmentPerOfficeController::class, 'plantillaWithAdjustment']);
+    Route::get('plantilla-without-adjustment/{office}/{year?}', [SalaryAdjustmentPerOfficeController::class, 'plantillaWithoutAdjustment']);
 });
+// Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}/query', );
+// Route::get('/office/salary/adjustment/peroffice/notselected/{officeCode}/query', function ($officeCode) {
+    // $dataWithLateSalaryAdjustment = Employee::with(['plantilla' => function ($query) use ($officeCode)
+    //         {
+    //                 $query->where('office_code', $officeCode);
+    //         }
+    //     , 'plantilla.pp_id', 'salary_adjustment'])
+    //     ->has('salary_adjustment')
+    //     ->get(['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode', 'OfficeCode2'])
+    //     ->filter(function ($record) {
+    //         return !in_array(date('Y'), $record->salary_adjustment->pluck('date_adjustment_year')->toArray());
+    //     });
+
+
+
+    // $dataWithNoSalaryAdjustment = Employee::whereHas('plantilla', function ($query) use ($officeCode) {
+    //     $query->where('office_code', $officeCode)->where('year', date('Y'));
+    // })
+    //     ->with(['plantilla', 'plantilla.plantillaPosition.position', 'plantilla.position'])
+    //     ->doesntHave('salary_adjustment')
+    //     ->get(['Employee_id', 'FirstName', 'Middlename', 'LastName', 'Suffix', 'PosCode', 'OfficeCode', 'OfficeCode2']);
+
+
+    // $data = $dataWithLateSalaryAdjustment->merge($dataWithNoSalaryAdjustment);
+
+
+
+    // return DataTables::of($data)
+    //     ->editColumn('checkbox', function ($row) {
+    //         // $checkbox = "<input id='checkbox{$row->plantilla->plantilla_id}' class='not-select-checkbox' style='transform:scale(1.35)' value='{$row->plantilla->plantilla_id}' type='checkbox' />";
+    //         $checkbox = "<input id='checkbox{$row}' class='not-select-checkbox' style='transform:scale(1.35)' value='' type='checkbox' />";
+    //         return $checkbox;
+    //     })->rawColumns(['checkbox'])
+    //     ->make(true);
+// });
 
 // salary adjustment per office multiple save
 Route::post('/salary-adjustment-per-office', function () {
