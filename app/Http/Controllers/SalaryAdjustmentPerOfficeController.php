@@ -49,31 +49,11 @@ class SalaryAdjustmentPerOfficeController extends Controller
             })
             ->rawColumns(['action'])
             ->make(true);
-        //old query
-        // if ($request->ajax()) {
-        //     $data = SalaryAdjustment::select('id','employee_id','item_no','pp_id', 'date_adjustment', 'sg_no', 'step_no', 'salary_previous','salary_new','salary_diff')->with('plantillaPosition:pp_id,position_id','plantillaPosition', 'plantillaPosition.position','employee:employee_id,firstname,middlename,lastname,extension', 'plantilla:employee_id,office_code');
-        //     return (new Datatables)->eloquent($data)
-        //             ->addIndexColumn()
-        //             ->addColumn('employee', function ($row) {
-        //                 return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
-        //             })
-        //             ->addColumn('plantilla', function ($row) {
-        //                 return $row->plantilla->office_code;
-        //             })
-        //             ->addColumn('action', function($row){
-        //                 $btn = "<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
-        //                 ";
-        //                     return $btn;
-        //             })
-        //             ->rawColumns(['action'])
-        //             ->make(true);
-        // }
         return view('SalaryAdjustmentPerOffice.SalaryAdjustmentPerOffice');
     }
 
     public function NotSelectedlist(Request $request)
     {
-        // $salaryAdjustment = SalaryAdjustment::get()->pluck('employee_id')->toArray();
         $data = DB::table('plantillas')
             ->join('employees', 'plantillas.employee_id', '=', 'employees.employee_id')
             ->join('plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
@@ -86,25 +66,6 @@ class SalaryAdjustmentPerOfficeController extends Controller
                 return $checkbox;
             })->rawColumns(['checkbox'])
             ->make(true);
-
-        //old query
-        // if ($request->ajax()) {
-        //     $salaryAdjustment = SalaryAdjustment::get()->pluck('employee_id')->toArray();
-        //     $data = Plantilla::select('plantilla_id','item_no', 'office_code', 'pp_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id')->with('plantillaPosition:pp_id,position_id','plantillaPosition', 'plantillaPosition.position','employee:employee_id,firstname,middlename,lastname,extension')->whereNotIn('employee_id', $salaryAdjustment );
-        //     return (new Datatables)->eloquent($data)
-        //             ->addIndexColumn()
-        //             ->addColumn('employee', function ($row) {
-        //                 return $row->employee->firstname . ' ' . $row->employee->middlename  . ' ' . $row->employee->lastname;
-        //             })
-        //             ->addColumn('plantillaPosition', function ($row) {
-        //                 return $row->plantillaPosition->position->position_name;
-        //             })
-        //             ->editColumn('checkbox', function ($row) {
-        //                 $checkbox = "<input id='checkbox$row->plantilla_id' style='transform:scale(1.35)' value='$row->plantilla_id' type='checkbox' />";
-        //                 return $checkbox;
-        //             })->rawColumns(['checkbox'])
-        //             ->make(true);
-        // }
         return view('SalaryAdjustmentPerOffice.SalaryAdjustmentPerOffice');
     }
 
