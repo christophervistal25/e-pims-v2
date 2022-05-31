@@ -1,5 +1,7 @@
 <?php
 
+use App\Employee;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BirthdayController;
@@ -99,7 +101,7 @@ Route::group(['prefix' => 'employee'], function () {
     Route::get('/leave/leave-recall', 'EmployeeLeave\LeaveRecallController@index')->name('leave.leave-recall');
     Route::resource('/leave-recall', 'EmployeeLeave\LeaveRecallController');
     Route::post('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@storeByAdmin')
-            ->name('employee.leave.application.filling.admin.create');
+        ->name('employee.leave.application.filling.admin.create');
     Route::get('/list/leave-forwarded-balance', 'EmployeeLeave\LeaveForwardedBalanceController@list')->name('leave-forwarded-balance.list');
     Route::post('/leave-forwarded-balance/{id}', 'EmployeeLeave\LeaveForwardedBalanceController@destroy');
     Route::get('/leave-forwarded-balance/{id}/edit', 'EmployeeLeave\LeaveForwardedBalanceController@edit');
@@ -200,3 +202,7 @@ Route::get('404', function () {
 
 // Jobs route.
 Route::post('leave-increment-job', 'LeaveIncrementJobController');
+
+Route::get('see-more/promotions', function () {
+    return view('StepIncrement.see-more');
+})->name('promotion.see-more');
