@@ -31,32 +31,11 @@ class StepIncrement extends Model
         'office_code',
         'deleted_at',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'PosCode',
+        'last_latest_appointment',
     ];
 
-     public static function boot()
-    {
-        parent::boot();
-        self::creating(function ($position) {
-            Cache::forget('step_increment_records');
-        });
-
-        self::created(function() {
-            Cache::forget('step_increment_records');
-        });
-
-        self::updated(function($record) {
-            Cache::forget('step_increment_records');
-        });
-
-        self::saved(function() {
-            Cache::forget('step_increment_records');
-        });
-
-        self::deleted(function() {  
-            Cache::forget('step_increment_records');
-        });
-    }
 
     public function employee()
     {
@@ -82,5 +61,4 @@ class StepIncrement extends Model
     {
         return $this->belongsTo(Office::class, 'office_code', 'office_code');
     }
-
 }
