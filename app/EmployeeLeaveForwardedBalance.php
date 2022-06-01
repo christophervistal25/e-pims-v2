@@ -9,13 +9,13 @@ class EmployeeLeaveForwardedBalance extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'forwarded_id';
     protected $connection = 'DTR_PAYROLL_CONNECTION';
     public $table = 'employee_leave_forwarded_balance';
     public $timestamps = false;
     
     protected $fillable = [
-        'id',
+        'forwarded_id',
         'Employee_id',
         'vl_earned',
         'vl_used',

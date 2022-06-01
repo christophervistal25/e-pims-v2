@@ -7,7 +7,6 @@ function ValidateDropDown(dropDown) {
 }
 
 $(document).ready(function () {
-
     $("#employeeOffice").change(function (e) {
         const FIRST_ELEMENT_OF_SELECT = 0;
         let year = $("#yearAdjustment").val();
@@ -19,7 +18,9 @@ $(document).ready(function () {
         $("#officeAdjustment").html(plantilla || "");
 
         if (employeeOffice) {
-            $("#salaryAdjustmentPerOffice").DataTable({
+            salaryAdjustmentPerOfficeSelected = $(
+                "#salaryAdjustmentPerOffice"
+            ).DataTable({
                 processing: true,
                 serverSide: true,
                 destroy: true,
@@ -36,7 +37,7 @@ $(document).ready(function () {
                     {
                         data: "date_adjustment",
                         name: "date_adjustment",
-                        render : function (_,_,row) {
+                        render: function (_, _, row) {
                             let [adjustment] = row.salary_adjustment;
                             return adjustment.date_adjustment;
                         },
@@ -46,57 +47,55 @@ $(document).ready(function () {
                         name: "office_code",
                         visible: false,
                     },
-                    { 
+                    {
                         data: "fullname",
                         name: "fullname",
-                        render : function (_, _, row) {
+                        render: function (_, _, row) {
                             return row.employee.fullname;
                         },
                     },
-                    { 
+                    {
                         data: "sg_no",
                         name: "sg_no",
-                        render : function (_, _, row) {
+                        render: function (_, _, row) {
                             let [adjustment] = row.salary_adjustment;
                             return adjustment.sg_no;
-                        }
+                        },
                     },
                     {
-                         data: "step_no", 
-                         name: "step_no",
-                         render : function (_, _, row) {
+                        data: "step_no",
+                        name: "step_no",
+                        render: function (_, _, row) {
                             let [adjustment] = row.salary_adjustment;
                             return adjustment.step_no;
-                        }
+                        },
                     },
                     {
                         data: "salary_previous",
                         name: "salary_previous",
-                        render : function (_, _, row) {
+                        render: function (_, _, row) {
                             let [adjustment] = row.salary_adjustment;
                             return adjustment.salary_previous;
-                        }
+                        },
                     },
                     {
                         data: "salary_new",
                         name: "salary_new",
-                        render : function (_, _, row) {
+                        render: function (_, _, row) {
                             let [adjustment] = row.salary_adjustment;
                             return adjustment.salary_new;
-                        }
+                        },
                     },
                     {
                         data: "salary_diff",
                         name: "salary_diff",
-                        render : function (_, _, row) {
+                        render: function (_, _, row) {
                             let [adjustment] = row.salary_adjustment;
                             return adjustment.salary_diff;
-                        }
+                        },
                     },
                 ],
             });
-
-            
         }
     });
 
@@ -106,64 +105,66 @@ $(document).ready(function () {
 
         $("#add").attr("class", "page-header");
         $("#table").attr("class", "page-header d-none");
-            $("#salaryAdjustmentPerOfficeList").DataTable({
-                processing: true,
-                serverSide: true,
-                destroy: true,
-                retrieve: true,
-                pagingType: "full_numbers",
-                language: {
-                    processing:
-                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
+        salaryAdjustmentPerOfficeNotSelected = $(
+            "#salaryAdjustmentPerOfficeList"
+        ).DataTable({
+            processing: true,
+            serverSide: true,
+            destroy: true,
+            retrieve: true,
+            pagingType: "full_numbers",
+            language: {
+                processing:
+                    '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
+            },
+            ajax: {
+                url: `/api/salary-adjustment-per-office/plantilla-without-adjustment/${office}/${year}`,
+            },
+            columns: [
+                {
+                    data: "checkbox",
+                    name: "checkbox",
+                    searchable: false,
+                    orderable: false,
+                    sortable: false,
                 },
-                ajax: {
-                    url: `/api/salary-adjustment-per-office/plantilla-without-adjustment/${office}/${year}`,
+                {
+                    data: "fullname",
+                    name: "fullname",
+                    visible: true,
+                    render: function (_, _, row) {
+                        return row.employee.fullname;
+                    },
                 },
-                columns: [
-                    {
-                        data: "checkbox",
-                        name: "checkbox",
-                        searchable: false,
-                        orderable: false,
-                        sortable: false,
+                {
+                    data: "office.office_code",
+                    name: "office.office_code",
+                    visible: false,
+                },
+                {
+                    data: "plantilla.pp_id",
+                    name: "position_name",
+                    render: function (_, _, row) {
+                        let { plantilla_positions } = row;
+                        return plantilla_positions.position.Description;
                     },
-                    {
-                        data: "fullname",
-                        name: "fullname",
-                        visible: true,
-                        render : function (_, _, row) {
-                            return row.employee.fullname;
-                        },
-                    },
-                    {
-                        data: "office.office_code",
-                        name: "office.office_code",
-                        visible: false,
-                    },
-                    {
-                        data: "plantilla.pp_id",
-                        name: "position_name",
-                        render : function (_, _, row) {
-                            let { plantilla_positions } = row;
-                            return plantilla_positions.position.Description;
-                         }
-                    },
-                    {
-                        data: "sg_no",
-                        name: "sg_no",
-                    },
-                    {
-                        data: "step_no",
-                        name: "step_no",
-                    },
-                    {
-                        data: "salary_amount",
-                        name: "salary_amount",
-                        visible: true,
-                        render: $.fn.dataTable.render.number(",", ".", 2),
-                    },
-                ],
-            });
+                },
+                {
+                    data: "sg_no",
+                    name: "sg_no",
+                },
+                {
+                    data: "step_no",
+                    name: "step_no",
+                },
+                {
+                    data: "salary_amount",
+                    name: "salary_amount",
+                    visible: true,
+                    render: $.fn.dataTable.render.number(",", ".", 2),
+                },
+            ],
+        });
     });
 
     $("#cancelButton").click(function () {
@@ -196,15 +197,15 @@ $(document).ready(function () {
             }
         });
 
-        if (selectedRecordIDS.length < 0) {
+        if (selectedRecordIDS.length == 0) {
             swal("Please Select Employee", "", "error");
             $("#saveBtn").attr("disabled", false);
-            $("#loading").removeClass("d-none");
+            $("#loading").addClass("d-none");
             $("#saving").html("Save");
         } else {
             $.ajax({
                 type: "POST",
-                url: `/api/salary-adjustment-per-office`,
+                url: `/api/salary-adjustment-per-office/AddData`,
                 data: {
                     ids: selectedRecordIDS.toString(),
                     date: date,

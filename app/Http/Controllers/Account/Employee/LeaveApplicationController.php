@@ -114,7 +114,7 @@ class LeaveApplicationController extends Controller
                 'no_of_days'            => $request->no_of_days,
                 'leave_type_id'         => $request->leave_type_id,
             ]);
-
+           
             $nextID = $convertedID + 1;
             DB::table('Settings')->where('Keyname', 'AUTONUMBER2')->update([ 'Keyvalue' => (string)$nextID ]);
 

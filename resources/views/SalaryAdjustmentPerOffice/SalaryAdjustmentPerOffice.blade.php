@@ -109,10 +109,11 @@
                               </div>
                          </div>
 
-                         <button style="margin-top:10px;" id="saveBtn" class="btn btn-primarys submit-btn float-right" type="submit">
-                              <span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>
-                              <b id="saving">Submit</b>
-                         </button>
+                         <button id="saveBtn" class="btn btn-primarys submit-btn float-right shadow" type="submit">
+                            <span id="loading" class="spinner-border spinner-border-sm d-none" role="status"
+                                aria-hidden="false"></span> <i class="fas fa-save"></i>
+                            <b id="saving">Save</b>
+                        </button>
 
 
                     </div>
@@ -123,8 +124,8 @@
      <div id="table" class="page-header ">
           <div class="row">
                <div style="padding-left:35px;" class="col-5 mb-2">
-                    <select data-style="btn-primarys text-white" name="employeeOffice" data-live-search="true" id="employeeOffice" data-size="5" 
-                         @class([ 
+                    <select data-style="btn-primarys text-white" name="employeeOffice" data-live-search="true" id="employeeOffice" data-size="5"
+                         @class([
                               'form-control',
                               'form-control-xs',
                               'selectpicker',

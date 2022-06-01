@@ -73,17 +73,17 @@ class LeaveForwardedBalanceController extends Controller
                     return (float)$rPerEmployee->sl_earned - $rPerEmployee->sl_used;
                 })
                 ->addColumn('leave_balance', function ($rPerEmployee) {
-                    return (float)$rPerEmployee->first()->vl_earned - $rPerEmployee->first()->vl_used
-                        + ($rPerEmployee->first()->sl_earned - $rPerEmployee->first()->sl_used);
+                    return (float)$rPerEmployee->vl_earned - $rPerEmployee->vl_used
+                        + ($rPerEmployee->sl_earned - $rPerEmployee->sl_used);
                 })
                 ->addcolumn('action', function ($rPerEmployee) {
                     $button = '<button type="button" class="btn btn-success btn-sm rounded-circle shadow edit__leave__type"
-                                        data-id="' . $rPerEmployee->id . '">
+                                        data-id="' . $rPerEmployee->forwarded_id . '">
                                         <i class="fa fa-pencil"></i>
                                     </button>';
                     $button .=
                         '<button type="button" class="btn btn-danger btn-sm rounded-circle shadow delete__leave__type ml-1"
-                            data-id="' . $rPerEmployee->id . '">
+                            data-id="' . $rPerEmployee->forwarded_id . '">
                             <i class="fa fa-trash"></i>
                         </button>';
 
@@ -133,7 +133,7 @@ class LeaveForwardedBalanceController extends Controller
     
         // Insert Record with As of.
         $employeeForwardedBalanceRecord = new EmployeeLeaveForwardedBalance;
-        $employeeForwardedBalanceRecord->id             = $convertedID;
+        $employeeForwardedBalanceRecord->forwarded_id   = $convertedID;
         $employeeForwardedBalanceRecord->Employee_id    = $request['Employee_id'];
         $employeeForwardedBalanceRecord->vl_earned      = $request['vl_earned'];
         $employeeForwardedBalanceRecord->vl_used        = $request['vl_used'];
