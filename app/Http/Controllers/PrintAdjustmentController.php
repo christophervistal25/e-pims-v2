@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\SalaryAdjustment;
 use App\Setting;
 use App\Employee;
+use Illuminate\Support\Facades\App;
 class PrintAdjustmentController extends Controller
 {
     /**
@@ -19,13 +20,18 @@ class PrintAdjustmentController extends Controller
     }
     public function print($id)
     {
-        $salaryAdjustment = SalaryAdjustment::with(['employee:employee_id,FirstName,MiddleName,LastName,Suffix'])->find($id);
-        $setting = Setting::find(1);
-        return view('salaryAdjustment.print.previewed', compact('salaryAdjustment', 'setting'));
+        $salaryAdjustment = SalaryAdjustment::find($id);
+        $setting = Setting::find('SALARYADPRINT');
+        // return view('salaryAdjustment.print.previewed', compact('salaryAdjustment', 'setting'));
+        $space = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+        $pdf = App::make('snappy.pdf.wrapper');
+        $pdf->loadView('salaryAdjustment.print.previewed', compact('salaryAdjustment', 'setting', 'space'))->setPaper('letter')->setOrientation('portrait');
+        return $pdf->inline();
     }
     public function printList($id)
     {
-        $salaryAdjustment = SalaryAdjustment::with(['employee','plantilla', 'plantilla.plantilla_positions.position', 'plantilla.office'])->find($id);
+        // $salaryAdjustment = SalaryAdjustment::with(['employee','plantilla', 'plantilla.plantilla_positions.position', 'plantilla.office'])->find($id);
+        $salaryAdjustment = SalaryAdjustment::find($id);
         $setting = Setting::find('SALARYADPRINT');
         return view('salaryAdjustment.print.printAdjustment', compact('salaryAdjustment', 'id', 'setting'));
     }
