@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Setting;
 use App\Plantilla;
+use Carbon\Carbon;
+use App\SalaryGrade;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -17,9 +21,9 @@ class SalaryAdjustmentPerOfficeController extends Controller
             $query->whereYear('date_adjustment', $year);
         }, 'office' => function ($query) use($office) {
             $query->where('office_code', $office);
-        }])->where('year', $year)
+        }])
         ->get();
-        
+
     return DataTables::of($data)
         ->make(true);
     }
@@ -37,10 +41,65 @@ class SalaryAdjustmentPerOfficeController extends Controller
 
         return DataTables::of($data)
             ->editColumn('checkbox', function ($row) {
-                // $checkbox = "<input id='checkbox{$row->plantilla->plantilla_id}' class='not-select-checkbox' style='transform:scale(1.35)' value='{$row->plantilla->plantilla_id}' type='checkbox' />";
-                $checkbox = "<input id='checkbox{$row}' class='not-select-checkbox' style='transform:scale(1.35)' value='' type='checkbox' />";
+                $checkbox = "<input id='checkbox{$row}' class='not-select-checkbox' style='transform:scale(1.35)' value='{$row->plantilla_id}' type='checkbox' />";
                 return $checkbox;
             })->rawColumns(['checkbox'])
             ->make(true);
     }
+
+    public function AddNewDatas()
+    {
+        $plantillaIds = explode(',', request()->ids);
+        $data = Plantilla::whereIn('plantilla_id', $plantillaIds)->get();
+        $newAdjustment = $data->toArray();
+        foreach ($newAdjustment as $newAdjustments) {
+
+            $getsalaryResult = SalaryGrade::where('sg_no', $newAdjustments['sg_no'])
+                ->where('sg_year', request()->year)
+                ->first(['sg_step' .  $newAdjustments['step_no']]);
+            $salaryDiff = $getsalaryResult['sg_step' .  $newAdjustments['step_no']] - $newAdjustments['salary_amount'];
+            $datas = DB::table('settings')->where('Keyname', 'AUTONUMBER2')->first();
+                DB::table('salary_adjustments')->insert(
+                // [
+                //     'employee_id' => $newAdjustments['employee_id'],
+                //     'salary_new' => $getsalaryResult['sg_step' .  $newAdjustments['step_no']],
+                //     'date_adjustment' => request()->date,
+                // ],
+                [
+                    'id'              => $datas->Keyvalue,
+                    'employee_id'     => $newAdjustments['employee_id'],
+                    'item_no'         => $newAdjustments['item_no'],
+                    'pp_id'           => $newAdjustments['pp_id'],
+                    'date_adjustment' => request()->date,
+                    'sg_no'           => $newAdjustments['sg_no'],
+                    'step_no'         => $newAdjustments['step_no'],
+                    'salary_previous' => $newAdjustments['salary_amount'],
+                    'salary_new'      => $getsalaryResult['sg_step' .  $newAdjustments['step_no']],
+                    'salary_diff'     => $salaryDiff,
+                    'remarks'         =>  request()->remarks,
+                    'created_at'      =>  Carbon::now(),
+                    'deleted_at'      => null,
+                ]
+            );
+            Setting::find('AUTONUMBER2')->increment('Keyvalue');
+            // salary adjustment per office save to service record
+            // DB::table('service_records')->updateOrInsert(
+            //     [
+            //         'employee_id' => $newAdjustment->employee_id,
+            //         'position_id' =>  $newAdjustment->plantillaPosition->position_id,
+            //     ],
+            //     [
+            //         'employee_id'               => $newAdjustment->employee_id,
+            //         'service_from_date'         => request()->date,
+            //         'position_id'               => $newAdjustment->plantillaPosition->position_id,
+            //         'status'                    => $newAdjustment->status,
+            //         'salary'                    => $getsalaryResult['sg_step' .  $newAdjustment->step_no],
+            //         'office_code'               => $newAdjustment->office_code,
+            //     ]
+            // );
+        }
+        return response()->json(['success' => true]);
+    }
+
+
 }
