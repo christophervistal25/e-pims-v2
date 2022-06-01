@@ -5,6 +5,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BirthdayController;
+use App\Http\Controllers\StepPromotionController;
 use App\Http\Controllers\PersonalDataSheetController;
 use App\Http\Controllers\EmployeeLeave\LeaveListController;
 
@@ -203,6 +204,9 @@ Route::get('404', function () {
 // Jobs route.
 Route::post('leave-increment-job', 'LeaveIncrementJobController');
 
-Route::get('see-more/promotions', function () {
-    return view('StepIncrement.see-more');
-})->name('promotion.see-more');
+// Route::get('see-more/promotions', function () {
+//     return view('StepIncrement.see-more');
+// })->name('promotion.see-more');
+
+
+Route::get('see-more/promotions', [StepPromotionController::class, 'upcomingStep'])->name('promotion.see-more');

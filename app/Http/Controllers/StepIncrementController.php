@@ -141,7 +141,6 @@ class StepIncrementController extends Controller
     //  EDIT METHOD //
     public function edit($id)
     {
-
         $stepIncrement = StepIncrement::with(['employee:Employee_id,FirstName,MiddleName,LastName,Suffix', 'position'])->find($id);
         $employee = $stepIncrement->employee;
         $position = $stepIncrement->position;
