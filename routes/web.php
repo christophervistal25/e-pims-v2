@@ -115,7 +115,7 @@ Route::group(['prefix' => 'employee'], function () {
     Route::get('/leave/leave-list/{edit}', 'EmployeeLeave\LeaveListController@edit')->name('leave-list.edit');
 
     Route::delete('/leave-list/{id}', 'EmployeeLeave\LeaveListController@destroy')->name('leave-list.delete');
-    Route::put('/leave/leave-list/{id}', 'EmployeeLeave\LeaveListController@update')->name('leave-list.update');
+    Route::put('/leave/leave-list/{id}', [LeaveListController::class, 'update'])->name('leave-list.update');
 
     // LEAVE MONITORING INDEX //
     Route::get('/leave-monitoring/{id}', 'EmployeeLeave\LeaveMonitoringController@list');

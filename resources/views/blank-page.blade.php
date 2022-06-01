@@ -13,7 +13,6 @@
      }
 
     #notification {
-        position: sticky;
         width: 100%;
         height: 300px;
         overflow-x: scroll;
@@ -28,7 +27,6 @@
         These are the names of employees that have an upcoming step-increment. To see more details, cliick the button below.
         <i class="fas fa-close text-danger float-right pr-2 mt-2" id="closeIcon"></i>
     </div>
-    
 
     <h1 class="p-4" id="employees">Employee Names</h1>
 
@@ -36,7 +34,7 @@
   
 
     <div class="col-lg-12 text-center">
-        <a href="/" class="btn btn-primary col-lg-12"><i class="fas fa-list">&nbsp; See More</i></a>
+        <a href="/" class="btn btn-primary col-lg-12"><i class="fas fa-list"> </i>&nbsp; See More</a>
     </div>
 </div>
 
@@ -301,30 +299,16 @@
 
      <script src="/assets/js/jquery.slimscroll.min.js"></script>
 
-<<<<<<< HEAD
-
-<script>
-  
-    $('#closeIcon').on('click', function() {
-        $('#notification').fadeOut(1000, function() {
-            $('#notification').remove();
-        });
-    })
-=======
      <script src="/assets/plugins/morris/morris.min.js"></script>
      <script src="/assets/plugins/raphael/raphael.min.js"></script>
 
      {{-- Charts --}}
      <script>
           $('#closeIcon').on('click', function() {
-                         $('#notification').fadeOut(1000, function() {
-                                   $('#notification').remove();
-                              }
-                         });
->>>>>>> 4726173be1a3c44c3a51c8df5d3525f3cd9de2c3
-
+               $('#notification').fadeOut(1000, function() {
+                    $('#notification').remove();
+               });
+          });
      </script>
-
-
      @endpush
      @endsection
