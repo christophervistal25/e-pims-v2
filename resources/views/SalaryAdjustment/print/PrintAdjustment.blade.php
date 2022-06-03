@@ -108,7 +108,7 @@
             </div>
 
             {{-- FOOTER --}}
-            <br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <br><br><br><br><br><br><br><br>
             <div class="float-left">
                 <h6>Copy Furnished: GSIS-Tandag, Surigao del Sur</h6>
                 <h6 class="mb-5">CSC-Field Office, Tandag City</h6>
