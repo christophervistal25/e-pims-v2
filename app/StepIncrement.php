@@ -18,7 +18,7 @@ class StepIncrement extends Model
     protected $fillable = [
         'employee_id',
         'item_no',
-        'position_id',
+        'position_id', 
         'date_step_increment',
         'sg_no_from',
         'date_latest_appointment',

@@ -17,30 +17,30 @@ Route::resource('notifications', 'NotificationController');
 
 Route::get('/', 'DashboardController@index');
 
-//maintenance salary grade
+// Maintenance salary grade
 Route::get('/salary-grade-list', 'SalaryGradecontroller@list')->name('salary-grade-list');
 Route::resource('/salary-grade', 'SalaryGradeController');
-//maintenance position
+// Maintenance position
 Route::get('/maintenance-position-list', 'MaintenancePositionController@list')->name('maintenance-position-list');
 Route::resource('/maintenance-position', 'MaintenancePositionController');
 Route::get('/maintenance-position/{id}', 'MaintenancePositionController@destroy')->name('maintenance-position.delete');
-//maintenance office
+// Maintenance office
 Route::get('/maintenance-office-list', 'MaintenanceOfficeController@list')->name('maintenance-office-list');
 Route::resource('/maintenance-office', 'MaintenanceOfficeController');
 Route::get('/maintenance-office/{id}', 'MaintenanceOfficeController@destroy')->name('maintenance-office.delete');
-//maintenance division
+// Maintenance division
 Route::get('/maintenance-division-list', 'MaintenanceDivisionController@list')->name('maintenance-division-list');
 Route::resource('/maintenance-division', 'MaintenanceDivisionController');
 Route::get('/maintenance-division/{id}', 'MaintenanceDivisionController@destroy')->name('maintenance-division.delete');
 
-//plantilla of schedule
+// Plantilla of schedule
 Route::resource('/plantilla-of-schedule', 'PlantillaOfScheduleController');
 Route::get('/plantilla-of-schedule-list', 'PlantillaOfScheduleController@list');
 Route::get('/plantilla-of-schedule-adjustedlist/{yearFilter}', 'PlantillaOfScheduleController@adjustedlist');
 Route::get('/print-plantilla-of-schedule/{id}/previewed', 'PrintPlantillaOfScheduleController@print')->name('plantilla-of-schedule.previewed.print');
 Route::get('/print-plantilla-of-schedule/{id}', 'PrintPlantillaOfScheduleController@printList')->name('print-plantilla-of-schedule');
 
-//position of schedule
+// Position of schedule
 // Route::get('/position-schedule-list-adjusted/{year?}', 'PositionScheduleController@adjustedlist')->name('position.schedule.list.adjusted');
 Route::get('/position-schedule-list-adjusted/{year}', 'PositionScheduleController@adjustedlist')->name('position.schedule.list.adjusted');
 Route::resource('/position-schedule', 'PositionScheduleController');
@@ -49,29 +49,35 @@ Route::put('/position-schedule/update/{edit}', 'PositionScheduleController@updat
 Route::get('/position-schedule-list', 'PositionScheduleController@list');
 
 
-//plantilla of personnel
+// Plantilla of personnel
 Route::get('/plantilla-list/{office?}', 'Plantillacontroller@list');
 Route::resource('/plantilla-of-personnel', 'PlantillaController');
 Route::put('/plantilla-of-personnel/{id}', 'PlantillaController@update');
 
-//plantilla of position
+// Plantilla of position
 Route::resource('/plantilla-of-position', 'PlantillaOfPositionController');
 Route::get('/plantilla-of-position-list/{office_code?}', 'PlantillaOfPositionController@list');
 Route::get('/plantilla-of-position/{id}', 'PlantillaOfPositionController@destroy')->name('plantilla-of-position.destroy');
 Route::put('/plantilla-of-position/{id}', 'PlantillaOfPositionController@update');
 
-// Step-Increment //
-Route::get('step-increment/list', 'StepIncrementController@list');
-Route::delete('step-increment/{id}', 'StepIncrementController@destroy')->name('step-increment.delete');
-Route::post('/', 'StepIncrementController@store')->name('create.step');
-Route::put('step-increment/{id}', 'StepIncrementController@update')->name('step-increment.update');
-Route::resource('step-increment', 'StepIncrementController');
+// Step-Increment
+Route::controller(StepIncrementController::class)->group(function() {
+    Route::get('step-increment/list', 'list');
+    Route::get('/step-increment', 'index')->name('step-increment.index');
+    Route::post('/step-increment', 'store')->name('create.step');
+    Route::get('/step-increment/{id}', 'edit')->name('step-increment.edit');
+    Route::put('step-increment/{id}', 'update')->name('step-increment.update');
+    Route::delete('step-increment/{id}', 'destroy')->name('step-increment.delete');
+});
 
-Route::get('/print-increment/{id}/previewed', 'PrintIncrementController@print')->name('step-increment.previewed.print');
-Route::get('/print-increment/{id}', 'PrintIncrementController@printList')->name('print-increment');
-Route::resource('/print-increment', 'PrintIncrementController');
+// Print-Step-Increment
+Route::controller(PrintIncrementController::class)->group(function() {
+    Route::get('/print-increment/{id}/previewed', 'print')->name('step-increment.previewed.print');
+    Route::get('/print-increment/{id}', 'printList')->name('print-increment');
+});
 
-//salary adjustment
+
+// Salary adjustment
 Route::get('/salary-adjustment/{id}', 'SalaryAdjustmentController@destroy')->name('salary-adjustment.delete');
 Route::resource('/salary-adjustment', 'SalaryAdjustmentController');
 Route::get('/salary-adjustment-list/{currentSgyear}', 'SalaryAdjustmentController@list');
@@ -79,7 +85,7 @@ Route::put('/salary-adjustment/update/{id}', 'SalaryAdjustmentController@update'
 Route::get('/print-adjustment/{id}/previewed', 'PrintAdjustmentController@print')->name('salary-adjustment.previewed.print');
 Route::get('/print-adjustment/{id}', 'PrintAdjustmentController@printList')->name('print-adjustment');
 
-//salary adjustment per office
+// Salary adjustment per office
 Route::resource('/salary-adjustment-per-office', 'SalaryAdjustmentPerOfficeController');
 Route::get('/salary-adjustment-per-office-list', 'SalaryAdjustmentPerOfficeController@list');
 Route::get('/salary-adjustment-per-office-not-selected-list', 'SalaryAdjustmentPerOfficeController@NotSelectedlist');
@@ -203,10 +209,6 @@ Route::get('404', function () {
 
 // Jobs route.
 Route::post('leave-increment-job', 'LeaveIncrementJobController');
-
-// Route::get('see-more/promotions', function () {
-//     return view('StepIncrement.see-more');
-// })->name('promotion.see-more');
 
 
 Route::get('see-more/promotions', [StepPromotionController::class, 'upcomingStep'])->name('promotion.see-more');

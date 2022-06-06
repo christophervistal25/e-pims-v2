@@ -78,7 +78,7 @@ class StepIncrementController extends Controller
 
 
                 return $btnEdit . "&nbsp" . $btnDelete . "&nbsp" . $btnPrint;
-                // return $btnEdit . "&nbsp" . $btnPrint;
+
             })->make(true);
     }
 
@@ -88,12 +88,12 @@ class StepIncrementController extends Controller
     public function index()
     {
 
-        // $employees = Employee::whereDoesntHave('step')->has('plantilla')->with(['plantilla'])->get();
+        $employees = Employee::has('plantillaForStep')
+                    ->with(['plantillaForStep', 'plantillaForStep.plantilla_positions', 'plantillaForStep.plantilla_positions.position'])
+                    // ->without(['office_charging'])
+                    ->doesntHave('step')
+                    ->get();
 
-        $employees = Employee::has('plantillaForStep')->with(['plantillaForStep', 'plantillaForStep.plantilla_positions', 'plantillaForStep.plantilla_positions.position'])
-            ->without(['office_charging'])->get();
-
-        // dd($employees);
 
         return view('StepIncrement.create', compact('employees'));
     }
@@ -195,4 +195,5 @@ class StepIncrementController extends Controller
 
         return response()->json(['success' => true]);
     }
+    
 }
