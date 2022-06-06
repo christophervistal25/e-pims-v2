@@ -25,7 +25,6 @@
 @endprepend
 @section('content')
 
-
 <div class="row">
      <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
           <div class="card dash-widget">

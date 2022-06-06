@@ -24,11 +24,18 @@ class EmployeeLeaveForwardedBalance extends Model
         'date_forwarded',
     ];
 
+
+
     public function employee()
     {
         return $this->belongsTo(Employee::class, 'Employee_id', 'Employee_id')
                     ->select('Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode', 'PosCode', 'OfficeCode2')
                     ->withDefault();
+    }
+
+    public function records()
+    {
+        return $this->morphMany(EmployeeLeaveTransaction::class, 'transaction');
     }
 
 }

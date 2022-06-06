@@ -3977,7 +3977,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     employeeID: {
@@ -4859,9 +4858,11 @@ __webpack_require__.r(__webpack_exports__);
     var _this3 = this;
 
     _core_familybackground__WEBPACK_IMPORTED_MODULE_1__["default"].fetchUser(this.employeeID).then(function (response) {
-      _this3.familyBackground = response;
+      if (response.length !== 0) {
+        _this3.familyBackground = response;
+      }
 
-      if (response.spouse.length != 0) {
+      if (response.hasOwnProperty("spouse") && response.spouse.length != 0) {
         _this3.spouse = response.spouse;
       }
     });
@@ -54297,8 +54298,8 @@ var render = function () {
               on: { click: _vm.submitEducationalBackground },
             },
             [
-              _c("i", { staticClass: "fa fa-pencil" }),
-              _vm._v("\n\n                UPDATE\n                "),
+              _c("i", { staticClass: "la la-pencil" }),
+              _vm._v("\n                UPDATE\n                "),
               _c(
                 "div",
                 {
@@ -55961,7 +55962,7 @@ var render = function () {
                 on: { click: _vm.submitPersonFamilyBackground },
               },
               [
-                _c("i", { staticClass: "fa fa-pencil" }),
+                _c("i", { staticClass: "la la-pencil" }),
                 _vm._v("\n                    UPDATE\n                    "),
                 _c(
                   "div",
@@ -58491,7 +58492,7 @@ var render = function () {
                     on: { click: _vm.submitPersonalInformation },
                   },
                   [
-                    _c("i", { staticClass: "fa fa-pencil font-weight-bold" }),
+                    _c("i", { staticClass: "la la-pencil" }),
                     _vm._v(
                       "\n                    UPDATE\n                    "
                     ),
@@ -60480,7 +60481,7 @@ var staticRenderFns = [
       [
         _c("strong", [
           _vm._v(
-            "(Start date_of_attendance_from the most recent\n                        L&D/training program and include only the relevant\n                        L&D/training taken for the last five (5) years for\n                        Division Chief/Executive/Managerial\n                        positions)"
+            "(Start from the most recent\n                        L&D/training program and include only the relevant\n                        L&D/training taken for the last five (5) years for\n                        Division Chief/Executive/Managerial\n                        positions)"
           ),
         ]),
       ]
@@ -60508,7 +60509,7 @@ var staticRenderFns = [
         { staticClass: "text-center text-sm", attrs: { scope: "col" } },
         [
           _vm._v(
-            "\n                                date_of_attendance_from\n                            "
+            "\n                                FROM\n                            "
           ),
         ]
       ),

@@ -95,9 +95,16 @@ let table = $("#employees-table").DataTable({
     ],
 });
 
-$("#employees-table tfoot th").each(function () {
-    var title = $(this).text();
-    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+$(document).on("focus", ".dataTables_filter input", function () {
+    $(this)
+        .unbind()
+        .bind("keyup", function (e) {
+            if (e.keyCode === 13) {
+                table.search(this.value).draw();
+            } else if (e.keyCode === 8 && !this.value) {
+                table.search("").draw();
+            }
+        });
 });
 
 $(document).on("click", ".btn-edit-employee", function () {

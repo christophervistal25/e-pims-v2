@@ -39,7 +39,6 @@ class PersonalDataSheetController extends Controller
     {
     }
 
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -66,7 +65,7 @@ class PersonalDataSheetController extends Controller
 
     public function getFamilyBackground(string $employeeID): EmployeeFamilyBackground|array|null
     {
-        return $this->personalDataSheetRepository->getFamilyBackground($employeeID);
+        return $this->personalDataSheetRepository->getFamilyBackground($employeeID) ?? [];
     }
 
     public function updateFamilyBackground(FamilyBackgroundRequest $request)

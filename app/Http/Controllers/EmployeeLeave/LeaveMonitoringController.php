@@ -31,8 +31,7 @@ class LeaveMonitoringController extends Controller
 
             // Forwarded Balance
             $forwardedBalance       = $this->leaveRecordRepository->getForwardedRecord($id);
-            $totalOfForwardedBalance = ($forwardedBalance->sum('vl_earned') + $forwardedBalance->sum('sl_earned')) - ($forwardedBalance->sum('sl_earned') + $forwardedBalance->sum('vl_earned'));
-            // $recordsWithoutForwarded = $this->leaveRecordRepository->getRecordsWithoutForwarded($id)->groupBy('record_type');
+            $totalOfForwardedBalance = ($forwardedBalance?->sum('vl_earned') + $forwardedBalance?->sum('sl_earned') ?? 0) - ($forwardedBalance?->sum('sl_earned') + $forwardedBalance?->sum('vl_earned'));
             $recordsWithoutForwarded = [];
 
             return view('leave.add-ons.leave-card', [

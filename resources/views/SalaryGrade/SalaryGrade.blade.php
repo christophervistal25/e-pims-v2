@@ -271,9 +271,13 @@
                             </div>
                         </div>
                         <div class="col-auto float-right ml-auto">
-                            <button id="addButton" class="btn btn-primarys submit-btn float-right"><i
+                        <button id="addButton" class="btn btn-primarys submit-btn float-right mx-2"><i
                                     class="fa fa-plus"></i>
                                 Add Salary Grade
+                            </button>
+                            <button id="btnPrintSalaryGrade" class="btn btn-info submit-btn float-right"><i
+                                    class="fa fa-print"></i>
+                                Print Salary Grade
                             </button>
                         </div>
                     </div>
@@ -312,5 +316,11 @@
         {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script> --}}
         <script src="{{ asset('/assets/js/salary-grade.js') }}"></script>
         <script src="https://cdn.datatables.net/plug-ins/1.10.24/sorting/currency.js"></script>
+        <script>
+            $('#btnPrintSalaryGrade').click(function () {
+                let selectedCurrentYear = $('#filter_year').val();
+                window.open(`prints/salary-grade/${selectedCurrentYear}`);
+            });
+        </script>
     @endpush
 @endsection

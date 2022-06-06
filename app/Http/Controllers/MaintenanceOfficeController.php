@@ -39,23 +39,14 @@ class MaintenanceOfficeController extends Controller
     {
         if ($request->ajax()) {
             $data = Office::with('desc')
-                ->select('OfficeCode', 'Description', 'OfficeCode2', 'DepartmentCode')
+                ->select('office_code', 'office_name', 'office_head', 'office_short_name', 'position_name')
                 ->get();
 
             return Datatables::of($data)
                 ->addIndexColumn()
-                ->addColumn('OfficeHead', function ($row) {
-                    return $row->desc->OfficeHead ?? '-';
-                })
-                ->addColumn('OfficeShortName', function ($row) {
-                    return $row->desc->OfficeShort ?? '-';
-                })
-                ->addColumn('OfficeHeadPosition', function ($row) {
-                    return $row->desc->PositionName ?? '-';
-                })
                 ->addColumn('action', function ($row) {
-                    $btn = "<a title='Edit Office' href='" . route('maintenance-office.edit', $row->OfficeCode) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-                    $btn = $btn . "<a title='Delete Office' id='delete' value='$row->OfficeCode' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                    $btn = "<a title='Edit Office' href='" . route('maintenance-office.edit', $row->office_code) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+                    $btn = $btn . "<a title='Delete Office' id='delete' value='$row->office_code' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
                         ";
                     return $btn;
                 })

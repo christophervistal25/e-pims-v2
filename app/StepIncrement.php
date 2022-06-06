@@ -33,7 +33,6 @@ class StepIncrement extends Model
         'created_at',
         'updated_at',
         'PosCode',
-        'last_latest_appointment',
     ];
 
 

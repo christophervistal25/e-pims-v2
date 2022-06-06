@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     let errorMessage = [
         "#office-code-error-message",
         "#office-name-error-message",
@@ -6,7 +6,7 @@ $(document).ready(function() {
         "#office-address-error-messagee",
         "#office-short-address-error-message",
         "#office-head-error-message",
-        "#position-name-error-message"
+        "#position-name-error-message",
     ];
 
     let errorClass = [
@@ -14,11 +14,11 @@ $(document).ready(function() {
         "#officeName",
         "#officeShortName",
         "#officeHead",
-        "#positionName"
+        "#positionName",
     ];
 
     // code for number only
-    $("#officeCode").on("input", function(e) {
+    $("#officeCode").on("input", function (e) {
         $(this).val(
             $(this)
                 .val()
@@ -27,23 +27,23 @@ $(document).ready(function() {
     });
 
     // code for show add form
-    $("#addButton").click(function() {
+    $("#addButton").click(function () {
         $("#add").attr("class", "page-header");
         $("#table").attr("class", "page-header d-none");
     });
 
     // code for show table
-    $("#showListOffice").click(function() {
+    $("#showListOffice").click(function () {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
     });
     // cancel
-    $("#cancelButton").click(function() {
+    $("#cancelButton").click(function () {
         $("input").val("");
-        $.each(errorClass, function(index, value) {
+        $.each(errorClass, function (index, value) {
             $(`${value}`).removeClass("is-invalid");
         });
-        $.each(errorMessage, function(index, value) {
+        $.each(errorMessage, function (index, value) {
             $(`${value}`).html("");
         });
         $("#add").attr("class", "page-header d-none");
@@ -59,52 +59,51 @@ $(document).ready(function() {
         // columnDefs: [{ width: "10%", targets: 7 }],
         language: {
             processing:
-                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
         },
         ajax: "/maintenance-office-list",
         columns: [
             {
-                data: "OfficeCode",
-                name: "OfficeCode",
-                class: "h6 align-middle"
+                data: "office_code",
+                name: "office_code",
+                class: "h6 align-middle",
             },
             {
-                data: "Description",
-                name: "Description",
-                class: "text-left h6 align-middle"
+                data: "office_name",
+                name: "office_name",
+                class: "text-left h6 align-middle",
             },
             {
-                data: "OfficeHead",
-                name: "OfficeHead",
-                class: "text-left h6 align-middle"
+                data: "office_head",
+                name: "office_head",
+                class: "text-left h6 align-middle",
             },
             {
-                data: "OfficeShortName",
-                name: "OfficeShortName",
-                class: "align-middle"
+                data: "office_short_name",
+                name: "office_short_name",
+                class: "align-middle",
             },
             {
-                data: "OfficeHeadPosition",
-                name: "OfficeHeadPosition",
-                class: "text-left align-middle"
+                data: "position_name",
+                name: "position_name",
+                class: "text-left align-middle",
             },
             {
-                data: "DepartmentCode",
-                name: "DepartmentCode",
-                class: "text-center align-middle"
+                class: "text-center align-middle",
+                defaultContent: "",
             },
             {
                 data: "action",
                 name: "action",
                 searchable: false,
                 sortable: false,
-                class: "align-middle"
-            }
-        ]
+                class: "align-middle",
+            },
+        ],
     });
 
     // add new office
-    $("#maintenanceOfficeForm").submit(function(e) {
+    $("#maintenanceOfficeForm").submit(function (e) {
         e.preventDefault();
         let data = $(this).serialize();
         $("#saveBtn").attr("disabled", true);
@@ -115,24 +114,22 @@ $(document).ready(function() {
             type: "POST",
             url: "/maintenance-office",
             data: data,
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     $("input").val("");
 
-                    $.each(errorClass, function(index, value) {
+                    $.each(errorClass, function (index, value) {
                         $(`${value}`).removeClass("is-invalid");
                     });
-                    $.each(errorMessage, function(index, value) {
+                    $.each(errorMessage, function (index, value) {
                         $(`${value}`).html("");
                     });
-                    $("#maintenanceOffice")
-                        .DataTable()
-                        .ajax.reload();
+                    $("#maintenanceOffice").DataTable().ajax.reload();
 
                     swal({
                         title: "",
                         text: "Successfully added!",
-                        icon: "success"
+                        icon: "success",
                     });
 
                     $("#saveBtn").attr("disabled", false);
@@ -140,7 +137,7 @@ $(document).ready(function() {
                     $("#saving").html("Save");
                 }
             },
-            error: function(response) {
+            error: function (response) {
                 if (response.status === 422) {
                     let errors = response.responseJSON.errors;
                     if (errors.hasOwnProperty("officeCode")) {
@@ -227,7 +224,7 @@ $(document).ready(function() {
                     // Create an parent element
                     let parentElement = document.createElement("ul");
                     let errorss = response.responseJSON.errors;
-                    $.each(errorss, function(key, value) {
+                    $.each(errorss, function (key, value) {
                         let errorMessage = document.createElement("li");
                         let [error] = value;
                         errorMessage.innerHTML = error;
@@ -242,32 +239,32 @@ $(document).ready(function() {
                     swal({
                         icon: "error",
                         content: parentElement,
-                        buttons: false
+                        buttons: false,
                     });
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
                     $("#saving").html("Save");
                 }
-            }
+            },
         });
     });
-    $("#officeCode").keyup(function() {
+    $("#officeCode").keyup(function () {
         $("#officeCode").removeClass("is-invalid");
         $("#office-code-error-message").html("");
     });
-    $("#officeName").keyup(function() {
+    $("#officeName").keyup(function () {
         $("#officeName").removeClass("is-invalid");
         $("#office-name-error-message").html("");
     });
-    $("#officeShortName").keyup(function() {
+    $("#officeShortName").keyup(function () {
         $("#officeShortName").removeClass("is-invalid");
         $("#office-short-name-error-message").html("");
     });
-    $("#officeHead").keyup(function() {
+    $("#officeHead").keyup(function () {
         $("#officeHead").removeClass("is-invalid");
         $("#office-head-error-message").html("");
     });
-    $("#positionName").keyup(function() {
+    $("#positionName").keyup(function () {
         $("#positionName").removeClass("is-invalid");
         $("#position-name-error-message").html("");
     });

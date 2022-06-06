@@ -1883,8 +1883,7 @@
                     @click="submitEducationalBackground"
                     :disabled="isLoading"
                 >
-                    <i class="fa fa-pencil"></i>
-
+                    <i class="la la-pencil"></i>
                     UPDATE
                     <div
                         class="spinner-border spinner-border-sm mb-1"

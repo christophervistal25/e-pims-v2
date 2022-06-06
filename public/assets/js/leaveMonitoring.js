@@ -49,7 +49,7 @@ $("#employeeName").change(function (e) {
     if (empID == "") {
         $("#empPhoto").attr("src", "/storage/employee_images/no_image.png");
     } else {
-        $("#empPhoto").attr("src", "/storage/employee_images/" + photo);
+        $("#empPhoto").attr("src", "/storage/employee_images/no_image.png");
     }
 
     if (empID === "") {

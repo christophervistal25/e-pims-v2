@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'PLANTILLA OF PERSONNEL SCHEDULE')
+@section('title', 'Plantilla of Personnel Schedule')
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('/assets/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet"
@@ -56,7 +56,7 @@
     <div class="card-body">
         <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
                 <div style='padding-top:20px; padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
-                    <button id="cancelbutton" class="btn submit-btn btn-primarys float-right"><i class="fa fa-list"></i> Plantilla Schedule List</button>
+                    <button id="cancelButton" class="btn submit-btn btn-primarys float-right"><i class="fa fa-list"></i> Plantilla Schedule List</button>
                 </div>
                     <div class="row">
 
@@ -70,29 +70,26 @@
                                 name="officePlantillaList" data-live-search="true" id="officePlantillaList" data-size="5">
                                 <option value="">All</option>
                                 @foreach($office as $offices)
-                                <option data-plantilla="{{ $offices->Description }}" value="{{ $offices->OfficeCode }}">{{ $offices->Description }}</option>
+                                    <option data-plantilla="{{ $offices->Description }}" value="{{ $offices->OfficeCode }}">{{ $offices->Description }}</option>
                                 @endforeach
                                 </select>
                     </div>
 
                     <div class="form-group col-4">
                         <label class="has-float-label mb-0">
-                        <input value="{{ Carbon\Carbon::now()->format('Y') }}"
+                        <input value="{{ date('Y') }}"
                             class="form-control {{ $errors->has('year')  ? 'is-invalid' : ''}}" name="year"
-                            id="year" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;" readonly>
+                            id="currentYear" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;" readonly>
                             <span class="font-weight-bold">CURRENT YEAR<span class="text-danger">*</span></span>
                         </label>
                         <div id='item-error-message' class='text-danger text-sm'>
                         </div>
                     </div>
 
-
-
-
                     <div class="form-group col-4">
-                    <button id="saveBtn" class="btn btn-danger submit-btn float-right" type="submit">
+                    <button id="btnPostPlantillaSchedule" class="btn btn-success text-white submit-btn float-right" type="submit">
                         <span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>
-                        <b id='post'>Post</b>
+                        <span id='post'>Post</span>
                     </button>
                 </div>
 
@@ -102,13 +99,13 @@
                         <table class="table table-bordered table-hover text-center" id="plantillaList" style="width:100%;">
                             <thead>
                                 <tr>
-                                    <td scope="col" class="text-center">Employee Name</td>
-                                    <td scope="col" class="text-center">Position Title</td>
-                                    <td scope="col" class="text-center">Office</td>
-                                    <td scope="col" class="text-center">Item No</td>
-                                    <td scope="col" class="text-center">Status</td>
-                                    <td scope="col" class="text-center">Year</td>
-                                    <td scope="col" class="text-center">Action</td>
+                                    <th scope="col">Employee Name</td>
+                                    <th scope="col" class="text-center">Position Title</th>
+                                    <th scope="col" class="text-center">Office</th>
+                                    <th scope="col" class="text-center">Item No</th>
+                                    <th scope="col" class="text-center">Status</th>
+                                    <th scope="col" class="text-center">Year</th>
+                                    <th scope="col" class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -123,24 +120,25 @@
                 <div style="padding-left:35px;" class="col-3 mb-2">
                     <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}"
                         name="officeCode" data-live-search="true" id="officeCode" data-size="5" >
-                        <option value="All">All</option>
-                        @foreach($office as $offices)
-                        <option data-plantilla="{{ $offices->Description }}" value="{{ $offices->OfficeCode }}">{{ $offices->Description }}</option>
-                        @endforeach
+                            <option value="*">All</option>
+                            @foreach($office as $offices)
+                                <option data-plantilla="{{ $offices->Description }}" value="{{ $offices->OfficeCode }}">{{ $offices->Description }}</option>
+                            @endforeach
                         </select>
             </div>
             <div class="col-2 mb-2">
                 <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('yearFilter')  ? 'is-invalid' : ''}}"
                     name="yearFilter" data-live-search="true" id="yearFilter" data-size="5">
-                    @foreach($PlantillaOfScheduleYear as $PlantillaOfScheduleYears)
-                    <option data-plantilla="{{ $PlantillaOfScheduleYears->year }}" value="{{ $PlantillaOfScheduleYears->year }}">{{ $PlantillaOfScheduleYears->year }}</option>
-                    @endforeach
+                        <option value="*">All</option>
+                        @foreach($plantillaYear as $plantillaYear)
+                            <option data-plantilla="{{ $plantillaYear }}" value="{{ $plantillaYear }}">{{ $plantillaYear }}</option>
+                        @endforeach
                     </select>
         </div>
             <div class="col-7 mb-2">
                     <div style="padding-right:20px;" class="float-right">
-                        <a id="printPreviewA"><button class="btn btn-secondary" id="printPreview" disabled="true" style="visibility:hidden;"><i class="la la-print"></i>&nbsp; Print Preview</button></a>&nbsp;&nbsp;
-                        <button id="addbutton" class="btn btn-primarys float-right" ><i class="fa fa-plus"></i> Create Plantilla Schedule</button>
+                        {{-- <a id="printPreviewA"><button class="btn btn-secondary" id="printPreview" disabled="true" style="visibility:hidden;"><i class="la la-print"></i>&nbsp; Print Preview</button></a>&nbsp;&nbsp; --}}
+                        {{-- <button id="btnCreatePlantillaSchedule" class="btn btn-primarys float-right" ><i class="fa fa-plus"></i> Create Plantilla Schedule</button> --}}
                     </div>
                 </div>
             </div>

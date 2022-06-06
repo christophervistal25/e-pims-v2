@@ -177,7 +177,7 @@
 
                               </div>
                               <div class="col-lg-3">
-                                   <button title="Add Undertime" type="button" class="btn btn-primary btn-block shadow" id="btnUndertime">
+                                   <button title="Add Undertime" type="button" class="btn btn-primary btn-block text-white shadow" id="btnUndertime">
                                         Add Late or Undertime
                                    </button>
                               </div>

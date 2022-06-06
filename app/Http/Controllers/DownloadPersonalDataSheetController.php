@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\IDownloadType;
 use App\Contracts\IPDSDownloadType;
 use Carbon\Carbon;
 use App\Employee;
@@ -18,29 +19,51 @@ use App\EmployeeOtherInformation;
 use App\EmployeeTrainingAttained;
 use App\EmployeeEducationalBackground;
 
-class DownloadPersonalDataSheetController extends Controller implements IPDSDownloadType
+class DownloadPersonalDataSheetController extends Controller implements IDownloadType
 {
-    private function relevantQueriesCheckbox($text, $isCheck)
-    {
-        $yesCheckbox =  new \PhpOffice\PhpSpreadsheet\RichText\RichText();
-        $payable = $yesCheckbox->createTextRun($isCheck ? 'R' : '0');
-        $payable->getFont()->setName('Wingdings 2');
-        $yesCheckbox->createTextRun(' ' . $text)->getFont()->setName("Calibri");
-        return $yesCheckbox;
-    }
+    public const C1 = 0;
+    public const C2 = 1;
+    public const C3 = 2;
+    public const C4 = 3;
+
+    public const CELLS = [
+        'C1' => [
+            'LASTNAME' => 'D8',
+            'FIRSTNAME' => 'D9',
+            'MIDDLENAME' => 'D10',
+            'NAME_EXTENSION' => 'L9',
+            'BIRTHDATE' => 'D11',
+            'BIRTHPLACE' => 'D13',
+            'CIVIL_STATUS_SINGLE'      => 'D15',
+            'CIVIL_STATUS_MARRIED'     => 'E15',
+            'CIVIL_STATUS_WIDOWED'     => 'D16',
+            'CIVIL_STATUS_SEPARATED'   => 'E16',
+            'CIVIL_STATUS_OTHERS'      => 'D17',
+            'CIVIL_STATUS_OTHERS_DATA' => 'E17',
+        ],
+    ];
 
     private function generatePDS(string $id)
     {
         $employee = Employee::with(['province_residential', 'city_residential', 'barangay_residential', 'province_permanent', 'city_permanent', 'barangay_permanent'])
             ->where('Employee_id', $id)
             ->first();
-
         $familyBackground = EmployeeFamilyBackground::where('employee_id', $id)->first();
+        $children = EmployeeSpouseChildren::where('employee_id', $id)->get();
+        $educational = EmployeeEducationalBackground::where('employee_id', $id)->first();
+        $eligibilities = EmployeeCivilService::where('employee_id', $id)->get();
+        $workExperiences = EmployeeWorkExperience::where('employee_id', $id)->get();
+        $voluntaryWorks = EmployeeVoluntaryWork::where('employee_id', $id)->get();
+        $trainings = EmployeeTrainingAttained::where('employee_id', $id)->get();
+        $otherInformations = EmployeeOtherInformation::where('employee_id', $id)->get();
+        $relevantQueries = EmployeeRelevantQuery::where('employee_id', $id)->first();
+        $references = EmployeeReference::where('employee_id', $id)->get();
+        $issuedID = EmployeeIssuedID::where('employee_id', $id)->first();
+
 
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(public_path() . '\\PDS-TEMPLATE.xlsx');
 
-
-        $worksheet = $spreadsheet->getSheet(0);
+        $worksheet = $spreadsheet->getSheet(self::C1);
 
         $worksheet
             ->getStyle("A10")
@@ -50,7 +73,6 @@ class DownloadPersonalDataSheetController extends Controller implements IPDSDown
             ->setARGB('#eaeaea');
 
 
-
         $richText = new \PhpOffice\PhpSpreadsheet\RichText\RichText();
         $payable = $richText->createTextRun('CS FORM No. 212');
         $payable->getFont()->setBold(true);
@@ -58,17 +80,17 @@ class DownloadPersonalDataSheetController extends Controller implements IPDSDown
         $richText->createTextRun("\nRevised 2017")->getFont()->setName("Calibri")->setSize(9)->setItalic(true)->setBold(true);
         $spreadsheet->getActiveSheet()->getCell('A2')->setValue($richText);
 
-        $worksheet->getCell('D8')->setValue($employee->LastName);
-        $worksheet->getCell('D9')->setValue($employee->FirstName);
-        $worksheet->getCell('D10')->setValue($employee->MiddleName);
+        $worksheet->getCell(self::CELLS['C1']['LASTNAME'])->setValue($employee->LastName);
+        $worksheet->getCell(self::CELLS['C1']['FIRSTNAME'])->setValue($employee->FirstName);
+        $worksheet->getCell(self::CELLS['C1']['MIDDLENAME'])->setValue($employee->MiddleName);
 
         $richText = new \PhpOffice\PhpSpreadsheet\RichText\RichText();
-        $spreadsheet->getActiveSheet()->getStyle('L9')->getAlignment()->setWrapText(true);
+        $spreadsheet->getActiveSheet()->getStyle(self::CELLS['C1']['NAME_EXTENSION'])->getAlignment()->setWrapText(true);
         $richText->createTextRun("NAME EXTENSION (JR., SR) \n{$employee->extension}")->getFont()->setName("Arial Narrow")->setSize(7);
-        $spreadsheet->getActiveSheet()->getCell('L9')->setValue($richText);
+        $spreadsheet->getActiveSheet()->getCell(self::CELLS['C1']['NAME_EXTENSION'])->setValue($richText);
 
-        $worksheet->getCell('D11')->setValue(Carbon::parse($employee->date_birth)->format('m/d/Y'));
-        $worksheet->getCell('D13')->setValue(Str::upper($employee->BirthPlace));
+        $worksheet->getCell(self::CELLS['C1']['BIRTHDATE'])->setValue(Carbon::parse($employee->date_birth)->format('m/d/Y'));
+        $worksheet->getCell(self::CELLS['C1']['BIRTHPLACE'])->setValue(Str::upper($employee->BirthPlace));
 
         $maleText =  new \PhpOffice\PhpSpreadsheet\RichText\RichText();
         $payable = $maleText->createTextRun('R');
@@ -106,12 +128,12 @@ class DownloadPersonalDataSheetController extends Controller implements IPDSDown
         $payable->getFont()->setName('Wingdings 2');
         $othersText->createTextRun(' OTHER/S')->getFont()->setName("Arial Narrow")->setSize(8);
 
-        $worksheet->setCellValue("D15", $singleText);
-        $worksheet->setCellValue("E15", $marriedText);
-        $worksheet->setCellValue("D16", $widowedText);
-        $worksheet->setCellValue("E16", $separatedText);
-        $worksheet->setCellValue("D17", $othersText);
-        $worksheet->setCellValue("E17", $employee->civil_status_others);
+        $worksheet->setCellValue(self::CELLS['C1']['CIVIL_STATUS_SINGLE'], $singleText);
+        $worksheet->setCellValue(self::CELLS['C1']['CIVIL_STATUS_MARRIED'], $marriedText);
+        $worksheet->setCellValue(self::CELLS['C1']['CIVIL_STATUS_WIDOWED'], $widowedText);
+        $worksheet->setCellValue(self::CELLS['C1']['CIVIL_STATUS_SEPARATED'], $separatedText);
+        $worksheet->setCellValue(self::CELLS['C1']['CIVIL_STATUS_OTHERS'], $othersText);
+        $worksheet->setCellValue(self::CELLS['C1']['CIVIL_STATUS_OTHERS_DATA'], $employee->civil_status_others);
 
         $filipinoText =  new \PhpOffice\PhpSpreadsheet\RichText\RichText();
         $payable = $filipinoText->createTextRun(Str::upper($employee->citizenship) == 'FILIPINO' ? 'R' : 0);
@@ -202,13 +224,12 @@ class DownloadPersonalDataSheetController extends Controller implements IPDSDown
         $spreadsheet->getActiveSheet()->getCell('G35')->setValue($spouseExtension);
 
         $index = 35;
-        EmployeeSpouseChildren::where('employee_id', $id)->get()->take(12)->each(function ($row) use (&$worksheet, &$index) {
+        $children->take(12)->each(function ($row) use (&$worksheet, &$index) {
             $worksheet->setCellValue("i" . $index, Str::upper($row->name));
             $worksheet->setCellValue("m" . $index, $row->date_of_birth);
             $index++;
         });
 
-        $educational = EmployeeEducationalBackground::where('employee_id', $id)->first();
 
         $worksheet->setCellValue("D52", Str::upper($educational?->elementary_name));
         $worksheet->setCellValue("G52", Str::upper($educational?->elementary_education));
@@ -250,9 +271,9 @@ class DownloadPersonalDataSheetController extends Controller implements IPDSDown
         $worksheet->setCellValue("M56", $educational?->graduate_studies_year_graduated);
         $worksheet->setCellValue("N56", $educational?->graduate_studies_scholarship);
 
-        $worksheet = $spreadsheet->getSheet(1);
+        $worksheet = $spreadsheet->getSheet(self::C2);
         $index = 4;
-        EmployeeCivilService::where('employee_id', $id)->get()->take(6)->each(function ($row) use (&$worksheet, &$index) {
+        $eligibilities->take(6)->each(function ($row) use (&$worksheet, &$index) {
             $worksheet->setCellValue("A" . $index, Str::upper($row->career_service));
             $worksheet->setCellValue("F" . $index, $row->rating);
             $worksheet->setCellValue("G" . $index, $row->date_of_examination);
@@ -263,7 +284,7 @@ class DownloadPersonalDataSheetController extends Controller implements IPDSDown
         });
 
         $index = 17;
-        EmployeeWorkExperience::where('employee_id', $id)->get()->each(function ($row) use (&$worksheet, &$index) {
+        $workExperiences->each(function ($row) use (&$worksheet, &$index) {
             $worksheet->setCellValue("A" . $index, Carbon::parse($row->from)->format('m/d/Y'));
             if ($index == 17) {
                 $worksheet->setCellValue("C" . $index, "PRESENT");
@@ -279,10 +300,10 @@ class DownloadPersonalDataSheetController extends Controller implements IPDSDown
             $index++;
         });
 
-        $worksheet = $spreadsheet->getSheet(2);
+        $worksheet = $spreadsheet->getSheet(self::C3);
 
         $index = 5;
-        EmployeeVoluntaryWork::where('employee_id', $id)->get()->each(function ($row) use (&$worksheet, &$index) {
+        $voluntaryWorks->each(function ($row) use (&$worksheet, &$index) {
             $worksheet->setCellValue("a" . $index, $row->name_and_address);
             $worksheet->setCellValue("e" . $index, Carbon::parse($row->inclusive_date_from)->format('m/d/Y'));
             $worksheet->setCellValue("f" . $index, Carbon::parse($row->inclusive_date_to)->format('m/d/Y'));
@@ -292,7 +313,7 @@ class DownloadPersonalDataSheetController extends Controller implements IPDSDown
         });
 
         $index = 18;
-        EmployeeTrainingAttained::where('employee_id', $id)->get()->take(21)->each(function ($row) use (&$worksheet, &$index) {
+        $trainings->take(21)->each(function ($row) use (&$worksheet, &$index) {
             $worksheet->setCellValue("a" . $index, Str::upper($row->title));
             $worksheet->setCellValue("e" . $index, Carbon::parse($row->date_of_attendance_from)->format('m/d/Y'));
             $worksheet->setCellValue("f" . $index, Carbon::parse($row->date_of_attendance_to)->format('m/d/Y'));
@@ -302,74 +323,72 @@ class DownloadPersonalDataSheetController extends Controller implements IPDSDown
         });
 
         $index  = 42;
-        EmployeeOtherInformation::where('employee_id', $id)->get()->take(7)->each(function ($row) use (&$worksheet, &$index) {
+        $otherInformations->take(7)->each(function ($row) use (&$worksheet, &$index) {
             $worksheet->setCellValue("a" . $index, Str::upper($row->special_skill));
             $worksheet->setCellValue("c" . $index, Str::upper($row->special_skill));
             $worksheet->setCellValue("i" . $index, Str::upper($row->organization ?? "N/A"));
             $index++;
         });
 
-        $worksheet = $spreadsheet->getSheet(3);
-
-        $relevant = EmployeeRelevantQuery::where('employee_id', $id)->first();
-
-        $worksheet->setCellValue("G5", $this->relevantQueriesCheckbox("YES", $relevant?->question_34_a_answer == 'yes' ? true : false));
-        $worksheet->setCellValue("I5", $this->relevantQueriesCheckbox("NO", $relevant?->question_34_a_answer == 'no' ? true : false));
-        // $worksheet->setCellValue("i11", $relevant->question_34_a_details);
-
-        $worksheet->setCellValue("G7", $this->relevantQueriesCheckbox("YES", $relevant?->question_34_b_answer == 'yes' ? true : false));
-        $worksheet->setCellValue("I7", $this->relevantQueriesCheckbox("NO", $relevant?->question_34_b_answer == 'no' ? true : false));
-        $worksheet->setCellValue("H10", $relevant?->question_34_b_details);
-
-        $worksheet->setCellValue("G12", $this->relevantQueriesCheckbox("YES", $relevant?->question_35_a_answer == 'yes' ? true : false));
-        $worksheet->setCellValue("I12", $this->relevantQueriesCheckbox("NO", $relevant?->question_35_a_answer == 'no' ? true : false));
-        $worksheet->setCellValue("H14", $relevant?->question_35_a_details);
+        $worksheet = $spreadsheet->getSheet(self::C4);
 
 
-        $worksheet->setCellValue("G17", $this->relevantQueriesCheckbox("YES", $relevant?->question_35_b_answer == 'yes' ? true : false));
-        $worksheet->setCellValue("I17", $this->relevantQueriesCheckbox("NO", $relevant?->question_35_b_answer == 'no' ? true : false));
+        $worksheet->setCellValue("G5", $this->relevantQueriesCheckbox("YES", $relevantQueries?->question_34_a_answer == 'yes' ? true : false));
+        $worksheet->setCellValue("I5", $this->relevantQueriesCheckbox("NO", $relevantQueries?->question_34_a_answer == 'no' ? true : false));
 
-        $worksheet->setCellValue("K19", $relevant?->question_35_b_date_filled);
-        $worksheet->setCellValue("K20", $relevant?->question_35_b_status_of_cases);
+        $worksheet->setCellValue("G7", $this->relevantQueriesCheckbox("YES", $relevantQueries?->question_34_b_answer == 'yes' ? true : false));
+        $worksheet->setCellValue("I7", $this->relevantQueriesCheckbox("NO", $relevantQueries?->question_34_b_answer == 'no' ? true : false));
+        $worksheet->setCellValue("H10", $relevantQueries?->question_34_b_details);
 
-        $worksheet->setCellValue("G22", $this->relevantQueriesCheckbox("YES", $relevant?->question_36_a_answer == 'yes' ? true : false));
-        $worksheet->setCellValue("I22", $this->relevantQueriesCheckbox("NO", $relevant?->question_36_a_answer == 'no' ? true : false));
-        $worksheet->setCellValue("H24", $relevant?->question_36_a_details);
+        $worksheet->setCellValue("G12", $this->relevantQueriesCheckbox("YES", $relevantQueries?->question_35_a_answer == 'yes' ? true : false));
+        $worksheet->setCellValue("I12", $this->relevantQueriesCheckbox("NO", $relevantQueries?->question_35_a_answer == 'no' ? true : false));
+        $worksheet->setCellValue("H14", $relevantQueries?->question_35_a_details);
 
 
-        $worksheet->setCellValue("G26", $this->relevantQueriesCheckbox("YES", $relevant?->question_37_a_answer == 'yes' ? true : false));
-        $worksheet->setCellValue("I26", $this->relevantQueriesCheckbox("NO", $relevant?->question_37_a_answer == 'no' ? true : false));
-        $worksheet->setCellValue("H28", $relevant?->question_37_a_details);
+        $worksheet->setCellValue("G17", $this->relevantQueriesCheckbox("YES", $relevantQueries?->question_35_b_answer == 'yes' ? true : false));
+        $worksheet->setCellValue("I17", $this->relevantQueriesCheckbox("NO", $relevantQueries?->question_35_b_answer == 'no' ? true : false));
 
-        $worksheet->setCellValue("G30", $this->relevantQueriesCheckbox("YES", $relevant?->question_38_a_answer == 'yes' ? true : false));
-        $worksheet->setCellValue("I30", $this->relevantQueriesCheckbox("NO", $relevant?->question_38_a_answer == 'no' ? true : false));
-        $worksheet->setCellValue("K31", $relevant?->question_38_a_details);
-        $worksheet->setCellValue("K34", $relevant?->question_38_b_details);
+        $worksheet->setCellValue("K19", $relevantQueries?->question_35_b_date_filled);
+        $worksheet->setCellValue("K20", $relevantQueries?->question_35_b_status_of_cases);
 
-        $worksheet->setCellValue("G33", $this->relevantQueriesCheckbox("YES", $relevant?->question_38_b_answer == 'yes' ? true : false));
-        $worksheet->setCellValue("I33", $this->relevantQueriesCheckbox("NO", $relevant?->question_38_b_answer == 'no' ? true : false));
+        $worksheet->setCellValue("G22", $this->relevantQueriesCheckbox("YES", $relevantQueries?->question_36_a_answer == 'yes' ? true : false));
+        $worksheet->setCellValue("I22", $this->relevantQueriesCheckbox("NO", $relevantQueries?->question_36_a_answer == 'no' ? true : false));
+        $worksheet->setCellValue("H24", $relevantQueries?->question_36_a_details);
 
-        $worksheet->setCellValue("H38", $relevant?->question_39_a_details);
 
-        $worksheet->setCellValue("G36", $this->relevantQueriesCheckbox("YES", $relevant?->question_39_a_answer == 'yes' ? true : false));
-        $worksheet->setCellValue("I36", $this->relevantQueriesCheckbox("NO", $relevant?->question_39_a_answer == 'no' ? true : false));
+        $worksheet->setCellValue("G26", $this->relevantQueriesCheckbox("YES", $relevantQueries?->question_37_a_answer == 'yes' ? true : false));
+        $worksheet->setCellValue("I26", $this->relevantQueriesCheckbox("NO", $relevantQueries?->question_37_a_answer == 'no' ? true : false));
+        $worksheet->setCellValue("H28", $relevantQueries?->question_37_a_details);
 
-        $worksheet->setCellValue("G42", $this->relevantQueriesCheckbox("YES", $relevant?->question_40_a_answer == 'yes' ? true : false));
-        $worksheet->setCellValue("I42", $this->relevantQueriesCheckbox("NO", $relevant?->question_40_a_answer == 'no' ? true : false));
+        $worksheet->setCellValue("G30", $this->relevantQueriesCheckbox("YES", $relevantQueries?->question_38_a_answer == 'yes' ? true : false));
+        $worksheet->setCellValue("I30", $this->relevantQueriesCheckbox("NO", $relevantQueries?->question_38_a_answer == 'no' ? true : false));
+        $worksheet->setCellValue("K31", $relevantQueries?->question_38_a_details);
+        $worksheet->setCellValue("K34", $relevantQueries?->question_38_b_details);
 
-        $worksheet->setCellValue("G44", $this->relevantQueriesCheckbox("YES", $relevant?->question_40_b_answer == 'yes' ? true : false));
-        $worksheet->setCellValue("I44", $this->relevantQueriesCheckbox("NO", $relevant?->question_40_b_answer == 'no' ? true : false));
+        $worksheet->setCellValue("G33", $this->relevantQueriesCheckbox("YES", $relevantQueries?->question_38_b_answer == 'yes' ? true : false));
+        $worksheet->setCellValue("I33", $this->relevantQueriesCheckbox("NO", $relevantQueries?->question_38_b_answer == 'no' ? true : false));
 
-        $worksheet->setCellValue("G46", $this->relevantQueriesCheckbox("YES", $relevant?->question_40_c_answer == 'yes' ? true : false));
-        $worksheet->setCellValue("I46", $this->relevantQueriesCheckbox("NO", $relevant?->question_40_c_answer == 'no' ? true : false));
+        $worksheet->setCellValue("H38", $relevantQueries?->question_39_a_details);
 
-        $worksheet->setCellValue("L43", $relevant?->question_40_a_details);
-        $worksheet->setCellValue("L45", $relevant?->question_40_b_details);
-        $worksheet->setCellValue("L47", $relevant?->question_40_c_details);
+        $worksheet->setCellValue("G36", $this->relevantQueriesCheckbox("YES", $relevantQueries?->question_39_a_answer == 'yes' ? true : false));
+        $worksheet->setCellValue("I36", $this->relevantQueriesCheckbox("NO", $relevantQueries?->question_39_a_answer == 'no' ? true : false));
+
+        $worksheet->setCellValue("G42", $this->relevantQueriesCheckbox("YES", $relevantQueries?->question_40_a_answer == 'yes' ? true : false));
+        $worksheet->setCellValue("I42", $this->relevantQueriesCheckbox("NO", $relevantQueries?->question_40_a_answer == 'no' ? true : false));
+
+        $worksheet->setCellValue("G44", $this->relevantQueriesCheckbox("YES", $relevantQueries?->question_40_b_answer == 'yes' ? true : false));
+        $worksheet->setCellValue("I44", $this->relevantQueriesCheckbox("NO", $relevantQueries?->question_40_b_answer == 'no' ? true : false));
+
+        $worksheet->setCellValue("G46", $this->relevantQueriesCheckbox("YES", $relevantQueries?->question_40_c_answer == 'yes' ? true : false));
+        $worksheet->setCellValue("I46", $this->relevantQueriesCheckbox("NO", $relevantQueries?->question_40_c_answer == 'no' ? true : false));
+
+        $worksheet->setCellValue("L43", $relevantQueries?->question_40_a_details);
+        $worksheet->setCellValue("L45", $relevantQueries?->question_40_b_details);
+        $worksheet->setCellValue("L47", $relevantQueries?->question_40_c_details);
 
 
         $index = 51;
-        EmployeeReference::where('employee_id', $id)->get()->each(function ($row) use (&$worksheet, &$index) {
+        $references->each(function ($row) use (&$worksheet, &$index) {
             $worksheet->setCellValue("A" . $index, Str::upper($row->name));
             $worksheet->setCellValue("F" . $index, Str::upper($row->address));
             $worksheet->setCellValue("G" . $index, Str::upper($row->telephone_number ?? "N/A"));
@@ -379,21 +398,16 @@ class DownloadPersonalDataSheetController extends Controller implements IPDSDown
         $spreadsheet->getActiveSheet()->getStyle('K51')->getAlignment()->setWrapText(true);
         $worksheet->setCellValue('K51', 'ID picture taken within the last 6 months 3.5 cm x 4.5 cm (passport size) With full and handwritten name tag and signature over printeed name Computer generated or photocopied picture is not acceptable');
 
-        $issuedID = EmployeeIssuedID::where('employee_id', $id)->first();
         if (isset($issuedID->id_type)) {
             $worksheet->setCellValue("D60", Str::upper($issuedID->id_type));
             $worksheet->setCellValue("D61", Str::upper($issuedID->id_no));
             $worksheet->setCellValue("D63", Str::upper($issuedID->date));
         }
 
-        $spreadsheet->getSheet(0)->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_LEGAL);
-
-        $spreadsheet->getSheet(1)->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_LEGAL);
-
-        $spreadsheet->getSheet(2)->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_LEGAL);
-
-        $spreadsheet->getSheet(3)->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_LEGAL);
-
+        $spreadsheet->getSheet(self::C1)->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_LEGAL);
+        $spreadsheet->getSheet(self::C2)->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_LEGAL);
+        $spreadsheet->getSheet(self::C3)->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_LEGAL);
+        $spreadsheet->getSheet(self::C4)->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_LEGAL);
 
 
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xls');
@@ -401,8 +415,17 @@ class DownloadPersonalDataSheetController extends Controller implements IPDSDown
         $fileName =  Str::upper(trim($employee->Employee_id)) . '-E-PDS';
         $extension = '.xls';
         $writer->save(storage_path() . '\\generated_pds\\' . $fileName . $extension);
-        $file = storage_path() . '\\generated_pds\\' . $fileName . $extension;
+
         return response()->json(['filename' => $fileName, 'success' => true]);
+    }
+
+    private function relevantQueriesCheckbox($text, $isCheck)
+    {
+        $yesCheckbox =  new \PhpOffice\PhpSpreadsheet\RichText\RichText();
+        $payable = $yesCheckbox->createTextRun($isCheck ? 'R' : '0');
+        $payable->getFont()->setName('Wingdings 2');
+        $yesCheckbox->createTextRun(' ' . $text)->getFont()->setName("Calibri");
+        return $yesCheckbox;
     }
 
     public function generate(string $id)

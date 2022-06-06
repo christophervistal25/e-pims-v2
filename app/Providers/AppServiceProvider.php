@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Employee;
+use App\Plantilla;
 use Carbon\Carbon;
 use App\Notification;
 use App\LeaveIncrement;
@@ -9,8 +11,10 @@ use App\EmployeeLeaveRecord;
 use App\EmployeeLeaveApplication;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
+use App\EmployeeLeaveForwardedBalance;
 use Illuminate\Support\ServiceProvider;
 use App\Http\Repositories\LeaveRecordRepository;
+use App\Observers\EmployeeLeaveForwardedBalanceObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,12 +39,24 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        EmployeeLeaveForwardedBalance::observe(EmployeeLeaveForwardedBalanceObserver::class);
+
         View::composer(['accounts.employee.layouts.app'], function ($view) {
             $view->with('notifications', Auth::user()->notifications);
         });
 
         View::composer(['layouts.app'], function ($view) {
-            // $no_of_pending_leave_list = EmployeeLeaveApplication::where('approved_status', 'pending')->count();
+            $currentYear = date('Y');
+            $fetchedYear = date('Y') - 1;
+
+            $employeeForPlantillaSchedule = Employee::whereHas('plantilla', function ($query) use($fetchedYear) {
+                $query->where('year', $fetchedYear);
+            })->whereDoesntHave('plantilla', function ($query) use($currentYear) {
+                $query->where('year', $currentYear);
+            })->count();
+
+            $view->with('no_of_employees_for_plantilla_schedule', $employeeForPlantillaSchedule);
             $view->with('no_of_pending_leave_list', 0);
         });
     }

@@ -47,9 +47,9 @@
                                     data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                     <option></option>
                                     @foreach($offices as $office)
-                                    <option {{ $division->office_code == $office->OfficeCode ? 'selected' : '' }}
-                                        value="{{ $office->OfficeCode }}">
-                                        {{ $office->Description }} - {{ $office->OfficeCode }}</option>
+                                    <option {{ $division->office_code == $office->office_code ? 'selected' : '' }}
+                                        value="{{ $office->office_code }}">
+                                        {{ $office->office_name }}</option>
                                     @endforeach
                                 </select>
                                 <span class="font-weight-bold">Office<span class="text-danger">*</span></span>

@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class EmployeeLeaveRecord extends Model
 {
     protected $primaryKey = 'id';
-    protected $connection = 'E_PIMS_CONNECTION';
+    protected $connection = 'DTR_PAYROLL_CONNECTION';
     public $table = 'employee_leave_records';
-    
+
     protected $fillable = [
         'employee_id',
         'leave_type_id',
@@ -26,7 +26,7 @@ class EmployeeLeaveRecord extends Model
     ];
 
     public const TYPES = ['FORWARD' => 'F', 'INCREMENT' => 'I', 'DECREMENT' => 'D'];
-    
+
     protected $dates = ['created_at', 'updated_at', 'date_record'];
 
     public function type()
@@ -37,15 +37,15 @@ class EmployeeLeaveRecord extends Model
     public function employee()
     {
         return $this->belongsTo(Employee::class, 'employee_id', 'Employee_id')
-                    ->select('Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode', 'PosCode')
-                    ->withDefault();
+            ->select('Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode', 'PosCode')
+            ->withDefault();
     }
 
     public function undertime()
     {
         return $this->hasOne(EmployeeLeaveUndertime::class, 'id', 'undertime_id');
     }
-    
+
     public function leave_file_application()
     {
         return $this->belongsTo(EmployeeLeaveApplication::class, 'leave_application_id', 'id')->withDefault();
