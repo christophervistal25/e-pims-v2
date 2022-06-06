@@ -48,13 +48,14 @@
                         <div class="col-12">
                             <div class="alert alert-secondary text-center font-weight-bold" role="alert">ADD STEP INCREMENT</div>
                         </div>
-
+                        
+                        
                         <div class="card-body col-12 col-md-6 col-lg-6">
                             <div class="col-12 col-lg-11 mt-2">
                                 <label class="form-group has-float-label mb-0" for="employeeName">
                                 <select class="form-control employeeName selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" data-live-search="true"
                                     name="employeeName" id="employeeName" data-size="6" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                    <option disabled>Search name here</option>
+                                    <option hidden></option>
 
                                     @foreach($employees as $employee)
                                     <option data-plantilla="{{ $employee->plantillaForStep }}"
@@ -165,7 +166,6 @@
                                 <select name="stepNo2" id="stepNo2" style="outline: none; box-shadow: 0px 0px 0px transparent;"
                                     class="form-control stepNo2 floating {{ $errors->has('stepNo2')  ? 'is-invalid' : ''}}">
                                     <option>Please Select</option>
-                                    <option value="">1</option>
                                 </select>
                                 <span><strong>STEP<span class="text-danger">*</span></strong></span>
                                 </label>
@@ -416,11 +416,12 @@
             $('#addForm').addClass('page-header d-none');
         });
 
+
         // FETCH DATA AND SHOW VALUE IN INPUT FIELDS
         $('#employeeName').change( (e)=> {
             let employeeID = e.target.value;
             let plantilla = $($("#employeeName option:selected")[0]).attr('data-plantilla');
-
+           
 
             if (plantilla) {
                 plantilla = JSON.parse(plantilla);
