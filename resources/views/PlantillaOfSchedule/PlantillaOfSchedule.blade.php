@@ -137,8 +137,8 @@
         </div>
             <div class="col-7 mb-2">
                     <div style="padding-right:20px;" class="float-right">
-                        <a id="printPreviewA"><button class="btn btn-secondary" id="printPreview" disabled="true" style="visibility:hidden;"><i class="la la-print"></i>&nbsp; Print Preview</button></a>&nbsp;&nbsp;
-                        <button id="btnCreatePlantillaSchedule" class="btn btn-primarys float-right" ><i class="fa fa-plus"></i> Create Plantilla Schedule</button>
+                        {{-- <a id="printPreviewA"><button class="btn btn-secondary" id="printPreview" disabled="true" style="visibility:hidden;"><i class="la la-print"></i>&nbsp; Print Preview</button></a>&nbsp;&nbsp; --}}
+                        {{-- <button id="btnCreatePlantillaSchedule" class="btn btn-primarys float-right" ><i class="fa fa-plus"></i> Create Plantilla Schedule</button> --}}
                     </div>
                 </div>
             </div>

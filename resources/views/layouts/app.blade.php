@@ -331,9 +331,9 @@
                                                   <a class='text-decoration-none' href="{{  route('plantilla-of-position.index') }}">
                                                        <span>Add New Position</span>
                                                   </a>
-                                                  <a class='text-decoration-none' href="{{ route('position-schedule.index') }}">
+                                                  {{-- <a class='text-decoration-none' href="{{ route('position-schedule.index') }}">
                                                        <span>Create Position Schedule</span>
-                                                  </a>
+                                                  </a> --}}
                                              </li>
                                         </ul>
                                    </li>
@@ -345,9 +345,9 @@
                                                   <a class='text-decoration-none' href="{{  route('plantilla-of-personnel.index') }}">
                                                        <span>Add New Plantilla</span>
                                                   </a>
-                                                  <a class='text-decoration-none' href="{{  route('plantilla-of-schedule.index') }}">
+                                                  {{-- <a class='text-decoration-none' href="{{  route('plantilla-of-schedule.index') }}">
                                                        <span>Create Plantilla Schedule</span>
-                                                  </a>
+                                                  </a> --}}
                                              </li>
                                         </ul>
                                    </li>
@@ -475,7 +475,7 @@
                               <div class="modal-footer">
                                    @if($no_of_employees_for_plantilla_schedule != 0)
                                         <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary text-white" id="btnCreatePlantillaSchedule">
+                                        <button type="button" class="btn btn-primary text-white" id="btnCreatePlantillaScheduleModal">
                                         <div class="spinner-border text-light spinner-border-sm" id='spinner-create-plantilla-schedule' role="status">
                                              <span class="sr-only">Loading...</span>
                                         </div>
@@ -520,8 +520,8 @@
 
           $('#spinner-create-plantilla-schedule').hide();
 
-          $('#btnCreatePlantillaSchedule').click(function() {
-               $('#btnCreatePlantillaSchedule').attr('disabled', true);
+          $('#btnCreatePlantillaScheduleModal').click(function() {
+               $('#btnCreatePlantillaScheduleModal').attr('disabled', true);
                $('#spinner-create-plantilla-schedule').show();
                $.ajax({
                     url: '/bulk-plantilla-of-schedule-generate',
@@ -529,7 +529,7 @@
                      success: function(response) {
                           if(response.success) {
                               $('#plantillaCreateScheduleModal').modal('toggle');
-                              $('#btnCreatePlantillaSchedule').removeAttr('disabled');
+                              $('#btnCreatePlantillaScheduleModal').removeAttr('disabled');
                                $('#spinner-create-plantilla-schedule').hide();
                                 swal({
                                    title : '',
