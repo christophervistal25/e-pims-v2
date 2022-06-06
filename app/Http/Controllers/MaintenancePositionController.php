@@ -23,12 +23,12 @@ class MaintenancePositionController extends Controller
     public function list(Request $request)
     {
         if ($request->ajax()) {
-            $data = Position::select('position_id', 'PosCode', 'Description', 'sg_no', 'position_short_name')->get();
+            $data = Position::select('PosCode', 'Description', 'sg_no', 'position_short_name')->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn = "<a title='Edit Position' href='" . route('maintenance-position.edit', $row->position_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-                    $btn = $btn . "<a title='Delete Position' id='delete' value='$row->position_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                    $btn = "<a title='Edit Position' href='" . route('maintenance-position.edit', $row->PosCode) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+                    $btn = $btn . "<a title='Delete Position' id='delete' value='$row->PosCode' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
                         ";
                     return $btn;
                 })
@@ -56,15 +56,15 @@ class MaintenancePositionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'positionCode'                 => 'required|unique:E_PIMS_CONNECTION.positions,position_code',
+            'positionCode'                 => 'required|unique:Position,PosCode',
             'positionName'                 => 'required',
             'salaryGradeNo'                => 'required',
             'positionShortName'            => 'required',
 
         ]);
         $position = new Position;
-        $position->position_id = Position::latest('position_id')->first()->position_id + 1 ?? 1;
-        $position->PosCode             = $request['positionCode'];
+
+        $position->PosCode             = $request['positionCode'];        // $position->position_id = Position::latest('position_id')->first()->position_id + 1 ?? 1;
         $position->Description         = $request['positionName'];
         $position->sg_no               = $request['salaryGradeNo'];
         $position->position_short_name = $request['positionShortName'];

@@ -1,4 +1,4 @@
-    @if($forwardedBalance->count() === 0)
+    @if($forwardedBalance?->count() === 0)
     <td colspan="12" class="text-center text-sm bg-light">
          <i class='fa fa-warning fa-2x text-danger'></i>
          <h6 class="display-5 text-uppercase">no available data</h6>
@@ -10,34 +10,34 @@
          <td class='text-truncate text-center font-weight-medium' data-label="period">
               Bal. forwaded as of
               <span class='font-weight-bold'>
-                   ( {{ Carbon\Carbon::parse($forwardedBalance->first()->fb_as_of)->format('F d, Y') }} )
+                   ( {{ Carbon\Carbon::parse($forwardedBalance?->first()->fb_as_of)->format('F d, Y') }} )
               </span>
          </td>
          <td class='text-center align-middle text-sm text-uppercase font-weight-medium' data-label="particular">
               Entrance</td>
          <td class='text-center align-middle text-xs text-uppercase font-weight-bold' data-label="earned">
-              {{ $forwardedBalance->vl_earned }}
+              {{ $forwardedBalance?->vl_earned }}
          </td>
          <td class='text-center align-middle text-xs text-uppercase font-weight-bold' data-label="absences_with_pay">
-              {{ $forwardedBalance->vl_used }}
+              {{ $forwardedBalance?->vl_used }}
          </td>
          <td class='text-center align-middle text-sm text-uppercase font-weight-bold' data-label="vacation_balance">
-              {{ $forwardedBalance->vl_earned  - $forwardedBalance->vl_used }}
+              {{ $forwardedBalance?->vl_earned  - $forwardedBalance?->vl_used }}
          </td>
          <td class='text-center align-middle text-xs text-uppercase font-weight-bold' data-label="absences_without_pay"></td>
 
          {{-- SICK LEAVE TABLE DATA --}}
          <td class='text-center align-middle text-xs text-uppercase font-weight-bold'>
-              {{ $forwardedBalance->sl_earned }}
+              {{ $forwardedBalance?->sl_earned }}
          </td>
          <td class='text-center align-middle text-xs text-uppercase font-weight-bold'>
-              {{ $forwardedBalance->sl_used }}
+              {{ $forwardedBalance?->sl_used }}
          </td>
          <td class='text-center align-middle text-sm text-uppercase font-weight-bold' data-label="sick_balance">
-              {{ $forwardedBalance->sl_earned - $forwardedBalance->sl_used }}</td>
+              {{ $forwardedBalance?->sl_earned - $forwardedBalance?->sl_used }}</td>
          <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
          <td class='text-center align-middle text-sm text-uppercase font-weight-bold' data-label="over_all_total">
-              {{ $overAllTotal = ($forwardedBalance->vl_earned - $forwardedBalance->vl_used) + ($forwardedBalance->sl_earned - $forwardedBalance->sl_used)  }}</td>
+              {{ $overAllTotal = ($forwardedBalance?->vl_earned - $forwardedBalance?->vl_used) + ($forwardedBalance?->sl_earned - $forwardedBalance?->sl_used)  }}</td>
          <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
     </tr>
     @foreach($recordsWithoutForwarded as $type => $record)
@@ -50,8 +50,8 @@
          @endphp
          @foreach($recordGroupByMonth as $period => $data)
          @php
-         $sickLeaveIncrement = $data->where('type.code_number', $SICK_LEAVE_CODE_NUMBER)->first();
-         $vacationLeaveIncrement = $data->where('type.code_number', $VACATION_LEAVE_CODE_NUMBER)->first();
+         $sickLeaveIncrement = $data->where('type.code_number', $SICK_LEAVE_CODE_NUMBER)?->first();
+         $vacationLeaveIncrement = $data->where('type.code_number', $VACATION_LEAVE_CODE_NUMBER)?->first();
          @endphp
     <tr>
          {{-- VACATION LEAVE DATA --}}

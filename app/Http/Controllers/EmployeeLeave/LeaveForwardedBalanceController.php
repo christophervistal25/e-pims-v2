@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\EmployeeLeave;
 
+use App\Setting;
 use App\Employee;
+use Carbon\Carbon;
+use App\EmployeeLeaveRecord;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
+use App\EmployeeLeaveTransaction;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\EmployeeLeaveForwardedBalance;
@@ -128,20 +132,28 @@ class LeaveForwardedBalanceController extends Controller
         ]); 
 
         $lastID = DB::table('Settings')->where('Keyname', 'AUTONUMBER2')->first();
-
-        $convertedID = (int)$lastID->Keyvalue;
-    
+        $convertedID = (int) $lastID->Keyvalue;
         // Insert Record with As of.
-        $employeeForwardedBalanceRecord = new EmployeeLeaveForwardedBalance;
-        $employeeForwardedBalanceRecord->forwarded_id   = $convertedID;
-        $employeeForwardedBalanceRecord->Employee_id    = $request['Employee_id'];
-        $employeeForwardedBalanceRecord->vl_earned      = $request['vl_earned'];
-        $employeeForwardedBalanceRecord->vl_used        = $request['vl_used'];
-        $employeeForwardedBalanceRecord->sl_earned      = $request['sl_earned'];
-        $employeeForwardedBalanceRecord->sl_used        = $request['sl_used'];
-        $employeeForwardedBalanceRecord->date_forwarded = $request['date_forwarded'];
-        $employeeForwardedBalanceRecord->save();
-
+        $employeeLeaveForwardedBalance = EmployeeLeaveForwardedBalance::create([
+            'forwarded_id'   => $convertedID,
+            'Employee_id'    => $request['Employee_id'],
+            'vl_earned'      => $request['vl_earned'],
+            'vl_used'        => $request['vl_used'],
+            'sl_earned'      => $request['sl_earned'],
+            'sl_used'        => $request['sl_used'],
+            'date_forwarded' => $request['date_forwarded'],
+        ]);
+        
+        EmployeeLeaveTransaction::create([
+            'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
+            'transaction_id' => $convertedID,
+            'transaction_type' => EmployeeLeaveForwardedBalance::class,
+            'record_type' => 'ENTRANCE',
+            'trans_date' => Carbon::now(),
+             'vl_amount' => $employeeLeaveForwardedBalance->vl_earned - $employeeLeaveForwardedBalance->vl_used,
+             'sl_amount' => $employeeLeaveForwardedBalance->sl_earned - $employeeLeaveForwardedBalance->sl_used,
+        ]);
+        
         $nextID = $convertedID + 1;
         
         DB::table('Settings')->where('Keyname', 'AUTONUMBER2')->update([ 'Keyvalue' => (string)$nextID ]);

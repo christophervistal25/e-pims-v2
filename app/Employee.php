@@ -4,18 +4,20 @@ namespace App;
 
 use App\Office;
 use App\Position;
-use App\OfficeCharging;
 use App\StepIncrement;
+use App\OfficeCharging;
 use Illuminate\Support\Str;
 use App\EmployeeLeaveRecord;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\EmployeeLaraTablesAction;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Traits\Relations\PersonalDataSheetRelationModels;
 
 class Employee extends Model
 {
     use EmployeeLaraTablesAction;
+    use PersonalDataSheetRelationModels;
 
     public $incrementing = false;
     protected $primaryKey = 'Employee_id';
@@ -23,7 +25,6 @@ class Employee extends Model
     protected $table = 'Employees';
     public $with = ['position', 'office_charging', 'office_assignment'];
     public $dates = ['first_day_of_service', 'last_step_increment'];
-    // 'office_charging.desc'
     public $keyType = 'string';
 
     protected $columns = [
@@ -173,36 +174,6 @@ class Employee extends Model
         'fullname'
     ];  
 
-    public function province_residential()
-    {
-        return $this->hasOne(Province::class, 'province_code', 'residential_province')->select('province_code', 'name');
-    }
-
-    public function city_residential()
-    {
-        return $this->hasOne(City::class, 'city_code', 'residential_city')->select('province_code', 'city_code', 'name');
-    }
-
-    public function barangay_residential()
-    {
-        return $this->hasOne(Barangay::class, 'barangay_code', 'residential_barangay')->select('barangay_code', 'province_code', 'city_code', 'name');
-    }
-
-    public function province_permanent()
-    {
-        return $this->hasOne(Province::class, 'province_code', 'permanent_province')->select('province_code', 'name');
-    }
-
-    public function city_permanent()
-    {
-        return $this->hasOne(City::class, 'city_code', 'permanent_city')->select('province_code', 'city_code', 'name');
-    }
-
-    public function barangay_permanent()
-    {
-        return $this->hasOne(Barangay::class, 'barangay_code', 'permanent_barangay')->select('barangay_code', 'province_code', 'city_code', 'name');
-    }
-
 
     public function getFullnameAttribute()
     {
@@ -242,8 +213,6 @@ class Employee extends Model
         );
     }
 
-
-
     protected function gender(): Attribute
     {
         return Attribute::make(
@@ -252,98 +221,24 @@ class Employee extends Model
         );
     }
 
-
     public function plantilla()
     {
         return $this->hasOne(Plantilla::class, 'Employee_id', 'employee_id');
     }
-
 
     public function plantillaForStep()
     {
         return $this->hasOne(Plantilla::class, 'employee_id', 'Employee_id');
     }
 
-
     public function PlantillaSchedule()
     {
         return $this->hasOne(PlantillaSchedule::class, 'employee_id', 'employee_id');
     }
 
-
-    public function family_background()
-    {
-        return $this->hasOne(EmployeeFamilyBackground::class, 'employee_id', 'employee_id');
-    }
-
-    public function spouse_child()
-    {
-        return $this->hasMany(EmployeeSpouseChildren::class, 'employee_id', 'employee_id');
-    }
-
-    public function educational_background()
-    {
-        return $this->hasOne(EmployeeEducationalBackground::class, 'employee_id', 'employee_id');
-    }
-
-    public function civil_service()
-    {
-        return $this->hasMany(EmployeeCivilService::class, 'employee_id', 'Employee_id');
-    }
-
-    public function work_experience()
-    {
-        return $this->hasMany(EmployeeWorkExperience::class, 'employee_id', 'employee_id');
-    }
-
-    public function voluntary_work()
-    {
-        return $this->hasMany(EmployeeVoluntaryWork::class, 'employee_id', 'employee_id');
-    }
-
-    public function program_attained()
-    {
-        return $this->hasMany(EmployeeTrainingAttained::class, 'employee_id', 'employee_id');
-    }
-
-    public function information()
-    {
-        return $this->hasOne(EmployeeInformation::class, 'EmpIDNo', 'employee_id');
-    }
-
-    public function other_information()
-    {
-        return $this->hasMany(EmployeeOtherInformation::class, 'employee_id', 'employee_id');
-    }
-
-    public function references()
-    {
-        return $this->hasMany(EmployeeReference::class, 'employee_id', 'employee_id');
-    }
-
-    public function relevant_queries()
-    {
-        return $this->hasOne(EmployeeRelevantQuery::class, 'employee_id', 'employee_id');
-    }
-
-    public function issued_id()
-    {
-        return $this->hasOne(EmployeeIssuedID::class, 'employee_id', 'employee_id');
-    }
-
-    public function status()
-    {
-        return $this->hasOne(RefStatus::class, 'id', 'status');
-    }
-
     public function loginAccount()
     {
         return $this->belongsTo(User::class, 'employee_id', 'employee_id');
-    }
-
-    public static function getWithRelations(array $relations = [])
-    {
-        return self::with($relations)->get();
     }
 
     public function position()

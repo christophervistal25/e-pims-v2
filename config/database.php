@@ -96,7 +96,7 @@ return [
         'DTR_PAYROLL_CONNECTION' => [
             'driver' => 'sqlsrv',
             'url' => '',
-            'host' => 'SERVER-PC',
+            'host' => 'server-pc',
             'port' => '',
             'database' => 'DTRPayroll',
             'username' => 'sa',

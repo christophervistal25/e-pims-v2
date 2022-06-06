@@ -19,9 +19,9 @@ class HolidayController extends Controller
     public function list()
     {
         if (request()->ajax()) {
-            $holidays = Holiday::select('id', 'name', 'date', 'type')->orderBy('date');
+            $holidays = Holiday::select('id', 'name', 'date', 'type');
             return (new Datatables)->eloquent($holidays)
-                    ->make(true);
+                ->make(true);
         }
     }
     /**
@@ -54,7 +54,7 @@ class HolidayController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->ajax()) {
+        if ($request->ajax()) {
             $this->validate($request, [
                 'name' => 'required',
                 'date' => 'required|date|unique:holidays,date',
@@ -103,7 +103,7 @@ class HolidayController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if($request->ajax()) {
+        if ($request->ajax()) {
             $this->validate($request, [
                 'name' => 'required',
                 'date' => 'required|date|unique:holidays,date,' . $id,
@@ -130,5 +130,4 @@ class HolidayController extends Controller
     {
         return response()->json(['success' => $holiday->delete()]);
     }
-
 }

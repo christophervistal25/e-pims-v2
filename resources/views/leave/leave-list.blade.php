@@ -524,6 +524,23 @@
         removeSearchAndTableLength();
     }
 
+    $(document).on('click', '.btnApprove', function () {
+        let applicationID = $(this).attr('data-id');
+        const status = 'approved';
+
+        $.ajax({
+            url : `/employee/leave/leave-list/${applicationID}`,
+            method : 'PUT',
+            data : { status },
+            success : function (response) {
+                if(response.success) {
+                    alert('done!');
+                }
+            }
+
+        });
+    });
+
 
     // Search by office, employee name and status
     $("#searchOffice, #searchName, #searchStatus").change(() => filter());

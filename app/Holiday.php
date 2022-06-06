@@ -12,9 +12,9 @@ class Holiday extends Model
     use SoftDeletes;
 
     public $connection = 'DTR_PAYROLL_CONNECTION';
-    
+
     public const TYPES = ['REGULAR', 'SPECIAL NON-WORKING', 'SPECIAL WORKING'];
-    
+
     protected $fillable = ['name', 'date',  'type'];
 
     protected $appends = ['title', 'date_string'];
@@ -34,9 +34,9 @@ class Holiday extends Model
         return $this->name;
     }
 
+
     public function getDateStringAttribute()
     {
-        return Carbon::parse($this->date)->format('l jS \of F Y');
+        return Carbon::parse(date('Y') . '-' . $this->date)->format('l jS \of F Y');
     }
-    
 }

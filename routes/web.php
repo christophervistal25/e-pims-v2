@@ -2,12 +2,20 @@
 
 use App\Employee;
 use Carbon\Carbon;
+use App\service_record;
+use Illuminate\Support\Str;
+use AnourValar\Office\Format;
+use AnourValar\Office\SheetsService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BirthdayController;
 use App\Http\Controllers\StepPromotionController;
+use App\Http\Controllers\ServiceRecordsController;
 use App\Http\Controllers\PersonalDataSheetController;
+use App\Http\Controllers\PrintServiceRecordController;
+use App\Http\Controllers\PlantillaOfScheduleController;
 use App\Http\Controllers\EmployeeLeave\LeaveListController;
+use App\Plantilla;
 
 Route::get('personal-data-sheet/{idNumber}', [PersonalDataSheetController::class, 'edit'])->name('employee.personal-data-sheet.edit');
 
@@ -34,11 +42,17 @@ Route::resource('/maintenance-division', 'MaintenanceDivisionController');
 Route::get('/maintenance-division/{id}', 'MaintenanceDivisionController@destroy')->name('maintenance-division.delete');
 
 //plantilla of schedule
-Route::resource('/plantilla-of-schedule', 'PlantillaOfScheduleController');
-Route::get('/plantilla-of-schedule-list', 'PlantillaOfScheduleController@list');
-Route::get('/plantilla-of-schedule-adjustedlist/{yearFilter}', 'PlantillaOfScheduleController@adjustedlist');
-Route::get('/print-plantilla-of-schedule/{id}/previewed', 'PrintPlantillaOfScheduleController@print')->name('plantilla-of-schedule.previewed.print');
-Route::get('/print-plantilla-of-schedule/{id}', 'PrintPlantillaOfScheduleController@printList')->name('print-plantilla-of-schedule');
+Route::get('plantilla-of-schedule-list/{office?}/{year?}', [PlantillaOfScheduleController::class, 'list'])->name('plantilla-of-schedile.lists');
+Route::get('plantilla-of-schedule', [PlantillaOfScheduleController::class, 'index'])->name('plantilla-of-schedule.index');
+Route::post('plantilla-of-schedule-store', [PlantillaOfScheduleController::class, 'store'])->name('plantilla-of-schedule.store');
+Route::post('bulk-plantilla-of-schedule-generate', [PlantillaOfScheduleController::class, 'generate'])->name('plantilla-of-schedule.generate');
+
+// Route::resource('/plantilla-of-schedule', 'PlantillaOfScheduleController');
+// Route::get('/plantilla-of-schedule-list', 'PlantillaOfScheduleController@list');
+// Route::get('/print-plantilla-of-schedule/{id}/previewed', 'PrintPlantillaOfScheduleController@print')->name('plantilla-of-schedule.previewed.print');
+// Route::get('/print-plantilla-of-schedule/{id}', 'PrintPlantillaOfScheduleController@printList')->name('print-plantilla-of-schedule');
+
+// Route::get('/plantilla-of-schedule-adjustedlist/{yearFilter}', 'PlantillaOfScheduleController@adjustedlist');
 
 //position of schedule
 // Route::get('/position-schedule-list-adjusted/{year?}', 'PositionScheduleController@adjustedlist')->name('position.schedule.list.adjusted');
@@ -210,3 +224,9 @@ Route::post('leave-increment-job', 'LeaveIncrementJobController');
 
 
 Route::get('see-more/promotions', [StepPromotionController::class, 'upcomingStep'])->name('promotion.see-more');
+
+Route::post('service-record-print/{employeeID}/pdf', [PrintServiceRecordController::class, 'pdf']);
+Route::post('service-record-print/{employeeID}/excel', [PrintServiceRecordController::class, 'excel']);
+Route::get('service-record-print/{employeeID}/{type}/download', function (string $employeeID, string $type) {
+    return \Response::download(storage_path() . '\\files\\' . $employeeID . '_' . 'SERVICE_RECORD.' . $type);
+});

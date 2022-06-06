@@ -17,7 +17,7 @@ class MaintenanceDivisionController extends Controller
      */
     public function index()
     {
-        $offices = Office::get(['OfficeCode', 'Description']);
+        $offices = Office::get(['office_code', 'office_name']);
         return view('MaintenanceDivision.division', compact('offices'));
     }
 
@@ -47,7 +47,7 @@ class MaintenanceDivisionController extends Controller
         $division->division_name                = $request['divisionName'];
         $division->office_code                = $request['officeCode'];
         $division->save();
-        return response()->json(['success'=>true]);
+        return response()->json(['success' => true]);
     }
 
     /**
@@ -59,21 +59,21 @@ class MaintenanceDivisionController extends Controller
     public function list(Request $request)
     {
         if ($request->ajax()) {
-            $data = Division::select('division_id','division_name', 'office_code')->with(['offices', 'offices.desc'])->get();
+            $data = Division::select('division_id', 'division_name', 'office_code')->with(['offices', 'offices.desc'])->get();
             return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('offices', function ($row) {
-                        return $row->offices?->Description;
-                    })
-                    ->addColumn('action', function($row){
-                        $btn = "<a title='Edit Division' href='". route('maintenance-division.edit', $row->division_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-                        $btn = $btn."<a title='Delete Division' id='delete' value='$row->division_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                ->addIndexColumn()
+                ->addColumn('offices', function ($row) {
+                    return $row->offices?->Description;
+                })
+                ->addColumn('action', function ($row) {
+                    $btn = "<a title='Edit Division' href='" . route('maintenance-division.edit', $row->division_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+                    $btn = $btn . "<a title='Delete Division' id='delete' value='$row->division_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
                         ";
-                            return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
-                    return view('MaintenanceDivision.division');
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+            return view('MaintenanceDivision.division');
         }
     }
 
@@ -114,7 +114,7 @@ class MaintenanceDivisionController extends Controller
         $division->office_code                = $request['officeCode'];
         $division->save();
         Session::flash('alert-success', 'Division Updated Successfully');
-        return back()->with('success','Updated Successfully');
+        return back()->with('success', 'Updated Successfully');
     }
 
     /**
@@ -126,12 +126,12 @@ class MaintenanceDivisionController extends Controller
     public function destroy($id)
     {
         Division::find($id)->delete();
-        return json_encode(array('statusCode'=>200));
+        return json_encode(array('statusCode' => 200));
     }
 
     public function delete($id)
     {
         Division::find($id)->delete();
-        return json_encode(array('statusCode'=>200));
+        return json_encode(array('statusCode' => 200));
     }
 }

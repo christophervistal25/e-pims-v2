@@ -30,7 +30,7 @@ class service_record extends Model
     ];
     public function position()
     {
-        return $this->belongsTo(Position::class, 'position_id', 'position_id');
+        return $this->belongsTo(Position::class, 'position_id', 'PosCode');
     }
 
     public function office()
