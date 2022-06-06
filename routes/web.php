@@ -1,11 +1,5 @@
 <?php
 
-use App\Employee;
-use Carbon\Carbon;
-use App\service_record;
-use Illuminate\Support\Str;
-use AnourValar\Office\Format;
-use AnourValar\Office\SheetsService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BirthdayController;
@@ -15,6 +9,7 @@ use App\Http\Controllers\PersonalDataSheetController;
 use App\Http\Controllers\PrintServiceRecordController;
 use App\Http\Controllers\PlantillaOfScheduleController;
 use App\Http\Controllers\EmployeeLeave\LeaveListController;
+use App\Http\Controllers\Prints\SalaryGradePrintController;
 use App\Plantilla;
 
 Route::get('personal-data-sheet/{idNumber}', [PersonalDataSheetController::class, 'edit'])->name('employee.personal-data-sheet.edit');
@@ -229,4 +224,10 @@ Route::post('service-record-print/{employeeID}/pdf', [PrintServiceRecordControll
 Route::post('service-record-print/{employeeID}/excel', [PrintServiceRecordController::class, 'excel']);
 Route::get('service-record-print/{employeeID}/{type}/download', function (string $employeeID, string $type) {
     return \Response::download(storage_path() . '\\files\\' . $employeeID . '_' . 'SERVICE_RECORD.' . $type);
+});
+
+
+
+Route::group(['prefix' => 'prints'], function () {
+    Route::get('salary-grade/{year}', [SalaryGradePrintController::class, 'index'])->name('salary-grade-print');
 });

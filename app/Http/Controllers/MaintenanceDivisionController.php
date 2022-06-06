@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Office;
+use App\Setting;
 use App\Division;
+use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Session;
 
@@ -43,9 +44,11 @@ class MaintenanceDivisionController extends Controller
             'divisionName'               => 'required',
             'officeCode'                 => 'required',
         ]);
+
         $division = new Division;
-        $division->division_name                = $request['divisionName'];
-        $division->office_code                = $request['officeCode'];
+        $division->division_id  = tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue;
+        $division->division_name = $request['divisionName']; 
+        $division->office_code   = $request['officeCode'];
         $division->save();
         return response()->json(['success' => true]);
     }
@@ -91,7 +94,7 @@ class MaintenanceDivisionController extends Controller
      */
     public function edit($divisionID)
     {
-        $offices = Office::get(['OfficeCode', 'Description']);
+        $offices = Office::get(['office_code', 'office_name']);
         $division = Division::find($divisionID);
         return view('MaintenanceDivision.edit', compact('division', 'offices'));
     }

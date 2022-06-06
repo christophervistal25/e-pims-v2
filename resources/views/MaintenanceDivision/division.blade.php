@@ -141,36 +141,36 @@
      $(document).on("click", ".delete", function() {
           let $ele = $(this).parent().parent();
           let id = $(this).attr("value");;
-          let url = /maintenance-division/;
-          let dltUrl = url + id;
+
           swal({
-                    title: "Are you sure you want to delete?"
-                    , text: "Once deleted, you will not be able to recover this record!"
-                    , icon: "warning"
-                    , buttons: true
-                    , dangerMode: true
-               , })
-               .then((willDelete) => {
-                    if (willDelete) {
-                         $.ajax({
-                              url: dltUrl
-                              , type: "DELETE"
-                              , cache: false
-                              , data: {
-                                   _token: '{{ csrf_token() }}'
+               title: "Are you sure you want to delete?",
+               text: "Once deleted, you will not be able to recover this record!",
+               icon: "warning",
+               buttons: true,
+               dangerMode: true
+          }).then((willDelete) => {
+               if (willDelete) {
+                    $.ajax({
+                         url: `/maintenance-division/${id}`,
+                         type: "DELETE",
+                         cache: false,
+                         data: { _token: '{{ csrf_token() }}' },
+                         success: function(dataResult) {
+                              var dataResult = JSON.parse(dataResult);
+                              if (dataResult.statusCode == 200) {
+                                   $('#maintenanceDivision').DataTable().ajax.reload();
+                                   swal({
+                                        title : '',
+                                        text : 'Successfully Deleted',
+                                        icon : 'success',
+                                        buttons : false,
+                                        timer : 5000,
+                                   });
                               }
-                              , success: function(dataResult) {
-                                   var dataResult = JSON.parse(dataResult);
-                                   if (dataResult.statusCode == 200) {
-                                        $('#maintenanceDivision').DataTable().ajax.reload();
-                                        swal("Successfully Deleted!", "", "success");
-                                   }
-                              }
-                         });
-                    } else {
-                         swal("Cancelled", "", "error");
-                    }
-               });
+                         }
+                    });
+               } 
+          });
      });
 
 </script>
