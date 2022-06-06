@@ -78,40 +78,6 @@
                <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
                <!-- Header Menu -->
                <ul class="nav user-menu">
-                    <li class="nav-item dropdown">
-                         <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
-                              <i class="fa fa-bell-o"></i> <span class="badge badge-pill" id="no_of_notifications"></span>
-                         </a>
-                         <div class="dropdown-menu notifications" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-247px, 60px, 0px);">
-                              <div class="topnav-dropdown-header">
-                                   <span class="notification-title">Notifications</span>
-                                   <a href="javascript:void(0)" class="clear-noti"> Clear All </a>
-                              </div>
-                              <div class="noti-content">
-                                   <ul class="notification-list">
-                                        {{-- <li class="notification-message">
-                                    <a href="activities.php">
-                                        <div class="media">
-                                            <span class="avatar">
-                                                <img alt="" src="assets/img/profiles/avatar-02.jpg">
-                                            </span>
-                                            <div class="media-body">
-                                                <p class="noti-details"><span class="noti-title">John Doe</span> added
-                                                    new task <span class="noti-title">Patient appointment booking</span>
-                                                </p>
-                                                <p class="noti-time"><span class="notification-time">4 mins ago</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li> --}}
-                                   </ul>
-                              </div>
-                              <div class="topnav-dropdown-footer">
-                                   <a href="activities.php">View all Notifications</a>
-                              </div>
-                         </div>
-                    </li>
                     <!-- Message Notifications -->
                     <li class="nav-item dropdown">
                          <a href="#" class="dropdown-toggle nav-link d-none" data-toggle="dropdown">
@@ -226,7 +192,7 @@
                          </a>
                          <div class="dropdown-menu">
                               <a class="dropdown-item" href="profile.html">My Profile</a>
-                              <a class="dropdown-item" href="settings.html">Settings</a>
+                              {{-- <a class="dropdown-item" href="settings.html">Settings</a> --}}
                               <a class="dropdown-item" href="login.html">Logout</a>
                          </div>
                     </li>
