@@ -59,7 +59,7 @@ Route::get('/position-schedule-list', 'PositionScheduleController@list');
 
 
 // Plantilla of personnel
-Route::get('/plantilla-list/{office?}', 'Plantillacontroller@list');
+Route::get('/plantilla-list/{office?}/{year?}', 'Plantillacontroller@list');
 Route::resource('/plantilla-of-personnel', 'PlantillaController');
 Route::put('/plantilla-of-personnel/{id}', 'PlantillaController@update');
 

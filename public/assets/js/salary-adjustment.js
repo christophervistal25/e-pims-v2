@@ -101,6 +101,30 @@ $(document).ready(function () {
     });
 });
 
+//  position display salary grade
+$(document).ready(function () {
+    $("#employeeName").change(function () {
+        let salaryGrade = $("#salaryGrade").val();
+        let stepNo = $("#stepNo").val();
+        let currentSgyear = $("#currentSgyear").val();
+        $.ajax({
+            url: `/api/salaryAdjustment/${salaryGrade}/${stepNo}/${currentSgyear}`,
+            success: (response) => {
+                if (response == "") {
+                    $("#salaryNew").val("");
+                } else {
+                    let currentSalaryAmount = response["sg_step" + stepNo];
+                    $("#salaryNew").val(currentSalaryAmount);
+                    var amount = parseFloat($("#salaryPrevious").val());
+                    var amount2 = parseFloat($("#salaryNew").val());
+                    var amountDifference = amount2 - amount;
+                    $("#salaryDifference").val(amountDifference.toFixed(2));
+                }
+            },
+        });
+    });
+});
+
 // code for show add form
 $(document).ready(function () {
     $("#addbutton").click(function () {
@@ -233,30 +257,6 @@ $(document).ready(function () {
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
                     document.getElementById("saving").innerHTML = "Save";
-                }
-            },
-        });
-    });
-});
-
-//  position display salary grade
-$(document).ready(function () {
-    $("#employeeName").change(function () {
-        let salaryGrade = $("#currentSalarygrade").val();
-        let stepNo = $("#currentStepno").val();
-        let currentSgyear = $("#currentSgyear").val();
-        $.ajax({
-            url: `/api/salaryAdjustment/${salaryGrade}/${stepNo}/${currentSgyear}`,
-            success: (response) => {
-                if (response == "") {
-                    $("#salaryNew").val("");
-                } else {
-                    let currentSalaryAmount = response["sg_step" + stepNo];
-                    $("#salaryNew").val(currentSalaryAmount);
-                    var amount = parseFloat($("#salaryPrevious").val());
-                    var amount2 = parseFloat($("#salaryNew").val());
-                    var amountDifference = amount2 - amount;
-                    $("#salaryDifference").val(amountDifference.toFixed(2));
                 }
             },
         });
