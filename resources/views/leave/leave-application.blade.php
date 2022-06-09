@@ -138,7 +138,7 @@
                                     <input type="date" name="date_applied" id="date_applied" class="form-control"
                                         value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
                                     <span>
-                                        <strong>DATE APPLY
+                                        <strong>DATE OF APPLICATION
                                             <span class="text-danger">*</span>
                                         </strong>
                                     </span>
@@ -151,7 +151,7 @@
                                 <label for="leave_type_id" class="form-group has-float-label">
                                     <select class="form-control selectpicker border type-of-leave" id="leave_type_id"
                                         name="selectedLeave" data-live-search="true">
-                                        <option selected disabled value="">-------------------------</option>
+                                        <option selected disabled hidden>-------------------------</option>
                                         @foreach($types->groupBy('category') as $category => $type)
                                         <optgroup class="text-uppercase" label="{{ $category }}">
                                             @foreach($type as $t)
@@ -169,7 +169,7 @@
                                 </label>
 
 
-                                <div id="inCaseOfContainer">
+                                <div id="inCaseOfContainer" class="d-none">
                                     <label for="inCaseOf" class="form-group has-float-label">
                                         <select class="form-control" id="inCaseOf" name="inCaseOfLeave"></select>
                                             <span id="in_case_of__label">
@@ -184,65 +184,63 @@
                                                     class='text-danger'>*</span></strong></span>
                                     </label>
                                 </div>
+
+                                <h6 class="text-sm text-center font-weight-medium">
+                                    LEAVE DATE
+                                    <br><small>(Select Date of leave Options)</small>
+                                </h6>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>
+                                            <input type="radio" name="leave_date_option" id="oneDay"> One day Leave
+                                        </label> &nbsp
+                                        <label>
+                                            <input type="radio" name="leave_date_option" id="dateRange"> Date Range
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="oneDay p-0 mt-3 d-none">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <label for="date_from" class="form-group has-float-label">
+                                                <input type="date" class="form-control" id="leave_date" name="leave_date"
+                                                    >
+                                                <span id="start__date__label"><strong>Leave Date <span
+                                                            class='text-danger'>*</span></strong></span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-3 pt-2">
+                                            <div class="checkbox">
+                                                <label> <input type="checkbox" name="isHalfday"> Halfday </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 
-                                <div class="col-auto p-0">
-                                    <label for="date_from" class="form-group has-float-label">
-                                        <input type="date" class="form-control" id="date_from" name="date_from"
-                                            >
-                                        <span id="start__date__label"><strong>START DATE <span
-                                                    class='text-danger'>*</span></strong></span>
-                                    </label>
+                                <div class="dateRange d-none">
+                                    <div class="col-auto p-0 mt-3">
+                                        <label for="date_from" class="form-group has-float-label">
+                                            <input type="date" class="form-control" id="date_from" name="date_from"
+                                                >
+                                            <span id="start__date__label"><strong>START DATE <span
+                                                        class='text-danger'>*</span></strong></span>
+                                        </label>
+                                    </div>
+                                    <div class="col-auto p-0">
+                                        <label for="date_to" class="form-group has-float-label">
+                                            <input type="date" class="form-control" id="date_to" name="date_to" >
+                                            <span id="end__date__Label"><strong>END DATE <span
+                                                        class='text-danger'>*</span></strong></span>
+                                        </label>
+                                    </div>
                                 </div>
 
-                                <div class="col-auto p-0">
-                                    <label for="date_to" class="form-group has-float-label">
-                                        <input type="date" class="form-control" id="date_to" name="date_to" >
-                                        <span id="end__date__Label"><strong>END DATE <span
-                                                    class='text-danger'>*</span></strong></span>
-                                    </label>
-                                </div>
-
-                                <div class="col-auto p-0">
+                                <div class="col-auto p-0 mt-3">
                                     <label for="no_of_days" class="form-group has-float-label">
                                         <input type="number" class="form-control" id="no_of_days" name="numberOfDays" readonly>
                                         <span><strong>NUMBER OF DAYS<span class="text-danger">*</span></strong></span>
                                     </label>
-                                </div>
-
-                                <hr>
-
-                                <div class="row">
-                                    <div class="col-6">
-                                        <label for="earnedLess" class="form-group has-float-label">
-                                            <input type="text" id="earnedLess" class="form-control" name="earnedLess" readonly>
-                                            <span id="earnedLessLabel"><strong>LESS</strong></span>
-                                        </label>
-
-                                    </div>
-                                    <div class="col-6">
-                                        <label for="earnedRemain" class="form-group has-float-label">
-                                            <input type="text" id="earnedRemaining" class="form-control" name="earnedRemain" readonly>
-                                            <span id="earnedRemainLabel"><strong>REMAINING</strong></span>
-                                        </label>
-                                    </div>
-
-                                    {{-- <div class="col-lg-12">
-                                        <div class="float-right">
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="leave_has_pay" id="withPay" value="with_pay" disabled>
-                                                <label class="form-check-label text-sm" for="withPay">W/ PAY</label>
-                                            </div>
-
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" name="leave_has_pay" id="withoutPay" value="without_pay" disabled>
-                                                <label class="form-check-label text-sm" for="withoutPay">W/O PAY</label>
-                                            </div>
-                                        </div>
-                                    </div> --}}
-
-                                    <div class="col-lg-12">
-                                        <div id="error_message_for_points"></div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -372,6 +370,7 @@
 <script src="{{ asset('/assets/libs/winbox/winbox.bundle.js') }}"></script>
 <script>
 $(function () {
+
     // SHOWS THE DATA VALUE IN INPUT INCLUDING THE PHOTO OF THE EMPLOYEE AND THE LEAVE RECORDS OF THE EMPLOYEE
     $('#employeeName').change(function (e) {
         let empID = e.target.value;
@@ -394,6 +393,9 @@ $(function () {
     const ROUTE                        = "{{ route('employee.leave.application.filling.admin.create') }}";
     const vacationLeaveIncaseOf        = ['WITHIN THE PHILIPPINES', 'ABROAD'];
     const sickLeaveIncaseOf            = ['IN HOSPITAL', 'OUT PATIENT'];
+    const slbwIncaseOf                 = ['Specify Illness'];
+    const studtyLeaveIncaseOf          = ['COMPLETION OF MASTER`S DEGREE', 'BAR/Board Examination Review'];
+    const othersIncaseOf               = ['Monetization of Leave Credits', 'Terminal Leave'];
     const ALREADY_HAVE_PENDING_FILE    = 423;
     const CANNOT_ACCESS_SELECTED_LEAVE = 424;
     const SPACE                        = new RegExp(/\s+/, "ig");
@@ -431,21 +433,32 @@ $(function () {
         let incaseOf = [];
 
         switch (selectedType) {
-            case LEAVE_TYPES.get('FL'):
-                    $('#inCaseOfContainer').addClass('d-none');
-                    $('#withPay, #withoutPay').attr('disabled', true);
-                break;
-
             case LEAVE_TYPES.get('VL'):
                     incaseOf = vacationLeaveIncaseOf;
                     $('#inCaseOfContainer').removeClass('d-none');
                 break;
-
+            case LEAVE_TYPES.get('SPL'):
+                    incaseOf = vacationLeaveIncaseOf;
+                    $('#inCaseOfContainer').removeClass('d-none');
+                break;
             case LEAVE_TYPES.get('SL'):
                     incaseOf = sickLeaveIncaseOf;
                     $('#inCaseOfContainer').removeClass('d-none');
                     $('#withPay, #withoutPay').attr('disabled', false);
                 break;
+            case LEAVE_TYPES.get('SLB'):
+                    incaseOf = slbwIncaseOf;
+                    $('#inCaseOfContainer').removeClass('d-none');
+                    $('#withPay, #withoutPay').attr('disabled', false);
+                break;
+            case LEAVE_TYPES.get('STL'):
+                    incaseOf = studtyLeaveIncaseOf;
+                    $('#inCaseOfContainer').removeClass('d-none');
+                    $('#withPay, #withoutPay').attr('disabled', false);
+                break;
+            default:
+                $('#inCaseOfContainer').addClass('d-none');
+                $('#withPay, #withoutPay').attr('disabled', true);
         }
 
         // Remove options of in case of select element
@@ -607,6 +620,17 @@ $(function () {
             });
         }
     });
+
+    $('#oneDay').click(function () {
+        $('.oneDay').removeClass('d-none');
+        $('.dateRange').addClass('d-none');
+    });
+
+    $('#dateRange').click(function () {
+        $('.oneDay').addClass('d-none');
+        $('.dateRange').removeClass('d-none');
+    });
+
 
 });
 

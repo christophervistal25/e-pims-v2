@@ -50,6 +50,8 @@ $(document).ready(function () {
         "#division-error-message",
     ];
     // filter list office
+    let selectedOffice = $("#employeeOffice").val();
+    let selectedYear = $("#currentYear").val();
     let PlantillaTable = $("#plantilla").DataTable({
         processing: true,
         serverSide: true,
@@ -59,7 +61,7 @@ $(document).ready(function () {
             processing:
                 '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
         },
-        ajax: "/plantilla-list",
+        ajax: `/plantilla-list/${selectedOffice}/${selectedYear}`,
         columns: [
             {
                 data: "fullname",
@@ -92,8 +94,12 @@ $(document).ready(function () {
         ],
     });
 
-    $("#employeeOffice").change(function (e) {
-        PlantillaTable.ajax.url(`/plantilla-list/${e.target.value}`).load();
+    $("#employeeOffice,#currentYear").change(function (e) {
+        let selectedOffices = $("#employeeOffice").val();
+        let selectedYears = $("#currentYear").val();
+        PlantillaTable.ajax
+            .url(`/plantilla-list/${selectedOffices}/${selectedYears}`)
+            .load();
     });
 
     // code for show add form

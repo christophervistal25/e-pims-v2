@@ -255,6 +255,7 @@ class LeaveListController extends Controller
             })
             ->addColumn('action', function ($row) {
                 $btnApprove = null;
+                $btnDecline = null;
                 $btnUpdate = null;
                 $btnDelete = null;
                 $btnDecline = null;
