@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use App\Holiday;
@@ -123,10 +124,10 @@ class HolidaySeeder extends Seeder
             ],
         ];
 
-        foreach($holidays as $holiday) {
+        foreach ($holidays as $holiday) {
             Holiday::create([
                 'name' => $holiday['name'],
-                'date' => Carbon::parse($holiday['date']),
+                'date' => Carbon::parse($holiday['date'])->format('m-d'),
                 'type' => Str::upper($holiday['type']),
             ]);
         }

@@ -2,7 +2,7 @@
 
 namespace App\Contracts;
 
-interface IPDSDownloadType
+interface IDownloadType
 {
      public function pdf(string $fileName);
      public function excel(string $id);

@@ -15,11 +15,9 @@ class LeaveIncrementJobController extends Controller
         $employees = Employee::permanent()->active()
                             ->pluck('Employee_id')
                             ->toArray();
-        
-
-        LeaveIncrementJob::dispatchIf(
-            $employees->count() !== 0, $employees
-        )->onQueue('high')->delay(now()->addSeconds(3));
+        foreach($employees as $employee) {
+            
+        }
         
         return true;
     }

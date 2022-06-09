@@ -78,40 +78,6 @@
                <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
                <!-- Header Menu -->
                <ul class="nav user-menu">
-                    <li class="nav-item dropdown">
-                         <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
-                              <i class="fa fa-bell-o"></i> <span class="badge badge-pill" id="no_of_notifications"></span>
-                         </a>
-                         <div class="dropdown-menu notifications" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-247px, 60px, 0px);">
-                              <div class="topnav-dropdown-header">
-                                   <span class="notification-title">Notifications</span>
-                                   <a href="javascript:void(0)" class="clear-noti"> Clear All </a>
-                              </div>
-                              <div class="noti-content">
-                                   <ul class="notification-list">
-                                        {{-- <li class="notification-message">
-                                    <a href="activities.php">
-                                        <div class="media">
-                                            <span class="avatar">
-                                                <img alt="" src="assets/img/profiles/avatar-02.jpg">
-                                            </span>
-                                            <div class="media-body">
-                                                <p class="noti-details"><span class="noti-title">John Doe</span> added
-                                                    new task <span class="noti-title">Patient appointment booking</span>
-                                                </p>
-                                                <p class="noti-time"><span class="notification-time">4 mins ago</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li> --}}
-                                   </ul>
-                              </div>
-                              <div class="topnav-dropdown-footer">
-                                   <a href="activities.php">View all Notifications</a>
-                              </div>
-                         </div>
-                    </li>
                     <!-- Message Notifications -->
                     <li class="nav-item dropdown">
                          <a href="#" class="dropdown-toggle nav-link d-none" data-toggle="dropdown">
@@ -226,7 +192,7 @@
                          </a>
                          <div class="dropdown-menu">
                               <a class="dropdown-item" href="profile.html">My Profile</a>
-                              <a class="dropdown-item" href="settings.html">Settings</a>
+                              {{-- <a class="dropdown-item" href="settings.html">Settings</a> --}}
                               <a class="dropdown-item" href="login.html">Logout</a>
                          </div>
                     </li>
@@ -331,9 +297,9 @@
                                                   <a class='text-decoration-none' href="{{  route('plantilla-of-position.index') }}">
                                                        <span>Add New Position</span>
                                                   </a>
-                                                  <a class='text-decoration-none' href="{{ route('position-schedule.index') }}">
+                                                  {{-- <a class='text-decoration-none' href="{{ route('position-schedule.index') }}">
                                                        <span>Create Position Schedule</span>
-                                                  </a>
+                                                  </a> --}}
                                              </li>
                                         </ul>
                                    </li>
@@ -345,13 +311,12 @@
                                                   <a class='text-decoration-none' href="{{  route('plantilla-of-personnel.index') }}">
                                                        <span>Add New Plantilla</span>
                                                   </a>
-                                                  <a class='text-decoration-none' href="{{  route('plantilla-of-schedule.index') }}">
+                                                  {{-- <a class='text-decoration-none' href="{{  route('plantilla-of-schedule.index') }}">
                                                        <span>Create Plantilla Schedule</span>
-                                                  </a>
+                                                  </a> --}}
                                              </li>
                                         </ul>
                                    </li>
-
 
                                    <li>
                                         <a class='text-decoration-none mr-2' href="{{  route('step-increment.index') }}">
@@ -372,6 +337,14 @@
                                         </ul>
                                    </li>
                               </ul>
+
+                         <li>
+                              <a class='text-decoration-none' href="#" id="plantillaScheduleCreate">
+                                   <i class="las la-book-medical"></i>
+                                   <span> Plantilla of Schedule </span>
+                              </a>
+                         </li>
+
 
                          <li class="submenu">
                               <a href="#" class='text-decoration-none'><i class="la la-bars"></i> <span>Service Record</span> <span class="menu-arrow"></span></a>
@@ -411,6 +384,7 @@
                          </li>
 
                          </li>
+
                          </ul>
 
 
@@ -440,6 +414,45 @@
                     <!-- /Content End -->
                </div>
                <!-- /Page Content -->
+
+               <!-- Modal -->
+               <div class="modal fade" id="plantillaCreateScheduleModal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                         <div class="modal-content ">
+                              <div class="modal-header">
+                                   <span class="modal-title" id="plantillaCreateScheduleTitle">
+                                        Create Plantilla Schedule for Year :
+                                        <strong>
+                                             {{ date('Y') }}
+                                        </strong>
+                                   </span>
+                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                   </button>
+                              </div>
+                              <div class="modal-body">
+                                   <div class="alert alert-info">
+                                        No. of Employees doesn't have plantilla schedule for year <strong> <i>{{ date('Y') }}</i> </strong> :
+                                        <strong>
+                                             {{ $no_of_employees_for_plantilla_schedule }}
+                                        </strong>
+                                   </div>
+                              </div>
+                              <div class="modal-footer">
+                                   @if($no_of_employees_for_plantilla_schedule != 0)
+                                        <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary text-white" id="btnCreatePlantillaScheduleModal">
+                                        <div class="spinner-border text-light spinner-border-sm" id='spinner-create-plantilla-schedule' role="status">
+                                             <span class="sr-only">Loading...</span>
+                                        </div>
+                                        Create Plantilla Schedule
+                                        </button>
+                                   @endif
+                              </div>
+                         </div>
+                    </div>
+               </div>
+
           </div>
           <!-- /Page Wrapper -->
      </div>
@@ -455,18 +468,46 @@
      <script src="{{ asset('/assets/js/app.js') }}"></script>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.8/push.min.js" integrity="sha512-eiqtDDb4GUVCSqOSOTz/s/eiU4B31GrdSb17aPAA4Lv/Cjc8o+hnDvuNkgXhSI5yHuDvYkuojMaQmrB5JB31XQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
      <script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>
-     @stack('page-scripts')
-     {{-- <script>
-		$.ajaxSetup({
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			}
-		});
+     <script type="text/javascript">
+          $.ajaxSetup({
+               headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+               }
+          });
 
-		$.ajax({
-			url : '/leave-increment-job',
-			method : 'POST',
-		});
-	</script> --}}
+     </script>
+     <script>
+          const conectionString = "{{ env('MIX_SOCKET_IP') }}";
+          let socket = io.connect(conectionString);
+          
+          $('#plantillaScheduleCreate').click(function() {
+               $('#plantillaCreateScheduleModal').modal('toggle');
+          });
+
+          $('#spinner-create-plantilla-schedule').hide();
+
+          $('#btnCreatePlantillaScheduleModal').click(function() {
+               $('#btnCreatePlantillaScheduleModal').attr('disabled', true);
+               $('#spinner-create-plantilla-schedule').show();
+               $.ajax({
+                    url: '/bulk-plantilla-of-schedule-generate',
+                     method: 'POST',
+                     success: function(response) {
+                          if(response.success) {
+                              $('#plantillaCreateScheduleModal').modal('toggle');
+                              $('#btnCreatePlantillaScheduleModal').removeAttr('disabled');
+                               $('#spinner-create-plantilla-schedule').hide();
+                                swal({
+                                   title : '',
+                                   text : 'Successfully generate plantilla schedule for this year',
+                                   icon : 'success',
+                              });
+                          }
+                    }
+               });
+          });
+
+     </script>
+     @stack('page-scripts')
 </body>
 </html>

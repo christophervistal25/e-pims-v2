@@ -25,7 +25,7 @@
 <div class="card">
     <div class="card-body">
         <div class="float-right mb-2">
-            <button type="button" class="btn btn-primary text-capitalize" data-toggle="modal" data-target="#addLeaveTypeModal">
+            <button type="button" class="btn btn-primary text-white text-capitalize" data-toggle="modal" data-target="#addLeaveTypeModal">
                 <i class='la la-plus'></i>
                 add new leave type
             </button>
@@ -152,14 +152,14 @@
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary shadow">
+                <button type="submit" class="btn btn-primary shadow text-white">
                     <div class="spinner-border spinner-border-sm text-light d-none" id="save-spinner" role="status">
                         <span class="sr-only">Loading...</span>
                     </div>
                     Save
                 </button>
             </form>
-                <button type="button" class="btn btn-danger shadow" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger shadow text-white" data-dismiss="modal">Close</button>
             </div>
 
         </div>
@@ -183,7 +183,7 @@
             <div class="modal-body">
                 <form id="editLeaveTypeForm" method="POST">
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                         <div class="form-group">
                             <label for="">Name 
                                 <span class='text-danger'>*</span>
@@ -193,12 +193,12 @@
                         </div>
                     </div>
 
-                    {{-- <div class="col-lg-6">
+                    <div class="col-lg-6">
                         <div class="form-group">
                             <label for="">Code</label>
                             <input type="text" class='form-control' name="edit_code" id="edit_code">
                         </div>
-                    </div> --}}
+                    </div>
                 </div>
 
                 <div class="row">
@@ -262,14 +262,14 @@
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="submit" class="btn btn-success shadow">
+                <button type="submit" class="btn btn-success text-white shadow">
                     <div class="spinner-border spinner-border-sm text-light d-none" id="update-spinner" role="status">
                         <span class="sr-only">Loading...</span>
                     </div>
                     Update
                 </button>
             </form>
-                <button type="button" class="btn btn-danger shadow" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger text-white shadow" data-dismiss="modal">Close</button>
             </div>
 
         </div>
@@ -301,7 +301,6 @@
 
     let table = $('#leave-types-table').DataTable({
         ajax: `/maintenance/leave/list`,
-        pagingType: "full_numbers",
         serverSide : true,
         stateSave: true,
         processing : true,
@@ -312,31 +311,31 @@
             "targets": '_all',
             "createdCell": function (td, cellData, rowData, row, col) {
                 if (col === CONVERTABLE_COLUMN) {
-                    if (cellData === 'yes') {
+                    if (cellData == 1) {
                         $(td).html('').html(`<i class='la la-check font-weight-bold text-success'></i>`)
                     }  else {
                         $(td).html('').html(`<i class='la la-times font-weight-bold text-danger'></i>`)
                     }
                 } else if(col === EDITABLE_COLUMN) {
-                    if (cellData === 'yes') {
+                    if (cellData == 1) {
                         $(td).html('').html(`<i class='la la-check font-weight-bold text-success'></i>`)
                     }  else {
                         $(td).html('').html(`<i class='la la-times font-weight-bold text-danger'></i>`)
                     }
                 } else if(col === ACTION_COLUMN) {
-                    if (rowData.editable === 'yes') {
+                    if (rowData.editable == 1) {
                         $(td).html('').html(`
-                            <button class='btn btn-success btn-sm rounded-circle shadow edit__leave__type' data-id="${rowData.id}">
+                            <button class='btn btn-success btn-sm rounded-circle shadow edit__leave__type' data-id="${rowData.leave_type_id}">
                                 <i class='la la-pencil'></i>
                             </button>
 
-                            <button class='btn btn-danger btn-sm rounded-circle shadow delete__leave__type' data-id="${rowData.id}">
+                            <button class='btn btn-danger btn-sm rounded-circle shadow delete__leave__type' data-id="${rowData.leave_type_id}">
                                 <i class='la la-trash'></i>
                             </button>
                         `)
                     } else {
                         $(td).html('').html(`
-                            <button class='btn btn-danger btn-sm rounded-circle shadow delete__leave__type' data-id="${rowData.id}">
+                            <button class='btn btn-danger btn-sm rounded-circle shadow delete__leave__type' data-id="${rowData.leave_type_id}">
                                 <i class='la la-trash'></i>
                             </button>
                         `)
@@ -346,13 +345,13 @@
         }],
         columns: [{
                 className: "text-truncate align-middle",
-                data: "name",
-                name: "name"
+                data: "description",
+                name: "description"
             },
             {
-                className : 'text-truncate align-middle text-center',
-                data: "code",
-                name: "code"
+                className : 'text-truncate align-middle',
+                data: "leave_type_id",
+                name: "leave_type_id"
             },
             {
                 className : 'text-center align-middle',
@@ -365,7 +364,7 @@
                 name: "convertible_to_cash"
             },
             {
-                className : 'text-center text-capitalize align-middle',
+                className : 'text-center text-capitalize align-middle text-uppercase',
                 data: "applicable_gender",
                 name: "applicable_gender"
             },
@@ -444,12 +443,23 @@
             url : `/maintenance/leave/${leaveID}/edit`,
             success : function (leave) {
                 // Collect data of form fields.
-                Object.keys(leave).map((field, index) => {
-                    $(`#edit_${field}`).val(leave[field]);
-                    if(field === 'editable' || field === 'convertible_to_cash') {
-                        $(`#edit_${field}`).prop('checked', leave[field] === 'yes' ? true : false);
-                    } 
-                });
+                $('#edit_code').val(leave.leave_type_id);
+                $('#edit_name').val(leave.description);
+                $('#edit_description').val(leave.description2);
+                $('#edit_days_period').val(leave.days_period);
+                $('#edit_applicable_gender').val(leave.applicable_gender);
+                $('#edit_required_rendered_service').val(leave.required_rendered_service);
+                if(leave.convertible_to_cash == 1) {
+                    $('#edit_convertible_to_cash').attr('checked', true);
+                } else {
+                    $('#edit_convertible_to_cash').removeAttr('checked');
+                }
+
+                if(leave.editable == 1) {
+                    $('#edit_editable').attr('checked', true);
+                } else {
+                    $('#edit_editable').removeAttr('checked');
+                }
             },
         });
     });
@@ -470,7 +480,7 @@
             success : function (response) {
                 $('#update-spinner').addClass('d-none');
                 if(response.success) {
-                    table.ajax.reload();
+                    table.ajax.reload(null, false);
                     swal("Good Job!", "Successfully update a leave type.", "success");
                     $('#editLeaveTypeModal').modal('toggle');
                 }
@@ -501,7 +511,7 @@
                         url : `/maintenance/leave/${leaveID}`,
                         method : 'DELETE',
                         success : function (response) {
-                            table.draw();
+                            table.ajax.reload(null, false);
                             swal("Good Job!", "Successfully delete a leave type record.", "success");
                         }
                     });

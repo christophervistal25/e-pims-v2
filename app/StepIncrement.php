@@ -18,7 +18,7 @@ class StepIncrement extends Model
     protected $fillable = [
         'employee_id',
         'item_no',
-        'position_id',
+        'position_id', 
         'date_step_increment',
         'sg_no_from',
         'date_latest_appointment',
@@ -33,7 +33,6 @@ class StepIncrement extends Model
         'created_at',
         'updated_at',
         'PosCode',
-        'last_latest_appointment',
     ];
 
 
@@ -54,7 +53,7 @@ class StepIncrement extends Model
 
     public function service_record()
     {
-        return $this->hasOne('App\service_record', 'employee_id', 'employee_id');
+        return $this->hasOne(service_record::class, 'employee_id', 'employee_id');
     }
 
     public function office()

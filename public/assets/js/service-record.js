@@ -1,5 +1,11 @@
 // display records
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
 $(function() {
+    
     let table = $("#serviceRecords").DataTable({
         // processing: true,
         serverSide: true,
@@ -31,7 +37,7 @@ $(function() {
                 name: "service_to_date",
                 visible: false
             },
-            { data: "position_name", name: "position_name", visible: false },
+            { data: "Description", name: "Description", visible: false },
             { data: "status", name: "status", visible: false },
             { data: "salary", name: "salary", visible: false },
             { data: "office_name", name: "office_name", visible: false },
@@ -93,7 +99,7 @@ $(function() {
             $(`${value}`).html("");
         });
 
-        if (e.target.value == "" || e.target.value == "") {
+        if (e.target.value == "") {
             table.destroy();
             table = $("#serviceRecords").DataTable({
                 processing: true,
@@ -225,6 +231,42 @@ $(document).ready(function() {
         $("#table").attr("class", "page-header");
     });
 });
+
+$('#printPreview').click(function () {
+    $('#downloadPDSModal').modal('toggle');
+});
+
+$('#downloadExcel').click(function () {
+    let employeeID = $('#employeeName').val();
+    $.ajax({
+        url : `/service-record-print/${employeeID}/excel`,
+        method : 'POST',
+        success : function (response) {
+            window.open(`/service-record-print/${employeeID}/xls/download`);
+        },
+    });
+});
+
+$("#downloadPdf").click(function () {
+    let employeeID = $('#employeeName').val();
+    $.ajax({
+        url : `/service-record-print/${employeeID}/pdf`,
+        method : 'POST',
+        success : function (response) {
+            if(response.success) {
+                // Socket connection.
+                socket.emit('SERVICE_RECORD_PDF', {
+                    file : response.file,
+                });
+                setTimeout(() => {
+                    window.open(`service-record-print/${employeeID}/pdf/download`);
+                }, 2000);
+            }
+            // Then download file.
+        },
+    });
+});
+
 ////disable button
 function ValidateDropDown(dd) {
     var input = document.getElementById("addbutton");
@@ -265,16 +307,15 @@ $(document).ready(function() {
         let plantilla = $($("#employeeName option:selected")[0]).attr(
             "data-plantilla"
         );
+
+        $('#addbutton').removeAttr('disabled');
         if (plantilla) {
+            $('#printPreview').removeAttr('disabled');
             plantilla = JSON.parse(plantilla);
-            document.getElementById("employeeTitleName").innerHTML =
-                plantilla.firstname +
-                " " +
-                plantilla.middlename +
-                ". " +
-                plantilla.lastname;
-            $("#employeeId").val(plantilla.employee_id);
+            $('#employeeTitleName').text(`${plantilla.LastName}, ${plantilla.FirstName} ${plantilla.MiddleName} ${plantilla.Suffix}`);
+            $("#employeeId").val(plantilla.Employee_id);
         } else {
+            $('#printPreview').attr('disabled', true);
             $("#employeeId").val("");
         }
     });

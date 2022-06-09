@@ -95,12 +95,39 @@ let table = $("#employees-table").DataTable({
     ],
 });
 
-$("#employees-table tfoot th").each(function () {
-    var title = $(this).text();
-    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+$(document).on("focus", ".dataTables_filter input", function () {
+    $(this)
+        .unbind()
+        .bind("keyup", function (e) {
+            if (e.keyCode === 13) {
+                table.search(this.value).draw();
+            } else if (e.keyCode === 8 && !this.value) {
+                table.search("").draw();
+            }
+        });
 });
 
 $(document).on("click", ".btn-edit-employee", function () {
+    $('#addEmployeeForm').children().each(function (index, element) {
+        $(element).find('input').each(function (index, e) {
+            let nameAttribute = $(e).attr('name');
+            $(`input[name="${nameAttribute}"]`).removeClass('is-invalid');
+            $(`#edit-${nameAttribute}-error`).text('');
+        });
+
+        $(element).find('select').each(function (index, e) {
+            let nameAttribute = $(e).attr('name');
+            $(`select[name="${nameAttribute}"]`).removeClass('is-invalid');
+            $(`#edit-${nameAttribute}-error`).text('');
+        });
+
+        $(element).find('textarea').each(function (index, e) {
+            let nameAttribute = $(e).attr('name');
+            $(`textarea[name="${nameAttribute}"]`).removeClass('is-invalid');
+            $(`#edit-${nameAttribute}-error`).text('');
+        });
+    });
+
     $("#loader-wrapper, #loader").show();
     const employeeID = $(this).attr("data-employee-id");
     let position = "";
@@ -283,7 +310,7 @@ $("#btnUpdateEmployee").click(function (e) {
                     response.responseJSON.errors
                 )) {
                     $(`[name='${field}']`).addClass("is-invalid");
-                    $(`#${field}-error`).text(error);
+                    $(`#edit-${field}-error`).text(error);
                 }
             }
         },
@@ -291,6 +318,26 @@ $("#btnUpdateEmployee").click(function (e) {
 });
 
 $("#addNewEmployee").click(function () {
+    $('#addEmployeeForm').children().each(function (index, element) {
+        $(element).find('input').each(function (index, e) {
+            let nameAttribute = $(e).attr('name');
+            $(`#${nameAttribute}-error`).text('');
+            $(e).removeClass('is-invalid');
+        });
+
+        $(element).find('select').each(function (index, e) {
+            let nameAttribute = $(e).attr('name');
+            $(`#${nameAttribute}-error`).text('');
+            $(e).removeClass('is-invalid');
+        });
+
+        $(element).find('textarea').each(function (index, e) {
+            let nameAttribute = $(e).attr('name');
+            $(`#${nameAttribute}-error`).text('');
+            $(e).removeClass('is-invalid');
+        });
+    });
+
     $("#loader-wrapper, #loader").show();
 
     $("#employees-data-table").fadeOut().hide();

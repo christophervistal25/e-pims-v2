@@ -215,6 +215,9 @@
             $.ajax({
                 url : `/api/step/${$('#sgNo2').val()}/${valueSelected}`,
                 success : function (response) {
+
+                    $('#stepNo2').append(`<option value='${valueSelected}'>${valueSelected}</option>`);
+
                     $('#amountTo').val(`${response['sg_step' + valueSelected]}`)
                     var amountFrom = parseFloat($('#amountFrom').val());
                     var amountTo = parseFloat($('#amountTo').val());
@@ -229,82 +232,25 @@
         })
     });
 
+
+
+    $('#btnUpdate').on('click', function(e) {
+        e.preventDefault()
         
 
-        // UPDATE FUNCTION //
-        // let btnUpdate = document.querySelector('#btnUpdate');
+        $.ajax({
+            url: `/api/step-increment/update/${stepId}`,
+            type: "POST",
+            data: $('#formStepIncrement').serialize(),
 
-        // btnUpdate.addEventListener('click', (e)=> {
-        //     e.preventDefault();
-        //     let getId = "{{ $stepIncrement->id }}";
-        //     console.log(getId)
+            success : function (response) {
 
-        //     // Prepare data
-        //     let data = {
-        //         employeeID : document.querySelector('#employeeId').value,
-        //         itemNoFrom : document.querySelector('#itemNo').value,
-        //         // positionID : document.querySelector('#positionID').value,
-        //         dateStepIncrement : document.querySelector('#dateIncrement').value,
-        //         datePromotion : document.querySelector('#lastAppointment').value,
-        //         sgNoFrom : document.querySelector('#salaryGrade').value,
-        //         stepNoFrom : document.querySelector('#stepNo').value,
-        //         amountFrom : document.querySelector('#amountFrom').value,
-        //         sgNo2 : document.querySelector('#sgNo2').value,
-        //         stepNo2 : document.querySelector('#stepNo2').value,
-        //         amount2 : document.querySelector('#amountTo').value,
-        //         monthlyDifference : document.querySelector('#monthlyDifference').value,
-        //     };
+            }
+        });
 
+        swal("Good Job!", "You have successfully updated the data.", "success");
 
-
-
-        //     // Ajax Request for sweet alert function //
-
-        //     fetch(`/api/step-increment/${getId}`, {
-        //         method: 'PUT',
-        //         headers :  {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify(data),
-        //         }).then(res => res.json())
-        //         .then((data) => {
-                
-        //     });
-        //     swal("Good Job!", "You have successfully updated the data.", "success");
-            
-        // });
-
-
-        $('#btnUpdate').on('click', function(e) {
-            e.preventDefault()
-            
-            // let stepId = $('#stepId').val();
-            // let employeeID = $('#employeeId');
-            // let itemNo = $('#itemNo').val();
-            // let dateIncrement = $('#dateIncrement').val();
-            // let datePromotion = $('#lastAppointment').val();
-            // let sgNoFrom = $('#salaryGrade').val();
-            // let stepNoFrom = $('#stepNo');
-            // let amountFrom = $('#amountFrom');
-            // let sgNo2 = $('#sgNo2').val();
-            // let stepNo2 = $('#stepNo2').val();
-            // let amount2 = $('#amount2').val();
-            // let monthlyDifference = $('#monthlyDifference').val();
-
-            $.ajax({
-                url: `/api/step-increment/update/${stepId}`,
-                type: "POST",
-                data: $('#formStepIncrement').serialize(),
-
-                success : function (response) {
-
-                }
-            });
-
-            swal("Good Job!", "You have successfully updated the data.", "success");
-
-        })
+    });
 
     </script>
     @endpush

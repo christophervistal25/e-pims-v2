@@ -12,7 +12,6 @@
     .cursor-pointer {
         cursor: pointer;
     }
-
 </style>
 @endprepend
 @section('content')

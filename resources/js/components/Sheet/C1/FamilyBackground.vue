@@ -588,7 +588,7 @@
                         "
                         @click="submitPersonFamilyBackground"
                     >
-                        <i class="fa fa-pencil"></i>
+                        <i class="la la-pencil"></i>
                         UPDATE
                         <div
                             class="spinner-border spinner-border-sm mb-1"
@@ -674,8 +674,13 @@ export default {
     },
     mounted() {
         familyBackground.fetchUser(this.employeeID).then((response) => {
-            this.familyBackground = response;
-            if (response.spouse.length != 0) {
+            if (response.length !== 0) {
+                this.familyBackground = response;
+            }
+            if (
+                response.hasOwnProperty("spouse") &&
+                response.spouse.length != 0
+            ) {
                 this.spouse = response.spouse;
             }
         });

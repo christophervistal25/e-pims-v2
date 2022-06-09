@@ -15,7 +15,7 @@
                         style="text-transform: uppercase"
                     >
                         <strong
-                            >(Start date_of_attendance_from the most recent
+                            >(Start from the most recent
                             L&D/training program and include only the relevant
                             L&D/training taken for the last five (5) years for
                             Division Chief/Executive/Managerial
@@ -83,7 +83,7 @@
                             <tr style="background: #eaeaea">
                                 <td></td>
                                 <td scope="col" class="text-center text-sm">
-                                    date_of_attendance_from
+                                    FROM
                                 </td>
                                 <td scope="col" class="text-center text-sm">
                                     TO

@@ -1149,7 +1149,7 @@
                         v-if="!isComplete"
                         :disabled="isLoading"
                     >
-                        <i class="fa fa-pencil font-weight-bold"></i>
+                        <i class="la la-pencil"></i>
                         UPDATE
                         <div
                             class="spinner-border spinner-border-sm mb-1"

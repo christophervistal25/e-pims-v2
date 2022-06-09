@@ -4,6 +4,7 @@ namespace App\Http\Controllers\EmployeeLeave;
 
 use App\Office;
 use App\Office2;
+use App\Setting;
 use App\Employee;
 use Carbon\Carbon;
 use App\OfficeCharging;
@@ -12,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Services\LeaveService;
 use Yajra\Datatables\Datatables;
 use App\EmployeeLeaveApplication;
+use App\EmployeeLeaveTransaction;
 use App\Services\EmployeeService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -50,7 +52,11 @@ class LeaveListController extends Controller
                 $btnDecline = null;
                 // route('leave.leave-list.edit', $row->id) is the name of the route on the web.php
                 if ($row->status !== 'approved') {
-                    $btnApprove = '<button type="button" class="rounded-circle text-white btnApprove btn btn-success btn-sm" title="Approved Request" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="fa fa-thumbs-up"></i></button>';
+                    $btnApprove = '<button type="button" class="rounded-circle text-white btnApprove btn btn-success btn-sm" title="Approved Request" 
+                        data-employee-id="'. $row->Employee_id. '"
+                        data-leave-type="' . $row->leave_type_id . '" 
+                        data-id="' . $row->application_id . '"
+                        ><i style="pointer-events:none;" class="fa fa-thumbs-up"></i></button>';
                     $btnDecline = '<button type="button" class="rounded-circle text-white btnDecline btn btn-danger btn-sm" title="Decline Request" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="fa fa-thumbs-down"></i></button>';
                     $btnUpdate = '<button type="button" class="rounded-circle text-white edit btn btn-info btn-sm" onclick="editLeaveApplication('.$row->application_id.')"><i class="la la-eye" title="Update Leave Request"></i></button>';
                     $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
@@ -105,7 +111,7 @@ class LeaveListController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $leaveList = EmployeeLeaveApplication::where('application_id', $id)->first();
+        $application = EmployeeLeaveApplication::where('application_id', $id)->first();
         // $leaveList->date_applied          = $request['dateApply'];
         // $leaveList->leave_type_id         = $request['selectedLeave'];
         // $leaveList->incase_of             = $request['inCaseOfLeave'];
@@ -118,10 +124,49 @@ class LeaveListController extends Controller
         // $leaveList->approved_status       = $request['status'];
 
         if ($request->status === 'approved') {
-            $leaveList->date_approved = Carbon::now()->format('Y-m-d');
-            $leaveList->date_rejected = null;
-            $leaveList->status = 'approved';
+
+            DB::transaction(function () use($application) {
+                // Update the leave application
+                $application->date_approved = date('Y-m-d');
+                $application->date_rejected = null;
+                $application->status = 'approved';
+                $application->save();
+
+                
+                // Insert Records in Employees Leave
+                $from = Carbon::parse($application->date_from);
+                $to = Carbon::parse($application->date_to);
+
+                $UUID = Setting::where('Keyname', 'AUTONUMBER')->first();
+                
+            }); 
+
+
+            if($request->type === 'SL') {
+                $deductions = [
+                //  'vl_amount' => $employeeLeaveForwardedBalance->vl_earned - $employeeLeaveForwardedBalance->vl_used,
+                //  'sl_amount' => $employeeLeaveForwardedBalance->sl_earned - $employeeLeaveForwardedBalance->sl_used,
+                ];
+            } else if($request->type === 'VL') {
+                $deductions = [
+                    // 'vl_amount' => $employeeLeaveForwardedBalance->vl_earned - $employeeLeaveForwardedBalance->vl_used,
+                    // 'sl_amount' => $employeeLeaveForwardedBalance->sl_earned - $employeeLeaveForwardedBalance->sl_used,
+                   ];
+            }
+            
+            EmployeeLeaveTransaction::create([
+                'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
+                'transaction_id' => $leaveList->application_id,
+                'transaction_type' => EmployeeLeaveForwardedBalance::class,
+                'record_type' => 'ENTRANCE',
+                'trans_date' => Carbon::now(),
+                $deductions,
+
+            ]);
+
             $leaveList->save();
+            
+            // Add record in leave transaction.
 
             // EmployeeLeaveRecord::updateOrCreate(
             //     [
@@ -213,6 +258,7 @@ class LeaveListController extends Controller
                 $btnDecline = null;
                 $btnUpdate = null;
                 $btnDelete = null;
+                $btnDecline = null;
                 // route('leave.leave-list.edit', $row->id) is the name of the route on the web.php
                 if ($row->status !== 'approved') {
                     $btnApprove = '<button type="button" class="rounded-circle text-white btnApprove btn btn-success btn-sm" title="Approved Request" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="fa fa-thumbs-up"></i></button>';

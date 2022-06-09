@@ -52,8 +52,8 @@
                                 <option></option>
                                 @foreach($plantilla as $plantillas)
                                 <option {{ $service_record->employee_id == $plantillas->employee_id ? 'selected' : '' }}
-                                    value="{{ $plantillas->employee_id }}">{{ $plantillas->employee->lastname }},
-                                    {{ $plantillas->employee->firstname }} {{ $plantillas->employee->middlename }}
+                                    value="{{ $plantillas->employee_id }}">{{ $plantillas->employee->LastName }},
+                                    {{ $plantillas->employee->FirstName }} {{ $plantillas->employee->MiddleName }}
                                 </option>
                                 @endforeach
                             </select>
@@ -159,8 +159,8 @@
                             <option></option>
                             @foreach($position as $positions)
                             <option style="width:350px;"
-                                {{ $service_record->position_id == $positions->position_id ? 'selected' : '' }}
-                                value="{{ $positions->position_id}}">{{ $positions->position_name }}</option>
+                                {{ $service_record->position_id == $positions->PosCode ? 'selected' : '' }}
+                                value="{{ $positions->PosCode }}">{{ $positions->Description }}</option>
                             @endforeach
                         </select>
                         <span class="font-weight-bold">POSITION<span class="text-danger">*</span></span>
@@ -206,7 +206,7 @@
                     </div>
 
                     <div class="form-group form-group submit-section col-12">
-                        <button type="submit" class="btn btn-success submit-btn float-right"><i
+                        <button type="submit" class="btn btn-success text-white submit-btn float-right"><i
                                 class="fas fa-check"></i> Update</button>
                         <a href="{{ route('service-records.index') }}"><button style="margin-right:10px;" type="button"
                                 class="text-white btn btn-warning submit-btn float-right"><i

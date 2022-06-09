@@ -13,7 +13,8 @@ use App\Services\EmployeeBirthdayService;
 class BirthdayController extends Controller
 {
     public function __construct(public EmployeeBirthdayService $birthdayService)
-    {}
+    {
+    }
 
     /**
      * Get all employees birthdays by range
@@ -34,7 +35,7 @@ class BirthdayController extends Controller
             'from' => ['date', 'required', 'before_or_equal:to'],
             'to' => ['date', 'required', 'after_or_equal:from']
         ], [], ['from' => 'Start Date', 'to' => 'End Date']);
-        
+
         return $this->birthdayService->getByRange($from, $to);
     }
     /**

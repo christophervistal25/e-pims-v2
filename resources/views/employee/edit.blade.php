@@ -18,7 +18,7 @@
                             <div class="form-group">
                                 <label for="employeeID" class="h5 required">EMPLOYEE ID</label>
                                 <input type="number" id="employeeID" name="employeeID" class="form-control" />
-                                <span class="text-sm text-danger" id="employeeID-error"></span>
+                                <span class="text-sm text-danger" id="edit-employeeID-error"></span>
                             </div>
                         </div>
 
@@ -26,7 +26,7 @@
                             <div class="form-group">
                                 <label for="lastname" class="text-uppercase h5 required">lastname</label>
                                 <input type="text" id="lastname" name="lastname" class="form-control" />
-                                <span class="text-sm text-danger" id="lastname-error"></span>
+                                <span class="text-sm text-danger" id="edit-lastname-error"></span>
                             </div>
                         </div>
 
@@ -34,7 +34,7 @@
                             <div class="form-group">
                                 <label for="firstname" class="text-uppercase h5 required">firstname</label>
                                 <input type="text" id="firstname" name="firstname" class="form-control" />
-                                <span class="text-sm text-danger" id="firstname-error"></span>
+                                <span class="text-sm text-danger" id="edit-firstname-error"></span>
                             </div>
                         </div>
 
@@ -42,7 +42,7 @@
                             <div class="form-group">
                                 <label for="middlename" class="text-uppercase h5">middlename</label>
                                 <input type="text" id="middlename" name="middlename" class="form-control" />
-                                <span class="text-sm text-danger" id="middlename-error"></span>
+                                <span class="text-sm text-danger" id="edit-middlename-error"></span>
                             </div>
                         </div>
 
@@ -50,7 +50,7 @@
                             <div class="form-group">
                                 <label for="suffix" class="text-uppercase h5">suffix</label>
                                 <input type="text" id="suffix" name="suffix" class="form-control" />
-                                <span class="text-sm text-danger" id="suffix-error"></span>
+                                <span class="text-sm text-danger" id="edit-suffix-error"></span>
                             </div>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                             <div class="form-group">
                                 <label for="birthdate" class="text-uppercase h5 required">birthdate</label>
                                 <input type="date" id="birthdate" name="birthdate" class="form-control" />
-                                <span class="text-sm text-danger" id="birthdate-error"></span>
+                                <span class="text-sm text-danger" id="edit-birthdate-error"></span>
                             </div>
                         </div>
 
@@ -68,7 +68,7 @@
                             <div class="form-group">
                                 <label for="birthplace" class="text-uppercase h5 required">birthplace</label>
                                 <input type="text" id="birthplace" name="birthplace" class="form-control" />
-                                <span class="text-sm text-danger" id="birthplace-error"></span>
+                                <span class="text-sm text-danger" id="edit-birthplace-error"></span>
                             </div>
                         </div>
 
@@ -79,7 +79,7 @@
                                     <option value="MALE">MALE</option>
                                     <option value="FEMALE">FEMALE</option>
                                 </select>
-                                <span class="text-sm text-danger" id="gender-error"></span>
+                                <span class="text-sm text-danger" id="edit-gender-error"></span>
                             </div>
                         </div>
 
@@ -93,7 +93,7 @@
                                     <option value="DIVORCED">DIVORCED</option>
                                     <option value="SEPARATED">SEPARATED</option>
                                 </select>
-                                <span class="text-sm text-danger" id="civil_status-error"></span>
+                                <span class="text-sm text-danger" id="edit-civil_status-error"></span>
                             </div>
                         </div>
                     </div>
@@ -102,7 +102,7 @@
                         <div class="col-lg-12">
                             <label for="address" class="text-uppercase h5 required">address</label>
                             <textarea name="address" id="address" class="form-control" cols="30" rows="3"></textarea>
-                            <span class="text-sm text-danger" id="address-error"></span>
+                            <span class="text-sm text-danger" id="edit-address-error"></span>
                         </div>
                     </div>
 
@@ -110,7 +110,7 @@
                         <div class="col-lg-6 pb-0">
                             <label for="contact_no" class="text-uppercase h5 required">Contact #</label>
                             <input type="text" class="form-control" name="contact_no" id="contact_no" maxlength="13" />
-                            <span class="text-sm text-danger" id="contact_no-erorr"></span>
+                            <span class="text-sm text-danger" id="edit-contact_no-erorr"></span>
                         </div>
 
                         <div class="col-lg-6 pb-0">
@@ -119,7 +119,7 @@
                                 <option value="1">Active</option>
                                 <option value="0">In-Active</option>
                             </select>
-                            <span class="text-sm text-danger" id="active_status-error"></span>
+                            <span class="text-sm text-danger" id="edit-active_status-error"></span>
                         </div>
                     </div>
 
@@ -129,14 +129,14 @@
                             <select name="office_charging" id="office_charging" class="form-control form-select">
                                 <option value="">-</option>
                             </select>
-                            <span class="text-sm text-danger" id="office_charging-error"></span>
+                            <span class="text-sm text-danger" id="edit-office_charging-error"></span>
                         </div>
                         <div class="col-lg-6 pb-0">
                             <label for="office_assignment" class="h5 required">OFFICE ASSIGNMENT</label>
                             <select name="office_assignment" id="office_assignment" class="form-control form-select">
                                 <option value="">-</option>
                             </select>
-                            <span class="text-sm text-danger" id="office_assignment-error"></span>
+                            <span class="text-sm text-danger" id="edit-office_assignment-error"></span>
                         </div>
                     </div>
 
@@ -145,7 +145,7 @@
                             <label for="position" class="h5 required">POSITION</label>
                             <select name="position" style="width : 100%;" id="position" class="form-control form-select">
                             </select>
-                            <span class="text-sm text-danger" id="position-error"></span>
+                            <span class="text-sm text-danger" id="edit-position-error"></span>
                         </div>
 
                         <div class="col-lg-6 pb-0">
@@ -159,7 +159,7 @@
                                 <option value="ELECTED">ELECTED</option>
                                 <option value="PERMANENT">PERMANENT</option>
                             </select>
-                            <span class="text-sm text-danger" id="status-error"></span>
+                            <span class="text-sm text-danger" id="edit-status-error"></span>
                         </div>
                     </div>
 
@@ -174,7 +174,7 @@
                                 }}</option>
                                 @endforeach
                             </select>
-                            <span class="text-sm text-danger" id="salary_grade-error"></span>
+                            <span class="text-sm text-danger" id="edit-salary_grade-error"></span>
                         </div>
 
                         <div class="col-lg-4">
@@ -185,13 +185,13 @@
                                 <option value="{{ $step }}">{{ $step }}</option>
                                 @endforeach
                             </select>
-                            <span class="text-sm text-danger" id="step_increment-error"></span>
+                            <span class="text-sm text-danger" id="edit-step_increment-error"></span>
                         </div>
 
                         <div class="col-lg-4">
                             <label for="salary_rate" class="h5 required">SALARY RATE</label>
                             <input name="salary_rate" id="salary_rate" class="form-control" />
-                            <span class="text-sm text-danger" id="salary_rate-error"></span>
+                            <span class="text-sm text-danger" id="edit-salary_rate-error"></span>
                         </div>
                     </div>
                 </div>
@@ -211,6 +211,7 @@
                                 Phil Health #
                             </label>
                             <input type="text" name="philhealth_no" class="form-control  {{ $errors->first('philhealth_no') ? 'is-invalid' : '' }}" id="philHealthNo" value="{{ old('philhealth_no') }}" />
+                            <span class="text-sm text-danger" id="edit-philhealth_no-error"></span>
                         </div>
                     </div>
 
@@ -220,6 +221,7 @@
                                 Pag-Ibig #
                             </label>
                             <input type="text" name="pagibig_no" class="form-control  {{ $errors->has('pagibig_no') ? 'is-invalid' : '' }}" id="pagIbigNo" value="{{ old('pagibig_no') }}" />
+                            <span class="text-sm text-danger" id="edit-pagibig_no-error"></span>
                         </div>
                     </div>
                 </div>
@@ -231,6 +233,7 @@
                                 tin #
                             </label>
                             <input type="text" name="tin_no" class="form-control  {{ $errors->has('tin_no') ? 'is-invalid' : '' }}" id="tinNo" value="{{ old('tin_no') }}" />
+                            <span class="text-sm text-danger" id="edit-tin_no-error"></span>
                         </div>
                     </div>
 
@@ -240,6 +243,7 @@
                                 GSIS #
                             </label>
                             <input type="text" name="gsis_no" class="form-control  {{ $errors->has('gsis_no') ? 'is-invalid' : '' }}" id="gsisNo" value="{{ old('gsis_no') }}" />
+                            <span class="text-sm text-danger" id="edit-gsis_no-error"></span>
                         </div>
                     </div>
                 </div>
@@ -260,7 +264,7 @@
                                         DBP Card Number
                                     </label>
                                     <input type="text" name="dbp_account_no" class="form-control" id="dbpCardNumber" />
-                                    <span class="text-sm text-danger" id="dbp_account_no-error"></span>
+                                    <span class="text-sm text-danger" id="edit-dbp_account_no-error"></span>
                                 </div>
                             </div>
 
@@ -270,7 +274,7 @@
                                         LBP Card Number
                                     </label>
                                     <input type="text" name="lbp_account_no" class="form-control" id="lbpCardNumber" />
-                                    <span class="text-sm text-danger" id="lbp_account_no-error"></span>
+                                    <span class="text-sm text-danger" id="edit-lbp_account_no-error"></span>
                                 </div>
                             </div>
                         </div>
