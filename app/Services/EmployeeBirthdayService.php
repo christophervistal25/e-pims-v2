@@ -65,7 +65,7 @@ class EmployeeBirthdayService extends EmployeeService
             ->leftJoin('Office', 'Employees.OfficeCode', '=', 'Office.OfficeCode')
             ->where('isActive', 1)
             ->select(['Employee_id', 'FirstName', 'LastName', 'MiddleName', 'Suffix', 'BirthDate', 'positions.position_name', 'Office.Description'])
-            ->orderBy('Birthdate')
+            ->orderBy('Birthdate', 'ASC')
             ->get();
     }
 }

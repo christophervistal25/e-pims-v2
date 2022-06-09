@@ -26,6 +26,7 @@ class LeaveController extends Controller
                         ->with('forwarded_leave_records')
                         ->without(['office_assignemnt', 'office_charging.desc'])
                         ->get(['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'Work_Status', 'PosCode', 'OfficeCode']);
+                        
         $types = $this->leaveTypeRepository->getLeaveTypesApplicableToGender();
         
         return view('leave.leave-application', compact('types','employees'));

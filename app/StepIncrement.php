@@ -53,7 +53,7 @@ class StepIncrement extends Model
 
     public function service_record()
     {
-        return $this->hasOne('App\service_record', 'employee_id', 'employee_id');
+        return $this->hasOne(service_record::class, 'employee_id', 'employee_id');
     }
 
     public function office()

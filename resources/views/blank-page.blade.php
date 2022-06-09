@@ -216,8 +216,7 @@
                          </div>
                     </div>
                     @if($key === 3)
-                    {{-- {{  $today->count() - 4 }} --}}
-                    <a href="{{ route('employees-birthday.index') }}" class='btn btn-primary btn-block h6'>View</a>
+                    <a href="{{ route('employees-birthday.index') }}?from={{ date('m-d') }}&to={{ date('m-d') }}" class='btn btn-primary btn-block h6'>See more {{  $today->count() - 4}} Birthday's</a>
                     @break
                     @endif
                     @endforeach
@@ -229,7 +228,7 @@
      <div class="col-md-12 col-lg-12 col-xl-4 d-flex">
           <div class="card flex-fill">
                <div class="card-header">
-                    Tomorrow Birthdays <span class="badge bg-inverse-primary ml-2">{{ $today->count() }}
+                    Tomorrow Birthdays <span class="badge bg-inverse-primary ml-2">{{ $tomorrow->count() }}
                </div>
                <div class="card-body">
                     @foreach($tomorrow as $key => $employee)
@@ -246,8 +245,7 @@
                          </div>
                     </div>
                     @if($key === 3)
-                    {{-- {{  $tomorrow->count() - 4 }} --}}
-                    <a href="{{ route('employees-birthday.index') }}" class='btn btn-primary btn-block h6'>View</a>
+                    <a href="{{ route('employees-birthday.index') }}?from={{ date('m-d', strtotime($employee->Birthdate)) }}&to={{ date('m-d', strtotime($employee->Birthdate)) }}" class='btn btn-primary btn-block h6'>See more {{  $tomorrow->count() - 4 }} Birthday's</a>
                     @break
                     @endif
                     @endforeach
@@ -275,8 +273,9 @@
                          </div>
                     </div>
                     @if($key === 3)
-                    {{-- {{ $oneWeekBeforeBirthdays->count() - 4  }} --}}
-                    <a href="{{ route('employees-birthday.index') }}" class='btn btn-primary btn-block h6'>View</a>
+                    <a href="{{ route('employees-birthday.index') }}?from={{ date('m-d', strtotime($employee->Birthdate)) }}&to={{ date('m-d', strtotime($employee->Birthdate)) }}" class='btn btn-primary btn-block h6'>
+                         See more {{  $oneWeekBeforeBirthdays->count() - 4 }} Birthday's
+                    </a>
                     @break
                     @endif
                     @endforeach

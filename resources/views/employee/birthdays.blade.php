@@ -47,8 +47,36 @@
 
 @push('page-scripts')
 <script>
+     (function($) {
+          $.QueryString = (function(paramsArray) {
+               let params = {};
+
+               for (let i = 0; i < paramsArray.length; ++i) {
+                    let param = paramsArray[i]
+                         .split('=', 2);
+
+                    if (param.length !== 2)
+                         continue;
+
+                    params[param[0]] = decodeURIComponent(param[1].replace(/\+/g, " "));
+               }
+
+               return params;
+          })(window.location.search.substr(1).split('&'))
+     })(jQuery);
+
      $(document).ready(function() {
           const VALIDATION_ERROR = 422;
+          let {from, to} = $.QueryString;
+          let currentYear = new Date().getFullYear();
+          $('#fromDate').val(`${currentYear}-${from}`);
+          $('#toDate').val(`${currentYear}-${to}`);
+          if(from) {
+               setTimeout(() => {
+                    $('#searchBirthRange').trigger('click');
+               }, 1000);
+          }
+          
 
           $('#searchBirthRange').click(function() {
                $(this).attr('disabled', true);
@@ -112,7 +140,7 @@
                               $('#birthdate__loader').remove();
 
                               $('#employeesBirthdateContainer').css('opacity', 1);
-
+                         
                               // Add red border to both fields.
                               $('#fromDate').addClass('is-invalid');
                               $('#toDate').addClass('is-invalid');

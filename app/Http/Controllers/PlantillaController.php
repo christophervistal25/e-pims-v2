@@ -8,6 +8,7 @@ use App\Division;
 use App\Employee;
 use App\Position;
 use App\Plantilla;
+use Carbon\Carbon;
 use App\SalaryGrade;
 use App\PlantillaPosition;
 use Illuminate\Http\Request;
@@ -33,6 +34,8 @@ class PlantillaController extends Controller
         $plantillaEmp = Plantilla::get()->pluck('employee_id')->toArray();
         $employee = Employee::select('Employee_id', 'LastName', 'FirstName', 'MiddleName')->whereNotIn('Employee_id', $plantillaEmp)->orderBy('LastName', 'ASC')->get();
         $office = Office::select('office_code', 'office_name')->get();
+        $year = Plantilla::select('year')->distinct()->orderBy('year', 'DESC')->get();
+        $selectedYear = Plantilla::select('year')->orderBy('year', 'DESC')->first();
 
         $position = Position::select('PosCode', 'Description')->get();
 
@@ -53,12 +56,12 @@ class PlantillaController extends Controller
         $arealevel = ['K','T','S','A'];
 
         count($arealevel) - 1;
-        return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition', 'division'));
+        return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition', 'division', 'year', 'selectedYear'));
     }
 
 
 
-    public function list(string $office = '*')
+    public function list(string $office = '*', $year)
     {
         $data = DB::table('plantillas')->join('offices', 'plantillas.office_code', '=', 'offices.office_code')
         ->join('employees', 'plantillas.employee_id', '=', 'employees.Employee_id')
@@ -67,8 +70,8 @@ class PlantillaController extends Controller
         ->select('plantilla_id', 'plantillas.item_no as item_no', 'plantillas.employee_id as employee_id', 'offices.office_name as office_name', 'plantillas.status as status', 'plantillas.year as year', 'Position.Description' ,DB::raw("CONCAT(LastName, ', ' , FirstName , ' ' , MiddleName, ' ' , Suffix) AS fullname"))
         ->orderBy('plantilla_id', 'desc');
         if (request()->ajax()) {
-            $PlantillaData = ($office != '*') ? $data->where('plantillas.office_code', $office)->get()
-                : $data->get();
+            $PlantillaData = ($office != '*') ? $data->where('plantillas.office_code', $office)->where('plantillas.year', $year)->get()
+                : $data->where('plantillas.year', $year)->get();
             return DataTables::of($PlantillaData)
             ->addColumn('action', function($row){
                 $btn = "<a title='Edit Plantilla' href='". route('plantilla-of-personnel.edit', $row->plantilla_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil'></i></a>";
