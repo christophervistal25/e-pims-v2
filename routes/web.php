@@ -1,10 +1,13 @@
 <?php
 
 use App\Plantilla;
+use App\SalaryGrade;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BirthdayController;
+use App\Http\Controllers\PlantillaController;
 use App\Http\Controllers\SalaryGradeController;
 use App\Http\Controllers\StepPromotionController;
 use App\Http\Controllers\ServiceRecordsController;
@@ -53,7 +56,7 @@ Route::get('/position-schedule-list', 'PositionScheduleController@list');
 
 
 //plantilla of personnel
-Route::get('/plantilla-list/{office?}', 'Plantillacontroller@list');
+Route::get('/plantilla-list/{office?}/{year?}', [PlantillaController::class, 'list']);
 Route::resource('/plantilla-of-personnel', 'PlantillaController');
 Route::put('/plantilla-of-personnel/{id}', 'PlantillaController@update');
 
@@ -233,13 +236,13 @@ Route::get('/birthday-card-2/{name}', function (string $name) {
      return view('birthday-card-2', compact('name'));
 });
 
-Route::get('export-image', function () {
-     $employees = DB::table('Employees')->get(['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix']);
-     foreach ($employees as $employee) {
-          DB::update(DB::raw("exec usp_ExportImage :Param1, :Param2, :Param3"), [
-               ':Param1' => $employee->Employee_id,
-               ':Param2' => "C:\\employees\\",
-               ':Param3' => $employee->Employee_id . ".jpg",
-          ]);
-     }
-});
+// Route::get('export-image', function () {
+//      $employees = DB::table('Employees')->get(['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix']);
+//      foreach ($employees as $employee) {
+//           DB::update(DB::raw("exec usp_ExportImage :Param1, :Param2, :Param3"), [
+//                ':Param1' => $employee->Employee_id,
+//                ':Param2' => "C:\\employees\\",
+//                ':Param3' => $employee->Employee_id . ".jpg",
+//           ]);
+//      }
+// });

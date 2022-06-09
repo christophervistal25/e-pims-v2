@@ -229,7 +229,7 @@
                                    </a>
                               </li>
                               <li>
-                                   <a class='text-decoration-none' href="{{ route('employees-birthday.index') }}">
+                                   <a class='text-decoration-none' href="{{ route('employees-birthday.index') }}?from={{ date('m-d') }}&to={{ date('m-d') }}">
                                         <i class="las la-birthday-cake"></i> <span> Employee's Birthday </span>
                                    </a>
                               </li>
