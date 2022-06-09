@@ -1,16 +1,17 @@
 <?php
 
+use App\Plantilla;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BirthdayController;
 use App\Http\Controllers\StepPromotionController;
+use App\Http\Controllers\Reports\ReportController;
 use App\Http\Controllers\ServiceRecordsController;
 use App\Http\Controllers\PersonalDataSheetController;
 use App\Http\Controllers\PrintServiceRecordController;
 use App\Http\Controllers\PlantillaOfScheduleController;
 use App\Http\Controllers\EmployeeLeave\LeaveListController;
 use App\Http\Controllers\Prints\SalaryGradePrintController;
-use App\Plantilla;
 
 Route::get('personal-data-sheet/{idNumber}', [PersonalDataSheetController::class, 'edit'])->name('employee.personal-data-sheet.edit');
 
@@ -233,3 +234,7 @@ Route::get('service-record-print/{employeeID}/{type}/download', function (string
 Route::group(['prefix' => 'prints'], function () {
     Route::get('salary-grade/{year}', [SalaryGradePrintController::class, 'index'])->name('salary-grade-print');
 });
+
+
+// Reports
+Route::get('show-report', [ReportController::class, 'show'])->name('show-plantilla-report');

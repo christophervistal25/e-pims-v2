@@ -417,6 +417,21 @@
                               </ul>
                          </li>
 
+                        
+                         <li class="menu-title">
+                              <span class="text-capitalize"> Reports</span>
+                         </li>
+
+                         <li class="submenu">
+                              <a href="#" class="text-decoration-none"><i class="la la-folder"></i> <span>Reports</span> <span class="menu-arrow"></span></a>
+                              <ul>
+                                   <li>
+                                        <a href="{{ route('show-plantilla-report') }}" class="text-decoration-none" >Plantilla</a>
+                                   </li>
+                              </ul>
+                         </li>
+
+                         
                          </li>
 
                          </ul>
