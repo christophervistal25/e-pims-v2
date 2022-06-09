@@ -210,6 +210,7 @@ class LeaveListController extends Controller
             })
             ->addColumn('action', function ($row) {
                 $btnApprove = null;
+                $btnDecline = null;
                 $btnUpdate = null;
                 $btnDelete = null;
                 // route('leave.leave-list.edit', $row->id) is the name of the route on the web.php

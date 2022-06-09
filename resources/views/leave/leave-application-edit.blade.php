@@ -66,9 +66,9 @@
                                         data-live-search="true">
                                         {{-- <option selected disabled value="">-------------------------</option> --}}
                                         @foreach($types->groupBy('category') as $category => $type)
-                                        <optgroup class="text-uppercase" label="{{ $category }}" value="{{ old('selectedLeave') ?? $data->leave_type_id }}">
+                                        <optgroup class="text-uppercase" label="{{ $category }}" value="{{ $data->leave_type_id }}">
                                             @foreach($type as $t)
-                                            <option data-code="{{  $t->code }}" value="{{ $t->id }}">{{ $t->name }}
+                                            <option data-code="{{  $t->leave_type_id }}" value="{{ $t->leave_type_id }}" {{ $t->leave_type_id == $data->leave_type_id ? "selected" : "" }}>{{ $t->description }}
                                             </option>
                                             @endforeach
                                         </optgroup>
@@ -84,6 +84,12 @@
                                 <label for="incase__of" class="form-group has-float-label">
                                     <input class="form-control" id="incaseOf" name="inCaseOfLeave" value="{{ old('inCaseOfLeave') ?? $data->incase_of }}">
                                     <span id="in__case__of__label"><strong>IN CASE OF<span class="text-danger">*</span></strong></span>
+                                </label>
+
+                                <label for="specify" class="form-group has-float-label">
+                                    <input type="text" class="form-control" id="specify" name="specify" value="{{ $data->specify }}">
+                                    <span id="specify__label"><strong>SPECIFY<span
+                                                class='text-danger'>*</span></strong></span>
                                 </label>
 
                                 <label for="no__of__days" class="form-group has-float-label">
@@ -122,48 +128,6 @@
                                             readonly>
                                         <span id="end__date__Label"><strong>END DATE</strong></span>
                                     </label>
-                                </div>
-
-                                <hr>
-
-                                <div class="row">
-                                    <div class="col-4">
-                                        <label for="earned" class="form-group has-float-label">
-                                            <input 
-                                            type="text"
-                                            id="earned"
-                                            class="form-control"
-                                            name="earnedSickLeave"
-                                            value=""
-                                            readonly>
-                                            <span id="earnedLabel"><strong>EARNED</strong></span>
-                                        </label>
-                                    </div>
-                                    <div class="col-4">
-                                        <label for="earnedLess" class="form-group has-float-label">
-                                            <input 
-                                            type="text" 
-                                            id="lessEarned" 
-                                            class="form-control" 
-                                            name="earned__less"
-                                            value="{{ old('earned_less') ?? $data->no_of_days }}"
-                                            readonly>
-                                            <span id="earnedLessLabel"><strong>LESS</strong></span>
-                                        </label>
-
-                                    </div>
-                                    <div class="col-4">
-                                        <label for="earnedRemain" class="form-group has-float-label">
-                                            <input
-                                            type="text"
-                                            id="remainEarned"
-                                            class="form-control"
-                                            name="earnedRemaing"
-                                            value=""
-                                            readonly>
-                                            <span id="earnedRemainLabel"><strong>REMAINING</strong></span>
-                                        </label>
-                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">

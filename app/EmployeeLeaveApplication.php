@@ -23,6 +23,7 @@ class EmployeeLeaveApplication extends Model
         'Employee_id',
         'leave_type_id',
         'incase_of',
+        'specify',
         'no_of_days',
         'commutation',
         'status',
