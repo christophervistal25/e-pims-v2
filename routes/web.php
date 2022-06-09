@@ -66,7 +66,7 @@ Route::put('/plantilla-of-personnel/{id}', 'PlantillaController@update');
 
 // Plantilla of position
 Route::resource('/plantilla-of-position', 'PlantillaOfPositionController');
-Route::get('/plantilla-of-position-list/{office_code?}', 'PlantillaOfPositionController@list');
+Route::get('/plantilla-of-position-list/{office_code?}/{year?}', 'PlantillaOfPositionController@list');
 Route::get('/plantilla-of-position/{id}', 'PlantillaOfPositionController@destroy')->name('plantilla-of-position.destroy');
 Route::put('/plantilla-of-position/{id}', 'PlantillaOfPositionController@update');
 

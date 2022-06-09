@@ -159,6 +159,8 @@ $(document).ready(function () {
     });
 
     // display plantilla of position
+    let selectedOffice = $("#employeeOffice").val();
+    let selectedYear = $("#currentYear").val();
     let PlantillaPositiontable = $("#plantillaofposition").DataTable({
         processing: true,
         pagingType: "full_numbers",
@@ -169,7 +171,7 @@ $(document).ready(function () {
             processing:
                 '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
         },
-        ajax: "/plantilla-of-position-list",
+        ajax: `/plantilla-of-position-list/${selectedOffice}/${selectedYear}`,
         columns: [
             {
                 data: "Description",
@@ -192,9 +194,13 @@ $(document).ready(function () {
         ],
     });
     //filter office
-    $("#employeeOffice").change(function (e) {
+    $("#employeeOffice,#currentYear").change(function (e) {
+        let selectedOffice = $("#employeeOffice").val();
+        let selectedYear = $("#currentYear").val();
         PlantillaPositiontable.ajax
-            .url(`/plantilla-of-position-list/${e.target.value}`)
+            .url(
+                `/plantilla-of-position-list/${selectedOffice}/${selectedYear}`
+            )
             .load();
     });
 
