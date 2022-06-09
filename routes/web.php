@@ -10,6 +10,7 @@ use App\Http\Controllers\BirthdayController;
 use App\Http\Controllers\PlantillaController;
 use App\Http\Controllers\SalaryGradeController;
 use App\Http\Controllers\StepPromotionController;
+use App\Http\Controllers\Reports\ReportController;
 use App\Http\Controllers\ServiceRecordsController;
 use App\Http\Controllers\MaintenanceOfficeController;
 use App\Http\Controllers\PersonalDataSheetController;
@@ -246,3 +247,10 @@ Route::get('/birthday-card-2/{name}', function (string $name) {
 //           ]);
 //      }
 // });
+
+Route::get('salary-grade/{year}', [SalaryGradePrintController::class, 'index'])->name('salary-grade-print');
+
+
+
+// Reports
+Route::get('show-report', [ReportController::class, 'show'])->name('show-plantilla-report');
