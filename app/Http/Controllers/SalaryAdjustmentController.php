@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Office;
 use App\Setting;
 use App\Employee;
 use App\Position;
@@ -44,6 +45,8 @@ class SalaryAdjustmentController extends Controller
 
         $currentYear = date('Y');
 
+        $office = Office::select('office_code', 'office_name')->get();
+
         $employee = Plantilla::select('item_no', 'pp_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id', 'year', 'status', 'office_code')
                             ->with(['Employee:Employee_id,FirstName,MiddleName,LastName,Suffix', 'plantilla_positions', 'plantilla_positions.position','plantilla_positions:pp_id,PosCode,office_code,item_no,sg_no', 'salary_adjustment'])
                             ->where('plantillas.year', $currentYear)
@@ -55,18 +58,19 @@ class SalaryAdjustmentController extends Controller
                                     return !in_array($currentYear, $haystack);
                             });
 
-        return view('SalaryAdjustment.SalaryAdjustment', compact('employee', 'position', 'year', 'dates'));
+        return view('SalaryAdjustment.SalaryAdjustment', compact('employee', 'position', 'year', 'dates', 'office'));
     }
 
-    public function list($currentSgyear)
+    public function list(string $office = '*', $year)
     {
         $data = DB::table('salary_adjustments')
                         ->join('Employees', 'salary_adjustments.employee_id', 'Employees.Employee_id')
                         ->select(
                             'id', 'Employees.Employee_id', DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"),
-                            DB::raw("FORMAT(date_adjustment, 'M/d/y') as date_adjustment"), 'salary_adjustments.sg_no', 'step_no', 'salary_previous', 'salary_new', 'salary_diff'
+                            DB::raw("FORMAT(date_adjustment, 'M/d/y') as date_adjustment"), 'salary_adjustments.sg_no', 'step_no', 'salary_previous', 'salary_new', 'salary_diff', 'salary_adjustments.office_code'
                         )
-                        ->whereYear('date_adjustment', $currentSgyear)
+                        ->where('salary_adjustments.office_code', $office)
+                        ->whereYear('date_adjustment', $year)
                         ->orderBy('date_adjustment', 'DESC')
                         ->whereNull('deleted_at')
                         ->orderBy('id', 'DESC')
