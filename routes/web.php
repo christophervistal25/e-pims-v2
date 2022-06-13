@@ -234,10 +234,7 @@ Route::get('service-record-print/{employeeID}/{type}/download', function (string
 Route::group(['prefix' => 'prints'], function () {
     Route::get('salary-grade/{year}', [SalaryGradePrintController::class, 'index'])->name('salary-grade-print');
 });
-<<<<<<< HEAD
 
 
 // Reports
 Route::get('show-report', [ReportController::class, 'show'])->name('show-plantilla-report');
-=======
->>>>>>> c9433e99db2c0d88f6722a4e617d0edc83305571
