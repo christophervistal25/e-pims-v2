@@ -307,8 +307,9 @@
                             <div class="col-2 mb-2">
                                 <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}"
                                     name="currentYear" data-live-search="true" id="currentYear" data-size="5">
+                                    <option value="{{ Carbon\Carbon::now()->format('Y') }}">{{ Carbon\Carbon::now()->format('Y') }}</option>
                                     @foreach($year as $years){
-                                        <option {{ $selectedYear->year == $years->year ? 'selected' : '' }} value="{{ $years->year }}">{{ $years->year }}</option>
+                                        <option value="{{ $years->year }}">{{ $years->year }}</option>
                                     }
                                     @endforeach
                                     </select>

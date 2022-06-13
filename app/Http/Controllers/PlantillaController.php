@@ -32,10 +32,10 @@ class PlantillaController extends Controller
     {
         $division = Division::select('division_id', 'division_name', 'office_code')->get();
         $plantillaEmp = Plantilla::get()->pluck('employee_id')->toArray();
-        $employee = Employee::select('Employee_id', 'LastName', 'FirstName', 'MiddleName')->whereNotIn('Employee_id', $plantillaEmp)->orderBy('LastName', 'ASC')->get();
+        $employee = Employee::select('Employee_id', 'LastName', 'FirstName', 'MiddleName', 'Work_Status')->where('Work_Status', 'PERMANENT')->whereNotIn('Employee_id', $plantillaEmp)->orderBy('LastName', 'ASC')->get();
         $office = Office::select('office_code', 'office_name')->get();
-        $year = Plantilla::select('year')->distinct()->orderBy('year', 'DESC')->get();
-        $selectedYear = Plantilla::select('year')->orderBy('year', 'DESC')->first();
+        // $year = Plantilla::select('year')->distinct()->orderBy('year', 'DESC')->get();
+        $year = Plantilla::select('year')->where('year', '!=', '2022')->get();
 
         $position = Position::select('PosCode', 'Description')->get();
 
@@ -56,7 +56,7 @@ class PlantillaController extends Controller
         $arealevel = ['K','T','S','A'];
 
         count($arealevel) - 1;
-        return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition', 'division', 'year', 'selectedYear'));
+        return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition', 'division', 'year'));
     }
 
 

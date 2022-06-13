@@ -66,7 +66,7 @@ Route::put('/plantilla-of-personnel/{id}', 'PlantillaController@update');
 
 // Plantilla of position
 Route::resource('/plantilla-of-position', 'PlantillaOfPositionController');
-Route::get('/plantilla-of-position-list/{office_code?}', 'PlantillaOfPositionController@list');
+Route::get('/plantilla-of-position-list/{office_code?}/{year?}', 'PlantillaOfPositionController@list');
 Route::get('/plantilla-of-position/{id}', 'PlantillaOfPositionController@destroy')->name('plantilla-of-position.destroy');
 Route::put('/plantilla-of-position/{id}', 'PlantillaOfPositionController@update');
 
@@ -90,7 +90,7 @@ Route::controller(PrintIncrementController::class)->group(function() {
 // Salary adjustment
 Route::get('/salary-adjustment/{id}', 'SalaryAdjustmentController@destroy')->name('salary-adjustment.delete');
 Route::resource('/salary-adjustment', 'SalaryAdjustmentController');
-Route::get('/salary-adjustment-list/{currentSgyear}', 'SalaryAdjustmentController@list');
+Route::get('/salary-adjustment-list/{employeeOffice}/{currentSgyear?}', 'SalaryAdjustmentController@list');
 Route::put('/salary-adjustment/update/{id}', 'SalaryAdjustmentController@update');
 Route::get('/print-adjustment/{id}/previewed', 'PrintAdjustmentController@print')->name('salary-adjustment.previewed.print');
 Route::get('/print-adjustment/{id}', 'PrintAdjustmentController@printList')->name('print-adjustment');
