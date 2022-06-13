@@ -51,8 +51,8 @@ class ServiceRecordsController extends Controller
     {
         $data = DB::table('service_records')
             ->join('offices', 'service_records.office_code', '=', 'offices.office_code')
-            ->join('Position', 'service_records.position_id', '=', 'Position.PosCode')
-            ->select('id', 'employee_id', DB::raw("FORMAT(service_from_date, 'MM-dd-yy') as service_from_date"), DB::raw("FORMAT(service_to_date, 'MM-dd-yy') as service_to_date"), 'Position.Description', 'service_records.status', 'salary', 'offices.office_name', 'leave_without_pay', DB::raw("FORMAT(separation_date, 'MM-dd-yy') as separation_date"), 'separation_cause')
+            ->join('Position', 'service_records.PosCode', '=', 'Position.PosCode')
+            ->select('id', 'employee_id', DB::raw("FORMAT(service_from_date, 'MM-dd-yy') as service_from_date"), DB::raw("FORMAT(service_to_date, 'MM-dd-yy') as service_to_date"), 'Position.Description as Description', 'service_records.status', 'salary', 'offices.office_name', 'leave_without_pay', DB::raw("FORMAT(separation_date, 'MM-dd-yy') as separation_date"), 'separation_cause')
             ->whereNull('service_records.deleted_at')
             ->get();
 
@@ -109,7 +109,7 @@ class ServiceRecordsController extends Controller
         $service_record->employee_id       = $request['employeeId'];
         $service_record->service_from_date = $request['fromDate'];
         $service_record->service_to_date   = $request['toDate'];
-        $service_record->position_id       = $request['positionTitle'];
+        $service_record->PosCode       = $request['positionTitle'];
         $service_record->status            = $request['status'];
         $service_record->salary            = $request['salary'];
         $service_record->office_code       = $request['officeCode'];
@@ -173,7 +173,7 @@ class ServiceRecordsController extends Controller
         $service_record->employee_id            = $request['employeeId'];
         $service_record->service_from_date      = $request['fromDate'];
         $service_record->service_to_date        = $request['toDate'];
-        $service_record->position_id            = $request['positionTitle'];
+        $service_record->PosCode                = $request['positionTitle'];
         $service_record->status                 = $request['status'];
         $service_record->salary                 = $request['salary'];
         $service_record->office_code            = $request['officeCode'];

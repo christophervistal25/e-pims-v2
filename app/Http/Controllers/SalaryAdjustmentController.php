@@ -139,52 +139,50 @@ class SalaryAdjustmentController extends Controller
             [
                 'employee_id' => $request->employeeId,
                 'salary_new' => $request->salaryNew,
-        ],
-        [
-            'id'              => $id,
-            'employee_id'     => $request->employeeId,
-            'item_no'         => $request->itemNo,
-            'office_code'     => $request->officeCode,
-            'pp_id'           => $request->positionId,
-            'date_adjustment' => $request->dateAdjustment,
-            'sg_no'           => $request->salaryGrade,
-            'step_no'         => $request->stepNo,
-            'salary_previous' => $request->salaryPrevious,
-            'salary_new'      => $request->salaryNew,
-            'salary_diff'     => $request->salaryDifference,
-            'remarks'         => $request->remarks,
-            'deleted_at'      => null,
-        ]);
+            ],
+            [
+                'id'              => $id,
+                'employee_id'     => $request->employeeId,
+                'item_no'         => $request->itemNo,
+                'office_code'     => $request->officeCode,
+                'pp_id'           => $request->positionId,
+                'date_adjustment' => $request->dateAdjustment,
+                'sg_no'           => $request->salaryGrade,
+                'step_no'         => $request->stepNo,
+                'salary_previous' => $request->salaryPrevious,
+                'salary_new'      => $request->salaryNew,
+                'salary_diff'     => $request->salaryDifference,
+                'remarks'         => $request->remarks,
+                'deleted_at'      => null,
+            ]);
         Setting::find('AUTONUMBER2')->increment('Keyvalue');
 
 
-        DB::table('plantillas')->where('employee_id', $request->employeeId)
+        DB::table('plantillas')->where('employee_id', $request->employeeId)->where('year', $request->currentSgyear)
             ->update(['salary_amount' => $request->salaryNew
         ]);
 
 
-        // $dateCheck = $request->remarks;
-        // if($dateCheck == ''){
-        //     $remarks =  'Salary Adjust';
-        // } else{
-        //     $remarks =  $request->remarks;
-        // }
-
-        // DB::connection('E_PIMS_CONNECTION')->table('service_records')->updateOrInsert(
-        //     [
-        //         'employee_id' => $request['employeeId'],
-        //         'position_id' =>  $request['positionId'],
-        // ],
-        // [
-        //     'employee_id'               => $request['employeeId'],
-        //     'service_from_date'         => $request['dateAdjustment'],
-        //     'position_id'               =>  $request['positionId'],
-        //     'status'                    => $request['status'],
-        //     'salary'                    => $request['salaryNew'],
-        //     'office_code'               => $request['officeCode'],
-        //     'separation_cause'          => $remarks
-        // ]);
-
+        $dateCheck = $request->remarks;
+        if($dateCheck == ''){
+            $remarks =  'Salary Adjust';
+        } else{
+            $remarks =  $request->remarks;
+        }
+        $datas = DB::table('settings')->where('Keyname', 'AUTONUMBER2')->first();
+        $ids = (int)$datas->Keyvalue;
+        DB::table('service_records')->insert(
+        [
+            'id'                        => $ids,
+            'employee_id'               => $request->employeeId,
+            'service_from_date'         => $request->dateAdjustment,
+            'PosCode'                   => $request->positionCode,
+            'status'                    => $request->status,
+            'salary'                    => $request->salaryNew,
+            'office_code'               => $request->officeCode,
+            'separation_cause'          => $remarks
+        ]);
+        Setting::find('AUTONUMBER2')->increment('Keyvalue');
         return response()->json(['success'=>true]);
     }
 

@@ -135,7 +135,7 @@
                             name="status" data-live-search="true" id="status" data-size="5" data-width="100%">
                             <option></option>
                             @foreach(range(0, 4) as $statuses)
-                            @if($status[$statuses] == old('status'))
+                            @if($status[$statuses] == 'Permanent')
                             <option value="{{ $status[$statuses]}}" selected>{{ $status[$statuses] }}</option>
                             @else
                             <option value="{{ $status[$statuses]}}">{{ $status[$statuses] }}</option>

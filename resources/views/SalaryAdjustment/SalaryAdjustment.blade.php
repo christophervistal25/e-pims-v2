@@ -116,6 +116,10 @@
                         <input class="form-control " value="" id="positionId" name="positionId" type="text" readonly>
                     </div>
 
+                    <div class="form-group col-2 mt-2 d-none">
+                        <input class="form-control " value="" id="positionCode" name="positionCode" type="text" readonly>
+                    </div>
+
                     <div class="form-group col-12 mt-2 d-none">
                         <input class="form-control " value="" id="officeCode" name="officeCode" type="text" readonly>
                     </div>
