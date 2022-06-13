@@ -21,7 +21,7 @@ class StepIncrement extends Model
         'position_id', 
         'date_step_increment',
         'sg_no_from',
-        'date_latest_appointment',
+        'last_latest_appointment',
         'step_no_from',
         'salary_amount_from',
         'sg_no_to',

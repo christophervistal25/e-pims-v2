@@ -7,7 +7,7 @@ function ValidateDropDown(dropDown) {
 }
 
 $(document).ready(function () {
-    $("#employeeOffice").change(function (e) {
+    $("#employeeOffice,#yearAdjustment").change(function (e) {
         const FIRST_ELEMENT_OF_SELECT = 0;
         let year = $("#yearAdjustment").val();
         let office = $("#employeeOffice").val();

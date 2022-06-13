@@ -172,7 +172,7 @@ class Employee extends Model
 
     public $appends = [
         'fullname'
-    ];  
+    ];
 
 
     public function getFullnameAttribute()

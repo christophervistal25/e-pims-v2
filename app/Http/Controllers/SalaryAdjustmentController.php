@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Office;
 use App\Setting;
 use App\Employee;
 use App\Position;
