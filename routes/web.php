@@ -1,28 +1,25 @@
 <?php
 
-use App\Plantilla;
-use App\SalaryGrade;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\BirthdayCardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BirthdayController;
 use App\Http\Controllers\PlantillaController;
 use App\Http\Controllers\SalaryGradeController;
 use App\Http\Controllers\StepPromotionController;
-use App\Http\Controllers\Reports\ReportController;
 use App\Http\Controllers\ServiceRecordsController;
 use App\Http\Controllers\MaintenanceOfficeController;
 use App\Http\Controllers\PersonalDataSheetController;
 use App\Http\Controllers\PrintServiceRecordController;
 use App\Http\Controllers\PlantillaOfScheduleController;
-use App\Http\Controllers\PrintServiceRecordsController;
 use App\Http\Controllers\EmployeeLeave\LeaveListController;
 use App\Http\Controllers\Prints\SalaryGradePrintController;
+use App\Http\Controllers\Reports\PlantillaReportController;
+
+Route::resource('notifications', 'NotificationController');
 
 Route::get('/', 'DashboardController@index');
 Route::get('personal-data-sheet/{idNumber}', [PersonalDataSheetController::class, 'edit'])->name('employee.personal-data-sheet.edit');
-Route::resource('notifications', 'NotificationController');
 
 // Maintenance salary grade
 Route::get('salary-grade-list', [SalaryGradeController::class, 'list'])->name('salary-grade-list');
@@ -102,54 +99,54 @@ Route::get('employees-birthdays/{from}/{to}', [BirthdayController::class, 'range
 Route::resource('employees-birthday', 'BirthdayController');
 Route::get('employees', 'EmployeeController@index')->name('employee.index');
 Route::group(['prefix' => 'employee'], function () {
-     Route::get('/leave/application', 'EmployeeLeave\LeaveController@show')->name('leave.application.filling');
-     Route::get('/leave/leave-recall', 'EmployeeLeave\LeaveRecallController@index')->name('leave.leave-recall');
-     Route::resource('/leave-recall', 'EmployeeLeave\LeaveRecallController');
-     Route::post('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@storeByAdmin')
-          ->name('employee.leave.application.filling.admin.create');
-     Route::get('/list/leave-forwarded-balance', 'EmployeeLeave\LeaveForwardedBalanceController@list')->name('leave-forwarded-balance.list');
-     Route::post('/leave-forwarded-balance/{id}', 'EmployeeLeave\LeaveForwardedBalanceController@destroy');
-     Route::get('/leave-forwarded-balance/{id}/edit', 'EmployeeLeave\LeaveForwardedBalanceController@edit');
-     Route::put('/leave-forwarded-balance/{id}', 'EmployeeLeave\LeaveForwardedBalanceController@update');
-     Route::resource('/leave-forwarded-balance', 'EmployeeLeave\LeaveForwardedBalanceController');
+      Route::get('/leave/application', 'EmployeeLeave\LeaveController@show')->name('leave.application.filling');
+      Route::get('/leave/leave-recall', 'EmployeeLeave\LeaveRecallController@index')->name('leave.leave-recall');
+      Route::resource('/leave-recall', 'EmployeeLeave\LeaveRecallController');
+      Route::post('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@storeByAdmin')
+            ->name('employee.leave.application.filling.admin.create');
+      Route::get('/list/leave-forwarded-balance', 'EmployeeLeave\LeaveForwardedBalanceController@list')->name('leave-forwarded-balance.list');
+      Route::post('/leave-forwarded-balance/{id}', 'EmployeeLeave\LeaveForwardedBalanceController@destroy');
+      Route::get('/leave-forwarded-balance/{id}/edit', 'EmployeeLeave\LeaveForwardedBalanceController@edit');
+      Route::put('/leave-forwarded-balance/{id}', 'EmployeeLeave\LeaveForwardedBalanceController@update');
+      Route::resource('/leave-forwarded-balance', 'EmployeeLeave\LeaveForwardedBalanceController');
 
-     //  LEAVE-LIST APPLICATIONS //
-     Route::get('leave-list/list', [LeaveListController::class, 'list']);
-     Route::get('leave-list', [LeaveListController::class, 'index'])->name('leave.leave-list');
+      //  LEAVE-LIST APPLICATIONS //
+      Route::get('leave-list/list', [LeaveListController::class, 'list']);
+      Route::get('leave-list', [LeaveListController::class, 'index'])->name('leave.leave-list');
 
-     Route::get('/leave/leave-list/{edit}', 'EmployeeLeave\LeaveListController@edit')->name('leave-list.edit');
+      Route::get('/leave/leave-list/{edit}', 'EmployeeLeave\LeaveListController@edit')->name('leave-list.edit');
 
-     Route::delete('/leave-list/{id}', 'EmployeeLeave\LeaveListController@destroy')->name('leave-list.delete');
-     Route::put('/leave/leave-list/{id}', [LeaveListController::class, 'update'])->name('leave-list.update');
+      Route::delete('/leave-list/{id}', 'EmployeeLeave\LeaveListController@destroy')->name('leave-list.delete');
+      Route::put('/leave/leave-list/{id}', [LeaveListController::class, 'update'])->name('leave-list.update');
 
-     // LEAVE MONITORING INDEX //
-     Route::get('/leave-monitoring/{id}', 'EmployeeLeave\LeaveMonitoringController@list');
-     Route::resource('/leave-monitoring', 'EmployeeLeave\LeaveMonitoringController');
+      // LEAVE MONITORING INDEX //
+      Route::get('/leave-monitoring/{id}', 'EmployeeLeave\LeaveMonitoringController@list');
+      Route::resource('/leave-monitoring', 'EmployeeLeave\LeaveMonitoringController');
 
-     // LATE & UNDERTIME //
-     Route::resource('/late-undertime', 'EmployeeLeave\LeaveUndertimeController');
+      // LATE & UNDERTIME //
+      Route::resource('/late-undertime', 'EmployeeLeave\LeaveUndertimeController');
 
-     // COMPENSATORY LEAVE //
-     Route::get('/leave/compensatory-build-up', 'EmployeeLeave\CompensatoryBuildUpController@list')->name('compensatory-build-up.list');
-     Route::get('/leave/compensatory-build-up/{id}/{year}', 'EmployeeLeave\CompensatoryBuildUpController@listComLeaveByYear');
-     Route::get('/leave/compensatory-build-up/forfeited/{id}/{year}', 'EmployeeLeave\CompensatoryBuildUpController@forfeited');
-     Route::get('/leave/compensatory-build-up/updateForfeited/{emloyeeID}/{year}', 'EmployeeLeave\CompensatoryBuildUpController@updateForfeited');
-     Route::post('/compensatory-build-up/{id}', 'EmployeeLeave\CompensatoryBuildUpController@destroy');
-     Route::resource('/compensatory-build-up', 'EmployeeLeave\CompensatoryBuildUpController');
+      // COMPENSATORY LEAVE //
+      Route::get('/leave/compensatory-build-up', 'EmployeeLeave\CompensatoryBuildUpController@list')->name('compensatory-build-up.list');
+      Route::get('/leave/compensatory-build-up/{id}/{year}', 'EmployeeLeave\CompensatoryBuildUpController@listComLeaveByYear');
+      Route::get('/leave/compensatory-build-up/forfeited/{id}/{year}', 'EmployeeLeave\CompensatoryBuildUpController@forfeited');
+      Route::get('/leave/compensatory-build-up/updateForfeited/{emloyeeID}/{year}', 'EmployeeLeave\CompensatoryBuildUpController@updateForfeited');
+      Route::post('/compensatory-build-up/{id}', 'EmployeeLeave\CompensatoryBuildUpController@destroy');
+      Route::resource('/compensatory-build-up', 'EmployeeLeave\CompensatoryBuildUpController');
 });
 
 Route::group(['prefix' => 'maintenance'], function () {
-     Route::get('leave/list', 'Maintenance\LeaveController@list');
-     Route::resource('leaveIncrement', 'Maintenance\LeaveIncrementController');
-     Route::resource('leave', 'Maintenance\LeaveController');
+      Route::get('leave/list', 'Maintenance\LeaveController@list');
+      Route::resource('leaveIncrement', 'Maintenance\LeaveIncrementController');
+      Route::resource('leave', 'Maintenance\LeaveController');
 });
 
 Route::get('holiday/attribute', function () {
-     return App\Holiday::get();
+      return App\Holiday::get();
 });
 
 Route::get('holiday-by-date/{date}', function (string $date) {
-     return App\Holiday::where('date', $date)->first();
+      return App\Holiday::where('date', $date)->first();
 });
 
 Route::get('holiday/list', 'HolidayController@list');
@@ -165,77 +162,69 @@ Auth::routes();
 
 // EMPLOYEES ACCOUNT ROUTES.
 Route::group(['middleware' => 'auth'], function () {
-     // Route for Dashboard
-     Route::get('employee-dashboard', 'Account\Employee\DashboardController')->name('employee.dashboard');
+      // Route for Dashboard
+      Route::get('employee-dashboard', 'Account\Employee\DashboardController')->name('employee.dashboard');
 
-     Route::get('employee-setting', function () {
-     })->name('employee.setting');
+      Route::get('employee-setting', function () {
+      })->name('employee.setting');
 
-     Route::get('employee-leave-application-print/{id}', 'Account\Employee\LeaveApplicationController@print')
-          ->name('employee.leave.application.filling');
+      Route::get('employee-leave-application-print/{id}', 'Account\Employee\LeaveApplicationController@print')
+            ->name('employee.leave.application.filling');
 
-     Route::group(['middleware' => 'verify.application.submitted'], function () {
-          // Route for Leave Application filling.
-          Route::get('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@create')
-               ->name('employee.leave.application.filling');
-          Route::post('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@store')
-               ->name('employee.leave.application.filling.submit');
-     });
+      Route::group(['middleware' => 'verify.application.submitted'], function () {
+            // Route for Leave Application filling.
+            Route::get('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@create')
+                  ->name('employee.leave.application.filling');
+            Route::post('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@store')
+                  ->name('employee.leave.application.filling.submit');
+      });
 
-     Route::get('employee-leave-history/list', 'Account\Employee\ProfileController@list')->name('employee.leave.history.list');
-     Route::get('employee-personal-profile', 'Account\Employee\ProfileController@index')->name('employee.personal.profile');
-     Route::put('employee-update-account-information', 'Account\Employee\ProfileController@update')->name('employee.update.account.information');
+      Route::get('employee-leave-history/list', 'Account\Employee\ProfileController@list')->name('employee.leave.history.list');
+      Route::get('employee-personal-profile', 'Account\Employee\ProfileController@index')->name('employee.personal.profile');
+      Route::put('employee-update-account-information', 'Account\Employee\ProfileController@update')->name('employee.update.account.information');
 
-     // Employee Leave Card
-     Route::get('employee-leave-card', 'Account\Employee\LeaveCardController@index')->name('employee.leave.card.index');
-     Route::get('employee-leave-card/{start?}/{end?}', 'Account\Employee\LeaveCardController@withRange')->name('employee.leave.card.with.range.index');
-     Route::post('employee-leave-card-print', 'Account\Employee\LeaveCardController@print')->name('employee.leave.card.print');
+      // Employee Leave Card
+      Route::get('employee-leave-card', 'Account\Employee\LeaveCardController@index')->name('employee.leave.card.index');
+      Route::get('employee-leave-card/{start?}/{end?}', 'Account\Employee\LeaveCardController@withRange')->name('employee.leave.card.with.range.index');
+      Route::post('employee-leave-card-print', 'Account\Employee\LeaveCardController@print')->name('employee.leave.card.print');
 
 
-     Route::get('leave-certification-print', 'Account\Employee\LeaveCertificationController@index')->name('print-leave-certification');
+      Route::get('leave-certification-print', 'Account\Employee\LeaveCertificationController@index')->name('print-leave-certification');
 
-     //  Employee Chat
-     Route::get('employee-chat', 'Account\Employee\ChatController@index')->name('employee.chat');
+      //  Employee Chat
+      Route::get('employee-chat', 'Account\Employee\ChatController@index')->name('employee.chat');
 });
 
 
 
 Route::get('404', function () {
-     return view('errors.423');
+      return view('errors.423');
 })->name('423-leave-application');
 
 Route::fallback(function () {
-     abort(404);
+      abort(404);
 });
 
 
 // Jobs route.
 Route::post('leave-increment-job', 'LeaveIncrementJobController');
 
-// Route::get('see-more/promotions', function () {
-//     return view('StepIncrement.see-more');
-// })->name('promotion.see-more');
-
-
 Route::get('see-more/promotions', [StepPromotionController::class, 'upcomingStep'])->name('promotion.see-more');
 
-Route::post('service-record-print/{employeeID}/pdf', [PrintServiceRecordController::class, 'pdf']);
-Route::post('service-record-print/{employeeID}/excel', [PrintServiceRecordController::class, 'excel']);
-Route::get('service-record-print/{employeeID}/{type}/download', [PrintServiceRecordController::class, 'download']);
+Route::controller(PrintServiceRecordController::class)->group(function () {
+      Route::post('service-record-print/{employeeID}/pdf', 'pdf');
+      Route::post('service-record-print/{employeeID}/excel', 'excel');
+      Route::get('servicec-record-print/{employeeID}/{type}/download', 'download');
+});
 
 
 
 Route::group(['prefix' => 'prints'], function () {
-     Route::get('salary-grade/{year}', [SalaryGradePrintController::class, 'index'])->name('salary-grade-print');
+      Route::get('salary-grade/{year}', [SalaryGradePrintController::class, 'index'])->name('salary-grade-print');
 });
 
-Route::get('/birthday-card/{name}', function (string $name) {
-     return view('birthday-card', compact('name'));
-});
-
-Route::get('/birthday-card-2/{name}', function (string $name) {
-     return view('birthday-card-2', compact('name'));
-});
+Route::get('birthday-card/{name}', [BirthdayCardController::class, 'firstCard']);
+Route::get('birthday-card-2/{name}', [BirthdayCardController::class, 'secondCard']);
 
 // Route::get('export-image', function () {
 //      $employees = DB::table('Employees')->get(['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix']);
@@ -250,7 +239,10 @@ Route::get('/birthday-card-2/{name}', function (string $name) {
 
 Route::get('salary-grade/{year}', [SalaryGradePrintController::class, 'index'])->name('salary-grade-print');
 
-
-
 // Reports
-Route::get('show-report', [ReportController::class, 'show'])->name('show-plantilla-report');
+Route::controller(PlantillaReportController::class)->group(function () {
+      Route::get('show-plantilla-report', 'index')->name('show-plantilla-report');
+      Route::post('plantilla-report/generate/{office}/{year}', 'generate')->name('generate.plantilla-report');
+      Route::post('export/{office}/{year}', 'export')->name('generate.plantilla-report');
+      Route::get('download/plantilla-generated-report/{fileName}', 'download')->name('download.generated.plantilla-report');
+});

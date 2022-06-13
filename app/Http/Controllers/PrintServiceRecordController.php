@@ -69,4 +69,9 @@ class PrintServiceRecordController extends Controller implements IDownloadType
         $this->generate($employeeID);
     }
 
+    public function download(string $employeeID, string $type)
+    {
+        return response()->download(storage_path() . '\\files\\' . $employeeID . '_' . 'SERVICE_RECORD.' . $type);
+    }
+
 }

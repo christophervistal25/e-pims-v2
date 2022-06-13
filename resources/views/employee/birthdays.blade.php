@@ -2,7 +2,6 @@
 @section('title', 'Employees Birthday')
 @prepend('page-css')
 {{-- CSS HERE --}}
-<link rel="stylesheet" href="assets/plugins/morris/morris.css">">
 <style>
      .btn-primary {
           background: #ff9b44 !important;
@@ -122,7 +121,8 @@
                                         <p clas='text-sm'>${employee.position_name}</p>
                                         <p clas='text-sm'>${employee.Description}</p>
                                         <button class='btn btn-primary btn-block mt-2'>${moment(employee.BirthDate).format('MMMM DD, YYYY')}</button>
-                                        <button class='btn btn-success btn-block mt-2'>Generate Greating Card</button>
+                                        <a target="_blank" class='btn btn-success btn-block mt-2' href='/birthday-card/${employee.FirstName} ${employee.MiddleName.substr(0, 1)}. ${employee.LastName} ${employee.Suffix}'>Generate Greating Card</a>
+                                        <a target="_blank" class='btn btn-success btn-block mt-2' href='/birthday-card-2/${employee.FirstName} ${employee.MiddleName.substr(0, 1)}. ${employee.LastName} ${employee.Suffix}'>Generate Greating Card 2</a>
                                     </div>
                                 </div>
                             `);
