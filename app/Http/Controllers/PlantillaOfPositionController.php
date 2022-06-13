@@ -23,7 +23,7 @@ class PlantillaOfPositionController extends Controller
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('PosCode', 'Description', 'sg_no')->get();
         $lastId = Position::latest('PosCode')->first();
-        $year = PlantillaPosition::select('year')->where('year', '!=', '2022')->get();
+        $year = PlantillaPosition::select('year')->distinct()->orderBy('year', 'DESC')->get();
         $selectedYear = PlantillaPosition::select('year')->orderBy('year', 'DESC')->first();
         return view('PlantillaOfPosition.PlantillaOfPosition', compact('position', 'office', 'lastId', 'year', 'selectedYear'));
     }
@@ -35,7 +35,7 @@ class PlantillaOfPositionController extends Controller
         ->select('pp_id', 'Position.PosCode', 'item_no', 'plantilla_positions.sg_no as sg_no', 'Offices.office_name as office_name', 'Position.Description as Description', 'old_position_name', 'year');
 
         if (request()->ajax()) {
-        $PlantillaPositionData = ($office != '*') ? $data->where('Offices.office_code', $office)->where('year', $year)->get()
+            $PlantillaPositionData = ($office != '*') ? $data->where('Offices.office_code', $office)->where('year', $year)->get()
             : $data->where('year', $year)->get();
         return DataTables::of($PlantillaPositionData)
         ->addColumn('action', function($row){

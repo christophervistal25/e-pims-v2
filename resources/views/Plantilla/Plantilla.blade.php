@@ -121,22 +121,24 @@
                               <div id='position-title-error-message' class='text-danger text-sm'>
                               </div>
                          </div>
+                    <div class="form-group col-12 col-lg-6">
+                        <label>Status<span class="text-danger">*</span></label>
+                        <select value=""
+                            class="form-control status selectpicker"
+                            name="status" data-live-search="true" id="status" data-size="5" data-width="100%">
+                            <option></option>
+                            @foreach(range(0, 4) as $statuses)
+                            @if($status[$statuses] == 'Permanent')
+                            <option value="{{ $status[$statuses]}}" selected>{{ $status[$statuses] }}</option>
+                            @else
+                            <option value="{{ $status[$statuses]}}">{{ $status[$statuses] }}</option>
+                            @endif
+                            @endforeach
+                        </select>
+                        <div id='status-error-message' class='text-danger text-sm'>
+                        </div>
+                    </div>
 
-                         <div class="form-group col-12 col-lg-6">
-                              <label>Status<span class="text-danger">*</span></label>
-                              <select value="" class="form-control status selectpicker" name="status" data-live-search="true" id="status" data-size="5" data-width="100%">
-                                   <option></option>
-                                   @foreach(range(0, 4) as $statuses)
-                                   @if($status[$statuses] == old('status'))
-                                   <option value="{{ $status[$statuses]}}" selected>{{ $status[$statuses] }}</option>
-                                   @else
-                                   <option value="{{ $status[$statuses]}}">{{ $status[$statuses] }}</option>
-                                   @endif
-                                   @endforeach
-                              </select>
-                              <div id='status-error-message' class='text-danger text-sm'>
-                              </div>
-                         </div>
 
                          <div class="form-group col-12 col-lg-6">
                               <label>Item No<span class="text-danger">*</span></label>
@@ -276,11 +278,11 @@
 
                     <div class="col-2 mb-2">
                          <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}" name="currentYear" data-live-search="true" id="currentYear" data-size="5">
-                              <option value="">All</option>
-                              @foreach($year as $years){
-                              <option {{ $selectedYear->year == $years->year ? 'selected' : '' }} value="{{ $years->year }}">{{ $years->year }}</option>
-                              }
-                              @endforeach
+                            <option value="{{ Carbon\Carbon::now()->format('Y') }}">{{ Carbon\Carbon::now()->format('Y') }}</option>
+                            @foreach($year as $years){
+                                <option value="{{ $years->year }}">{{ $years->year }}</option>
+                            }
+                            @endforeach
                          </select>
                     </div>
 

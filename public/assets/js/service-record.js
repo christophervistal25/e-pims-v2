@@ -58,7 +58,6 @@ $(function () {
             { data: "action", name: "action", visible: false },
         ],
     });
-
     $("#employeeName").change(function (e) {
         $("input, textarea").val("");
         $("#positionTitle").val("Please Select").trigger("change");
@@ -116,13 +115,13 @@ $(function () {
                 },
                 columns: [
                     {
-                        data: "employee_id",
-                        name: "employee_id",
+                        data: "service_from_date",
+                        name: "service_from_date",
                         visible: false,
                     },
                     {
-                        data: "service_from_date",
-                        name: "service_from_date",
+                        data: "service_to_date",
+                        name: "service_to_date",
                         visible: false,
                     },
                     {
@@ -173,7 +172,7 @@ $(function () {
                         '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
                 },
                 ajax: {
-                    url: `/api/employee/service-records/${e.target.value}`,
+                    url: `/api/employee/service/records/${e.target.value}`,
                     data: function (d) {
                         d.employeeName = $("#employeeName").val();
                     },
@@ -262,6 +261,31 @@ $("#downloadPdf").click(function () {
         },
     });
 });
+
+////disable button
+function ValidateDropDown(dd) {
+    var input = document.getElementById("addbutton");
+    if (dd.value == "") input.disabled = true;
+    else input.disabled = false;
+    let printPreview = document.getElementById("printPreview");
+    let printPreviewA = document.getElementById("printPreviewA");
+    if (dd.value == "") {
+        printPreview.setAttribute("style", "visibility:hidden;");
+        printPreviewA.removeAttribute("href");
+        printPreview.setAttribute("disabled", true);
+        document.getElementById("line").style.visibility = "visible";
+    } else {
+        printPreviewA.setAttribute("href", "print-service-records/" + dd.value);
+        printPreview.setAttribute("style", "visibility:visible;");
+        printPreview.removeAttribute("disabled");
+        document.getElementById("line").style.visibility = "hidden";
+    }
+    $("input, textarea").val("");
+    const select = ["#positionTitle", "#status", "#officeCode"];
+    $.each(select, function (index, value) {
+        $(`${value}`).val("Please Select").trigger("change");
+    });
+}
 
 // get value namesss
 $(document).ready(function () {

@@ -118,8 +118,25 @@ Route::get('/cscPrevious/{sg_no}/{sg_step?}/{sg_year}', 'Api\PlantillaController
 Route::get('/positionSalaryGrade/{positionTitle}/{currentYear}', 'Api\PlantillaController@positionSalaryGrade');
 Route::post('/addPosition', 'Api\PlantillaController@addPosition');
 
-// Service Record
-Route::get('employee/service-records/{employeeId}', [ServiceRecordsController::class, 'filter']);
+// service record
+Route::get('/employee/service/records/{employeeId}', function ($employeeId) {
+    $data = DB::table('service_records')->join('offices', 'service_records.office_code', '=', 'offices.office_code')
+        ->join('Position', 'service_records.PosCode', '=', 'Position.PosCode')
+        ->select('id', 'employee_id', DB::raw("FORMAT(service_from_date, 'MM-dd-yy') as service_from_date"), DB::raw("FORMAT(service_to_date, 'MM-dd-yy') as service_to_date"), 'Position.Description as position_name', 'status', 'salary', 'offices.office_name', 'leave_without_pay', DB::raw("FORMAT(separation_date, 'MM-dd-yy') as separation_date"), 'separation_cause')
+        ->where('employee_id', $employeeId)
+        ->whereNull('service_records.deleted_at')
+        ->get();
+
+    return DataTables::of($data)
+        ->addColumn('action', function ($row) {
+            $btn = "<a title='Edit Service Record' href='" . route('service-records.edit', $row->id) . "' class='rounded-circle edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+            $btn = $btn . "<a title='Delete Service Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+        ";
+            return $btn;
+        })
+        ->rawColumns(['action'])
+        ->make(true);
+});
 
 Route::get('step/{sg_no}/{step}', function ($sgNo, $step) {
       $salaryGrade = SalaryGrade::where('sg_no', $sgNo)->first(['sg_step' . $step]);

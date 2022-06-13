@@ -75,6 +75,7 @@ $(document).ready(function () {
         let plantilla = $($("#employeeName option:selected")[0]).attr(
             "data-plantilla"
         );
+        console.log(plantilla);
         if (plantilla) {
             plantilla = JSON.parse(plantilla);
             $("#employeeId").val(plantilla.employee_id);
@@ -83,6 +84,7 @@ $(document).ready(function () {
             );
             $("#status").val(plantilla.status);
             $("#positionId").val(plantilla.pp_id);
+            $("#positionCode").val(plantilla.plantilla_positions.PosCode);
             $("#itemNo").val(plantilla.item_no);
             $("#salaryGrade").val(plantilla.sg_no);
             $("#stepNo").val(plantilla.step_no);
@@ -100,6 +102,8 @@ $(document).ready(function () {
             $("#status").val("");
             $("#previousYear").val("");
             $("#officeCode").val("");
+            $("#positionId").val("");
+            $("#positionCode").val("");
         }
     });
 });
