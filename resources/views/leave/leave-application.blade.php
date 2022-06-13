@@ -197,76 +197,19 @@ $layouts = 'layouts.app';
                                                       <span><strong>APPROVED BY<span class="text-danger">*</span></strong></span>
                                                 </label>
                                           </div>
-                                          <div class="col-lg-6">
-                                                <h6 class="text-sm text-center font-weight-medium">LEAVE CREDITS <br><small>(will be applied upon approval of this leave application)</small></h6>
-                                                <div class="row">
-                                                      <div class="col-lg-12">
-                                                            <label for="asOf" class="form-group has-float-label">
-                                                                  <input type="date" id="asOf" class="form-control" disabled name="balanceAsOfDate" value="">
-                                                                  <span><strong>AS OF</strong></span>
-                                                            </label>
-                                                      </div>
-                                                      <div class="col-lg-6">
-                                                            <label for="vacation__leave__earned" class="form-group has-float-label">
-                                                                  <input type="number" class="form-control" id="vacation__leave__earned" disabled name="vacationLeaveEarned" value="">
-                                                                  <span><strong>VL EARNED</strong></span>
-                                                            </label>
-                                                      </div>
-                                                      <div class="col-lg-6">
-                                                            <label for="vacation__leave__used" class="form-group has-float-label">
-                                                                  <input type="number" class="form-control" id="vacation__leave__used" disabled name="vacationLeaveUsed" value="">
-                                                                  <span><strong>VL USED</strong></span>
-                                                            </label>
-                                                      </div>
-                                                      <div class="col-lg-12">
-                                                            <label for="vacation__leave__balance" class="form-group has-float-label">
-                                                                  <input type="number" class="form-control" id="vacation__leave__balance" disabled name="vacationLeaveBalance" value="">
-                                                                  <span><strong>VL BALANCE</strong></span>
-                                                            </label>
-                                                      </div>
-
-                                                      <div class="col-lg-12 m-0 p-0">
-                                                            <hr>
-                                                      </div>
-
-                                                      <div class="col-lg-6">
-                                                            <label for="sick__leave__earned" class="form-group has-float-label">
-                                                                  <input type="number" id="sick__leave__earned" class="form-control" disabled name="sickLeaveEarned" value="">
-                                                                  <span><strong>SL EARNED</strong></span>
-                                                            </label>
-                                                      </div>
-                                                      <div class="col-lg-6">
-                                                            <label for="sick__leave__used" class="form-group has-float-label">
-                                                                  <input type="number" class="form-control" id="sick__leave__used" disabled name="sickLeaveUsed" value="">
-                                                                  <span><strong>SL USED</strong></span>
-                                                            </label>
-                                                      </div>
-                                                      <div class="col-lg-12">
-                                                            <label for="sick__leave__balance" class="form-group has-float-label">
-                                                                  <input type="number" class="form-control" id="sick__leave__balance" disabled name="sickLeaveBalance" value="">
-                                                                  <span><strong>SL BALANCE</strong></span>
-                                                            </label>
-                                                      </div>
-
-                                                      <div class="col-lg-12">
-                                                            <hr>
-                                                            <label for="total__balance" class="form-group has-float-label">
-                                                                  <input type="number" class="form-control" id="total__balance" disabled name="totalBalance" value="">
-                                                                  <span><strong>TOTAL BALANCE</strong></span>
-                                                            </label>
-                                                      </div>
-
-                                                      <div class="col-lg-12 p-0 m-0">
-                                                            <hr>
-                                                      </div>
-
-                                                      <div class="col-lg-12">
-                                                            <label for="mandatory__leave__balance" class="form-group has-float-label mt-4">
-                                                                  <input type="number" class="form-control" id="mandatory__leave__balance" disabled value="5" name="mandatoryLeaveBalance">
-                                                                  <span><strong>MANDATORY LEAVE</strong></span>
-                                                            </label>
-                                                      </div>
-                                                </div>
+                                          <div class="col-lg-6 ">
+                                                <table class="table table-condensed">
+                                                      <thead>
+                                                            <tr>
+                                                                  <th class="text-center">Date</th>
+                                                                  <th class="text-center">Whole Day</th>
+                                                                  <th class="text-center">PM</th>
+                                                                  <th class="text-center">AM</th>
+                                                            </tr>
+                                                      </thead>
+                                                      <tbody class="inclusiveDates">
+                                                      </tbody>
+                                                </table>
                                           </div>
                                     </div>
                                     <div class="text-right">
@@ -276,7 +219,7 @@ $layouts = 'layouts.app';
                                                 </div>
                                                 <i class="la la-user-plus" id="apply-button-icon"></i>
 
-                                                Apply for Leave
+                                                Create Leave Application
                                           </button>
                                     </div>
                               </form>
@@ -392,6 +335,7 @@ $layouts = 'layouts.app';
 
 
             $('#date_from').change(function() {
+                  $('.inclusiveDates').empty();
                   let period = moment($('#date_to').val()).diff($('#date_from').val(), 'days');
                   let POINTS = 0;
 
@@ -415,9 +359,27 @@ $layouts = 'layouts.app';
                         $('#earnedLess').val(period || 0);
                         $('#earnedRemaining').val((POINTS - period) || 0);
                   }
+
+                  let from = $('#date_from').val();
+                  let to = $('#date_to').val();
+                  $.get({
+                        url: `/api/generate/periods/${from}/${to}`
+                        , success: function(response) {
+                              jQuery.each(response.period, function(index, item) {
+                                    $('.inclusiveDates').append(` <tr>
+                                                                        <td class="text-center">`+item+`</td>
+                                                                        <td class="text-center"><input type="radio" name="date`+(index+1)+`" checked></td>
+                                                                        <td class="text-center"><input type="radio" name="date`+(index+1)+`"></td>
+                                                                        <td class="text-center"><input type="radio" name="date`+(index+1)+`"></td>
+                                                                  </tr>`);
+                              });
+                        }
+                  });
             });
 
             $('#date_to').change(function() {
+
+                  $('.inclusiveDates').empty();
                   let rangePeriod = {
                         start: moment($('#date_from').val())
                         , end: moment($('#date_to').val())
@@ -457,7 +419,14 @@ $layouts = 'layouts.app';
                   $.get({
                         url: `/api/generate/periods/${from}/${to}`
                         , success: function(response) {
-                              alert(response.period);
+                              jQuery.each(response.period, function(index, item) {
+                                    $('.inclusiveDates').append(` <tr>
+                                                                        <td class="text-center">`+item+`</td>
+                                                                        <td class="text-center"><input type="radio" name="date`+(index+1)+`" checked></td>
+                                                                        <td class="text-center"><input type="radio" name="date`+(index+1)+`"></td>
+                                                                        <td class="text-center"><input type="radio" name="date`+(index+1)+`"></td>
+                                                                  </tr>`);
+                              });
                         }
                   });
             });
