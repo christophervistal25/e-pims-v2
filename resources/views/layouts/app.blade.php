@@ -389,7 +389,7 @@
                          </li>
 
                          <li class="submenu">
-                              <a href="#" class="text-decoration-none"><i class="la la-folder"></i> <span>Reports</span> <span class="menu-arrow"></span></a>
+                              <a href="#" class="text-decoration-none"><i class="la la-dashcube"></i> <span>Reports</span> <span class="menu-arrow"></span></a>
                               <ul>
                                    <li>
                                         <a href="{{ route('show-plantilla-report') }}" class="text-decoration-none" >Plantilla</a>
