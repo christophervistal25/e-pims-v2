@@ -1,26 +1,25 @@
-$(document).ready(function() {
-
+$(document).ready(function () {
     let errorMessage = [
         "#division-name-error-message",
-        "#office-code-error-message"
+        "#office-code-error-message",
     ];
 
     let errorClass = ["#divisionName", ".officeCode .dropdown"];
 
     // code for show add form
-    $("#addButton").click(function() {
+    $("#addButton").click(function () {
         $("#add").attr("class", "page-header");
         $("#table").attr("class", "page-header d-none");
     });
 
     // code for show table
-    $("#showListDivision").click(function() {
+    $("#showListDivision").click(function () {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
     });
 
     // cancel
-    $("#cancelButton").click(function() {
+    $("#cancelButton").click(function () {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
 
@@ -28,14 +27,13 @@ $(document).ready(function() {
 
         $("input").val("");
 
-        $.each(errorClass, function(index, value) {
+        $.each(errorClass, function (index, value) {
             $(`${value}`).removeClass("is-invalid");
         });
 
-        $.each(errorMessage, function(index, value) {
+        $.each(errorMessage, function (index, value) {
             $(`${value}`).html("");
         });
-
     });
     //show list of division
     let table = $("#maintenanceDivision").DataTable({
@@ -45,7 +43,7 @@ $(document).ready(function() {
         processing: true,
         language: {
             processing:
-                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
         },
         ajax: "/maintenance-division-list",
         columns: [
@@ -55,12 +53,12 @@ $(document).ready(function() {
                 data: "action",
                 name: "action",
                 searchable: false,
-                sortable: false
-            }
-        ]
+                sortable: false,
+            },
+        ],
     });
 
-    $("#maintenanceDivisionOffice").change(function(e) {
+    $("#maintenanceDivisionOffice").change(function (e) {
         if (e.target.value == "") {
             table.destroy();
             table = $("#maintenanceDivision").DataTable({
@@ -70,7 +68,7 @@ $(document).ready(function() {
                 processing: true,
                 language: {
                     processing:
-                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
                 },
                 ajax: "/maintenance-division-list",
                 columns: [
@@ -80,9 +78,9 @@ $(document).ready(function() {
                         data: "action",
                         name: "action",
                         searchable: false,
-                        sortable: false
-                    }
-                ]
+                        sortable: false,
+                    },
+                ],
             });
         } else {
             table.destroy();
@@ -93,10 +91,10 @@ $(document).ready(function() {
                 processing: true,
                 language: {
                     processing:
-                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
                 },
                 ajax: {
-                    url: `/api/maintenance/division/${e.target.value}`
+                    url: `/api/maintenance/division/${e.target.value}`,
                 },
                 columns: [
                     { data: "division_name", name: "division_name" },
@@ -105,15 +103,15 @@ $(document).ready(function() {
                         data: "action",
                         name: "action",
                         searchable: false,
-                        sortable: false
-                    }
-                ]
+                        sortable: false,
+                    },
+                ],
             });
         }
     });
 
     // add new division
-    $("#maintenanceDivisionForm").submit(function(e) {
+    $("#maintenanceDivisionForm").submit(function (e) {
         e.preventDefault();
         let data = $(this).serialize();
         $("#saveBtn").attr("disabled", true);
@@ -123,41 +121,45 @@ $(document).ready(function() {
             type: "POST",
             url: "/maintenance-division",
             data: data,
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
-                    $("#officeCode")
-                        .val("Please Select")
-                        .trigger("change");
+                    $("#officeCode").val("Please Select").trigger("change");
 
                     $("input").val("");
 
-                    const errorClass = ["#divisionName", ".officeCode .dropdown"];
+                    const errorClass = [
+                        "#divisionName",
+                        ".officeCode .dropdown",
+                    ];
 
-                    $.each(errorClass, function(index, value) {
+                    $.each(errorClass, function (index, value) {
                         $(`${value}`).removeClass("is-invalid");
                     });
 
-                    const errorMessage = ["#division-name-error-message", "#office-code-error-message"];
+                    const errorMessage = [
+                        "#division-name-error-message",
+                        "#office-code-error-message",
+                    ];
 
-                    $.each(errorMessage, function(index, value) {
+                    $.each(errorMessage, function (index, value) {
                         $(`${value}`).html("");
                     });
-                    
+
                     $("#maintenanceDivision").DataTable().ajax.reload();
 
                     swal({
-                        title : '',
-                        text : 'Division successfully add',
-                        icon : 'success',
-                        timer : 5000,
-                        buttons : false,
+                        title: "",
+                        text: "Division successfully add",
+                        icon: "success",
+                        timer: 5000,
+                        buttons: false,
                     });
-                    
+
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
                 }
             },
-            error: function(response) {
+            error: function (response) {
                 if (response.status === 422) {
                     let errors = response.responseJSON.errors;
                     if (errors.hasOwnProperty("divisionName")) {
@@ -185,7 +187,7 @@ $(document).ready(function() {
                     let parentElement = document.createElement("ul");
                     let errorss = response.responseJSON.errors;
 
-                    $.each(errorss, function(key, value) {
+                    $.each(errorss, function (key, value) {
                         let errorMessage = document.createElement("li");
                         let [error] = value;
                         errorMessage.innerHTML = error;
@@ -195,13 +197,13 @@ $(document).ready(function() {
                     swal({
                         title: "The given data was invalid!",
                         icon: "error",
-                        content: parentElement
+                        content: parentElement,
                     });
 
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
                 }
-            }
+            },
         });
     });
 });

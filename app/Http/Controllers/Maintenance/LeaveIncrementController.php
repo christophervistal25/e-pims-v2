@@ -16,10 +16,7 @@ class LeaveIncrementController extends Controller
      */
     public function index()
     {
-        $sickIncrement = LeaveIncrement::where('id', 1)->first(['id', 'increment', 'description']);
-        $vacationIncrement = LeaveIncrement::where('id', 2)->first(['id', 'increment', 'description']);
-        
-        return view('maintenance.leave.leaveIncrement',  compact('sickIncrement', 'vacationIncrement'));
+        return view('maintenance.leave.leaveIncrement');
     }
 
     /**

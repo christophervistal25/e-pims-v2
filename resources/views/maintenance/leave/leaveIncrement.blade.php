@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'LEAVE INCREMENT')
+@section('title', 'Leave Increment')
 @prepend('page-css')
 <script src="{{ asset('/js/app.js') }}" defer></script>
 <link rel="stylesheet" href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css"/>
@@ -52,20 +52,20 @@ input[type=number] {
         </div>  
     </div>  
     <div class="col-md-9">
-        <div class="card shadow" id="sickIncrementCard" >
+        <div class="card shadow-none" id="sickIncrementCard" >
             <div class="card-body" >
                 <div class="row">
                     <div class="col-md-12">
-                        <h4>SICK LEAVE INCREMENT SETTINGS</h4>
+                        <h4>Sick Leave Increment Settings</h4>
                         <hr>
                         <form action="" method="POST" id="sickIncrement">
                             @csrf
-                            <input type="hidden" class='form-control' name="sick_id" id="sick_id" value="{{ $sickIncrement->id }}">
+                            <input type="hidden" class='form-control' name="sick_id" id="sick_id" >
                             <div class="row">
                                 <div class="col-lg-12">
                                     <label for="sick_increment" class="form-group has-float-label edit_availed">
                                         <input type="number" name="sick_increment" id="sick_increment" class="form-control w-50 border-0" 
-                                            value="{{ $sickIncrement->increment }}" 
+                                            value="" 
                                             readonly
                                             style="outline: none; box-shadow: 0px 0px 0px transparent; height: 80px; font-size:40px; background: white;">
                                         <span class="font-weight-bold">INCREMENT</span>
@@ -76,36 +76,36 @@ input[type=number] {
                             <div class="row">
                                 <div class="col-lg-12">
                                     <label for="sick_description" class="form-group has-float-label">
-                                        <textarea id="sick_description" name="sick_description" rows="1" class="w-100 form-control border-0 pt-3" placeholder="Description" readonly
+                                        <textarea id="sick_description" name="sick_description" rows="1" class="w-100 form-control border-0 pt-3" readonly
                                         style="outline: none; box-shadow: 0px 0px 0px transparent; font-size:18px; resize:none; background: white;"
-                                        >{{ $sickIncrement->description }}</textarea>
+                                        ></textarea>
                                         <span class="font-weight-bold">DESCRIPTION</span>
                                         <div class='text-danger' id="sick_description__error__element"></div>
                                     </label>
                                 </div>
                             </div>
                             <hr>
-                            <button type="button" class="btn btn-primary rounded-pill w-25" id="btnSick"><i class="fa fa-edit"></i> UPDATE</button>
-                            <button type="button" class="btn btn-primary rounded-pill w-25" id="btnSickSave"><i class="fa fa-save"></i> Save Changes</button>
+                            <button type="button" class="btn btn-primary text-white w-25" id="btnSick"><i class="fa fa-edit"></i> UPDATE</button>
+                            <button type="button" class="btn btn-primary text-white w-25" id="btnSickSave"><i class="fa fa-save"></i> Save Changes</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="card shadow" id="vacationIncrementCard">
+        <div class="card shadow-none" id="vacationIncrementCard">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-12   ">
-                        <h4>VACATION LEAVE INCREMENT SETTINGS</h4>
+                    <div class="col-md-12">
+                        <h4>Vacation Leave Increment Settings</h4>
                         <hr>
                         <form action="" method="POST" id="vacationIncrement">
                             @csrf
-                            <input type="hidden" class='form-control' name="vacation_id" id="vacation_id" value="{{ $vacationIncrement->id }}">
+                            <input type="hidden" class='form-control' name="vacation_id" id="vacation_id">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <label for="vacation_increment" class="form-group has-float-label edit_availed">
                                         <input type="number" name="vacation_increment" id="vacation_increment" class="form-control w-50 border-0" 
-                                            value="{{ $vacationIncrement->increment }}" 
+                                            value="" 
                                             readonly
                                             style="outline: none; box-shadow: 0px 0px 0px transparent; height: 80px; font-size:40px; background: white;">
                                         <span class="font-weight-bold">INCREMENT</span>
@@ -117,17 +117,17 @@ input[type=number] {
                             <div class="row">
                                 <div class="col-lg-12">
                                     <label for="vacation_description" class="form-group has-float-label">
-                                        <textarea id="vacation_description" name="vacation_description" rows="1" class="w-100 form-control border-0 pt-3" placeholder="Description" readonly
+                                        <textarea id="vacation_description" name="vacation_description" rows="1" class="w-100 form-control border-0 pt-3" readonly
                                         style="outline: none; box-shadow: 0px 0px 0px transparent; font-size:18px; background: white; resize:none;"
-                                        >{{ $vacationIncrement->description }}</textarea>
+                                        ></textarea>
                                         <span class="font-weight-bold">DESCRIPTION</span>
                                         <div class='text-danger' id="vacation_description__error__element"></div>
                                     </label>
                                 </div>
                             </div>
                             <hr>
-                            <button type="button" class="btn btn-primary rounded-pill w-25" id="btnVacation"><i class="fa fa-edit"></i> UPDATE</button>
-                            <button type="button" class="btn btn-primary rounded-pill w-25" id="btnVacationSave"><i class="fa fa-save"></i> Save Changes</button>
+                            <button type="button" class="btn btn-primary text-white w-25" id="btnVacation"><i class="fa fa-edit"></i> UPDATE</button>
+                            <button type="button" class="btn btn-primary text-white w-25" id="btnVacationSave"><i class="fa fa-save"></i> Save Changes</button>
                         </form>
                     </div>
                 </div>

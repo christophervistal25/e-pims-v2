@@ -52,6 +52,7 @@ $(document).ready(function () {
     // filter list office
     let selectedOffice = $("#employeeOffice").val();
     let selectedYear = $("#currentYear").val();
+
     let PlantillaTable = $("#plantilla").DataTable({
         processing: true,
         serverSide: true,
@@ -97,6 +98,7 @@ $(document).ready(function () {
     $("#employeeOffice,#currentYear").change(function (e) {
         let selectedOffices = $("#employeeOffice").val();
         let selectedYears = $("#currentYear").val();
+
         PlantillaTable.ajax
             .url(`/plantilla-list/${selectedOffices}/${selectedYears}`)
             .load();

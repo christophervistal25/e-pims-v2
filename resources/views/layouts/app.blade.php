@@ -229,7 +229,7 @@
                                    </a>
                               </li>
                               <li>
-                                   <a class='text-decoration-none' href="{{ route('employees-birthday.index') }}">
+                                   <a class='text-decoration-none' href="{{ route('employees-birthday.index') }}?from={{ date('m-d') }}&to={{ date('m-d') }}">
                                         <i class="las la-birthday-cake"></i> <span> Employee's Birthday </span>
                                    </a>
                               </li>
@@ -298,7 +298,7 @@
                                                        <span>Add New Position</span>
                                                   </a>
                                                   {{-- <a class='text-decoration-none' href="{{ route('position-schedule.index') }}">
-                                                       <span>Create Position Schedule</span>
+                                                  <span>Create Position Schedule</span>
                                                   </a> --}}
                                              </li>
                                         </ul>
@@ -312,7 +312,7 @@
                                                        <span>Add New Plantilla</span>
                                                   </a>
                                                   {{-- <a class='text-decoration-none' href="{{  route('plantilla-of-schedule.index') }}">
-                                                       <span>Create Plantilla Schedule</span>
+                                                  <span>Create Plantilla Schedule</span>
                                                   </a> --}}
                                              </li>
                                         </ul>
@@ -345,6 +345,16 @@
                               </a>
                          </li>
 
+                         <li class="submenu">
+                              <a href="#" class='text-decoration-none'><i class="las la-sort-amount-up"></i> <span>Promotions</span> <span class="menu-arrow"></span></a>
+                              <ul style="display: none;">
+                                   <li>
+                                        <a class='text-decoration-none mr-2' href="{{  route('service-records.index') }}">
+                                             Add Promotion
+                                        </a>
+                                   </li>
+                              </ul>
+                         </li>
 
                          <li class="submenu">
                               <a href="#" class='text-decoration-none'><i class="la la-bars"></i> <span>Service Record</span> <span class="menu-arrow"></span></a>
@@ -383,21 +393,27 @@
                               </ul>
                          </li>
 
-                        
+
                          <li class="menu-title">
                               <span class="text-capitalize"> Reports</span>
                          </li>
 
-                         <li class="submenu">
-                              <a href="#" class="text-decoration-none"><i class="la la-dashcube"></i> <span>Reports</span> <span class="menu-arrow"></span></a>
+                         <li>
+                              <a class='text-decoration-none' href='{{ route('show-plantilla-report') }}'>
+                                   <i class="las la-file-excel"></i> <span>Plantilla</span></a>
+                              </a>
+                         </li>
+
+                         {{-- <li class="submenu">
+                              <a href="#" class="text-decoration-none"><i class="la la-folder"></i> <span>Reports</span> <span class="menu-arrow"></span></a>
                               <ul>
                                    <li>
                                         <a href="{{ route('show-plantilla-report') }}" class="text-decoration-none" >Plantilla</a>
-                                   </li>
-                              </ul>
                          </li>
+                         </ul>
+                         </li> --}}
 
-                         
+
                          </li>
 
                          </ul>
@@ -455,13 +471,13 @@
                               </div>
                               <div class="modal-footer">
                                    @if($no_of_employees_for_plantilla_schedule != 0)
-                                        <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary text-white" id="btnCreatePlantillaScheduleModal">
+                                   <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
+                                   <button type="button" class="btn btn-primary text-white" id="btnCreatePlantillaScheduleModal">
                                         <div class="spinner-border text-light spinner-border-sm" id='spinner-create-plantilla-schedule' role="status">
                                              <span class="sr-only">Loading...</span>
                                         </div>
                                         Create Plantilla Schedule
-                                        </button>
+                                   </button>
                                    @endif
                               </div>
                          </div>
@@ -494,7 +510,7 @@
      <script>
           const conectionString = "{{ env('MIX_SOCKET_IP') }}";
           let socket = io.connect(conectionString);
-          
+
           $('#plantillaScheduleCreate').click(function() {
                $('#plantillaCreateScheduleModal').modal('toggle');
           });
@@ -505,19 +521,19 @@
                $('#btnCreatePlantillaScheduleModal').attr('disabled', true);
                $('#spinner-create-plantilla-schedule').show();
                $.ajax({
-                    url: '/bulk-plantilla-of-schedule-generate',
-                     method: 'POST',
-                     success: function(response) {
-                          if(response.success) {
+                    url: '/bulk-plantilla-of-schedule-generate'
+                    , method: 'POST'
+                    , success: function(response) {
+                         if (response.success) {
                               $('#plantillaCreateScheduleModal').modal('toggle');
                               $('#btnCreatePlantillaScheduleModal').removeAttr('disabled');
-                               $('#spinner-create-plantilla-schedule').hide();
-                                swal({
-                                   title : '',
-                                   text : 'Successfully generate plantilla schedule for this year',
-                                   icon : 'success',
-                              });
-                          }
+                              $('#spinner-create-plantilla-schedule').hide();
+                              swal({
+                                   title: ''
+                                   , text: 'Successfully generate plantilla schedule for this year'
+                                   , icon: 'success'
+                              , });
+                         }
                     }
                });
           });
