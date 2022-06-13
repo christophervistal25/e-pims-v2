@@ -185,41 +185,7 @@
                                     </label>
                                 </div>
 
-                                <h6 class="text-sm text-center font-weight-medium">
-                                    LEAVE DATE
-                                    <br><small>(Select Date of leave Options)</small>
-                                </h6>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label>
-                                            <input type="radio" name="leave_date_option" id="oneDay"> One day Leave
-                                        </label> &nbsp
-                                        <label>
-                                            <input type="radio" name="leave_date_option" id="dateRange"> Date Range
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="oneDay p-0 mt-3 d-none">
-                                    <div class="row">
-                                        <div class="col-md-9">
-                                            <label for="date_from" class="form-group has-float-label">
-                                                <input type="date" class="form-control" id="leave_date" name="leave_date"
-                                                    >
-                                                <span id="start__date__label"><strong>Leave Date <span
-                                                            class='text-danger'>*</span></strong></span>
-                                            </label>
-                                        </div>
-                                        <div class="col-md-3 pt-2">
-                                            <div class="checkbox">
-                                                <label> <input type="checkbox" name="isHalfday"> Halfday </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="dateRange d-none">
-                                    <div class="col-auto p-0 mt-3">
+                                <div class="col-auto p-0 mt-3">
                                         <label for="date_from" class="form-group has-float-label">
                                             <input type="date" class="form-control" id="date_from" name="date_from"
                                                 >
@@ -234,14 +200,29 @@
                                                         class='text-danger'>*</span></strong></span>
                                         </label>
                                     </div>
-                                </div>
-
-                                <div class="col-auto p-0 mt-3">
-                                    <label for="no_of_days" class="form-group has-float-label">
-                                        <input type="number" class="form-control" id="no_of_days" name="numberOfDays" readonly>
-                                        <span><strong>NUMBER OF DAYS<span class="text-danger">*</span></strong></span>
-                                    </label>
-                                </div>
+                                    <div class="col-auto p-0 mt-3">
+                                        <label for="no_of_days" class="form-group has-float-label">
+                                            <input type="number" class="form-control" id="no_of_days" name="numberOfDays" readonly>
+                                            <span><strong>NUMBER OF DAYS<span class="text-danger">*</span></strong></span>
+                                        </label>
+                                    </div>
+                                    <label for="commutation" class="form-group has-float-label">
+                                    <select class="form-control" id="commutation" name="communication">
+                                        <option readonly selected value="0">NOT REQUESTED</option>
+                                        <option value="1">REQUESTED</option>
+                                    </select>
+                                    <span><strong>COMMUTATION<span class="text-danger">*</span></strong></span>
+                                </label>
+                                <label for="recoApproval" class="form-group has-float-label">
+                                    <input class="form-control" name="recommendingApproval" id="recommendingApproval"
+                                        disabled value="">
+                                    <span><strong>RECOMMENDING APPROVAL<span class="text-danger">*</span></strong></span>
+                                </label>
+                                <label for="approveBy" class="form-group has-float-label">
+                                    <input class="form-control" name="approveBy" id="approvedBy" disabled
+                                        value="">
+                                    <span><strong>APPROVED BY<span class="text-danger">*</span></strong></span>
+                                </label>
                             </div>
                             <div class="col-lg-6">
                                 <h6 class="text-sm text-center font-weight-medium">LEAVE CREDITS <br><small>(will be applied upon approval of this leave application)</small></h6>
@@ -326,25 +307,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-12 col-sm-12 pl-0 pt-0">
-                            <label for="commutation" class="form-group has-float-label">
-                                <select class="form-control" id="commutation" name="communication">
-                                    <option readonly selected value="0">NOT REQUESTED</option>
-                                    <option value="1">REQUESTED</option>
-                                </select>
-                                <span><strong>COMMUTATION<span class="text-danger">*</span></strong></span>
-                            </label>
-                            <label for="recoApproval" class="form-group has-float-label">
-                                <input class="form-control" name="recommendingApproval" id="recommendingApproval"
-                                    disabled value="">
-                                <span><strong>RECOMMENDING APPROVAL<span class="text-danger">*</span></strong></span>
-                            </label>
-                            <label for="approveBy" class="form-group has-float-label">
-                                <input class="form-control" name="approveBy" id="approvedBy" disabled
-                                    value="">
-                                <span><strong>APPROVED BY<span class="text-danger">*</span></strong></span>
-                            </label>
                         </div>
                         <div class="text-right">
                             <button type="submit" class="text-white shadow btn btn-primary" id="btn--apply--for--leave">
@@ -620,17 +582,6 @@ $(function () {
             });
         }
     });
-
-    $('#oneDay').click(function () {
-        $('.oneDay').removeClass('d-none');
-        $('.dateRange').addClass('d-none');
-    });
-
-    $('#dateRange').click(function () {
-        $('.oneDay').addClass('d-none');
-        $('.dateRange').removeClass('d-none');
-    });
-
 
 });
 
