@@ -128,9 +128,18 @@ class StepIncrementController extends Controller
             'salary_diff'               => $request->monthlyDifference
         ]);
 
+        $increment->plantilla->update([
+            'step_no'          => $request['stepNo2'],
+            'salary_amount'    => $request['amount2']
+        ]);
+
+
+
         $employee = Employee::find($request->employeeID);
         $employee->last_step_increment = $increment->last_latest_appointment;
         $employee->save();
+
+
 
         return redirect('/step-increment')->with('success', true);
     }
@@ -178,6 +187,11 @@ class StepIncrementController extends Controller
         $step_increments->salary_amount_to = $request['amount2'];
         $step_increments->salary_diff = $request['monthlyDifference'];
         $step_increments->update();
+
+        $step_increments->plantilla->update([
+            'step_no'          => $request['stepNo2'],
+            'salary_amount'    => $request['amount2']
+        ]);
 
 
         Session::flash('success', true);
