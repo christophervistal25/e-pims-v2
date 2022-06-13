@@ -23,7 +23,7 @@ class PlantillaOfPositionController extends Controller
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('PosCode', 'Description', 'sg_no')->get();
         $lastId = Position::latest('PosCode')->first();
-        $year = PlantillaPosition::select('year')->distinct()->orderBy('year', 'DESC')->get();
+        $year = PlantillaPosition::select('year')->where('year', '!=', '2022')->get();
         $selectedYear = PlantillaPosition::select('year')->orderBy('year', 'DESC')->first();
         return view('PlantillaOfPosition.PlantillaOfPosition', compact('position', 'office', 'lastId', 'year', 'selectedYear'));
     }
