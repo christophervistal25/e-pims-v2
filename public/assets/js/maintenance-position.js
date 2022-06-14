@@ -1,71 +1,73 @@
-$(document).ready(function() {
+$(document).ready(function () {
     let errorMessage = [
         "#position-code-error-message",
         "#position-name-error-message",
         "#salary-grade-no-error-message",
-        "#position-short-name-error-message"
+        "#position-short-name-error-message",
     ];
     let errorClass = [
         "#positionCode",
         "#positionName",
         ".salaryGradeNo .dropdown",
-        "#positionShortName"
+        "#positionShortName",
     ];
     let removeValue = ["#positionName", "#positionShortName"];
     // code for show add form
-    $("#addButton").click(function() {
+    $("#addButton").click(function () {
         $("#add").attr("class", "page-header");
         $("#table").attr("class", "page-header d-none");
     });
     // code for show table
-    $("#showListPosition").click(function() {
+    $("#showListPosition").click(function () {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
     });
+
     // cancel
-    $("#cancelButton").click(function() {
+    $("#cancelButton").click(function () {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
-        $("#salaryGradeNo")
-            .val("Please Select")
-            .trigger("change");
-        $.each(removeValue, function(index, value) {
+        $("#salaryGradeNo").val("Please Select").trigger("change");
+        $.each(removeValue, function (index, value) {
             $(`${value}`).val("");
         });
-        $.each(errorClass, function(index, value) {
+        $.each(errorClass, function (index, value) {
             $(`${value}`).removeClass("is-invalid");
         });
-        $.each(errorMessage, function(index, value) {
+        $.each(errorMessage, function (index, value) {
             $(`${value}`).html("");
         });
     });
+
     //display list of position
     $("#maintenancePosition").DataTable({
-        processing: true,
         pagingType: "full_numbers",
-        stateSave: true,
         serverSide: true,
-        retrieve: true,
         ajax: "/maintenance-position-list",
         language: {
             processing:
-                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> '
+                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
         },
         columns: [
-            { data: "PosCode", name: "PosCode" },
+            { className: "text-center", data: "PosCode", name: "PosCode" },
             { data: "Description", name: "Description" },
-            { data: "sg_no", name: "sg_no" },
-            { data: "position_short_name", name: "position_short_name" },
+            { className: "text-center", data: "sg_no", name: "sg_no" },
+            {
+                className: "text-center",
+                data: "position_short_name",
+                name: "position_short_name",
+            },
             {
                 data: "action",
                 name: "action",
+                className: "text-center",
                 searchable: false,
-                sortable: false
-            }
-        ]
+                sortable: false,
+            },
+        ],
     });
     // add new position
-    $("#maintenancePositionForm").submit(function(e) {
+    $("#maintenancePositionForm").submit(function (e) {
         e.preventDefault();
         let data = $(this).serialize();
         let positionCode = parseInt($("#positionCode").val()) + 1;
@@ -76,21 +78,17 @@ $(document).ready(function() {
             type: "POST",
             url: "/maintenance-position",
             data: data,
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
-                    $("#salaryGradeNo")
-                        .val("Please Select")
-                        .trigger("change");
+                    $("#salaryGradeNo").val("Please Select").trigger("change");
                     $("input").val("");
-                    $.each(errorClass, function(index, value) {
+                    $.each(errorClass, function (index, value) {
                         $(`${value}`).removeClass("is-invalid");
                     });
-                    $.each(errorMessage, function(index, value) {
+                    $.each(errorMessage, function (index, value) {
                         $(`${value}`).html("");
                     });
-                    $("#maintenancePosition")
-                        .DataTable()
-                        .ajax.reload();
+                    $("#maintenancePosition").DataTable().ajax.reload();
                     swal("Sucessfully Added!", "", "success");
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
@@ -98,7 +96,7 @@ $(document).ready(function() {
                     $("#positionCode").val(positionCode);
                 }
             },
-            error: function(response) {
+            error: function (response) {
                 if (response.status === 422) {
                     let errors = response.responseJSON.errors;
                     if (errors.hasOwnProperty("positionCode")) {
@@ -144,7 +142,7 @@ $(document).ready(function() {
                     // Create an parent element
                     let parentElement = document.createElement("ul");
                     let errorss = response.responseJSON.errors;
-                    $.each(errorss, function(key, value) {
+                    $.each(errorss, function (key, value) {
                         let errorMessage = document.createElement("li");
                         let [error] = value;
                         errorMessage.innerHTML = error;
@@ -153,29 +151,29 @@ $(document).ready(function() {
                     swal({
                         title: "The given data was invalid!",
                         icon: "error",
-                        content: parentElement
+                        content: parentElement,
                     });
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
                     $("#saving").html("Save");
                 }
-            }
+            },
         });
     });
     //remove error if put value
-    $("#positionCode").keyup(function() {
+    $("#positionCode").keyup(function () {
         $("#positionCode").removeClass("is-invalid");
         $("#position-code-error-message").html("");
     });
-    $("#positionName").keyup(function() {
+    $("#positionName").keyup(function () {
         $("#positionName").removeClass("is-invalid");
         $("#position-name-error-message").html("");
     });
-    $("#salaryGradeNo").change(function() {
+    $("#salaryGradeNo").change(function () {
         $(".salaryGradeNo .dropdown").removeClass("is-invalid");
         $("#salary-grade-no-error-message").html("");
     });
-    $("#positionShortName").keyup(function() {
+    $("#positionShortName").keyup(function () {
         $("#positionShortName").removeClass("is-invalid");
         $("#position-short-name-error-message").html("");
     });
