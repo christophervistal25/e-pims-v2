@@ -16,8 +16,9 @@ use App\Http\Controllers\PlantillaOfScheduleController;
 use App\Http\Controllers\EmployeeLeave\LeaveListController;
 use App\Http\Controllers\Prints\SalaryGradePrintController;
 use App\Http\Controllers\Reports\PlantillaReportController;
-use App\Http\Controllers\Account\Employee\DashboardController as EmployeeDashboardController;
 use App\Http\Controllers\Account\Employee\PrintLeaveApplicationController;
+use App\Http\Controllers\Account\Employee\EmployeePersonalDataSheetController;
+use App\Http\Controllers\Account\Employee\DashboardController as EmployeeDashboardController;
 
 Route::resource('notifications', 'NotificationController');
 
@@ -219,12 +220,10 @@ Route::controller(PlantillaReportController::class)->group(function () {
 
 // EMPLOYEES ACCOUNT ROUTES.
 Route::group(['middleware' => 'auth'], function () {
-      // Route for Dashboard8
       Route::get('employee-dashboard', [EmployeeDashboardController::class, 'index'])->name('employee.dashboard');
+      Route::get('employee-personal-data-sheet', [EmployeePersonalDataSheetController::class, 'edit'])->name('employee.personal-data-sheet');
       Route::get('print-leave-application/{applicationID}', [PrintLeaveApplicationController::class, 'print']);
-
-      // Route::get('employee-leave-application-print/{id}', 'Account\Employee\LeaveApplicationController@print')
-      //       ->name('employee.leave.application.filling');
+      
 
       Route::group(['middleware' => 'verify.application.submitted'], function () {
             // Route for Leave Application filling.
