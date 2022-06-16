@@ -18,7 +18,7 @@ class DashboardController extends Controller
       {
       }
 
-      public function __invoke()
+      public function index()
       {
             $employeeID = Auth::user()->Employee_id;
 
@@ -32,8 +32,7 @@ class DashboardController extends Controller
 
             $onGoingLeaves = $this->leaveApplicationRepository->onGoingToday();
 
-            $balances = $this->leaveRecordRepository->getBalances($employeeID);
-
+            $balances = $this->leaveRecordRepository->getCredits($employeeID);
 
             return view('accounts.employee.dashboard', [
                   'user' => $user,

@@ -1,5 +1,5 @@
 @extends('accounts.employee.layouts.app')
-@section('title', 'Your Dashboard')
+@section('title', 'Dashboard')
 @prepend('page-css')
 <link rel="stylesheet" href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 <style>
@@ -25,7 +25,7 @@
             </div>
       </div>
 
-      <h1 class="dash-sec-title">LEAVE BALANCES</h1>
+      <h1 class="dash-sec-title">LEAVE CREDITS</h1>
 
       <div class="row">
             <div class="col-lg-12">
@@ -154,7 +154,7 @@
                                     <th class="align-middle text-center font-weight-bold text-uppercase" rowspan="1" colspan="4">Date</th>
                                     <th class="align-middle text-center font-weight-bold text-uppercase" rowspan="2">No. of Days</th>
                               <tr>
-                                    <td class="align-middle text-center font-weight-bold text-uppercase">Applied</td>
+                                    <td class="align-middle text-center font-weight-bold text-uppercase">Filling</td>
                                     <td class="align-middle text-center font-weight-bold text-uppercase">Approved</td>
                                     <td class="align-middle text-center font-weight-bold text-uppercase">FROM</td>
                                     <td class="align-middle text-center font-weight-bold text-uppercase">TO</td>
@@ -166,7 +166,7 @@
                               <tr>
                                     <td class='text-center font-weight-medium'>{{ $application->type->description }}</td>
                                     <td class='text-uppercase text-center'>{{ str_replace('_', ' ', $application->incase_of) }}</td>
-                                    <td class='text-center'>{{ $application->commutation }}</td>
+                                    <td class='text-center'>{{ $application->commutation == 0 ? 'Not Requested' : 'Requested' }}</td>
                                     <td class='text-center'>
                                           <span @class([ 'text-uppercase' , 'badge badge-info'=> $application->status === 'pending',
                                                 'badge badge-success' => $application->status === 'approved',
@@ -183,7 +183,7 @@
                                     <td class='text-center'>{{ $application->date_to->format('F d, Y') }}</td>
                                     <td class='text-center font-weight-bold'>{{ $application->no_of_days }}</td>
                                     <td class='text-sm text-center'>
-                                          <button data-source="{{ $application->id }}" class='btn btn-primary btn-sm btn-rounded shadow btnPrintLeaveApplicationFilling'>
+                                          <button data-source="{{ $application->application_id }}" class='btn btn-primary btn-sm btn-rounded shadow btnPrintLeaveApplicationFilling'>
                                                 <i class='la la-print' style="pointer-events:none;"></i>
                                           </button>
                                     </td>
@@ -191,8 +191,8 @@
                               @empty
                               <tr>
                                     <td colspan="9" class='text-center'>
-                                          <i class='fa fa-warning fa-2x text-danger'></i>
-                                          <h6 class="display-5 text-uppercase">no available data</h6>
+                                          <i class='fa fa-warning text-danger'></i>
+                                          <h6 class="text-uppercase">No data available</h6>
                                     </td>
                               </tr>
                               @endforelse
@@ -201,332 +201,12 @@
             </div>
       </div>
 </div>
-
-{{-- VIEW ON-GOING LEAVES MODAL --}}
-<div class="modal fade" id="onGoingEmployeeLeavesModal" tabindex="-1" role="dialog" aria-labelledby="onGoingEmployeeLeavesModalTitle" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-                  <div class="modal-header">
-                        <h5 class="modal-title" id="onGoingEmployeeLeavesModalTitle">ON-GOING</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                        </button>
-                  </div>
-                  <div class="modal-body" id="content">
-                        <div id="accordion">
-
-                        </div>
-                  </div>
-            </div>
-      </div>
-      {{-- END OF ON-GOING LEAVES MODAL --}}
-</div>
 @push('page-scripts')
 <script src="{{ asset('/assets/js/moment.min.js') }}"></script>
 <script>
-      $('#onGoingEmployeeLeavesModal').modal({
-            backdrop: 'static'
-            , keyboard: false
-            , show: false
-      });
-
-      $('#widget--today--leave').click(function(e) {
-            let onGoingForToday = JSON.parse($('meta[name="on-going--today"]').attr('content'));
-
-            if (onGoingForToday.length === 0) {
-                  return;
-            }
-
-            $('#onGoingEmployeeLeavesModalTitle').text('ON-GOING FOR TODAY');
-
-            $('#onGoingEmployeeLeavesModal').modal('toggle');
-
-            $('#accordion').html('');
-
-            onGoingForToday.map((record) => {
-                        {
-                              {
-                                    --$('#accordion').append(`
-                <div class="card m-0 shadow-none rounded-0">
-                        <div class="card-header" id="heading--${record.employee.employee_id}">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse--${record.employee.employee_id}" aria-expanded="true"
-                                    aria-controls="collapse--${record.employee.employee_id}">
-                                    ${record.employee.fullname}
-                                </button>
-                            </h5>
-                        </div>
-
-                        <div id="collapse--${record.employee.employee_id}" class="collapse" aria-labelledby="heading--${record.employee.employee_id}" data-parent="#accordion">
-                            <div class="card-body">
-                                <div class='row'>
-                                    <div class='col-lg-12 text-right'>
-                                        <label class="form-group has-float-label">
-                                            <input 
-                                                type="text"
-                                                class="form-control" 
-                                                readonly
-                                                value="${record.type.name}">
-                                                <span><strong>LEAVE TYPE</strong></span>
-                                        </label>
-                                    </div>
-
-                                    <div class='col-lg-12 text-right'>
-                                        <label class="form-group has-float-label">
-                                            <input 
-                                                type="text"
-                                                class="form-control" 
-                                                readonly
-                                                value="${moment(record.date_from).format('LL')} - ${moment(record.date_to).format('LL')}">
-                                                <span><strong>LEAVE PERIOD</strong></span>
-                                        </label>
-                                    </div>
-
-                                    <div class='col-lg-12 text-right'>
-                                        <label class="form-group has-float-label">
-                                            <input 
-                                                type="text"
-                                                class="form-control" 
-                                                readonly
-                                                value="${record.no_of_days}">
-                                                <span><strong>NO. OF DAYS</strong></span>
-                                        </label>
-                                    </div>
-                                    
-                                    <div class='col-lg-12 text-right'>
-                                        <label class="form-group has-float-label">
-                                            <input 
-                                                type="text"
-                                                class="form-control" 
-                                                readonly
-                                                value="${record.employee.information.office.office_name}">
-                                                <span><strong>OFFICE</strong></span>
-                                        </label>
-                                    </div>
-
-                                    <div class='col-lg-12 text-right'>
-                                        <label class="form-group has-float-label">
-                                            <input 
-                                                type="text"
-                                                class="form-control" 
-                                                readonly
-                                                value="${record.employee.information.position.position_name}">
-                                                <span><strong>POSITION</strong></span>
-                                        </label>
-                                    </div>
-
-                                </div>
-
-
-                            </div>
-                        </div>
-                    </div>
-            `);
-                              });
-                        --
-                  }
-            }
-
-      });
-
-      $('#widget--tomorrow--leave').click(function(e) {
-            let onGoingForTomorrow = JSON.parse($('meta[name="on-going--tomorrow"]').attr('content'));
-
-            if (onGoingForTomorrow.length === 0) {
-                  return;
-            }
-
-            $('#onGoingEmployeeLeavesModalTitle').text('ON-GOING FOR TOMORROW');
-
-            $('#onGoingEmployeeLeavesModal').modal('toggle');
-
-            $('#accordion').html('');
-
-            onGoingForTomorrow.map((record) => {
-                  $('#accordion').append(`
-                <div class="card m-0 shadow-none rounded-0">
-                        <div class="card-header" id="heading--${record.employee.employee_id}">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse--${record.employee.employee_id}" aria-expanded="true"
-                                    aria-controls="collapse--${record.employee.employee_id}">
-                                    ${record.employee.fullname}
-                                </button>
-                            </h5>
-                        </div>
-
-                        <div id="collapse--${record.employee.employee_id}" class="collapse" aria-labelledby="heading--${record.employee.employee_id}" data-parent="#accordion">
-                            <div class="card-body">
-                                <div class='row'>
-                                    <div class='col-lg-12 text-right'>
-                                        <label class="form-group has-float-label">
-                                            <input 
-                                                type="text"
-                                                class="form-control" 
-                                                readonly
-                                                value="${record.type.name}">
-                                                <span><strong>LEAVE TYPE</strong></span>
-                                        </label>
-                                    </div>
-
-                                    <div class='col-lg-12 text-right'>
-                                        <label class="form-group has-float-label">
-                                            <input 
-                                                type="text"
-                                                class="form-control" 
-                                                readonly
-                                                value="${moment(record.date_from).format('LL')} - ${moment(record.date_to).format('LL')}">
-                                                <span><strong>LEAVE PERIOD</strong></span>
-                                        </label>
-                                    </div>
-
-                                    <div class='col-lg-12 text-right'>
-                                        <label class="form-group has-float-label">
-                                            <input 
-                                                type="text"
-                                                class="form-control" 
-                                                readonly
-                                                value="${record.no_of_days}">
-                                                <span><strong>NO. OF DAYS</strong></span>
-                                        </label>
-                                    </div>
-                                    
-                                    <div class='col-lg-12 text-right'>
-                                        <label class="form-group has-float-label">
-                                            <input 
-                                                type="text"
-                                                class="form-control" 
-                                                readonly
-                                                value="${record.employee.information.office.office_name}">
-                                                <span><strong>OFFICE</strong></span>
-                                        </label>
-                                    </div>
-
-                                    <div class='col-lg-12 text-right'>
-                                        <label class="form-group has-float-label">
-                                            <input 
-                                                type="text"
-                                                class="form-control" 
-                                                readonly
-                                                value="${record.employee.information.position.position_name}">
-                                                <span><strong>POSITION</strong></span>
-                                        </label>
-                                    </div>
-
-                                </div>
-
-
-                            </div>
-                        </div>
-                    </div>
-            `);
-            });
-      });
-
-      $('#widget--next--seven--days--leave').click(function(e) {
-            let onGoingForNextSevenDays = JSON.parse($('meta[name="on-going--seven--days"]').attr('content'));
-
-            if (onGoingForNextSevenDays.length === 0) {
-                  return;
-            }
-
-            $('#onGoingEmployeeLeavesModalTitle').text('ON-GOING FOR NEXT SEVEN DAYS');
-
-            $('#onGoingEmployeeLeavesModal').modal('toggle');
-
-            $('#accordion').html('');
-
-            onGoingForNextSevenDays.map((record) => {
-                  $('#accordion').append(`
-                <div class="card m-0 shadow-none rounded-0">
-                        <div class="card-header" id="heading--${record.employee.employee_id}">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link" data-toggle="collapse" data-target="#collapse--${record.employee.employee_id}" aria-expanded="true"
-                                    aria-controls="collapse--${record.employee.employee_id}">
-                                    ${record.employee.fullname}
-                                </button>
-                            </h5>
-                        </div>
-
-                        <div id="collapse--${record.employee.employee_id}" class="collapse" aria-labelledby="heading--${record.employee.employee_id}" data-parent="#accordion">
-                            <div class="card-body">
-                                <div class='row'>
-                                    <div class='col-lg-12 text-right'>
-                                        <label class="form-group has-float-label">
-                                            <input 
-                                                type="text"
-                                                class="form-control" 
-                                                readonly
-                                                value="${record.type.name}">
-                                                <span><strong>LEAVE TYPE</strong></span>
-                                        </label>
-                                    </div>
-
-                                    <div class='col-lg-12 text-right'>
-                                        <label class="form-group has-float-label">
-                                            <input 
-                                                type="text"
-                                                class="form-control" 
-                                                readonly
-                                                value="${moment(record.date_from).format('LL')} - ${moment(record.date_to).format('LL')}">
-                                                <span><strong>LEAVE PERIOD</strong></span>
-                                        </label>
-                                    </div>
-
-                                    <div class='col-lg-12 text-right'>
-                                        <label class="form-group has-float-label">
-                                            <input 
-                                                type="text"
-                                                class="form-control" 
-                                                readonly
-                                                value="${record.no_of_days}">
-                                                <span><strong>NO. OF DAYS</strong></span>
-                                        </label>
-                                    </div>
-                                    
-                                    <div class='col-lg-12 text-right'>
-                                        <label class="form-group has-float-label">
-                                            <input 
-                                                type="text"
-                                                class="form-control" 
-                                                readonly
-                                                value="${record.employee.information.office.office_name}">
-                                                <span><strong>OFFICE</strong></span>
-                                        </label>
-                                    </div>
-
-                                    <div class='col-lg-12 text-right'>
-                                        <label class="form-group has-float-label">
-                                            <input 
-                                                type="text"
-                                                class="form-control" 
-                                                readonly
-                                                value="${record.employee.information.position.position_name}">
-                                                <span><strong>POSITION</strong></span>
-                                        </label>
-                                    </div>
-
-                                </div>
-
-
-                            </div>
-                        </div>
-                    </div>
-            `);
-            });
-
-      });
-
-      $(document).on('click', '.btnPrintLeaveApplicationFilling', function(e) {
-            let applicationID = $(e.target).attr('data-source');
-            $.ajax({
-                  url: `/employee-leave-application-print/${applicationID}`
-                  , success: function(response) {
-                        let FULLNAME = "{{ $user->fullname }}";
-                        socket.emit('preview_application_filling_form', {
-                              arguments: `${FULLNAME}|REQUEST_APPLICATION_FILLING_FORM`
-                        });
-                  }
-            });
+      $(document).on('click', '.btnPrintLeaveApplicationFilling', function() {
+            let id = $(this).attr('data-source');
+            window.open(`/print-leave-application/${id}`);
       })
 
 </script>

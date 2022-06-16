@@ -16,6 +16,8 @@ use App\Http\Controllers\PlantillaOfScheduleController;
 use App\Http\Controllers\EmployeeLeave\LeaveListController;
 use App\Http\Controllers\Prints\SalaryGradePrintController;
 use App\Http\Controllers\Reports\PlantillaReportController;
+use App\Http\Controllers\Account\Employee\DashboardController as EmployeeDashboardController;
+use App\Http\Controllers\Account\Employee\PrintLeaveApplicationController;
 
 Route::resource('notifications', 'NotificationController');
 
@@ -161,42 +163,6 @@ Route::get('/restore', 'RestoreController@index');
 Auth::routes();
 
 
-// EMPLOYEES ACCOUNT ROUTES.
-Route::group(['middleware' => 'auth'], function () {
-      // Route for Dashboard
-      Route::get('employee-dashboard', 'Account\Employee\DashboardController')->name('employee.dashboard');
-
-      Route::get('employee-setting', function () {
-      })->name('employee.setting');
-
-      Route::get('employee-leave-application-print/{id}', 'Account\Employee\LeaveApplicationController@print')
-            ->name('employee.leave.application.filling');
-
-      Route::group(['middleware' => 'verify.application.submitted'], function () {
-            // Route for Leave Application filling.
-            Route::get('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@create')
-                  ->name('employee.leave.application.filling');
-            Route::post('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@store')
-                  ->name('employee.leave.application.filling.submit');
-      });
-
-      Route::get('employee-leave-history/list', 'Account\Employee\ProfileController@list')->name('employee.leave.history.list');
-      Route::get('employee-personal-profile', 'Account\Employee\ProfileController@index')->name('employee.personal.profile');
-      Route::put('employee-update-account-information', 'Account\Employee\ProfileController@update')->name('employee.update.account.information');
-
-      // Employee Leave Card
-      Route::get('employee-leave-card', 'Account\Employee\LeaveCardController@index')->name('employee.leave.card.index');
-      Route::get('employee-leave-card/{start?}/{end?}', 'Account\Employee\LeaveCardController@withRange')->name('employee.leave.card.with.range.index');
-      Route::post('employee-leave-card-print', 'Account\Employee\LeaveCardController@print')->name('employee.leave.card.print');
-
-
-      Route::get('leave-certification-print', 'Account\Employee\LeaveCertificationController@index')->name('print-leave-certification');
-
-      //  Employee Chat
-      Route::get('employee-chat', 'Account\Employee\ChatController@index')->name('employee.chat');
-});
-
-
 
 Route::get('404', function () {
       return view('errors.423');
@@ -247,3 +213,40 @@ Route::controller(PlantillaReportController::class)->group(function () {
       Route::post('export/{office}/{year}', 'export')->name('generate.plantilla-report');
       Route::get('download/plantilla-generated-report/{fileName}', 'download')->name('download.generated.plantilla-report');
 });
+
+
+
+
+// EMPLOYEES ACCOUNT ROUTES.
+Route::group(['middleware' => 'auth'], function () {
+      // Route for Dashboard8
+      Route::get('employee-dashboard', [EmployeeDashboardController::class, 'index'])->name('employee.dashboard');
+      Route::get('print-leave-application/{applicationID}', [PrintLeaveApplicationController::class, 'print']);
+
+      // Route::get('employee-leave-application-print/{id}', 'Account\Employee\LeaveApplicationController@print')
+      //       ->name('employee.leave.application.filling');
+
+      Route::group(['middleware' => 'verify.application.submitted'], function () {
+            // Route for Leave Application filling.
+            Route::get('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@create')
+                  ->name('employee.leave.application.filling');
+            Route::post('employee-leave-application-filling', 'Account\Employee\LeaveApplicationController@store')
+                  ->name('employee.leave.application.filling.submit');
+      });
+
+      Route::get('employee-leave-history/list', 'Account\Employee\ProfileController@list')->name('employee.leave.history.list');
+      Route::get('employee-personal-profile', 'Account\Employee\ProfileController@index')->name('employee.personal.profile');
+      Route::put('employee-update-account-information', 'Account\Employee\ProfileController@update')->name('employee.update.account.information');
+
+      // Employee Leave Card
+      Route::get('employee-leave-card', 'Account\Employee\LeaveCardController@index')->name('employee.leave.card.index');
+      Route::get('employee-leave-card/{start?}/{end?}', 'Account\Employee\LeaveCardController@withRange')->name('employee.leave.card.with.range.index');
+      Route::post('employee-leave-card-print', 'Account\Employee\LeaveCardController@print')->name('employee.leave.card.print');
+
+
+      Route::get('leave-certification-print', 'Account\Employee\LeaveCertificationController@index')->name('print-leave-certification');
+
+      //  Employee Chat
+      Route::get('employee-chat', 'Account\Employee\ChatController@index')->name('employee.chat');
+});
+

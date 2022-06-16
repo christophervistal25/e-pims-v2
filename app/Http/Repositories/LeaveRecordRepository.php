@@ -13,9 +13,9 @@ use App\Http\Repositories\LeaveApplicationRepository;
 class LeaveRecordRepository extends LeaveApplicationRepository
 {
 
-      public function getBalances()
+      public function getCredits(string $employeeID)
       {
-            return EmployeeLeaveForwardedBalance::get();
+            return EmployeeLeaveForwardedBalance::where('Employee_id', $employeeID)->orderBy('date_forwarded', 'DESC')->get();
       }
 
       public function records(Employee $employee): Collection

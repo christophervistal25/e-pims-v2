@@ -172,7 +172,10 @@
                                           <a class="" href="{{  route('employee.dashboard') }}"><i class="las la-digital-tachograph"></i> <span>Dashboard</span></a>
                                     </li>
                                     <li>
-                                          <a class="" href="#"><i class="la la-file-signature"></i> <span>Personal Data Sheet</span></a>
+                                          <a class="" href="#">
+                                                <i class='las la-file'></i>
+                                                <span>Personal Data Sheet</span>
+                                          </a>
                                     </li>
                                     <li class="submenu">
                                           <a href="#"><i class="la la-suitcase-rolling"></i> <span> Leaves</span> <span class="menu-arrow"></span></a>
