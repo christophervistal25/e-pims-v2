@@ -20,7 +20,6 @@ class LeaveController extends Controller
             $types = LeaveType::query();
             return (new Datatables)->eloquent($types)
                     ->make(true);
-                    
         }
     }
     /**
@@ -31,7 +30,10 @@ class LeaveController extends Controller
     public function index()
     {
         $types = LeaveType::get();
-        return view('maintenance.leave.index', compact('types'));
+        return view('maintenance.leave.index', [
+            'types' => $types,
+            'class' => 'mini-sidebar'
+        ]);
     }
 
     /**
@@ -57,22 +59,17 @@ class LeaveController extends Controller
                 'name'                      => 'required',
                 'code'                      => 'required|unique:Leave_type,leave_type_id|max:10',
                 'description'               => 'nullable|string',
-                'days_period'               => 'nullable',
                 'convertible_to_cash'       => 'nullable',
                 'applicable_gender'         => 'required|in:male,female,female/male',
-                'required_rendered_service' => 'required',
-                'editable'                  => 'nullable',
             ]);
 
             LeaveType::create([
                 'name' => $request->name,
                 'leave_type_id' => $request->code,
                 'description' => $request->description,
-                'days_period' => $request->days_period,
+                'description2' => $request->description,
                 'convertible_to_cash' => $request->has('convertible_to_cash') ? 1 : 0,
                 'applicable_gender' => $request->applicable_gender,
-                'required_rendered_service' => $request->required_rendered_service,
-                'editable' => $request->has('editable') ? 1 : 0,
             ]);
 
             return response()->json(['success' => true], 201);
@@ -115,32 +112,22 @@ class LeaveController extends Controller
                 'edit_name'                      => 'required',
                 // 'edit_code'                      => ['required', 'unique:leave_types,code,' . $id, 'max:10'],
                 'edit_description'               => 'nullable|string',
-                'edit_days_period'               => 'required',
                 'edit_convertible_to_cash'       => 'nullable',
                 'edit_applicable_gender'         => 'required|in:male,female,female/male',
-                'edit_required_rendered_service' => 'required',
-                'edit_editable'                  => 'nullable',
             ], [], [
                 'edit_name'                      => 'name',
                 // 'edit_code'                      => 'code',
                 'edit_description'               => 'description',
-                'days_period'                    => 'days_period',
                 'edit_convertible_to_cash'       => 'convertible_to_cash',
                 'edit_applicable_gender'         => 'applicable_gender',
-                'edit_required_rendered_service' => 'required_rendered_service',
-                'edit_editable'                  => 'editable',
             ]);
 
             $leaveType = LeaveType::findOrFail($id);
             
-            $leaveType->leave_type_id = $request->edit_code;
             $leaveType->description = $request->edit_name;
             $leaveType->description2 = $request->edit_description;
-            $leaveType->days_period = $request->edit_days_period;
             $leaveType->convertible_to_cash = $request->has('edit_convertible_to_cash') ? 1 : 0;
             $leaveType->applicable_gender = $request->edit_applicable_gender;
-            $leaveType->required_rendered_service = $request->edit_required_rendered_service;
-            $leaveType->editable = $request->has('edit_editable') ? 1 : 0;
 
             $leaveType->save();
 
