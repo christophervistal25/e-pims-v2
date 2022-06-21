@@ -33,18 +33,12 @@
                template.hasBorders = false;
                template.selectable = false;
                canvas.add(template).sendToBack(template);
-               console.log('Template Image : ', 
-                    canvas.getObjects().indexOf(template)
-               );
           });
 
           fabric.Image.fromURL('http://e-pims.test/assets/img/luna.jpg', function(image) {
                image.scale(0.53);
                image.selectable = false;
                canvas.add(image).sendToBack(image).centerObject(image);
-               console.log('Employee Image : ',
-                    canvas.getObjects().indexOf(image)
-               );
           });
           
           // Create shadow object
@@ -71,9 +65,6 @@
 
 
           canvas.add(geek).bringForward(geek).setActiveObject(geek);
-          console.log('Text : ',
-               canvas.getObjects().indexOf(geek)
-          );
 
           function saveImage() {
                this.href = canvas.toDataURL({
