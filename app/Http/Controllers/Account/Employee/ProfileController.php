@@ -16,10 +16,10 @@ class ProfileController extends Controller
     public function list()
     {
         if(request()->ajax()) {
-            $applications = EmployeeLeaveApplication::where('approved_status', 'approved')
+            $applications = EmployeeLeaveApplication::where('status', 'approved')
                                                 ->with('type')
                                                 ->whereDate('date_to', '<', date('Y-m-d'))
-                                                ->select(['date_applied', 'leave_type_id', 'no_of_days', 'date_from', 'date_to', 'approved_by', 'approved_for']);
+                                                ->select(['date_applied', 'leave_type_id', 'no_of_days', 'date_from', 'date_to']);
             
             return (new Datatables)->eloquent($applications)
                             ->make(true);
@@ -33,18 +33,12 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $account = User::with([
-                'employee',
-                'employee.information',
-                'employee.information.office',
-                'employee.information.position',
-                'employee.loginAccount'
-            ])->where('employee_id', Auth::user()->employee_id)->first();
+      $account = User::with(['employee'])->find(Auth::user()->Employee_id);
 
-            $noOfLeaveHistory = EmployeeLeaveApplication::where('approved_status', 'approved')
-                                                ->with('type')
-                                                ->whereDate('date_to', '<', date('Y-m-d'))
-                                                ->get()->count();
+      $noOfLeaveHistory = EmployeeLeaveApplication::where('status', 'approved')
+                                          ->with('type')
+                                          ->whereDate('date_to', '<', date('Y-m-d'))
+                                          ->get()->count();
             
                                                 
             return view('accounts.employee.profile', compact('account', 'noOfLeaveHistory'));

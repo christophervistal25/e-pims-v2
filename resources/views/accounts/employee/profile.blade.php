@@ -1,8 +1,9 @@
 @extends('accounts.employee.layouts.app')
 @section('title', 'Your Profile')
 @prepend('page-css')
-<link rel="stylesheet" href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
-<link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}"> 
+<link rel="stylesheet"
+    href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+<link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link rel="stylesheet" href="{{ asset('/assets/css/dataTables.bootstrap4.min.css') }}">
 @endprepend
@@ -28,47 +29,51 @@
                     <div class="profile-view">
                         <div class="profile-img-wrap">
                             <div class="profile-img">
-                                <a href=""><img alt=""
-                                        src="/storage/employee_images/{{ is_null($account->employee->information) ? 'no_image.png' : $account->employee->information->photo }}"></a>
+                                <a href="">
+                                <img alt="" class='rounded-circle'
+                                        {{ is_null($account->employee->profile) ? "src=asset(/assets/img/province.png)" :  'src=/storage/employee_images/' . $account->employee->profile . "" }}></a>
                             </div>
                         </div>
                         <div class="profile-basic">
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="profile-info-left">
-                                        <h3 class="user-name m-t-0 mb-0">{{ $account->employee->fullname }}</h3>
-                                        <h6 class="">
-                                            {{  is_null($account->employee->information) ? 'N/A' : $account->employee->information->office->office_name }}
-                                        </h6>
-                                        <small
-                                            class="">{{  is_null($account->employee->information) ? 'N/A' : $account->employee->information->position->position_name }}</small>
-                                        <div class="staff-id">Employee ID : {{ $account->employee_id }}</div>
-                                        <div class="small doj ">Date of Join :
-                                            {{ is_null($account->employee->first_day_of_service) ? Carbon\Carbon::parse($account->employee->created_at)->format('l jS \of F Y h:i A') : Carbon\Carbon::parse($account->employee->first_day_of_service)->format('l jS \of F Y h:i A') }}
-                                        </div>
+                                        <p class="h3 font-weight-medium">
+                                            {{ $account->employee?->FirstName }}
+                                            {{ substr($account->employee?->MiddleName, 0, 1) . '.' }}
+                                            {{ $account->employee?->LastName }} {{  $account->employee?->Suffix }}
+                                        </p>
+                                        <p>
+                                            {{ $account->Employee_id }}
+                                            <br>
+                                            {{ $account->employee?->offices?->office_name ?? 'N/A' }}
+                                            <br>
+                                            {{ $account->employee?->position?->Description ?? 'N/A' }}
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="col-md-7">
                                     <ul class="personal-info">
                                         <li>
                                             <div class="title">Email:</div>
-                                            <div class="text"><a href="" id="email_text">{{  $account->email }}</a></div>
+                                            <div class=""><a {{ $account->employee?->Email_address ? "href=mailto:{$account->employee->Email_address}" : '' }}  id="email_text">{{ $account->employee?->Email_address ?? 'N/A' }}</a>
+                                            </div>
                                         </li>
                                         <li>
                                             <div class="title">Phone:</div>
-                                            <div class="text">{{ $account->employee->mobile_no ?? 'N/A' }}</div>
+                                            <div class="">{{ $account->employee?->ContactNumber ?? 'N/A' }}</div>
                                         </li>
                                         <li>
                                             <div class="title">Birthday:</div>
-                                            <div class="text">{{  $account->employee->date_birth }}</div>
+                                            <div class="">{{ $account->employee?->Birthdate }}</div>
                                         </li>
                                         <li>
                                             <div class="title">Address:</div>
-                                            <div class="text">{{ $account->employee->permanent_full_address }}</div>
+                                            <div class="">{{ $account->employee?->Address }}</div>
                                         </li>
                                         <li>
                                             <div class="title">Gender:</div>
-                                            <div class="text text-capitalize">{{ $account->employee->sex }}</div>
+                                            <div class="text-uppercase">{{ $account->employee?->Gender }}</div>
                                         </li>
                                     </ul>
                                 </div>
@@ -87,10 +92,12 @@
             <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
                 <ul class="nav nav-tabs nav-tabs-bottom">
                     <li class="nav-item">
-                        <a href="#emp_profile" data-toggle="tab" class="nav-link font-weight-bold active">Account Informations</a>
+                        <a href="#emp_profile" data-toggle="tab" class="nav-link font-weight-bold active">Account
+                            Informations</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#leave_logs" data-toggle="tab" class="nav-link font-weight-bold">Leave History  <span class='badge badge-primary rounded-circle px-2 py-1'>{{ $noOfLeaveHistory }}</span></a>
+                        <a href="#leave_logs" data-toggle="tab" class="nav-link font-weight-bold">Leave History <span
+                                class='badge badge-primary rounded-circle px-2 py-1'>{{ $noOfLeaveHistory }}</span></a>
                     </li>
                 </ul>
             </div>
@@ -103,7 +110,7 @@
                 <div class="col-md-12 d-flex">
                     <div class="card profile-box flex-fill">
                         <div class="card-body">
-                            <h3 class="card-title">Account Informations
+                            <h3 class="card-title">Login Credentials
                                 <a class="edit-icon" href="#" data-toggle="modal" data-target="#account__info__modal">
                                     <i class="fa fa-pencil"></i>
                                 </a>
@@ -117,12 +124,12 @@
                                 <hr>
                                 <li>
                                     <div class="title">Email</div>
-                                    <div class="text" id="email__field">{{  $account->email }}</div>
+                                    <div class="text" id="email__field">{{ $account->email }}</div>
                                 </li>
                                 <hr>
                                 <li>
                                     <div class="title">Password</div>
-                                    <div class="text">{{  str_repeat('*', 16) }}</div>
+                                    <div class="text">{{ str_repeat('*', 16) }}</div>
                                 </li>
                                 <hr>
                             </ul>
@@ -395,7 +402,7 @@
             <div class="modal-body">
                 <span class='font-weight-medium text-danger text-sm'>All fields with (*) asterisk mark are
                     required</span>
-					<div id="form__validation__error__container"></div>
+                <div id="form__validation__error__container"></div>
                 <hr>
                 <div class="row">
                     <div class="col-md-12">
@@ -421,8 +428,8 @@
                             </span>
                         </label>
                     </div>
-				</div>
-				<div class='row'>
+                </div>
+                <div class='row'>
                     <div class="col-md-6">
                         <label for="password" class="form-group has-float-label">
                             <input type="password" name="password" id="password" class="form-control">
@@ -463,43 +470,41 @@
         }
     });
 
-
-
 </script>
 <script>
     $('#btn__update__account__information').click(function () {
         let data = {
             username: $('#username').val(),
             password: $('#password').val(),
-            email : $('#email').val(),
+            email: $('#email').val(),
             retypePassword: $('#password_confirmation').val(),
         };
 
-		Object.keys(data).forEach((field) => $(`#${field}`).removeClass('is-invalid'));
-		$('#form__validation__error__container').html('');
+        Object.keys(data).forEach((field) => $(`#${field}`).removeClass('is-invalid'));
+        $('#form__validation__error__container').html('');
 
         $.ajax({
             url: `/employee-update-account-information`,
             method: 'PUT',
             data: data,
             success: function (response) {
-				if(response.success) {
-					$('#username__field').text(data.username);
+                if (response.success) {
+                    $('#username__field').text(data.username);
                     $('#email__field').text(data.email);
                     $('#email_text').text(data.email);
-					$('#account__info__modal').modal('toggle');
-					swal("Good Job!", "Successfully update your account information.", "success");
-				}
+                    $('#account__info__modal').modal('toggle');
+                    swal("Good Job!", "Successfully update your account information.", "success");
+                }
             },
             error: function (response) {
-				if(response.status === 422) {
-					Object.keys(response.responseJSON.errors).forEach((field) => {
-						$(`#${field}`).addClass('is-invalid');
-						$('#form__validation__error__container').append(`
+                if (response.status === 422) {
+                    Object.keys(response.responseJSON.errors).forEach((field) => {
+                        $(`#${field}`).addClass('is-invalid');
+                        $('#form__validation__error__container').append(`
 							<span class='text-danger text-sm'><br> • ${response.responseJSON.errors[field].join("<br> •")}</span>
 						`);
-					});
-				}
+                    });
+                }
             }
         });
     });
@@ -511,55 +516,48 @@
         ajax: `/employee-leave-history/list`,
         processing: true,
         language: {
-                    processing: '<i class="text-primary fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
+            processing: '<i class="text-primary fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
         },
         pagingType: "full_numbers",
-        columns: [
-            {
-                data : "date_applied",
-                name : "date_applied",
-                className : 'text-center font-weight-bold',
-                render : function (data) {
+        columns: [{
+                data: "date_applied",
+                name: "date_applied",
+                className: 'text-center font-weight-bold',
+                render: function (data) {
                     return moment(data).format('MMMM DD, YYYY')
                 }
-            },
-            {
+            }, {
                 data: "type.name",
                 name: "leave_type_id",
-                className : 'text-center'
-            },
-            {
+                className: 'text-center'
+            }, {
                 data: "no_of_days",
                 name: "no_of_days",
-                className : 'text-center'
-            },
-            {
+                className: 'text-center'
+            }, {
                 data: "date_from",
                 type: "date_from",
-                className : 'text-center',
-                render : function (data) {
+                className: 'text-center',
+                render: function (data) {
                     return moment(data).format('YYYY-MM-DD');
                 }
-            },
-            {
-                data : "date_to",
-                name : "date_to",
-                className : 'text-center',
-                render : function (data) {
+            }, {
+                data: "date_to",
+                name: "date_to",
+                className: 'text-center',
+                render: function (data) {
                     return moment(data).format('YYYY-MM-DD');
                 }
+            }, {
+                data: "approved_by",
+                name: "approved_by",
+                className: 'text-center',
+            }, {
+                data: "approved_for",
+                name: "approved_for",
+                className: 'text-center',
             },
-            {
-                data : "approved_by",
-                name : "approved_by",
-                className : 'text-center',
-            },
-            {
-                data : "approved_for",
-                name : "approved_for",
-                className : 'text-center',
-            },
-            
+
         ],
     });
 
