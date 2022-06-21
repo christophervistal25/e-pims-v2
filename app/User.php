@@ -12,6 +12,7 @@ class User extends Authenticatable
       public $connection = 'DTR_PAYROLL_CONNECTION';
       public $table = 'EPIMS_Users';
       public $timestamps = false;
+      public $primaryKey = 'Employee_id';
 
       /**
        * The attributes that are mass assignable.
@@ -19,7 +20,7 @@ class User extends Authenticatable
        * @var array
        */
       protected $fillable = [
-            'username', 'email', 'password', 'employee_id',
+            'username', 'password', 'Employee_id',
       ];
 
       /**

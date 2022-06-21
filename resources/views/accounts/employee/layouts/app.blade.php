@@ -27,7 +27,7 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="{{ asset('/assets/img/icons/ms-icon-144x144.png') }}">
     <meta name="theme-color" content="#ffffff">
-    <title>@yield('title') | {{  config('app.name') }}</title>
+    <title>@yield('title') | {{ config('app.name') }}</title>
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -37,7 +37,8 @@
     <!-- Fontawesome CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}">
     <!-- Lineawesome CSS -->
-    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     {{-- <link rel="stylesheet" href="{{ asset('assets/css/line-awesome.min.css') }}"> --}}
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
@@ -83,7 +84,7 @@
             </a>
             <!-- Header Title -->
             <div class="page-title-box">
-                <h3>{{  config('app.name') }}</h3>
+                <h3>{{ config('app.name') }}</h3>
             </div>
             <!-- /Header Title -->
             <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
@@ -102,21 +103,26 @@
                         <div class="noti-content">
                             <ul class="notification-list">
                                 @foreach($notifications as $notification)
-                                    <li class="notification-message">
-                                        <a href="/">
-                                            <div class="media">
-                                                <span class="avatar">
-                                                    <img alt="" src="assets/img/profiles/avatar-03.jpg">
-                                                </span>
-                                                <div class="media-body">
-                                                    <p class="noti-details"><span class="noti-title"><strong>{{ $notification->title }}</strong> - </span>
-                                                        <span class="noti-title">{{ Str::limit($notification->description, 80) }}</span></p>
-                                                    <p class="noti-time"><span class="notification-time">{{ $notification->created_at->diffForHumans() }}</span>
-                                                    </p>
-                                                </div>
+                                <li class="notification-message">
+                                    <a href="/">
+                                        <div class="media">
+                                            <span class="avatar">
+                                                <img alt="" src="assets/img/profiles/avatar-03.jpg">
+                                            </span>
+                                            <div class="media-body">
+                                                <p class="noti-details"><span
+                                                        class="noti-title"><strong>{{ $notification->title }}</strong> -
+                                                    </span>
+                                                    <span
+                                                        class="noti-title">{{ Str::limit($notification->description, 80) }}</span>
+                                                </p>
+                                                <p class="noti-time"><span
+                                                        class="notification-time">{{ $notification->created_at->diffForHumans() }}</span>
+                                                </p>
                                             </div>
-                                        </a>
-                                    </li>
+                                        </div>
+                                    </a>
+                                </li>
                                 @endforeach
                             </ul>
                         </div>
@@ -129,10 +135,11 @@
                 <li class="nav-item dropdown has-arrow main-drop">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                         <span class="user-img">
-                        {{-- <img
-                                src="/storage/employee_images/{{ Auth::user()->employee->information->photo }}" alt=""> --}}
+                            {{-- <img
+                                src="/storage/employee_images/{{ Auth::user()->employee->information->photo }}" alt="">
+                            --}}
                             <span class="status online"></span></span>
-                        <span id="employee--fullname">{{  Auth::user()->employee->fullname }}</span>
+                        <span id="employee--fullname">{{ Auth::user()->employee->fullname }}</span>
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ route('employee.personal.profile') }}">My Profile</a>
@@ -170,16 +177,20 @@
                             <span>Main</span>
                         </li>
                         <li>
-                            <a class="" href="{{  route('employee.dashboard') }}"><i
-                                    class="las la-digital-tachograph"></i> <span>Dashboard</span></a>
+                            <a class="" href="{{ route('employee.dashboard') }}">
+                                <i class="las la-tachometer-alt"></i>
+                                <span>Dashboard</span></a>
                         </li>
                         <li>
-                            <a class="" href="{{ route('employee.personal-data-sheet') }}"><i
-                                    class="la la-file-signature"></i> <span>Personal Data Sheet</span></a>
+                            <a class="" href="{{ route('employee.personal-data-sheet') }}">
+                                <i class='las la-file'></i>
+                                <span>Personal Data Sheet</span>
+                            </a>
                         </li>
                         <li class="submenu">
-                            <a href="#"><i class="la la-suitcase-rolling"></i> <span> Leaves</span> <span
-                                    class="menu-arrow"></span></a>
+                            <a href="#">
+                                <i class="las la-address-card"></i>
+                                <span> Leaves</span> <span class="menu-arrow"></span></a>
                             <ul style="display: none;">
                                 <li><a class="" href="{{ route('employee.leave.application.filling') }}">Leave
                                         Application Filling</a></li>
@@ -221,21 +232,26 @@
     <!-- Custom JS -->
     <script src="{{ asset('assets/js/app.js') }}"></script>
     @stack('page-scripts')
-	<script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>
+    <script src="https://cdn.socket.io/3.1.1/socket.io.min.js"
+        integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous">
+    </script>
     <script>
         const socket = io.connect("{{ env('MIX_SOCKET_IP') }}");
         $('#print--certification').click(() => {
             $.ajax({
-                url : '/leave-certification-print',
-                success : function (response) {
+                url: '/leave-certification-print',
+                success: function (response) {
                     const window_title = "LEAVE_CERTIFICATE";
                     let fullname = document.querySelector('#employee--fullname').innerText;
-                        if(response.success) {
-                            socket.emit('preview_leave_certification', { arguments : `${fullname}|${window_title}` })
-                        }
+                    if (response.success) {
+                        socket.emit('preview_leave_certification', {
+                            arguments: `${fullname}|${window_title}`
+                        })
+                    }
                 }
             });
         });
+
     </script>
 </body>
 

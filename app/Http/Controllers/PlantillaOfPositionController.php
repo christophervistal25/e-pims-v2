@@ -35,7 +35,7 @@ class PlantillaOfPositionController extends Controller
         ->select('pp_id', 'Position.PosCode', 'item_no', 'plantilla_positions.sg_no as sg_no', 'Offices.office_name as office_name', 'Position.Description as Description', 'old_position_name', 'year');
 
         if (request()->ajax()) {
-        $PlantillaPositionData = ($office != '*') ? $data->where('Offices.office_code', $office)->where('year', $year)->get()
+            $PlantillaPositionData = ($office != '*') ? $data->where('Offices.office_code', $office)->where('year', $year)->get()
             : $data->where('year', $year)->get();
         return DataTables::of($PlantillaPositionData)
         ->addColumn('action', function($row){

@@ -46,7 +46,7 @@
             <div class="account-content">
                   <div class="container">
                         <center>
-                              <img src="/assets/img/main-logo.png" class="img-fluid mb-3" width="200px">
+                              <img src="/assets/img/province.png" class="img-fluid mb-3" width="200px">
                         </center>
                         @if($errors->any())
                         <div class='alert alert-danger rounded-0'>

@@ -247,17 +247,29 @@
 
             <div id="table" class="page-header {{  count($errors->all()) == 0 ? '' : 'd-none' }}">
                   <div class="row">
-                        <div class="col-5 mb-2">
-                              <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}" name="employeeOffice" data-live-search="true" id="employeeOffice" data-size="5">
-                                    <option value="">All</option>
-                                    @foreach($office as $offices)
-                                    <option value="{{ $offices->office_code }}">{{ $offices->office_name }}</option>
-                                    @endforeach
-                              </select>
-                        </div>
+                    <div class="col-5 mb-2">
+                        <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}"
+                            name="employeeOffice" data-live-search="true" id="employeeOffice" data-size="5">
+                            <option value="*">All</option>
+                            @foreach($office as $offices)
+                                <option {{ '10001' == $offices->office_code ? 'selected' : '' }} value="{{ $offices->office_code }}">{{ $offices->office_name }}</option>
+                            @endforeach
+                            </select>
+                    </div>
+
+                    <div class="col-2 mb-2">
+                        <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}"
+                            name="currentYear" data-live-search="true" id="currentYear" data-size="5">
+                            <option value="{{ Carbon\Carbon::now()->format('Y') }}">{{ Carbon\Carbon::now()->format('Y') }}</option>
+                    @foreach($year as $years){
+                        <option {{ $selectedYear->year == $years->year ? 'selected' : '' }} value="{{ $years->year }}">{{ $years->year }}</option>
+                    }
+                            @endforeach
+                            </select>
+                    </div>
 
 
-                        <div class="col-7 float-right mb-10">
+                        <div class="col-5 float-right mb-10">
                               <button id="addButton" class="btn btn-primarys submit-btn float-right"><i class="fa fa-plus"></i> Add
                                     New Position</button>
                         </div>

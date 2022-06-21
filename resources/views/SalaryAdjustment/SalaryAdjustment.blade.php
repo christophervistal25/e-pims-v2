@@ -101,14 +101,13 @@
                               <input class="form-control" value="" name="employeeId" id="employeeId" type="text" placeholder="Input item No.">
                          </div>
 
-                         <div class="form-group col-12 col-lg-2">
-                              <label class="has-float-label mb-0" for="itemNo">
-                                   <input class="form-control" value="" name="itemNo" id="itemNo" type="text" placeholder="" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                   <span class="font-weight-bold">ITEM NO<span class="text-danger">*</span></span>
-                              </label>
-                              <div id='item-no-error-message' class='text-danger text-sm'>
-                              </div>
-                         </div>
+                    <div class="form-group col-2 mt-2 d-none">
+                        <input class="form-control " value="" id="positionCode" name="positionCode" type="text" readonly>
+                    </div>
+
+                    <div class="form-group col-12 mt-2 d-none">
+                        <input class="form-control " value="" id="officeCode" name="officeCode" type="text" readonly>
+                    </div>
 
                          <div class="form-group col-2 mt-2 d-none">
                               <input class="form-control " value="" id="positionId" name="positionId" type="text" readonly>
@@ -226,7 +225,16 @@
           <div id="table" class="page-header {{  count($errors->all()) == 0 ? '' : 'd-none' }}">
 
                <div class="row">
-                    <div class="col-3 mb-2">
+                <div class="col-4 mb-2">
+                    <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}"
+                        name="employeeOffice" data-live-search="true" id="employeeOffice" data-size="5">
+                        <option value="*">All</option>
+                        @foreach($office as $offices)
+                            <option {{ '10001' == $offices->office_code ? 'selected' : '' }} value="{{ $offices->office_code }}">{{ $offices->office_name }}</option>
+                        @endforeach
+                        </select>
+                </div>
+                    <div class="col-2 mb-2">
                          <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker yearAdjustment {{ $errors->has('yearAdjustment')  ? 'is-invalid' : ''}}" name="yearAdjustment" data-live-search="true" id="yearAdjustment" data-size="5">
                               <option value="{{ Carbon\Carbon::now()->format('Y') }}">{{ Carbon\Carbon::now()->format('Y') }}</option>
                               @foreach ($dates as $date)
@@ -234,7 +242,7 @@
                               @endforeach
                          </select>
                     </div>
-                    <div class="col-9 mb-2">
+                    <div class="col-6 mb-2">
                          <div class="float-right">
                               <button id="addbutton" class="btn btn-primarys submit-btn float-right shadow"><i class="fa fa-plus"></i>
                                    Add Salary Adjustment</button>
