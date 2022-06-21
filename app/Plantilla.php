@@ -5,6 +5,7 @@ namespace App;
 use App\Office;
 use App\Employee;
 use App\StepIncrement;
+use App\PlantillaPosition;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 

@@ -169,7 +169,7 @@
                               <div class="my-0 font-weight-medium">Office Charging : <strong>{{ $employee->office_charging->Description }}</strong></div>
                               <div class="my-0 font-weight-medium">Office Assignment : {{ $employee->office_assignment->Description }}</div>
                               <div class="my-0 font-weight-medium">First day of service : <strong>{{ date('l F d, Y', strtotime($employee->first_day_of_service)) }}</strong>
-                                   <div class="my-0 font-weight-medium">Next Increment : <strong>{{ date('l F d, Y', strtotime($employee->first_day_of_service->addYears(3))) }}</strong>
+                                   <div class="my-0 font-weight-medium">Next Increment : <strong>{{ date('l F d, Y', strtotime($employee->first_day_of_service?->addYears(3))) }}</strong>
                                    </div>
                               </div>
                          </div>
