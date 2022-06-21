@@ -82,7 +82,7 @@ Route::resource('/print-increment', 'PrintIncrementController');
 //salary adjustment
 Route::get('/salary-adjustment/{id}', 'SalaryAdjustmentController@destroy')->name('salary-adjustment.delete');
 Route::resource('/salary-adjustment', 'SalaryAdjustmentController');
-Route::get('/salary-adjustment-list/{employeeOffice}/{currentSgyear?}', 'SalaryAdjustmentController@list');
+Route::get('/salary-adjustment-list/{employeeOffice?}/{currentSgyear?}', 'SalaryAdjustmentController@list');
 Route::put('/salary-adjustment/update/{id}', 'SalaryAdjustmentController@update');
 Route::get('/print-adjustment/{id}/previewed', 'PrintAdjustmentController@print')->name('salary-adjustment.previewed.print');
 Route::get('/print-adjustment/{id}', 'PrintAdjustmentController@printList')->name('print-adjustment');
@@ -223,7 +223,7 @@ Route::group(['middleware' => 'auth'], function () {
       Route::get('employee-dashboard', [EmployeeDashboardController::class, 'index'])->name('employee.dashboard');
       Route::get('employee-personal-data-sheet', [EmployeePersonalDataSheetController::class, 'edit'])->name('employee.personal-data-sheet');
       Route::get('print-leave-application/{applicationID}', [PrintLeaveApplicationController::class, 'print']);
-      
+
 
       Route::group(['middleware' => 'verify.application.submitted'], function () {
             // Route for Leave Application filling.
