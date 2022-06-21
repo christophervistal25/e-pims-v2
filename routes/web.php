@@ -39,12 +39,14 @@ use App\Http\Controllers\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Account\Employee\PrintLeaveApplicationController;
 use App\Http\Controllers\Account\Employee\EmployeePersonalDataSheetController;
 use App\Http\Controllers\Account\Employee\DashboardController as EmployeeDashboardController;
+use App\Http\Controllers\DownloadPersonalDataSheetController;
 use App\Http\Controllers\Maintenance\LeaveController as MaintenanceLeaveController;
 
 
 Route::resource('notifications', 'NotificationController');
 
-Route::get('/', [AdminDashboardController::class, 'index']);
+Route::redirect('/', 'login');
+Route::get('administrator/dashboard', [AdminDashboardController::class, 'index']);
 
 Route::get('personal-data-sheet/{idNumber}', [PersonalDataSheetController::class, 'edit'])->name('employee.personal-data-sheet.edit');
 
@@ -193,6 +195,9 @@ Route::controller(PrintServiceRecordController::class)->group(function () {
 
 Route::group(['prefix' => 'prints'], function () {
       Route::get('salary-grade/{year}', [SalaryGradePrintController::class, 'index'])->name('salary-grade-print');
+      Route::post('download-personal-data-sheet/generate/{employeeID}', [DownloadPersonalDataSheetController::class, 'generate']);
+      Route::get('download-personal-data-sheet-pdf/{employeeID}', [DownloadPersonalDataSheetController::class, 'pdf']);
+      Route::get('download-personal-data-sheet-excel/{employeeID}', [DownloadPersonalDataSheetController::class, 'excel']);
 });
 
 Route::get('birthday-card/{name}', [BirthdayCardController::class, 'firstCard']);
