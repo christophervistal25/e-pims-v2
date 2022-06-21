@@ -241,13 +241,13 @@
                                     </li>
                                     <li>
                                           <a class="" href="{{ route('employee.personal-data-sheet') }}">
-                                          <i class="las la-file"></i>
-                                          <span>Personal Data Sheet</span></a>
+                                                <i class="las la-file"></i>
+                                                <span>Personal Data Sheet</span></a>
                                     </li>
                                     <li class="submenu">
                                           <a href="#">
-                                          <i class="las la-address-card"></i>
-                                          <span> Leaves</span> <span class="menu-arrow"></span></a>
+                                                <i class="las la-address-card"></i>
+                                                <span> Leaves</span> <span class="menu-arrow"></span></a>
                                           <ul style="display: none;">
                                                 <li><a class="" href="{{ route('employee.leave.application.filling') }}">Leave
                                                             Application Filling</a></li>
@@ -303,6 +303,8 @@
       </script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.min.js" integrity="sha512-fB746S+jyTdN2LSWbYSGP2amFYId226wpOeV4ApumcDpIttPxvk1ZPOgnwqwQziRAtZkiFJVx9F64GLAtoIlCQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <script>
+            const EMPLOYEE_ID = "{{ Auth::user()->Employee_id }}";
+
             const fullname = "{{ Auth::user()->employee->fullname }}";
             const ID = "{{ Auth::user()->employee_id }}";
 
@@ -325,6 +327,12 @@
                         }
                   });
             }
+
+            socket.on(`PUBLISH_DONE_SECOND_${EMPLOYEE_ID}`, function() {
+                  window.open(`/prints/download-personal-data-sheet-pdf/${EMPLOYEE_ID}`);
+                  $('#selectFilExportModal').modal('toggle');
+                  $('#btn-download-status').fadeOut().hide();
+            });
 
       </script>
       @stack('page-scripts')

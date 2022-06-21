@@ -1,5 +1,11 @@
 <template>
     <div>
+        <button
+            class="btn btn-primary btn-block text-uppercase mb-3"
+            @click="downloadPersonalDataSheet"
+        >
+            Download Personal Data Sheet
+        </button>
         <div class="container-fluid">
             <ul class="nav nav-tabs nav-tabs-solid nav-justified">
                 <li class="nav-item" v-for="(tab, key) in tabs" :key="key">
@@ -81,6 +87,79 @@
                 <!-- END OF C4 -->
             </div>
         </div>
+
+        <div
+            class="modal fade bd-example-modal-lg show"
+            id="selectFilExportModal"
+            aria-labelledby="myLargeModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5
+                            class="modal-title text-uppercase"
+                            id="exampleModalLabel"
+                        >
+                            CHOOSE A FILE TYPE
+                        </h5>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div
+                                class="col-lg-6 p-2"
+                                @click="downloadInExcel"
+                                style="cursor: pointer"
+                            >
+                                <img
+                                    class="img-fluid w-25"
+                                    src="/assets/img/xls.png"
+                                    alt=""
+                                />
+                                <span class="font-weight-medium"
+                                    >DOWNLOAD IN EXCEL FORMAT</span
+                                >
+                            </div>
+                            <div
+                                class="col-lg-6 p-2"
+                                @click="downloadInPdf"
+                                style="cursor: pointer"
+                            >
+                                <img
+                                    class="img-fluid w-25"
+                                    src="/assets/img/pdf.png"
+                                    alt=""
+                                />
+                                <span class="font-weight-medium"
+                                    >DOWNLOAD IN PDF FORMAT</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button
+                            class="btn btn-block btn-primary"
+                            id="btn-download-status"
+                            v-show="spinnerShow"
+                        >
+                            <div
+                                class="spinner-border text-light"
+                                role="status"
+                            ></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -89,6 +168,7 @@ export default {
     props: ["id"],
     data() {
         return {
+            spinnerShow: false,
             tabs: [
                 {
                     name: "C1",
@@ -111,8 +191,27 @@ export default {
             this.selected_tab = tab;
             localStorage.setItem("current_tab", tab);
         },
-        download() {
-            window.open(`/api/personal-data-sheet/download/${this.id}`);
+        downloadPersonalDataSheet() {
+            $("#selectFilExportModal").modal("toggle");
+        },
+        downloadInPdf() {
+            this.spinnerShow = true;
+            window.axios
+                .post(
+                    `/prints/download-personal-data-sheet/generate/${this.id}`
+                )
+                .then((response) => {
+                    socket.emit("PRINT_PDF", {
+                        id: this.id,
+                        fileName: response.data.filename,
+                    });
+                });
+        },
+        downloadInExcel() {
+            window.open(
+                `/prints/download-personal-data-sheet-excel/${this.id}`
+            );
+            $("#selectFilExportModal").modal("toggle");
         },
     },
     created() {
