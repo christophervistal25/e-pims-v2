@@ -41,7 +41,7 @@ use App\Http\Controllers\Account\Employee\EmployeePersonalDataSheetController;
 use App\Http\Controllers\Account\Employee\DashboardController as EmployeeDashboardController;
 use App\Http\Controllers\DownloadPersonalDataSheetController;
 use App\Http\Controllers\Maintenance\LeaveController as MaintenanceLeaveController;
-
+use App\Http\Controllers\PromotionController;
 
 Route::resource('notifications', 'NotificationController');
 
@@ -89,6 +89,8 @@ Route::resource('plantilla-of-position', PlantillaOfPositionController::class);
 Route::get('plantilla-of-position-list/{office_code?}/{year?}', [PlantillaOfPositionController::class, 'list']);
 Route::get('plantilla-of-position/{id}', [PlantillaOfPositionController::class, 'destroy'])->name('plantilla-of-position.destroy');
 Route::put('plantilla-of-position/{id}', [PlantillaOfPositionController::class, 'update']);
+
+Route::get('promotions', [PromotionController::class, 'index'])->name('promotion.index');
 
 Route::get('step-increment/list', 'StepIncrementController@list');
 Route::delete('step-increment/{id}', 'StepIncrementController@destroy')->name('step-increment.delete');
@@ -222,13 +224,13 @@ Route::group(['middleware' => 'auth'], function () {
       Route::get('print-leave-application/{applicationID}', [PrintLeaveApplicationController::class, 'print']);
 
       Route::group(['middleware' => 'verify.application.submitted'], function () {
-            Route::get('employee-leave-application-filling', [LeaveApplicationController::class,'create'])->name('employee.leave.application.filling');
-            Route::post('employee-leave-application-filling', [LeaveApplicationController::class,'store'])->name('employee.leave.application.filling.submit');
+            Route::get('employee-leave-application-filling', [LeaveApplicationController::class, 'create'])->name('employee.leave.application.filling');
+            Route::post('employee-leave-application-filling', [LeaveApplicationController::class, 'store'])->name('employee.leave.application.filling.submit');
       });
 
-      Route::get('employee-leave-history/list', [ProfileController::class,'list'])->name('employee.leave.history.list');
-      Route::get('employee-personal-profile', [ProfileController::class,'index'])->name('employee.personal.profile');
-      Route::put('employee-update-account-information', [ProfileController::class,'update'])->name('employee.update.account.information');
+      Route::get('employee-leave-history/list', [ProfileController::class, 'list'])->name('employee.leave.history.list');
+      Route::get('employee-personal-profile', [ProfileController::class, 'index'])->name('employee.personal.profile');
+      Route::put('employee-update-account-information', [ProfileController::class, 'update'])->name('employee.update.account.information');
 
       Route::get('employee-leave-card', [LeaveCardController::class, 'index'])->name('employee.leave.card.index');
       Route::get('employee-leave-card/{start?}/{end?}', [LeaveCardController::class, 'withRange'])->name('employee.leave.card.with.range.index');
