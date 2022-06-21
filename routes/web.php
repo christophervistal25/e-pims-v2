@@ -102,21 +102,21 @@ Route::get('/print-increment/{id}/previewed', 'PrintIncrementController@print')-
 Route::get('/print-increment/{id}', 'PrintIncrementController@printList')->name('print-increment');
 Route::resource('/print-increment', 'PrintIncrementController');
 
-/* Creating a route for the controller. */
-Route::get('salary-adjustment/{id}', [SalaryAdjustmentController::class, 'destroy'])->name('salary-adjustment.delete');
-Route::resource('salary-adjustment', SalaryAdjustmentController::class);
-Route::get('salary-adjustment-list/{employeeOffice}/{currentSgyear?}', [SalaryAdjustmentController::class, 'list']);
-Route::put('salary-adjustment/update/{id}', [SalaryAdjustmentController::class, 'update']);
+//salary adjustment
+Route::get('/salary-adjustment/{id}', 'SalaryAdjustmentController@destroy')->name('salary-adjustment.delete');
+Route::resource('/salary-adjustment', 'SalaryAdjustmentController');
+Route::get('/salary-adjustment-list/{employeeOffice?}/{currentSgyear?}', 'SalaryAdjustmentController@list');
+Route::put('/salary-adjustment/update/{id}', 'SalaryAdjustmentController@update');
+Route::get('/print-adjustment/{id}/previewed', 'PrintAdjustmentController@print')->name('salary-adjustment.previewed.print');
+Route::get('/print-adjustment/{id}', 'PrintAdjustmentController@printList')->name('print-adjustment');
 
-Route::get('print-adjustment/{id}/previewed', [PrintAdjustmentController::class, 'print'])->name('salary-adjustment.previewed.print');
-Route::get('print-adjustment/{id}', [PrintAdjustmentController::class, 'printList'])->name('print-adjustment');
+//salary adjustment per office
+Route::resource('/salary-adjustment-per-office', 'SalaryAdjustmentPerOfficeController');
+Route::get('/salary-adjustment-per-office-list', 'SalaryAdjustmentPerOfficeController@list');
+Route::get('/salary-adjustment-per-office-not-selected-list', 'SalaryAdjustmentPerOfficeController@NotSelectedlist');
+Route::get('/salary-adjustment-per-office/{id}', 'SalaryAdjustmentPerOfficeController@destroy')->name('salary-adjustment-per-office.delete');
 
-Route::resource('salary-adjustment-per-office', SalaryAdjustmentPerOfficeController::class);
-Route::get('salary-adjustment-per-office-list', [SalaryAdjustmentPerOfficeController::class, 'list']);
-Route::get('salary-adjustment-per-office-not-selected-list', [SalaryAdjustmentPerOfficeController::class, 'NotSelectedlist']);
-Route::get('salary-adjustment-per-office/{id}', [SalaryAdjustmentPerOfficeController::class, 'destroy'])->name('salary-adjustment-per-office.delete');
-
-/* Creating a route to a controller method. */
+// Service Records
 Route::get('service-record/{id}', [ServiceRecordsController::class, 'destroy'])->name('service-records.delete');
 Route::get('service-records-list', [ServiceRecordsController::class, 'list']);
 Route::resource('service-records', ServiceRecordsController::class);
