@@ -75,7 +75,7 @@
                <!-- Modal Header -->
                <div class="modal-header">
                     <h4 class="modal-title">Add new Holiday</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
                </div>
 
                <!-- Modal body -->
@@ -112,7 +112,7 @@
                          </div>
                          Save
                     </button>
-                    <button type="button" class="btn btn-danger shadow" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger text-white shadow" data-dismiss="modal">Close</button>
                </div>
 
           </div>
@@ -164,7 +164,7 @@
                          </div>
                          Update
                     </button>
-                    <button type="button" class="btn btn-danger shadow" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger text-white shadow" data-dismiss="modal">Close</button>
                </div>
 
           </div>

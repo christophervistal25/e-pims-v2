@@ -63,7 +63,7 @@ class HolidayController extends Controller
 
             Holiday::create([
                 'name' => $request->name,
-                'date' => Carbon::parse($request->date),
+                'date' => date('m-d', strtotime($request->date)),
                 'type' => $request->type,
             ]);
 
@@ -112,7 +112,7 @@ class HolidayController extends Controller
 
             $holiday = Holiday::find($id);
             $holiday->name = $request->name;
-            $holiday->date = $request->date;
+            $holiday->date = date('m-d', strtotime($request->date));
             $holiday->type = $request->type;
             $holiday->save();
             return response()->json(['success' => true]);
