@@ -7391,7 +7391,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
     employeeID: {
@@ -7432,6 +7431,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       swal({
         icon: "warning",
         text: "Are you sure you want to remove this record?",
+        dangerMode: true,
         buttons: ["No", "Yes"]
       }).then(function (isClicked) {
         if (isClicked) _this.learnDev.splice(index, 1);
@@ -7446,11 +7446,14 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         _this2.isComplete = true;
         _this2.errors = {};
         _this2.rowErrors = null;
+        var message = document.createElement("p");
+        message.innerHTML = "<br>You successfully store all data your input in Learning and Development Involvement";
+        message.classList.add("text-center");
 
         if (response.status === 200) {
           swal({
             icon: "success",
-            text: "You successfully store all you data you input in Learning and Development Involvement",
+            content: message,
             buttons: false,
             timer: 5000
           });
@@ -7502,7 +7505,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
     window.axios("/api/personal-data-sheet/learning-and-development/fetch/".concat(this.employeeID)).then(function (response) {
       if (response.status === 200 && response.data.length !== 0) {
-        // Store
         _this3.learnDev = response.data;
       }
     });
@@ -10226,10 +10228,90 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["id"],
   data: function data() {
     return {
+      spinnerShow: false,
       tabs: [{
         name: "C1"
       }, {
@@ -10247,8 +10329,23 @@ __webpack_require__.r(__webpack_exports__);
       this.selected_tab = tab;
       localStorage.setItem("current_tab", tab);
     },
-    download: function download() {
-      window.open("/api/personal-data-sheet/download/".concat(this.id));
+    downloadPersonalDataSheet: function downloadPersonalDataSheet() {
+      $("#selectFilExportModal").modal("toggle");
+    },
+    downloadInPdf: function downloadInPdf() {
+      var _this = this;
+
+      this.spinnerShow = true;
+      window.axios.post("/prints/download-personal-data-sheet/generate/".concat(this.id)).then(function (response) {
+        socket.emit("PRINT_PDF", {
+          id: _this.id,
+          fileName: response.data.filename
+        });
+      });
+    },
+    downloadInExcel: function downloadInExcel() {
+      window.open("/prints/download-personal-data-sheet-excel/".concat(this.id));
+      $("#selectFilExportModal").modal("toggle");
     }
   },
   created: function created() {
@@ -60481,7 +60578,7 @@ var staticRenderFns = [
       [
         _c("strong", [
           _vm._v(
-            "(Start from the most recent\n                        L&D/training program and include only the relevant\n                        L&D/training taken for the last five (5) years for\n                        Division Chief/Executive/Managerial\n                        positions)"
+            "(Start from the most recent L&D/training program\n                        and include only the relevant L&D/training taken for\n                        the last five (5) years for Division\n                        Chief/Executive/Managerial positions)"
           ),
         ]),
       ]
@@ -64162,6 +64259,15 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary btn-block text-uppercase mb-3",
+        on: { click: _vm.downloadPersonalDataSheet },
+      },
+      [_vm._v("\n        Download Personal Data Sheet\n    ")]
+    ),
+    _vm._v(" "),
     _c("div", { staticClass: "container-fluid" }, [
       _c(
         "ul",
@@ -64247,9 +64353,127 @@ var render = function () {
         1
       ),
     ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade bd-example-modal-lg show",
+        attrs: {
+          id: "selectFilExportModal",
+          "aria-labelledby": "myLargeModalLabel",
+          "aria-hidden": "true",
+        },
+      },
+      [
+        _c("div", { staticClass: "modal-dialog modal-lg" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-lg-6 p-2",
+                    staticStyle: { cursor: "pointer" },
+                    on: { click: _vm.downloadInExcel },
+                  },
+                  [
+                    _c("img", {
+                      staticClass: "img-fluid w-25",
+                      attrs: { src: "/assets/img/xls.png", alt: "" },
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "font-weight-medium" }, [
+                      _vm._v("DOWNLOAD IN EXCEL FORMAT"),
+                    ]),
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-lg-6 p-2",
+                    staticStyle: { cursor: "pointer" },
+                    on: { click: _vm.downloadInPdf },
+                  },
+                  [
+                    _c("img", {
+                      staticClass: "img-fluid w-25",
+                      attrs: { src: "/assets/img/pdf.png", alt: "" },
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "font-weight-medium" }, [
+                      _vm._v("DOWNLOAD IN PDF FORMAT"),
+                    ]),
+                  ]
+                ),
+              ]),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.spinnerShow,
+                      expression: "spinnerShow",
+                    },
+                  ],
+                  staticClass: "btn btn-block btn-primary",
+                  attrs: { id: "btn-download-status" },
+                },
+                [
+                  _c("div", {
+                    staticClass: "spinner-border text-light",
+                    attrs: { role: "status" },
+                  }),
+                ]
+              ),
+            ]),
+          ]),
+        ]),
+      ]
+    ),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        {
+          staticClass: "modal-title text-uppercase",
+          attrs: { id: "exampleModalLabel" },
+        },
+        [
+          _vm._v(
+            "\n                        CHOOSE A FILE TYPE\n                    "
+          ),
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close",
+          },
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      ),
+    ])
+  },
+]
 render._withStripped = true
 
 

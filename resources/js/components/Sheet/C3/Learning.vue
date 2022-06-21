@@ -15,11 +15,10 @@
                         style="text-transform: uppercase"
                     >
                         <strong
-                            >(Start from the most recent
-                            L&D/training program and include only the relevant
-                            L&D/training taken for the last five (5) years for
-                            Division Chief/Executive/Managerial
-                            positions)</strong
+                            >(Start from the most recent L&D/training program
+                            and include only the relevant L&D/training taken for
+                            the last five (5) years for Division
+                            Chief/Executive/Managerial positions)</strong
                         >
                     </div>
                     <p>Indicate <strong>N/A </strong>if not applicable</p>
@@ -330,6 +329,7 @@ export default {
             swal({
                 icon: "warning",
                 text: "Are you sure you want to remove this record?",
+                dangerMode: true,
                 buttons: ["No", "Yes"],
             }).then((isClicked) => {
                 if (isClicked) this.learnDev.splice(index, 1);
@@ -347,10 +347,16 @@ export default {
                     this.isComplete = true;
                     this.errors = {};
                     this.rowErrors = null;
+
+                    let message = document.createElement("p");
+                    message.innerHTML =
+                        "<br>You successfully store all data your input in Learning and Development Involvement";
+                    message.classList.add("text-center");
+
                     if (response.status === 200) {
                         swal({
                             icon: "success",
-                            text: "You successfully store all you data you input in Learning and Development Involvement",
+                            content: message,
                             buttons: false,
                             timer: 5000,
                         });
@@ -401,7 +407,6 @@ export default {
             )
             .then((response) => {
                 if (response.status === 200 && response.data.length !== 0) {
-                    // Store
                     this.learnDev = response.data;
                 }
             });
