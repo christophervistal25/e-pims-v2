@@ -2,9 +2,10 @@
 
 namespace App\Services;
 
+use App\User;
 use App\Employee;
-use App\EmployeeCivilService;
 use App\Plantilla;
+use App\EmployeeCivilService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Collection;
@@ -28,7 +29,7 @@ class EmployeeService
     public function findByEmployeeID(string $employeeID): Employee
     {
         $employeeID = str_pad($employeeID, 4, 0, STR_PAD_LEFT);
-        return Employee::exclude(['ImagePhoto'])->with(['province_residential', 'city_residential', 'barangay_residential', 'province_permanent', 'city_permanent', 'barangay_permanent'])
+        return Employee::exclude(['ImagePhoto'])->with(['account', 'province_residential', 'city_residential', 'barangay_residential', 'province_permanent', 'city_permanent', 'barangay_permanent'])
             ->find($employeeID);
     }
 
@@ -118,8 +119,6 @@ class EmployeeService
             $employee['pagibig_no'] = $data['pagibig_no'];
             $employee['tin_no'] = $data['tin_no'];
             $employee['gsis_no'] = $data['gsis_no'];
-            $employee['dbp_account_no'] = $data['dbp_account_no'];
-            $employee['lbp_account_no'] = $data['lbp_account_no'];
 
             if (array_key_exists('salary_grade', $data)) {
                 $employee['sg_no'] = $data['salary_grade'];
@@ -128,6 +127,15 @@ class EmployeeService
             if (array_key_exists('step_increment', $data)) {
                 $employee['step'] = $data['step_increment'];
             }
+
+            $account = User::find($data['employeeID']);
+            $account->username = $data['username'];
+
+            if(!is_null($data['password'])) {
+                  $account->password = bcrypt($data['password']);
+            }
+
+            $account->save();
 
             $employee->save();
         });

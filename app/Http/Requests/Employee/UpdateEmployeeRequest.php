@@ -4,6 +4,7 @@ namespace App\Http\Requests\Employee;
 
 use App\Rules\LandBankRule;
 use App\Rules\UpdateTrapfullname;
+use Illuminate\Support\Facades\Auth;
 use App\Rules\LandbankAccountNumberRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -48,6 +49,8 @@ class UpdateEmployeeRequest extends FormRequest
                   'salary_grade' => ['nullable', 'numeric', 'min:1', 'max:33'],
                   'step_increment' => ['nullable', 'numeric', 'min:1', 'max:8'],
                   'position' => ['nullable'],
+                  'username' => ['required', 'unique:EPIMS_Users,username,' . request('employeeID') . ',Employee_id' ],
+                  'password' => ['nullable', 'min:8', 'confirmed'],
             ];
 
             return $rules;

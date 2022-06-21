@@ -250,38 +250,48 @@
                   </div>
             </div>
 
-            {{-- <div class="card shadow-none mb-0">
-            <div class="card-header h4">
-                BANK DETAILS
-            </div>
-            <div class="card-body">
-                <section>
-                    <div>
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label for="cardNumber" class="h5 text-uppercase required">
-                                        DBP Card Number
-                                    </label>
-                                    <input type="text" name="dbp_account_no" class="form-control" id="dbpCardNumber" />
-                                    <span class="text-sm text-danger" id="edit-dbp_account_no-error"></span>
-                                </div>
-                            </div>
+            <div class="card shadow-none">
+                  <div class="card-header h4">
+                        LOGIN CREDENTIALS
+                  </div>
 
-                            <div class="col-lg-6">
-                                <div class="mb-3">
-                                    <label for="cardNumber" class="text-uppercase h5 required">
-                                        LBP Card Number
-                                    </label>
-                                    <input type="text" name="lbp_account_no" class="form-control" id="lbpCardNumber" />
-                                    <span class="text-sm text-danger" id="edit-lbp_account_no-error"></span>
-                                </div>
-                            </div>
+                  <div class="card-body">
+                        <div class="row p-0">
+                              <div class="col-lg-12 pb-0">
+                                    <div class="form-group">
+                                          <label class="h5 text-uppercase required">
+                                                Username
+                                          </label>
+                                          <input type="text" name="username" id="username" class="form-control {{ $errors->first('username') ? 'is-invalid' : '' }}" value="{{ old('username') }}" />
+                                          <span class="text-sm text-danger" id='edit-username-error'></span>
+                                    </div>
+                              </div>
+                              
                         </div>
-                    </div>
-                </section>
+
+                        <div class="row">
+                              <div class="col-lg-6">
+                                    <div class="form-group">
+                                          <label class="text-uppercase h5 ">
+                                                Password
+                                          </label>
+                                          <input type="password" name="password" id="password" class="form-control  {{ $errors->has('password') ? 'is-invalid' : '' }}" value="{{ old('password') }}" />
+                                          <span class="text-sm text-danger" id='edit-password-error'></span>
+                                    </div>
+                              </div>
+
+                              <div class="col-lg-6">
+                                    <div class="form-group">
+                                          <label class="text-uppercase h5 ">
+                                                Re-type Password
+                                          </label>
+                                          <input type="password" name="password_confirmation" id="password_confirmation" class="form-control  {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}" value="{{ old('password_confirmation') }}" />
+                                    </div>
+                              </div>
+                        </div>
+                  </div>
             </div>
-        </div> --}}
+
             <button class="btn btn-success btn-lg h5 shadow float-right my-3" id="btnUpdateEmployee">
                   <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true" id='btnUpdateSpinner'></span>
                   UPDATE
