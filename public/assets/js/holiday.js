@@ -115,9 +115,9 @@ $("#btnHolidaySave").click(function (e) {
         success: function (response) {
             if (response.success) {
                 table.draw();
-                calendar.destroy();
-                calendar.refetchEvents();
-                calendar.render();
+            //     calendar.destroy();
+            //     calendar.refetchEvents();
+            //     calendar.render();
                 swal("Good job!", "Sucessfully add new holiday.", "success");
                 $("#save-spinner").addClass("d-none");
                 $("#addNewHolidayModal").modal("toggle");
@@ -182,9 +182,9 @@ $("#btnHolidayUpdate").click(function () {
             $("#editHolidayModal").modal("toggle");
             table.draw();
 
-            calendar.destroy();
-            calendar.refetchEvents();
-            calendar.render();
+            // calendar.destroy();
+            // calendar.refetchEvents();
+            // calendar.render();
 
             swal({
                 title: "Good Job!",
@@ -226,12 +226,12 @@ $(document).on("click", ".holiday__delete", function (e) {
                     if (response.success) {
                         table.draw();
 
-                        calendar.destroy();
-                        calendar.refetchEvents();
-                        calendar.render();
+                        // calendar.destroy();
+                        // calendar.refetchEvents();
+                        // calendar.render();
 
                         swal({
-                            title: "Good Job!",
+                            title: "Awesome!",
                             text: "Successfully deleted a holiday",
                             icon: "success",
                         });
@@ -242,62 +242,3 @@ $(document).on("click", ".holiday__delete", function (e) {
     });
 });
 
-// CALENDAR HOLIDAYS FUNCTION //
-let calendarBtn = document.querySelector("#calendarBtn");
-let tableParentContainer = document.querySelector("#table__parent__container");
-
-calendarBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    let button = e.target;
-
-    if (button.getAttribute("data-view") === "calendar") {
-        tableParentContainer.classList.add("d-none");
-        button.innerHTML = `<i class="fa fa-table"></i> View Table`;
-        button.setAttribute("data-view", "table");
-        $("#calendar__container").show();
-        calendar.render();
-    } else {
-        tableParentContainer.classList.remove("d-none");
-        button.innerHTML = `<i class="far fa-calendar-alt float-start"></i> View Calendar`;
-        button.setAttribute("data-view", "calendar");
-        $("#calendar__container").hide();
-        calendar.render();
-    }
-});
-
-let calendarElement = document.querySelector("#calendar");
-let nameField = $("#holidayName");
-let dateField = $("#holidayDate");
-let typeField = $("#holidayType");
-
-let calendar = new FullCalendar.Calendar(calendarElement, {
-    initialView: "dayGridMonth",
-    events: "holiday/attribute",
-    dateClick: function (info) {
-        if (info.dayEl.querySelector(".fc-event-title")) {
-            $.ajax({
-                url: `/holiday-by-date/${info.dateStr}`,
-                success: function (response) {
-                    // Append the button edit and trigger the click event to display the edit modal for holiday.
-                    $("#cardBody").prepend(`
-                                <button class="holiday__edit d-none" id="custom-button-${response.id}"  data-id="${response.id}" 
-                                        data-name="${response.name}" 
-                                        data-date="${response.date}" 
-                                        data-type="${response.type}"
-                                        >test</button> 
-                            `);
-
-                    $(`#custom-button-${response.id}`).trigger("click");
-                },
-            });
-        } else {
-            let holidayDate = document.querySelector("#holidayDate");
-            $("#addNewHolidayModal").modal("toggle");
-            holidayDate.value = moment(info.dateStr).format("YYYY-MM-DD");
-        }
-    },
-});
-calendar.render();
-
-$("#calendar__container").hide();
