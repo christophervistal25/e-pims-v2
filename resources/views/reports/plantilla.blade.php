@@ -103,6 +103,11 @@
                   <i class="las la-file-excel"></i>
                   EXPORT XLS
             </button>
+
+            <button class='btn btn-danger shadow' id='btnExportPdf'>
+                  <i class="las la-file-pdf"></i>
+                  EXPORT PDF
+            </button>
       </div>
       <table class='table table-bordered table-hover'>
             <thead>
@@ -176,6 +181,7 @@
 
                         let DEFAULT_STEP = 1;
                         let authorizedAndActualField;
+                        $('#dynamic-content-of-plantilla-report').html(``);
                         response.forEach((record) => {
                               let {
                                     plantilla_history
@@ -224,10 +230,26 @@
             let office = $("#office").val();
             let year = $('#year').val();
             $.post({
-                  url: `/export/${office}/${year}`
-                  , success: function(response) {
+                  url: `/export/${office}/${year}`,
+                  success: function(response) {
                         if (response.success) {
                               window.open(`download/plantilla-generated-report/${response.fileName}`);
+                        }
+                  }
+            });
+      });
+
+      $('#btnExportPdf').click(function () {
+let office = $("#office").val();
+            let year = $('#year').val();
+            $.post({
+                  url: `/export/${office}/${year}`,
+                  success: function(response) {
+                        if (response.success) {
+                              socket.emit('PLANTILLA_PDF', {
+                                    file : fileName = response.fileName.split('||').pop(),
+                              });                     
+                               window.open(`download/plantilla-generated-report/${response.fileName.replace('xls', 'pdf')}`);
                         }
                   }
             });
