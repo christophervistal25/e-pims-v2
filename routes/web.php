@@ -91,6 +91,8 @@ Route::get('plantilla-of-position/{id}', [PlantillaOfPositionController::class, 
 Route::put('plantilla-of-position/{id}', [PlantillaOfPositionController::class, 'update']);
 
 Route::get('promotions', [PromotionController::class, 'index'])->name('promotion.index');
+Route::get('promotion/create', [PromotionController::class, 'create'])->name('promotion.create');
+Route::post('promotion/store', [PromotionController::class, 'store'])->name('promotion.store');
 
 Route::get('step-increment/list', 'StepIncrementController@list');
 Route::delete('step-increment/{id}', 'StepIncrementController@destroy')->name('step-increment.delete');
