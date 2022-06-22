@@ -90,6 +90,7 @@ Route::get('plantilla-of-position-list/{office_code?}/{year?}', [PlantillaOfPosi
 Route::get('plantilla-of-position/{id}', [PlantillaOfPositionController::class, 'destroy'])->name('plantilla-of-position.destroy');
 Route::put('plantilla-of-position/{id}', [PlantillaOfPositionController::class, 'update']);
 
+Route::get('promotion/list/{office?}/{year?}', [PromotionController::class, 'list'])->name('promotion.list');
 Route::get('promotions', [PromotionController::class, 'index'])->name('promotion.index');
 Route::get('promotion/create', [PromotionController::class, 'create'])->name('promotion.create');
 Route::post('promotion/store', [PromotionController::class, 'store'])->name('promotion.store');

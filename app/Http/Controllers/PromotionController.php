@@ -11,15 +11,44 @@ use App\Promotion;
 use Carbon\Carbon;
 use App\PlantillaPosition;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 use App\Services\EmployeeService;
+use App\Services\PromotionService;
 use Illuminate\Support\Facades\DB;
 use App\Services\PlantillaPersonnelService;
 
 class PromotionController extends Controller
 {
-      public function __construct(public PlantillaPersonnelService $plantillaPersonnelService)
+      public function __construct(public PlantillaPersonnelService $plantillaPersonnelService, public PromotionService $promotionService)
       {
 
+      }
+
+      public function list(string $office = '*', string $year = '*')
+      {
+            $promotions = Promotion::with(['employee', 'old_plantilla_position', 'old_plantilla_position.position', 'new_plantilla_position.position']);
+
+            if($office != '*') {
+                  $promotions->whereHas('employee', function ($query) use($office) {
+                        $query->where('OfficeCode', $office);
+                  });
+            }
+
+            if($year != '*') {
+                  $promotions->where('sg_year', $year);
+            }
+
+            return DataTables::of($promotions->get())
+                        ->addColumn('employee', function ($record) {
+                              return $record->employee->fullname;
+                        })
+                        ->addColumn('old_plantilla_position', function ($record) {
+                              return $record->old_plantilla_position->position->Description;
+                        })
+                        ->addColumn('new_plantilla_position', function ($record) {
+                              return $record->new_plantilla_position->position->Description;
+                        })
+                        ->make(true);
       }
 
       public function index()
@@ -27,11 +56,12 @@ class PromotionController extends Controller
             $offices = Office::get();
             $minYear = date('Y') - 5;
             $maxYear = date('Y');
+            $rangeYear = range($minYear, $maxYear);
+            rsort($rangeYear);
 
             return view('promotion.index', [
                   'offices' => $offices,
-                  'minYear' => $minYear,
-                  'maxYear' => $maxYear,
+                  'rangeYear' => $rangeYear
             ]);
       }
 
@@ -74,22 +104,14 @@ class PromotionController extends Controller
             DB::transaction(function () use($request, $employeeLatestPlantilla) {
 
                   /* Creating a new promotion. */
-                  Promotion::create([
-                        'promotion_id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
-                        'promotion_date' => Carbon::now(),
-                        'employee_id' => $request->employee,
-                        'oldpp_id' => $employeeLatestPlantilla->pp_id,
-                        'sg_no' => $request->salary_grade,
-                        'step_no' => $request->step,
-                        'sg_year' => $request->current_salary_grade_year,
-                        'newpp_id' => $request->position
-                  ]);
+                  $this->promotionService->store($employeeLatestPlantilla->pp_id, $request->all());
 
                   /* Adding a new plantilla for the employee. */
                   $this->plantillaPersonnelService->addNewPlantilla($employeeLatestPlantilla, $request->all());
 
                   /* Removing the current plantilla of the employee. */
                   $this->plantillaPersonnelService->removeCurrentPlantilla($employeeLatestPlantilla);
+
 
             });
 
