@@ -17,7 +17,7 @@
 </style>
 @endprepend
 @section('content')
-<div class="card">
+<div class="card rounded-0 shadow-none border-none">
     <div class="card-body">
         <form action="{{ route('promotion.store') }}" method="POST">
             @csrf
@@ -78,9 +78,7 @@
                     </select>
                 </div>
             </div>
-
-            <hr>
-
+            
             <div class="row">
                 <div class="col-lg-6">
                     <label class='text-uppercase h6'>Item No</label>
@@ -100,8 +98,9 @@
                     </div>
                 </div>
 
-
             </div>
+
+            <hr>
 
             <div class="row">
                 <div class="col-lg-3">
@@ -132,8 +131,6 @@
                 </div>
             </div>
 
-            <hr>
-
             <div class="row">
                 <div class="col-lg-6">
                     <label class='text-uppercase h6'>Original Appointment</label>
@@ -145,8 +142,6 @@
                     <input type="date" class='form-control form-control-xs' name="last_promotion" id="last_promotion">
                 </div>
             </div>
-
-            <hr>
 
             <div class="row">
                 <div class="col-lg-4">
