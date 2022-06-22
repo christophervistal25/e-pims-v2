@@ -22,6 +22,7 @@ class SalaryAdjustmentPerOfficeController extends Controller
             }, 'office' => function ($query) use($office) {
                   $query->where('office_code', $office);
             }])->where('office_code', $office)
+            ->where('year', $year)
             ->get();
 
             return DataTables::of($data)
