@@ -194,7 +194,7 @@ Route::get('see-more/promotions', [StepPromotionController::class, 'upcomingStep
 Route::controller(PrintServiceRecordController::class)->group(function () {
       Route::post('service-record-print/{employeeID}/pdf', 'pdf');
       Route::post('service-record-print/{employeeID}/excel', 'excel');
-      Route::get('servicec-record-print/{employeeID}/{type}/download', 'download');
+      Route::get('service-record-print/{employeeID}/{type}/download', 'download');
 });
 
 Route::group(['prefix' => 'prints'], function () {
