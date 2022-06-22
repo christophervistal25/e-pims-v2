@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\OfficeController;
 use App\Http\Controllers\Api\DivisionController;
 use App\Http\Controllers\Api\EmployeeController;
+use App\Http\Controllers\Api\PlantillaController;
 use App\Http\Controllers\Api\PositionController;
 use App\Http\Controllers\Api\ProvinceController;
 use App\Http\Controllers\StepIncrementController;
@@ -333,3 +334,4 @@ Route::get('division-by-office/{office}', [DivisionController::class, 'getDivisi
 Route::get('office-plantilla-positions/{office}', [PlantillaPositionController::class, 'positionsByOffice']);
 Route::get('plantilla-position-details/{plantillaPositionID}', [PlantillaPositionController::class, 'getPositionDetails']);
 Route::get('salary-amount/{grade}/{step}/{year}', [APISalaryGradeController::class, 'salary']);
+Route::get('personnel-get-current-plantilla/{employeeID}', [PlantillaController::class, 'getEmployeeCurrentPlantilla']);

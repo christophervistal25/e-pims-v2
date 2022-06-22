@@ -58,6 +58,7 @@
                               <th>STEP</th>
                               <th>SALARY GRADE YEAR</th>
                               <th>NEW POSITION</th>
+                              <th>ACTIONS</th>
                         </tr>
                   </thead>
             </table>
