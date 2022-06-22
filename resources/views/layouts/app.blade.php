@@ -321,7 +321,13 @@
                               <li>
                                     <a class='text-decoration-none' href="#" id="plantillaScheduleCreate">
                                           <i class="las la-book-medical"></i>
-                                          <span> Plantilla of Schedule </span>
+                                          <span> Plantilla of Schedule <span
+                                          @class([
+                                                'badge',
+                                                'badge-primary',
+                                                'd-none' => $no_of_employees_for_plantilla_schedule === 0
+                                          ]) 
+                                          class='badge badge-primary'>{{ $no_of_employees_for_plantilla_schedule }}</span> </span>
                                     </a>
                               </li>
 
