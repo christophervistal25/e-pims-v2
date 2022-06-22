@@ -39,7 +39,7 @@ class PrintServiceRecordController extends Controller implements IDownloadType
                 $sheet = $spreadsheet->getActiveSheet();
                 $sheet->setCellValue('A' . $row, $record->service_from_date);
                 $sheet->setCellValue('B' . $row, $record->service_to_date);
-                $sheet->setCellValue('C' . $row, Str::title($record->position->Description));
+                $sheet->setCellValue('C' . $row, Str::title($record->position?->Description));
                 $sheet->setCellValue('D' . $row, $record->status);
                 $sheet->setCellValue('E' . $row, $record->salary);
                 $sheet->setCellValue('F' . $row, $record->office->Description);
