@@ -12,18 +12,22 @@ use App\SalaryAdjustment;
 use App\PlantillaPosition;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
+use App\Services\SalaryGradeService;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\OfficeController;
+use App\Http\Controllers\Api\DivisionController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\PositionController;
 use App\Http\Controllers\Api\ProvinceController;
 use App\Http\Controllers\StepIncrementController;
 use App\Http\Controllers\ServiceRecordsController;
 use App\Http\Controllers\PersonalDataSheetController;
+use App\Http\Controllers\Api\PlantillaPositionController;
 use App\Http\Controllers\DownloadPersonalDataSheetController;
 use App\Http\Controllers\Api\SalaryAdjustmentPerOfficeController;
+use App\Http\Controllers\Api\SalaryGradeController as APISalaryGradeController;
 
 Route::group(['prefix' => 'personal-data-sheet'], function () {
 
@@ -119,22 +123,22 @@ Route::post('/addPosition', 'Api\PlantillaController@addPosition');
 
 // service record
 Route::get('/employee/service/records/{employeeId}', function ($employeeId) {
-    $data = DB::table('service_records')->join('offices', 'service_records.office_code', '=', 'offices.office_code')
-        ->join('Position', 'service_records.PosCode', '=', 'Position.PosCode')
-        ->select('id', 'employee_id', DB::raw("FORMAT(service_from_date, 'MM-dd-yy') as service_from_date"), DB::raw("FORMAT(service_to_date, 'MM-dd-yy') as service_to_date"), 'Position.Description as position_name', 'status', 'salary', 'offices.office_name', 'leave_without_pay', DB::raw("FORMAT(separation_date, 'MM-dd-yy') as separation_date"), 'separation_cause')
-        ->where('employee_id', $employeeId)
-        ->whereNull('service_records.deleted_at')
-        ->get();
+      $data = DB::table('service_records')->join('offices', 'service_records.office_code', '=', 'offices.office_code')
+            ->join('Position', 'service_records.PosCode', '=', 'Position.PosCode')
+            ->select('id', 'employee_id', DB::raw("FORMAT(service_from_date, 'MM-dd-yy') as service_from_date"), DB::raw("FORMAT(service_to_date, 'MM-dd-yy') as service_to_date"), 'Position.Description as position_name', 'status', 'salary', 'offices.office_name', 'leave_without_pay', DB::raw("FORMAT(separation_date, 'MM-dd-yy') as separation_date"), 'separation_cause')
+            ->where('employee_id', $employeeId)
+            ->whereNull('service_records.deleted_at')
+            ->get();
 
-    return DataTables::of($data)
-        ->addColumn('action', function ($row) {
-            $btn = "<a title='Edit Service Record' href='" . route('service-records.edit', $row->id) . "' class='rounded-circle edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-            $btn = $btn . "<a title='Delete Service Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+      return DataTables::of($data)
+            ->addColumn('action', function ($row) {
+                  $btn = "<a title='Edit Service Record' href='" . route('service-records.edit', $row->id) . "' class='rounded-circle edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+                  $btn = $btn . "<a title='Delete Service Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
         ";
-            return $btn;
-        })
-        ->rawColumns(['action'])
-        ->make(true);
+                  return $btn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
 });
 
 Route::get('step/{sg_no}/{step}', function ($sgNo, $step) {
@@ -321,3 +325,11 @@ Route::get('generate/periods/{start}/{end}', function ($start, $end) {
 
       return response()->json(['period' => $range]);
 });
+
+
+
+/* Promotion Routes */
+Route::get('division-by-office/{office}', [DivisionController::class, 'getDivisions']);
+Route::get('office-plantilla-positions/{office}', [PlantillaPositionController::class, 'positionsByOffice']);
+Route::get('plantilla-position-details/{plantillaPositionID}', [PlantillaPositionController::class, 'getPositionDetails']);
+Route::get('salary-amount/{grade}/{step}/{year}', [APISalaryGradeController::class, 'salary']);
