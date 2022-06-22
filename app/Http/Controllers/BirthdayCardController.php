@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class BirthdayCardController extends Controller
 {
-      public function firstCard()
+      public function firstCard(string $name)
       {
             return view('birthday-card', compact('name'));
       }

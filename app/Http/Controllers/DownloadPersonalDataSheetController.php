@@ -43,6 +43,11 @@ class DownloadPersonalDataSheetController extends Controller implements IDownloa
                     ],
           ];
 
+          public function __construct()
+          {
+                  $this->middleware(['auth']);
+          }
+
           private function generatePDS(string $id)
           {
                     $employee = Employee::with(['province_residential', 'city_residential', 'barangay_residential', 'province_permanent', 'city_permanent', 'barangay_permanent'])
@@ -430,18 +435,18 @@ class DownloadPersonalDataSheetController extends Controller implements IDownloa
 
           public function generate(string $id)
           {
-                    return $this->generatePDS($id);
+                  return $this->generatePDS($id);
           }
 
           public function excel(string $id)
           {
-                    $this->generate($id);
-                    return response()->download(storage_path() . '\\generated_pds\\' . $id . '-E-PDS' . ".xls");
+                  $this->generate($id);
+                  return response()->download(storage_path() . '\\generated_pds\\' . $id . '-E-PDS' . ".xls");
           }
 
           public function pdf(string $fileName)
           {
-                    $file = storage_path() . '\\generated_pds\\' . $fileName . ".pdf";
-                    return response()->download($file);
+                  $file = storage_path() . '\\generated_pds\\' . $fileName . "-E-PDS.pdf";
+                  return response()->download($file);
           }
 }

@@ -114,13 +114,22 @@ class PlantillaOfScheduleController extends Controller
     {
         $currentYear = date('Y');
         $fetchYear = date('Y') - 1;
-        Plantilla::where('year', $fetchYear)->get()->each(function ($record) use($currentYear) {
+        Plantilla::with('plantilla_positions')->where('year', $fetchYear)->get()->each(function ($record) use($currentYear) {
             $currentData = $record->getAttributes();
             $currentData['plantilla_id'] = tap(Setting::where('Keyname', 'AUTONUMBER')->first())->increment('Keyvalue', 1)->Keyvalue;
             $currentData['year'] = $currentYear;
 
             unset($currentData['created_at']);
             unset($currentData['updated_at']);
+
+            PlantillaPosition::create([
+                  'pp_id' => tap(Setting::where('Keyname', 'AUTONUMBER')->first())->increment('Keyvalue', 1)->Keyvalue,
+                  'PosCode' => $record->plantilla_positions->PosCode,
+                  'item_no' => $record->plantilla_positions->item_no,
+                  'sg_no' => $record->plantilla_positions->sg_no,
+                  'office_code' => $record->plantilla_positions->office_code,
+                  'year' => $currentData['year'],
+            ]);
 
             Plantilla::updateOrCreate([
                 'year'        => $currentData['year'],
@@ -129,7 +138,8 @@ class PlantillaOfScheduleController extends Controller
                 'employee_id' => $currentData['employee_id'],
                 'pp_id'       => $currentData['pp_id'],
             ], $currentData);
-        });
+        
+      });
 
         return response()->json(['success' => true]);
     }

@@ -1,23 +1,12 @@
-function ValidateDropDown(dropDown) {
-    let input = document.querySelector("#addButton");
-    let line = document.querySelector("#line");
-
-    input.disabled = !dropDown.value;
-    line.visibility = !dropDown.value;
-}
-
 $(document).ready(function () {
+
+   
     $("#employeeOffice,#yearAdjustment").change(function (e) {
-        const FIRST_ELEMENT_OF_SELECT = 0;
         let year = $("#yearAdjustment").val();
         let office = $("#employeeOffice").val();
-
-        let plantilla = $("#employeeOffice option:selected")[
-            FIRST_ELEMENT_OF_SELECT
-        ].getAttribute("data-plantilla");
-        $("#officeAdjustment").html(plantilla || "");
-
-        if (employeeOffice) {
+        $('#salaryAdjustmentPerOffice').DataTable().destroy();
+        if (office) {
+            $("#addButton").prop("disabled", false);
             salaryAdjustmentPerOfficeSelected = $(
                 "#salaryAdjustmentPerOffice"
             ).DataTable({
@@ -96,15 +85,22 @@ $(document).ready(function () {
                     },
                 ],
             });
+        } else {
+            $('#salaryAdjustmentPerOffice').DataTable().destroy();
+            $("#addButton").prop("disabled", true);
         }
     });
 
     $("#addButton").click(function () {
         let year = $("#yearAdjustment").val();
         let office = $("#employeeOffice").val();
+        $('#salaryAdjustmentPerOfficeList').DataTable().destroy();
+
+        
 
         $("#add").attr("class", "page-header");
         $("#table").attr("class", "page-header d-none");
+
         salaryAdjustmentPerOfficeNotSelected = $(
             "#salaryAdjustmentPerOfficeList"
         ).DataTable({
@@ -165,6 +161,8 @@ $(document).ready(function () {
                 },
             ],
         });
+
+
     });
 
     $("#cancelButton").click(function () {

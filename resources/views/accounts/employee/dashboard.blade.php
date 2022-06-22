@@ -25,6 +25,8 @@
             </div>
       </div>
 
+      <button class='btn btn-primary btn-block mb-3 rounded-0' id='btnDownloadPDS'>DOWNLOAD PERSONAL DATA SHEET</button>
+
       <h1 class="dash-sec-title">LEAVE CREDITS</h1>
 
       <div class="row">
@@ -201,14 +203,86 @@
             </div>
       </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id='selectFilExportModal' tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-uppercase" id="exampleModalLabel">CHOOSE A FILE TYPE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-6 p-2" id='download-in-excel' style='cursor:pointer;'>
+                        <img class='img-fluid w-25' src="{{ asset('/assets/img/xls.png') }}" alt="">
+                        <span class='font-weight-medium'>DOWNLOAD IN EXCEL FORMAT</span>
+                    </div>
+                    <div class="col-lg-6 p-2" id='download-in-pdf' style='cursor:pointer;'>
+                        <img class='img-fluid w-25' src="{{ asset('/assets/img/pdf.png') }}" alt="">
+                        <span class='font-weight-medium'>DOWNLOAD IN PDF FORMAT</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                  <button class='btn btn-block btn-primary' id='btn-download-status'>
+                        <div class="spinner-border text-light" role="status"></div>
+                  </button>
+            </div>
+        </div>
+    </div>
+</div>
 @push('page-scripts')
 <script src="{{ asset('/assets/js/moment.min.js') }}"></script>
+<script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>
 <script>
+      const EMPLOYEE_ID = "{{ Auth::user()->Employee_id }}";
+      conectionString = "{{ env('MIX_SOCKET_IP') }}";
+      socket = io.connect(conectionString);
+
+      $('#btn-download-status').hide();
+
       $(document).on('click', '.btnPrintLeaveApplicationFilling', function() {
             let id = $(this).attr('data-source');
             window.open(`/print-leave-application/${id}`);
       })
 
+      $('#btnDownloadPDS').click(function () {
+            $('#selectFilExportModal').modal('toggle');
+      });
+
+      $('#download-in-excel').click(function () {
+            $('#btn-download-status').fadeIn();
+            window.open(`/prints/download-personal-data-sheet-excel/${EMPLOYEE_ID}`);
+            $('#btn-download-status').fadeOut();
+            $('#selectFilExportModal').modal('toggle');
+      });
+
+      $('#download-in-pdf').click(function () {
+            $('#btn-download-status').fadeIn();
+            $.ajax({
+                  url : `/prints/download-personal-data-sheet/generate/${EMPLOYEE_ID}`,
+                  method : 'POST',
+                  success : function (response) {
+                        if(response.success) {
+                              socket.emit('PRINT_PDF', {
+                                    id : EMPLOYEE_ID,
+                                    fileName : response.filename,
+                              });
+                        }
+                  }
+            });
+      });
+
+      socket.on(`PUBLISH_DONE_${EMPLOYEE_ID}`, function () {
+            $('#btn-download-status').fadeOut();
+            window.open(`/prints/download-personal-data-sheet-pdf/${EMPLOYEE_ID}`);
+            $('#selectFilExportModal').modal('toggle');
+      });
 </script>
 @endpush
 @endsection

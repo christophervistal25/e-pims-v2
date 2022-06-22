@@ -757,10 +757,9 @@ class EmployeeRepository
                   $employee->information()->save($employeeInformation);
 
                   User::create([
-                        'email'       => $data['email'],
                         'username'    => $data['username'],
                         'password'    => bcrypt($data['password']),
-                        'employee_id' => $employee->employee_id,
+                        'Employee_id' => $employee->employee_id,
                   ]);
 
                   DB::commit();
@@ -777,7 +776,7 @@ class EmployeeRepository
                   ];
             } catch (\Exception $e) {
                   DB::rollback();
-                  dd($e->getMessage());
+                  // dd($e->getMessage());
             }
       }
 

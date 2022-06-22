@@ -109,8 +109,10 @@
                                                                         <img alt="" src="assets/img/profiles/avatar-03.jpg">
                                                                   </span>
                                                                   <div class="media-body">
-                                                                        <p class="noti-details"><span class="noti-title"><strong>{{ $notification->title }}</strong> - </span>
-                                                                              <span class="noti-title">{{ Str::limit($notification->description, 80) }}</span></p>
+                                                                        <p class="noti-details"><span class="noti-title"><strong>{{ $notification->title }}</strong> -
+                                                                              </span>
+                                                                              <span class="noti-title">{{ Str::limit($notification->description, 80) }}</span>
+                                                                        </p>
                                                                         <p class="noti-time"><span class="notification-time">{{ $notification->created_at->diffForHumans() }}</span>
                                                                         </p>
                                                                   </div>
@@ -130,7 +132,8 @@
                               <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                                     <span class="user-img">
                                           {{-- <img
-                                src="/storage/employee_images/{{ Auth::user()->employee->information->photo }}" alt=""> --}}
+                                src="/storage/employee_images/{{ Auth::user()->employee->information->photo }}" alt="">
+                                          --}}
                                           <span class="status online"></span></span>
                                     <span id="employee--fullname">{{ Auth::user()->employee->fullname }}</span>
                               </a>
@@ -169,7 +172,9 @@
                                           <span>Main</span>
                                     </li>
                                     <li>
-                                          <a class="" href="{{  route('employee.dashboard') }}"><i class="las la-digital-tachograph"></i> <span>Dashboard</span></a>
+                                          <a class="" href="{{ route('employee.dashboard') }}">
+                                                <i class="las la-tachometer-alt"></i>
+                                                <span>Dashboard</span></a>
                                     </li>
                                     <li>
                                           <a class="" href="{{ route('employee.personal-data-sheet') }}">
@@ -178,7 +183,9 @@
                                           </a>
                                     </li>
                                     <li class="submenu">
-                                          <a href="#"><i class="la la-suitcase-rolling"></i> <span> Leaves</span> <span class="menu-arrow"></span></a>
+                                          <a href="#">
+                                                <i class="las la-address-card"></i>
+                                                <span> Leaves</span> <span class="menu-arrow"></span></a>
                                           <ul style="display: none;">
                                                 <li><a class="" href="{{ route('employee.leave.application.filling') }}">Leave
                                                             Application Filling</a></li>
@@ -220,7 +227,8 @@
       <!-- Custom JS -->
       <script src="{{ asset('assets/js/app.js') }}"></script>
       @stack('page-scripts')
-      <script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>
+      <script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous">
+      </script>
       <script>
             const socket = io.connect("{{ env('MIX_SOCKET_IP') }}");
             $('#print--certification').click(() => {

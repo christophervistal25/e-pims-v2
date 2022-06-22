@@ -184,6 +184,7 @@ $(document).on("click", ".btn-edit-employee", function () {
             $("#gsisNo").val(employee.gsis_no);
             $("#dbpCardNumber").val(employee.dbp_account_no);
             $("#lbpCardNumber").val(employee.lbp_account_no);
+            $('#username').val(employee.account.username);
             $("#btnUpdateEmployee").attr(
                 "data-employee-id",
                 employee.Employee_id
@@ -409,12 +410,32 @@ $("#addNewEmployee").click(function () {
     $("#loader-wrapper, #loader").hide();
 });
 
+const clearErrorFieldsInAddForm = () => {
+      $('#addEmployeeForm').children().each(function (index, element) {
+            $(element).find('input').each(function (index, e) {
+                let nameAttribute = $(e).attr('name');
+                $(`input[name="${nameAttribute}"]`).removeClass('is-invalid');
+                $(`#${nameAttribute}-error`).text('');
+            });
+      
+            $(element).find('select').each(function (index, e) {
+                let nameAttribute = $(e).attr('name');
+                $(`select[name="${nameAttribute}"]`).removeClass('is-invalid');
+                $(`#${nameAttribute}-error`).text('');
+            });
+      
+            $(element).find('textarea').each(function (index, e) {
+                let nameAttribute = $(e).attr('name');
+                $(`textarea[name="${nameAttribute}"]`).removeClass('is-invalid');
+                $(`#${nameAttribute}-error`).text('');
+            });
+        });
+};
+
 $("#submitNewEmployee").click(function (e) {
     e.preventDefault();
     let data = $("#addEmployeeForm").serialize();
-    $('[name="*"]').each(function (index, element) {
-        console.log(element);
-    });
+    clearErrorFieldsInAddForm();
 
     $.ajax({
         url: "/api/employee/store",

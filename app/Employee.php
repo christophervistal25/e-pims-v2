@@ -236,9 +236,9 @@ class Employee extends Model
         return $this->hasOne(PlantillaSchedule::class, 'employee_id', 'employee_id');
     }
 
-    public function loginAccount()
+    public function account()
     {
-        return $this->belongsTo(User::class, 'employee_id', 'employee_id');
+        return $this->belongsTo(User::class, 'Employee_id', 'Employee_id');
     }
 
     public function position()

@@ -75,7 +75,6 @@ $(document).ready(function () {
         let plantilla = $($("#employeeName option:selected")[0]).attr(
             "data-plantilla"
         );
-        console.log(plantilla);
         if (plantilla) {
             plantilla = JSON.parse(plantilla);
             $("#employeeId").val(plantilla.employee_id);
@@ -223,7 +222,6 @@ $(document).ready(function () {
                 }
             },
             error: function (response) {
-                console.log(response);
                 if (response.status === 422) {
                     let errors = response.responseJSON.errors;
                     if (errors.hasOwnProperty("employeeName")) {

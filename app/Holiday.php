@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Holiday extends Model
 {
-    use SoftDeletes;
-
     public $connection = 'DTR_PAYROLL_CONNECTION';
 
     public const TYPES = ['REGULAR', 'SPECIAL NON-WORKING', 'SPECIAL WORKING'];

@@ -15,17 +15,18 @@ class SalaryAdjustmentPerOfficeController extends Controller
 {
     public function plantillaWithAdjustment(string $office, string $year = null)
     {
-        $data = Plantilla::whereHas('salary_adjustment', function ($query)  use($year) {
-            $query->whereYear('date_adjustment', $year);
-        })->with(['Employee', 'salary_adjustment' => function ($query) use($year) {
-            $query->whereYear('date_adjustment', $year);
-        }, 'office' => function ($query) use($office) {
-            $query->where('office_code', $office);
-        }])
-        ->get();
+            $data = Plantilla::whereHas('salary_adjustment', function ($query)  use($year) {
+                  $query->whereYear('date_adjustment', $year);
+            })->with(['Employee', 'salary_adjustment' => function ($query) use($year) {
+                  $query->whereYear('date_adjustment', $year);
+            }, 'office' => function ($query) use($office) {
+                  $query->where('office_code', $office);
+            }])->where('office_code', $office)
+            ->where('year', $year)
+            ->get();
 
-    return DataTables::of($data)
-        ->make(true);
+            return DataTables::of($data)
+                  ->make(true);
     }
 
     public function plantillaWithoutAdjustment(string $office, string $year)
@@ -34,9 +35,8 @@ class SalaryAdjustmentPerOfficeController extends Controller
             $query->whereYear('date_adjustment', $year);
         })->with(['Employee', 'plantilla_positions', 'plantilla_positions.position', 'salary_adjustment' => function ($query) use($year) {
             $query->whereYear('date_adjustment', $year);
-        }, 'office' => function ($query) use($office) {
-            $query->where('office_code', $office);
-        }])->where('year', $year)
+        }, 'office'])->where('year', $year)
+            ->where('office_code', $office)
             ->get();
 
         return DataTables::of($data)
