@@ -106,15 +106,11 @@
                     </div>
 
                     <div class="form-group col-12 mt-2 d-none">
-                        <input class="form-control " value="" id="officeCode" name="officeCode" type="text" readonly>
+                        <input class="form-control" value="" id="officeCode" name="officeCode" type="text" readonly>
                     </div>
 
                          <div class="form-group col-2 mt-2 d-none">
-                              <input class="form-control " value="" id="positionId" name="positionId" type="text" readonly>
-                         </div>
-
-                         <div class="form-group col-12 mt-2 d-none">
-                              <input class="form-control " value="" id="officeCode" name="officeCode" type="text" readonly>
+                              <input class="form-control" value="" id="positionId" name="positionId" type="text" readonly>
                          </div>
 
                          <div class="form-group col-12 mt-2 d-none">
@@ -129,6 +125,13 @@
                               <div id='position-error-message' class='text-danger text-sm'>
                               </div>
                          </div>
+
+                         <div class="form-group col-12 col-lg-2">
+                            <label class="has-float-label mb-0" for="itemNo">
+                                 <input class="form-control" value="" name="itemNo" id="itemNo" type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                 <span class="font-weight-bold">ITEM NO<span class="text-danger">*</span></span>
+                            </label>
+                       </div>
 
                          <div class="form-group col-12 col-lg-3 mt-2">
                               <label class="has-float-label mb-0" for="salaryGrade">

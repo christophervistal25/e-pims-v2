@@ -72,6 +72,7 @@ class SalaryAdjustmentController extends Controller
                     DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"),
                     DB::raw("FORMAT(date_adjustment, 'M/d/y') as date_adjustment"), 'salary_adjustments.sg_no', 'step_no', 'salary_previous', 'salary_new', 'salary_diff', 'salary_adjustments.office_code'
                     )
+               ->where('salary_adjustments.office_code', $office)
                ->whereYear('date_adjustment', $year)
                ->orderBy('date_adjustment', 'DESC')
                ->whereNull('deleted_at')
