@@ -60,7 +60,9 @@ class LeaveApplicationController extends Controller
         if($request->ajax()) {
             $startDate = Carbon::parse($request->date_from);
 
-            if($request->leave_type_id == 'SL') {
+            if($request->leave_type_id == ''){
+                $rules = ['leave_type_id' => ['required']];
+            }elseif($request->leave_type_id == 'SL') {
                 $rules['date_from'][] = 'before_or_equal:' . Carbon::parse($request->date_to)->format('Y-m-d');
             }else{
                  // Validation with employee balance look-up
@@ -69,9 +71,7 @@ class LeaveApplicationController extends Controller
                     'date_applied'         => ['required'],
                     'date_from'            => ['required', 'after:' . Carbon::now()->addDays(4)->format('F d, Y')],
                     'date_to'              => ['required', 'after_or_equal:' . $startDate->format('Y-m-d')],
-                    'inCaseOf'             => ['required'],
                     'no_of_days'           => ['required'],
-                    'leave_type_id'        => ['required'],
                 ];
             }
 
@@ -82,6 +82,13 @@ class LeaveApplicationController extends Controller
                     'leave_type_id' => 'Leave type',
                     'no_of_days'      => 'No. of days',
             ]);
+
+            $leave_dates = [];
+            foreach($request->leave_date as $date) {
+                foreach($date as $leave_date => $x) {
+                    $leave_dates[$leave_date] = $x;
+                }
+            }
 
             // $response = $this->leaveRecordRepository
             //                 ->fileApplication($employee->only(['employee_id', 'sex', 'first_day_of_service']), $leaveType, $request->noOfDays);
@@ -112,7 +119,8 @@ class LeaveApplicationController extends Controller
                 'date_from'             => $request->date_from,
                 'date_to'               => $request->date_to,
                 'no_of_days'            => $request->no_of_days,
-                'leave_type_id'         => $request->leave_type_id,
+                'leave_type_id'         => $request->leave_type_id, 
+                'leave_date'            => json_encode($leave_dates)
             ]);
             
             $nextID = $convertedID + 1;
@@ -162,7 +170,6 @@ class LeaveApplicationController extends Controller
                 'date_applied'         => ['required'],
                 'startDate'            => ['required', 'after:' . Carbon::now()->addDays(4)->format('F d, Y')],
                 'endDate'              => ['required', 'after_or_equal:' . $startDate->format('Y-m-d')],
-                'inCaseOf'             => ['required'],
                 'noOfDays'             => ['required'],
                 'leave_type_id'        => ['required'],
             ];

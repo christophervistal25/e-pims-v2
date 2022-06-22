@@ -32,6 +32,7 @@ class EmployeeLeaveApplication extends Model
         'date_applied',
         'date_from',
         'date_to',
+        'leave_date',
         'deleted_at',
         'recommendation',
     ]; 

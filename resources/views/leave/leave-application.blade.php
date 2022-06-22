@@ -35,7 +35,7 @@ $layouts = 'layouts.app';
 @endprepend
 @section('content')
 <div class="row">
-      <div class="d-flex col-lg-3">
+      <div class="d-flex col-lg-4">
             <div class="flex-fill">
                   <div class="card h-100">
                         <div class="card-body">
@@ -50,7 +50,26 @@ $layouts = 'layouts.app';
                                                 <select class="form-control selectpicker" data-live-search="true" name="employeeName" id="employeeName" data-size="6" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                                       <option value="">Search name here</option>
                                                       @foreach($employees as $employee)
-                                                      <option data-office="{{ $employee->office_charging->Description }}" data-position="{{ $employee?->position?->Description }}" data-employeeId="{{ $employee->Employee_id }}" data-vlBalance="{{ $employee->forwarded_leave_records?->vl_earned - $employee->forwarded_leave_records?->vl_used }}" data-slBalance="{{ $employee->forwarded_leave_records?->sl_earned - $employee->forwarded_leave_records?->sl_used }}" value="{{ $employee->Employee_id }}">{{ $employee->LastName }},
+                                                      <option 
+                                                            data-office="{{ $employee->offices->office_name }}" 
+                                                            data-officeHead="{{ $employee->offices->office_head }}" 
+                                                            data-position="{{ $employee?->position?->Description }}" 
+                                                            data-employeeId="{{ $employee->Employee_id }}"
+                                                            data-leaveRecord="{{  $employee->forwarded_leave_records }}" 
+                                                            data-vlBalance="{{ $employee->forwarded_leave_records?->vl_balance }}" 
+                                                            data-slBalance="{{ $employee->forwarded_leave_records?->sl_balance }}" 
+                                                            data-vawcBalance="{{ $employee->forwarded_leave_records?->vawc_balance }}" 
+                                                            data-adoptBalance="{{ $employee->forwarded_leave_records?->adopt_balance }}" 
+                                                            data-mandatoryBalance="{{ $employee->forwarded_leave_records?->mandatory_balance }}" 
+                                                            data-maternityBalance="{{ $employee->forwarded_leave_records?->maternity_balance }}" 
+                                                            data-paternityBalance="{{ $employee->forwarded_leave_records?->paternity_balance }}" 
+                                                            data-soloparentBalance="{{ $employee->forwarded_leave_records?->soloparent_balance }}" 
+                                                            data-emergencyBalance="{{ $employee->forwarded_leave_records?->emergency_balance }}" 
+                                                            data-slbBalance="{{ $employee->forwarded_leave_records?->slb_balance }}" 
+                                                            data-studyBalance="{{ $employee->forwarded_leave_records?->study_balance }}" 
+                                                            data-splBalance="{{ $employee->forwarded_leave_records?->spl_balance }}" 
+                                                            data-rehabBalance="{{ $employee->forwarded_leave_records?->rehab_balance }}" 
+                                                            value="{{ $employee->Employee_id }}">{{ $employee->LastName }},
                                                             {{ $employee->FirstName }} {{ $employee->MiddleName }} </option>
                                                       @endforeach
                                                 </select>
@@ -73,7 +92,67 @@ $layouts = 'layouts.app';
                                           <div class="alert alert-warning text-center">
                                                 <strong>LEAVE BALANCES</strong>
                                           </div>
-                                          <div class="row">
+                                          <table class="table table-condensed table-sm">
+                                                <tbody>
+                                                      <tr>
+                                                            <td class="font-weight-bold">SICK LEAVE</td>
+                                                            <td class="text-right font-weight-bold" id="slBal"></td>
+                                                      </tr>
+                                                      <tr>
+                                                            <td class="font-weight-bold">VACATION LEAVE</td>
+                                                            <td class="text-right font-weight-bold" id="vlBal"></td>
+                                                      </tr>
+                                                      <tr>
+                                                            <td>10-Day VAWC Leave</td>
+                                                            <td class="text-right" id="vawcBal"></td>
+                                                      </tr>
+                                                      <tr>
+                                                            <td>Adoption Leave</td>
+                                                            <td class="text-right" id="adoptBal"></td>
+                                                      </tr>
+                                                      <tr>
+                                                            <td>Mandatory Leave</td>
+                                                            <td class="text-right" id="mandatoryBal"></td>
+                                                      </tr>
+                                                      <tr>
+                                                            <td>Maternity Leave</td>
+                                                            <td class="text-right" id="maternityBal"></td>
+                                                      </tr>
+                                                      <tr>
+                                                            <td>Paternity Leave</td>
+                                                            <td class="text-right" id="paternityBal"></td>
+                                                      </tr>
+                                                      <tr>
+                                                            <td>Solo Parent Leave</td>
+                                                            <td class="text-right" id="soloparentBal"></td>
+                                                      </tr>
+                                                      <tr>
+                                                            <td>Special Emer Leave</td>
+                                                            <td class="text-right" id="emergencyBal"></td>
+                                                      </tr>
+                                                      <tr>
+                                                            <td>Special Benefit for Women</td>
+                                                            <td class="text-right" id="slbBal"></td>
+                                                      </tr>
+                                                      <tr>
+                                                            <td>Study Leave</td>
+                                                            <td class="text-right" id="studyBal"></td>
+                                                      </tr>
+                                                      <tr>
+                                                            <td>Special Privilege Leave</td>
+                                                            <td class="text-right" id="splBal"></td>
+                                                      </tr>
+                                                      <tr>
+                                                            <td>Rehabilitation Leave</td>
+                                                            <td class="text-right" id="rehabBal"></td>
+                                                      </tr>
+                                                      <tr>
+                                                            <td></td>
+                                                            <td></td>
+                                                      </tr>
+                                                </tbody>
+                                          </table>
+                                          {{-- <div class="row">
                                                 <div class="col-lg-12">
                                                       <label for="vlBal" class="form-group has-float-label">
                                                             <input type="text" class="form-control text-right text-secondary font-weight-bold bg-light" id="vlBal" style="outline: none; box-shadow: 0px 0px 0px transparent; font-size: 20px" readonly>
@@ -97,15 +176,14 @@ $layouts = 'layouts.app';
                                                             <span><strong>TOTAL LEAVE BALANCE</strong></span>
                                                       </label>
                                                 </div>
-                                          </div>
-                                          <div class="alert alert-danger d-none" role="alert" id="formErrors"></div>
+                                          </div> --}}
                                     </div>
                               </div>
                         </div>
                   </div>
             </div>
       </div>
-      <div class="d-flex col-lg-9">
+      <div class="d-flex col-lg-8">
             <div class="flex-fill">
                   <div class="card h-100">
                         <div class="card-body">
@@ -114,6 +192,7 @@ $layouts = 'layouts.app';
                                     {{-- <hr> --}}
                                     <div class="row">
                                           <div class="col-lg-6 border border-bottom-0 border-left-0 border-top-0">
+                                                <div class="alert alert-danger d-none mt-2" role="alert" id="formErrors"></div>
                                                 <h6 class="text-sm text-center">&nbsp;</h6>
                                                 <label for="date_applied" class="form-group has-float-label">
                                                       <input type="date" name="date_applied" id="date_applied" class="form-control" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
@@ -193,9 +272,16 @@ $layouts = 'layouts.app';
                                                       <span><strong>RECOMMENDING APPROVAL<span class="text-danger">*</span></strong></span>
                                                 </label>
                                                 <label for="approveBy" class="form-group has-float-label">
-                                                      <input class="form-control" name="approveBy" id="approvedBy" disabled value="">
+                                                      <input class="form-control" name="approveBy" id="approvedBy" disabled value="{{ $signatory_for_approval }}">
                                                       <span><strong>APPROVED BY<span class="text-danger">*</span></strong></span>
                                                 </label>
+                                                <button type="submit" class="text-white shadow btn btn-primary" id="btn--apply--for--leave">
+                                                      <div class="spinner-border spinner-border-sm text-light d-none" id="apply-spinner" role="status">
+                                                            <span class="sr-only">Loading...</span>
+                                                      </div>
+                                                      <i class="la la-user-plus" id="apply-button-icon"></i>
+                                                      Create Leave Application
+                                                </button>
                                           </div>
                                           <div class="col-lg-6 ">
                                                 <table class="table table-condensed">
@@ -211,16 +297,6 @@ $layouts = 'layouts.app';
                                                       </tbody>
                                                 </table>
                                           </div>
-                                    </div>
-                                    <div class="text-right">
-                                          <button type="submit" class="text-white shadow btn btn-primary" id="btn--apply--for--leave">
-                                                <div class="spinner-border spinner-border-sm text-light d-none" id="apply-spinner" role="status">
-                                                      <span class="sr-only">Loading...</span>
-                                                </div>
-                                                <i class="la la-user-plus" id="apply-button-icon"></i>
-
-                                                Create Leave Application
-                                          </button>
                                     </div>
                               </form>
                         </div>
@@ -240,19 +316,39 @@ $layouts = 'layouts.app';
             $('#employeeName').change(function(e) {
                   let empID = e.target.value;
                   let [selectedItem] = $("#employeeName option:selected");
-
                   let employeeOffice = selectedItem.getAttribute('data-office') || '';
+                  let employeeOfficeHead = selectedItem.getAttribute('data-officeHead') || '';
                   let employeePosition = selectedItem.getAttribute('data-position') || '';
                   let vlBalance = selectedItem.getAttribute('data-vlBalance') || '';
                   let slBalance = selectedItem.getAttribute('data-slBalance') || '';
+                  let vawcBalance = selectedItem.getAttribute('data-vawcBalance') || '';
+                  let adoptBalance = selectedItem.getAttribute('data-adoptBalance') || '';
+                  let mandatoryBalance = selectedItem.getAttribute('data-mandatoryBalance') || '';
+                  let maternityBalance = selectedItem.getAttribute('data-maternityBalance') || '';
+                  let paternityBalance = selectedItem.getAttribute('data-paternityBalance') || '';
+                  let soloparentBalance = selectedItem.getAttribute('data-soloparentBalance') || '';
+                  let emergencyBalance = selectedItem.getAttribute('data-emergencyBalance') || '';
+                  let slbBalance = selectedItem.getAttribute('data-slbBalance') || '';
+                  let studyBalance = selectedItem.getAttribute('data-studyBalance') || '';
+                  let splBalance = selectedItem.getAttribute('data-splBalance') || '';
+                  let rehabBalance = selectedItem.getAttribute('data-rehabBalance') || '';
                   let photo = selectedItem.getAttribute('data-photo') || '';
-                  let totBalance = parseInt(vlBalance) + parseInt(slBalance);
                   $('#office').val(employeeOffice);
                   $('#position').val(employeePosition);
-                  $('table tbody').html('');
-                  $('#vlBal').val(vlBalance);
-                  $('#slBal').val(slBalance);
-                  $('#totalBalance').val(totBalance);
+                  $('#vlBal').text(vlBalance);
+                  $('#slBal').text(slBalance);
+                  $('#vawcBal').text(vawcBalance);
+                  $('#adoptBal').text(adoptBalance);
+                  $('#mandatoryBal').text(mandatoryBalance);
+                  $('#maternityBal').text(maternityBalance);
+                  $('#paternityBal').text(paternityBalance);
+                  $('#soloparentBal').text(soloparentBalance);
+                  $('#emergencyBal').text(emergencyBalance);
+                  $('#slbBal').text(slbBalance);
+                  $('#studyBal').text(studyBalance);
+                  $('#splBal').text(splBalance);
+                  $('#rehabBal').text(rehabBalance);
+                  $('#recommendingApproval').val(employeeOfficeHead);
             });
 
             const ROUTE = "{{ route('employee.leave.application.filling.admin.create') }}";
@@ -344,13 +440,13 @@ $layouts = 'layouts.app';
 
                   let type = getSelectedLeaveTypeData(types, $('#leave_type_id').val());
 
-                  /* if (type.leave_type_id === LEAVE_TYPES.get('FL')) {
+                  if (type.leave_type_id === LEAVE_TYPES.get('FL')) {
                         POINTS = 5;
                   } else if (LEAVE_TYPES.get('VL')) {
                         POINTS = VACATION_LEAVE_EARNED;
                   } else if (LEAVE_TYPES.get('SL')) {
                         POINTS = SICK_LEAVE_EARNED;
-                  }*/
+                  }
 
                   $('#insufficient_points_error').remove();
                   if (POINTS <= Math.abs(period)) {
@@ -368,9 +464,9 @@ $layouts = 'layouts.app';
                               jQuery.each(response.period, function(index, item) {
                                     $('.inclusiveDates').append(` <tr>
                                                                         <td class="text-center">`+item+`</td>
-                                                                        <td class="text-center"><input type="radio" name="date`+(index+1)+`" checked></td>
-                                                                        <td class="text-center"><input type="radio" name="date`+(index+1)+`"></td>
-                                                                        <td class="text-center"><input type="radio" name="date`+(index+1)+`"></td>
+                                                                        <td class="text-center"><input type="radio" class="leave_date" name="date`+(index+1)+`" checked></td>
+                                                                        <td class="text-center"><input type="radio" class="leave_date" name="date`+(index+1)+`"></td>
+                                                                        <td class="text-center"><input type="radio" class="leave_date" name="date`+(index+1)+`"></td>
                                                                   </tr>`);
                               });
                         }
@@ -422,9 +518,9 @@ $layouts = 'layouts.app';
                               jQuery.each(response.period, function(index, item) {
                                     $('.inclusiveDates').append(` <tr>
                                                                         <td class="text-center">`+item+`</td>
-                                                                        <td class="text-center"><input type="radio" name="date`+(index+1)+`" checked></td>
-                                                                        <td class="text-center"><input type="radio" name="date`+(index+1)+`"></td>
-                                                                        <td class="text-center"><input type="radio" name="date`+(index+1)+`"></td>
+                                                                        <td class="text-center"><input type="radio" class="leave_date" data-date="${item}" value="whole_day" name="date[${index}]" checked></td>
+                                                                        <td class="text-center"><input type="radio" class="leave_date" data-date="${item}" value="pm" name="date[${index}]"></td>
+                                                                        <td class="text-center"><input type="radio" class="leave_date" data-date="${item}" value="am" name="date[${index}]"></td>
                                                                   </tr>`);
                               });
                         }
@@ -435,6 +531,10 @@ $layouts = 'layouts.app';
             $('#submitLeaveFileButton').submit(function(e) {
                   e.preventDefault();
 
+                  let leaveDates = [];
+                  let [selectedItem] = $("#employeeName option:selected");
+                  let emLeaveRecord = selectedItem.getAttribute('data-leaveRecord') || '';
+
                   if ($('#employeeName').val() == '') {
                         swal({
                               text: "Select first Employee."
@@ -442,83 +542,106 @@ $layouts = 'layouts.app';
                               , timer: 2000
                         });
                   } else {
-                        $('#apply-spinner').removeClass('d-none');
-                        $('#apply-button-icon').addClass('d-none');
-
-                        let data = {
-                              date_applied: $('#date_applied').val()
-                              , employeeName: $('#employeeName').val()
-                              , leave_type_id: $('#leave_type_id').val()
-                              , inCaseOf: $('#inCaseOf').val()
-                              , specify: $('#specify').val()
-                              , no_of_days: $("#no_of_days").val()
-                              , date_from: $('#date_from').val()
-                              , date_to: $('#date_to').val()
-                              , earned: $('#earned').val()
-                              , earnedLess: $('#earnedLess').val()
-                              , earnedRemaining: $('#earnedRemaining').val()
-                              , commutation: $('#commutation').val()
-                              , recommendingApproval: $('#recommendingApproval').val()
-                              , approvedBy: $('#approvedBy').val()
-                        , };
-
-                        $.ajax({
-                              url: ROUTE
-                              , method: 'POST'
-                              , data: data
-                              , success: function(response) {
-                                    $('#formErrors').addClass('d-none').html('');
-                                    $('#apply-spinner').addClass('d-none');
-                                    $('#apply-button-icon').removeClass('d-none');
-
-                                    if (response.success) {
-
-                                          Object.keys(data).map((elementID) => {
-                                                $(`${elementID}`).removeClass('is-invalid');
-                                          });
-
-                                          swal({
-                                                title: "Good Job!"
-                                                , text: "Your leave application successfully submit plesae wait for the approval."
-                                                , icon: "success"
-                                                , timer: 5000
-                                          });
-
-                                          data.fullname = response.fullname;
-                                          // socket.emit(`submit_application_for_leave`, data);
-                                          // socket.emit('notify_administrator', { arguments : `${response.fullname}|NOTIFY_ADMINISTRATOR`});
-                                          // socket.emit('service_notify_administrator', { arguments : `${response.fullname}|NOTIFY_ADMINISTRATOR`});
-                                    }
-                              }
-                              , error: function(response) {
-                                    $('#apply-spinner').addClass('d-none');
-                                    $('#apply-button-icon').removeClass('d-none');
-
-                                    if (response.status == 422) {
-                                          Object.keys(data).map((elementID) => {
-                                                $(`${elementID}`).removeClass('d-none');
-                                          });
-
-                                          $('#formErrors').removeClass('d-none').html('');
-                                          Object.keys(response.responseJSON.errors).map((fieldID) => {
-                                                let [message] = response.responseJSON.errors[fieldID];
-                                                if (fieldID.includes('typeOf')) {
-                                                      // Select field with select picker.
-                                                      $('button[data-id="leave_type_id"]').addClass(
-                                                            'border border-danger');
-                                                } else {
-                                                      $(`#${fieldID}`).addClass('is-invalid');
-                                                }
-
-                                                $('#formErrors').append(`<span>- ${message}</span> <br>`);
-                                          });
-                                    } else if (response.status == ALREADY_HAVE_PENDING_FILE) {
-                                          swal('Oops!', response.responseJSON.message, 'error');
-                                    } else if (response.status === CANNOT_ACCESS_SELECTED_LEAVE) {
-                                          swal('Oops!', response.responseJSON.message, 'error');
-                                    }
-                              }
+                        if(emLeaveRecord == ''){
+                              swal({
+                              text: "No Leave Balances. Unable to create application."
+                              , icon: "warning"
+                              , timer: 2000
                         });
+                        }else{
+                              $('#apply-spinner').removeClass('d-none');
+                              $('#apply-button-icon').addClass('d-none');
+
+                              $('.leave_date').each(function(index, date) {
+                                    let key = $(date).attr('data-date');
+                                    if($(date).is(':checked')) {
+                                          leaveDates.push({
+                                                [key] : $(date).val(),
+                                          });
+                                    }
+                              });
+
+                              console.log(leaveDates);
+
+                              let data = {
+                                    date_applied: $('#date_applied').val()
+                                    , employeeName: $('#employeeName').val()
+                                    , leave_type_id: $('#leave_type_id').val()
+                                    , inCaseOf: $('#inCaseOf').val()
+                                    , specify: $('#specify').val()
+                                    , no_of_days: $("#no_of_days").val()
+                                    , date_from: $('#date_from').val()
+                                    , date_to: $('#date_to').val()
+                                    , earned: $('#earned').val()
+                                    , earnedLess: $('#earnedLess').val()
+                                    , earnedRemaining: $('#earnedRemaining').val()
+                                    , commutation: $('#commutation').val()
+                                    , recommendingApproval: $('#recommendingApproval').val()
+                                    , approvedBy: $('#approvedBy').val()
+                                    , leave_date: leaveDates
+                              , };
+
+                              // console.log(leaveDates);
+                              
+                              $.ajax({
+                                    url: ROUTE, 
+                                    method: 'POST', 
+                                    data: data, 
+                                    success: function(response) {
+                                          $('#formErrors').addClass('d-none').html('');
+                                          $('#apply-spinner').addClass('d-none');
+                                          $('#apply-button-icon').removeClass('d-none');
+
+                                          if (response.success) {
+
+                                                Object.keys(data).map((elementID) => {
+                                                      $(`${elementID}`).removeClass('is-invalid');
+                                                });
+
+                                                swal({
+                                                      title: "Good Job!"
+                                                      , text: "Your leave application successfully submit plesae wait for the approval."
+                                                      , icon: "success"
+                                                      , timer: 5000
+                                                });
+
+                                                data.fullname = response.fullname;
+                                                // socket.emit(`submit_application_for_leave`, data);
+                                                // socket.emit('notify_administrator', { arguments : `${response.fullname}|NOTIFY_ADMINISTRATOR`});
+                                                // socket.emit('service_notify_administrator', { arguments : `${response.fullname}|NOTIFY_ADMINISTRATOR`});
+                                          }
+                                    }, 
+                                    error: function(response) {
+                                          $('#apply-spinner').addClass('d-none');
+                                          $('#apply-button-icon').removeClass('d-none');
+
+                                          if (response.status == 422) {
+                                                Object.keys(data).map((elementID) => {
+                                                      $(`${elementID}`).removeClass('d-none');
+                                                });
+
+                                                $('#formErrors').removeClass('d-none').html('');
+                                                Object.keys(response.responseJSON.errors).map((fieldID) => {
+                                                      let [message] = response.responseJSON.errors[fieldID];
+                                                      if (fieldID.includes('typeOf')) {
+                                                            // Select field with select picker.
+                                                            $('button[data-id="leave_type_id"]').addClass(
+                                                                  'border border-danger');
+                                                      } else {
+                                                            $(`#${fieldID}`).addClass('is-invalid');
+                                                      }
+
+                                                      $('#formErrors').append(`<span>- ${message}</span> <br>`);
+                                                });
+                                          } else if (response.status == ALREADY_HAVE_PENDING_FILE) {
+                                                swal('Oops!', response.responseJSON.message, 'error');
+                                          } else if (response.status === CANNOT_ACCESS_SELECTED_LEAVE) {
+                                                swal('Oops!', response.responseJSON.message, 'error');
+                                          }
+                                    }
+                              });
+                        }
+                        
                   }
             });
 

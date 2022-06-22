@@ -47,15 +47,8 @@
                                     <th class="font-weight-bold align-middle text-left " width="25%">Employee Name
                                     </th>
                                     <th class="font-weight-bold align-middle text-center " width="15%">As Of</th>
-                                    <th class="font-weight-bold align-middle text-center " width="5%">VL Earned</th>
-                                    <th class="font-weight-bold align-middle text-center " width="5%">VL Used</th>
                                     <th class="font-weight-bold align-middle text-center " width="5%">VL Balance</th>
-                                    <th class="font-weight-bold align-middle text-center " width="5%">SL Earned</th>
-                                    <th class="font-weight-bold align-middle text-center " width="5%">SL Used</th>
                                     <th class="font-weight-bold align-middle text-center " width="5%">SL Balance</th>
-                                    <th class="font-weight-bold align-middle text-center " width="10%">Balance Leave
-                                        Credits
-                                    </th>
                                     <th class="font-weight-bold align-middle text-center" width="10%">Actions</th>
                                 </tr>
                             </thead>
@@ -75,7 +68,7 @@
                     <div class="alert alert-secondary text-center font-weight-bold">LEAVE FORWARDED BALANCE</div>
                     <hr>
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-3">
                             <div class="row">
                                 <div class="col-lg-12 text-center">
                                     <div class="spinner-border spinner-border-sm text-light d-none" id="save-spinner"
@@ -120,86 +113,106 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-8">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <h6 class="text-sm text-center">VACATION LEAVE</h6>
-                                            <label for="vl_earned" class="form-group has-float-label">
-                                                <input type="number" class="form-control vl_earned" id="vl_earned"
-                                                    name="vl_earned"
-                                                    style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;">
-                                                <span><strong>VL EARNED</strong></span>
-                                                <div id="vl_earned-error-message" class="text-danger text-sm"></div>
-                                            </label>
-                                            <label for="vl_used" class="form-group has-float-label">
-                                                <input type="number" value="0" class="form-control vl_used"
-                                                    id="vl_used" name="vl_used"
-                                                    style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;">
-                                                <span><strong>VL ENJOYED</strong></span>
-                                                <div id="vl_used-error-message" class="text-danger text-sm"></div>
-                                            </label>
-                                            <label for="vl_balance" class="form-group has-float-label">
-                                                <input type="number" class="form-control" id="vl_balance"
-                                                    name="vl_balance" readonly
-                                                    style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;">
-                                                <span><strong>VL BALANCE</strong></span>
-                                            </label>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <h6 class="text-sm text-center">SICK LEAVE</h6>
-                                            <label for="sl_earned" class="form-group has-float-label">
-                                                <input type="number" id="sl_earned" class="form-control sl_earned"
-                                                    name="sl_earned"
-                                                    style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;">
-                                                <span><strong>SL EARNED</strong></span>
-                                                <div id="sl_earned-error-message" class="text-danger text-sm"></div>
-                                            </label>
-                                            <label for="sl_used" class="form-group has-float-label">
-                                                <input type="number" class="form-control sl_used" id="sl_used"
-                                                    name="sl_used" value="0"
-                                                    style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;">
-                                                <span><strong>SL ENJOYED</strong></span>
-                                                <div id="sl_used-error-message" class="text-danger text-sm"></div>
-                                            </label>
-                                            <label for="sl_balance" class="form-group has-float-label">
-                                                <input type="number" class="form-control" id="sl_balance"
-                                                    name="sl_balance" readonly
-                                                    style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;">
-                                                <span><strong>SL BALANCE</strong></span>
-                                            </label>
+                        <div class="col-lg-9">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 class="text-sm text-center">Special Type of Leaves</h6><hr>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <label for="vawc_balance" class="form-group has-float-label">
+                                                        <input type="number" class="form-control" id="vawc_balance"
+                                                            name="vawc_balance" style="font-weight:bold; text-align: right;" value="10.00">
+                                                        <span><strong>VAWC BALANCE</strong></span>
+                                                    </label>
+                                                    <label for="adopt_balance" class="form-group has-float-label">
+                                                        <input type="number" class="form-control" id="adopt_balance"
+                                                            name="adopt_balance" style="font-weight:bold; text-align: right;" value="60.00">
+                                                        <span><strong>ADOPT BALANCE</strong></span>
+                                                    </label>
+                                                    <label for="mandatory_balance" class="form-group has-float-label">
+                                                        <input type="number" class="form-control" id="mandatory_balance"
+                                                            name="mandatory_balance" style="font-weight:bold; text-align: right;" value="5.00">
+                                                        <span><strong>MANDATORY BALANCE</strong></span>
+                                                    </label>
+                                                    <label for="maternity_balance" class="form-group has-float-label">
+                                                        <input type="number" class="form-control" id="maternity_balance"
+                                                            name="maternity_balance" style="font-weight:bold; text-align: right;" value="105.00">
+                                                        <span><strong>MATERNITY BALANCE</strong></span>
+                                                    </label>
+                                                    <label for="paternity_balance" class="form-group has-float-label">
+                                                        <input type="number" class="form-control" id="paternity_balance"
+                                                            name="paternity_balance" style="font-weight:bold; text-align: right;" value="7.00">
+                                                        <span><strong>PATERNITY BALANCE</strong></span>
+                                                    </label>
+                                                    <label for="soloparent_balance" class="form-group has-float-label">
+                                                        <input type="number" class="form-control" id="soloparent_balance"
+                                                            name="soloparent_balance" style="font-weight:bold; text-align: right;" value="7.00">
+                                                        <span><strong>SOLO PARENT BALANCE</strong></span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <label for="emergency_balance" class="form-group has-float-label">
+                                                        <input type="number" class="form-control" id="emergency_balance"
+                                                            name="emergency_balance" style="font-weight:bold; text-align: right;" value="5.00">
+                                                        <span><strong>EMERGENCY BALANCE</strong></span>
+                                                    </label>
+                                                    <label for="slb_balance" class="form-group has-float-label">
+                                                        <input type="number" class="form-control" id="slb_balance"
+                                                            name="slb_balance" style="font-weight:bold; text-align: right;" value="60.00">
+                                                        <span><strong>SLB BALANCE</strong></span>
+                                                    </label>
+                                                    <label for="study_balance" class="form-group has-float-label">
+                                                        <input type="number" class="form-control" id="study_balance"
+                                                            name="study_balance" style="font-weight:bold; text-align: right;" value="180.00">
+                                                        <span><strong>STUDY BALANCE</strong></span>
+                                                    </label>
+                                                    <label for="spl_balance" class="form-group has-float-label">
+                                                        <input type="number" class="form-control" id="spl_balance"
+                                                            name="spl_balance" style="font-weight:bold; text-align: right;" value="5.00">
+                                                        <span><strong>SPL BALANCE</strong></span>
+                                                    </label>
+                                                    <label for="rehab_balance" class="form-group has-float-label">
+                                                        <input type="number" class="form-control" id="rehab_balance"
+                                                            name="rehab_balance" style="font-weight:bold; text-align: right;" value="180.00">
+                                                        <span><strong>REHABILITATION BALANCE</strong></span>
+                                                    </label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-lg-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 class="text-sm text-center">Main Type of Leaves</h6><hr>
+                                            <label for="vl_balance" class="form-group has-float-label">
+                                                <input type="number" class="form-control vl_balance" id="vl_balance"
+                                                    name="vl_balance"
+                                                    style="outline: none; box-shadow: 0px 0px 0px transparent; height:50px; font-weight:bold; font-size:25px; text-align: right;">
+                                                <span><strong>VL BALANCE</strong></span>
+                                                <div id="vl_balance-error-message" class="text-danger text-sm"></div>
+                                            </label>
+                                            <label for="sl_balance" class="form-group has-float-label">
+                                                <input type="number" class="form-control sl_balance" id="sl_balance"
+                                                    name="sl_balance"
+                                                    style="outline: none; box-shadow: 0px 0px 0px transparent; height:50px; font-weight:bold; font-size:25px; text-align: right;">
+                                                <span><strong>SL BALANCE</strong></span>
+                                                <div id="sl_balance-error-message" class="text-danger text-sm"></div>
+                                            </label>
+                                        </div>
+                                    </div>
                                     <label for="date_forwarded" class="form-group has-float-label">
                                         <input type="date" name="date_forwarded" id="date_forwarded" class="form-control date_forwarded"
-                                            style="outline: none; box-shadow: 0px 0px 0px transparent; height:70px; font-weight:bold; font-size:30px;">
+                                            style="outline: none; box-shadow: 0px 0px 0px transparent; height:50px; font-weight:bold; font-size:25px;">
                                         <span class="font-weight-bold">As of</span>
                                         <div id="date_forwarded-error-message" class="text-danger text-sm"></div>
                                     </label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label for="total_lb" class="form-group has-float-label">
-                                        <input type="number" name="total_lb" id="total_lb" class="form-control"
-                                            style="outline: none; box-shadow: 0px 0px 0px transparent; height:70px; font-weight:bold; font-size:40px; text-align: right;"
-                                            disabled>
-                                        <span><strong>TOTAL LEAVE BALANCE</strong></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6">
                                     <button type="submit"
                                         class="text-white shadow btn btn-lg btn-success w-100 ml-1 mt-2" id="btnSave"><i
-                                            class="la la-save"></i> Add
-                                        Record
+                                            class="la la-save"></i> Add Record
                                     </button>
-                                </div>
-                                <div class="col-lg-6">
                                     <button type="button"
                                         class="text-white shadow btn btn-lg btn-primary w-100 ml-1 mt-2" id="btnBack"><i
                                             class="la la-list"></i>
@@ -408,32 +421,12 @@
                     name: "date_forwarded"
                 },
                 {
-                    data: "vl_earned",
-                    name: "vl_earned"
-                },
-                {
-                    data: "vl_used",
-                    name: "vl_used"
-                },
-                {
                     data: "vl_balance",
                     name: "vl_balance"
                 },
                 {
-                    data: "sl_earned",
-                    name: "sl_earned"
-                },
-                {
-                    data: "sl_used",
-                    name: "sl_used"
-                },
-                {
                     data: "sl_balance",
                     name: "sl_balance"
-                },
-                {
-                    data: "leave_balance",
-                    name: "leave_balance"
                 },
                 {
                     data: "action",
@@ -452,7 +445,7 @@
                 },
                 {
                     className: "text-center",
-                    targets: [0, 2, 3, 4, 5, 6, 7, 8, 9],
+                    targets: [0, 2, 3, 4, 5],
                 },
             ]
         });

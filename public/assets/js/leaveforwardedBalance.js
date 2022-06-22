@@ -28,78 +28,11 @@ $( document ).ready(function() {
 //     });
 // });
 
-let vl_earned = document.querySelector('#vl_earned');
-let vl_used = document.querySelector('#vl_used');
 let vl_balance = document.querySelector('#vl_balance');
-let sl_earned = document.querySelector('#sl_earned');
-let sl_used = document.querySelector('#sl_used');
 let sl_balance = document.querySelector('#sl_balance');   
-let total_lb = document.querySelector('#total_lb');
 
-let update_vl_earned = document.querySelector('#update_vl_earned');
-let update_vl_used = document.querySelector('#update_vl_used');
 let update_vl_balance = document.querySelector('#update_vl_balance');
-let update_sl_earned = document.querySelector('#update_sl_earned');
-let update_sl_used = document.querySelector('#update_sl_used');
 let update_sl_balance = document.querySelector('#update_sl_balance');   
-let update_total_lb = document.querySelector('#update_total_lb');
-
-vl_balance.value = 0;
-sl_balance.value = 0;
-total_lb.value = 0;
-
-update_vl_balance.value = 0;
-update_sl_balance.value = 0;
-update_total_lb.value = 0;
-
-vl_earned.addEventListener("keyup", function(){
-    vl_balance.value = parseFloat(vl_earned.value) - parseFloat(vl_used.value);
-    sl_balance.value = parseFloat(sl_earned.value) - parseFloat(sl_used.value);
-    total_lb.value = (parseFloat(vl_balance.value) + parseFloat(sl_balance.value)).toFixed(3);
-})
-
-vl_used.addEventListener("keyup", function(){
-    vl_balance.value = parseFloat(vl_earned.value) - parseFloat(vl_used.value);
-    sl_balance.value = parseFloat(sl_earned.value) - parseFloat(sl_used.value);
-    total_lb.value = ( (parseFloat(vl_balance.value) ) + (parseFloat(sl_balance.value))).toFixed(3);
-})
-
-sl_earned.addEventListener("keyup", function(){
-    vl_balance.value = parseFloat(vl_earned.value) - parseFloat(vl_used.value);
-    sl_balance.value = parseFloat(sl_earned.value) - parseFloat(sl_used.value);
-    total_lb.value = (parseFloat(vl_balance.value) + parseFloat(sl_balance.value)).toFixed(3);
-})
-
-sl_used.addEventListener("keyup", function(){
-    vl_balance.value = parseFloat(vl_earned.value) - parseFloat(vl_used.value);
-    sl_balance.value = parseFloat(sl_earned.value) - parseFloat(sl_used.value);
-    total_lb.value = ( (parseFloat(vl_balance.value)) + (parseFloat(sl_balance.value))).toFixed(3);
-})
-
-update_vl_earned.addEventListener("keyup", function(){
-    update_vl_balance.value = parseFloat(update_vl_earned.value) - parseFloat(update_vl_used.value);
-    update_sl_balance.value = parseFloat(update_sl_earned.value) - parseFloat(update_sl_used.value);
-    update_total_lb.value = (parseFloat(update_vl_balance.value) + parseFloat(update_sl_balance.value)).toFixed(3);
-})
-
-update_vl_used.addEventListener("keyup", function(){
-    update_vl_balance.value = parseFloat(update_vl_earned.value) - parseFloat(update_vl_used.value);
-    update_sl_balance.value = parseFloat(update_sl_earned.value) - parseFloat(update_sl_used.value);
-    update_total_lb.value = (parseFloat(update_vl_balance.value) + parseFloat(update_sl_balance.value)).toFixed(3);
-})
-
-update_sl_earned.addEventListener("keyup", function(){
-    update_vl_balance.value = parseFloat(update_vl_earned.value) - parseFloat(update_vl_used.value);
-    update_sl_balance.value = parseFloat(update_sl_earned.value) - parseFloat(update_sl_used.value);
-    update_total_lb.value = (parseFloat(update_vl_balance.value) + parseFloat(update_sl_balance.value)).toFixed(3);
-})
-
-update_sl_used.addEventListener("keyup", function(){
-    update_vl_balance.value = parseFloat(update_vl_earned.value) - parseFloat(update_vl_used.value);
-    update_sl_balance.value = parseFloat(update_sl_earned.value) - parseFloat(update_sl_used.value);
-    update_total_lb.value = (parseFloat(update_vl_balance.value) + parseFloat(update_sl_balance.value)).toFixed(3);
-})
-
 
 // SHOWS THE DATA VALUE IN INPUT INCLUDING THE PHOTO OF THE EMPLOYEE
 $('#Employee_id').change( function (e) {
@@ -128,6 +61,7 @@ $('#Employee_id').change( function (e) {
 $('#btnSave').click( (e)=> {
     e.preventDefault();
     let data = $('#forwardedBalance').serialize();
+    
     $.ajax({
         url : '/employee/leave-forwarded-balance',
         method : 'POST',
@@ -148,11 +82,20 @@ $('#btnSave').click( (e)=> {
                 let errors = response.responseJSON.errors;
                 const inputNames = [
                     "Employee_id",
-                    "vl_earned",
-                    "sl_used",
-                    "sl_earned",
-                    "sl_used",
-                    "date_forwarded"
+                    "date_forwarded",
+                    "vl_balance",
+                    "sl_balance",
+                    // "vawc_balance",
+                    // "adopt_balance",
+                    // "mandatory_balance",
+                    // "maternity_balance",
+                    // "paternity_balance",
+                    // "soloparent_balance",
+                    // "emergency_balance",
+                    // "slb_balance",
+                    // "study_balance",
+                    // "spl_balance",
+                    // "rehab_balance",
                 ];
                 $.each(inputNames, function(index, value) {
                     if (errors.hasOwnProperty(value)) {
@@ -195,11 +138,20 @@ $('#btnUpdate').click( (e)=> {
             if (response.status === 422) {
                 let errors = response.responseJSON.errors;
                 const inputNames = [
-                    "update_vl_earned",
-                    "update_sl_earned",
-                    "update_vl_used",
-                    "update_sl_used",
-                    "update_date_forwarded"
+                    "update_date_forwarded",
+                    "update_vl_balance",
+                    "update_sl_balance",
+                    "update_vawc_balance",
+                    "update_adopt_balance",
+                    "update_mandatory_balance",
+                    "update_maternity_balance",
+                    "update_paternity_balance",
+                    "update_soloparent_balance",
+                    "update_emergency_balance",
+                    "update_slb_balance",
+                    "update_study_balance",
+                    "update_spl_balance",
+                    "update_rehab_balance",
                 ];
                 $.each(inputNames, function(index, value) {
                     if (errors.hasOwnProperty(value)) {

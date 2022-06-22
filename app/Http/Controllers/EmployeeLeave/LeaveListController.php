@@ -76,8 +76,8 @@ class LeaveListController extends Controller
 
         $employeeIds = $this->leaveService->getEmployeeApplied();
 
-        $employees = Employee::without(['position', 'office_charging', 'office_assignemnt', 'office_charging.desc'])
-            ->whereIn('Employee_id', $employeeIds)
+        $employees = Employee::without(['position', 'office_assignment', 'office_charging.desc'])
+            ->where('Employee_id', '0051')
             ->get();
 
         return view('leave.leave-list', compact('statuses', 'offices', 'employees'));
@@ -112,16 +112,6 @@ class LeaveListController extends Controller
     public function update(Request $request, $id)
     {
         $application = EmployeeLeaveApplication::where('application_id', $id)->first();
-        // $leaveList->date_applied          = $request['dateApply'];
-        // $leaveList->leave_type_id         = $request['selectedLeave'];
-        // $leaveList->incase_of             = $request['inCaseOfLeave'];
-        // $leaveList->no_of_days            = $request['numberOfDays'];
-        // $leaveList->date_from             = $request['startDate'];
-        // $leaveList->date_to               = $request['endDate'];
-        // $leaveList->commutation           = $request['commutation'];
-        // $leaveList->recommending_approval = $request['recommendingApproval'];
-        // $leaveList->approved_by           = $request['approvedBy']; 
-        // $leaveList->approved_status       = $request['status'];
 
         if ($request->status === 'approved') {
 
