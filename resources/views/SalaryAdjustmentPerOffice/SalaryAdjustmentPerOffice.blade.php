@@ -148,7 +148,7 @@
 
                <div class="col-5 mb-2">
                     <div style="padding-right:20px;" class="float-right">
-                         <button id="addButton" class="btn btn-primarys float-right"><i class="fa fa-plus"></i> Adjust Salary</button>
+                         <button id="addButton" class="btn btn-primarys float-right" disabled><i class="fa fa-plus"></i> Adjust Salary</button>
                     </div>
                </div>
           </div>

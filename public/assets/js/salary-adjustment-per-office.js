@@ -1,23 +1,22 @@
-function ValidateDropDown(dropDown) {
-    let input = document.querySelector("#addButton");
-    let line = document.querySelector("#line");
-
-    input.disabled = !dropDown.value;
-    line.visibility = !dropDown.value;
-}
-
 $(document).ready(function () {
+    // $("#employeeOffice").change(function (e) {
+    //     if (employeeOffice) {
+    // $("#addButton").prop("disabled", false);
+    //     } else {
+    //         $("#addButton").prop("disabled", true);
+    //     }
+    // });
+
     $("#employeeOffice,#yearAdjustment").change(function (e) {
         const FIRST_ELEMENT_OF_SELECT = 0;
         let year = $("#yearAdjustment").val();
         let office = $("#employeeOffice").val();
-
-        let plantilla = $("#employeeOffice option:selected")[
-            FIRST_ELEMENT_OF_SELECT
-        ].getAttribute("data-plantilla");
-        $("#officeAdjustment").html(plantilla || "");
-
-        if (employeeOffice) {
+        // let plantilla = $("#employeeOffice option:selected")[
+        //     FIRST_ELEMENT_OF_SELECT
+        // ].getAttribute("data-plantilla");
+        // $("#officeAdjustment").html(plantilla || "");
+        if (office) {
+            $("#addButton").prop("disabled", false);
             salaryAdjustmentPerOfficeSelected = $(
                 "#salaryAdjustmentPerOffice"
             ).DataTable({
@@ -96,6 +95,10 @@ $(document).ready(function () {
                     },
                 ],
             });
+        } else {
+            $("#addButton").prop("disabled", true);
+            salaryAdjustmentPerOfficeSelected.clear();
+            salaryAdjustmentPerOfficeSelected.destroy();
         }
     });
 
