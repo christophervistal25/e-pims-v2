@@ -96,6 +96,7 @@ Route::get('promotion/create', [PromotionController::class, 'create'])->name('pr
 Route::post('promotion/store', [PromotionController::class, 'store'])->name('promotion.store');
 Route::get('promotion/{id}/edit', [PromotionController::class, 'edit'])->name('promotion.edit');
 Route::put('promotion/{id}/edit', [PromotionController::class, 'update'])->name('promotion.update');
+Route::delete('promotion/{id}/delete', [PromotionController::class, 'destroy'])->name('promotion.destroy');
 
 Route::get('step-increment/list', 'StepIncrementController@list');
 Route::delete('step-increment/{id}', 'StepIncrementController@destroy')->name('step-increment.delete');
