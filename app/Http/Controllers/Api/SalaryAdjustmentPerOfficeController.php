@@ -60,14 +60,10 @@ class SalaryAdjustmentPerOfficeController extends Controller
             $salaryDiff = $getsalaryResult['sg_step' .  $newAdjustments['step_no']] - $newAdjustments['salary_amount'];
             $datas = DB::table('settings')->where('Keyname', 'AUTONUMBER2')->first();
                 DB::table('salary_adjustments')->insert(
-                // [
-                //     'employee_id' => $newAdjustments['employee_id'],
-                //     'salary_new' => $getsalaryResult['sg_step' .  $newAdjustments['step_no']],
-                //     'date_adjustment' => request()->date,
-                // ],
                 [
                     'id'              => $datas->Keyvalue,
                     'employee_id'     => $newAdjustments['employee_id'],
+                    'office_code'     => $newAdjustments['office_code'],
                     'item_no'         => $newAdjustments['item_no'],
                     'pp_id'           => $newAdjustments['pp_id'],
                     'date_adjustment' => request()->date,
