@@ -216,7 +216,7 @@
                         <div id="sidebar-menu" class="sidebar-menu">
                               <ul>
                                     <li>
-                                          <a class='text-decoration-none' href='/'>
+                                          <a class='text-decoration-none' href='/administrator/dashboard'>
                                                 <i class="las la-tachometer-alt"></i> <span>Dashboard</span></a>
                                           </a>
                                     </li>
@@ -416,7 +416,7 @@
                                     <div class="col-sm-12">
                                           <h3 class="page-title">@yield('title')</h3>
                                           <ul class="breadcrumb">
-                                                <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                                                <li class="breadcrumb-item"><a href="/administrator/dashboard">Dashboard</a></li>
                                                 <li class="breadcrumb-item active">@yield('title')</li>
                                           </ul>
                                     </div>

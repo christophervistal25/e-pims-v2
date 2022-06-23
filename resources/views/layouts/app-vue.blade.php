@@ -230,7 +230,7 @@
                     <div id="sidebar-menu" class="sidebar-menu">
                          <ul>
                               <li>
-                                   <a class='text-decoration-none' href='http://127.0.0.1:8000/'>
+                                   <a class='text-decoration-none' href='/administrator/dashboard'>
                                         <i class="fa fa-chart-line"></i> <span> Dashboard</span>
                                    </a>
                               </li>
@@ -419,6 +419,11 @@
           }
 
      </style>
+      <script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>
+      <script>
+            const conectionString = "{{ env('MIX_SOCKET_IP') }}";
+            let socket = io.connect(conectionString);
+      </script>
      @stack('page-scripts')
 </body>
 
