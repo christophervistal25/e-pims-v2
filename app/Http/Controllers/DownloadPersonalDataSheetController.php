@@ -446,7 +446,7 @@ class DownloadPersonalDataSheetController extends Controller implements IDownloa
 
           public function pdf(string $fileName)
           {
-                  $file = storage_path() . '\\generated_pds\\' . $fileName . "-E-PDS.pdf";
+                  $file = storage_path() . '\\generated_pds\\' . $fileName . ".pdf";
                   return response()->download($file);
           }
 }
