@@ -24,9 +24,15 @@ class SalaryAdjustmentPerOfficeController extends Controller
             }])->where('office_code', $office)
             ->where('year', $year)
             ->get();
-
             return DataTables::of($data)
-                  ->make(true);
+            ->addColumn('action', function ($row) {
+                $btn = "<a title='Edit Salary Adjustment' href='" . route('salary-adjustment-per-office.edit', $row->salary_adjustment[0]->id) . "' class='rounded-circle edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+                $btn = $btn . "<a title='Delete Salary Adjustment' id='delete' value='". $row->salary_adjustment[0]->id . "' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+        ";
+                return $btn;
+           })
+           ->rawColumns(['action'])
+        ->make(true);
     }
 
     public function plantillaWithoutAdjustment(string $office, string $year)

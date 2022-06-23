@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
+use App\Employee;
 use App\Plantilla;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
-use App\SalaryAdjustment;
 use App\SalaryGrade;
+use App\SalaryAdjustment;
+use App\PlantillaPosition;
+use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\DB;
 
 class SalaryAdjustmentPerOfficeController extends Controller
 {
@@ -42,12 +44,13 @@ class SalaryAdjustmentPerOfficeController extends Controller
             ->whereNull('deleted_at')
             ->get();
         return DataTables::of($data)
-            ->addColumn('action', function ($row) {
-                $btn = "<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
-            ";
-                return $btn;
-            })
-            ->rawColumns(['action'])
+        ->addColumn('action', function ($row) {
+            $btn = "<a title='Edit Salary Adjustment' href='" . route('salary-adjustment.edit', $row->id) . "' class='rounded-circle edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+            $btn = $btn . "<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                ";
+            return $btn;
+       })
+       ->rawColumns(['action'])
             ->make(true);
         return view('SalaryAdjustmentPerOffice.SalaryAdjustmentPerOffice');
     }
@@ -109,7 +112,10 @@ class SalaryAdjustmentPerOfficeController extends Controller
      */
     public function edit($id)
     {
-        //
+        $employee = Employee::select('Employee_id', 'Firstname', 'Lastname', 'Middlename')->get();
+        $plantillaPosition = PlantillaPosition::select('pp_id', 'PosCode', 'item_no', 'sg_no', 'office_code', 'old_position_name')->with('position:PosCode,Description')->get();
+        $salaryAdjustment = SalaryAdjustment::find($id);
+        return view('SalaryAdjustmentPerOffice.edit', compact('salaryAdjustment', 'employee', 'plantillaPosition'));
     }
 
     /**
@@ -121,7 +127,30 @@ class SalaryAdjustmentPerOfficeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'employeeName'                        => 'required',
+            'itemNo'                              => 'required',
+            'position'                            => 'required',
+            'dateAdjustment'                      => 'required',
+            'salaryGrade'                         => 'required',
+            'stepNo'                              => 'required',
+            'salaryPrevious'                      => 'required|numeric',
+            'salaryNew'                           => 'required|numeric',
+            'salaryDifference'                    => 'required|numeric',
+       ]);
+       $salaryAdjustmentPerOffice                  = SalaryAdjustment::find($id);
+       $salaryAdjustmentPerOffice->employee_id     = $request->employeeName;
+       $salaryAdjustmentPerOffice->item_no         = $request->itemNo;
+       $salaryAdjustmentPerOffice->pp_id           = $request->position;
+       $salaryAdjustmentPerOffice->date_adjustment = $request->dateAdjustment2;
+       $salaryAdjustmentPerOffice->sg_no           = $request->salaryGrade;
+       $salaryAdjustmentPerOffice->step_no         = $request->stepNo;
+       $salaryAdjustmentPerOffice->salary_previous = $request->salaryPrevious;
+       $salaryAdjustmentPerOffice->salary_new      = $request->salaryNew;
+       $salaryAdjustmentPerOffice->salary_diff     = $request->salaryDifference;
+       $salaryAdjustmentPerOffice->remarks            = $request->remarks;
+       $salaryAdjustmentPerOffice->save();
+       return response()->json(['success' => true]);
     }
 
     /**

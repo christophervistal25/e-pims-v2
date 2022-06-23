@@ -81,6 +81,7 @@ $(document).ready(function () {
                             return adjustment.salary_diff;
                         },
                     },
+                    { data: "action", name: "action" },
                 ],
             });
         } else {
