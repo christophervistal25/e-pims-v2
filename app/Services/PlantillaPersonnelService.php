@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Setting;
 use App\Division;
 use App\Plantilla;
+use Illuminate\Support\Str;
 
 class PlantillaPersonnelService
 {
@@ -52,7 +53,7 @@ class PlantillaPersonnelService
                   'pp_id'                     => $data['position'],
                   'sg_no'                     => $data['salary_grade'],
                   'step_no'                   => $data['step'],
-                  'salary_amount'             => $data['salary_amount'],
+                  'salary_amount'             => Str::remove(',', $data['salary_amount']),
                   'employee_id'               => $data['employee'],
                   'area_code'                 => $data['area_code'],
                   'area_type'                 => $data['area_type'],

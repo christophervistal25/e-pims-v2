@@ -6,20 +6,23 @@ use App\Office;
 use App\Setting;
 use App\Division;
 use App\Employee;
+use App\Position;
 use App\Plantilla;
 use App\Promotion;
 use Carbon\Carbon;
 use App\PlantillaPosition;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Services\EmployeeService;
 use App\Services\PromotionService;
 use Illuminate\Support\Facades\DB;
+use App\Services\SalaryGradeService;
 use App\Services\PlantillaPersonnelService;
 
 class PromotionController extends Controller
 {
-      public function __construct(public PlantillaPersonnelService $plantillaPersonnelService, public PromotionService $promotionService)
+      public function __construct(public PlantillaPersonnelService $plantillaPersonnelService, public PromotionService $promotionService, public SalaryGradeService $salaryGradeService)
       {
 
       }
@@ -39,6 +42,9 @@ class PromotionController extends Controller
             }
 
             return DataTables::of($promotions->get())
+                        ->addColumn('promotion_date', function ($record) {
+                              return date('F d, Y', strtotime($record->promotion_date));
+                        })
                         ->addColumn('employee', function ($record) {
                               return $record->employee->fullname;
                         })
@@ -68,6 +74,7 @@ class PromotionController extends Controller
       public function create()
       {
             $employees = Employee::without(['position', 'office_charging', 'office_assignment'])
+                  ->has('plantilla')
                   ->permanent()
                   ->active()
                   ->orderBy('LastName')
@@ -116,5 +123,47 @@ class PromotionController extends Controller
             });
 
             return back()->with('success', 'You successfully promote a employee');
+      }
+
+      public function edit(int $promotionID)
+      {
+            $offices = Office::get();
+
+            $positions = Position::get();
+
+            $promotion = Promotion::with(['employee', 'new_plantilla_position', 'new_plantilla_position.plantillas', 'new_plantilla_position.plantillas.plantilla_positions', 'new_plantilla_position.plantillas.plantilla_positions.position'])->find($promotionID);
+            
+            $employeeStatus = ['Permanent', 'Casual', 'Coterminous', 'Provisional', 'Temporary'];
+            
+            $areaCode = Plantilla::REGIONS;
+
+            $areaType = ['Region', 'Province', 'District', 'Municipality', 'Foreign Post'];
+
+            $areaLevel = ['K', 'T', 'S', 'A'];
+
+            return view('promotion.edit', [
+                  'positions' => $positions,
+                  'promotion' => $promotion,
+                  'offices' => $offices,
+                  'areaCode' => $areaCode,
+                  'areaType' => $areaType,
+                  'areaLevel' => $areaLevel,
+                  'employeeStatus' => $employeeStatus,
+                  'class' => 'mini-sidebar',
+            ]);
+      }
+
+
+      public function update(Request $request, int $promotionID)
+      {
+            $promotion = Promotion::with(['new_plantilla_position', 'new_plantilla_position.plantillas'])->find($promotionID);
+
+            if(!is_null($request->position)) {
+                  $this->promotionService->changePositionInPromotion($promotion, $request->all());
+            } else {
+                  $this->promotionService->updatePromotion($promotion, $request->all());
+            }
+
+            return back()->with('success', 'You successfully update a promotion');
       }
 }

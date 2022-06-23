@@ -58,7 +58,7 @@
                               <th>SALARY GRADE</th>
                               <th>STEP</th>
                               <th>SALARY GRADE YEAR</th>
-                              {{--<th>ACTIONS</th> --}}
+                              <th>ACTIONS</th>
                         </tr>
                   </thead>
             </table>
@@ -80,13 +80,29 @@
         },
         ajax: `/promotion/list/*/*`,
         columns: [
-            { data: "promotion_date", name: "promotion_date", className : 'text-center' },
-            { data: "employee", name: "employee" },
-            { data: "old_plantilla_position", name: "old_plantilla_position" },
-            { data: "new_plantilla_position", name: "new_plantilla_position" },
-            { data: "sg_no", name: "sg_no", className : 'text-center' },
-            { data: "step_no", name: "step_no", className : 'text-center' },
-            { data: "sg_year", name: "sg_year", className : 'text-center' },
+            { data: "promotion_date", name: "promotion_date", className : 'text-center align-middle' },
+            { data: "employee", name: "employee", className : 'align-middle' },
+            { data: "old_plantilla_position", name: "old_plantilla_position", className : 'align-middle' },
+            { data: "new_plantilla_position", name: "new_plantilla_position", className : 'align-middle' },
+            { data: "sg_no", name: "sg_no", className : 'text-center align-middle' },
+            { data: "step_no", name: "step_no", className : 'text-center align-middle' },
+            { data: "sg_year", name: "sg_year", className : 'text-center align-middle' },
+            { 
+                  data: "promotion_id",
+                  name: "promotion_id",
+                  className : 'text-center',
+                  render : function (id, _, _, _) {
+                        return `
+                              <a class='btn btn-success shadow mr-2' href="/promotion/${id}/edit">
+                                    <i class="las la-user-edit"></i>
+                              </a>
+
+                              <button class='btn btn-danger shadow'>
+                                    <i class="las la-trash"></i>
+                              </button>
+                        `;
+                  }
+            },
         ],
     });
 
