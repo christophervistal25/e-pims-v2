@@ -45,7 +45,7 @@ class DownloadPersonalDataSheetController extends Controller implements IDownloa
 
           public function __construct()
           {
-                  $this->middleware(['auth']);
+                  // $this->middleware(['auth']);
           }
 
           private function generatePDS(string $id)
