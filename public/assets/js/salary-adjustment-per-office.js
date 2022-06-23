@@ -1,10 +1,8 @@
 $(document).ready(function () {
-
-   
     $("#employeeOffice,#yearAdjustment").change(function (e) {
         let year = $("#yearAdjustment").val();
         let office = $("#employeeOffice").val();
-        $('#salaryAdjustmentPerOffice').DataTable().destroy();
+        $("#salaryAdjustmentPerOffice").DataTable().destroy();
         if (office) {
             $("#addButton").prop("disabled", false);
             salaryAdjustmentPerOfficeSelected = $(
@@ -86,7 +84,8 @@ $(document).ready(function () {
                 ],
             });
         } else {
-            $('#salaryAdjustmentPerOffice').DataTable().destroy();
+            $("#salaryAdjustmentPerOffice").DataTable().clear();
+            $("#salaryAdjustmentPerOffice").DataTable().destroy();
             $("#addButton").prop("disabled", true);
         }
     });
@@ -94,9 +93,7 @@ $(document).ready(function () {
     $("#addButton").click(function () {
         let year = $("#yearAdjustment").val();
         let office = $("#employeeOffice").val();
-        $('#salaryAdjustmentPerOfficeList').DataTable().destroy();
-
-        
+        $("#salaryAdjustmentPerOfficeList").DataTable().destroy();
 
         $("#add").attr("class", "page-header");
         $("#table").attr("class", "page-header d-none");
@@ -161,8 +158,6 @@ $(document).ready(function () {
                 },
             ],
         });
-
-
     });
 
     $("#cancelButton").click(function () {
