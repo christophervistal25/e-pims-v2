@@ -48,6 +48,127 @@ use App\Http\Controllers\PromotionController;
 Route::resource('notifications', 'NotificationController');
 
 Route::redirect('/', 'login');
+Route::get('administrator/dashboard', [AdminDashboardController::class, 'index']);
+
+Route::get('personal-data-sheet/{idNumber}', [PersonalDataSheetController::class, 'edit'])->name('employee.personal-data-sheet.edit');
+
+/* Creating a route for the SalaryGradeController. */
+Route::get('salary-grade-list', [SalaryGradeController::class, 'list'])->name('salary-grade-list');
+Route::resource('salary-grade', SalaryGradeController::class);
+
+/* Creating a route for the MaintenancePositionController. */
+Route::get('maintenance-position-list', [MaintenancePositionController::class, 'list'])->name('maintenance-position-list');
+Route::resource('maintenance-position', MaintenancePositionController::class);
+Route::get('maintenance-position/{id}', [MaintenancePositionController::class, 'destroy'])->name('maintenance-position.delete');
+
+/* Creating a route for the MaintenanceOfficeController. */
+Route::get('maintenance-office-list', [MaintenanceOfficeController::class, 'list'])->name('maintenance-office-list');
+Route::resource('maintenance-office', MaintenanceOfficeController::class);
+Route::get('maintenance-office/{id}', [MaintenanceOfficeController::class, 'destroy'])->name('maintenance-office.delete');
+
+/* Creating a route for the MaintenanceDivisionController. */
+Route::get('maintenance-division-list', [MaintenanceDivisionController::class, 'list'])->name('maintenance-division-list');
+Route::resource('maintenance-division', MaintenanceDivisionController::class);
+Route::get('maintenance-division/{id}', [MaintenanceDivisionController::class, 'destroy'])->name('maintenance-division.delete');
+
+/* Creating a route for the PlantillaOfScheduleController. */
+Route::get('plantilla-of-schedule-list/{office?}/{year?}', [PlantillaOfScheduleController::class, 'list'])->name('plantilla-of-schedile.lists');
+Route::get('plantilla-of-schedule', [PlantillaOfScheduleController::class, 'index'])->name('plantilla-of-schedule.index');
+Route::post('plantilla-of-schedule-store', [PlantillaOfScheduleController::class, 'store'])->name('plantilla-of-schedule.store');
+Route::post('bulk-plantilla-of-schedule-generate', [PlantillaOfScheduleController::class, 'generate'])->name('plantilla-of-schedule.generate');
+
+Route::get('position-schedule-list-adjusted/{year}', [PositionScheduleController::class, 'adjustedlist'])->name('position.schedule.list.adjusted');
+Route::resource('position-schedule', PositionScheduleController::class);
+Route::get('position-schedule/edit/{edit}', [PositionScheduleController::class, 'edits'])->name('position-schedule.edits');
+Route::put('position-schedule/update/{edit}', [PositionScheduleController::class, 'updates'])->name('position-schedule.updates');
+Route::get('position-schedule-list', [PositionScheduleController::class, 'list']);
+
+Route::get('plantilla-list/{office?}/{year?}', [PlantillaController::class, 'list']);
+Route::resource('plantilla-of-personnel', PlantillaController::class);
+Route::put('plantilla-of-personnel/{id}', [PlantillaController::class, 'update']);
+
+Route::resource('plantilla-of-position', PlantillaOfPositionController::class);
+Route::get('plantilla-of-position-list/{office_code?}/{year?}', [PlantillaOfPositionController::class, 'list']);
+Route::get('plantilla-of-position/{id}', [PlantillaOfPositionController::class, 'destroy'])->name('plantilla-of-position.destroy');
+Route::put('plantilla-of-position/{id}', [PlantillaOfPositionController::class, 'update']);
+
+Route::get('promotion/list/{office?}/{year?}', [PromotionController::class, 'list'])->name('promotion.list');
+Route::get('promotions', [PromotionController::class, 'index'])->name('promotion.index');
+Route::get('promotion/create', [PromotionController::class, 'create'])->name('promotion.create');
+Route::post('promotion/store', [PromotionController::class, 'store'])->name('promotion.store');
+Route::get('promotion/{id}/edit', [PromotionController::class, 'edit'])->name('promotion.edit');
+Route::put('promotion/{id}/edit', [PromotionController::class, 'update'])->name('promotion.update');
+
+Route::get('step-increment/list', 'StepIncrementController@list');
+Route::delete('step-increment/{id}', 'StepIncrementController@destroy')->name('step-increment.delete');
+Route::post('/', 'StepIncrementController@store')->name('create.step');
+Route::put('step-increment/{id}', 'StepIncrementController@update')->name('step-increment.update');
+Route::resource('step-increment', 'StepIncrementController');
+
+Route::get('/print-increment/{id}/previewed', 'PrintIncrementController@print')->name('step-increment.previewed.print');
+Route::get('/print-increment/{id}', 'PrintIncrementController@printList')->name('print-increment');
+Route::resource('/print-increment', 'PrintIncrementController');
+
+//salary adjustment
+Route::get('/salary-adjustment/{id}', 'SalaryAdjustmentController@destroy')->name('salary-adjustment.delete');
+Route::resource('/salary-adjustment', 'SalaryAdjustmentController');
+Route::get('/salary-adjustment-list/{employeeOffice?}/{currentSgyear?}', 'SalaryAdjustmentController@list');
+Route::put('/salary-adjustment/update/{id}', 'SalaryAdjustmentController@update');
+Route::get('/print-adjustment/{id}/previewed', 'PrintAdjustmentController@print')->name('salary-adjustment.previewed.print');
+Route::get('/print-adjustment/{id}', 'PrintAdjustmentController@printList')->name('print-adjustment');
+
+//salary adjustment per office
+Route::resource('/salary-adjustment-per-office', 'SalaryAdjustmentPerOfficeController');
+Route::get('/salary-adjustment-per-office-list', 'SalaryAdjustmentPerOfficeController@list');
+Route::put('/salary-adjustment-per-office/update/{id}', 'SalaryAdjustmentPerOfficeController@update');
+Route::get('/salary-adjustment-per-office-not-selected-list', 'SalaryAdjustmentPerOfficeController@NotSelectedlist');
+Route::delete('/salary-adjustment-per-offices/{id}', 'SalaryAdjustmentPerOfficeController@destroy');
+
+// Service Records
+Route::get('service-record/{id}', [ServiceRecordsController::class, 'destroy'])->name('service-records.delete');
+Route::get('service-records-list', [ServiceRecordsController::class, 'list']);
+Route::resource('service-records', ServiceRecordsController::class);
+
+
+Route::get('employees-birthdays/{from}/{to}', [BirthdayController::class, 'range']);
+Route::resource('employees-birthday', BirthdayController::class);
+Route::get('employees', [EmployeeController::class, 'index'])->name('employee.index');
+
+Route::group(['prefix' => 'employee'], function () {
+      Route::get('leave/application', [LeaveController::class, 'show'])->name('leave.application.filling');
+      Route::get('leave/leave-recall', [LeaveRecallController::class, 'index'])->name('leave.leave-recall');
+      Route::resource('leave-recall', LeaveRecallController::class);
+      Route::post('employee-leave-application-filling', [LeaveApplicationController::class, 'storeByAdmin'])->name('employee.leave.application.filling.admin.create');
+      Route::get('list/leave-forwarded-balance', [LeaveForwardedBalanceController::class, 'list'])->name('leave-forwarded-balance.list');
+      Route::post('leave-forwarded-balance/{id}', [LeaveForwardedBalanceController::class, 'destroy']);
+      Route::get('leave-forwarded-balance/{id}/edit', [LeaveForwardedBalanceController::class, 'edit']);
+      Route::put('leave-forwarded-balance/{id}', [LeaveForwardedBalanceController::class, 'update']);
+      Route::resource('leave-forwarded-balance', LeaveForwardedBalanceController::class);
+
+      Route::get('leave-list/list', [LeaveListController::class, 'list']);
+      Route::get('leave-list', [LeaveListController::class, 'index'])->name('leave.leave-list');
+      Route::get('leave/leave-list/{edit}', [LeaveListController::class, 'edit'])->name('leave-list.edit');
+      Route::delete('leave-list/{id}', [LeaveListController::class, 'destroy'])->name('leave-list.delete');
+      Route::put('leave/leave-list/{id}', [LeaveListController::class, 'update'])->name('leave-list.update');
+
+      Route::get('leave-monitoring/{id}', [LeaveMonitoringController::class, 'list']);
+      Route::resource('leave-monitoring', LeaveMonitoringController::class);
+
+      Route::resource('late-undertime', LeaveUndertimeController::class);
+
+      Route::get('leave/compensatory-build-up', [CompensatoryBuildUpController::class, 'list'])->name('compensatory-build-up.list');
+      Route::get('leave/compensatory-build-up/{id}/{year}', [CompensatoryBuildUpController::class, 'listComLeaveByYear']);
+      Route::get('leave/compensatory-build-up/forfeited/{id}/{year}', [CompensatoryBuildUpController::class, 'forfeited']);
+      Route::get('leave/compensatory-build-up/updateForfeited/{emloyeeID}/{year}', [CompensatoryBuildUpController::class, 'updateForfeited']);
+      Route::post('compensatory-build-up/{id}', [CompensatoryBuildUpController::class, 'destroy']);
+      Route::resource('compensatory-build-up', CompensatoryBuildUpController::class);
+});
+
+Route::group(['prefix' => 'maintenance'], function () {
+      Route::get('leave/list', [MaintenanceLeaveController::class, 'list']);
+      Route::resource('leaveIncrement', LeaveIncrementController::class);
+      Route::resource('leave', MaintenanceLeaveController::class);
+});
 
 Route::group(['middleware' => ['auth', 'administrator']], function () {
     Route::get('administrator/dashboard', [AdminDashboardController::class, 'index'])->name('administrator.dashboard');
@@ -108,7 +229,7 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
     Route::post('/', 'StepIncrementController@store')->name('create.step');
     Route::put('step-increment/{id}', 'StepIncrementController@update')->name('step-increment.update');
     Route::resource('step-increment', 'StepIncrementController');
-    
+
     Route::get('/print-increment/{id}/previewed', 'PrintIncrementController@print')->name('step-increment.previewed.print');
     Route::get('/print-increment/{id}', 'PrintIncrementController@printList')->name('print-increment');
     Route::resource('/print-increment', 'PrintIncrementController');
@@ -147,18 +268,18 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
             Route::get('leave-forwarded-balance/{id}/edit', [LeaveForwardedBalanceController::class, 'edit']);
             Route::put('leave-forwarded-balance/{id}', [LeaveForwardedBalanceController::class, 'update']);
             Route::resource('leave-forwarded-balance', LeaveForwardedBalanceController::class);
-    
+
             Route::get('leave-list/list', [LeaveListController::class, 'list']);
             Route::get('leave-list', [LeaveListController::class, 'index'])->name('leave.leave-list');
             Route::get('leave/leave-list/{edit}', [LeaveListController::class, 'edit'])->name('leave-list.edit');
             Route::delete('leave-list/{id}', [LeaveListController::class, 'destroy'])->name('leave-list.delete');
             Route::put('leave/leave-list/{id}', [LeaveListController::class, 'update'])->name('leave-list.update');
-    
+
             Route::get('leave-monitoring/{id}', [LeaveMonitoringController::class, 'list']);
             Route::resource('leave-monitoring', LeaveMonitoringController::class);
-    
+
             Route::resource('late-undertime', LeaveUndertimeController::class);
-    
+
             Route::get('leave/compensatory-build-up', [CompensatoryBuildUpController::class, 'list'])->name('compensatory-build-up.list');
             Route::get('leave/compensatory-build-up/{id}/{year}', [CompensatoryBuildUpController::class, 'listComLeaveByYear']);
             Route::get('leave/compensatory-build-up/forfeited/{id}/{year}', [CompensatoryBuildUpController::class, 'forfeited']);
@@ -172,13 +293,13 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
         Route::resource('leaveIncrement', LeaveIncrementController::class);
         Route::resource('leave', MaintenanceLeaveController::class);
     });
-    
-  
+
+
     Route::get('holiday/list', [HolidayController::class, 'list']);
     Route::resource('holiday', HolidayController::class);
-    
+
     Route::get('profile', 'EmployeeController@profile');
-    
+
     Route::get('salary-grade/{year}', [SalaryGradePrintController::class, 'index'])->name('salary-grade-print');
     Route::post('leave-increment-job', 'LeaveIncrementJobController');
 
