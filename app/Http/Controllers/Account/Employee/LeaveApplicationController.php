@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Account\Employee;
 
 use App\Office;
 use App\Holiday;
+use App\Employee;
 use App\LeaveType;
 use Carbon\Carbon;
 use App\Notification;
@@ -58,6 +59,8 @@ class LeaveApplicationController extends Controller
     public function storeByAdmin(Request $request)
     {   
         if($request->ajax()) {
+            $employee = Employee::where('Employee_id', $request->employeeName)->first();
+            
             $startDate = Carbon::parse($request->date_from);
 
             if($request->leave_type_id == ''){
@@ -99,11 +102,14 @@ class LeaveApplicationController extends Controller
             //     return response()->json(['success' => false, 'message' => $response['message']], 424);
             // }
 
-            // $holidays = Holiday::get()->pluck('date')->toArray();
+            // Check if employee already request a leave.
+            $hasPendingLeave = $employee->leave_files->where('status', 'pending')->count();
 
-            // $noOfWorkingDays = Carbon::parse($request->startDate)->diffInDaysFiltered(function (Carbon $date) use ($holidays) {
-            //     return strtolower($date->format('l')) !== 'saturday' && strtolower($date->format('l')) !== 'sunday' || in_array($date->format('Y-m-d'), $holidays);
-            // }, Carbon::parse($request->endDate)->addDay(1));
+            if($hasPendingLeave) {
+                return response()->json(['success' => false, 'message' => 'You already have a pending request please wait for the approval before filing new application.'], 423);
+            }
+
+
             $employeeID = $request->employeeName;
 
             $lastID = DB::table('Settings')->where('Keyname', 'AUTONUMBER2')->first();

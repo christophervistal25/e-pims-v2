@@ -349,6 +349,10 @@ $layouts = 'layouts.app';
                   $('#splBal').text(splBalance);
                   $('#rehabBal').text(rehabBalance);
                   $('#recommendingApproval').val(employeeOfficeHead);
+
+                  if($('#date_from').val() != null && $('#date_to').val() != null ){
+                        $('#date_to').trigger('change');
+                  }
             });
 
             const ROUTE = "{{ route('employee.leave.application.filling.admin.create') }}";
@@ -386,94 +390,129 @@ $layouts = 'layouts.app';
 
             // When user select a type of leave.
             $('#leave_type_id').change(function(e) {
-                  let selectedType = $('#leave_type_id').val();
+                  if ($('#employeeName').val() == '') {
+                        swal({
+                              text: "Select first Employee."
+                              , icon: "warning"
+                              , timer: 2000
+                        });
+                        $('#leave_type_id').val(null);
+                  } else {
+                        let selectedType = $('#leave_type_id').val();
 
-                  let type = getSelectedLeaveTypeData(types, selectedType);
+                        let type = getSelectedLeaveTypeData(types, selectedType);
 
-                  // Initialize value of Incase of.
-                  let incaseOf = [];
+                        // Initialize value of Incase of.
+                        let incaseOf = [];
 
-                  switch (selectedType) {
-                        case LEAVE_TYPES.get('VL'):
-                              incaseOf = vacationLeaveIncaseOf;
-                              $('#inCaseOfContainer').removeClass('d-none');
-                              break;
-                        case LEAVE_TYPES.get('SPL'):
-                              incaseOf = vacationLeaveIncaseOf;
-                              $('#inCaseOfContainer').removeClass('d-none');
-                              break;
-                        case LEAVE_TYPES.get('SL'):
-                              incaseOf = sickLeaveIncaseOf;
-                              $('#inCaseOfContainer').removeClass('d-none');
-                              $('#withPay, #withoutPay').attr('disabled', false);
-                              break;
-                        case LEAVE_TYPES.get('SLB'):
-                              incaseOf = slbwIncaseOf;
-                              $('#inCaseOfContainer').removeClass('d-none');
-                              $('#withPay, #withoutPay').attr('disabled', false);
-                              break;
-                        case LEAVE_TYPES.get('STL'):
-                              incaseOf = studtyLeaveIncaseOf;
-                              $('#inCaseOfContainer').removeClass('d-none');
-                              $('#withPay, #withoutPay').attr('disabled', false);
-                              break;
-                        default:
-                              $('#inCaseOfContainer').addClass('d-none');
-                              $('#withPay, #withoutPay').attr('disabled', true);
+                        switch (selectedType) {
+                              case LEAVE_TYPES.get('VL'):
+                                    incaseOf = vacationLeaveIncaseOf;
+                                    $('#inCaseOfContainer').removeClass('d-none');
+                                    break;
+                              case LEAVE_TYPES.get('SPL'):
+                                    incaseOf = vacationLeaveIncaseOf;
+                                    $('#inCaseOfContainer').removeClass('d-none');
+                                    break;
+                              case LEAVE_TYPES.get('SL'):
+                                    incaseOf = sickLeaveIncaseOf;
+                                    $('#inCaseOfContainer').removeClass('d-none');
+                                    $('#withPay, #withoutPay').attr('disabled', false);
+                                    break;
+                              case LEAVE_TYPES.get('SLB'):
+                                    incaseOf = slbwIncaseOf;
+                                    $('#inCaseOfContainer').removeClass('d-none');
+                                    $('#withPay, #withoutPay').attr('disabled', false);
+                                    break;
+                              case LEAVE_TYPES.get('STL'):
+                                    incaseOf = studtyLeaveIncaseOf;
+                                    $('#inCaseOfContainer').removeClass('d-none');
+                                    $('#withPay, #withoutPay').attr('disabled', false);
+                                    break;
+                              default:
+                                    $('#inCaseOfContainer').addClass('d-none');
+                                    $('#withPay, #withoutPay').attr('disabled', true);
+                        }
+
+                        // Remove options of in case of select element
+                        $('#inCaseOf').children().remove();
+
+                        // Dynamically insert value for incase of.
+                        incaseOf.map((data) => $('#inCaseOf').append(`<option value="${data}">${data}</option>`));
                   }
-
-                  // Remove options of in case of select element
-                  $('#inCaseOf').children().remove();
-
-                  // Dynamically insert value for incase of.
-                  incaseOf.map((data) => $('#inCaseOf').append(`<option value="${data}">${data}</option>`));
             });
 
 
             $('#date_from').change(function() {
-                  $('.inclusiveDates').empty();
-                  let noOfDays = 0;
-                  let from = $('#date_from').val();
-                  let to = $('#date_to').val();
-                  $.get({
-                        url: `/api/generate/periods/${from}/${to}`
-                        , success: function(response) {
-                              jQuery.each(response.period, function(index, item) {
-                                    $('.inclusiveDates').append(`  <tr>
-                                                                        <td class="text-center">${item}</td>
-                                                                        <td class="text-center"><input type="radio" class="leave_date" data-child="${index}" data-date="${item}" value="whole_day" name="date[${index}]" checked></td>
-                                                                        <td class="text-center"><input type="radio" class="leave_date" data-child="${index}" data-date="${item}" value="pm" name="date[${index}]"></td>
-                                                                        <td class="text-center"><input type="radio" class="leave_date" data-child="${index}" data-date="${item}" value="am" name="date[${index}]"><input type="hidden" id='parent-${index}' class="noOfDays${item}" value="1"></td>
-                                                                  </tr>`);
-                                    noOfDays += parseFloat($(`#parent-${index}`).val());
-                              });
-                              $('#no_of_days').val(noOfDays);
-                        }
-                  });
+                  let leave_type = $('#leave_type_id').val();
+                  
+                  if(leave_type == null){
+                        swal({
+                              text: "Select Type of Leave first."
+                              , icon: "warning"
+                              , timer: 2000
+                        });
+                        $('#date_from').val('');
+                  }else{
+                        $('.inclusiveDates').empty();
+                        let noOfDays = 0;
+                        let from = $('#date_from').val();
+                        let to = $('#date_to').val();
+                        let employee_id = $('#employeeName').val();
+                  
+                        $.get({
+                              url: `/api/generate/periods/${from}/${to}/${employee_id}`
+                              , success: function(response) {
+                                    jQuery.each(response.period, function(index, item) {
+                                          $('.inclusiveDates').append(`  <tr>
+                                                                              <td class="text-center">${item}</td>
+                                                                              <td class="text-center"><input type="radio" class="leave_date" data-child="${index}" data-date="${item}" value="whole_day" name="date[${index}]" checked></td>
+                                                                              <td class="text-center"><input type="radio" class="leave_date" data-child="${index}" data-date="${item}" value="pm" name="date[${index}]"></td>
+                                                                              <td class="text-center"><input type="radio" class="leave_date" data-child="${index}" data-date="${item}" value="am" name="date[${index}]"><input type="hidden" id='parent-${index}' class="noOfDays${item}" value="1"></td>
+                                                                        </tr>`);
+                                          noOfDays += parseFloat($(`#parent-${index}`).val());
+                                    });
+                                    $('#no_of_days').val(noOfDays);
+                              }
+                        });
+                  }
             });
 
             $('#date_to').change(function() {
-                  $('.inclusiveDates').empty();
-                  let type = getSelectedLeaveTypeData(types, $('#leave_type_id').val());
+                  let leave_type = $('#leave_type_id').val();
+                  
+                  if(leave_type == null){
+                        swal({
+                              text: "Select Type of Leave first."
+                              , icon: "warning"
+                              , timer: 2000
+                        });
+                        $('#date_to').val('');
+                  }else{
+                        $('.inclusiveDates').empty();
+                        let type = getSelectedLeaveTypeData(types, $('#leave_type_id').val());
 
-                  let noOfDays = 0;
-                  let from = $('#date_from').val();
-                  let to = $('#date_to').val();
-                  $.get({
-                        url: `/api/generate/periods/${from}/${to}`
-                        , success: function(response) {
-                              jQuery.each(response.period, function(index, item) {
-                                    $('.inclusiveDates').append(` <tr>
-                                                                        <td class="text-center">${item}</td>
-                                                                        <td class="text-center"><input type="radio" class="leave_date" data-child="${index}" data-date="${item}" data-equivalent='1' value="whole_day" name="date[${index}]" checked></td>
-                                                                        <td class="text-center"><input type="radio" class="leave_date" data-child="${index}" data-date="${item}" data-equivalent='.5' value="pm" name="date[${index}]"></td>
-                                                                        <td class="text-center"><input type="radio" class="leave_date" data-child="${index}" data-date="${item}" data-equivalent='.5' value="am" name="date[${index}]"><input type="hidden" id='parent-${index}' class="noOfDays" value="1"></td>
-                                                                  </tr>`);
-                                    noOfDays += parseFloat($(`#parent-${index}`).val());
-                              });
-                              $('#no_of_days').val(noOfDays);
-                        }
-                  });
+                        let noOfDays = 0;
+                        let from = $('#date_from').val();
+                        let to = $('#date_to').val();
+                        let employee_id = $('#employeeName').val();
+
+                        $.get({
+                              url: `/api/generate/periods/${from}/${to}/${employee_id}`
+                              , success: function(response) {
+                                    jQuery.each(response.period, function(index, item) {
+                                          $('.inclusiveDates').append(` <tr>
+                                                                              <td class="text-center">${item}</td>
+                                                                              <td class="text-center"><input type="radio" class="leave_date" data-child="${index}" data-date="${item}" data-equivalent='1' value="whole_day" name="date[${index}]" checked></td>
+                                                                              <td class="text-center"><input type="radio" class="leave_date" data-child="${index}" data-date="${item}" data-equivalent='.5' value="pm" name="date[${index}]"></td>
+                                                                              <td class="text-center"><input type="radio" class="leave_date" data-child="${index}" data-date="${item}" data-equivalent='.5' value="am" name="date[${index}]"><input type="hidden" id='parent-${index}' class="noOfDays" value="1"></td>
+                                                                        </tr>`);
+                                          noOfDays += parseFloat($(`#parent-${index}`).val());
+                                    });
+                                    $('#no_of_days').val(noOfDays);
+                              }
+                        });
+                  }
             });
 
             $(document).on('click', function (e) {
@@ -506,10 +545,10 @@ $layouts = 'layouts.app';
                   } else {
                         if(emLeaveRecord == ''){
                               swal({
-                              text: "No Leave Balances. Unable to create application."
-                              , icon: "warning"
-                              , timer: 2000
-                        });
+                                    text: "No Leave Balances. Unable to create application."
+                                    , icon: "warning"
+                                    , timer: 2000
+                              });
                         }else{
                               $('#apply-spinner').removeClass('d-none');
                               $('#apply-button-icon').addClass('d-none');
