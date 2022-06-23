@@ -359,6 +359,9 @@
                                     <a href="#" class='text-decoration-none'><i class="la la-cog"></i> <span>Maintenance</span> <span class="menu-arrow"></span></a>
                                     <ul style="display: none;">
                                           <li>
+                                            <a class='text-decoration-none' href="{{ route('users.index') }}">
+                                                      Users
+                                                </a>
                                                 <a class='text-decoration-none' href="{{ route('salary-grade.index') }}">
                                                       Salary Grade
                                                 </a>

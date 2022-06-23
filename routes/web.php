@@ -2,10 +2,13 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\BirthdayController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PlantillaController;
+use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\SalaryGradeController;
 use App\Http\Controllers\BirthdayCardController;
 use App\Http\Controllers\StepPromotionController;
@@ -25,6 +28,7 @@ use App\Http\Controllers\EmployeeLeave\LeaveListController;
 use App\Http\Controllers\Prints\SalaryGradePrintController;
 use App\Http\Controllers\Reports\PlantillaReportController;
 use App\Http\Controllers\Account\Employee\ProfileController;
+use App\Http\Controllers\DownloadPersonalDataSheetController;
 use App\Http\Controllers\EmployeeLeave\LeaveRecallController;
 use App\Http\Controllers\SalaryAdjustmentPerOfficeController;
 use App\Http\Controllers\Account\Employee\LeaveCardController;
@@ -38,11 +42,8 @@ use App\Http\Controllers\EmployeeLeave\LeaveForwardedBalanceController;
 use App\Http\Controllers\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Account\Employee\PrintLeaveApplicationController;
 use App\Http\Controllers\Account\Employee\EmployeePersonalDataSheetController;
-use App\Http\Controllers\Account\Employee\DashboardController as EmployeeDashboardController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\DownloadPersonalDataSheetController;
 use App\Http\Controllers\Maintenance\LeaveController as MaintenanceLeaveController;
-use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\Account\Employee\DashboardController as EmployeeDashboardController;
 
 
 Route::resource('notifications', 'NotificationController');
@@ -52,6 +53,11 @@ Route::redirect('/', 'login');
 Route::group(['middleware' => ['auth', 'administrator']], function () {
     Route::get('administrator/dashboard', [AdminDashboardController::class, 'index'])->name('administrator.dashboard');
     Route::get('personal-data-sheet/{idNumber}', [PersonalDataSheetController::class, 'edit'])->name('employee.personal-data-sheet.edit');
+
+    Route::get('employees', [EmployeeController::class, 'index'])->name('employee.index');
+
+    Route::get('user/list', [UserController::class, 'list'])->name('users.list');
+    Route::get('users', [UserController::class, 'index'])->name('users.index');
 
     /* Creating a route for the SalaryGradeController. */
     Route::get('salary-grade-list', [SalaryGradeController::class, 'list'])->name('salary-grade-list');
@@ -135,7 +141,6 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
     Route::resource('employees-birthday', BirthdayController::class);
     Route::get('birthday-card/{name}', [BirthdayCardController::class, 'firstCard']);
     Route::get('birthday-card-2/{name}', [BirthdayCardController::class, 'secondCard']);
-    Route::get('employees', [EmployeeController::class, 'index'])->name('employee.index');
 
     Route::group(['prefix' => 'employee'], function () {
             Route::get('leave/application', [LeaveController::class, 'show'])->name('leave.application.filling');
