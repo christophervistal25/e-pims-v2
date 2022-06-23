@@ -63,7 +63,9 @@ class LeaveApplicationController extends Controller
             if($request->leave_type_id == ''){
                 $rules = ['leave_type_id' => ['required']];
             }elseif($request->leave_type_id == 'SL') {
-                $rules['date_from'][] = 'before_or_equal:' . Carbon::parse($request->date_to)->format('Y-m-d');
+                $rules = [
+                    'date_from'             => ['required', 'before:' . Carbon::parse(today())->format('Y-m-d')],
+                ];
             }else{
                  // Validation with employee balance look-up
                 $rules = [
@@ -264,29 +266,29 @@ class LeaveApplicationController extends Controller
         $status           = $application->approved_status;
 
         $data = [
-            'office'          => $office ?? ' ',
-            'fullname'        => $fullName ?? ' ',
-            'date_of_fill' => $dateOfFill ?? ' ',
-            'position'        => $position ?? ' ',
-            'salary'          => $salary ?? ' ',
-            'type_of_leave'   => $application->type->name ?? ' ',
-            'inclusive_dates' => ' ',
-            'commutation' => $commutation ?? ' ',
-            'tardiness' => $tardiness ?? 0,
-            'under_time' => $underTime ?? 0,
-            'vacation_earn' => $vacationEarn ?? 0,
-            'vacation_less' => $vacationLess ?? 0,
-            'sick_earn' => $sickEarn ?? 0,
-            'sick_less' => $sickLess ?? 0,
-            'earn_total' => $earnTotal ?? 0,
-            'less_total' => $lessTotal ?? 0,
-            'sick_total' => $sickTotal ?? 0,
-            'vacation_total' => $vacationTotal ?? ' ',
-            'over_all_total' => $sickEarn + $vacationEarn,
-            'reccomendation' => $recommendation ?? ' ',
-            'approved_for' => $approvedFor ?? ' ',
+            'office'            => $office ?? ' ',
+            'fullname'          => $fullName ?? ' ',
+            'date_of_fill'      => $dateOfFill ?? ' ',
+            'position'          => $position ?? ' ',
+            'salary'            => $salary ?? ' ',
+            'type_of_leave'     => $application->type->name ?? ' ',
+            'inclusive_dates'   => ' ',
+            'commutation'       => $commutation ?? ' ',
+            'tardiness'         => $tardiness ?? 0,
+            'under_time'        => $underTime ?? 0,
+            'vacation_earn'     => $vacationEarn ?? 0,
+            'vacation_less'     => $vacationLess ?? 0,
+            'sick_earn'         => $sickEarn ?? 0,
+            'sick_less'         => $sickLess ?? 0,
+            'earn_total'        => $earnTotal ?? 0,
+            'less_total'        => $lessTotal ?? 0,
+            'sick_total'        => $sickTotal ?? 0,
+            'vacation_total'    => $vacationTotal ?? ' ',
+            'over_all_total'    => $sickEarn + $vacationEarn,
+            'reccomendation'    => $recommendation ?? ' ',
+            'approved_for'      => $approvedFor ?? ' ',
             'disapproved_due_to' => $disApprovedDueTo ?? ' ',
-            'status' => $status,
+            'status'            => $status,
         ];
         
 
