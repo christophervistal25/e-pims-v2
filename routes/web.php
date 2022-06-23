@@ -99,7 +99,7 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
     Route::put('plantilla-of-personnel/{id}', [PlantillaController::class, 'update']);
 
     Route::resource('plantilla-of-position', PlantillaOfPositionController::class);
-    Route::get('plantilla-of-position-list/{office_code?}/{year?}', [PlantillaOfPositionController::class, 'list']);
+    Route::get('plantilla-of-position-list/{office_code?}', [PlantillaOfPositionController::class, 'list']);
     Route::get('plantilla-of-position/{id}', [PlantillaOfPositionController::class, 'destroy'])->name('plantilla-of-position.destroy');
     Route::put('plantilla-of-position/{id}', [PlantillaOfPositionController::class, 'update']);
 
@@ -137,7 +137,7 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
     Route::get('/salary-adjustment-per-office/{id}', 'SalaryAdjustmentPerOfficeController@destroy')->name('salary-adjustment-per-office.delete');
     Route::put('/salary-adjustment-per-office/update/{id}', 'SalaryAdjustmentPerOfficeController@update');
     Route::delete('/salary-adjustment-per-offices/{id}', 'SalaryAdjustmentPerOfficeController@destroy');
-    
+
     // Service Records
     Route::get('service-record/{id}', [ServiceRecordsController::class, 'destroy'])->name('service-records.delete');
     Route::get('service-records-list', [ServiceRecordsController::class, 'list']);

@@ -23,20 +23,18 @@ class PlantillaOfPositionController extends Controller
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('PosCode', 'Description', 'sg_no')->get();
         $lastId = Position::latest('PosCode')->first();
-        $year = PlantillaPosition::select('year')->where('year', '!=', '2022')->get();
-        $selectedYear = PlantillaPosition::select('year')->orderBy('year', 'DESC')->first();
-        return view('PlantillaOfPosition.PlantillaOfPosition', compact('position', 'office', 'lastId', 'year', 'selectedYear'));
+        return view('PlantillaOfPosition.PlantillaOfPosition', compact('position', 'office', 'lastId'));
     }
 
-    public function list(string $office = '*', $year)
+    public function list(string $office = '*')
     {
         $data = DB::table('plantilla_positions')->join('Position', 'plantilla_positions.PosCode', '=', 'Position.PosCode')
         ->join('Offices', 'plantilla_positions.office_code', '=', 'Offices.office_code')
-        ->select('pp_id', 'Position.PosCode', 'item_no', 'plantilla_positions.sg_no as sg_no', 'Offices.office_name as office_name', 'Position.Description as Description', 'old_position_name', 'year');
+        ->select('pp_id', 'Position.PosCode', 'item_no', 'plantilla_positions.sg_no as sg_no', 'Offices.office_name as office_name', 'Position.Description as Description', 'old_position_name');
 
         if (request()->ajax()) {
-            $PlantillaPositionData = ($office != '*') ? $data->where('Offices.office_code', $office)->where('year', $year)->get()
-            : $data->where('year', $year)->get();
+            $PlantillaPositionData = ($office != '*') ? $data->where('Offices.office_code', $office)->get()
+            : $data->get();
         return DataTables::of($PlantillaPositionData)
         ->addColumn('action', function($row){
                             $btn = "<a title='Edit Plantilla Of Position' href='". route('plantilla-of-position.edit', $row->pp_id) .  "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
@@ -83,7 +81,6 @@ class PlantillaOfPositionController extends Controller
         $plantillaposition->sg_no                             = $request['salaryGrade'];
         $plantillaposition->office_code                       = $request['officeCode'];
         $plantillaposition->old_position_name                 = $request['positionOldName'];
-        $plantillaposition->year                              = $request['year'];
         $plantillaposition->save();
         Setting::find('PP_id')->increment('Keyvalue');
         return response()->json(['success'=>true]);
@@ -133,7 +130,6 @@ class PlantillaOfPositionController extends Controller
         $plantillaposition->sg_no                             = $request['salaryGrade'];
         $plantillaposition->office_code                       = $request['officeCode'];
         $plantillaposition->old_position_name                 = $request['positionOldName'];
-        $plantillaposition->year                              = $request['year'];
         $plantillaposition->save();
         return response()->json(['success'=>true]);
     }
