@@ -483,7 +483,7 @@ $layouts = 'layouts.app';
                         let child = e.target.getAttribute('data-child');
                         $(`#parent-${child}`).val(e.target.getAttribute('data-equivalent'));
                         $('.noOfDays').each(function(index, item) {
-                              noOfDays += parseFloat($(`#parent-${index}`).val());
+                              noOfDays += parseFloat(item.value);
                         });
                         $('#no_of_days').val(noOfDays);
                   }
@@ -534,12 +534,7 @@ $layouts = 'layouts.app';
                                     , no_of_days: $("#no_of_days").val()
                                     , date_from: $('#date_from').val()
                                     , date_to: $('#date_to').val()
-                                    , earned: $('#earned').val()
-                                    , earnedLess: $('#earnedLess').val()
-                                    , earnedRemaining: $('#earnedRemaining').val()
                                     , commutation: $('#commutation').val()
-                                    , recommendingApproval: $('#recommendingApproval').val()
-                                    , approvedBy: $('#approvedBy').val()
                                     , leave_date: leaveDates
                               , };
 
