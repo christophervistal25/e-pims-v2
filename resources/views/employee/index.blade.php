@@ -174,6 +174,23 @@
 <script src="/assets/js/jquery.dataTables.min.js"></script>
 <script src="/assets/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hashids/2.2.10/hashids.min.js" integrity="sha512-c2uJyl0yoZaILXV5QC5s78uT8gQrd0MbmH3t1fXZ7j/2WfC+KJwglzdjVaYVJtfG9k3NTokOR016aP13vWwiiw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="{{ asset('/assets/js/employee.js') }}"></script>
+<script>
+    $(document).ready(function ()  {
+        const hashids = new Hashids()
+        const url = new URL(window.location.href);
+        let lookFor = url.searchParams.get('lookfor');
+        
+
+        if(lookFor) {
+            table.search( hashids.decode(lookFor) ).draw();
+
+            table.on('draw', function () {
+                $(`[data-employee-id="${lookFor}"]`).trigger('click')
+            });
+        }
+    });
+</script>
 @endpush
 @endsection

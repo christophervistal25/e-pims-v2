@@ -131,14 +131,12 @@
                         <li class="nav-item dropdown has-arrow main-drop">
                               <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                                     <span class="user-img">
-                                          {{-- <img
-                                src="/storage/employee_images/{{ Auth::user()->employee->information->photo }}" alt="">
-                                          --}}
+                                          <img src="{{ asset('/assets/img/province.png') }}" alt="">
                                           <span class="status online"></span></span>
                                     <span id="employee--fullname">{{ Auth::user()->employee->fullname }}</span>
                               </a>
                               <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="{{ route('employee.personal.profile') }}">My Profile</a>
+                                    <a class="dropdown-item" href="{{ route('employee.personal.profile') }}">Account Setting</a>
                                     <form action="{{  route('logout') }}" method="POST">
                                           @csrf
                                           <button class="dropdown-item" style="outline-none;" type="submit">Logout</button>
@@ -151,8 +149,7 @@
                   <div class="dropdown mobile-user-menu">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                         <div class="dropdown-menu dropdown-menu-right">
-                              <a class="dropdown-item" href="profile.php">My Profile</a>
-                              <a class="dropdown-item" href="settings.php">Settings</a>
+                              <a class="dropdown-item" href="{{ route('employee.personal.profile') }}">Account Setting</a>
                               <form action="{{  route('logout') }}" method="POST">
                                     @csrf
                                     <button class="dropdown-item" style="outline-none;" type="submit">Logout</button>

@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Office;
-use App\Setting;
-use App\Division;
 use App\Employee;
 use App\Position;
 use App\Plantilla;
@@ -119,7 +117,6 @@ class PromotionController extends Controller
                   /* Removing the current plantilla of the employee. */
                   $this->plantillaPersonnelService->removeCurrentPlantilla($employeeLatestPlantilla);
 
-
             });
 
             return back()->with('success', 'You successfully promote a employee');
@@ -165,5 +162,17 @@ class PromotionController extends Controller
             }
 
             return back()->with('success', 'You successfully update a promotion');
+      }
+
+      public function destroy(Request $request, int $promotionID)
+      {
+            
+            DB::transaction(function () use($promotionID) {
+                  $promotion = Promotion::with(['new_plantilla_position', 'new_plantilla_position.plantillas'])->find($promotionID);
+                  $promotion->new_plantilla_position->plantillas->delete();
+                  $promotion->delete();
+            });
+
+            return response()->json(['success' => true]);
       }
 }

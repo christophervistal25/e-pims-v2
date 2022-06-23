@@ -186,14 +186,16 @@
                         <li class="nav-item dropdown has-arrow main-drop">
                               <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                                     <span class="user-img">
-                                          {{-- <img src=/assets/img/profiles/avatar-21.jpg" alt=""> --}}
+                                          <img src="{{ asset('/assets/img/province.png') }}" alt="">
                                           <span class="status online"></span></span>
                                     <span>Admin</span>
                               </a>
                               <div class="dropdown-menu">
                                     <a class="dropdown-item" href="profile.html">My Profile</a>
-                                    {{-- <a class="dropdown-item" href="settings.html">Settings</a> --}}
-                                    <a class="dropdown-item" href="login.html">Logout</a>
+                                    <form action="{{ route('logout') }}" method="POST">
+                                          @csrf
+                                          <button class="dropdown-item" style="outline-none;" type="submit">Logout</button>
+                                    </form>
                               </div>
                         </li>
                   </ul>
@@ -204,7 +206,10 @@
                         <div class="dropdown-menu dropdown-menu-right">
                               <a class="dropdown-item" href="profile.html">My Profile</a>
                               <a class="dropdown-item" href="settings.html">Settings</a>
-                              <a class="dropdown-item" href="login.html">Logout</a>
+                              <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button class="dropdown-item" style="outline-none;" type="submit">Logout</button>
+                              </form>
                         </div>
                   </div>
                   <!-- /Mobile Menu -->
@@ -216,7 +221,7 @@
                         <div id="sidebar-menu" class="sidebar-menu">
                               <ul>
                                     <li>
-                                          <a class='text-decoration-none' href='/'>
+                                          <a class='text-decoration-none' href='/administrator/dashboard'>
                                                 <i class="las la-tachometer-alt"></i> <span>Dashboard</span></a>
                                           </a>
                                     </li>
@@ -354,6 +359,9 @@
                                     <a href="#" class='text-decoration-none'><i class="la la-cog"></i> <span>Maintenance</span> <span class="menu-arrow"></span></a>
                                     <ul style="display: none;">
                                           <li>
+                                            <a class='text-decoration-none' href="{{ route('users.index') }}">
+                                                      Users
+                                                </a>
                                                 <a class='text-decoration-none' href="{{ route('salary-grade.index') }}">
                                                       Salary Grade
                                                 </a>
@@ -416,7 +424,7 @@
                                     <div class="col-sm-12">
                                           <h3 class="page-title">@yield('title')</h3>
                                           <ul class="breadcrumb">
-                                                <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                                                <li class="breadcrumb-item"><a href="/administrator/dashboard">Dashboard</a></li>
                                                 <li class="breadcrumb-item active">@yield('title')</li>
                                           </ul>
                                     </div>

@@ -97,8 +97,8 @@
                                     <i class="las la-user-edit"></i>
                               </a>
 
-                              <button class='btn btn-danger shadow'>
-                                    <i class="las la-trash"></i>
+                              <button class='btn btn-danger shadow btn-delete-promotion' data-promotion-id="${id}">
+                                    <i class="las la-trash" style="pointer-events:none;"></i>
                               </button>
                         `;
                   }
@@ -116,6 +116,48 @@
             let selectedOffice = $('#office').val();
             let selectedYear = $(this).val();
             table.ajax.url(`/promotion/list/${selectedOffice}/${selectedYear}`).load();
+    });
+    let input = document.createElement('input');
+    $(input).addClass('swal-content__input').attr('type', 'password');
+
+
+    let authenticationGuard = () => swal("Please enter your password: ", { content: input });
+
+    $(document).on('click', '.btn-delete-promotion', function () {
+            let id = $(this).attr('data-promotion-id');
+            swal({
+                  title : '',
+                  text : 'Are you sure you want to delete?',
+                  icon : 'warning',
+                  dangerMode : true,
+                  buttons : ["No", "Yes"],
+                  timer : 5000,
+            }).then((confirmed) => {
+                  if(confirmed) {
+                        $.ajax({
+                              url : `/promotion/${id}/delete`,
+                              method : 'DELETE',
+                              success : function (response) {
+                                    if(response.success) {
+                                          table.ajax.reload();
+                                          
+                                          swal({
+                                                title : '',
+                                                text : 'You successfully remove a promotion',
+                                                icon : 'success',
+                                                buttons : false,
+                                                timer : 5000,
+                                          });
+                                    }
+                              }
+                        });
+                  }
+            });
+            /* authenticationGuard().then((buttonClicked) => {
+                  if(buttonClicked && $(input).val().length !== 0) {
+                        
+                  }
+            }); */
     });
 </script>
 @endpush
