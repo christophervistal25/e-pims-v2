@@ -1,5 +1,6 @@
 <?php
 
+use App\Holiday;
 use App\Division;
 use App\Employee;
 use App\Plantilla;
@@ -19,9 +20,9 @@ use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\OfficeController;
 use App\Http\Controllers\Api\DivisionController;
 use App\Http\Controllers\Api\EmployeeController;
-use App\Http\Controllers\Api\PlantillaController;
 use App\Http\Controllers\Api\PositionController;
 use App\Http\Controllers\Api\ProvinceController;
+use App\Http\Controllers\Api\PlantillaController;
 use App\Http\Controllers\StepIncrementController;
 use App\Http\Controllers\ServiceRecordsController;
 use App\Http\Controllers\PersonalDataSheetController;
@@ -318,13 +319,17 @@ Route::get('/leave/leave-list/{officeID}/{status?}/{employeeID?}', 'EmployeeLeav
 
 Route::get('generate/periods/{start}/{end}', function ($start, $end) {
       $period = CarbonPeriod::create($start, $end)->filter('isWeekday');
+      $startMonth = Carbon::parse($start)->format('m');
+     
       $range = [];
+      $holidays = [];
 
       foreach ($period as $date) {
             $range[] = $date->format('Y-m-d');
+            $holidays[] = $date->format('m-d');
       }
-
-      return response()->json(['period' => $range]);
+      $holidays = Holiday::whereIn('date', $holidays)->get()->each(fn($holiday) => $holiday->date = date('Y').'-'. $holiday->date)->pluck('date')->toArray();
+      return response()->json(['period' => array_diff($range, $holidays)]);
 });
 
 
