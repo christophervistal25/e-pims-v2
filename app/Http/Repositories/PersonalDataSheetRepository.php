@@ -2,28 +2,32 @@
 
 namespace App\Http\Repositories;
 
-use Illuminate\Support\Facades\DB;
+use App\Setting;
+use App\Employee;
+use App\EmployeeIssuedID;
+use App\EmployeeReference;
 use Illuminate\Support\Str;
+use App\EmployeeCivilService;
+use App\EmployeeRelevantQuery;
+use App\EmployeeVoluntaryWork;
+use App\EmployeeSpouseChildren;
+use App\EmployeeWorkExperience;
+use App\EmployeeFamilyBackground;
+use App\EmployeeOtherInformation;
+use App\EmployeeTrainingAttained;
+use Illuminate\Support\Facades\DB;
 use App\Contracts\IPersonalDataSheet;
-use App\{ // <Models>
-    Setting,
-    Employee,
-    EmployeeIssuedID,
-    EmployeeReference,
-    EmployeeCivilService,
-    EmployeeRelevantQuery,
-    EmployeeVoluntaryWork,
-    EmployeeSpouseChildren,
-    EmployeeWorkExperience,
-    EmployeeFamilyBackground,
-    EmployeeOtherInformation,
-    EmployeeTrainingAttained,
-    EmployeeEducationalBackground,
-};
+use App\EmployeeEducationalBackground;
+use Illuminate\Database\Eloquent\Collection;
 
 class PersonalDataSheetRepository implements IPersonalDataSheet
 {
 
+    /**
+     * It gets the employee's personal information from the database
+     * 
+     * @param string employeeID The employee ID of the employee you want to get the information of.
+     */
     public function getPersonalInformation(string $employeeID)
     {
         $employeeID = str_pad($employeeID, 4, "0", STR_PAD_LEFT);
@@ -32,6 +36,12 @@ class PersonalDataSheetRepository implements IPersonalDataSheet
             ->find($employeeID);
     }
 
+    /**
+     * It updates the employee's personal information.
+     * 
+     * @param array data The data to be updated.
+     * @param employeeID The employee ID of the employee you want to update.
+     */
     public function updatePersonalInformation(array $data = [], $employeeID): Employee
     {
         $employeeID = str_pad($employeeID, 4, "0", STR_PAD_LEFT);
@@ -81,6 +91,13 @@ class PersonalDataSheetRepository implements IPersonalDataSheet
         return $employee->exclude(['ImagePhoto'])->first();
     }
 
+    /**
+     * It takes an array of children, and an employee ID, and updates the children for that employee
+     * 
+     * @param array children array of children
+     * @param string employeeID The employee ID of the employee.
+     * 
+     */
     public function updateChildren(array $children = [], string $employeeID)
     {
         $employeeID = str_pad($employeeID, 4, "0", STR_PAD_LEFT);
@@ -102,12 +119,26 @@ class PersonalDataSheetRepository implements IPersonalDataSheet
         return $this;
     }
 
+    /**
+     * It gets the family background of an employee
+     * 
+     * @param string employeeID The employee ID of the employee you want to get the family background
+     * of.
+     * 
+     */
     public function getFamilyBackground(string $employeeID)
     {
         $employeeID = str_pad($employeeID, 4, "0", STR_PAD_LEFT);
         return EmployeeFamilyBackground::with(['spouse'])->where('employee_id', $employeeID)->first();
     }
 
+    /**
+     * It updates or creates a new record in the database.
+     * 
+     * @param array data The data to be inserted or updated.
+     * 
+     * @return array The data is being returned.
+     */
     public function updateFamilyBackground(array $data = []): array
     {
         $employeeID = $data['employee_id'];
@@ -138,7 +169,15 @@ class PersonalDataSheetRepository implements IPersonalDataSheet
         return $data;
     }
 
-    public function getEducationalBackground(string $employeeID)
+   /**
+    * It gets the educational background of an employee
+    * 
+    * @param string employeeID The employee ID of the employee you want to get the educational
+    * background of.
+    * 
+    * @return EmployeeEducationalBackground educational background of the employee.
+    */
+    public function getEducationalBackground(string $employeeID) :EmployeeEducationalBackground
     {
         $employeeID = str_pad($employeeID, 4, "0", STR_PAD_LEFT);
 
@@ -153,6 +192,14 @@ class PersonalDataSheetRepository implements IPersonalDataSheet
         return $educationalBackground;
     }
 
+   /**
+    * It updates or creates a new record in the database
+    * 
+    * @param array data The array of data to be inserted or updated.
+    * @param employeeID The employee ID of the employee.
+    * 
+    * @return array The data is being returned.
+    */
     public function updateEducationalBackground(array $data = [], $employeeID): array
     {
         $employeeID = str_pad($data['employee_id'], 4, "0", STR_PAD_LEFT);
@@ -202,12 +249,29 @@ class PersonalDataSheetRepository implements IPersonalDataSheet
         return $data;
     }
 
-    public function getCivilServiceEligibility(string $employeeID)
+   
+    /**
+     * > This function returns a collection of civil service eligibilities of an employee
+     * 
+     * @param string employeeID The employee ID of the employee you want to get the civil service
+     * eligibility of.
+     * 
+     * @return Collection|array A collection of EmployeeCivilService objects.
+     */
+    public function getCivilServiceEligibility(string $employeeID) :Collection|array
     {
         $employeeID = str_pad($employeeID, 4, "0", STR_PAD_LEFT);
         return EmployeeCivilService::where('employee_id', $employeeID)->get() ?? json_encode([]);
     }
 
+    /**
+     * It updates the employee civil service record.
+     * 
+     * @param array data The data to be inserted.
+     * @param string employeeID The employee ID of the employee you want to update.
+     * 
+     * @return array The data that was passed in the function.
+     */
     public function updateCivilService(array $data = [], string $employeeID): array
     {
         DB::transaction(function () use ($data, $employeeID) {
@@ -231,12 +295,24 @@ class PersonalDataSheetRepository implements IPersonalDataSheet
         return $data;
     }
 
+    /**
+     * > This function returns the work experience of an employee
+     * 
+     * @param string employeeID The employee ID of the employee you want to get the work experience of.
+     * 
+     */
     public function getWorkExperience(string $employeeID)
     {
         $employeeID = str_pad($employeeID, 4, "0", STR_PAD_LEFT);
         return EmployeeWorkExperience::where('employee_id', $employeeID)->orderBy('to', 'DESC')->get() ?? json_encode([]);
     }
 
+    /**
+     * It deletes all the records in the database and then inserts the new records
+     * 
+     * @param array data array of data to be inserted
+     * @param employeeID The employee ID of the employee you want to update.
+     */
     public function updateWorkExperience(array $data = [], $employeeID): array
     {
         DB::transaction(function () use ($data, $employeeID) {
@@ -263,12 +339,25 @@ class PersonalDataSheetRepository implements IPersonalDataSheet
         return $data;
     }
 
+    /**
+     * > This function returns the voluntary work of an employee
+     * 
+     * @param string employeeID The employee ID of the employee you want to get the voluntary work of.
+     */
     public function getVoluntaryWork(string $employeeID)
     {
         $employeeID = str_pad($employeeID, 4, "0", STR_PAD_LEFT);
         return EmployeeVoluntaryWork::where('employee_id', $employeeID)->get() ?? json_encode([]);
     }
 
+    /**
+     * It updates the voluntary work of an employee.
+     * 
+     * @param array data The data to be inserted.
+     * @param employeeID The employee ID of the employee you want to update.
+     * 
+     * @return array The data is being returned.
+     */
     public function updateVoluntary(array $data = [], $employeeID): array
     {
         DB::transaction(function () use ($data, $employeeID) {
@@ -292,12 +381,27 @@ class PersonalDataSheetRepository implements IPersonalDataSheet
         return $data;
     }
 
+    /**
+     * > This function returns all the training and development of an employee
+     * 
+     * @param string employeeID The employee ID of the employee you want to get the learning and
+     * development of.
+     * 
+     * @return It returns the employee's training and development.
+     */
     public function getLearningAndDevelopment(string $employeeID)
     {
         $employeeID = str_pad($employeeID, 4, "0", STR_PAD_LEFT);
         return EmployeeTrainingAttained::where('employee_id', $employeeID)->get() ?? json_encode([]);
     }
 
+    /**
+     * It updates the employee's learning and development by deleting all the previous records and
+     * inserting the new ones
+     * 
+     * @param array data The data to be saved.
+     * @param employeeID The employee's ID
+     */
     public function updateLearningAndDevelopment(array $data = [], $employeeID): array
     {
         DB::transaction(function () use ($data, $employeeID) {
@@ -323,12 +427,25 @@ class PersonalDataSheetRepository implements IPersonalDataSheet
         return $data;
     }
 
+    /**
+     * > This function returns the other information of an employee
+     * 
+     * @param string employeeID The employee ID of the employee you want to get the other information
+     * of.
+     * 
+     */
     public function getOtherInformation(string $employeeID)
     {
         $employeeID = str_pad($employeeID, 4, "0", STR_PAD_LEFT);
         return EmployeeOtherInformation::where('employee_id', $employeeID)->get() ?? json_encode([]);
     }
 
+    /**
+     * It updates the employee's other information
+     * 
+     * @param array data The data to be inserted
+     * @param employeeID The employee ID of the employee you want to update.
+     */
     public function updateOtherInformation(array $data = [], $employeeID): array
     {
         DB::transaction(function () use ($data, $employeeID) {
@@ -351,12 +468,27 @@ class PersonalDataSheetRepository implements IPersonalDataSheet
         return $data;
     }
 
+    /**
+     * It returns the relevant queries of an employee
+     * 
+     * @param string employeeID The employee ID of the employee you want to get the relevant queries
+     * of an object of the EmployeeRelevantQuery model
+     * 
+     */
     public function getRelevantQueries(string $employeeID)
     {
         $employeeID = str_pad($employeeID, 4, "0", STR_PAD_LEFT);
         return EmployeeRelevantQuery::where('employee_id', $employeeID)->first();
     }
 
+    /**
+     * It updates the relevant query table.
+     * 
+     * @param array data The data to be inserted or updated.
+     * @param employeeID The employee ID of the employee.
+     * 
+     * @return array The data is being returned.
+     */
     public function updateRelevantQuery(array $data = [], $employeeID): array
     {
         $employeeID = str_pad($employeeID, 4, "0", STR_PAD_LEFT);
@@ -397,15 +529,29 @@ class PersonalDataSheetRepository implements IPersonalDataSheet
         return $data;
     }
 
+    /**
+     * It returns all the references of an employee
+     * 
+     * @param string employeeID The employee ID of the employee you want to get the references of.
+     * 
+     */
     public function getReferences(string $employeeID)
     {
         $employeeID = str_pad($employeeID, 4, "0", STR_PAD_LEFT);
         return EmployeeReference::where('employee_id', $employeeID)->get();
     }
 
+    /**
+     * It updates the employee references by deleting all the existing references and then inserting
+     * the new references
+     * 
+     * @param array data the array of data to be inserted
+     * @param employeeID The employee ID of the employee you want to update the references of.
+     * 
+     * @return array The data that was passed in.
+     */
     public function updateReferences(array $data = [], $employeeID): array
     {
-
         DB::transaction(function () use ($data, $employeeID) {
             $employeeID = str_pad($employeeID, 4, "0", STR_PAD_LEFT);
 
@@ -425,12 +571,27 @@ class PersonalDataSheetRepository implements IPersonalDataSheet
         return $data;
     }
 
+    /**
+     * It gets the government issued ID of an employee
+     * 
+     * @param string employeeID The employee ID of the employee you want to get the government issued
+     * ID of.
+     * 
+     */
     public function getGovernmentIssuedID(string $employeeID)
     {
         $employeeID = str_pad($employeeID, 4, "0", STR_PAD_LEFT);
         return EmployeeIssuedID::where('employee_id', $employeeID)->first();
     }
 
+    /**
+     * It updates or creates a new record in the database.
+     * 
+     * @param array data The data to be inserted into the database.
+     * @param employeeID The employee ID of the employee you want to update.
+     * 
+     * @return array The data is being returned.
+     */
     public function updateGovernmentIssuedID(array $data = [], $employeeID): array
     {
         $employeeID = str_pad($employeeID, 4, "0", STR_PAD_LEFT);
