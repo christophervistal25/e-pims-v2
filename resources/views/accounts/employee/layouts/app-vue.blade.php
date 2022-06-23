@@ -207,7 +207,7 @@
                                     <span id="employee--fullname">{{ Auth::user()->employee->fullname }}</span>
                               </a>
                               <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="{{ route('employee.personal.profile') }}">My Profile</a>
+                                    <a class="dropdown-item" href="{{ route('employee.personal.profile') }}">Account Setting</a>
                                     <a class="dropdown-item" href="login.html">Logout</a>
                               </div>
                         </li>
@@ -217,7 +217,7 @@
                   <div class="dropdown mobile-user-menu">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                         <div class="dropdown-menu dropdown-menu-right">
-                              <a class="dropdown-item" href="{{ route('employee.personal.profile') }}">My Profile</a>
+                              <a class="dropdown-item" href="{{ route('employee.personal.profile') }}">Account Setting</a>
                         </div>
                   </div>
                   <!-- /Mobile Menu -->

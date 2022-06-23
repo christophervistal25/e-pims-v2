@@ -39,14 +39,17 @@ use App\Http\Controllers\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Account\Employee\PrintLeaveApplicationController;
 use App\Http\Controllers\Account\Employee\EmployeePersonalDataSheetController;
 use App\Http\Controllers\Account\Employee\DashboardController as EmployeeDashboardController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DownloadPersonalDataSheetController;
 use App\Http\Controllers\Maintenance\LeaveController as MaintenanceLeaveController;
 use App\Http\Controllers\PromotionController;
 
+
 Route::resource('notifications', 'NotificationController');
 
 Route::redirect('/', 'login');
-Route::get('administrator/dashboard', [AdminDashboardController::class, 'index']);
+
+Route::get('administrator/dashboard', [AdminDashboardController::class, 'index'])->name('administrator.dashboard');
 
 Route::get('personal-data-sheet/{idNumber}', [PersonalDataSheetController::class, 'edit'])->name('employee.personal-data-sheet.edit');
 
@@ -181,7 +184,9 @@ Route::resource('holiday', HolidayController::class);
 
 Route::get('/profile', 'EmployeeController@profile');
 
-Auth::routes();
+Auth::routes(['register' => false]);
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [LoginController::class, 'submitLogin'])->name('submit.login');
 
 Route::get('404', function () {
       return view('errors.423');
