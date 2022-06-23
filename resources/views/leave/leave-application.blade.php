@@ -432,84 +432,31 @@ $layouts = 'layouts.app';
 
             $('#date_from').change(function() {
                   $('.inclusiveDates').empty();
-                  let period = moment($('#date_to').val()).diff($('#date_from').val(), 'days');
-                  let POINTS = 0;
-
-                  $('#no_of_days').val(period);
-
-
-                  let type = getSelectedLeaveTypeData(types, $('#leave_type_id').val());
-
-                  if (type.leave_type_id === LEAVE_TYPES.get('FL')) {
-                        POINTS = 5;
-                  } else if (LEAVE_TYPES.get('VL')) {
-                        POINTS = VACATION_LEAVE_EARNED;
-                  } else if (LEAVE_TYPES.get('SL')) {
-                        POINTS = SICK_LEAVE_EARNED;
-                  }
-
-                  $('#insufficient_points_error').remove();
-                  if (POINTS <= Math.abs(period)) {
-                        $('#formErrors').prepend(`<span id="insufficient_points_error">- Insufficient Leave points <br></span>`);
-                  } else {
-                        $('#earnedLess').val(period || 0);
-                        $('#earnedRemaining').val((POINTS - period) || 0);
-                  }
-
+                  let noOfDays = 0;
                   let from = $('#date_from').val();
                   let to = $('#date_to').val();
                   $.get({
                         url: `/api/generate/periods/${from}/${to}`
                         , success: function(response) {
                               jQuery.each(response.period, function(index, item) {
-                                    $('.inclusiveDates').append(` <tr>
-                                                                        <td class="text-center">`+item+`</td>
-                                                                        <td class="text-center"><input type="radio" class="leave_date" name="date`+(index+1)+`" checked></td>
-                                                                        <td class="text-center"><input type="radio" class="leave_date" name="date`+(index+1)+`"></td>
-                                                                        <td class="text-center"><input type="radio" class="leave_date" name="date`+(index+1)+`"></td>
+                                    $('.inclusiveDates').append(`  <tr>
+                                                                        <td class="text-center">${item}</td>
+                                                                        <td class="text-center"><input type="radio" class="leave_date" data-child="${index}" data-date="${item}" value="whole_day" name="date[${index}]" checked></td>
+                                                                        <td class="text-center"><input type="radio" class="leave_date" data-child="${index}" data-date="${item}" value="pm" name="date[${index}]"></td>
+                                                                        <td class="text-center"><input type="radio" class="leave_date" data-child="${index}" data-date="${item}" value="am" name="date[${index}]"><input type="hidden" id='parent-${index}' class="noOfDays${item}" value="1"></td>
                                                                   </tr>`);
+                                    noOfDays += parseFloat($(`#parent-${index}`).val());
                               });
+                              $('#no_of_days').val(noOfDays);
                         }
                   });
             });
 
             $('#date_to').change(function() {
-
                   $('.inclusiveDates').empty();
-                  let rangePeriod = {
-                        start: moment($('#date_from').val())
-                        , end: moment($('#date_to').val())
-                  , };
-
-                  if (rangePeriod.end.format('dddd').toLowerCase() === 'saturday' || rangePeriod.end.format('dddd').toLowerCase() === 'sunday') {
-                        return '';
-                  }
-
-                  let period = (moment(rangePeriod.end).diff(rangePeriod.start, 'days') - getNoOfWeekendInRange(rangePeriod.start, rangePeriod.end)) + 1;
-
-                  let POINTS = 0;
-
-                  $('#no_of_days').val(period);
-
                   let type = getSelectedLeaveTypeData(types, $('#leave_type_id').val());
 
-                  /*if (type.leave_type_id === LEAVE_TYPES.get('FL')) {
-                        POINTS = 5;
-                  } else if (LEAVE_TYPES.get('VL')) {
-                        POINTS = VACATION_LEAVE_EARNED;
-                  } else if (LEAVE_TYPES.get('SL')) {
-                        POINTS = SICK_LEAVE_EARNED;
-                  }*/
-
-                  $('#insufficient_points_error').remove();
-                  if (POINTS <= Math.abs(period)) {
-                        $('#formErrors').prepend(`<span id="insufficient_points_error">- Insufficient Leave points <br></span>`);
-                  } else {
-                        $('#earnedLess').val(period || 0);
-                        $('#earnedRemaining').val((POINTS - period) || 0);
-                  }
-
-
+                  let noOfDays = 0;
                   let from = $('#date_from').val();
                   let to = $('#date_to').val();
                   $.get({
@@ -517,14 +464,29 @@ $layouts = 'layouts.app';
                         , success: function(response) {
                               jQuery.each(response.period, function(index, item) {
                                     $('.inclusiveDates').append(` <tr>
-                                                                        <td class="text-center">`+item+`</td>
-                                                                        <td class="text-center"><input type="radio" class="leave_date" data-date="${item}" value="whole_day" name="date[${index}]" checked></td>
-                                                                        <td class="text-center"><input type="radio" class="leave_date" data-date="${item}" value="pm" name="date[${index}]"></td>
-                                                                        <td class="text-center"><input type="radio" class="leave_date" data-date="${item}" value="am" name="date[${index}]"></td>
+                                                                        <td class="text-center">${item}</td>
+                                                                        <td class="text-center"><input type="radio" class="leave_date" data-child="${index}" data-date="${item}" data-equivalent='1' value="whole_day" name="date[${index}]" checked></td>
+                                                                        <td class="text-center"><input type="radio" class="leave_date" data-child="${index}" data-date="${item}" data-equivalent='.5' value="pm" name="date[${index}]"></td>
+                                                                        <td class="text-center"><input type="radio" class="leave_date" data-child="${index}" data-date="${item}" data-equivalent='.5' value="am" name="date[${index}]"><input type="hidden" id='parent-${index}' class="noOfDays" value="1"></td>
                                                                   </tr>`);
+                                    noOfDays += parseFloat($(`#parent-${index}`).val());
                               });
+                              $('#no_of_days').val(noOfDays);
                         }
                   });
+            });
+
+            $(document).on('click', function (e) {
+                  let noOfDays = 0;
+
+                  if(e.target.tagName == 'INPUT' && e.target.getAttribute('class').includes('leave_date')) {
+                        let child = e.target.getAttribute('data-child');
+                        $(`#parent-${child}`).val(e.target.getAttribute('data-equivalent'));
+                        $('.noOfDays').each(function(index, item) {
+                              noOfDays += parseFloat($(`#parent-${index}`).val());
+                        });
+                        $('#no_of_days').val(noOfDays);
+                  }
             });
 
 

@@ -317,7 +317,7 @@ Route::post('step-increment/update/{stepId}', [StepIncrementController::class, '
 Route::get('/leave/leave-list/{officeID}/{status?}/{employeeID?}', 'EmployeeLeave\LeaveListController@search');
 
 Route::get('generate/periods/{start}/{end}', function ($start, $end) {
-      $period = CarbonPeriod::create($start, $end);
+      $period = CarbonPeriod::create($start, $end)->filter('isWeekday');
       $range = [];
 
       foreach ($period as $date) {
