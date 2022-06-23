@@ -343,6 +343,7 @@
             {
                 data: 'action',
                 name: 'action',
+                sortable: false,
             }
         ]
     });
@@ -516,7 +517,8 @@
                 },
                 {
                     data: 'action',
-                    name: 'action'
+                    name: 'action',
+                    sortable: false,
                 }
             ]
         });
@@ -527,18 +529,29 @@
     $(document).on('click', '.btnApprove', function () {
         let applicationID = $(this).attr('data-id');
         const status = 'approved';
+        swal({
+                title: "Approve Application",
+                text: "You're about to approve this application. Continue?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,   
+            })
+            .then((willbeApproved) => {
+                if (willbeApproved) {
+                    $.ajax({
+                        url : `/employee/leave/leave-list/${applicationID}`,
+                        method : 'PUT',
+                        data : { status },
+                        success : function (response) {
+                            if(response.success) {
+                                filter();
+                            }
+                        }
 
-        $.ajax({
-            url : `/employee/leave/leave-list/${applicationID}`,
-            method : 'PUT',
-            data : { status },
-            success : function (response) {
-                if(response.success) {
-                    alert('done!');
+                    });
                 }
-            }
-
-        });
+            });
+        
     });
 
 
