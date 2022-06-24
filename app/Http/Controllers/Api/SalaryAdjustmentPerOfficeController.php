@@ -56,14 +56,19 @@ class SalaryAdjustmentPerOfficeController extends Controller
     public function AddNewDatas()
     {
         $plantillaIds = explode(',', request()->ids);
-        $data = Plantilla::whereIn('plantilla_id', $plantillaIds)->get();
+        $data = Plantilla::with('plantilla_positions', 'plantilla_positions.position')->whereIn('plantilla_id', $plantillaIds)->get();
         $newAdjustment = $data->toArray();
         foreach ($newAdjustment as $newAdjustments) {
-
             $getsalaryResult = SalaryGrade::where('sg_no', $newAdjustments['sg_no'])
                 ->where('sg_year', request()->year)
                 ->first(['sg_step' .  $newAdjustments['step_no']]);
             $salaryDiff = $getsalaryResult['sg_step' .  $newAdjustments['step_no']] - $newAdjustments['salary_amount'];
+            $dateCheck = request()->remarks;
+            if($dateCheck == ''){
+                $remarks =  'Salary Adjustment';
+            } else{
+                $remarks =  request()->remarks;
+            }
             $datas = DB::table('settings')->where('Keyname', 'AUTONUMBER2')->first();
                 DB::table('salary_adjustments')->insert(
                 [
@@ -78,27 +83,27 @@ class SalaryAdjustmentPerOfficeController extends Controller
                     'salary_previous' => $newAdjustments['salary_amount'],
                     'salary_new'      => $getsalaryResult['sg_step' .  $newAdjustments['step_no']],
                     'salary_diff'     => $salaryDiff,
-                    'remarks'         =>  request()->remarks,
+                    'remarks'         =>  $remarks,
                     'created_at'      =>  Carbon::now(),
                     'deleted_at'      => null,
                 ]
             );
             Setting::find('AUTONUMBER2')->increment('Keyvalue');
             // salary adjustment per office save to service record
-            // DB::table('service_records')->updateOrInsert(
-            //     [
-            //         'employee_id' => $newAdjustment->employee_id,
-            //         'position_id' =>  $newAdjustment->plantillaPosition->position_id,
-            //     ],
-            //     [
-            //         'employee_id'               => $newAdjustment->employee_id,
-            //         'service_from_date'         => request()->date,
-            //         'position_id'               => $newAdjustment->plantillaPosition->position_id,
-            //         'status'                    => $newAdjustment->status,
-            //         'salary'                    => $getsalaryResult['sg_step' .  $newAdjustment->step_no],
-            //         'office_code'               => $newAdjustment->office_code,
-            //     ]
-            // );
+            $datas = DB::table('settings')->where('Keyname', 'AUTONUMBER2')->first();
+            DB::table('service_records')->insert(
+                [
+                    'id'                        => $datas->Keyvalue,
+                    'employee_id'               => $newAdjustments['employee_id'],
+                    'service_from_date'         => request()->date,
+                    'PosCode'                   => $newAdjustments['plantilla_positions']['position']['PosCode'],
+                    'status'                    => $newAdjustments['status'],
+                    'salary'                    => $getsalaryResult['sg_step' .  $newAdjustments['step_no']],
+                    'office_code'               => $newAdjustments['office_code'],
+                    'separation_cause'                   =>  $remarks,
+                ]
+            );
+            Setting::find('AUTONUMBER2')->increment('Keyvalue');
         }
         return response()->json(['success' => true]);
     }
