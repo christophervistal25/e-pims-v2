@@ -5,6 +5,7 @@ namespace App\Services;
 use App\User;
 use App\Employee;
 use App\Plantilla;
+use App\Promotion;
 use App\EmployeeCivilService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
@@ -46,10 +47,7 @@ class EmployeeService
 
     private function getPromotedEmployeesByYear(string $year): Collection
     {
-        return Employee::without(['position', 'office'])->where('isActive', self::ACTIVE)
-            ->whereHas('step', function ($query) use ($year) {
-                $query->whereYear('date_step_increment', $year);
-            })->get();
+        return Promotion::where('sg_year', $year)->get();
     }
 
     public function getNoOfPromotedEmployees(string $year): int
