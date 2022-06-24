@@ -23,10 +23,10 @@ class Position extends Model
         return Str::upper($value);
     }
 
-    // public function plantillas()
-    // {
-    //     return $this->belongsTo(Plantilla::class, 'pp_id', 'pp_id');
-    // }
+    public function plantillas()
+    {
+        return $this->belongsTo(Plantilla::class, 'PosCode', 'PosCode');
+    }
 
     public function salary_grade()
     {
@@ -40,7 +40,7 @@ class Position extends Model
     {
         return $this->hasOne(SalaryAdjustment::class, 'position_id', 'PosCode');
     }
-    
+
     public function plantilla_positions()
     {
         return $this->belongsTo(PlantillaPosition::class, 'PosCode', 'PosCode');

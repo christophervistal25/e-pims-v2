@@ -173,8 +173,12 @@
                               <label>Steps<span class="text-danger">*</span></label>
                               <select value="" class="form-control stepNo selectpicker" name="stepNo" data-live-search="true" id="currentStepno" data-size="5" data-width="100%">
                                    <option></option>
-                                   @foreach (range(1, 8) as $step_no)
-                                   <option {{ old('stepNo') == $step_no ? 'selected' : '' }} value="{{ $step_no}}">{{ $step_no}}</option>
+                                   @foreach(range(0, 4) as $step_no)
+                                   @if($step_no == '1')
+                                   <option value="{{ $step_no}}" selected>{{ $step_no}}</option>
+                                   @else
+                                   <option value="{{ $step_no}}">{{ $step_no}}</option>
+                                   @endif
                                    @endforeach
                               </select>
                               <div id='steps-error-message' class='text-danger text-sm'>
