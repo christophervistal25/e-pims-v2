@@ -45,7 +45,10 @@ class PlantillaController extends Controller
 
         $plantillaPositionID = Plantilla::get()->pluck('pp_id')->toArray();
 
-        $plantillaPosition = PlantillaPosition::select('pp_id', 'PosCode', 'office_code')->with('position:PosCode,Description')->whereNotIn('pp_id', $plantillaPositionID )->get();
+        $plantillaPosition = PlantillaPosition::with('position:PosCode,Description')->whereDoesntHave('plantillas', function ($query) {
+            $query->where('year', date('Y'));
+        })->get();
+
         $salarygrade = SalaryGrade::get(['sg_no']);
 
         $status = ['Casual','Coterminous','Permanent','Provisional','Temporary','Elected'];

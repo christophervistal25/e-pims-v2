@@ -53,12 +53,12 @@
                         <tr>
                               <th>PROMOTION DATE</th>
                                <th>EMPLOYEE</th>
-                              <th>OLD POSITION</th>
+                              <th class='font-weight-bold'>OLD POSITION</th>
                               <th>NEW POSITION</th>
                               <th>SALARY GRADE</th>
                               <th>STEP</th>
                               <th>SALARY GRADE YEAR</th>
-                              <th>ACTIONS</th>
+                              <th class='font-weight-bold'>ACTIONS</th>
                         </tr>
                   </thead>
             </table>
@@ -80,13 +80,13 @@
         },
         ajax: `/promotion/list/*/*`,
         columns: [
-            { data: "promotion_date", name: "promotion_date", className : 'text-center align-middle' },
-            { data: "employee", name: "employee", className : 'align-middle' },
+            { data: "promotion_date", name: "promotion_date", className : 'text-center align-middle font-weight-bold' },
+            { data: "employee", name: "employee", className : 'align-middle font-weight-bold' },
             { data: "old_plantilla_position", name: "old_plantilla_position", className : 'align-middle' },
-            { data: "new_plantilla_position", name: "new_plantilla_position", className : 'align-middle' },
-            { data: "sg_no", name: "sg_no", className : 'text-center align-middle' },
-            { data: "step_no", name: "step_no", className : 'text-center align-middle' },
-            { data: "sg_year", name: "sg_year", className : 'text-center align-middle' },
+            { data: "new_plantilla_position", name: "new_plantilla_position", className : 'align-middle font-weight-bold' },
+            { data: "sg_no", name: "sg_no", className : 'text-center align-middle font-weight-bold' },
+            { data: "step_no", name: "step_no", className : 'text-center align-middle font-weight-bold' },
+            { data: "sg_year", name: "sg_year", className : 'text-center align-middle font-weight-bold' },
             { 
                   data: "promotion_id",
                   name: "promotion_id",
@@ -153,11 +153,6 @@
                         });
                   }
             });
-            /* authenticationGuard().then((buttonClicked) => {
-                  if(buttonClicked && $(input).val().length !== 0) {
-                        
-                  }
-            }); */
     });
 </script>
 @endpush
