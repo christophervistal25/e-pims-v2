@@ -254,13 +254,13 @@
                   $.get({
                   url: `/api/plantilla-position-details/${plantillaPositionID}`,
                   success: function (response) {
-                        $('#current_salary_grade_year').val(response.year);
+                        let year = $('#current_salary_grade_year').val();
                         $('#salary_grade').val(response.sg_no);
                         $('#item_no').val(response.item_no);
 
                         let step = $('#step').val() || 1;
                         $.get({
-                              url: `/api/salary-amount/${response.sg_no}/${step}/${response.year}`,
+                              url: `/api/salary-amount/${response.sg_no}/${step}/${year}`,
                               success: function (salary_amount) {
                                     $('#salary_amount').val(salary_amount);
                               }

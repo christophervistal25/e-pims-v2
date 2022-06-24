@@ -218,14 +218,7 @@
 
 
 
-                                          <div class="col-6 col-md-6 col-lg-6">
-                                                <label class="has-float-label mb-0">
-                                                      <input value="{{ Carbon\Carbon::now()->format('Y') }}" class="form-control {{ $errors->has('year')  ? 'is-invalid' : ''}}" name="year" id="year" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;" readonly>
-                                                      <span class="font-weight-bold">CURRENT YEAR<span class="text-danger">*</span></span>
-                                                </label>
-                                                <div id='year-error-message' class='text-danger text-sm'>
-                                                </div>
-                                          </div>
+
                                     </div>
 
 
@@ -257,19 +250,7 @@
                             </select>
                     </div>
 
-                    <div class="col-2 mb-2">
-                        <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}"
-                            name="currentYear" data-live-search="true" id="currentYear" data-size="5">
-                            <option value="{{ Carbon\Carbon::now()->format('Y') }}">{{ Carbon\Carbon::now()->format('Y') }}</option>
-                    @foreach($year as $years){
-                        <option {{ $selectedYear->year == $years->year ? 'selected' : '' }} value="{{ $years->year }}">{{ $years->year }}</option>
-                    }
-                            @endforeach
-                            </select>
-                    </div>
-
-
-                        <div class="col-5 float-right mb-10">
+                        <div class="col-7 float-right mb-10">
                               <button id="addButton" class="btn btn-primarys submit-btn float-right"><i class="fa fa-plus"></i> Add
                                     New Position</button>
                         </div>
@@ -286,7 +267,6 @@
                                           <td scope="col" class="text-center">Salary Grade</td>
                                           <td scope="col" class="text-center">Office</td>
                                           <td scope="col" class="text-center">Old Position Name</td>
-                                          <td scope="col" class="text-center">Year</td>
                                           <td scope="col" class="text-center">Action</td>
                                     </tr>
                               </thead>

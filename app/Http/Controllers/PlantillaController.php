@@ -39,13 +39,16 @@ class PlantillaController extends Controller
                                 ->whereNotIn('Employee_id', $plantillaEmp)
                                 ->orderBy('LastName', 'ASC')->get();
         $office = Office::select('office_code', 'office_name')->get();
-        $year = Plantilla::select('year')->where('year', '!=', '2022')->get();
+        $year = Plantilla::select('year')->distinct('year')->where('year', '!=', '2022')->get();
 
         $position = Position::select('PosCode', 'Description')->get();
 
         $plantillaPositionID = Plantilla::get()->pluck('pp_id')->toArray();
 
-        $plantillaPosition = PlantillaPosition::select('pp_id', 'PosCode', 'office_code')->with('position:PosCode,Description')->whereNotIn('pp_id', $plantillaPositionID )->get();
+        $plantillaPosition = PlantillaPosition::with('position:PosCode,Description')->whereDoesntHave('plantillas', function ($query) {
+            $query->where('year', date('Y'));
+        })->get();
+
         $salarygrade = SalaryGrade::get(['sg_no']);
 
         $status = ['Casual','Coterminous','Permanent','Provisional','Temporary','Elected'];
