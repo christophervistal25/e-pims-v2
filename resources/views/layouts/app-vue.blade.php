@@ -205,8 +205,7 @@
                               <span>Admin</span>
                          </a>
                          <div class="dropdown-menu">
-                              <a class="dropdown-item" href="profile.html">My Profile</a>
-                              <a class="dropdown-item" href="settings.html">Settings</a>
+                              <a class="dropdown-item" href="{{ route('administrator.profile') }}">My Profile</a>
                               <form action="{{ route('logout') }}" method="POST">
                                     @csrf
                                     <button class="dropdown-item" style="outline-none;" type="submit">Logout</button>
@@ -219,8 +218,7 @@
                <div class="dropdown mobile-user-menu">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                     <div class="dropdown-menu dropdown-menu-right">
-                         <a class="dropdown-item" href="profile.html">My Profile</a>
-                         <a class="dropdown-item" href="settings.html">Settings</a>
+                         <a class="dropdown-item" href="{{ route('administrator.profile') }}">My Profile</a>
                          <form action="{{ route('logout') }}" method="POST">
                               @csrf
                               <button class="dropdown-item" style="outline-none;" type="submit">Logout</button>
