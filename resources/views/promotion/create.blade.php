@@ -91,7 +91,7 @@
                 </div>
 
                 <div class="col-lg-6">
-                    <label class='text-uppercase h6'>Old Item No</label>
+                    <label class='text-uppercase h6'>Current Item No</label>
                     <div class="input-group mb-3">
                         <input type="text" class='form-control form-control-xs' name="old_item_no" id="old_item_no"
                             readonly>
@@ -111,7 +111,7 @@
                 <div class="col-lg-3">
                     <label class='text-uppercase h6'>Current Salary Grade Year</label>
                     <input type="text" class='form-control form-control-xs' name="current_salary_grade_year"
-                        id="current_salary_grade_year" readonly>
+                        id="current_salary_grade_year" readonly value="{{ date('Y') }}">
                 </div>
 
                 <div class="col-lg-3">
@@ -271,13 +271,13 @@
             $.get({
                 url: `/api/plantilla-position-details/${plantillaPositionID}`,
                 success: function (response) {
-                    $('#current_salary_grade_year').val(response.year);
                     $('#salary_grade').val(response.sg_no);
                     $('#item_no').val(response.item_no);
+                    let year = $('#current_salary_grade_year').val();
 
                     let step = $('#step').val() || 1;
                     $.get({
-                        url: `/api/salary-amount/${response.sg_no}/${step}/${response.year}`,
+                        url: `/api/salary-amount/${response.sg_no}/${step}/${year}`,
                         success: function (salary_amount) {
                             $('#salary_amount').val(salary_amount);
                         }

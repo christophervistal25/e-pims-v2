@@ -269,7 +269,7 @@
                               
                         </div>
 
-                        <div class="row">
+                        <div class="row p-0">
                               <div class="col-lg-6">
                                     <div class="form-group">
                                           <label class="text-uppercase h5 ">
@@ -286,6 +286,20 @@
                                                 Re-type Password
                                           </label>
                                           <input type="password" name="password_confirmation" id="password_confirmation" class="form-control  {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}" value="{{ old('password_confirmation') }}" />
+                                    </div>
+                              </div>
+                        </div>
+
+                        <div class="row p-0">
+                              <div class="col-lg-12">
+                                    <div class="form-group">
+                                          <label class="text-uppercase h5 ">
+                                                User type
+                                          </label>
+                                          <select name="user_type" id="user_type" class='form-control form-select'>
+                                                <option value="0">USER</option>
+                                                <option value="1">ADMINISTRATOR</option>
+                                          </select>
                                     </div>
                               </div>
                         </div>

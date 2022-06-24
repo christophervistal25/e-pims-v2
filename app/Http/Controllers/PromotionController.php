@@ -72,13 +72,14 @@ class PromotionController extends Controller
       public function create()
       {
             $employees = Employee::without(['position', 'office_charging', 'office_assignment'])
-                  ->has('plantilla')
+                ->with('promotions')
+                ->has('plantilla')
                   ->permanent()
                   ->active()
                   ->orderBy('LastName')
                   ->orderBy('FirstName')
                   ->get(['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'PosCode', 'OfficeCode']);
-
+            
             $offices = Office::get();
 
             $employeeStatus = ['Permanent', 'Casual', 'Coterminous', 'Provisional', 'Temporary'];
@@ -166,13 +167,8 @@ class PromotionController extends Controller
 
       public function destroy(Request $request, int $promotionID)
       {
-            
-            DB::transaction(function () use($promotionID) {
-                  $promotion = Promotion::with(['new_plantilla_position', 'new_plantilla_position.plantillas'])->find($promotionID);
-                  $promotion->new_plantilla_position->plantillas->delete();
-                  $promotion->delete();
-            });
-
+            $promotion = Promotion::find($promotionID);
+            $promotion->delete();
             return response()->json(['success' => true]);
       }
 }

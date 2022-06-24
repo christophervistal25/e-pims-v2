@@ -522,8 +522,9 @@
                                     swal({
                                           title: ''
                                           , text: 'Successfully generate plantilla schedule for this year'
-                                          , icon: 'success'
-                                    , });
+                                          , icon: 'success',
+                                          buttons : false,
+                                     });
                               }
                         }
                   });
