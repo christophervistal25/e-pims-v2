@@ -39,7 +39,7 @@ class PlantillaController extends Controller
                                 ->whereNotIn('Employee_id', $plantillaEmp)
                                 ->orderBy('LastName', 'ASC')->get();
         $office = Office::select('office_code', 'office_name')->get();
-        $year = Plantilla::select('year')->where('year', '!=', '2022')->get();
+        $year = Plantilla::select('year')->distinct('year')->where('year', '!=', '2022')->get();
 
         $position = Position::select('PosCode', 'Description')->get();
 
