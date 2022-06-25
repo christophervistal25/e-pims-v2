@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Office;
+use App\Setting;
 use App\Employee;
 use App\Position;
 use App\Plantilla;
@@ -12,163 +13,193 @@ use App\PlantillaPosition;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
-use App\Services\EmployeeService;
 use App\Services\PromotionService;
 use Illuminate\Support\Facades\DB;
 use App\Services\SalaryGradeService;
+use App\service_record as ServiceRecord;
 use App\Services\PlantillaPersonnelService;
 
 class PromotionController extends Controller
 {
-      public function __construct(public PlantillaPersonnelService $plantillaPersonnelService, public PromotionService $promotionService, public SalaryGradeService $salaryGradeService)
-      {
+    public function __construct(public PlantillaPersonnelService $plantillaPersonnelService, public PromotionService $promotionService, public SalaryGradeService $salaryGradeService)
+    {
+    }
 
-      }
+    public function list(string $office = '*', string $year = '*')
+    {
+        $promotions = Promotion::with(['employee', 'old_plantilla_position', 'old_plantilla_position.position', 'new_plantilla_position.position']);
 
-      public function list(string $office = '*', string $year = '*')
-      {
-            $promotions = Promotion::with(['employee', 'old_plantilla_position', 'old_plantilla_position.position', 'new_plantilla_position.position']);
-
-            if($office != '*') {
-                  $promotions->whereHas('employee', function ($query) use($office) {
-                        $query->where('OfficeCode', $office);
-                  });
-            }
-
-            if($year != '*') {
-                  $promotions->where('sg_year', $year);
-            }
-
-            return DataTables::of($promotions->get())
-                        ->addColumn('promotion_date', function ($record) {
-                              return date('F d, Y', strtotime($record->promotion_date));
-                        })
-                        ->addColumn('employee', function ($record) {
-                              return $record->employee->fullname;
-                        })
-                        ->addColumn('old_plantilla_position', function ($record) {
-                              return $record->old_plantilla_position->position->Description;
-                        })
-                        ->addColumn('new_plantilla_position', function ($record) {
-                              return $record->new_plantilla_position->position->Description;
-                        })
-                        ->make(true);
-      }
-
-      public function index()
-      {
-            $offices = Office::get();
-            $minYear = date('Y') - 5;
-            $maxYear = date('Y');
-            $rangeYear = range($minYear, $maxYear);
-            rsort($rangeYear);
-
-            return view('promotion.index', [
-                  'offices' => $offices,
-                  'rangeYear' => $rangeYear
-            ]);
-      }
-
-      public function create()
-      {
-            $employees = Employee::without(['position', 'office_charging', 'office_assignment'])
-                ->with('promotions')
-                ->has('plantilla')
-                  ->permanent()
-                  ->active()
-                  ->orderBy('LastName')
-                  ->orderBy('FirstName')
-                  ->get(['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'PosCode', 'OfficeCode']);
-            
-            $offices = Office::get();
-
-            $employeeStatus = ['Permanent', 'Casual', 'Coterminous', 'Provisional', 'Temporary'];
-            
-            $areaCode = Plantilla::REGIONS;
-
-            $areaType = ['Region', 'Province', 'District', 'Municipality', 'Foreign Post'];
-
-            $areaLevel = ['K', 'T', 'S', 'A'];
-
-            return view('promotion.create', [
-                  'employees' => $employees,
-                  'offices' => $offices,
-                  'areaCode' => $areaCode,
-                  'areaType' => $areaType,
-                  'areaLevel' => $areaLevel,
-                  'employeeStatus' => $employeeStatus,
-                  // 'class' => 'mini-sidebar',
-            ]);
-      }
-
-      public function store(Request $request)
-      {
-            $employeeLatestPlantilla = Plantilla::where('employee_id', $request->employee)
-                                                            ->orderBy('year', 'DESC')
-                                                            ->first();
-
-            DB::transaction(function () use($request, $employeeLatestPlantilla) {
-
-                  /* Creating a new promotion. */
-                  $this->promotionService->store($employeeLatestPlantilla->pp_id, $request->all());
-
-                  /* Adding a new plantilla for the employee. */
-                  $this->plantillaPersonnelService->addNewPlantilla($employeeLatestPlantilla, $request->all());
-
-                  /* Removing the current plantilla of the employee. */
-                  $this->plantillaPersonnelService->removeCurrentPlantilla($employeeLatestPlantilla);
-
+        if ($office != '*') {
+            $promotions->whereHas('employee', function ($query) use ($office) {
+                $query->where('OfficeCode', $office);
             });
+        }
 
-            return back()->with('success', 'You successfully promote a employee');
-      }
+        if ($year != '*') {
+            $promotions->where('sg_year', $year);
+        }
 
-      public function edit(int $promotionID)
-      {
-            $offices = Office::get();
+        return DataTables::of($promotions->get())
+            ->addColumn('promotion_date', function ($record) {
+                return date('F d, Y', strtotime($record->promotion_date));
+            })
+            ->addColumn('employee', function ($record) {
+                return $record->employee->fullname;
+            })
+            ->addColumn('old_plantilla_position', function ($record) {
+                return $record->old_plantilla_position->position->Description;
+            })
+            ->addColumn('new_plantilla_position', function ($record) {
+                return $record->new_plantilla_position->position->Description;
+            })
+            ->make(true);
+    }
 
-            $positions = Position::get();
+    public function index()
+    {
+        $offices = Office::get();
+        $minYear = date('Y') - 5;
+        $maxYear = date('Y');
+        $rangeYear = range($minYear, $maxYear);
+        rsort($rangeYear);
 
-            $promotion = Promotion::with(['employee', 'new_plantilla_position', 'new_plantilla_position.plantillas', 'new_plantilla_position.plantillas.plantilla_positions', 'new_plantilla_position.plantillas.plantilla_positions.position'])->find($promotionID);
-            
-            $employeeStatus = ['Permanent', 'Casual', 'Coterminous', 'Provisional', 'Temporary'];
-            
-            $areaCode = Plantilla::REGIONS;
+        return view('promotion.index', [
+            'offices' => $offices,
+            'rangeYear' => $rangeYear
+        ]);
+    }
 
-            $areaType = ['Region', 'Province', 'District', 'Municipality', 'Foreign Post'];
+    public function create()
+    {
+        $employees = Employee::without(['position', 'office_charging', 'office_assignment'])
+            ->with('promotions')
+            ->has('plantilla')
+            ->permanent()
+            ->active()
+            ->orderBy('LastName')
+            ->orderBy('FirstName')
+            ->get(['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'PosCode', 'OfficeCode']);
 
-            $areaLevel = ['K', 'T', 'S', 'A'];
+        $offices = Office::get();
 
-            return view('promotion.edit', [
-                  'positions' => $positions,
-                  'promotion' => $promotion,
-                  'offices' => $offices,
-                  'areaCode' => $areaCode,
-                  'areaType' => $areaType,
-                  'areaLevel' => $areaLevel,
-                  'employeeStatus' => $employeeStatus,
-                  'class' => 'mini-sidebar',
+        $employeeStatus = ['Permanent', 'Casual', 'Coterminous', 'Provisional', 'Temporary'];
+
+        $areaCode = Plantilla::REGIONS;
+
+        $areaType = ['Region', 'Province', 'District', 'Municipality', 'Foreign Post'];
+
+        $areaLevel = ['K', 'T', 'S', 'A'];
+
+        return view('promotion.create', [
+            'employees' => $employees,
+            'offices' => $offices,
+            'areaCode' => $areaCode,
+            'areaType' => $areaType,
+            'areaLevel' => $areaLevel,
+            'employeeStatus' => $employeeStatus,
+            // 'class' => 'mini-sidebar',
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $employeeLatestPlantilla = Plantilla::where('employee_id', $request->employee)
+            ->orderBy('year', 'DESC')
+            ->first();
+
+        DB::transaction(function () use ($request, $employeeLatestPlantilla) {
+            /* Creating a new promotion. */
+            $this->promotionService->store($employeeLatestPlantilla->pp_id, $request->all());
+
+            /* Adding a new plantilla for the employee. */
+            $this->plantillaPersonnelService->addNewPlantilla($employeeLatestPlantilla, $request->all());
+
+            /* Removing the current plantilla of the employee. */
+            $this->plantillaPersonnelService->removeCurrentPlantilla($employeeLatestPlantilla);
+
+            /* Updating the current service record of the employee soon to be previous record. */
+            $currentServiceRecord = $this->promotionService->getCurrentServiceRecord($request->employee);
+            $currentServiceRecord->service_to_date = Carbon::parse($request->last_promotion)->subDays(1);
+            $currentServiceRecord->save();
+
+            /* Creating a new record in the service_record table. */
+            $plantillaPosition = PlantillaPosition::find($request->position);
+
+            $this->promotionService->addNewRecord([
+                'employee_id' => $request->employee,
+                'service_from_date' => $request->last_promotion,
+                'PosCode' => $plantillaPosition->PosCode,
+                'status' => $request->status,
+                'salary' => Str::remove(',', $request->salary_amount),
+                'office_code' => $plantillaPosition->office_code,
             ]);
-      }
+        });
+
+        return back()->with('success', 'You successfully promote a employee');
+    }
+
+    public function edit(int $promotionID)
+    {
+        $offices = Office::get();
+
+        $positions = Position::get();
+
+        $promotion = Promotion::with(['employee', 'new_plantilla_position', 'new_plantilla_position.plantillas', 'new_plantilla_position.plantillas.plantilla_positions', 'new_plantilla_position.plantillas.plantilla_positions.position'])->find($promotionID);
+
+        $employeeStatus = ['Permanent', 'Casual', 'Coterminous', 'Provisional', 'Temporary'];
+
+        $areaCode = Plantilla::REGIONS;
+
+        $areaType = ['Region', 'Province', 'District', 'Municipality', 'Foreign Post'];
+
+        $areaLevel = ['K', 'T', 'S', 'A'];
+
+        return view('promotion.edit', [
+            'positions' => $positions,
+            'promotion' => $promotion,
+            'offices' => $offices,
+            'areaCode' => $areaCode,
+            'areaType' => $areaType,
+            'areaLevel' => $areaLevel,
+            'employeeStatus' => $employeeStatus,
+            'class' => 'mini-sidebar',
+        ]);
+    }
 
 
-      public function update(Request $request, int $promotionID)
-      {
-            $promotion = Promotion::with(['new_plantilla_position', 'new_plantilla_position.plantillas'])->find($promotionID);
+    public function update(Request $request, int $promotionID)
+    {
+        $promotion = Promotion::with(['new_plantilla_position', 'new_plantilla_position.plantillas'])->find($promotionID);
 
-            if(!is_null($request->position)) {
-                  $this->promotionService->changePositionInPromotion($promotion, $request->all());
-            } else {
-                  $this->promotionService->updatePromotion($promotion, $request->all());
-            }
+        if (!is_null($request->position)) {
+            $this->promotionService->changePositionInPromotion($promotion, $request->all());
+            $plantillaPosition = PlantillaPosition::find($request->position);
+            $this->promotionService->getCurrentServiceRecord($promotion->employee_id)->update([
+                'employee_id' => $promotion->employee_id,
+                'service_from_date' => $request->last_promotion,
+                'PosCode' => $plantillaPosition->PosCode,
+                'status' => $request->status,
+                'salary' => Str::remove(',', $request->salary_amount),
+                'office_code' => $request->office,
+            ]);
+        } else {
+            $this->promotionService->updatePromotion($promotion, $request->all());
+            $this->promotionService->getCurrentServiceRecord($promotion->employee_id)->update([
+                'service_from_date' => $request->last_promotion,
+                'status' => $request->status,
+            ]);
+        }
 
-            return back()->with('success', 'You successfully update a promotion');
-      }
+        /* Updating the service record of the employee. */
 
-      public function destroy(Request $request, int $promotionID)
-      {
-            $promotion = Promotion::find($promotionID);
-            $promotion->delete();
-            return response()->json(['success' => true]);
-      }
+
+        return back()->with('success', 'You successfully update a promotion');
+    }
+
+    public function destroy(Request $request, int $promotionID)
+    {
+        $promotion = Promotion::find($promotionID);
+        $promotion->delete();
+        return response()->json(['success' => true]);
+    }
 }
