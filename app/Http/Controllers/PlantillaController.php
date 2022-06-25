@@ -232,24 +232,53 @@ class PlantillaController extends Controller
             'areaType'                      => 'required|in:Region,Province,District,Municipality,Foreign Post',
             'areaLevel'                     => 'required|in:K,T,S,A',
         ]);
-        $plantilla                              = Plantilla::find($plantilla_id);
-        $plantilla->item_no                     = $request->itemNo;
-        $plantilla->old_item_no                 = $request->oldItemNo;
-        $plantilla->pp_id                       = $request->positionTitle;
-        $plantilla->employee_id                 = $request->employeeId;
-        $plantilla->sg_no                       = $request->salaryGrade;
-        $plantilla->step_no                     = $request->stepNo;
-        $plantilla->salary_amount               = $request->salaryAmount;
-        $plantilla->office_code                 = $request->officeCode;
-        $plantilla->division_id                 = $request->divisionId;
-        $plantilla->date_original_appointment   = $request->originalAppointment;
-        $plantilla->date_last_promotion         = $request->lastPromotion;
-        $plantilla->status                      = $request->status;
-        $plantilla->area_code                   = $request->areaCode;
-        $plantilla->area_type                   = $request->areaType;
-        $plantilla->area_level                  = $request->areaLevel;
-        $plantilla->year                        = $request->currentSgyear;
-        $plantilla->save();
+        DB::transaction(function () use ($request, $plantilla_id) {
+            $plantilla                              = Plantilla::with('plantilla_positions')->find($plantilla_id);
+            $plantilla->item_no                     = $request->itemNo;
+            $plantilla->old_item_no                 = $request->oldItemNo;
+            $plantilla->pp_id                       = $request->positionTitle;
+            $plantilla->employee_id                 = $request->employeeId;
+            $plantilla->sg_no                       = $request->salaryGrade;
+            $plantilla->step_no                     = $request->stepNo;
+            $plantilla->salary_amount               = $request->salaryAmount;
+            $plantilla->office_code                 = $request->officeCode;
+            $plantilla->division_id                 = $request->divisionId;
+            $plantilla->date_original_appointment   = $request->originalAppointment;
+            $plantilla->date_last_promotion         = $request->lastPromotion;
+            $plantilla->status                      = $request->status;
+            $plantilla->area_code                   = $request->areaCode;
+            $plantilla->area_type                   = $request->areaType;
+            $plantilla->area_level                  = $request->areaLevel;
+            $plantilla->year                        = $request->currentSgyear;
+            $plantilla->save();
+
+            $plantillaPosition = $plantilla->plantilla_positions;
+
+            // Get the present service record of employee.
+            $record = ServiceRecord::where([
+                'employee_id' => $request->employeeId,
+                'PosCode' => $plantillaPosition->PosCode,
+                'office_code' => $plantillaPosition->office_code,
+            ])->whereNull('service_to_date')->first();
+
+            // Delete the current service record
+            $record->delete();
+
+            $newPlantillaPosition = PlantillaPosition::find($request->positionTitle);
+
+            // Insert new service record.
+            ServiceRecord::create([
+                'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
+                'employee_id' => $request->employeeId,
+                'service_from_date' => $request->lastPromotion,
+                'PosCode' => $newPlantillaPosition->PosCode,
+                'status' => $request->status,
+                'salary' => $request->salaryAmount,
+                'office_code' => $request->officeCode,
+            ]);
+        });
+
+
         return response()->json(['success' => true]);
     }
 
