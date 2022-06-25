@@ -425,8 +425,15 @@
      </style>
       <script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>
       <script>
+            const EMPLOYEE_ID = "{{ Auth::user()->Employee_id }}";
+
             const conectionString = "{{ env('MIX_SOCKET_IP') }}";
             let socket = io.connect(conectionString);
+            socket.on(`PUBLISH_DONE_SECOND_${EMPLOYEE_ID}`, function() {
+                  window.open(`/prints/download-personal-data-sheet-pdf/${EMPLOYEE_ID}-E-PDS`);
+                  $('#selectFilExportModal').modal('toggle');
+                  $('#btn-download-status').fadeOut().hide();
+            });
       </script>
      @stack('page-scripts')
 </body>
