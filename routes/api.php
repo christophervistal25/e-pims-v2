@@ -14,6 +14,7 @@ use App\PlantillaPosition;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 use App\Services\SalaryGradeService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\Api\CityController;
@@ -317,10 +318,26 @@ Route::post('step-increment/update/{stepId}', [StepIncrementController::class, '
 // LEAVE LIST //
 Route::get('/leave/leave-list/{officeID}/{status?}/{employeeID?}', 'EmployeeLeave\LeaveListController@search');
 
-Route::get('generate/periods/{start}/{end}', function ($start, $end) {
-      $period = CarbonPeriod::create($start, $end)->filter('isWeekday');
-      $startMonth = Carbon::parse($start)->format('m');
-     
+Route::get('generate/periods/{start}/{end}/{includeWeekends}/{employeeID}', function ($start, $end, $includeWeekends, $employeeID) {
+      $employee = Employee::with(['leave_files'])->find($employeeID);
+
+      $checkSum = 0;
+      if($employee->leave_files->count() >= 1) {
+            $checkSum += $employee->leave_files()->where('status', 'approved')->where('date_from', '>=', $start)->where('date_from', '<=', $end)->count();
+            $checkSum += $employee->leave_files()->where('status', 'approved')->where('date_to', '>=', $start)->where('date_to', '<=', $end)->count();
+
+            if($checkSum >= 1) {
+                  // Fail
+                  return response()->json(['success' => false, 'message' => 'Conflict']);
+            }
+      }
+      
+      if($includeWeekends == 'true'){
+            $period = CarbonPeriod::create($start, $end);
+      }else{
+            $period = CarbonPeriod::create($start, $end)->filter('isWeekday');
+      }
+
       $range = [];
       $holidays = [];
 
@@ -329,7 +346,8 @@ Route::get('generate/periods/{start}/{end}', function ($start, $end) {
             $holidays[] = $date->format('m-d');
       }
       $holidays = Holiday::whereIn('date', $holidays)->get()->each(fn($holiday) => $holiday->date = date('Y').'-'. $holiday->date)->pluck('date')->toArray();
-      return response()->json(['period' => array_diff($range, $holidays)]);
+
+      return response()->json(['success' => true, 'period' => array_diff($range, $holidays)]);
 });
 
 

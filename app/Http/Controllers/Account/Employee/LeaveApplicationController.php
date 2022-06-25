@@ -67,7 +67,8 @@ class LeaveApplicationController extends Controller
                 $rules = ['leave_type_id' => ['required']];
             }elseif($request->leave_type_id == 'SL') {
                 $rules = [
-                    'date_from'             => ['required', 'before:' . Carbon::parse(today())->format('Y-m-d')],
+                    'date_from'             => ['required', 'before:' . Carbon::now()->format('Y-m-d')],
+                    'date_to'               => ['required', 'before:' . Carbon::now()->format('Y-m-d')],
                 ];
             }else{
                  // Validation with employee balance look-up

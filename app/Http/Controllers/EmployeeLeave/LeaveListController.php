@@ -63,7 +63,7 @@ class LeaveListController extends Controller
                 }else{
                     $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
                 }
-                return  $btnApprove . "&nbsp" . $btnDecline . "&nbsp &nbsp &nbsp" . $btnUpdate . "&nbsp" . $btnDelete;
+                return  $btnApprove . "&nbsp" . $btnDecline . "&nbsp" . $btnUpdate . "&nbsp" . $btnDelete;
             })
             ->make(true);
     }
@@ -223,7 +223,7 @@ class LeaveListController extends Controller
                 }else{
                     $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
                 }
-                return  $btnApprove . "&nbsp" . $btnDecline . "&nbsp &nbsp &nbsp" . $btnUpdate . "&nbsp" . $btnDelete;
+                return  $btnApprove . "&nbsp" . $btnDecline . "&nbsp" . $btnUpdate . "&nbsp" . $btnDelete;
             })->make(true);
     }
 }

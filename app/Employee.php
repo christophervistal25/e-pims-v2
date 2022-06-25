@@ -322,7 +322,7 @@ class Employee extends Model
 
     public function leave_files()
     {
-        return $this->hasMany(EmployeeLeaveApplication::class, 'employee_id', 'Employee_id');
+        return $this->hasMany(EmployeeLeaveApplication::class, 'Employee_id', 'Employee_id');
     }
 
 
