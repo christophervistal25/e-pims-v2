@@ -17,45 +17,45 @@ class PrintServiceRecordController extends Controller implements IDownloadType
     {
         $inputFileName = public_path() . '\\SERVICE_RECORD.xlsx';
         $spreadsheet = IOFactory::load($inputFileName);
-    
+
         $TITLE = new RichText();
         $spreadsheet->getActiveSheet()->getStyle('A3')->getAlignment()->setWrapText(true);
         $TITLE->createTextRun("S E R V I C E  R E C O R D")->getFont()->setName("Times New Roman")->setSize(15)->setBold(true);
         $spreadsheet->getActiveSheet()->getCell('A3')->setValue($TITLE);
-    
+
         $employee = Employee::exclude(['ImagePhoto'])->find($employeeID);
-    
+
         $spreadsheet->getActiveSheet()->setCellValue('B6', $employee->LastName);
         $spreadsheet->getActiveSheet()->setCellValue('C6', $employee->FirstName);
         $spreadsheet->getActiveSheet()->setCellValue('D6', $employee->MiddleName[0] ?? '');
         $spreadsheet->getActiveSheet()->setCellValue('C9', date('F d, Y', strtotime($employee->Birthdate)));
         $spreadsheet->getActiveSheet()->setCellValue('C12', $employee->BirthPlace);
         $spreadsheet->getActiveSheet()->setCellValue('C70', date('F d, Y'));
-    
+
         $row = 22;
         ServiceRecord::with(['position', 'office'])->where('employee_id', $employeeID)->orderBy('service_from_date', 'ASC')
             ->get()
-            ->each(function($record) use(&$spreadsheet, &$row) {
+            ->each(function ($record) use (&$spreadsheet, &$row) {
                 $sheet = $spreadsheet->getActiveSheet();
                 $sheet->setCellValue('A' . $row, $record->service_from_date);
-                $sheet->setCellValue('B' . $row, $record->service_to_date);
+                $sheet->setCellValue('B' . $row, $record->service_to_date ?? 'PRESENT');
                 $sheet->setCellValue('C' . $row, Str::title($record->position?->Description));
                 $sheet->setCellValue('D' . $row, $record->status);
-                $sheet->setCellValue('E' . $row, $record->salary);
-                $sheet->setCellValue('F' . $row, $record->office->Description);
+                $sheet->setCellValue('E' . $row, number_format($record->salary, 2, ".", ","));
+                $sheet->setCellValue('F' . $row, $record->office->office_name);
                 $sheet->setCellValue('G' . $row, $record->leave_without_pay);
                 $sheet->setCellValue('H' . $row, $record->separation_date);
                 $sheet->setCellValue('I' . $row, $record->separation_cause);
-                $row++; 
+                $row++;
             });
-    
-            $writer = new Xlsx($spreadsheet);
-            $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xls');
-            $fileName =  $employeeID . '_' . 'SERVICE_RECORD';
-            $extension = '.xls';
-            $generatedFile = storage_path() . '\\files\\' . $fileName . $extension;
-            $writer->save($generatedFile);
-            return $fileName .  $extension;
+
+        $writer = new Xlsx($spreadsheet);
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xls');
+        $fileName =  $employeeID . '_' . 'SERVICE_RECORD';
+        $extension = '.xls';
+        $generatedFile = storage_path() . '\\files\\' . $fileName . $extension;
+        $writer->save($generatedFile);
+        return $fileName .  $extension;
     }
 
     public function pdf(string $employeeID)
@@ -73,5 +73,4 @@ class PrintServiceRecordController extends Controller implements IDownloadType
     {
         return response()->download(storage_path() . '\\files\\' . $employeeID . '_' . 'SERVICE_RECORD.' . $type);
     }
-
 }
