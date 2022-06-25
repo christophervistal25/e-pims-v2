@@ -169,15 +169,15 @@ class PersonalDataSheetRepository implements IPersonalDataSheet
         return $data;
     }
 
-   /**
-    * It gets the educational background of an employee
-    * 
-    * @param string employeeID The employee ID of the employee you want to get the educational
-    * background of.
-    * 
-    * @return EmployeeEducationalBackground educational background of the employee.
-    */
-    public function getEducationalBackground(string $employeeID) :EmployeeEducationalBackground
+    /**
+     * It gets the educational background of an employee
+     * 
+     * @param string employeeID The employee ID of the employee you want to get the educational
+     * background of.
+     * 
+     * @return EmployeeEducationalBackground|array educational background of the employee.
+     */
+    public function getEducationalBackground(string $employeeID): EmployeeEducationalBackground|array
     {
         $employeeID = str_pad($employeeID, 4, "0", STR_PAD_LEFT);
 
@@ -192,14 +192,14 @@ class PersonalDataSheetRepository implements IPersonalDataSheet
         return $educationalBackground;
     }
 
-   /**
-    * It updates or creates a new record in the database
-    * 
-    * @param array data The array of data to be inserted or updated.
-    * @param employeeID The employee ID of the employee.
-    * 
-    * @return array The data is being returned.
-    */
+    /**
+     * It updates or creates a new record in the database
+     * 
+     * @param array data The array of data to be inserted or updated.
+     * @param employeeID The employee ID of the employee.
+     * 
+     * @return array The data is being returned.
+     */
     public function updateEducationalBackground(array $data = [], $employeeID): array
     {
         $employeeID = str_pad($data['employee_id'], 4, "0", STR_PAD_LEFT);
@@ -249,7 +249,7 @@ class PersonalDataSheetRepository implements IPersonalDataSheet
         return $data;
     }
 
-   
+
     /**
      * > This function returns a collection of civil service eligibilities of an employee
      * 
@@ -258,7 +258,7 @@ class PersonalDataSheetRepository implements IPersonalDataSheet
      * 
      * @return Collection|array A collection of EmployeeCivilService objects.
      */
-    public function getCivilServiceEligibility(string $employeeID) :Collection|array
+    public function getCivilServiceEligibility(string $employeeID): Collection|array
     {
         $employeeID = str_pad($employeeID, 4, "0", STR_PAD_LEFT);
         return EmployeeCivilService::where('employee_id', $employeeID)->get() ?? json_encode([]);
