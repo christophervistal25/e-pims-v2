@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -10,12 +11,11 @@ use App\Http\Controllers\PlantillaController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\SalaryGradeController;
+use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\BirthdayCardController;
 use App\Http\Controllers\StepPromotionController;
 use App\Http\Controllers\ServiceRecordsController;
-use App\Http\Controllers\PrintAdjustmentController;
 use App\Http\Controllers\PositionScheduleController;
-use App\Http\Controllers\SalaryAdjustmentController;
 use App\Http\Controllers\MaintenanceOfficeController;
 use App\Http\Controllers\PersonalDataSheetController;
 use App\Http\Controllers\PrintServiceRecordController;
@@ -30,7 +30,6 @@ use App\Http\Controllers\Reports\PlantillaReportController;
 use App\Http\Controllers\Account\Employee\ProfileController;
 use App\Http\Controllers\DownloadPersonalDataSheetController;
 use App\Http\Controllers\EmployeeLeave\LeaveRecallController;
-use App\Http\Controllers\SalaryAdjustmentPerOfficeController;
 use App\Http\Controllers\Account\Employee\LeaveCardController;
 use App\Http\Controllers\Maintenance\LeaveIncrementController;
 use App\Http\Controllers\EmployeeLeave\LeaveUndertimeController;
@@ -44,14 +43,20 @@ use App\Http\Controllers\Account\Employee\PrintLeaveApplicationController;
 use App\Http\Controllers\Account\Employee\EmployeePersonalDataSheetController;
 use App\Http\Controllers\Maintenance\LeaveController as MaintenanceLeaveController;
 use App\Http\Controllers\Account\Employee\DashboardController as EmployeeDashboardController;
-use App\Http\Controllers\AdminProfileController;
+
+Route::get('/', function () {
+    $user = Auth::user();
+    if ($user && $user->user_type === User::USER_TYPES['ADMINISTRATOR']) {
+        return redirect()->to(route('administrator.dashboard'));
+    } else if ($user && $user->user_type === User::USER_TYPES['USER']) {
+        return redirect()->to(route('employee.dashboard'));
+    } else {
+        return redirect()->to(route('login'));
+    }
+});
 
 Route::resource('notifications', 'NotificationController');
-
-Route::redirect('/', 'login');
 Route::get('administrator/dashboard', [AdminDashboardController::class, 'index']);
-
-
 
 
 Route::group(['middleware' => ['auth', 'administrator']], function () {
@@ -152,33 +157,33 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
     Route::get('birthday-card-2/{name}', [BirthdayCardController::class, 'secondCard']);
 
     Route::group(['prefix' => 'employee'], function () {
-            Route::get('leave/application', [LeaveController::class, 'show'])->name('leave.application.filling');
-            Route::get('leave/leave-recall', [LeaveRecallController::class, 'index'])->name('leave.leave-recall');
-            Route::resource('leave-recall', LeaveRecallController::class);
-            Route::post('employee-leave-application-filling', [LeaveApplicationController::class, 'storeByAdmin'])->name('employee.leave.application.filling.admin.create');
-            Route::get('list/leave-forwarded-balance', [LeaveForwardedBalanceController::class, 'list'])->name('leave-forwarded-balance.list');
-            Route::post('leave-forwarded-balance/{id}', [LeaveForwardedBalanceController::class, 'destroy']);
-            Route::get('leave-forwarded-balance/{id}/edit', [LeaveForwardedBalanceController::class, 'edit']);
-            Route::put('leave-forwarded-balance/{id}', [LeaveForwardedBalanceController::class, 'update']);
-            Route::resource('leave-forwarded-balance', LeaveForwardedBalanceController::class);
+        Route::get('leave/application', [LeaveController::class, 'show'])->name('leave.application.filling');
+        Route::get('leave/leave-recall', [LeaveRecallController::class, 'index'])->name('leave.leave-recall');
+        Route::resource('leave-recall', LeaveRecallController::class);
+        Route::post('employee-leave-application-filling', [LeaveApplicationController::class, 'storeByAdmin'])->name('employee.leave.application.filling.admin.create');
+        Route::get('list/leave-forwarded-balance', [LeaveForwardedBalanceController::class, 'list'])->name('leave-forwarded-balance.list');
+        Route::post('leave-forwarded-balance/{id}', [LeaveForwardedBalanceController::class, 'destroy']);
+        Route::get('leave-forwarded-balance/{id}/edit', [LeaveForwardedBalanceController::class, 'edit']);
+        Route::put('leave-forwarded-balance/{id}', [LeaveForwardedBalanceController::class, 'update']);
+        Route::resource('leave-forwarded-balance', LeaveForwardedBalanceController::class);
 
-            Route::get('leave-list/list', [LeaveListController::class, 'list']);
-            Route::get('leave-list', [LeaveListController::class, 'index'])->name('leave.leave-list');
-            Route::get('leave/leave-list/{edit}', [LeaveListController::class, 'edit'])->name('leave-list.edit');
-            Route::delete('leave-list/{id}', [LeaveListController::class, 'destroy'])->name('leave-list.delete');
-            Route::put('leave/leave-list/{id}', [LeaveListController::class, 'update'])->name('leave-list.update');
+        Route::get('leave-list/list', [LeaveListController::class, 'list']);
+        Route::get('leave-list', [LeaveListController::class, 'index'])->name('leave.leave-list');
+        Route::get('leave/leave-list/{edit}', [LeaveListController::class, 'edit'])->name('leave-list.edit');
+        Route::delete('leave-list/{id}', [LeaveListController::class, 'destroy'])->name('leave-list.delete');
+        Route::put('leave/leave-list/{id}', [LeaveListController::class, 'update'])->name('leave-list.update');
 
-            Route::get('leave-monitoring/{id}', [LeaveMonitoringController::class, 'list']);
-            Route::resource('leave-monitoring', LeaveMonitoringController::class);
+        Route::get('leave-monitoring/{id}', [LeaveMonitoringController::class, 'list']);
+        Route::resource('leave-monitoring', LeaveMonitoringController::class);
 
-            Route::resource('late-undertime', LeaveUndertimeController::class);
+        Route::resource('late-undertime', LeaveUndertimeController::class);
 
-            Route::get('leave/compensatory-build-up', [CompensatoryBuildUpController::class, 'list'])->name('compensatory-build-up.list');
-            Route::get('leave/compensatory-build-up/{id}/{year}', [CompensatoryBuildUpController::class, 'listComLeaveByYear']);
-            Route::get('leave/compensatory-build-up/forfeited/{id}/{year}', [CompensatoryBuildUpController::class, 'forfeited']);
-            Route::get('leave/compensatory-build-up/updateForfeited/{emloyeeID}/{year}', [CompensatoryBuildUpController::class, 'updateForfeited']);
-            Route::post('compensatory-build-up/{id}', [CompensatoryBuildUpController::class, 'destroy']);
-            Route::resource('compensatory-build-up', CompensatoryBuildUpController::class);
+        Route::get('leave/compensatory-build-up', [CompensatoryBuildUpController::class, 'list'])->name('compensatory-build-up.list');
+        Route::get('leave/compensatory-build-up/{id}/{year}', [CompensatoryBuildUpController::class, 'listComLeaveByYear']);
+        Route::get('leave/compensatory-build-up/forfeited/{id}/{year}', [CompensatoryBuildUpController::class, 'forfeited']);
+        Route::get('leave/compensatory-build-up/updateForfeited/{emloyeeID}/{year}', [CompensatoryBuildUpController::class, 'updateForfeited']);
+        Route::post('compensatory-build-up/{id}', [CompensatoryBuildUpController::class, 'destroy']);
+        Route::resource('compensatory-build-up', CompensatoryBuildUpController::class);
     });
 
     Route::group(['prefix' => 'maintenance'], function () {
@@ -195,7 +200,6 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
 
     Route::get('salary-grade/{year}', [SalaryGradePrintController::class, 'index'])->name('salary-grade-print');
     Route::post('leave-increment-job', 'LeaveIncrementJobController');
-
 });
 
 
@@ -205,44 +209,44 @@ Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'submitLogin'])->name('submit.login');
 
 Route::get('404', function () {
-      return view('errors.423');
+    return view('errors.423');
 })->name('423-leave-application');
 
 Route::fallback(function () {
-      abort(404);
+    abort(404);
 });
 
 
 
 Route::controller(PrintServiceRecordController::class)->group(function () {
-      Route::post('service-record-print/{employeeID}/pdf', 'pdf');
-      Route::post('service-record-print/{employeeID}/excel', 'excel');
-      Route::get('service-record-print/{employeeID}/{type}/download', 'download');
+    Route::post('service-record-print/{employeeID}/pdf', 'pdf');
+    Route::post('service-record-print/{employeeID}/excel', 'excel');
+    Route::get('service-record-print/{employeeID}/{type}/download', 'download');
 });
 
 Route::group(['prefix' => 'prints'], function () {
-      Route::get('salary-grade/{year}', [SalaryGradePrintController::class, 'index'])->name('salary-grade-print');
-      Route::post('download-personal-data-sheet/generate/{employeeID}', [DownloadPersonalDataSheetController::class, 'generate']);
-      Route::get('download-personal-data-sheet-pdf/{employeeID}', [DownloadPersonalDataSheetController::class, 'pdf']);
-      Route::get('download-personal-data-sheet-excel/{employeeID}', [DownloadPersonalDataSheetController::class, 'excel']);
+    Route::get('salary-grade/{year}', [SalaryGradePrintController::class, 'index'])->name('salary-grade-print');
+    Route::post('download-personal-data-sheet/generate/{employeeID}', [DownloadPersonalDataSheetController::class, 'generate']);
+    Route::get('download-personal-data-sheet-pdf/{employeeID}', [DownloadPersonalDataSheetController::class, 'pdf']);
+    Route::get('download-personal-data-sheet-excel/{employeeID}', [DownloadPersonalDataSheetController::class, 'excel']);
 });
 
 Route::controller(PlantillaReportController::class)->group(function () {
-      Route::get('show-plantilla-report', 'index')->name('show-plantilla-report');
-      Route::post('plantilla-report/generate/{office}/{year}', 'generate')->name('generate.plantilla-report');
-      Route::post('export/{office}/{year}', 'export')->name('generate.plantilla-report');
-      Route::get('download/plantilla-generated-report/{fileName}', 'download')->name('download.generated.plantilla-report');
+    Route::get('show-plantilla-report', 'index')->name('show-plantilla-report');
+    Route::post('plantilla-report/generate/{office}/{year}', 'generate')->name('generate.plantilla-report');
+    Route::post('export/{office}/{year}', 'export')->name('generate.plantilla-report');
+    Route::get('download/plantilla-generated-report/{fileName}', 'download')->name('download.generated.plantilla-report');
 });
 
-// EMPLOYEES ACCOUNT ROUTES.
+
 Route::group(['middleware' => ['auth', 'user']], function () {
     Route::get('employee-dashboard', [EmployeeDashboardController::class, 'index'])->name('employee.dashboard');
     Route::get('employee-personal-data-sheet', [EmployeePersonalDataSheetController::class, 'edit'])->name('employee.personal-data-sheet');
     Route::get('print-leave-application/{applicationID}', [PrintLeaveApplicationController::class, 'print']);
 
     Route::group(['middleware' => 'verify.application.submitted'], function () {
-          Route::get('employee-leave-application-filling', [LeaveApplicationController::class, 'create'])->name('employee.leave.application.filling');
-          Route::post('employee-leave-application-filling', [LeaveApplicationController::class, 'store'])->name('employee.leave.application.filling.submit');
+        Route::get('employee-leave-application-filling', [LeaveApplicationController::class, 'create'])->name('employee.leave.application.filling');
+        Route::post('employee-leave-application-filling', [LeaveApplicationController::class, 'store'])->name('employee.leave.application.filling.submit');
     });
 
     Route::get('employee-leave-history/list', [ProfileController::class, 'list'])->name('employee.leave.history.list');
