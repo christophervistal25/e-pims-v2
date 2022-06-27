@@ -49,15 +49,15 @@
                               <img src="/assets/img/province.png" class="img-fluid mb-3" width="200px">
                         </center>
                         @if($errors->any())
-                        <div class='alert alert-danger rounded-0'>
+                        <div class='alert alert-danger rounded-0 text-center'>
                               Please check your email/password.
                         </div>
                         @endif
                         <div class="account-box">
                               <div class="account-wrapper">
-                                    <h3 class="account-title">Login</h3>
+                                    <h3 class="account-title">{{ config('app.name') }}</h3>
                                     <p class="account-subtitle">Access to our dashboard</p>
-                                    <form action="{{ route('login') }}" method="POST">
+                                    <form action="{{ route('submit.login') }}" method="POST">
                                           @csrf
                                           <div class="form-group">
                                                 <label>Username</label>

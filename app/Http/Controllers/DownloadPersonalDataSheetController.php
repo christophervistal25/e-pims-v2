@@ -45,7 +45,7 @@ class DownloadPersonalDataSheetController extends Controller implements IDownloa
 
           public function __construct()
           {
-                  $this->middleware(['auth']);
+                  // $this->middleware(['auth']);
           }
 
           private function generatePDS(string $id)
@@ -446,7 +446,7 @@ class DownloadPersonalDataSheetController extends Controller implements IDownloa
 
           public function pdf(string $fileName)
           {
-                  $file = storage_path() . '\\generated_pds\\' . $fileName . "-E-PDS.pdf";
+                  $file = storage_path() . '\\generated_pds\\' . $fileName . ".pdf";
                   return response()->download($file);
           }
 }

@@ -47,15 +47,13 @@ class ProfileController extends Controller
     public function update(Request $request)
     {
         $this->validate($request, [
-            'username' => 'required|unique:users,username,'. Auth::user()->id,
-            'email' => 'required|unique:users,email,'. Auth::user()->id,
+            'username' => 'required|unique:EPIMS_Users,username,'. Auth::user()->Employee_id . ',Employee_id',
             'password' => 'nullable|min:6|max:16|same:retypePassword',
         ], [], ['retypePassword' => 'password confirmation']);
 
-        $id = Auth::user()->id;
+        $id = Auth::user()->Employee_id;
         $user = User::find($id);
         $user->username = $request->username;
-        $user->email = $request->email;
         $user->password = is_null($request->password) ? $user->password : bcrypt($request->password);
         $user->save();
 

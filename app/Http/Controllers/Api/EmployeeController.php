@@ -38,6 +38,7 @@ class EmployeeController extends Controller
     public function store(StoreEmployeeRequest $request)
     {
         // Store new employee
+        return $this->employeeService->addNewEmployee($request->all());
     }
 
     public function update(UpdateEmployeeRequest $request, string $employeeID): Employee

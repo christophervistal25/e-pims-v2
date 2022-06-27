@@ -17,11 +17,20 @@ class EmployeeLeaveForwardedBalance extends Model
     protected $fillable = [
         'forwarded_id',
         'Employee_id',
-        'vl_earned',
-        'vl_used',
-        'sl_earned',
-        'sl_used',
         'date_forwarded',
+        'vl_balance',
+        'sl_balance',
+        'vawc_balance',
+        'adopt_balance',
+        'mandatory_balance',
+        'maternity_balance',
+        'paternity_balance',
+        'soloparent_balance',
+        'emergency_balance',
+        'slb_balance',
+        'study_balance',
+        'spl_balance',
+        'rehab_balance',
     ];
 
 

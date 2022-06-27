@@ -221,6 +221,11 @@ class Employee extends Model
         );
     }
 
+    public function promotions()
+    {
+        return $this->hasMany(Promotion::class, 'employee_id', 'Employee_id');
+    }
+
     public function plantilla()
     {
         return $this->hasOne(Plantilla::class, 'Employee_id', 'employee_id');
@@ -317,7 +322,7 @@ class Employee extends Model
 
     public function leave_files()
     {
-        return $this->hasMany(EmployeeLeaveApplication::class, 'employee_id', 'Employee_id');
+        return $this->hasMany(EmployeeLeaveApplication::class, 'Employee_id', 'Employee_id');
     }
 
 

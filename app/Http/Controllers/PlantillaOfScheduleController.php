@@ -114,7 +114,7 @@ class PlantillaOfScheduleController extends Controller
     {
         $currentYear = date('Y');
         $fetchYear = date('Y') - 1;
-        Plantilla::where('year', $fetchYear)->get()->each(function ($record) use($currentYear) {
+        Plantilla::with('plantilla_positions')->where('year', $fetchYear)->get()->each(function ($record) use($currentYear) {
             $currentData = $record->getAttributes();
             $currentData['plantilla_id'] = tap(Setting::where('Keyname', 'AUTONUMBER')->first())->increment('Keyvalue', 1)->Keyvalue;
             $currentData['year'] = $currentYear;
@@ -129,7 +129,8 @@ class PlantillaOfScheduleController extends Controller
                 'employee_id' => $currentData['employee_id'],
                 'pp_id'       => $currentData['pp_id'],
             ], $currentData);
-        });
+        
+      });
 
         return response()->json(['success' => true]);
     }

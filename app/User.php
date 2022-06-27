@@ -2,17 +2,23 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Traits\UserLaraTablesAction;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    use UserLaraTablesAction;
       use Notifiable;
       public $connection = 'DTR_PAYROLL_CONNECTION';
       public $table = 'EPIMS_Users';
       public $timestamps = false;
       public $primaryKey = 'Employee_id';
+      
+      public const USER_TYPES = [
+            'USER' => 0,
+            'ADMINISTRATOR' => 1,
+      ];
 
       /**
        * The attributes that are mass assignable.
@@ -20,7 +26,7 @@ class User extends Authenticatable
        * @var array
        */
       protected $fillable = [
-            'username', 'password', 'Employee_id',
+            'username', 'password', 'Employee_id', 'user_type',
       ];
 
       /**

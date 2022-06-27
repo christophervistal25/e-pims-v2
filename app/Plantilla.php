@@ -81,15 +81,10 @@ class Plantilla extends Model
       }
 
 
-      // public function position()
-      // {
-      //     return $this->hasOne('App\Position', 'position_id', 'pp_id');
-      // }
-
-      // public function plantillaPosition()
-      // {
-      //     return $this->hasOne('App\PlantillaPosition', 'position_id', 'pp_id');
-      // }
+      public function position()
+      {
+          return $this->hasOne(Position::class, 'PosCode', 'PosCode');
+      }
 
       public function salary_adjustment()
       {

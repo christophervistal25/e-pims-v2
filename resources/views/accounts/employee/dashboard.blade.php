@@ -280,7 +280,7 @@
 
       socket.on(`PUBLISH_DONE_${EMPLOYEE_ID}`, function () {
             $('#btn-download-status').fadeOut();
-            window.open(`/prints/download-personal-data-sheet-pdf/${EMPLOYEE_ID}`);
+            window.open(`/prints/download-personal-data-sheet-pdf/${EMPLOYEE_ID}-E-PDS`);
             $('#selectFilExportModal').modal('toggle');
       });
 </script>

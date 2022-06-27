@@ -18,7 +18,9 @@ class PlantillaPositionService
        */
       public function positionsByOffice(string $office) :Collection
       {
-            return PlantillaPosition::with('position')->doesntHave('plantillas')->where('office_code', $office)->get();
+            return PlantillaPosition::with('position')->whereDoesntHave('plantillas', function ($query) {
+                $query->where('year', date('Y'));
+            })->where('office_code', $office)->get();
       }
 
       /**

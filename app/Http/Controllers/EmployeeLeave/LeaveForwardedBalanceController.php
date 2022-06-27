@@ -58,30 +58,18 @@ class LeaveForwardedBalanceController extends Controller
                 ->addColumn('date_forwarded', function ($rPerEmployee) {
                     return date("Y-m-d", strtotime($rPerEmployee->date_forwarded));
                 })
-                ->addColumn('vl_earned', function ($rPerEmployee) {
-                    return $rPerEmployee->vl_earned;
-                })
-                ->addColumn('vl_used', function ($rPerEmployee) {
-                    return $rPerEmployee->vl_used;
-                })
                 ->addColumn('vl_balance', function ($rPerEmployee) {
-                    return (float)$rPerEmployee->vl_earned - $rPerEmployee->vl_used;
-                })
-                ->addColumn('sl_earned', function ($rPerEmployee) {
-                    return $rPerEmployee->sl_earned;
-                })
-                ->addColumn('sl_used', function ($rPerEmployee) {
-                    return $rPerEmployee->sl_used;
+                    return $rPerEmployee->vl_balance;
                 })
                 ->addColumn('sl_balance', function ($rPerEmployee) {
-                    return (float)$rPerEmployee->sl_earned - $rPerEmployee->sl_used;
-                })
-                ->addColumn('leave_balance', function ($rPerEmployee) {
-                    return (float)$rPerEmployee->vl_earned - $rPerEmployee->vl_used
-                        + ($rPerEmployee->sl_earned - $rPerEmployee->sl_used);
+                    return $rPerEmployee->sl_balance;
                 })
                 ->addcolumn('action', function ($rPerEmployee) {
-                    $button = '<button type="button" class="btn btn-success btn-sm rounded-circle shadow edit__leave__type"
+                    $button = '<button type="button" class="btn btn-info btn-sm rounded-circle shadow view__leave__balances"
+                                        data-id="' . $rPerEmployee->forwarded_id . '">
+                                        <i class="fa fa-eye"></i>
+                                    </button>';
+                    $button .= '<button type="button" class="btn btn-success btn-sm rounded-circle shadow edit__leave__type ml-1"
                                         data-id="' . $rPerEmployee->forwarded_id . '">
                                         <i class="fa fa-pencil"></i>
                                     </button>';
@@ -118,40 +106,35 @@ class LeaveForwardedBalanceController extends Controller
     {
         $this->validate($request, [
             'Employee_id' => 'required|unique:employee_leave_forwarded_balance',
-            'vl_earned' => 'required',
-            'vl_used' => 'required',
-            'sl_earned' => 'required',
-            'sl_used' => 'required',
+            'vl_balance' => 'required',
+            'sl_balance' => 'required',
         ], [
             'Employee_id.required' => 'Please select an employee.',
             'Employee_id.unique' => 'Duplicated entry.',
-            'vl_earned.required' => 'This field is required.',
-            'vl_used.required' => 'This field is required.',
-            'sl_earned.required' => 'This field is required.',
-            'sl_used.required' => 'This field is required.',
+            'vl_balance.required' => 'This field is required.',
+            'sl_balance.required' => 'This field is required.',
         ]); 
 
         $lastID = DB::table('Settings')->where('Keyname', 'AUTONUMBER2')->first();
         $convertedID = (int) $lastID->Keyvalue;
         // Insert Record with As of.
         $employeeLeaveForwardedBalance = EmployeeLeaveForwardedBalance::create([
-            'forwarded_id'   => $convertedID,
-            'Employee_id'    => $request['Employee_id'],
-            'vl_earned'      => $request['vl_earned'],
-            'vl_used'        => $request['vl_used'],
-            'sl_earned'      => $request['sl_earned'],
-            'sl_used'        => $request['sl_used'],
-            'date_forwarded' => $request['date_forwarded'],
-        ]);
-        
-        EmployeeLeaveTransaction::create([
-            'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
-            'transaction_id' => $convertedID,
-            'transaction_type' => EmployeeLeaveForwardedBalance::class,
-            'record_type' => 'ENTRANCE',
-            'trans_date' => Carbon::now(),
-             'vl_amount' => $employeeLeaveForwardedBalance->vl_earned - $employeeLeaveForwardedBalance->vl_used,
-             'sl_amount' => $employeeLeaveForwardedBalance->sl_earned - $employeeLeaveForwardedBalance->sl_used,
+            'forwarded_id'          => $convertedID,
+            'Employee_id'           => $request['Employee_id'],
+            'date_forwarded'        => $request['date_forwarded'],
+            "vl_balance"            => $request['vl_balance'],
+            "sl_balance"            => $request['sl_balance'],
+            "vawc_balance"          => $request['vawc_balance'],
+            "adopt_balance"         => $request['adopt_balance'],
+            "mandatory_balance"     => $request['mandatory_balance'],
+            "maternity_balance"     => $request['maternity_balance'],
+            "paternity_balance"     => $request['paternity_balance'],
+            "soloparent_balance"    => $request['soloparent_balance'],
+            "emergency_balance"     => $request['emergency_balance'],
+            "slb_balance"           => $request['slb_balance'],
+            "study_balance"         => $request['study_balance'],
+            "spl_balance"           => $request['spl_balance'],
+            "rehab_balance"         => $request['rehab_balance'],
         ]);
         
         $nextID = $convertedID + 1;

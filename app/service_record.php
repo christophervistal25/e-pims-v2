@@ -16,21 +16,22 @@ class service_record extends Model
 
 
     protected $fillable = [
+        'id',
         'employee_id',
         'service_from_date',
         'service_to_date',
-        'position_id',
+        'PosCode',
         'status',
         'salary',
-        'office_name',
-        'office_address',
+        'office_code',
         'leave_without_pay',
         'separation_date',
         'separation_cause',
     ];
+
     public function position()
     {
-        return $this->belongsTo(Position::class, 'position_id', 'PosCode');
+        return $this->belongsTo(Position::class, 'PosCode', 'PosCode');
     }
 
     public function office()

@@ -1,5 +1,6 @@
 <?php
 
+use App\Holiday;
 use App\Division;
 use App\Employee;
 use App\Plantilla;
@@ -13,6 +14,7 @@ use App\PlantillaPosition;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 use App\Services\SalaryGradeService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\Api\CityController;
@@ -21,6 +23,7 @@ use App\Http\Controllers\Api\DivisionController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\PositionController;
 use App\Http\Controllers\Api\ProvinceController;
+use App\Http\Controllers\Api\PlantillaController;
 use App\Http\Controllers\StepIncrementController;
 use App\Http\Controllers\ServiceRecordsController;
 use App\Http\Controllers\PersonalDataSheetController;
@@ -315,15 +318,36 @@ Route::post('step-increment/update/{stepId}', [StepIncrementController::class, '
 // LEAVE LIST //
 Route::get('/leave/leave-list/{officeID}/{status?}/{employeeID?}', 'EmployeeLeave\LeaveListController@search');
 
-Route::get('generate/periods/{start}/{end}', function ($start, $end) {
-      $period = CarbonPeriod::create($start, $end);
+Route::get('generate/periods/{start}/{end}/{includeWeekends}/{employeeID}', function ($start, $end, $includeWeekends, $employeeID) {
+      $employee = Employee::with(['leave_files'])->find($employeeID);
+
+      $checkSum = 0;
+      if($employee->leave_files->count() >= 1) {
+            $checkSum += $employee->leave_files()->where('status', 'approved')->where('date_from', '>=', $start)->where('date_from', '<=', $end)->count();
+            $checkSum += $employee->leave_files()->where('status', 'approved')->where('date_to', '>=', $start)->where('date_to', '<=', $end)->count();
+
+            if($checkSum >= 1) {
+                  // Fail
+                  return response()->json(['success' => false, 'message' => 'Conflict']);
+            }
+      }
+      
+      if($includeWeekends == 'true'){
+            $period = CarbonPeriod::create($start, $end);
+      }else{
+            $period = CarbonPeriod::create($start, $end)->filter('isWeekday');
+      }
+
       $range = [];
+      $holidays = [];
 
       foreach ($period as $date) {
             $range[] = $date->format('Y-m-d');
+            $holidays[] = $date->format('m-d');
       }
+      $holidays = Holiday::whereIn('date', $holidays)->get()->each(fn($holiday) => $holiday->date = date('Y').'-'. $holiday->date)->pluck('date')->toArray();
 
-      return response()->json(['period' => $range]);
+      return response()->json(['success' => true, 'period' => array_diff($range, $holidays)]);
 });
 
 
@@ -333,3 +357,4 @@ Route::get('division-by-office/{office}', [DivisionController::class, 'getDivisi
 Route::get('office-plantilla-positions/{office}', [PlantillaPositionController::class, 'positionsByOffice']);
 Route::get('plantilla-position-details/{plantillaPositionID}', [PlantillaPositionController::class, 'getPositionDetails']);
 Route::get('salary-amount/{grade}/{step}/{year}', [APISalaryGradeController::class, 'salary']);
+Route::get('personnel-get-current-plantilla/{employeeID}', [PlantillaController::class, 'getEmployeeCurrentPlantilla']);

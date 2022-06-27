@@ -168,7 +168,7 @@ class SalaryAdjustmentController extends Controller
 
         $dateCheck = $request->remarks;
         if($dateCheck == ''){
-            $remarks =  'Salary Adjust';
+            $remarks =  'Salary Adjustment';
         } else{
             $remarks =  $request->remarks;
         }

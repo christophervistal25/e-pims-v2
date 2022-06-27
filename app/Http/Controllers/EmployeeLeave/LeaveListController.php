@@ -60,8 +60,10 @@ class LeaveListController extends Controller
                     $btnDecline = '<button type="button" class="rounded-circle text-white btnDecline btn btn-danger btn-sm" title="Decline Request" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="fa fa-thumbs-down"></i></button>';
                     $btnUpdate = '<button type="button" class="rounded-circle text-white edit btn btn-info btn-sm" onclick="editLeaveApplication('.$row->application_id.')"><i class="la la-eye" title="Update Leave Request"></i></button>';
                     $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
+                }else{
+                    $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
                 }
-                return  $btnApprove . "&nbsp" . $btnDecline . "&nbsp &nbsp &nbsp" . $btnUpdate . "&nbsp" . $btnDelete;
+                return  $btnApprove . "&nbsp" . $btnDecline . "&nbsp" . $btnUpdate . "&nbsp" . $btnDelete;
             })
             ->make(true);
     }
@@ -76,8 +78,8 @@ class LeaveListController extends Controller
 
         $employeeIds = $this->leaveService->getEmployeeApplied();
 
-        $employees = Employee::without(['position', 'office_charging', 'office_assignemnt', 'office_charging.desc'])
-            ->whereIn('Employee_id', $employeeIds)
+        $employees = Employee::without(['position', 'office_assignment', 'office_charging.desc'])
+            ->where('Employee_id', '0051')
             ->get();
 
         return view('leave.leave-list', compact('statuses', 'offices', 'employees'));
@@ -112,16 +114,6 @@ class LeaveListController extends Controller
     public function update(Request $request, $id)
     {
         $application = EmployeeLeaveApplication::where('application_id', $id)->first();
-        // $leaveList->date_applied          = $request['dateApply'];
-        // $leaveList->leave_type_id         = $request['selectedLeave'];
-        // $leaveList->incase_of             = $request['inCaseOfLeave'];
-        // $leaveList->no_of_days            = $request['numberOfDays'];
-        // $leaveList->date_from             = $request['startDate'];
-        // $leaveList->date_to               = $request['endDate'];
-        // $leaveList->commutation           = $request['commutation'];
-        // $leaveList->recommending_approval = $request['recommendingApproval'];
-        // $leaveList->approved_by           = $request['approvedBy']; 
-        // $leaveList->approved_status       = $request['status'];
 
         if ($request->status === 'approved') {
 
@@ -141,69 +133,32 @@ class LeaveListController extends Controller
                 
             }); 
 
-
-            if($request->type === 'SL') {
-                $deductions = [
-                //  'vl_amount' => $employeeLeaveForwardedBalance->vl_earned - $employeeLeaveForwardedBalance->vl_used,
-                //  'sl_amount' => $employeeLeaveForwardedBalance->sl_earned - $employeeLeaveForwardedBalance->sl_used,
-                ];
-            } else if($request->type === 'VL') {
-                $deductions = [
-                    // 'vl_amount' => $employeeLeaveForwardedBalance->vl_earned - $employeeLeaveForwardedBalance->vl_used,
-                    // 'sl_amount' => $employeeLeaveForwardedBalance->sl_earned - $employeeLeaveForwardedBalance->sl_used,
-                   ];
-            }
-            
             EmployeeLeaveTransaction::create([
                 'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
-                'transaction_id' => $leaveList->application_id,
+                'transaction_id' => $application->application_id,
                 'transaction_type' => EmployeeLeaveForwardedBalance::class,
                 'record_type' => 'ENTRANCE',
                 'trans_date' => Carbon::now(),
-                $deductions,
+                'leave_amount' => $application->no_of_days,
 
             ]);
-
-            $leaveList->save();
             
-            // Add record in leave transaction.
+            return response()->json(['success' => true]);
 
-            // EmployeeLeaveRecord::updateOrCreate(
-            //     [
-            //         'date_record' => $request['startDate'],
-            //         'employee_id' => $leaveList->employee_id,
-            //         'leave_application_id' => $id,
-            //     ],
-            //     [
-            //         'employee_id'          => $leaveList->employee_id,
-            //         'particular'           => ($leaveList->type->code) . '(' . $request->numberOfDays . '-0' . '-0' . ')',
-            //         'leave_type_id'        => $request->selectedLeave,
-            //         'earned'               => 0.000,
-            //         'used'                 => $request->numberOfDays,
-            //         'leave_application_id' => $id,
-            //         'date_record'          => $request['startDate'],
-            //         'record_type'          => 'D',
-            //     ]
-            // );
         } elseif ($request->status === 'declined') {
-            $leaveList->date_rejected = Carbon::now()->format('Y-m-d');
-            $leaveList->approved_for = null;
-            $leaveList->date_approved = null;
-            $leaveList->disapproved_due_to = $request['reason'];
-
-
-
-            $leaveList->leave_records()->delete();
-            // $leaveList->leave_records->delete();
+            $application->date_rejected = Carbon::now()->format('Y-m-d');
+            $application->approved_for = null;
+            $application->date_approved = null;
+            $application->disapproved_due_to = $request['reason'];
         } else {
-            $leaveList->date_rejected = Carbon::now()->format('Y-m-d');
-            $leaveList->date_approved = null;
-            $leaveList->disapproved_due_to = $request['reason'];
-            $leaveList->approved_for = null;
-            $leaveList->date_applied = null;
+            $application->date_rejected = Carbon::now()->format('Y-m-d');
+            $application->date_approved = null;
+            $application->disapproved_due_to = $request['reason'];
+            $application->approved_for = null;
+            $application->date_applied = null;
         }
 
-        $leaveList->save();
+        $application->save();
 
 
         Session::flash('success', true);
@@ -265,8 +220,10 @@ class LeaveListController extends Controller
                     $btnDecline = '<button type="button" class="rounded-circle text-white btnDecline btn btn-danger btn-sm" title="Decline Request" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="fa fa-thumbs-down"></i></button>';
                     $btnUpdate = '<button type="button" class="rounded-circle text-white edit btn btn-info btn-sm" onclick="editLeaveApplication('.$row->application_id.')"><i class="la la-eye" title="Update Leave Request"></i></button>';
                     $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
-                } 
-                return  $btnApprove . "&nbsp" . $btnDecline . "&nbsp &nbsp &nbsp" . $btnUpdate . "&nbsp" . $btnDelete;
+                }else{
+                    $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
+                }
+                return  $btnApprove . "&nbsp" . $btnDecline . "&nbsp" . $btnUpdate . "&nbsp" . $btnDelete;
             })->make(true);
     }
 }

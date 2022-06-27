@@ -5,6 +5,7 @@ namespace App\Services;
 use App\User;
 use App\Employee;
 use App\Plantilla;
+use App\Promotion;
 use App\EmployeeCivilService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
@@ -46,10 +47,7 @@ class EmployeeService
 
     private function getPromotedEmployeesByYear(string $year): Collection
     {
-        return Employee::without(['position', 'office'])->where('isActive', self::ACTIVE)
-            ->whereHas('step', function ($query) use ($year) {
-                $query->whereYear('date_step_increment', $year);
-            })->get();
+        return Promotion::where('sg_year', $year)->get();
     }
 
     public function getNoOfPromotedEmployees(string $year): int
@@ -98,6 +96,64 @@ class EmployeeService
         return Employee::get(['Employee_id'])->pluck('Employee_id');
     }
 
+
+    public function addNewEmployee(array $data = []): Employee
+    {
+
+        $employee = new Employee();
+        $employee['Employee_id'] = $data['employeeID'];
+        $employee['FirstName'] = $data['firstname'];
+        $employee['LastName'] = $data['lastname'];
+        $employee['MiddleName'] = $data['middlename'];
+        $employee['Suffix'] = $data['suffix'];
+        $employee['Birthdate'] = $data['birthdate'];
+        $employee['BirthPlace'] = $data['birthplace'];
+        $employee['Gender'] = $data['gender'];
+        $employee['CivilStatus'] = $data['civil_status'];
+        $employee['Address'] = $data['address'];
+        $employee['ContactNumber'] = $data['contact_no'];
+        $employee['isActive'] = $data['active_status'];
+        $employee['OfficeCode'] = $data['office_charging'];
+        $employee['OfficeCode2'] = $data['office_assignment'];
+        $employee['Work_Status'] = $data['status'];
+        $employee['salary_rate'] = $data['salary_rate'];
+        $employee['philhealth_no'] = $data['philhealth_no'];
+        $employee['pagibig_no'] = $data['pagibig_no'];
+        $employee['tin_no'] = $data['tin_no'];
+        $employee['gsis_no'] = $data['gsis_no'];
+        if (array_key_exists('salary_grade', $data)) {
+            $employee['sg_no'] = $data['salary_grade'];
+        }
+
+        if (array_key_exists('step_increment', $data)) {
+            $employee['step'] = $data['step_increment'];
+        }
+
+        if (!is_null($data['username'])) {
+            $user = User::updateOrCreate([
+                'Employee_id' => $data['employeeID']
+            ], [
+                'username' => $data['username'],
+                'user_type' => $data['user_type'],
+            ]);
+
+            if (!is_null($data['password'])) {
+                $user->password = bcrypt($data['password']);
+                $user->save();
+            }
+        }
+        $employee->save();
+        return $employee;
+    }
+
+    /**
+     * It updates the employee information and if the username is not null, it will update the user
+     * information.
+     * </code>
+     * 
+     * @param array data array of data
+     * @param Employee employee the employee object
+     */
     public function updateInformation(array $data, Employee $employee): Employee
     {
         $employee = tap($employee, function ($employee) use ($data) {
@@ -119,6 +175,7 @@ class EmployeeService
             $employee['pagibig_no'] = $data['pagibig_no'];
             $employee['tin_no'] = $data['tin_no'];
             $employee['gsis_no'] = $data['gsis_no'];
+            $employee['philhealth_no'] = $data['philhealth_no'];
 
             if (array_key_exists('salary_grade', $data)) {
                 $employee['sg_no'] = $data['salary_grade'];
@@ -128,14 +185,20 @@ class EmployeeService
                 $employee['step'] = $data['step_increment'];
             }
 
-            $account = User::find($data['employeeID']);
-            $account->username = $data['username'];
+            if (!is_null($data['username'])) {
+                $user = User::updateOrCreate([
+                    'Employee_id' => $data['employeeID']
+                ], [
+                    'username' => $data['username'],
+                    'user_type' => $data['user_type'],
+                ]);
 
-            if(!is_null($data['password'])) {
-                  $account->password = bcrypt($data['password']);
+                if (!is_null($data['password'])) {
+                    $user->password = bcrypt($data['password']);
+                    $user->save();
+                }
             }
 
-            $account->save();
 
             $employee->save();
         });
