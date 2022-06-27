@@ -71,10 +71,6 @@
                                     <small id="employeeName-error-message" class="text-danger text-sm"></small>
                             </div>
 
-
-                            <div class="col-12 col-lg-4">
-                                <input type="hidden" class="form-control" id="year" value="{{ $thisYear }}">
-                            </div>
         
                             <div class="col-12 col-lg-4">
                                 <label class="form-group has-float-label" for="employeeId">
@@ -430,15 +426,10 @@
             if (plantilla) {
                 plantilla = JSON.parse(plantilla);
                 
-
                 let {plantilla_positions} = plantilla;
                 let {position} = plantilla_positions;
-                let thisYear =  $('#year').val();
 
-                let year = JSON.parse(thisYear);
-
-                console.log(year);
-
+                console.log(plantilla)
                 
                 $('#employeeId').val(plantilla.employee_id);
                 $('#plantillaId').val(plantilla.plantilla_id);

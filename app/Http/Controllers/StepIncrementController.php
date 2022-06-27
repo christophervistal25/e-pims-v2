@@ -97,11 +97,11 @@ class StepIncrementController extends Controller
         $employees = Employee::has('plantillaForStep')
                     ->with(['plantillaForStep', 'plantillaForStep.plantilla_positions', 'plantillaForStep.plantilla_positions.position'])
                     // ->whereYear('year', '=', date('Y'))
-                    ->select('PlantillaForStep:year')
                     // ->without(['office_charging'])
                     ->doesntHave('step')
                     ->get();    
 
+        // dd($employees);
 
 
         return view('StepIncrement.create', compact('employees'));
