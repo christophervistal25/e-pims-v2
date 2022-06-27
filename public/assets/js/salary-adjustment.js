@@ -184,7 +184,27 @@ $(document).ready(function () {
                         .find('[value="' + empIds + '"]')
                         .remove();
                     $("#employeeName").selectpicker("refresh");
-                    $("input").val("");
+                    let inputId = [
+                        "#employeeName",
+                        "#employeeId",
+                        "#positionCode",
+                        "#officeCode",
+                        "#positionId",
+                        "#status",
+                        "#positionName",
+                        "#itemNo",
+                        "#salaryGrade",
+                        "#stepNo",
+                        "#previousYear",
+                        "#salaryPrevious",
+                        "#salaryNew",
+                        "#salaryDifference",
+                        "#remarks",
+                    ];
+                    $.each(inputId, function (index, value) {
+                        $(`${value}`).val("");
+                    });
+
                     $("#employeeName").val("Please Select").trigger("change");
                     const errorClass = [
                         "#dateAdjustment",
@@ -303,7 +323,26 @@ $(document).ready(function () {
     $("#cancelbutton1").click(function () {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
-        $("input").val("");
+        let inputId = [
+            "#employeeName",
+            "#employeeId",
+            "#positionCode",
+            "#officeCode",
+            "#positionId",
+            "#status",
+            "#positionName",
+            "#itemNo",
+            "#salaryGrade",
+            "#stepNo",
+            "#previousYear",
+            "#salaryPrevious",
+            "#salaryNew",
+            "#salaryDifference",
+            "#remarks",
+        ];
+        $.each(inputId, function (index, value) {
+            $(`${value}`).val("");
+        });
         $("#employeeName").val("Please Select").trigger("change");
         const errorClass = [
             "#dateAdjustment",

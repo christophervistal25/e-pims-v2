@@ -125,10 +125,8 @@ class PlantillaController extends Controller
             'areaLevel'                     => 'required|in:K,T,S,A',
         ]);
         DB::transaction(function () use ($request) {
-            $data = DB::table('settings')->where('Keyname', 'AUTONUMBER2')->first();
-            $id = (int) $data->Keyvalue;
             $plantilla = new Plantilla;
-            $plantilla->plantilla_id           = $id;
+            $plantilla->plantilla_id           = tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue;
             $plantilla->item_no                = $request['itemNo'];
             $plantilla->old_item_no            = $request['oldItemNo'];
             $plantilla->pp_id                  = $request['positionTitle'];
@@ -146,10 +144,7 @@ class PlantillaController extends Controller
             $plantilla->area_level             = $request['areaLevel'];
             $plantilla->year                   = $request['currentSgyear'];
             $plantilla->save();
-            Setting::find('AUTONUMBER2')->increment('Keyvalue');
-
             $plantillaPosition = PlantillaPosition::find($request->positionTitle);
-
             /* Creating a new record in the ServiceRecord table. */
             ServiceRecord::create([
                 'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
