@@ -47,7 +47,8 @@ class SalaryAdjustmentPerOfficeController extends Controller
 
         return DataTables::of($data)
             ->editColumn('checkbox', function ($row) {
-                $checkbox = "<input id='checkbox{$row}' class='not-select-checkbox' style='transform:scale(1.35)' value='{$row->plantilla_id}' type='checkbox' />";
+                $checkbox = "<input id='checkbox{$row}' name='checkboxNotSelected' class='not-select-checkbox' style='transform:scale(1.35)' value='{$row->plantilla_id}' type='checkbox' />";
+                // $checkbox = "<input id='checkbox{$row}' name='checkboxNotSelected' class='not-select-checkbox' style='transform:scale(1.35)' value='{$row->plantilla_id}' type='checkbox' />";
                 return $checkbox;
             })->rawColumns(['checkbox'])
             ->make(true);
