@@ -9,7 +9,6 @@ $(document).ready(function () {
                 "#salaryAdjustmentPerOffice"
             ).DataTable({
                 processing: true,
-                serverSide: true,
                 destroy: true,
                 retrieve: true,
                 pagingType: "full_numbers",
@@ -103,7 +102,6 @@ $(document).ready(function () {
             "#salaryAdjustmentPerOfficeList"
         ).DataTable({
             processing: true,
-            serverSide: true,
             destroy: true,
             retrieve: true,
             pagingType: "full_numbers",
@@ -175,22 +173,30 @@ $(document).ready(function () {
         $('input[type="checkbox"]', rows).prop("checked", this.checked);
     });
 
+    $(document).on("change", ".not-select-checkbox", function () {
+        if (
+            $(".not-select-checkbox:checked").length ==
+            $(".not-select-checkbox").length
+        ) {
+            $("#selectAll").prop("checked", true);
+        } else {
+            $("#selectAll").prop("checked", false);
+        }
+    });
+
     $("#saveBtn").click(function () {
         let date = $("#dateAdjustment").val();
         let currentYear = $("#year").val();
         let remarks = $("#remarks").val();
         let selectedRecordIDS = [];
-
         $("#saveBtn").attr("disabled", true);
         $("#loading").removeClass("d-none");
         $("#saving").html("Saving . . . ");
-
         $(".not-select-checkbox").each(function (index, element) {
             if (element.checked == true) {
                 selectedRecordIDS.push(element.value);
             }
         });
-
         if (selectedRecordIDS.length == 0) {
             swal("Please Select Employee", "", "error");
             $("#saveBtn").attr("disabled", false);
