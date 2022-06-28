@@ -426,10 +426,10 @@
             if (plantilla) {
                 plantilla = JSON.parse(plantilla);
                 
-
                 let {plantilla_positions} = plantilla;
                 let {position} = plantilla_positions;
-                
+
+                console.log(plantilla)
                 
                 $('#employeeId').val(plantilla.employee_id);
                 $('#plantillaId').val(plantilla.plantilla_id);

@@ -65,8 +65,7 @@ class PlantillaOfPositionController extends Controller
      */
     public function store(Request $request)
     {
-        $data = DB::table('settings')->where('Keyname', 'PP_ID')->first();
-        $id = (int)$data->Keyvalue;
+
         $this->validate($request, [
             'positionTitle'                 => 'required',
             'itemNo'                        => 'required|numeric',
@@ -75,14 +74,13 @@ class PlantillaOfPositionController extends Controller
         ]);
 
         $plantillaposition = new PlantillaPosition;
-        $plantillaposition->pp_id                             = $id;
+        $plantillaposition->pp_id                             = tap(Setting::where('Keyname', 'PP_ID')->first())->increment('Keyvalue', 1)->Keyvalue;
         $plantillaposition->PosCode                           = $request['positionTitle'];
         $plantillaposition->item_no                           = $request['itemNo'];
         $plantillaposition->sg_no                             = $request['salaryGrade'];
         $plantillaposition->office_code                       = $request['officeCode'];
         $plantillaposition->old_position_name                 = $request['positionOldName'];
         $plantillaposition->save();
-        Setting::find('PP_id')->increment('Keyvalue');
         return response()->json(['success'=>true]);
     }
 

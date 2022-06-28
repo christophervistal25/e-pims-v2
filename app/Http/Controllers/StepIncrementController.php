@@ -19,6 +19,7 @@ class StepIncrementController extends Controller
     //  SHOW DATA IN YAJRA TABLE //
     public function list()
     {
+
         $data = DB::table('Step_increments')
             ->leftJoin('Employees', 'Step_increments.employee_id', '=', 'Employees.Employee_id')
             ->leftJoin('Position', 'Step_increments.PosCode', '=', 'Position.PosCode')
@@ -88,11 +89,19 @@ class StepIncrementController extends Controller
     public function index()
     {
 
+        // $thisYear = DB::table('plantillas')
+        // ->whereYear('year', '=', date('Y'))
+        // ->get();
+
+
         $employees = Employee::has('plantillaForStep')
                     ->with(['plantillaForStep', 'plantillaForStep.plantilla_positions', 'plantillaForStep.plantilla_positions.position'])
+                    // ->whereYear('year', '=', date('Y'))
                     // ->without(['office_charging'])
                     ->doesntHave('step')
-                    ->get();
+                    ->get();    
+
+        // dd($employees);
 
 
         return view('StepIncrement.create', compact('employees'));
@@ -127,12 +136,12 @@ class StepIncrementController extends Controller
             'salary_amount_to'          => $request->amount2,
             'salary_diff'               => $request->monthlyDifference
         ]);
+    
 
         $increment->plantilla->update([
             'step_no'          => $request['stepNo2'],
             'salary_amount'    => $request['amount2']
         ]);
-
 
 
         $employee = Employee::find($request->employeeID);
@@ -189,8 +198,9 @@ class StepIncrementController extends Controller
         $step_increments->update();
 
         $step_increments->plantilla->update([
-            'step_no'          => $request['stepNo2'],
-            'salary_amount'    => $request['amount2']
+            'step_no'               => $request['stepNo2'],
+            'salary_amount'         => $request['amount2'],
+            'date_last_promotion'   => $request['created']
         ]);
 
 

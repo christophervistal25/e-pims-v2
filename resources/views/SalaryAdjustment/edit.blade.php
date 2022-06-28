@@ -270,6 +270,7 @@
         e.preventDefault();
         let id = $('#idSalaryAdjustment').val();
         let data = $(this).serialize();
+        console.log(data);
         $("#saveBtn").attr("disabled", true);
         $("#loading").removeClass("d-none");
         $("#saving").html("Updating . . .");
