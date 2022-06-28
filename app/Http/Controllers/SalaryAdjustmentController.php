@@ -243,8 +243,11 @@ class SalaryAdjustmentController extends Controller
           $salaryAdjustment->salary_previous = $request->salaryPrevious;
           $salaryAdjustment->salary_new      = $request->salaryNew;
           $salaryAdjustment->salary_diff     = $request->salaryDifference;
-          $salaryAdjustment->remarks     = $request->remarks;
+          $salaryAdjustment->remarks         = $request->remarks;
           $salaryAdjustment->save();
+          DB::table('plantillas')->where('employee_id', $request->employeeName)->where('year', $request->currentSgyear)
+            ->update(['salary_amount' => $request->salaryNew
+            ]);
           return response()->json(['success' => true]);
      }
 
