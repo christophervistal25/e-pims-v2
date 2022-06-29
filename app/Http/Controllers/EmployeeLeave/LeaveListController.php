@@ -36,7 +36,7 @@ class LeaveListController extends Controller
     // FETCH DATA IN YAJRA TABLES //
     public function list()
     {
-        $data = EmployeeLeaveApplication::get();
+        $data = EmployeeLeaveApplication::with('employee')->get();
 
         if ($data->count() === 0) {
             $data = $data->where('deleted_at', null);
@@ -64,13 +64,18 @@ class LeaveListController extends Controller
                     data-id="' . $row->application_id . '"
                     ><i style="pointer-events:none;" class="fa fa-thumbs-up"></i></button>';
                     $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord mr-1" title="Delete" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
-                }else{
+                } else{
                     $btnApprove = '<button type="button" class="rounded-circle text-white btnApprove btn btn-success btn-sm mr-1" title="Approved Request" 
                     data-employee-id="'. $row->Employee_id. '"
                     data-leave-type="' . $row->leave_type_id . '" 
                     data-id="' . $row->application_id . '"
+                    data-employee="' . $row->Employee->FirstName.  ' ' . $row->Employee->LastName . '"
+                    data-employee-contact="' . $row->Employee->ContactNumber. '"
                     ><i style="pointer-events:none;" class="fa fa-thumbs-up"></i></button>';
-                    $btnDecline = '<button type="button" class="rounded-circle text-white btnDecline btn btn-danger btn-sm mr-1" title="Decline Request" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="fa fa-times"></i></button>';
+                    $btnDecline = '<button type="button" class="rounded-circle text-white btnDecline btn btn-danger btn-sm mr-1" title="Decline Request" data-id="' . $row->application_id . '" 
+                    data-employee="' . $row->Employee->fullname. '"
+                    data-employee-contact="' . $row->Employee->ContactNumber. '"
+                    ><i style="pointer-events:none;" class="fa fa-times"></i></button>';
                     $btnUpdate = '<button type="button" class="rounded-circle text-white edit btn btn-info btn-sm btnEditRecord mr-1" onclick="editLeaveApplication('.$row->application_id.')"><i class="la la-pencil" title="Update Leave Request"></i></button>';
                     $btnPrint = '<button type="button" class="rounded-circle text-white edit btn btn-warning btn-sm btnPrintRecord mr-1" onclick="printLeaveApplication('.$row->application_id.')"><i class="la la-print" title="Update Leave Request"></i></button>';
                     $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord mr-1" title="Delete" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
