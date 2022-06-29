@@ -26,6 +26,7 @@ class SalaryAdjustmentController extends Controller
       *
       * @return \Illuminate\Http\Response
       */
+
      public function index()
      {
           $dates = SalaryAdjustment::select('date_adjustment')
@@ -165,6 +166,11 @@ class SalaryAdjustmentController extends Controller
         DB::table('plantillas')->where('employee_id', $request->employeeId)->where('year', $request->currentSgyear)
             ->update(['salary_amount' => $request->salaryNew
         ]);
+
+        /* Updating the current service record of the employee soon to be previous record. */
+        $serviceToDate = Carbon::parse($request->dateAdjustment)->subDays(1);
+        DB::table('service_records')->select('employee_id', 'service_from_date', 'service_to_date')->where('employee_id', $request->employeeId)->where('service_to_date', NULL)->latest('service_from_date')
+        ->update(['service_to_date' => $serviceToDate]);
 
 
         $dateCheck = $request->remarks;
