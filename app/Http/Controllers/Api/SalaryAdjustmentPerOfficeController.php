@@ -13,6 +13,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class SalaryAdjustmentPerOfficeController extends Controller
 {
+
     public function plantillaWithAdjustment(string $office, string $year = null)
     {
             $data = Plantilla::whereHas('salary_adjustment', function ($query)  use($year) {
@@ -90,6 +91,11 @@ class SalaryAdjustmentPerOfficeController extends Controller
                 ]
             );
             Setting::find('AUTONUMBER2')->increment('Keyvalue');
+
+            /* Updating the current service record of the employee soon to be previous record. */
+            $serviceToDate = Carbon::parse(request()->date)->subDays(1);
+            DB::table('service_records')->select('employee_id', 'service_from_date', 'service_to_date')->where('employee_id', $newAdjustments['employee_id'])->where('service_to_date', NULL)->latest('service_from_date')
+            ->update(['service_to_date' => $serviceToDate]);
             // salary adjustment per office save to service record
             $datas = DB::table('settings')->where('Keyname', 'AUTONUMBER2')->first();
             DB::table('service_records')->insert(
@@ -101,7 +107,8 @@ class SalaryAdjustmentPerOfficeController extends Controller
                     'status'                    => $newAdjustments['status'],
                     'salary'                    => $getsalaryResult['sg_step' .  $newAdjustments['step_no']],
                     'office_code'               => $newAdjustments['office_code'],
-                    'separation_cause'                   =>  $remarks,
+                    'separation_cause'          =>  $remarks,
+                    'created_at'                => Carbon::now(),
                 ]
             );
             Setting::find('AUTONUMBER2')->increment('Keyvalue');

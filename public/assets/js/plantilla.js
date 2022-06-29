@@ -1,11 +1,9 @@
 $(document).ready(function () {
     let select = [
         "#positionTitle",
-        "#currentStepno",
         "#employeeName",
         "#officeCode",
         "#divisionId",
-        "#status",
     ];
     let inputs = [
         "#oldItemNo",
