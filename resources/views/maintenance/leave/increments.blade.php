@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="col-lg-11">
-                <input type="date" class='form-control rounded-0' id="month" name="month" value="{{ date('Y-m-d') }}">
+                <input type="date" class='form-control rounded-0' required id="month" name="month" value="{{ date('Y-m-d') }}">
             </div>
         </div>
         <div class="card rounded-0 shadow-none">
@@ -223,9 +223,25 @@
     $('#btn-increment-leave-credits').click(function () {
         let month = $('#month').val();
 
+        if(!month) {
+            let message = document.createElement('p');
+            message.innerText = "Please select a month first.";
+            $('#month').addClass('is-invalid');
+            message.classList.add('text-center');
+            swal({
+                icon : 'error',
+                title : '',
+                content : message,
+                buttons : false,
+                timer : 5000,
+            });
+            return ;
+        }
+
         // Check if the selected month already exists in database using guard route
         $.ajax({
             url : `/maintenance/leave/increments/guard/${month}`,
+            method : 'POST',
             success : function (response) {
                 if(response.success) {
                     let employeeIDs = [];

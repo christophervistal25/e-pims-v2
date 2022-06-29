@@ -51,8 +51,8 @@ class EmployeeLeaveIncrementController extends Controller
     public function show(string $employeeID)
     {
         $employee = Employee::with(['forwarded_leave_records', 'leave_increments', 'leave_increments.transaction'])->find($employeeID, ['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode', 'OfficeCode2', 'PosCode']);
-
         $leaveCredits = $this->leaveRecordRepository->getEmployeeLeaveCredits($employee);
+
         return [
             'employee' => $employee,
             'leaveCredits' => $leaveCredits,

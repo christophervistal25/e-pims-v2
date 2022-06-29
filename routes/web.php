@@ -195,7 +195,7 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
         Route::get('leave/list', [MaintenanceLeaveController::class, 'list']);
         Route::resource('leaveIncrement', LeaveIncrementController::class);
         Route::get('employee-leave-increment', [EmployeeLeaveIncrementController::class, 'index'])->name('employee.leave.increment');
-        Route::get('leave/increments/guard/{month}', [EmployeeLeaveIncrementController::class, 'validateMonth']);
+        Route::post('leave/increments/guard/{month}', [EmployeeLeaveIncrementController::class, 'validateMonth']);
         Route::post('leave/increments/{month}', [EmployeeLeaveIncrementController::class, 'increment'])->name('employee.leave.increment.submit');
         Route::get('leave/increments/{employeeID}', [EmployeeLeaveIncrementController::class, 'show'])->name('employee.leave.increment.show');
 
