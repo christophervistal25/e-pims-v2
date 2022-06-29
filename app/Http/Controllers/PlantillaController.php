@@ -144,12 +144,13 @@ class PlantillaController extends Controller
             $plantilla->area_level             = $request['areaLevel'];
             $plantilla->year                   = $request['currentSgyear'];
             $plantilla->save();
+
             $plantillaPosition = PlantillaPosition::find($request->positionTitle);
             /* Creating a new record in the ServiceRecord table. */
             ServiceRecord::create([
                 'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
                 'employee_id' => $request->employeeName,
-                'service_from_date' => $request->lastPromotion,
+                'service_from_date' => $request->originalAppointment,
                 'PosCode' => $plantillaPosition->PosCode,
                 'status' => $request->status,
                 'salary' => $request->salaryAmount,

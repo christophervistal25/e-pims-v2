@@ -1,6 +1,8 @@
 <?php
 
 use App\User;
+use App\Employee;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -34,6 +36,7 @@ use App\Http\Controllers\Account\Employee\LeaveCardController;
 use App\Http\Controllers\Maintenance\LeaveIncrementController;
 use App\Http\Controllers\EmployeeLeave\LeaveUndertimeController;
 use App\Http\Controllers\EmployeeLeave\LeaveMonitoringController;
+use App\Http\Controllers\DownloadSeperateWorkExperienceController;
 use App\Http\Controllers\Account\Employee\LeaveApplicationController;
 use App\Http\Controllers\EmployeeLeave\CompensatoryBuildUpController;
 use App\Http\Controllers\Account\Employee\LeaveCertificationController;
@@ -43,6 +46,7 @@ use App\Http\Controllers\Account\Employee\PrintLeaveApplicationController;
 use App\Http\Controllers\Account\Employee\EmployeePersonalDataSheetController;
 use App\Http\Controllers\Maintenance\LeaveController as MaintenanceLeaveController;
 use App\Http\Controllers\Account\Employee\DashboardController as EmployeeDashboardController;
+use App\Http\Controllers\Maintenance\EmployeeLeaveIncrementController;
 
 Route::get('/', function () {
     $user = Auth::user();
@@ -190,6 +194,11 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
     Route::group(['prefix' => 'maintenance'], function () {
         Route::get('leave/list', [MaintenanceLeaveController::class, 'list']);
         Route::resource('leaveIncrement', LeaveIncrementController::class);
+        Route::get('employee-leave-increment', [EmployeeLeaveIncrementController::class, 'index'])->name('employee.leave.increment');
+        Route::post('leave/increments', [EmployeeLeaveIncrementController::class, 'increment'])->name('employee.leave.increment.submit');
+        Route::get('leave/increments/{employeeID}', [EmployeeLeaveIncrementController::class, 'show'])->name('employee.leave.increment.show');
+
+
         Route::resource('leave', MaintenanceLeaveController::class);
     });
 
@@ -230,6 +239,7 @@ Route::group(['prefix' => 'prints'], function () {
     Route::post('download-personal-data-sheet/generate/{employeeID}', [DownloadPersonalDataSheetController::class, 'generate']);
     Route::get('download-personal-data-sheet-pdf/{employeeID}', [DownloadPersonalDataSheetController::class, 'pdf']);
     Route::get('download-personal-data-sheet-excel/{employeeID}', [DownloadPersonalDataSheetController::class, 'excel']);
+    Route::get('download-personal-data-sheet-work-experience-excel/{employeeID}', [DownloadSeperateWorkExperienceController::class, 'excel']);
 });
 
 Route::controller(PlantillaReportController::class)->group(function () {
@@ -262,16 +272,3 @@ Route::group(['middleware' => ['auth', 'user']], function () {
 
     Route::get('employee-chat', [ChatController::class, 'index'])->name('employee.chat');
 });
-
-
-/* Exporting images from the database to a folder. */
-/* Route::get('export-image', function () {
-      $employees = DB::table('Employees')->get(['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix']);
-      foreach ($employees as $employee) {
-           DB::update(DB::raw("exec usp_ExportImage :Param1, :Param2, :Param3"), [
-                ':Param1' => $employee->Employee_id,
-                ':Param2' => "C:\\employees\\",
-                ':Param3' => $employee->Employee_id . ".jpg",
-           ]);
-      }
- }); */

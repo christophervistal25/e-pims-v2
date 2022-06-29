@@ -202,7 +202,7 @@
           <div id="table" class="page-header {{  count($errors->all()) == 0 ? '' : 'd-none' }}">
                <div class="row">
                     <div class="col-6 mb-2">
-                         <select data-style="btn-primarys text-white" class="form-control form-control-xs  {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" name="employeeName" data-live-search="true" id="employeeName" data-size="5">
+                         <select data-style="btn-primarys text-white selectpicker" class="form-control form-control-xs selectpicker  {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" name="employeeName" data-live-search="true" id="employeeName" data-size="5">
                               <option>Nothing Selected</option>
                               @foreach($plantillas as $plantilla)
                               <option data-plantilla="{{ $plantilla->employee }}" value="{{ $plantilla->employee_id }}">

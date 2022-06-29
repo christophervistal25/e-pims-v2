@@ -184,7 +184,19 @@ $(function () {
                         visible: false,
                     },
                     { data: "service_from_date", name: "service_from_date" },
-                    { data: "service_to_date", name: "service_to_date" },
+                    {
+                        data: "service_to_date",
+                        name: "service_to_date",
+                        render: function (_, _, data, row) {
+                            if (data.service_to_date == null) {
+                                return `
+                                    <p style="background-color:#FF9B44; border-radius:5px; padding:3px; color:white;">PRESENT</p>
+                                `;
+                            } else {
+                                return `${data.service_to_date}`;
+                            }
+                        },
+                    },
                     { data: "position_name", name: "position_name" },
                     { data: "status", name: "status" },
                     {
