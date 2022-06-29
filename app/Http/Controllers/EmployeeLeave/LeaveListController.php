@@ -8,6 +8,7 @@ use App\Setting;
 use App\Employee;
 use Carbon\Carbon;
 use App\OfficeCharging;
+use Carbon\CarbonPeriod;
 use App\EmployeeLeaveRecord;
 use Illuminate\Http\Request;
 use App\Services\LeaveService;
@@ -43,31 +44,72 @@ class LeaveListController extends Controller
 
         return Datatables::of($data)
             ->addColumn('applied', function ($row) {
-                return $row->date_applied;
+                return Carbon::parse($row->date_applied)->format('Y-m-d');
             })
             ->addColumn('action', function ($row) {
                 $btnApprove = null;
                 $btnUpdate = null;
+                $btnPrint = null;
                 $btnDelete = null;
                 $btnDecline = null;
                 // route('leave.leave-list.edit', $row->id) is the name of the route on the web.php
-                if ($row->status !== 'approved') {
-                    $btnApprove = '<button type="button" class="rounded-circle text-white btnApprove btn btn-success btn-sm" title="Approved Request" 
-                        data-employee-id="'. $row->Employee_id. '"
-                        data-leave-type="' . $row->leave_type_id . '" 
-                        data-id="' . $row->application_id . '"
-                        ><i style="pointer-events:none;" class="fa fa-thumbs-up"></i></button>';
-                    $btnDecline = '<button type="button" class="rounded-circle text-white btnDecline btn btn-danger btn-sm" title="Decline Request" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="fa fa-thumbs-down"></i></button>';
-                    $btnUpdate = '<button type="button" class="rounded-circle text-white edit btn btn-info btn-sm" onclick="editLeaveApplication('.$row->application_id.')"><i class="la la-eye" title="Update Leave Request"></i></button>';
-                    $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
+                if ($row->status == 'approved') {  
+                    $btnPrint = '<button type="button" class="rounded-circle text-white edit btn btn-warning btn-sm btnPrintRecord mr-1" onclick="printLeaveApplication('.$row->application_id.')"><i class="la la-print" title="Update Leave Request"></i></button>';
+                    $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord mr-1" title="Delete" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
+                }elseif ($row->status == 'declined') {  
+                    $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord mr-1" title="Delete" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
                 }else{
-                    $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
+                    $btnApprove = '<button type="button" class="rounded-circle text-white btnApprove btn btn-success btn-sm mr-1" title="Approved Request" 
+                    data-employee-id="'. $row->Employee_id. '"
+                    data-leave-type="' . $row->leave_type_id . '" 
+                    data-id="' . $row->application_id . '"
+                    ><i style="pointer-events:none;" class="fa fa-thumbs-up"></i></button>';
+                    $btnDecline = '<button type="button" class="rounded-circle text-white btnDecline btn btn-danger btn-sm mr-1" title="Decline Request" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="fa fa-times"></i></button>';
+                    $btnUpdate = '<button type="button" class="rounded-circle text-white edit btn btn-info btn-sm btnEditRecord mr-1" onclick="editLeaveApplication('.$row->application_id.')"><i class="la la-pencil" title="Update Leave Request"></i></button>';
+                    $btnPrint = '<button type="button" class="rounded-circle text-white edit btn btn-warning btn-sm btnPrintRecord mr-1" onclick="printLeaveApplication('.$row->application_id.')"><i class="la la-print" title="Update Leave Request"></i></button>';
+                    $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord mr-1" title="Delete" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
                 }
-                return  $btnApprove . "&nbsp" . $btnDecline . "&nbsp" . $btnUpdate . "&nbsp" . $btnDelete;
+                return  $btnApprove . "" . $btnDecline . "" .  $btnPrint . "" . $btnUpdate . "" . $btnDelete;
             })
             ->make(true);
     }
 
+    public function print($applicationID)
+    {
+        $application = EmployeeLeaveApplication::find($applicationID);
+
+        $employee = Employee::exclude(['ImagePhoto'])->with(['offices'])->find($application->Employee_id);
+
+        $leaveCredits = $this->leaveRecordRepository->getCredits($application->Employee_id);
+
+        // dd($leaveCredits);
+
+        $dateForwarded = Carbon::parse($leaveCredits->first()->date_forwarded);
+
+        $provincialGovernor = Setting::where('Keyname', 'SIG3_4')->first()->Keyvalue;
+
+        $humanResourceCode = Setting::where('Keyname', 'HR_OFFICE_CODE')->first()->Keyvalue;
+
+        $humanResourceOffice = Office::find($humanResourceCode);
+
+        $inclusiveDates = CarbonPeriod::create($application->date_from, $application->date_to);
+        
+        $seqNo = EmployeeLeaveApplication::count();
+        
+        return view('leave.leave-application-print', [
+                'employeeID' => $application->Employee_id,
+                'application' => $application,
+                'employee' => $employee,
+                'provincialGovernor' => $provincialGovernor,
+                'hrmoOffice' => $humanResourceOffice,
+                'vacationCredit' => $leaveCredits->sum('vl_earned') - $leaveCredits->sum('vl_used'),
+                'sickCredit' => $leaveCredits->sum('sl_earned') - $leaveCredits->sum('sl_used'),
+                'dateForwarded' => $dateForwarded,
+                'inclusiveDates' => $inclusiveDates,
+                'dates' => '',
+                'seqNo' => $seqNo,
+        ]);
+}
 
     // Leave List
     public function index()
@@ -165,25 +207,24 @@ class LeaveListController extends Controller
                 'record_type' => 'ENTRANCE',
                 'trans_date' => Carbon::now(),
                 'leave_amount' => $application->no_of_days,
-
             ]);
             
             return response()->json(['success' => true]);
 
         } elseif ($request->status === 'declined') {
-            $application->date_rejected = Carbon::now()->format('Y-m-d');
-            $application->approved_for = null;
-            $application->date_approved = null;
-            $application->disapproved_due_to = $request['reason'];
+            DB::transaction(function () use($application) {
+                // Update the leave application
+                $application->date_rejected = date('Y-m-d');
+                $application->date_approved = null;
+                $application->status = 'declined';
+                $application->save();
+                
+            }); 
         } else {
             $application->date_rejected = Carbon::now()->format('Y-m-d');
             $application->date_approved = null;
-            $application->disapproved_due_to = $request['reason'];
-            $application->approved_for = null;
             $application->date_applied = null;
         }
-
-        $application->save();
 
 
         Session::flash('success', true);
@@ -235,20 +276,28 @@ class LeaveListController extends Controller
             })
             ->addColumn('action', function ($row) {
                 $btnApprove = null;
-                $btnDecline = null;
                 $btnUpdate = null;
+                $btnPrint = null;
                 $btnDelete = null;
                 $btnDecline = null;
                 // route('leave.leave-list.edit', $row->id) is the name of the route on the web.php
-                if ($row->status !== 'approved') {
-                    $btnApprove = '<button type="button" class="rounded-circle text-white btnApprove btn btn-success btn-sm" title="Approved Request" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="fa fa-thumbs-up"></i></button>';
-                    $btnDecline = '<button type="button" class="rounded-circle text-white btnDecline btn btn-danger btn-sm" title="Decline Request" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="fa fa-thumbs-down"></i></button>';
-                    $btnUpdate = '<button type="button" class="rounded-circle text-white edit btn btn-info btn-sm" onclick="editLeaveApplication('.$row->application_id.')"><i class="la la-eye" title="Update Leave Request"></i></button>';
-                    $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
+                if ($row->status == 'approved') {  
+                    $btnPrint = '<button type="button" class="rounded-circle text-white edit btn btn-warning btn-sm btnPrintRecord mr-1" onclick="printLeaveApplication('.$row->application_id.')"><i class="la la-print" title="Update Leave Request"></i></button>';
+                    $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord mr-1" title="Delete" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
+                }elseif ($row->status == 'declined') {  
+                    $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord mr-1" title="Delete" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
                 }else{
-                    $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
+                    $btnApprove = '<button type="button" class="rounded-circle text-white btnApprove btn btn-success btn-sm mr-1" title="Approved Request" 
+                    data-employee-id="'. $row->Employee_id. '"
+                    data-leave-type="' . $row->leave_type_id . '" 
+                    data-id="' . $row->application_id . '"
+                    ><i style="pointer-events:none;" class="fa fa-thumbs-up"></i></button>';
+                    $btnDecline = '<button type="button" class="rounded-circle text-white btnDecline btn btn-danger btn-sm mr-1" title="Decline Request" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="fa fa-times"></i></button>';
+                    $btnUpdate = '<button type="button" class="rounded-circle text-white edit btn btn-info btn-sm btnEditRecord mr-1" onclick="editLeaveApplication('.$row->application_id.')"><i class="la la-pencil" title="Update Leave Request"></i></button>';
+                    $btnPrint = '<button type="button" class="rounded-circle text-white edit btn btn-warning btn-sm btnPrintRecord mr-1" onclick="printLeaveApplication('.$row->application_id.')"><i class="la la-print" title="Update Leave Request"></i></button>';
+                    $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord mr-1" title="Delete" data-id="' . $row->application_id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
                 }
-                return  $btnApprove . "&nbsp" . $btnDecline . "&nbsp" . $btnUpdate . "&nbsp" . $btnDelete;
+                return  $btnApprove . "" . $btnDecline . "" .  $btnPrint . "" . $btnUpdate . "" . $btnDelete;
             })->make(true);
     }
 }

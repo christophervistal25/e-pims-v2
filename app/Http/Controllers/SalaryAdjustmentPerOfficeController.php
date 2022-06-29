@@ -150,6 +150,9 @@ class SalaryAdjustmentPerOfficeController extends Controller
        $salaryAdjustmentPerOffice->salary_diff     = $request->salaryDifference;
        $salaryAdjustmentPerOffice->remarks            = $request->remarks;
        $salaryAdjustmentPerOffice->save();
+       DB::table('plantillas')->where('employee_id', $request->employeeName)->where('year', $request->currentSgyear)
+       ->update(['salary_amount' => $request->salaryNew
+       ]);
        return response()->json(['success' => true]);
     }
 

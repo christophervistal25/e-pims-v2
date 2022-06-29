@@ -174,6 +174,7 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
         Route::get('leave-list/list', [LeaveListController::class, 'list']);
         Route::get('leave-list', [LeaveListController::class, 'index'])->name('leave.leave-list');
         Route::get('leave/leave-list/{edit}', [LeaveListController::class, 'edit'])->name('leave-list.edit');
+        Route::get('leave/leave-list/{id}/print', [LeaveListController::class, 'print'])->name('leave-list.print');
         Route::delete('leave-list/{id}', [LeaveListController::class, 'destroy'])->name('leave-list.delete');
         Route::put('leave/leave-list/{id}', [LeaveListController::class, 'update'])->name('leave-list.update');
 
