@@ -11,7 +11,8 @@ class EmployeeLeaveTransaction extends Model
     protected $fillable = ['id', 'transaction_id', 'transaction_type', 'record_type', 'trans_date', 'leave_amount'];
     public $timestamps = false;
 
-    public function transaction()
+
+    public function transactionable()
     {
         return $this->morphTo();
     }
