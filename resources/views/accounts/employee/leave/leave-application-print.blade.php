@@ -9,10 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Print Leave Application | {{ config('app.name') }}</title>
 
-    <!-- DATEPICKER -->
-    <link rel="stylesheet" href="https://lms.phrmosds.ph/vendor/adminlte/dist/css/adminlte.min.css">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" href="{{ asset('/css/adminlte.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
     <style type="text/css">
         .rectangle {
@@ -86,7 +84,7 @@
                             <div class="row">
 
                                 <div style="position: relative; left: 25%;">
-                                    <img src="https://lms.phrmosds.ph/images/sds_logo.png" height="120px" width="120px">
+                                    <img src="{{ asset('/assets/img/province.png') }}" height="120px" width="120px">
                                 </div>
 
                                 <div class="text-center mx-auto" style="position: absolute; left: 40%; ">
@@ -157,14 +155,14 @@
 
                                         <div class="form-check">
                                             <div class="form-group">
-                                                <input data-code="VL" type="checkbox" name="typeOfLeave" id="Vacation"
+                                                <input data-code="VL" type="checkbox" name="typeOfLeave" id="Vacation" onclick="return false;"
                                                     value="Vacation">
                                                 <label class="form-check-label" for="typeOfLeave">Vacation
                                                     Leave <small>(Sec. 51, Rule XVI, Omnibus Rules
                                                         Implementing E.O. No. 292)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="FL" name="typeOfLeave" id="Mandatory"
+                                                <input type="checkbox" data-code="FL" name="typeOfLeave" id="Mandatory" onclick="return false;"
                                                     value="Mandatory">
                                                 <label class="form-check-label" for="typeOfLeave">Mandatory/Forced
                                                     Leave <small>(Sec.
@@ -172,7 +170,7 @@
                                                         292)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="SL" name="typeOfLeave" id="Sick"
+                                                <input type="checkbox" data-code="SL" name="typeOfLeave" id="Sick" onclick="return false;"
                                                     value="Sick">
                                                 <label class="form-check-label" for="typeOfLeave">Sick Leave
                                                     <small>(Sec. 43, RuleXVI, Omnibus Rules Implementing
@@ -180,28 +178,28 @@
                                             </div>
                                             <!-- start -->
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="ML" name="typeOfLeave"
+                                                <input type="checkbox" data-code="ML" name="typeOfLeave" onclick="return false;"
                                                     id="Maternity Leave (RA 11210)" value="Maternity Leave (RA 11210)">
                                                 <label class="form-check-label" for="typeOfLeave">Maternity
                                                     Leave <small>(R.A No.11210/IRR issued by CSC, DOLE and
                                                         SSS)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="PL" name="typeOfLeave"
+                                                <input type="checkbox" data-code="PL" name="typeOfLeave" onclick="return false;"
                                                     id="Paternity Leave (RA 8187)" value="Paternity Leave (RA 8187)">
                                                 <label class="form-check-label" for="typeOfLeave">Paternity
                                                     Leave <small>(R.A. No. 8187/CSC MC No. 71, s. 1998, as
                                                         amended)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="SPL" name="typeOfLeave"
+                                                <input type="checkbox" data-code="SPL" name="typeOfLeave" onclick="return false;"
                                                     id="Special Privilege Leave" value="Special Privilege Leave">
                                                 <label class="form-check-label" for="typeOfLeave">Special
                                                     Privilege Leave <small>(Sec. 21, Rule XVI, Omnibus Rules
                                                         Implementing E.O. No. 292)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="SOLOPARENT" name="typeOfLeave"
+                                                <input type="checkbox" data-code="SOLOPARENT" name="typeOfLeave" onclick="return false;"
                                                     id="Solo Parent Leave (RA 8972)"
                                                     value="Solo Parent Leave (RA 8972)">
                                                 <label class="form-check-label" for="typeOfLeave">Solo
@@ -209,14 +207,14 @@
                                                         2004)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="STL" name="typeOfLeave"
+                                                <input type="checkbox" data-code="STL" name="typeOfLeave" onclick="return false;"
                                                     id="Study Leave" value="Study Leave">
                                                 <label class="form-check-label" for="typeOfLeave">Study
                                                     Leave <small>(Sec. 68, Rule XVI, Omnibus Rules
                                                         Implementing E.O. No. 292)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="VAWC" name="typeOfLeave"
+                                                <input type="checkbox" data-code="VAWC" name="typeOfLeave" onclick="return false;"
                                                     id="10-Day VAWC Leave (RA 9262)"
                                                     value="10-Day VAWC Leave (RA 9262)">
                                                 <label class="form-check-label" for="typeOfLeave">10-Day
@@ -224,7 +222,7 @@
                                                         2005)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="RL" name="typeOfLeave"
+                                                <input type="checkbox" data-code="RL" name="typeOfLeave" onclick="return false;"
                                                     id="Rehabilitation" value="Rehabilitation">
                                                 <label class="form-check-label" for="typeOfLeave">Rehabilitation
                                                     Privilege <small>(Sec.
@@ -232,7 +230,7 @@
                                                         292)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="SLB" name="typeOfLeave"
+                                                <input type="checkbox" data-code="SLB" name="typeOfLeave" onclick="return false;"
                                                     id="Special Leave Benefits for Women (RA 9710)"
                                                     value="Special Leave Benefits for Women (RA 9710)">
                                                 <label class="form-check-label" for="typeOfLeave">Special
@@ -240,7 +238,7 @@
                                                         25, s. 2010)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="SEL" name="typeOfLeave"
+                                                <input type="checkbox" data-code="SEL" name="typeOfLeave" onclick="return false;"
                                                     id="Special Emergency (Calamity) Leave"
                                                     value="Special Emergency (Calamity) Leave">
                                                 <label class="form-check-label" for="typeOfLeave">Special
@@ -248,7 +246,7 @@
                                                         2012, as amended)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="AL" name="typeOfLeave"
+                                                <input type="checkbox" data-code="AL" name="typeOfLeave" onclick="return false;"
                                                     id="Adoption Leave (RA 8552)" value="Adoption Leave (RA 8552)">
                                                 <label class="form-check-label" for="typeOfLeave">Adoption
                                                     Leave <small>(R.A No. 8552)</small></label>
@@ -260,14 +258,14 @@
                     </div> -->
 
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="CTL" name="typeOfLeave"
+                                                <input type="checkbox" data-code="CTL" name="typeOfLeave" onclick="return false;"
                                                     id="COVID19 Leave (Quarantine)" value="COVID19 Leave (Quarantine)">
                                                 <label class="form-check-label" for="typeOfLeave">COVID19
                                                     Leave (Quarantine) <small>(CSC MC No. 10, s.
                                                         2020)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" name="typeOfLeave" id="COVID19 Leave (Treatment)"
+                                                <input type="checkbox" name="typeOfLeave" id="COVID19 Leave (Treatment)" onclick="return false;"
                                                     value="COVID19 Leave (Treatment)">
                                                 <label class="form-check-label" for="typeOfLeave">COVID19
                                                     Leave (Treatment) <small>(CSC MC No. 10, s.
@@ -276,7 +274,7 @@
 
                                             <!-- ADDITIONAL LEAVE -->
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="VACL" name="typeOfLeave"
+                                                <input type="checkbox" data-code="VACL" name="typeOfLeave" onclick="return false;"
                                                     id="Vaccination" value="Vaccination">
                                                 <label class="form-check-label" for="typeOfLeave">Vaccination Leave
                                                     <small>(CSC MC No.
@@ -302,13 +300,13 @@
 
                                                     <tr>
                                                         <td>
-                                                            <input type="checkbox" data-key="WITHIN THE PHILIPPINES" name="vacationLoc"
+                                                            <input type="checkbox" data-key="WITHIN THE PHILIPPINES" name="vacationLoc" onclick="return false;"
                                                                 value="vacationLoc"> Within the Philippines: <span data-key-text="WITHIN THE PHILIPPINES"></span>
                                                         </td>
                                                     </tr>
 
                                                     <tr>
-                                                        <td><input type="checkbox" data-key="ABROAD SPECIFY" name="vacationLoc"
+                                                        <td><input type="checkbox" data-key="ABROAD SPECIFY" name="vacationLoc" onclick="return false;"
                                                                 value="vacationLoc"> Abroad Specify: <span data-key-text="ABROAD SPECIFY"></span></td>
                                                     </tr>
 
@@ -319,12 +317,12 @@
                                                 <text><i>In case of Sick Leave:</i></text>
                                                 <table>
                                                     <tr>
-                                                        <td><input type="checkbox" data-key="IN HOSPITAL" name="sickLoc" value="In Hospital">
+                                                        <td><input type="checkbox" data-key="IN HOSPITAL" name="sickLoc" value="In Hospital" onclick="return false;">
                                                             In Hospital (Specify
                                                             Illness): <span data-key-text="IN HOSPITAL"></span></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><input type="checkbox" data-key="OUT PATIENT" name="sickLoc" value="Out Patient">
+                                                        <td><input type="checkbox" data-key="OUT PATIENT" name="sickLoc" value="Out Patient" onclick="return false;">
                                                             Out Patient (Specify
                                                             Illness): <span data-key-text="OUT PATIENT"></span></td>
                                                     </tr>
@@ -355,12 +353,12 @@
                                                 <text><i>In case of Study Leave:</i></text>
                                                 <table>
                                                     <tr>
-                                                        <td><input type="checkbox" name="studyreason"
+                                                        <td><input type="checkbox" name="studyreason" onclick="return false;"
                                                                 value="Completion of Master's Degree">
                                                             Completion of Master's Degree</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><input type="checkbox" name="studyreason"
+                                                        <td><input type="checkbox" name="studyreason" onclick="return false;"
                                                                 value="BAR/Board Examination Review">
                                                             BAR/Board Examination Review</td>
                                                     </tr>
@@ -371,12 +369,12 @@
                                                 <text><i>Other purpose:</i></text>
                                                 <table>
                                                     <tr>
-                                                        <td><input type="checkbox" name="typeOfLeave"
+                                                        <td><input type="checkbox" name="typeOfLeave" onclick="return false;"
                                                                 value="Monetization"> Monetization of Leave
                                                             Credits</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><input type="checkbox" name="typeOfLeave"
+                                                        <td><input type="checkbox" name="typeOfLeave" onclick="return false;"
                                                                 value="Terminal Leave"> Terminal Leave</td>
                                                     </tr>
                                                 </table>
@@ -423,11 +421,11 @@
                                             <div class="form-check">
                                                 <table>
                                                     <tr>
-                                                        <td><input type="checkbox" name="" value="" checked>
+                                                        <td><input type="checkbox" name="" value="" checked onclick="return false">
                                                             Not Requested</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><input type="checkbox" name="" value="">
+                                                        <td><input type="checkbox" name="" value="" onclick="return false">
                                                             Requested</td>
                                                     </tr>
                                                 </table>
@@ -550,10 +548,10 @@
 
                                             <div class="form-check">
                                                 <div>
-                                                    <input type="checkbox" name=""> For Approval
+                                                    <input type="checkbox" name="" onclick="return false"> For Approval
                                                 </div>
                                                 <div style="margin-right: 10px;">
-                                                    <input type="checkbox" name=""> For disapproval due to
+                                                    <input type="checkbox" name="" onclick="return false"> For disapproval due to
                                                     <text><u>___________________________________________________________________________________________________________________________________________________________________________________________________________________________________</u></text>
                                                 </div>
 
