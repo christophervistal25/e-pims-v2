@@ -19,7 +19,12 @@ class LeaveMonitoringController extends Controller
 
     public function index(Request $request)
     {
-        $employees = Employee::permanent()->get(['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode', 'OfficeCode2', 'PosCode']);
+        $employees = Employee::orderBy('LastName', 'ASC')
+        ->active()
+        ->permanent()
+        ->with(['forwarded_leave_records', 'offices'])
+        ->without(['office_assignment', 'office_charging.desc'])
+        ->get(['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode', 'OfficeCode2', 'PosCode']);
         return view('leave.leave-monitoring', compact('employees'));
     }
 
@@ -27,11 +32,11 @@ class LeaveMonitoringController extends Controller
     {
         if ($request->ajax()) {
 
-            $employee = Employee::permanent()->find($id, ['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode', 'OfficeCode2', 'PosCode']);
+            $employee = Employee::find($id, ['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode', 'OfficeCode2', 'PosCode']);
 
             // Forwarded Balance
-            $forwardedBalance       = $this->leaveRecordRepository->getForwardedRecord($id);
-            $totalOfForwardedBalance = ($forwardedBalance?->sum('vl_earned') + $forwardedBalance?->sum('sl_earned') ?? 0) - ($forwardedBalance?->sum('sl_earned') + $forwardedBalance?->sum('vl_earned'));
+            $forwardedBalance       = $this->leaveRecordRepository->getCredits($id);
+            $totalOfForwardedBalance = ($forwardedBalance?->sum('vl_balance') + $forwardedBalance?->sum('vl_balance') ?? 0);
             $recordsWithoutForwarded = [];
 
             return view('leave.add-ons.leave-card', [

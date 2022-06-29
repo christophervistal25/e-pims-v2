@@ -475,44 +475,100 @@
                                                         <tr>
                                                             <td><b>Less this application</b></td>
                                                             <td>
-                                                                {{ $application->leave_type_id == 'VL' ? number_format($application->no_of_days, 3, ".") : 0 }}
+                                                                @if($application->leave_type_id == 'VL')
+                                                                    {{ number_format($application->no_of_days, 3, ".") }}
+                                                                @elseif($application->leave_type_id == 'FL')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'SPL')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'STL')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @else
+                                                                    {{ number_format(0, 3, ".") }}
+                                                                @endif
                                                             </td>
                                                             <td>
-                                                                {{ $application->leave_type_id == 'SL' ? number_format($application->no_of_days, 3, ".") : 0 }}
+                                                                @if($application->leave_type_id == 'SL')
+                                                                    {{ number_format($application->no_of_days, 3, ".") }}
+                                                                @elseif($application->leave_type_id == 'AL')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'CA2004')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'ML')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'PL')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'RL')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'SEL')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'SLB')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'SOLOPARENT')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'VAWC')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @else
+                                                                    {{ number_format(0, 3, ".") }}
+                                                                @endif
                                                             </td>
                                                             <td>
-                                                                {{ $application->leave_type_id == 'VL' ? number_format($application->no_of_days, 3, ".") : '' }}
-                                                                {{ $application->leave_type_id == 'SL' ? number_format($application->no_of_days, 3, ".") : '' }}
+                                                                @if($application->leave_type_id == 'VL' || $application->leave_type_id == 'SL')
+                                                                    {{ number_format($application->no_of_days, 3, ".")}}
+                                                                @else
+                                                                    ({{ number_format($application->no_of_days, 3, ".")}})
+                                                                @endif
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td><b>Balance</b></td>
 
                                                             <td>
+                                                                @if($application->leave_type_id == 'VL')
+                                                                    {{ number_format($vacationCredit - $application->no_of_days, 3, ".") }}
+                                                                @elseif($application->leave_type_id == 'FL')
+                                                                    {{ number_format($vacationCredit, 3, ".") }}
+                                                                @elseif($application->leave_type_id == 'SPL')
+                                                                    {{ number_format($vacationCredit, 3, ".") }}
+                                                                @elseif($application->leave_type_id == 'STL')
+                                                                    {{ number_format($vacationCredit, 3, ".") }}
+                                                                @else
+                                                                    {{ number_format($vacationCredit, 3, ".") }}
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                @if($application->leave_type_id == 'SL')
+                                                                    {{ number_format($sickCredit - $application->no_of_days, 3, ".") }}
+                                                                @elseif($application->leave_type_id == 'AL')
+                                                                    ({{ number_format($sickCredit, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'CA2004')
+                                                                    ({{ number_format($sickCredit, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'ML')
+                                                                    ({{ number_format($sickCredit, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'PL')
+                                                                    ({{ number_format($sickCredit, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'RL')
+                                                                    ({{ number_format($sickCredit, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'SEL')
+                                                                    ({{ number_format($sickCredit, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'SLB')
+                                                                    ({{ number_format($sickCredit, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'SOLOPARENT')
+                                                                    ({{ number_format($sickCredit, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'VAWC')
+                                                                    ({{ number_format($sickCredit, 3, ".") }})
+                                                                @else
+                                                                    {{ number_format($sickCredit, 3, ".") }}
+                                                                @endif
+                                                            </td>
+                                                            <td>
                                                                 @if($application->leave_type_id === 'VL')
-                                                                {{ number_format($vacationCredit - $application->no_of_days, 3, ".") }}
+                                                                    {{ number_format($vacationCredit - $application->no_of_days + $sickCredit, 3, ".") }}
+                                                                @elseif($application->leave_type_id === 'SL')
+                                                                    {{ number_format($sickCredit - $application->no_of_days + $vacationCredit, 3, ".") }}
                                                                 @else
-                                                                {{ number_format($vacationCredit, 3, ".") }}
+                                                                    {{ number_format($sickCredit + $vacationCredit, 3, ".") }}
                                                                 @endif
-                                                            </td>
-                                                            <td>
-                                                                @if($application->leave_type_id === 'SL')
-                                                                {{ number_format($sickCredit - $application->no_of_days, 3, ".") }}
-                                                                @else
-                                                                {{ number_format($sickCredit, 3, ".") }}
-                                                                @endif
-                                                            </td>
-                                                            <td>
-                                                                {{
-
-                                                                                                       number_format(
-                                                                                                            number_format($vacationCredit - $application->no_of_days, 3, ".") +
-                                                                                                            number_format($sickCredit - $application->no_of_days, 3, "."), 
-                                                                                                            3,
-                                                                                                            ".",
-                                                                                                      )
-
-                                                                                                      }}
                                                             </td>
                                                         </tr>
                                                     </tbody>

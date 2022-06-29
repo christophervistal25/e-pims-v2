@@ -46,7 +46,7 @@ class EmployeeLeaveApplication extends Model
     
     public function employee()
     {
-        return $this->belongsTo(Employee::class, 'Employee_id', 'Employee_id')->select('Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode', 'OfficeCode2')->withDefault();
+        return $this->belongsTo(Employee::class, 'Employee_id', 'Employee_id')->select('Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode', 'OfficeCode2', 'PosCode')->withDefault();
     }
 
     public function leave_records()

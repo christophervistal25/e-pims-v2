@@ -4,6 +4,7 @@ namespace App\Http\Controllers\EmployeeLeave;
 
 use App\Office;
 use App\Employee;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -31,7 +32,7 @@ class LeaveController extends Controller
         $leave_files = [];
 
         $employeesWithLeaveFiles = Employee::has('leave_files')->with(['leave_files' => function ($query) {
-            $query->where('status', 'approved');
+            $query->where('status', 'approved')->where('date_from', '<', Carbon::now()->format('Y-m-d'));
         }])->get(['Employee_id'])->each(function ($employee) use(&$leave_files) {
             $leave_files[$employee->Employee_id] = [
                 'slBalance'         => $employee->leave_files->where('leave_type_id', 'SL')->sum('no_of_days'),
