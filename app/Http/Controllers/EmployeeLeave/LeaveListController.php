@@ -165,7 +165,7 @@ class LeaveListController extends Controller
         
         $statuses = $this->leaveService->countAllStatus();
         
-        $offices = Office::get();
+        $offices = OfficeCharging::get();
 
         return view('leave.leave-list', compact('statuses', 'offices', 'employees'));
     }
