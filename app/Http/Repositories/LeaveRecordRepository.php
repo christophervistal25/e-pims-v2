@@ -18,6 +18,68 @@ class LeaveRecordRepository extends LeaveApplicationRepository
             return EmployeeLeaveForwardedBalance::where('Employee_id', $employeeID)->orderBy('date_forwarded', 'DESC')->get();
       }
 
+     /**
+      * It gets the leave credits of an employee.
+      * 
+      * @param Employee employee the employee object
+      * 
+      * @return array Array
+      * (
+      *     [slBalance] => 0.000
+      *     [vlBalance] => 0.000
+      *     [vawcBalance] => 0.000
+      *     [adoptBalance] => 0.000
+      *     [mandatoryBalance] => 0.000
+      *     [maternityBalance] => 0.000
+      *     [paternityBalance] => 0.
+      */
+     
+      public function getEmployeeLeaveCredits(Employee $employee) : array
+      {
+            $credits = [
+                'slBalance'         => ($employee->leave_increments->where('leave_type_id', 'SL')->sum('transaction.leave_amount') + $employee->forwarded_leave_records?->sl_balance) - $employee->leave_files?->where('leave_type_id', 'SL')->sum('no_of_days'),
+                'vlBalance'         =>  ($employee->leave_increments->where('leave_type_id', 'VL')->sum('transaction.leave_amount') + $employee->forwarded_leave_records?->vl_balance) - $employee->leave_files?->where('leave_type_id', 'VL')->sum('no_of_days'),
+                'vawcBalance'       => $employee->forwarded_leave_records?->vawc_balance - $employee->leave_files?->where('leave_type_id', 'VAWC')->sum('no_of_days'),
+                'adoptBalance'      => $employee->forwarded_leave_records?->adopt_balance - $employee->leave_files?->where('leave_type_id', 'AL')->sum('no_of_days'),
+                'mandatoryBalance'  => $employee->forwarded_leave_records?->mandatory_balance - $employee->leave_files?->where('leave_type_id', 'FL')->sum('no_of_days'),
+                'maternityBalance'  => $employee->forwarded_leave_records?->maternity_balance - $employee->leave_files?->where('leave_type_id', 'ML')->sum('no_of_days'),
+                'paternityBalance'  => $employee->forwarded_leave_records?->paternity_balance - $employee->leave_files?->where('leave_type_id', 'PL')->sum('no_of_days'),
+                'soloparentBalance' => $employee->forwarded_leave_records?->soloparent_balance - $employee->leave_files?->where('leave_type_id', 'SOLOPARENT')->sum('no_of_days'),
+                'emergencyBalance'  => $employee->forwarded_leave_records?->emergency_balance - $employee->leave_files?->where('leave_type_id', 'SEL')->sum('no_of_days'),
+                'slbBalance'        => $employee->forwarded_leave_records?->slb_balance - $employee->leave_files?->where('leave_type_id', 'SLB')->sum('no_of_days'),
+                'studyBalance'      => $employee->forwarded_leave_records?->study_balance - $employee->leave_files?->where('leave_type_id', 'STL')->sum('no_of_days'),
+                'splBalance'        => $employee->forwarded_leave_records?->spl_balance - $employee->leave_files?->where('leave_type_id', 'SPL')->sum('no_of_days'),
+                'rehabBalance'      => $employee->forwarded_leave_records?->rehab_balance - $employee->leave_files?->where('leave_type_id', 'RL')->sum('no_of_days'),
+            ];
+
+            return array_map(function($value) {
+                return number_format($value, 3, ".", "");
+            }, $credits);
+      }
+
+      /**
+       * It gets the employee's leave records with the status of approved
+       * 
+       * @param string employeeID the employee's ID
+       * @param status approved, disapproved, pending
+       * 
+       * @return <code>{
+       *     "Employee_id": "12345",
+       *     "FirstName": "John",
+       *     "MiddleName": "Doe",
+       *     "LastName": "Smith",
+       *     "Suffix": "Jr.",
+       *     "OfficeCode": "123",
+       *     "OfficeCode2": "456",
+       *     "PosCode
+       */
+      public function getEmployeeLeaveRecords(string $employeeID, $status = 'approved')
+      {
+            return Employee::has('leave_files')->with(['forwarded_leave_records', 'leave_files' => function ($query) use($status) {
+                $query->where('status', $status);
+            }])->find($employeeID, ['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode', 'OfficeCode2', 'PosCode']);
+      }
+
       public function records(Employee $employee): Collection
       {
             return $employee->leave_records->groupBy('leave_type.name');
