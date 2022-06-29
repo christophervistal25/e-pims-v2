@@ -241,7 +241,7 @@
 <script>
     const EMPLOYEE_ID = "{{ Auth::user()->Employee_id }}";
     conectionString = "{{ env('MIX_SOCKET_IP') }}";
-    socket = io.connect(conectionString);
+    socket = io.connect(conectionString, { query : "name=e-PIMS" });
 
     $('#btn-download-status').hide();
 

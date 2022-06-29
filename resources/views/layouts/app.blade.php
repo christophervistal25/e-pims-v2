@@ -493,7 +493,7 @@
     </script>
     <script>
         const conectionString = "{{ env('MIX_SOCKET_IP') }}";
-        let socket = io.connect(conectionString);
+        let socket = io.connect(conectionString, { query : "name=e-PIMS" } );
 
         $('#plantillaScheduleCreate').click(function() {
             $('#plantillaCreateScheduleModal').modal('toggle');
