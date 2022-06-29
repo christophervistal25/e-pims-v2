@@ -162,6 +162,10 @@ class LeaveListController extends Controller
 
         $signatory = DB::table('Settings')->where('Keyname', 'SIG4_0')->first();
         $signatory_for_approval = $signatory->Keyvalue;
+        
+        $statuses = $this->leaveService->countAllStatus();
+        
+        $offices = Office::get();
 
         return view('leave.leave-list', compact('statuses', 'offices', 'employees'));
     }
