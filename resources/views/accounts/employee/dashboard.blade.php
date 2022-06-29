@@ -240,7 +240,6 @@
 <script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>
 <script>
     const EMPLOYEE_ID = "{{ Auth::user()->Employee_id }}";
-    const HAS_MULTIPLE_WORK_EXPERIENCE = "{{ $hasMultipleWorkExperience }}";
     conectionString = "{{ env('MIX_SOCKET_IP') }}";
     socket = io.connect(conectionString);
 
@@ -258,9 +257,6 @@
     $('#download-in-excel').click(function() {
         $('#btn-download-status').fadeIn();
         window.open(`/prints/download-personal-data-sheet-excel/${EMPLOYEE_ID}`);
-        if (HAS_MULTIPLE_WORK_EXPERIENCE) {
-            window.open(`/prints/download-personal-data-sheet-work-experience-excel/${EMPLOYEE_ID}`);
-        }
         $('#btn-download-status').fadeOut();
         $('#selectFilExportModal').modal('toggle');
     });
