@@ -370,6 +370,9 @@
                                 <a class='text-decoration-none mr-2' href="{{ route('leave.index') }}">
                                     Leave
                                 </a>
+                                <a class='text-decoration-none mr-2' href="{{ route('employee.leave.increment') }}">
+                                    Leave Increment
+                                </a>
                             </li>
                         </ul>
                     </li>
