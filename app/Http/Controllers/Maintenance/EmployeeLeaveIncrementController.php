@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Maintenance;
 
 use App\Setting;
 use App\Employee;
+use App\EmployeeLeaveTransaction;
 use Carbon\Carbon;
 use App\LeaveIncrement;
 use Illuminate\Support\Str;
@@ -99,7 +100,8 @@ class EmployeeLeaveIncrementController extends Controller
                     'month' => $month->format('F-Y'),
                 ]);
 
-                DB::table('Employee_leave_transactions')->insert([
+                EmployeeLeaveTransaction::create([
+                    'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
                     'transaction_id' => $sickLeave->id,
                     'transaction_type' => LeaveIncrement::class,
                     'record_type' => 'INCREMENT',
@@ -107,7 +109,8 @@ class EmployeeLeaveIncrementController extends Controller
                     'leave_amount' => config('leave.SICK_LEAVE'),
                 ]);
 
-                DB::table('Employee_leave_transactions')->insert([
+                EmployeeLeaveTransaction::create([
+                    'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
                     'transaction_id' => $vacationLeave->id,
                     'transaction_type' => LeaveIncrement::class,
                     'record_type' => 'INCREMENT',
