@@ -72,6 +72,7 @@
                             </div>
 
         
+
                             <div class="col-12 col-lg-4">
                                 <label class="form-group has-float-label" for="employeeId">
                                 <input  type="text" class="form-control" id="employeeId" name="employeeID"
@@ -88,15 +89,12 @@
                                 </label>
                             </div>
 
-
-                            <div class="form-group">
-                                <input type="hidden" name="officeCode" id="officeCode" class="">
+                            <div>
+                                <input type="hidden" name="officeCode" id="officeCode">
                             </div>
 
-
                             <div class="form-group col-12 col-lg-11">
-                                <input class="form-control d-none" id="positionId" name="positionID"
-                                    type="hidden" readonly>
+                                <input class="form-control d-none" id="positionId" name="positionID" type="hidden" readonly>
                             </div>
 
                             <div class="col-12 col-lg-11">
@@ -184,7 +182,7 @@
                             </label>
                                 <div id="amount2-error-message" class="text-danger">
                                 </div>
-                            </div>`
+                            </div>
 
                             <div class="col-12 col-lg-12">
                                 <label class="form-group has-float-label" for="monthlyDifference">
@@ -421,7 +419,7 @@
         $('#employeeName').change( (e)=> {
             let employeeID = e.target.value;
             let plantilla = $($("#employeeName option:selected")[0]).attr('data-plantilla');
-           
+
 
             if (plantilla) {
                 plantilla = JSON.parse(plantilla);

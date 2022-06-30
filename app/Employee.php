@@ -233,7 +233,7 @@ class Employee extends Model
 
     public function plantillaForStep()
     {
-        return $this->hasOne(Plantilla::class, 'employee_id', 'Employee_id');
+        return $this->hasOne(Plantilla::class, 'employee_id', 'Employee_id')->where('year', date('Y'));
     }
 
     public function PlantillaSchedule()
