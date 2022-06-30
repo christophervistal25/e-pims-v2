@@ -37,23 +37,23 @@ class LeaveRecordRepository extends LeaveApplicationRepository
       public function getEmployeeLeaveCredits(Employee $employee) : array
       {
             $credits = [
-                'slBalance'         => ($employee->leave_increments->where('leave_type_id', 'SL')->sum('transaction.leave_amount') + $employee->forwarded_leave_records?->sl_balance) - $employee->leave_files?->where('leave_type_id', 'SL')->sum('no_of_days'),
-                'vlBalance'         =>  ($employee->leave_increments->where('leave_type_id', 'VL')->sum('transaction.leave_amount') + $employee->forwarded_leave_records?->vl_balance) - $employee->leave_files?->where('leave_type_id', 'VL')->sum('no_of_days'),
-                'vawcBalance'       => $employee->forwarded_leave_records?->vawc_balance - $employee->leave_files?->where('leave_type_id', 'VAWC')->sum('no_of_days'),
-                'adoptBalance'      => $employee->forwarded_leave_records?->adopt_balance - $employee->leave_files?->where('leave_type_id', 'AL')->sum('no_of_days'),
-                'mandatoryBalance'  => $employee->forwarded_leave_records?->mandatory_balance - $employee->leave_files?->where('leave_type_id', 'FL')->sum('no_of_days'),
-                'maternityBalance'  => $employee->forwarded_leave_records?->maternity_balance - $employee->leave_files?->where('leave_type_id', 'ML')->sum('no_of_days'),
-                'paternityBalance'  => $employee->forwarded_leave_records?->paternity_balance - $employee->leave_files?->where('leave_type_id', 'PL')->sum('no_of_days'),
-                'soloparentBalance' => $employee->forwarded_leave_records?->soloparent_balance - $employee->leave_files?->where('leave_type_id', 'SOLOPARENT')->sum('no_of_days'),
-                'emergencyBalance'  => $employee->forwarded_leave_records?->emergency_balance - $employee->leave_files?->where('leave_type_id', 'SEL')->sum('no_of_days'),
-                'slbBalance'        => $employee->forwarded_leave_records?->slb_balance - $employee->leave_files?->where('leave_type_id', 'SLB')->sum('no_of_days'),
-                'studyBalance'      => $employee->forwarded_leave_records?->study_balance - $employee->leave_files?->where('leave_type_id', 'STL')->sum('no_of_days'),
-                'splBalance'        => $employee->forwarded_leave_records?->spl_balance - $employee->leave_files?->where('leave_type_id', 'SPL')->sum('no_of_days'),
-                'rehabBalance'      => $employee->forwarded_leave_records?->rehab_balance - $employee->leave_files?->where('leave_type_id', 'RL')->sum('no_of_days'),
+                  'slBalance'         => ($employee->leave_increments->where('leave_type_id', 'SL')->sum('transaction.leave_amount') + $employee->forwarded_leave_records?->sl_balance) - $employee->leave_files?->where('leave_type_id', 'SL')->sum('no_of_days'),
+                  'vlBalance'         =>  ($employee->leave_increments->where('leave_type_id', 'VL')->sum('transaction.leave_amount') + $employee->forwarded_leave_records?->vl_balance) - $employee->leave_files?->where('leave_type_id', 'VL')->sum('no_of_days'),
+                  'vawcBalance'       => $employee->forwarded_leave_records?->vawc_balance - $employee->leave_files?->where('leave_type_id', 'VAWC')->sum('no_of_days'),
+                  'adoptBalance'      => $employee->forwarded_leave_records?->adopt_balance - $employee->leave_files?->where('leave_type_id', 'AL')->sum('no_of_days'),
+                  'mandatoryBalance'  => $employee->forwarded_leave_records?->mandatory_balance - $employee->leave_files?->where('leave_type_id', 'FL')->sum('no_of_days'),
+                  'maternityBalance'  => $employee->forwarded_leave_records?->maternity_balance - $employee->leave_files?->where('leave_type_id', 'ML')->sum('no_of_days'),
+                  'paternityBalance'  => $employee->forwarded_leave_records?->paternity_balance - $employee->leave_files?->where('leave_type_id', 'PL')->sum('no_of_days'),
+                  'soloparentBalance' => $employee->forwarded_leave_records?->soloparent_balance - $employee->leave_files?->where('leave_type_id', 'SOLOPARENT')->sum('no_of_days'),
+                  'emergencyBalance'  => $employee->forwarded_leave_records?->emergency_balance - $employee->leave_files?->where('leave_type_id', 'SEL')->sum('no_of_days'),
+                  'slbBalance'        => $employee->forwarded_leave_records?->slb_balance - $employee->leave_files?->where('leave_type_id', 'SLB')->sum('no_of_days'),
+                  'studyBalance'      => $employee->forwarded_leave_records?->study_balance - $employee->leave_files?->where('leave_type_id', 'STL')->sum('no_of_days'),
+                  'splBalance'        => $employee->forwarded_leave_records?->spl_balance - $employee->leave_files?->where('leave_type_id', 'SPL')->sum('no_of_days'),
+                  'rehabBalance'      => $employee->forwarded_leave_records?->rehab_balance - $employee->leave_files?->where('leave_type_id', 'RL')->sum('no_of_days'),
             ];
 
             return array_map(function($value) {
-                return number_format($value, 2, ".", "");
+                  return number_format($value, 2, ".", "");
             }, $credits);
       }
 

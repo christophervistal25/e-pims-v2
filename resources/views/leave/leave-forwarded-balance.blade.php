@@ -213,165 +213,18 @@
                                         class="text-white shadow btn btn-lg btn-success w-100 ml-1 mt-2" id="btnSave"><i
                                             class="la la-save"></i> Add Record
                                     </button>
-                                    <button type="button"
-                                        class="text-white shadow btn btn-lg btn-primary w-100 ml-1 mt-2" id="btnBack"><i
-                                            class="la la-list"></i>
-                                        Go back to List
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="card shadow d-none" id="editForwardedBalanceCard">
-            <div class="card-body">
-                <form action="" method="POST" id="editForwardedBalance">
-                    @csrf
-                    <div class="alert alert-secondary text-center font-weight-bold">LEAVE FORWARDED BALANCE</div>
-                    <div class="form-group">
-                        <input class="form-control" type="hidden" id="leaveID" name="leaveID" value="">
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="row">
-                                <div class="col-lg-12 text-center">
-                                    <div class="spinner-border spinner-border-sm text-light d-none" id="save-spinner"
-                                        role="status">
-                                        <span class="sr-only">Loading...</span>
-                                    </div>
-                                    <img class="mb-3 rounded-circle img-thumbnail" id="update_empPhoto"
-                                        src="/storage/employee_images/no_image.png" width="45%" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <label for="update_employeeName" class="form-group has-float-label">
-                                        <input type="text" name="update_employeeName" id="update_employeeName"
-                                            class="form-control"
-                                            style="outline: none; box-shadow: 0px 0px 0px transparent;" readonly>
-                                        <span class="font-weight-bold">EMPLOYEE NAME</span>
-                                    </label>
-                                    <label for="update_office" class="form-group has-float-label">
-                                        <input type="text" name="update_office" id="update_office" class="form-control"
-                                            style="outline: none; box-shadow: 0px 0px 0px transparent;" readonly>
-                                        <span class="font-weight-bold">OFFICE</span>
-                                    </label>
-                                    <label for="update_position" class="form-group has-float-label">
-                                        <input type="text" name="update_position" id="update_position"
-                                            class="form-control"
-                                            style="outline: none; box-shadow: 0px 0px 0px transparent;" readonly>
-                                        <span class="font-weight-bold">POSITION</span>
-                                    </label>
-                                    <div class="form-group">
-                                        <input class="form-control" type="hidden" id="update_Employee_id"
-                                            name="update_Employee_id">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-8">
-                            <div class="card shadow">
-                                <div class="card-body">
-
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <h6 class="text-sm text-center">VACATION LEAVE</h6>
-                                            <label for="update_vl_earned" class="form-group has-float-label">
-                                                <input type="number" class="form-control update_vl_earned"
-                                                    id="update_vl_earned" name="update_vl_earned" step="any"
-                                                    style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;">
-                                                <span><strong>VL EARNED</strong></span>
-                                                <div id="update_vl_earned-error-message" class="text-danger text-sm">
-                                                </div>
-                                            </label>
-                                            <label for="update_vl_used" class="form-group has-float-label">
-                                                <input type="number" class="form-control update_vl_used"
-                                                    id="update_vl_used" name="update_vl_used" step="any"
-                                                    style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;">
-                                                <span><strong>VL ENJOYED</strong></span>
-                                                <div id="update_vl_used-error-message" class="text-danger text-sm">
-                                                </div>
-                                            </label>
-                                            <label for="update_vl_balance" class="form-group has-float-label">
-                                                <input type="number" class="form-control" id="update_vl_balance"
-                                                    name="update_vl_balance" readonly
-                                                    style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;">
-                                                <span><strong>VL BALANCE</strong></span>
-                                            </label>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <h6 class="text-sm text-center">SICK LEAVE</h6>
-                                            <label for="update_sl_earned" class="form-group has-float-label">
-                                                <input type="number" id="update_sl_earned"
-                                                    class="form-control update_sl_earned" name="update_sl_earned"
-                                                    step="any"
-                                                    style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;">
-                                                <span><strong>SL EARNED</strong></span>
-                                                <div id="update_sl_earned-error-message" class="text-danger text-sm">
-                                                </div>
-                                            </label>
-                                            <label for="update_sl_used" class="form-group has-float-label">
-                                                <input type="number" class="form-control update_sl_used"
-                                                    id="update_sl_used" name="update_sl_used" step="any"
-                                                    style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;">
-                                                <span><strong>SL ENJOYED</strong></span>
-                                                <div id="update_sl_used-error-message" class="text-danger text-sm">
-                                                </div>
-                                            </label>
-                                            <label for="update_sl_balance" class="form-group has-float-label">
-                                                <input type="number" class="form-control" id="update_sl_balance"
-                                                    name="update_sl_balance" readonly
-                                                    style="outline: none; box-shadow: 0px 0px 0px transparent; height:60px; font-weight:bold; font-size:30px; text-align: right;">
-                                                <span><strong>SL BALANCE</strong></span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <label for="update_date_forwarded" class="form-group has-float-label">
-                                        <input type="date" name="update_date_forwarded" id="update_date_forwarded"
-                                            class="form-control update_date_forwarded"
-                                            style="outline: none; box-shadow: 0px 0px 0px transparent; height:70px; font-weight:bold; font-size:30px;">
-                                        <span class="font-weight-bold">As of</span>
-                                        <div id="update_date_forwarded-error-message" class="text-danger text-sm"></div>
-                                    </label>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label for="update_total_lb" class="form-group has-float-label">
-                                        <input type="number" name="update_total_lb" id="update_total_lb"
-                                            class="form-control"
-                                            style="outline: none; box-shadow: 0px 0px 0px transparent; height:70px; font-weight:bold; font-size:40px; text-align: right;"
-                                            readonly>
-                                        <span><strong>Total VL & SL</strong></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-3 pl-1 pr-1">
                                     <button type="submit"
-                                        class="text-white shadow btn btn-lg btn-success btn-block mt-2"
+                                        class="text-white shadow btn btn-lg btn-success btn-block ml-1 mt-2 d-none"
                                         id="btnUpdate"><i class="la la-save"></i>
                                         Save Changes
                                     </button>
-                                </div>
-                                <div class="col-lg-3 pl-1 pr-1">
-                                    <button type="button" class="text-white shadow btn btn-lg btn-danger btn-block mt-2"
+                                    <button type="button" class="text-white shadow btn btn-lg btn-danger btn-block ml-1 mt-2 d-none"
                                         id="update_btnDelete"><i class="la la-trash"></i>
                                         Delete Record
                                     </button>
-                                </div>
-                                <div class="col-lg-3">
-                                </div>
-                                <div class="col-lg-3">
                                     <button type="button"
-                                        class="text-white shadow btn btn-lg btn-primary btn-block float-right ml-1 mt-2"
-                                        id="update_btnBack"><i class="la la-list"></i>
+                                        class="text-white shadow btn btn-lg btn-primary w-100 ml-1 mt-2" id="btnBack"><i
+                                            class="la la-list"></i>
                                         Go back to List
                                     </button>
                                 </div>

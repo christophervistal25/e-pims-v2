@@ -186,26 +186,29 @@ class LeaveForwardedBalanceController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'update_vl_earned' => 'required',
-            'update_vl_used' => 'required',
-            'update_sl_earned' => 'required',
-            'update_sl_used' => 'required',
+            'vl_balance' => 'required',
+            'sl_balance' => 'required',
         ], [
-            'update_vl_earned.required' => 'This field is required.',
-            'update_vl_used.required' => 'This field is required.',
-            'update_sl_earned.required' => 'This field is required.',
-            'update_sl_used.required' => 'This field is required.',
-        ]);
+            'vl_balance.required' => 'This field is required.',
+            'sl_balance.required' => 'This field is required.',
+        ]); 
 
         $updateRecord = EmployeeLeaveForwardedBalance::findOrFail($id);
 
-        $updateRecord->Employee_id      = $request->update_Employee_id;
-        $updateRecord->vl_earned        = $request->update_vl_earned;
-        $updateRecord->vl_used          = $request->update_vl_used;
-        $updateRecord->sl_earned        = $request->update_sl_earned;
-        $updateRecord->sl_used          = $request->update_sl_used;
-        $updateRecord->date_forwarded   = $request->update_date_forwarded;
-
+        $updateRecord->vl_balance           = $request->vl_balance;
+        $updateRecord->sl_balance           = $request->sl_balance;
+        $updateRecord->vawc_balance         = $request->vawc_balance;
+        $updateRecord->adopt_balance        = $request->adopt_balance;
+        $updateRecord->mandatory_balance    = $request->mandatory_balance;
+        $updateRecord->maternity_balance    = $request->maternity_balance;
+        $updateRecord->paternity_balance    = $request->paternity_balance;
+        $updateRecord->soloparent_balance   = $request->soloparent_balance;
+        $updateRecord->emergency_balance    = $request->emergency_balance;
+        $updateRecord->slb_balance          = $request->slb_balance;
+        $updateRecord->study_balance        = $request->study_balance;
+        $updateRecord->spl_balance          = $request->spl_balance;
+        $updateRecord->rehab_balance        = $request->rehab_balance;
+        $updateRecord->date_forwarded       = $request->date_forwarded;
         $updateRecord->save();
 
         return response()->json(['success' => true]);

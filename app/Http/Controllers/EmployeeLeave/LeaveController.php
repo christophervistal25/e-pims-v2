@@ -33,24 +33,10 @@ class LeaveController extends Controller
 
         $employeesWithLeaveFiles = Employee::has('leave_files')->with(['leave_files' => function ($query) {
             $query->where('status', 'approved')->where('date_from', '<', Carbon::now()->format('Y-m-d'));
-        }])->get(['Employee_id'])->each(function ($employee) use(&$leave_files) {
-            $leave_files[$employee->Employee_id] = [
-                'slBalance'         => $employee->leave_files->where('leave_type_id', 'SL')->sum('no_of_days'),
-                'vlBalance'         => $employee->leave_files->where('leave_type_id', 'VL')->sum('no_of_days'),
-                'vawcBalance'       => $employee->leave_files->where('leave_type_id', 'VAWC')->sum('no_of_days'),
-                'adoptBalance'      => $employee->leave_files->where('leave_type_id', 'AL')->sum('no_of_days'),
-                'mandatoryBalance'  => $employee->leave_files->where('leave_type_id', 'FL')->sum('no_of_days'),
-                'maternityBalance'  => $employee->leave_files->where('leave_type_id', 'ML')->sum('no_of_days'),
-                'paternityBalance'  => $employee->leave_files->where('leave_type_id', 'PL')->sum('no_of_days'),
-                'soloparentBalance' => $employee->leave_files->where('leave_type_id', 'SOLOPARENT')->sum('no_of_days'),
-                'emergencyBalance'  => $employee->leave_files->where('leave_type_id', 'SEL')->sum('no_of_days'),
-                'slbBalance'        => $employee->leave_files->where('leave_type_id', 'SLB')->sum('no_of_days'),
-                'studyBalance'      => $employee->leave_files->where('leave_type_id', 'STL')->sum('no_of_days'),
-                'splBalance'        => $employee->leave_files->where('leave_type_id', 'SPL')->sum('no_of_days'),
-                'rehabBalance'      => $employee->leave_files->where('leave_type_id', 'RL')->sum('no_of_days'),
-            ];
+        }, 'leave_increments', 'leave_increments.transaction'])->get(['Employee_id'])->each(function ($employee) use(&$leave_files) {
+            $leave_files[$employee->Employee_id] = $this->leaveRecordRepository->getEmployeeLeaveCredits($employee);
         });
-
+        // dd($leave_files);
 
         $types = $this->leaveTypeRepository->getLeaveTypesApplicableToGender();
 

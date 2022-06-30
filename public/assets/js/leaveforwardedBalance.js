@@ -68,13 +68,9 @@ $('#btnSave').click( (e)=> {
         data : data,
         success : function (response) {
             if(response.success){
-                swal("Good job!", "Successfully added!", "success", {closeOnClickOutside: false}).then((isClicked) => {
-                    if(isClicked) {
-                        $('#btnBack').trigger('click');
-                        $('#forwarded-balance-table').DataTable().ajax.reload();
-                    }
-
-                })
+                swal("", "Successfully added!", "success",  {closeOnClickOutside: false, timer:1000, button: false})
+                $('#btnBack').trigger('click');
+                $('#forwarded-balance-table').DataTable().ajax.reload();
             }
     },
         error: function(response) {
@@ -114,44 +110,40 @@ $('#btnSave').click( (e)=> {
     });
 });
 
-$('#btnUpdate').click( (e)=> {
+$(document).on('click', '#btnUpdate', function (e) {
     e.preventDefault();
+    leaveID = $(this).attr('data-id');
 
-    let leaveID = $('#leaveID').val();
-
-    let data = $('#editForwardedBalance').serialize();
+    let data = $('#forwardedBalance').serialize();
     $.ajax({
         url : `/employee/leave-forwarded-balance/${leaveID}`,
         method : 'PUT',
         data : data,
         success : function (response) {
             if(response.success){
-                swal("Good job!", "Successfully updated!", "success", {closeOnClickOutside: false}).then((isClicked) => {
-                    if(isClicked) {
-                        $('#update_btnBack').trigger('click');
-                        $('#forwarded-balance-table').DataTable().ajax.reload();
-                    }
-                })
+                swal("", "Successfully updated!", "success",  {closeOnClickOutside: false, timer:1000, button: false});
+                $('#btnBack').trigger('click');
+                $('#forwarded-balance-table').DataTable().ajax.reload();
             }
         },
         error: function(response) {
             if (response.status === 422) {
                 let errors = response.responseJSON.errors;
                 const inputNames = [
-                    "update_date_forwarded",
-                    "update_vl_balance",
-                    "update_sl_balance",
-                    "update_vawc_balance",
-                    "update_adopt_balance",
-                    "update_mandatory_balance",
-                    "update_maternity_balance",
-                    "update_paternity_balance",
-                    "update_soloparent_balance",
-                    "update_emergency_balance",
-                    "update_slb_balance",
-                    "update_study_balance",
-                    "update_spl_balance",
-                    "update_rehab_balance",
+                    "date_forwarded",
+                    "vl_balance",
+                    "sl_balance",
+                    // "vawc_balance",
+                    // "adopt_balance",
+                    // "mandatory_balance",
+                    // "maternity_balance",
+                    // "paternity_balance",
+                    // "soloparent_balance",
+                    // "emergency_balance",
+                    // "slb_balance",
+                    // "study_balance",
+                    // "spl_balance",
+                    // "rehab_balance",
                 ];
                 $.each(inputNames, function(index, value) {
                     if (errors.hasOwnProperty(value)) {
@@ -173,32 +165,32 @@ $('#btnUpdate').click( (e)=> {
     // TRANSITION OF FORM TO TABLE
 $('#addBtn').click( ()=> {
     let Employee_id = '';
-    $('#Employee_id').val(Employee_id).trigger('change');
-    $('#forwardedBalanceTable').addClass('d-none');
-    $('#forwardedBalanceCard').removeClass('d-none'); 
+    $('#Employee_id').val(Employee_id).trigger('change').prop('disabled', false);
+    $('#forwardedBalanceTable, #btnUpdate, #update_btnDelete').addClass('d-none');
+    $('#forwardedBalanceCard, #btnSave').removeClass('d-none'); 
     $('#Employee_id-error-message, #date_forwarded-error-message, #vl_earned-error-message').html('');
     $('#sl_earned-error-message, #vl_used-error-message, #sl_used-error-message').html('');
-    $('#date_forwarded, #vl_earned, #vl_used, #sl_earned, #sl_used, .Employee_id').removeClass('is-invalid');
-    $('#date_forwarded, #vl_earned, #vl_used, #sl_earned, #sl_used, .Employee_id').removeClass('is-valid');
+    $('#date_forwarded, #vl_balance, #sl_balance, .Employee_id').removeClass('is-invalid');
+    $('#date_forwarded, #vl_balance, #sl_balance, .Employee_id').removeClass('is-valid');
+    $('#vl_balance, #sl_balance').val('');
 });
 
 $('#btnBack').click( ()=> {
     $('#forwardedBalanceTable').removeClass('d-none');
     $('#forwardedBalanceCard').addClass('d-none'); 
-    $('#editForwardedBalanceCard').addClass('d-none'); 
-});
-
-$('#update_btnBack').click( ()=> {
-    $('#forwardedBalanceTable').removeClass('d-none');
-    $('#forwardedBalanceCard').addClass('d-none'); 
-    $('#editForwardedBalanceCard').addClass('d-none'); 
 });
 
 $(document).on('click', '.edit__leave__type', function () {
     leaveID = $(this).attr('data-id');
     $('#forwardedBalanceTable').addClass('d-none');
-    $('#editForwardedBalanceCard').removeClass('d-none'); 
+    $('#forwardedBalanceCard').removeClass('d-none'); 
     $('#btnViewTableContainer').removeClass('d-none');
+    $('#btnSave').addClass('d-none'); 
+    $('#btnUpdate').removeClass('d-none');
+    $('#update_btnDelete').removeClass('d-none'); 
+    $('#update_btnDelete').attr('data-id', leaveID);
+    $('#btnUpdate').attr('data-id', leaveID);
+    
     $('#leaveID').val(leaveID);
 
     // Ajax request for fetching leave type data.
@@ -206,26 +198,24 @@ $(document).on('click', '.edit__leave__type', function () {
         url : `/employee/leave-forwarded-balance/${leaveID}/edit`,
         success : function (leave) {
             // Collect data of form fields.
-            
-            $('#update_empPhoto').attr('src','/storage/employee_images/sdslogo.jpg');
-            $('#update_employeeName').val(`${leave.employeeFullname}`);
-            $('#update_office').val(leave.office);
-            $('#update_position').val(leave.position);
-            $('#update_Employee_id').val(leave.leaveRecord.Employee_id);
-            
-            $('#update_date_forwarded').val(formatDate(leave.leaveRecord.date_forwarded));
-
-            $('#update_vl_earned').val(leave.leaveRecord.vl_earned);
-            $('#update_vl_used').val(leave.leaveRecord.vl_used);
-            vl_balanceVal = parseFloat(leave.leaveRecord.vl_earned - leave.leaveRecord.vl_used).toFixed(3);
-            $('#update_vl_balance').val(vl_balanceVal);
-        
-            $('#update_sl_earned').val(leave.leaveRecord.sl_earned);
-            $('#update_sl_used').val(leave.leaveRecord.sl_used);
-            sl_balanceVal = parseFloat(leave.leaveRecord.sl_earned - leave.leaveRecord.sl_used).toFixed(3);
-            $('#update_sl_balance').val(sl_balanceVal);
-            
-            $('#update_total_lb').val((parseFloat(vl_balanceVal) + parseFloat(sl_balanceVal)).toFixed(3));
+            console.log(leave);
+            $('#empPhoto').attr('src','/storage/employee_images/sdslogo.jpg');
+            $('#Employee_id').val(leave.leaveRecord.Employee_id).trigger('change');
+            $('#Employee_id').prop('disabled', true);
+            $('#vl_balance').val(leave.leaveRecord.vl_balance);
+            $('#sl_balance').val(leave.leaveRecord.sl_balance);
+            $('#vawc_balance').val(leave.leaveRecord.vawc_balance);
+            $('#adopt_balance').val(leave.leaveRecord.adopt_balance);
+            $('#mandatory_balance').val(leave.leaveRecord.mandatory_balance);
+            $('#maternity_balance').val(leave.leaveRecord.maternity_balance);
+            $('#paternity_balance').val(leave.leaveRecord.paternity_balance);
+            $('#soloparent_balance').val(leave.leaveRecord.soloparent_balance);
+            $('#emergency_balance').val(leave.leaveRecord.emergency_balance);
+            $('#slb_balance').val(leave.leaveRecord.slb_balance);
+            $('#study_balance').val(leave.leaveRecord.study_balance);
+            $('#spl_balance').val(leave.leaveRecord.spl_balance);
+            $('#rehab_balance').val(leave.leaveRecord.rehab_balance);
+            $('#date_forwarded').val(formatDate(leave.leaveRecord.date_forwarded));
         },
     });
 });
@@ -234,10 +224,9 @@ $(document).on('click', '#update_btnDelete', function () {
     let leaveID = $(this).attr('data-id');
     
     swal({
-        title: "Are you sure?",
-        text : "You are about to delete a forwarded leave balance record",
+        text : "Are you sure you want to delete this?",
         icon: "warning",
-        buttons: true,
+        buttons: ['No', 'Yes'],
         dangerMode: true,
         closeOnClickOutside: false,
         }).then((willDelete) => {
@@ -246,11 +235,9 @@ $(document).on('click', '#update_btnDelete', function () {
                     url : `/employee/leave-forwarded-balance/${leaveID}`,
                     method : 'POST',
                     success : function (response) {
-                            swal("Good job!", "Successfully delete a leave record.", "success", {closeOnClickOutside: false}).then((isClicked) => {
-                            if(isClicked) {
-                                $('#forwarded-balance-table').DataTable().ajax.reload();
-                            }
-                        })
+                        swal("",  "Successfully deleted a leave record.", "success",  {closeOnClickOutside: false, timer:1000, button: false});
+                        $('#btnBack').trigger('click');
+                        $('#forwarded-balance-table').DataTable().ajax.reload();
                     }, 
                     error : function (response) {
                         console.log(response);
@@ -264,10 +251,9 @@ $(document).on('click', '.delete__leave__type', function () {
     let leaveID = $(this).attr('data-id');
     
     swal({
-        title: "Are you sure?",
-        text : "You are about to delete a forwarded leave balance record",
+        text : "Are you sure you want to delete this?",
         icon: "warning",
-        buttons: true,
+        buttons: ['No', 'Yes'],
         dangerMode: true,
         closeOnClickOutside: false,
         }).then((willDelete) => {
@@ -276,11 +262,8 @@ $(document).on('click', '.delete__leave__type', function () {
                     url : `/employee/leave-forwarded-balance/${leaveID}`,
                     method : 'POST',
                     success : function (response) {
-                            swal("Good job!", "Successfully delete a leave record.", "success", {closeOnClickOutside: false}).then((isClicked) => {
-                            if(isClicked) {
-                                $('#forwarded-balance-table').DataTable().ajax.reload();
-                            }
-                        })
+                        swal("", "Successfully delete a leave record.", "success", {closeOnClickOutside: false, timer:1000, button: false});
+                        $('#forwarded-balance-table').DataTable().ajax.reload();
                     }, 
                     error : function (response) {
                         console.log(response);
