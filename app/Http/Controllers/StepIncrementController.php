@@ -11,6 +11,7 @@ use App\service_record;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Carbon;
 
 class StepIncrementController extends Controller
 {
@@ -89,29 +90,18 @@ class StepIncrementController extends Controller
     public function index()
     {
 
-        // $thisYear = DB::table('plantillas')
-        // ->whereYear('year', '=', date('Y'))
-        // ->get();
-
-
         $employees = Employee::has('plantillaForStep')
                     ->with(['plantillaForStep', 'plantillaForStep.plantilla_positions', 'plantillaForStep.plantilla_positions.position'])
-                    // ->whereYear('year', '=', date('Y'))
                     // ->without(['office_charging'])
                     ->doesntHave('step')
-                    ->get();    
-
-        // dd($employees);
-
+                    ->get();
 
         return view('StepIncrement.create', compact('employees'));
     }
 
 
 
-
-
-    //  POST METHOD //
+    // POST //
     public function store(Request $request)
     {
 
@@ -156,7 +146,7 @@ class StepIncrementController extends Controller
 
 
 
-    //  EDIT METHOD //
+    // EDIT //
     public function edit($id)
     {
         $stepIncrement = StepIncrement::with(['employee:Employee_id,FirstName,MiddleName,LastName,Suffix', 'position'])->find($id);
@@ -171,7 +161,7 @@ class StepIncrementController extends Controller
 
 
 
-    //  UPDATE METHOD //
+    // UPDATE //
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -211,7 +201,7 @@ class StepIncrementController extends Controller
 
 
 
-    //  DELETE METHOD //
+    // DELETE //
     public function destroy($id)
     {
         $stepIncrement = StepIncrement::find($id);
