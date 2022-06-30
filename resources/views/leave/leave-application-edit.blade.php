@@ -291,20 +291,19 @@ $layouts = 'layouts.app';
                                     </tbody>
                                 </table>
                             </div>
+                            <div class="col-lg-12 float-right">
+                                <button type="submit" class="text-white shadow btn btn-primary mr-1"
+                                    id="btn--apply--for--leave">
+                                    <div class="spinner-border spinner-border-sm text-light d-none" id="apply-spinner"
+                                        role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <i class="la la-save" id="apply-button-icon"></i>
+                                    Save Changes
+                                </button>
+                            </div>
                         </div>
-                        <div class="row mt-2 float-right">
-                            <button type="submit" class="text-white shadow btn btn-primary mr-1"
-                                id="btn--apply--for--leave">
-                                <div class="spinner-border spinner-border-sm text-light d-none" id="apply-spinner"
-                                    role="status">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
-                                <i class="la la-save" id="apply-button-icon"></i>
-                                Save Changes
-                            </button>
-                            <button type="button" class="btn btn-danger btn-md mr-1" id="btnReject"><i class="fa fa-times"></i> Decline</button>
-                            <button type="button" class="btn btn-success text-white btn-md mr-4" id="btnApproved"><i class="fa fa-thumbs-up"></i> Approved</i></button>
-                        </div>
+                        
                     </form>
                 </div>
             </div>
@@ -517,7 +516,7 @@ $layouts = 'layouts.app';
         $('#date_to').change(function () {
             let leave_type = $('#leave_type_id').val();
             let employeeID = $('#employeeID').val();
-
+            
             if (leave_type == null) {
                 swal({
                     text: "Select Type of Leave first.",
@@ -544,7 +543,7 @@ $layouts = 'layouts.app';
                                                                         <td class="text-center"><input type="radio" class="leave_date" data-child="${index}" data-date="${item}" data-equivalent='1' value="whole_day" name="date[${index}]" checked></td>
                                                                         <td class="text-center"><input type="radio" class="leave_date" data-child="${index}" data-date="${item}" data-equivalent='.5' value="pm" name="date[${index}]"></td>
                                                                         <td class="text-center"><input type="radio" class="leave_date" data-child="${index}" data-date="${item}" data-equivalent='.5' value="am" name="date[${index}]"><input type="hidden" id='parent-${index}' class="noOfDays" value="1"></td>
-                                                                  </tr>`);
+                                                                </tr>`);
                                 noOfDays += parseFloat($(`#parent-${index}`).val());
                             });
                             $('#no_of_days').val(noOfDays);
@@ -694,99 +693,6 @@ $layouts = 'layouts.app';
                     }
                 });
             }
-        });
-
-        // APPROVED BUTTON FOR A LEAVE REQUEST //
-        let btnApproved = document.querySelector('#btnApproved');
-
-        btnApproved.addEventListener('click', (e) => {
-            e.preventDefault();
-            let employeeID = $('#employeeID');
-            let id = "{{ $data->application_id }}";
-            swal({
-                    text : "Are you sure you want to approve this request?",
-                    icon: "warning",
-                    buttons: ['No', 'Yes'],
-                    dangerMode: false,
-                })
-                .then((ifApproved) => {
-                    $.ajax({
-                        url: `/employee/leave/leave-list/${id}`,
-                        data: {
-                            status : 'approved',
-                        },
-                        method: 'PUT',
-                        success: function(response) {
-                            if(response.success) {
-                                swal({
-                                        title: "Request has been approved!",
-                                        text : "You are also successfully updated a request",
-                                        icon: "success",
-                                });
-                                socket.emit('notify_employee_leave_status', { fullname : 'Christopher Vistal Platino', phone_number : '09193693499', message : 'This is just a sample message'});
-                            }
-                        },
-                    });
-                });
-        });
-
-
-        // REJECT BUTTON FOR A LEAVE REQUEST //
-        let btnReject = document.querySelector('#btnReject');
-
-        btnReject.addEventListener('click', (e)=> {
-            e.preventDefault();
-            let employeeId = $('#employeeId');
-            let recommendingApproval = $('#recommendingApproval');
-            let approvedBy = $('#approvedBy');
-            let leaveTypes = $('#leaveTypes');
-            let dateApplied = $('#dateApplied');
-            let commutation = $('#commutation');
-            let incaseOf = $('#incaseOf');
-            let numberOfDays = $('#numberOfDays');
-            let dateStarted = $('#dateStarted');
-            let dateEnded = $('#dateEnded');
-
-            let getId = "{{ $data->application_id }}";
-            
-            swal({
-                    text : "Are you sure you want to reject a request?",
-                    icon: "warning",
-                    buttons: ['No', 'Yes'],
-                    dangerMode: false,
-                })
-                .then((isRejected) => {
-                    if (isRejected) {
-                        swal({
-                            text: 'Enter the reason why you disapproved this application.',
-                            content: "input",
-                            button: {
-                                text: "Submit",
-                                closeModal: false,
-                            },
-                            })
-                            .then(reason => {
-                                if (!reason) throw null;
-                                
-                                $.ajax({
-                                    url: `/employee/leave/leave-list/${getId}`,
-                                    data: {
-                                        status : 'declined',
-                                        recommendation: reason,
-                                    },
-                                    method: 'PUT',
-                                    success: function() {
-                                        swal.stopLoading()
-                                        swal({
-                                            title: "Request has been rejected!",
-                                            text : "You are rejected a leave request",
-                                            icon: "success",
-                                        });  
-                                    },
-                                });
-                            });
-                    }
-                });
         });
 
     });

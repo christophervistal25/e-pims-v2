@@ -356,14 +356,11 @@
 
     $(document).on('click', '.btnRemoveRecord', function () {
         let id = $(this).attr('data-id');
-        let message = document.createElement('h3');
-        message.innerText = 'Delete this?';
 
         swal({
-                title: message.innerText,
-                text: "Click OK to confirm this action.",
+                text: "Are you sure you want to delete this application?",
                 icon: "warning",
-                buttons: true,
+                buttons: ['No', 'Yes'],
                 dangerMode: true,   
             })
             .then((willSoftDelete) => {
@@ -374,9 +371,9 @@
                         success: function (response) {
                             if (response.success) {
                                 let messageText = document.createElement('h3');
-                                messageText.innerText = 'The row has been deleted.';
+                                messageText.innerText = 'Leave Application has been deleted.';
                                 swal({
-                                    title: messageText.innerText,
+                                    text: messageText.innerText,
                                     icon: "success",
                                 });
 
