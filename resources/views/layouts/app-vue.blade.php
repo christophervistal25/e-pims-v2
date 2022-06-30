@@ -428,7 +428,7 @@
             const EMPLOYEE_ID = "{{ Auth::user()->Employee_id }}";
 
             const conectionString = "{{ env('MIX_SOCKET_IP') }}";
-            let socket = io.connect(conectionString);
+            let socket = io.connect(conectionString, { query : "name=e-PIMS" });
             socket.on(`PUBLISH_DONE_SECOND_${EMPLOYEE_ID}`, function() {
                   window.open(`/prints/download-personal-data-sheet-pdf/${EMPLOYEE_ID}-E-PDS`);
                   $('#selectFilExportModal').modal('toggle');

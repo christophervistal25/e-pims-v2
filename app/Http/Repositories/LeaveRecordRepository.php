@@ -53,7 +53,7 @@ class LeaveRecordRepository extends LeaveApplicationRepository
             ];
 
             return array_map(function($value) {
-                return number_format($value, 3, ".", "");
+                return number_format($value, 2, ".", "");
             }, $credits);
       }
 

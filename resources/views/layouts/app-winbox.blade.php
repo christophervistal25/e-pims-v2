@@ -99,7 +99,7 @@
     @stack('page-scripts')
 	<script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>
     <script>
-        const socket = io.connect("{{ env('MIX_SOCKET_IP') }}");
+        const socket = io.connect("{{ env('MIX_SOCKET_IP') }}", { query : "name=e-PIMS" });
         $('#print--certification').click(() => {
             $.ajax({
                 url : '/leave-certification-print',

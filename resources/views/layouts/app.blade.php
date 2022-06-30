@@ -370,6 +370,9 @@
                                 <a class='text-decoration-none mr-2' href="{{ route('leave.index') }}">
                                     Leave
                                 </a>
+                                <a class='text-decoration-none mr-2' href="{{ route('employee.leave.increment') }}">
+                                    Leave Increment
+                                </a>
                             </li>
                         </ul>
                     </li>
@@ -490,7 +493,7 @@
     </script>
     <script>
         const conectionString = "{{ env('MIX_SOCKET_IP') }}";
-        let socket = io.connect(conectionString);
+        let socket = io.connect(conectionString, { query : "name=e-PIMS" } );
 
         $('#plantillaScheduleCreate').click(function() {
             $('#plantillaCreateScheduleModal').modal('toggle');

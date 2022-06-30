@@ -552,6 +552,9 @@
     $(document).on('click', '.btnApprove', function () {
         let applicationID = $(this).attr('data-id');
         const status = 'approved';
+        let employee = $(this).attr('data-employee');
+        let employeeContactNumber = $(this).attr('data-employee-contact');
+
         swal({
                 title: "Approve Application",
                 text: "You're about to approve this application. Continue?",
@@ -567,6 +570,15 @@
                         data : { status },
                         success : function (response) {
                             if(response.success) {
+                                if(socket) {
+                                    employeeContactNumber = "09270323277";
+                                    if(employee && employeeContactNumber) {
+                                        socket.emit('LEAVE_NOTIFY', {
+                                            message : `Hello ${employee.toUpperCase()}`,
+                                            contact_number : employeeContactNumber,
+                                        });
+                                    }
+                                }
                                 filter();
                             }
                         }
@@ -580,6 +592,9 @@
     $(document).on('click', '.btnDecline', function () {
         let applicationID = $(this).attr('data-id');
         const status = 'declined';
+        let employee = $(this).attr('data-employee');
+        let employeeContactNumber = $(this).attr('data-employee-contact');
+
         swal({
                 title: "Disapprove Application",
                 text: "You're about to disapprove this application. Continue?",
@@ -595,6 +610,15 @@
                         data : { status },
                         success : function (response) {
                             if(response.success) {
+                                    if(socket) {
+                                        employeeContactNumber = "09270323277";
+                                        if(employee && employeeContactNumber) {
+                                            socket.emit('LEAVE_NOTIFY', {
+                                                message : `Hello ${employee.toUpperCase()}`,
+                                                contact_number : employeeContactNumber,
+                                            });
+                                        }
+                                }
                                 filter();
                             }
                         }

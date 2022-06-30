@@ -19,10 +19,10 @@ class UserOnly
     public function handle(Request $request, Closure $next)
     {
         $user = Auth::user();
-        if($user->user_type == User::USER_TYPES['USER']) {
+        if ($user->user_type == User::USER_TYPES['USER']) {
             return $next($request);
         } else {
-            abort(404);
+            return redirect()->to(route('administrator.dashboard'));
         }
         return $next($request);
     }
