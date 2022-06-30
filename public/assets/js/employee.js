@@ -48,7 +48,7 @@ let table = $("#employees-table").DataTable({
             searchable: false,
         },
         {
-            name: "office_charging.office_name",
+            name: "office_charging.Description",
             defaultContent: "",
             class: "align-middle text-uppercase",
             orderable: false,
@@ -78,15 +78,6 @@ let table = $("#employees-table").DataTable({
             },
         },
         {
-            name: "Employee_id",
-            class: "align-middle text-center text-truncate",
-            orderable: false,
-            defaultContent: "",
-            render: function () {
-                return ``;
-            },
-        },
-        {
             name: "action",
             class: "text-truncate align-middle",
             searchable: false,
@@ -108,25 +99,39 @@ $(document).on("focus", ".dataTables_filter input", function () {
 });
 
 $(document).on("click", ".btn-edit-employee", function () {
-    $('#addEmployeeForm').children().each(function (index, element) {
-        $(element).find('input').each(function (index, e) {
-            let nameAttribute = $(e).attr('name');
-            $(`input[name="${nameAttribute}"]`).removeClass('is-invalid');
-            $(`#edit-${nameAttribute}-error`).text('');
-        });
+    $("#addEmployeeForm")
+        .children()
+        .each(function (index, element) {
+            $(element)
+                .find("input")
+                .each(function (index, e) {
+                    let nameAttribute = $(e).attr("name");
+                    $(`input[name="${nameAttribute}"]`).removeClass(
+                        "is-invalid"
+                    );
+                    $(`#edit-${nameAttribute}-error`).text("");
+                });
 
-        $(element).find('select').each(function (index, e) {
-            let nameAttribute = $(e).attr('name');
-            $(`select[name="${nameAttribute}"]`).removeClass('is-invalid');
-            $(`#edit-${nameAttribute}-error`).text('');
-        });
+            $(element)
+                .find("select")
+                .each(function (index, e) {
+                    let nameAttribute = $(e).attr("name");
+                    $(`select[name="${nameAttribute}"]`).removeClass(
+                        "is-invalid"
+                    );
+                    $(`#edit-${nameAttribute}-error`).text("");
+                });
 
-        $(element).find('textarea').each(function (index, e) {
-            let nameAttribute = $(e).attr('name');
-            $(`textarea[name="${nameAttribute}"]`).removeClass('is-invalid');
-            $(`#edit-${nameAttribute}-error`).text('');
+            $(element)
+                .find("textarea")
+                .each(function (index, e) {
+                    let nameAttribute = $(e).attr("name");
+                    $(`textarea[name="${nameAttribute}"]`).removeClass(
+                        "is-invalid"
+                    );
+                    $(`#edit-${nameAttribute}-error`).text("");
+                });
         });
-    });
 
     $("#loader-wrapper, #loader").show();
     const employeeID = $(this).attr("data-employee-id");
@@ -184,7 +189,13 @@ $(document).on("click", ".btn-edit-employee", function () {
             $("#gsisNo").val(employee.gsis_no);
             $("#dbpCardNumber").val(employee.dbp_account_no);
             $("#lbpCardNumber").val(employee.lbp_account_no);
-            $('#username').val(employee.account.username);
+            if (employee.account) {
+                $("#username").val(employee.account.username);
+                $("#user_type").val(employee.account.user_type);
+            } else {
+                $("#username").val("");
+            }
+
             $("#btnUpdateEmployee").attr(
                 "data-employee-id",
                 employee.Employee_id
@@ -319,25 +330,33 @@ $("#btnUpdateEmployee").click(function (e) {
 });
 
 $("#addNewEmployee").click(function () {
-    $('#addEmployeeForm').children().each(function (index, element) {
-        $(element).find('input').each(function (index, e) {
-            let nameAttribute = $(e).attr('name');
-            $(`#${nameAttribute}-error`).text('');
-            $(e).removeClass('is-invalid');
-        });
+    $("#addEmployeeForm")
+        .children()
+        .each(function (index, element) {
+            $(element)
+                .find("input")
+                .each(function (index, e) {
+                    let nameAttribute = $(e).attr("name");
+                    $(`#${nameAttribute}-error`).text("");
+                    $(e).removeClass("is-invalid");
+                });
 
-        $(element).find('select').each(function (index, e) {
-            let nameAttribute = $(e).attr('name');
-            $(`#${nameAttribute}-error`).text('');
-            $(e).removeClass('is-invalid');
-        });
+            $(element)
+                .find("select")
+                .each(function (index, e) {
+                    let nameAttribute = $(e).attr("name");
+                    $(`#${nameAttribute}-error`).text("");
+                    $(e).removeClass("is-invalid");
+                });
 
-        $(element).find('textarea').each(function (index, e) {
-            let nameAttribute = $(e).attr('name');
-            $(`#${nameAttribute}-error`).text('');
-            $(e).removeClass('is-invalid');
+            $(element)
+                .find("textarea")
+                .each(function (index, e) {
+                    let nameAttribute = $(e).attr("name");
+                    $(`#${nameAttribute}-error`).text("");
+                    $(e).removeClass("is-invalid");
+                });
         });
-    });
 
     $("#loader-wrapper, #loader").show();
 
@@ -411,24 +430,38 @@ $("#addNewEmployee").click(function () {
 });
 
 const clearErrorFieldsInAddForm = () => {
-      $('#addEmployeeForm').children().each(function (index, element) {
-            $(element).find('input').each(function (index, e) {
-                let nameAttribute = $(e).attr('name');
-                $(`input[name="${nameAttribute}"]`).removeClass('is-invalid');
-                $(`#${nameAttribute}-error`).text('');
-            });
-      
-            $(element).find('select').each(function (index, e) {
-                let nameAttribute = $(e).attr('name');
-                $(`select[name="${nameAttribute}"]`).removeClass('is-invalid');
-                $(`#${nameAttribute}-error`).text('');
-            });
-      
-            $(element).find('textarea').each(function (index, e) {
-                let nameAttribute = $(e).attr('name');
-                $(`textarea[name="${nameAttribute}"]`).removeClass('is-invalid');
-                $(`#${nameAttribute}-error`).text('');
-            });
+    $("#addEmployeeForm")
+        .children()
+        .each(function (index, element) {
+            $(element)
+                .find("input")
+                .each(function (index, e) {
+                    let nameAttribute = $(e).attr("name");
+                    $(`input[name="${nameAttribute}"]`).removeClass(
+                        "is-invalid"
+                    );
+                    $(`#${nameAttribute}-error`).text("");
+                });
+
+            $(element)
+                .find("select")
+                .each(function (index, e) {
+                    let nameAttribute = $(e).attr("name");
+                    $(`select[name="${nameAttribute}"]`).removeClass(
+                        "is-invalid"
+                    );
+                    $(`#${nameAttribute}-error`).text("");
+                });
+
+            $(element)
+                .find("textarea")
+                .each(function (index, e) {
+                    let nameAttribute = $(e).attr("name");
+                    $(`textarea[name="${nameAttribute}"]`).removeClass(
+                        "is-invalid"
+                    );
+                    $(`#${nameAttribute}-error`).text("");
+                });
         });
 };
 
@@ -441,7 +474,18 @@ $("#submitNewEmployee").click(function (e) {
         url: "/api/employee/store",
         method: "POST",
         data: data,
-        success: function (response) {},
+        success: function (response) {
+            swal({
+                text: "You successfully add new employee",
+                icon: "success",
+                buttons: false,
+                timer: 1500,
+            });
+            $("#addEmployeeForm")[0].reset();
+            let employeeID = parseInt(response.Employee_id) + 1;
+            $("#newEmployeeID").val(employeeID);
+            console.log(employeeID);
+        },
         error: function (response) {
             $("#btnUpdateEmployee").removeAttr("disabled");
             $("#btnUpdateSpinner").addClass("d-none");

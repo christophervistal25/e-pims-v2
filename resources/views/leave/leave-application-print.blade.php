@@ -9,8 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Print Leave Application | {{ config('app.name') }}</title>
 
-    <link rel="stylesheet" href="{{ asset('/css/adminlte.css') }}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <!-- DATEPICKER -->
+    <link rel="stylesheet" href="https://lms.phrmosds.ph/vendor/adminlte/dist/css/adminlte.min.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
     <style type="text/css">
         .rectangle {
@@ -26,13 +28,14 @@
         .myDiv {
             border: 1px outset black;
             /*text-align: center;*/
-            padding: 5px;
+            padding: 2px;
             margin: auto;
+            font-size: 12px;
         }
 
         .double {
             border-style: double;
-            padding: 5px;
+            padding: 3px;
         }
 
         .half {
@@ -50,7 +53,7 @@
             /* Default, but explicitly in portrait or landscape orientation and not user-
             customizable. In my instance of Chrome, this is a vertical or horizontal letter
             format, but you might find something different depending on your locale. */
-            size: legal portrait;
+            size: letter portrait;
             margin :0;
       }
     </style>
@@ -83,8 +86,8 @@
                             </div>
                             <div class="row">
 
-                                <div style="position: relative; left: 25%;">
-                                    <img src="{{ asset('/assets/img/province.png') }}" height="120px" width="120px">
+                                <div style="position: relative; left: 25%; ">
+                                    <img src="https://lms.phrmosds.ph/images/sds_logo.png" height="100px" width="100px">
                                 </div>
 
                                 <div class="text-center mx-auto" style="position: absolute; left: 40%; ">
@@ -93,7 +96,6 @@
                                         <h6><b>Republic of the Philippines</b></h6>
                                         <h6><b>PROVINCE OF SURIGAO DEL SUR</b></h6>
                                         <h6><b><i> Tandag City</i></b></h6>
-
                                     </div>
 
                                 </div>
@@ -107,8 +109,8 @@
 
                         <div class="card-body">
 
-                            <div class="text-center mx-auto">
-                                <h3><strong>APPLICATION FOR LEAVE</strong></h3>
+                            <div class="text-center mx-auto mt-0">
+                                <h4><strong>APPLICATION FOR LEAVE</strong></h4>
                             </div>
                             <div class="myDiv">
                                 <table style="width: 100%">
@@ -155,14 +157,14 @@
 
                                         <div class="form-check">
                                             <div class="form-group">
-                                                <input data-code="VL" type="checkbox" name="typeOfLeave" id="Vacation" onclick="return false;"
+                                                <input data-code="VL" type="checkbox" name="typeOfLeave" id="Vacation"
                                                     value="Vacation">
                                                 <label class="form-check-label" for="typeOfLeave">Vacation
                                                     Leave <small>(Sec. 51, Rule XVI, Omnibus Rules
                                                         Implementing E.O. No. 292)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="FL" name="typeOfLeave" id="Mandatory" onclick="return false;"
+                                                <input type="checkbox" data-code="FL" name="typeOfLeave" id="Mandatory"
                                                     value="Mandatory">
                                                 <label class="form-check-label" for="typeOfLeave">Mandatory/Forced
                                                     Leave <small>(Sec.
@@ -170,7 +172,7 @@
                                                         292)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="SL" name="typeOfLeave" id="Sick" onclick="return false;"
+                                                <input type="checkbox" data-code="SL" name="typeOfLeave" id="Sick"
                                                     value="Sick">
                                                 <label class="form-check-label" for="typeOfLeave">Sick Leave
                                                     <small>(Sec. 43, RuleXVI, Omnibus Rules Implementing
@@ -178,28 +180,28 @@
                                             </div>
                                             <!-- start -->
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="ML" name="typeOfLeave" onclick="return false;"
+                                                <input type="checkbox" data-code="ML" name="typeOfLeave"
                                                     id="Maternity Leave (RA 11210)" value="Maternity Leave (RA 11210)">
                                                 <label class="form-check-label" for="typeOfLeave">Maternity
                                                     Leave <small>(R.A No.11210/IRR issued by CSC, DOLE and
                                                         SSS)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="PL" name="typeOfLeave" onclick="return false;"
+                                                <input type="checkbox" data-code="PL" name="typeOfLeave"
                                                     id="Paternity Leave (RA 8187)" value="Paternity Leave (RA 8187)">
                                                 <label class="form-check-label" for="typeOfLeave">Paternity
                                                     Leave <small>(R.A. No. 8187/CSC MC No. 71, s. 1998, as
                                                         amended)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="SPL" name="typeOfLeave" onclick="return false;"
+                                                <input type="checkbox" data-code="SPL" name="typeOfLeave"
                                                     id="Special Privilege Leave" value="Special Privilege Leave">
                                                 <label class="form-check-label" for="typeOfLeave">Special
                                                     Privilege Leave <small>(Sec. 21, Rule XVI, Omnibus Rules
                                                         Implementing E.O. No. 292)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="SOLOPARENT" name="typeOfLeave" onclick="return false;"
+                                                <input type="checkbox" data-code="SOLOPARENT" name="typeOfLeave"
                                                     id="Solo Parent Leave (RA 8972)"
                                                     value="Solo Parent Leave (RA 8972)">
                                                 <label class="form-check-label" for="typeOfLeave">Solo
@@ -207,14 +209,14 @@
                                                         2004)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="STL" name="typeOfLeave" onclick="return false;"
+                                                <input type="checkbox" data-code="STL" name="typeOfLeave"
                                                     id="Study Leave" value="Study Leave">
                                                 <label class="form-check-label" for="typeOfLeave">Study
                                                     Leave <small>(Sec. 68, Rule XVI, Omnibus Rules
                                                         Implementing E.O. No. 292)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="VAWC" name="typeOfLeave" onclick="return false;"
+                                                <input type="checkbox" data-code="VAWC" name="typeOfLeave"
                                                     id="10-Day VAWC Leave (RA 9262)"
                                                     value="10-Day VAWC Leave (RA 9262)">
                                                 <label class="form-check-label" for="typeOfLeave">10-Day
@@ -222,7 +224,7 @@
                                                         2005)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="RL" name="typeOfLeave" onclick="return false;"
+                                                <input type="checkbox" data-code="RL" name="typeOfLeave"
                                                     id="Rehabilitation" value="Rehabilitation">
                                                 <label class="form-check-label" for="typeOfLeave">Rehabilitation
                                                     Privilege <small>(Sec.
@@ -230,7 +232,7 @@
                                                         292)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="SLB" name="typeOfLeave" onclick="return false;"
+                                                <input type="checkbox" data-code="SLB" name="typeOfLeave"
                                                     id="Special Leave Benefits for Women (RA 9710)"
                                                     value="Special Leave Benefits for Women (RA 9710)">
                                                 <label class="form-check-label" for="typeOfLeave">Special
@@ -238,7 +240,7 @@
                                                         25, s. 2010)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="SEL" name="typeOfLeave" onclick="return false;"
+                                                <input type="checkbox" data-code="SEL" name="typeOfLeave"
                                                     id="Special Emergency (Calamity) Leave"
                                                     value="Special Emergency (Calamity) Leave">
                                                 <label class="form-check-label" for="typeOfLeave">Special
@@ -246,7 +248,7 @@
                                                         2012, as amended)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="AL" name="typeOfLeave" onclick="return false;"
+                                                <input type="checkbox" data-code="AL" name="typeOfLeave"
                                                     id="Adoption Leave (RA 8552)" value="Adoption Leave (RA 8552)">
                                                 <label class="form-check-label" for="typeOfLeave">Adoption
                                                     Leave <small>(R.A No. 8552)</small></label>
@@ -258,14 +260,14 @@
                     </div> -->
 
                                             <div class="form-group">
-                                                <input type="checkbox" data-code="CTL" name="typeOfLeave" onclick="return false;"
+                                                <input type="checkbox" data-code="CTL" name="typeOfLeave"
                                                     id="COVID19 Leave (Quarantine)" value="COVID19 Leave (Quarantine)">
                                                 <label class="form-check-label" for="typeOfLeave">COVID19
                                                     Leave (Quarantine) <small>(CSC MC No. 10, s.
                                                         2020)</small></label>
                                             </div>
                                             <div class="form-group">
-                                                <input type="checkbox" name="typeOfLeave" id="COVID19 Leave (Treatment)" onclick="return false;"
+                                                <input type="checkbox" name="typeOfLeave" id="COVID19 Leave (Treatment)"
                                                     value="COVID19 Leave (Treatment)">
                                                 <label class="form-check-label" for="typeOfLeave">COVID19
                                                     Leave (Treatment) <small>(CSC MC No. 10, s.
@@ -273,17 +275,16 @@
                                             </div>
 
                                             <!-- ADDITIONAL LEAVE -->
-                                            <div class="form-group">
-                                                <input type="checkbox" data-code="VACL" name="typeOfLeave" onclick="return false;"
+                                            <div class="form-group mb-2">
+                                                <input type="checkbox" data-code="VACL" name="typeOfLeave"
                                                     id="Vaccination" value="Vaccination">
                                                 <label class="form-check-label" for="typeOfLeave">Vaccination Leave
                                                     <small>(CSC MC No.
                                                         16, s. 2021)</small></label>
                                             </div>
                                             <!-- end -->
-                                            &nbsp;
                                             <div class="form-group">
-                                                <p>Others: <u> ___________________________________</u></p>
+                                                Others: <u> ___________________________________</u>
                                             </div>
                                         </div>
 
@@ -293,54 +294,43 @@
                                         <p>6.B DETAILS OF LEAVE</p>
                                         <div class="form-group">
 
-                                            <div class="form-check">
+                                            <div class="form-check mb-2">
                                                 <text><i>In case of Vacation/Special Privilege
                                                         Leave:</i></text>
                                                 <table>
 
                                                     <tr>
                                                         <td>
-                                                            <input type="checkbox" data-key="WITHIN THE PHILIPPINES" name="vacationLoc" onclick="return false;"
+                                                            <input type="checkbox" data-key="WITHIN THE PHILIPPINES" name="vacationLoc"
                                                                 value="vacationLoc"> Within the Philippines: <span data-key-text="WITHIN THE PHILIPPINES"></span>
                                                         </td>
                                                     </tr>
 
                                                     <tr>
-                                                        <td><input type="checkbox" data-key="ABROAD SPECIFY" name="vacationLoc" onclick="return false;"
+                                                        <td><input type="checkbox" data-key="ABROAD SPECIFY" name="vacationLoc"
                                                                 value="vacationLoc"> Abroad Specify: <span data-key-text="ABROAD SPECIFY"></span></td>
                                                     </tr>
 
                                                 </table>
                                             </div>
-                                            <br>
-                                            <div class="form-check">
+                                            
+                                            <div class="form-check mb-2">
                                                 <text><i>In case of Sick Leave:</i></text>
                                                 <table>
                                                     <tr>
-                                                        <td><input type="checkbox" data-key="IN HOSPITAL" name="sickLoc" value="In Hospital" onclick="return false;">
+                                                        <td><input type="checkbox" data-key="IN HOSPITAL" name="sickLoc" value="In Hospital">
                                                             In Hospital (Specify
                                                             Illness): <span data-key-text="IN HOSPITAL"></span></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><input type="checkbox" data-key="OUT PATIENT" name="sickLoc" value="Out Patient" onclick="return false;">
+                                                        <td><input type="checkbox" data-key="OUT PATIENT" name="sickLoc" value="Out Patient">
                                                             Out Patient (Specify
                                                             Illness): <span data-key-text="OUT PATIENT"></span></td>
                                                     </tr>
                                                 </table>
                                             </div>
-                                            <br>
-                                            <div class="form-check">
-                                                <!-- <table>
-                            <tr>
-                                <td><i>In case of Special Leave Benefits for Women:</i></td>
-                                
-                            </tr>
-                            <tr>
-                                <td>(Specify Illness): &nbsp;&nbsp; <u> </u></td>
-                               
-                            </tr>
-                            </table> -->
-
+                                           
+                                            <div class="form-check mb-2">
                                                 <div>
                                                     <text><i>In case of Special Leave Benefits for
                                                             Women:</i></text><br>
@@ -348,33 +338,33 @@
                                                 </div>
 
                                             </div>
-                                            <br>
-                                            <div class="form-check">
+                                            
+                                            <div class="form-check mb-2">
                                                 <text><i>In case of Study Leave:</i></text>
                                                 <table>
                                                     <tr>
-                                                        <td><input type="checkbox" name="studyreason" onclick="return false;"
+                                                        <td><input type="checkbox" name="studyreason"
                                                                 value="Completion of Master's Degree">
                                                             Completion of Master's Degree</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><input type="checkbox" name="studyreason" onclick="return false;"
+                                                        <td><input type="checkbox" name="studyreason"
                                                                 value="BAR/Board Examination Review">
                                                             BAR/Board Examination Review</td>
                                                     </tr>
                                                 </table>
                                             </div>
-                                            <br>
-                                            <div class="form-check">
+                                            
+                                            <div class="form-check mb-2">
                                                 <text><i>Other purpose:</i></text>
                                                 <table>
                                                     <tr>
-                                                        <td><input type="checkbox" name="typeOfLeave" onclick="return false;"
+                                                        <td><input type="checkbox" name="typeOfLeave"
                                                                 value="Monetization"> Monetization of Leave
                                                             Credits</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><input type="checkbox" name="typeOfLeave" onclick="return false;"
+                                                        <td><input type="checkbox" name="typeOfLeave"
                                                                 value="Terminal Leave"> Terminal Leave</td>
                                                     </tr>
                                                 </table>
@@ -421,11 +411,11 @@
                                             <div class="form-check">
                                                 <table>
                                                     <tr>
-                                                        <td><input type="checkbox" name="" value="" checked onclick="return false">
+                                                        <td><input type="checkbox" name="" value="" checked>
                                                             Not Requested</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><input type="checkbox" name="" value="" onclick="return false">
+                                                        <td><input type="checkbox" name="" value="">
                                                             Requested</td>
                                                     </tr>
                                                 </table>
@@ -451,14 +441,14 @@
                             <div class="myDiv">
                                 <div class="row">
                                     <div class="col-sm-6 border-right border-dark">
-                                        <p>7.A CERTIFICATION OF LEAVE CREDITS </p>
+                                        <p class="mb-2">7.A CERTIFICATION OF LEAVE CREDITS </p>
 
                                         <div class="form-group">
-                                            <div class="text-center" style="margin-bottom: 5px;"> As of <u>
+                                            <div class="text-center" style="margin-bottom: 3px;"> As of <u>
                                                     ___<b>{{ $dateForwarded->format('F - Y') }}</b>___ </u></div>
 
-                                            <div class="card-body table-responsive p-0 myDiv" style="width: 80%">
-                                                <table class="table table-hover table-bordered table-sm ">
+                                            <div class="card-body table-responsive p-0 myDiv" style="width: 90%">
+                                                <table class="table table-bordered table-sm table-condensed">
                                                     <thead class="thead-light">
                                                         <tr>
                                                             <th></th>
@@ -474,55 +464,111 @@
                                                             <td>{{ number_format($sickCredit, 3, ".") }}</td>
                                                             <td>
                                                                 {{
-                                                                                                            number_format(
-                                                                                                                  number_format($vacationCredit, 3, ".") + number_format($sickCredit, 3, "."),
-                                                                                                                  2,
-                                                                                                                  ".",
-                                                                                                            )
-                                                                                                       }}
+                                                                    number_format(
+                                                                            number_format($vacationCredit, 3, ".") + number_format($sickCredit, 3, "."),
+                                                                            2,
+                                                                            ".",
+                                                                    )
+                                                                }}
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td><b>Less this application</b></td>
                                                             <td>
-                                                                {{ $application->leave_type_id == 'VL' ? number_format($application->no_of_days, 3, ".") : 0 }}
+                                                                @if($application->leave_type_id == 'VL')
+                                                                    {{ number_format($application->no_of_days, 3, ".") }}
+                                                                @elseif($application->leave_type_id == 'FL')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'SPL')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'STL')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @else
+                                                                    {{ number_format(0, 3, ".") }}
+                                                                @endif
                                                             </td>
                                                             <td>
-                                                                {{ $application->leave_type_id == 'SL' ? number_format($application->no_of_days, 3, ".") : 0 }}
+                                                                @if($application->leave_type_id == 'SL')
+                                                                    {{ number_format($application->no_of_days, 3, ".") }}
+                                                                @elseif($application->leave_type_id == 'AL')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'CA2004')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'ML')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'PL')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'RL')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'SEL')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'SLB')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'SOLOPARENT')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'VAWC')
+                                                                    ({{ number_format($application->no_of_days, 3, ".") }})
+                                                                @else
+                                                                    {{ number_format(0, 3, ".") }}
+                                                                @endif
                                                             </td>
                                                             <td>
-                                                                {{ $application->leave_type_id == 'VL' ? number_format($application->no_of_days, 3, ".") : '' }}
-                                                                {{ $application->leave_type_id == 'SL' ? number_format($application->no_of_days, 3, ".") : '' }}
+                                                                @if($application->leave_type_id == 'VL' || $application->leave_type_id == 'SL')
+                                                                    {{ number_format($application->no_of_days, 3, ".")}}
+                                                                @else
+                                                                    ({{ number_format($application->no_of_days, 3, ".")}})
+                                                                @endif
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td><b>Balance</b></td>
 
                                                             <td>
+                                                                @if($application->leave_type_id == 'VL')
+                                                                    {{ number_format($vacationCredit - $application->no_of_days, 3, ".") }}
+                                                                @elseif($application->leave_type_id == 'FL')
+                                                                    {{ number_format($vacationCredit, 3, ".") }}
+                                                                @elseif($application->leave_type_id == 'SPL')
+                                                                    {{ number_format($vacationCredit, 3, ".") }}
+                                                                @elseif($application->leave_type_id == 'STL')
+                                                                    {{ number_format($vacationCredit, 3, ".") }}
+                                                                @else
+                                                                    {{ number_format($vacationCredit, 3, ".") }}
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                @if($application->leave_type_id == 'SL')
+                                                                    {{ number_format($sickCredit - $application->no_of_days, 3, ".") }}
+                                                                @elseif($application->leave_type_id == 'AL')
+                                                                    ({{ number_format($sickCredit, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'CA2004')
+                                                                    ({{ number_format($sickCredit, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'ML')
+                                                                    ({{ number_format($sickCredit, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'PL')
+                                                                    ({{ number_format($sickCredit, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'RL')
+                                                                    ({{ number_format($sickCredit, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'SEL')
+                                                                    ({{ number_format($sickCredit, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'SLB')
+                                                                    ({{ number_format($sickCredit, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'SOLOPARENT')
+                                                                    ({{ number_format($sickCredit, 3, ".") }})
+                                                                @elseif($application->leave_type_id == 'VAWC')
+                                                                    ({{ number_format($sickCredit, 3, ".") }})
+                                                                @else
+                                                                    {{ number_format($sickCredit, 3, ".") }}
+                                                                @endif
+                                                            </td>
+                                                            <td>
                                                                 @if($application->leave_type_id === 'VL')
-                                                                {{ number_format($vacationCredit - $application->no_of_days, 3, ".") }}
+                                                                    {{ number_format($vacationCredit - $application->no_of_days + $sickCredit, 3, ".") }}
+                                                                @elseif($application->leave_type_id === 'SL')
+                                                                    {{ number_format($sickCredit - $application->no_of_days + $vacationCredit, 3, ".") }}
                                                                 @else
-                                                                {{ number_format($vacationCredit, 3, ".") }}
+                                                                    {{ number_format($sickCredit + $vacationCredit, 3, ".") }}
                                                                 @endif
-                                                            </td>
-                                                            <td>
-                                                                @if($application->leave_type_id === 'SL')
-                                                                {{ number_format($sickCredit - $application->no_of_days, 3, ".") }}
-                                                                @else
-                                                                {{ number_format($sickCredit, 3, ".") }}
-                                                                @endif
-                                                            </td>
-                                                            <td>
-                                                                {{
-
-                                                                                                       number_format(
-                                                                                                            number_format($vacationCredit - $application->no_of_days, 3, ".") +
-                                                                                                            number_format($sickCredit - $application->no_of_days, 3, "."), 
-                                                                                                            3,
-                                                                                                            ".",
-                                                                                                      )
-
-                                                                                                      }}
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -543,15 +589,15 @@
                                     </div>
                                     <!--col-sm-6 certification of leave credits-->
                                     <div class="col-sm-6">
-                                        <p>7.B RECOMMENDATION</p>
+                                        <p >7.B RECOMMENDATION</p>
                                         <div class="form">
 
                                             <div class="form-check">
                                                 <div>
-                                                    <input type="checkbox" name="" onclick="return false"> For Approval
+                                                    <input type="checkbox" name=""> For Approval
                                                 </div>
                                                 <div style="margin-right: 10px;">
-                                                    <input type="checkbox" name="" onclick="return false"> For disapproval due to
+                                                    <input type="checkbox" name=""> For disapproval due to
                                                     <text><u>___________________________________________________________________________________________________________________________________________________________________________________________________________________________________</u></text>
                                                 </div>
 
@@ -575,7 +621,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <p>7.C APPROVED FOR:</p>
+                                            <p class="mb-2">7.C APPROVED FOR:</p>
                                             <div class="form-check">
                                                 <div> <text><u>__<b>{{ $application->no_of_days }}</b>__</u> days with
                                                         pay</text></div>
@@ -586,7 +632,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <p>7.D. DISAPPROVED DUE TO:</p>
+                                        <p class="mb-2">7.D. DISAPPROVED DUE TO:</p>
                                         <div class="form-check">
                                             <div style="margin-right: 10px;">
                                                 <P><u>____________________________________________________________________________________________________________________________</u>
@@ -613,6 +659,7 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
     <script>
             let type = "{{ $application->leave_type_id }}";
@@ -635,7 +682,16 @@
                   incaseSpecify.innerText = specify;
             }
 
-            window.print();
+            let w = window.print();
+
+            $(document).on('click', function (e) {
+                console.log(e);
+            });
+
+            onafterprint = function () {
+                $('.winbox', parent.document).remove();
+            }
+
     </script>
 </body>
 

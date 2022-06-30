@@ -236,6 +236,7 @@
                         </div>
                     </div>
 
+
                     {{-- LEAVE LIST DATATABLES --}}
                     <div class="table">
                         <div class="table-responsive">
@@ -248,7 +249,7 @@
                                         <td class="font-weight-bold align-middle text-center text-truncate">
                                             Leave Type</td>
                                         <td class="font-weight-bold align-middle text-center">Status</td>
-                                        <td class="font-weight-bold align-middle text-center">Actions</td>
+                                        <td class="font-weight-bold align-middle text-center" width="25%">Actions</td>
                                         
                                     </tr>
 
@@ -264,6 +265,7 @@
         </div>
     </div>
 </div>
+
 
 @push('page-scripts')
 <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
@@ -436,6 +438,30 @@
                 }
             });
     }
+    let leaveApplicationDialog = null;
+
+    function printLeaveApplication(application_id) {
+        $(document.documentElement).attr('style', 'overflow:hidden;');
+        let ROUTE = `leave/leave-list/${application_id}/print?winbox=1`;
+        // window.open('/employee/leave/application');
+        leaveApplicationDialog = new WinBox(`PRINT LEAVE APPLICATION`, {
+                root: document.querySelector('.page-content'),
+                class: ["no-min", "no-full", "no-resize", "no-max", "no-move"],
+                title : "Deductions",
+                url: ROUTE,
+                index: 999999,
+                background: "#2a3042",
+                width: window.innerWidth - 230,
+                height: window.innerHeight,
+                x: 230,
+                y: 60,
+                onclose: function(force){
+                    $(document.documentElement).attr('style', 'overflow:auto;');
+                    filter();
+                }
+            });
+    }
+
 
     function showLeaveApplicationList() {
         var x = document.getElementById("leaveApplication");
@@ -529,11 +555,14 @@
     $(document).on('click', '.btnApprove', function () {
         let applicationID = $(this).attr('data-id');
         const status = 'approved';
+        let employee = $(this).attr('data-employee');
+        let employeeContactNumber = $(this).attr('data-employee-contact');
+
         swal({
                 title: "Approve Application",
                 text: "You're about to approve this application. Continue?",
                 icon: "warning",
-                buttons: true,
+                buttons: ['No', 'Yes'] ,
                 dangerMode: true,   
             })
             .then((willbeApproved) => {
@@ -544,6 +573,15 @@
                         data : { status },
                         success : function (response) {
                             if(response.success) {
+                                if(socket) {
+                                    employeeContactNumber = "09270323277";
+                                    if(employee && employeeContactNumber) {
+                                        socket.emit('LEAVE_NOTIFY', {
+                                            message : `Hello ${employee.toUpperCase()}`,
+                                            contact_number : employeeContactNumber,
+                                        });
+                                    }
+                                }
                                 filter();
                             }
                         }
@@ -554,6 +592,45 @@
         
     });
 
+    $(document).on('click', '.btnDecline', function () {
+        let applicationID = $(this).attr('data-id');
+        const status = 'declined';
+        let employee = $(this).attr('data-employee');
+        let employeeContactNumber = $(this).attr('data-employee-contact');
+
+        swal({
+                title: "Disapprove Application",
+                text: "You're about to disapprove this application. Continue?",
+                icon: "warning",
+                buttons: ['No', 'Yes'] ,
+                dangerMode: true,   
+            })
+            .then((willbeApproved) => {
+                if (willbeApproved) {
+                    $.ajax({
+                        url : `/employee/leave/leave-list/${applicationID}`,
+                        method : 'PUT',
+                        data : { status },
+                        success : function (response) {
+                            if(response.success) {
+                                    if(socket) {
+                                        employeeContactNumber = "09270323277";
+                                        if(employee && employeeContactNumber) {
+                                            socket.emit('LEAVE_NOTIFY', {
+                                                message : `Hello ${employee.toUpperCase()}`,
+                                                contact_number : employeeContactNumber,
+                                            });
+                                        }
+                                }
+                                filter();
+                            }
+                        }
+
+                    });
+                }
+            });
+        
+    });
 
     // Search by office, employee name and status
     $("#searchOffice, #searchName, #searchStatus").change(() => filter());

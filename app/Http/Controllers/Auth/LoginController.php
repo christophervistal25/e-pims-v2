@@ -64,7 +64,7 @@ class LoginController extends Controller
                         return redirect()->intended(route('employee.dashboard'));
                   }
             } else {
-                  return back()->withErrors(['message' => 'Please check your username/password']);
+                  return back()->withErrors(['message' => 'Please check your username/password'])->withInput();
             }
     }
 }

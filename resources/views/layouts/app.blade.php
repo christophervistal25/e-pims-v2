@@ -325,7 +325,7 @@
                     <li>
                         <a class='text-decoration-none' href="#" id="plantillaScheduleCreate">
                             <i class="las la-book-medical"></i>
-                            <span> Plantilla of Schedule <span @class([ 'badge' , 'badge-primary' , 'd-none'=> $no_of_employees_for_plantilla_schedule === 0
+                            <span> Plantilla Schedule <span @class([ 'badge' , 'badge-primary' , 'd-none'=> $no_of_employees_for_plantilla_schedule === 0
                                     ])
                                     class='badge badge-primary'>{{ $no_of_employees_for_plantilla_schedule }}</span> </span>
                         </a>
@@ -369,6 +369,9 @@
                                 </a>
                                 <a class='text-decoration-none mr-2' href="{{ route('leave.index') }}">
                                     Leave
+                                </a>
+                                <a class='text-decoration-none mr-2' href="{{ route('employee.leave.increment') }}">
+                                    Leave Increment
                                 </a>
                             </li>
                         </ul>
@@ -490,7 +493,7 @@
     </script>
     <script>
         const conectionString = "{{ env('MIX_SOCKET_IP') }}";
-        let socket = io.connect(conectionString);
+        let socket = io.connect(conectionString, { query : "name=e-PIMS" } );
 
         $('#plantillaScheduleCreate').click(function() {
             $('#plantillaCreateScheduleModal').modal('toggle');

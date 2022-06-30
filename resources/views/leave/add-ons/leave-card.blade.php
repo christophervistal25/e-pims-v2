@@ -16,28 +16,28 @@
          <td class='text-center align-middle text-sm text-uppercase font-weight-medium' data-label="particular">
               Entrance</td>
          <td class='text-center align-middle text-xs text-uppercase font-weight-bold' data-label="earned">
-              {{ $forwardedBalance?->vl_earned }}
+              {{-- {{ $forwardedBalance?->vl_earned }} --}}
          </td>
          <td class='text-center align-middle text-xs text-uppercase font-weight-bold' data-label="absences_with_pay">
-              {{ $forwardedBalance?->vl_used }}
+              {{-- {{ $forwardedBalance?->vl_used }} --}}
          </td>
          <td class='text-center align-middle text-sm text-uppercase font-weight-bold' data-label="vacation_balance">
-              {{ $forwardedBalance?->vl_earned  - $forwardedBalance?->vl_used }}
+              {{ $forwardedBalance?->first()->vl_balance }}
          </td>
          <td class='text-center align-middle text-xs text-uppercase font-weight-bold' data-label="absences_without_pay"></td>
 
          {{-- SICK LEAVE TABLE DATA --}}
          <td class='text-center align-middle text-xs text-uppercase font-weight-bold'>
-              {{ $forwardedBalance?->sl_earned }}
+              {{-- {{ $forwardedBalance?->sl_earned }} --}}
          </td>
          <td class='text-center align-middle text-xs text-uppercase font-weight-bold'>
-              {{ $forwardedBalance?->sl_used }}
+              {{-- {{ $forwardedBalance?->sl_used }} --}}
          </td>
          <td class='text-center align-middle text-sm text-uppercase font-weight-bold' data-label="sick_balance">
-              {{ $forwardedBalance?->sl_earned - $forwardedBalance?->sl_used }}</td>
+              {{ $forwardedBalance?->first()->sl_balance }}
          <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
          <td class='text-center align-middle text-sm text-uppercase font-weight-bold' data-label="over_all_total">
-              {{ $overAllTotal = ($forwardedBalance?->vl_earned - $forwardedBalance?->vl_used) + ($forwardedBalance?->sl_earned - $forwardedBalance?->sl_used)  }}</td>
+              {{ $overAllTotal = ($forwardedBalance?->first()->vl_balance + $forwardedBalance?->first()->sl_balance)  }}</td>
          <td class='text-center align-middle text-xs text-uppercase font-weight-bold'></td>
     </tr>
     @foreach($recordsWithoutForwarded as $type => $record)

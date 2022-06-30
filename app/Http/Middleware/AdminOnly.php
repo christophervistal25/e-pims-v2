@@ -19,10 +19,10 @@ class AdminOnly
     public function handle(Request $request, Closure $next)
     {
         $user = Auth::user();
-        if($user->user_type == User::USER_TYPES['ADMINISTRATOR']) {
+        if ($user->user_type == User::USER_TYPES['ADMINISTRATOR']) {
             return $next($request);
         } else {
-            abort(404);
+            return redirect()->to(route('employee.dashboard'));
         }
     }
 }

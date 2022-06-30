@@ -26,6 +26,7 @@ class SalaryAdjustmentController extends Controller
       *
       * @return \Illuminate\Http\Response
       */
+
      public function index()
      {
           $dates = SalaryAdjustment::select('date_adjustment')
@@ -136,15 +137,16 @@ class SalaryAdjustmentController extends Controller
             'salaryNew'                           => 'required|numeric',
             'salaryDifference'                    => 'required|numeric',
         ]);
-        $data = DB::table('settings')->where('Keyname', 'AUTONUMBER2')->first();
-        $id = (int)$data->Keyvalue;
+        // $data = DB::table('settings')->where('Keyname', 'AUTONUMBER2')->first();
+        // $id = (int)$data->Keyvalue;
+
         DB::table('salary_adjustments')->updateOrInsert(
             [
                 'employee_id' => $request->employeeId,
                 'salary_new' => $request->salaryNew,
             ],
             [
-                'id'              => $id,
+                'id'              => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
                 'employee_id'     => $request->employeeId,
                 'item_no'         => $request->itemNo,
                 'office_code'     => $request->officeCode,
@@ -165,6 +167,11 @@ class SalaryAdjustmentController extends Controller
             ->update(['salary_amount' => $request->salaryNew
         ]);
 
+        /* Updating the current service record of the employee soon to be previous record. */
+        $serviceToDate = Carbon::parse($request->dateAdjustment)->subDays(1);
+        DB::table('service_records')->select('employee_id', 'service_from_date', 'service_to_date')->where('employee_id', $request->employeeId)->where('service_to_date', NULL)->latest('service_from_date')
+        ->update(['service_to_date' => $serviceToDate]);
+
 
         $dateCheck = $request->remarks;
         if($dateCheck == ''){
@@ -172,11 +179,9 @@ class SalaryAdjustmentController extends Controller
         } else{
             $remarks =  $request->remarks;
         }
-        $datas = DB::table('settings')->where('Keyname', 'AUTONUMBER2')->first();
-        $ids = (int)$datas->Keyvalue;
         DB::table('service_records')->insert(
         [
-            'id'                        => $ids,
+            'id'                        => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
             'employee_id'               => $request->employeeId,
             'service_from_date'         => $request->dateAdjustment,
             'PosCode'                   => $request->positionCode,
@@ -185,7 +190,6 @@ class SalaryAdjustmentController extends Controller
             'office_code'               => $request->officeCode,
             'separation_cause'          => $remarks
         ]);
-        Setting::find('AUTONUMBER2')->increment('Keyvalue');
         return response()->json(['success'=>true]);
     }
 
@@ -245,8 +249,11 @@ class SalaryAdjustmentController extends Controller
           $salaryAdjustment->salary_previous = $request->salaryPrevious;
           $salaryAdjustment->salary_new      = $request->salaryNew;
           $salaryAdjustment->salary_diff     = $request->salaryDifference;
-          $salaryAdjustment->remarks     = $request->remarks;
+          $salaryAdjustment->remarks         = $request->remarks;
           $salaryAdjustment->save();
+          DB::table('plantillas')->where('employee_id', $request->employeeName)->where('year', $request->currentSgyear)
+            ->update(['salary_amount' => $request->salaryNew
+            ]);
           return response()->json(['success' => true]);
      }
 

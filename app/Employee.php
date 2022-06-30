@@ -331,6 +331,11 @@ class Employee extends Model
         return $this->hasOne(EmployeeLeaveForwardedBalance::class, 'Employee_id', 'Employee_id');
     }
 
+    public function leave_increments()
+    {
+        return $this->hasMany(LeaveIncrement::class, 'Employee_id', 'Employee_id');
+    }
+
     public function compensatory_leaves()
     {
         return $this->hasMany(CompensatoryLeave::class, 'employee_id', 'employee_id');
