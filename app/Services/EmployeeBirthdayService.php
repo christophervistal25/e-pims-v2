@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Employee;
 use Carbon\Carbon;
+use NumberFormatter;
 use App\Services\EmployeeService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -47,6 +48,13 @@ class EmployeeBirthdayService extends EmployeeService
         $day   = $date->format('d');
 
         return $this->getByMonthAndDate($month, $day);
+    }
+    
+    public function transformToOrdinal(int $age)
+    {
+        $locale = 'en_US';
+        $nf = new NumberFormatter($locale, NumberFormatter::ORDINAL);
+        return $nf->format($age);
     }
 
     public function getByRange(string $from, string $to): Collection

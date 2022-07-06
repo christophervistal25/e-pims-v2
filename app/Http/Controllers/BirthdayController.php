@@ -36,7 +36,12 @@ class BirthdayController extends Controller
             'to' => ['date', 'required', 'after_or_equal:from']
         ], [], ['from' => 'Start Date', 'to' => 'End Date']);
 
-        return $this->birthdayService->getByRange($from, $to);
+        /* Returning the result of the `getByRange` method, which is a collection of employees. Then it
+        is calling the `each` method on the collection, which will iterate over each employee and
+        add the `age` property to the employee. */
+        return $this->birthdayService->getByRange($from, $to)->each(function ($employee) {
+            $employee->age_ordinal = $this->birthdayService->transformToOrdinal( Carbon::parse($employee->BirthDate)->age);
+        });
     }
     /**
      * Display a listing of the resource.
