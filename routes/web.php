@@ -3,7 +3,7 @@
 use App\User;
 use App\Employee;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth; 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HolidayController;
@@ -46,6 +46,7 @@ use App\Http\Controllers\Account\Employee\PrintLeaveApplicationController;
 use App\Http\Controllers\Account\Employee\EmployeePersonalDataSheetController;
 use App\Http\Controllers\Maintenance\LeaveController as MaintenanceLeaveController;
 use App\Http\Controllers\Account\Employee\DashboardController as EmployeeDashboardController;
+use App\Http\Controllers\Account\Employee\PaySlipController;
 use App\Http\Controllers\Maintenance\EmployeeLeaveIncrementController;
 
 Route::get('/', function () {
@@ -269,7 +270,18 @@ Route::group(['middleware' => ['auth', 'user']], function () {
     Route::get('employee-leave-card/{start?}/{end?}', [LeaveCardController::class, 'withRange'])->name('employee.leave.card.with.range.index');
     Route::post('employee-leave-card-print', [LeaveCardController::class, 'print'])->name('employee.leave.card.print');
 
-    Route::get('leave-certification-print', [LeaveCertificationController::class, 'index'])->name('print-leave-certification');
+    Route::get('employee-payslip', [PaySlipController::class, 'index'])->name('employee.payslip');
+
+    // Route::get('leave-certification-print', [LeaveCertificationController::class, 'index'])->name('print-leave-certification');
 
     Route::get('employee-chat', [ChatController::class, 'index'])->name('employee.chat');
 });
+
+
+// Route::get('export-image', function () {
+//     $employees = Employee::get(['Employee_id', 'ImagePhoto']);
+//     foreach ($employees as $employee) {
+//         file_put_contents(public_path('assets/img/profiles/') . $employee->Employee_id . '.jpg', $employee->ImagePhoto);
+//         sleep(0.6);
+//     }
+// });

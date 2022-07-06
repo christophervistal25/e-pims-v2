@@ -3,25 +3,16 @@
 @section('content')
 <div class="p-3">
     <div class="row mb-3">
-        <div class="col-lg-6 col-xs-12">
-            <label for="month" class='font-weight-bold'>Month</label>
+        <div class="col-lg-12 col-xs-12">
+            <label for="month" class='font-weight-bold'>Month & Year</label>
             <select name="month" class='form-control form-select' id="month">
-                <option value="ALL" selected>All</option>
+                <option value="ALL" selected>ALL</option>
                 @foreach($months as $month)
-                <option value="{{ Str::upper(date('M', strtotime($month))) }}">{{ $month }}</option>
+                <option value="{{ $month }}" class='text-uppercase'>{{ date('F Y', strtotime($month)) }}</option>
                 @endforeach
             </select>
         </div>
 
-        <div class="col-lg-6 col-xs-12">
-            <label for="year" class='font-weight-bold'>Year</label>
-            <select name="year" class='form-control form-select' id="year">
-                <option value="ALL" selected>All</option>
-                @foreach($years as $year)
-                <option value="{{ $year }}">{{ $year }}</option>
-                @endforeach
-            </select>
-        </div>
     </div>
     <div id="payroll-wrapper">
         @foreach($payrolls as $payroll)
@@ -195,28 +186,20 @@
 <script>
     $('#month').change(function () {
         let month = $(this).val();
-        let year = $('#year').val();
-
-        let month_year = `${month}${year}`;
-
-
-        $('#payroll-wrapper').children().each(function (index, element) {
-            let [monthYear, sequenceNo] = $(element).attr('data-content').split('-');
-        });
-
         
-    });
-
-    $('#year').change(function () {
-        let month = $('#month').val();
-        let year = $(this).val();
-
-        let month_year = `${month}${year}`;
-        
-        $('#payroll-wrapper').children().each(function (index, element) {
-            let [monthYear, sequenceNo] = $(element).attr('data-content').split('-');
-            
-        });
+        if(month === 'ALL') {
+            // Dispay all card children of #payroll-wrapper
+            $('#payroll-wrapper').children().fadeIn().show();
+        } else {
+            $('#payroll-wrapper').children().each(function (index, element) {
+                let [monthYear, sequenceNo] = $(element).attr('data-content').split('-');
+                if(monthYear.includes(month)) {
+                    $(element).fadeIn().show();
+                } else {
+                    $(element).fadeOut().hide();
+                }
+            });
+        }
     });
 
 </script>
