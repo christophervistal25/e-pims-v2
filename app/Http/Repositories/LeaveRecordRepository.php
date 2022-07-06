@@ -51,7 +51,6 @@ class LeaveRecordRepository extends LeaveApplicationRepository
                   'splBalance'        => $employee->forwarded_leave_records?->spl_balance - $employee->leave_files?->where('leave_type_id', 'SPL')->sum('no_of_days'),
                   'rehabBalance'      => $employee->forwarded_leave_records?->rehab_balance - $employee->leave_files?->where('leave_type_id', 'RL')->sum('no_of_days'),
             ];
-
             return array_map(function($value) {
                   return number_format($value, 2, ".", "");
             }, $credits);

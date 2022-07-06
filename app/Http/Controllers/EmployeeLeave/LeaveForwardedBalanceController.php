@@ -34,20 +34,22 @@ class LeaveForwardedBalanceController extends Controller
     public function index()
     {
         $employees = Employee::exclude(['ImagePhoto'])
-                        ->orderBy('LastName', 'asc')
-                        ->orderBy('FirstName', 'asc')
-                        ->permanent()
-                        ->active()
-                        ->get();
+            ->orderBy('LastName', 'asc')
+            ->orderBy('FirstName', 'asc')
+            ->permanent()
+            ->active()
+            ->get();
         return view('leave.leave-forwarded-balance', compact('employees'));
     }
 
     public function list(Request $request)
     {
         if ($request->ajax()) {
+            $button = null;
+
             $rPerEmployee = EmployeeLeaveForwardedBalance::with('employee')->get();
-            
-            
+
+
             return Datatables::of($rPerEmployee)
                 ->addColumn('employee_id', function ($rPerEmployee) {
                     return $rPerEmployee->Employee_id;
@@ -64,26 +66,21 @@ class LeaveForwardedBalanceController extends Controller
                 ->addColumn('sl_balance', function ($rPerEmployee) {
                     return $rPerEmployee->sl_balance;
                 })
-                ->addcolumn('action', function ($rPerEmployee) {
-                    $button = '<button type="button" class="btn btn-info btn-sm rounded-circle shadow view__leave__balances"
-                                        data-id="' . $rPerEmployee->forwarded_id . '">
-                                        <i class="fa fa-eye"></i>
-                                    </button>';
+                ->addcolumn('action', function ($rPerEmployee) use ($button) {
                     $button .= '<button type="button" class="btn btn-success btn-sm rounded-circle shadow edit__leave__type ml-1"
                                         data-id="' . $rPerEmployee->forwarded_id . '">
-                                        <i class="fa fa-pencil"></i>
+                                        <i class="text-white fa fa-pencil"></i>
                                     </button>';
                     $button .=
                         '<button type="button" class="btn btn-danger btn-sm rounded-circle shadow delete__leave__type ml-1"
                             data-id="' . $rPerEmployee->forwarded_id . '">
-                            <i class="fa fa-trash"></i>
+                            <i class="text-white fa fa-trash"></i>
                         </button>';
 
                     return $button;
                 })
                 ->make(true);
         }
-
     }
 
     /**
@@ -113,7 +110,7 @@ class LeaveForwardedBalanceController extends Controller
             'Employee_id.unique' => 'Duplicated entry.',
             'vl_balance.required' => 'This field is required.',
             'sl_balance.required' => 'This field is required.',
-        ]); 
+        ]);
 
         $lastID = DB::table('Settings')->where('Keyname', 'AUTONUMBER2')->first();
         $convertedID = (int) $lastID->Keyvalue;
@@ -136,10 +133,10 @@ class LeaveForwardedBalanceController extends Controller
             "spl_balance"           => $request['spl_balance'],
             "rehab_balance"         => $request['rehab_balance'],
         ]);
-        
+
         $nextID = $convertedID + 1;
-        
-        DB::table('Settings')->where('Keyname', 'AUTONUMBER2')->update([ 'Keyvalue' => (string)$nextID ]);
+
+        DB::table('Settings')->where('Keyname', 'AUTONUMBER2')->update(['Keyvalue' => (string)$nextID]);
 
         return response()->json(['success' => true]);
     }
@@ -170,10 +167,12 @@ class LeaveForwardedBalanceController extends Controller
         $position = $leaveRecord->employee->position->Description;
 
         return response()
-                ->json(['leaveRecord' => $leaveRecord, 
-                        'employeeFullname' => $employeeFullname,
-                        'office' => $office,
-                        'position' => $position]);
+            ->json([
+                'leaveRecord' => $leaveRecord,
+                'employeeFullname' => $employeeFullname,
+                'office' => $office,
+                'position' => $position
+            ]);
     }
 
     /**
@@ -191,7 +190,7 @@ class LeaveForwardedBalanceController extends Controller
         ], [
             'vl_balance.required' => 'This field is required.',
             'sl_balance.required' => 'This field is required.',
-        ]); 
+        ]);
 
         $updateRecord = EmployeeLeaveForwardedBalance::findOrFail($id);
 
@@ -226,10 +225,5 @@ class LeaveForwardedBalanceController extends Controller
         $leaveRecord->delete();
 
         return response()->json(['success' => true]);
-
     }
 }
-
-
-
-?>
