@@ -46,7 +46,7 @@ class StoreEmployeeRequest extends FormRequest
             'salary_grade' => ['nullable', 'numeric', 'min:1', 'max:33'],
             'step_increment' => ['nullable', 'numeric', 'min:1', 'max:8'],
             'position' => ['nullable'],
-            'username' => ['nullable', 'min:6', 'unique:EPIMS_Users'],
+            'username' => ['nullable', 'min:4', 'unique:EPIMS_Users'],
             'password' => ['nullable', 'min:6', 'confirmed'],
         ];
 

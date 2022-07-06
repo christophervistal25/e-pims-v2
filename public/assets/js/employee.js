@@ -22,6 +22,12 @@ let table = $("#employees-table").DataTable({
     initComplete: function () {},
     columns: [
         {
+            name: "image",
+            class: "align-middle text-center",
+            searchable: false,
+            orderable: false,
+        },
+        {
             name: "Employee_id",
             class: "align-middle text-center",
         },
@@ -70,7 +76,7 @@ let table = $("#employees-table").DataTable({
             class: "align-middle text-center text-truncate",
             orderable: false,
             render: function (rawData, _, data, row) {
-                if (data[ACTIVE_STATUS_INDEX] == ACTIVE) {
+                if (rawData == ACTIVE) {
                     return `<span class="badge badge-primary text-uppercase">Active</span>`;
                 } else {
                     return `<span class="badge badge-danger text-uppercase">In-active</span>`;
@@ -170,6 +176,16 @@ $(document).on("click", ".btn-edit-employee", function () {
             $("#firstname").val(employee.FirstName);
             $("#middlename").val(employee.MiddleName);
             $("#suffix").val(employee.Suffix);
+
+            $("#employeeImage")
+                .attr("src", `/assets/img/profiles/${employee.Employee_id}.jpg`)
+                .on("error", function () {
+                    $("#employeeImage").attr(
+                        "src",
+                        "/assets/img/profiles/no_image.png"
+                    );
+                });
+
             $("#birthdate").val(employee.Birthdate);
             $("#birthplace").val(employee.BirthPlace);
             $("#gender").val(employee.Gender?.toUpperCase());
