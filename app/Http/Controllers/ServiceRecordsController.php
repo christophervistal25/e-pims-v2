@@ -7,11 +7,12 @@ use App\Setting;
 use App\Employee;
 use App\Position;
 use App\Plantilla;
-use App\service_record as ServiceRecord;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use App\service_record as ServiceRecord;
 
 class ServiceRecordsController extends Controller
 {
@@ -94,7 +95,7 @@ class ServiceRecordsController extends Controller
     {
         $this->validate($request, [
             'fromDate'      => 'required',
-            'toDate'        => 'required|after:fromDate',
+            'toDate'        => 'nullable|after:fromDate',
             'positionTitle' => 'required',
             'status'        => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
             'salary'        => 'required',
@@ -104,12 +105,24 @@ class ServiceRecordsController extends Controller
             'cause'         => 'required',
         ]);
 
+        // Check if the toDate is null
+        if ($request->toDate == null) {
+            // Get the current service record of employee
+            $currentServiceRecord = ServiceRecord::where('employee_id', $request->employeeId)->whereNull('service_to_date')->orderBy('service_from_date', 'desc')->first();
+
+            // Update the service_to_date column by the current service_from_date
+            if ($currentServiceRecord) {
+                $currentServiceRecord->service_to_date = Carbon::parse($request->fromDate)->subDays(1)->format('Y-m-d');
+                $currentServiceRecord->save();
+            } 
+        } 
+        
         $service_record = new ServiceRecord;
         $service_record->id                = tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue;
         $service_record->employee_id       = $request['employeeId'];
         $service_record->service_from_date = $request['fromDate'];
         $service_record->service_to_date   = $request['toDate'];
-        $service_record->PosCode       = $request['positionTitle'];
+        $service_record->PosCode           = $request['positionTitle'];
         $service_record->status            = $request['status'];
         $service_record->salary            = $request['salary'];
         $service_record->office_code       = $request['officeCode'];
@@ -117,6 +130,7 @@ class ServiceRecordsController extends Controller
         $service_record->separation_date   = $request['date'];
         $service_record->separation_cause  = $request['cause'];
         $service_record->save();
+
         return response()->json(['success' => true]);
     }
 
@@ -139,14 +153,15 @@ class ServiceRecordsController extends Controller
      */
     public function edit($id)
     {
-        $service_record = ServiceRecord::find($id);
+        $service_record = ServiceRecord::with(['employee'])->find($id);
+
         $office = Office::select('office_code', 'office_name')->get();
-        $status = ['Casual', 'Contractual', 'Coterminous', 'Coterminous-Temporary', 'Permanent', 'Provisional', 'Regular Permanent', 'Substitute', 'Temporary', 'Elected'];
-        count($status) - 1;
-        $position = Position::select('PosCode', 'Description')->get();
-        $employee = Employee::select('employee_id', 'LastName', 'FirstName', 'MiddleName', 'Suffix')->get();
-        $plantilla = Plantilla::select('plantilla_id', 'employee_id')->with('employee:Employee_id,FirstName,MiddleName,LastName,Suffix')->get();
-        return view('ServiceRecords.edit', compact('service_record', 'employee', 'position', 'status', 'office', 'plantilla'));
+
+        $statuses = ['Casual', 'Contractual', 'Coterminous', 'Coterminous-Temporary', 'Permanent', 'Provisional', 'Substitute', 'Temporary', 'Elected'];
+
+        $positions = Position::select('PosCode', 'Description')->get();
+
+        return view('ServiceRecords.edit', compact('service_record', 'positions', 'statuses', 'office'));
     }
 
     /**
@@ -160,7 +175,7 @@ class ServiceRecordsController extends Controller
     {
         $this->validate($request, [
             'fromDate'                    => 'required',
-            'toDate'                      => 'required',
+            'toDate'                      => ['nullable', 'after:fromDate'],
             'positionTitle'               => 'required',
             'status'                      => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
             'salary'                      => 'required',
@@ -169,6 +184,7 @@ class ServiceRecordsController extends Controller
             'cause'                       => 'required',
             'date'                        => 'required',
         ]);
+
         $service_record                         =  ServiceRecord::find($id);
         $service_record->employee_id            = $request['employeeId'];
         $service_record->service_from_date      = $request['fromDate'];

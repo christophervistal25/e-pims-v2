@@ -45,18 +45,7 @@
 
                     <div class="form-group col-12 col-lg-12 ">
                         <label class="has-float-label mb-0">
-                            <select
-                                class="form-control form-control-xs selectpicker {{ $errors->has('')  ? 'is-invalid' : ''}}"
-                                name="" data-live-search="true" id="" data-size="5" disabled
-                                style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <option></option>
-                                @foreach($plantilla as $plantillas)
-                                <option {{ $service_record->employee_id == $plantillas->employee_id ? 'selected' : '' }}
-                                    value="{{ $plantillas->employee_id }}">{{ $plantillas->employee->LastName }},
-                                    {{ $plantillas->employee->FirstName }} {{ $plantillas->employee->MiddleName }}
-                                </option>
-                                @endforeach
-                            </select>
+                            <input type="text" class='form-control form-control-xs' value="{{ $service_record->employee->fullname }}" readonly>
                             <span class="font-weight-bold">EMPLOYEE NAME</span>
                         </label>
                     </div>
@@ -101,7 +90,7 @@
 
                     <div class="form-group col-12 col-lg-4">
                         <label class="has-float-label mb-0">
-                            <input value="{{ $service_record->leave_without_pay ?? old('leavePay') }}"
+                            <input value="{{ $service_record->leave_without_pay ?? old('leavePay') ?? 0 }}"
                                 class="form-control {{ $errors->has('leavePay')  ? 'is-invalid' : ''}}" name="leavePay"
                                 id="leavePay" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <span class="font-weight-bold">LEAVE WITHOUT PAY<span class="text-danger">*</span></span>
@@ -114,7 +103,7 @@
 
                     <div class="form-group col-12 col-lg-4">
                         <label class="has-float-label mb-0">
-                            <input class="form-control {{ $errors->has('date')  ? 'is-invalid' : ''}}" value="{{ $service_record->separation_date }}" name="date"
+                            <input class="form-control {{ $errors->has('date')  ? 'is-invalid' : ''}}" value="{{ $service_record->separation_date ?? date('Y-m-d') }}" name="date"
                                 id="date" type="date" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <span class="font-weight-bold">DATE<span class="text-danger">*</span></span>
                         </label>
@@ -130,15 +119,10 @@
                         <label class="has-float-label mb-0">
                         <select value=""
                             class="form-control selectpicker  {{ $errors->has('status')  ? 'is-invalid' : ''}}"
-                            name="status" data-live-search="true" id="status" data-size="4"
-                            data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                            name="status" data-live-search="true" id="status" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <option></option>
-                            @foreach(range(0, 9) as $statuses)
-                            @if($status[$statuses] == $service_record->status))
-                            <option value="{{ $status[$statuses]}}" selected>{{ $status[$statuses] }}</option>
-                            @else
-                            <option value="{{ $status[$statuses]}}">{{ $status[$statuses] }}</option>
-                            @endif
+                            @foreach($statuses as $status)
+                                <option value="{{ $status }}" {{ Str::upper($status) === Str::upper($service_record->status) }}>{{ $status }}</option>
                             @endforeach
                         </select>
                         <span class="font-weight-bold">STATUS<span class="text-danger">*</span></span>
@@ -157,10 +141,8 @@
                             name="positionTitle" data-live-search="true" id="positionTitle" data-size="5"
                             data-width="100%">
                             <option></option>
-                            @foreach($position as $positions)
-                            <option style="width:350px;"
-                                {{ $service_record->position_id == $positions->PosCode ? 'selected' : '' }}
-                                value="{{ $positions->PosCode }}">{{ $positions->Description }}</option>
+                            @foreach($positions as $position)
+                            <option style="width:350px;" value="{{ $position->PosCode }}">{{ $position->Description }}</option>
                             @endforeach
                         </select>
                         <span class="font-weight-bold">POSITION<span class="text-danger">*</span></span>
@@ -196,7 +178,7 @@
                             <textarea value=""
                                 class="form-control {{ $errors->has('cause')  ? 'is-invalid' : ''}}" name="cause"
                                 id="cause" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;"
-                                rows="3">{{ $service_record->separation_cause ?? old('cause') }}</textarea>
+                                rows="3">{{ $service_record->separation_cause ?? old('cause') ?? 'N/A' }}</textarea>
                             <span class="font-weight-bold">CAUSE<span class="text-danger">*</span></span>
                         </label>
                         @if($errors->has('cause'))
@@ -231,7 +213,13 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    const SERVICE_RECORD_POSITION = "{{ $service_record->PosCode }}";
+    const SERVICE_RECORD_OFFICE = "{{ $service_record->office_code }}";
+    const SERVICE_RECORD_STATUS = "{{ $service_record->status }}";
 
+    $('#positionTitle').val(SERVICE_RECORD_POSITION).selectpicker('refresh');
+    $('#officeCode').val(SERVICE_RECORD_OFFICE).selectpicker('refresh');
+    $('#status').val(SERVICE_RECORD_STATUS).selectpicker('refresh');
 </script>
 @endpush
 @endsection
