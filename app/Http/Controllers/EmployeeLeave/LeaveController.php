@@ -31,12 +31,11 @@ class LeaveController extends Controller
 
         $leave_files = [];
 
-        $employeesWithLeaveFiles = Employee::has('leave_files')->with(['leave_files' => function ($query) {
+        $employeesWithLeaveFiles = Employee::permanent()->active()->with(['leave_files' => function ($query) {
             $query->where('status', 'approved')->where('date_from', '<', Carbon::now()->format('Y-m-d'));
         }, 'leave_increments', 'leave_increments.transaction'])->get(['Employee_id'])->each(function ($employee) use(&$leave_files) {
             $leave_files[$employee->Employee_id] = $this->leaveRecordRepository->getEmployeeLeaveCredits($employee);
         });
-        // dd($leave_files);
 
         $types = $this->leaveTypeRepository->getLeaveTypesApplicableToGender();
 
