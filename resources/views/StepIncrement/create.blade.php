@@ -30,8 +30,8 @@
 @section('content')
 
 
-<div class="content container-fluid">
-    <div class="kanban-board card mb-0 shadow">
+<div class="p-0 m-0 container-fluid">
+    <div class="kanban-board card mb-0 shadow-none">
         <div class="card-body">
             <div class="page-header d-none" id="addForm" >
                 <div class="float-right mb-2" id='btnViewTableContainer'>
@@ -48,7 +48,6 @@
                         <div class="col-12">
                             <div class="alert alert-secondary text-center font-weight-bold" role="alert">ADD STEP INCREMENT</div>
                         </div>
-                        
                         
                         <div class="card-body col-12 col-md-6 col-lg-6">
                             <div class="col-12 col-lg-11 mt-2">
@@ -190,14 +189,19 @@
                                     type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                 <span><strong>MONTHLY DIFFERENCE</strong></span>
                                 </label>
+                                    <div class='text-center'>
+                                        <button type="submit" id="btnSave" 
+                                            class="p-2 col-5 btn btn-success shadow mx-3 text-white">
+                                            <i class="fas fa-save"></i> Save
+                                        </button>
+                                        <button type="button" id="btnCancel"
+                                            class="p-2 col-5 btn btn-danger shadow text-light">
+                                                <i class="fas fa-ban"></i> Cancel
+                                        </button>
+                                    </div>
                             </div>
 
-                            <div class="form-group col-12 col-lg-12" id="buttons">
-                                <button type="submit" id="btnSave"
-                                    class="form-control col-5 float-right btn btn-success mb-5 shadow"><i class="fas fa-save"></i>&nbsp; Save</button>
-                                <button type="button" id="btnCancel" style="margin-right:10px"
-                                    class="form-control col-5 btn btn-danger float-right shadow text-light"><i class="fas fa-ban"></i>&nbsp; Cancel</button>
-                            </div>
+                            
                         </div>
                         <form>
                     </div>
@@ -211,7 +215,7 @@
                             Add Step Increment </button>
                     </div>
                 </div>
-                <div class="table" style="overflow-x:auto;">
+                <div class="table table-responsive">
                     <table class="table table-bordered" id="step-increment-table" style="width:100%;">
                         <thead>
                             <tr>
@@ -223,8 +227,8 @@
                                 <th class="font-weight-bold align-middle" rowspan="2">Date of Last
                                     Appointment
                                 </th>
-                                <th class="font-weight-bold align-middle text-center" rowspan="1 " colspan="2">From</th>
-                                <th class="font-weight-bold align-middle text-center" rowspan="1" colspan="2">To</th>
+                                <th class="font-weight-bold align-middle text-center" colspan="2">From</th>
+                                <th class="font-weight-bold align-middle text-center" colspan="2">To</th>
                                 <th class="font-weight-bold align-middle" rowspan="2">Monthly Difference</th>
                                 <th class="font-weight-bold align-middle" rowspan="2">Action</th>
                                 <tr>
@@ -277,7 +281,8 @@
             },
             columns: [{
                     data: 'date_step_increment',
-                    name: 'date_step_increment'
+                    name: 'date_step_increment',
+                    className : 'text-center',
                 },
                 {
                     className: 'text-truncate',
@@ -302,14 +307,16 @@
                     name: 'item_no',
                     searchable: true,
                     sortable: false,
-                    visible: true
+                    visible: true,
+                    className : 'text-center',
                 },
                 {
                     data: 'last_latest_appointment',
                     name: 'last_latest_appointment',
                     searchable: true,
                     sortable: false,
-                    visible: true
+                    visible: true,
+                    className : 'text-center',
                 },
                 {
                     className: 'text-truncate',
@@ -317,7 +324,8 @@
                     name: 'sg_from_and_step_from',
                     searchable: true,
                     sortable: false,
-                    visible: true
+                    visible: true,
+                    className : 'text-center',
                 },
                 {
                     className: 'text-truncate',
@@ -333,7 +341,8 @@
                     name: 'sg_to_and_step_to',
                     searchable: true,
                     sortable: false,
-                    visible: true
+                    visible: true,
+                    className : 'text-center',
                 },
                 {
                     className: 'text-truncate',
@@ -341,14 +350,14 @@
                     name: 'salary_amount_to',
                     searchable: true,
                     sortable: false,
-                    visible: true
+                    visible: true,
                 },
                 {
                     data: 'salary_diff',
                     name: 'salary_diff',
                     searchable: true,
                     sortable: false,
-                    visible: true
+                    visible: true,
                 },
                 {
                     className: 'text-truncate',
@@ -387,7 +396,7 @@
                                         title: messageText.innerText,
                                         icon: "success",
                                     });
-
+                                    window.location.reload();
                                     table.draw();
                                 }
                             },
@@ -399,6 +408,9 @@
 
         // TRANSITION OF FORM TO TABLE
         $('#addBtn').click( ()=> {
+            // Reset the form step increment form
+            $('#formStepIncrement')[0].reset();
+
             $('#addForm').attr("class", "page-header d-none");
             $('#stepIncrementTable').attr("class", "page-header d-none");
             // $('#btnViewTableContainer').removeClass('float-right d-none');
@@ -482,7 +494,7 @@
                     let amount = parseFloat($('#amount').val());
                     let amount2 = parseFloat($('#amount2').val());
                     let amountDifference = parseFloat(((amount2 - amount) || ''));
-                    $('#monthlyDifference').val(amountDifference);
+                    $('#monthlyDifference').val(amountDifference || 0);
                 }
             });
         });

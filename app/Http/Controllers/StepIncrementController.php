@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use App\Employee;
-use App\Position;
-use App\Plantilla;
+use Carbon\Carbon;
 use App\StepIncrement;
-use App\service_record;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\DB;
+use App\Services\ServiceRecordService;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Carbon;
 
 class StepIncrementController extends Controller
 {
 
+    public function __construct(public ServiceRecordService $serviceRecordService)
+    {}
 
     //  SHOW DATA IN YAJRA TABLE //
     public function list()
@@ -33,7 +33,6 @@ class StepIncrementController extends Controller
                 'Description',
                 'item_no',
                 ('last_latest_appointment'),
-                // DB::raw("CONCAT(FirstName, ' ' , MiddleName, ' ' , LastName, ' ' , Suffix) AS fullname")
                 DB::raw("CONCAT(sg_no_from, '-' , step_no_from) AS sg_from_and_step_from"),
                 'salary_amount_from',
                 DB::raw("CONCAT(sg_no_to, '-' , step_no_to) AS sg_to_and_step_to"),
@@ -41,13 +40,8 @@ class StepIncrementController extends Controller
                 'salary_diff'
             )
 
-
             ->where('Step_increments.deleted_at', null)
             ->get();
-
-        // dd($data);
-
-
 
 
         if ($data->count() === 0) {
@@ -66,33 +60,26 @@ class StepIncrementController extends Controller
                 return '₱' . number_format($row->salary_diff, 2, '.', ',');
             })
 
-
             // EDIT FUNCTION IN YAJRA TABLE //
             ->addColumn('action', function ($row) {
                 $btnEdit = "<a href='" . route('step-increment.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil' title='Edit'></i></a>";
-
-
                 // DELETE FUNCTION IN YAJRA TABLE //
                 $btnDelete = '<button type="button" class="rounded-circle text-white delete btn btn-danger btn-sm btnRemoveRecord" title="Delete" data-id="' . $row->id . '"><i style="pointer-events:none;" class="la la-trash"></i></button>';
-
                 // PRINT FUNCTION IN YAJRA TABLE //
-                $btnPrint = "<a href='" . route('print-increment', $row->id) . "' class='rounded-circle text-white btn btn-primary btn-sm' title='Print'><i style='pointer-events:none;' class='la la-print'></i></a>";
-
-
+                $btnPrint = "<a href='" . route('print-increment', $row->id) . "' target='_blank' class='rounded-circle text-white btn btn-primary btn-sm' title='Print'><i style='pointer-events:none;' class='la la-print'></i></a>";
                 return $btnEdit . "&nbsp" . $btnDelete . "&nbsp" . $btnPrint;
-
             })->make(true);
     }
 
 
 
-    // SHOW //
+    /**
+     * It gets all employees that have a plantillaForStep, and that don't have a step.
+     */
     public function index()
     {
-
         $employees = Employee::has('plantillaForStep')
                     ->with(['plantillaForStep', 'plantillaForStep.plantilla_positions', 'plantillaForStep.plantilla_positions.position'])
-                    // ->without(['office_charging'])
                     ->doesntHave('step')
                     ->get();
 
@@ -101,7 +88,12 @@ class StepIncrementController extends Controller
 
 
 
-    // POST //
+    /**
+     * It creates a new record in the step_increments table and updates the plantilla table.
+     * </code>
+     * 
+     * @param Request request the request object
+     */
     public function store(Request $request)
     {
 
@@ -111,49 +103,64 @@ class StepIncrementController extends Controller
             'stepNo2'           => 'required',
         ]);
 
-        $increment = StepIncrement::create([
-            'employee_id'               => $request->employeeID,
-            'item_no'                   => $request->itemNoFrom,
-            'office_code'               => $request->officeCode,
-            'PosCode'                   => $request->positionID,
-            'date_step_increment'       => $request->dateStepIncrement,
-            'last_latest_appointment'   => $request->datePromotion,
-            'sg_no_from'                => $request->sgNoFrom,
-            'step_no_from'              => $request->stepNoFrom,
-            'salary_amount_from'        => $request->amountFrom,
-            'sg_no_to'                  => $request->sgNo2,
-            'step_no_to'                => $request->stepNo2,
-            'salary_amount_to'          => $request->amount2,
-            'salary_diff'               => $request->monthlyDifference
-        ]);
+        DB::transaction(function () use($request) {
+            $increment = StepIncrement::create([
+                'employee_id'               => $request->employeeID,
+                'item_no'                   => $request->itemNoFrom,
+                'office_code'               => $request->officeCode,
+                'PosCode'                   => $request->positionID,
+                'date_step_increment'       => $request->dateStepIncrement,
+                'last_latest_appointment'   => $request->datePromotion,
+                'sg_no_from'                => $request->sgNoFrom,
+                'step_no_from'              => $request->stepNoFrom,
+                'salary_amount_from'        => $request->amountFrom,
+                'sg_no_to'                  => $request->sgNo2,
+                'step_no_to'                => $request->stepNo2,
+                'salary_amount_to'          => $request->amount2,
+                'salary_diff'               => $request->monthlyDifference
+            ]);
+        
+            $increment->plantilla->update([
+                'step_no'          => $request['stepNo2'],
+                'salary_amount'    => $request['amount2']
+            ]);
     
+            $employee = Employee::find($request->employeeID, ['Employee_id', 'last_step_increment']);
+            $employee->last_step_increment = $increment->last_latest_appointment;
+            $employee->save();
 
-        $increment->plantilla->update([
-            'step_no'          => $request['stepNo2'],
-            'salary_amount'    => $request['amount2']
-        ]);
+            /* Updating the service record of the employee. */
+            $currentServiceRecord = $this->serviceRecordService->getCurrentServiceRecord($request->employeeID);
+            $currentServiceRecord->service_to_date = Carbon::parse($request->datePromotion)->format('Y-m-d');
+            $currentServiceRecord->save();
 
-
-        $employee = Employee::find($request->employeeID);
-        $employee->last_step_increment = $increment->last_latest_appointment;
-        $employee->save();
-
+            /* Adding a new record to the service record table. */
+            $this->serviceRecordService->addNewRecord([
+                'employee_id' => $request->employeeID,
+                'service_from_date' => $request->datePromotion,
+                'PosCode' => $request->positionID,
+                'status' => $increment->plantilla->status,
+                'salary' => $increment->plantilla->salary_amount,
+                'office_code' => $request->officeCode,
+            ]);
+        });
 
 
         return redirect('/step-increment')->with('success', true);
     }
 
 
-
-
-    // EDIT //
+    /**
+     * It gets the step increment with the employee and position data, then it gets the employee and
+     * position data from the step increment.
+     * 
+     * @param id the id of the step increment
+     */
     public function edit($id)
     {
         $stepIncrement = StepIncrement::with(['employee:Employee_id,FirstName,MiddleName,LastName,Suffix', 'position'])->find($id);
         $employee = $stepIncrement->employee;
         $position = $stepIncrement->position;
-
-        // dd($position);
 
         return view('stepIncrement.edit', compact('stepIncrement', 'employee', 'position'));
     }
@@ -161,7 +168,12 @@ class StepIncrementController extends Controller
 
 
 
-    // UPDATE //
+    /**
+     * It updates the step increment table and the plantilla table.
+     * 
+     * @param Request request 
+     * @param id the id of the step increment
+     */
     public function update(Request $request, $id)
     {
         $this->validate($request, [
@@ -170,29 +182,31 @@ class StepIncrementController extends Controller
             'stepNo2'           => 'required',
         ]);
 
-        $request = request()->all();
-        $stepId = $request['stepID'];
+        DB::transaction(function () use($request) {
+            $stepId = $request['stepID'];
 
-        $step_increments = StepIncrement::find($stepId);
-        $step_increments->date_step_increment = $request['dateStepIncrement'];
-        $step_increments->employee_id = $request['employeeID'];
-        $step_increments->item_no = $request['itemNoFrom'];
-        $step_increments->last_latest_appointment = $request['datePromotion'];
-        $step_increments->sg_no_from = $request['sgNoFrom'];
-        $step_increments->step_no_from = $request['stepNoFrom'];
-        $step_increments->salary_amount_from = $request['amountFrom'];
-        $step_increments->sg_no_to = $request['sgNo2'];
-        $step_increments->step_no_to = $request['stepNo2'];
-        $step_increments->salary_amount_to = $request['amount2'];
-        $step_increments->salary_diff = $request['monthlyDifference'];
-        $step_increments->update();
+            $step_increments = StepIncrement::find($stepId);
+            $step_increments->date_step_increment = $request['dateStepIncrement'];
+            $step_increments->employee_id = $request['employeeID'];
+            $step_increments->item_no = $request['itemNoFrom'];
+            $step_increments->last_latest_appointment = $request['datePromotion'];
+            $step_increments->sg_no_from = $request['sgNoFrom'];
+            $step_increments->step_no_from = $request['stepNoFrom'];
+            $step_increments->salary_amount_from = $request['amountFrom'];
+            $step_increments->sg_no_to = $request['sgNo2'];
+            $step_increments->step_no_to = $request['stepNo2'];
+            $step_increments->salary_amount_to = $request['amount2'];
+            $step_increments->salary_diff = $request['monthlyDifference'];
+            $step_increments->update();
 
-        $step_increments->plantilla->update([
-            'step_no'               => $request['stepNo2'],
-            'salary_amount'         => $request['amount2'],
-            'date_last_promotion'   => $request['created']
-        ]);
+            $step_increments->plantilla->update([
+                'step_no'               => $request['stepNo2'],
+                'salary_amount'         => $request['amount2'],
+                'date_last_promotion'   => $request['datePromotion']
+            ]);
 
+    
+        });
 
         Session::flash('success', true);
 
@@ -201,7 +215,14 @@ class StepIncrementController extends Controller
 
 
 
-    // DELETE //
+
+    /**
+     * It deletes a step increment from the database
+     * 
+     * @param id The id of the step increment to be deleted
+     * 
+     * @return A JSON object with a key of success and a value of true.
+     */
     public function destroy($id)
     {
         $stepIncrement = StepIncrement::find($id);
