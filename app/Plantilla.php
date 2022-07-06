@@ -32,6 +32,12 @@ class Plantilla extends Model
             'ARMM',
       ];
 
+      public const AREA_TYPES = [
+        'Region', 'Province', 'District', 'Municipality', 'Foreign Post'
+      ];
+
+      public const AREA_LEVELS = ['K', 'T', 'S', 'A'];
+
       protected $fillable = [
             'plantilla_id',
             'old_item_no',

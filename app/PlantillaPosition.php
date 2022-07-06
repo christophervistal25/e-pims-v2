@@ -34,8 +34,9 @@ class PlantillaPosition extends Model
 
       public function office()
       {
-            return $this->hasOne('App\Office', 'OfficeCode', 'office_code');
+            return $this->hasOne('App\Office', 'office_code', 'office_code');
       }
+      
       public function salaryAdjustment()
       {
             return $this->hasOne('App\SalaryAdjustment', 'pp_id', 'pp_id');
