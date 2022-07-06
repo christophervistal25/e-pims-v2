@@ -29,13 +29,16 @@
             <div class="row">
                 <div class="col-lg-10">
                     <label class='text-uppercase h6'>Employee Name</label>
-                    <select data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker"
+                    <select data-style="{{ $errors->has('employee') ? 'border-danger' : 'border form-select' }}" class="form-control form-control-xs selectpicker"
                         name="employee" data-live-search="true" id="employee" data-size="5">
                         <option value=""></option>
                         @foreach($employees as $employee)
-                        <option data-fullname="{{ $employee->fullname }}" value="{{ $employee->Employee_id }}">{{ $employee->fullname }}</option>
+                            <option data-fullname="{{ $employee->fullname }}" value="{{ $employee->Employee_id }}">{{ $employee->fullname }}</option>
                         @endforeach
                     </select>
+                    @error('employee')
+                        <span class="text-danger">{{ $message }}</span>  
+                    @enderror
                 </div>
 
                 <div class="col-lg-2">
@@ -47,53 +50,66 @@
             <div class="row">
                 <div class="col-lg-6">
                     <label class='text-uppercase h6'>Office</label>
-                    <select data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker"
+                    <select data-style="{{ $errors->has('office') ? 'border-danger' : 'border form-select' }}" class="form-control form-control-xs selectpicker"
                         name="office" data-live-search="true" id="office" data-size="5">
                         <option value=""></option>
                         @foreach($offices as $office)
                         <option value="{{ $office->office_code }}">{{ $office->office_name }}</option>
                         @endforeach
                     </select>
+                    @error('office')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="col-lg-6">
                     <label class='text-uppercase h6'>Division</label>
-                    <select data-style="btn-primarys text-white" class="form-control form-control-xs" name="division"
-                        data-live-search="true" id="division" data-size="5">
+                    <select class="form-control form-control-xs {{ $errors->has('division') ? 'is-invalid' : '' }}" name="division" id="division" >
                     </select>
+                    @error('division')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-lg-6">
                     <label class='text-uppercase h6'>Position</label>
-                    <select data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker"
+                    <select data-style="{{ $errors->has('position') ? 'border-danger' : 'border form-select' }}" class="form-control form-control-xs selectpicker"
                         name="position" data-live-search="true" id="position" data-size="5">
-                        <option value=""></option>
                     </select>
+                    @error('position')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="col-lg-6">
                     <label class='text-uppercase h6'>Status</label>
-                    <select data-style="btn-primarys text-white" class="form-control form-control-xs" name="status"
-                        data-live-search="true" id="status" data-size="5">
+                    <select class="form-control form-control-xs {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status"
+                        id="status">
                         @foreach($employeeStatus as $status)
                         <option value="{{ $status }}">{{ $status }}</option>
                         @endforeach
                     </select>
+                    @error('status')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
             
             <div class="row">
                 <div class="col-lg-6">
                     <label class='text-uppercase h6'>Item No</label>
-                    <input type="text" class='form-control form-control-xs' name="item_no" id="item_no" readonly>
+                    <input type="text" class='form-control form-control-xs {{ $errors->has('item_no') ? 'is-invalid' : '' }}' name="item_no" id="item_no" readonly>
+                    @error('item_no')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="col-lg-6">
                     <label class='text-uppercase h6'>Current Item No</label>
                     <div class="input-group mb-3">
-                        <input type="text" class='form-control form-control-xs' name="old_item_no" id="old_item_no"
+                        <input type="text" class='form-control form-control-xs {{ $errors->has('old_item_no') ? 'is-invalid' : '' }}' name="old_item_no" id="old_item_no"
                             readonly>
                         <div class="input-group-append">
                             <button class="btn btn-primarys d-none" id="btnViewOldItem" type="button">
@@ -101,8 +117,10 @@
                             </button>
                         </div>
                     </div>
+                    @error('old_item_no')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
-
             </div>
 
             <hr>
@@ -110,70 +128,97 @@
             <div class="row">
                 <div class="col-lg-3">
                     <label class='text-uppercase h6'>Current Salary Grade Year</label>
-                    <input type="text" class='form-control form-control-xs' name="current_salary_grade_year"
+                    <input type="text" class='form-control form-control-xs {{ $errors->has('current_salary_grade_year') ? 'is-invalid' : '' }}' name="current_salary_grade_year"
                         id="current_salary_grade_year" readonly value="{{ date('Y') }}">
+                    @error('current_salary_grade_year')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="col-lg-3">
                     <label class='text-uppercase h6'>Salary Grade</label>
-                    <input type="text" class='form-control form-control-xs' name="salary_grade" id="salary_grade"
+                    <input type="text" class='form-control form-control-xs {{ $errors->has('salary_grade') ? 'is-invalid' : '' }}' name="salary_grade" id="salary_grade"
                         readonly>
+                    @error('salary_grade')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="col-lg-3">
                     <label class='text-uppercase h6'>Steps</label>
-                    <select class='form-control form-control-xs' name="step" id="step">
+                    <select class='form-control form-control-xs {{ $errors->has('step') ? 'is-invalid' : '' }}' name="step" id="step">
                         @foreach(range(1, 8) as $increment)
-                        <option value="{{ $increment }}">{{ $increment }}</option>
+                            <option value="{{ $increment }}">{{ $increment }}</option>
                         @endforeach
                     </select>
+                    @error('step')
+                        <span class='text-danger'>{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="col-lg-3">
                     <label class='text-uppercase h6'>Salary Amount</label>
-                    <input type="text" class='form-control form-control-xs' name="salary_amount" id="salary_amount"
+                    <input type="text" class='form-control form-control-xs {{ $errors->has('salary_amount')  ? 'is-invalid' : '' }}' name="salary_amount" id="salary_amount"
                         readonly>
+                    @error('salary_amount')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-lg-6">
                     <label class='text-uppercase h6'>Original Appointment</label>
-                    <input type="date" class='form-control form-control-xs' name="original_appointment">
+                    <input type="date" class='form-control form-control-xs {{ $errors->has('original_appointment') ? 'is-invalid' : '' }}' name="original_appointment">
+                    @error('original_appointment')
+                        <span class='text-danger'>{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="col-lg-6">
                     <label class='text-uppercase h6'>Last Promotion</label>
-                    <input type="date" class='form-control form-control-xs' name="last_promotion" id="last_promotion">
+                    <input type="date" class='form-control form-control-xs {{ $errors->has('last_promotion') ? 'is-invalid' : '' }}' name="last_promotion" id="last_promotion">
+                    @error('last_promotion')
+                        <span class='text-danger'>{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-lg-4">
                     <label class='text-uppercase h6'>Area Code</label>
-                    <select name="area_code" id="area_code" class='form-control form-control-xs'>
+                    <select name="area_code" id="area_code" class='form-control form-control-xs {{ $errors->has('area_code') ? 'is-invalid' : '' }}'>
                         @foreach($areaCode as $area)
                         <option {{ Str::upper($area) === 'CARAGA' ? 'selected' : '' }} value="{{ $area }}">{{ $area }}</option>
                         @endforeach
                     </select>
+                    @error('area_code')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="col-lg-4">
                     <label class='text-uppercase h6'>Area Type</label>
-                    <select name="area_type" id="area_type" class='form-control form-control-xs'>
+                    <select name="area_type" id="area_type" class='form-control form-control-xs {{ $errors->has('area_type') ? 'is-invalid' : '' }}'>
                         @foreach($areaType as $areaType)
                         <option {{ Str::upper($areaType) === 'PROVINCE' ? 'selected' : '' }} value="{{ $areaType }}">{{ $areaType }}</option>
                         @endforeach
                     </select>
+                    @error('area_type')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="col-lg-4">
                     <label class='text-uppercase h6'>Area Level</label>
-                    <select class='form-control form-control-xs' name="area_level" id="area_level">
+                    <select class='form-control form-control-xs {{ $errors->has('area_level') ? 'is-invalid' : '' }}' name="area_level" id="area_level">
                         @foreach($areaLevel as $level)
                         <option {{ Str::upper($level) === 'A' ? 'selected' : '' }} value="{{ $level }}">{{ $level }}</option>
                         @endforeach
                     </select>
+                    @error('area_level')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
 

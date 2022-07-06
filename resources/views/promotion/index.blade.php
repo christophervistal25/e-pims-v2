@@ -51,14 +51,15 @@
             <table class='table table-bordered table-hover' id="promotionTable">
                   <thead>
                         <tr>
-                              <th>PROMOTION DATE</th>
-                               <th>EMPLOYEE</th>
-                              <th class='font-weight-bold'>OLD POSITION</th>
-                              <th>NEW POSITION</th>
-                              <th>SALARY GRADE</th>
-                              <th>STEP</th>
-                              <th>SALARY GRADE YEAR</th>
-                              <th class='font-weight-bold'>ACTIONS</th>
+                              <td>Promotion Date</td>
+                              <td>Employee</td>
+                              <td>Office</td>
+                              <td>Old Position</td>
+                              <td>New Position</td>
+                              <td>Salary Grade</td>
+                              <td>Step</td>
+                              <td>Salary Grade Year</td>
+                              <td>Actions</td>
                         </tr>
                   </thead>
             </table>
@@ -80,13 +81,14 @@
         },
         ajax: `/promotion/list/*/*`,
         columns: [
-            { data: "promotion_date", name: "promotion_date", className : 'text-center align-middle font-weight-bold' },
-            { data: "employee", name: "employee", className : 'align-middle font-weight-bold' },
+            { data: "promotion_date", name: "promotion_date", className : 'text-center align-middle' },
+            { data: "employee", name: "employee", className : 'align-middle' },
+            { data: "office", name: "office", className : 'align-middle' },
             { data: "old_plantilla_position", name: "old_plantilla_position", className : 'align-middle' },
-            { data: "new_plantilla_position", name: "new_plantilla_position", className : 'align-middle font-weight-bold' },
-            { data: "sg_no", name: "sg_no", className : 'text-center align-middle font-weight-bold' },
-            { data: "step_no", name: "step_no", className : 'text-center align-middle font-weight-bold' },
-            { data: "sg_year", name: "sg_year", className : 'text-center align-middle font-weight-bold' },
+            { data: "new_plantilla_position", name: "new_plantilla_position", className : 'align-middle' },
+            { data: "sg_no", name: "sg_no", className : 'text-center align-middle' },
+            { data: "step_no", name: "step_no", className : 'text-center align-middle' },
+            { data: "sg_year", name: "sg_year", className : 'text-center align-middle' },
             { 
                   data: "promotion_id",
                   name: "promotion_id",

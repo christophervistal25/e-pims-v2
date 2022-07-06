@@ -65,7 +65,7 @@
                     <span class='float-right text-primary text-decoration-underline font-weight-bold' id='changeCurrentPosition' style='cursor:pointer;'>Change</span>
                     <input type="text" id="positionReadonly" class='form-control form-control-xs' readonly value="{{ $promotion?->new_plantilla_position->plantillas?->plantilla_positions?->position?->Description }}">
                     <select data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker d-none"
-                        name="position" data-live-search="true" id="position" data-size="5">
+                        name="position" data-live-search="true" id="position">
                         <option value=""></option>
                     </select>
                 </div>
@@ -85,18 +85,24 @@
                 <div class="col-lg-6">
                     <label class='text-uppercase h6'>Item No</label>
                     <input type="text" class='form-control form-control-xs' name="item_no" id="item_no" value="{{ $promotion->new_plantilla_position->plantillas->item_no }}" readonly>
+                    @error('item_no')
+                            <span class='text-danger'>{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="col-lg-6">
                     <label class='text-uppercase h6'>Old Item No</label>
                     <div class="input-group mb-3">
-                        <input type="text" class='form-control form-control-xs' name="old_item_no" id="old_item_no" value="{{ $promotion->new_plantilla_position->plantillas->old_item_no }}" readonly>
+                        <input type="text" class='form-control form-control-xs {{ $errors->has('old_item_no') ? 'is-invalid' : '' }}' name="old_item_no" id="old_item_no" value="{{ $promotion->new_plantilla_position->plantillas->old_item_no }}" readonly>
                         {{-- <div class="input-group-append">
                             <button class="btn btn-primarys" id="btnViewOldItem" type="button">
                                 <i class='fas fa-eye'></i>
                             </button>
                         </div> --}}
                     </div>
+                    @error('old_item_no')
+                        <span class='text-danger'>{{ $message }}</span>
+                    @enderror
                 </div>
 
             </div>
@@ -132,12 +138,18 @@
             <div class="row">
                 <div class="col-lg-6">
                     <label class='text-uppercase h6'>Original Appointment</label>
-                    <input type="date" class='form-control form-control-xs' name="original_appointment" value="{{ $promotion->new_plantilla_position->plantillas->date_original_appointment }}">
+                    <input type="date" class='form-control form-control-xs {{ $errors->has('original_appointment') ? 'is-invalid' : '' }}' name="original_appointment" value="{{ $promotion->new_plantilla_position->plantillas->date_original_appointment }}">
+                    @error('original_appointment')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="col-lg-6">
                     <label class='text-uppercase h6'>Last Promotion</label>
-                    <input type="date" class='form-control form-control-xs' name="last_promotion" id="last_promotion" value="{{ $promotion->new_plantilla_position->plantillas->date_last_promotion }}">
+                    <input type="date" class='form-control form-control-xs {{ $errors->has('last_promotion') ? 'is-invalid' : '' }}' name="last_promotion" id="last_promotion" value="{{ $promotion->new_plantilla_position->plantillas->date_last_promotion }}">
+                    @error('last_promotion')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
 
