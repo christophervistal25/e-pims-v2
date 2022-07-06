@@ -3,10 +3,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <meta name="description" content="SmarthrBootstrap Admin Template">
-    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
-    <meta name="author" content="DreamguysBootstrap Admin Template">
-    <meta name="robots" content="noindex, nofollow">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="leave-list-route" content="{{ route('leave.leave-list') }}">
 
@@ -282,11 +278,11 @@
                                 Leave Forwaded Balance
                             </a>
                         </li>
-                        <li>
+                        {{-- <li>
                             <a class='text-decoration-none mr-2' href="{{  route('compensatory-build-up.index') }}">
-                                Compensatory Build-up
-                            </a>
-                        </li>
+                        Compensatory Build-up
+                        </a>
+                        </li> --}}
                     </ul>
                     </li>
 
@@ -388,14 +384,6 @@
                         </a>
                     </li>
 
-                    {{-- <li class="submenu">
-                              <a href="#" class="text-decoration-none"><i class="la la-folder"></i> <span>Reports</span> <span class="menu-arrow"></span></a>
-                              <ul>
-                                   <li>
-                                        <a href="{{ route('show-plantilla-report') }}" class="text-decoration-none" >Plantilla</a>
-                    </li>
-                    </ul>
-                    </li> --}}
 
 
                     </li>
@@ -493,7 +481,9 @@
     </script>
     <script>
         const conectionString = "{{ env('MIX_SOCKET_IP') }}";
-        let socket = io.connect(conectionString, { query : "name=e-PIMS" } );
+        let socket = io.connect(conectionString, {
+            query: "name=e-PIMS"
+        });
 
         $('#plantillaScheduleCreate').click(function() {
             $('#plantillaCreateScheduleModal').modal('toggle');

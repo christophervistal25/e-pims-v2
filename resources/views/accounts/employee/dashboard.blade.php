@@ -15,11 +15,11 @@
         <div class="col-md-12">
             <div class="welcome-box">
                 <div class="welcome-img e-avatar">
-                    <img alt="" src="/storage/employee_images/{{ $user->profile }}">
+                    <img alt="" src="/assets/img/profiles/{{ $user->Employee_id . '.jpg' }}">
                 </div>
                 <div class="welcome-det">
                     <h3>Welcome, {{ $user->fullname }}</h3>
-                    <p>{{ Carbon\Carbon::now()->format('l jS \of F Y') }}</p>
+                    <p class='text-dark'>{{ Carbon\Carbon::now()->format('l jS \of F Y') }}</p>
                 </div>
             </div>
         </div>

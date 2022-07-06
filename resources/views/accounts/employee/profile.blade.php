@@ -30,8 +30,7 @@
                         <div class="profile-img-wrap">
                             <div class="profile-img">
                                 <a href="">
-                                <img alt="" class='rounded-circle'
-                                        {{ is_null($account->employee->profile) ? "src=asset(/assets/img/province.png)" :  'src=/storage/employee_images/' . $account->employee->profile . "" }}></a>
+                                <img alt="" class='rounded-circle' src="{{ asset('/assets/img/profiles/' . $account->Employee_id . '.jpg') }}"></a>
                             </div>
                         </div>
                         <div class="profile-basic">

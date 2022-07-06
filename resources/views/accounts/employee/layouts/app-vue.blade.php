@@ -48,9 +48,7 @@
 
 
 </head>
-{{-- mini-sidebar --}}
-
-<body class="">
+<body class="mini-sidebar">
     <div id="loader-wrapper">
         <div id="loader">
             <div class="loader-ellips">
@@ -254,14 +252,12 @@
                                 <li>
                                     <a class="" href="{{ route('employee.leave.card.index') }}">Leave Card</a>
                                 </li>
-                                <li>
-                                    <a href="javascript:;" onclick="printCertificate()">Certification</a>
-                                </li>
                             </ul>
                         </li>
                         <li>
-                            <a class="" href="{{ route('employee.chat') }}"><i class="lar la-comments"></i>
-                                <span>Chat</span></a>
+                            <a class="" href="{{ route('employee.payslip') }}">
+                                <i class="las la-receipt"></i>
+                                <span>Payslip</span></a>
                         </li>
                     </ul>
                 </div>
@@ -329,7 +325,7 @@
         }
 
         socket.on(`PUBLISH_DONE_SECOND_${EMPLOYEE_ID}`, function() {
-            window.open(`/prints/download-personal-data-sheet-pdf/${EMPLOYEE_ID}`);
+            window.open(`/prints/download-personal-data-sheet-pdf/${EMPLOYEE_ID}-E-PDS`);
             $('#selectFilExportModal').modal('toggle');
             $('#btn-download-status').fadeOut().hide();
         });

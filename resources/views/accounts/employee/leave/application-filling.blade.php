@@ -33,7 +33,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-12 text-center">
-                            <img class="mb-3 rounded-circle img-thumbnail" id="empPhoto"  width="50%" src="{{asset('/assets/img/province.png') }}" />
+                            <img class="mb-3 rounded-circle img-thumbnail" id="empPhoto" width="50%" src="{{asset('/assets/img/profiles/' . Auth::user()->Employee_id . '.jpg') }}" />
                         </div>
                     </div>
                     <div class="row">
@@ -290,11 +290,11 @@
         // SHOWS THE DATA VALUE IN INPUT INCLUDING THE PHOTO OF THE EMPLOYEE AND THE LEAVE RECORDS OF THE EMPLOYEE
         const ROUTE = "{{ route('employee.leave.application.filling.submit') }}";
         const vacationLeaveIncaseOf = ['WITHIN THE PHILIPPINES', 'ABROAD'];
-        const sickLeaveIncaseOf     = ['IN HOSPITAL', 'OUT PATIENT'];
-        const slbwIncaseOf          = ['Specify Illness'];
-        const studtyLeaveIncaseOf   = ['COMPLETION OF MASTER`S DEGREE', 'BAR/Board Examination Review'];
-        const othersIncaseOf        = ['Monetization of Leave Credits', 'Terminal Leave'];
-        
+        const sickLeaveIncaseOf = ['IN HOSPITAL', 'OUT PATIENT'];
+        const slbwIncaseOf = ['Specify Illness'];
+        const studtyLeaveIncaseOf = ['COMPLETION OF MASTER`S DEGREE', 'BAR/Board Examination Review'];
+        const othersIncaseOf = ['Monetization of Leave Credits', 'Terminal Leave'];
+
         const ALREADY_HAVE_PENDING_FILE = 423;
         const CANNOT_ACCESS_SELECTED_LEAVE = 424;
         const SPACE = new RegExp(/\s+/, "ig");
@@ -310,117 +310,117 @@
 
         // When user select a type of leave.
         $('#leave_type_id').change(function(e) {
-            
-                let selectedType = $('#leave_type_id').val();
 
-                let type = getSelectedLeaveTypeData(types, selectedType);
+            let selectedType = $('#leave_type_id').val();
 
-                // Initialize value of Incase of.
-                let incaseOf = [];
+            let type = getSelectedLeaveTypeData(types, selectedType);
 
-                switch (selectedType) {
-                    case LEAVE_TYPES.get('SL'):
-                        incaseOf = sickLeaveIncaseOf;
-                        $('#inCaseOfContainer').removeClass('d-none');
-                        $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
-                        $('#slBal').parent().addClass('bg-primary text-white');
-                        $('#leave_balance').val($('#slBal').text());
-                        break;
-                    case LEAVE_TYPES.get('VL'):
-                        incaseOf = vacationLeaveIncaseOf;
-                        $('#inCaseOfContainer').removeClass('d-none');
-                        $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
-                        $('#vlBal').parent().addClass('bg-primary text-white');
-                        $('#leave_balance').val($('#vlBal').text());
-                        break;
-                    case LEAVE_TYPES.get('VAWC'):
-                        incaseOf = vacationLeaveIncaseOf;
-                        $('#inCaseOfContainer').removeClass('d-none');
-                        $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
-                        $('#vawcBal').parent().addClass('bg-primary text-white');
-                        $('#leave_balance').val($('#vawcBal').text());
-                        break;
-                    case LEAVE_TYPES.get('AL'):
-                        incaseOf = vacationLeaveIncaseOf;
-                        $('#inCaseOfContainer').removeClass('d-none');
-                        $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
-                        $('#adoptBal').parent().addClass('bg-primary text-white');
-                        $('#leave_balance').val($('#adoptBal').text());
-                        break;
-                    case LEAVE_TYPES.get('FL'):
-                        incaseOf = vacationLeaveIncaseOf;
-                        $('#inCaseOfContainer').removeClass('d-none');
-                        $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
-                        $('#mandatoryBal').parent().addClass('bg-primary text-white');
-                        $('#leave_balance').val($('#mandatoryBal').text());
-                        break;
-                    case LEAVE_TYPES.get('ML'):
-                        incaseOf = vacationLeaveIncaseOf;
-                        $('#inCaseOfContainer').removeClass('d-none');
-                        $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
-                        $('#maternityBal').parent().addClass('bg-primary text-white');
-                        $('#leave_balance').val($('#maternityBal').text());
-                        break;
-                    case LEAVE_TYPES.get('PL'):
-                        incaseOf = vacationLeaveIncaseOf;
-                        $('#inCaseOfContainer').removeClass('d-none');
-                        $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
-                        $('#paternityBal').parent().addClass('bg-primary text-white');
-                        $('#leave_balance').val($('#paternityBal').text());
-                        break;
-                    case LEAVE_TYPES.get('SOLOPARENT'):
-                        incaseOf = vacationLeaveIncaseOf;
-                        $('#inCaseOfContainer').removeClass('d-none');
-                        $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
-                        $('#soloparentBal').parent().addClass('bg-primary text-white');
-                        $('#leave_balance').val($('#soloparentBal').text());
-                        break;
-                    case LEAVE_TYPES.get('SEL'):
-                        incaseOf = vacationLeaveIncaseOf;
-                        $('#inCaseOfContainer').removeClass('d-none');
-                        $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
-                        $('#emergencyBal').parent().addClass('bg-primary text-white');
-                        $('#leave_balance').val($('#emergencyBal').text());
-                        break;
-                    case LEAVE_TYPES.get('SLB'):
-                        incaseOf = slbwIncaseOf;
-                        $('#inCaseOfContainer').removeClass('d-none');
-                        $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
-                        $('#slbBal').parent().addClass('bg-primary text-white');
-                        $('#leave_balance').val($('#slbBal').text());
-                        break;
-                    case LEAVE_TYPES.get('STL'):
-                        incaseOf = studtyLeaveIncaseOf;
-                        $('#inCaseOfContainer').removeClass('d-none');
-                        $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
-                        $('#studyBal').parent().addClass('bg-primary text-white');
-                        $('#leave_balance').val($('#studyBal').text());
-                        break;
-                    case LEAVE_TYPES.get('SPL'):
-                        incaseOf = vacationLeaveIncaseOf;
-                        $('#inCaseOfContainer').removeClass('d-none');
-                        $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
-                        $('#splBal').parent().addClass('bg-primary text-white');
-                        $('#leave_balance').val($('#splBal').text());
-                        break;
-                    case LEAVE_TYPES.get('RL'):
-                        incaseOf = vacationLeaveIncaseOf;
-                        $('#inCaseOfContainer').removeClass('d-none');
-                        $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
-                        $('#rehabBal').parent().addClass('bg-primary text-white');
-                        $('#leave_balance').val($('#rehabBal').text());
-                        break;
-                    default:
-                        $('#inCaseOfContainer').addClass('d-none');
-                        $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
-                        $('#leave_balance').val('');
-                }
+            // Initialize value of Incase of.
+            let incaseOf = [];
 
-                // Remove options of in case of select element
-                $('#inCaseOf').children().remove();
+            switch (selectedType) {
+                case LEAVE_TYPES.get('SL'):
+                    incaseOf = sickLeaveIncaseOf;
+                    $('#inCaseOfContainer').removeClass('d-none');
+                    $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
+                    $('#slBal').parent().addClass('bg-primary text-white');
+                    $('#leave_balance').val($('#slBal').text());
+                    break;
+                case LEAVE_TYPES.get('VL'):
+                    incaseOf = vacationLeaveIncaseOf;
+                    $('#inCaseOfContainer').removeClass('d-none');
+                    $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
+                    $('#vlBal').parent().addClass('bg-primary text-white');
+                    $('#leave_balance').val($('#vlBal').text());
+                    break;
+                case LEAVE_TYPES.get('VAWC'):
+                    incaseOf = vacationLeaveIncaseOf;
+                    $('#inCaseOfContainer').removeClass('d-none');
+                    $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
+                    $('#vawcBal').parent().addClass('bg-primary text-white');
+                    $('#leave_balance').val($('#vawcBal').text());
+                    break;
+                case LEAVE_TYPES.get('AL'):
+                    incaseOf = vacationLeaveIncaseOf;
+                    $('#inCaseOfContainer').removeClass('d-none');
+                    $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
+                    $('#adoptBal').parent().addClass('bg-primary text-white');
+                    $('#leave_balance').val($('#adoptBal').text());
+                    break;
+                case LEAVE_TYPES.get('FL'):
+                    incaseOf = vacationLeaveIncaseOf;
+                    $('#inCaseOfContainer').removeClass('d-none');
+                    $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
+                    $('#mandatoryBal').parent().addClass('bg-primary text-white');
+                    $('#leave_balance').val($('#mandatoryBal').text());
+                    break;
+                case LEAVE_TYPES.get('ML'):
+                    incaseOf = vacationLeaveIncaseOf;
+                    $('#inCaseOfContainer').removeClass('d-none');
+                    $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
+                    $('#maternityBal').parent().addClass('bg-primary text-white');
+                    $('#leave_balance').val($('#maternityBal').text());
+                    break;
+                case LEAVE_TYPES.get('PL'):
+                    incaseOf = vacationLeaveIncaseOf;
+                    $('#inCaseOfContainer').removeClass('d-none');
+                    $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
+                    $('#paternityBal').parent().addClass('bg-primary text-white');
+                    $('#leave_balance').val($('#paternityBal').text());
+                    break;
+                case LEAVE_TYPES.get('SOLOPARENT'):
+                    incaseOf = vacationLeaveIncaseOf;
+                    $('#inCaseOfContainer').removeClass('d-none');
+                    $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
+                    $('#soloparentBal').parent().addClass('bg-primary text-white');
+                    $('#leave_balance').val($('#soloparentBal').text());
+                    break;
+                case LEAVE_TYPES.get('SEL'):
+                    incaseOf = vacationLeaveIncaseOf;
+                    $('#inCaseOfContainer').removeClass('d-none');
+                    $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
+                    $('#emergencyBal').parent().addClass('bg-primary text-white');
+                    $('#leave_balance').val($('#emergencyBal').text());
+                    break;
+                case LEAVE_TYPES.get('SLB'):
+                    incaseOf = slbwIncaseOf;
+                    $('#inCaseOfContainer').removeClass('d-none');
+                    $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
+                    $('#slbBal').parent().addClass('bg-primary text-white');
+                    $('#leave_balance').val($('#slbBal').text());
+                    break;
+                case LEAVE_TYPES.get('STL'):
+                    incaseOf = studtyLeaveIncaseOf;
+                    $('#inCaseOfContainer').removeClass('d-none');
+                    $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
+                    $('#studyBal').parent().addClass('bg-primary text-white');
+                    $('#leave_balance').val($('#studyBal').text());
+                    break;
+                case LEAVE_TYPES.get('SPL'):
+                    incaseOf = vacationLeaveIncaseOf;
+                    $('#inCaseOfContainer').removeClass('d-none');
+                    $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
+                    $('#splBal').parent().addClass('bg-primary text-white');
+                    $('#leave_balance').val($('#splBal').text());
+                    break;
+                case LEAVE_TYPES.get('RL'):
+                    incaseOf = vacationLeaveIncaseOf;
+                    $('#inCaseOfContainer').removeClass('d-none');
+                    $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
+                    $('#rehabBal').parent().addClass('bg-primary text-white');
+                    $('#leave_balance').val($('#rehabBal').text());
+                    break;
+                default:
+                    $('#inCaseOfContainer').addClass('d-none');
+                    $('#leaveBalanceTable tr').removeClass("bg-primary text-white");
+                    $('#leave_balance').val('');
+            }
 
-                // Dynamically insert value for incase of.
-                incaseOf.map((data) => $('#inCaseOf').append(`<option value="${data}">${data}</option>`));
+            // Remove options of in case of select element
+            $('#inCaseOf').children().remove();
+
+            // Dynamically insert value for incase of.
+            incaseOf.map((data) => $('#inCaseOf').append(`<option value="${data}">${data}</option>`));
         });
 
 
@@ -431,11 +431,11 @@
 
             if (leave_type == null) {
                 swal({
-                    text: "Select Type of Leave first.",
-                    icon: "warning",
-                    timer: 2000,
-                    buttons : false,
-                });
+                    text: "Select Type of Leave first."
+                    , icon: "warning"
+                    , timer: 2000
+                    , buttons: false
+                , });
                 $('#date_from').val('');
             } else {
                 $('.inclusiveDates').empty();
@@ -445,8 +445,8 @@
                 let includeWeekends = $('#includeWeekends').is(':checked');
 
                 $.get({
-                    url: `/api/generate/periods/${from}/${to}/${includeWeekends}/${employeeID}`,
-                    success: function(response) {
+                    url: `/api/generate/periods/${from}/${to}/${includeWeekends}/${employeeID}`
+                    , success: function(response) {
                         if (response.success) {
                             jQuery.each(response.period, function(index, item) {
                                 $('.inclusiveDates').append(` <tr>
@@ -477,11 +477,11 @@
 
             if (leave_type == null) {
                 swal({
-                    text: "Select Type of Leave first.",
-                    icon: "warning",
-                    timer: 2000,
-                    buttons : false,
-                });
+                    text: "Select Type of Leave first."
+                    , icon: "warning"
+                    , timer: 2000
+                    , buttons: false
+                , });
                 $('#date_to').val('');
             } else {
                 $('.inclusiveDates').empty();
@@ -548,14 +548,14 @@
             let [selectedItem] = $("#employeeName option:selected");
             let leave_balance = parseFloat($('#leave_balance').val());
             let leave_amount_applied = parseFloat($("#no_of_days").val());
-            
+
             if (leave_balance < leave_amount_applied) {
                 swal({
-                    text: "Unable to create application. Insufficient leave balance.",
-                    icon: "warning",
-                    timer: 2000,
-                    buttons : false,
-                });
+                    text: "Unable to create application. Insufficient leave balance."
+                    , icon: "warning"
+                    , timer: 2000
+                    , buttons: false
+                , });
             } else {
                 $('#apply-spinner').removeClass('d-none');
                 $('#apply-button-icon').addClass('d-none');
@@ -563,29 +563,31 @@
                 $('.leave_date').each(function(index, date) {
                     let key = $(date).attr('data-date');
                     if ($(date).is(':checked')) {
-                        leaveDates.push({ [key]: $(date).val() });
+                        leaveDates.push({
+                            [key]: $(date).val()
+                        });
                     }
                 });
 
                 let data = {
-                    date_applied: $('#date_applied').val(),
-                    employeeName: $('#employeeName').val(),
-                    leave_type_id: $('#leave_type_id').val(),
-                    inCaseOf: $('#inCaseOf').val(),
-                    specify: $('#specify').val(),
-                    no_of_days: $("#no_of_days").val(),
-                    date_from: $('#date_from').val(),
-                    date_to: $('#date_to').val(),
-                    commutation: $('#commutation').val(),
-                    leave_date: leaveDates,
-                    };
+                    date_applied: $('#date_applied').val()
+                    , employeeName: $('#employeeName').val()
+                    , leave_type_id: $('#leave_type_id').val()
+                    , inCaseOf: $('#inCaseOf').val()
+                    , specify: $('#specify').val()
+                    , no_of_days: $("#no_of_days").val()
+                    , date_from: $('#date_from').val()
+                    , date_to: $('#date_to').val()
+                    , commutation: $('#commutation').val()
+                    , leave_date: leaveDates
+                , };
 
 
                 $.ajax({
-                    url: ROUTE,
-                    method: 'POST',
-                    data: data,
-                    success: function(response) {
+                    url: ROUTE
+                    , method: 'POST'
+                    , data: data
+                    , success: function(response) {
                         $('#formErrors').addClass('d-none').html('');
                         $('#apply-spinner').addClass('d-none');
                         $('#apply-button-icon').removeClass('d-none');
