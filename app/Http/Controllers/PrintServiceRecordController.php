@@ -33,7 +33,7 @@ class PrintServiceRecordController extends Controller implements IDownloadType
         $spreadsheet->getActiveSheet()->setCellValue('C70', date('F d, Y'));
 
         $row = 22;
-        ServiceRecord::with(['position', 'office'])->where('employee_id', $employeeID)->orderBy('service_from_date', 'ASC')
+        ServiceRecord::with(['position', 'office'])->where('employee_id', $employeeID)->orderBy('service_to_date', 'DESC')
             ->get()
             ->each(function ($record) use (&$spreadsheet, &$row) {
                 $sheet = $spreadsheet->getActiveSheet();
@@ -43,7 +43,7 @@ class PrintServiceRecordController extends Controller implements IDownloadType
                 $sheet->setCellValue('D' . $row, $record->status);
                 $sheet->setCellValue('E' . $row, number_format($record->salary, 2, ".", ","));
                 $sheet->setCellValue('F' . $row, $record->office->office_name);
-                $sheet->setCellValue('G' . $row, $record->leave_without_pay);
+                $sheet->setCellValue('G' . $row, $record->leave_without_pay ?? 0);
                 $sheet->setCellValue('H' . $row, $record->separation_date);
                 $sheet->setCellValue('I' . $row, $record->separation_cause);
                 $row++;
