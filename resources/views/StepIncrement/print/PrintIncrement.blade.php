@@ -33,7 +33,7 @@
 {{-- BUTTONS --}}
 <div class="container col-lg-10">
     <div id='action-buttons' class="float-right mb-2">
-        <a class="btn btn-info" href="{{ route('step-increment.previewed.print', $id) }}" id="printBtn"><i class="fas fa-print"></i>&nbsp; Print</a>
+        <a class="btn btn-info" target="_blank" href="{{ route('step-increment.previewed.print', $id) }}" id="printBtn"><i class="fas fa-print"></i>&nbsp; Print</a>
         <a href="/step-increment" class="btn btn-primary"><i class="fa fa-list"></i>&nbsp; Personnel List</a>
     </div>
     <div class="clearfix"></div>
