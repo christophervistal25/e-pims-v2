@@ -47,4 +47,9 @@ class service_record extends Model
     {
         return $this->belongsTo(SalaryAdjustment::class, 'employee_id', 'employee_id');
     }
+
+    public function employee()
+    {
+        return $this->hasOne(Employee::class, 'Employee_id', 'employee_id')->select('Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode', 'OfficeCode2', 'PosCode');
+    }
 }
