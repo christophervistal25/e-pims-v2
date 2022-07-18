@@ -3,7 +3,7 @@
 use App\User;
 use App\Employee;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HolidayController;
@@ -91,7 +91,8 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
     Route::get('maintenance-office/{id}', [MaintenanceOfficeController::class, 'destroy'])->name('maintenance-office.delete');
 
     /* Creating a route for the MaintenanceDivisionController. */
-    Route::get('maintenance-division-list', [MaintenanceDivisionController::class, 'list'])->name('maintenance-division-list');
+    // Route::get('maintenance-division-list', [MaintenanceDivisionController::class, 'list'])->name('maintenance-division-list');
+    Route::get('/maintenance-division-list/{office_code?}', 'MaintenanceDivisionController@list')->name('maintenance-division-list');
     Route::resource('maintenance-division', MaintenanceDivisionController::class);
     Route::get('maintenance-division/{id}', [MaintenanceDivisionController::class, 'destroy'])->name('maintenance-division.delete');
 

@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css">
 <link rel="stylesheet" href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.1.0/css/fixedColumns.dataTables.min.css" />
 <style>
      .swal-content ul {
           list-style-type: none;
@@ -57,7 +58,7 @@
           <div class="card-body">
 
                <div id="add" class="page-header {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
-                    <div style='padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
+                    <div style='padding-bottom:50px;margin-right:9px;' >
                          <button id="showList" class="btn btn-primarys submit-btn float-right shadow"><i class="fa fa-list"></i>
                               Salary Grade List
                          </button>
@@ -217,20 +218,21 @@
                     <div style="padding-bottom:10px;" class="row align-items-right">
                          <div class="col">
                               <div class="row">
-                                   <div class="form-group form-focus select-focus col-5">
-                                        <select class="select floating" id="filter_year" onchange="filter_year();">
-                                             @foreach (range(5, 1) as $year)
-                                             {{ $year1 = date("Y",strtotime("+$year year")) }}
-                                             <option value={{ $year1 }}>{{ $year1 }}</option>
-                                             @endforeach
-                                             {{ $date = date("Y") }}
-                                             <option selected value={{ $date }}>{{ $date }}</option>
-                                             @foreach (range(1, 6) as $year)
-                                             {{ $year2 = date("Y",strtotime("-$year year")) }}
-                                             <option value={{ $year2 }}>{{ $year2 }}</option>
-                                             @endforeach
+                                   <div class="col-5">
+
+                                    <select value="" data-style="btn-primarys text-white" id="filter_year" onchange="filter_year();" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}"
+                                        name="employeeOffice" data-live-search="true" id="employeeOffice" data-size="5">
+                                        @foreach (range(5, 1) as $year)
+                                        {{ $year1 = date("Y",strtotime("+$year year")) }}
+                                        <option value={{ $year1 }}>{{ $year1 }}</option>
+                                        @endforeach
+                                        {{ $date = date("Y") }}
+                                        <option selected value={{ $date }}>{{ $date }}</option>
+                                        @foreach (range(1, 6) as $year)
+                                        {{ $year2 = date("Y",strtotime("-$year year")) }}
+                                        <option value={{ $year2 }}>{{ $year2 }}</option>
+                                        @endforeach
                                         </select>
-                                        <label class="font-weight-bold focus-label">Select Year</label>
                                    </div>
                               </div>
                          </div>
@@ -274,7 +276,7 @@
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="{{ asset('/assets/js/dataTables.bootstrap4.min.js') }}"></script>
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script> --}}
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script> --}}
+<script src="https://cdn.datatables.net/fixedcolumns/4.1.0/js/dataTables.fixedColumns.min.js"></script>
 <script src="{{ asset('/assets/js/salary-grade.js') }}"></script>
 <script src="https://cdn.datatables.net/plug-ins/1.10.24/sorting/currency.js"></script>
 <script>

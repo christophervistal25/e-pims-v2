@@ -59,20 +59,22 @@ class MaintenanceDivisionController extends Controller
       * @param  int  $id
       * @return \Illuminate\Http\Response
       */
-     public function list(Request $request)
-     {
-          if ($request->ajax()) {
-               $data = Division::select('division_id', 'division_name', 'office_code')->with(['offices'])->get();
-               return Datatables::of($data)
+        public function list(string $office = '*')
+        {
+            $data = Division::select('division_id', 'division_name', 'office_code')->with(['offices']);
+            if (request()->ajax()) {
+                $divisionData = ($office != '*') ? $data->where('office_code', $office)->get()
+                : $data->get();
+                return Datatables::of($divisionData)
                     ->addIndexColumn()
                     ->addColumn('offices', function ($row) {
-                         return $row->offices?->office_name;
+                            return $row->offices->office_name;
                     })
                     ->addColumn('action', function ($row) {
-                         $btn = "<a title='Edit Division' href='" . route('maintenance-division.edit', $row->division_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-                         $btn = $btn . "<a title='Delete Division' id='delete' value='$row->division_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                            $btn = "<a title='Edit Division' href='" . route('maintenance-division.edit', $row->division_id) . "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+                            $btn = $btn . "<a title='Delete Division' id='delete' value='$row->division_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
                         ";
-                         return $btn;
+                            return $btn;
                     })
                     ->rawColumns(['action'])
                     ->make(true);

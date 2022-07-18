@@ -103,7 +103,7 @@
                          <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}" name="maintenanceDivisionOffice" data-live-search="true" id="maintenanceDivisionOffice" data-size="5">
                               <option value="">All</option>
                               @foreach($offices as $office)
-                              <option value="{{ $office->office_code }}">{{ $office->office_name }}</option>
+                              <option {{ '10001' == $office->office_code ? 'selected' : '' }} value="{{ $office->office_code }}">{{ $office->office_name }}</option>
                               @endforeach
                          </select>
                     </div>
@@ -118,8 +118,8 @@
                     <table class="table table-bordered table-hover text-center" id="maintenanceDivision" style="width:100%;">
                          <thead>
                               <tr>
-                                   <td scope="col" class="text-truncate">Division Name</td>
-                                   <td scope="col" class="text-truncate">Office</td>
+                                  <td scope="col" class="text-truncate">Division Id</td>
+                                  <td scope="col" class="text-truncate">Division</td>
                                    <td scope="col" class="text-truncate">Action</td>
                               </tr>
                          </thead>
