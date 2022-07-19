@@ -26,6 +26,7 @@ class PrintIncrementController extends Controller
         $stepIncrement = StepIncrement::with(['employee:Employee_id,FirstName,MiddleName,LastName,OfficeCode'])->find($id);
         $pdf = App::make('snappy.pdf.wrapper');
         $pdf->loadView('stepIncrement.print.previewed', compact('stepIncrement', 'id'))->setPaper('letter')->setOrientation('portrait');
+        
         return $pdf->inline();
     }
 

@@ -439,7 +439,9 @@
                 let {plantilla_positions} = plantilla;
                 let {position} = plantilla_positions;
 
-                console.log(plantilla)
+
+
+                // console.log(plantilla)
                 
                 $('#employeeId').val(plantilla.employee_id);
                 $('#plantillaId').val(plantilla.plantilla_id);
@@ -452,17 +454,35 @@
                 $("#sgNo2").val(plantilla.sg_no);
                 $('#stepNo').val(plantilla.step_no);
                 $('#amount').val(plantilla.salary_amount);
-                /*$('#amount').val(plantilla.salary_amount)toLocalString('ph', {maximumFractionDigits:2}) + '.00';*/
+
+                
 
                 $('#stepNo2').html('');
-                $('#stepNo2').append(`<option readonly>Please select</option>`);
+                // $('#stepNo2').append(`<option readonly>Please select</option>`);
 
 
-                let step = plantilla.step_no;
+                let step = plantilla.step_no;             
 
+            
                 for ( step + 1; step <= MAX_NUMBER_OF_STEP_NO; step++ )
                 {
                     $('#stepNo2').append(`<option value='${step}'>${step}</option>`);
+
+                    let stepTo = $('#stepNo2').val();
+
+                    $.ajax({
+                    url: `/api/step/${$('#sgNo2').val()}/${stepTo}`,
+                    success: function (response) {
+                        $('#amount2').val(`${response['sg_step' + stepTo]}`);
+
+                        let prevAmt = parseFloat($('#amount').val());
+                        let currentAmt = parseFloat($('#amount2').val());
+                        let amountDifference = parseFloat(((currentAmt - prevAmt) || ''));
+                        
+                            $('#monthlyDifference').val(amountDifference || 0);
+                        }
+                    });
+                                        
                 }
 
             } else {
@@ -484,19 +504,21 @@
             let valueSelected = e.target.value;
 
 
-            console.log(valueSelected)
+            // console.log(valueSelected)
             $.ajax({
                 url: `/api/step/${$('#sgNo2').val()}/${valueSelected}`,
                 success: function (response) {
                     $('#amount2').val(`${response['sg_step' + valueSelected]}`)
 
 
-                    let amount = parseFloat($('#amount').val());
-                    let amount2 = parseFloat($('#amount2').val());
-                    let amountDifference = parseFloat(((amount2 - amount) || ''));
+                    let prevAmt = parseFloat($('#amount').val());
+                    let currentAmt = parseFloat($('#amount2').val());
+                    let amountDifference = parseFloat(((currentAmt - prevAmt) || ''));
                     $('#monthlyDifference').val(amountDifference || 0);
                 }
             });
+
+
         });
 
 
