@@ -103,7 +103,7 @@
                          <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}" name="maintenanceDivisionOffice" data-live-search="true" id="maintenanceDivisionOffice" data-size="5">
                               <option value="">All</option>
                               @foreach($offices as $office)
-                              <option value="{{ $office->office_code }}">{{ $office->office_name }}</option>
+                                    <option value="{{ $office->office_code }}">{{ $office->office_name }}</option>
                               @endforeach
                          </select>
                     </div>
@@ -115,12 +115,12 @@
                </div>
 
                <div class="table">
-                    <table class="table table-bordered table-hover text-center" id="maintenanceDivision" style="width:100%;">
+                    <table class="table table-bordered table-hover" id="maintenanceDivision" style="width:100%;">
                          <thead>
                               <tr>
-                                   <td scope="col" class="text-truncate">Division Name</td>
-                                   <td scope="col" class="text-truncate">Office</td>
-                                   <td scope="col" class="text-truncate">Action</td>
+                                   <th scope="col" class="text-truncate">Division Name</th>
+                                   <th scope="col" class="text-truncate">Office</th>
+                                   <th scope="col" class="text-truncate">Action</th>
                               </tr>
                          </thead>
                     </table>
@@ -140,21 +140,21 @@
 
      $(document).on("click", ".delete", function() {
           let $ele = $(this).parent().parent();
-          let id = $(this).attr("value");;
+          let id = $(this).attr("value");
 
           swal({
-               title: "Are you sure you want to delete?"
-               , text: "Once deleted, you will not be able to recover this record!"
-               , icon: "warning"
-               , buttons: true
-               , dangerMode: true
+               title: "Are you sure you want to delete?",
+               text: "Once deleted, you will not be able to recover this record!",
+               icon: "warning",
+               buttons: true,
+               dangerMode: true
           }).then((willDelete) => {
                if (willDelete) {
                     $.ajax({
-                         url: `/maintenance-division/${id}`
-                         , type: "DELETE"
-                         , cache: false
-                         , data: {
+                         url: `/maintenance-division/${id}`,
+                         type: "DELETE",
+                         cache: false,
+                         data: {
                               _token: '{{ csrf_token() }}'
                          }
                          , success: function(dataResult) {
@@ -162,12 +162,12 @@
                               if (dataResult.statusCode == 200) {
                                    $('#maintenanceDivision').DataTable().ajax.reload();
                                    swal({
-                                        title: ''
-                                        , text: 'Successfully Deleted'
-                                        , icon: 'success'
-                                        , buttons: false
-                                        , timer: 5000
-                                   , });
+                                        title: '',
+                                        text: 'Successfully Deleted',
+                                        icon: 'success',
+                                        buttons: false,
+                                        timer: 5000
+                                    });
                               }
                          }
                     });

@@ -52,11 +52,13 @@ $(document).ready(function () {
             {
                 data: "action",
                 name: "action",
+                className : "text-center",
                 searchable: false,
                 sortable: false,
             },
         ],
     });
+    
 
     $("#maintenanceDivisionOffice").change(function (e) {
         if (e.target.value == "") {
