@@ -26,7 +26,7 @@ class CSCPlantillaReportController extends Controller
 
     public function generate(string $office, string $year)
     {
-        return PlantillaPosition::with(['plantillas', 'position', 'plantillas.Employee', 'plantilla_history', 'plantilla_history.Employee', 'salary_grade' => function ($query) use ($year) {
+        return PlantillaPosition::with(['plantillas', 'position', 'plantillas.Employee', 'plantillas.division', 'plantilla_history', 'plantilla_history.Employee', 'salary_grade' => function ($query) use ($year) {
             $query->where('sg_year', $year)->orWhere('sg_year', $year - 1);
         }])
             ->where('office_code', $office)
