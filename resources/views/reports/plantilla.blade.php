@@ -79,7 +79,6 @@
                 </div>
 
                 <div class="text-right mt-3">
-                    {{-- <button class='btn btn-primary text-uppercase' id='btnGenerate'>Generate</button> --}}
                     <button class='btn btn-primarys text-uppercase shadow' id='btnGenerate'>GENERATE</button>
                 </div>
 
@@ -91,25 +90,27 @@
 </div>
 
 <div id='plantilla-reports-table' class='mt-2'>
-    <span>
-        VACANT : <span class='fw-bold' id='vacant-total'>0</span>
-        <br>
-        PERSONNEL WITH PLANTILLA : <span id='personnel-with-plantilla-total' class='fw-bold'>0</span>
-        <br>
-        TOTAL : <span id='total' class='fw-bold'>0</span>
-    </span>
     <div class="float-right mb-2">
+        <button class='btn btn-info shadow' id='btnDbmExport'>
+            <i class="las la-file-excel"></i>
+            DBM - EXPORT XLS
+        </button>
+        <button class='btn btn-danger shadow' id='btnDbmExportPdf'>
+            <i class="las la-file-pdf"></i>
+            DBM - EXPORT PDF
+        </button>
+    
         <button class='btn btn-info shadow' id='btnExport'>
             <i class="las la-file-excel"></i>
-            EXPORT XLS
+            CSC - EXPORT XLS
         </button>
 
         <button class='btn btn-danger shadow' id='btnExportPdf'>
             <i class="las la-file-pdf"></i>
-            EXPORT PDF
+            CSC - EXPORT PDF
         </button>
     </div>
-    <table class='table table-bordered table-hover'>
+    <table class='table table-bordered table-hover' id='report-table'>
         <thead>
             <tr>
                 <th class='font-weight-bold text-sm'>ITEM #</th>
@@ -128,6 +129,21 @@
         </thead>
         <tbody id='dynamic-content-of-plantilla-report'>
         </tbody>
+        <tfoot>
+            <tr class='bg-light text-center'>
+                <td colspan='6'>
+                   VACANT : <span class='font-weight-bold' id='vacant-total'>0</span>
+                </td>
+                <td colspan='6'>
+                    PERSONNEL WITH PLANTILLA : <span id='personnel-with-plantilla-total' class='font-weight-bold'>0</span>
+                </td>
+            </tr>
+            <tr class='bg-light'>
+                <td colspan='12' class='text-center'>
+                    TOTAL : <span id='total' class='font-weight-bold'>0</span>
+                </td>
+            </tr>
+        </tfoot>
     </table>
 </div>
 
@@ -168,78 +184,178 @@
     }
 
     $('#btnGenerate').click(function() {
+        // Change the content of button to a spinner
+        $('#btnGenerate').html('<i class="las la-spinner la-spin"></i>');
+        $('#btnGenerate').attr('disabled', true);
+
         $('#filterOptions').collapse('hide');
-        $('#plantilla-reports-table').fadeIn();
+        $('#plantilla-reports-table').fadeIn(1000);
 
         let office = $('#office').val();
         let year = $('#year').val();
-        $.ajax({
-            url: `/plantilla-report/generate/${office}/${year}`
-            , method: 'POST'
-            , success: function(response) {
-                let totalVacant = 0;
 
+        $('#dynamic-content-of-plantilla-report').html(`
+            <tr class='text-center'>
+                <td colspan='12'><i class="las la-spinner la-spin fa-2x text-primary"></i></td>
+            </tr>
+        `);
+
+        $.ajax({
+            url: `/plantilla-report/generate/${office}/${year}`,
+            method: 'POST',
+            success: function(response) {
+                // Change the content of button to a normal text
+                $('#btnGenerate').text('GENERATE');
+                // Enable the button
+                $('#btnGenerate').attr('disabled', false);
+
+                let totalVacant = 0;
                 let DEFAULT_STEP = 1;
                 let authorizedAndActualField;
+                let totalPersonnelWithPlantilla = 0;
                 $('#dynamic-content-of-plantilla-report').html(``);
-                response.forEach((record) => {
-                    let {
-                        plantilla_history
-                    } = record;
-                    let [current, previous] = plantilla_history;
-                    authorizedAndActualField = "";
 
-                    if (previous && current) {
-                        authorizedAndActualField = `
-                                          <td class='text-sm text-right font-weight-bold'>${number_format(previous?.salary_amount * 12, 2, ".", ",") || ''}</td>
-                                          <td class='text-sm text-right font-weight-bold'>${number_format(current?.salary_amount * 12, 2, ".", ",") || ''}</td>
-                                    `;
-                    } else {
-                        totalVacant++;
-                        let [currentYear, previousYear] = record.salary_grade;
-                        authorizedAndActualField = `
-                                          <td class='text-sm text-right font-weight-bold'>${number_format(previousYear?.sg_step1 * 12, 2, ".", ",") || ''}</td>
-                                          <td class='text-sm text-right font-weight-bold'>${number_format(currentYear?.sg_step1 * 12, 2, ".", ",") || ''}</td>
-                                    `;
-                    }
+                if(response.length !== 0) {
+                    $('#report-table tfoot').show();
+                    response.forEach((record) => {
+                        let {plantilla_history} = record;
+                        let [current, previous] = plantilla_history;
+                        authorizedAndActualField = "";
 
-                    $('#dynamic-content-of-plantilla-report').append(`
-                                    <tr>
-                                                <td class='text-sm'>${record.item_no}</td>
-                                                <td class='text-sm'>${record.position.Description}</td>
-                                                <td class='text-sm text-center'>${record.sg_no}</td>
-                                                ${authorizedAndActualField}
-                                                <td class='text-sm text-center'>${current?.step_no || DEFAULT_STEP}</td>
-                                                <td class='text-sm text-center'>15</td>
-                                                <td class='text-sm text-center'>P</td>
-                                                <td class='text-sm text-center'>${record.plantillas?.area_level || '-'}</td>
-                                                <td class='text-sm font-weight-bold ${current ? 'text-left' : 'text-center'}' style='background : ${current ? '' : '#FFFF00'}'>${record.plantillas?.employee.LastName || 'VACANT'} ${record.plantillas?.employee.FirstName || ''} ${record.plantillas?.employee.MiddleName || ''}</td>
-                                                <td class='text-sm text-center'>${current?.date_original_appointment || ''}</td>
-                                                <td class='text-sm text-center'>${current?.date_last_promotion || ''}</td>
-                                    </tr>
-                              `);
-                });
-                $('#total').text(response.length);
-                $('#personnel-with-plantilla-total').text(response.length - totalVacant);
-                $('#vacant-total').text(totalVacant);
+                        if (previous && current) {
+                            authorizedAndActualField = `
+                                            <td class='text-sm text-right font-weight-bold'>${number_format(previous?.salary_amount * 12, 2, ".", ",") || ''}</td>
+                                            <td class='text-sm text-right font-weight-bold'>${number_format(current?.salary_amount * 12, 2, ".", ",") || ''}</td>
+                                        `;
+                        } else {
+                            totalVacant++;
+                            let [currentYear, previousYear] = record.salary_grade;
+                            authorizedAndActualField = `
+                                            <td class='text-sm text-right font-weight-bold'>${number_format(previousYear?.sg_step1 * 12, 2, ".", ",") || ''}</td>
+                                            <td class='text-sm text-right font-weight-bold'>${number_format(currentYear?.sg_step1 * 12, 2, ".", ",") || ''}</td>
+                                        `;
+                        }
+
+                        let employeeOrVacant = record.plantillas?.employee.fullname || 'VACANT';
+
+                        if(employeeOrVacant !== 'VACANT') {
+                            totalPersonnelWithPlantilla++;
+                        }
+
+                        $('#dynamic-content-of-plantilla-report').append(`
+                            <tr>
+                                <td class='text-sm'>${record.item_no}</td>
+                                <td class='text-sm'>${record.position.Description}</td>
+                                <td class='text-sm text-center'>${record.sg_no}</td>
+                                ${authorizedAndActualField}
+                                <td class='text-sm text-center'>${current?.step_no || DEFAULT_STEP}</td>
+                                <td class='text-sm text-center'>15</td>
+                                <td class='text-sm text-center'>P</td>
+                                <td class='text-sm text-center'>${record.plantillas?.area_level || '-'}</td>
+                                <td class='text-sm font-weight-bold ${current ? 'text-left' : 'text-center'}' style='background : ${current ? '' : '#FFFF00'}'>
+                                    ${employeeOrVacant}
+                                </td>
+                                <td class='text-sm text-center'>${current?.date_original_appointment || ''}</td>
+                                <td class='text-sm text-center'>${current?.date_last_promotion || ''}</td>
+                            </tr>
+                        `);
+                    });
+
+                    $('#personnel-with-plantilla-total').text(totalPersonnelWithPlantilla);
+                    $('#vacant-total').text(response.length - totalPersonnelWithPlantilla);
+                    $('#total').text(response.length);
+                } else {
+                    // Hide tfoot if there is no data
+                    $('#report-table tfoot').hide();
+                    // Display no available data in dynamic-content-of-plantilla-report with icon
+                    $('#dynamic-content-of-plantilla-report').html(`
+                        <tr>
+                            <td colspan="12" class="text-center text-danger">
+                                <i class="las la-exclamation-triangle"></i>
+                                No available data
+                            </td>
+                        </tr>
+                    `);
+                }
+            
             }
-        , });
+        });
+    });
+
+    $('#btnDbmExportPdf').click(function () {
+        // Display a page spinner
+        $('#btnDbmExportPdf').html('<i class="las la-spinner la-spin"></i>');
+    
+
+        let office = $("#office").val();
+        let year = $('#year').val();
+        
+         $.post({
+            url: `/dbm/plantilla-report/generate/${office}/${year}`,
+            success: function(response) {
+                if (response.success) {
+                    socket.emit('DBM_PLANTILLA_PDF', {
+                        file: response.filename
+                    });
+                    setTimeout(() => {
+                        window.open(`/dbm/plantilla-report/download/${response.filename.replace('xls', 'pdf')}`);
+                        $('#btnDbmExportPdf').html(`
+                            <i class="las la-file-pdf"></i>
+                            DBM - EXPORT PDF
+                        `);
+                    }, 1000);
+
+                    // Change the content of button to a normal text
+                }
+            }
+        });
+    });
+
+    $('#btnDbmExport').click(function () {
+        // Change the content of button to a loading text
+        $('#btnDbmExport').html('<i class="las la-spinner la-spin"></i>');
+
+        let office = $("#office").val();
+        let year = $('#year').val();
+        
+        $.post({
+            url: `/dbm/plantilla-report/generate/${office}/${year}`,
+            success: function(response) {
+                if (response.success) {
+                    window.open(`/dbm/plantilla-report/download/${response.filename}`);
+                    // Change the content of button to a normal text
+                    $('#btnDbmExport').html(`
+                        <i class="las la-file-excel"></i>
+                        DBM - EXPORT XLS
+                    `);
+                }
+            }
+        });
     });
 
     $('#btnExport').click(function() {
+        // Change the content to a spinner
+        $('#btnExport').html('<i class="las la-spinner la-spin"></i>');
+
         let office = $("#office").val();
         let year = $('#year').val();
         $.post({
-            url: `/export/${office}/${year}`
-            , success: function(response) {
+            url: `/export/${office}/${year}`,
+            success: function(response) {
                 if (response.success) {
                     window.open(`download/plantilla-generated-report/${response.fileName}`);
+                    // Change the content to a normal text
+                    $('#btnExport').html(`
+                        <i class="las la-file-excel"></i>
+                        DBM - EXPORT XLS
+                    `);
                 }
             }
         });
     });
 
     $('#btnExportPdf').click(function() {
+        $('#btnExportPdf').html('<i class="las la-spinner la-spin"></i>');
         let office = $("#office").val();
         let year = $('#year').val();
         $.post({
@@ -248,8 +364,14 @@
                 if (response.success) {
                     socket.emit('PLANTILLA_PDF', {
                         file: fileName = response.fileName.split('||').pop()
-                    , });
-                    setTimeout(() => window.open(`download/plantilla-generated-report/${response.fileName.replace('xls', 'pdf')}`), 1000);
+                    });
+                    setTimeout(() => {
+                        window.open(`download/plantilla-generated-report/${response.fileName.replace('xls', 'pdf')}`);
+                    }, 1000);
+                    $('#btnExportPdf').html(`
+                        <i class="las la-file-pdf"></i>
+                        DBM - EXPORT PDF
+                    `);
                 }
             }
         });

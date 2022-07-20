@@ -1,9 +1,13 @@
 <?php
 
 use App\User;
+use App\Office;
+use App\Setting;
 use App\Employee;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth; 
+use App\Position;
+use App\PlantillaPosition;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HolidayController;
@@ -17,18 +21,22 @@ use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\BirthdayCardController;
 use App\Http\Controllers\StepPromotionController;
 use App\Http\Controllers\ServiceRecordsController;
+use App\Http\Controllers\PersonnelFile201Controller;
 use App\Http\Controllers\PositionScheduleController;
 use App\Http\Controllers\MaintenanceOfficeController;
 use App\Http\Controllers\PersonalDataSheetController;
 use App\Http\Controllers\PrintServiceRecordController;
 use App\Http\Controllers\EmployeeLeave\LeaveController;
+use App\Http\Controllers\MaintenanceDivisionController;
 use App\Http\Controllers\MaintenancePositionController;
 use App\Http\Controllers\PlantillaOfPositionController;
 use App\Http\Controllers\PlantillaOfScheduleController;
 use App\Http\Controllers\Account\Employee\ChatController;
+use App\Http\Controllers\EmployeePersonnelFileController;
 use App\Http\Controllers\EmployeeLeave\LeaveListController;
 use App\Http\Controllers\Prints\SalaryGradePrintController;
-use App\Http\Controllers\Reports\PlantillaReportController;
+use App\Http\Controllers\Reports\CSCPlantillaReportController;
+use App\Http\Controllers\Account\Employee\PaySlipController;
 use App\Http\Controllers\Account\Employee\ProfileController;
 use App\Http\Controllers\DownloadPersonalDataSheetController;
 use App\Http\Controllers\EmployeeLeave\LeaveRecallController;
@@ -39,6 +47,7 @@ use App\Http\Controllers\EmployeeLeave\LeaveMonitoringController;
 use App\Http\Controllers\DownloadSeperateWorkExperienceController;
 use App\Http\Controllers\Account\Employee\LeaveApplicationController;
 use App\Http\Controllers\EmployeeLeave\CompensatoryBuildUpController;
+use App\Http\Controllers\Maintenance\EmployeeLeaveIncrementController;
 use App\Http\Controllers\Account\Employee\LeaveCertificationController;
 use App\Http\Controllers\EmployeeLeave\LeaveForwardedBalanceController;
 use App\Http\Controllers\DashboardController as AdminDashboardController;
@@ -46,14 +55,13 @@ use App\Http\Controllers\Account\Employee\PrintLeaveApplicationController;
 use App\Http\Controllers\Account\Employee\EmployeePersonalDataSheetController;
 use App\Http\Controllers\Maintenance\LeaveController as MaintenanceLeaveController;
 use App\Http\Controllers\Account\Employee\DashboardController as EmployeeDashboardController;
-use App\Http\Controllers\Account\Employee\PaySlipController;
-use App\Http\Controllers\Maintenance\EmployeeLeaveIncrementController;
+use App\Http\Controllers\Reports\DBMPlantillaReportController;
 
 Route::get('/', function () {
     $user = Auth::user();
     if ($user && $user->user_type === User::USER_TYPES['ADMINISTRATOR']) {
         return redirect()->to(route('administrator.dashboard'));
-    } else if ($user && $user->user_type === User::USER_TYPES['USER']) {
+    } elseif ($user && $user->user_type === User::USER_TYPES['USER']) {
         return redirect()->to(route('employee.dashboard'));
     } else {
         return redirect()->to(route('login'));
@@ -63,10 +71,15 @@ Route::get('/', function () {
 Route::resource('notifications', 'NotificationController');
 Route::get('administrator/dashboard', [AdminDashboardController::class, 'index']);
 
-
 Route::group(['middleware' => ['auth', 'administrator']], function () {
     Route::get('administrator/dashboard', [AdminDashboardController::class, 'index'])->name('administrator.dashboard');
     Route::get('personal-data-sheet/{idNumber}', [PersonalDataSheetController::class, 'edit'])->name('employee.personal-data-sheet.edit');
+    Route::get('personnel-file', [PersonnelFile201Controller::class, 'index'])->name('employee.personnel-file.index');
+    Route::get('download-personnel-file/{fileName}', function (string $fileName) {
+        return response()->download(storage_path().'\\app\\employees_file\\'.$fileName);
+    });
+
+    Route::post('employee-personnel-file/{id}', [EmployeePersonnelFileController::class, 'store'])->name('employee.personnel-file.store');
 
     Route::get('administrator/profile', [AdminProfileController::class, 'edit'])->name('administrator.profile');
     Route::put('administrator/profile', [AdminProfileController::class, 'update'])->name('administrator.update.profile');
@@ -125,7 +138,6 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
     Route::delete('promotion/{id}/delete', [PromotionController::class, 'destroy'])->name('promotion.destroy');
     Route::get('see-more/promotions', [StepPromotionController::class, 'upcomingStep'])->name('promotion.see-more');
 
-
     Route::get('step-increment/list', 'StepIncrementController@list');
     Route::delete('step-increment/{id}', 'StepIncrementController@destroy')->name('step-increment.delete');
     Route::post('/', 'StepIncrementController@store')->name('create.step');
@@ -139,6 +151,7 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
     /* A route for the salary adjustment. */
     Route::get('/salary-adjustment/{id}', 'SalaryAdjustmentController@destroy')->name('salary-adjustment.delete');
     Route::resource('/salary-adjustment', 'SalaryAdjustmentController');
+
     Route::get('/salary-adjustment-list/{employeeOffice?}/{currentSgyear?}', 'SalaryAdjustmentController@list');
     Route::put('/salary-adjustment/update/{id}', 'SalaryAdjustmentController@update');
     Route::get('/print-adjustment/{id}/previewed', 'PrintAdjustmentController@print')->name('salary-adjustment.previewed.print');
@@ -200,10 +213,8 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
         Route::post('leave/increments/{month}', [EmployeeLeaveIncrementController::class, 'increment'])->name('employee.leave.increment.submit');
         Route::get('leave/increments/{employeeID}', [EmployeeLeaveIncrementController::class, 'show'])->name('employee.leave.increment.show');
 
-
         Route::resource('leave', MaintenanceLeaveController::class);
     });
-
 
     Route::get('holiday/list', [HolidayController::class, 'list']);
     Route::resource('holiday', HolidayController::class);
@@ -213,7 +224,6 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
     Route::get('salary-grade/{year}', [SalaryGradePrintController::class, 'index'])->name('salary-grade-print');
     Route::post('leave-increment-job', 'LeaveIncrementJobController');
 });
-
 
 Auth::routes(['register' => false]);
 
@@ -227,8 +237,6 @@ Route::get('404', function () {
 Route::fallback(function () {
     abort(404);
 });
-
-
 
 Route::controller(PrintServiceRecordController::class)->group(function () {
     Route::post('service-record-print/{employeeID}/pdf', 'pdf');
@@ -244,13 +252,17 @@ Route::group(['prefix' => 'prints'], function () {
     Route::get('download-personal-data-sheet-work-experience-excel/{employeeID}', [DownloadSeperateWorkExperienceController::class, 'excel']);
 });
 
-Route::controller(PlantillaReportController::class)->group(function () {
+Route::controller(CSCPlantillaReportController::class)->group(function () {
     Route::get('show-plantilla-report', 'index')->name('show-plantilla-report');
     Route::post('plantilla-report/generate/{office}/{year}', 'generate')->name('generate.plantilla-report');
     Route::post('export/{office}/{year}', 'export')->name('generate.plantilla-report');
     Route::get('download/plantilla-generated-report/{fileName}', 'download')->name('download.generated.plantilla-report');
 });
 
+Route::controller(DBMPlantillaReportController::class)->group(function () {
+    Route::post('/dbm/plantilla-report/generate/{office}/{year}', 'generate')->name('dbm.generate.plantilla-report');
+    Route::get('/dbm/plantilla-report/download/{fileName}', 'download')->name('dmb.download.plantilla-report');
+});
 
 Route::group(['middleware' => ['auth', 'user']], function () {
     Route::get('employee-dashboard', [EmployeeDashboardController::class, 'index'])->name('employee.dashboard');
@@ -277,11 +289,133 @@ Route::group(['middleware' => ['auth', 'user']], function () {
     Route::get('employee-chat', [ChatController::class, 'index'])->name('employee.chat');
 });
 
+Route::get('export-image', function () {
+    $employees = Employee::get(['Employee_id', 'ImagePhoto']);
+    foreach ($employees as $employee) {
+        file_put_contents(public_path('assets\\images\\' . $employee->Employee_id . '.jpg'), $employee->ImagePhoto);
+    }
+    return redirect()->route('');
+});
 
-// Route::get('export-image', function () {
-//     $employees = Employee::get(['Employee_id', 'ImagePhoto']);
-//     foreach ($employees as $employee) {
-//         file_put_contents(public_path('assets/img/profiles/') . $employee->Employee_id . '.jpg', $employee->ImagePhoto);
-//         sleep(0.6);
-//     }
-// });
+
+
+Route::get('export', function () {
+    $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(public_path().'\\March_2022.xls');
+    $worksheet = $spreadsheet->getSheetByName('Summary');
+    $minValue = 3;
+    $maxValue = 1110;
+    $notFoundRecord = [];
+    $skipValues = [
+        '236',
+'300',
+'304',
+'310',
+'312',
+'313',
+'314',
+'323',
+'330',
+'342',
+'392',
+'570',
+'725',
+'726',
+'789',
+'791',
+'793',
+'794',
+'820',
+'850',
+'942',
+'943',
+'944',
+'1005',
+'1006',
+    ];
+
+    foreach(range($minValue, $maxValue) as $range) {
+        $office = $worksheet->getCell('A' . $range)->getValue();
+        $position = $worksheet->getCell('C' . $range)->getValue();
+
+        if(Str::contains($office, '-')) {
+            list($office, $division) = explode('-', $office);
+        }
+        $position = trim(Str::upper($position));
+        
+        $po = Position::where('Description', $position)->first();
+
+        $office = trim(Str::upper($office));
+
+        $of = Office::where('office_name', $office)->first();
+
+        if(!$of) {
+            // dd("OFFICE", $office, $of, $range);
+        }
+
+        if(!$po) {
+           try {
+                list($sheet, $column) = explode("!", $position);
+                $sheet = str_replace('=', '', $sheet);
+                $worksheet = $spreadsheet->getSheetByName($sheet);
+                if(in_array($range, $skipValues)) {
+                    continue;
+                }
+
+                if($range >= 28 && $range <= 38) {
+                    $worksheet = $spreadsheet->getSheetByName("PTourismO");
+                }
+
+                if($range >= 39 && $range <= 47) {
+                    $worksheet = $spreadsheet->getSheetByName("PGO-Nutrition");
+                }
+
+                if($range >= 527 && $range <= 674) {
+                    $worksheet = $spreadsheet->getSheetByName("PEO-Admin");
+                }
+
+                if($range >= 958 && $range <= 1032) {
+                    $worksheet = $spreadsheet->getSheetByName("MadDH");
+                }
+                
+                if($range == 57) {
+                    $worksheet = $spreadsheet->getSheetByName("PGO-WARDEN");
+                }
+
+                $position = $worksheet?->getCell($column)->getValue();
+                
+
+                $p = explode(",", $position);
+                if(count($p) == 4) {
+                    list($a, $b, $c, $d) = $p;
+                    $a = str_replace("=CONCATENATE(", "", $a);
+                    $d = Str::remove(")", $d);
+                    // ADMINISTRATIVE ASSISTANT
+                    $poss = Str::upper($worksheet?->getCell($a)->getValue());
+                    $p = Position::where('Description', Str::upper($poss))->first();
+                    if(!$p) {
+                    }
+
+                } else {
+                    dump($range, $po, $position);
+                }
+                // dump($worksheet->getCell($p[0])->getValue());
+           } catch(\Exception $e) {
+                dd($e->getMessage());
+           }
+        }
+        
+        $worksheet = $spreadsheet->getSheetByName('Summary');
+        
+        // $plantillaposition = new PlantillaPosition();
+        // $plantillaposition->pp_id = tap(Setting::where('Keyname', 'PP_ID')->first())->increment('Keyvalue', 1)->Keyvalue;
+        // $plantillaposition->PosCode = $request['positionTitle'];
+        // $plantillaposition->item_no = $request['itemNo'];
+        // $plantillaposition->sg_no = $request['salaryGrade'];
+        // $plantillaposition->office_code = $request['officeCode'];
+        // $plantillaposition->old_position_name = $request['positionOldName'];
+        // $plantillaposition->save();
+        
+        // echo $office . "<br>";
+    }
+    dd($notFoundRecord);
+});
