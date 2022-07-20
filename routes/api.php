@@ -386,6 +386,8 @@ Route::get('step/{sg_no}/{step}', function ($sgNo, $step) {
     return $salaryGrade;
 });
 
+
+
 // UPDATE OF STEP-INCREMENT //
 Route::post('step-increment/update/{stepId}', [StepIncrementController::class, 'update']);
 

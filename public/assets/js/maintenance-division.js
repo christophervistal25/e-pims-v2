@@ -36,7 +36,7 @@ $(document).ready(function () {
         });
     });
     //show list of division
-    let table = $("#maintenanceDivision").DataTable({
+    let divisionTable = $("#maintenanceDivision").DataTable({
         pagingType: "full_numbers",
         serverSide: true,
         stateSave: true,
@@ -45,10 +45,10 @@ $(document).ready(function () {
             processing:
                 '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
         },
-        ajax: "/maintenance-division-list",
+        ajax: "/maintenance-division-list/10001",
         columns: [
+            { data: "division_id", name: "division_id" },
             { data: "division_name", name: "division_name" },
-            { data: "offices", name: "offices" },
             {
                 data: "action",
                 name: "action",
@@ -61,56 +61,63 @@ $(document).ready(function () {
     
 
     $("#maintenanceDivisionOffice").change(function (e) {
-        if (e.target.value == "") {
-            table.destroy();
-            table = $("#maintenanceDivision").DataTable({
-                pagingType: "full_numbers",
-                serverSide: true,
-                stateSave: true,
-                processing: true,
-                language: {
-                    processing:
-                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
-                },
-                ajax: "/maintenance-division-list",
-                columns: [
-                    { data: "division_name", name: "division_name" },
-                    { data: "offices", name: "offices" },
-                    {
-                        data: "action",
-                        name: "action",
-                        searchable: false,
-                        sortable: false,
-                    },
-                ],
-            });
-        } else {
-            table.destroy();
-            table = $("#maintenanceDivision").DataTable({
-                pagingType: "full_numbers",
-                serverSide: true,
-                stateSave: true,
-                processing: true,
-                language: {
-                    processing:
-                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
-                },
-                ajax: {
-                    url: `/api/maintenance/division/${e.target.value}`,
-                },
-                columns: [
-                    { data: "division_name", name: "division_name" },
-                    { data: "offices", name: "offices" },
-                    {
-                        data: "action",
-                        name: "action",
-                        searchable: false,
-                        sortable: false,
-                    },
-                ],
-            });
-        }
+        let maintenanceDivisionOffice = $("#maintenanceDivisionOffice").val();
+        divisionTable.ajax
+            .url(`/maintenance-division-list/${maintenanceDivisionOffice}`)
+            .load();
     });
+
+    // $("#maintenanceDivisionOffice").change(function (e) {
+    //     if (e.target.value == "") {
+    //         table.destroy();
+    //         table = $("#maintenanceDivision").DataTable({
+    //             pagingType: "full_numbers",
+    //             serverSide: true,
+    //             stateSave: true,
+    //             processing: true,
+    //             language: {
+    //                 processing:
+    //                     '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
+    //             },
+    //             ajax: "/maintenance-division-list",
+    //             columns: [
+    //                 { data: "offices", name: "offices" },
+    //                 { data: "division_name", name: "division_name" },
+    //                 {
+    //                     data: "action",
+    //                     name: "action",
+    //                     searchable: false,
+    //                     sortable: false,
+    //                 },
+    //             ],
+    //         });
+    //     } else {
+    //         table.destroy();
+    //         table = $("#maintenanceDivision").DataTable({
+    //             pagingType: "full_numbers",
+    //             serverSide: true,
+    //             stateSave: true,
+    //             processing: true,
+    //             language: {
+    //                 processing:
+    //                     '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
+    //             },
+    //             ajax: {
+    //                 url: `/api/maintenance/division/${e.target.value}`,
+    //             },
+    //             columns: [
+    //                 { data: "division_name", name: "division_name" },
+    //                 { data: "offices", name: "offices" },
+    //                 {
+    //                     data: "action",
+    //                     name: "action",
+    //                     searchable: false,
+    //                     sortable: false,
+    //                 },
+    //             ],
+    //         });
+    //     }
+    // });
 
     // add new division
     $("#maintenanceDivisionForm").submit(function (e) {
