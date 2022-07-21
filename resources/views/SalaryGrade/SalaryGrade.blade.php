@@ -237,6 +237,9 @@
                               </div>
                          </div>
                          <div class="col-auto float-right ml-auto">
+                            <button class="btn btn-secondary text-white mr-3" id="importExcel" type="button">
+                                <i class="fas fa-file-import"></i>&nbsp; Import Excel
+                           </button>
                               <button id="addButton" class="btn btn-primarys submit-btn float-right mx-2"><i class="fa fa-plus"></i>
                                    Add Salary Grade
                               </button>
@@ -269,6 +272,40 @@
                </div>
           </div>
      </div>
+     <div class="modal fade" id="importSalaryGradeModal" tabindex="-1" role="dialog" aria-labelledby="downloadPDSModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+             <div class="modal-content">
+                  <div class="modal-header">
+                       <h5 class="modal-title" id="downloadPDSModalLongTitle">
+                            <h4 class='font-weight-normal'>Import Salary Grade Excel File</h4>
+                       </h5>
+                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                       </button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="{{ url('/import-salarygrade') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                       <div class="row">
+                            <div class="col-lg-6 text-center hoverable" style="cursor:pointer;">
+                                 <img style="padding-bottom:15px;" src="{{ asset('assets/img/xls.png') }}" class='w-50 img-fluid' alt="">
+                                <input style="margin-bottom:20px;" type="file" name="file" class="form-control {{ $errors->has('file')  ? 'is-invalid' : ''}}" id="file" />
+                           </div>
+
+                           <div class="col-lg-6 text-center hoverable" style="cursor:pointer;">
+                            <button style="margin-top:30%;" id="saveImport" class="btn btn-primarys submit-btn float-right shadow" type="submit"><span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span> <i class="fas fa-save"></i>
+                                <b id="saving">Save</b>
+                           </button>
+                        </div>
+                       </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                       <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
+                  </div>
+             </div>
+        </div>
+   </div>
 </div>
 
 @push('page-scripts')
@@ -284,6 +321,32 @@
           let selectedCurrentYear = $('#filter_year').val();
           window.open(`prints/salary-grade/${selectedCurrentYear}`);
      });
+     $("#importExcel").click(function () {
+    $("#importSalaryGradeModal").modal("toggle");
+});
+    @if($message = session('success'))
+            swal({
+        title: 'Successfully Added!',
+        icon: "success",
+        text: "          ",
+        timer: 2000,
+        showCancelButton: false,
+        showConfirmButton: false,
+        buttons: false,
+        })
+    @endif
+
+    @if($errors->any())
+            swal({
+        title: 'Error Adding!',
+        icon: "error",
+        text: "          ",
+        timer: 2000,
+        showCancelButton: false,
+        showConfirmButton: false,
+        buttons: false,
+        })
+    @endif
 
 </script>
 @endpush

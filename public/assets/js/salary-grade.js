@@ -112,6 +112,13 @@ $(document).ready(function () {
         $("#table").attr("class", "page-header d-none");
     });
 
+    $("#saveImport").click(function () {
+        // $("#saveImport").prop("disabled", true);
+        $("#saveBtn").attr("disabled", false);
+        $("#loading").addClass("d-none");
+        $("#saving").html("Save");
+    });
+
     // code for number only
     $("input").on("input", function (e) {
         $(this).val(
