@@ -79,6 +79,7 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
     /* Creating a route for the SalaryGradeController. */
     Route::get('salary-grade-list', [SalaryGradeController::class, 'list'])->name('salary-grade-list');
     Route::resource('salary-grade', SalaryGradeController::class);
+    Route::post('/import-salarygrade', [SalaryGradeController::class, 'ImportSalaryGrade'])->name('import');
 
     /* Creating a route for the MaintenancePositionController. */
     Route::get('maintenance-position-list', [MaintenancePositionController::class, 'list'])->name('maintenance-position-list');

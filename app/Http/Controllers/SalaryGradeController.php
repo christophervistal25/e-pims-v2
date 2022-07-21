@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\SalaryGrade;
-use Yajra\Datatables\Datatables;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Yajra\Datatables\Datatables;
+use App\Imports\SalaryGradeImport;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Session;
 
 class SalaryGradeController extends Controller
 {
@@ -162,5 +165,15 @@ class SalaryGradeController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function ImportSalaryGrade(Request $request)
+    {
+        $this->validate($request, [
+            'file' => 'required|mimes:xls,xlsx',
+        ]);
+        Excel::import(new SalaryGradeImport, $request->file);
+        // return back()->with('success', 'Excel Successfully Imported');?
+        return redirect('/salary-grade')->with('success', '$url');
     }
 }
