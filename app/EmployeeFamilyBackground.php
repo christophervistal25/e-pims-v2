@@ -2,12 +2,13 @@
 
 namespace App;
 
-use Illuminate\Support\Str;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Model;
 
 class EmployeeFamilyBackground extends Model
 {
+    public $connection = 'E_PIMS_CONNECTION';
+
     protected $fillable = [
         'id',
         'employee_id',
@@ -32,12 +33,10 @@ class EmployeeFamilyBackground extends Model
 
     protected $appends = ['has_spouse'];
 
-
-
     protected function hasSpouse(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => !empty($this->spouse_firstname) ? true : false,
+            get: fn ($value) => ! empty($this->spouse_firstname) ? true : false,
         );
     }
 

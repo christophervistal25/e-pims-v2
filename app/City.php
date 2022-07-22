@@ -3,15 +3,20 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Scopes\CityScope;
 
 class City extends Model
 {
-    public    $incrementing = false;
-    protected $primaryKey   = 'city_code';
+    public $incrementing = false;
+
+    protected $primaryKey = 'city_code';
+
+    public $connection = 'E_PIMS_CONNECTION';
+
     public $keyType = 'string';
+
     public $table = 'Cities';
-    protected $fillable     = ['name', 'status', 'province_code', 'city_code'];
+
+    protected $fillable = ['name', 'status', 'province_code', 'city_code'];
 
     public function province()
     {

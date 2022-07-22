@@ -35,7 +35,6 @@ return [
 
     'connections' => [
 
-
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DATABASE_URL'),
@@ -47,11 +46,11 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => '127.0.0.1',
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'database' => 'testing_2',
+            'username' => 'root',
+            'password' => '',
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
@@ -92,13 +91,25 @@ return [
             'prefix_indexes' => true,
         ],
 
-       
         'DTR_PAYROLL_CONNECTION' => [
             'driver' => 'sqlsrv',
             'url' => '',
-            'host' => 'server-pc',
+            'host' => 'SERVER-PC',
             'port' => '',
             'database' => 'DTRPayroll',
+            'username' => 'sa',
+            'password' => 'nicole',
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+        ],
+
+        'E_PIMS_CONNECTION' => [
+            'driver' => 'sqlsrv',
+            'url' => '',
+            'host' => 'SERVER-PC',
+            'port' => '',
+            'database' => 'Epims',
             'username' => 'sa',
             'password' => 'nicole',
             'charset' => 'utf8',
@@ -137,7 +148,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
         ],
 
         'default' => [

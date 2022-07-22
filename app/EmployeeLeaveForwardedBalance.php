@@ -10,10 +10,14 @@ class EmployeeLeaveForwardedBalance extends Model
     use HasFactory;
 
     protected $primaryKey = 'forwarded_id';
-    protected $connection = 'DTR_PAYROLL_CONNECTION';
+
+    public $connection = 'E_PIMS_CONNECTION';
+
+
     public $table = 'employee_leave_forwarded_balance';
+
     public $timestamps = false;
-    
+
     protected $fillable = [
         'forwarded_id',
         'Employee_id',
@@ -33,8 +37,6 @@ class EmployeeLeaveForwardedBalance extends Model
         'rehab_balance',
     ];
 
-
-
     public function employee()
     {
         return $this->belongsTo(Employee::class, 'Employee_id', 'Employee_id')
@@ -46,5 +48,4 @@ class EmployeeLeaveForwardedBalance extends Model
     {
         return $this->morphMany(EmployeeLeaveTransaction::class, 'transaction');
     }
-
 }

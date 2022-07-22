@@ -18,7 +18,7 @@ class CompensatoryLeave extends Model
     ];
 
     protected $dates = [
-        'date_added'
+        'date_added',
     ];
 
     public function employee()

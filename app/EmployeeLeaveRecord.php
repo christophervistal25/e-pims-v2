@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class EmployeeLeaveRecord extends Model
 {
     protected $primaryKey = 'id';
+
     protected $connection = 'DTR_PAYROLL_CONNECTION';
+
     public $table = 'employee_leave_records';
 
     protected $fillable = [

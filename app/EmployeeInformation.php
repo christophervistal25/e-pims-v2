@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class EmployeeInformation extends Model
 {
     protected $table = 'employee_informations';
+
     protected $fillable = ['EmpIDNo', 'pos_code', 'office_code', 'photo'];
 
     public function position()

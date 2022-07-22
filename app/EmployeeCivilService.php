@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class EmployeeCivilService extends Model
 {
-    public $connection = 'DTR_PAYROLL_CONNECTION';
+    public $connection = 'E_PIMS_CONNECTION';
+
     public $table = 'employee_civil_services';
+
     protected $fillable = [
         'id',
         'employee_id',
@@ -21,6 +23,6 @@ class EmployeeCivilService extends Model
 
     public function employee()
     {
-        return $this->belongsTo(Employee::class, 'Employee_id', 'employee_id');
+        return $this->belongsTo(Employee::class, 'Employee_id', 'Epims.employee_id');
     }
 }

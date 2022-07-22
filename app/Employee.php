@@ -2,13 +2,8 @@
 
 namespace App;
 
-use App\Office;
-use App\Position;
-use App\StepIncrement;
-use App\OfficeCharging;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
-use App\EmployeeLeaveRecord;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\EmployeeLaraTablesAction;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -20,11 +15,17 @@ class Employee extends Model
     use PersonalDataSheetRelationModels;
 
     public $incrementing = false;
+
     protected $primaryKey = 'Employee_id';
+
     protected $connection = 'DTR_PAYROLL_CONNECTION';
+
     protected $table = 'Employees';
+
     public $with = ['position', 'office_charging', 'office_assignment'];
+
     public $dates = ['first_day_of_service', 'last_step_increment'];
+
     public $keyType = 'string';
 
     protected $columns = [
@@ -94,7 +95,7 @@ class Employee extends Model
         'telephone_no',
         'first_day_of_service',
         'office_code',
-        'last_step_increment'
+        'last_step_increment',
     ];
 
     protected $fillable = [
@@ -164,22 +165,21 @@ class Employee extends Model
         'telephone_no',
         'first_day_of_service',
         'office_code',
-        'last_step_increment'
+        'last_step_increment',
     ];
 
     public const ACTIVE = 1;
+
     public const IN_ACTIVE = 0;
 
     public $appends = [
-        'fullname'
+        'fullname',
     ];
-
 
     public function getFullnameAttribute()
     {
-        return "{$this->LastName}, {$this->FirstName} " . substr($this->MiddleName, 0, 1) . "." . " {$this->Suffix}";
+        return "{$this->LastName}, {$this->FirstName} ".substr($this->MiddleName, 0, 1).'.'." {$this->Suffix}";
     }
-
 
     protected function FirstName(): Attribute
     {
@@ -268,11 +268,10 @@ class Employee extends Model
 
     public function scopePermanent($query)
     {
-        return $query->where('Work_Status', 'not like', '%' . 'JOB ORDER' . '%')
-            ->where('Work_Status', 'not like', '%' . 'CONTRACT OF SERVICE' . '%')
+        return $query->where('Work_Status', 'not like', '%'.'JOB ORDER'.'%')
+            ->where('Work_Status', 'not like', '%'.'CONTRACT OF SERVICE'.'%')
             ->where('Work_Status', '!=', '');
     }
-
 
     public function offices()
     {
@@ -289,11 +288,10 @@ class Employee extends Model
         return $this->hasOne(Office2::class, 'OfficeCode2', 'OfficeCode2')->withDefault();
     }
 
-
     public static function fetchWithFullInformation(string $employeeId): Employee
     {
         return self::with([
-            'family_background', 'spouse_child', 'educational_background', 'civil_service', 'work_experience', 'voluntary_work', 'program_attained', 'other_information', 'references', 'relevant_queries', 'issued_id', 'status', 'information.position', 'information.office', 'loginAccount'
+            'family_background', 'spouse_child', 'educational_background', 'civil_service', 'work_experience', 'voluntary_work', 'program_attained', 'other_information', 'references', 'relevant_queries', 'issued_id', 'status', 'information.position', 'information.office', 'loginAccount',
         ])->find($employeeId);
     }
 
@@ -301,7 +299,6 @@ class Employee extends Model
     {
         return $this->hasMany(SalaryAdjustment::class, 'employee_id', 'Employee_id');
     }
-
 
     // STEP-INCREMENT //
     public function step()
@@ -325,7 +322,6 @@ class Employee extends Model
         return $this->hasMany(EmployeeLeaveApplication::class, 'Employee_id', 'Employee_id');
     }
 
-
     public function forwarded_leave_records()
     {
         return $this->hasOne(EmployeeLeaveForwardedBalance::class, 'Employee_id', 'Employee_id');
@@ -339,5 +335,10 @@ class Employee extends Model
     public function compensatory_leaves()
     {
         return $this->hasMany(CompensatoryLeave::class, 'employee_id', 'employee_id');
+    }
+
+    public function file_records()
+    {
+        return $this->hasMany(EmployeePersonnelFile::class, 'Employee_id', 'Employee_id');
     }
 }

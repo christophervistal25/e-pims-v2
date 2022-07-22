@@ -12,6 +12,6 @@ class EmployeeIssuedID extends Model
         'id_type',
         'id_no',
         'date',
-        'place_of_issuance'
+        'place_of_issuance',
     ];
 }
