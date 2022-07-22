@@ -14,4 +14,7 @@ class EmployeeIssuedID extends Model
         'date',
         'place_of_issuance',
     ];
+
+    public $table = 'employee_issued_i_d_s';
+    public $connection = 'E_PIMS_CONNECTION';
 }
