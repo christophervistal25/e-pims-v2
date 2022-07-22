@@ -31,7 +31,7 @@ class PersonalDataSheetRepository implements IPersonalDataSheet
     {
         $employeeID = str_pad($employeeID, 4, '0', STR_PAD_LEFT);
 
-        return Employee::exclude(['ImagePhoto'])
+        return Employee::exclude(['ImagePhoto', 'signaturephoto'])
             ->with(['province_residential', 'city_residential', 'barangay_residential', 'province_permanent', 'city_permanent', 'barangay_permanent'])
             ->find($employeeID);
     }
@@ -83,7 +83,7 @@ class PersonalDataSheetRepository implements IPersonalDataSheet
         $employee->permanent_zip_code = $data['permanentZipCode'];
         $employee->telephone_no = @$data['telephone_no'];
         $employee->ContactNumber = $data['ContactNumber'];
-        $employee->Email_address = @$data['Email'];
+        $employee->Email = @$data['Email'];
 
         $employee = tap($employee, function ($employee) {
             $employee->save();
