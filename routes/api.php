@@ -176,6 +176,7 @@ Route::group(['namespace' => 'Api'], function () {
         Route::get('find/{employeeID}', 'show');
         Route::put('{employeeID}/update', 'update');
         Route::get('find/ids/{employee_id?}', 'ids');
+        Route::delete('retire', 'retire');
     });
 
     Route::group(['prefix' => 'province', 'controller' => ProvinceController::class], function () {
@@ -385,8 +386,6 @@ Route::get('step/{sg_no}/{step}', function ($sgNo, $step) {
 
     return $salaryGrade;
 });
-
-
 
 // UPDATE OF STEP-INCREMENT //
 Route::post('step-increment/update/{stepId}', [StepIncrementController::class, 'update']);

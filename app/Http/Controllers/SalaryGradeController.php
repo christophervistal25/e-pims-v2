@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\SalaryGrade;
-use Yajra\Datatables\Datatables;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
+use Yajra\Datatables\Datatables;
 
 class SalaryGradeController extends Controller
 {
@@ -17,23 +17,26 @@ class SalaryGradeController extends Controller
      */
     public function index()
     {
-        // $salary_grade = SalaryGrade::get();
         return view('SalaryGrade.SalaryGrade');
     }
+
     public function list(Request $request)
     {
-      if ($request->ajax()) {
-        $data = SalaryGrade::select('*');
-        return Datatables::of($data)
+        if ($request->ajax()) {
+            $data = SalaryGrade::select('*');
+
+            return Datatables::of($data)
                 ->addIndexColumn()
-                ->addColumn('action', function($row){
-                    $btn = "<a title='Edit Salary Grade' href='". route('salary-grade.edit', $row->id) . "' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil'></i></a>";
-                        return $btn;
+                ->addColumn('action', function ($row) {
+                    $btn = "<a title='Edit Salary Grade' href='".route('salary-grade.edit', $row->id)."' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil'></i></a>";
+
+                    return $btn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
-    }
-    return view('SalaryGrade.SalaryGrade');
+        }
+
+        return view('SalaryGrade.SalaryGrade');
     }
 
     /**
@@ -55,12 +58,12 @@ class SalaryGradeController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'sgNo'  => [
+            'sgNo' => [
                 'required',
-                    Rule::unique('salary_grades','sg_no')->where(function ($query) use ($request) {
+                Rule::unique('salary_grades', 'sg_no')->where(function ($query) use ($request) {
                     return $query
-                    ->where('sg_no', $request->sgNo)
-                    ->where('sg_year', $request->sgYear);
+                ->where('sg_no', $request->sgNo)
+                ->where('sg_year', $request->sgYear);
                 }),
             ],
             'sgStep1' => 'required',
@@ -71,18 +74,18 @@ class SalaryGradeController extends Controller
             'sgStep6' => 'required',
             'sgStep7' => 'required',
             'sgStep8' => 'required',
-            'sgYear'  =>  [
+            'sgYear' => [
                 'required',
-                    Rule::unique('salary_grades','sg_year')->where(function ($query) use ($request) {
+                Rule::unique('salary_grades', 'sg_year')->where(function ($query) use ($request) {
                     return $query
-                    ->where('sg_year', $request->sgYear)
-                    ->where('sg_no', $request->sgNo);
+                ->where('sg_year', $request->sgYear)
+                ->where('sg_no', $request->sgNo);
                 }),
             ],
         ]);
 
-        $salarygrade           = new SalaryGrade;
-        $salarygrade->sg_no    = $request['sgNo'];
+        $salarygrade = new SalaryGrade();
+        $salarygrade->sg_no = $request['sgNo'];
         $salarygrade->sg_step1 = $request['sgStep1'];
         $salarygrade->sg_step2 = $request['sgStep2'];
         $salarygrade->sg_step3 = $request['sgStep3'];
@@ -91,9 +94,10 @@ class SalaryGradeController extends Controller
         $salarygrade->sg_step6 = $request['sgStep6'];
         $salarygrade->sg_step7 = $request['sgStep7'];
         $salarygrade->sg_step8 = $request['sgStep8'];
-        $salarygrade->sg_year  = $request['sgYear' ];
+        $salarygrade->sg_year = $request['sgYear'];
         $salarygrade->save();
-        return response()->json(['success'=>true]);
+
+        return response()->json(['success' => true]);
     }
 
     /**
@@ -116,7 +120,8 @@ class SalaryGradeController extends Controller
     public function edit($id)
     {
         $salaryGrade = SalaryGrade::find($id);
-        return view ('SalaryGrade.edit', compact('salaryGrade'));
+
+        return view('SalaryGrade.edit', compact('salaryGrade'));
     }
 
     /**
@@ -139,7 +144,7 @@ class SalaryGradeController extends Controller
             'sgStep8' => 'required',
         ]);
 
-        $salarygrade           = SalaryGrade::find($id);
+        $salarygrade = SalaryGrade::find($id);
         $salarygrade->sg_step1 = $request['sgStep1'];
         $salarygrade->sg_step2 = $request['sgStep2'];
         $salarygrade->sg_step3 = $request['sgStep3'];
@@ -150,7 +155,8 @@ class SalaryGradeController extends Controller
         $salarygrade->sg_step8 = $request['sgStep8'];
         $salarygrade->save();
         Session::flash('alert-success', 'Update Salary Grade Successfully');
-        return back()->with('success','Updated Successfully');
+
+        return back()->with('success', 'Updated Successfully');
     }
 
     /**

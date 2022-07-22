@@ -1,16 +1,19 @@
 <?php
 
+use App\City;
 use App\User;
 use App\Office;
-use App\Setting;
+use App\Barangay;
 use App\Employee;
-use App\Position;
+use App\LeaveIncrement;
 use App\PlantillaPosition;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
+use App\EmployeeTrainingAttained;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\BirthdayController;
 use App\Http\Controllers\EmployeeController;
@@ -36,13 +39,15 @@ use App\Http\Controllers\Account\Employee\ChatController;
 use App\Http\Controllers\EmployeePersonnelFileController;
 use App\Http\Controllers\EmployeeLeave\LeaveListController;
 use App\Http\Controllers\Prints\SalaryGradePrintController;
-use App\Http\Controllers\Reports\CSCPlantillaReportController;
 use App\Http\Controllers\Account\Employee\PaySlipController;
 use App\Http\Controllers\Account\Employee\ProfileController;
+use App\Http\Controllers\Reports\EmployeeTrainingController;
 use App\Http\Controllers\DownloadPersonalDataSheetController;
 use App\Http\Controllers\EmployeeLeave\LeaveRecallController;
 use App\Http\Controllers\Account\Employee\LeaveCardController;
 use App\Http\Controllers\Maintenance\LeaveIncrementController;
+use App\Http\Controllers\Reports\CSCPlantillaReportController;
+use App\Http\Controllers\Reports\DBMPlantillaReportController;
 use App\Http\Controllers\EmployeeLeave\LeaveUndertimeController;
 use App\Http\Controllers\EmployeeLeave\LeaveMonitoringController;
 use App\Http\Controllers\DownloadSeperateWorkExperienceController;
@@ -56,7 +61,6 @@ use App\Http\Controllers\Account\Employee\PrintLeaveApplicationController;
 use App\Http\Controllers\Account\Employee\EmployeePersonalDataSheetController;
 use App\Http\Controllers\Maintenance\LeaveController as MaintenanceLeaveController;
 use App\Http\Controllers\Account\Employee\DashboardController as EmployeeDashboardController;
-use App\Http\Controllers\Reports\DBMPlantillaReportController;
 
 Route::get('/', function () {
     $user = Auth::user();
@@ -258,12 +262,18 @@ Route::controller(CSCPlantillaReportController::class)->group(function () {
     Route::get('show-plantilla-report', 'index')->name('show-plantilla-report');
     Route::post('plantilla-report/generate/{office}/{year}', 'generate')->name('generate.plantilla-report');
     Route::post('export/{office}/{year}', 'export')->name('generate.plantilla-report');
+    Route::post('export/all/office/{year}', 'exportAll')->name('generate-all.plantilla-report');
     Route::get('download/plantilla-generated-report/{fileName}', 'download')->name('download.generated.plantilla-report');
 });
 
 Route::controller(DBMPlantillaReportController::class)->group(function () {
-    Route::post('/dbm/plantilla-report/generate/{office}/{year}', 'generate')->name('dbm.generate.plantilla-report');
-    Route::get('/dbm/plantilla-report/download/{fileName}', 'download')->name('dmb.download.plantilla-report');
+    Route::post('dbm/plantilla-report/generate/{office}/{year}', 'generate')->name('dbm.generate.plantilla-report');
+    Route::get('dbm/plantilla-report/download/{fileName}', 'download')->name('dmb.download.plantilla-report');
+});
+
+Route::middleware('auth')->controller(EmployeeTrainingController::class)->group(function () {
+    Route::get('trainings-report', 'index')->name('trainings-report');
+    Route::get('trainings-report/{office?}/{year?}', 'generate')->name('trainings-report.generate');
 });
 
 Route::group(['middleware' => ['auth', 'user']], function () {
@@ -291,12 +301,12 @@ Route::group(['middleware' => ['auth', 'user']], function () {
     Route::get('employee-chat', [ChatController::class, 'index'])->name('employee.chat');
 });
 
+
 Route::get('export-image', function () {
     $employees = Employee::get(['Employee_id', 'ImagePhoto']);
     foreach ($employees as $employee) {
-        file_put_contents(public_path('assets\\images\\' . $employee->Employee_id . '.jpg'), $employee->ImagePhoto);
+        file_put_contents(public_path('assets\\images\\'.$employee->Employee_id.'.jpg'), $employee->ImagePhoto);
     }
+
     return redirect()->route('');
 });
-
-
