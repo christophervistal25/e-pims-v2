@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
 use App\User;
+use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,6 +24,7 @@ class UserOnly
         } else {
             return redirect()->to(route('administrator.dashboard'));
         }
+
         return $next($request);
     }
 }

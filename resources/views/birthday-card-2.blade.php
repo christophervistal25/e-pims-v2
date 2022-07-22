@@ -73,7 +73,7 @@
         });
  
 
-        canvas.add(text).bringForward(text).setActiveObject(text);
+        // canvas.add(text).bringForward(text).setActiveObject(text);
 
         /* function saveImage() {
             this.href = canvas.toDataURL({

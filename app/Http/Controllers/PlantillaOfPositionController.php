@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Office;
-use App\Setting;
-use App\Position;
 use App\PlantillaPosition;
+use App\Position;
+use App\Setting;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
+use Yajra\Datatables\Datatables;
 
 class PlantillaOfPositionController extends Controller
 {
@@ -23,6 +22,7 @@ class PlantillaOfPositionController extends Controller
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('PosCode', 'Description', 'sg_no')->get();
         $lastId = Position::latest('PosCode')->first();
+
         return view('PlantillaOfPosition.PlantillaOfPosition', compact('position', 'office', 'lastId'));
     }
 
@@ -35,16 +35,18 @@ class PlantillaOfPositionController extends Controller
         if (request()->ajax()) {
             $PlantillaPositionData = ($office != '*') ? $data->where('Offices.office_code', $office)->get()
             : $data->get();
-        return DataTables::of($PlantillaPositionData)
-        ->addColumn('action', function($row){
-                            $btn = "<a title='Edit Plantilla Of Position' href='". route('plantilla-of-position.edit', $row->pp_id) .  "' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-                            $btn = $btn."<a title='Delete Plantilla Of Position' id='delete' value='$row->pp_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+
+            return DataTables::of($PlantillaPositionData)
+        ->addColumn('action', function ($row) {
+            $btn = "<a title='Edit Plantilla Of Position' href='".route('plantilla-of-position.edit', $row->pp_id)."' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+            $btn = $btn."<a title='Delete Plantilla Of Position' id='delete' value='$row->pp_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
                             ";
-                                return $btn;
+
+            return $btn;
         })
         ->rawColumns(['action'])
         ->make(true);
-    }
+        }
     }
 
     /**
@@ -65,23 +67,23 @@ class PlantillaOfPositionController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->validate($request, [
-            'positionTitle'                 => 'required',
-            'itemNo'                        => 'required|numeric',
-            'salaryGrade'                   => 'required | in:' . implode(',',range(1, 33)),
-            'officeCode'                    => 'required',
+            'positionTitle' => 'required',
+            'itemNo' => 'required|numeric',
+            'salaryGrade' => 'required | in:'.implode(',', range(1, 33)),
+            'officeCode' => 'required',
         ]);
 
-        $plantillaposition = new PlantillaPosition;
-        $plantillaposition->pp_id                             = tap(Setting::where('Keyname', 'PP_ID')->first())->increment('Keyvalue', 1)->Keyvalue;
-        $plantillaposition->PosCode                           = $request['positionTitle'];
-        $plantillaposition->item_no                           = $request['itemNo'];
-        $plantillaposition->sg_no                             = $request['salaryGrade'];
-        $plantillaposition->office_code                       = $request['officeCode'];
-        $plantillaposition->old_position_name                 = $request['positionOldName'];
+        $plantillaposition = new PlantillaPosition();
+        $plantillaposition->pp_id = tap(Setting::where('Keyname', 'PP_ID')->first())->increment('Keyvalue', 1)->Keyvalue;
+        $plantillaposition->PosCode = $request['positionTitle'];
+        $plantillaposition->item_no = $request['itemNo'];
+        $plantillaposition->sg_no = $request['salaryGrade'];
+        $plantillaposition->office_code = $request['officeCode'];
+        $plantillaposition->old_position_name = $request['positionOldName'];
         $plantillaposition->save();
-        return response()->json(['success'=>true]);
+
+        return response()->json(['success' => true]);
     }
 
     /**
@@ -106,7 +108,8 @@ class PlantillaOfPositionController extends Controller
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('PosCode', 'Description', 'sg_no')->get();
         $plantillaofposition = PlantillaPosition::find($pp_id);
-        return view('PlantillaOfPosition.edit', compact('plantillaofposition','position', 'office'));
+
+        return view('PlantillaOfPosition.edit', compact('plantillaofposition', 'position', 'office'));
     }
 
     /**
@@ -119,17 +122,18 @@ class PlantillaOfPositionController extends Controller
     public function update(Request $request, $pp_id)
     {
         $this->validate($request, [
-            'itemNo'                        => 'required|numeric',
-            'salaryGrade'                   => 'required | in:' . implode(',',range(1, 33)),
-            'officeCode'                    => 'required',
+            'itemNo' => 'required|numeric',
+            'salaryGrade' => 'required | in:'.implode(',', range(1, 33)),
+            'officeCode' => 'required',
         ]);
         $plantillaposition = PlantillaPosition::find($pp_id);
-        $plantillaposition->item_no                           = $request['itemNo'];
-        $plantillaposition->sg_no                             = $request['salaryGrade'];
-        $plantillaposition->office_code                       = $request['officeCode'];
-        $plantillaposition->old_position_name                 = $request['positionOldName'];
+        $plantillaposition->item_no = $request['itemNo'];
+        $plantillaposition->sg_no = $request['salaryGrade'];
+        $plantillaposition->office_code = $request['officeCode'];
+        $plantillaposition->old_position_name = $request['positionOldName'];
         $plantillaposition->save();
-        return response()->json(['success'=>true]);
+
+        return response()->json(['success' => true]);
     }
 
     /**
@@ -141,6 +145,7 @@ class PlantillaOfPositionController extends Controller
     public function destroy($id)
     {
         PlantillaPosition::find($id)->delete();
-        return json_encode(array('statusCode'=>200));
+
+        return json_encode(['statusCode' => 200]);
     }
 }

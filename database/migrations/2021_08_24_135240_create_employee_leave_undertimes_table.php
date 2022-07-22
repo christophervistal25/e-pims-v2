@@ -15,10 +15,10 @@ class CreateEmployeeLeaveUndertimesTable extends Migration
     {
         Schema::create('employee_leave_undertimes', function (Blueprint $table) {
             $table->id();
-            $table->string('employee_id'); 
-            $table->integer('hoursLate'); 
-            $table->integer('minsLate'); 
-            $table->integer('hoursUndertime'); 
+            $table->string('employee_id');
+            $table->integer('hoursLate');
+            $table->integer('minsLate');
+            $table->integer('hoursUndertime');
             $table->integer('minsUndertime');
             $table->decimal('equivalent', 5, 3);
             $table->date('month_year');

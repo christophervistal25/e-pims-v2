@@ -8,8 +8,11 @@ use Illuminate\Contracts\Validation\Rule;
 class CompensatoryDateEarned implements Rule
 {
     public $month;
+
     public $year;
+
     public $id;
+
     /**
      * Create a new rule instance.
      *
@@ -31,7 +34,7 @@ class CompensatoryDateEarned implements Rule
      */
     public function passes($attribute, $value)
     {
-        return !CompensatoryLeave::where('employee_id', $this->id)->whereMonth('date_added', $this->month)->whereYear('date_added', $this->year)->exists();                                                                                                                                                 
+        return ! CompensatoryLeave::where('employee_id', $this->id)->whereMonth('date_added', $this->month)->whereYear('date_added', $this->year)->exists();
     }
 
     /**

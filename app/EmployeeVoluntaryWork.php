@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class EmployeeVoluntaryWork extends Model
 {
+    public $connection = 'E_PIMS_CONNECTION';
+
     protected $fillable = [
         'id',
         'employee_id',
@@ -13,6 +15,6 @@ class EmployeeVoluntaryWork extends Model
         'inclusive_date_from',
         'inclusive_date_to',
         'no_of_hours',
-        'position'
+        'position',
     ];
 }

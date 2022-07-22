@@ -281,9 +281,14 @@ export default {
                         this.errors = {};
                         this.rowErrors = null;
                         this.isComplete = true;
+
+                        let message = document.createElement('p');
+                        message.innerHTML = 'Successfully store all your inputs in voluntary work or involvement.';
+                        message.setAttribute('class', 'text-dark text-center');
+
                         swal({
                             icon: "success",
-                            text: "Successfully store all your inputs in voluntary work or involvement",
+                            content: message,
                             timer: 5000,
                             buttons: false,
                         });

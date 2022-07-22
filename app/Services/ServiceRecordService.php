@@ -2,17 +2,16 @@
 
 namespace App\Services;
 
-use App\Setting;
 use App\service_record as ServiceRecord;
+use App\Setting;
 
 class ServiceRecordService
 {
     /**
      * It returns the first record in the database where the employee_id is equal to the employeeID
      * parameter and the service_to_date is null
-     * 
+     *
      * @param string employeeID The employee's ID
-     * 
      * @return ServiceRecord A ServiceRecord object
      */
     public function getCurrentServiceRecord(string $employeeID): ServiceRecord

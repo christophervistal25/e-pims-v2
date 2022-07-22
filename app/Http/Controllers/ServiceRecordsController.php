@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Office;
-use App\Setting;
 use App\Employee;
-use App\Position;
+use App\Office;
 use App\Plantilla;
+use App\Position;
+use App\service_record as ServiceRecord;
+use App\Setting;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use App\service_record as ServiceRecord;
+use Yajra\Datatables\Datatables;
 
 class ServiceRecordsController extends Controller
 {
@@ -48,6 +48,7 @@ class ServiceRecordsController extends Controller
     {
         //
     }
+
     public function list()
     {
         $data = DB::table('service_records')
@@ -60,6 +61,7 @@ class ServiceRecordsController extends Controller
         return DataTables::of($data)
             ->addColumn('action', function ($row) {
                 $btn = "<a href='' class='edit btn btn-primary btn-sm'>Edit</a>";
+
                 return $btn;
             })
             ->rawColumns(['action'])
@@ -94,15 +96,15 @@ class ServiceRecordsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'fromDate'      => 'required',
-            'toDate'        => 'nullable|after:fromDate',
+            'fromDate' => 'required',
+            'toDate' => 'nullable|after:fromDate',
             'positionTitle' => 'required',
-            'status'        => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
-            'salary'        => 'required',
-            'officeCode'    => 'required',
-            'leavePay'      => 'required',
-            'date'          => 'required',
-            'cause'         => 'required',
+            'status' => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
+            'salary' => 'required',
+            'officeCode' => 'required',
+            'leavePay' => 'required',
+            'date' => 'required',
+            'cause' => 'required',
         ]);
 
         // Check if the toDate is null
@@ -114,21 +116,21 @@ class ServiceRecordsController extends Controller
             if ($currentServiceRecord) {
                 $currentServiceRecord->service_to_date = Carbon::parse($request->fromDate)->subDays(1)->format('Y-m-d');
                 $currentServiceRecord->save();
-            } 
-        } 
-        
-        $service_record = new ServiceRecord;
-        $service_record->id                = tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue;
-        $service_record->employee_id       = $request['employeeId'];
+            }
+        }
+
+        $service_record = new ServiceRecord();
+        $service_record->id = tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue;
+        $service_record->employee_id = $request['employeeId'];
         $service_record->service_from_date = $request['fromDate'];
-        $service_record->service_to_date   = $request['toDate'];
-        $service_record->PosCode           = $request['positionTitle'];
-        $service_record->status            = $request['status'];
-        $service_record->salary            = $request['salary'];
-        $service_record->office_code       = $request['officeCode'];
+        $service_record->service_to_date = $request['toDate'];
+        $service_record->PosCode = $request['positionTitle'];
+        $service_record->status = $request['status'];
+        $service_record->salary = $request['salary'];
+        $service_record->office_code = $request['officeCode'];
         $service_record->leave_without_pay = $request['leavePay'];
-        $service_record->separation_date   = $request['date'];
-        $service_record->separation_cause  = $request['cause'];
+        $service_record->separation_date = $request['date'];
+        $service_record->separation_cause = $request['cause'];
         $service_record->save();
 
         return response()->json(['success' => true]);
@@ -174,30 +176,31 @@ class ServiceRecordsController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'fromDate'                    => 'required',
-            'toDate'                      => ['nullable', 'after:fromDate'],
-            'positionTitle'               => 'required',
-            'status'                      => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
-            'salary'                      => 'required',
-            'leavePay'                    => 'required',
-            'officeCode'                  => 'required',
-            'cause'                       => 'required',
-            'date'                        => 'required',
+            'fromDate' => 'required',
+            'toDate' => ['nullable', 'after:fromDate'],
+            'positionTitle' => 'required',
+            'status' => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
+            'salary' => 'required',
+            'leavePay' => 'required',
+            'officeCode' => 'required',
+            'cause' => 'required',
+            'date' => 'required',
         ]);
 
-        $service_record                         =  ServiceRecord::find($id);
-        $service_record->employee_id            = $request['employeeId'];
-        $service_record->service_from_date      = $request['fromDate'];
-        $service_record->service_to_date        = $request['toDate'];
-        $service_record->PosCode                = $request['positionTitle'];
-        $service_record->status                 = $request['status'];
-        $service_record->salary                 = $request['salary'];
-        $service_record->office_code            = $request['officeCode'];
-        $service_record->leave_without_pay      = $request['leavePay'];
-        $service_record->separation_date        = $request['date'];
-        $service_record->separation_cause       = $request['cause'];
+        $service_record = ServiceRecord::find($id);
+        $service_record->employee_id = $request['employeeId'];
+        $service_record->service_from_date = $request['fromDate'];
+        $service_record->service_to_date = $request['toDate'];
+        $service_record->PosCode = $request['positionTitle'];
+        $service_record->status = $request['status'];
+        $service_record->salary = $request['salary'];
+        $service_record->office_code = $request['officeCode'];
+        $service_record->leave_without_pay = $request['leavePay'];
+        $service_record->separation_date = $request['date'];
+        $service_record->separation_cause = $request['cause'];
         $service_record->save();
         Session::flash('alert-success', 'Update Service Records Successfully');
+
         return back()->with('success', 'Updated Successfully');
     }
 
@@ -210,12 +213,14 @@ class ServiceRecordsController extends Controller
     public function destroy($id)
     {
         ServiceRecord::find($id)->delete();
-        return json_encode(array('statusCode' => 200));
+
+        return json_encode(['statusCode' => 200]);
     }
+
     public function delete($id)
     {
         ServiceRecord::find($id)->delete();
         // return back()->with('success', 'Successfully delete a salary adjustment record.');
-        return json_encode(array('statusCode' => 200));
+        return json_encode(['statusCode' => 200]);
     }
 }

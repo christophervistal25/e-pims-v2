@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Prints;
 
 use App\Http\Controllers\Controller;
 use App\SalaryGrade;
-use Illuminate\Http\Request;
 
 class SalaryGradePrintController extends Controller
 {
@@ -14,6 +13,7 @@ class SalaryGradePrintController extends Controller
         $pdf = \App::make('snappy.pdf.wrapper');
         // $pdf->setOption('header-html', base_path('views/reports/header.blade.php'));
         $pdf->loadView('SalaryGrade.print', compact('grades', 'year'))->setPaper('letter')->setOrientation('portrait');
+
         return $pdf->inline();
     }
 }

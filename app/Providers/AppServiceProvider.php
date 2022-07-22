@@ -3,63 +3,58 @@
 namespace App\Providers;
 
 use App\Employee;
-use App\Plantilla;
-use Carbon\Carbon;
-use App\Notification;
-use App\LeaveIncrement;
-use App\EmployeeLeaveRecord;
-use App\EmployeeLeaveApplication;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\View;
 use App\EmployeeLeaveForwardedBalance;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\ServiceProvider;
 use App\Http\Repositories\LeaveRecordRepository;
 use App\Observers\EmployeeLeaveForwardedBalanceObserver;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-      public function __construct()
-      {
-            $this->leaveRecordRepository = new LeaveRecordRepository();
-      }
-      /**
-       * Register any application services.
-       *
-       * @return void
-       */
-      public function register()
-      {
-            //
-      }
+    public function __construct()
+    {
+        $this->leaveRecordRepository = new LeaveRecordRepository();
+    }
 
-      /**
-       * Bootstrap any application services.
-       *
-       * @return void
-       */
-      public function boot()
-      {
-            // Model::preventLazyLoading(!app()->isProduction());
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
 
-            EmployeeLeaveForwardedBalance::observe(EmployeeLeaveForwardedBalanceObserver::class);
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        // Model::preventLazyLoading(!app()->isProduction());
 
-            View::composer(['accounts.employee.layouts.app'], function ($view) {
-                  $view->with('notifications', Auth::user()->notifications);
-            });
+        EmployeeLeaveForwardedBalance::observe(EmployeeLeaveForwardedBalanceObserver::class);
 
-            View::composer(['layouts.app'], function ($view) {
-                  $currentYear = date('Y');
-                  $fetchedYear = date('Y') - 1;
+        View::composer(['accounts.employee.layouts.app'], function ($view) {
+            $view->with('notifications', Auth::user()->notifications);
+        });
 
-                  $employeeForPlantillaSchedule = Employee::whereHas('plantilla', function ($query) use ($fetchedYear) {
-                        $query->where('year', $fetchedYear);
-                  })->whereDoesntHave('plantilla', function ($query) use ($currentYear) {
-                        $query->where('year', $currentYear);
-                  })->count();
+        View::composer(['layouts.app', 'layouts.app-vue'], function ($view) {
+            $currentYear = date('Y');
+            $fetchedYear = date('Y') - 1;
 
-                  $view->with('no_of_employees_for_plantilla_schedule', $employeeForPlantillaSchedule);
-                  $view->with('no_of_pending_leave_list', 0);
-            });
-      }
+            $employeeForPlantillaSchedule = Employee::whereHas('plantilla', function ($query) use ($fetchedYear) {
+                $query->where('year', $fetchedYear);
+            })->whereDoesntHave('plantilla', function ($query) use ($currentYear) {
+                $query->where('year', $currentYear);
+            })->count();
+
+            $view->with('no_of_employees_for_plantilla_schedule', $employeeForPlantillaSchedule);
+            $view->with('no_of_pending_leave_list', 0);
+        });
+    }
 }

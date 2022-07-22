@@ -2,9 +2,6 @@
 
 namespace App\Observers;
 
-use App\Setting;
-use Carbon\Carbon;
-use App\EmployeeLeaveTransaction;
 use App\EmployeeLeaveForwardedBalance;
 
 class EmployeeLeaveForwardedBalanceObserver
@@ -17,7 +14,6 @@ class EmployeeLeaveForwardedBalanceObserver
      */
     public function created(EmployeeLeaveForwardedBalance $employeeLeaveForwardedBalance)
     {
-        
     }
 
     /**

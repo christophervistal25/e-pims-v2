@@ -2,18 +2,18 @@
 
 namespace App\Services;
 
-use App\User;
 use App\Employee;
+use App\EmployeeCivilService;
 use App\Plantilla;
 use App\Promotion;
-use App\EmployeeCivilService;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Cache;
+use App\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Cache;
 
 class EmployeeService
 {
     public const INACTIVE = 0;
+
     public const ACTIVE = 1;
 
     public function getJobOrdersCount(): int
@@ -30,6 +30,7 @@ class EmployeeService
     public function findByEmployeeID(string $employeeID): Employee
     {
         $employeeID = str_pad($employeeID, 4, 0, STR_PAD_LEFT);
+
         return Employee::exclude(['ImagePhoto'])->with(['account', 'province_residential', 'city_residential', 'barangay_residential', 'province_permanent', 'city_permanent', 'barangay_permanent'])
             ->find($employeeID);
     }
@@ -73,17 +74,15 @@ class EmployeeService
 
     public function getNoOfEmployeesWithEligibility(): int
     {
-        return Cache::rememberForever('EMPLOYEES_WITH_CIVIL_SERVICE', function () {
-            return EmployeeCivilService::has('employee')->count();
-        });
+        return EmployeeCivilService::distinct('employee_id')->count();
     }
 
     public function getNoOfEmployeesWithNewPlantilla(): int
     {
-        return Cache::rememberForever('EMPLOYEES_WITH_NEW_PLANTILLA', function () {
-            $currentYear = date('Y');
-            return Plantilla::has('employee')->where('year', $currentYear)->count();
-        });
+        $currentYear = date('Y');
+        return Employee::permanent()->active()->whereHas('plantilla', function () use($currentYear) {
+            return Plantilla::where('year', $currentYear);
+        })->count();
     }
 
     public function getLastId(): int
@@ -96,10 +95,8 @@ class EmployeeService
         return Employee::get(['Employee_id'])->pluck('Employee_id');
     }
 
-
     public function addNewEmployee(array $data = []): Employee
     {
-
         $employee = new Employee();
         $employee['Employee_id'] = $data['employeeID'];
         $employee['FirstName'] = $data['firstname'];
@@ -129,20 +126,21 @@ class EmployeeService
             $employee['step'] = $data['step_increment'];
         }
 
-        if (!is_null($data['username'])) {
+        if (! is_null($data['username'])) {
             $user = User::updateOrCreate([
-                'Employee_id' => $data['employeeID']
+                'Employee_id' => $data['employeeID'],
             ], [
                 'username' => $data['username'],
                 'user_type' => $data['user_type'],
             ]);
 
-            if (!is_null($data['password'])) {
+            if (! is_null($data['password'])) {
                 $user->password = bcrypt($data['password']);
                 $user->save();
             }
         }
         $employee->save();
+
         return $employee;
     }
 
@@ -150,7 +148,7 @@ class EmployeeService
      * It updates the employee information and if the username is not null, it will update the user
      * information.
      * </code>
-     * 
+     *
      * @param array data array of data
      * @param Employee employee the employee object
      */
@@ -185,20 +183,19 @@ class EmployeeService
                 $employee['step'] = $data['step_increment'];
             }
 
-            if (!is_null($data['username'])) {
+            if (! is_null($data['username'])) {
                 $user = User::updateOrCreate([
-                    'Employee_id' => $data['employeeID']
+                    'Employee_id' => $data['employeeID'],
                 ], [
                     'username' => $data['username'],
                     'user_type' => $data['user_type'],
                 ]);
 
-                if (!is_null($data['password'])) {
+                if (! is_null($data['password'])) {
                     $user->password = bcrypt($data['password']);
                     $user->save();
                 }
             }
-
 
             $employee->save();
         });

@@ -22,10 +22,9 @@ class CreatePlatillaCscSchedulesTable extends Migration
             $table->string('position_ext');
             $table->integer('sg_no');
             $table->integer('step_no');
-            $table->decimal('salary_amount',11,2);
+            $table->decimal('salary_amount', 11, 2);
 
-
-            $table->string('employee_id'); 
+            $table->string('employee_id');
             $table->string('area_code');
             $table->string('area_type');
             $table->string('area_level');
@@ -33,10 +32,10 @@ class CreatePlatillaCscSchedulesTable extends Migration
             $table->date('date_original_appointment');
             $table->date('date_last_promotion');
             $table->string('office_code');
-            $table->bigInteger('division_id');            
+            $table->bigInteger('division_id');
 
-            $table->string('status');        
-            $table->year('covered_year');        
+            $table->string('status');
+            $table->year('covered_year');
             $table->timestamps();
         });
     }

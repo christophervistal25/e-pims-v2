@@ -1,7 +1,7 @@
 <?php
 
-use App\Office;
 use App\Division;
+use App\Office;
 use Illuminate\Database\Seeder;
 
 class DivisionSeeder extends Seeder
@@ -14,14 +14,13 @@ class DivisionSeeder extends Seeder
     public function run()
     {
         $offices = Office::get();
-        foreach($offices as $index => $office) {
-            Office::get()->each(function ($office) use($index) {
+        foreach ($offices as $index => $office) {
+            Office::get()->each(function ($office) use ($index) {
                 Division::create([
-                    'division_name' => 'Division ' . $index,
-                    'office_code' => $office->office_code
+                    'division_name' => 'Division '.$index,
+                    'office_code' => $office->office_code,
                 ]);
             });
         }
-        
     }
 }

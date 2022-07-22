@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
+use App\Services\EmployeeBirthdayService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Cache;
-use App\Http\Repositories\BirthdayRepository;
-use App\Services\EmployeeBirthdayService;
 
 class BirthdayController extends Controller
 {
@@ -19,8 +16,8 @@ class BirthdayController extends Controller
     /**
      * Get all employees birthdays by range
      *
-     * @param string $from
-     * @param string $to
+     * @param  string  $from
+     * @param  string  $to
      * @return void
      */
     public function range(string $from, string $to, Request $request)
@@ -28,21 +25,22 @@ class BirthdayController extends Controller
         // Merge query params into request for validation.
         $request->merge([
             'from' => $from,
-            'to' => $to
+            'to' => $to,
         ]);
 
         $this->validate($request, [
             'from' => ['date', 'required', 'before_or_equal:to'],
-            'to' => ['date', 'required', 'after_or_equal:from']
+            'to' => ['date', 'required', 'after_or_equal:from'],
         ], [], ['from' => 'Start Date', 'to' => 'End Date']);
 
         /* Returning the result of the `getByRange` method, which is a collection of employees. Then it
         is calling the `each` method on the collection, which will iterate over each employee and
         add the `age` property to the employee. */
         return $this->birthdayService->getByRange($from, $to)->each(function ($employee) {
-            $employee->age_ordinal = $this->birthdayService->transformToOrdinal( Carbon::parse($employee->BirthDate)->age);
+            $employee->age_ordinal = $this->birthdayService->transformToOrdinal(Carbon::parse($employee->BirthDate)->age);
         });
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -54,7 +52,8 @@ class BirthdayController extends Controller
 
         return view('employee.birthdays', [
             'currentDate' => $currentDate,
-            'class' => 'mini-sidebar'
+            'class' => 'mini-sidebar',
+            'style' => 'overflow-y:hidden',
         ]);
     }
 

@@ -25,10 +25,10 @@ class VoluntaryWorkRequest extends FormRequest
     {
         return [
             '*.name_and_address' => ['required'],
-            '*.inclusive_date_from'      => ['nullable', 'required_with:*.name_and_address', 'date', 'before:*.inclusive_date_to'],
-            '*.inclusive_date_to'        => ['nullable', 'required_with:*.name_and_address', 'date', 'after:*.inclusive_date_from'],
-            '*.no_of_hours'   => ['nullable', 'required_with:*.name_and_address'],
-            '*.position'  => ['nullable', 'required_with:*.name_and_address'],
+            '*.inclusive_date_from' => ['nullable', 'required_with:*.name_and_address', 'date', 'before:*.inclusive_date_to'],
+            '*.inclusive_date_to' => ['nullable', 'required_with:*.name_and_address', 'date', 'after:*.inclusive_date_from'],
+            '*.no_of_hours' => ['nullable', 'required_with:*.name_and_address'],
+            '*.position' => ['nullable', 'required_with:*.name_and_address'],
         ];
     }
 
@@ -36,10 +36,10 @@ class VoluntaryWorkRequest extends FormRequest
     {
         return [
             '*.name_and_address' => 'Name & Address Organization',
-            '*.inclusive_date_from'      => 'Inclusive Date From',
-            '*.inclusive_date_to'        => 'Inclusive Date to',
-            '*.no_of_hours'   => 'Number of Hours',
-            '*.position'  => 'Position',
+            '*.inclusive_date_from' => 'Inclusive Date From',
+            '*.inclusive_date_to' => 'Inclusive Date to',
+            '*.no_of_hours' => 'Number of Hours',
+            '*.position' => 'Position',
         ];
     }
 }

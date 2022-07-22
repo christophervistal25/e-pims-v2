@@ -2,23 +2,20 @@
 
 namespace App\Services;
 
-use App\Setting;
 use App\Plantilla;
-use App\Promotion;
-use Carbon\Carbon;
-
 use App\PlantillaPosition;
-use Illuminate\Support\Str;
+use App\Promotion;
+use App\Setting;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use App\Services\ServiceRecordService;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
 
 class PromotionService extends ServiceRecordService
 {
     /**
      * It creates a new record in the `promotion` table, and it increments the `Keyvalue` column of
      * the `setting` table by 1
-     * 
+     *
      * @param int oldPlantillaID The old position of the employee
      * @param array data array of data to be inserted
      */
@@ -32,14 +29,13 @@ class PromotionService extends ServiceRecordService
             'sg_no' => $data['salary_grade'],
             'step_no' => $data['step'],
             'sg_year' => $data['current_salary_grade_year'],
-            'newpp_id' => $data['position']
+            'newpp_id' => $data['position'],
         ]);
     }
 
-
     /**
      * It updates the promotion and plantilla table
-     * 
+     *
      * @param Promotion promotion the promotion model
      * @param array data array of data from the form
      */
@@ -56,13 +52,12 @@ class PromotionService extends ServiceRecordService
             $promotion->step_no = $data['step'];
             $promotion->sg_year = $data['current_salary_grade_year'];
 
-
             $plantilla = $promotion->new_plantilla_position->plantillas;
             $plantilla->item_no = $plantillaPosition->item_no;
             $plantilla->pp_id = $plantillaPosition->pp_id;
             $plantilla->sg_no = $data['salary_grade'];
             $plantilla->step_no = $data['step'];
-            $plantilla->salary_amount = Str::remove(",", $data['salary_amount']);
+            $plantilla->salary_amount = Str::remove(',', $data['salary_amount']);
             $plantilla->area_code = $data['area_code'];
             $plantilla->area_type = $data['area_type'];
             $plantilla->area_level = $data['area_level'];
@@ -77,13 +72,12 @@ class PromotionService extends ServiceRecordService
             $plantillaUpdate = $plantilla->save();
         });
 
-
         return $promotionUpdate && $plantillaUpdate;
     }
 
     /**
      * It updates the plantilla table with the new data
-     * 
+     *
      * @param Promotion promotion the promotion object
      * @param array data
      */
@@ -91,7 +85,7 @@ class PromotionService extends ServiceRecordService
     {
         $plantilla = $promotion->new_plantilla_position->plantillas;
         $plantilla->step_no = $data['step'];
-        $plantilla->salary_amount = Str::remove(",", $data['salary_amount']);
+        $plantilla->salary_amount = Str::remove(',', $data['salary_amount']);
         $plantilla->date_original_appointment = $data['original_appointment'];
         $plantilla->date_last_promotion = $data['last_promotion'];
         $plantilla->area_code = $data['area_code'];
@@ -99,6 +93,7 @@ class PromotionService extends ServiceRecordService
         $plantilla->area_level = $data['area_level'];
         $plantilla->division_id = $data['division'];
         $plantilla->status = $data['status'];
+
         return $plantilla->save();
     }
 }

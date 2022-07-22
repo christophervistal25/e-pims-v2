@@ -19,7 +19,7 @@
           <div class="card-body">
 
                <div class="row">
-                    @foreach($promotionInSixMonths as $employees)
+                    @foreach($promotionInSixMonths as $employee)
                     <div class="col-lg-6">
                          <div class="leave-info-box">
                               <div class="btn-group dropleft float-right">
@@ -37,16 +37,14 @@
                               </div>
                               <br>
                          <div class="media align-items-center">
-                              <img class="img-fluid w-25 mr-4" src="/storage/employee_images/no_image.png">
-                              {{-- <img class="img-fluid w-25 mr-2" src="{{ asset('/assets/img/luna.jpg') }}" style="height: 200px"> --}}
-                            
+                              <img class="img-fluid w-25 shadow-sm mr-2" src="{{ asset('/assets/img/profiles/'.$employee->Employee_id.'.jpg') }}">
                               <div class="media-body">
-                                   <div class="my-0 font-weight-bold h3">{{ $employees->fullname }}</div>
-                                   <div class="my-0 font-weight-medium">{{ $employees->position->Description }}</div>
-                                   <div class="my-0 font-weight-medium">Office Charging : <strong>{{ $employees->office_charging->Description }}</strong></div>
-                                   <div class="my-0 font-weight-medium">Office Assignment : {{ $employees->office_assignment->Description }}</div>
-                                   <div class="my-0 font-weight-medium">First day of service : <strong>{{ date('l F d, Y', strtotime($employees->first_day_of_service)) }}</strong>
-                                        <div class="my-0 font-weight-medium">Next Increment : <strong>{{ date('l F d, Y', strtotime( $employees->first_day_of_service->addYears(3) )) }}</strong>
+                                   <div class="my-0 font-weight-bold h3">{{ $employee->fullname }}</div>
+                                   <div class="my-0 font-weight-medium">{{ $employee->position->Description }}</div>
+                                   <div class="my-0 font-weight-medium">Office Charging : <strong>{{ $employee->office_charging->Description }}</strong></div>
+                                   <div class="my-0 font-weight-medium">Office Assignment : {{ $employee->office_assignment->Description }}</div>
+                                   <div class="my-0 font-weight-medium">First day of service : <strong>{{ date('l F d, Y', strtotime($employee->first_day_of_service)) }}</strong>
+                                        <div class="my-0 font-weight-medium">Next Increment : <strong>{{ date('l F d, Y', strtotime( $employee->first_day_of_service->addYears(3) )) }}</strong>
                                         </div>
                                    </div>
                               </div>

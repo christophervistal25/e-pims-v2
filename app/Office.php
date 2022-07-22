@@ -2,21 +2,20 @@
 
 namespace App;
 
-use App\Office2;
-use App\Plantilla;
-use App\StepIncrement;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Office extends Model
 {
     public $incrementing = false;
 
     protected $primaryKey = 'office_code';
+
     protected $keyType = 'string';
+
     public $table = 'Offices';
-    public $connection = 'DTR_PAYROLL_CONNECTION';
+
+    public $connection = 'E_PIMS_CONNECTION';
+
     public $timestamps = false;
 
     protected $fillable = [

@@ -45,6 +45,7 @@ class PlantillaOfSchedule extends Model
     {
         return $this->hasOne('App\Position', 'position_id', 'pp_id');
     }
+
     public function plantillaPosition()
     {
         return $this->hasOne('App\PlantillaPosition', 'pp_id', 'pp_id');
@@ -54,6 +55,4 @@ class PlantillaOfSchedule extends Model
     {
         return $this->hasOne('App\Plantilla', 'plantilla', 'plantilla');
     }
-
-
 }

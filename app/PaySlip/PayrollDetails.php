@@ -7,13 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class PayrollDetails extends Model
 {
-    public $table = 'Payroll_Details';
     use HasFactory;
+
+    public $table = 'Payroll_Details';
 
     public function payroll()
     {
         return $this->belongsTo(Payroll::class, 'payroll_no', 'payroll_no');
     }
-
-    
 }

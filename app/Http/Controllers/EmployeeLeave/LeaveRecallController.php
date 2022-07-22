@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\EmployeeLeave;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class LeaveRecallController extends Controller
 {
@@ -11,11 +10,4 @@ class LeaveRecallController extends Controller
     {
         return view('leave.leave-recall');
     }
-} 
-
-
-
-
-
-
-?>
+}

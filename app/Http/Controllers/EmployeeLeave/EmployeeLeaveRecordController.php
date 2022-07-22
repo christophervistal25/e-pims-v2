@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\EmployeeLeave;
 
 use App\Employee;
-use App\LeaveType;
 use App\EmployeeLeaveRecord;
-use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
-use App\Http\Repositories\LeaveRecordRepository;
+use App\LeaveType;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Yajra\Datatables\Datatables;
 
 class EmployeeLeaveRecordController extends Controller
 {
     public const SICK_LEAVE = 10001;
+
     public const VACATION_LEAVE = 10002;
 
     /**
@@ -25,7 +24,8 @@ class EmployeeLeaveRecordController extends Controller
     public function index()
     {
         $employees = Employee::exclude(['ImagePhoto'])->get();
-        $records = EmployeeLeaveRecord::where('fb_as_of', '!=', NULL)->with(['employee', 'type'])->get()->groupBy('employee.fullname');
+        $records = EmployeeLeaveRecord::where('fb_as_of', '!=', null)->with(['employee', 'type'])->get()->groupBy('employee.fullname');
+
         return view('leave.leave-forwarded-balance', compact('records', 'employees'));
     }
 
@@ -33,12 +33,13 @@ class EmployeeLeaveRecordController extends Controller
     {
         if ($request->ajax()) {
             $rPerEmployee = EmployeeLeaveRecord::where('record_type', 'F')->with(['employee', 'type'])->get()->groupBy('employee.fullname');
+
             return Datatables::of($rPerEmployee)
                 ->addColumn('employee_id', function ($rPerEmployee) {
                     return $rPerEmployee->first()->employee_id;
                 })
                 ->addColumn('fullname', function ($rPerEmployee) {
-                    return $rPerEmployee->first()->employee->LastName . ', ' . $rPerEmployee->first()->employee->FirstName . ' ' . $rPerEmployee->first()->employee->MiddleName . ' ' . $rPerEmployee->first()->employee->Suffix;
+                    return $rPerEmployee->first()->employee->LastName.', '.$rPerEmployee->first()->employee->FirstName.' '.$rPerEmployee->first()->employee->MiddleName.' '.$rPerEmployee->first()->employee->Suffix;
                 })
                 ->addColumn('fb_as_of', function ($rPerEmployee) {
                     return $rPerEmployee->first()->fb_as_of;
@@ -50,7 +51,7 @@ class EmployeeLeaveRecordController extends Controller
                     return $rPerEmployee->where('type.code', 'VL')->sum('used');
                 })
                 ->addColumn('vl_balance', function ($rPerEmployee) {
-                    return (float)$rPerEmployee->where('type.code', 'VL')->sum('earned') - $rPerEmployee->where('type.code', 'VL')->sum('used');
+                    return (float) $rPerEmployee->where('type.code', 'VL')->sum('earned') - $rPerEmployee->where('type.code', 'VL')->sum('used');
                 })
                 ->addColumn('sl_earned', function ($rPerEmployee) {
                     return $rPerEmployee->where('type.code', 'SL')->sum('earned');
@@ -59,20 +60,20 @@ class EmployeeLeaveRecordController extends Controller
                     return $rPerEmployee->where('type.code', 'SL')->sum('used');
                 })
                 ->addColumn('sl_balance', function ($rPerEmployee) {
-                    return (float)$rPerEmployee->where('type.code', 'SL')->sum('earned') - $rPerEmployee->where('type.code', 'SL')->sum('used');
+                    return (float) $rPerEmployee->where('type.code', 'SL')->sum('earned') - $rPerEmployee->where('type.code', 'SL')->sum('used');
                 })
                 ->addColumn('leave_balance', function ($rPerEmployee) {
-                    return (float)($rPerEmployee->where('type.code', 'VL')->sum('earned') - $rPerEmployee->where('type.code', 'VL')->sum('used'))
+                    return (float) ($rPerEmployee->where('type.code', 'VL')->sum('earned') - $rPerEmployee->where('type.code', 'VL')->sum('used'))
                         + ($rPerEmployee->where('type.code', 'SL')->sum('earned') - $rPerEmployee->where('type.code', 'SL')->sum('used'));
                 })
                 ->addcolumn('action', function ($rPerEmployee) {
                     $button = '<button type="button" class="btn btn-success btn-sm rounded-circle shadow edit__leave__type"
-                                        data-id="' . $rPerEmployee[0]->employee_id . '">
+                                        data-id="'.$rPerEmployee[0]->employee_id.'">
                                         <i class="la la-pencil"></i>
                                     </button>';
                     $button .=
                         '<button class="btn btn-danger btn-sm rounded-circle shadow delete__leave__type ml-1"
-                            data-id="' . $rPerEmployee[0]->employee_id . '" data-as-of-date="' . $rPerEmployee[0]->fb_as_of . ' ">
+                            data-id="'.$rPerEmployee[0]->employee_id.'" data-as-of-date="'.$rPerEmployee[0]->fb_as_of.' ">
                             <i class="la la-trash"></i>
                         </button>';
 
@@ -80,7 +81,6 @@ class EmployeeLeaveRecordController extends Controller
                 })
                 ->make(true);
         }
-
     }
 
     /**
@@ -96,7 +96,7 @@ class EmployeeLeaveRecordController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -120,7 +120,7 @@ class EmployeeLeaveRecordController extends Controller
 
         $leaveTypes->each(function ($leaveType) use ($request) {
             // Insert Record with As of.
-            $employeeForwardedBalanceRecord = new EmployeeLeaveRecord;
+            $employeeForwardedBalanceRecord = new EmployeeLeaveRecord();
             $employeeForwardedBalanceRecord->employee_id = $request['employeeID'];
             $employeeForwardedBalanceRecord->leave_type_id = $leaveType->id;
 
@@ -148,7 +148,7 @@ class EmployeeLeaveRecordController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $ids
+     * @param  int  $ids
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -159,7 +159,7 @@ class EmployeeLeaveRecordController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -178,8 +178,8 @@ class EmployeeLeaveRecordController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -219,13 +219,14 @@ class EmployeeLeaveRecordController extends Controller
             $leaverec->date_record = $request['update_asOf'];
             $leaverec->save();
         }
+
         return response()->json(['success' => true]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, $id)
@@ -238,6 +239,5 @@ class EmployeeLeaveRecordController extends Controller
 
         return response()
             ->json(['success' => true]);
-
     }
 }

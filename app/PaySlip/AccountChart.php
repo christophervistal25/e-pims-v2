@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AccountChart extends Model
 {
-    public $table = 'AccountsChart';
     use HasFactory;
+
+    public $table = 'AccountsChart';
 }

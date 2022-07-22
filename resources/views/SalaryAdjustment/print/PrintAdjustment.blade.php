@@ -39,7 +39,7 @@
         <div class="body-container row">
             {{-- LOGO --}}
             <div class="w-25">
-                <img src="/assets/img/sdslogo.jpg" width="165px" style="margin-right: 100px">
+                <img src="/assets/img/province.png" width="165px" style="margin-right: 100px">
             </div>
             <div class="offset-1 ml-5 pl-4">
                 <span class="h4">Republic of the Philippines</span>

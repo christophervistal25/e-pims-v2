@@ -104,7 +104,7 @@
 
 
                          <div class="form-group col-12 col-lg-6">
-                              <label>Division<span class="text-danger">*</span></label>
+                              <label>Division</label>
                               <select value="" class="form-control divisionId selectpicker" name="divisionId" data-live-search="true" id="divisionId" data-size="5">
                                    <option></option>
                               </select>

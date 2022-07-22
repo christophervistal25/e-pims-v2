@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Employees')
+@prepend('meta-data')
+    <meta name="current-user" content="{{ $username }}">
+@endprepend
 @prepend('page-css')
 <link rel="stylesheet" href="/assets/css/style.css" />
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" />
@@ -14,6 +17,10 @@
     .hoverable:hover {
         background: #F2F3F6;
         transition: 200ms all ease-in;
+    }
+
+    .swal-content {
+        text-align :left !important;
     }
 
 </style>
@@ -110,6 +117,7 @@
                             Middlename
                         </th>
                         <th class="text-truncate text-uppercase text-sm">Suffix</th>
+                        <th class="text-truncate text-uppercase text-sm">Age</th>
                         <th class="text-truncate text-uppercase text-sm">
                             Position
                         </th>

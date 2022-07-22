@@ -6,7 +6,8 @@ use Illuminate\Contracts\Validation\Rule;
 
 class LandbankAccountNumberRule implements Rule
 {
-    public const CODE = "432765432"; 
+    public const CODE = '432765432';
+
     /**
      * Create a new rule instance.
      *
@@ -27,43 +28,45 @@ class LandbankAccountNumberRule implements Rule
     public function passes($attribute, $value)
     {
         $checkSum = ($value + 0);
-        if($checkSum === 0 || strlen($value) <= 9) {
+        if ($checkSum === 0 || strlen($value) <= 9) {
             $this->message = 'Invalid account number';
+
             return false;
         }
-        $isDigit      = false;
-        $firstNumber  = 0;
+        $isDigit = false;
+        $firstNumber = 0;
         $secondNumber = 0;
-        $startIndex   = 0;
-        $lastDigit    = 0;
-        $MINUED       = 11;
+        $startIndex = 0;
+        $lastDigit = 0;
+        $MINUED = 11;
         $accountNumber = $value;
 
         do {
             $first = $accountNumber[$startIndex];
             $second = self::CODE[$startIndex] ?? 0;
-            
-            if($second == 0) {
+
+            if ($second == 0) {
                 $lastDigit = (int) $first;
                 break;
             }
-        
-            $firstNumber +=  (int) $first * (int) $second;
+
+            $firstNumber += (int) $first * (int) $second;
             $startIndex++;
         } while ($startIndex <= strlen(self::CODE));
-        
+
         $secondNumber = $firstNumber % $MINUED;
-        if(($secondNumber == 0 or $secondNumber == 1.0) and $lastDigit == 0) {
+        if (($secondNumber == 0 or $secondNumber == 1.0) and $lastDigit == 0) {
             $isDigit = true;
         } else {
-            if($lastDigit == ($MINUED - $secondNumber)) {
+            if ($lastDigit == ($MINUED - $secondNumber)) {
                 $isDigit = true;
             }
         }
 
-        if(!$isDigit) {
+        if (! $isDigit) {
             $this->message = 'Invalid account number';
-        } 
+        }
+
         return true;
     }
 

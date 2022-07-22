@@ -13,25 +13,25 @@ class RefStatus extends Model
     {
         parent::boot();
         self::creating(function ($status) {
-            $maxStatusCode     = self::max('stat_code');
-            $code              = str_pad(($maxStatusCode + 1), 4, '0', STR_PAD_LEFT);
+            $maxStatusCode = self::max('stat_code');
+            $code = str_pad(($maxStatusCode + 1), 4, '0', STR_PAD_LEFT);
             $status->stat_code = $code;
             Cache::forget('status');
         });
 
-        self::created(function() {
+        self::created(function () {
             Cache::forget('status');
         });
 
-        self::updated(function() {
+        self::updated(function () {
             Cache::forget('status');
         });
 
-        self::saved(function() {
+        self::saved(function () {
             Cache::forget('status');
         });
 
-        self::deleted(function() {
+        self::deleted(function () {
             Cache::forget('status');
         });
     }
@@ -46,5 +46,4 @@ class RefStatus extends Model
     {
         $this->attributes['status_name'] = strtoupper($value);
     }
-
 }

@@ -4,11 +4,9 @@ namespace App\Services;
 
 use App\Employee;
 use Carbon\Carbon;
-use NumberFormatter;
-use App\Services\EmployeeService;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Cache;
+use NumberFormatter;
 
 class EmployeeBirthdayService extends EmployeeService
 {
@@ -34,45 +32,46 @@ class EmployeeBirthdayService extends EmployeeService
 
     public function tomorrow(): Collection
     {
-        $date  = Carbon::now()->addDays(1);
+        $date = Carbon::now()->addDays(1);
         $month = $date->format('m');
-        $day   = $date->format('d');
+        $day = $date->format('d');
 
         return $this->getByMonthAndDate($month, $day);
     }
 
     public function weekBefore(): Collection
     {
-        $date  = Carbon::now()->addDay(self::ONE_WEEK);
+        $date = Carbon::now()->addDay(self::ONE_WEEK);
         $month = $date->format('m');
-        $day   = $date->format('d');
+        $day = $date->format('d');
 
         return $this->getByMonthAndDate($month, $day);
     }
-    
+
     public function transformToOrdinal(int $age)
     {
         $locale = 'en_US';
         $nf = new NumberFormatter($locale, NumberFormatter::ORDINAL);
+
         return $nf->format($age);
     }
 
     public function getByRange(string $from, string $to): Collection
     {
         $fromMonth = Carbon::parse($from)->format('m');
-        $fromDate = Carbon::parse($from)->format('d');
-        $toMonth = Carbon::parse($to)->format('m');
-        $toDate = Carbon::parse($to)->format('d');
+        $fromDate  = Carbon::parse($from)->format('d');
+        $toMonth   = Carbon::parse($to)->format('m');
+        $toDate    = Carbon::parse($to)->format('d');
 
         return DB::connection('DTR_PAYROLL_CONNECTION')->table('Employees')
             ->whereMonth('Birthdate', '>=', $fromMonth)
             ->whereMonth('Birthdate', '<=', $toMonth)
             ->whereDay('Birthdate', '>=', $fromDate)
             ->whereDay('Birthdate', '<=', $toDate)
-            ->leftJoin('E_PIMS.dbo.positions', 'Employees.PosCode', '=', 'E_PIMS.dbo.positions.position_code')
+            ->leftJoin('EPims.dbo.Positions', 'Employees.PosCode', '=', 'EPims.dbo.Positions.PosCode')
             ->leftJoin('Office', 'Employees.OfficeCode', '=', 'Office.OfficeCode')
-            ->where('isActive', 1)
-            ->select(['Employee_id', 'FirstName', 'LastName', 'MiddleName', 'Suffix', 'BirthDate', 'positions.position_name', 'Office.Description'])
+            ->where('isActive', Employee::ACTIVE)
+            ->select(['Employee_id', 'FirstName', 'LastName', 'MiddleName', 'Suffix', 'BirthDate', 'Positions.Description as Position_Description','Office.Description'])
             ->orderBy('Birthdate', 'ASC')
             ->get();
     }

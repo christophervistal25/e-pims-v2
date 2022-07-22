@@ -20,7 +20,7 @@ class CreatePlantillasTable extends Migration
             $table->bigInteger('pp_id');
             $table->integer('sg_no');
             $table->integer('step_no');
-            $table->decimal('salary_amount',11,2);
+            $table->decimal('salary_amount', 11, 2);
             $table->string('employee_id');
             $table->string('area_code');
             $table->string('area_type');

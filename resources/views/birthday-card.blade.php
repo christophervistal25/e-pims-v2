@@ -87,7 +87,7 @@
         });
  
 
-        canvas.add(text).bringForward(text).setActiveObject(text);
+         // canvas.add(text).bringForward(text).setActiveObject(text);
 
     </script>
 </body>

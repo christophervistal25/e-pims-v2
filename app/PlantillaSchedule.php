@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class PlantillaSchedule extends Model
 {
     public $connection = 'DTR_PAYROLL_CONNECTION';
-    
+
     protected $fillable = [
         'ps_id',
         'plantilla_id',
@@ -47,6 +47,7 @@ class PlantillaSchedule extends Model
     {
         return $this->hasOne('App\Position', 'position_id', 'pp_id');
     }
+
     public function plantillaPosition()
     {
         return $this->hasOne('App\PlantillaPosition', 'pp_id', 'pp_id');

@@ -2,15 +2,13 @@
 
 namespace App\Services;
 
-use App\Office;
 use App\Office2;
 use App\OfficeCharging;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Cache;
 
 class OfficeService
 {
-
     public function get(): Collection
     {
         return Cache::rememberForever('OFFICES', function () {

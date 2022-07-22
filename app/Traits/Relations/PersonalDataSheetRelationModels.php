@@ -2,25 +2,23 @@
 
 namespace App\Traits\Relations;
 
-use App\City;
 use App\Barangay;
-use App\Province;
-use App\EmployeeIssuedID;
-use App\EmployeeReference;
+use App\City;
 use App\EmployeeCivilService;
-use App\EmployeeRelevantQuery;
-use App\EmployeeVoluntaryWork;
-use App\EmployeeSpouseChildren;
-use App\EmployeeWorkExperience;
-use App\EmployeeFamilyBackground;
-use App\EmployeeOtherInformation;
-use App\EmployeeTrainingAttained;
 use App\EmployeeEducationalBackground;
-
+use App\EmployeeFamilyBackground;
+use App\EmployeeIssuedID;
+use App\EmployeeOtherInformation;
+use App\EmployeeReference;
+use App\EmployeeRelevantQuery;
+use App\EmployeeSpouseChildren;
+use App\EmployeeTrainingAttained;
+use App\EmployeeVoluntaryWork;
+use App\EmployeeWorkExperience;
+use App\Province;
 
 trait PersonalDataSheetRelationModels
 {
-     
     public function province_residential()
     {
         return $this->hasOne(Province::class, 'province_code', 'residential_province')->select('province_code', 'name');
@@ -51,7 +49,6 @@ trait PersonalDataSheetRelationModels
         return $this->hasOne(Barangay::class, 'barangay_code', 'permanent_barangay')->select('barangay_code', 'province_code', 'city_code', 'name');
     }
 
-    
     public function family_background()
     {
         return $this->hasOne(EmployeeFamilyBackground::class, 'employee_id', 'employee_id');
@@ -84,7 +81,7 @@ trait PersonalDataSheetRelationModels
 
     public function program_attained()
     {
-        return $this->hasMany(EmployeeTrainingAttained::class, 'employee_id', 'employee_id');
+        return $this->hasMany(EmployeeTrainingAttained::class, 'Employee_id', 'employee_id');
     }
 
     public function other_information()
@@ -106,6 +103,4 @@ trait PersonalDataSheetRelationModels
     {
         return $this->hasOne(EmployeeIssuedID::class, 'employee_id', 'employee_id');
     }
-
-
 }

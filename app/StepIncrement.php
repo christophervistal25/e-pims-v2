@@ -2,11 +2,6 @@
 
 namespace App;
 
-use App\Office;
-use App\Employee;
-use App\Position;
-use App\Plantilla;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -14,11 +9,14 @@ class StepIncrement extends Model
 {
     use SoftDeletes;
 
+    public $connection = 'E_PIMS_CONNECTION';
+    
     protected $dates = ['deleted_at'];
+
     protected $fillable = [
         'employee_id',
         'item_no',
-        'position_id', 
+        'position_id',
         'date_step_increment',
         'sg_no_from',
         'last_latest_appointment',
@@ -34,7 +32,6 @@ class StepIncrement extends Model
         'updated_at',
         'PosCode',
     ];
-
 
     public function employee()
     {

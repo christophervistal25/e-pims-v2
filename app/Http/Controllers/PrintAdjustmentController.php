@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Employee;
 use App\SalaryAdjustment;
 use App\Setting;
-use App\Employee;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+
 class PrintAdjustmentController extends Controller
 {
     /**
@@ -18,6 +19,7 @@ class PrintAdjustmentController extends Controller
     {
         return view('salaryAdjustment.print.printAdjustment');
     }
+
     public function print($id)
     {
         $salaryAdjustment = SalaryAdjustment::find($id);
@@ -26,15 +28,19 @@ class PrintAdjustmentController extends Controller
         $space = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
         $pdf = App::make('snappy.pdf.wrapper');
         $pdf->loadView('salaryAdjustment.print.previewed', compact('salaryAdjustment', 'setting', 'space'))->setPaper('letter')->setOrientation('portrait');
+
         return $pdf->inline();
     }
+
     public function printList($id)
     {
         // $salaryAdjustment = SalaryAdjustment::with(['employee','plantilla', 'plantilla.plantilla_positions.position', 'plantilla.office'])->find($id);
         $salaryAdjustment = SalaryAdjustment::find($id);
         $setting = Setting::find('SALARYADPRINT');
+
         return view('salaryAdjustment.print.printAdjustment', compact('salaryAdjustment', 'id', 'setting'));
     }
+
     /**
      * Show the form for creating a new resource.
      *

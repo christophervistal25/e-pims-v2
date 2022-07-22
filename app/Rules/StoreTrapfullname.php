@@ -3,13 +3,12 @@
 namespace App\Rules;
 
 use App\Employee;
-
-use Illuminate\Support\Str;
 use Illuminate\Contracts\Validation\Rule;
 
 class StoreTrapfullname implements Rule
 {
     private $data;
+
     /**
      * Create a new rule instance.
      *
@@ -29,7 +28,7 @@ class StoreTrapfullname implements Rule
      */
     public function passes($attribute, $value)
     {
-        if(count($this->data) !== 0) {
+        if (count($this->data) !== 0) {
             $records = Employee::where('lastname', $this->data['lastname'])
                                 ->where('firstname', $this->data['firstname'])
                                 ->where('middlename', $this->data['middlename'] ?? '')
@@ -40,11 +39,11 @@ class StoreTrapfullname implements Rule
             $records = Employee::where('lastname', request()->lastName)
                                 ->where('firstname', request()->firstName)
                                 ->where('middlename', request()->middleName ?? '')
-                                ->where('extension', request()->extension  ?? '')
+                                ->where('extension', request()->extension ?? '')
                                 ->where('date_birth', request()->dateOfBirth)
                                 ->count();
-                                
         }
+
         return $records <= 0;
     }
 

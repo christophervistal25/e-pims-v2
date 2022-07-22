@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\RefNameExtension;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\RefNameExtension;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Str;
 
 class ReferenceNameExtensionController extends Controller
 {
@@ -24,10 +23,10 @@ class ReferenceNameExtensionController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'extension' => ['required', 'unique:ref_name_extensions,extension','regex:/^[a-zA-Z]+$/u'],
+            'extension' => ['required', 'unique:ref_name_extensions,extension', 'regex:/^[a-zA-Z]+$/u'],
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return response()->json(['errors' => $validator->messages()], 422);
         }
 
@@ -35,5 +34,4 @@ class ReferenceNameExtensionController extends Controller
 
         return response()->json($record, 201);
     }
-
 }

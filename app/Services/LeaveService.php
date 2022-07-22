@@ -1,10 +1,8 @@
 <?php
+
 namespace App\Services;
 
 use App\EmployeeLeaveApplication;
-use App\EmployeeLeaveRecord;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 
 class LeaveService
 {
@@ -17,21 +15,21 @@ class LeaveService
         'enjoyed',
     ];
 
-    public function getEmployeeApplied() : array
+    public function getEmployeeApplied(): array
     {
         return EmployeeLeaveApplication::get(['Employee_id'])
                                 ->pluck('Employee_id')
                                 ->toArray();
     }
 
-    public function countAllStatus() : array
+    public function countAllStatus(): array
     {
         $data = [];
- 
-        foreach(self::STATUS as $status) {
-            $data[$status] =  EmployeeLeaveApplication::where('status', $status)->count();
-        }   
+
+        foreach (self::STATUS as $status) {
+            $data[$status] = EmployeeLeaveApplication::where('status', $status)->count();
+        }
+
         return $data;
     }
-
 }

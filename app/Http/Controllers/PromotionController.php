@@ -2,22 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Office;
-use App\Setting;
 use App\Employee;
-use App\Position;
+use App\Office;
 use App\Plantilla;
-use App\Promotion;
-use Carbon\Carbon;
 use App\PlantillaPosition;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables;
-use App\Services\PromotionService;
-use Illuminate\Support\Facades\DB;
-use App\Services\SalaryGradeService;
-use App\service_record as ServiceRecord;
+use App\Position;
+use App\Promotion;
 use App\Services\PlantillaPersonnelService;
+use App\Services\PromotionService;
+use App\Services\SalaryGradeService;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Yajra\DataTables\DataTables;
 
 class PromotionController extends Controller
 {
@@ -68,7 +66,7 @@ class PromotionController extends Controller
 
         return view('promotion.index', [
             'offices' => $offices,
-            'rangeYear' => $rangeYear
+            'rangeYear' => $rangeYear,
         ]);
     }
 
@@ -109,26 +107,25 @@ class PromotionController extends Controller
 
         // Validate form input
         $this->validate($request, [
-            "employee"                  => ['required', 'exists:plantillas,employee_id'],
-            "office"                    => ['required', 'exists:Offices,office_code'],
-            "division"                  => ['required', 'exists:Divisions,division_id'],
-            "position"                  => ['required'],
-            "status"                    => ['required', 'in:Permanent,Casual,Coterminous,Provisional,Temporary'],
-            "item_no"                   => ['required', 'integer'],
-            "old_item_no"               => ['required', 'integer'],
-            "current_salary_grade_year" => ['required', 'digits:4', 'integer'],
-            "salary_grade"              => ['required', 'integer', 'min:1', 'max:33'],
-            "step"                      => ['required', 'integer', 'min:1', 'max:8'],
-            "salary_amount"             => ['required'],
-            "original_appointment"      => ['required', 'date', 'before:last_promotion'],
-            "last_promotion"            => ['required', 'date', 'after:original_appointment'],
-            "area_code"                 => ['required', 'in:'.implode(',', Plantilla::REGIONS)],
-            "area_type"                 => ['required', 'in:'.implode(',', Plantilla::AREA_TYPES)],
-            "area_level"                => ['required', 'in:'.implode(',', Plantilla::AREA_LEVELS)],
+            'employee' => ['required', 'exists:plantillas,employee_id'],
+            'office' => ['required', 'exists:Offices,office_code'],
+            'division' => ['nullable', 'exists:Divisions,division_id'],
+            'position' => ['required'],
+            'status' => ['required', 'in:Permanent,Casual,Coterminous,Provisional,Temporary'],
+            'item_no' => ['required', 'integer'],
+            'old_item_no' => ['required', 'integer'],
+            'current_salary_grade_year' => ['required', 'digits:4', 'integer'],
+            'salary_grade' => ['required', 'integer', 'min:1', 'max:33'],
+            'step' => ['required', 'integer', 'min:1', 'max:8'],
+            'salary_amount' => ['required'],
+            'original_appointment' => ['required', 'date', 'before:last_promotion'],
+            'last_promotion' => ['required', 'date', 'after:original_appointment'],
+            'area_code' => ['required', 'in:'.implode(',', Plantilla::REGIONS)],
+            'area_type' => ['required', 'in:'.implode(',', Plantilla::AREA_TYPES)],
+            'area_level' => ['required', 'in:'.implode(',', Plantilla::AREA_LEVELS)],
         ], [], [
-            'employee' => 'employee name'
+            'employee' => 'employee name',
         ]);
-        
 
         $employeeLatestPlantilla = Plantilla::where('employee_id', $request->employee)
             ->orderBy('year', 'DESC')
@@ -173,7 +170,7 @@ class PromotionController extends Controller
         $positions = Position::get();
 
         $promotion = Promotion::with(['employee', 'new_plantilla_position', 'new_plantilla_position.plantillas', 'new_plantilla_position.plantillas.plantilla_positions', 'new_plantilla_position.plantillas.plantilla_positions.position'])->find($promotionID);
-        
+
         $employeeStatus = ['Permanent', 'Casual', 'Coterminous', 'Provisional', 'Temporary'];
 
         $areaCode = Plantilla::REGIONS;
@@ -194,29 +191,28 @@ class PromotionController extends Controller
         ]);
     }
 
-
     public function update(Request $request, int $promotionID)
     {
         $this->validate($request, [
-            "office"                    => ['required', 'exists:Offices,office_code'],
-            "division"                  => ['required', 'exists:Divisions,division_id'],
-            "status"                    => ['required', 'in:Permanent,Casual,Coterminous,Provisional,Temporary'],
-            "item_no"                   => ['required', 'integer'],
-            "old_item_no"               => ['required', 'integer'],
-            "current_salary_grade_year" => ['required', 'digits:4', 'integer'],
-            "salary_grade"              => ['required', 'integer', 'min:1', 'max:33'],
-            "step"                      => ['required', 'integer', 'min:1', 'max:8'],
-            "salary_amount"             => ['required'],
-            "original_appointment"      => ['required', 'date', 'before:last_promotion'],
-            "last_promotion"            => ['required', 'date', 'after:original_appointment'],
-            "area_code"                 => ['required', 'in:'.implode(',', Plantilla::REGIONS)],
-            "area_type"                 => ['required', 'in:'.implode(',', Plantilla::AREA_TYPES)],
-            "area_level"                => ['required', 'in:'.implode(',', Plantilla::AREA_LEVELS)],
+            'office' => ['required', 'exists:Offices,office_code'],
+            'division' => ['required', 'exists:Divisions,division_id'],
+            'status' => ['required', 'in:Permanent,Casual,Coterminous,Provisional,Temporary'],
+            'item_no' => ['required', 'integer'],
+            'old_item_no' => ['required', 'integer'],
+            'current_salary_grade_year' => ['required', 'digits:4', 'integer'],
+            'salary_grade' => ['required', 'integer', 'min:1', 'max:33'],
+            'step' => ['required', 'integer', 'min:1', 'max:8'],
+            'salary_amount' => ['required'],
+            'original_appointment' => ['required', 'date', 'before:last_promotion'],
+            'last_promotion' => ['required', 'date', 'after:original_appointment'],
+            'area_code' => ['required', 'in:'.implode(',', Plantilla::REGIONS)],
+            'area_type' => ['required', 'in:'.implode(',', Plantilla::AREA_TYPES)],
+            'area_level' => ['required', 'in:'.implode(',', Plantilla::AREA_LEVELS)],
         ]);
 
         $promotion = Promotion::with(['new_plantilla_position', 'new_plantilla_position.plantillas'])->find($promotionID);
 
-        if (!is_null($request->position)) {
+        if (! is_null($request->position)) {
             $this->promotionService->changePositionInPromotion($promotion, $request->all());
             $plantillaPosition = PlantillaPosition::find($request->position);
             $this->promotionService->getCurrentServiceRecord($promotion->employee_id)->update([
@@ -237,7 +233,6 @@ class PromotionController extends Controller
 
         /* Updating the service record of the employee. */
 
-
         return back()->with('success', 'You successfully update a promotion');
     }
 
@@ -245,6 +240,7 @@ class PromotionController extends Controller
     {
         $promotion = Promotion::find($promotionID);
         $promotion->delete();
+
         return response()->json(['success' => true]);
     }
 }

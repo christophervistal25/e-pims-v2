@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\LeaveType;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class LeaveTypeSeeder extends Seeder
 {
@@ -15,7 +14,6 @@ class LeaveTypeSeeder extends Seeder
      */
     public function run()
     {
-        
         $data = [
             [
                 'name' => 'SICK LEAVE',
@@ -128,7 +126,7 @@ class LeaveTypeSeeder extends Seeder
                 'applicable_gender' => 'female/male',
                 'convertible_to_cash' => 'no',
                 'required_rendered_service' => 0,
-                'category' => 'others', 
+                'category' => 'others',
                 'editable' => 'no',
             ],
             [
@@ -154,19 +152,19 @@ class LeaveTypeSeeder extends Seeder
                 'editable' => 'no',
             ],
         ];
-        foreach($data as $index => $type) {
+        foreach ($data as $index => $type) {
             LeaveType::create([
-                'name'                      => $type['name'],
-                'code'                      => $type['code'],
-                'code_number'               => (10001) + ($index),
-                'description'               => $type['description'],
-                'days_period'               => $type['days_period'],
-                'applicable_gender'         => $type['applicable_gender'],
-                'convertible_to_cash'       => $type['convertible_to_cash'],
+                'name' => $type['name'],
+                'code' => $type['code'],
+                'code_number' => (10001) + ($index),
+                'description' => $type['description'],
+                'days_period' => $type['days_period'],
+                'applicable_gender' => $type['applicable_gender'],
+                'convertible_to_cash' => $type['convertible_to_cash'],
                 'required_rendered_service' => $type['required_rendered_service'],
                 // 'editable'                => $type['editable'],
-                'editable'                => 'yes',
-                'category'                => $type['category'] ?? '',
+                'editable' => 'yes',
+                'category' => $type['category'] ?? '',
             ]);
         }
     }

@@ -3,13 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Scopes\ProvinceScope;
 
 class Province extends Model
 {
+    public $connection = 'E_PIMS_CONNECTION';
+    
     public $incrementing = false;
-    public    $primaryKey = 'province_code';
-    protected $fillable   = ['province_code', 'name', 'income_classification', 'population'];
+
+    public $primaryKey = 'province_code';
+
+    protected $fillable = ['province_code', 'name', 'income_classification', 'population'];
+
     public $table = 'Provinces';
 
     public function cities()

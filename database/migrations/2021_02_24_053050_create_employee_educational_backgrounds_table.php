@@ -49,7 +49,6 @@ class CreateEmployeeEducationalBackgroundsTable extends Migration
             $table->string('college_year_graduated')->nullable();
             $table->string('college_scholarship')->nullable();
 
-
             $table->string('graduate_studies_name')->nullable();
             $table->string('graduate_studies_education')->nullable();
             $table->string('graduate_studies_period_from')->nullable();

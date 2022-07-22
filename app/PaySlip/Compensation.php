@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Compensation extends Model
 {
-    public $table = 'Employee_Add_Compensation';
     use HasFactory;
+
+    public $table = 'Employee_Add_Compensation';
 
     public function description()
     {

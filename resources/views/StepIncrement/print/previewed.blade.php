@@ -50,7 +50,7 @@
             <div class="body-container row">
                 <!-- {{-- LOGO --}} -->
                 <div class="header-text w-25 logo" style="margin-top: -20px">
-                    <img src="file:///laragon/www/E-PIMS-V2/public/assets/img/sdslogo.jpg" width="150px">
+                    <img src="file:///laragon/www/E-PIMS/public/assets/img/province.png" width="150px">
                 </div>
                 <div class="header-text">
                     <span style="font-size: 1em; margin-top: 50px; font-family: 'Open Sans', sans-serif;">Republic of the Philippines</span>

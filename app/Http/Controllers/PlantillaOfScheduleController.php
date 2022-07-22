@@ -2,21 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Office;
-use App\Setting;
-use App\Division;
-use App\Employee;
-use App\Position;
-use App\Plantilla;
-use Carbon\Carbon;
-use App\SalaryGrade;
 use App\OfficeCharging;
-use App\PlantillaPosition;
-use App\PlantillaSchedule;
+use App\Plantilla;
+use App\Setting;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
 
 class PlantillaOfScheduleController extends Controller
 {
@@ -36,13 +26,14 @@ class PlantillaOfScheduleController extends Controller
         $currentYear = date('Y');
 
         // Check if plantilla year has current year
-        if (!in_array($currentYear, $plantillaYear)) {
+        if (! in_array($currentYear, $plantillaYear)) {
             $plantillaYear[] = $currentYear;
         }
 
         $PlantillaOfScheduleYear = [];
 
         $office = OfficeCharging::select('OfficeCode', 'Description')->get();
+
         return view('PlantillaOfSchedule.PlantillaOfSchedule', compact('office', 'plantillaYear', 'PlantillaOfScheduleYear'));
     }
 
@@ -69,9 +60,9 @@ class PlantillaOfScheduleController extends Controller
             $class = $row->year == $year ? 'present_element' : '';
 
             $btn = "<a title='Edit Plantilla' 
-                        href='" . route('plantilla-of-personnel.edit', $row->plantilla_id) . "' 
+                        href='".route('plantilla-of-personnel.edit', $row->plantilla_id)."' 
                         class='rounded-circle text-white edit btn btn-success btn-sm $class' 
-                        data-id='" . $row->plantilla_id . "'>
+                        data-id='".$row->plantilla_id."'>
                             <i class='la la-pencil'></i>
                     </a>";
             // $btn .= "&nbsp; <a title='Delete Plantilla' class='rounded-circle text-white edit btn btn-danger btn-sm id__holder' data-id='".$row->plantilla_id."'><i class='la la-trash'></i></a>";
@@ -83,7 +74,6 @@ class PlantillaOfScheduleController extends Controller
 
     /**
      * Responsible method for create new plantilla schedule.
-     * 
      */
     public function store(Request $request)
     {
@@ -99,11 +89,11 @@ class PlantillaOfScheduleController extends Controller
             unset($currentData['updated_at']);
 
             Plantilla::updateOrCreate([
-                'year'        => $currentData['year'],
-                'status'      => $currentData['status'],
+                'year' => $currentData['year'],
+                'status' => $currentData['status'],
                 'office_code' => $currentData['office_code'],
                 'employee_id' => $currentData['employee_id'],
-                'pp_id'       => $currentData['pp_id'],
+                'pp_id' => $currentData['pp_id'],
             ], $currentData);
         }
 
@@ -114,7 +104,7 @@ class PlantillaOfScheduleController extends Controller
     {
         $currentYear = date('Y');
         $fetchYear = date('Y') - 1;
-        Plantilla::with('plantilla_positions')->where('year', $fetchYear)->get()->each(function ($record) use($currentYear) {
+        Plantilla::with('plantilla_positions')->where('year', $fetchYear)->get()->each(function ($record) use ($currentYear) {
             $currentData = $record->getAttributes();
             $currentData['plantilla_id'] = tap(Setting::where('Keyname', 'AUTONUMBER')->first())->increment('Keyvalue', 1)->Keyvalue;
             $currentData['year'] = $currentYear;
@@ -123,14 +113,13 @@ class PlantillaOfScheduleController extends Controller
             unset($currentData['updated_at']);
 
             Plantilla::updateOrCreate([
-                'year'        => $currentData['year'],
-                'status'      => $currentData['status'],
+                'year' => $currentData['year'],
+                'status' => $currentData['status'],
                 'office_code' => $currentData['office_code'],
                 'employee_id' => $currentData['employee_id'],
-                'pp_id'       => $currentData['pp_id'],
+                'pp_id' => $currentData['pp_id'],
             ], $currentData);
-        
-      });
+        });
 
         return response()->json(['success' => true]);
     }

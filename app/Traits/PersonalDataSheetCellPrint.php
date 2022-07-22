@@ -1,9 +1,10 @@
-<?php 
+<?php
+
 namespace App\Traits;
 
 trait PersonalDataSheetCellPrint
 {
-    public static function personalInformationCells() : array
+    public static function personalInformationCells(): array
     {
         return [
             'D10' => 'lastname',
@@ -44,7 +45,7 @@ trait PersonalDataSheetCellPrint
         ];
     }
 
-    public static function familyBackgroundCells() : array
+    public static function familyBackgroundCells(): array
     {
         return [
             'relation_type' => 'one_to_one',
@@ -70,28 +71,28 @@ trait PersonalDataSheetCellPrint
         ];
     }
 
-    public static function spouseChildsCells() : array
+    public static function spouseChildsCells(): array
     {
         return [
             'relation_type' => 'one_to_many',
             'relation' => 'spouse_child',
             'options' => [
-                'max_row'    => 2,
+                'max_row' => 2,
                 'max_column' => 11,
             ],
             'cells' => [
                 'letters' => ['I', 'M'],
                 'from' => 37,
-                'to'   => 48,
+                'to' => 48,
                 'columns' => [
                     'name',
-                    'date_of_birth'
+                    'date_of_birth',
                 ],
             ],
         ];
     }
 
-    public static function educationalBackground() : array
+    public static function educationalBackground(): array
     {
         return [
             'relation_type' => 'one_to_one',
@@ -121,7 +122,6 @@ trait PersonalDataSheetCellPrint
                 'M56' => 'vocational_trade_course_year_graduated',
                 'N56' => 'vocational_trade_course_scholarship',
 
-
                 'D57' => 'college_name',
                 'G57' => 'college_education',
                 'J57' => 'college_period_from',
@@ -141,19 +141,19 @@ trait PersonalDataSheetCellPrint
         ];
     }
 
-    public static function civilServiceEgibility() : array
+    public static function civilServiceEgibility(): array
     {
         return [
             'relation_type' => 'one_to_many',
             'relation' => 'civil_service',
             'options' => [
-                'max_row'    => 6,
+                'max_row' => 6,
                 'max_column' => 7,
             ],
             'cells' => [
                 'letters' => ['A', 'F', 'G', 'I', 'L', 'M'],
                 'from' => 5,
-                'to'   => 11,
+                'to' => 11,
                 'columns' => [
                     'career_service',
                     'rating',
@@ -166,19 +166,19 @@ trait PersonalDataSheetCellPrint
         ];
     }
 
-    public static function workExperience() : array
+    public static function workExperience(): array
     {
         return [
             'relation_type' => 'one_to_many',
             'relation' => 'work_experience',
             'options' => [
-                'max_row'    => 8,
-                'max_column' =>  28,
+                'max_row' => 8,
+                'max_column' => 28,
             ],
             'cells' => [
                 'letters' => ['A', 'C', 'D', 'G', 'J', 'K', 'L', 'M'],
                 'from' => 18,
-                'to'   => 45,
+                'to' => 45,
                 'columns' => [
                     'from',
                     'to',
@@ -193,43 +193,43 @@ trait PersonalDataSheetCellPrint
         ];
     }
 
-    public static function voluntaryWork() :array
+    public static function voluntaryWork(): array
     {
         return [
             'relation_type' => 'one_to_many',
             'relation' => 'voluntary_work',
             'options' => [
-                'max_row'    => 5,
-                'max_column' =>  6,
+                'max_row' => 5,
+                'max_column' => 6,
             ],
             'cells' => [
                 'letters' => ['A', 'E', 'F', 'G', 'H'],
                 'from' => 6,
-                'to'   => 12,
+                'to' => 12,
                 'columns' => [
-                   'name_and_address',
-                   'inclusive_date_from',
-                   'inclusive_date_to',
-                   'no_of_hours',
-                   'position',
+                    'name_and_address',
+                    'inclusive_date_from',
+                    'inclusive_date_to',
+                    'no_of_hours',
+                    'position',
                 ],
             ],
         ];
     }
 
-    public static function learningAndDevelopment() : array
+    public static function learningAndDevelopment(): array
     {
         return [
             'relation_type' => 'one_to_many',
             'relation' => 'program_attained',
             'options' => [
-                'max_row'    => 6,
-                'max_column' =>  17,
+                'max_row' => 6,
+                'max_column' => 17,
             ],
             'cells' => [
                 'letters' => ['A', 'E', 'F', 'G', 'H', 'I'],
                 'from' => 19,
-                'to'   => 35,
+                'to' => 35,
                 'columns' => [
                     'title',
                     'date_of_attendance_from',
@@ -242,19 +242,19 @@ trait PersonalDataSheetCellPrint
         ];
     }
 
-    public static function otherInformation() : array
+    public static function otherInformation(): array
     {
         return [
             'relation_type' => 'one_to_many',
             'relation' => 'other_information',
             'options' => [
-                'max_row'    => 3,
-                'max_column' =>  7,
+                'max_row' => 3,
+                'max_column' => 7,
             ],
             'cells' => [
                 'letters' => ['A', 'C', 'I'],
                 'from' => 39,
-                'to'   => 45,
+                'to' => 45,
                 'columns' => [
                     'special_skill',
                     'non_academic',
@@ -264,7 +264,7 @@ trait PersonalDataSheetCellPrint
         ];
     }
 
-    public static function references() : array
+    public static function references(): array
     {
         return [
             'relation_type' => 'one_to_many',
@@ -272,17 +272,17 @@ trait PersonalDataSheetCellPrint
             'cells' => [
                 'letters' => ['A', 'F', 'G'],
                 'from' => 52,
-                'to'   => 54,
+                'to' => 54,
                 'columns' => [
                     'name',
                     'address',
                     'telephone_number',
                 ],
-            ]
+            ],
         ];
     }
 
-    public static function issuedID() : array
+    public static function issuedID(): array
     {
         return [
             'relation_type' => 'one_to_one',
@@ -294,6 +294,4 @@ trait PersonalDataSheetCellPrint
             ],
         ];
     }
-
-
 }

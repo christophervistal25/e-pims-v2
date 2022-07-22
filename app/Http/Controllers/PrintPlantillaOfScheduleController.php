@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\PlantillaSchedule;
-use App\PlantillaPosition;
-use App\Position;
-use App\SalaryGrade;
 use App\Employee;
 use App\Office;
+use App\PlantillaPosition;
+use App\PlantillaSchedule;
+use Illuminate\Http\Request;
+
 class PrintPlantillaOfScheduleController extends Controller
 {
     /**
@@ -20,43 +19,47 @@ class PrintPlantillaOfScheduleController extends Controller
     {
         return view('plantillaOfSchedule.print.printPlantillaOfSchedule');
     }
+
     public function print($id)
     {
-        $plantillaPosition = PlantillaPosition::select('pp_id', 'position_id', 'item_no', 'sg_no', 'office_code', 'old_position_name','year')->with('position:position_id,position_name','plantillas:pp_id,step_no,salary_amount,employee_id,year,area_code,area_type,area_level','salary_grade:sg_no,sg_step1')->where('office_code',$id)->get(); 
+        $plantillaPosition = PlantillaPosition::select('pp_id', 'position_id', 'item_no', 'sg_no', 'office_code', 'old_position_name', 'year')->with('position:position_id,position_name', 'plantillas:pp_id,step_no,salary_amount,employee_id,year,area_code,area_type,area_level', 'salary_grade:sg_no,sg_step1')->where('office_code', $id)->get();
         $plantillaEmployeeid = array_column(array_column($plantillaPosition->toArray(), 'plantillas'), 'employee_id');
         $plantillaPositionPpid = array_column($plantillaPosition->toArray(), 'pp_id');
         $plantillaPositionYear = array_column(array_column($plantillaPosition->toArray(), 'plantillas'), 'year');
-        foreach($plantillaPositionYear as $plantillaPositionYears){
+        foreach ($plantillaPositionYear as $plantillaPositionYears) {
             $newPlantillaPositionYear[] = $plantillaPositionYears - 1;
         }
-        $plantillaSchedule = PlantillaSchedule::select('ps_id','pp_id','item_no','salary_amount','date_original_appointment','date_last_promotion','year','status')->whereIn('pp_id',$plantillaPositionPpid)->whereIn('year',$newPlantillaPositionYear)->get();
+        $plantillaSchedule = PlantillaSchedule::select('ps_id', 'pp_id', 'item_no', 'salary_amount', 'date_original_appointment', 'date_last_promotion', 'year', 'status')->whereIn('pp_id', $plantillaPositionPpid)->whereIn('year', $newPlantillaPositionYear)->get();
         $plantillaSchedulePpid = array_column($plantillaSchedule->toArray(), 'pp_id');
         $plantillaScheduleSalaryAmount = array_column($plantillaSchedule->toArray(), 'salary_amount');
-        $employee = Employee::select('employee_id','lastname','firstname','middlename','date_birth')->whereIn('employee_id',$plantillaEmployeeid)->get();
+        $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename', 'date_birth')->whereIn('employee_id', $plantillaEmployeeid)->get();
         $item_no = array_column($plantillaSchedule->toArray(), 'item_no');
         $plantillaPositionCount = count($plantillaPosition);
-        $office = Office::select('office_code','office_short_name','office_address')->whereIn('office_code',[$id])->get();
-        return view('plantillaOfSchedule.print.previewed', compact('employee','plantillaPosition','plantillaSchedule','plantillaPositionCount','office','id'));
+        $office = Office::select('office_code', 'office_short_name', 'office_address')->whereIn('office_code', [$id])->get();
+
+        return view('plantillaOfSchedule.print.previewed', compact('employee', 'plantillaPosition', 'plantillaSchedule', 'plantillaPositionCount', 'office', 'id'));
     }
 
     public function printList($id)
     {
-        $plantillaPosition = PlantillaPosition::select('pp_id', 'position_id', 'item_no', 'sg_no', 'office_code', 'old_position_name','year')->with('position:position_id,position_name','plantillas:pp_id,step_no,salary_amount,employee_id,year,area_code,area_type,area_level','salary_grade:sg_no,sg_step1')->where('office_code',$id)->get(); 
+        $plantillaPosition = PlantillaPosition::select('pp_id', 'position_id', 'item_no', 'sg_no', 'office_code', 'old_position_name', 'year')->with('position:position_id,position_name', 'plantillas:pp_id,step_no,salary_amount,employee_id,year,area_code,area_type,area_level', 'salary_grade:sg_no,sg_step1')->where('office_code', $id)->get();
         $plantillaEmployeeid = array_column(array_column($plantillaPosition->toArray(), 'plantillas'), 'employee_id');
         $plantillaPositionPpid = array_column($plantillaPosition->toArray(), 'pp_id');
         $plantillaPositionYear = array_column(array_column($plantillaPosition->toArray(), 'plantillas'), 'year');
-        foreach($plantillaPositionYear as $plantillaPositionYears){
+        foreach ($plantillaPositionYear as $plantillaPositionYears) {
             $newPlantillaPositionYear[] = $plantillaPositionYears - 1;
         }
-        $plantillaSchedule = PlantillaSchedule::select('ps_id','pp_id','item_no','salary_amount','date_original_appointment','date_last_promotion','year','status')->whereIn('pp_id',$plantillaPositionPpid)->whereIn('year',$newPlantillaPositionYear)->get();
+        $plantillaSchedule = PlantillaSchedule::select('ps_id', 'pp_id', 'item_no', 'salary_amount', 'date_original_appointment', 'date_last_promotion', 'year', 'status')->whereIn('pp_id', $plantillaPositionPpid)->whereIn('year', $newPlantillaPositionYear)->get();
         $plantillaSchedulePpid = array_column($plantillaSchedule->toArray(), 'pp_id');
         $plantillaScheduleSalaryAmount = array_column($plantillaSchedule->toArray(), 'salary_amount');
-        $employee = Employee::select('employee_id','lastname','firstname','middlename','date_birth')->whereIn('employee_id',$plantillaEmployeeid)->get();
+        $employee = Employee::select('employee_id', 'lastname', 'firstname', 'middlename', 'date_birth')->whereIn('employee_id', $plantillaEmployeeid)->get();
         $item_no = array_column($plantillaSchedule->toArray(), 'item_no');
         $plantillaPositionCount = count($plantillaPosition);
-        $office = Office::select('office_code','office_short_name','office_address')->whereIn('office_code',[$id])->get();
-        return view('plantillaOfSchedule.print.printPlantillaOfSchedule', compact('employee','plantillaPosition','plantillaSchedule','plantillaPositionCount','office','id'));
+        $office = Office::select('office_code', 'office_short_name', 'office_address')->whereIn('office_code', [$id])->get();
+
+        return view('plantillaOfSchedule.print.printPlantillaOfSchedule', compact('employee', 'plantillaPosition', 'plantillaSchedule', 'plantillaPositionCount', 'office', 'id'));
     }
+
     /**
      * Show the form for creating a new resource.
      *

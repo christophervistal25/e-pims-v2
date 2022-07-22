@@ -8137,9 +8137,12 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           _this2.errors = {};
           _this2.rowErrors = null;
           _this2.isComplete = true;
+          var message = document.createElement('p');
+          message.innerHTML = 'Successfully store all your inputs in voluntary work or involvement.';
+          message.setAttribute('class', 'text-dark text-center');
           sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
             icon: "success",
-            text: "Successfully store all your inputs in voluntary work or involvement",
+            content: message,
             timer: 5000,
             buttons: false
           });
@@ -8387,6 +8390,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           swal({
             text: "Successfully store all your inputs in Government Issued I.D",
             icon: "success",
+            buttons: false,
             timer: 5000
           });
         }

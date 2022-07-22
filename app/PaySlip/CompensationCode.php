@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class CompensationCode extends Model
 {
-    public $table = 'Compensation';
     use HasFactory;
+
+    public $table = 'Compensation';
 
     public function account_chart()
     {

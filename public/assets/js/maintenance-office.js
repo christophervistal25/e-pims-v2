@@ -130,6 +130,8 @@ $(document).ready(function () {
                         title: "",
                         text: "Successfully added!",
                         icon: "success",
+                        buttons : false,
+                        timer :5000,
                     });
 
                     $("#saveBtn").attr("disabled", false);

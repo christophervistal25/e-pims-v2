@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
@@ -8,11 +9,14 @@
 
     @stack('meta-data')
     <title>@yield('title') | {{ config('app.name') }}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" />
     {{-- <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/assets/img/favicon.png') }}"> --}}
     {{-- <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}"> --}}
     {{-- <link rel="stylesheet" href="{{ asset('/assets/css/all.min.css') }}"> --}}
-    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet"
+        href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <link rel="stylesheet" href="{{ asset('/assets/css/font-awesome.min.css') }}">
     {{-- <link rel="stylesheet" href="{{ asset('/assets/css/line-awesome.min.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('/assets/css/style.css') }}">
@@ -33,7 +37,8 @@
 </head>
 
 {{-- mini-sidebar --}}
-<body class="{{ $class ?? '' }}">
+
+<body class="{{ $class ?? '' }}" style="{{ $style ?? '' }}">
     <div id="loader-wrapper">
         <div id="loader">
             <div class="loader-ellips">
@@ -98,79 +103,16 @@
                                                 <span class="message-author">Richard Miles </span>
                                                 <span class="message-time">12:28 AM</span>
                                                 <div class="clearfix"></div>
-                                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
+                                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur
+                                                    adipiscing</span>
                                             </div>
                                         </div>
                                     </a>
                                 </li>
-                                <li class="notification-message">
-                                    <a href="chat.html">
-                                        <div class="list-item">
-                                            <div class="list-left">
-                                                <span class="avatar">
-                                                    <img alt="" src="/assets/img/profiles/avatar-02.jpg">
-                                                </span>
-                                            </div>
-                                            <div class="list-body">
-                                                <span class="message-author">John Doe</span>
-                                                <span class="message-time">6 Mar</span>
-                                                <div class="clearfix"></div>
-                                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="notification-message">
-                                    <a href="chat.html">
-                                        <div class="list-item">
-                                            <div class="list-left">
-                                                <span class="avatar">
-                                                    <img alt="" src="/assets/img/profiles/avatar-03.jpg">
-                                                </span>
-                                            </div>
-                                            <div class="list-body">
-                                                <span class="message-author"> Tarah Shropshire </span>
-                                                <span class="message-time">5 Mar</span>
-                                                <div class="clearfix"></div>
-                                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="notification-message">
-                                    <a href="chat.html">
-                                        <div class="list-item">
-                                            <div class="list-left">
-                                                <span class="avatar">
-                                                    <img alt="" src="/assets/img/profiles/avatar-05.jpg">
-                                                </span>
-                                            </div>
-                                            <div class="list-body">
-                                                <span class="message-author">Mike Litorus</span>
-                                                <span class="message-time">3 Mar</span>
-                                                <div class="clearfix"></div>
-                                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="notification-message">
-                                    <a href="chat.html">
-                                        <div class="list-item">
-                                            <div class="list-left">
-                                                <span class="avatar">
-                                                    <img alt="" src="/assets/img/profiles/avatar-08.jpg">
-                                                </span>
-                                            </div>
-                                            <div class="list-body">
-                                                <span class="message-author"> Catherine Manseau </span>
-                                                <span class="message-time">27 Feb</span>
-                                                <div class="clearfix"></div>
-                                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
+
+
+
+
                             </ul>
                         </div>
                         <div class="topnav-dropdown-footer">
@@ -198,7 +140,8 @@
             <!-- /Header Menu -->
             <!-- Mobile Menu -->
             <div class="dropdown mobile-user-menu">
-                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i
+                        class="fa fa-ellipsis-v"></i></a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="{{ route('administrator.profile') }}">My Profile</a>
                     <form action="{{ route('logout') }}" method="POST">
@@ -229,20 +172,22 @@
                             </a>
                         </li>
                         <li>
-                            <a class='text-decoration-none' href="{{ route('employees-birthday.index') }}?from={{ date('m-d') }}&to={{ date('m-d') }}">
+                            <a class='text-decoration-none'
+                                href="{{ route('employees-birthday.index') }}?from={{ date('m-d') }}&to={{ date('m-d') }}">
                                 <i class="las la-birthday-cake"></i> <span> Employee's Birthday </span>
                             </a>
                         </li>
-                        {{-- <li>
-                            <a class='text-decoration-none' href="{{ route('data.index') }}">
-                        <i class="la la-file-text"></i> <span> Personal Data Sheet </span>
-                        </a>
-                        </li> --}}
+                        <li>
+                            <a class='text-decoration-none' href="{{ route('employee.personnel-file.index') }}">
+                                <i class="las la-file-archive"></i> <span> Personnel File 201 </span>
+                            </a>
+                        </li>
                         <li class="menu-title">
                             <span class="text-capitalize">Human Resource Module</span>
                         </li>
                         <li class="submenu">
-                            <a href="#" class='text-decoration-none'><i class="la la-home"></i> <span> Leave Management </span> <span class="menu-arrow"></span></a>
+                            <a href="#" class='text-decoration-none'><i class="la la-home"></i> <span> Leave Management
+                                </span> <span class="menu-arrow"></span></a>
                             <ul style="display: none;">
                                 {{-- <li>
                                     <a class='text-decoration-none mr-2' href="{{ route('leave.application.filling') }}">
@@ -287,110 +232,118 @@
                     </li>
 
                     <li class="submenu">
-                        <a href="#" class='text-decoration-none'><i class="la la-bookmark"></i> <span>Plantilla</span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
+                            <a href="#" class='text-decoration-none'><i class="la la-bookmark"></i> <span>Plantilla</span>
+                                <span class="menu-arrow"></span></a>
+                            <ul style="display: none;">
+                                <li>
+                                    <a class='text-decoration-none' href="{{  route('plantilla-of-position.index') }}">
+                                        <span>Plantilla of Position</span></a>
+                                </li>
 
-                            <li>
-                                <a class='text-decoration-none' href="{{  route('plantilla-of-position.index') }}"> <span>Plantilla of Position</span></a>
-                            </li>
+                                <li>
+                                    <a class='text-decoration-none' href="{{  route('plantilla-of-personnel.index') }}">
+                                        <span>Plantilla of Personnel</span></a>
+                                </li>
 
-                            <li>
-                                <a class='text-decoration-none' href="{{  route('plantilla-of-personnel.index') }}"> <span>Plantilla of Personnel</span></a>
-                            </li>
+                                <li>
+                                    <a class='text-decoration-none mr-2' href="{{  route('step-increment.index') }}">
+                                        Notice of Step Increment
+                                    </a>
+                                </li>
+                                <li class="submenu">
+                                    <a class='text-decoration-none' href="javascript:void(0);"> <span>Salary
+                                            Adjustment</span> <span class="menu-arrow"></span></a>
+                                    <ul style="display: none;">
+                                        <li>
+                                            <a class='text-decoration-none' href="{{  route('salary-adjustment.index') }}">
+                                                <span>Individual</span>
+                                            </a>
+                                            <a class='text-decoration-none'
+                                                href="{{  route('salary-adjustment-per-office.index') }}">
+                                                <span>Per Office</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
 
-                            <li>
-                                <a class='text-decoration-none mr-2' href="{{  route('step-increment.index') }}">
-                                    Notice of Step Increment
-                                </a>
-                            </li>
-                            <li class="submenu">
-                                <a class='text-decoration-none' href="javascript:void(0);"> <span>Salary Adjustment</span> <span class="menu-arrow"></span></a>
-                                <ul style="display: none;">
-                                    <li>
-                                        <a class='text-decoration-none' href="{{  route('salary-adjustment.index') }}">
-                                            <span>Individual</span>
-                                        </a>
-                                        <a class='text-decoration-none' href="{{  route('salary-adjustment-per-office.index') }}">
-                                            <span>Per Office</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+                        <li>
+                            <a class='text-decoration-none' href="#" id="plantillaScheduleCreate">
+                                <i class="las la-book-medical"></i>
+                                <span> Plantilla Schedule <span @class([ 'badge' , 'badge-primary' , 'd-none'=>
+                                        $no_of_employees_for_plantilla_schedule === 0
+                                        ])
+                                        class='badge badge-primary'>{{ $no_of_employees_for_plantilla_schedule }}</span>
+                                </span>
+                            </a>
+                        </li>
 
-                    <li>
-                        <a class='text-decoration-none' href="#" id="plantillaScheduleCreate">
-                            <i class="las la-book-medical"></i>
-                            <span> Plantilla Schedule <span @class([ 'badge' , 'badge-primary' , 'd-none'=> $no_of_employees_for_plantilla_schedule === 0
-                                    ])
-                                    class='badge badge-primary'>{{ $no_of_employees_for_plantilla_schedule }}</span> </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a class='text-decoration-none' href="{{ route('promotion.index') }}">
-                            <i class="las la-sort-amount-up"></i> <span>Promotions</span>
-                        </a>
-                    </li>
-
-
-
-                    <li>
-                        <a class='text-decoration-none' href="{{ route('service-records.index') }}">
-                            <i class="la la-bars"></i> <span>Service Record</span>
-                        </a>
-                    </li>
-
-                    <li class="submenu">
-                        <a href="#" class='text-decoration-none'><i class="la la-cog"></i> <span>Maintenance</span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
-                            <li>
-                                <a class='text-decoration-none' href="{{ route('users.index') }}">
-                                    Users
-                                </a>
-                                <a class='text-decoration-none' href="{{ route('salary-grade.index') }}">
-                                    Salary Grade
-                                </a>
-                                <a class='text-decoration-none mr-2' href="{{ route('maintenance-position.index') }}">
-                                    Position
-                                </a>
-                                <a class='text-decoration-none mr-2' href="{{ route('maintenance-office.index') }}">
-                                    Office
-                                </a>
-                                <a class='text-decoration-none mr-2' href="{{ route('maintenance-division.index') }}">
-                                    Division
-                                </a>
-                                <a class='text-decoration-none mr-2' href="{{ route('holiday.index') }}">
-                                    Holiday
-                                </a>
-                                <a class='text-decoration-none mr-2' href="{{ route('leave.index') }}">
-                                    Leave
-                                </a>
-                                <a class='text-decoration-none mr-2' href="{{ route('employee.leave.increment') }}">
-                                    Leave Increment
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-
-                    <li class="menu-title">
-                        <span class="text-capitalize"> Reports</span>
-                    </li>
-
-                    <li>
-                        <a class='text-decoration-none' href='{{ route('show-plantilla-report') }}'>
-                            <i class="las la-file-excel"></i> <span>Plantilla</span></a>
-                        </a>
-                    </li>
+                        <li>
+                            <a class='text-decoration-none' href="{{ route('promotion.index') }}">
+                                <i class="las la-sort-amount-up"></i> <span>Promotions</span>
+                            </a>
+                        </li>
 
 
 
+                        <li>
+                            <a class='text-decoration-none' href="{{ route('service-records.index') }}">
+                                <i class="la la-bars"></i> <span>Service Record</span>
+                            </a>
+                        </li>
+
+                        <li class="submenu">
+                            <a href="#" class='text-decoration-none'><i class="la la-cog"></i> <span>Maintenance</span>
+                                <span class="menu-arrow"></span></a>
+                            <ul style="display: none;">
+                                <li>
+                                    <a class='text-decoration-none' href="{{ route('users.index') }}">
+                                        Users
+                                    </a>
+                                    <a class='text-decoration-none' href="{{ route('salary-grade.index') }}">
+                                        Salary Grade
+                                    </a>
+                                    <a class='text-decoration-none mr-2' href="{{ route('maintenance-position.index') }}">
+                                        Position
+                                    </a>
+                                    <a class='text-decoration-none mr-2' href="{{ route('maintenance-office.index') }}">
+                                        Office
+                                    </a>
+                                    <a class='text-decoration-none mr-2' href="{{ route('maintenance-division.index') }}">
+                                        Division
+                                    </a>
+                                    <a class='text-decoration-none mr-2' href="{{ route('holiday.index') }}">
+                                        Holiday
+                                    </a>
+                                    <a class='text-decoration-none mr-2' href="{{ route('leave.index') }}">
+                                        Leave
+                                    </a>
+                                    <a class='text-decoration-none mr-2' href="{{ route('employee.leave.increment') }}">
+                                        Leave Increment
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <li class="menu-title">
+                            <span class="text-capitalize"> Reports</span>
+                        </li>
+
+                        <li>
+                            <a class='text-decoration-none' href='{{ route('show-plantilla-report') }}'>
+                                <i class="las la-folder"></i> <span>Plantilla</span></a>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class='text-decoration-none' href='{{ route('trainings-report') }}'>
+                                <i class="las la-project-diagram"></i> <span>Trainings</span></a>
+                            </a>
+                        </li>
                     </li>
 
                     </ul>
-
-
                 </div>
             </div>
         </div>
@@ -435,7 +388,8 @@
                         </div>
                         <div class="modal-body">
                             <div class="alert alert-info">
-                                No. of Employees doesn't have plantilla schedule for year <strong> <i>{{ date('Y') }}</i> </strong> :
+                                No. of Employees doesn't have plantilla schedule for year <strong>
+                                    <i>{{ date('Y') }}</i> </strong> :
                                 <strong>
                                     {{ $no_of_employees_for_plantilla_schedule }}
                                 </strong>
@@ -443,9 +397,12 @@
                         </div>
                         <div class="modal-footer">
                             @if($no_of_employees_for_plantilla_schedule != 0)
-                            <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary text-white" id="btnCreatePlantillaScheduleModal">
-                                <div class="spinner-border text-light spinner-border-sm" id='spinner-create-plantilla-schedule' role="status">
+                            <button type="button" class="btn btn-secondary text-white"
+                                data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary text-white"
+                                id="btnCreatePlantillaScheduleModal">
+                                <div class="spinner-border text-light spinner-border-sm"
+                                    id='spinner-create-plantilla-schedule' role="status">
                                     <span class="sr-only">Loading...</span>
                                 </div>
                                 Create Plantilla Schedule
@@ -460,7 +417,8 @@
         <!-- /Page Wrapper -->
     </div>
     <!-- /Main Wrapper -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="{{ asset('/assets/js/popper.min.js') }}"></script>
     <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
@@ -469,8 +427,12 @@
     <script src="{{ asset('/assets/js/moment.min.js') }}"></script>
     <script src="{{ asset('/assets/js/bootstrap-datetimepicker.min.js') }}"></script>
     <script src="{{ asset('/assets/js/app.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.8/push.min.js" integrity="sha512-eiqtDDb4GUVCSqOSOTz/s/eiU4B31GrdSb17aPAA4Lv/Cjc8o+hnDvuNkgXhSI5yHuDvYkuojMaQmrB5JB31XQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.8/push.min.js"
+        integrity="sha512-eiqtDDb4GUVCSqOSOTz/s/eiU4B31GrdSb17aPAA4Lv/Cjc8o+hnDvuNkgXhSI5yHuDvYkuojMaQmrB5JB31XQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.socket.io/3.1.1/socket.io.min.js"
+        integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous">
+    </script>
     <script type="text/javascript">
         $.ajaxSetup({
             headers: {
@@ -485,29 +447,29 @@
             query: "name=e-PIMS"
         });
 
-        $('#plantillaScheduleCreate').click(function() {
+        $('#plantillaScheduleCreate').click(function () {
             $('#plantillaCreateScheduleModal').modal('toggle');
         });
 
         $('#spinner-create-plantilla-schedule').hide();
 
-        $('#btnCreatePlantillaScheduleModal').click(function() {
+        $('#btnCreatePlantillaScheduleModal').click(function () {
             $('#btnCreatePlantillaScheduleModal').attr('disabled', true);
             $('#spinner-create-plantilla-schedule').show();
             $.ajax({
-                url: '/bulk-plantilla-of-schedule-generate'
-                , method: 'POST'
-                , success: function(response) {
+                url: '/bulk-plantilla-of-schedule-generate',
+                method: 'POST',
+                success: function (response) {
                     if (response.success) {
                         $('#plantillaCreateScheduleModal').modal('toggle');
                         $('#btnCreatePlantillaScheduleModal').removeAttr('disabled');
                         $('#spinner-create-plantilla-schedule').hide();
                         swal({
-                            title: ''
-                            , text: 'Successfully generate plantilla schedule for this year'
-                            , icon: 'success'
-                            , buttons: false
-                        , });
+                            title: '',
+                            text: 'Successfully generate plantilla schedule for this year',
+                            icon: 'success',
+                            buttons: false,
+                        });
                     }
                 }
             });
@@ -516,4 +478,5 @@
     </script>
     @stack('page-scripts')
 </body>
+
 </html>

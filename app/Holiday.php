@@ -3,9 +3,8 @@
 namespace App;
 
 use Carbon\Carbon;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Holiday extends Model
 {
@@ -32,9 +31,8 @@ class Holiday extends Model
         return $this->name;
     }
 
-
     public function getDateStringAttribute()
     {
-        return Carbon::parse(date('Y') . '-' . $this->date)->format('l jS \of F Y');
+        return Carbon::parse(date('Y').'-'.$this->date)->format('l jS \of F Y');
     }
 }

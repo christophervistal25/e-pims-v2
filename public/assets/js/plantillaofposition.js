@@ -63,7 +63,13 @@ $(document).ready(function () {
                         .val("Please Select")
                         .selectpicker("refresh");
                     $("#plantillaofposition").DataTable().ajax.reload();
-                    swal("Sucessfully Added!", "", "success");
+                    swal({
+                        title : '',
+                        text : 'You successfully add a new plantilla of position',
+                        icon : 'success',
+                        buttons : false,
+                        timer : 5000,
+                    });
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
                     document.getElementById("saving").innerHTML = "Save";
@@ -135,6 +141,8 @@ $(document).ready(function () {
                     swal({
                         title: "The given data was invalid!",
                         icon: "error",
+                        buttons : false,
+                        timer : 5000,
                         content: parentElement,
                     });
                     $("#saveBtn").attr("disabled", false);
@@ -225,7 +233,13 @@ $(document).ready(function () {
                         $(".modal").each(function () {
                             $(this).modal("hide");
                         });
-                        swal("Sucessfully Added!", "", "success");
+                        swal({
+                            title : '',
+                            text : 'Position has been added successfully!',
+                            icon : 'success',
+                            timer : 5000,
+                            buttons : false,
+                        });
                         $('input[type="text"],select').val("");
                         $("#addSalaryGrade")
                             .val("Please Select")

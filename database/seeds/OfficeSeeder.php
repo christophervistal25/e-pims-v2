@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\Office;
+use Illuminate\Database\Seeder;
 
 class OfficeSeeder extends Seeder
 {
@@ -12,7 +12,7 @@ class OfficeSeeder extends Seeder
      */
     public function run()
     {
-      
+
       //   foreach($offices as $office) {
       //       Office::updateOrCreate(['office_code' => $office['office_code'] ],[
       //           'office_code'          => $office['office_code'],
@@ -24,7 +24,5 @@ class OfficeSeeder extends Seeder
       //           'position_name'        => $office['position_name']
       //       ]);
       //   }
-
-
     }
 }

@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
-use App\StepIncrement;
-use Illuminate\Http\Request;
 
 class StepPromotionController extends Controller
 {
@@ -19,15 +17,12 @@ class StepPromotionController extends Controller
                 $sixMonthRange = $lastStepIncrementPlusThreeYears->copy();
                 $employee->in_range_of_six_months = $employee->last_step_increment->between($sixMonthRange->subMonths(6), $lastStepIncrementPlusThreeYears) ? true : false;
                 $employee->in_range_of_six_months = true;
-
             });
-            
-            $promotionInSixMonths = $promotionInSixMonths->where('in_range_of_six_months', true);
 
+        $promotionInSixMonths = $promotionInSixMonths->where('in_range_of_six_months', true);
 
-        // dd($promotionInSixMonths);            
+        // dd($promotionInSixMonths);
 
         return view('StepIncrement.see-more', compact('promotionInSixMonths'));
     }
-
 }

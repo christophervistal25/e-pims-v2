@@ -119,25 +119,32 @@
 
                         Object.values(birthdates).map((employee) => {
                             $('#employeesBirthdateContainer').append(`
-                                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3 rounded-0">
+                                <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3 shadow-none">
                                     <div class="profile-widget rounded-0">
                                         <div class="profile-img">
                                             <a href="/assets/img/profiles/${employee.Employee_id}.jpg" data-lightbox='image-1' data-title="${employee.LastName}">
-                                                <img class='img-fluid rounded-circle shadow' alt="No Image" src="/assets/img/thumbnail/${employee.Employee_id}.jpg">
+                                                <img class='img-fluid rounded-circle shadow-sm' alt="No Image" src="/assets/img/thumbnail/${employee.Employee_id}.jpg">
                                             </a>
                                         </div>
                                         <p class="user-name text-ellipsis">
                                             <br>
+                                            <span class='mt-5'>
+                                                ${employee.Employee_id}
+                                            </span>
+                                            <br>
                                             <span class='font-weight-bold'>${employee.LastName}, ${employee.FirstName} ${employee.MiddleName.substr(0, 1)}. ${employee.Suffix || ''}</span>
                                             <br>
-                                            ${employee.position_name}
+                                            ${employee.Position_Description || '-'}
                                             <br>
                                             ${employee.Description}
                                             <hr>
                                             <span class='font-weight-bold'>${employee.age_ordinal} Birthday on ${moment(employee.BirthDate).format('MMMM DD, YYYY')}</span>
                                         </p>
+
                                         <a target="_blank" class='btn btn-success btn-block mt-2' href='/birthday-card/${employee.Employee_id}-${employee.FirstName} ${employee.MiddleName.substr(0, 1)}. ${employee.LastName} ${employee.Suffix}'>Generate Greating Card</a>
+
                                         <a target="_blank" class='btn btn-success btn-block mt-2' href='/birthday-card-2/${employee.Employee_id}-${employee.FirstName} ${employee.MiddleName.substr(0, 1)}. ${employee.LastName} ${employee.Suffix}'>Generate Greating Card 2</a>
+
                                     </div>
                                 </div>
                             `);

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\EmployeeLeave;
 
-use Carbon\Carbon;
 use App\EmployeeLeaveRecord;
-use Illuminate\Http\Request;
 use App\EmployeeLeaveUndertime;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LeaveUndertimeController extends Controller
 {
@@ -18,7 +18,6 @@ class LeaveUndertimeController extends Controller
      */
     public function index()
     {
-        
     }
 
     /**
@@ -39,34 +38,33 @@ class LeaveUndertimeController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->ajax()) {
-            
-            $carbonDate=Carbon::parse($request->date_added)->format('Y-m-d');
+        if ($request->ajax()) {
+            $carbonDate = Carbon::parse($request->date_added)->format('Y-m-d');
             $this->validate($request, [
-                'date_added'             => 'required',
-                'equivalent'             => 'required|not_in:0',
+                'date_added' => 'required',
+                'equivalent' => 'required|not_in:0',
             ], [
-                'date_added.required'   => '<small>Please select a month.</small>',
-                'equivalent.not_in'     => '<small>Equivalent leave should have a value. Please input atleast 1 input box of late or undertime.</small>',
+                'date_added.required' => '<small>Please select a month.</small>',
+                'equivalent.not_in' => '<small>Equivalent leave should have a value. Please input atleast 1 input box of late or undertime.</small>',
             ]);
-            
+
             $lastID = DB::table('Settings')->where('Keyname', 'AUTONUMBER2')->first();
 
-            $convertedID = (int)$lastID->Keyvalue;
+            $convertedID = (int) $lastID->Keyvalue;
 
             $employeeUndertime = EmployeeLeaveUndertime::create([
-                'undertime_id'          => $convertedID,
-                'Employee_id'           => $request->employee_id,
-                'hours_late'            => $request->hoursLate,
-                'mins_late'             => $request->minsLate,
-                'hours_undertime'       => $request->hoursUndertime,
-                'mins_undertime'        => $request->minsUndertime,
-                'equivalent'            => $request->equivalent,
-                'month_year'            => $carbonDate,
+                'undertime_id' => $convertedID,
+                'Employee_id' => $request->employee_id,
+                'hours_late' => $request->hoursLate,
+                'mins_late' => $request->minsLate,
+                'hours_undertime' => $request->hoursUndertime,
+                'mins_undertime' => $request->minsUndertime,
+                'equivalent' => $request->equivalent,
+                'month_year' => $carbonDate,
             ]);
 
             $nextID = $convertedID + 1;
-            DB::table('Settings')->where('Keyname', 'AUTONUMBER2')->update([ 'Keyvalue' => (string)$nextID ]);
+            DB::table('Settings')->where('Keyname', 'AUTONUMBER2')->update(['Keyvalue' => (string) $nextID]);
 
             // if($employeeUndertime) {
             //     $employeeLeaveRecord = EmployeeLeaveRecord::create([
@@ -82,7 +80,7 @@ class LeaveUndertimeController extends Controller
             //             'undertime_id'                            => $employeeUndertime->id,
             //     ]);
             // }
-            
+
             return response()->json(['success' => true], 201);
         }
     }
@@ -118,25 +116,25 @@ class LeaveUndertimeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if($request->ajax()) {
-            $carbonDate=Carbon::parse($request->date_added)->format('Y-m-d');
+        if ($request->ajax()) {
+            $carbonDate = Carbon::parse($request->date_added)->format('Y-m-d');
             $this->validate($request, [
-                'date_added'             => 'required',
-                'equivalent'             => 'required|not_in:0',
+                'date_added' => 'required',
+                'equivalent' => 'required|not_in:0',
             ], [
-                'date_added.required'   => '<small>Please select a month.</small>',
-                'equivalent.not_in'     => '<small>Equivalent leave should have a value. Please input atleast 1 input box of late or undertime.</small>',
+                'date_added.required' => '<small>Please select a month.</small>',
+                'equivalent.not_in' => '<small>Equivalent leave should have a value. Please input atleast 1 input box of late or undertime.</small>',
             ]);
             //update
             $undertimeRecords = EmployeeLeaveUndertime::with('leave_records')->where('id', $id)->get();
-            foreach($undertimeRecords as $undertimeRecord){
+            foreach ($undertimeRecords as $undertimeRecord) {
                 // Insert Record with As of.
-                $undertimeRecord->hoursLate         = $request->hoursLate;
-                $undertimeRecord->minsLate          = $request->minsLate;
-                $undertimeRecord->hoursUndertime    = $request->hoursUndertime;
-                $undertimeRecord->minsUndertime     = $request->minsUndertime;
-                $undertimeRecord->month_year        = $carbonDate;
-                $undertimeRecord->equivalent        = $request->equivalent;
+                $undertimeRecord->hoursLate = $request->hoursLate;
+                $undertimeRecord->minsLate = $request->minsLate;
+                $undertimeRecord->hoursUndertime = $request->hoursUndertime;
+                $undertimeRecord->minsUndertime = $request->minsUndertime;
+                $undertimeRecord->month_year = $carbonDate;
+                $undertimeRecord->equivalent = $request->equivalent;
                 $undertimeRecord->save();
 
                 $undertimeRecord->leave_records->particular = 'T(0-'.$request->hoursLate.'-'.$request->minsLate.') / U(0-'.$request->hoursUndertime.'-'.$request->minsUndertime.')';
@@ -144,6 +142,7 @@ class LeaveUndertimeController extends Controller
                 $undertimeRecord->date_record = $carbonDate;
                 $undertimeRecord->leave_records->save();
             }
+
             return response()->json(['success' => true]);
         }
     }
@@ -160,6 +159,7 @@ class LeaveUndertimeController extends Controller
         $undertime->delete();
 
         $undertime->leave_records()->delete();
+
         return response()->json(['success' => true]);
     }
 }

@@ -3,27 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Holiday;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 
 class HolidayController extends Controller
 {
-
     /**
      * Return JSON list of holidays.
      *
      * @return void
      */
-
     public function list()
     {
         if (request()->ajax()) {
             $holidays = Holiday::select('id', 'name', 'date', 'type');
-            return (new Datatables)->eloquent($holidays)
+
+            return (new Datatables())->eloquent($holidays)
                 ->make(true);
         }
     }
+
     /**
     pubic
      * Display a listing of the resource.
@@ -33,6 +32,7 @@ class HolidayController extends Controller
     public function index()
     {
         $holidays = Holiday::get();
+
         return view('holiday.index', compact('holidays'));
     }
 
@@ -58,7 +58,7 @@ class HolidayController extends Controller
             $this->validate($request, [
                 'name' => 'required',
                 'date' => 'required|date|unique:holidays,date',
-                'type' => 'required|in:' . implode(',', Holiday::TYPES),
+                'type' => 'required|in:'.implode(',', Holiday::TYPES),
             ]);
 
             Holiday::create([
@@ -69,6 +69,7 @@ class HolidayController extends Controller
 
             return response()->json(['success' => true]);
         }
+
         return response()->json(['success' => false], 404);
     }
 
@@ -106,8 +107,8 @@ class HolidayController extends Controller
         if ($request->ajax()) {
             $this->validate($request, [
                 'name' => 'required',
-                'date' => 'required|date|unique:holidays,date,' . $id,
-                'type' => 'required|in:' . implode(',', Holiday::TYPES),
+                'date' => 'required|date|unique:holidays,date,'.$id,
+                'type' => 'required|in:'.implode(',', Holiday::TYPES),
             ]);
 
             $holiday = Holiday::find($id);
@@ -115,8 +116,10 @@ class HolidayController extends Controller
             $holiday->date = date('m-d', strtotime($request->date));
             $holiday->type = $request->type;
             $holiday->save();
+
             return response()->json(['success' => true]);
         }
+
         return response()->json(['success' => false], 404);
     }
 

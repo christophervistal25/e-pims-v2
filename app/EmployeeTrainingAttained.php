@@ -2,11 +2,13 @@
 
 namespace App;
 
-use App\Setting;
 use Illuminate\Database\Eloquent\Model;
 
 class EmployeeTrainingAttained extends Model
 {
+    public $connection = 'E_PIMS_CONNECTION';
+    public $table = 'employee_training_attaineds';
+
     protected $fillable = [
         'id',
         'employee_id',

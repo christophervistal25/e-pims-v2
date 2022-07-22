@@ -2,16 +2,15 @@
 
 namespace App;
 
-use Carbon\Carbon;
 use DateTimeInterface;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class SalaryAdjustment extends Model
 {
-    // public $connection = 'DTR_PAYROLL_CONNECTION';
+    public $connection = 'E_PIMS_CONNECTION';
     protected $dates = ['date_adjustment'];
+
     protected $fillable = [
         'employee_id',
         'office_code',
@@ -27,11 +26,12 @@ class SalaryAdjustment extends Model
     ];
 
     protected $appends = [
-        'date_adjustment_year'
+        'date_adjustment_year',
     ];
 
-    public function __construct() {
-        $this->table = DB::connection($this->connection)->getDatabaseName() . '.dbo.' . $this->getTable();
+    public function __construct()
+    {
+        $this->table = DB::connection($this->connection)->getDatabaseName().'.dbo.'.$this->getTable();
     }
 
     public function getDateAdjustmentYearAttribute()
@@ -43,6 +43,7 @@ class SalaryAdjustment extends Model
     {
         return $this->belongsTo(Employee::class, 'employee_id', 'Employee_id');
     }
+
     // public function position()
     // {
     //     return $this->belongsTo(Position::class, 'PosCode', 'position_id');
@@ -51,12 +52,13 @@ class SalaryAdjustment extends Model
     {
         return $this->belongsTo(PlantillaPosition::class, 'pp_id', 'pp_id');
     }
+
     public function plantilla()
     {
         return $this->belongsTo(Plantilla::class, 'employee_id', 'employee_id');
     }
 
-    public function serializeDate(DateTimeInterface  $date)
+    public function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d');
     }
@@ -66,4 +68,3 @@ class SalaryAdjustment extends Model
         return $this->hasOne('App\service_record', 'employee_id', 'employee_id');
     }
 }
-

@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers\EmployeeLeave;
 
-use App\Employee;
-use Carbon\Carbon;
 use App\CompensatoryLeave;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use Yajra\Datatables\Datatables;
-use Illuminate\Support\Facades\DB;
+use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Rules\CompensatoryDateEarned;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Yajra\Datatables\Datatables;
 
 class CompensatoryBuildUpController extends Controller
 {
-    
     /**
      * Return list of all leave types in json format.
      *
@@ -27,13 +25,13 @@ class CompensatoryBuildUpController extends Controller
      */
     public function index(Request $request)
     {
-        $employees = Employee::has('information')->with(['information','information.office', 'information.position'])->get();
+        $employees = Employee::has('information')->with(['information', 'information.office', 'information.position'])->get();
         $records = CompensatoryLeave::with('employee')->get()->groupBy('employee.fullname');
-        
+
         $yearfilters = CompensatoryLeave::get('date_added')->groupBy(function ($data) {
             return $data->date_added->format('Y');
         })->keys();
-        
+
         return view('leave.compensatory-build-up', compact('employees', 'records', 'yearfilters'));
     }
 
@@ -43,7 +41,8 @@ class CompensatoryBuildUpController extends Controller
         // dd($rPerEmployee);
         if ($request->ajax()) {
             $rPerEmployee = CompensatoryLeave::with(['employee'])->get()->groupBy('employee_id');
-                return Datatables::of($rPerEmployee)
+
+            return Datatables::of($rPerEmployee)
                         ->addColumn('employee_id', function ($rPerEmployee) {
                             return $rPerEmployee->first()->employee_id;
                         })
@@ -51,7 +50,8 @@ class CompensatoryBuildUpController extends Controller
                             return $rPerEmployee->first()->employee->fullname;
                         })
                         ->addColumn('date_added', function ($rPerEmployee) {
-                            $dateadded = date("Y-m-d", strtotime($rPerEmployee->sortBy('date_added')->last()->date_added));
+                            $dateadded = date('Y-m-d', strtotime($rPerEmployee->sortBy('date_added')->last()->date_added));
+
                             return $dateadded;
                         })
                         ->addColumn('earned', function ($rPerEmployee) {
@@ -62,19 +62,19 @@ class CompensatoryBuildUpController extends Controller
                         })
                         ->addColumn('balance', function ($rPerEmployee) {
                             $totalBal = floatval($rPerEmployee->sum('earned')) - floatval($rPerEmployee->sum('availed'));
+
                             return $totalBal;
                         })
-                        ->addcolumn('action', function($rPerEmployee){
-                        $button = '<button title="View Details" type="button" data-id="'.$rPerEmployee->first()->employee_id.'"  class="edit btn btn-info btn-sm rounded-circle shadow mr-1 btn__edit__view__compensatory">
+                        ->addcolumn('action', function ($rPerEmployee) {
+                            $button = '<button title="View Details" type="button" data-id="'.$rPerEmployee->first()->employee_id.'"  class="edit btn btn-info btn-sm rounded-circle shadow mr-1 btn__edit__view__compensatory">
                         <i class="la la-eye"></i></button>';
-                        $button .= '<button title="Delete Compensatory" type="button" data-id="'.$rPerEmployee->first()->employee_id.'"  class="delete btn btn-danger btn-sm rounded-circle shadow delete__allcompensatory__type">
+                            $button .= '<button title="Delete Compensatory" type="button" data-id="'.$rPerEmployee->first()->employee_id.'"  class="delete btn btn-danger btn-sm rounded-circle shadow delete__allcompensatory__type">
                         <i class="la la-trash"></i></button>';
 
-                        return $button;
-                    })
+                            return $button;
+                        })
                     ->make(true);
         }
-        
     }
 
     public function forfeited($id, $year)
@@ -82,7 +82,7 @@ class CompensatoryBuildUpController extends Controller
         $data = CompensatoryLeave::where('employee_id', $id)
         ->whereYear('date_added', $year)
         ->where('forfeited', 'yes')
-        ->count(); 
+        ->count();
 
         $forfeited['data'] = $data;
 
@@ -92,50 +92,54 @@ class CompensatoryBuildUpController extends Controller
 
     public function listComLeaveByYear(Request $request, $id, $year)
     {
-            $test = DB::table('compensatory_leaves')->where('employee_id', $id)
+        $test = DB::table('compensatory_leaves')->where('employee_id', $id)
                                         ->whereYear('date_added', $year)
                                         ->orderBy('date_added', 'DESC')
                                         ->first(['date_added']);
 
-            $data = DB::table('compensatory_leaves')
+        $data = DB::table('compensatory_leaves')
             ->join('employees', 'compensatory_leaves.employee_id', '=', 'employees.employee_id')
             ->select('id', 'employees.employee_id', 'overtime_type', 'hours_rendered', 'earned', 'availed', 'date_added', 'remarks', 'forfeited')
             ->where('compensatory_leaves.employee_id', $id)
             ->whereYear('compensatory_leaves.date_added', $year)
             ->orderBy('date_added', 'ASC')
             ->get();
-            return DataTables::of($data)
-            ->addColumn('action', function($row) use($test) {
-                    if(strtotime($test->date_added) > strtotime($row->date_added)) {
-                        return '';
-                    }
-                    if($row->earned > 0){
-                        if ($row->forfeited =='yes'){
-                            $btn = '';
-                            return $btn;
-                        }else{
-                            $btn = '<button type="button" title="Edit Earned" data-id="'.$row->id.'"  class="edit btn btn-success btn-sm rounded-circle shadow mr-1 btnEdit__earned__compensatory">
+
+        return DataTables::of($data)
+            ->addColumn('action', function ($row) use ($test) {
+                if (strtotime($test->date_added) > strtotime($row->date_added)) {
+                    return '';
+                }
+                if ($row->earned > 0) {
+                    if ($row->forfeited == 'yes') {
+                        $btn = '';
+
+                        return $btn;
+                    } else {
+                        $btn = '<button type="button" title="Edit Earned" data-id="'.$row->id.'"  class="edit btn btn-success btn-sm rounded-circle shadow mr-1 btnEdit__earned__compensatory">
                             <i class="la la-edit"></i></button>';
-                            $btn .= '<button type="button" data-id="'.$row->id.'"  class="delete btn btn-danger btn-sm rounded-circle shadow delete__compensatory">
+                        $btn .= '<button type="button" data-id="'.$row->id.'"  class="delete btn btn-danger btn-sm rounded-circle shadow delete__compensatory">
                             <i class="la la-trash"></i></button>';
-                            return $btn;
-                        }
-                    }else{
-                        if ($row->forfeited =='yes'){
-                            $btn = '';
-                            return $btn;
-                        }else{
-                            $btn = '<button type="button" title="Edit Availed" data-id="'.$row->id.'"  class="edit btn btn-success btn-sm rounded-circle shadow mr-1 btnEdit__availed__compensatory">
-                            <i class="la la-edit"></i></button>';
-                            $btn .= '<button type="button" data-id="'.$row->id.'"  class="delete btn btn-danger btn-sm rounded-circle shadow delete__compensatory">
-                            <i class="la la-trash"></i></button>';
-                            return $btn;
-                        }
+
+                        return $btn;
                     }
+                } else {
+                    if ($row->forfeited == 'yes') {
+                        $btn = '';
+
+                        return $btn;
+                    } else {
+                        $btn = '<button type="button" title="Edit Availed" data-id="'.$row->id.'"  class="edit btn btn-success btn-sm rounded-circle shadow mr-1 btnEdit__availed__compensatory">
+                            <i class="la la-edit"></i></button>';
+                        $btn .= '<button type="button" data-id="'.$row->id.'"  class="delete btn btn-danger btn-sm rounded-circle shadow delete__compensatory">
+                            <i class="la la-trash"></i></button>';
+
+                        return $btn;
+                    }
+                }
             })
             ->rawColumns(['action'])
             ->make(true);
-        
     }
 
     /**
@@ -156,77 +160,76 @@ class CompensatoryBuildUpController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->ajax()) {
-            $carbonYear=Carbon::parse($request->date_added)->format('Y');
-            $carbonMonth=Carbon::parse($request->date_added)->format('m');
-            if($request->selected_date == 'null' ){
-                if($request['action'] == 'earn'){
+        if ($request->ajax()) {
+            $carbonYear = Carbon::parse($request->date_added)->format('Y');
+            $carbonMonth = Carbon::parse($request->date_added)->format('m');
+            if ($request->selected_date == 'null') {
+                if ($request['action'] == 'earn') {
                     $this->validate($request, [
-                        'overtime_type'             => 'required|in:weekdays,weekends/holidays',
-                        'hours_rendered'            => 'required|numeric|min:0|not_in:0',
-                        'date_added'                =>  [
-                                                            'required',
-                                                            'date',
-                                                            'before_or_equal:today',
-                                                            new CompensatoryDateEarned($carbonMonth, $carbonYear, $request->employee_id),
-                                                        ],
-                        'remarks'                   => 'required',
+                        'overtime_type' => 'required|in:weekdays,weekends/holidays',
+                        'hours_rendered' => 'required|numeric|min:0|not_in:0',
+                        'date_added' => [
+                            'required',
+                            'date',
+                            'before_or_equal:today',
+                            new CompensatoryDateEarned($carbonMonth, $carbonYear, $request->employee_id),
+                        ],
+                        'remarks' => 'required',
                     ], [
-                        'overtime_type.required'    => '',
-                        'hours_rendered.required'   => '<small>Please input a number.</small>',
-                        'hours_rendered.not_in'     => '<small>This should not be 0.</small>',
-                        'date_added.required'       => '<small>Please select a date.</small>',
-                        'date_added.before_or_equal'=> '<small>Date should not be greater than today.</small>',
-                        'remarks.required'          => '<small>You need to input remarks.</small>',
+                        'overtime_type.required' => '',
+                        'hours_rendered.required' => '<small>Please input a number.</small>',
+                        'hours_rendered.not_in' => '<small>This should not be 0.</small>',
+                        'date_added.required' => '<small>Please select a date.</small>',
+                        'date_added.before_or_equal' => '<small>Date should not be greater than today.</small>',
+                        'remarks.required' => '<small>You need to input remarks.</small>',
                     ]);
                 }
-            }else{
-                if($request['action'] == 'earn'){
+            } else {
+                if ($request['action'] == 'earn') {
                     $this->validate($request, [
-                        'overtime_type'             => 'required|in:weekdays,weekends/holidays',
-                        'hours_rendered'            => 'required|numeric|min:0|not_in:0',
-                        'date_added'                =>  [
-                                                            'required',
-                                                            'date',
-                                                            'before_or_equal:today',
-                                                            'after:'.Carbon::parse($request->selected_date)->format('Y-m-d'),
-                                                            new CompensatoryDateEarned($carbonMonth, $carbonYear, $request->employee_id),
-                                                        ],
-                        'remarks'                   => 'required',
+                        'overtime_type' => 'required|in:weekdays,weekends/holidays',
+                        'hours_rendered' => 'required|numeric|min:0|not_in:0',
+                        'date_added' => [
+                            'required',
+                            'date',
+                            'before_or_equal:today',
+                            'after:'.Carbon::parse($request->selected_date)->format('Y-m-d'),
+                            new CompensatoryDateEarned($carbonMonth, $carbonYear, $request->employee_id),
+                        ],
+                        'remarks' => 'required',
                     ], [
-                        'overtime_type.required'    => '',
-                        'hours_rendered.required'   => '<small>Please input a number.</small>',
-                        'hours_rendered.not_in'     => '<small>This should not be 0.</small>',
-                        'date_added.required'       => '<small>Please select a date.</small>',
-                        'date_added.before_or_equal'=> '<small>Date should not be greater than today.</small>',
-                        'date_added.after'          => '<small>Date should be greater than the last record.</small>',
-                        'remarks.required'          => '<small>You need to input remarks.</small>',
+                        'overtime_type.required' => '',
+                        'hours_rendered.required' => '<small>Please input a number.</small>',
+                        'hours_rendered.not_in' => '<small>This should not be 0.</small>',
+                        'date_added.required' => '<small>Please select a date.</small>',
+                        'date_added.before_or_equal' => '<small>Date should not be greater than today.</small>',
+                        'date_added.after' => '<small>Date should be greater than the last record.</small>',
+                        'remarks.required' => '<small>You need to input remarks.</small>',
                     ]);
                 }
-                if($request['action'] == 'avail'){
+                if ($request['action'] == 'avail') {
                     $this->validate($request, [
-                        'availed'                   => 'required|numeric|min:0|not_in:0|lte:'.$request->totalComBalance,
-                        'date_added'                =>  [
-                                                            'required',
-                                                            'date',
-                                                            'before_or_equal:today',
-                                                            'after:'.Carbon::parse($request->selected_date)->format('Y-m-d'),
-                                                        ],
-                        'remarks'                   => 'required',
+                        'availed' => 'required|numeric|min:0|not_in:0|lte:'.$request->totalComBalance,
+                        'date_added' => [
+                            'required',
+                            'date',
+                            'before_or_equal:today',
+                            'after:'.Carbon::parse($request->selected_date)->format('Y-m-d'),
+                        ],
+                        'remarks' => 'required',
                     ], [
-                        'availed.required'          => '<small>Please input a number.</small>',
-                        'availed.not_in'            => '<small>This should not be 0.</small>',
-                        'availed.lte'               => '<small>Insufficient balance.</small>',
-                        'date_added.required'       => '<small>Please select a date.</small>',
-                        'date_added.before_or_equal'=> '<small>Date should not be greater than today.</small>',
-                        'date_added.after'          => '<small>Date should be greater than the last record.</small>',
-                        'remarks.required'          => '<small>You need to input remarks.</small>',
+                        'availed.required' => '<small>Please input a number.</small>',
+                        'availed.not_in' => '<small>This should not be 0.</small>',
+                        'availed.lte' => '<small>Insufficient balance.</small>',
+                        'date_added.required' => '<small>Please select a date.</small>',
+                        'date_added.before_or_equal' => '<small>Date should not be greater than today.</small>',
+                        'date_added.after' => '<small>Date should be greater than the last record.</small>',
+                        'remarks.required' => '<small>You need to input remarks.</small>',
                     ]);
                 }
             }
-            
-            
-            if($request->availed == 0){
+
+            if ($request->availed == 0) {
                 CompensatoryLeave::create([
                     'employee_id' => $request->employee_id,
                     'overtime_type' => $request->overtime_type,
@@ -237,11 +240,11 @@ class CompensatoryBuildUpController extends Controller
                     'remarks' => $request->remarks,
                     'forfeited' => 'no',
                 ]);
-            }else{
+            } else {
                 CompensatoryLeave::create([
                     'employee_id' => $request->employee_id,
-                    'overtime_type' => NULL,
-                    'hours_rendered' => NULL,
+                    'overtime_type' => null,
+                    'hours_rendered' => null,
                     'earned' => 0,
                     'availed' => $request->availed,
                     'date_added' => $request->date_added,
@@ -249,6 +252,7 @@ class CompensatoryBuildUpController extends Controller
                     'forfeited' => 'no',
                 ]);
             }
+
             return response()->json(['success' => true], 201);
         }
     }
@@ -261,7 +265,6 @@ class CompensatoryBuildUpController extends Controller
      */
     public function show($id)
     {
-       
     }
 
     /**
@@ -284,32 +287,32 @@ class CompensatoryBuildUpController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if($request->ajax()) {
-            if($request['edit_action'] == 'earn'){
+        if ($request->ajax()) {
+            if ($request['edit_action'] == 'earn') {
                 $this->validate($request, [
-                    'edit_hours_rendered'            => 'required|numeric|min:0|not_in:0',
-                    'edit_remarks'                   => 'required',
+                    'edit_hours_rendered' => 'required|numeric|min:0|not_in:0',
+                    'edit_remarks' => 'required',
                 ], [
-                    'edit_hours_rendered.required'   => '<small>Please input a number.</small>',
-                    'edit_hours_rendered.not_in'     => '<small>This should not be 0.</small>',
-                    'edit_remarks.required'          => '<small>You need to input remarks.</small>',
+                    'edit_hours_rendered.required' => '<small>Please input a number.</small>',
+                    'edit_hours_rendered.not_in' => '<small>This should not be 0.</small>',
+                    'edit_remarks.required' => '<small>You need to input remarks.</small>',
                 ]);
             }
-            if($request['edit_action'] == 'avail'){
-                $totalbal = floatval($request->edit_totalComBalance) + floatval($request->prev_availment);  
+            if ($request['edit_action'] == 'avail') {
+                $totalbal = floatval($request->edit_totalComBalance) + floatval($request->prev_availment);
                 $this->validate($request, [
-                    'edit_availed'                   => 'required|numeric|min:0|not_in:0|lte:'.$totalbal,
-                    'edit_remarks'                   => 'required',
+                    'edit_availed' => 'required|numeric|min:0|not_in:0|lte:'.$totalbal,
+                    'edit_remarks' => 'required',
                 ], [
-                    'edit_availed.required'          => '<small>Please input a number.</small>',
-                    'edit_availed.not_in'            => '<small>This should not be 0.</small>',
-                    'edit_availed.lte'               => '<small>Insufficient balance.</small>',
-                    'edit_remarks.required'          => '<small>You need to input remarks.</small>',
+                    'edit_availed.required' => '<small>Please input a number.</small>',
+                    'edit_availed.not_in' => '<small>This should not be 0.</small>',
+                    'edit_availed.lte' => '<small>Insufficient balance.</small>',
+                    'edit_remarks.required' => '<small>You need to input remarks.</small>',
                 ]);
             }
             //update
             $comRecords = CompensatoryLeave::where('id', $id)->get();
-            foreach($comRecords as $comRecord){
+            foreach ($comRecords as $comRecord) {
                 // Insert Record with As of.
                 $comRecord->overtime_type = $request['edit_overtime_type'];
                 $comRecord->date_added = $request['edit_date_added'];
@@ -319,6 +322,7 @@ class CompensatoryBuildUpController extends Controller
                 $comRecord->remarks = $request['edit_remarks'];
                 $comRecord->save();
             }
+
             return response()->json(['success' => true]);
         }
     }
@@ -326,18 +330,19 @@ class CompensatoryBuildUpController extends Controller
     public function updateForfeited(Request $request, $id, $year)
     {
         $isForfeited = $request['isChecked'];
-        
+
         //update
         $comRecords = CompensatoryLeave::where('employee_id', $id)->whereYear('date_added', $year)->get();
-        foreach($comRecords as $comRecord){
+        foreach ($comRecords as $comRecord) {
             // Insert Record with As of.
-            if($isForfeited == 1){
+            if ($isForfeited == 1) {
                 $comRecord->forfeited = 'yes';
-            }else if($isForfeited == 0){
+            } elseif ($isForfeited == 0) {
                 $comRecord->forfeited = 'no';
             }
             $comRecord->save();
         }
+
         return response()->json(['success' => true]);
     }
 
@@ -350,13 +355,14 @@ class CompensatoryBuildUpController extends Controller
     public function destroy(Request $request, $id)
     {
         $deleteAll = $request['delete_All'];
-        if ($deleteAll == 1){
+        if ($deleteAll == 1) {
             $comRecords = CompensatoryLeave::where('employee_id', $id)->get();
-            foreach($comRecords as $comRecord){
+            foreach ($comRecords as $comRecord) {
                 $comRecord->delete();
             }
+
             return response()->json(['success' => true]);
-        }else{
+        } else {
             $comRecords = CompensatoryLeave::find($id);
             $comRecords->delete();
         }

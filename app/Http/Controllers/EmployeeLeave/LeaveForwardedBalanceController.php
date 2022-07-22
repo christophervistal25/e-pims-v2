@@ -2,20 +2,15 @@
 
 namespace App\Http\Controllers\EmployeeLeave;
 
-use App\Setting;
 use App\Employee;
-use Carbon\Carbon;
-use App\EmployeeLeaveRecord;
-use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
-use App\EmployeeLeaveTransaction;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use App\EmployeeLeaveForwardedBalance;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Yajra\Datatables\Datatables;
 
 class LeaveForwardedBalanceController extends Controller
 {
-
     // public function getApplicationID(string $keyName, bool $isCreated){
 
     //     $lastID = DB::table('Settings')->where('Keyname', $keyName)->first();
@@ -39,6 +34,7 @@ class LeaveForwardedBalanceController extends Controller
             ->permanent()
             ->active()
             ->get();
+
         return view('leave.leave-forwarded-balance', compact('employees'));
     }
 
@@ -49,7 +45,6 @@ class LeaveForwardedBalanceController extends Controller
 
             $rPerEmployee = EmployeeLeaveForwardedBalance::with('employee')->get();
 
-
             return Datatables::of($rPerEmployee)
                 ->addColumn('employee_id', function ($rPerEmployee) {
                     return $rPerEmployee->Employee_id;
@@ -58,7 +53,7 @@ class LeaveForwardedBalanceController extends Controller
                     return $rPerEmployee->employee->fullname;
                 })
                 ->addColumn('date_forwarded', function ($rPerEmployee) {
-                    return date("Y-m-d", strtotime($rPerEmployee->date_forwarded));
+                    return date('Y-m-d', strtotime($rPerEmployee->date_forwarded));
                 })
                 ->addColumn('vl_balance', function ($rPerEmployee) {
                     return $rPerEmployee->vl_balance;
@@ -68,12 +63,12 @@ class LeaveForwardedBalanceController extends Controller
                 })
                 ->addcolumn('action', function ($rPerEmployee) use ($button) {
                     $button .= '<button type="button" class="btn btn-success btn-sm rounded-circle shadow edit__leave__type ml-1"
-                                        data-id="' . $rPerEmployee->forwarded_id . '">
+                                        data-id="'.$rPerEmployee->forwarded_id.'">
                                         <i class="text-white fa fa-pencil"></i>
                                     </button>';
                     $button .=
                         '<button type="button" class="btn btn-danger btn-sm rounded-circle shadow delete__leave__type ml-1"
-                            data-id="' . $rPerEmployee->forwarded_id . '">
+                            data-id="'.$rPerEmployee->forwarded_id.'">
                             <i class="text-white fa fa-trash"></i>
                         </button>';
 
@@ -96,7 +91,7 @@ class LeaveForwardedBalanceController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -116,27 +111,27 @@ class LeaveForwardedBalanceController extends Controller
         $convertedID = (int) $lastID->Keyvalue;
         // Insert Record with As of.
         $employeeLeaveForwardedBalance = EmployeeLeaveForwardedBalance::create([
-            'forwarded_id'          => $convertedID,
-            'Employee_id'           => $request['Employee_id'],
-            'date_forwarded'        => $request['date_forwarded'],
-            "vl_balance"            => $request['vl_balance'],
-            "sl_balance"            => $request['sl_balance'],
-            "vawc_balance"          => $request['vawc_balance'],
-            "adopt_balance"         => $request['adopt_balance'],
-            "mandatory_balance"     => $request['mandatory_balance'],
-            "maternity_balance"     => $request['maternity_balance'],
-            "paternity_balance"     => $request['paternity_balance'],
-            "soloparent_balance"    => $request['soloparent_balance'],
-            "emergency_balance"     => $request['emergency_balance'],
-            "slb_balance"           => $request['slb_balance'],
-            "study_balance"         => $request['study_balance'],
-            "spl_balance"           => $request['spl_balance'],
-            "rehab_balance"         => $request['rehab_balance'],
+            'forwarded_id' => $convertedID,
+            'Employee_id' => $request['Employee_id'],
+            'date_forwarded' => $request['date_forwarded'],
+            'vl_balance' => $request['vl_balance'],
+            'sl_balance' => $request['sl_balance'],
+            'vawc_balance' => $request['vawc_balance'],
+            'adopt_balance' => $request['adopt_balance'],
+            'mandatory_balance' => $request['mandatory_balance'],
+            'maternity_balance' => $request['maternity_balance'],
+            'paternity_balance' => $request['paternity_balance'],
+            'soloparent_balance' => $request['soloparent_balance'],
+            'emergency_balance' => $request['emergency_balance'],
+            'slb_balance' => $request['slb_balance'],
+            'study_balance' => $request['study_balance'],
+            'spl_balance' => $request['spl_balance'],
+            'rehab_balance' => $request['rehab_balance'],
         ]);
 
         $nextID = $convertedID + 1;
 
-        DB::table('Settings')->where('Keyname', 'AUTONUMBER2')->update(['Keyvalue' => (string)$nextID]);
+        DB::table('Settings')->where('Keyname', 'AUTONUMBER2')->update(['Keyvalue' => (string) $nextID]);
 
         return response()->json(['success' => true]);
     }
@@ -144,7 +139,7 @@ class LeaveForwardedBalanceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $ids
+     * @param  int  $ids
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -155,7 +150,7 @@ class LeaveForwardedBalanceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -171,15 +166,15 @@ class LeaveForwardedBalanceController extends Controller
                 'leaveRecord' => $leaveRecord,
                 'employeeFullname' => $employeeFullname,
                 'office' => $office,
-                'position' => $position
+                'position' => $position,
             ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -194,20 +189,20 @@ class LeaveForwardedBalanceController extends Controller
 
         $updateRecord = EmployeeLeaveForwardedBalance::findOrFail($id);
 
-        $updateRecord->vl_balance           = $request->vl_balance;
-        $updateRecord->sl_balance           = $request->sl_balance;
-        $updateRecord->vawc_balance         = $request->vawc_balance;
-        $updateRecord->adopt_balance        = $request->adopt_balance;
-        $updateRecord->mandatory_balance    = $request->mandatory_balance;
-        $updateRecord->maternity_balance    = $request->maternity_balance;
-        $updateRecord->paternity_balance    = $request->paternity_balance;
-        $updateRecord->soloparent_balance   = $request->soloparent_balance;
-        $updateRecord->emergency_balance    = $request->emergency_balance;
-        $updateRecord->slb_balance          = $request->slb_balance;
-        $updateRecord->study_balance        = $request->study_balance;
-        $updateRecord->spl_balance          = $request->spl_balance;
-        $updateRecord->rehab_balance        = $request->rehab_balance;
-        $updateRecord->date_forwarded       = $request->date_forwarded;
+        $updateRecord->vl_balance = $request->vl_balance;
+        $updateRecord->sl_balance = $request->sl_balance;
+        $updateRecord->vawc_balance = $request->vawc_balance;
+        $updateRecord->adopt_balance = $request->adopt_balance;
+        $updateRecord->mandatory_balance = $request->mandatory_balance;
+        $updateRecord->maternity_balance = $request->maternity_balance;
+        $updateRecord->paternity_balance = $request->paternity_balance;
+        $updateRecord->soloparent_balance = $request->soloparent_balance;
+        $updateRecord->emergency_balance = $request->emergency_balance;
+        $updateRecord->slb_balance = $request->slb_balance;
+        $updateRecord->study_balance = $request->study_balance;
+        $updateRecord->spl_balance = $request->spl_balance;
+        $updateRecord->rehab_balance = $request->rehab_balance;
+        $updateRecord->date_forwarded = $request->date_forwarded;
         $updateRecord->save();
 
         return response()->json(['success' => true]);
@@ -216,7 +211,7 @@ class LeaveForwardedBalanceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, $id)

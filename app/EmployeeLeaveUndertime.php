@@ -2,13 +2,14 @@
 
 namespace App;
 
-use App\Employee;
 use Illuminate\Database\Eloquent\Model;
 
 class EmployeeLeaveUndertime extends Model
 {
     protected $primaryKey = 'undertime_id';
-    protected $connection = 'DTR_PAYROLL_CONNECTION';
+
+    public $connection = 'E_PIMS_CONNECTION';
+
     protected $table = 'employee_leave_undertime';
 
     protected $fillable = [
@@ -23,7 +24,6 @@ class EmployeeLeaveUndertime extends Model
     ];
 
     public $dates = ['month_year'];
-    
 
     public function employee()
     {

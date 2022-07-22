@@ -2,20 +2,22 @@
 
 namespace App;
 
-use App\StepIncrement;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Position extends Model
 {
     use SoftDeletes;
-    public $connection = 'DTR_PAYROLL_CONNECTION';
-    public $incrementing  = false;
-    public $table = 'Position';
+
+    public $connection = 'E_PIMS_CONNECTION';
+
+    public $incrementing = false;
+
+    public $table = 'Positions';
+
     public $primaryKey = 'PosCode';
+
     protected $fillable = ['PosCode', 'Description', 'sg_no', 'position_short_name'];
 
     public function getPositionNameAttribute($value)
@@ -32,10 +34,12 @@ class Position extends Model
     {
         return $this->hasOne(SalaryGrade::class, 'sg_no', 'sg_no');
     }
+
     public function service_record()
     {
         return $this->belongsTo(service_record::class, 'position_id', 'PosCode');
     }
+
     public function salary_adjustment()
     {
         return $this->hasOne(SalaryAdjustment::class, 'position_id', 'PosCode');
@@ -60,6 +64,4 @@ class Position extends Model
     {
         return $this->hasOne(StepIncrement::class, 'PosCode', 'PosCode');
     }
-
-
 }

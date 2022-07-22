@@ -11,14 +11,14 @@ use Yajra\Datatables\Datatables;
 
 class MaintenanceDivisionController extends Controller
 {
-     /**
-      * Display a listing of the resource.
-      *
-      * @return \Illuminate\Http\Response
-      */
-     public function index()
-     {
-          $offices = Office::get(['office_code', 'office_name']);
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $offices = Office::get(['office_code', 'office_name']);
 
         return view('MaintenanceDivision.division', compact('offices'));
     }
@@ -33,15 +33,15 @@ class MaintenanceDivisionController extends Controller
         //
     }
 
-     /**
-      * Store a newly created resource in storage.
-      *
-      * @param  \Illuminate\Http\Request  $request
-      * @return \Illuminate\Http\Response
-      */
-     public function store(Request $request)
-     {
-          $this->validate($request, [
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $this->validate($request, [
             'divisionName' => 'required',
             'officeCode' => 'required',
         ]);

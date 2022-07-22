@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Maintenance;
 
-use App\LeaveType;
-use App\LeaveIncrement;
 use App\Http\Controllers\Controller;
+use App\LeaveIncrement;
 use Illuminate\Http\Request;
 
 class LeaveIncrementController extends Controller
@@ -74,22 +73,22 @@ class LeaveIncrementController extends Controller
         //update for sick .
 
         $increments = LeaveIncrement::where('id', $id)->get();
-        if($id == 1) {
-            foreach($increments as $increment){
+        if ($id == 1) {
+            foreach ($increments as $increment) {
                 // Insert Record with As of.
                 $increment->increment = $request['sick_increment'];
                 $increment->description = $request['sick_description'];
                 $increment->save();
             }
-        } elseif($id == 2) {
-            foreach($increments as $increment){
+        } elseif ($id == 2) {
+            foreach ($increments as $increment) {
                 // Insert Record with As of.
                 $increment->increment = $request['vacation_increment'];
                 $increment->description = $request['vacation_description'];
                 $increment->save();
             }
         }
-            
+
         return response()->json(['success' => true]);
     }
 

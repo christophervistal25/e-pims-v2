@@ -24,47 +24,47 @@ class FamilyBackgroundRequest extends FormRequest
     public function rules()
     {
         return [
-            'has_spouse'                    => ['nullable'],
-            'spouse_lastname'               => ['required_if:has_spouse,true'],
-            'spouse_firstname'              => ['required_if:has_spouse,true'],
-            'spouse_middlename'             => ['nullable', 'min:2', 'regex:/^[a-zA-Z ].+$/u'],
-            'spouse_extension'              => ['nullable', 'min:2', 'regex:/^[a-zA-Z ].+$/u'],
-            'spouse_occupation'             => [],
+            'has_spouse' => ['nullable'],
+            'spouse_lastname' => ['required_if:has_spouse,true'],
+            'spouse_firstname' => ['required_if:has_spouse,true'],
+            'spouse_middlename' => ['nullable', 'min:2', 'regex:/^[a-zA-Z ].+$/u'],
+            'spouse_extension' => ['nullable', 'min:2', 'regex:/^[a-zA-Z ].+$/u'],
+            'spouse_occupation' => [],
             'spouse_employer_business_name' => [],
-            'spouse_business_address'       => [],
-            'spouse_telephone_number'       => [],
-            'spouse.*.name'                 => ['nullable'],
-            'spouse.*.date_of_birth'        => ['required_with:spouse.*.name'],
-            'father_lastname'               => 'required|regex:/^[a-zA-Z ].+$/u',
-            'father_firstname'              => 'required_with:father_lastname|regex:/^[a-zA-Z ].+$/u',
-            'father_middlename'             => 'nullable|regex:/^[a-zA-Z ].+$/u',
-            'father_extension'              => '',
-            'mother_lastname'               => 'required|regex:/^[a-zA-Z ].+$/u',
-            'mother_firstname'              => 'required_with:mother_lastname|regex:/^[a-zA-Z ].+$/u',
-            'mother_middlename'             => 'nullable|regex:/^[a-zA-Z ].+$/u',
+            'spouse_business_address' => [],
+            'spouse_telephone_number' => [],
+            'spouse.*.name' => ['nullable'],
+            'spouse.*.date_of_birth' => ['required_with:spouse.*.name'],
+            'father_lastname' => 'required|regex:/^[a-zA-Z ].+$/u',
+            'father_firstname' => 'required_with:father_lastname|regex:/^[a-zA-Z ].+$/u',
+            'father_middlename' => 'nullable|regex:/^[a-zA-Z ].+$/u',
+            'father_extension' => '',
+            'mother_lastname' => 'required|regex:/^[a-zA-Z ].+$/u',
+            'mother_firstname' => 'required_with:mother_lastname|regex:/^[a-zA-Z ].+$/u',
+            'mother_middlename' => 'nullable|regex:/^[a-zA-Z ].+$/u',
         ];
     }
 
     public function attributes()
     {
         return [
-            'fsurname'     => 'Father\'s Surname',
-            'ffirstname'   => 'Father\'s Firstname',
+            'fsurname' => 'Father\'s Surname',
+            'ffirstname' => 'Father\'s Firstname',
             'fmiddlename' => 'Father\'s Middlename',
-            'msurname'    => 'Mother\'s Surname',
-            'mfirstname'   => 'Mother\'s Firstname',
-            'mmiddlename'  => 'Mother\'s Middlename',
+            'msurname' => 'Mother\'s Surname',
+            'mfirstname' => 'Mother\'s Firstname',
+            'mmiddlename' => 'Mother\'s Middlename',
             'sfirstname' => 'Spouse\'s Firstname',
             'ssurname' => 'Spouse\'s Surname',
             'spouse.*.name' => 'child fullname',
-            'spouse.*.date_of_birth' => 'date of birth'
+            'spouse.*.date_of_birth' => 'date of birth',
         ];
     }
 
     public function messages()
     {
         return [
-            'spouse.*.date_of_birth.required_with' => 'The Date of birth field is required when Name of children is present.'
+            'spouse.*.date_of_birth.required_with' => 'The Date of birth field is required when Name of children is present.',
         ];
     }
 }

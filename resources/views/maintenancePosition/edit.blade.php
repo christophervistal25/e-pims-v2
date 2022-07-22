@@ -18,7 +18,7 @@
 <div class="kanban-board card shadow-none">
     <div class="card-body">
         <div id="add" class="page-header">
-            <form action="{{ route('maintenance-position.update', $position->position_id) }}" method="POST" id="maintenancePositionEditForm">
+            <form action="{{ route('maintenance-position.update', $position->PosCode) }}" method="POST" id="maintenancePositionEditForm">
                 @csrf
                 @method('PUT')
                 <div class="alert alert-secondary text-center font-weight-bold" role="alert">EDIT POSITION</div>

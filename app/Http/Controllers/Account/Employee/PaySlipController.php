@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers\Account\Employee;
 
-use Carbon\Carbon;
-use App\Payslip\Payroll;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Payslip\Payroll;
 
 class PaySlipController extends Controller
 {
@@ -26,14 +23,13 @@ class PaySlipController extends Controller
         })->orderBy('created_at')->get();
 
         $months = array_map(function ($payroll_no) {
-            list($month, $sequenceNo) = explode("-", $payroll_no);
+            [$month, $sequenceNo] = explode('-', $payroll_no);
+
             return $month;
         }, $payrolls->pluck('payroll_no')->toArray());
-
 
         $months = array_unique($months);
 
         return view('accounts.employee.payslip.index', compact('payrolls', 'months'));
     }
-
 }

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class SalaryGrade extends Model
 {
+    public $connection = 'E_PIMS_CONNECTION';
+    
     protected $fillable = [
         'sg_no',
         'sg_step1',
@@ -23,6 +25,7 @@ class SalaryGrade extends Model
     {
         return $this->belongsTo(Position::class, 'sg_no', 'sg_no');
     }
+
     public function plantilla_position()
     {
         return $this->belongsTo(PlantillaPosition::class, 'sg_no', 'sg_no');

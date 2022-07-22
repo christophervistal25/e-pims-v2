@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class Plantilla extends Model
 {
-    // public $connection = 'DTR_PAYROLL_CONNECTION';
+    public $connection = 'E_PIMS_CONNECTION';
     public $table = 'plantillas';
 
     public const REGIONS = [

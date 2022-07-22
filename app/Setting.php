@@ -6,14 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Setting extends Model
 {
+    public $connection = 'E_PIMS_CONNECTION';
     protected $fillable = [
         'Keyname',
         'Keyvalue',
     ];
 
     public $timestamps = false;
+
     public $incrementing = false;
+
     public $primaryKey = 'Keyname';
+
     public static $id = 0;
 
     public static function prepare()

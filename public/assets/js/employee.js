@@ -2,12 +2,50 @@ const ACTIVE_STATUS_INDEX = 9;
 const OFFICE_INDEX = 6;
 const ACTIVE = 1;
 const FORM_VALIDATION_ERROR = 422;
+const EMPLOYEE_IS_ACTIVE = 1;
+const EMPLOYEE_IS_INACTIVE_OR_RETIRE = 0;
 
 $("#showEmployee").hide();
 $("#showAddEmployee").hide();
 $(".select2").select2();
 $(".office_charging").select2();
 $(".office_assignment").select2();
+
+const clearErrorFieldsInAddForm = () => {
+    $("#addEmployeeForm")
+        .children()
+        .each(function (index, element) {
+            $(element)
+                .find("input")
+                .each(function (index, e) {
+                    let nameAttribute = $(e).attr("name");
+                    $(`input[name="${nameAttribute}"]`).removeClass(
+                        "is-invalid"
+                    );
+                    $(`#${nameAttribute}-error`).text("");
+                });
+
+            $(element)
+                .find("select")
+                .each(function (index, e) {
+                    let nameAttribute = $(e).attr("name");
+                    $(`select[name="${nameAttribute}"]`).removeClass(
+                        "is-invalid"
+                    );
+                    $(`#${nameAttribute}-error`).text("");
+                });
+
+            $(element)
+                .find("textarea")
+                .each(function (index, e) {
+                    let nameAttribute = $(e).attr("name");
+                    $(`textarea[name="${nameAttribute}"]`).removeClass(
+                        "is-invalid"
+                    );
+                    $(`#${nameAttribute}-error`).text("");
+                });
+        });
+};
 
 let table = $("#employees-table").DataTable({
     ajax: "/api/employee/list",
@@ -46,6 +84,13 @@ let table = $("#employees-table").DataTable({
         {
             name: "Suffix",
             class: "align-middle text-center",
+        },
+        {
+            name: "age",
+            class: "align-middle text-center",
+            orderable : false,
+            searchable : false,
+            
         },
         {
             name: "position.position_short_name",
@@ -263,7 +308,6 @@ $("#btn-back").click(function () {
 
 $("#btn-add-back").click(function () {
     $("#showAddEmployee").fadeOut().hide();
-
     $("#employees-data-table").fadeIn().show();
 });
 
@@ -445,42 +489,6 @@ $("#addNewEmployee").click(function () {
     $("#loader-wrapper, #loader").hide();
 });
 
-const clearErrorFieldsInAddForm = () => {
-    $("#addEmployeeForm")
-        .children()
-        .each(function (index, element) {
-            $(element)
-                .find("input")
-                .each(function (index, e) {
-                    let nameAttribute = $(e).attr("name");
-                    $(`input[name="${nameAttribute}"]`).removeClass(
-                        "is-invalid"
-                    );
-                    $(`#${nameAttribute}-error`).text("");
-                });
-
-            $(element)
-                .find("select")
-                .each(function (index, e) {
-                    let nameAttribute = $(e).attr("name");
-                    $(`select[name="${nameAttribute}"]`).removeClass(
-                        "is-invalid"
-                    );
-                    $(`#${nameAttribute}-error`).text("");
-                });
-
-            $(element)
-                .find("textarea")
-                .each(function (index, e) {
-                    let nameAttribute = $(e).attr("name");
-                    $(`textarea[name="${nameAttribute}"]`).removeClass(
-                        "is-invalid"
-                    );
-                    $(`#${nameAttribute}-error`).text("");
-                });
-        });
-};
-
 $("#submitNewEmployee").click(function (e) {
     e.preventDefault();
     let data = $("#addEmployeeForm").serialize();
@@ -515,6 +523,127 @@ $("#submitNewEmployee").click(function (e) {
             }
         },
     });
+});
+
+
+$(document).on('click', '.btn-mark-as-retire', function () {
+    let employeeID = $(this).attr('data-id');
+    let isActive = $(this).attr('data-active-status');
+
+    // Create a password element
+    // Add label
+
+
+    let password = document.createElement('input');
+    password.setAttribute('type', 'password');
+    password.setAttribute('name', 'password');
+    password.setAttribute('id', 'authentication-password');
+    password.setAttribute('required', 'required');
+    password.setAttribute('class', 'form-control');
+
+    let passwordLabel = document.createElement('label');
+    passwordLabel.setAttribute('for', 'authentication-password');
+    passwordLabel.setAttribute('class', 'col-form-label');
+    passwordLabel.innerHTML = `Your password <span class='text-info'>(to confirm your action)</span> <span class='text-danger'>*</span>`;
+
+    let passwordWrapper = document.createElement('div');
+    passwordWrapper.setAttribute('class', 'form-group');
+
+    passwordWrapper.appendChild(passwordLabel);
+    passwordWrapper.appendChild(password);
+
+    let remarksWrapper = document.createElement('div');
+
+    if(isActive == EMPLOYEE_IS_ACTIVE) {
+        remarksWrapper.setAttribute('class', 'form-group');
+
+        let remarksInput = document.createElement('textarea');
+        remarksInput.setAttribute('name', 'remarks');
+        remarksInput.setAttribute('id', 'remarks');
+        remarksInput.setAttribute('class', 'form-control');
+        remarksInput.setAttribute('rows', '3');
+
+        let remarksLabel = document.createElement('label');
+        remarksLabel.innerHTML = 'Reasons for retirement <span class="text-info">(optional)</span>';
+        remarksLabel.setAttribute('for', 'remarks');
+        remarksLabel.setAttribute('class', 'col-form-label');
+        
+        remarksWrapper.appendChild(remarksLabel);
+        remarksWrapper.appendChild(remarksInput);
+    }
+
+    // Combine two wrappers
+    let formWrapper = document.createElement('div');
+    formWrapper.setAttribute('class', 'form-group');
+    formWrapper.appendChild(passwordWrapper);
+
+    if(isActive == EMPLOYEE_IS_ACTIVE) {
+        formWrapper.appendChild(remarksWrapper);
+    }
+    
+    
+    let textContent = `${isActive == EMPLOYEE_IS_ACTIVE ? 'You want to mark this employee as retired?' : 'You want to mark this employee as active?'}`;
+    // Ask if the user really want to mark as retired
+    swal({
+        title: "Are you sure?",
+        text: textContent,
+        icon: "warning",
+        dangerMode: true,
+        closeOnClickOutside : false,
+        buttons : ["No", "Yes"],
+    }).then((willMark) => {
+        if (willMark) {
+            // Get the content of meta named user
+            let user = $(`meta[name="current-user"]`).attr("content");
+
+            // Display a sweet alert with password input content
+            swal("", {
+                content: formWrapper,
+                closeOnClickOutside : false,
+                button : {
+                    text : "Submit",
+                    closeModal: false,
+                }
+            })
+            .then((value) => {
+                // Check if value has length
+                if ($(value).length > 0) {
+                    $.ajax({
+                        url: `/api/employee/retire`,
+                        method: "DELETE",
+                        data : { username : user, employeeID : employeeID, password : $('#authentication-password').val(), remarks : $('#remarks').val() },
+                        success: function (response) {
+                            if(response.success) {
+                                swal({
+                                    text: `You successfully mark this employee as ${isActive == EMPLOYEE_IS_ACTIVE ? 'retired' : 'active'}`,
+                                    icon: "success",
+                                    buttons: false,
+                                    timer: 3000,
+                                });
+                                table.ajax.reload(null, false);
+                            }
+                        },
+                        error : function (response) {
+                            if(response.status === 422) {
+                                let message = document.createElement('p');
+                                message.setAttribute('class', 'text-center text-dark');
+                                message.innerHTML = response.responseJSON.message;
+                                swal({
+                                    title : '',
+                                    content: message,
+                                    icon: "error",
+                                    buttons: false,
+                                    timer: 5000,
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    });
+    
+
 });
 
 let downloadID = 0;

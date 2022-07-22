@@ -110,7 +110,7 @@
                         <div class="col-lg-6 pb-0">
                             <label for="contact_no" class="text-uppercase h5 required">Contact #</label>
                             <input type="text" class="form-control" name="contact_no" id="contact_no" maxlength="13" />
-                            <span class="text-sm text-danger" id="edit-contact_no-erorr"></span>
+                            <span class="text-sm text-danger" id="edit-contact_no-error"></span>
                         </div>
 
                         <div class="col-lg-6 pb-0">

@@ -5,6 +5,7 @@ $(document).ready(function () {
         "#officeCode",
         "#divisionId",
     ];
+
     let inputs = [
         "#oldItemNo",
         "#itemNo",
@@ -14,6 +15,7 @@ $(document).ready(function () {
         "#originalAppointment",
         "#lastPromotion",
     ];
+
     let errorClass = [
         "#oldItemNo",
         ".positionTitle",
@@ -47,6 +49,7 @@ $(document).ready(function () {
         "#office-error-message",
         "#division-error-message",
     ];
+
     // filter list office
     let selectedOffice = $("#employeeOffice").val();
     let selectedYear = $("#currentYear").val();
@@ -107,12 +110,14 @@ $(document).ready(function () {
         $("#add").attr("class", "page-header");
         $("#table").attr("class", "page-header d-none");
     });
+
     // code for show table
     $("#displayListPlantilla").click(function () {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
     });
-    // number only
+
+    // Number only
     $("input[id='oldItemNo']").on("input", function (e) {
         $(this).val(
             $(this)
@@ -120,36 +125,43 @@ $(document).ready(function () {
                 .replace(/[^0-9.]/g, "")
         );
     });
+
     // display emp id
     $("#employeeName").change(function (e) {
         let employeeID = e.target.value;
-        let plantilla = $($("#employeeName option:selected")[0]).attr(
-            "data-plantilla"
-        );
+        let plantilla = $($("#employeeName option:selected")[0]).attr("data-plantilla");
         $("#employeeID").val(plantilla);
     });
-    //
+
     $("#cancelButton").click(function () {
         $("#add").attr("class", "page-header d-none");
+
         $("#table").attr("class", "page-header");
         $.each(inputs, function (index, value) {
             $(`${value}`).val("");
         });
+
         $.each(select, function (index, value) {
             $(`${value}`).val("Please Select").trigger("change");
         });
+
         $.each(errorClass, function (index, value) {
             $(`${value}`).removeClass("is-invalid");
         });
+
         $.each(errorMessage, function (index, value) {
             $(`${value}`).html("");
         });
+
     });
-    // display the value of positin and division per office selected
+
+    // Display the value of positin and division per office selected
     $("#positionTitle").change(function () {
         let positionTitle = $("#positionTitle").val();
+
         let currentStepno = $("#currentStepno").val();
         let currentSgyear = $("#currentSgyear").val();
+
         $.ajax({
             url: `/api/positionSalaryGrade/${positionTitle}/${currentSgyear}`,
             success: (response) => {
@@ -158,15 +170,15 @@ $(document).ready(function () {
                     $("#itemNo").val("");
                     $("#currentSalaryamount").val("");
                 } else {
-                    console.log(response);
                     let currentSalaryGrade = response.salary_grade[0].sg_no;
                     $("#currentSalarygrade").val(currentSalaryGrade);
                     let currentItemNo = response.item_no;
                     $("#itemNo").val(currentItemNo);
-                    let currentSalaryAmount =
-                        response.salary_grade[0]["sg_step" + currentStepno];
+                    let currentSalaryAmount =response.salary_grade[0]["sg_step" + currentStepno];
+
                     $("#currentSalaryamount").val(currentSalaryAmount);
                 }
+
             },
         });
     });
@@ -374,7 +386,13 @@ $(document).ready(function () {
                         $(`${value}`).html("");
                     });
                     $("#plantilla").DataTable().ajax.reload();
-                    swal("Sucessfully Added!", "", "success");
+                    swal({
+                        title: "",
+                        text: "Plantilla of Personnel has been added",
+                        icon: "success",
+                        buttons : false,
+                        timer : 5000,
+                    });
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
                     $("#saving").html("Save");
@@ -604,7 +622,14 @@ $("#plantillaEditForm").submit(function (e) {
         data: data,
         success: function (response) {
             if (response.success) {
-                swal("Sucessfully Saved!", "", "success");
+                swal({
+                    title : '',
+                    text: "Successfully updated!",
+                    icon: "success",
+                    buttons : false,
+                    timer : 5000,
+                });
+
                 $("#plantillaUpdate").attr("disabled", false);
                 $("#loading").addClass("d-none");
                 document.getElementById("saving").innerHTML = "Update";

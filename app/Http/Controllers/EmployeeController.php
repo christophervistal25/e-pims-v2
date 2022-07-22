@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\OfficeService;
-use App\Services\EmployeeService;
-use App\Http\Controllers\Controller;
-use App\Http\Repositories\EmployeeRepository;
-use App\Http\Requests\Employee\UpdateEmployeeRequest;
 use App\Http\Requests\Employee\NewEmployeeStoreRequest;
-use App\Http\Requests\Employee\OldEmployeeUpdateRequest;
+use App\Http\Requests\Employee\UpdateEmployeeRequest;
+use App\Services\EmployeeService;
+use App\Services\OfficeService;
 
 class EmployeeController extends Controller
 {
     public function __construct(public EmployeeService $employeeService, public OfficeService $officeService)
-    {}
+    {
+    }
 
     /**
      * Display a listing of the resource.
@@ -25,9 +23,10 @@ class EmployeeController extends Controller
         $offices = $this->officeService->get();
 
         return view('employee.index', [
-            'class'     => 'mini-sidebar',
+            'class' => 'mini-sidebar',
             'offices' => $offices,
             'lastEmployeeID' => $this->employeeService->getLastId(),
+            'username' => auth()->user()->username
         ]);
     }
 
@@ -55,9 +54,9 @@ class EmployeeController extends Controller
     public function store(NewEmployeeStoreRequest $request)
     {
         $employee = $this->employeeRepository->addEmployee($request->all());
+
         return response()->json($employee, 201);
     }
-
 
     /**
      * Display the specified resource.

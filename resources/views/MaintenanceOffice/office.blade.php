@@ -206,7 +206,13 @@
                             var dataResult = JSON.parse(dataResult);
                             if (dataResult.statusCode == 200) {
                                 $('#maintenanceOffice').DataTable().ajax.reload();
-                                swal("Successfully Deleted!", "", "success");
+                                swal({
+                                    title : '',
+                                    text : 'Successfully Deleted!',
+                                    icon : 'success',
+                                    timer : 5000,
+                                    buttons : false,
+                                });
                             }
                         }
                     });

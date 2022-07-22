@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Province;
-use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Cache;
-
+use App\Province;
+use Illuminate\Support\Collection;
 
 class ProvinceController extends Controller
 {
@@ -39,6 +36,7 @@ class ProvinceController extends Controller
     public function getCities(string $code): Collection
     {
         $province = Province::with(['cities'])->find($code);
+
         return $province->cities;
     }
 }

@@ -163,7 +163,8 @@ export default {
                         swal({
                             text: "Successfully store all your inputs in Government Issued I.D",
                             icon: "success",
-                            timer: 5000,
+                            buttons : false,
+                            timer : 5000,
                         });
                     }
                 })

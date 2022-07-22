@@ -15,7 +15,7 @@ class CreateCompensatoryLeavesTable extends Migration
     {
         Schema::create('compensatory_leaves', function (Blueprint $table) {
             $table->id();
-            $table->string('employee_id'); 
+            $table->string('employee_id');
             $table->enum('overtime_type', ['weekdays', 'weekends/holidays'])->nullable();
             $table->decimal('hours_rendered', 5, 3)->nullable();
             $table->decimal('earned', 5, 3);

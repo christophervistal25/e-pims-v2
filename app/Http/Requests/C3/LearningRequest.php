@@ -25,11 +25,11 @@ class LearningRequest extends FormRequest
     {
         return [
             '*.title' => ['required'],
-            '*.date_of_attendance_from'           => ['nullable', 'required_with:*.title', 'date', 'before:*.date_of_attendance_to'],
-            '*.date_of_attendance_to'             => ['nullable', 'required_with:*.title', 'date', 'after:*.date_of_attendance_from'],
-            '*.number_of_hours'      => ['nullable', 'required_with:*.title', 'numeric'],
-            '*.type_of_id'       => ['nullable', 'required_with:*.title'],
-            '*.sponsored_by'      => ['nullable', 'required_with:*.title'],
+            '*.date_of_attendance_from' => ['nullable', 'required_with:*.title', 'date', 'before:*.date_of_attendance_to'],
+            '*.date_of_attendance_to' => ['nullable', 'required_with:*.title', 'date', 'after:*.date_of_attendance_from'],
+            '*.number_of_hours' => ['nullable', 'required_with:*.title', 'numeric'],
+            '*.type_of_id' => ['nullable', 'required_with:*.title'],
+            '*.sponsored_by' => ['nullable', 'required_with:*.title'],
         ];
     }
 
@@ -37,11 +37,11 @@ class LearningRequest extends FormRequest
     {
         return [
             '*.title' => 'Name of training',
-            '*.date_of_attendance_from'           => 'Inclusive date From',
-            '*.date_of_attendance_to'             => 'Inclusive date To',
-            '*.number_of_hours'      => 'No. of hours',
-            '*.type_of_id'       => 'type of LD',
-            '*.sponsored_by'      => 'Conducted/Sponsored',
+            '*.date_of_attendance_from' => 'Inclusive date From',
+            '*.date_of_attendance_to' => 'Inclusive date To',
+            '*.number_of_hours' => 'No. of hours',
+            '*.type_of_id' => 'type of LD',
+            '*.sponsored_by' => 'Conducted/Sponsored',
         ];
     }
 }

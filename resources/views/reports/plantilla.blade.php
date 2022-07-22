@@ -63,8 +63,9 @@
                 <div class="form-group">
                     <label for="" class='h6'>Select Office: </label>
                     <select name="office" id="office" class='form-control form-select selectpicker border' data-live-search="true">
+                        <option value="*" selected>ALL</option>
                         @foreach($offices as $office)
-                        <option value="{{ $office->office_code }}">{{ $office->office_name }}</option>
+                            <option value="{{ $office->office_code }}">{{ $office->office_name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -79,7 +80,10 @@
                 </div>
 
                 <div class="text-right mt-3">
-                    <button class='btn btn-primarys text-uppercase shadow' id='btnGenerate'>GENERATE</button>
+                    <button class='btn btn-primarys text-uppercase shadow' id='btnGenerate'>
+                        <i class='las la-file'></i>
+                        GENERATE
+                    </button>
                 </div>
 
             </div>
@@ -122,7 +126,8 @@
                 <th class='font-weight-bold text-sm text-center'>CODE</th>
                 <th class='font-weight-bold text-sm text-center'>TYPE</th>
                 <th class='font-weight-bold text-sm text-center'>LEVEL</th>
-                <th class='font-weight-bold text-sm'>FULLNAME</th>
+                <th class='font-weight-bold text-sm text-truncate'>FULLNAME</th>
+                <th class='font-weight-bold text-sm'>DIVISION</th>
                 <th class='font-weight-bold text-sm'>ORIGINAL APPOINTMENT</th>
                 <th class='font-weight-bold text-sm'>LAST PROMOTION</th>
             </tr>
@@ -131,7 +136,7 @@
         </tbody>
         <tfoot>
             <tr class='bg-light text-center'>
-                <td colspan='6'>
+                <td colspan='7'>
                    VACANT : <span class='font-weight-bold' id='vacant-total'>0</span>
                 </td>
                 <td colspan='6'>
@@ -139,7 +144,7 @@
                 </td>
             </tr>
             <tr class='bg-light'>
-                <td colspan='12' class='text-center'>
+                <td colspan='13' class='text-center'>
                     TOTAL : <span id='total' class='font-weight-bold'>0</span>
                 </td>
             </tr>
@@ -196,7 +201,7 @@
 
         $('#dynamic-content-of-plantilla-report').html(`
             <tr class='text-center'>
-                <td colspan='12'><i class="las la-spinner la-spin fa-2x text-primary"></i></td>
+                <td colspan='13'><i class="las la-spinner la-spin fa-2x text-primary"></i></td>
             </tr>
         `);
 
@@ -205,7 +210,10 @@
             method: 'POST',
             success: function(response) {
                 // Change the content of button to a normal text
-                $('#btnGenerate').text('GENERATE');
+                $('#btnGenerate').html(`
+                    <i class='las la-file'></i>
+                    GENERATE
+                `);
                 // Enable the button
                 $('#btnGenerate').attr('disabled', false);
 
@@ -252,9 +260,10 @@
                                 <td class='text-sm text-center'>15</td>
                                 <td class='text-sm text-center'>P</td>
                                 <td class='text-sm text-center'>${record.plantillas?.area_level || '-'}</td>
-                                <td class='text-sm font-weight-bold ${current ? 'text-left' : 'text-center'}' style='background : ${current ? '' : '#FFFF00'}'>
+                                <td class='text-sm font-weight-bold text-truncate ${current ? 'text-left' : 'text-center'}' style='background : ${current ? '' : '#FFFF00'}'>
                                     ${employeeOrVacant}
                                 </td>
+                                <td class='text-sm text-center text-uppercase'>${record?.plantillas?.division?.division_name || ''}</td>
                                 <td class='text-sm text-center'>${current?.date_original_appointment || ''}</td>
                                 <td class='text-sm text-center'>${current?.date_last_promotion || ''}</td>
                             </tr>
@@ -270,22 +279,21 @@
                     // Display no available data in dynamic-content-of-plantilla-report with icon
                     $('#dynamic-content-of-plantilla-report').html(`
                         <tr>
-                            <td colspan="12" class="text-center text-danger">
+                            <td colspan="13" class="text-center text-danger">
                                 <i class="las la-exclamation-triangle"></i>
                                 No available data
                             </td>
                         </tr>
                     `);
                 }
-            
             }
         });
+        
+        
     });
 
     $('#btnDbmExportPdf').click(function () {
-        // Display a page spinner
         $('#btnDbmExportPdf').html('<i class="las la-spinner la-spin"></i>');
-    
 
         let office = $("#office").val();
         let year = $('#year').val();
@@ -347,7 +355,7 @@
                     // Change the content to a normal text
                     $('#btnExport').html(`
                         <i class="las la-file-excel"></i>
-                        DBM - EXPORT XLS
+                        CSC - EXPORT XLS
                     `);
                 }
             }
@@ -359,8 +367,8 @@
         let office = $("#office").val();
         let year = $('#year').val();
         $.post({
-            url: `/export/${office}/${year}`
-            , success: function(response) {
+            url: `/export/${office}/${year}`,
+            success: function(response) {
                 if (response.success) {
                     socket.emit('PLANTILLA_PDF', {
                         file: fileName = response.fileName.split('||').pop()
@@ -370,7 +378,7 @@
                     }, 1000);
                     $('#btnExportPdf').html(`
                         <i class="las la-file-pdf"></i>
-                        DBM - EXPORT PDF
+                        CSC - EXPORT PDF
                     `);
                 }
             }

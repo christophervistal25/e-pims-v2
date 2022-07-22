@@ -1,16 +1,15 @@
 <?php
 
-use App\Office;
 use App\Division;
 use App\Employee;
-use App\Position;
+use App\Office;
 use App\Plantilla;
-use App\RefStatus;
-use App\SalaryGrade;
 use App\PlantillaPosition;
 use App\PlantillaSchedule;
+use App\Position;
+use App\RefStatus;
+use App\SalaryGrade;
 use Illuminate\Database\Seeder;
-use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Random;
 
 class PlantillaScheduleSeeder extends Seeder
 {
@@ -35,14 +34,14 @@ class PlantillaScheduleSeeder extends Seeder
         PlantillaPosition::get()->each(function ($pp) {
             $sg_no = $pp->sg_no + 1;
             $step_no = rand(2, 7);
-           $plantilla = Plantilla::create([
-                'item_no'       => $pp->item_no + 1,
-                'pp_id'         => $pp->pp_id,
-                'sg_no'         => $sg_no,
-                'step_no'       => $step_no,
-                'salary_amount' => SalaryGrade::where(['sg_no' => $sg_no])->first(['sg_step' . $step_no])['sg_step' . $step_no],
-                'employee_id'   => Employee::get()->random()->employee_id,
-                'area_code'     => 'CARAGA',
+            $plantilla = Plantilla::create([
+                'item_no' => $pp->item_no + 1,
+                'pp_id' => $pp->pp_id,
+                'sg_no' => $sg_no,
+                'step_no' => $step_no,
+                'salary_amount' => SalaryGrade::where(['sg_no' => $sg_no])->first(['sg_step'.$step_no])['sg_step'.$step_no],
+                'employee_id' => Employee::get()->random()->employee_id,
+                'area_code' => 'CARAGA',
                 'area_type' => 'Province',
                 'area_level' => 'K',
                 'date_original_appointment' => date('Y-m-d'),
@@ -54,14 +53,14 @@ class PlantillaScheduleSeeder extends Seeder
             ]);
 
             PlantillaSchedule::create([
-                'item_no'       => $pp->item_no + 1,
+                'item_no' => $pp->item_no + 1,
                 'plantilla_id' => $plantilla->plantilla_id,
-                'pp_id'         => $pp->pp_id,
-                'sg_no'         => $sg_no,
-                'step_no'       => $step_no,
-                'salary_amount' => SalaryGrade::where(['sg_no' => $sg_no])->first(['sg_step' . $step_no])['sg_step' . $step_no],
-                'employee_id'   => Employee::get()->random()->employee_id,
-                'area_code'     => 'CARAGA',
+                'pp_id' => $pp->pp_id,
+                'sg_no' => $sg_no,
+                'step_no' => $step_no,
+                'salary_amount' => SalaryGrade::where(['sg_no' => $sg_no])->first(['sg_step'.$step_no])['sg_step'.$step_no],
+                'employee_id' => Employee::get()->random()->employee_id,
+                'area_code' => 'CARAGA',
                 'area_type' => 'Province',
                 'area_level' => 'K',
                 'date_original_appointment' => date('Y-m-d'),
@@ -71,8 +70,6 @@ class PlantillaScheduleSeeder extends Seeder
                 'status' => RefStatus::get()->random()->stat_code,
                 'year' => rand(2015, 2020),
             ]);
-
         });
-
     }
 }

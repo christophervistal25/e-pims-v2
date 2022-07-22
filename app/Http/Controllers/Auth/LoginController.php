@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -48,23 +48,23 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-            return view('auth.login');
+        return view('auth.login');
     }
 
     public function submitLogin(Request $request)
     {
-            if(Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
-                  $type = Auth::user()->user_type;
+        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+            $type = Auth::user()->user_type;
 
-                  if($type == User::USER_TYPES['ADMINISTRATOR']) {
-                        // Redirect to admin dashboard
-                        return redirect()->to(route('administrator.dashboard'));
-                  } else if($type == User::USER_TYPES['USER']) {
-                        // Redirect to user dashboard
-                        return redirect()->intended(route('employee.dashboard'));
-                  }
-            } else {
-                  return back()->withErrors(['message' => 'Please check your username/password'])->withInput();
+            if ($type == User::USER_TYPES['ADMINISTRATOR']) {
+                // Redirect to admin dashboard
+                return redirect()->to(route('administrator.dashboard'));
+            } elseif ($type == User::USER_TYPES['USER']) {
+                // Redirect to user dashboard
+                return redirect()->intended(route('employee.dashboard'));
             }
+        } else {
+            return back()->withErrors(['message' => 'Please check your username/password'])->withInput();
+        }
     }
 }

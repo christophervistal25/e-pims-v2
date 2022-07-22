@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class DeductionCode extends Model
 {
-    public $table = 'Deduction';
     use HasFactory;
+
+    public $table = 'Deduction';
 
     public function account_chart()
     {

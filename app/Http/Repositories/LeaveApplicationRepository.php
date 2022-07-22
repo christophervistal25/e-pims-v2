@@ -2,13 +2,12 @@
 
 namespace App\Http\Repositories;
 
-use App\User;
-use App\Employee;
-use App\LeaveType;
-use Carbon\Carbon;
-use Illuminate\Support\Str;
 use App\EmployeeLeaveApplication;
 use App\EmployeeLeaveRecord;
+use App\LeaveType;
+use App\User;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class LeaveApplicationRepository
 {
@@ -34,7 +33,7 @@ class LeaveApplicationRepository
         return $earned >= $noOfDays;
     }
 
-    public function fileApplication(array $employee = [], LeaveType $leaveType, int $noOfDays)
+    public function fileApplication(array $employee, LeaveType $leaveType, int $noOfDays)
     {
 
         // applicable_to_gender
@@ -54,7 +53,7 @@ class LeaveApplicationRepository
             ->get()
             ->sum('earned');
 
-        if (!$this->isEmployeePointsEnough($earned, $noOfDays)) {
+        if (! $this->isEmployeePointsEnough($earned, $noOfDays)) {
             return ['status' => false, 'message' => 'Insufficient leave points'];
         }
 

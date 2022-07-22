@@ -15,7 +15,7 @@ class CreateLeaveIncrementsTable extends Migration
     {
         Schema::create('leave_increments', function (Blueprint $table) {
             $table->id();
-            $table->integer('leave_type_id'); 
+            $table->integer('leave_type_id');
             $table->decimal('increment', 5, 3);
             $table->text('description');
             $table->timestamps();

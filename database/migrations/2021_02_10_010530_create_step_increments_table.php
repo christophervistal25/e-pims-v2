@@ -22,11 +22,11 @@ class CreateStepIncrementsTable extends Migration
             $table->date('date_latest_appointment');
             $table->integer('sg_no_from');
             $table->integer('step_no_from');
-            $table->decimal('salary_amount_from',11,2);
+            $table->decimal('salary_amount_from', 11, 2);
             $table->integer('sg_no_to');
             $table->integer('step_no_to');
-            $table->decimal('salary_amount_to',11,2);
-            $table->decimal('salary_diff',11,2);
+            $table->decimal('salary_amount_to', 11, 2);
+            $table->decimal('salary_diff', 11, 2);
             $table->softDeletes();
             $table->timestamps();
         });

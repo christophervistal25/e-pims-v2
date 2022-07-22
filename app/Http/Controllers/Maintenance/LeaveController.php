@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Maintenance;
 
+use App\Http\Controllers\Controller;
 use App\LeaveType;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Yajra\Datatables\Datatables;
 
 class LeaveController extends Controller
@@ -18,10 +18,12 @@ class LeaveController extends Controller
     {
         if (request()->ajax()) {
             $types = LeaveType::query();
-            return (new Datatables)->eloquent($types)
+
+            return (new Datatables())->eloquent($types)
                     ->make(true);
         }
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -30,9 +32,10 @@ class LeaveController extends Controller
     public function index()
     {
         $types = LeaveType::get();
+
         return view('maintenance.leave.index', [
             'types' => $types,
-            'class' => 'mini-sidebar'
+            'class' => 'mini-sidebar',
         ]);
     }
 
@@ -54,13 +57,13 @@ class LeaveController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->ajax()) {
+        if ($request->ajax()) {
             $this->validate($request, [
-                'name'                      => 'required',
-                'code'                      => 'required|unique:Leave_type,leave_type_id|max:10',
-                'description'               => 'nullable|string',
-                'convertible_to_cash'       => 'nullable',
-                'applicable_gender'         => 'required|in:male,female,female/male',
+                'name' => 'required',
+                'code' => 'required|unique:Leave_type,leave_type_id|max:10',
+                'description' => 'nullable|string',
+                'convertible_to_cash' => 'nullable',
+                'applicable_gender' => 'required|in:male,female,female/male',
             ]);
 
             LeaveType::create([
@@ -93,7 +96,7 @@ class LeaveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id) : LeaveType
+    public function edit($id): LeaveType
     {
         return LeaveType::findOrFail($id);
     }
@@ -107,23 +110,23 @@ class LeaveController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if($request->ajax()) {
+        if ($request->ajax()) {
             $this->validate($request, [
-                'edit_name'                      => 'required',
+                'edit_name' => 'required',
                 // 'edit_code'                      => ['required', 'unique:leave_types,code,' . $id, 'max:10'],
-                'edit_description'               => 'nullable|string',
-                'edit_convertible_to_cash'       => 'nullable',
-                'edit_applicable_gender'         => 'required|in:male,female,female/male',
+                'edit_description' => 'nullable|string',
+                'edit_convertible_to_cash' => 'nullable',
+                'edit_applicable_gender' => 'required|in:male,female,female/male',
             ], [], [
-                'edit_name'                      => 'name',
+                'edit_name' => 'name',
                 // 'edit_code'                      => 'code',
-                'edit_description'               => 'description',
-                'edit_convertible_to_cash'       => 'convertible_to_cash',
-                'edit_applicable_gender'         => 'applicable_gender',
+                'edit_description' => 'description',
+                'edit_convertible_to_cash' => 'convertible_to_cash',
+                'edit_applicable_gender' => 'applicable_gender',
             ]);
 
             $leaveType = LeaveType::findOrFail($id);
-            
+
             $leaveType->description = $request->edit_name;
             $leaveType->description2 = $request->edit_description;
             $leaveType->convertible_to_cash = $request->has('edit_convertible_to_cash') ? 1 : 0;
@@ -146,6 +149,7 @@ class LeaveController extends Controller
     public function destroy($id)
     {
         $leaveType = LeaveType::where('leave_type_id', $id)->first();
+
         return response()->json(['success' => $leaveType->delete()]);
     }
 }

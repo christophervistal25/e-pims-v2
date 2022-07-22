@@ -7,7 +7,6 @@ use Illuminate\Contracts\Validation\Rule;
 
 class UpdateTrapfullname implements Rule
 {
-    
     /**
      * Create a new rule instance.
      *
@@ -34,8 +33,7 @@ class UpdateTrapfullname implements Rule
                             ->where('employee_id', '!=', request()->employee_id)
                             ->get(['firstname', 'middlename', 'lastname', 'date_birth', 'extension', 'employee_id']);
 
-        return $employee->count()  === 0;
-
+        return $employee->count() === 0;
     }
 
     /**

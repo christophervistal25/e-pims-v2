@@ -7,13 +7,13 @@ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
-    
-    public function setUp() : void
+
+    public function setUp(): void
     {
         parent::setUp();
     }
 
-    public function tearDown() :void
+    public function tearDown(): void
     {
         $this->artisan('migrate:refresh');
         parent::tearDown();

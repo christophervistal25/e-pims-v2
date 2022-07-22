@@ -1,10 +1,8 @@
 <?php
 
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateEmployeeLeaveRecordsTable extends Migration
 {
@@ -17,7 +15,7 @@ class CreateEmployeeLeaveRecordsTable extends Migration
     {
         Schema::create('employee_leave_records', function (Blueprint $table) {
             $table->id();
-            $table->string('employee_id'); 
+            $table->string('employee_id');
             $table->unsignedInteger('leave_type_id');
             $table->decimal('earned', 8, 3);
             $table->decimal('used', 8, 3)->default(0);
@@ -30,7 +28,7 @@ class CreateEmployeeLeaveRecordsTable extends Migration
             $table->unsignedInteger('undertime_id')->nullable();
             $table->date('date_record');
             $table->timestamps();
-        });     
+        });
     }
 
     /**

@@ -3,20 +3,18 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\RefStatus;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class ReferenceStatusController extends Controller
 {
-
     public function status()
     {
-       return Cache::rememberForever('status', function () {
+        return Cache::rememberForever('status', function () {
             return RefStatus::orderBy('status_name')->get(['id', 'stat_code', 'status_name']);
         });
     }
-
 
     public function store(Request $request)
     {
@@ -24,7 +22,7 @@ class ReferenceStatusController extends Controller
             'status_name' => 'required|unique:ref_statuses|regex:/^[a-zA-Z ].+$/u',
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 

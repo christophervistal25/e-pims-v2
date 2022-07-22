@@ -2,6 +2,7 @@
 @section('title', 'Dashboard')
 @prepend('page-css')
 <link rel="stylesheet" href="assets/plugins/morris/morris.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
       .btn-primary {
             background: #ff9b44 !important;
@@ -155,14 +156,14 @@
             <div class="card data-notif">
                   <div class="alert alert-warning rounded-0">
                         These are the names of employees that have an upcoming step-increment. To see more details, click the button below.
-                        <i class="fas fa-close text-danger float-right pr-2 mt-2" id="closeIcon" title="Close"></i>
+                        <i class="fas fa-close text-danger float-right pr-2 mt-2" id="closeIcon" style="cursor:pointer;" title="Close"></i>
                   </div>
 
                   <div class="p-2 employeeList">
                         <div class="leave-info-box">
                               @foreach($promotionInSixMonths as $employee)
-                              <div class="media align-items-center mb-2">
-                                    <img class="img-fluid w-25" src="/storage/employee_images/no_image.png">
+                              <div class="media align-items-center mb-3">
+                                    <img class="img-fluid mr-3 border" width="200" src="{{ asset('/assets/img/profiles/'.$employee->Employee_id.'.jpg') }}">
                                     <div class="media-body ml-3">
                                           <div class="my-0 h5">{{ $employee->fullname }}</div>
                                           <div class="my-0 font-weight-medium">{{ $employee->position->Description }}</div>
@@ -203,9 +204,14 @@
                   </div>
                   <div class="card-body">
                         @foreach($today as $key => $employee)
+                        @php
+                            $employeeImage = file_exists(public_path('/assets/img/thumbnail/'.$employee->Employee_id.'.jpg')) ? asset('/assets/img/thumbnail/'.$employee->Employee_id.'.jpg') : asset('/assets/img/profiles/no_image.png');
+                        @endphp
                         <div class="leave-info-box">
                               <div class="media align-items-center">
-                                    <img class="img-fluid w-25" src="/storage/employee_images/no_image.png">
+                                    <a href="{{ asset('/assets/img/profiles/'.$employee->Employee_id.'.jpg') }}" data-lightbox='image-1' data-title="{{ $employee->LastName }}">
+                                        <img class="img-fluid bor  der rounded-circle shadow-sm mr-3" width="60" src="{{ $employeeImage }}">
+                                    </a>
                                     <div class="media-body">
                                           <div class="my-0 h6">{{ $employee->fullname }}</div>
                                           <div class="my-0 font-weight-medium">{{ $employee->position?->position_name }}</div>
@@ -215,8 +221,8 @@
                                     </div>
                               </div>
                         </div>
-                        @if($key === 3)
-                        <a href="{{ route('employees-birthday.index') }}?from={{ date('m-d') }}&to={{ date('m-d') }}" class='btn btn-primary btn-block h6'>See more {{ $today->count() - 4}} Birthday's</a>
+                        @if($key === 3 && ($today->count() - 4) !== 0)
+                        <a href="{{ route('employees-birthday.index') }}?from={{ date('m-d') }}&to={{ date('m-d') }}" class='btn btn-primary btn-block h6'>See more {{ $today->count() - 4 }} Birthday's</a>
                         @break
                         @endif
                         @endforeach
@@ -232,9 +238,14 @@
                   </div>
                   <div class="card-body">
                         @foreach($tomorrow as $key => $employee)
+                        @php
+                            $employeeImage = file_exists(public_path('/assets/img/thumbnail/'.$employee->Employee_id.'.jpg')) ? asset('/assets/img/thumbnail/'.$employee->Employee_id.'.jpg') : asset('/assets/img/profiles/no_image.png');
+                        @endphp
                         <div class="leave-info-box">
                               <div class="media align-items-center">
-                                    <img class="img-fluid w-25" src="/storage/employee_images/no_image.png">
+                                    <a href="{{ asset('/assets/img/profiles/'.$employee->Employee_id.'.jpg') }}" data-lightbox='image-1' data-title="{{ $employee->LastName }}">
+                                        <img class="img-fluid border rounded-circle shadow-sm mr-3" width="60" src="{{ $employeeImage }}">
+                                    </a>
                                     <div class="media-body">
                                           <div class="my-0 h6">{{ $employee->fullname }}</div>
                                           <div class="my-0 font-weight-medium">{{ $employee->position?->position_name }}</div>
@@ -244,7 +255,7 @@
                                     </div>
                               </div>
                         </div>
-                        @if($key === 3)
+                        @if($key === 3 && ($tomorrow->count() - 4) !== 0)
                         <a href="{{ route('employees-birthday.index') }}?from={{ date('m-d', strtotime($employee->Birthdate)) }}&to={{ date('m-d', strtotime($employee->Birthdate)) }}" class='btn btn-primary btn-block h6'>See more {{ $tomorrow->count() - 4 }} Birthday's</a>
                         @break
                         @endif
@@ -258,11 +269,15 @@
             <div class="card flex-fill">
                   <div class="card-header">One week before Birthdays <span class="badge bg-inverse-primary ml-2">{{ $oneWeekBeforeBirthdays->count() }}</div>
                   <div class="card-body">
-
                         @foreach($oneWeekBeforeBirthdays as $key => $employee)
+                        @php
+                            $employeeImage = file_exists(public_path('/assets/img/thumbnail/'.$employee->Employee_id.'.jpg')) ? asset('/assets/img/thumbnail/'.$employee->Employee_id.'.jpg') : asset('/assets/img/profiles/no_image.png');
+                        @endphp
                         <div class="leave-info-box">
                               <div class="media align-items-center">
-                                    <img class="img-fluid w-25" src="/storage/employee_images/no_image.png">
+                                    <a href="{{ asset('/assets/img/profiles/'.$employee->Employee_id.'.jpg') }}" data-lightbox='image-1' data-title="{{ $employee->LastName }}">
+                                        <img class="img-fluid border rounded-circle shadow-sm mr-3" width="60" src="{{ $employeeImage }}">
+                                    </a>
                                     <div class="media-body">
                                           <div class="my-0 h6">{{ $employee->fullname }}</div>
                                           <div class="my-0 font-weight-medium">{{ $employee->position?->position_name }}</div>
@@ -272,7 +287,7 @@
                                     </div>
                               </div>
                         </div>
-                        @if($key === 3)
+                        @if($key === 3 && ($oneWeekBeforeBirthdays->count() - 4) !== 0)
                         <a href="{{ route('employees-birthday.index') }}?from={{ date('m-d', strtotime($employee->Birthdate)) }}&to={{ date('m-d', strtotime($employee->Birthdate)) }}" class='btn btn-primary btn-block h6'>
                               See more {{ $oneWeekBeforeBirthdays->count() - 4 }} Birthday's
                         </a>
@@ -293,15 +308,12 @@
 {{-- JS SCRIPTS HERE --}}
 <script src="/assets/js/popper.min.js"></script>
 <script src="/assets/js/bootstrap.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="/assets/js/jquery.slimscroll.min.js"></script>
-
 
 <script>
       $('#closeIcon').on('click', function() {
-            $('.data-notif').fadeOut(1000, function() {
-                  $('.data-notif').remove();
-            });
+            $('.data-notif').fadeOut();
       });
 
 </script>

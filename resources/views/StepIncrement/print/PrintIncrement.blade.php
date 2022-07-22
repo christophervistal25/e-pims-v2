@@ -45,7 +45,7 @@
             <div class="col-lg-12 col-md-12 row mt-5">
                 {{-- LOGO --}}
                 <div class="col-lg-1 w-25" style="2rem">
-                    <img src="/assets/img/sdslogo.jpg" width="155px" style="margin-right: 100px">
+                    <img src="/assets/img/province.png" width="155px" style="margin-right: 100px">
                 </div>
                 {{-- END LOGO --}}
 

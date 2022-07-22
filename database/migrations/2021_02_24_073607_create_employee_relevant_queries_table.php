@@ -42,7 +42,6 @@ class CreateEmployeeRelevantQueriesTable extends Migration
             // $table->string('indigency_social_matters_answer');
             // $table->string('indigency_social_matters_details')->nullable();
 
-
             $table->string('question_34_a_answer');
             $table->string('question_34_a_details')->nullable();
             $table->string('question_34_b_answer');

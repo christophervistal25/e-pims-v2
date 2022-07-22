@@ -9,6 +9,7 @@ class CreateEmployeesTable extends Migration
     /**
      * Run the migrations.
      *git
+     *
      * @return void
      */
     public function up()
