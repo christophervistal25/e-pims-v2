@@ -200,9 +200,9 @@ Route::post('/addPosition', 'Api\PlantillaController@addPosition');
 
 // service record
 Route::get('/employee/service/records/{employeeId}', function ($employeeId) {
-    $data = DB::table('service_records')->join('offices', 'service_records.office_code', '=', 'offices.office_code')
-            ->join('Position', 'service_records.PosCode', '=', 'Position.PosCode')
-            ->select('id', 'employee_id', DB::raw("FORMAT(service_from_date, 'MM-dd-yy') as service_from_date"), DB::raw("FORMAT(service_to_date, 'MM-dd-yy') as service_to_date"), 'Position.Description as position_name', 'status', 'salary', 'offices.office_name', 'leave_without_pay', DB::raw("FORMAT(separation_date, 'MM-dd-yy') as separation_date"), 'separation_cause')
+    $data = DB::table('EPims.dbo.service_records')->join('EPims.dbo.offices', 'service_records.office_code', '=', 'offices.office_code')
+            ->join('EPims.dbo.Positions', 'service_records.PosCode', '=', 'Positions.PosCode')
+            ->select('id', 'employee_id', DB::raw("FORMAT(service_from_date, 'MM-dd-yy') as service_from_date"), DB::raw("FORMAT(service_to_date, 'MM-dd-yy') as service_to_date"), 'Positions.Description as position_name', 'status', 'salary', 'offices.office_name', 'leave_without_pay', DB::raw("FORMAT(separation_date, 'MM-dd-yy') as separation_date"), 'separation_cause')
             ->where('employee_id', $employeeId)
             ->whereNull('service_records.deleted_at')
             ->get();

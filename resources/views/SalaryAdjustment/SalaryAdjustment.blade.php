@@ -233,7 +233,7 @@
                         name="employeeOffice" data-live-search="true" id="employeeOffice" data-size="5">
                         <option value="*">All</option>
                         @foreach($office as $offices)
-                            <option {{ '10001' == $offices->office_code ? 'selected' : '' }} value="{{ $offices->office_code }}">{{ $offices->office_name }}</option>
+                            <option {{ '0001' == $offices->office_code ? 'selected' : '' }} value="{{ $offices->office_code }}">{{ $offices->office_name }}</option>
                         @endforeach
                         </select>
                 </div>

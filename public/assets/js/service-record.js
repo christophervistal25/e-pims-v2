@@ -9,6 +9,7 @@ $(function () {
         // processing: true,
         serverSide: true,
         destroy: true,
+        scrollX: true,
         retrieve: true,
         paging: false,
         info: false,
@@ -97,6 +98,7 @@ $(function () {
             table = $("#serviceRecords").DataTable({
                 processing: true,
                 serverSide: true,
+                scrollX: true,
                 destroy: true,
                 retrieve: true,
                 paging: false,
@@ -166,6 +168,7 @@ $(function () {
                 serverSide: true,
                 destroy: true,
                 retrieve: true,
+                scrollX: true,
                 pagingType: "full_numbers",
                 language: {
                     processing:

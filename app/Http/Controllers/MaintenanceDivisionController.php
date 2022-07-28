@@ -69,7 +69,7 @@ class MaintenanceDivisionController extends Controller
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('offices', function ($row) {
-                        return $row->offices?->office_name;
+                        return $row->offices->office_name;
                     })
                     ->addColumn('action', function ($row) {
                         $btn = "<a title='Edit Division' href='".route('maintenance-division.edit', $row->division_id)."' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";

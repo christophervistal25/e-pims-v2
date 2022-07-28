@@ -71,8 +71,8 @@ class SalaryAdjustmentPerOfficeController extends Controller
             } else {
                 $remarks = request()->remarks;
             }
-            $datas = DB::table('settings')->where('Keyname', 'AUTONUMBER2')->first();
-            DB::table('salary_adjustments')->insert(
+            $datas = DB::table('EPims.dbo.settings')->where('Keyname', 'AUTONUMBER2')->first();
+            DB::table('EPims.dbo.salary_adjustments')->insert(
                 [
                     'id' => $datas->Keyvalue,
                     'employee_id' => $newAdjustments['employee_id'],
@@ -94,11 +94,11 @@ class SalaryAdjustmentPerOfficeController extends Controller
 
             /* Updating the current service record of the employee soon to be previous record. */
             $serviceToDate = Carbon::parse(request()->date)->subDays(1);
-            DB::table('service_records')->select('employee_id', 'service_from_date', 'service_to_date')->where('employee_id', $newAdjustments['employee_id'])->where('service_to_date', null)->latest('service_from_date')
+            DB::table('EPims.dbo.service_records')->select('employee_id', 'service_from_date', 'service_to_date')->where('employee_id', $newAdjustments['employee_id'])->where('service_to_date', null)->latest('service_from_date')
             ->update(['service_to_date' => $serviceToDate]);
             // salary adjustment per office save to service record
-            $datas = DB::table('settings')->where('Keyname', 'AUTONUMBER2')->first();
-            DB::table('service_records')->insert(
+            $datas = DB::table('EPims.dbo.settings')->where('Keyname', 'AUTONUMBER2')->first();
+            DB::table('EPims.dbo.service_records')->insert(
                 [
                     'id' => $datas->Keyvalue,
                     'employee_id' => $newAdjustments['employee_id'],

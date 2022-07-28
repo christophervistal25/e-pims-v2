@@ -51,9 +51,9 @@ class ServiceRecordsController extends Controller
 
     public function list()
     {
-        $data = DB::table('service_records')
-            ->join('offices', 'service_records.office_code', '=', 'offices.office_code')
-            ->join('Position', 'service_records.PosCode', '=', 'Position.PosCode')
+        $data = DB::table('EPims.dbo.service_records')
+            ->join('EPims.dbo.offices', 'service_records.office_code', '=', 'offices.office_code')
+            ->join('EPims.dbo.Position', 'service_records.PosCode', '=', 'Position.PosCode')
             ->select('id', 'employee_id', DB::raw("FORMAT(service_from_date, 'MM-dd-yy') as service_from_date"), DB::raw("FORMAT(service_to_date, 'MM-dd-yy') as service_to_date"), 'Position.Description as Description', 'service_records.status', 'salary', 'offices.office_name', 'leave_without_pay', DB::raw("FORMAT(separation_date, 'MM-dd-yy') as separation_date"), 'separation_cause')
             ->whereNull('service_records.deleted_at')
             ->get();
@@ -66,24 +66,6 @@ class ServiceRecordsController extends Controller
             })
             ->rawColumns(['action'])
             ->make(true);
-        //old query
-        // if ($request->ajax()) {
-        //     $data = service_record::select('employee_id', 'service_from_date', 'service_to_date', 'position_id', 'status', 'salary', 'office_code', 'leave_without_pay', 'separation_date', 'separation_cause')->with('office:office_code,office_name,office_address','position:position_id,position_name');
-        //     return Datatables::of($data)
-        //             ->addIndexColumn()
-        //             ->addColumn('position', function ($row) {
-        //                     return $row->position->position_name;
-        //                 })
-        //                 ->addColumn('office', function ($row) {
-        //                     return $row->office->office_name . '' . $row->office->office_address;
-        //                 })
-        //             ->addColumn('action', function($row){
-        //                 $btn = "<a href='' class='edit btn btn-primary btn-sm'>Edit</a>";
-        //                     return $btn;
-        //             })
-        //             ->rawColumns(['action'])
-        //             ->make(true);
-        // }
         return view('ServiceRecords.ServiceRecords');
     }
 

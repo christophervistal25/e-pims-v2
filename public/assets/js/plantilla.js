@@ -129,7 +129,9 @@ $(document).ready(function () {
     // display emp id
     $("#employeeName").change(function (e) {
         let employeeID = e.target.value;
-        let plantilla = $($("#employeeName option:selected")[0]).attr("data-plantilla");
+        let plantilla = $($("#employeeName option:selected")[0]).attr(
+            "data-plantilla"
+        );
         $("#employeeID").val(plantilla);
     });
 
@@ -152,7 +154,6 @@ $(document).ready(function () {
         $.each(errorMessage, function (index, value) {
             $(`${value}`).html("");
         });
-
     });
 
     // Display the value of positin and division per office selected
@@ -174,11 +175,11 @@ $(document).ready(function () {
                     $("#currentSalarygrade").val(currentSalaryGrade);
                     let currentItemNo = response.item_no;
                     $("#itemNo").val(currentItemNo);
-                    let currentSalaryAmount =response.salary_grade[0]["sg_step" + currentStepno];
+                    let currentSalaryAmount =
+                        response.salary_grade[0]["sg_step" + currentStepno];
 
                     $("#currentSalaryamount").val(currentSalaryAmount);
                 }
-
             },
         });
     });
@@ -390,8 +391,8 @@ $(document).ready(function () {
                         title: "",
                         text: "Plantilla of Personnel has been added",
                         icon: "success",
-                        buttons : false,
-                        timer : 5000,
+                        buttons: false,
+                        timer: 5000,
                     });
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
@@ -623,11 +624,11 @@ $("#plantillaEditForm").submit(function (e) {
         success: function (response) {
             if (response.success) {
                 swal({
-                    title : '',
+                    title: "",
                     text: "Successfully updated!",
                     icon: "success",
-                    buttons : false,
-                    timer : 5000,
+                    buttons: false,
+                    timer: 5000,
                 });
 
                 $("#plantillaUpdate").attr("disabled", false);

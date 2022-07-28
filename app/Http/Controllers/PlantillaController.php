@@ -68,20 +68,20 @@ class PlantillaController extends Controller
 
     public function list(string $office, $year)
     {
-        $data = DB::table('plantillas')->join('offices', 'plantillas.office_code', '=', 'offices.office_code')
-            ->join('employees', 'plantillas.employee_id', '=', 'employees.Employee_id')
-            ->join('plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
-            ->join('Position', 'plantilla_positions.PosCode', '=', 'Position.PosCode')
-            ->select('plantilla_id', 'plantillas.item_no as item_no', 'plantillas.employee_id as employee_id', 'offices.office_name as office_name', 'plantillas.status as status', 'plantillas.year as year', 'Position.Description', DB::raw("CONCAT(LastName, ', ' , FirstName , ' ' , MiddleName, ' ' , Suffix) AS fullname"))
-            ->orderBy('plantilla_id', 'desc');
+        $data = DB::table('EPims.dbo.plantillas')
+        ->join('EPims.dbo.offices', 'plantillas.office_code', '=', 'offices.office_code')
+        ->join('EPims.dbo.plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
+        ->join('EPims.dbo.Positions', 'plantilla_positions.PosCode', '=', 'Positions.PosCode')
+        ->join('DTRPayroll.dbo.Employees', 'Employees.Employee_id', '=', 'plantillas.employee_id')
+        ->select(
+            DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"),
+            'plantilla_id', 'plantillas.item_no as item_no', 'offices.office_name as office_name', 'plantillas.status as status', 'plantillas.year as year', 'Positions.Description');
         if (request()->ajax()) {
             $PlantillaData = ($office != '*') ? $data->where('plantillas.office_code', $office)->where('plantillas.year', $year)->get()
                 : $data->where('plantillas.year', $year)->get();
-
             return DataTables::of($PlantillaData)
                 ->addColumn('action', function ($row) {
                     $btn = "<a title='Edit Plantilla' href='".route('plantilla-of-personnel.edit', $row->plantilla_id)."' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil'></i></a>";
-
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -114,7 +114,7 @@ class PlantillaController extends Controller
             'stepNo' => 'required|in:'.implode(',', range(1, 8)),
             'salaryAmount' => 'required|numeric',
             'currentSgyear' => 'required',
-            'officeCode' => 'required|in:'.implode(',', range(10001, 10056)),
+            'officeCode' => 'required|in:'.implode(',', range(0001, 0037)),
             // 'divisionId' => 'required',
             'originalAppointment' => 'required',
             'lastPromotion' => 'required|after:originalAppointment',

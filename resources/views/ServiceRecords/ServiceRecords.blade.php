@@ -223,7 +223,7 @@
                     </div>
                </div>
 
-               <div class="table" style="overflow-x:auto;">
+               <div class="table">
                     <table class="table table-bordered table-hover text-center" id="serviceRecords" style="width:100%;">
                          <thead>
                               <tr>
