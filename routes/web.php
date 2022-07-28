@@ -173,7 +173,7 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
 
     // Service Records
     Route::get('service-record/{id}', [ServiceRecordsController::class, 'destroy'])->name('service-records.delete');
-    Route::get('service-records-list', [ServiceRecordsController::class, 'list']);
+    Route::get('/service-records-list/{employeeId}', [ServiceRecordsController::class, 'list']);
     Route::resource('service-records', ServiceRecordsController::class);
 
     Route::get('employees-birthdays/{from}/{to}', [BirthdayController::class, 'range']);

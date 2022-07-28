@@ -49,23 +49,24 @@ class ServiceRecordsController extends Controller
         //
     }
 
-    public function list()
+    public function list(Request $request, $employeeId)
     {
-        $data = DB::table('EPims.dbo.service_records')
-            ->join('EPims.dbo.offices', 'service_records.office_code', '=', 'offices.office_code')
-            ->join('EPims.dbo.Position', 'service_records.PosCode', '=', 'Position.PosCode')
-            ->select('id', 'employee_id', DB::raw("FORMAT(service_from_date, 'MM-dd-yy') as service_from_date"), DB::raw("FORMAT(service_to_date, 'MM-dd-yy') as service_to_date"), 'Position.Description as Description', 'service_records.status', 'salary', 'offices.office_name', 'leave_without_pay', DB::raw("FORMAT(separation_date, 'MM-dd-yy') as separation_date"), 'separation_cause')
-            ->whereNull('service_records.deleted_at')
-            ->get();
+        $data = DB::table('EPims.dbo.service_records')->join('EPims.dbo.offices', 'service_records.office_code', '=', 'offices.office_code')
+        ->join('EPims.dbo.Positions', 'service_records.PosCode', '=', 'Positions.PosCode')
+        ->select('id', 'employee_id', DB::raw("FORMAT(service_from_date, 'MM-dd-yy') as service_from_date"), DB::raw("FORMAT(service_to_date, 'MM-dd-yy') as service_to_date"), 'Positions.Description as position_name', 'status', 'salary', 'offices.office_name', 'leave_without_pay', DB::raw("FORMAT(separation_date, 'MM-dd-yy') as separation_date"), 'separation_cause')
+        ->where('employee_id', $employeeId)
+        ->whereNull('service_records.deleted_at')
+        ->get();
 
         return DataTables::of($data)
-            ->addColumn('action', function ($row) {
-                $btn = "<a href='' class='edit btn btn-primary btn-sm'>Edit</a>";
-
-                return $btn;
-            })
-            ->rawColumns(['action'])
-            ->make(true);
+                ->addColumn('action', function ($row) {
+                    $btn = "<a title='Edit Service Record' href='".route('service-records.edit', $row->id)."' class='rounded-circle edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+                    $btn = $btn."<a title='Delete Service Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+            ";
+            return $btn;
+        })
+        ->rawColumns(['action'])
+        ->make(true);
         return view('ServiceRecords.ServiceRecords');
     }
 

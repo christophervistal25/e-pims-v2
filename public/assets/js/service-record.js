@@ -5,61 +5,8 @@ $.ajaxSetup({
     },
 });
 $(function () {
-    let table = $("#serviceRecords").DataTable({
-        // processing: true,
-        serverSide: true,
-        destroy: true,
-        scrollX: true,
-        retrieve: true,
-        paging: false,
-        info: false,
-        bFilter: false,
-        pagingType: "full_numbers",
-        language: {
-            processing:
-                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
-        },
-        ajax: {
-            url: "/service-records-list",
-            data: function (d) {
-                d.employeeName = $("#employeeName").val();
-            },
-        },
-        columns: [
-            { data: "employee_id", name: "employee_id", visible: false },
-            {
-                data: "service_from_date",
-                name: "service_from_date",
-                visible: false,
-            },
-            {
-                data: "service_to_date",
-                name: "service_to_date",
-                visible: false,
-            },
-            { data: "Description", name: "Description", visible: false },
-            { data: "status", name: "status", visible: false },
-            { data: "salary", name: "salary", visible: false },
-            { data: "office_name", name: "office_name", visible: false },
-            {
-                data: "leave_without_pay",
-                name: "leave_without_pay",
-                visible: false,
-            },
-            {
-                data: "separation_date",
-                name: "separation_date",
-                visible: false,
-            },
-            {
-                data: "separation_cause",
-                name: "separation_cause",
-                visible: false,
-            },
-            { data: "action", name: "action", visible: false },
-        ],
-    });
-    $("#employeeName").change(function (e) {
+    $("#employeeName").change(function () {
+        var nameVal = $("#employeeName").val();
         $("input, textarea").val("");
         $("#positionTitle").val("Please Select").trigger("change");
         $("#officeCode").val("Please Select").trigger("change");
@@ -92,78 +39,12 @@ $(function () {
         $.each(errorMessage, function (index, value) {
             $(`${value}`).html("");
         });
-
-        if (e.target.value == "") {
-            table.destroy();
-            table = $("#serviceRecords").DataTable({
-                processing: true,
-                serverSide: true,
-                scrollX: true,
-                destroy: true,
-                retrieve: true,
-                paging: false,
-                info: false,
-                bFilter: false,
-                pagingType: "full_numbers",
-                language: {
-                    processing:
-                        '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
-                },
-                ajax: {
-                    url: "/service-records-list",
-                    data: function (d) {
-                        d.employeeName = $("#employeeName").val();
-                    },
-                },
-                columns: [
-                    {
-                        data: "service_from_date",
-                        name: "service_from_date",
-                        visible: false,
-                    },
-                    {
-                        data: "service_to_date",
-                        name: "service_to_date",
-                        visible: false,
-                    },
-                    {
-                        data: "service_to_date",
-                        name: "service_to_date",
-                        visible: false,
-                    },
-                    {
-                        data: "position_name",
-                        name: "position_name",
-                        visible: false,
-                    },
-                    { data: "status", name: "status", visible: false },
-                    { data: "salary", name: "salary", visible: false },
-                    {
-                        data: "office_name",
-                        name: "office_name",
-                        visible: false,
-                    },
-                    {
-                        data: "leave_without_pay",
-                        name: "leave_without_pay",
-                        visible: false,
-                    },
-                    {
-                        data: "separation_date",
-                        name: "separation_date",
-                        visible: false,
-                    },
-                    {
-                        data: "separation_cause",
-                        name: "separation_cause",
-                        visible: false,
-                    },
-                    { data: "action", name: "action", visible: false },
-                ],
-            });
+        if (nameVal == "") {
+            $("#serviceRecords").DataTable().clear();
+            $("#serviceRecords").DataTable().destroy();
         } else {
-            table.destroy();
-            table = $("#serviceRecords").DataTable({
+            $("#serviceRecords").removeClass("d-none");
+            $("#serviceRecords").DataTable({
                 processing: true,
                 serverSide: true,
                 destroy: true,
@@ -175,7 +56,7 @@ $(function () {
                         '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
                 },
                 ajax: {
-                    url: `/api/employee/service/records/${e.target.value}`,
+                    url: `/service-records-list/${nameVal}`,
                     data: function (d) {
                         d.employeeName = $("#employeeName").val();
                     },
@@ -193,8 +74,8 @@ $(function () {
                         render: function (_, _, data, row) {
                             if (data.service_to_date == null) {
                                 return `
-                                    <p style="background-color:#FF9B44; border-radius:5px; padding:3px; color:white;">PRESENT</p>
-                                `;
+                                                <p style="background-color:#FF9B44; border-radius:5px; padding:3px; color:white;">PRESENT</p>
+                                            `;
                             } else {
                                 return `${data.service_to_date}`;
                             }
@@ -277,31 +158,6 @@ $("#downloadPdf").click(function () {
     });
 });
 
-////disable button
-function ValidateDropDown(dd) {
-    var input = document.getElementById("addbutton");
-    if (dd.value == "") input.disabled = true;
-    else input.disabled = false;
-    let printPreview = document.getElementById("printPreview");
-    let printPreviewA = document.getElementById("printPreviewA");
-    if (dd.value == "") {
-        printPreview.setAttribute("style", "visibility:hidden;");
-        printPreviewA.removeAttribute("href");
-        printPreview.setAttribute("disabled", true);
-        document.getElementById("line").style.visibility = "visible";
-    } else {
-        printPreviewA.setAttribute("href", "print-service-records/" + dd.value);
-        printPreview.setAttribute("style", "visibility:visible;");
-        printPreview.removeAttribute("disabled");
-        document.getElementById("line").style.visibility = "hidden";
-    }
-    $("input, textarea").val("");
-    const select = ["#positionTitle", "#status", "#officeCode"];
-    $.each(select, function (index, value) {
-        $(`${value}`).val("Please Select").trigger("change");
-    });
-}
-
 // get value namesss
 $(document).ready(function () {
     $("#employeeName").change(function (e) {
@@ -309,21 +165,22 @@ $(document).ready(function () {
         let plantilla = $($("#employeeName option:selected")[0]).attr(
             "data-plantilla"
         );
-
-        $("#addbutton").removeAttr("disabled");
         if (plantilla) {
+            $("#addbutton").removeAttr("disabled");
             $("#printPreview").removeAttr("disabled");
             plantilla = JSON.parse(plantilla);
             $("#employeeTitleName").text(
-                `${plantilla.LastName}, ${plantilla.FirstName} ${plantilla.MiddleName} ${plantilla.Suffix}`
+                `${plantilla.LastName}, ${plantilla.FirstName} ${plantilla.MiddleName}`
             );
             $("#employeeId").val(plantilla.Employee_id);
         } else {
             $("#printPreview").attr("disabled", true);
+            $("#addbutton").attr("disabled", true);
             $("#employeeId").val("");
         }
     });
 });
+
 //// add salary adjustment
 $(document).ready(function () {
     $("#serviceRecordForm").submit(function (e) {

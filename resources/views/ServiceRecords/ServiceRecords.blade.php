@@ -64,7 +64,7 @@
      <div class="card-body">
           <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
 
-               <div style='padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
+               <div style='padding-bottom:50px;' class="ml-auto">
                     <button id="cancelbutton" class="btn btn-primarys submit-btn float-right"><i class="fa fa-list"></i>
                          Service Records List</button>
                </div>
@@ -202,8 +202,8 @@
           <div id="table" class="page-header {{  count($errors->all()) == 0 ? '' : 'd-none' }}">
                <div class="row">
                     <div class="col-6 mb-2">
-                         <select data-style="btn-primarys text-white selectpicker" class="form-control form-control-xs selectpicker  {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" name="employeeName" data-live-search="true" id="employeeName" data-size="5">
-                              <option>Nothing Selected</option>
+                         <select data-style="btn-primarys text-white selectpicker" class="form-control form-control-xs selectpicker  {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" name="employeeName" onchange="ValidateDropDown()" data-live-search="true" id="employeeName" data-size="5">
+                              <option value="">Nothing Selected</option>
                               @foreach($plantillas as $plantilla)
                               <option data-plantilla="{{ $plantilla->employee }}" value="{{ $plantilla->employee_id }}">
                                    {{ $plantilla->employee->fullname }}
@@ -216,7 +216,7 @@
                               <button class="btn btn-secondary text-white mr-3" id="printPreview" disabled="true" type="button">
                                    <i class="la la-print"></i>&nbsp; Download Service Record
                               </button>
-                              <button id="addbutton" disabled type="button" class="btn btn-primarys float-right">
+                              <button id="addbutton" disabled type="button" class="btn btn-primarys float-right" >
                                    <i class="fa fa-plus"></i> Add Service Records
                               </button>
                          </div>
@@ -227,7 +227,7 @@
                     <table class="table table-bordered table-hover text-center" id="serviceRecords" style="width:100%;">
                          <thead>
                               <tr>
-                                   <th class="font-weight-bold align-middle text-center" rowspan="2">Emp Id</th>
+                                   <th class="font-weight-bold align-middle text-center d-none" rowspan="2">Emp Id</th>
                                    <th class="font-weight-bold align-middle text-center" rowspan="1 " colspan="2">Service
                                         Records<br><small>(Inclusive dates)</small></th>
                                    <th class="font-weight-bold align-middle text-center" rowspan="1" colspan="3">Records of
