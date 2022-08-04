@@ -59,7 +59,10 @@ $(document).ready(function () {
                     $.each(valueE, function (index, value) {
                         $(`${value}`).val("");
                     });
-                    $("#positionTitle,#officeCode,#salaryGrade")
+                    // $("#positionTitle,#officeCode,#salaryGrade")
+                    //     .val("Please Select")
+                    //     .selectpicker("refresh");
+                    $("#positionTitle,#salaryGrade")
                         .val("Please Select")
                         .selectpicker("refresh");
                     $("#plantillaofposition").DataTable().ajax.reload();

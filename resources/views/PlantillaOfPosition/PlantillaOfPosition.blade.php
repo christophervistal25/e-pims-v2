@@ -310,13 +310,7 @@
                                           var dataResult = JSON.parse(dataResult);
                                           if (dataResult.statusCode == 200) {
                                                 $('#plantillaofposition').DataTable().ajax.reload();
-                                                swal({
-                                                      title: ''
-                                                      , text: 'Plantilla Position deleted successfully'
-                                                      , icon: 'success'
-                                                      , timer: 5000
-                                                      , button: false
-                                                , });
+                                                swal("Deleted Successfully!", "", "success");
                                           }
                                     }
                               });
