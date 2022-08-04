@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class SalaryGrade extends Model
 {
     public $connection = 'E_PIMS_CONNECTION';
-    
+
     protected $fillable = [
         'sg_no',
         'sg_step1',

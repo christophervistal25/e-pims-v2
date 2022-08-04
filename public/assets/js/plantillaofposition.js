@@ -59,6 +59,13 @@ $(document).ready(function () {
                     $.each(valueE, function (index, value) {
                         $(`${value}`).val("");
                     });
+                    $.each(errorClass, function (index, value) {
+                        $(`${value}`).removeClass("is-invalid");
+                    });
+                    $.each(errorMessage, function (index, value) {
+                        $(`${value}`).html("");
+                    });
+
                     // $("#positionTitle,#officeCode,#salaryGrade")
                     //     .val("Please Select")
                     //     .selectpicker("refresh");

@@ -9,6 +9,7 @@ use App\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
+use Illuminate\Validation\Rule;
 
 class PlantillaOfPositionController extends Controller
 {
@@ -67,12 +68,46 @@ class PlantillaOfPositionController extends Controller
      */
     public function store(Request $request)
     {
+        // $this->validate($request, [
+        //     'positionTitle' => 'required',
+        //     'itemNo' => 'required|numeric',
+        //     'salaryGrade' => 'required | in:'.implode(',', range(1, 33)),
+        //     'officeCode' => 'required',
+        // ]);
+
         $this->validate($request, [
-            'positionTitle' => 'required',
-            'itemNo' => 'required|numeric',
+            'positionTitle' => [
+                'required',
+                Rule::unique('E_PIMS_CONNECTION.plantilla_positions', 'PosCode')->where(function ($query) use ($request) {
+                    return $query
+                ->where('PosCode', $request->positionTitle)
+                ->where('item_no', $request->itemNo)
+                ->where('office_code', $request->officeCode);
+                }),
+            ],
+            'itemNo' => [
+                'required',
+                Rule::unique('E_PIMS_CONNECTION.plantilla_positions', 'item_no')->where(function ($query) use ($request) {
+                    return $query
+                ->where('item_no', $request->itemNo)
+                ->where('PosCode', $request->positionTitle)
+                ->where('office_code', $request->officeCode);
+                }),
+            ],
             'salaryGrade' => 'required | in:'.implode(',', range(1, 33)),
-            'officeCode' => 'required',
+            'officeCode' => [
+                'required',
+                Rule::unique('E_PIMS_CONNECTION.plantilla_positions', 'office_code')->where(function ($query) use ($request) {
+                    return $query
+                ->where('office_code', $request->officeCode)
+                ->where('PosCode', $request->positionTitle)
+                ->where('item_no', $request->itemNo);
+                }),
+            ],
         ]);
+
+
+
 
         $plantillaposition = new PlantillaPosition();
         $plantillaposition->pp_id = tap(Setting::where('Keyname', 'PP_ID')->first())->increment('Keyvalue', 1)->Keyvalue;
