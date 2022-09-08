@@ -23,4 +23,8 @@ class Division extends Model
     {
         return $this->hasOne(Office::class, 'office_code', 'office_code');
     }
+    public function divisions()
+    {
+        return $this->belongsTo(Section::class, 'division_id', 'division_id');
+    }
 }

@@ -32,6 +32,7 @@ use App\Http\Controllers\PersonalDataSheetController;
 use App\Http\Controllers\PrintServiceRecordController;
 use App\Http\Controllers\EmployeeLeave\LeaveController;
 use App\Http\Controllers\MaintenanceDivisionController;
+use App\Http\Controllers\MaintenanceSectionController;
 use App\Http\Controllers\MaintenancePositionController;
 use App\Http\Controllers\PlantillaOfPositionController;
 use App\Http\Controllers\PlantillaOfScheduleController;
@@ -114,6 +115,11 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
     Route::get('/maintenance-division-list/{office_code?}', 'MaintenanceDivisionController@list')->name('maintenance-division-list');
     Route::resource('maintenance-division', MaintenanceDivisionController::class);
     Route::get('maintenance-division/{id}', [MaintenanceDivisionController::class, 'destroy'])->name('maintenance-division.delete');
+
+    /* Creating a route for the MaintenanceSectionController. */
+    Route::resource('maintenance-section', MaintenanceSectionController::class);
+    Route::get('/maintenance-section-list/{sectionId?}', 'MaintenanceSectionController@list')->name('maintenance-section-list');
+    Route::get('/maintenance-section/{id}', [MaintenanceSectionController::class, 'destroy'])->name('maintenance-section.delete');
 
     /* Creating a route for the PlantillaOfScheduleController. */
     Route::get('plantilla-of-schedule-list/{office?}/{year?}', [PlantillaOfScheduleController::class, 'list'])->name('plantilla-of-schedile.lists');

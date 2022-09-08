@@ -312,6 +312,9 @@
                                     <a class='text-decoration-none mr-2' href="{{ route('maintenance-division.index') }}">
                                         Division
                                     </a>
+                                    <a class='text-decoration-none mr-2' href="{{ route('maintenance-section.index') }}">
+                                        Section
+                                    </a>
                                     <a class='text-decoration-none mr-2' href="{{ route('holiday.index') }}">
                                         Holiday
                                     </a>
