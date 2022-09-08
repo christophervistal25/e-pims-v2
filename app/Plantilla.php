@@ -52,6 +52,7 @@ class Plantilla extends Model
         'date_last_promotion',
         'office_code',
         'division_id',
+        'section_id',
         'status',
         'year',
     ];
