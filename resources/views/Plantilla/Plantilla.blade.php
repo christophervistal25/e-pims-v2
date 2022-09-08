@@ -256,6 +256,12 @@
                               </div>
                          </div>
 
+                         <div class="form-group col-12 col-lg-6">
+                            <label>Salary Authorized</label>
+                            <input value="{{ old('salaryAuthorized') }}" class="form-control" name="salaryAuthorized" id="salaryAuthorized" type="text" placeholder="(optional)">
+                            <div id='salaryAuthorized-no-error-message' class='text-danger'>
+                            </div>
+                       </div>
 
                          <div class="form-group form-group submit-section col-12">
                               <button id="saveBtn" class="btn btn-primarys submit-btn float-right shadow" type="submit">

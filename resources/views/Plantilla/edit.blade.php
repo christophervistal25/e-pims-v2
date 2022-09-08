@@ -225,10 +225,17 @@
                                         <option value="{{ $arealevel[$arealevels]}}">{{ $arealevel[$arealevels] }}</option>
                                         @endif
                                         @endforeach
-                                   </select>
-                                   <div id='area-level-error-message' class='text-danger text-sm'>
-                                   </div>
-                              </div>
+                                </select>
+                                <div id='area-level-error-message' class='text-danger text-sm'>
+                                </div>
+                            </div>
+
+                        <div class="form-group col-12 col-lg-6">
+                            <label>Salary Authorized<span class="text-danger">*</span></label>
+                            <input value="{{ old('salaryAuthorized') ?? $plantilla->salary_authorized }}" class="form-control {{ $errors->has ('salaryAuthorized')  ? 'is-invalid' : ''}}" name="salaryAuthorized" id="num-only" type="text" placeholder="Salary Authorized">
+                            <div id='salaryAuthorized-no-error-message' class='text-danger'>
+                            </div>
+                        </div>
 
                               <div class="form-group form-group submit-section col-12">
                                    <button id="plantillaUpdate" type="submit" class="btn btn-primarys submit-btn float-right shadow"><span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>

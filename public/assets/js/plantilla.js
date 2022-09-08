@@ -14,6 +14,7 @@ $(document).ready(function () {
         "#employeeID",
         "#originalAppointment",
         "#lastPromotion",
+        "#salaryAuthorized",
     ];
 
     let errorClass = [
@@ -30,6 +31,7 @@ $(document).ready(function () {
         "#currentSalaryamount",
         ".officeCode",
         ".divisionId",
+        "#salaryAuthorized",
     ];
 
     let errorMessage = [
@@ -48,6 +50,7 @@ $(document).ready(function () {
         "#salary-amount-error-message",
         "#office-error-message",
         "#division-error-message",
+        "#salaryAuthorized-no-error-message",
     ];
 
     // filter list office
@@ -511,6 +514,18 @@ $(document).ready(function () {
                         $(".stepNo").removeClass("is-invalid");
                         $("#steps-error-message").html("");
                     }
+
+                    if (errors.hasOwnProperty("salaryAuthorized")) {
+                        $("#salaryAuthorized").addClass("is-invalid");
+                        $("#salaryAuthorized-no-error-message").html("");
+                        $("#salaryAuthorized-no-error-message").append(
+                            `<span>${errors.salaryAuthorized[0]}</span>`
+                        );
+                    } else {
+                        $("#salaryAuthorized").removeClass("is-invalid");
+                        $("#salaryAuthorized-no-error-message").html("");
+                    }
+
                     if (errors.hasOwnProperty("currentSalaryamount")) {
                         $("#currentSalaryamount").addClass("is-invalid");
                         $("#salary-amount-error-message").html("");
@@ -708,6 +723,16 @@ $("#plantillaEditForm").submit(function (e) {
                 } else {
                     $(".areaCode").removeClass("is-invalid");
                     $("#area-code-error-message").html("");
+                }
+                if (errors.hasOwnProperty("salaryAuthorized")) {
+                    $("#salaryAuthorized").addClass("is-invalid");
+                    $("#salaryAuthorized-no-error-message").html("");
+                    $("#salaryAuthorized-no-error-message").append(
+                        `<span>${errors.salaryAuthorized[0]}</span>`
+                    );
+                } else {
+                    $("#salaryAuthorized").removeClass("is-invalid");
+                    $("#salaryAuthorized-no-error-message").html("");
                 }
                 if (errors.hasOwnProperty("areaType")) {
                     $(".areaType").addClass("is-invalid");

@@ -117,6 +117,7 @@ class PlantillaController extends Controller
             'officeCode' => 'required|in:'.implode(',', range(0001, 0037)),
             // 'divisionId' => 'required',
             'originalAppointment' => 'required',
+            'salaryAuthorized' => 'numeric',
             'lastPromotion' => 'required|after:originalAppointment',
             'status' => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
             'areaCode' => 'required|in:'.implode(',', Plantilla::REGIONS),
@@ -132,6 +133,7 @@ class PlantillaController extends Controller
             $plantilla->employee_id = $request['employeeName'];
             $plantilla->sg_no = $request['salaryGrade'];
             $plantilla->step_no = $request['stepNo'];
+            $plantilla->salary_authorized = $request['salaryAuthorized'];
             $plantilla->salary_amount = $request['salaryAmount'];
             $plantilla->office_code = $request['officeCode'];
             $plantilla->division_id = $request['divisionId'] ?? 0;
@@ -219,7 +221,8 @@ class PlantillaController extends Controller
             'stepNo' => 'required|in:'.implode(',', range(1, 8)),
             'currentSgyear' => 'required',
             'salaryAmount' => 'required|numeric',
-            'officeCode' => 'required|in:'.implode(',', range(10001, 10056)),
+            'salaryAuthorized' => 'numeric',
+            'officeCode' => 'required|in:'.implode(',', range(0001, 0037)),
             'divisionId' => ['nullable', 'min:3'],
             'originalAppointment' => 'required',
             'lastPromotion' => 'required|after:originalAppointment',
@@ -236,6 +239,7 @@ class PlantillaController extends Controller
             $plantilla->employee_id = $request->employeeId;
             $plantilla->sg_no = $request->salaryGrade;
             $plantilla->step_no = $request->stepNo;
+            $plantilla->salary_authorized = $request->salaryAuthorized;
             $plantilla->salary_amount = $request->salaryAmount;
             $plantilla->office_code = $request->officeCode;
             $plantilla->division_id = $request->divisionId ?? 0;

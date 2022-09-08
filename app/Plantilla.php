@@ -42,6 +42,7 @@ class Plantilla extends Model
         'pp_id',
         'sg_no',
         'step_no',
+        'salary_authorized',
         'salary_amount',
         'employee_id',
         'area_code',
