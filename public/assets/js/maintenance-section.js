@@ -85,7 +85,7 @@ $(document).ready(function () {
                     $("input").val("");
                     const errorClass = [
                         "#sectionName",
-                        ".divisionCode .dropdown",
+                        ".divisionCode .dropdown .officeCode",
                     ];
                     $.each(errorClass, function (index, value) {
                         $(`${value}`).removeClass("is-invalid");
@@ -93,6 +93,7 @@ $(document).ready(function () {
                     const errorMessage = [
                         "#section-name-error-message",
                         "#division-id-error-message",
+                        "#office-code-error-message",
                     ];
                     $.each(errorMessage, function (index, value) {
                         $(`${value}`).html("");
@@ -131,6 +132,16 @@ $(document).ready(function () {
                     } else {
                         $(".divisionCode .dropdown").removeClass("is-invalid");
                         $("#division-id-error-message").html("");
+                    }
+                    if (errors.hasOwnProperty("officeCode")) {
+                        $(".officeCode .dropdown").addClass("is-invalid");
+                        $("#office-code-error-message").html("");
+                        $("#office-code-error-message").append(
+                            `<span>${errors.officeCode[0]}</span>`
+                        );
+                    } else {
+                        $(".officeCode .dropdown").removeClass("is-invalid");
+                        $("#office-code-error-message").html("");
                     }
                     // Create an parent element
                     let parentElement = document.createElement("ul");

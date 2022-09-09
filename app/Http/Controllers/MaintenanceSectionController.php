@@ -68,12 +68,14 @@ class MaintenanceSectionController extends Controller
     {
         $this->validate($request, [
             'sectionName' => 'required',
+            'officeCode' => 'required',
             'divisionCode' => 'required',
         ]);
 
         $section = new Section();
         $section->section_id = tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue;
         $section->section_name = $request['sectionName'];
+        $section->office_code = $request['officeCode'];
         $section->division_id = $request['divisionCode'];
         $section->save();
 
