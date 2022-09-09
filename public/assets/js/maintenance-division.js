@@ -45,10 +45,11 @@ $(document).ready(function () {
             processing:
                 '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
         },
-        ajax: "/maintenance-division-list/10001",
+        ajax: "/maintenance-division-list/0001",
         columns: [
             { data: "division_id", name: "division_id" },
             { data: "division_name", name: "division_name" },
+            { data: "offices", name: "offices" },
             {
                 data: "action",
                 name: "action",
@@ -131,7 +132,7 @@ $(document).ready(function () {
             data: data,
             success: function (response) {
                 if (response.success) {
-                    $("#officeCode").val("Please Select").trigger("change");
+                    // $("#officeCode").val("Please Select").trigger("change");
 
                     $("input").val("");
 

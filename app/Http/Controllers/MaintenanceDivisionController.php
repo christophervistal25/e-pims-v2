@@ -61,12 +61,13 @@ class MaintenanceDivisionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function list(Request $request)
+    public function list(string $office = '*')
     {
-        if ($request->ajax()) {
-            $data = Division::select('division_id', 'division_name', 'office_code')->with(['offices'])->get();
-
-            return Datatables::of($data)
+        $divisionData = Division::select('division_id', 'division_name', 'office_code')->with(['offices']);
+        if (request()->ajax()) {
+            $divisionData = ($office != '*') ? $divisionData->where('office_code', $office)->get()
+            : $divisionData->get();
+            return Datatables::of($divisionData)
                     ->addIndexColumn()
                     ->addColumn('offices', function ($row) {
                         return $row->offices->office_name;

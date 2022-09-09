@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Office;
 use App\Section;
 use App\Setting;
 use App\Division;
@@ -19,8 +20,9 @@ class MaintenanceSectionController extends Controller
      */
     public function index()
     {
+        $office = Office::get(['office_code', 'office_name']);
         $division = Division::get(['division_id', 'division_name']);
-        return view('MaintenanceSection.section', compact('division'));
+        return view('MaintenanceSection.section', compact('office', 'division'));
     }
 
     /**
@@ -34,14 +36,15 @@ class MaintenanceSectionController extends Controller
     }
 
 
-    public function list(string $division = '*')
+    public function list(string $office = '*')
     {
         $data = DB::connection('E_PIMS_CONNECTION')->table('Sections')
         ->join('Divisions', 'Sections.division_id', '=', 'Divisions.division_id')
-        ->select('Sections.section_id', 'Sections.section_name', 'Sections.division_id', 'Divisions.division_name');
+        ->join('Offices', 'Sections.office_code', '=', 'Offices.office_code')
+        ->select('Sections.section_id', 'Sections.section_name', 'Sections.division_id', 'Divisions.division_name', 'Offices.office_name');
 
         if (request()->ajax()) {
-            $sectionData = ($division != '*') ? $data->where('Sections.division_id', $division)->get()
+            $sectionData = ($office != '*') ? $data->where('Sections.office_code', $office)->get()
             : $data->get();
             return Datatables::of($sectionData)
                     ->addColumn('action', function ($row) {

@@ -60,6 +60,38 @@
                     <div class="container">
                          <div class="row justify-content-center align-items-center">
 
+                            <div class="form-group col-10 col-lg-7">
+                                <label class="has-float-label officeCode mb-0">
+                                     <select value="" class="form-control selectpicker  {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}" name="officeCode" data-live-search="true" id="officeCode" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                             <option></option>
+                                              @foreach($office as $offices)
+                                             <option {{ old('officeCode') == $offices->office_code ? 'selected' : '' }} value="{{ $offices->office_code }}">
+                                                 {{ $offices->office_name }}
+                                             </option>
+                                             @endforeach
+                                     </select>
+                                     <span class="font-weight-bold">Office<span class="text-danger">*</span></span>
+                                </label>
+                                <div id='division-id-error-message' class='text-danger text-sm'>
+                                </div>
+                           </div>
+
+                            <div class="form-group col-10 col-lg-7">
+                                <label class="has-float-label divisionCode mb-0">
+                                     <select value="" class="form-control selectpicker  {{ $errors->has('divisionCode')  ? 'is-invalid' : ''}}" name="divisionCode" data-live-search="true" id="divisionCode" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                             <option></option>
+                                              @foreach($division as $divisions)
+                                             <option {{ old('divisionCode') == $divisions->division_id ? 'selected' : '' }} value="{{ $divisions->division_id }}">
+                                                 {{ $divisions->division_name }}
+                                             </option>
+                                             @endforeach
+                                     </select>
+                                     <span class="font-weight-bold">Division<span class="text-danger">*</span></span>
+                                </label>
+                                <div id='division-id-error-message' class='text-danger text-sm'>
+                                </div>
+                           </div>
+
                               <div class="form-group col-12 col-md-6 col-lg-7">
                                    <label class="has-float-label mb-0">
                                         <input value="{{ old('sectionName') }}" class="form-control {{ $errors->has('sectionName')  ? 'is-invalid' : ''}}" name="sectionName" id="sectionName" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -69,21 +101,7 @@
                                    </div>
                               </div>
 
-                              <div class="form-group col-10 col-lg-7">
-                                   <label class="has-float-label divisionCode mb-0">
-                                        <select value="" class="form-control selectpicker  {{ $errors->has('divisionCode')  ? 'is-invalid' : ''}}" name="divisionCode" data-live-search="true" id="divisionCode" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                                <option></option>
-                                                 @foreach($division as $divisions)
-                                                <option {{ old('divisionCode') == $divisions->division_id ? 'selected' : '' }} value="{{ $divisions->division_id }}">
-                                                    {{ $divisions->division_name }}
-                                                </option>
-                                                @endforeach
-                                        </select>
-                                        <span class="font-weight-bold">Division<span class="text-danger">*</span></span>
-                                   </label>
-                                   <div id='division-id-error-message' class='text-danger text-sm'>
-                                   </div>
-                              </div>
+
 
                               <div class="form-group form-group submit-section col-12">
                                    <button id="saveBtn" class="btn btn-primarys submit-btn float-right shadow" type="submit">
@@ -99,15 +117,15 @@
 
           <div id="table" class="page-header {{  count($errors->all()) == 0 ? '' : 'd-none' }}">
                <div class="row">
-                    <div class="col-5 mb-2">
-                         <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}" name="maintenanceSectionOffice" data-live-search="true" id="maintenanceSectionOffice" data-size="5">
-                              <option value="">All</option>
-                            @foreach($division as $divisions)
-                              <option {{ '10001' == $divisions->division_id ? 'selected' : '' }} value="{{ $divisions->division_id }}">{{ $divisions->division_name }}</option>
+                    <div class="col-8 mb-2">
+                        <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}" name="maintenanceSectionOffice" data-live-search="true" id="maintenanceSectionOffice" data-size="5">
+                             <option value="">All</option>
+                             @foreach($office as $offices)
+                              <option {{ '0001' == $offices->office_code ? 'selected' : '' }} value="{{ $offices->office_code }}">{{ $offices->office_name }}</option>
                               @endforeach
-                         </select>
-                    </div>
-                    <div class="col-7 float-right mb-2">
+                        </select>
+                   </div>
+                    <div class="col-4 float-right mb-2">
                          <button id="addButton" class="btn btn-primarys submit-btn float-right"><i class="fa fa-plus"></i>
                               Add
                               New Section</button>
@@ -118,9 +136,10 @@
                     <table class="table table-bordered table-hover" id="maintenanceSection" style="width:100%;">
                          <thead>
                               <tr>
-                                  <td scope="col" class="text-truncate">Section Id</td>
-                                  <td scope="col" class="text-truncate">Section</td>
+                                  <td scope="col" class="text-truncate">Id</td>
+                                  <td scope="col" class="text-truncate">Description</td>
                                   <td scope="col" class="text-truncate">Division</td>
+                                  <td scope="col" class="text-truncate">Office</td>
                                    <td scope="col" class="text-truncate">Action</td>
                               </tr>
                          </thead>

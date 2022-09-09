@@ -46,11 +46,12 @@ $(document).ready(function () {
             processing:
                 '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
         },
-        ajax: "/maintenance-section-list",
+        ajax: "/maintenance-section-list/0001",
         columns: [
             { data: "section_id", name: "section_id" },
             { data: "section_name", name: "section_name" },
             { data: "division_name", name: "division_name" },
+            { data: "office_name", name: "office_name" },
             {
                 data: "action",
                 name: "action",
@@ -80,7 +81,7 @@ $(document).ready(function () {
             data: data,
             success: function (response) {
                 if (response.success) {
-                    $("#divisionCode").val("Please Select").trigger("change");
+                    // $("#divisionCode").val("Please Select").trigger("change");
                     $("input").val("");
                     const errorClass = [
                         "#sectionName",
