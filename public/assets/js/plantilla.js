@@ -186,7 +186,7 @@ $(document).ready(function () {
             },
         });
     });
-    // filter position by office
+    // filter position and division by office
     $("#officeCode").change(function (e) {
         //plantillaPositionMetaData
         $("#currentSalarygrade").val("");
@@ -316,7 +316,7 @@ $(document).ready(function () {
         $("#divisionId").append("<option></option>");
         for (i = 0; i < plantillaLengthDivisionId; i++) {
             var plantillaDivisionFilter_final = plantillaDivisionFilter[i];
-            //filter all position data//
+            //filter all division data//
             let divisionIdFilter = divisionOptionAll.filter(function (
                 Division
             ) {
@@ -334,6 +334,80 @@ $(document).ready(function () {
             );
         }
         $("#divisionId").selectpicker("refresh");
+    });
+    // filter section by division
+    $("#divisionId").change(function (e) {
+        //sectionMetaData
+        if (document.querySelectorAll('[id="sectionMetaData"]')[1] == null) {
+            var sectionMetaData = document
+                .querySelectorAll('[id="sectionMetaData"]')[0]
+                .content.replaceAll("|", '"');
+        } else {
+            var sectionMetaData = document
+                .querySelectorAll('[id="sectionMetaData"]')[1]
+                .content.replaceAll("|", '"');
+        }
+        var sectionMetaDataRemoveLast =
+            "[" +
+            sectionMetaData.substring(0, sectionMetaData.length - 2) +
+            "]";
+        let sectionDivisionIdOptionAll = JSON.parse(
+            sectionMetaDataRemoveLast
+        );
+        if (document.querySelectorAll('[id="sectionMetaData"]')[1] == null) {
+            var metaDataSection = document
+                .querySelectorAll('[id="sectionMetaData"]')[0]
+                .content.replaceAll("|", '"');
+        } else {
+            var metaDataSection = document
+                .querySelectorAll('[id="sectionMetaData"]')[1]
+                .content.replaceAll("|", '"');
+        }
+        var metaDataSectionRemoveLast =
+            "[" +
+            metaDataSection.substring(0, metaDataSection.length - 2) +
+            "]";
+        let sectionOptionAll = JSON.parse(metaDataSectionRemoveLast);
+        let divisionId2 = e.target.value;
+        //filter all section data in plantilla//
+        let plantillaSectionFilter = sectionDivisionIdOptionAll.filter(
+            function (Section) {
+                return Section.divisionId == divisionId2;
+            }
+        );
+        //Remove all option in #sectionId//
+        function removeOptionsSection(selectSection) {
+            var ii,
+                L = selectSection.options.length - 1;
+            for (ii = L; ii >= 0; ii--) {
+                selectSection.remove(ii);
+            }
+        }
+        removeOptionsSection(document.getElementById("sectionId"));
+        //add section data based in what you select in #divisionId//
+        var i,
+            plantillaLengthSectionId = plantillaSectionFilter.length;
+        $("#sectionId").append("<option></option>");
+        for (i = 0; i < plantillaLengthSectionId; i++) {
+            var plantillaSectionFilter_final = plantillaSectionFilter[i];
+            //filter all division data//
+            let sectionIdFilter = sectionOptionAll.filter(function (
+                Section
+            ) {
+                return (
+                    Section.divisionId ==
+                    plantillaSectionFilter_final.divisionId
+                );
+            });
+            $("#sectionId").append(
+                '<option value="' +
+                    sectionIdFilter[i].sectionId +
+                    '">' +
+                    sectionIdFilter[i].sectionName +
+                    "</option>"
+            );
+        }
+        $("#sectionId").selectpicker("refresh");
     });
     // generate amount
     $("#currentStepno").change(function () {
