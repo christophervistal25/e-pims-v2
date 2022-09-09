@@ -101,10 +101,10 @@ class MaintenanceSectionController extends Controller
      */
     public function edit($section_id)
     {
-        $division = Division::get(['division_id', 'division_name']);
-
+        $office = Office::get(['office_code', 'office_name']);
+        $division = Division::get(['division_id', 'division_name', 'office_code']);
         $section = DB::connection('E_PIMS_CONNECTION')->table('Sections')->where('section_id', $section_id)->first();
-        return view('MaintenanceSection.edit', compact('section', 'division'));
+        return view('MaintenanceSection.edit', compact('section', 'division', 'office'));
     }
 
     /**
@@ -118,11 +118,12 @@ class MaintenanceSectionController extends Controller
     {
         $this->validate($request, [
             'sectionName' => 'required',
+            'officeCode' => 'required',
             'divisionId' => 'required',
         ]);
         DB::connection('E_PIMS_CONNECTION')->table('Sections')
         ->where('section_id', $section_id)
-        ->update(['section_name' => $request['sectionName'], 'division_id' => $request['divisionId']]);
+        ->update(['section_name' => $request['sectionName'], 'division_id' => $request['divisionId'], 'office_code' => $request['officeCode'],]);
         Session::flash('alert-success', 'Section Updated Successfully');
         return back()->with('success', 'Updated Successfully');
     }

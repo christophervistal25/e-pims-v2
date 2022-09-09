@@ -33,7 +33,7 @@ class Plantilla extends Model
         'Region', 'Province', 'District', 'Municipality', 'Foreign Post',
     ];
 
-    public const AREA_LEVELS = ['K', 'T', 'S', 'A'];
+    public const AREA_LEVELS = ['A', 'K', 'S', 'T'];
 
     protected $fillable = [
         'plantilla_id',
