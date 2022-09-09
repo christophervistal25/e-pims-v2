@@ -23,8 +23,10 @@ class PlantillaOfPositionController extends Controller
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('PosCode', 'Description', 'sg_no')->get();
         $lastId = Position::latest('PosCode')->first();
-
-        return view('PlantillaOfPosition.PlantillaOfPosition', compact('position', 'office', 'lastId'));
+        $areacode = DB::table('EPims.dbo.Area_code')->get();
+        $areatype = DB::table('EPims.dbo.Area_type')->get();
+        $arealevel = DB::table('EPims.dbo.Area_level')->get();
+        return view('PlantillaOfPosition.PlantillaOfPosition', compact('position', 'office', 'lastId', 'areacode', 'areatype', 'arealevel'));
     }
 
     public function list(string $office = '*')
@@ -105,6 +107,9 @@ class PlantillaOfPositionController extends Controller
                 ->where('item_no', $request->itemNo);
                 }),
             ],
+            'areaCode' => 'required',
+            'areaType' => 'required',
+            'areaLevel' => 'required',
         ]);
 
 
@@ -117,6 +122,9 @@ class PlantillaOfPositionController extends Controller
         $plantillaposition->sg_no = $request['salaryGrade'];
         $plantillaposition->office_code = $request['officeCode'];
         $plantillaposition->old_position_name = $request['positionOldName'];
+        $plantillaposition->area_code = $request['areaCode'];
+        $plantillaposition->area_type = $request['areaType'];
+        $plantillaposition->area_level = $request['areaLevel'];
         $plantillaposition->save();
 
         return response()->json(['success' => true]);
@@ -144,8 +152,10 @@ class PlantillaOfPositionController extends Controller
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('PosCode', 'Description', 'sg_no')->get();
         $plantillaofposition = PlantillaPosition::find($pp_id);
-
-        return view('PlantillaOfPosition.edit', compact('plantillaofposition', 'position', 'office'));
+        $areacode = DB::table('EPims.dbo.Area_code')->get();
+        $areatype = DB::table('EPims.dbo.Area_type')->get();
+        $arealevel = DB::table('EPims.dbo.Area_level')->get();
+        return view('PlantillaOfPosition.edit', compact('plantillaofposition', 'position', 'office', 'areacode','areatype','arealevel'));
     }
 
     /**
@@ -161,12 +171,18 @@ class PlantillaOfPositionController extends Controller
             'itemNo' => 'required|numeric',
             'salaryGrade' => 'required | in:'.implode(',', range(1, 33)),
             'officeCode' => 'required',
+            'areaCode' => 'required',
+            'areaType' => 'required',
+            'areaLevel' => 'required',
         ]);
         $plantillaposition = PlantillaPosition::find($pp_id);
         $plantillaposition->item_no = $request['itemNo'];
         $plantillaposition->sg_no = $request['salaryGrade'];
         $plantillaposition->office_code = $request['officeCode'];
         $plantillaposition->old_position_name = $request['positionOldName'];
+        $plantillaposition->area_code = $request['areaCode'];
+        $plantillaposition->area_type = $request['areaType'];
+        $plantillaposition->area_level = $request['areaLevel'];
         $plantillaposition->save();
 
         return response()->json(['success' => true]);
@@ -181,7 +197,6 @@ class PlantillaOfPositionController extends Controller
     public function destroy($id)
     {
         PlantillaPosition::find($id)->delete();
-
         return json_encode(['statusCode' => 200]);
     }
 }

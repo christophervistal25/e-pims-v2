@@ -16,6 +16,32 @@ class PlantillaPosition extends Model
 
     protected $fillable = ['pp_id', 'PosCode', 'item_no', 'sg_no', 'office_code', 'old_position_name', 'year'];
 
+    public const REGIONS = [
+        'Region 1',
+        'Region 2',
+        'Region 3',
+        'Region 4',
+        'Region 5',
+        'Region 6',
+        'Region 7',
+        'Region 8',
+        'Region 9',
+        'Region 10',
+        'Region 11',
+        'Region 12',
+        'NCR',
+        'CAR',
+        'CARAGA',
+        'ARMM',
+    ];
+
+    public const AREA_TYPES = [
+        'Region', 'Province', 'District', 'Municipality', 'Foreign Post',
+    ];
+
+    public const AREA_LEVELS = ['A', 'K', 'S', 'T'];
+
+
     public $keyType = 'string';
 
     protected $primaryKey = 'pp_id';

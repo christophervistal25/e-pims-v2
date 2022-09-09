@@ -5,6 +5,9 @@ $(document).ready(function () {
         "#itemNo",
         ".salaryGrade .dropdown",
         ".officeCode .dropdown",
+        ".areaCode .dropdown",
+        ".areaType .dropdown",
+        ".areaLevel .dropdown",
         "#positionOldName",
     ];
     let errorMessage = [
@@ -13,8 +16,16 @@ $(document).ready(function () {
         "#salary-grade-error-message",
         "#office-error-message",
         "#old-position-name-error-message",
+        "#area-code-error-message",
+        "#area-type-error-message",
+        "#area-level-error-message",
     ];
-    let select = ["#positionTitle", "#salaryGrade", "#officeCode"];
+    let select = [
+        "#positionTitle",
+        "#salaryGrade",
+        "#officeCode",
+        "#areaLevel",
+    ];
     // code for show add form
     $("#addButton").click(function () {
         $("#add").attr("class", "page-header");
@@ -32,7 +43,7 @@ $(document).ready(function () {
         $.each(valueE, function (index, value) {
             $(`${value}`).val("");
         });
-        $("#positionTitle,#addSalaryGrade,#officeCode")
+        $("#positionTitle,#addSalaryGrade,#officeCode", "#areaLevel")
             .val("Please Select")
             .trigger("change");
         $.each(errorClass, function (index, value) {
@@ -66,10 +77,7 @@ $(document).ready(function () {
                         $(`${value}`).html("");
                     });
 
-                    // $("#positionTitle,#officeCode,#salaryGrade")
-                    //     .val("Please Select")
-                    //     .selectpicker("refresh");
-                    $("#positionTitle,#salaryGrade")
+                    $("#positionTitle,#officeCode,#salaryGrade,#areaLevel")
                         .val("Please Select")
                         .selectpicker("refresh");
                     $("#plantillaofposition").DataTable().ajax.reload();
@@ -132,6 +140,39 @@ $(document).ready(function () {
                     } else {
                         $("#positionOldName").removeClass("is-invalid");
                         $("#old-position-name-error-message").html("");
+                    }
+
+                    if (errors.hasOwnProperty("areaCode")) {
+                        $("#areaCode").addClass("is-invalid");
+                        $("#area-code-error-message").html("");
+                        $("#area-code-error-message").append(
+                            `<span>${errors.areaCode[0]}</span>`
+                        );
+                    } else {
+                        $("#areaCode").removeClass("is-invalid");
+                        $("#area-code-error-message").html("");
+                    }
+
+                    if (errors.hasOwnProperty("areaType")) {
+                        $("#areaType").addClass("is-invalid");
+                        $("#area-type-error-message").html("");
+                        $("#area-type-error-message").append(
+                            `<span>${errors.areaType[0]}</span>`
+                        );
+                    } else {
+                        $("#areaType").removeClass("is-invalid");
+                        $("#area-type-error-message").html("");
+                    }
+
+                    if (errors.hasOwnProperty("areaLevel")) {
+                        $(".areaLevel .dropdown").addClass("is-invalid");
+                        $("#area-level-error-message").html("");
+                        $("#area-level-error-message").append(
+                            `<span>${errors.areaLevel[0]}</span>`
+                        );
+                    } else {
+                        $(".areaLevel .dropdown").removeClass("is-invalid");
+                        $("#area-level-error-message").html("");
                     }
                     // Create an parent element
                     let parentElement = document.createElement("ul");
