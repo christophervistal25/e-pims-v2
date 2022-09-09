@@ -151,6 +151,7 @@
                                                                         </div>
                                                                   </div>
 
+
                                                                   <div class=" col-12 col-md-6 col-lg-12">
                                                                         <label class="has-float-label addSalaryGrade mb-0">
                                                                               <select value="" class="form-control form-control-xs selectpicker  {{ $errors->has('addSalaryGrade')  ? 'is-invalid' : ''}}" name="addSalaryGrade" data-live-search="true" id="addSalaryGrade" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -166,14 +167,14 @@
                                                                         </div>
                                                                   </div>
 
-                                                                  <div class=" col-12 col-md-6 col-lg-12">
+                                                                <div class=" col-12 col-md-6 col-lg-12">
                                                                         <label class="has-float-label mb-0">
-                                                                              <input value="{{ old('addPositionShortName') }}" class="form-control {{ $errors->has('addPositionShortName')  ? 'is-invalid' : ''}}" name="addPositionShortName" id="addPositionShortName" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                                                              <span class="font-weight-bold">Position Short Name<span class="text-danger">*</span></span>
+                                                                            <input value="{{ old('addPositionShortName') }}" class="form-control {{ $errors->has('addPositionShortName')  ? 'is-invalid' : ''}}" name="addPositionShortName" id="addPositionShortName" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                                                            <span class="font-weight-bold">Position Short Name<span class="text-danger">*</span></span>
                                                                         </label>
                                                                         <div id='add-position-short-name-error-message' class='text-danger text-sm'>
                                                                         </div>
-                                                                  </div>
+                                                                </div>
 
                                                             </div>
                                                             <div class="modal-footer">
@@ -215,9 +216,47 @@
                                                 </div>
                                           </div>
 
+                                                <div class=" col-6 col-md-6 col-lg-6">
+                                                    <label class="has-float-label areaCode mb-0">
+                                                        <select value="" class="form-control selectpicker" name="areaCode" data-live-search="true" id="areaCode" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                                                <option></option>
+                                                            @foreach($areacode as $areacodes)
+                                                            <option {{ old('areaCode') == $areacodes->area_code_id ? 'selected' : '' }} value="{{ $areacodes->area_code_id }}" selected>{{ $areacodes->area_code_id }} - {{ $areacodes->description }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <span class="font-weight-bold">AREA CODE<span class="text-danger">*</span></span>
+                                                    </label>
+                                                    <div id='area-code-error-message' class='text-danger text-sm'>
+                                                    </div>
+                                            </div>
 
+                                            <div class=" col-6 col-md-6 col-lg-6">
+                                                <label class="has-float-label areaType mb-0">
+                                                    <select value="" class="form-control selectpicker" name="areaType" data-live-search="true" id="areaType" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                                            <option></option>
+                                                            @foreach($areatype as $areatypes)
+                                                                <option {{ old('areaType') == $areatypes->area_type_id ? 'selected' : '' }} value="{{ $areatypes->area_type_id }}" selected>{{ $areatypes->area_type_id }} - {{ $areatypes->description }}</option>
+                                                            @endforeach
+                                                    </select>
+                                                    <span class="font-weight-bold">AREA TYPE<span class="text-danger">*</span></span>
+                                                </label>
+                                                <div id='area-type-error-message' class='text-danger text-sm'>
+                                                </div>
+                                        </div>
 
-
+                                        <div class=" col-6 col-md-6 col-lg-6">
+                                            <label class="has-float-label areaLevel mb-0">
+                                                <select value="" class="form-control selectpicker" name="areaLevel" data-live-search="true" id="areaLevel" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                                        <option selected></option>
+                                                        @foreach($arealevel as $arealevels)
+                                                                <option {{ old('areaLevel') == $arealevels->area_level_id ? 'selected' : '' }}  value="{{ $arealevels->area_level_id }}">{{ $arealevels->area_level_id }}</option>
+                                                        @endforeach
+                                                </select>
+                                                <span class="font-weight-bold">AREA LEVEL<span class="text-danger">*</span></span>
+                                            </label>
+                                            <div id='area-level-error-message' class='text-danger text-sm'>
+                                            </div>
+                                    </div>
 
                                     </div>
 
