@@ -21,7 +21,7 @@ class MaintenanceSectionController extends Controller
     public function index()
     {
         $office = Office::get(['office_code', 'office_name']);
-        $division = Division::get(['division_id', 'division_name']);
+        $division = Division::get(['division_id', 'division_name', 'office_code']);
         return view('MaintenanceSection.section', compact('office', 'division'));
     }
 
@@ -68,13 +68,13 @@ class MaintenanceSectionController extends Controller
     {
         $this->validate($request, [
             'sectionName' => 'required',
-            'divisionCode' => 'required',
+            'divisionId' => 'required',
         ]);
 
         $section = new Section();
         $section->section_id = tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue;
         $section->section_name = $request['sectionName'];
-        $section->division_id = $request['divisionCode'];
+        $section->division_id = $request['divisionId'];
         $section->save();
 
         return response()->json(['success' => true]);

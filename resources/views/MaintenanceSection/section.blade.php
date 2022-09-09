@@ -47,6 +47,9 @@
 
 </style>
 @endprepend
+@prepend('meta-data')
+<meta id="divisionMetaData" content="@foreach($division as $divisions){ |officeCode|:|{{ $divisions->office_code }}|, |divisionId|:|{{ $divisions->division_id }}|, |divisionName|:|{{ $divisions->division_name }}|}, @endforeach">
+@endprepend
 @section('content')
 <div class="kanban-board card">
      <div class="card-body">
@@ -77,14 +80,9 @@
                            </div>
 
                             <div class="form-group col-10 col-lg-7">
-                                <label class="has-float-label divisionCode mb-0">
-                                     <select value="" class="form-control selectpicker  {{ $errors->has('divisionCode')  ? 'is-invalid' : ''}}" name="divisionCode" data-live-search="true" id="divisionCode" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <label class="has-float-label divisionId mb-0">
+                                     <select value="" class="form-control selectpicker divisionId  {{ $errors->has('divisionId')  ? 'is-invalid' : ''}}" name="divisionId" data-live-search="true" id="divisionId" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                              <option></option>
-                                              @foreach($division as $divisions)
-                                             <option {{ old('divisionCode') == $divisions->division_id ? 'selected' : '' }} value="{{ $divisions->division_id }}">
-                                                 {{ $divisions->division_name }}
-                                             </option>
-                                             @endforeach
                                      </select>
                                      <span class="font-weight-bold">Division<span class="text-danger">*</span></span>
                                 </label>
@@ -194,6 +192,80 @@
           });
      });
 
+     // filter position and division by office
+    $("#officeCode").change(function (e) {
+        //divisionMetaData
+        if (document.querySelectorAll('[id="divisionMetaData"]')[1] == null) {
+            var divisionMetaData = document
+                .querySelectorAll('[id="divisionMetaData"]')[0]
+                .content.replaceAll("|", '"');
+        } else {
+            var divisionMetaData = document
+                .querySelectorAll('[id="divisionMetaData"]')[1]
+                .content.replaceAll("|", '"');
+        }
+        var divisionMetaDataRemoveLast =
+            "[" +
+            divisionMetaData.substring(0, divisionMetaData.length - 2) +
+            "]";
+        let divisionOfficeCodeOptionAll = JSON.parse(
+            divisionMetaDataRemoveLast
+        );
+        if (document.querySelectorAll('[id="divisionMetaData"]')[1] == null) {
+            var metaDataDivision = document
+                .querySelectorAll('[id="divisionMetaData"]')[0]
+                .content.replaceAll("|", '"');
+        } else {
+            var metaDataDivision = document
+                .querySelectorAll('[id="divisionMetaData"]')[1]
+                .content.replaceAll("|", '"');
+        }
+        var metaDataDivisionRemoveLast =
+            "[" +
+            metaDataDivision.substring(0, metaDataDivision.length - 2) +
+            "]";
+        let divisionOptionAll = JSON.parse(metaDataDivisionRemoveLast);
+        let officeCode2 = e.target.value;
+        //filter all division data in plantilla//
+        let plantillaDivisionFilter = divisionOfficeCodeOptionAll.filter(
+            function (Division) {
+                return Division.officeCode == officeCode2;
+            }
+        );
+        //Remove all option in #divisionId//
+        function removeOptionsDivision(selectDivision) {
+            var ii,
+                L = selectDivision.options.length - 1;
+            for (ii = L; ii >= 0; ii--) {
+                selectDivision.remove(ii);
+            }
+        }
+        removeOptionsDivision(document.getElementById("divisionId"));
+        //add division data based in what you select in #officeCode//
+        var i,
+            plantillaLengthDivisionId = plantillaDivisionFilter.length;
+        $("#divisionId").append("<option></option>");
+        for (i = 0; i < plantillaLengthDivisionId; i++) {
+            var plantillaDivisionFilter_final = plantillaDivisionFilter[i];
+            //filter all division data//
+            let divisionIdFilter = divisionOptionAll.filter(function (
+                Division
+            ) {
+                return (
+                    Division.officeCode ==
+                    plantillaDivisionFilter_final.officeCode
+                );
+            });
+            $("#divisionId").append(
+                '<option value="' +
+                    divisionIdFilter[i].divisionId +
+                    '">' +
+                    divisionIdFilter[i].divisionName +
+                    "</option>"
+            );
+        }
+        $("#divisionId").selectpicker("refresh");
+    });
 </script>
 <script src="{{ asset('/assets/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('/assets/js/dataTables.bootstrap4.min.js') }}"></script>
