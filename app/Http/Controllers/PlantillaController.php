@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Division;
+use App\Section;
 use App\Employee;
 use App\Office;
 use App\Plantilla;
@@ -30,6 +31,7 @@ class PlantillaController extends Controller
     public function index(Request $req)
     {
         $division = Division::select('division_id', 'division_name', 'office_code')->get();
+        $section = Section::select('section_id', 'section_name', 'division_id')->get();
         $plantillaEmp = Plantilla::get()->pluck('employee_id')->toArray();
         $employee = Employee::select('Employee_id', 'LastName', 'FirstName', 'MiddleName', 'Work_Status')
             ->where('Work_Status', 'not like', '%'.'JOB ORDER'.'%')
@@ -63,7 +65,7 @@ class PlantillaController extends Controller
 
         count($arealevel) - 1;
 
-        return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition', 'division', 'year'));
+        return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition', 'division', 'section', 'year'));
     }
 
     public function list(string $office, $year)

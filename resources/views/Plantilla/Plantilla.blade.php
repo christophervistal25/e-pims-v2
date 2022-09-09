@@ -58,6 +58,7 @@
 <meta id="plantillaPositionMetaData" content="@foreach($plantillaPosition as $plantillaPositions){ |officeCode|:|{{ $plantillaPositions->office_code }}|, |positionId|:|{{ $plantillaPositions->PosCode }}|, |ppId|:|{{ $plantillaPositions->pp_id }}|}, @endforeach">
 <meta id="positionMetaData" content="@foreach($position as $positions){ |positionId|:|{{ $positions->PosCode }}|, |positionName|:|{{ $positions->Description }}|}, @endforeach">
 <meta id="divisionMetaData" content="@foreach($division as $divisions){ |officeCode|:|{{ $divisions->office_code }}|, |divisionId|:|{{ $divisions->division_id }}|, |divisionName|:|{{ $divisions->division_name }}|}, @endforeach">
+<meta id="sectionMetaData" content="@foreach($section as $sections){ |divisionId|:|{{ $sections->division_id }}|, |sectionId|:|{{ $sections->section_id }}|, |sectionName|:|{{ $sections->section_name }}|}, @endforeach">
 @endprepend
 @section('content')
 <div class="kanban-board card shadow mb-0">
