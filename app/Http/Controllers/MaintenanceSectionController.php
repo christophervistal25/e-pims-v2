@@ -104,7 +104,8 @@ class MaintenanceSectionController extends Controller
         $office = Office::get(['office_code', 'office_name']);
         $division = Division::get(['division_id', 'division_name', 'office_code']);
         $section = DB::connection('E_PIMS_CONNECTION')->table('Sections')->where('section_id', $section_id)->first();
-        return view('MaintenanceSection.edit', compact('section', 'division', 'office'));
+        $divisionedit = Division::where('office_code', $section->office_code)->get(['division_id', 'division_name', 'office_code']);
+        return view('MaintenanceSection.edit', compact('section', 'division', 'office', 'divisionedit'));
     }
 
     /**

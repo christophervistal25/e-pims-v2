@@ -70,7 +70,7 @@ class PlantillaController extends Controller
 
     public function list(string $office, $year)
     {
-        $data = DB::table('EPims.dbo.plantillas')
+        $data = DB::connection('E_PIMS_CONNECTION')->table('EPims.dbo.plantillas')
         ->join('EPims.dbo.offices', 'plantillas.office_code', '=', 'offices.office_code')
         ->join('EPims.dbo.plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
         ->join('EPims.dbo.Positions', 'plantilla_positions.PosCode', '=', 'Positions.PosCode')
@@ -186,6 +186,7 @@ class PlantillaController extends Controller
     public function edit($plantilla_id)
     {
         $division = Division::select('division_id', 'division_name', 'office_code')->get();
+        $section = Section::select('section_id', 'section_name', 'division_id')->get();
         $employee = Employee::select('Employee_id', 'LastName', 'FirstName', 'MiddleName')->get();
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('PosCode', 'Description')->get();
@@ -202,10 +203,13 @@ class PlantillaController extends Controller
         count($arealevel) - 1;
         $plantilla = Plantilla::find($plantilla_id);
         $officeCode = $plantilla->office_code;
+        $division_id = $plantilla->division_id;
+        $divisionedit = Division::where('office_code', $officeCode)->get(['division_id', 'division_name', 'office_code']);
+        $sectionedit = Section::where('division_id', $division_id)->get(['section_id', 'section_name', 'division_id']);
         $plantillaPositionID = Plantilla::where('plantilla_id', '!=', $plantilla_id)->get()->pluck('pp_id')->toArray();
         $plantillaPosition = PlantillaPosition::select('pp_id', 'PosCode', 'office_code')->with('position:PosCode,Description')->where('office_code', $officeCode)->whereNotIn('pp_id', $plantillaPositionID)->get();
 
-        return view('Plantilla.edit', compact('division', 'plantilla', 'employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition', 'plantillaPositionAll'));
+        return view('Plantilla.edit', compact('division', 'section', 'divisionedit', 'sectionedit', 'plantilla', 'employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition', 'plantillaPositionAll'));
     }
 
     /**
@@ -228,6 +232,7 @@ class PlantillaController extends Controller
             'salaryAuthorized' => 'numeric',
             'officeCode' => 'required|in:'.implode(',', range(0001, 0037)),
             'divisionId' => ['nullable', 'min:3'],
+            'sectionId' => ['nullable', 'min:3'],
             'originalAppointment' => 'required',
             'lastPromotion' => 'required|after:originalAppointment',
             'status' => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
@@ -247,6 +252,7 @@ class PlantillaController extends Controller
             $plantilla->salary_amount = $request->salaryAmount;
             $plantilla->office_code = $request->officeCode;
             $plantilla->division_id = $request->divisionId ?? 0;
+            $plantilla->section_id = $request->sectionId ?? 0;
             $plantilla->date_original_appointment = $request->originalAppointment;
             $plantilla->date_last_promotion = $request->lastPromotion;
             $plantilla->status = $request->status;
