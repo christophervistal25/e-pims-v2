@@ -75,7 +75,7 @@
                                      </select>
                                      <span class="font-weight-bold">Office<span class="text-danger">*</span></span>
                                 </label>
-                                <div id='division-id-error-message' class='text-danger text-sm'>
+                                <div id='office-code-error-message' class='text-danger text-sm'>
                                 </div>
                            </div>
 
