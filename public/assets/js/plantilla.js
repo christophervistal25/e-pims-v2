@@ -334,6 +334,16 @@ $(document).ready(function () {
             );
         }
         $("#divisionId").selectpicker("refresh");
+        //Remove all option in #sectionId//
+        function removeOptionsSection(selectSection) {
+            var ii,
+                L = selectSection.options.length - 1;
+            for (ii = L; ii >= 0; ii--) {
+                selectSection.remove(ii);
+            }
+        }
+        removeOptionsSection(document.getElementById("sectionId"));
+        $("#sectionId").selectpicker("refresh");
     });
     // filter section by division
     $("#divisionId").change(function (e) {

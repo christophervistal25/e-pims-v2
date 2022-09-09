@@ -50,8 +50,8 @@
                             <label class="has-float-label divisionId mb-0">
                                  <select value="" class="form-control selectpicker divisionId  {{ $errors->has('divisionId')  ? 'is-invalid' : ''}}" name="divisionId" data-live-search="true" id="divisionId" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                          <option></option>
-                                         @foreach($division as $divisions)
-                                         <option {{ $section->division_id  == $divisions->division_id ? 'selected' : '' }} value="{{ $divisions->division_id }}">{{ $divisions->division_name }}</option>
+                                         @foreach($divisionedit as $divisionedits)
+                                         <option {{ $section->division_id  == $divisionedits->division_id ? 'selected' : '' }} value="{{ $divisionedits->division_id }}">{{ $divisionedits->division_name }}</option>
                                          @endforeach
                                  </select>
                                  <span class="font-weight-bold">Division<span class="text-danger">*</span></span>
