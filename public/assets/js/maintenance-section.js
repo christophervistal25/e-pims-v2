@@ -85,7 +85,7 @@ $(document).ready(function () {
                     $("input").val("");
                     const errorClass = [
                         "#sectionName",
-                        ".divisionCode .dropdown .officeCode",
+                        ".divisionId .dropdown .officeCode",
                     ];
                     $.each(errorClass, function (index, value) {
                         $(`${value}`).removeClass("is-invalid");
@@ -123,14 +123,14 @@ $(document).ready(function () {
                         $("#sectionName").removeClass("is-invalid");
                         $("#section-name-error-message").html("");
                     }
-                    if (errors.hasOwnProperty("divisionCode")) {
-                        $(".divisionCode .dropdown").addClass("is-invalid");
+                    if (errors.hasOwnProperty("divisionId")) {
+                        $(".divisionId .dropdown").addClass("is-invalid");
                         $("#division-id-error-message").html("");
                         $("#division-id-error-message").append(
-                            `<span>${errors.divisionCode[0]}</span>`
+                            `<span>${errors.divisionId[0]}</span>`
                         );
                     } else {
-                        $(".divisionCode .dropdown").removeClass("is-invalid");
+                        $(".divisionId .dropdown").removeClass("is-invalid");
                         $("#division-id-error-message").html("");
                     }
                     if (errors.hasOwnProperty("officeCode")) {
