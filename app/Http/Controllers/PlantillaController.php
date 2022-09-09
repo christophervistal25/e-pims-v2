@@ -112,12 +112,11 @@ class PlantillaController extends Controller
             'itemNo' => 'required',
             'positionTitle' => 'required',
             'employeeName' => 'required',
-            // 'salaryGrade'                   => 'required|in:' . implode(',',range(1, 33)),
+            // 'salaryGrade'  => 'required|in:' . implode(',',range(1, 33)),
             'stepNo' => 'required|in:'.implode(',', range(1, 8)),
             'salaryAmount' => 'required|numeric',
             'currentSgyear' => 'required',
             'officeCode' => 'required|in:'.implode(',', range(0001, 0037)),
-            // 'divisionId' => 'required',
             'originalAppointment' => 'required',
             'salaryAuthorized' => 'numeric',
             'lastPromotion' => 'required|after:originalAppointment',
@@ -135,10 +134,13 @@ class PlantillaController extends Controller
             $plantilla->employee_id = $request['employeeName'];
             $plantilla->sg_no = $request['salaryGrade'];
             $plantilla->step_no = $request['stepNo'];
-            $plantilla->salary_authorized = $request['salaryAuthorized'];
+            $plantilla->salary_amount_previous = $request['salaryAuthorized'];
+            $plantilla->sg_no_previous = $request['salaryGradePrevious'];
+            $plantilla->step_no_previous = $request['stepNoPrevious'];
             $plantilla->salary_amount = $request['salaryAmount'];
             $plantilla->office_code = $request['officeCode'];
             $plantilla->division_id = $request['divisionId'] ?? 0;
+            $plantilla->section_id = $request['sectionId'] ?? 0;
             $plantilla->date_original_appointment = $request['originalAppointment'];
             $plantilla->date_last_promotion = $request['lastPromotion'];
             $plantilla->status = $request['status'];
@@ -241,7 +243,7 @@ class PlantillaController extends Controller
             $plantilla->employee_id = $request->employeeId;
             $plantilla->sg_no = $request->salaryGrade;
             $plantilla->step_no = $request->stepNo;
-            $plantilla->salary_authorized = $request->salaryAuthorized;
+            $plantilla->salary_amount_previous = $request->salaryAuthorized;
             $plantilla->salary_amount = $request->salaryAmount;
             $plantilla->office_code = $request->officeCode;
             $plantilla->division_id = $request->divisionId ?? 0;

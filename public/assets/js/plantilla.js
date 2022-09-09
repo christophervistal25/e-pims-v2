@@ -162,9 +162,9 @@ $(document).ready(function () {
     // Display the value of positin and division per office selected
     $("#positionTitle").change(function () {
         let positionTitle = $("#positionTitle").val();
-
         let currentStepno = $("#currentStepno").val();
         let currentSgyear = $("#currentSgyear").val();
+        let previousSgyear = $("#currentSgyear").val() - 1;
 
         $.ajax({
             url: `/api/positionSalaryGrade/${positionTitle}/${currentSgyear}`,
@@ -172,7 +172,7 @@ $(document).ready(function () {
                 if (response == "") {
                     $("#currentSalarygrade").val("");
                     $("#itemNo").val("");
-                    $("#currentSalaryamount").val("");
+                    $("#salaryAmount").val("");
                 } else {
                     let currentSalaryGrade = response.salary_grade[0].sg_no;
                     $("#currentSalarygrade").val(currentSalaryGrade);
@@ -181,7 +181,25 @@ $(document).ready(function () {
                     let currentSalaryAmount =
                         response.salary_grade[0]["sg_step" + currentStepno];
 
-                    $("#currentSalaryamount").val(currentSalaryAmount);
+                    $("#salaryAmount").val(currentSalaryAmount);
+                }
+            },
+        });
+        // salary authorized
+        $.ajax({
+            url: `/api/positionSalaryGrade/${positionTitle}/${previousSgyear}`,
+            success: (response) => {
+                if (response == "") {
+                    $("#salaryGradePrevious").val("");
+                    $("#StepnoPrevious").val("");
+                } else {
+                    let currentSalaryGrade = response.salary_grade[0].sg_no;
+                    $("#salaryGradePrevious")
+                        .val(currentSalaryGrade)
+                        .trigger("change");
+                    let currentSalaryAmount =
+                        response.salary_grade[0]["sg_step" + currentStepno];
+                    $("#salaryAuthorized").val(currentSalaryAmount);
                 }
             },
         });
@@ -351,9 +369,7 @@ $(document).ready(function () {
             "[" +
             sectionMetaData.substring(0, sectionMetaData.length - 2) +
             "]";
-        let sectionDivisionIdOptionAll = JSON.parse(
-            sectionMetaDataRemoveLast
-        );
+        let sectionDivisionIdOptionAll = JSON.parse(sectionMetaDataRemoveLast);
         if (document.querySelectorAll('[id="sectionMetaData"]')[1] == null) {
             var metaDataSection = document
                 .querySelectorAll('[id="sectionMetaData"]')[0]
@@ -391,9 +407,7 @@ $(document).ready(function () {
         for (i = 0; i < plantillaLengthSectionId; i++) {
             var plantillaSectionFilter_final = plantillaSectionFilter[i];
             //filter all division data//
-            let sectionIdFilter = sectionOptionAll.filter(function (
-                Section
-            ) {
+            let sectionIdFilter = sectionOptionAll.filter(function (Section) {
                 return (
                     Section.divisionId ==
                     plantillaSectionFilter_final.divisionId
@@ -588,6 +602,17 @@ $(document).ready(function () {
                         $(".stepNo").removeClass("is-invalid");
                         $("#steps-error-message").html("");
                     }
+
+                    // if (errors.hasOwnProperty("salaryAmount")) {
+                    //     $("#currentSalaryamount").addClass("is-invalid");
+                    //     $("#salary-amount-error-message").html("");
+                    //     $("#salary-amount-error-message").append(
+                    //         `<span>${errors.salaryAmount[0]}</span>`
+                    //     );
+                    // } else {
+                    //     $("#currentSalaryamount").removeClass("is-invalid");
+                    //     $("#salary-amount-error-message").html("");
+                    // }
 
                     if (errors.hasOwnProperty("salaryAuthorized")) {
                         $("#salaryAuthorized").addClass("is-invalid");

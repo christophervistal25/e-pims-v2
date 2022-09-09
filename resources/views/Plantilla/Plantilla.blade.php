@@ -172,7 +172,7 @@
                          </div>
 
                          <div class="form-group col-12 col-lg-3">
-                              <label>Salary Grade<span class="text-danger">*</span></label>
+                              <label> Salary Grade<span class="text-danger">*</span></label>
                               <input value="{{ old('salaryGrade') }}" class="form-control" name="salaryGrade" id="currentSalarygrade" type="text" readonly>
                               <div id='salary-grade-error-message' class='text-danger text-sm'>
                               </div>
@@ -180,10 +180,10 @@
 
 
                          <div class="form-group col-12 col-lg-3">
-                              <label>Steps<span class="text-danger">*</span></label>
+                              <label>Step<span class="text-danger">*</span></label>
                               <select value="" class="form-control stepNo selectpicker" name="stepNo" data-live-search="true" id="currentStepno" data-size="5" data-width="100%">
                                    <option></option>
-                                   @foreach(range(0, 4) as $step_no)
+                                   @foreach(range(1, 8) as $step_no)
                                    @if($step_no == '1')
                                    <option value="{{ $step_no}}" selected>{{ $step_no}}</option>
                                    @else
@@ -197,10 +197,51 @@
 
                          <div class="form-group col-12 col-lg-3">
                               <label>Salary Amount<span class="text-danger">*</span></label>
-                              <input value="{{ old('salaryAmount') }}" class="form-control" name="salaryAmount" id="currentSalaryamount" type="text" readonly>
+                              <input value="{{ old('salaryAmount') }}" class="form-control" name="salaryAmount" id="salaryAmount" type="text">
                               <div id='salary-amount-error-message' class='text-danger text-sm'>
                               </div>
                          </div>
+
+                         <div class="form-group col-12 col-lg-4">
+                            <label>Previous Salary Grade<span class="text-danger">*</span></label>
+                                <select value="" class="form-control salaryGradePrevious selectpicker" name="salaryGradePrevious" data-live-search="true" id="salaryGradePrevious" data-size="5" data-width="100%">
+                                    <option></option>
+                                    @foreach(range(1, 33) as $sal_grade)
+                                        @if($sal_grade == '')
+                                            <option value="{{ $sal_grade }}" >{{ $sal_grade }}</option>
+                                            @else
+                                            <option value="{{ $sal_grade }}">{{ $sal_grade }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                <div id='salary-grade-error-message' class='text-danger text-sm'>
+                                </div>
+                       </div>
+
+
+                       <div class="form-group col-12 col-lg-4">
+                            <label>Previous Step<span class="text-danger">*</span></label>
+                            <select class="form-control stepNoPrevious selectpicker" name="stepNoPrevious" data-live-search="true" id="stepNoPrevious" data-size="5" data-width="100%">
+                                 <option></option>
+                                 @foreach(range(1,8) as $step_no)
+                                 @if($step_no == '1')
+                                 <option value="{{ $step_no}}" selected>{{ $step_no}}</option>
+                                 @else
+                                 <option value="{{ $step_no}}">{{ $step_no}}</option>
+                                 @endif
+                                 @endforeach
+                            </select>
+                            <div id='steps-error-message' class='text-danger text-sm'>
+                            </div>
+                       </div>
+
+
+                         <div class="form-group col-12 col-lg-4">
+                            <label>Salary Authorized</label>
+                            <input value="{{ old('salaryAuthorized') }}" class="form-control" name="salaryAuthorized" id="salaryAuthorized" type="text" placeholder="">
+                            <div id='salaryAuthorized-no-error-message' class='text-danger'>
+                            </div>
+                       </div>
 
                          <div class="form-group col-12 col-lg-6">
                               <label>Original Appointment<span class="text-danger">*</span></label>
@@ -266,12 +307,7 @@
                               </div>
                          </div>
 
-                         <div class="form-group col-12 col-lg-6">
-                            <label>Salary Authorized</label>
-                            <input value="{{ old('salaryAuthorized') }}" class="form-control" name="salaryAuthorized" id="salaryAuthorized" type="text" placeholder="(optional)">
-                            <div id='salaryAuthorized-no-error-message' class='text-danger'>
-                            </div>
-                       </div>
+
 
                          <div class="form-group form-group submit-section col-12">
                               <button id="saveBtn" class="btn btn-primarys submit-btn float-right shadow" type="submit">
