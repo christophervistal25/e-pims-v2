@@ -306,6 +306,7 @@
                                           <td scope="col" class="text-center">Salary Grade</td>
                                           <td scope="col" class="text-center">Office</td>
                                           <td scope="col" class="text-center">Old Position Name</td>
+                                          <td scope="col" class="text-center">Area Level</td>
                                           <td scope="col" class="text-center">Action</td>
                                     </tr>
                               </thead>

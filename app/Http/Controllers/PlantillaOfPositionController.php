@@ -34,16 +34,17 @@ class PlantillaOfPositionController extends Controller
         $data = DB::connection('E_PIMS_CONNECTION')->table('plantilla_positions')
         ->join('Positions', 'plantilla_positions.PosCode', '=', 'Positions.PosCode')
         ->join('Offices', 'plantilla_positions.office_code', '=', 'Offices.office_code')
-        ->select('pp_id', 'Positions.PosCode', 'item_no', 'plantilla_positions.sg_no as sg_no', 'Offices.office_name as office_name', 'Positions.Description as Description', 'old_position_name')->orderBy('item_no', 'desc');
+        ->select('pp_id',  'plantilla_positions.area_level as area_level','Positions.PosCode', 'item_no', 'plantilla_positions.sg_no as sg_no', 'Offices.office_name as office_name', 'Positions.Description as Description', 'old_position_name')->orderBy('item_no', 'desc');
 
         if (request()->ajax()) {
             $PlantillaPositionData = ($office != '*') ? $data->where('Offices.office_code', $office)->get()
             : $data->get();
 
             return DataTables::of($PlantillaPositionData)
-        ->addColumn('action', function ($row) {
-            $btn = "<a title='Edit Plantilla Of Position' href='".route('plantilla-of-position.edit', $row->pp_id)."' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-            $btn = $btn."<a title='Delete Plantilla Of Position' id='delete' value='$row->pp_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+            ->addColumn('action', function ($row) {
+                $btn = "<a title='Edit Plantilla Of Position' href='".route('plantilla-of-position.edit', $row->pp_id)."' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
+                // $btn = $btn."<a title='Delete Plantilla Of Position' id='delete' value='$row->pp_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                $btn = $btn."<a title='save Plantilla Of Position' id='save' value='$row->pp_id' class=' rounded-circle btn btn-primary btn-sm mr-1'><i class='la la-check'></i></a>
                             ";
 
             return $btn;

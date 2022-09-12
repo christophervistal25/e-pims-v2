@@ -237,6 +237,16 @@ $(document).ready(function () {
             { data: "office_name", searchable: false, name: "office_name" },
             { data: "old_position_name", name: "old_position_name" },
             {
+                data: "area_level",
+                name: "area_level",
+                render: function (_, _, data, row) {
+                    console.log(data);
+                    return `
+                    <input type="text" class="form-control" value="${data.area_level}" id="${data.pp_id}">
+                    `;
+                },
+            },
+            {
                 data: "action",
                 name: "action",
                 searchable: false,
