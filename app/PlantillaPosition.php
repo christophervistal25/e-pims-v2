@@ -80,6 +80,19 @@ class PlantillaPosition extends Model
     {
         return $this->belongsTo(PlantillaSchedule::class, 'pp_id', 'pp_id');
     }
+    public function areaCode()
+    {
+        return $this->belongsTo(AreaCode::class, 'area_code', 'area_code_id');
+    }
+
+    public function areaType()
+    {
+        return $this->belongsTo(AreaType::class, 'area_type', 'area_type_id');
+    }
+    public function areaLevel()
+    {
+        return $this->belongsTo(AreaLevel::class, 'area_level', 'area_level_id');
+    }
 
     // protected static function boot()
       // {

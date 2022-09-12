@@ -175,7 +175,6 @@ $(document).ready(function () {
         $.ajax({
             url: `/api/positionSalaryGrade/${positionTitle}/${currentSgyear}`,
             success: (response) => {
-                console.log(response);
                 if (response == "") {
                     $("#currentSalarygrade").val("");
                     $("#itemNo").val("");
@@ -184,12 +183,15 @@ $(document).ready(function () {
                     $("#areaLevel").val("");
                     $("#areaType").val("");
                 } else {
-                    let areaCode = response.area_code;
-                    $("#areaCode").val(areaCode);
-                    let areaLevel = response.area_level;
-                    $("#areaLevel").val(areaLevel);
-                    let areaType = response.area_type;
-                    $("#areaType").val(areaType);
+                    let areaCodeID = response.area_code.area_code_id;
+                    let areaCodeDesc = response.area_code.description;
+                    $("#areaCode").val(areaCodeID + " - " + areaCodeDesc);
+                    let areaLevelID = response.area_level.area_level_id;
+                    let areaLevelDesc = response.area_level.description;
+                    $("#areaLevel").val(areaLevelID + " - " + areaLevelDesc);
+                    let areaTypeID = response.area_type.area_type_id;
+                    let areaTypeDesc = response.area_type.description;
+                    $("#areaType").val(areaTypeID + " - " + areaTypeDesc);
                     let currentSalaryGrade = response.salary_grade[0].sg_no;
                     $("#currentSalarygrade").val(currentSalaryGrade);
                     let currentItemNo = response.item_no;

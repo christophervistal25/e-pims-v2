@@ -46,7 +46,9 @@ class PlantillaController extends Controller
     //position display sg
     public function positionSalaryGrade($pp_id, $sg_year)
     {
-        return PlantillaPosition::with(['salary_grade' => function ($q) use ($sg_year) {$q->where('sg_year', $sg_year);}])->find($pp_id);
+        return PlantillaPosition::with(['areaCode', 'areaType', 'areaLevel'])->with(['salary_grade' => function ($q) use ($sg_year) {
+            $q->where('sg_year', $sg_year);
+        }])->find($pp_id);
     }
 
     // add position function

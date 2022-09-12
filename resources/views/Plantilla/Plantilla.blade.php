@@ -137,7 +137,7 @@
                             class="form-control status selectpicker"
                             name="status" data-live-search="true" id="status" data-size="5" data-width="100%">
                             <option></option>
-                            @foreach(range(0, 4) as $statuses)
+                            @foreach(range(0, 5) as $statuses)
                             @if($status[$statuses] == 'Permanent')
                             <option value="{{ $status[$statuses]}}" selected>{{ $status[$statuses] }}</option>
                             @else
@@ -257,55 +257,6 @@
                               </div>
                          </div>
 
-                         {{-- <div class="form-group col-12 col-lg-4">
-                              <label>Area Code<span class="text-danger">*</span></label>
-                              <select value="" class="form-control areaCode selectpicker" name="areaCode" data-live-search="true" id="areaCode" data-size="5">
-                                   <option></option>
-                                   @foreach(range(0, 15) as $areacodes)
-                                   @if($areacode[$areacodes] == 'CARAGA')
-                                   <option value="{{ $areacode[$areacodes]}}" selected>{{ $areacode[$areacodes] }}</option>
-                                   @else
-                                   <option value="{{ $areacode[$areacodes]}}">{{ $areacode[$areacodes] }}</option>
-                                   @endif
-                                   @endforeach
-                              </select>
-                              <div id='area-code-error-message' class='text-danger text-sm'>
-                              </div>
-                         </div>
-
-
-                         <div class="form-group col-12 col-lg-4">
-                              <label>Area Type<span class="text-danger">*</span></label>
-                              <select value="" class="form-control areaType selectpicker" name="areaType" data-live-search="true" id="areaType" data-size="5">
-                                   <option></option>
-                                   @foreach(range(0, 4) as $areatypes)
-                                   @if($areatype[$areatypes] == 'Province')
-                                   <option value="{{ $areatype[$areatypes]}}" selected>{{ $areatype[$areatypes] }}</option>
-                                   @else
-                                   <option value="{{ $areatype[$areatypes]}}">{{ $areatype[$areatypes] }}</option>
-                                   @endif
-                                   @endforeach
-                              </select>
-                              <div id='area-type-error-message' class='text-danger text-sm'>
-                              </div>
-                         </div>
-
-
-                         <div class="form-group col-12 col-lg-4">
-                              <label>Area Level<span class="text-danger">*</span></label>
-                              <select value="" class="form-control areaLevel selectpicker" name="areaLevel" data-live-search="true" id="areaLevel" data-size="5">
-                                   <option></option>
-                                   @foreach(range(0, 3) as $arealevels)
-                                   @if($arealevel[$arealevels] == 'A')
-                                   <option value="{{ $arealevel[$arealevels]}}" selected>{{ $arealevel[$arealevels] }}</option>
-                                   @else
-                                   <option value="{{ $arealevel[$arealevels]}}">{{ $arealevel[$arealevels] }}</option>
-                                   @endif
-                                   @endforeach
-                              </select>
-                              <div id='area-level-error-message' class='text-danger text-sm'>
-                              </div>
-                         </div> --}}
 
                         <div class="form-group col-12 col-lg-4">
                             <label>Area Code</label>

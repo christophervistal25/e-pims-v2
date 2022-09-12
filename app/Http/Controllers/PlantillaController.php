@@ -59,6 +59,8 @@ class PlantillaController extends Controller
 
     public function list(string $office, $year)
     {
+
+
         $data = DB::connection('E_PIMS_CONNECTION')->table('EPims.dbo.plantillas')
         ->join('EPims.dbo.offices', 'plantillas.office_code', '=', 'offices.office_code')
         ->join('EPims.dbo.plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
