@@ -4,6 +4,7 @@ $(document).ready(function () {
         "#employeeName",
         "#officeCode",
         "#divisionId",
+        "#salaryGradePrevious",
     ];
 
     let inputs = [
@@ -14,7 +15,11 @@ $(document).ready(function () {
         "#employeeID",
         "#originalAppointment",
         "#lastPromotion",
+        "#areaCode",
+        "#areaType",
+        "#areaLevel",
         "#salaryAuthorized",
+        "#salaryAmount",
     ];
 
     let errorClass = [
@@ -166,21 +171,31 @@ $(document).ready(function () {
         let currentSgyear = $("#currentSgyear").val();
         let previousSgyear = $("#currentSgyear").val() - 1;
 
+        //get salary grade and amount
         $.ajax({
             url: `/api/positionSalaryGrade/${positionTitle}/${currentSgyear}`,
             success: (response) => {
+                console.log(response);
                 if (response == "") {
                     $("#currentSalarygrade").val("");
                     $("#itemNo").val("");
                     $("#salaryAmount").val("");
+                    $("#areaCode").val("");
+                    $("#areaLevel").val("");
+                    $("#areaType").val("");
                 } else {
+                    let areaCode = response.area_code;
+                    $("#areaCode").val(areaCode);
+                    let areaLevel = response.area_level;
+                    $("#areaLevel").val(areaLevel);
+                    let areaType = response.area_type;
+                    $("#areaType").val(areaType);
                     let currentSalaryGrade = response.salary_grade[0].sg_no;
                     $("#currentSalarygrade").val(currentSalaryGrade);
                     let currentItemNo = response.item_no;
                     $("#itemNo").val(currentItemNo);
                     let currentSalaryAmount =
                         response.salary_grade[0]["sg_step" + currentStepno];
-
                     $("#salaryAmount").val(currentSalaryAmount);
                 }
             },

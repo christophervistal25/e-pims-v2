@@ -92,7 +92,7 @@
                                    <div id='division-error-message' class='text-danger text-sm'>
                                    </div>
                               </div>
-                              
+
                               <div class="form-group col-12 col-lg-4">
                                    <label>Section<span class="text-danger">*</span></label>
                                    <select value="" class="form-control sectionId selectpicker {{ $errors->has('sectionId')  ? 'is-invalid' : ''}}" name="sectionId" data-live-search="true" id="sectionId" data-size="5">
@@ -161,7 +161,7 @@
                               </div>
 
                               <div class="form-group col-12 col-lg-3">
-                                   <label>Steps<span class="text-danger">*</span></label>
+                                   <label>Step<span class="text-danger">*</span></label>
                                    <select value="{{ old('stepNo') }}" class="form-control form-control-xs selectpicker  {{ $errors->has('stepNo')  ? 'is-invalid' : ''}}" name="stepNo" data-live-search="true" id="currentStepno" data-size="5" data-width="100%">
                                         <option></option>
                                         @foreach (range(1, 8) as $step_no)
@@ -175,10 +175,46 @@
 
                               <div class="form-group col-12 col-lg-3">
                                    <label>Salary Amount<span class="text-danger">*</span></label>
-                                   <input value="{{ old('salaryAmount') ?? $plantilla->salary_amount}}" class="form-control {{ $errors->has('salaryAmount')  ? 'is-invalid' : ''}}" name="salaryAmount" id="currentSalaryamount" type="text" readonly>
+                                   <input value="{{ old('salaryAmount') ?? $plantilla->salary_amount}}" class="form-control {{ $errors->has('salaryAmount')  ? 'is-invalid' : ''}}" name="salaryAmount" id="currentSalaryamount" type="text">
                                    <div id='salary-amount-error-message' class='text-danger text-sm'>
                                    </div>
                               </div>
+
+                              <div class="form-group col-12 col-lg-4">
+                                <label>Previous Salary Grade<span class="text-danger">*</span></label>
+                                    <select value="" class="form-control salaryGradePrevious selectpicker" name="salaryGradePrevious" data-live-search="true" id="salaryGradePrevious" data-size="5" data-width="100%">
+                                        <option></option>
+                                        @foreach(range(1, 33) as $sal_grade)
+                                        <option {{ $plantilla->sg_no_previous == $sal_grade ? 'selected' : '' }} value="{{ $sal_grade }}">
+                                             {{ $sal_grade }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div id='salary-grade-error-message' class='text-danger text-sm'>
+                                    </div>
+                           </div>
+
+
+                           <div class="form-group col-12 col-lg-4">
+                                <label>Previous Step<span class="text-danger">*</span></label>
+                                <select class="form-control stepNoPrevious selectpicker" name="stepNoPrevious" data-live-search="true" id="stepNoPrevious" data-size="5" data-width="100%">
+                                        <option></option>
+                                        @foreach(range(1,8) as $step_no)
+                                        <option {{ $plantilla->step_no_previous == $step_no ? 'selected' : '' }} value="{{ $step_no }}">
+                                        {{ $step_no }}</option>
+                                        @endforeach
+                                </select>
+                                <div id='steps-error-message' class='text-danger text-sm'>
+                                </div>
+                           </div>
+
+
+                             <div class="form-group col-12 col-lg-4">
+                                <label>Salary Authorized</label>
+                                <input value="{{ old('salaryAuthorized') ?? $plantilla->salary_amount_previous }}" class="form-control" name="salaryAuthorized" id="salaryAuthorized" type="text" placeholder="">
+                                <div id='salaryAuthorized-no-error-message' class='text-danger'>
+                                </div>
+                           </div>
+
 
                               <div class="form-group col-12 col-lg-6">
                                    <label>Original Appointment<span class="text-danger">*</span></label>
@@ -195,60 +231,22 @@
                               </div>
 
                               <div class="form-group col-12 col-lg-4">
-                                   <label>Area Code<span class="text-danger">*</span></label>{{$plantilla->area_code}}DSADASDA
-                                   <select value="{{ old('areaCode') }}" class="form-control form-control-xs selectpicker {{ $errors->has('areaCode')  ? 'is-invalid' : ''}}" name="areaCode" data-live-search="true" id="areaCode" data-size="5">
-                                        <option></option>
-                                        @foreach(range(0, 15) as $areacodes)
-                                        @if($areacode[$areacodes] == $plantilla->area_code)
-                                        <option value="{{ $areacode[$areacodes]}}" selected>{{ $areacode[$areacodes] }}</option>
-                                        @else
-                                        <option value="{{ $areacode[$areacodes]}}">{{ $areacode[$areacodes] }}</option>
-                                        @endif
-                                        @endforeach
-                                   </select>
-                                   <div id='area-code-error-message' class='text-danger text-sm'>
-                                   </div>
-                              </div>
-
-                              <div class="form-group col-12 col-lg-4">
-                                   <label>Area Type<span class="text-danger">*</span></label>
-                                   <select value="{{ old('areaType') }}" class="form-control form-control-xs selectpicker {{ $errors->has('areaType')  ? 'is-invalid' : ''}}" name="areaType" data-live-search="true" id="areaType" data-size="5">
-                                        <option></option>
-                                        @foreach(range(0, 4) as $areatypes)
-                                        @if($areatype[$areatypes] == $plantilla->area_type)
-                                        <option value="{{ $areatype[$areatypes]}}" selected>{{ $areatype[$areatypes] }}</option>
-                                        @else
-                                        <option value="{{ $areatype[$areatypes]}}">{{ $areatype[$areatypes] }}</option>
-                                        @endif
-                                        @endforeach
-                                   </select>
-                                   <div id='area-type-error-message' class='text-danger text-sm'>
-                                   </div>
-                              </div>
-
-                              <div class="form-group col-12 col-lg-4">
-                                   <label>Area Level<span class="text-danger">*</span></label>
-                                   <select value="{{ old('areaLevel') }}" class="form-control form-control-xs selectpicker {{ $errors->has('areaLevel')  ? 'is-invalid' : ''}}" name="areaLevel" data-live-search="true" id="areaLevel" data-size="5">
-                                        <option></option>
-                                        @foreach(range(0, 3) as $arealevels)
-                                        @if($arealevel[$arealevels] == $plantilla->area_level)
-                                        <option value="{{ $arealevel[$arealevels]}}" selected>{{ $arealevel[$arealevels] }}
-                                        </option>
-                                        @else
-                                        <option value="{{ $arealevel[$arealevels]}}">{{ $arealevel[$arealevels] }}</option>
-                                        @endif
-                                        @endforeach
-                                </select>
-                                <div id='area-level-error-message' class='text-danger text-sm'>
-                                </div>
+                                <label>Area Code</label>
+                                <input class="form-control" name="areaCode" id="areaCode" type="text" placeholder="" readonly>
                             </div>
 
-                        <div class="form-group col-12 col-lg-6">
-                            <label>Salary Authorized<span class="text-danger">*</span></label>
-                            <input value="{{ old('salaryAuthorized') ?? $plantilla->salary_authorized }}" class="form-control {{ $errors->has ('salaryAuthorized')  ? 'is-invalid' : ''}}" name="salaryAuthorized" id="num-only" type="text" placeholder="Salary Authorized">
-                            <div id='salaryAuthorized-no-error-message' class='text-danger'>
+                            <div class="form-group col-12 col-lg-4">
+                                <label>Area Type</label>
+                                <input class="form-control" name="areaType" id="areaType" type="text" placeholder="" readonly>
                             </div>
-                        </div>
+
+                            <div class="form-group col-12 col-lg-4">
+                                <label>Area Level</label>
+                                <input class="form-control" name="areaLevel" id="areaLevel" type="text" placeholder="" readonly>
+                            </div>
+
+
+
 
                               <div class="form-group form-group submit-section col-12">
                                    <button id="plantillaUpdate" type="submit" class="btn btn-primarys submit-btn float-right shadow"><span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>

@@ -257,7 +257,7 @@
                               </div>
                          </div>
 
-                         <div class="form-group col-12 col-lg-4">
+                         {{-- <div class="form-group col-12 col-lg-4">
                               <label>Area Code<span class="text-danger">*</span></label>
                               <select value="" class="form-control areaCode selectpicker" name="areaCode" data-live-search="true" id="areaCode" data-size="5">
                                    <option></option>
@@ -305,7 +305,23 @@
                               </select>
                               <div id='area-level-error-message' class='text-danger text-sm'>
                               </div>
-                         </div>
+                         </div> --}}
+
+                        <div class="form-group col-12 col-lg-4">
+                            <label>Area Code</label>
+                            <input class="form-control" name="areaCode" id="areaCode" type="text" placeholder="" readonly>
+                        </div>
+
+                        <div class="form-group col-12 col-lg-4">
+                            <label>Area Type</label>
+                            <input class="form-control" name="areaType" id="areaType" type="text" placeholder="" readonly>
+                        </div>
+
+                        <div class="form-group col-12 col-lg-4">
+                            <label>Area Level</label>
+                            <input class="form-control" name="areaLevel" id="areaLevel" type="text" placeholder="" readonly>
+                        </div>
+
 
 
 

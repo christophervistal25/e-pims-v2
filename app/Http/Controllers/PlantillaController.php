@@ -54,18 +54,7 @@ class PlantillaController extends Controller
 
         $status = ['Casual', 'Coterminous', 'Permanent', 'Provisional', 'Temporary', 'Elected'];
 
-        count($status) - 1;
-        $areacode = ['Region 1', 'Region 2', 'Region 3', 'Region 4', 'Region 5', 'Region 6', 'Region 7',  'Region 8', 'Region 9', 'Region 10', 'Region 11', 'Region 12', 'NCR', 'CAR', 'CARAGA', 'ARMM'];
-
-        count($areacode) - 1;
-        $areatype = ['Region', 'Province', 'District', 'Municipality', 'Foreign Post'];
-
-        count($areatype) - 1;
-        $arealevel = ['K', 'T', 'S', 'A'];
-
-        count($arealevel) - 1;
-
-        return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition', 'division', 'section', 'year'));
+        return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'office', 'salarygrade', 'plantillaPosition', 'division', 'section', 'year'));
     }
 
     public function list(string $office, $year)
@@ -121,9 +110,6 @@ class PlantillaController extends Controller
             'salaryAuthorized' => 'numeric',
             'lastPromotion' => 'required|after:originalAppointment',
             'status' => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
-            'areaCode' => 'required|in:'.implode(',', Plantilla::REGIONS),
-            'areaType' => 'required|in:Region,Province,District,Municipality,Foreign Post',
-            'areaLevel' => 'required|in:K,T,S,A',
         ]);
         DB::transaction(function () use ($request) {
             $plantilla = new Plantilla();
@@ -144,9 +130,6 @@ class PlantillaController extends Controller
             $plantilla->date_original_appointment = $request['originalAppointment'];
             $plantilla->date_last_promotion = $request['lastPromotion'];
             $plantilla->status = $request['status'];
-            $plantilla->area_code = $request['areaCode'];
-            $plantilla->area_type = $request['areaType'];
-            $plantilla->area_level = $request['areaLevel'];
             $plantilla->year = $request['currentSgyear'];
             $plantilla->save();
 
@@ -195,12 +178,6 @@ class PlantillaController extends Controller
         $salarygrade = SalaryGrade::get(['sg_no']);
         $status = ['Casual', 'Coterminous', 'Permanent', 'Provisional', 'Temporary', 'Elected'];
         count($status) - 1;
-        $areacode = ['Region 1', 'Region 2', 'Region 3', 'Region 4', 'Region 5', 'Region 6', 'Region 7',  'Region 8', 'Region 9', 'Region 10', 'Region 11', 'Region 12', 'NCR', 'CAR', 'CARAGA', 'ARMM'];
-        count($areacode) - 1;
-        $areatype = ['Region', 'Province', 'District', 'Municipality', 'Foreign Post'];
-        count($areatype) - 1;
-        $arealevel = ['K', 'T', 'S', 'A'];
-        count($arealevel) - 1;
         $plantilla = Plantilla::find($plantilla_id);
         $officeCode = $plantilla->office_code;
         $division_id = $plantilla->division_id;
@@ -209,7 +186,7 @@ class PlantillaController extends Controller
         $plantillaPositionID = Plantilla::where('plantilla_id', '!=', $plantilla_id)->get()->pluck('pp_id')->toArray();
         $plantillaPosition = PlantillaPosition::select('pp_id', 'PosCode', 'office_code')->with('position:PosCode,Description')->where('office_code', $officeCode)->whereNotIn('pp_id', $plantillaPositionID)->get();
 
-        return view('Plantilla.edit', compact('division', 'section', 'divisionedit', 'sectionedit', 'plantilla', 'employee', 'status', 'position', 'areacode', 'areatype', 'office', 'arealevel', 'salarygrade', 'plantillaPosition', 'plantillaPositionAll'));
+        return view('Plantilla.edit', compact('division', 'section', 'divisionedit', 'sectionedit', 'plantilla', 'employee', 'status', 'position',   'office',  'salarygrade', 'plantillaPosition', 'plantillaPositionAll'));
     }
 
     /**
@@ -236,9 +213,6 @@ class PlantillaController extends Controller
             'originalAppointment' => 'required',
             'lastPromotion' => 'required|after:originalAppointment',
             'status' => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
-            'areaCode' => 'required|in:'.implode(',', Plantilla::REGIONS),
-            'areaType' => 'required|in:Region,Province,District,Municipality,Foreign Post',
-            'areaLevel' => 'required|in:K,T,S,A',
         ]);
         DB::transaction(function () use ($request, $plantilla_id) {
             $plantilla = Plantilla::with('plantilla_positions')->find($plantilla_id);
@@ -256,9 +230,6 @@ class PlantillaController extends Controller
             $plantilla->date_original_appointment = $request->originalAppointment;
             $plantilla->date_last_promotion = $request->lastPromotion;
             $plantilla->status = $request->status;
-            $plantilla->area_code = $request->areaCode;
-            $plantilla->area_type = $request->areaType;
-            $plantilla->area_level = $request->areaLevel;
             $plantilla->year = $request->currentSgyear;
             $plantilla->save();
 

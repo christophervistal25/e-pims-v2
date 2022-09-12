@@ -225,16 +225,16 @@ $(document).ready(function () {
         },
         ajax: `/plantilla-of-position-list/${selectedOffice}`,
         columns: [
+            { data: "item_no", name: "item_no" },
             {
                 data: "Description",
                 name: "Description",
             },
-            { data: "item_no", name: "item_no" },
             {
                 data: "sg_no",
                 name: "sg_no",
             },
-            { data: "office_name", name: "office_name" },
+            { data: "office_name", searchable: false, name: "office_name" },
             { data: "old_position_name", name: "old_position_name" },
             {
                 data: "action",
