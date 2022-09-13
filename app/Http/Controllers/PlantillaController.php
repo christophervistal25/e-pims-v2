@@ -123,8 +123,6 @@ class PlantillaController extends Controller
             $plantilla->salary_amount_yearly = $request['salaryAmountYearly'];
             $plantilla->salary_amount_previous_yearly = $request['salaryAmountPreviousYearly'];
             $plantilla->office_code = $request['officeCode'];
-            $plantilla->division_id = $request['divisionId'] ?? 0;
-            $plantilla->section_id = $request['sectionId'] ?? 0;
             $plantilla->date_original_appointment = $request['originalAppointment'];
             $plantilla->date_last_promotion = $request['lastPromotion'];
             $plantilla->status = $request['status'];
@@ -174,12 +172,16 @@ class PlantillaController extends Controller
         $salarygrade = SalaryGrade::get(['sg_no']);
         $status = ['Casual', 'Coterminous', 'Permanent', 'Provisional', 'Temporary', 'Elected'];
         count($status) - 1;
-        $plantilla = Plantilla::find($plantilla_id);
+        $plantilla = Plantilla::with('plantilla_positions.areaType', 'plantilla_positions.areaLevel', 'plantilla_positions.areaCode', 'plantilla_positions.division', 'plantilla_positions.section')->find($plantilla_id);
+
         $officeCode = $plantilla->office_code;
         $plantillaPositionID = Plantilla::where('plantilla_id', '!=', $plantilla_id)->get()->pluck('pp_id')->toArray();
-        $plantillaPosition = PlantillaPosition::select('pp_id', 'PosCode', 'office_code')->with('position:PosCode,Description')->where('office_code', $officeCode)->whereNotIn('pp_id', $plantillaPositionID)->get();
+        $plantillaPositionedit = PlantillaPosition::select('pp_id', 'PosCode', 'office_code')->with('position:PosCode,Description')->where('office_code', $officeCode)->whereNotIn('pp_id', $plantillaPositionID)->get();
 
-        return view('Plantilla.edit', compact('plantilla', 'employee', 'status', 'position',   'office',  'salarygrade', 'plantillaPosition', 'plantillaPositionAll'));
+        $plantillaPosition = PlantillaPosition::with('position:PosCode,Description')->whereDoesntHave('plantillas', function ($query) {
+            $query->where('year', date('Y'));
+        })->get();
+        return view('Plantilla.edit', compact('plantilla', 'employee', 'status', 'position',   'office',  'salarygrade', 'plantillaPosition', 'plantillaPositionedit', 'plantillaPositionAll'));
     }
 
     /**
@@ -218,8 +220,6 @@ class PlantillaController extends Controller
             $plantilla->salary_amount_yearly = $request->salaryAmountYearly;
             $plantilla->salary_amount_previous_yearly = $request->salaryAmountPreviousYearly;
             $plantilla->office_code = $request->officeCode;
-            $plantilla->division_id = $request->divisionId ?? 0;
-            $plantilla->section_id = $request->sectionId ?? 0;
             $plantilla->date_original_appointment = $request->originalAppointment;
             $plantilla->date_last_promotion = $request->lastPromotion;
             $plantilla->status = $request->status;

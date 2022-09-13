@@ -66,7 +66,7 @@
                                    <input value="{{ old('employeeId') ?? $plantilla->employee_id }}" class="form-control {{ $errors->has ('employeeId')  ? 'is-invalid' : ''}}" name="employeeId" type="text" readonly>
                               </div>
 
-                              <div class="form-group col-12 col-lg-4">
+                              <div class="form-group col-12 col-lg-6">
                                    <label>Office<span class="text-danger">*</span></label>
                                    <select value="" class="form-control selectpicker {{ $errors->has('officeCode')  ? 'is-invalid' : ''}}" name="officeCode" data-live-search="true" id="officeCode" data-size="5">
                                         <option></option>
@@ -79,38 +79,48 @@
                                    </div>
                               </div>
 
-                              <div class="form-group col-12 col-lg-4">
-                                   <label>Division<span class="text-danger">*</span></label>
-                                   <select value="" class="form-control selectpicker {{ $errors->has('divisionId')  ? 'is-invalid' : ''}}" name="divisionId" data-live-search="true" id="divisionId" data-size="5">
-                                        <option></option>
-                                   </select>
-                                   <div id='division-error-message' class='text-danger text-sm'>
-                                   </div>
-                              </div>
-
-                              <div class="form-group col-12 col-lg-4">
-                                   <label>Section<span class="text-danger">*</span></label>
-                                   <select value="" class="form-control sectionId selectpicker {{ $errors->has('sectionId')  ? 'is-invalid' : ''}}" name="sectionId" data-live-search="true" id="sectionId" data-size="5">
-                                        <option></option>
-                                   </select>
-                                   <div id='division-error-message' class='text-danger text-sm'>
-                                   </div>
-                              </div>
 
                               <div class="form-group col-12 col-lg-6">
                                    <label>Position<span class="text-danger">*</span></label>
                                    <select value="{{ old('positionTitle') }}" class="form-control form-control-xs selectpicker  {{ $errors->has('positionTitle')  ? 'is-invalid' : ''}}" name="positionTitle" data-live-search="true" id="positionTitle" data-size="5" data-width="100%">
                                         <option></option>
-                                        @foreach($plantillaPosition as $plantillaPositions)
-                                        <option {{ $plantilla->pp_id == $plantillaPositions->pp_id ? 'selected' : '' }} value="{{ $plantillaPositions->pp_id }}">
-                                             {{ $plantillaPositions->position->Description }}</option>
+                                        @foreach($plantillaPositionedit as $plantillaPositionedits)
+                                        <option {{ $plantilla->pp_id == $plantillaPositionedits->pp_id ? 'selected' : '' }} value="{{ $plantillaPositionedits->pp_id }}">
+                                             {{ $plantillaPositionedits->position->Description }}</option>
                                         @endforeach
                                    </select>
                                    <div id='position-title-error-message' class='text-danger text-sm'>
                                    </div>
                               </div>
 
-                              <div class="form-group col-12 col-lg-6">
+
+                              <div class="form-group col-12 col-lg-4">
+                                <label>Division</label>
+                                <input
+                                @if ($plantilla->plantilla_positions->division_id == null)
+                                    value=""
+                                @else
+                                    value="{{ $plantilla->plantilla_positions->division->division_name }}"
+                                @endif
+                                class="form-control" name="divisionId" id="divisionId" type="text" placeholder="" readonly>
+                                <div id='division-error-message' class='text-danger text-sm'>
+                                </div>
+                           </div>
+
+                           <div class="form-group col-12 col-lg-4">
+                              <label>Section</label>
+                              <input
+                              @if ($plantilla->plantilla_positions->section_id == null)
+                                    value=""
+                                @else
+                                value="{{ $plantilla->plantilla_positions->section->section_name }}"
+                                @endif
+                              class="form-control" name="sectionId" id="sectionId" type="text" placeholder="" readonly>
+                              <div id='section-error-message' class='text-danger text-sm'>
+                              </div>
+                         </div>
+
+                              <div class="form-group col-12 col-lg-4">
                                    <label>Status<span class="text-danger">*</span></label>
                                    <select value="{{ old('status') }}" class="form-control form-control-xs selectpicker  {{ $errors->has('status')  ? 'is-invalid' : ''}}" name="status" data-live-search="true" id="status" data-size="5" data-width="100%">
                                         <option></option>
@@ -237,17 +247,35 @@
 
                               <div class="form-group col-12 col-lg-4">
                                 <label>Area Code</label>
-                                <input class="form-control" name="areaCode" id="areaCode" type="text" placeholder="" readonly>
+                                <input
+                                @if ($plantilla->plantilla_positions->area_code == null)
+                                    value=""
+                                @else
+                                value="{{ $plantilla->plantilla_positions->areaCode->area_code_id }} - {{ $plantilla->plantilla_positions->areaCode->description }}"
+                                @endif
+                                class="form-control" name="areaCode" id="areaCode" type="text" placeholder="" readonly>
                             </div>
 
                             <div class="form-group col-12 col-lg-4">
                                 <label>Area Type</label>
-                                <input class="form-control" name="areaType" id="areaType" type="text" placeholder="" readonly>
+                                <input
+                                @if ($plantilla->plantilla_positions->area_type == null)
+                                    value=""
+                                @else
+                                value="{{ $plantilla->plantilla_positions->areaType->area_type_id }} - {{ $plantilla->plantilla_positions->areaType->description }}"
+                                @endif
+                                class="form-control" name="areaType" id="areaType" type="text" placeholder="" readonly>
                             </div>
 
                             <div class="form-group col-12 col-lg-4">
                                 <label>Area Level</label>
-                                <input class="form-control" name="areaLevel" id="areaLevel" type="text" placeholder="" readonly>
+                                <input
+                                @if ($plantilla->plantilla_positions->area_level == null)
+                                    value=""
+                                @else
+                                value="{{ $plantilla->plantilla_positions->areaLevel->area_level_id }} - {{ $plantilla->plantilla_positions->areaLevel->description }}"
+                                @endif
+                                class="form-control" name="areaLevel" id="areaLevel" type="text" placeholder="" readonly>
                             </div>
 
 

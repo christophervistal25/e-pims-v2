@@ -88,7 +88,7 @@
                               <input value="{{ old('employeeID') }}" class="form-control" name="employeeID" id="employeeID" type="text" readonly>
                          </div>
 
-                         <div class="form-group col-12 col-lg-4">
+                         <div class="form-group col-12 col-lg-6">
                               <label>Office<span class="text-danger">*</span></label>
                               <select value="" class="form-control officeCode selectpicker" name="officeCode" data-live-search="true" id="officeCode" data-size="5">
                                    <option></option>
@@ -102,24 +102,6 @@
                          </div>
 
 
-                         <div class="form-group col-12 col-lg-4">
-                              <label>Division</label>
-                              <select value="" class="form-control divisionId selectpicker" name="divisionId" data-live-search="true" id="divisionId" data-size="5">
-                                   <option></option>
-                              </select>
-                              <div id='division-error-message' class='text-danger text-sm'>
-                              </div>
-                         </div>
-
-                         <div class="form-group col-12 col-lg-4">
-                            <label>Section</label>
-                            <select value="" class="form-control sectionId selectpicker" name="sectionId" data-live-search="true" id="sectionId" data-size="5">
-                                 <option></option>
-                            </select>
-                            <div id='section-error-message' class='text-danger text-sm'>
-                            </div>
-                       </div>
-
 
                          <div class="form-group col-12 col-lg-6">
                               <label>Position<span class="text-danger">*</span></label>
@@ -129,7 +111,23 @@
                               <div id='position-title-error-message' class='text-danger text-sm'>
                               </div>
                          </div>
-                    <div class="form-group col-12 col-lg-6">
+
+
+                         <div class="form-group col-12 col-lg-4">
+                            <label>Division</label>
+                            <input value="{{ old('divisionId') }}" class="form-control" name="divisionId" id="divisionId" type="text" placeholder="" readonly>
+                            <div id='division-error-message' class='text-danger text-sm'>
+                            </div>
+                       </div>
+
+                       <div class="form-group col-12 col-lg-4">
+                          <label>Section</label>
+                          <input value="{{ old('sectionId') }}" class="form-control" name="sectionId" id="sectionId" type="text" placeholder="" readonly>
+                          <div id='section-error-message' class='text-danger text-sm'>
+                          </div>
+                     </div>
+
+                    <div class="form-group col-12 col-lg-4">
                         <label>Status<span class="text-danger">*</span></label>
                         <select value=""
                             class="form-control status selectpicker"
