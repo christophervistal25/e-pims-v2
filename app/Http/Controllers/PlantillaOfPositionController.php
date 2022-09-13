@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Office;
-use App\PlantillaPosition;
-use App\Position;
 use App\Setting;
+use App\Division;
+use App\Position;
+use App\PlantillaPosition;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Yajra\Datatables\Datatables;
 use Illuminate\Validation\Rule;
+use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\DB;
 
 class PlantillaOfPositionController extends Controller
 {
@@ -23,18 +24,17 @@ class PlantillaOfPositionController extends Controller
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('PosCode', 'Description', 'sg_no')->get();
         $lastId = Position::latest('PosCode')->first();
-        $areacode = DB::table('EPims.dbo.Area_code')->get();
-        $areatype = DB::table('EPims.dbo.Area_type')->get();
-        $arealevel = DB::table('EPims.dbo.Area_level')->get();
-        return view('PlantillaOfPosition.PlantillaOfPosition', compact('position', 'office', 'lastId', 'areacode', 'areatype', 'arealevel'));
+        $areacode = DB::connection('E_PIMS_CONNECTION')->table('EPims.dbo.Area_code')->get();
+        $areatype = DB::connection('E_PIMS_CONNECTION')->table('EPims.dbo.Area_type')->get();
+        $arealevel = DB::connection('E_PIMS_CONNECTION')->table('EPims.dbo.Area_level')->get();
+        $section = DB::connection('E_PIMS_CONNECTION')->table('Sections')->orderBy('section_name')->get();
+        $division = Division::orderBy('division_name')->get();
+        return view('PlantillaOfPosition.PlantillaOfPosition', compact('position', 'office', 'lastId', 'areacode', 'areatype', 'arealevel', 'section', 'division'));
     }
 
     public function list(string $office = '*')
     {
-        $data = DB::connection('E_PIMS_CONNECTION')->table('plantilla_positions')
-        ->join('Positions', 'plantilla_positions.PosCode', '=', 'Positions.PosCode')
-        ->join('Offices', 'plantilla_positions.office_code', '=', 'Offices.office_code')
-        ->select('pp_id','Positions.PosCode', 'item_no', 'plantilla_positions.sg_no as sg_no', 'Offices.office_name as office_name', 'Positions.Description as Description', 'old_position_name')->orderBy('item_no', 'desc');
+        $data = DB::connection('E_PIMS_CONNECTION')->table('plantilla_positions')->join('Positions', 'plantilla_positions.PosCode', '=', 'Positions.PosCode')->join('Offices', 'plantilla_positions.office_code', '=', 'Offices.office_code')->orderBy('item_no', 'desc');
 
         if (request()->ajax()) {
             $PlantillaPositionData = ($office != '*') ? $data->where('Offices.office_code', $office)->get()
@@ -71,13 +71,6 @@ class PlantillaOfPositionController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->validate($request, [
-        //     'positionTitle' => 'required',
-        //     'itemNo' => 'required|numeric',
-        //     'salaryGrade' => 'required | in:'.implode(',', range(1, 33)),
-        //     'officeCode' => 'required',
-        // ]);
-
         $this->validate($request, [
             'positionTitle' => [
                 'required',
@@ -125,6 +118,8 @@ class PlantillaOfPositionController extends Controller
         $plantillaposition->area_code = $request['areaCode'];
         $plantillaposition->area_type = $request['areaType'];
         $plantillaposition->area_level = $request['areaLevel'];
+        $plantillaposition->division_id = $request['divisionId'];
+        $plantillaposition->section_id = $request['sectionId'];
         $plantillaposition->save();
 
         return response()->json(['success' => true]);
@@ -155,7 +150,9 @@ class PlantillaOfPositionController extends Controller
         $areacode = DB::table('EPims.dbo.Area_code')->get();
         $areatype = DB::table('EPims.dbo.Area_type')->get();
         $arealevel = DB::table('EPims.dbo.Area_level')->get();
-        return view('PlantillaOfPosition.edit', compact('plantillaofposition', 'position', 'office', 'areacode','areatype','arealevel'));
+        $section = DB::connection('E_PIMS_CONNECTION')->table('Sections')->orderBy('section_name')->get();
+        $division = Division::orderBy('division_name')->get();
+        return view('PlantillaOfPosition.edit', compact('plantillaofposition', 'position', 'office', 'areacode','areatype','arealevel', 'section', 'division'));
     }
 
     /**
@@ -183,6 +180,8 @@ class PlantillaOfPositionController extends Controller
         $plantillaposition->area_code = $request['areaCode'];
         $plantillaposition->area_type = $request['areaType'];
         $plantillaposition->area_level = $request['areaLevel'];
+        $plantillaposition->division_id = $request['divisionId'];
+        $plantillaposition->section_id = $request['sectionId'];
         $plantillaposition->save();
 
         return response()->json(['success' => true]);

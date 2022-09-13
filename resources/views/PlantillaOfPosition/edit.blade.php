@@ -62,6 +62,34 @@
                                     </div>
                                 </div>
 
+                                <div class="col-5 col-lg-6">
+                                    <label class="has-float-label divisionId mb-0">
+                                          <select value="" class="form-control form-control-xs selectpicker" name="divisionId" data-live-search="true" id="divisionId" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                                <option></option>
+                                                @foreach($division as $divisions)
+                                                    <option style="width:350px;" {{ $plantillaofposition->division_id == $divisions->division_id ? 'selected' : '' }} value="{{ $divisions->division_id }}">{{ $divisions->division_name }}</option>
+                                                @endforeach
+                                          </select>
+                                          <span class="font-weight-bold">DIVISION<span class="text-danger">*</span></span>
+                                    </label>
+                                    <div id='division-error-message' class='text-danger text-sm'>
+                                    </div>
+                              </div>
+
+                              <div class="col-5 col-lg-6">
+                                <label class="has-float-label sectionId mb-0">
+                                      <select value="" class="form-control form-control-xs selectpicker" name="sectionId" data-live-search="true" id="sectionId" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                            <option></option>
+                                            @foreach($section as $sections)
+                                                <option style="width:350px;" {{ $plantillaofposition->section_id == $sections->section_id ? 'selected' : '' }} value="{{ $sections->section_id }}">{{ $sections->section_name }}</option>
+                                            @endforeach
+                                      </select>
+                                      <span class="font-weight-bold">SECTION<span class="text-danger">*</span></span>
+                                </label>
+                                <div id='section-error-message' class='text-danger text-sm'>
+                                </div>
+                          </div>
+
                                 <div class="col-6 col-md-6 col-lg-6">
                                     <label class="has-float-label positionTitle mb-0">
                                         <select name="positionTitle" value=""

@@ -174,6 +174,27 @@ $(document).ready(function () {
                         $(".areaLevel .dropdown").removeClass("is-invalid");
                         $("#area-level-error-message").html("");
                     }
+                    if (errors.hasOwnProperty("sectionId")) {
+                        $(".sectionId .dropdown").addClass("is-invalid");
+                        $("#section-error-message").html("");
+                        $("#section-error-message").append(
+                            `<span>${errors.sectionId[0]}</span>`
+                        );
+                    } else {
+                        $(".sectionId .dropdown").removeClass("is-invalid");
+                        $("#section-error-message").html("");
+                    }
+                    if (errors.hasOwnProperty("divisionId")) {
+                        $(".divisionId .dropdown").addClass("is-invalid");
+                        $("#division-error-message").html("");
+                        $("#division-error-message").append(
+                            `<span>${errors.divisionId[0]}</span>`
+                        );
+                    } else {
+                        $(".divisionId .dropdown").removeClass("is-invalid");
+                        $("#division-error-message").html("");
+                    }
+
                     // Create an parent element
                     let parentElement = document.createElement("ul");
                     let errorss = response.responseJSON.errors;
