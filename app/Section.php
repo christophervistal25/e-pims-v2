@@ -18,4 +18,9 @@ class Section extends Model
 
     public $table = 'Sections';
 
+    public function plantillaPosition()
+    {
+        return $this->hasOne(PlantillaPosition::class, 'section_id', 'section_id');
+    }
+
 }

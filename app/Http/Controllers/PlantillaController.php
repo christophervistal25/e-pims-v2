@@ -59,8 +59,6 @@ class PlantillaController extends Controller
 
     public function list(string $office, $year)
     {
-
-
         $data = DB::connection('E_PIMS_CONNECTION')->table('EPims.dbo.plantillas')
         ->join('EPims.dbo.offices', 'plantillas.office_code', '=', 'offices.office_code')
         ->join('EPims.dbo.plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
@@ -103,17 +101,12 @@ class PlantillaController extends Controller
             'itemNo' => 'required',
             'positionTitle' => 'required',
             'employeeName' => 'required',
-            // 'salaryGrade'  => 'required|in:' . implode(',',range(1, 33)),
             'stepNo' => 'required|in:'.implode(',', range(1, 8)),
             'salaryAmount' => 'required|numeric',
             'currentSgyear' => 'required',
             'officeCode' => 'required|in:'.implode(',', range(0001, 0037)),
-            // 'originalAppointment' => 'required',
-            // 'salaryGradePrevious' => 'required',
             'salaryAmountYearly' => 'required',
-            // 'stepNoPrevious' => 'required|in:'.implode(',', range(1, 8)),
-            // 'salaryAuthorized' => 'required|numeric',
-            // 'lastPromotion' => 'after:originalAppointment',
+            'lastPromotion' => 'nullable|after:originalAppointment',
             'status' => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
         ]);
         DB::transaction(function () use ($request) {
@@ -208,17 +201,13 @@ class PlantillaController extends Controller
         $this->validate($request, [
             'itemNo' => 'required',
             'positionTitle' => 'required',
-            // 'employeeName' => 'required',
             'stepNo' => 'required|in:'.implode(',', range(1, 8)),
             'salaryAmount' => 'required|numeric',
             'currentSgyear' => 'required',
             'officeCode' => 'required|in:'.implode(',', range(0001, 0037)),
             'originalAppointment' => 'required',
-            // 'salaryGradePrevious' => 'required',
             'salaryAmountYearly' => 'required',
-            // 'stepNoPrevious' => 'required|in:'.implode(',', range(1, 8)),
-            // 'salaryAuthorized' => 'required|numeric',
-            // 'lastPromotion' => 'required|after:originalAppointment',
+            'lastPromotion' => 'nullable|after:originalAppointment',
             'status' => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
         ]);
         DB::transaction(function () use ($request, $plantilla_id) {

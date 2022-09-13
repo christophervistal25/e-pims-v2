@@ -93,6 +93,15 @@ class PlantillaPosition extends Model
     {
         return $this->belongsTo(AreaLevel::class, 'area_level', 'area_level_id');
     }
+    public function division()
+    {
+        return $this->belongsTo(Division::class, 'division_id', 'division_id');
+    }
+
+    public function section()
+    {
+        return $this->belongsTo(Section::class, 'section_id', 'section_id');
+    }
 
     // protected static function boot()
       // {

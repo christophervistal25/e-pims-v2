@@ -34,7 +34,10 @@ class PlantillaOfPositionController extends Controller
 
     public function list(string $office = '*')
     {
-        $data = DB::connection('E_PIMS_CONNECTION')->table('plantilla_positions')->join('Positions', 'plantilla_positions.PosCode', '=', 'Positions.PosCode')->join('Offices', 'plantilla_positions.office_code', '=', 'Offices.office_code')->orderBy('item_no', 'desc');
+        $data = DB::connection('E_PIMS_CONNECTION')->table('plantilla_positions')
+        ->join('Positions', 'plantilla_positions.PosCode', '=', 'Positions.PosCode')
+        ->join('Offices', 'plantilla_positions.office_code', '=', 'Offices.office_code')
+        ->orderBy('item_no', 'desc');
 
         if (request()->ajax()) {
             $PlantillaPositionData = ($office != '*') ? $data->where('Offices.office_code', $office)->get()
