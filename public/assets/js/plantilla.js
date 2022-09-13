@@ -20,6 +20,8 @@ $(document).ready(function () {
         "#areaLevel",
         "#salaryAuthorized",
         "#salaryAmount",
+        "#salaryAmountYearly",
+        "#salaryAmountPreviousYearly",
     ];
 
     let errorClass = [
@@ -37,6 +39,9 @@ $(document).ready(function () {
         ".officeCode",
         ".divisionId",
         "#salaryAuthorized",
+        "#salaryAmountYearly",
+        "#salaryAmount",
+        ".salaryGradePrevious",
     ];
 
     let errorMessage = [
@@ -56,6 +61,8 @@ $(document).ready(function () {
         "#office-error-message",
         "#division-error-message",
         "#salaryAuthorized-no-error-message",
+        "#salaryAmountYearly-no-error-message",
+        "#salary-grade-previous-error-message",
     ];
 
     // filter list office
@@ -199,6 +206,9 @@ $(document).ready(function () {
                     let currentSalaryAmount =
                         response.salary_grade[0]["sg_step" + currentStepno];
                     $("#salaryAmount").val(currentSalaryAmount);
+                    $("#salaryAmountYearly").val(
+                        parseFloat(currentSalaryAmount * 12).toFixed(2)
+                    );
                 }
             },
         });
@@ -210,13 +220,16 @@ $(document).ready(function () {
                     $("#salaryGradePrevious").val("");
                     $("#StepnoPrevious").val("");
                 } else {
-                    let currentSalaryGrade = response.salary_grade[0].sg_no;
+                    let previousSalaryGrade = response.salary_grade[0].sg_no;
                     $("#salaryGradePrevious")
-                        .val(currentSalaryGrade)
+                        .val(previousSalaryGrade)
                         .trigger("change");
-                    let currentSalaryAmount =
+                    let previousSalaryAmount =
                         response.salary_grade[0]["sg_step" + currentStepno];
-                    $("#salaryAuthorized").val(currentSalaryAmount);
+                    $("#salaryAuthorized").val(previousSalaryAmount);
+                    $("#salaryAmountPreviousYearly").val(
+                        parseFloat(previousSalaryAmount * 12).toFixed(2)
+                    );
                 }
             },
         });
@@ -450,7 +463,7 @@ $(document).ready(function () {
         }
         $("#sectionId").selectpicker("refresh");
     });
-    // generate amount
+    // generate amount current salary
     $("#currentStepno").change(function () {
         let currentSalarygrade = $("#currentSalarygrade").val();
         let currentStepno = $("#currentStepno").val();
@@ -459,11 +472,35 @@ $(document).ready(function () {
             url: `/api/salarySteplist/${currentSalarygrade}/${currentStepno}/${currentSgyear}`,
             success: (response) => {
                 if (response == "") {
-                    $("#currentSalaryamount").val("No Data");
+                    $("#salaryAmount").val("No Data");
                 } else {
                     let currentSalaryAmount =
                         response["sg_step" + currentStepno];
-                    $("#currentSalaryamount").val(currentSalaryAmount);
+                    $("#salaryAmount").val(currentSalaryAmount);
+                    $("#salaryAmountYearly").val(
+                        parseFloat(currentSalaryAmount * 12).toFixed(2)
+                    );
+                }
+            },
+        });
+    });
+    // get previous salary
+    $("#stepNoPrevious, #salaryGradePrevious").change(function () {
+        let salaryGradePrevious = $("#salaryGradePrevious").val();
+        let stepNoPrevious = $("#stepNoPrevious").val();
+        let previousYear = $("#currentSgyear").val() - 1;
+        $.ajax({
+            url: `/api/salarySteplist/${salaryGradePrevious}/${stepNoPrevious}/${previousYear}`,
+            success: (response) => {
+                if (response == "") {
+                    $("#salaryAuthorized").val("No Data");
+                } else {
+                    let previousSalaryAmount =
+                        response["sg_step" + stepNoPrevious];
+                    $("#salaryAuthorized").val(previousSalaryAmount);
+                    $("#salaryAmountPreviousYearly").val(
+                        parseFloat(previousSalaryAmount * 12).toFixed(2)
+                    );
                 }
             },
         });
@@ -579,36 +616,6 @@ $(document).ready(function () {
                         $(".status").removeClass("is-invalid");
                         $("#status-error-message").html("");
                     }
-                    if (errors.hasOwnProperty("areaCode")) {
-                        $(".areaCode").addClass("is-invalid");
-                        $("#area-code-error-message").html("");
-                        $("#area-code-error-message").append(
-                            `<span>${errors.areaCode[0]}</span>`
-                        );
-                    } else {
-                        $(".areaCode").removeClass("is-invalid");
-                        $("#area-code-error-message").html("");
-                    }
-                    if (errors.hasOwnProperty("areaType")) {
-                        $(".areaType").addClass("is-invalid");
-                        $("#area-type-error-message").html("");
-                        $("#area-type-error-message").append(
-                            `<span>${errors.areaType[0]}</span>`
-                        );
-                    } else {
-                        $(".areaType").removeClass("is-invalid");
-                        $("#area-type-error-message").html("");
-                    }
-                    if (errors.hasOwnProperty("areaLevel")) {
-                        $(".areaLevel").addClass("is-invalid");
-                        $("#area-level-error-message").html("");
-                        $("#area-level-error-message").append(
-                            `<span>${errors.areaLevel[0]}</span>`
-                        );
-                    } else {
-                        $(".areaLevel").removeClass("is-invalid");
-                        $("#area-level-error-message").html("");
-                    }
                     if (errors.hasOwnProperty("employeeName")) {
                         $(".employeeName").addClass("is-invalid");
                         $("#employee-name-error-message").html("");
@@ -630,16 +637,27 @@ $(document).ready(function () {
                         $("#steps-error-message").html("");
                     }
 
-                    // if (errors.hasOwnProperty("salaryAmount")) {
-                    //     $("#currentSalaryamount").addClass("is-invalid");
-                    //     $("#salary-amount-error-message").html("");
-                    //     $("#salary-amount-error-message").append(
-                    //         `<span>${errors.salaryAmount[0]}</span>`
-                    //     );
-                    // } else {
-                    //     $("#currentSalaryamount").removeClass("is-invalid");
-                    //     $("#salary-amount-error-message").html("");
-                    // }
+                    if (errors.hasOwnProperty("salaryGradePrevious")) {
+                        $(".salaryGradePrevious").addClass("is-invalid");
+                        $("#salary-grade-previous-error-message").html("");
+                        $("#salary-grade-previous-error-message").append(
+                            `<span>${errors.salaryGradePrevious[0]}</span>`
+                        );
+                    } else {
+                        $(".salaryGradePrevious").removeClass("is-invalid");
+                        $("#salary-grade-previous-error-message").html("");
+                    }
+
+                    if (errors.hasOwnProperty("stepNoPrevious")) {
+                        $(".stepNoPrevious").addClass("is-invalid");
+                        $("#steps-previous-error-message").html("");
+                        $("#steps-previous-error-message").append(
+                            `<span>${errors.stepNoPrevious[0]}</span>`
+                        );
+                    } else {
+                        $(".stepNoPrevious").removeClass("is-invalid");
+                        $("#steps-previous-error-message").html("");
+                    }
 
                     if (errors.hasOwnProperty("salaryAuthorized")) {
                         $("#salaryAuthorized").addClass("is-invalid");
@@ -652,16 +670,28 @@ $(document).ready(function () {
                         $("#salaryAuthorized-no-error-message").html("");
                     }
 
-                    if (errors.hasOwnProperty("currentSalaryamount")) {
-                        $("#currentSalaryamount").addClass("is-invalid");
+                    if (errors.hasOwnProperty("salaryAmount")) {
+                        $("#salaryAmount").addClass("is-invalid");
                         $("#salary-amount-error-message").html("");
                         $("#salary-amount-error-message").append(
                             `<span>${errors.salaryAmount[0]}</span>`
                         );
                     } else {
-                        $("#currentSalaryamount").removeClass("is-invalid");
+                        $("#salaryAmount").removeClass("is-invalid");
                         $("#salary-amount-error-message").html("");
                     }
+
+                    if (errors.hasOwnProperty("salaryAmountYearly")) {
+                        $("#salaryAmountYearly").addClass("is-invalid");
+                        $("#salaryAmountYearly-no-error-message").html("");
+                        $("#salaryAmountYearly-no-error-message").append(
+                            `<span>${errors.salaryAmountYearly[0]}</span>`
+                        );
+                    } else {
+                        $("#salaryAmountYearly").removeClass("is-invalid");
+                        $("#salaryAmountYearly-no-error-message").html("");
+                    }
+
                     if (errors.hasOwnProperty("officeCode")) {
                         $(".officeCode").addClass("is-invalid");
                         $("#office-error-message").html("");
@@ -900,14 +930,14 @@ $("#plantillaEditForm").submit(function (e) {
                     $(".stepNo").removeClass("is-invalid");
                     $("#steps-error-message").html("");
                 }
-                if (errors.hasOwnProperty("currentSalaryamount")) {
-                    $("#currentSalaryamount").addClass("is-invalid");
+                if (errors.hasOwnProperty("salaryAmount")) {
+                    $("#salaryAmount").addClass("is-invalid");
                     $("#salary-amount-error-message").html("");
                     $("#salary-amount-error-message").append(
                         `<span>${errors.salaryAmount[0]}</span>`
                     );
                 } else {
-                    $("#currentSalaryamount").removeClass("is-invalid");
+                    $("#salaryAmount").removeClass("is-invalid");
                     $("#salary-amount-error-message").html("");
                 }
                 if (errors.hasOwnProperty("officeCode")) {

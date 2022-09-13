@@ -109,7 +109,10 @@ class PlantillaController extends Controller
             'currentSgyear' => 'required',
             'officeCode' => 'required|in:'.implode(',', range(0001, 0037)),
             'originalAppointment' => 'required',
-            'salaryAuthorized' => 'numeric',
+            'salaryGradePrevious' => 'required',
+            'salaryAmountYearly' => 'required',
+            'stepNoPrevious' => 'required|in:'.implode(',', range(1, 8)),
+            'salaryAuthorized' => 'required|numeric',
             'lastPromotion' => 'required|after:originalAppointment',
             'status' => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
         ]);
@@ -126,6 +129,8 @@ class PlantillaController extends Controller
             $plantilla->sg_no_previous = $request['salaryGradePrevious'];
             $plantilla->step_no_previous = $request['stepNoPrevious'];
             $plantilla->salary_amount = $request['salaryAmount'];
+            $plantilla->salary_amount_yearly = $request['salaryAmountYearly'];
+            $plantilla->salary_amount_previous_yearly = $request['salaryAmountPreviousYearly'];
             $plantilla->office_code = $request['officeCode'];
             $plantilla->division_id = $request['divisionId'] ?? 0;
             $plantilla->section_id = $request['sectionId'] ?? 0;
@@ -203,16 +208,16 @@ class PlantillaController extends Controller
         $this->validate($request, [
             'itemNo' => 'required',
             'positionTitle' => 'required',
-            'employeeId' => 'required',
-            'salaryGrade' => 'required|in:'.implode(',', range(1, 33)),
+            // 'employeeName' => 'required',
             'stepNo' => 'required|in:'.implode(',', range(1, 8)),
-            'currentSgyear' => 'required',
             'salaryAmount' => 'required|numeric',
-            'salaryAuthorized' => 'numeric',
+            'currentSgyear' => 'required',
             'officeCode' => 'required|in:'.implode(',', range(0001, 0037)),
-            'divisionId' => ['nullable', 'min:3'],
-            'sectionId' => ['nullable', 'min:3'],
             'originalAppointment' => 'required',
+            'salaryGradePrevious' => 'required',
+            'salaryAmountYearly' => 'required',
+            'stepNoPrevious' => 'required|in:'.implode(',', range(1, 8)),
+            'salaryAuthorized' => 'required|numeric',
             'lastPromotion' => 'required|after:originalAppointment',
             'status' => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
         ]);
@@ -225,7 +230,11 @@ class PlantillaController extends Controller
             $plantilla->sg_no = $request->salaryGrade;
             $plantilla->step_no = $request->stepNo;
             $plantilla->salary_amount_previous = $request->salaryAuthorized;
+            $plantilla->sg_no_previous = $request->salaryGradePrevious;
+            $plantilla->step_no_previous = $request->stepNoPrevious;
             $plantilla->salary_amount = $request->salaryAmount;
+            $plantilla->salary_amount_yearly = $request->salaryAmountYearly;
+            $plantilla->salary_amount_previous_yearly = $request->salaryAmountPreviousYearly;
             $plantilla->office_code = $request->officeCode;
             $plantilla->division_id = $request->divisionId ?? 0;
             $plantilla->section_id = $request->sectionId ?? 0;

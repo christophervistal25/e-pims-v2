@@ -171,7 +171,7 @@
                               </div>
                          </div>
 
-                         <div class="form-group col-12 col-lg-3">
+                         <div class="form-group col-12 col-lg-2">
                               <label> Salary Grade<span class="text-danger">*</span></label>
                               <input value="{{ old('salaryGrade') }}" class="form-control" name="salaryGrade" id="currentSalarygrade" type="text" readonly>
                               <div id='salary-grade-error-message' class='text-danger text-sm'>
@@ -179,7 +179,7 @@
                          </div>
 
 
-                         <div class="form-group col-12 col-lg-3">
+                         <div class="form-group col-12 col-lg-2">
                               <label>Step<span class="text-danger">*</span></label>
                               <select value="" class="form-control stepNo selectpicker" name="stepNo" data-live-search="true" id="currentStepno" data-size="5" data-width="100%">
                                    <option></option>
@@ -195,14 +195,21 @@
                               </div>
                          </div>
 
-                         <div class="form-group col-12 col-lg-3">
+                         <div class="form-group col-12 col-lg-2">
                               <label>Salary Amount<span class="text-danger">*</span></label>
                               <input value="{{ old('salaryAmount') }}" class="form-control" name="salaryAmount" id="salaryAmount" type="text">
                               <div id='salary-amount-error-message' class='text-danger text-sm'>
                               </div>
                          </div>
 
-                         <div class="form-group col-12 col-lg-4">
+                         <div class="form-group col-12 col-lg-3">
+                            <label>(Yearly)</label>
+                            <input value="{{ old('salaryAmountYearly') }}" class="form-control" name="salaryAmountYearly" id="salaryAmountYearly" type="text" placeholder="">
+                            <div id='salaryAmountYearly-no-error-message' class='text-danger'>
+                            </div>
+                        </div>
+
+                         <div class="form-group col-12 col-lg-3">
                             <label>Previous Salary Grade<span class="text-danger">*</span></label>
                                 <select value="" class="form-control salaryGradePrevious selectpicker" name="salaryGradePrevious" data-live-search="true" id="salaryGradePrevious" data-size="5" data-width="100%">
                                     <option></option>
@@ -214,12 +221,12 @@
                                         @endif
                                     @endforeach
                                 </select>
-                                <div id='salary-grade-error-message' class='text-danger text-sm'>
+                                <div id='salary-grade-previous-error-message' class='text-danger text-sm'>
                                 </div>
                        </div>
 
 
-                       <div class="form-group col-12 col-lg-4">
+                       <div class="form-group col-12 col-lg-3">
                             <label>Previous Step<span class="text-danger">*</span></label>
                             <select class="form-control stepNoPrevious selectpicker" name="stepNoPrevious" data-live-search="true" id="stepNoPrevious" data-size="5" data-width="100%">
                                  <option></option>
@@ -231,17 +238,24 @@
                                  @endif
                                  @endforeach
                             </select>
-                            <div id='steps-error-message' class='text-danger text-sm'>
+                            <div id='steps-previous-error-message' class='text-danger text-sm'>
                             </div>
                        </div>
 
 
-                         <div class="form-group col-12 col-lg-4">
+                         <div class="form-group col-12 col-lg-3">
                             <label>Salary Authorized</label>
                             <input value="{{ old('salaryAuthorized') }}" class="form-control" name="salaryAuthorized" id="salaryAuthorized" type="text" placeholder="">
                             <div id='salaryAuthorized-no-error-message' class='text-danger'>
                             </div>
                        </div>
+
+                       <div class="form-group col-12 col-lg-3">
+                            <label>(Yearly)</label>
+                            <input value="{{ old('salaryAmountPreviousYearly') }}" class="form-control" name="salaryAmountPreviousYearly" id="salaryAmountPreviousYearly" type="text" placeholder="">
+                            <div id='salaryAmountPreviousYearly-no-error-message' class='text-danger'>
+                            </div>
+                        </div>
 
                          <div class="form-group col-12 col-lg-6">
                               <label>Original Appointment<span class="text-danger">*</span></label>

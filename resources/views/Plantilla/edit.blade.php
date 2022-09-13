@@ -155,12 +155,12 @@
                                    </div>
                               </div>
 
-                              <div class="form-group col-12 col-lg-3">
+                              <div class="form-group col-12 col-lg-2">
                                    <label>Salary Grade<span class="text-danger">*</span></label>
                                    <input value="{{ old('salaryGrade') ?? $plantilla->sg_no}}" class="form-control {{ $errors->has('')  ? 'is-invalid' : ''}}" name="salaryGrade" id="currentSalarygrade" type="text" readonly>
                               </div>
 
-                              <div class="form-group col-12 col-lg-3">
+                              <div class="form-group col-12 col-lg-2">
                                    <label>Step<span class="text-danger">*</span></label>
                                    <select value="{{ old('stepNo') }}" class="form-control form-control-xs selectpicker  {{ $errors->has('stepNo')  ? 'is-invalid' : ''}}" name="stepNo" data-live-search="true" id="currentStepno" data-size="5" data-width="100%">
                                         <option></option>
@@ -173,14 +173,21 @@
                                    </div>
                               </div>
 
-                              <div class="form-group col-12 col-lg-3">
+                              <div class="form-group col-12 col-lg-2">
                                    <label>Salary Amount<span class="text-danger">*</span></label>
-                                   <input value="{{ old('salaryAmount') ?? $plantilla->salary_amount}}" class="form-control {{ $errors->has('salaryAmount')  ? 'is-invalid' : ''}}" name="salaryAmount" id="currentSalaryamount" type="text">
+                                   <input value="{{ old('salaryAmount') ?? $plantilla->salary_amount}}" class="form-control {{ $errors->has('salaryAmount')  ? 'is-invalid' : ''}}" name="salaryAmount" id="salaryAmount" type="text">
                                    <div id='salary-amount-error-message' class='text-danger text-sm'>
                                    </div>
                               </div>
 
-                              <div class="form-group col-12 col-lg-4">
+                              <div class="form-group col-12 col-lg-3">
+                                <label>(Yearly)</label>
+                                <input value="{{ old('salaryAmountYearly') ?? $plantilla->salary_amount_yearly }}" class="form-control" name="salaryAmountYearly" id="salaryAmountYearly" type="text" placeholder="">
+                                <div id='salaryAmountYearly-no-error-message' class='text-danger'>
+                                </div>
+                            </div>
+
+                              <div class="form-group col-12 col-lg-3">
                                 <label>Previous Salary Grade<span class="text-danger">*</span></label>
                                     <select value="" class="form-control salaryGradePrevious selectpicker" name="salaryGradePrevious" data-live-search="true" id="salaryGradePrevious" data-size="5" data-width="100%">
                                         <option></option>
@@ -194,7 +201,7 @@
                            </div>
 
 
-                           <div class="form-group col-12 col-lg-4">
+                           <div class="form-group col-12 col-lg-3">
                                 <label>Previous Step<span class="text-danger">*</span></label>
                                 <select class="form-control stepNoPrevious selectpicker" name="stepNoPrevious" data-live-search="true" id="stepNoPrevious" data-size="5" data-width="100%">
                                         <option></option>
@@ -203,18 +210,24 @@
                                         {{ $step_no }}</option>
                                         @endforeach
                                 </select>
-                                <div id='steps-error-message' class='text-danger text-sm'>
+                                <div id='steps-previous-error-message' class='text-danger text-sm'>
                                 </div>
                            </div>
 
 
-                             <div class="form-group col-12 col-lg-4">
+                             <div class="form-group col-12 col-lg-3">
                                 <label>Salary Authorized</label>
                                 <input value="{{ old('salaryAuthorized') ?? $plantilla->salary_amount_previous }}" class="form-control" name="salaryAuthorized" id="salaryAuthorized" type="text" placeholder="">
                                 <div id='salaryAuthorized-no-error-message' class='text-danger'>
                                 </div>
                            </div>
 
+                           <div class="form-group col-12 col-lg-3">
+                            <label>(Yearly)</label>
+                            <input value="{{ old('salaryAmountPreviousYearly') ?? $plantilla->salary_amount_previous_yearly }}" class="form-control" name="salaryAmountPreviousYearly" id="salaryAmountPreviousYearly" type="text" placeholder="">
+                            <div id='salaryAmountPreviousYearly-no-error-message' class='text-danger'>
+                            </div>
+                        </div>
 
                               <div class="form-group col-12 col-lg-6">
                                    <label>Original Appointment<span class="text-danger">*</span></label>
