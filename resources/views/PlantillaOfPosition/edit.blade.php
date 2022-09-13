@@ -13,6 +13,8 @@
     }
 
 </style>
+<meta id="divisionMetaData" content="@foreach($division as $divisions){ |officeCode|:|{{ $divisions->office_code }}|, |divisionId|:|{{ $divisions->division_id }}|, |divisionName|:|{{ $divisions->division_name }}|}, @endforeach">
+<meta id="sectionMetaData" content="@foreach($section as $sections){ |divisionId|:|{{ $sections->division_id }}|, |sectionId|:|{{ $sections->section_id }}|, |sectionName|:|{{ $sections->section_name }}|}, @endforeach">
 @endprepend
 @section('content')
 @include('PlantillaOfPosition.add-ons.success')
@@ -66,8 +68,8 @@
                                     <label class="has-float-label divisionId mb-0">
                                           <select value="" class="form-control form-control-xs selectpicker" name="divisionId" data-live-search="true" id="divisionId" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                                 <option></option>
-                                                @foreach($division as $divisions)
-                                                    <option style="width:350px;" {{ $plantillaofposition->division_id == $divisions->division_id ? 'selected' : '' }} value="{{ $divisions->division_id }}">{{ $divisions->division_name }}</option>
+                                                @foreach($divisionedit as $divisionedits)
+                                                    <option style="width:350px;" {{ $plantillaofposition->division_id == $divisionedits->division_id ? 'selected' : '' }} value="{{ $divisionedits->division_id }}">{{ $divisionedits->division_name }}</option>
                                                 @endforeach
                                           </select>
                                           <span class="font-weight-bold">DIVISION<span class="text-danger">*</span></span>
@@ -80,8 +82,8 @@
                                 <label class="has-float-label sectionId mb-0">
                                       <select value="" class="form-control form-control-xs selectpicker" name="sectionId" data-live-search="true" id="sectionId" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                             <option></option>
-                                            @foreach($section as $sections)
-                                                <option style="width:350px;" {{ $plantillaofposition->section_id == $sections->section_id ? 'selected' : '' }} value="{{ $sections->section_id }}">{{ $sections->section_name }}</option>
+                                            @foreach($sectionedit as $sectionedits)
+                                                <option style="width:350px;" {{ $plantillaofposition->section_id == $sectionedits->section_id ? 'selected' : '' }} value="{{ $sectionedits->section_id }}">{{ $sectionedits->section_name }}</option>
                                             @endforeach
                                       </select>
                                       <span class="font-weight-bold">SECTION<span class="text-danger">*</span></span>

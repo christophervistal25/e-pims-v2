@@ -30,8 +30,6 @@ class PlantillaController extends Controller
      */
     public function index(Request $req)
     {
-        $division = Division::select('division_id', 'division_name', 'office_code')->get();
-        $section = Section::select('section_id', 'section_name', 'division_id')->get();
         $plantillaEmp = Plantilla::get()->pluck('employee_id')->toArray();
         $employee = Employee::select('Employee_id', 'LastName', 'FirstName', 'MiddleName', 'Work_Status')
             ->where('Work_Status', 'not like', '%'.'JOB ORDER'.'%')
@@ -54,7 +52,7 @@ class PlantillaController extends Controller
 
         $status = ['Casual', 'Coterminous', 'Permanent', 'Provisional', 'Temporary', 'Elected'];
 
-        return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'office', 'salarygrade', 'plantillaPosition', 'division', 'section', 'year'));
+        return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'office', 'salarygrade', 'plantillaPosition', 'year'));
     }
 
     public function list(string $office, $year)
@@ -168,8 +166,6 @@ class PlantillaController extends Controller
      */
     public function edit($plantilla_id)
     {
-        $division = Division::select('division_id', 'division_name', 'office_code')->get();
-        $section = Section::select('section_id', 'section_name', 'division_id')->get();
         $employee = Employee::select('Employee_id', 'LastName', 'FirstName', 'MiddleName')->get();
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('PosCode', 'Description')->get();
@@ -180,13 +176,10 @@ class PlantillaController extends Controller
         count($status) - 1;
         $plantilla = Plantilla::find($plantilla_id);
         $officeCode = $plantilla->office_code;
-        $division_id = $plantilla->division_id;
-        $divisionedit = Division::where('office_code', $officeCode)->get(['division_id', 'division_name', 'office_code']);
-        $sectionedit = Section::where('division_id', $division_id)->get(['section_id', 'section_name', 'division_id']);
         $plantillaPositionID = Plantilla::where('plantilla_id', '!=', $plantilla_id)->get()->pluck('pp_id')->toArray();
         $plantillaPosition = PlantillaPosition::select('pp_id', 'PosCode', 'office_code')->with('position:PosCode,Description')->where('office_code', $officeCode)->whereNotIn('pp_id', $plantillaPositionID)->get();
 
-        return view('Plantilla.edit', compact('division', 'section', 'divisionedit', 'sectionedit', 'plantilla', 'employee', 'status', 'position',   'office',  'salarygrade', 'plantillaPosition', 'plantillaPositionAll'));
+        return view('Plantilla.edit', compact('plantilla', 'employee', 'status', 'position',   'office',  'salarygrade', 'plantillaPosition', 'plantillaPositionAll'));
     }
 
     /**
