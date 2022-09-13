@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Office;
 use App\Setting;
 use App\Division;
+use App\Section;
 use App\Position;
 use App\PlantillaPosition;
 use Illuminate\Http\Request;
@@ -29,7 +30,13 @@ class PlantillaOfPositionController extends Controller
         $arealevel = DB::connection('E_PIMS_CONNECTION')->table('EPims.dbo.Area_level')->get();
         $section = DB::connection('E_PIMS_CONNECTION')->table('Sections')->orderBy('section_name')->get();
         $division = Division::orderBy('division_name')->get();
-        return view('PlantillaOfPosition.PlantillaOfPosition', compact('position', 'office', 'lastId', 'areacode', 'areatype', 'arealevel', 'section', 'division'));
+
+
+        $plantillaPosition = PlantillaPosition::with('position:PosCode,Description')->whereDoesntHave('plantillas', function ($query) {
+            $query->where('year', date('Y'));
+        })->get();
+        // dd($plantillaPosition[0]->section_id);
+        return view('PlantillaOfPosition.PlantillaOfPosition', compact('position', 'office', 'lastId', 'areacode', 'areatype', 'arealevel', 'section', 'division', 'plantillaPosition'));
     }
 
     public function list(string $office = '*')
@@ -147,12 +154,17 @@ class PlantillaOfPositionController extends Controller
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('PosCode', 'Description', 'sg_no')->get();
         $plantillaofposition = PlantillaPosition::find($pp_id);
-        $areacode = DB::table('EPims.dbo.Area_code')->get();
-        $areatype = DB::table('EPims.dbo.Area_type')->get();
-        $arealevel = DB::table('EPims.dbo.Area_level')->get();
+        $areacode = DB::connection('E_PIMS_CONNECTION')->table('EPims.dbo.Area_code')->get();
+        $areatype = DB::connection('E_PIMS_CONNECTION')->table('EPims.dbo.Area_type')->get();
+        $arealevel = DB::connection('E_PIMS_CONNECTION')->table('EPims.dbo.Area_level')->get();
         $section = DB::connection('E_PIMS_CONNECTION')->table('Sections')->orderBy('section_name')->get();
         $division = Division::orderBy('division_name')->get();
-        return view('PlantillaOfPosition.edit', compact('plantillaofposition', 'position', 'office', 'areacode','areatype','arealevel', 'section', 'division'));
+        
+        $officeCode = $plantillaofposition->office_code;
+        $division_id = $plantillaofposition->division_id;
+        $divisionedit = Division::where('office_code', $officeCode)->get(['division_id', 'division_name', 'office_code']);
+        $sectionedit = Section::where('division_id', $division_id)->get(['section_id', 'section_name', 'division_id']);
+        return view('PlantillaOfPosition.edit', compact('plantillaofposition', 'position', 'office', 'areacode','areatype','arealevel', 'section', 'division', 'divisionedit', 'sectionedit'));
     }
 
     /**

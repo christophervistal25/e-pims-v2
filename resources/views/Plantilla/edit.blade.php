@@ -29,8 +29,6 @@
 @prepend('meta-data')
 <meta id="plantillaPositionMetaData" content="@foreach($plantillaPosition as $plantillaPositions){ |officeCode|:|{{ $plantillaPositions->office_code }}|, |positionId|:|{{ $plantillaPositions->PosCode }}|, |ppId|:|{{ $plantillaPositions->pp_id }}|}, @endforeach">
 <meta id="positionMetaData" content="@foreach($position as $positions){ |positionId|:|{{ $positions->PosCode }}|, |positionName|:|{{ $positions->Description }}|}, @endforeach">
-<meta id="divisionMetaData" content="@foreach($division as $divisions){ |officeCode|:|{{ $divisions->office_code }}|, |divisionId|:|{{ $divisions->division_id }}|, |divisionName|:|{{ $divisions->division_name }}|}, @endforeach">
-<meta id="sectionMetaData" content="@foreach($section as $sections){ |divisionId|:|{{ $sections->division_id }}|, |sectionId|:|{{ $sections->section_id }}|, |sectionName|:|{{ $sections->section_name }}|}, @endforeach">
 @endprepend
 @section('content')
 <div class="content">
@@ -85,9 +83,6 @@
                                    <label>Division<span class="text-danger">*</span></label>
                                    <select value="" class="form-control selectpicker {{ $errors->has('divisionId')  ? 'is-invalid' : ''}}" name="divisionId" data-live-search="true" id="divisionId" data-size="5">
                                         <option></option>
-                                        @foreach($divisionedit as $divisionedits)
-                                        <option {{ $plantilla->division_id == $divisionedits->division_id ? 'selected' : '' }} value="{{ $divisionedits->division_id }}">{{ $divisionedits->division_name }}</option>
-                                        @endforeach
                                    </select>
                                    <div id='division-error-message' class='text-danger text-sm'>
                                    </div>
@@ -97,9 +92,6 @@
                                    <label>Section<span class="text-danger">*</span></label>
                                    <select value="" class="form-control sectionId selectpicker {{ $errors->has('sectionId')  ? 'is-invalid' : ''}}" name="sectionId" data-live-search="true" id="sectionId" data-size="5">
                                         <option></option>
-                                        @foreach($sectionedit as $sectionedits)
-                                        <option {{ $plantilla->section_id == $sectionedits->section_id ? 'selected' : '' }} value="{{ $sectionedits->section_id }}">{{ $sectionedits->section_name }}</option>
-                                        @endforeach
                                    </select>
                                    <div id='division-error-message' class='text-danger text-sm'>
                                    </div>

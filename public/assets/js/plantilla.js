@@ -20,8 +20,6 @@ $(document).ready(function () {
         "#areaLevel",
         "#salaryAuthorized",
         "#salaryAmount",
-        "#salaryAmountYearly",
-        "#salaryAmountPreviousYearly",
     ];
 
     let errorClass = [
@@ -39,9 +37,6 @@ $(document).ready(function () {
         ".officeCode",
         ".divisionId",
         "#salaryAuthorized",
-        "#salaryAmountYearly",
-        "#salaryAmount",
-        ".salaryGradePrevious",
     ];
 
     let errorMessage = [
@@ -61,8 +56,6 @@ $(document).ready(function () {
         "#office-error-message",
         "#division-error-message",
         "#salaryAuthorized-no-error-message",
-        "#salaryAmountYearly-no-error-message",
-        "#salary-grade-previous-error-message",
     ];
 
     // filter list office
@@ -80,7 +73,6 @@ $(document).ready(function () {
         },
         ajax: `/plantilla-list/${selectedOffice}/${selectedYear}`,
         columns: [
-            { data: "item_no", name: "item_no" },
             {
                 data: "fullname",
                 name: "fullname",
@@ -100,7 +92,7 @@ $(document).ready(function () {
                 searchable: true,
                 visible: true,
             },
-
+            { data: "item_no", name: "item_no" },
             { data: "status", name: "status", sortable: false },
             { data: "year", name: "year", sortable: false },
             {
@@ -183,6 +175,7 @@ $(document).ready(function () {
         $.ajax({
             url: `/api/positionSalaryGrade/${positionTitle}/${currentSgyear}`,
             success: (response) => {
+                console.log(response);
                 if (response == "") {
                     $("#currentSalarygrade").val("");
                     $("#itemNo").val("");
@@ -191,15 +184,12 @@ $(document).ready(function () {
                     $("#areaLevel").val("");
                     $("#areaType").val("");
                 } else {
-                    let areaCodeID = response.area_code.area_code_id;
-                    let areaCodeDesc = response.area_code.description;
-                    $("#areaCode").val(areaCodeID + " - " + areaCodeDesc);
-                    let areaLevelID = response.area_level.area_level_id;
-                    let areaLevelDesc = response.area_level.description;
-                    $("#areaLevel").val(areaLevelID + " - " + areaLevelDesc);
-                    let areaTypeID = response.area_type.area_type_id;
-                    let areaTypeDesc = response.area_type.description;
-                    $("#areaType").val(areaTypeID + " - " + areaTypeDesc);
+                    let areaCode = response.area_code;
+                    $("#areaCode").val(areaCode);
+                    let areaLevel = response.area_level;
+                    $("#areaLevel").val(areaLevel);
+                    let areaType = response.area_type;
+                    $("#areaType").val(areaType);
                     let currentSalaryGrade = response.salary_grade[0].sg_no;
                     $("#currentSalarygrade").val(currentSalaryGrade);
                     let currentItemNo = response.item_no;
@@ -207,9 +197,6 @@ $(document).ready(function () {
                     let currentSalaryAmount =
                         response.salary_grade[0]["sg_step" + currentStepno];
                     $("#salaryAmount").val(currentSalaryAmount);
-                    $("#salaryAmountYearly").val(
-                        parseFloat(currentSalaryAmount * 12).toFixed(2)
-                    );
                 }
             },
         });
@@ -221,21 +208,18 @@ $(document).ready(function () {
                     $("#salaryGradePrevious").val("");
                     $("#StepnoPrevious").val("");
                 } else {
-                    let previousSalaryGrade = response.salary_grade[0].sg_no;
+                    let currentSalaryGrade = response.salary_grade[0].sg_no;
                     $("#salaryGradePrevious")
-                        .val(previousSalaryGrade)
+                        .val(currentSalaryGrade)
                         .trigger("change");
-                    let previousSalaryAmount =
+                    let currentSalaryAmount =
                         response.salary_grade[0]["sg_step" + currentStepno];
-                    $("#salaryAuthorized").val(previousSalaryAmount);
-                    $("#salaryAmountPreviousYearly").val(
-                        parseFloat(previousSalaryAmount * 12).toFixed(2)
-                    );
+                    $("#salaryAuthorized").val(currentSalaryAmount);
                 }
             },
         });
     });
-    // filter position and division by office
+    // filter position by office
     $("#officeCode").change(function (e) {
         //plantillaPositionMetaData
         $("#currentSalarygrade").val("");
@@ -312,159 +296,8 @@ $(document).ready(function () {
             );
         }
         $("#positionTitle").selectpicker("refresh");
-        //divisionMetaData
-        if (document.querySelectorAll('[id="divisionMetaData"]')[1] == null) {
-            var divisionMetaData = document
-                .querySelectorAll('[id="divisionMetaData"]')[0]
-                .content.replaceAll("|", '"');
-        } else {
-            var divisionMetaData = document
-                .querySelectorAll('[id="divisionMetaData"]')[1]
-                .content.replaceAll("|", '"');
-        }
-        var divisionMetaDataRemoveLast =
-            "[" +
-            divisionMetaData.substring(0, divisionMetaData.length - 2) +
-            "]";
-        let divisionOfficeCodeOptionAll = JSON.parse(
-            divisionMetaDataRemoveLast
-        );
-        if (document.querySelectorAll('[id="divisionMetaData"]')[1] == null) {
-            var metaDataDivision = document
-                .querySelectorAll('[id="divisionMetaData"]')[0]
-                .content.replaceAll("|", '"');
-        } else {
-            var metaDataDivision = document
-                .querySelectorAll('[id="divisionMetaData"]')[1]
-                .content.replaceAll("|", '"');
-        }
-        var metaDataDivisionRemoveLast =
-            "[" +
-            metaDataDivision.substring(0, metaDataDivision.length - 2) +
-            "]";
-        let divisionOptionAll = JSON.parse(metaDataDivisionRemoveLast);
-        let officeCode2 = e.target.value;
-        //filter all division data in plantilla//
-        let plantillaDivisionFilter = divisionOfficeCodeOptionAll.filter(
-            function (Division) {
-                return Division.officeCode == officeCode2;
-            }
-        );
-        //Remove all option in #divisionId//
-        function removeOptionsDivision(selectDivision) {
-            var ii,
-                L = selectDivision.options.length - 1;
-            for (ii = L; ii >= 0; ii--) {
-                selectDivision.remove(ii);
-            }
-        }
-        removeOptionsDivision(document.getElementById("divisionId"));
-        //add division data based in what you select in #officeCode//
-        var i,
-            plantillaLengthDivisionId = plantillaDivisionFilter.length;
-        $("#divisionId").append("<option></option>");
-        for (i = 0; i < plantillaLengthDivisionId; i++) {
-            var plantillaDivisionFilter_final = plantillaDivisionFilter[i];
-            //filter all division data//
-            let divisionIdFilter = divisionOptionAll.filter(function (
-                Division
-            ) {
-                return (
-                    Division.officeCode ==
-                    plantillaDivisionFilter_final.officeCode
-                );
-            });
-            $("#divisionId").append(
-                '<option value="' +
-                    divisionIdFilter[i].divisionId +
-                    '">' +
-                    divisionIdFilter[i].divisionName +
-                    "</option>"
-            );
-        }
-        $("#divisionId").selectpicker("refresh");
-        //Remove all option in #sectionId//
-        function removeOptionsSection(selectSection) {
-            var ii,
-                L = selectSection.options.length - 1;
-            for (ii = L; ii >= 0; ii--) {
-                selectSection.remove(ii);
-            }
-        }
-        removeOptionsSection(document.getElementById("sectionId"));
-        $("#sectionId").selectpicker("refresh");
     });
-    // filter section by division
-    $("#divisionId").change(function (e) {
-        //sectionMetaData
-        if (document.querySelectorAll('[id="sectionMetaData"]')[1] == null) {
-            var sectionMetaData = document
-                .querySelectorAll('[id="sectionMetaData"]')[0]
-                .content.replaceAll("|", '"');
-        } else {
-            var sectionMetaData = document
-                .querySelectorAll('[id="sectionMetaData"]')[1]
-                .content.replaceAll("|", '"');
-        }
-        var sectionMetaDataRemoveLast =
-            "[" +
-            sectionMetaData.substring(0, sectionMetaData.length - 2) +
-            "]";
-        let sectionDivisionIdOptionAll = JSON.parse(sectionMetaDataRemoveLast);
-        if (document.querySelectorAll('[id="sectionMetaData"]')[1] == null) {
-            var metaDataSection = document
-                .querySelectorAll('[id="sectionMetaData"]')[0]
-                .content.replaceAll("|", '"');
-        } else {
-            var metaDataSection = document
-                .querySelectorAll('[id="sectionMetaData"]')[1]
-                .content.replaceAll("|", '"');
-        }
-        var metaDataSectionRemoveLast =
-            "[" +
-            metaDataSection.substring(0, metaDataSection.length - 2) +
-            "]";
-        let sectionOptionAll = JSON.parse(metaDataSectionRemoveLast);
-        let divisionId2 = e.target.value;
-        //filter all section data in plantilla//
-        let plantillaSectionFilter = sectionDivisionIdOptionAll.filter(
-            function (Section) {
-                return Section.divisionId == divisionId2;
-            }
-        );
-        //Remove all option in #sectionId//
-        function removeOptionsSection(selectSection) {
-            var ii,
-                L = selectSection.options.length - 1;
-            for (ii = L; ii >= 0; ii--) {
-                selectSection.remove(ii);
-            }
-        }
-        removeOptionsSection(document.getElementById("sectionId"));
-        //add section data based in what you select in #divisionId//
-        var i,
-            plantillaLengthSectionId = plantillaSectionFilter.length;
-        $("#sectionId").append("<option></option>");
-        for (i = 0; i < plantillaLengthSectionId; i++) {
-            var plantillaSectionFilter_final = plantillaSectionFilter[i];
-            //filter all division data//
-            let sectionIdFilter = sectionOptionAll.filter(function (Section) {
-                return (
-                    Section.divisionId ==
-                    plantillaSectionFilter_final.divisionId
-                );
-            });
-            $("#sectionId").append(
-                '<option value="' +
-                    sectionIdFilter[i].sectionId +
-                    '">' +
-                    sectionIdFilter[i].sectionName +
-                    "</option>"
-            );
-        }
-        $("#sectionId").selectpicker("refresh");
-    });
-    // generate amount current salary
+    // generate amount
     $("#currentStepno").change(function () {
         let currentSalarygrade = $("#currentSalarygrade").val();
         let currentStepno = $("#currentStepno").val();
@@ -473,41 +306,11 @@ $(document).ready(function () {
             url: `/api/salarySteplist/${currentSalarygrade}/${currentStepno}/${currentSgyear}`,
             success: (response) => {
                 if (response == "") {
-                    $("#salaryAmount").val("No Data");
+                    $("#currentSalaryamount").val("No Data");
                 } else {
                     let currentSalaryAmount =
                         response["sg_step" + currentStepno];
-                    $("#salaryAmount").val(currentSalaryAmount);
-                    $("#salaryAmountYearly").val(
-                        parseFloat(currentSalaryAmount * 12).toFixed(2)
-                    );
-                }
-            },
-        });
-    });
-    // get previous salary
-    $("#stepNoPrevious, #salaryGradePrevious").change(function () {
-        let salaryGradePrevious = $("#salaryGradePrevious").val();
-        let stepNoPrevious = $("#stepNoPrevious").val();
-        let previousYear = $("#currentSgyear").val() - 1;
-        if (this.value == "") {
-            $("#stepNoPrevious").val("");
-            $("#stepNoPrevious").selectpicker("refresh");
-            $("#salaryAmountPreviousYearly").val("");
-            $("#salaryAuthorized").val("");
-        }
-        $.ajax({
-            url: `/api/salarySteplist/${salaryGradePrevious}/${stepNoPrevious}/${previousYear}`,
-            success: (response) => {
-                if (response == "") {
-                    $("#salaryAuthorized").val("No Data");
-                } else {
-                    let previousSalaryAmount =
-                        response["sg_step" + stepNoPrevious];
-                    $("#salaryAuthorized").val(previousSalaryAmount);
-                    $("#salaryAmountPreviousYearly").val(
-                        parseFloat(previousSalaryAmount * 12).toFixed(2)
-                    );
+                    $("#currentSalaryamount").val(currentSalaryAmount);
                 }
             },
         });
@@ -623,6 +426,36 @@ $(document).ready(function () {
                         $(".status").removeClass("is-invalid");
                         $("#status-error-message").html("");
                     }
+                    if (errors.hasOwnProperty("areaCode")) {
+                        $(".areaCode").addClass("is-invalid");
+                        $("#area-code-error-message").html("");
+                        $("#area-code-error-message").append(
+                            `<span>${errors.areaCode[0]}</span>`
+                        );
+                    } else {
+                        $(".areaCode").removeClass("is-invalid");
+                        $("#area-code-error-message").html("");
+                    }
+                    if (errors.hasOwnProperty("areaType")) {
+                        $(".areaType").addClass("is-invalid");
+                        $("#area-type-error-message").html("");
+                        $("#area-type-error-message").append(
+                            `<span>${errors.areaType[0]}</span>`
+                        );
+                    } else {
+                        $(".areaType").removeClass("is-invalid");
+                        $("#area-type-error-message").html("");
+                    }
+                    if (errors.hasOwnProperty("areaLevel")) {
+                        $(".areaLevel").addClass("is-invalid");
+                        $("#area-level-error-message").html("");
+                        $("#area-level-error-message").append(
+                            `<span>${errors.areaLevel[0]}</span>`
+                        );
+                    } else {
+                        $(".areaLevel").removeClass("is-invalid");
+                        $("#area-level-error-message").html("");
+                    }
                     if (errors.hasOwnProperty("employeeName")) {
                         $(".employeeName").addClass("is-invalid");
                         $("#employee-name-error-message").html("");
@@ -644,27 +477,16 @@ $(document).ready(function () {
                         $("#steps-error-message").html("");
                     }
 
-                    if (errors.hasOwnProperty("salaryGradePrevious")) {
-                        $(".salaryGradePrevious").addClass("is-invalid");
-                        $("#salary-grade-previous-error-message").html("");
-                        $("#salary-grade-previous-error-message").append(
-                            `<span>${errors.salaryGradePrevious[0]}</span>`
-                        );
-                    } else {
-                        $(".salaryGradePrevious").removeClass("is-invalid");
-                        $("#salary-grade-previous-error-message").html("");
-                    }
-
-                    if (errors.hasOwnProperty("stepNoPrevious")) {
-                        $(".stepNoPrevious").addClass("is-invalid");
-                        $("#steps-previous-error-message").html("");
-                        $("#steps-previous-error-message").append(
-                            `<span>${errors.stepNoPrevious[0]}</span>`
-                        );
-                    } else {
-                        $(".stepNoPrevious").removeClass("is-invalid");
-                        $("#steps-previous-error-message").html("");
-                    }
+                    // if (errors.hasOwnProperty("salaryAmount")) {
+                    //     $("#currentSalaryamount").addClass("is-invalid");
+                    //     $("#salary-amount-error-message").html("");
+                    //     $("#salary-amount-error-message").append(
+                    //         `<span>${errors.salaryAmount[0]}</span>`
+                    //     );
+                    // } else {
+                    //     $("#currentSalaryamount").removeClass("is-invalid");
+                    //     $("#salary-amount-error-message").html("");
+                    // }
 
                     if (errors.hasOwnProperty("salaryAuthorized")) {
                         $("#salaryAuthorized").addClass("is-invalid");
@@ -677,28 +499,16 @@ $(document).ready(function () {
                         $("#salaryAuthorized-no-error-message").html("");
                     }
 
-                    if (errors.hasOwnProperty("salaryAmount")) {
-                        $("#salaryAmount").addClass("is-invalid");
+                    if (errors.hasOwnProperty("currentSalaryamount")) {
+                        $("#currentSalaryamount").addClass("is-invalid");
                         $("#salary-amount-error-message").html("");
                         $("#salary-amount-error-message").append(
                             `<span>${errors.salaryAmount[0]}</span>`
                         );
                     } else {
-                        $("#salaryAmount").removeClass("is-invalid");
+                        $("#currentSalaryamount").removeClass("is-invalid");
                         $("#salary-amount-error-message").html("");
                     }
-
-                    if (errors.hasOwnProperty("salaryAmountYearly")) {
-                        $("#salaryAmountYearly").addClass("is-invalid");
-                        $("#salaryAmountYearly-no-error-message").html("");
-                        $("#salaryAmountYearly-no-error-message").append(
-                            `<span>${errors.salaryAmountYearly[0]}</span>`
-                        );
-                    } else {
-                        $("#salaryAmountYearly").removeClass("is-invalid");
-                        $("#salaryAmountYearly-no-error-message").html("");
-                    }
-
                     if (errors.hasOwnProperty("officeCode")) {
                         $(".officeCode").addClass("is-invalid");
                         $("#office-error-message").html("");
@@ -937,14 +747,14 @@ $("#plantillaEditForm").submit(function (e) {
                     $(".stepNo").removeClass("is-invalid");
                     $("#steps-error-message").html("");
                 }
-                if (errors.hasOwnProperty("salaryAmount")) {
-                    $("#salaryAmount").addClass("is-invalid");
+                if (errors.hasOwnProperty("currentSalaryamount")) {
+                    $("#currentSalaryamount").addClass("is-invalid");
                     $("#salary-amount-error-message").html("");
                     $("#salary-amount-error-message").append(
                         `<span>${errors.salaryAmount[0]}</span>`
                     );
                 } else {
-                    $("#salaryAmount").removeClass("is-invalid");
+                    $("#currentSalaryamount").removeClass("is-invalid");
                     $("#salary-amount-error-message").html("");
                 }
                 if (errors.hasOwnProperty("officeCode")) {
