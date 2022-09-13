@@ -108,12 +108,12 @@ class PlantillaController extends Controller
             'salaryAmount' => 'required|numeric',
             'currentSgyear' => 'required',
             'officeCode' => 'required|in:'.implode(',', range(0001, 0037)),
-            'originalAppointment' => 'required',
-            'salaryGradePrevious' => 'required',
+            // 'originalAppointment' => 'required',
+            // 'salaryGradePrevious' => 'required',
             'salaryAmountYearly' => 'required',
-            'stepNoPrevious' => 'required|in:'.implode(',', range(1, 8)),
-            'salaryAuthorized' => 'required|numeric',
-            'lastPromotion' => 'required|after:originalAppointment',
+            // 'stepNoPrevious' => 'required|in:'.implode(',', range(1, 8)),
+            // 'salaryAuthorized' => 'required|numeric',
+            // 'lastPromotion' => 'after:originalAppointment',
             'status' => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
         ]);
         DB::transaction(function () use ($request) {
@@ -140,17 +140,17 @@ class PlantillaController extends Controller
             $plantilla->year = $request['currentSgyear'];
             $plantilla->save();
 
-            $plantillaPosition = PlantillaPosition::find($request->positionTitle);
-            /* Creating a new record in the ServiceRecord table. */
-            ServiceRecord::create([
-                'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
-                'employee_id' => $request->employeeName,
-                'service_from_date' => $request->originalAppointment,
-                'PosCode' => $plantillaPosition->PosCode,
-                'status' => $request->status,
-                'salary' => $request->salaryAmount,
-                'office_code' => $request->officeCode,
-            ]);
+            // $plantillaPosition = PlantillaPosition::find($request->positionTitle);
+            // /* Creating a new record in the ServiceRecord table. */
+            // ServiceRecord::create([
+            //     'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
+            //     'employee_id' => $request->employeeName,
+            //     'service_from_date' => $request->originalAppointment,
+            //     'PosCode' => $plantillaPosition->PosCode,
+            //     'status' => $request->status,
+            //     'salary' => $request->salaryAmount,
+            //     'office_code' => $request->officeCode,
+            // ]);
         });
 
         return response()->json(['success' => true]);
@@ -214,11 +214,11 @@ class PlantillaController extends Controller
             'currentSgyear' => 'required',
             'officeCode' => 'required|in:'.implode(',', range(0001, 0037)),
             'originalAppointment' => 'required',
-            'salaryGradePrevious' => 'required',
+            // 'salaryGradePrevious' => 'required',
             'salaryAmountYearly' => 'required',
-            'stepNoPrevious' => 'required|in:'.implode(',', range(1, 8)),
-            'salaryAuthorized' => 'required|numeric',
-            'lastPromotion' => 'required|after:originalAppointment',
+            // 'stepNoPrevious' => 'required|in:'.implode(',', range(1, 8)),
+            // 'salaryAuthorized' => 'required|numeric',
+            // 'lastPromotion' => 'required|after:originalAppointment',
             'status' => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
         ]);
         DB::transaction(function () use ($request, $plantilla_id) {
@@ -244,30 +244,30 @@ class PlantillaController extends Controller
             $plantilla->year = $request->currentSgyear;
             $plantilla->save();
 
-            $plantillaPosition = $plantilla->plantilla_positions;
+            // $plantillaPosition = $plantilla->plantilla_positions;
 
-            // Get the present service record of employee.
-            $record = ServiceRecord::where([
-                'employee_id' => $request->employeeId,
-                'PosCode' => $plantillaPosition->PosCode,
-                'office_code' => $plantillaPosition->office_code,
-            ])->whereNull('service_to_date')->first();
+            // // Get the present service record of employee.
+            // $record = ServiceRecord::where([
+            //     'employee_id' => $request->employeeId,
+            //     'PosCode' => $plantillaPosition->PosCode,
+            //     'office_code' => $plantillaPosition->office_code,
+            // ])->whereNull('service_to_date')->first();
 
-            // Delete the current service record
-            $record->delete();
+            // // // Delete the current service record
+            // $record->delete();
 
-            $newPlantillaPosition = PlantillaPosition::find($request->positionTitle);
+            // $newPlantillaPosition = PlantillaPosition::find($request->positionTitle);
 
-            // Insert new service record.
-            ServiceRecord::create([
-                'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
-                'employee_id' => $request->employeeId,
-                'service_from_date' => $request->lastPromotion,
-                'PosCode' => $newPlantillaPosition->PosCode,
-                'status' => $request->status,
-                'salary' => $request->salaryAmount,
-                'office_code' => $request->officeCode,
-            ]);
+            // // Insert new service record.
+            // ServiceRecord::create([
+            //     'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
+            //     'employee_id' => $request->employeeId,
+            //     'service_from_date' => $request->lastPromotion,
+            //     'PosCode' => $newPlantillaPosition->PosCode,
+            //     'status' => $request->status,
+            //     'salary' => $request->salaryAmount,
+            //     'office_code' => $request->officeCode,
+            // ]);
         });
 
         return response()->json(['success' => true]);

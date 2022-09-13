@@ -80,6 +80,7 @@ $(document).ready(function () {
         },
         ajax: `/plantilla-list/${selectedOffice}/${selectedYear}`,
         columns: [
+            { data: "item_no", name: "item_no" },
             {
                 data: "fullname",
                 name: "fullname",
@@ -99,7 +100,7 @@ $(document).ready(function () {
                 searchable: true,
                 visible: true,
             },
-            { data: "item_no", name: "item_no" },
+
             { data: "status", name: "status", sortable: false },
             { data: "year", name: "year", sortable: false },
             {
@@ -489,6 +490,12 @@ $(document).ready(function () {
         let salaryGradePrevious = $("#salaryGradePrevious").val();
         let stepNoPrevious = $("#stepNoPrevious").val();
         let previousYear = $("#currentSgyear").val() - 1;
+        if (this.value == "") {
+            $("#stepNoPrevious").val("");
+            $("#stepNoPrevious").selectpicker("refresh");
+            $("#salaryAmountPreviousYearly").val("");
+            $("#salaryAuthorized").val("");
+        }
         $.ajax({
             url: `/api/salarySteplist/${salaryGradePrevious}/${stepNoPrevious}/${previousYear}`,
             success: (response) => {

@@ -210,7 +210,7 @@
                         </div>
 
                          <div class="form-group col-12 col-lg-3">
-                            <label>Previous Salary Grade<span class="text-danger">*</span></label>
+                            <label>Previous Salary Grade</label>
                                 <select value="" class="form-control salaryGradePrevious selectpicker" name="salaryGradePrevious" data-live-search="true" id="salaryGradePrevious" data-size="5" data-width="100%">
                                     <option></option>
                                     @foreach(range(1, 33) as $sal_grade)
@@ -227,7 +227,7 @@
 
 
                        <div class="form-group col-12 col-lg-3">
-                            <label>Previous Step<span class="text-danger">*</span></label>
+                            <label>Previous Step</label>
                             <select class="form-control stepNoPrevious selectpicker" name="stepNoPrevious" data-live-search="true" id="stepNoPrevious" data-size="5" data-width="100%">
                                  <option></option>
                                  @foreach(range(1,8) as $step_no)
@@ -258,14 +258,14 @@
                         </div>
 
                          <div class="form-group col-12 col-lg-6">
-                              <label>Original Appointment<span class="text-danger">*</span></label>
+                              <label>Original Appointment</label>
                               <input value="{{ old('originalAppointment') }}" class="form-control" name="originalAppointment" type="date" id="originalAppointment">
                               <div id='original-appointment-error-message' class='text-danger text-sm'>
                               </div>
                          </div>
 
                          <div class="form-group col-12 col-lg-6">
-                              <label>Last Promotion<span class="text-danger">*</span></label>
+                              <label>Last Promotion</label>
                               <input value="{{ old('lastPromotion') }}" class="form-control" name="lastPromotion" type="date" id="lastPromotion">
                               <div id='last-promotion-error-message' class='text-danger text-sm'>
                               </div>
@@ -333,10 +333,10 @@
                     <table class="table table-bordered table-hover text-center" id="plantilla" style="width:100%;">
                          <thead>
                               <tr>
+                                <td scope="col" class="text-center">Item No</td>
                                    <td scope="col" class="text-center">Employee Name</td>
                                    <td scope="col" class="text-center">Position Title</td>
                                    <td scope="col" class="text-center">Office</td>
-                                   <td scope="col" class="text-center">Item No</td>
                                    <td scope="col" class="text-center">Status</td>
                                    <td scope="col" class="text-center">Year</td>
                                    <td scope="col" class="text-center">Action</td>
