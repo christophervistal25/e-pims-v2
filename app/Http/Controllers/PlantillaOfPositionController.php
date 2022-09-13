@@ -28,7 +28,7 @@ class PlantillaOfPositionController extends Controller
         $areatype = DB::connection('E_PIMS_CONNECTION')->table('EPims.dbo.Area_type')->get();
         $arealevel = DB::connection('E_PIMS_CONNECTION')->table('EPims.dbo.Area_level')->get();
         $section = DB::connection('E_PIMS_CONNECTION')->table('Sections')->orderBy('section_name')->get();
-        $division = Division::orderBy('division_name')->get();
+        $division = Division::with('offices')->orderBy('division_name')->get();
         return view('PlantillaOfPosition.PlantillaOfPosition', compact('position', 'office', 'lastId', 'areacode', 'areatype', 'arealevel', 'section', 'division'));
     }
 

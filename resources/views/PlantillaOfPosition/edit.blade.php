@@ -67,7 +67,7 @@
                                           <select value="" class="form-control form-control-xs selectpicker" name="divisionId" data-live-search="true" id="divisionId" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                                 <option></option>
                                                 @foreach($division as $divisions)
-                                                    <option style="width:350px;" {{ $plantillaofposition->division_id == $divisions->division_id ? 'selected' : '' }} value="{{ $divisions->division_id }}">{{ $divisions->division_name }}</option>
+                                                    <option style="width:350px;" {{ $plantillaofposition->division_id == $divisions->division_id ? 'selected' : '' }} value="{{ $divisions->division_id }}">{{ $divisions->division_name }} - {{ $divisions->offices->office_name }}</option>
                                                 @endforeach
                                           </select>
                                           <span class="font-weight-bold">DIVISION<span class="text-danger">*</span></span>
