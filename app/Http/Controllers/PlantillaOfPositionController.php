@@ -29,14 +29,8 @@ class PlantillaOfPositionController extends Controller
         $areatype = DB::connection('E_PIMS_CONNECTION')->table('EPims.dbo.Area_type')->get();
         $arealevel = DB::connection('E_PIMS_CONNECTION')->table('EPims.dbo.Area_level')->get();
         $section = DB::connection('E_PIMS_CONNECTION')->table('Sections')->orderBy('section_name')->get();
-        $division = Division::orderBy('division_name')->get();
-
-
-        $plantillaPosition = PlantillaPosition::with('position:PosCode,Description')->whereDoesntHave('plantillas', function ($query) {
-            $query->where('year', date('Y'));
-        })->get();
-        // dd($plantillaPosition[0]->section_id);
-        return view('PlantillaOfPosition.PlantillaOfPosition', compact('position', 'office', 'lastId', 'areacode', 'areatype', 'arealevel', 'section', 'division', 'plantillaPosition'));
+        $division = Division::with('offices')->orderBy('division_name')->get();
+        return view('PlantillaOfPosition.PlantillaOfPosition', compact('position', 'office', 'lastId', 'areacode', 'areatype', 'arealevel', 'section', 'division'));
     }
 
     public function list(string $office = '*')
@@ -162,7 +156,7 @@ class PlantillaOfPositionController extends Controller
         $arealevel = DB::connection('E_PIMS_CONNECTION')->table('EPims.dbo.Area_level')->get();
         $section = DB::connection('E_PIMS_CONNECTION')->table('Sections')->orderBy('section_name')->get();
         $division = Division::orderBy('division_name')->get();
-        
+
         $officeCode = $plantillaofposition->office_code;
         $division_id = $plantillaofposition->division_id;
         $divisionedit = Division::where('office_code', $officeCode)->get(['division_id', 'division_name', 'office_code']);
