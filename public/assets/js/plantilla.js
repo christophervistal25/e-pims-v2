@@ -3,7 +3,6 @@ $(document).ready(function () {
         "#positionTitle",
         "#employeeName",
         "#officeCode",
-        "#divisionId",
         "#salaryGradePrevious",
     ];
     let inputs = [
@@ -21,6 +20,8 @@ $(document).ready(function () {
         "#salaryAmount",
         "#salaryAmountYearly",
         "#salaryAmountPreviousYearly",
+        "#divisionId",
+        "#sectionId",
     ];
     let errorClass = [
         "#oldItemNo",
@@ -179,6 +180,7 @@ $(document).ready(function () {
         $.ajax({
             url: `/api/positionSalaryGrade/${positionTitle}/${currentSgyear}`,
             success: (response) => {
+                console.log();
                 if (response == "") {
                     $("#currentSalarygrade").val("");
                     $("#itemNo").val("");
@@ -202,16 +204,24 @@ $(document).ready(function () {
                     $("#currentSalarygrade").val(currentSalaryGrade);
                     let currentItemNo = response.item_no;
                     $("#itemNo").val(currentItemNo);
-                    let division = response.division.division_name;
-                    $("#divisionId").val(division);
-                    let section = response.section.section_name;
-                    $("#sectionId").val(section);
                     let currentSalaryAmount =
                         response.salary_grade[0]["sg_step" + currentStepno];
                     $("#salaryAmount").val(currentSalaryAmount);
                     $("#salaryAmountYearly").val(
                         parseFloat(currentSalaryAmount * 12).toFixed(2)
                     );
+                    if (response.division == null) {
+                        $("#divisionId").val("");
+                    } else {
+                        let division = response.division.division_name;
+                        $("#divisionId").val(division);
+                    }
+                    if (response.section == null) {
+                        $("#sectionId").val("");
+                    } else {
+                        let section = response.section.section_name;
+                        $("#sectionId").val(section);
+                    }
                 }
             },
         });

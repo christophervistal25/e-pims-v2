@@ -138,7 +138,7 @@
 
                               <div class="form-group col-12 col-lg-6">
                                    <label>Item No<span class="text-danger">*</span></label>
-                                   <input value="{{ old('itemNo') ?? $plantilla->item_no }}" class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" name="itemNo" id="num-only" type="text" placeholder="Item No." readonly>
+                                   <input value="{{ old('itemNo') ?? $plantilla->item_no }}" class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" name="itemNo" id="itemNo" type="text" placeholder="Item No." readonly>
                                    <div id='item-no-error-message' class='text-danger text-sm'>
                                    </div>
                               </div>

@@ -36,6 +36,8 @@ class PlantillaOfPositionController extends Controller
     public function list(string $office = '*')
     {
         $data = DB::connection('E_PIMS_CONNECTION')->table('plantilla_positions')
+        // ->join('Sections', 'plantilla_positions.section_id', '=', 'Sections.section_id')
+        // ->join('Divisions', 'plantilla_positions.division_id', '=', 'Divisions.division_id')
         ->join('Positions', 'plantilla_positions.PosCode', '=', 'Positions.PosCode')
         ->join('Offices', 'plantilla_positions.office_code', '=', 'Offices.office_code')
         ->orderBy('item_no', 'desc');

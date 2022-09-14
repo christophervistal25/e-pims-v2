@@ -219,160 +219,160 @@ $(document).ready(function () {
         });
     });
 
-// filter position and division by office
-$("#officeCode").change(function (e) {
-    //divisionMetaData
-    if (document.querySelectorAll('[id="divisionMetaData"]')[1] == null) {
-    var divisionMetaData = document
-          .querySelectorAll('[id="divisionMetaData"]')[0]
-          .content.replaceAll("|", '"');
-    } else {
-    var divisionMetaData = document
-          .querySelectorAll('[id="divisionMetaData"]')[1]
-          .content.replaceAll("|", '"');
-    }
-    var divisionMetaDataRemoveLast =
-    "[" +
-    divisionMetaData.substring(0, divisionMetaData.length - 2) +
-    "]";
-    let divisionOfficeCodeOptionAll = JSON.parse(
-    divisionMetaDataRemoveLast
-    );
-    if (document.querySelectorAll('[id="divisionMetaData"]')[1] == null) {
-    var metaDataDivision = document
-          .querySelectorAll('[id="divisionMetaData"]')[0]
-          .content.replaceAll("|", '"');
-    } else {
-    var metaDataDivision = document
-          .querySelectorAll('[id="divisionMetaData"]')[1]
-          .content.replaceAll("|", '"');
-    }
-    var metaDataDivisionRemoveLast =
-    "[" +
-    metaDataDivision.substring(0, metaDataDivision.length - 2) +
-    "]";
-    let divisionOptionAll = JSON.parse(metaDataDivisionRemoveLast);
-    let officeCode2 = e.target.value;
-    //filter all division data in plantilla//
-    let plantillaDivisionFilter = divisionOfficeCodeOptionAll.filter(
-    function (Division) {
-          return Division.officeCode == officeCode2;
-    }
-    );
-    //Remove all option in #divisionId//
-    function removeOptionsDivision(selectDivision) {
-    var ii,
-          L = selectDivision.options.length - 1;
-    for (ii = L; ii >= 0; ii--) {
-          selectDivision.remove(ii);
-    }
-    }
-    removeOptionsDivision(document.getElementById("divisionId"));
-    //add division data based in what you select in #officeCode//
-    var i,
-    plantillaLengthDivisionId = plantillaDivisionFilter.length;
-    $("#divisionId").append("<option></option>");
-    for (i = 0; i < plantillaLengthDivisionId; i++) {
-    var plantillaDivisionFilter_final = plantillaDivisionFilter[i];
-    //filter all division data//
-    let divisionIdFilter = divisionOptionAll.filter(function (
-          Division
-    ) {
-          return (
-                Division.officeCode ==
-                plantillaDivisionFilter_final.officeCode
-          );
+    // filter position and division by office
+    $("#officeCode").change(function (e) {
+        //divisionMetaData
+        if (document.querySelectorAll('[id="divisionMetaData"]')[1] == null) {
+            var divisionMetaData = document
+                .querySelectorAll('[id="divisionMetaData"]')[0]
+                .content.replaceAll("|", '"');
+        } else {
+            var divisionMetaData = document
+                .querySelectorAll('[id="divisionMetaData"]')[1]
+                .content.replaceAll("|", '"');
+        }
+        var divisionMetaDataRemoveLast =
+            "[" +
+            divisionMetaData.substring(0, divisionMetaData.length - 2) +
+            "]";
+        let divisionOfficeCodeOptionAll = JSON.parse(
+            divisionMetaDataRemoveLast
+        );
+        if (document.querySelectorAll('[id="divisionMetaData"]')[1] == null) {
+            var metaDataDivision = document
+                .querySelectorAll('[id="divisionMetaData"]')[0]
+                .content.replaceAll("|", '"');
+        } else {
+            var metaDataDivision = document
+                .querySelectorAll('[id="divisionMetaData"]')[1]
+                .content.replaceAll("|", '"');
+        }
+        var metaDataDivisionRemoveLast =
+            "[" +
+            metaDataDivision.substring(0, metaDataDivision.length - 2) +
+            "]";
+        let divisionOptionAll = JSON.parse(metaDataDivisionRemoveLast);
+        let officeCode2 = e.target.value;
+        //filter all division data in plantilla//
+        let plantillaDivisionFilter = divisionOfficeCodeOptionAll.filter(
+            function (Division) {
+                return Division.officeCode == officeCode2;
+            }
+        );
+        //Remove all option in #divisionId//
+        function removeOptionsDivision(selectDivision) {
+            var ii,
+                L = selectDivision.options.length - 1;
+            for (ii = L; ii >= 0; ii--) {
+                selectDivision.remove(ii);
+            }
+        }
+        removeOptionsDivision(document.getElementById("divisionId"));
+        //add division data based in what you select in #officeCode//
+        var i,
+            plantillaLengthDivisionId = plantillaDivisionFilter.length;
+        $("#divisionId").append("<option></option>");
+        for (i = 0; i < plantillaLengthDivisionId; i++) {
+            var plantillaDivisionFilter_final = plantillaDivisionFilter[i];
+            //filter all division data//
+            let divisionIdFilter = divisionOptionAll.filter(function (
+                Division
+            ) {
+                return (
+                    Division.officeCode ==
+                    plantillaDivisionFilter_final.officeCode
+                );
+            });
+            $("#divisionId").append(
+                '<option value="' +
+                    divisionIdFilter[i].divisionId +
+                    '">' +
+                    divisionIdFilter[i].divisionName +
+                    "</option>"
+            );
+        }
+        $("#divisionId").selectpicker("refresh");
+        //Remove all option in #sectionId//
+        function removeOptionsSection(selectSection) {
+            var ii,
+                L = selectSection.options.length - 1;
+            for (ii = L; ii >= 0; ii--) {
+                selectSection.remove(ii);
+            }
+        }
+        removeOptionsSection(document.getElementById("sectionId"));
+        $("#sectionId").selectpicker("refresh");
     });
-    $("#divisionId").append(
-          '<option value="' +
-                divisionIdFilter[i].divisionId +
-                '">' +
-                divisionIdFilter[i].divisionName +
-                "</option>"
-    );
-    }
-    $("#divisionId").selectpicker("refresh");
-    //Remove all option in #sectionId//
-    function removeOptionsSection(selectSection) {
-    var ii,
-          L = selectSection.options.length - 1;
-    for (ii = L; ii >= 0; ii--) {
-          selectSection.remove(ii);
-    }
-    }
-    removeOptionsSection(document.getElementById("sectionId"));
-    $("#sectionId").selectpicker("refresh");
-});
-// filter section by division
-$("#divisionId").change(function (e) {
-    //sectionMetaData
-    if (document.querySelectorAll('[id="sectionMetaData"]')[1] == null) {
-    var sectionMetaData = document
-          .querySelectorAll('[id="sectionMetaData"]')[0]
-          .content.replaceAll("|", '"');
-    } else {
-    var sectionMetaData = document
-          .querySelectorAll('[id="sectionMetaData"]')[1]
-          .content.replaceAll("|", '"');
-    }
-    var sectionMetaDataRemoveLast =
-    "[" +
-    sectionMetaData.substring(0, sectionMetaData.length - 2) +
-    "]";
-    let sectionDivisionIdOptionAll = JSON.parse(sectionMetaDataRemoveLast);
-    if (document.querySelectorAll('[id="sectionMetaData"]')[1] == null) {
-    var metaDataSection = document
-          .querySelectorAll('[id="sectionMetaData"]')[0]
-          .content.replaceAll("|", '"');
-    } else {
-    var metaDataSection = document
-          .querySelectorAll('[id="sectionMetaData"]')[1]
-          .content.replaceAll("|", '"');
-    }
-    var metaDataSectionRemoveLast =
-    "[" +
-    metaDataSection.substring(0, metaDataSection.length - 2) +
-    "]";
-    let sectionOptionAll = JSON.parse(metaDataSectionRemoveLast);
-    let divisionId2 = e.target.value;
-    //filter all section data in plantilla//
-    let plantillaSectionFilter = sectionDivisionIdOptionAll.filter(
-    function (Section) {
-          return Section.divisionId == divisionId2;
-    }
-    );
-    //Remove all option in #sectionId//
-    function removeOptionsSection(selectSection) {
-    var ii,
-          L = selectSection.options.length - 1;
-    for (ii = L; ii >= 0; ii--) {
-          selectSection.remove(ii);
-    }
-    }
-    removeOptionsSection(document.getElementById("sectionId"));
-    //add section data based in what you select in #divisionId//
-    var i,
-    plantillaLengthSectionId = plantillaSectionFilter.length;
-    $("#sectionId").append("<option></option>");
-    for (i = 0; i < plantillaLengthSectionId; i++) {
-    var plantillaSectionFilter_final = plantillaSectionFilter[i];
-    //filter all division data//
-    let sectionIdFilter = sectionOptionAll.filter(function (Section) {
-          return (
-                Section.divisionId ==
-                plantillaSectionFilter_final.divisionId
-          );
+    // filter section by division
+    $("#divisionId").change(function (e) {
+        //sectionMetaData
+        if (document.querySelectorAll('[id="sectionMetaData"]')[1] == null) {
+            var sectionMetaData = document
+                .querySelectorAll('[id="sectionMetaData"]')[0]
+                .content.replaceAll("|", '"');
+        } else {
+            var sectionMetaData = document
+                .querySelectorAll('[id="sectionMetaData"]')[1]
+                .content.replaceAll("|", '"');
+        }
+        var sectionMetaDataRemoveLast =
+            "[" +
+            sectionMetaData.substring(0, sectionMetaData.length - 2) +
+            "]";
+        let sectionDivisionIdOptionAll = JSON.parse(sectionMetaDataRemoveLast);
+        if (document.querySelectorAll('[id="sectionMetaData"]')[1] == null) {
+            var metaDataSection = document
+                .querySelectorAll('[id="sectionMetaData"]')[0]
+                .content.replaceAll("|", '"');
+        } else {
+            var metaDataSection = document
+                .querySelectorAll('[id="sectionMetaData"]')[1]
+                .content.replaceAll("|", '"');
+        }
+        var metaDataSectionRemoveLast =
+            "[" +
+            metaDataSection.substring(0, metaDataSection.length - 2) +
+            "]";
+        let sectionOptionAll = JSON.parse(metaDataSectionRemoveLast);
+        let divisionId2 = e.target.value;
+        //filter all section data in plantilla//
+        let plantillaSectionFilter = sectionDivisionIdOptionAll.filter(
+            function (Section) {
+                return Section.divisionId == divisionId2;
+            }
+        );
+        //Remove all option in #sectionId//
+        function removeOptionsSection(selectSection) {
+            var ii,
+                L = selectSection.options.length - 1;
+            for (ii = L; ii >= 0; ii--) {
+                selectSection.remove(ii);
+            }
+        }
+        removeOptionsSection(document.getElementById("sectionId"));
+        //add section data based in what you select in #divisionId//
+        var i,
+            plantillaLengthSectionId = plantillaSectionFilter.length;
+        $("#sectionId").append("<option></option>");
+        for (i = 0; i < plantillaLengthSectionId; i++) {
+            var plantillaSectionFilter_final = plantillaSectionFilter[i];
+            //filter all division data//
+            let sectionIdFilter = sectionOptionAll.filter(function (Section) {
+                return (
+                    Section.divisionId ==
+                    plantillaSectionFilter_final.divisionId
+                );
+            });
+            $("#sectionId").append(
+                '<option value="' +
+                    sectionIdFilter[i].sectionId +
+                    '">' +
+                    sectionIdFilter[i].sectionName +
+                    "</option>"
+            );
+        }
+        $("#sectionId").selectpicker("refresh");
     });
-    $("#sectionId").append(
-          '<option value="' +
-                sectionIdFilter[i].sectionId +
-                '">' +
-                sectionIdFilter[i].sectionName +
-                "</option>"
-    );
-    }
-    $("#sectionId").selectpicker("refresh");
-});
 
     // get value of employees sg, sn, sp
     $("#positionTitle").change(function (e) {
@@ -411,6 +411,8 @@ $("#divisionId").change(function (e) {
                 name: "sg_no",
             },
             { data: "office_name", searchable: false, name: "office_name" },
+            // { data: "division_name", searchable: false, name: "division_name" },
+            // { data: "section_name", searchable: false, name: "section_name" },
             { data: "old_position_name", name: "old_position_name" },
             {
                 data: "action",
