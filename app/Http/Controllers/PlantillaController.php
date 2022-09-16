@@ -50,7 +50,7 @@ class PlantillaController extends Controller
 
         $salarygrade = SalaryGrade::get(['sg_no']);
 
-        $status = ['Casual', 'Coterminous', 'Permanent', 'Provisional', 'Temporary', 'Elected'];
+        $status = ['Appointed','Casual', 'Coterminous', 'Permanent', 'Provisional', 'Temporary', 'Elected'];
 
         return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'office', 'salarygrade', 'plantillaPosition', 'year'));
     }
@@ -102,10 +102,10 @@ class PlantillaController extends Controller
             'stepNo' => 'required|in:'.implode(',', range(1, 8)),
             'salaryAmount' => 'required|numeric',
             'currentSgyear' => 'required',
-            'officeCode' => 'required|in:'.implode(',', range(0001, 0037)),
+            'officeCode' => 'required|in:'.implode(',', range(1, 37)),
             'salaryAmountYearly' => 'required',
             'lastPromotion' => 'nullable|after:originalAppointment',
-            'status' => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
+            'status' => 'required|in:Appointed,Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
         ]);
         DB::transaction(function () use ($request) {
             $plantilla = new Plantilla();
@@ -170,7 +170,7 @@ class PlantillaController extends Controller
         $plantillaPositionIDAll = Plantilla::where('plantilla_id', '!=', $plantilla_id)->get()->pluck('pp_id')->toArray();
         $plantillaPositionAll = PlantillaPosition::select('pp_id', 'PosCode', 'office_code')->with('position:PosCode,Description')->whereNotIn('pp_id', $plantillaPositionIDAll)->get();
         $salarygrade = SalaryGrade::get(['sg_no']);
-        $status = ['Casual', 'Coterminous', 'Permanent', 'Provisional', 'Temporary', 'Elected'];
+        $status = ['Appointed','Casual', 'Coterminous', 'Permanent', 'Provisional', 'Temporary', 'Elected'];
         count($status) - 1;
         $plantilla = Plantilla::with('plantilla_positions.areaType', 'plantilla_positions.areaLevel', 'plantilla_positions.areaCode', 'plantilla_positions.division', 'plantilla_positions.section')->find($plantilla_id);
 
@@ -199,11 +199,11 @@ class PlantillaController extends Controller
             'stepNo' => 'required|in:'.implode(',', range(1, 8)),
             'salaryAmount' => 'required|numeric',
             'currentSgyear' => 'required',
-            'officeCode' => 'required|in:'.implode(',', range(0001, 0037)),
+            'officeCode' => 'required|in:'.implode(',', range(1, 37)),
             'originalAppointment' => 'required',
             'salaryAmountYearly' => 'required',
             'lastPromotion' => 'nullable|after:originalAppointment',
-            'status' => 'required|in:Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
+            'status' => 'required|in:Appointed,Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',
         ]);
         DB::transaction(function () use ($request, $plantilla_id) {
             $plantilla = Plantilla::with('plantilla_positions')->find($plantilla_id);

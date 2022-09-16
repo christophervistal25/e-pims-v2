@@ -55,7 +55,7 @@
 @endprepend
 
 @prepend('meta-data')
-<meta id="plantillaPositionMetaData" content="@foreach($plantillaPosition as $plantillaPositions){ |officeCode|:|{{ $plantillaPositions->office_code }}|, |positionId|:|{{ $plantillaPositions->PosCode }}|, |ppId|:|{{ $plantillaPositions->pp_id }}|}, @endforeach">
+<meta id="plantillaPositionMetaData" content="@foreach($plantillaPosition as $plantillaPositions){ |officeCode|:|{{ $plantillaPositions->office_code }}|, |positionId|:|{{ $plantillaPositions->PosCode }}|, |ppId|:|{{ $plantillaPositions->pp_id }}|, |item_no|:|{{ $plantillaPositions->item_no }}|}, @endforeach">
 <meta id="positionMetaData" content="@foreach($position as $positions){ |positionId|:|{{ $positions->PosCode }}|, |positionName|:|{{ $positions->Description }}|}, @endforeach">
 @endprepend
 @section('content')
@@ -133,7 +133,7 @@
                             class="form-control status selectpicker"
                             name="status" data-live-search="true" id="status" data-size="5" data-width="100%">
                             <option></option>
-                            @foreach(range(0, 5) as $statuses)
+                            @foreach(range(0, 6) as $statuses)
                             @if($status[$statuses] == 'Permanent')
                             <option value="{{ $status[$statuses]}}" selected>{{ $status[$statuses] }}</option>
                             @else

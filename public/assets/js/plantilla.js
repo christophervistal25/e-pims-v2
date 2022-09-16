@@ -320,6 +320,8 @@ $(document).ready(function () {
                 '<option value="' +
                     plantillaPositionIdFilter_final.ppId +
                     '">' +
+                    plantillaPositionIdFilter_final.item_no +
+                    "-" +
                     positionIdFilter[0].positionName +
                     "</option>"
             );
