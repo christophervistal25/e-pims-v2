@@ -71,7 +71,6 @@ $(document).ready(function () {
         processing: true,
         serverSide: true,
         pagingType: "full_numbers",
-        stateSave: true,
         language: {
             processing:
                 '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
@@ -84,6 +83,13 @@ $(document).ready(function () {
                 name: "fullname",
                 searchable: true,
                 visible: true,
+                render: function (nRow, _, data, row) {
+                    if (data.fullname == "   ") {
+                        return `<span class="badge badge-primary text-white">VACANT</span>`;
+                    } else {
+                        return `${data.fullname}`;
+                    }
+                },
             },
             {
                 data: "Description",

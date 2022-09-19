@@ -275,7 +275,7 @@
                                                 <select value="" class="form-control selectpicker" name="areaLevel" data-live-search="true" id="areaLevel" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                                         <option selected></option>
                                                         @foreach($arealevel as $arealevels)
-                                                                <option {{ old('areaLevel') == $arealevels->area_level_id ? 'selected' : '' }}  value="{{ $arealevels->area_level_id }}">{{ $arealevels->area_level_id }}</option>
+                                                                <option {{ old('areaLevel') == $arealevels->area_level_id ? 'selected' : '' }}  value="{{ $arealevels->area_level_id }}">{{ $arealevels->area_level_id }} - {{ $arealevels->description }} </option>
                                                         @endforeach
                                                 </select>
                                                 <span class="font-weight-bold">AREA LEVEL<span class="text-danger">*</span></span>

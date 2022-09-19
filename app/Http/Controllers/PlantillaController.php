@@ -30,7 +30,7 @@ class PlantillaController extends Controller
      */
     public function index(Request $req)
     {
-        $plantillaEmp = Plantilla::get()->pluck('employee_id')->toArray();
+        $plantillaEmp = array_filter(Plantilla::get()->pluck('employee_id')->toArray());
         $employee = Employee::select('Employee_id', 'LastName', 'FirstName', 'MiddleName', 'Work_Status')
             ->where('Work_Status', 'not like', '%'.'JOB ORDER'.'%')
             ->where('Work_Status', 'not like', '%'.'CONTRACT OF SERVICE'.'%')
@@ -61,7 +61,7 @@ class PlantillaController extends Controller
         ->join('EPims.dbo.offices', 'plantillas.office_code', '=', 'offices.office_code')
         ->join('EPims.dbo.plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
         ->join('EPims.dbo.Positions', 'plantilla_positions.PosCode', '=', 'Positions.PosCode')
-        ->join('DTRPayroll.dbo.Employees', 'Employees.Employee_id', '=', 'plantillas.employee_id')
+        ->leftJoin('DTRPayroll.dbo.Employees', 'Employees.Employee_id', '=', 'plantillas.employee_id')
         ->select(
             DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"),
             'plantilla_id', 'plantillas.item_no as item_no', 'offices.office_name as office_name', 'plantillas.status as status', 'plantillas.year as year', 'Positions.Description');
@@ -98,7 +98,6 @@ class PlantillaController extends Controller
         $this->validate($request, [
             'itemNo' => 'required',
             'positionTitle' => 'required',
-            'employeeName' => 'required',
             'stepNo' => 'required|in:'.implode(',', range(1, 8)),
             'salaryAmount' => 'required|numeric',
             'currentSgyear' => 'required',
@@ -200,7 +199,6 @@ class PlantillaController extends Controller
             'salaryAmount' => 'required|numeric',
             'currentSgyear' => 'required',
             'officeCode' => 'required|in:'.implode(',', range(1, 37)),
-            'originalAppointment' => 'required',
             'salaryAmountYearly' => 'required',
             'lastPromotion' => 'nullable|after:originalAppointment',
             'status' => 'required|in:Appointed,Casual,Contractual,Coterminous,Coterminous-Temporary,Permanent,Provisional,Regular Permanent,Substitute,Temporary,Elected',

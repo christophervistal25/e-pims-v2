@@ -36,6 +36,7 @@ $(document).ready(function () {
         $("#add").attr("class", "page-header d-none");
         $("#table").attr("class", "page-header");
     });
+
     // cancel button
     $("#cancelButton").click(function () {
         $("#add").attr("class", "page-header d-none");
@@ -98,7 +99,7 @@ $(document).ready(function () {
                             `<span>${errors.positionTitle[0]}</span>`
                         );
                     } else {
-                        $("#positionTitle").removeClass("is-invalid");
+                        $(".positionTitle .dropdown").removeClass("is-invalid");
                         $("#position-title-error-message").html("");
                     }
                     if (errors.hasOwnProperty("itemNo")) {
@@ -387,7 +388,7 @@ $(document).ready(function () {
         }
     });
 
-    // display plantilla of position
+    // display plantilla of position table
     let selectedOffice = $("#employeeOffice").val();
     let PlantillaPositiontable = $("#plantillaofposition").DataTable({
         processing: true,
@@ -422,7 +423,7 @@ $(document).ready(function () {
             },
         ],
     });
-    //filter office
+    //filter plantilla of position datable by office
     $("#employeeOffice").change(function (e) {
         let selectedOffice = $("#employeeOffice").val();
         PlantillaPositiontable.ajax
