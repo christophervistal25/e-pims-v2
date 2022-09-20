@@ -36,14 +36,14 @@ class PlantillaOfPositionController extends Controller
     public function list(string $office = '*')
     {
         $data = DB::connection('E_PIMS_CONNECTION')->table('plantilla_positions')
-        // ->join('Sections', 'plantilla_positions.section_id', '=', 'Sections.section_id')
         // ->join('Divisions', 'plantilla_positions.division_id', '=', 'Divisions.division_id')
+        // ->join('Sections', 'plantilla_positions.section_id', '=', 'Sections.section_id')
         ->join('Positions', 'plantilla_positions.PosCode', '=', 'Positions.PosCode')
         ->join('Offices', 'plantilla_positions.office_code', '=', 'Offices.office_code')
         ->orderBy('item_no', 'desc');
 
         if (request()->ajax()) {
-            $PlantillaPositionData = ($office != '*') ? $data->where('Offices.office_code', $office)->get()
+            $PlantillaPositionData = ($office != '*') ? $data->where('plantilla_positions.office_code', $office)->get()
             : $data->get();
 
             return DataTables::of($PlantillaPositionData)
@@ -185,6 +185,7 @@ class PlantillaOfPositionController extends Controller
         ]);
         $plantillaposition = PlantillaPosition::find($pp_id);
         $plantillaposition->item_no = $request['itemNo'];
+        $plantillaposition->PosCode = $request['positionTitle'];
         $plantillaposition->sg_no = $request['salaryGrade'];
         $plantillaposition->office_code = $request['officeCode'];
         $plantillaposition->old_position_name = $request['positionOldName'];

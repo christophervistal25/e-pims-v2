@@ -1,36 +1,38 @@
 $(document).ready(function () {
-    let valueE = ["#itemNo", "#positionOldName"];
-    let errorClass = [
-        ".positionTitle .dropdown",
-        "#itemNo",
-        ".salaryGrade .dropdown",
-        ".officeCode .dropdown",
-        ".areaCode .dropdown",
-        ".areaType .dropdown",
-        ".areaLevel .dropdown",
-        "#positionOldName",
-    ];
-    let errorMessage = [
-        "#position-title-error-message",
-        "#item-error-message",
-        "#salary-grade-error-message",
-        "#office-error-message",
-        "#old-position-name-error-message",
-        "#area-code-error-message",
-        "#area-type-error-message",
-        "#area-level-error-message",
-    ];
-    let select = [
-        "#positionTitle",
-        "#salaryGrade",
-        "#officeCode",
-        "#areaLevel",
-    ];
+    var arrayErrors = {
+            "positionTitle": {
+                ".positionTitle .dropdown": "#position-title-error-message"
+            },
+            "itemNo": {
+                "#itemNo": "#item-error-message"
+            },
+            "salaryGrade": {
+                ".salaryGrade .dropdown": "#salary-grade-error-message"
+            },
+            "officeCode": {
+                ".officeCode .dropdown": "#office-error-message"
+            },
+            "positionOldName": {
+                "#positionOldName": "#old-position-name-error-message"
+            },
+            "areaCode": {
+                ".areaCode .dropdown": "#area-code-error-message"
+            },
+            "areaType": {
+                ".areaType .dropdown": "#area-type-error-message"
+            },
+            "areaLevel": {
+                ".areaLevel .dropdown": "#area-level-error-message"
+            }
+};
+    var valueE = ["#itemNo", "#positionOldName"];
+
     // code for show add form
     $("#addButton").click(function () {
         $("#add").attr("class", "page-header");
         $("#table").attr("class", "page-header d-none");
     });
+
     // code for show table
     $("#showListPlantillaPosition").click(function () {
         $("#add").attr("class", "page-header d-none");
@@ -44,14 +46,12 @@ $(document).ready(function () {
         $.each(valueE, function (index, value) {
             $(`${value}`).val("");
         });
-        $("#positionTitle,#addSalaryGrade,#officeCode", "#areaLevel")
-            .val("Please Select")
-            .trigger("change");
-        $.each(errorClass, function (index, value) {
-            $(`${value}`).removeClass("is-invalid");
-        });
-        $.each(errorMessage, function (index, value) {
-            $(`${value}`).html("");
+        $("#positionTitle,#divisionId,#sectionId,#officeCode,#salaryGrade,#areaLevel").val("Please Select").selectpicker("refresh");
+        $.each(arrayErrors, function (propertyName, arrayErrors) {
+            $.each(arrayErrors, function (errorClass, errorMessage) {
+                $(`${errorClass}`).removeClass("is-invalid");
+                $(`${errorMessage}`).html("");
+            });
         });
     });
 
@@ -71,16 +71,13 @@ $(document).ready(function () {
                     $.each(valueE, function (index, value) {
                         $(`${value}`).val("");
                     });
-                    $.each(errorClass, function (index, value) {
-                        $(`${value}`).removeClass("is-invalid");
+                    $.each(arrayErrors, function (propertyName, arrayErrors) {
+                        $.each(arrayErrors, function (errorClass, errorMessage) {
+                            $(`${errorClass}`).removeClass("is-invalid");
+                            $(`${errorMessage}`).html("");
+                        });
                     });
-                    $.each(errorMessage, function (index, value) {
-                        $(`${value}`).html("");
-                    });
-
-                    $("#positionTitle,#officeCode,#salaryGrade,#areaLevel")
-                        .val("Please Select")
-                        .selectpicker("refresh");
+                    $("#positionTitle,#divisionId,#sectionId,#officeCode,#salaryGrade,#areaLevel").val("Please Select").selectpicker("refresh");
                     $("#plantillaofposition").DataTable().ajax.reload();
                     swal("Added Successfully!", "", "success");
                     $("#saveBtn").attr("disabled", false);
@@ -91,111 +88,18 @@ $(document).ready(function () {
             },
             error: function (response) {
                 if (response.status === 422) {
-                    let errors = response.responseJSON.errors;
-                    if (errors.hasOwnProperty("positionTitle")) {
-                        $(".positionTitle .dropdown").addClass("is-invalid");
-                        $("#position-title-error-message").html("");
-                        $("#position-title-error-message").append(
-                            `<span>${errors.positionTitle[0]}</span>`
-                        );
-                    } else {
-                        $(".positionTitle .dropdown").removeClass("is-invalid");
-                        $("#position-title-error-message").html("");
-                    }
-                    if (errors.hasOwnProperty("itemNo")) {
-                        $("#itemNo").addClass("is-invalid");
-                        $("#item-error-message").html("");
-                        $("#item-error-message").append(
-                            `<span>${errors.itemNo[0]}</span>`
-                        );
-                    } else {
-                        $("#itemNo").removeClass("is-invalid");
-                        $("#item-error-message").html("");
-                    }
-                    if (errors.hasOwnProperty("salaryGrade")) {
-                        $(".salaryGrade .dropdown").addClass("is-invalid");
-                        $("#salary-grade-error-message").html("");
-                        $("#salary-grade-error-message").append(
-                            `<span>${errors.salaryGrade[0]}</span>`
-                        );
-                    } else {
-                        $("#salaryGrade").removeClass("is-invalid");
-                        $("#salary-grade-error-message").html("");
-                    }
-                    if (errors.hasOwnProperty("officeCode")) {
-                        $(".officeCode .dropdown").addClass("is-invalid");
-                        $("#office-error-message").html("");
-                        $("#office-error-message").append(
-                            `<span>${errors.officeCode[0]}</span>`
-                        );
-                    } else {
-                        $("#officeCode").removeClass("is-invalid");
-                        $("#office-error-message").html("");
-                    }
-                    if (errors.hasOwnProperty("positionOldName")) {
-                        $("#positionOldName").addClass("is-invalid");
-                        $("#old-position-name-error-message").html("");
-                        $("#old-position-name-error-message").append(
-                            `<span>${errors.positionOldName[0]}</span>`
-                        );
-                    } else {
-                        $("#positionOldName").removeClass("is-invalid");
-                        $("#old-position-name-error-message").html("");
-                    }
-
-                    if (errors.hasOwnProperty("areaCode")) {
-                        $("#areaCode").addClass("is-invalid");
-                        $("#area-code-error-message").html("");
-                        $("#area-code-error-message").append(
-                            `<span>${errors.areaCode[0]}</span>`
-                        );
-                    } else {
-                        $("#areaCode").removeClass("is-invalid");
-                        $("#area-code-error-message").html("");
-                    }
-
-                    if (errors.hasOwnProperty("areaType")) {
-                        $("#areaType").addClass("is-invalid");
-                        $("#area-type-error-message").html("");
-                        $("#area-type-error-message").append(
-                            `<span>${errors.areaType[0]}</span>`
-                        );
-                    } else {
-                        $("#areaType").removeClass("is-invalid");
-                        $("#area-type-error-message").html("");
-                    }
-
-                    if (errors.hasOwnProperty("areaLevel")) {
-                        $(".areaLevel .dropdown").addClass("is-invalid");
-                        $("#area-level-error-message").html("");
-                        $("#area-level-error-message").append(
-                            `<span>${errors.areaLevel[0]}</span>`
-                        );
-                    } else {
-                        $(".areaLevel .dropdown").removeClass("is-invalid");
-                        $("#area-level-error-message").html("");
-                    }
-                    if (errors.hasOwnProperty("sectionId")) {
-                        $(".sectionId .dropdown").addClass("is-invalid");
-                        $("#section-error-message").html("");
-                        $("#section-error-message").append(
-                            `<span>${errors.sectionId[0]}</span>`
-                        );
-                    } else {
-                        $(".sectionId .dropdown").removeClass("is-invalid");
-                        $("#section-error-message").html("");
-                    }
-                    if (errors.hasOwnProperty("divisionId")) {
-                        $(".divisionId .dropdown").addClass("is-invalid");
-                        $("#division-error-message").html("");
-                        $("#division-error-message").append(
-                            `<span>${errors.divisionId[0]}</span>`
-                        );
-                    } else {
-                        $(".divisionId .dropdown").removeClass("is-invalid");
-                        $("#division-error-message").html("");
-                    }
-
+                    var errors = response.responseJSON.errors;
+                    $.each(arrayErrors, function (propertyName, arrayErrors) {
+                        $.each(arrayErrors, function (errorClass, errorMessage) {
+                            if(errors[propertyName] != undefined){
+                                $(`${errorClass}`).addClass("is-invalid");
+                                $(`${errorMessage}`).html("");
+                                $(`${errorMessage}`).append(
+                                        `<span>${errors[propertyName][0]}</span>`
+                                    );
+                            }
+                        });
+                    });
                     // Create an parent element
                     let parentElement = document.createElement("ul");
                     let errorss = response.responseJSON.errors;
@@ -387,8 +291,9 @@ $(document).ready(function () {
             $("#salaryGrade").val("").change();
         }
     });
+    // end get values of employees
 
-    // display plantilla of position table
+    // display data in datatables
     let selectedOffice = $("#employeeOffice").val();
     let PlantillaPositiontable = $("#plantillaofposition").DataTable({
         processing: true,
@@ -423,6 +328,8 @@ $(document).ready(function () {
             },
         ],
     });
+    // end display in datatables
+
     //filter plantilla of position datable by office
     $("#employeeOffice").change(function (e) {
         let selectedOffice = $("#employeeOffice").val();
@@ -430,6 +337,7 @@ $(document).ready(function () {
             .url(`/plantilla-of-position-list/${selectedOffice}`)
             .load();
     });
+    // end filter plantilla
 
     // start add new position modal
     $("#btnPosition").click(function (e) {
@@ -566,9 +474,9 @@ $(document).ready(function () {
             swal("Please Input Data", "", "warning");
         }
     });
-
     // end add new position modal
 
+    //remove errors if put values
     $("#itemNo").keyup(function () {
         $("#item-error-message").html("");
         $("#itemNo").removeClass("is-invalid");
@@ -578,14 +486,22 @@ $(document).ready(function () {
         $("#salary-grade-error-message").html("");
         $(".salaryGrade .dropdown").removeClass("is-invalid");
     });
+
     $("#positionTitle").change(function () {
         $("#position-title-error-message").html("");
         $(".positionTitle .dropdown").removeClass("is-invalid");
         $("#salary-grade-error-message").html("");
         $(".salaryGrade .dropdown").removeClass("is-invalid");
     });
+
     $("#officeCode").change(function () {
         $("#office-error-message").html("");
         $(".officeCode .dropdown").removeClass("is-invalid");
     });
+
+    $("#areaLevel").change(function () {
+        $("#area-level-error-message").html("");
+        $(".areaLevel .dropdown").removeClass("is-invalid");
+    });
+    // end errors
 });

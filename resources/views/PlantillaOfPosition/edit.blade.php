@@ -94,15 +94,12 @@
 
                                 <div class="col-6 col-md-6 col-lg-6">
                                     <label class="has-float-label positionTitle mb-0">
-                                        <select name="positionTitle" value=""
-                                        class="form-control form-control-xs selectpicker"
-                                        id="positionTitle" disabled @foreach($position as $positions)
-                                        <option
-                                        {{ $plantillaofposition->PosCode == $positions->PosCode ? 'selected' : '?? $plantillaofposition->PosCode' }}
-                                        value="{{ $positions->PosCode}}">{{ $positions->Description }}
-                                        </option>
+                                    <select value="" class="form-control form-control-xs selectpicker" name="positionTitle" data-live-search="true" id="positionTitle" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                        <option></option>
+                                        @foreach($position as $positions)
+                                            <option data-position="{{ $positions }}" {{ $plantillaofposition->PosCode == $positions->PosCode ? 'selected' : '?? $plantillaofposition->PosCode' }} style="width:350px;" {{ old('positionTitle') == $positions->PosCode ? 'selected' : '' }} value="{{ $positions->PosCode}}">{{ $positions->Description }}</option>
                                         @endforeach
-                                    </select>
+                                  </select>
                                         <span class="font-weight-bold">POSITION<span class="text-danger">*</span></span>
                                     </label>
                                     <div id='position-title-error-message' class='text-danger text-sm'>
@@ -208,6 +205,7 @@
 </div>
 @push('page-scripts')
 <script>
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -294,6 +292,36 @@
                         $("#positionOldName").removeClass("is-invalid");
                         $("#old-position-name-error-message").html("");
                     }
+                    if (errors.hasOwnProperty("areaCode")) {
+                        $(".areaCode .dropdown").addClass("is-invalid");
+                        $("#area-code-error-message").html("");
+                        $("#area-code-error-message").append(
+                            `<span>${errors.areaCode[0]}</span>`
+                        );
+                    } else {
+                        $(".areaCode .dropdown").removeClass("is-invalid");
+                        $("#area-code-error-message").html("");
+                    }
+                    if (errors.hasOwnProperty("areaType")) {
+                        $(".areaType .dropdown").addClass("is-invalid");
+                        $("#area-type-error-message").html("");
+                        $("#area-type-error-message").append(
+                            `<span>${errors.areaType[0]}</span>`
+                        );
+                    } else {
+                        $(".areaType .dropdown").removeClass("is-invalid");
+                        $("#area-type-error-message").html("");
+                    }
+                    if (errors.hasOwnProperty("areaLevel")) {
+                        $(".areaLevel .dropdown").addClass("is-invalid");
+                        $("#area-level-error-message").html("");
+                        $("#area-level-error-message").append(
+                            `<span>${errors.areaLevel[0]}</span>`
+                        );
+                    } else {
+                        $(".areaLevel .dropdown").removeClass("is-invalid");
+                        $("#area-level-error-message").html("");
+                    }
                     // Create an parent element
                     let parentElement = document.createElement("ul");
                     let errorss = response.responseJSON.errors;
@@ -315,9 +343,21 @@
             },
         });
     });
-
-
-
+    $(document).ready(function () {
+        // get value of employees sg, sn, sp
+    $("#positionTitle").change(function (e) {
+        let position = $($("#positionTitle option:selected")[0]).attr(
+            "data-position"
+        );
+        if (position != "") {
+            position = JSON.parse(position);
+            $("#salaryGrade").val(position.sg_no).change();
+        } else {
+            $("#salaryGrade").val("").change();
+        }
+    });
+    // end get values of employees
+    });
 
 
 
