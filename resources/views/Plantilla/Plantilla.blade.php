@@ -297,6 +297,7 @@
                 </form>
             </div>
 
+
             <div id="table" class="page-header {{  count($errors->all()) == 0 ? '' : 'd-none' }}">
 
                 <div class="row">

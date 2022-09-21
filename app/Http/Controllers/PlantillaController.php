@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Division;
-use App\Section;
-use App\Employee;
 use App\Office;
-use App\Plantilla;
-use App\PlantillaPosition;
-use App\Position;
-use App\SalaryGrade;
-use App\service_record as ServiceRecord;
+use App\Section;
 use App\Setting;
+use App\Division;
+use App\Employee;
+use App\Position;
+use App\Plantilla;
+use App\SalaryGrade;
+use App\PlantillaPosition;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use App\service_record as ServiceRecord;
 
 class PlantillaController extends Controller
 {
@@ -28,7 +29,7 @@ class PlantillaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $req)
+    public function index(Request $request)
     {
         $plantillaEmp = array_filter(Plantilla::get()->pluck('employee_id')->toArray());
         $employee = Employee::select('Employee_id', 'LastName', 'FirstName', 'MiddleName', 'Work_Status')
@@ -52,8 +53,10 @@ class PlantillaController extends Controller
 
         $status = ['Appointed','Casual', 'Coterminous', 'Permanent', 'Provisional', 'Temporary', 'Elected'];
 
+
         return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'office', 'salarygrade', 'plantillaPosition', 'year'));
     }
+
 
     public function list(string $office, $year)
     {
