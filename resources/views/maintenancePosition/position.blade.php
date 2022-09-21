@@ -56,7 +56,7 @@
 <div class="kanban-board card shadow-none">
       <div class="card-body">
             <div id="add" class="page-header {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
-                  <div style='padding-bottom:50px;margin-right:-15px;' class="col-auto ml-auto">
+                  <div style='padding-bottom:50px;' class="ml-auto">
                         <button id="showListPosition" class="btn btn-primarys submit-btn float-right shadow"><i class="fa fa-list"></i> Position List
                         </button>
                   </div>
@@ -68,7 +68,7 @@
 
                                     <div class="form-group col-12 col-md-6 col-lg-7">
                                           <label class="has-float-label mb-0">
-                                                <input value="{{ old('positionCode') ?? $lastId->PosCode + 1}}" class="form-control {{ $errors->has('positionCode')  ? 'is-invalid' : ''}}" name="positionCode" id="positionCode" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                                <input value="{{ old('positionCode') ?? $lastId->PosCode + 1 }}" class="form-control {{ $errors->has('positionCode')  ? 'is-invalid' : ''}}" name="positionCode" id="positionCode" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                                 <span class="font-weight-bold">Position Code<span class="text-danger">*</span></span>
                                           </label>
                                           <div id='position-code-error-message' class='text-danger text-sm'>

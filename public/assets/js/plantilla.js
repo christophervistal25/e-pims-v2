@@ -13,6 +13,7 @@ $(document).ready(function () {
         "#employeeID",
         "#originalAppointment",
         "#lastPromotion",
+        "#lastStepIncrement",
         "#areaCode",
         "#areaType",
         "#areaLevel",
@@ -445,15 +446,15 @@ $(document).ready(function () {
             error: function (response) {
                 if (response.status === 422) {
                     let errors = response.responseJSON.errors;
-                    if (errors.hasOwnProperty("oldItemNo")) {
-                        $("#oldItemNo").addClass("is-invalid");
-                        $("#old_item-no-error-message").html("");
-                        $("#old_item-no-error-message").append(
-                            `<span>${errors.oldItemNo[0]}</span>`
+                    if (errors.hasOwnProperty("officeCode")) {
+                        $(".officeCode").addClass("is-invalid");
+                        $("#office-error-message").html("");
+                        $("#office-error-message").append(
+                            `<span>${errors.officeCode[0]}</span>`
                         );
                     } else {
-                        $("#oldItemNo").removeClass("is-invalid");
-                        $("#old_item-no-error-message").html("");
+                        $(".officeCode").removeClass("is-invalid");
+                        $("#office-error-message").html("");
                     }
                     if (errors.hasOwnProperty("positionTitle")) {
                         $(".positionTitle").addClass("is-invalid");
@@ -495,16 +496,8 @@ $(document).ready(function () {
                         $(".status").removeClass("is-invalid");
                         $("#status-error-message").html("");
                     }
-                    if (errors.hasOwnProperty("employeeName")) {
-                        $(".employeeName").addClass("is-invalid");
-                        $("#employee-name-error-message").html("");
-                        $("#employee-name-error-message").append(
-                            `<span>${errors.employeeName[0]}</span>`
-                        );
-                    } else {
-                        $(".employeeName").removeClass("is-invalid");
-                        $("#employee-name-error-message").html("");
-                    }
+
+
                     if (errors.hasOwnProperty("stepNo")) {
                         $(".stepNo").addClass("is-invalid");
                         $("#steps-error-message").html("");
@@ -514,36 +507,6 @@ $(document).ready(function () {
                     } else {
                         $(".stepNo").removeClass("is-invalid");
                         $("#steps-error-message").html("");
-                    }
-                    if (errors.hasOwnProperty("salaryGradePrevious")) {
-                        $(".salaryGradePrevious").addClass("is-invalid");
-                        $("#salary-grade-previous-error-message").html("");
-                        $("#salary-grade-previous-error-message").append(
-                            `<span>${errors.salaryGradePrevious[0]}</span>`
-                        );
-                    } else {
-                        $(".salaryGradePrevious").removeClass("is-invalid");
-                        $("#salary-grade-previous-error-message").html("");
-                    }
-                    if (errors.hasOwnProperty("stepNoPrevious")) {
-                        $(".stepNoPrevious").addClass("is-invalid");
-                        $("#steps-previous-error-message").html("");
-                        $("#steps-previous-error-message").append(
-                            `<span>${errors.stepNoPrevious[0]}</span>`
-                        );
-                    } else {
-                        $(".stepNoPrevious").removeClass("is-invalid");
-                        $("#steps-previous-error-message").html("");
-                    }
-                    if (errors.hasOwnProperty("salaryAuthorized")) {
-                        $("#salaryAuthorized").addClass("is-invalid");
-                        $("#salaryAuthorized-no-error-message").html("");
-                        $("#salaryAuthorized-no-error-message").append(
-                            `<span>${errors.salaryAuthorized[0]}</span>`
-                        );
-                    } else {
-                        $("#salaryAuthorized").removeClass("is-invalid");
-                        $("#salaryAuthorized-no-error-message").html("");
                     }
                     if (errors.hasOwnProperty("salaryAmount")) {
                         $("#salaryAmount").addClass("is-invalid");
@@ -565,26 +528,8 @@ $(document).ready(function () {
                         $("#salaryAmountYearly").removeClass("is-invalid");
                         $("#salaryAmountYearly-no-error-message").html("");
                     }
-                    if (errors.hasOwnProperty("officeCode")) {
-                        $(".officeCode").addClass("is-invalid");
-                        $("#office-error-message").html("");
-                        $("#office-error-message").append(
-                            `<span>${errors.officeCode[0]}</span>`
-                        );
-                    } else {
-                        $(".officeCode").removeClass("is-invalid");
-                        $("#office-error-message").html("");
-                    }
-                    if (errors.hasOwnProperty("divisionId")) {
-                        $(".divisionId").addClass("is-invalid");
-                        $("#division-error-message").html("");
-                        $("#division-error-message").append(
-                            `<span>${errors.divisionId[0]}</span>`
-                        );
-                    } else {
-                        $(".divisionId").removeClass("is-invalid");
-                        $("#division-error-message").html("");
-                    }
+
+
                     // Create an parent element
                     let parentElement = document.createElement("ul");
                     let errorss = response.responseJSON.errors;
@@ -616,10 +561,7 @@ $("#officeCode").change(function () {
     $("#office-error-message").html("");
     $(".officeCode").removeClass("is-invalid");
 });
-$("#divisionId").change(function () {
-    $("#division-error-message").html("");
-    $(".divisionId").removeClass("is-invalid");
-});
+
 $("#positionTitle").change(function () {
     $("#position-title-error-message").html("");
     $(".positionTitle").removeClass("is-invalid");
@@ -639,18 +581,6 @@ $("#originalAppointment").change(function () {
 $("#lastPromotion").change(function () {
     $("#last-promotion-error-message").html("");
     $("#lastPromotion").removeClass("is-invalid");
-});
-$("#areaCode").change(function () {
-    $("#area-code-error-message").html("");
-    $(".areaCode").removeClass("is-invalid");
-});
-$("#areaType").change(function () {
-    $("#area-type-error-message").html("");
-    $(".areaType").removeClass("is-invalid");
-});
-$("#areaType").change(function () {
-    $("#area-level-error-message").html("");
-    $(".areaLevel").removeClass("is-invalid");
 });
 
 // edit page

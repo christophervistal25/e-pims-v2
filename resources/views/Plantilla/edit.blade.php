@@ -231,19 +231,26 @@
                             </div>
                         </div>
 
-                              <div class="form-group col-12 col-lg-6">
+                              <div class="form-group col-12 col-lg-4">
                                    <label>Original Appointment<span class="text-danger">*</span></label>
                                    <input value="{{ old('originalAppointment') ?? $plantilla->date_original_appointment }}" class="form-control {{ $errors->has('originalAppointment')  ? 'is-invalid' : ''}}" name="originalAppointment" type="date">
                                    <div id='original-appointment-error-message' class='text-danger text-sm'>
                                    </div>
                               </div>
 
-                              <div class="form-group col-12 col-lg-6">
+                              <div class="form-group col-12 col-lg-4">
                                    <label>Last Promotion<span class="text-danger">*</span></label>
                                    <input value="{{ old('lastPromotion') ?? $plantilla->date_last_promotion }}" class="form-control {{ $errors->has('lastPromotion')  ? 'is-invalid' : ''}}" name="lastPromotion" type="date">
                                    <div id='last-promotion-error-message' class='text-danger text-sm'>
                                    </div>
                               </div>
+
+
+                            <div class="form-group col-12 col-lg-4">
+                                <label>Last Step Increment</label>
+                                <input value="{{ old('lastStepIncrement') ?? $plantilla->date_last_increment }}" class="form-control {{ $errors->has('lastStepIncrement')  ? 'is-invalid' : ''}}" name="lastStepIncrement" type="date">
+                                <div id='last-step-increment-error-message' class='text-danger text-sm'></div>
+                            </div>
 
                               <div class="form-group col-12 col-lg-4">
                                 <label>Area Code</label>

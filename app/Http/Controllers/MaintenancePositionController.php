@@ -63,7 +63,7 @@ class MaintenancePositionController extends Controller
             'positionCode' => 'required|unique:Position,PosCode',
             'positionName' => 'required',
             'salaryGradeNo' => 'required',
-            'positionShortName' => 'required',
+            // 'positionShortName' => 'required',
 
         ]);
         $position = new Position();
@@ -114,7 +114,7 @@ class MaintenancePositionController extends Controller
             'positionCode' => 'required',
             'positionName' => 'required',
             'salaryGradeNo' => 'required',
-            'positionShortName' => 'required',
+            // 'positionShortName' => 'required',
         ]);
         $position = Position::where('PosCode', $position_id)->first();
 
@@ -137,7 +137,7 @@ class MaintenancePositionController extends Controller
      */
     public function destroy($id)
     {
-        Position::where('position_id', $id)->delete();
+        Position::where('PosCode', $id)->delete();
 
         return response()->json(['statusCode' => 200]);
     }

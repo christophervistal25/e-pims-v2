@@ -92,26 +92,26 @@ class SalaryAdjustmentPerOfficeController extends Controller
             );
             Setting::find('AUTONUMBER2')->increment('Keyvalue');
 
-            /* Updating the current service record of the employee soon to be previous record. */
-            $serviceToDate = Carbon::parse(request()->date)->subDays(1);
-            DB::table('EPims.dbo.service_records')->select('employee_id', 'service_from_date', 'service_to_date')->where('employee_id', $newAdjustments['employee_id'])->where('service_to_date', null)->latest('service_from_date')
-            ->update(['service_to_date' => $serviceToDate]);
-            // salary adjustment per office save to service record
-            $datas = DB::table('EPims.dbo.settings')->where('Keyname', 'AUTONUMBER2')->first();
-            DB::table('EPims.dbo.service_records')->insert(
-                [
-                    'id' => $datas->Keyvalue,
-                    'employee_id' => $newAdjustments['employee_id'],
-                    'service_from_date' => request()->date,
-                    'PosCode' => $newAdjustments['plantilla_positions']['position']['PosCode'],
-                    'status' => $newAdjustments['status'],
-                    'salary' => $getsalaryResult['sg_step'.$newAdjustments['step_no']],
-                    'office_code' => $newAdjustments['office_code'],
-                    'separation_cause' => $remarks,
-                    'created_at' => Carbon::now(),
-                ]
-            );
-            Setting::find('AUTONUMBER2')->increment('Keyvalue');
+            // /* Updating the current service record of the employee soon to be previous record. */
+            // $serviceToDate = Carbon::parse(request()->date)->subDays(1);
+            // DB::table('EPims.dbo.service_records')->select('employee_id', 'service_from_date', 'service_to_date')->where('employee_id', $newAdjustments['employee_id'])->where('service_to_date', null)->latest('service_from_date')
+            // ->update(['service_to_date' => $serviceToDate]);
+            // // salary adjustment per office save to service record
+            // $datas = DB::table('EPims.dbo.settings')->where('Keyname', 'AUTONUMBER2')->first();
+            // DB::table('EPims.dbo.service_records')->insert(
+            //     [
+            //         'id' => $datas->Keyvalue,
+            //         'employee_id' => $newAdjustments['employee_id'],
+            //         'service_from_date' => request()->date,
+            //         'PosCode' => $newAdjustments['plantilla_positions']['position']['PosCode'],
+            //         'status' => $newAdjustments['status'],
+            //         'salary' => $getsalaryResult['sg_step'.$newAdjustments['step_no']],
+            //         'office_code' => $newAdjustments['office_code'],
+            //         'separation_cause' => $remarks,
+            //         'created_at' => Carbon::now(),
+            //     ]
+            // );
+            // Setting::find('AUTONUMBER2')->increment('Keyvalue');
         }
 
         return response()->json(['success' => true]);

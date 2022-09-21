@@ -142,7 +142,7 @@ class SalaryAdjustmentController extends Controller
             'salaryNew' => 'required|numeric',
             'salaryDifference' => 'required|numeric',
         ]);
-
+        // insert data to salary adjustment
         DB::table('EPims.dbo.salary_adjustments')->updateOrInsert(
             [
                 'employee_id' => $request->employeeId,
@@ -164,34 +164,34 @@ class SalaryAdjustmentController extends Controller
                 'deleted_at' => null,
             ]
         );
-
+        // insert data to plantillas
         DB::table('EPims.dbo.plantillas')->where('employee_id', $request->employeeId)->where('year', $request->currentSgyear)
             ->update(['salary_amount' => $request->salaryNew,
             ]);
 
         /* Updating the current service record of the employee soon to be previous record. */
-        $serviceToDate = Carbon::parse($request->dateAdjustment)->subDays(1);
-        DB::table('EPims.dbo.service_records')->select('employee_id', 'service_from_date', 'service_to_date')->where('employee_id', $request->employeeId)->where('service_to_date', null)->latest('service_from_date')
-        ->update(['service_to_date' => $serviceToDate]);
+        // $serviceToDate = Carbon::parse($request->dateAdjustment)->subDays(1);
+        // DB::table('EPims.dbo.service_records')->select('employee_id', 'service_from_date', 'service_to_date')->where('employee_id', $request->employeeId)->where('service_to_date', null)->latest('service_from_date')
+        // ->update(['service_to_date' => $serviceToDate]);
 
-        $dateCheck = $request->remarks;
-        if ($dateCheck == '') {
-            $remarks = 'Salary Adjustment';
-        } else {
-            $remarks = $request->remarks;
-        }
-        DB::table('EPims.dbo.service_records')->insert(
-            [
-                'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
-                'employee_id' => $request->employeeId,
-                'service_from_date' => $request->dateAdjustment,
-                'PosCode' => $request->positionCode,
-                'status' => $request->status,
-                'salary' => $request->salaryNew,
-                'office_code' => $request->officeCode,
-                'separation_cause' => $remarks,
-            ]
-        );
+        // $dateCheck = $request->remarks;
+        // if ($dateCheck == '') {
+        //     $remarks = 'Salary Adjustment';
+        // } else {
+        //     $remarks = $request->remarks;
+        // }
+        // DB::table('EPims.dbo.service_records')->insert(
+        //     [
+        //         'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
+        //         'employee_id' => $request->employeeId,
+        //         'service_from_date' => $request->dateAdjustment,
+        //         'PosCode' => $request->positionCode,
+        //         'status' => $request->status,
+        //         'salary' => $request->salaryNew,
+        //         'office_code' => $request->officeCode,
+        //         'separation_cause' => $remarks,
+        //     ]
+        // );
 
         return response()->json(['success' => true]);
     }

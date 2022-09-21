@@ -50,6 +50,7 @@ class Plantilla extends Model
         'area_level',
         'date_original_appointment',
         'date_last_promotion',
+        'date_last_increment',
         'office_code',
         'division_id',
         'section_id',

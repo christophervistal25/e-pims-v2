@@ -124,6 +124,7 @@ class PlantillaController extends Controller
             $plantilla->office_code = $request['officeCode'];
             $plantilla->date_original_appointment = $request['originalAppointment'];
             $plantilla->date_last_promotion = $request['lastPromotion'];
+            $plantilla->date_last_increment = $request['lastStepIncrement'];
             $plantilla->status = $request['status'];
             $plantilla->year = $request['currentSgyear'];
             $plantilla->save();
@@ -220,6 +221,7 @@ class PlantillaController extends Controller
             $plantilla->office_code = $request->officeCode;
             $plantilla->date_original_appointment = $request->originalAppointment;
             $plantilla->date_last_promotion = $request->lastPromotion;
+            $plantilla->date_last_increment = $request->lastStepIncrement;
             $plantilla->status = $request->status;
             $plantilla->year = $request->currentSgyear;
             $plantilla->save();
