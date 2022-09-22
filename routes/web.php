@@ -88,16 +88,19 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
     /* Creating a route for the SalaryGradeController. */
     Route::get('salary-grade-list', [SalaryGradeController::class, 'list'])->name('salary-grade-list');
     Route::resource('salary-grade', SalaryGradeController::class);
+    Route::put('salary-grade/{id}', [SalaryGradeController::class, 'update']);
     Route::post('/import-salarygrade', [SalaryGradeController::class, 'ImportSalaryGrade'])->name('import');
 
     /* Creating a route for the MaintenancePositionController. */
     Route::get('maintenance-position-list', [MaintenancePositionController::class, 'list'])->name('maintenance-position-list');
     Route::resource('maintenance-position', MaintenancePositionController::class);
+    Route::put('maintenance-position-update/{id}', [MaintenancePositionController::class, 'update']);
     Route::get('maintenance-position/{id}', [MaintenancePositionController::class, 'destroy'])->name('maintenance-position.delete');
 
     /* Creating a route for the MaintenanceOfficeController. */
     Route::get('maintenance-office-list', [MaintenanceOfficeController::class, 'list'])->name('maintenance-office-list');
     Route::resource('maintenance-office', MaintenanceOfficeController::class);
+    Route::put('maintenance-office-update/{id}', [MaintenanceOfficeController::class, 'update']);
     Route::get('maintenance-office/{id}', [MaintenanceOfficeController::class, 'destroy'])->name('maintenance-office.delete');
 
     /* Creating a route for the MaintenanceDivisionController. */

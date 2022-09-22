@@ -125,11 +125,9 @@ class MaintenanceOfficeController extends Controller
     {
         $this->validate($request, [
             'officeName' => 'required',
-            'officeAddress' => 'nullable|min:5',
             'officeShortName' => 'required',
             'officeHead' => 'required',
             'positionName' => 'required',
-            'departmentCode' => 'nullable|min:5',
         ]);
 
         $office = Office::find($OfficeCode);

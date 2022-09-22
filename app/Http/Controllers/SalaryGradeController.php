@@ -157,9 +157,7 @@ class SalaryGradeController extends Controller
         $salarygrade->sg_step7 = $request['sgStep7'];
         $salarygrade->sg_step8 = $request['sgStep8'];
         $salarygrade->save();
-        Session::flash('alert-success', 'Update Salary Grade Successfully');
-
-        return back()->with('success', 'Updated Successfully');
+        return response()->json(['success' => true]);
     }
 
     /**
