@@ -85,116 +85,6 @@
             <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
             <!-- Header Menu -->
             <ul class="nav user-menu">
-                <!-- Message Notifications -->
-                <li class="nav-item dropdown">
-                    <a href="#" class="dropdown-toggle nav-link d-none" data-toggle="dropdown">
-                        <i class="fa fa-comment-o"></i> <span class="badge badge-pill">8</span>
-                    </a>
-                    <div class="dropdown-menu notifications d-none">
-                        <div class="topnav-dropdown-header">
-                            <span class="notification-title">Messages</span>
-                            <a href="javascript:void(0)" class="clear-noti"> Clear All </a>
-                        </div>
-                        <div class="noti-content">
-                            <ul class="notification-list">
-                                <li class="notification-message">
-                                    <a href="chat.html">
-                                        <div class="list-item">
-                                            <div class="list-left">
-                                                <span class="avatar">
-                                                    {{-- <img alt="" src="/assets/img/profiles/avatar-09.jpg"> --}}
-                                                </span>
-                                            </div>
-                                            <div class="list-body">
-                                                <span class="message-author">Richard Miles </span>
-                                                <span class="message-time">12:28 AM</span>
-                                                <div class="clearfix"></div>
-                                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur
-                                                    adipiscing</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="notification-message">
-                                    <a href="chat.html">
-                                        <div class="list-item">
-                                            <div class="list-left">
-                                                <span class="avatar">
-                                                    <img alt="" src="/assets/img/profiles/avatar-02.jpg">
-                                                </span>
-                                            </div>
-                                            <div class="list-body">
-                                                <span class="message-author">John Doe</span>
-                                                <span class="message-time">6 Mar</span>
-                                                <div class="clearfix"></div>
-                                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur
-                                                    adipiscing</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="notification-message">
-                                    <a href="chat.html">
-                                        <div class="list-item">
-                                            <div class="list-left">
-                                                <span class="avatar">
-                                                    <img alt="" src="/assets/img/profiles/avatar-03.jpg">
-                                                </span>
-                                            </div>
-                                            <div class="list-body">
-                                                <span class="message-author"> Tarah Shropshire </span>
-                                                <span class="message-time">5 Mar</span>
-                                                <div class="clearfix"></div>
-                                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur
-                                                    adipiscing</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="notification-message">
-                                    <a href="chat.html">
-                                        <div class="list-item">
-                                            <div class="list-left">
-                                                <span class="avatar">
-                                                    <img alt="" src="/assets/img/profiles/avatar-05.jpg">
-                                                </span>
-                                            </div>
-                                            <div class="list-body">
-                                                <span class="message-author">Mike Litorus</span>
-                                                <span class="message-time">3 Mar</span>
-                                                <div class="clearfix"></div>
-                                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur
-                                                    adipiscing</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="notification-message">
-                                    <a href="chat.html">
-                                        <div class="list-item">
-                                            <div class="list-left">
-                                                <span class="avatar">
-                                                    <img alt="" src="/assets/img/profiles/avatar-08.jpg">
-                                                </span>
-                                            </div>
-                                            <div class="list-body">
-                                                <span class="message-author"> Catherine Manseau </span>
-                                                <span class="message-time">27 Feb</span>
-                                                <div class="clearfix"></div>
-                                                <span class="message-content">Lorem ipsum dolor sit amet, consectetur
-                                                    adipiscing</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="topnav-dropdown-footer">
-                            <a href="chat.html">View all Messages</a>
-                        </div>
-                    </div>
-                </li>
-                <!-- /Message Notifications -->
                 <li class="nav-item dropdown has-arrow main-drop">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                         <span class="user-img">
@@ -254,152 +144,149 @@
                         </li>
 
 
-                        <li class="submenu">
+                        {{-- <li class="submenu">
                             <a href="#" class='text-decoration-none'><i class="la la-home"></i> <span> Leave Management </span> <span class="menu-arrow"></span></a>
                             <ul style="display: none;">
-                                {{-- <li>
+                                <li>
                                     <a class='text-decoration-none mr-2' href="{{ route('leave.application.filling') }}">
-                                Leave Application Filing</a>
-                        </li> --}}
-                        <li>
-                            <a class='text-decoration-none mr-2' href="{{ route('leave.leave-list') }}">
-                                Leave List
-                                @if($no_of_pending_leave_list !== 0)
-                                <div class="float-right">
-                                    <span class='badge badge-danger'>{{ $no_of_pending_leave_list }}</span>
-                                </div>
-                                @endif
-                            </a>
-                        </li>
-                        {{-- <li>
+                                        Leave Application Filing</a>
+                                </li>
+                                <li>
+                                    <a class='text-decoration-none mr-2' href="{{ route('leave.leave-list') }}">
+                                        Leave List
+                                        @if($no_of_pending_leave_list !== 0)
+                                        <div class="float-right">
+                                            <span class='badge badge-danger'>{{ $no_of_pending_leave_list }}</span>
+                                        </div>
+                                        @endif
+                                    </a>
+                                </li>
+                                <li>
                                     <a class='text-decoration-none mr-2' href="{{  route('leave-recall.index') }}">
-                        Leave Recall, Cancel or Transfer
-                        </a>
-                        </li> --}}
-                        <li>
-                            <a class='text-decoration-none mr-2' href="{{  route('leave-monitoring.index') }}">
-                                Leave Monitoring Index
-                            </a>
-                        </li>
-                        {{-- <li>
+                                        Leave Recall, Cancel or Transfer
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class='text-decoration-none mr-2' href="{{  route('leave-monitoring.index') }}">
+                                        Leave Monitoring Index
+                                    </a>
+                                </li>
+                                <li>
                                     <a class='text-decoration-none mr-2' href="{{  route('leave-starting-balance.index') }}">
-                        Leave Starting Balance
-                        </a>
+                                        Leave Starting Balance
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class='text-decoration-none mr-2' href="{{  route('leave-forwarded-balance.index') }}">
+                                        Leave Forwaded Balance
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class='text-decoration-none mr-2' href="{{  route('compensatory-build-up.index') }}">
+                                        Compensatory Build-up
+                                    </a>
+                                </li>
+                            </ul>
                         </li> --}}
+
+
+                        <li class="submenu">
+                            <a href="#" class='text-decoration-none'><i class="la la-bookmark"></i> <span>Plantilla</span> <span class="menu-arrow"></span></a>
+                            <ul style="display: none;">
+
+                                <li>
+                                    <a class='text-decoration-none' href="{{  route('plantilla-of-position.index') }}"> <span>Plantilla of Position</span></a>
+                                </li>
+
+                                <li>
+                                    <a class='text-decoration-none' href="{{  route('plantilla-of-personnel.index') }}"> <span>Plantilla of Personnel</span></a>
+                                </li>
+
+                                <li>
+                                    <a class='text-decoration-none mr-2' href="{{  route('step-increment.index') }}">
+                                        Notice of Step Increment
+                                    </a>
+                                </li>
+                                <li class="submenu">
+                                    <a class='text-decoration-none' href="javascript:void(0);"> <span>Salary Adjustment</span> <span class="menu-arrow"></span></a>
+                                    <ul style="display: none;">
+                                        <li>
+                                            <a class='text-decoration-none' href="{{  route('salary-adjustment.index') }}">
+                                                <span>Individual</span>
+                                            </a>
+                                            <a class='text-decoration-none' href="{{  route('salary-adjustment-per-office.index') }}">
+                                                <span>Per Office</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+
                         <li>
-                            <a class='text-decoration-none mr-2' href="{{  route('leave-forwarded-balance.index') }}">
-                                Leave Forwaded Balance
+                            <a class='text-decoration-none' href="#" id="plantillaScheduleCreate">
+                                <i class="las la-book-medical"></i>
+                                <span> Plantilla Schedule <span @class([ 'badge' , 'badge-primary' , 'd-none'=> $no_of_employees_for_plantilla_schedule === 0
+                                        ])
+                                        class='badge badge-primary'>{{ $no_of_employees_for_plantilla_schedule }}</span> </span>
                             </a>
                         </li>
-                        {{-- <li>
-                            <a class='text-decoration-none mr-2' href="{{  route('compensatory-build-up.index') }}">
-                        Compensatory Build-up
-                        </a>
-                        </li> --}}
-                    </ul>
-                    </li>
 
-
-                    <li class="submenu">
-                        <a href="#" class='text-decoration-none'><i class="la la-bookmark"></i> <span>Plantilla</span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
-
-                            <li>
-                                <a class='text-decoration-none' href="{{  route('plantilla-of-position.index') }}"> <span>Plantilla of Position</span></a>
-                            </li>
-
-                            <li>
-                                <a class='text-decoration-none' href="{{  route('plantilla-of-personnel.index') }}"> <span>Plantilla of Personnel</span></a>
-                            </li>
-
-                            <li>
-                                <a class='text-decoration-none mr-2' href="{{  route('step-increment.index') }}">
-                                    Notice of Step Increment
-                                </a>
-                            </li>
-                            <li class="submenu">
-                                <a class='text-decoration-none' href="javascript:void(0);"> <span>Salary Adjustment</span> <span class="menu-arrow"></span></a>
-                                <ul style="display: none;">
-                                    <li>
-                                        <a class='text-decoration-none' href="{{  route('salary-adjustment.index') }}">
-                                            <span>Individual</span>
-                                        </a>
-                                        <a class='text-decoration-none' href="{{  route('salary-adjustment-per-office.index') }}">
-                                            <span>Per Office</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-
-                    <li>
-                        <a class='text-decoration-none' href="#" id="plantillaScheduleCreate">
-                            <i class="las la-book-medical"></i>
-                            <span> Plantilla Schedule <span @class([ 'badge' , 'badge-primary' , 'd-none'=> $no_of_employees_for_plantilla_schedule === 0
-                                    ])
-                                    class='badge badge-primary'>{{ $no_of_employees_for_plantilla_schedule }}</span> </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a class='text-decoration-none' href="{{ route('promotion.index') }}">
-                            <i class="las la-sort-amount-up"></i> <span>Promotions</span>
-                        </a>
-                    </li>
+                        <li>
+                            <a class='text-decoration-none' href="{{ route('promotion.index') }}">
+                                <i class="las la-sort-amount-up"></i> <span>Promotions</span>
+                            </a>
+                        </li>
 
 
 
-                    <li>
-                        <a class='text-decoration-none' href="{{ route('service-records.index') }}">
-                            <i class="la la-bars"></i> <span>Service Record</span>
-                        </a>
-                    </li>
+                        <li>
+                            <a class='text-decoration-none' href="{{ route('service-records.index') }}">
+                                <i class="la la-bars"></i> <span>Service Record</span>
+                            </a>
+                        </li>
 
-                    <li class="submenu">
-                        <a href="#" class='text-decoration-none'><i class="la la-cog"></i> <span>Maintenance</span> <span class="menu-arrow"></span></a>
-                        <ul style="display: none;">
-                            <li>
-                                <a class='text-decoration-none' href="{{ route('users.index') }}">
-                                    Users
-                                </a>
-                                <a class='text-decoration-none' href="{{ route('salary-grade.index') }}">
-                                    Salary Grade
-                                </a>
-                                <a class='text-decoration-none mr-2' href="{{ route('maintenance-position.index') }}">
-                                    Position
-                                </a>
-                                <a class='text-decoration-none mr-2' href="{{ route('maintenance-office.index') }}">
-                                    Office
-                                </a>
-                                <a class='text-decoration-none mr-2' href="{{ route('maintenance-division.index') }}">
-                                    Division
-                                </a>
-                                <a class='text-decoration-none mr-2' href="{{ route('holiday.index') }}">
-                                    Holiday
-                                </a>
-                                <a class='text-decoration-none mr-2' href="{{ route('leave.index') }}">
-                                    Leave
-                                </a>
-                                <a class='text-decoration-none mr-2' href="{{ route('employee.leave.increment') }}">
-                                    Leave Increment
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                        <li class="submenu">
+                            <a href="#" class='text-decoration-none'><i class="la la-cog"></i> <span>Maintenance</span> <span class="menu-arrow"></span></a>
+                            <ul style="display: none;">
+                                <li>
+                                    <a class='text-decoration-none' href="{{ route('users.index') }}">
+                                        Users
+                                    </a>
+                                    <a class='text-decoration-none' href="{{ route('salary-grade.index') }}">
+                                        Salary Grade
+                                    </a>
+                                    <a class='text-decoration-none mr-2' href="{{ route('maintenance-position.index') }}">
+                                        Position
+                                    </a>
+                                    <a class='text-decoration-none mr-2' href="{{ route('maintenance-office.index') }}">
+                                        Office
+                                    </a>
+                                    <a class='text-decoration-none mr-2' href="{{ route('maintenance-division.index') }}">
+                                        Division
+                                    </a>
+                                    <a class='text-decoration-none mr-2' href="{{ route('leave.index') }}">
+                                        Leave Types
+                                    </a>
+                                    {{-- <a class='text-decoration-none mr-2' href="{{ route('employee.leave.increment') }}">
+                                        Leave Increment
+                                    </a> --}}
+                                </li>
+                            </ul>
+                        </li>
 
 
-                    <li class="menu-title">
-                        <span class="text-capitalize"> Reports</span>
-                    </li>
+                        <li class="menu-title">
+                            <span class="text-capitalize"> Reports</span>
+                        </li>
 
-                    <li>
-                        <a class='text-decoration-none' href='{{ route('show-plantilla-report') }}'>
-                            <i class="las la-file-excel"></i> <span>Plantilla</span></a>
-                        </a>
-                    </li>
+                        <li>
+                            <a class='text-decoration-none' href='{{ route('show-plantilla-report') }}'>
+                                <i class="las la-file-excel"></i> <span>Plantilla</span></a>
+                            </a>
+                        </li>
 
 
-                    </li>
+                        </li>
 
 
 
