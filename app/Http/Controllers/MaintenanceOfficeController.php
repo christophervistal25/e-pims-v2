@@ -23,7 +23,6 @@ class MaintenanceOfficeController extends Controller
      */
     public function index()
     {
-
         return view('MaintenanceOffice.office');
     }
 
@@ -133,15 +132,13 @@ class MaintenanceOfficeController extends Controller
             'departmentCode' => 'nullable|min:5',
         ]);
 
-        DB::transaction(function () use ($request, $OfficeCode) {
-            $office = Office::with('desc')->find($OfficeCode);
-            $office->office_name = $request['officeName'];
-            // $office->DepartmentCode = $request['departmentCode'];
-            $office->office_short_name = $request['officeShortName'];
-            $office->office_head = $request['officeHead'];
-            $office->position_name = $request['positionName'];
-            $office->save();
-        });
+        $office = Office::find($OfficeCode);
+        $office->office_name          = $request->officeName;
+        $office->office_short_name    = $request->officeShortName;
+        $office->office_short_address = $request->officeShortAddress;
+        $office->office_head          = $request->officeHead;
+        $office->position_name        = $request->positionName;
+        $office->save();
 
         Session::flash('alert-success', 'Office Updated Successfully');
 
