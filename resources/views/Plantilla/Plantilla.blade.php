@@ -225,7 +225,7 @@
                             <select class="form-control stepNoPrevious selectpicker" name="stepNoPrevious" data-live-search="true" id="stepNoPrevious" data-size="5" data-width="100%">
                                 <option></option>
                                 @foreach(range(1,8) as $step_no)
-                                @if($step_no == '1')
+                                @if($step_no == '')
                                 <option value="{{ $step_no}}" selected>{{ $step_no}}</option>
                                 @else
                                 <option value="{{ $step_no}}">{{ $step_no}}</option>
