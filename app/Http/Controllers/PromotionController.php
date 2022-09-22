@@ -15,7 +15,6 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Services\PromotionService;
 use Illuminate\Support\Facades\DB;
-use App\Services\SalaryGradeService;
 use App\Services\PlantillaPositionService;
 use App\Services\PlantillaPersonnelService;
 
@@ -23,7 +22,7 @@ class PromotionController extends Controller
 {
     private readonly PlantillaPositionService $plantillaPositionService;
 
-    public function __construct(public PlantillaPersonnelService $plantillaPersonnelService, public PromotionService $promotionService, public SalaryGradeService $salaryGradeService)
+    public function __construct(private readonly PlantillaPersonnelService $plantillaPersonnelService, private readonly PromotionService $promotionService)
     {
         $this->plantillaPositionService = app()->make(PlantillaPositionService::class);
     }
@@ -108,26 +107,17 @@ class PromotionController extends Controller
 
     public function store(Request $request)
     {
-
         // Validate form input
         $this->validate($request, [
             'employee' => ['required', 'exists:E_PIMS_CONNECTION.plantillas,employee_id'],
             'office' => ['required', 'exists:E_PIMS_CONNECTION.Offices,office_code'],
-            'division' => ['nullable', 'exists:E_PIMS_CONNECTION.Divisions,division_name'],
-            'section' => ['nullable', 'exists:E_PIMS_CONNECTION.Sections,section_name'],
             'position' => ['required'],
-            'status' => ['required', 'in:Permanent,Casual,Coterminous,Provisional,Temporary'],
-            'item_no' => ['required', 'integer'],
             'old_item_no' => ['required', 'integer'],
-            'current_salary_grade_year' => ['required', 'digits:4', 'integer'],
+            'item_no' => ['required', 'integer'],
+            'salary_grade_year' => ['required', 'digits:4', 'integer'],
             'salary_grade' => ['required', 'integer', 'min:1', 'max:33'],
             'step' => ['required', 'integer', 'min:1', 'max:8'],
             'salary_amount' => ['required'],
-            'original_appointment' => ['required', 'date', 'before:last_promotion'],
-            'last_promotion' => ['required', 'date', 'after:original_appointment'],
-            'area_code' => ['required'],
-            'area_type' => ['required'],
-            'area_level' => ['required'],
         ], [], [
             'employee' => 'employee name',
         ]);
@@ -155,17 +145,16 @@ class PromotionController extends Controller
              * UPDATE OLD_ITEM_NO
              * UPDATE EMPLOYEE_iD
              */
-            $this->plantillaPersonnelService->addNewPlantilla($request->all());
+            $this->plantillaPersonnelService->addNewPlantilla($employeeLatestPlantilla, $request->all());
 
             // Promotion add new record.
             $this->promotionService->store($employeeLatestPlantilla->pp_id, $request->all());
-
 
             /* Updating the current service record of the employee soon to be previous record. */
             $currentServiceRecord = $this->promotionService->getCurrentServiceRecord($request->employee);
 
             if($currentServiceRecord) {
-                $currentServiceRecord->service_to_date = Carbon::parse($request->last_promotion)->subDays(1);
+                $currentServiceRecord->service_to_date = Carbon::parse($request['date_promotion'])->subDays(1);
                 $currentServiceRecord->save();
             }
 
@@ -173,11 +162,12 @@ class PromotionController extends Controller
             $plantillaPosition = PlantillaPosition::find($request->position);
 
             /* Creating a new record in the service_record table. */
+
             $this->promotionService->addNewRecord([
                 'employee_id'       => $request->employee,
-                'service_from_date' => $request->last_promotion,
+                'service_from_date' => $request['date_promotion'],
                 'PosCode'           => $plantillaPosition->PosCode,
-                'status'            => $request->status,
+                'status'            => $employeeLatestPlantilla->status,
                 'salary'            => Str::remove(',', $request->salary_amount),
                 'office_code'       => $plantillaPosition->office_code,
             ]);

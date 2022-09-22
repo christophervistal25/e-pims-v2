@@ -20,238 +20,152 @@
 @section('content')
 @if(Session::has('success'))
 <div class="alert alert-success" role="alert">
-  {{ Session::get('success') }}
+    {{ Session::get('success') }}
 </div>
+@else
+
 @endif
 <div class="card rounded-0 shadow-none">
-    <div class="card-body">
-        <form action="{{ route('promotion.store') }}" method="POST">
+    <div class="card-body p-0">
+
+        <form method="POST" action="{{ route('promotion.store') }}">
             @csrf
-            <div class="row">
-                <div class="col-lg-10">
-                    <label class='text-uppercase h6'>Employee Name</label>
-                    <select data-style="{{ $errors->has('employee') ? 'border-danger' : 'border form-select' }}" class="form-control form-control-xs selectpicker"
-                        name="employee" data-live-search="true" id="employee" data-size="5">
-                        <option value=""></option>
-                        @foreach($employees as $employee)
-                            <option data-fullname="{{ $employee->fullname }}" value="{{ $employee->Employee_id }}">{{ $employee->fullname }}</option>
-                        @endforeach
-                    </select>
-                    @error('employee')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
+
+            <div class="row px-4 mt-2">
+                <div class="col-lg-4">
+                    <label class="text-uppercase">Date Promotion</label>
+                    <input type="date" class="form-control form-control-xs" name="date_promotion">
                 </div>
 
-                <div class="col-lg-2">
-                    <label class='text-uppercase h6'>Employee ID</label>
-                    <input type="text" id="employeeID" class='form-control' readonly>
+                <div class="col-lg-4">
+                    <label class="text-uppercase">Employee Name</label>
+                    <select data-style="{{ $errors->has('employee') ? 'border-danger' : 'border form-select' }}" class="form-control form-control-xs selectpicker" name="employee" data-live-search="true" id="employee" data-size="15">
+                        <option value=""></option>
+                        @foreach($employees as $employee)
+                        <option data-fullname="{{ $employee->fullname }}" value="{{ $employee->Employee_id }}">{{ $employee->fullname }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-lg-4">
+                    <label class="text-uppercase">Employee ID</label>
+                    <input type="text" class="form-control" name="employee_id" id="employee_id" readonly>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="py-3 bg-light my-4 border-bottom border-top">
+                <span class="px-3 font-weight-bold">
+                    CURRENT PLANTILLA
+                </span>
+            </div>
+
+            <div class="row px-4 mb-3">
                 <div class="col-lg-6">
-                    <label class='text-uppercase h6'>Office</label>
-                    <select data-style="{{ $errors->has('office') ? 'border-danger' : 'border form-select' }}" class="form-control form-control-xs selectpicker"
-                        name="office" data-live-search="true" id="office" data-size="5">
+                    <label class="text-uppercase">Office</label>
+                    <input type="text" class="form-control" id="current_office" readonly>
+                </div>
+
+                <div class="col-lg-6">
+                    <label class="text-uppercase">Position</label>
+                    <input type="text" class="form-control"  id="current_position" readonly>
+                </div>
+            </div>
+
+            <div class="row px-4 mb-3">
+                <div class="col-lg-1">
+                    <label class="text-uppercase">Item No</label>
+                    <input type="text" class="form-control text-center" name="old_item_no"  id="current_item_no" readonly>
+                </div>
+
+                <div class="col-lg-2">
+                    <label class="text-uppercase">Salary Grade Year</label>
+                    <input type="text" class="form-control text-center"  id="current_salary_grade_year" readonly>
+                </div>
+
+                <div class="col-lg-3">
+                    <label class="text-uppercase">Salary Grade</label>
+                    <input type="text" class="form-control text-center" id="current_salary_grade" readonly>
+                </div>
+
+                <div class="col-lg-3">
+                    <label class="text-uppercase">Step</label>
+                    <input type="text" class="form-control text-center"  id="current_step" readonly>
+                </div>
+
+                <div class="col-lg-3">
+                    <label class="text-uppercase">Salary Amount</label>
+                    <input type="text" class="form-control text-center" id="current_salary_amount" readonly>
+                </div>
+
+            </div>
+
+            <div class="py-3 bg-light my-4 border-bottom border-top">
+                <span class="px-3 font-weight-bold">
+                    NEW PLANTILLA
+                </span>
+            </div>
+
+            <div class="row px-4 mb-3">
+                <div class="col-lg-6">
+                    <label class="text-uppercase">Office</label>
+                    <select name="office" id="office" class="form-control selectpicker" data-live-search="true" data-size="5">
                         <option value=""></option>
                         @foreach($offices as $office)
                         <option value="{{ $office->office_code }}">{{ $office->office_name }}</option>
                         @endforeach
                     </select>
-                    @error('office')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
                 </div>
+
                 <div class="col-lg-6">
-                    <label class='text-uppercase h6'>Position</label>
-                    <select data-style="{{ $errors->has('position') ? 'border-danger' : 'border form-select' }}" class="form-control form-control-xs selectpicker"
-                        name="position" data-live-search="true" id="position" data-size="5">
+                    <label class="text-uppercase">Position</label>
+                    <select name="position" id="position" class="form-control selectpicker" data-live-search="true" data-size="5">
                     </select>
-                    @error('position')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
                 </div>
-
-
-
-
             </div>
 
-            <div class="row">
-                <div class="col-lg-3">
-                    <label class='text-uppercase h6'>Division</label>
-                    <input type="text" id="division" class="form-control form-control-xs border {{  $errors->has('division') ? 'is-invalid' : '' }}" name="division" readonly>
-                    @error('division')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
+            <div class="row px-4 mb-3">
+                <div class="col-lg-1">
+                    <label class="text-uppercase">Item No</label>
+                    <input type="text" class="form-control text-center" name="item_no" id="item_no" readonly>
+                </div>
+
+                <div class="col-lg-2">
+                    <label class="text-uppercase">Salary Grade Year</label>
+                    <input type="text" class="form-control text-center" name="salary_grade_year" id="salary_grade_year">
                 </div>
 
                 <div class="col-lg-3">
-                    <label class='text-uppercase h6'>Section</label>
-                    <input class="form-control form-control-xs bordedr {{ $errors->has('section') ? 'is-invalid' : '' }}" name="section" id="section" readonly />
-                    @error('section')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="col-lg-6">
-                    <label class='text-uppercase h6'>Status</label>
-                    <input class="form-control form-control-xs {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status" id="status" readonly>
-                    @error('status')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-6">
-                    <label class='text-uppercase h6'>Item No</label>
-                    <input type="text" class='form-control form-control-xs {{ $errors->has('item_no') ? 'is-invalid' : '' }}' name="item_no" id="item_no" readonly>
-                    @error('item_no')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="col-lg-6">
-                    <label class='text-uppercase h6'>Current Item No</label>
-                    <div class="input-group mb-3">
-                        <input type="text" class='form-control form-control-xs {{ $errors->has('old_item_no') ? 'is-invalid' : '' }}' name="old_item_no" id="old_item_no"
-                            readonly>
-                        <div class="input-group-append">
-                            <button class="btn btn-primarys d-none" id="btnViewOldItem" type="button">
-                                <i class='fas fa-eye'></i>
-                            </button>
-                        </div>
-                    </div>
-                    @error('old_item_no')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-            </div>
-
-            <hr>
-
-            <div class="row">
-                <div class="col-lg-3">
-                    <label class='text-uppercase h6'>Current Salary Grade Year</label>
-                    <input type="text" class='form-control form-control-xs {{ $errors->has('current_salary_grade_year') ? 'is-invalid' : '' }}' name="current_salary_grade_year"
-                        id="current_salary_grade_year" readonly value="{{ date('Y') }}">
-                    @error('current_salary_grade_year')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
+                    <label class="text-uppercase">Salary Grade</label>
+                    <input type="text" class="form-control text-center" name="salary_grade" id="salary_grade">
                 </div>
 
                 <div class="col-lg-3">
-                    <label class='text-uppercase h6'>Salary Grade</label>
-                    <input type="text" class='form-control form-control-xs {{ $errors->has('salary_grade') ? 'is-invalid' : '' }}' name="salary_grade" id="salary_grade"
-                        readonly>
-                    @error('salary_grade')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
+                    <label class="text-uppercase">Step</label>
+                    <select class="form-control" name="step" id="step">
+                        @foreach(range(1, 8) as $step)
+                        <option value="{{ $step }}">{{ $step }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="col-lg-3">
-                    <label class='text-uppercase h6'>Steps</label>
-                    <input class='form-control form-control-xs {{ $errors->has('step') ? 'is-invalid' : '' }}' name="step" id="step" readonly>
-                    @error('step')
-                        <span class='text-danger'>{{ $message }}</span>
-                    @enderror
+                    <label class="text-uppercase">Salary Amount</label>
+                    <input type="text" class="form-control text-center" readonly name="salary_amount" id="salary_amount">
                 </div>
 
-                <div class="col-lg-3">
-                    <label class='text-uppercase h6'>Salary Amount</label>
-                    <input type="text" class='form-control form-control-xs {{ $errors->has('salary_amount')  ? 'is-invalid' : '' }}' name="salary_amount" id="salary_amount"
-                        readonly>
-                    @error('salary_amount')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
             </div>
 
-            <div class="row">
-                <div class="col-lg-6">
-                    <label class='text-uppercase h6'>Original Appointment</label>
-                    <input type="date" id="original_appointment" class='form-control form-control-xs {{ $errors->has('original_appointment') ? 'is-invalid' : '' }}' name="original_appointment">
-                    @error('original_appointment')
-                        <span class='text-danger'>{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="col-lg-6">
-                    <label class='text-uppercase h6'>Last Promotion</label>
-                    <input type="date" class='form-control form-control-xs {{ $errors->has('last_promotion') ? 'is-invalid' : '' }}' name="last_promotion" id="last_promotion">
-                    @error('last_promotion')
-                        <span class='text-danger'>{{ $message }}</span>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-4">
-                    <label class='text-uppercase h6'>Area Code</label>
-                    <input type="text" class="form-control" name="area_code" id="area_code" readonly>
-                    @error('area_code')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="col-lg-4">
-                    <label class='text-uppercase h6'>Area Type</label>
-                    <input type="text" class="form-control" name="area_type" id="area_type" readonly>
-                    @error('area_type')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="col-lg-4">
-                    <label class='text-uppercase h6'>Area level</label>
-                    <input type="text" class="form-control" name="area_level" id="area_level" readonly>
-                    @error('area_level')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="float-right mt-3">
-                <button class='btn btn-primarys' type="submit">
-                    <i class="las la-folder-plus"></i>
-                    Submit Promotion
-                </button>
-            </div>
-        </form>
-    </div>
-
-
-    <!-- View Old Item Modal -->
-    <div class="modal fade" id="oldItemModal" tabindex="-1" role="dialog" aria-labelledby="oldItemModalTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <p class="modal-title h6 text-uppercase" id="oldItemModalTitle"></p>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+            <div class="px-4">
+                <div class="float-right">
+                    <button class='btn btn-primarys' type="submit">
+                        <i class="las la-folder-plus"></i>
+                        Submit Promotion
                     </button>
                 </div>
-                <div class="modal-body">
-                        <table class='table table-bordered'>
-                              <thead>
-                                    <tr>
-                                          <th>POSITION TITLE</th>
-                                          <th>OFFICE</th>
-                                          <th>ITEM NO</th>
-                                          <th>STATUS</th>
-                                          <th>YEAR</th>
-                                    </tr>
-                              </thead>
-                              <tbody id='employee-current-plantilla-container'></tbody>
-                        </table>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
-                </div>
+                <br>
+                <br>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 @push('page-scripts')
@@ -260,31 +174,28 @@
 <script>
     let employeePlantilla = {};
 
-    $('#employee').change(function () {
+    $('#employee').change(function() {
         let employeeID = $(this).val();
-        if(employeeID) {
-            $('#employeeID').val(employeeID);
-        } else {
-            $('#employeeID').val('');
+        if (employeeID) {
+            axios(`/api/personnel-get-current-plantilla/${employeeID}`).then((response) => {
+                $('#employee_id').val(employeeID);
+                $('#current_salary_amount').val(response.data.salary_amount);
+                $('#current_step').val(response.data.step_no || 1);
+                $('#current_salary_grade').val(response.data.sg_no);
+                $('#current_salary_grade_year').val(response.data.year);
+                $('#current_item_no').val(response.data.item_no);
+                $('#current_position').val(response.data.plantilla_positions.position.Description);
+                $('#current_office').val(response.data.plantilla_positions.office.office_name);
+            });
         }
     });
 
-    $('#office').change(function () {
+    $('#office').change(function() {
         let office = $(this).val();
         if (office) {
-            // $.get({
-            //     url: `/api/division-by-office/${office}`,
-            //     success: function (response) {
-            //         $('#division').children().remove();
-            //         response.divisions.forEach((division) => $(`#division`).append(
-            //             `<option value="${division.division_id}">${division.division_name}</option>`
-            //         ));
-            //     }
-            // });
-
             $.get({
-                url: `/api/office-plantilla-positions/${office}`,
-                success: function (response) {
+                url: `/api/office-plantilla-positions/${office}`
+                , success: function(response) {
                     $('#position').children().remove();
                     $('#position').append(`<option value=""></option>`);
                     response.positions.forEach((position) => $(`#position`).append(
@@ -300,65 +211,45 @@
         }
     });
 
-    $('#position').change(function () {
+    $('#position').change(function() {
         let selectedEmployee = $('#employeeID').val();
         let plantillaPositionID = $(this).val();
         if (plantillaPositionID) {
             $.get({
-                url: `/api/plantilla-position-details/${plantillaPositionID}`,
-                success: function (response) {
-                    $('#division').val(response?.division?.division_name || '');
-                    $('#section').val(response?.section?.section_name || '');
-                    $('#status').val(response?.plantillas?.status);
+                url: `/api/plantilla-position-details/${plantillaPositionID}`
+                , success: function(response) {
                     $('#item_no').val(response.item_no);
-                    $('#old_item_no').val(response?.plantillas.item_no);
-                    $('#original_appointment').val(response?.plantillas.date_original_appointment);
-                    $('#last_promotion').val(response?.plantillas.date_last_promotion);
-                    $('#current_salary_grade_year').val(response?.plantillas?.year);
-                    $('#salary_grade').val(response?.plantillas.sg_no);
-                    $('#salary_amount').val(response?.plantillas.salary_amount);
-                    $('#step').val(response?.plantillas.step_no);
-                    $('#area_code').val(`${response?.area_code.area_code_id} - ${response.area_code.description}`)
-                    $('#area_type').val(`${response?.area_type.area_type_id} - ${response.area_type.description}`)
-                    $('#area_level').val(`${response?.area_level.area_level_id} - ${response.area_level.description}`)
-                    $('#btnViewOldItem').removeClass('d-none');
-                    employeePlantilla = response;
+                    $('#salary_grade_year').val(response.plantillas.year);
+                    $('#salary_grade').val(response.plantillas.sg_no);
+                    $('#salary_amount').val(response.plantillas.salary_amount);
+                    $('#step').val(response.plantillas.step_no);
                 }
             });
         } else {
-            $('#division').val('');
-            $('#section').val('');
             $('#status').val('');
             $('#item_no').val('');
-            $('#old_item_no').val('');
-            $('#original_appointment').val('');
-            $('#last_promotion').val('');
-            $('#current_salary_grade_year').val('');
+            $('#salary_grade_year').val('');
             $('#salary_grade').val('');
             $('#salary_amount').val('');
             $('#step').val('');
-            $('#area_code').val('')
-            $('#area_type').val('')
-            $('#area_level').val('')
-            $('#btnViewOldItem').addClass('d-none');
         }
 
     });
 
-    $('#step').change(function () {
+    $('#step').change(function() {
         let grade = $('#salary_grade').val();
         let year = $('#current_salary_grade_year').val();
         let step = $('#step').val() || 1;
 
         $.ajax({
-            url: `/api/salary-amount/${grade}/${step}/${year}`,
-            success: function (salary_amount) {
+            url: `/api/salary-amount/${grade}/${step}/${year}`
+            , success: function(salary_amount) {
                 $('#salary_amount').val(salary_amount);
             }
         });
     });
 
-    $('#btnViewOldItem').click(function () {
+    $('#btnViewOldItem').click(function() {
         if (employeePlantilla) {
             $('#oldItemModal').modal('toggle');
             let selectedEmployeeID = $('#employee').val();
