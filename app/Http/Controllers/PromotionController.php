@@ -28,14 +28,15 @@ class PromotionController extends Controller
         $promotions = Promotion::with(['employee', 'old_plantilla_position', 'old_plantilla_position.position', 'new_plantilla_position.position']);
 
         if ($office != '*') {
-            $promotions->whereHas('employee', function ($query) use ($office) {
-                $query->where('OfficeCode', $office);
-            });
+            // $promotions->employee', function ($query) use ($office) {
+                // $promotions->where('OfficeCode', $office);
+            // });
         }
 
         if ($year != '*') {
             $promotions->where('sg_year', $year);
         }
+
 
         return DataTables::of($promotions->get())
             ->addColumn('promotion_date', function ($record) {
@@ -107,9 +108,9 @@ class PromotionController extends Controller
 
         // Validate form input
         $this->validate($request, [
-            'employee' => ['required', 'exists:plantillas,employee_id'],
-            'office' => ['required', 'exists:Offices,office_code'],
-            'division' => ['nullable', 'exists:Divisions,division_id'],
+            'employee' => ['required', 'exists:E_PIMS_CONNECTION.plantillas,employee_id'],
+            'office' => ['required', 'exists:E_PIMS_CONNECTION.Offices,office_code'],
+            'division' => ['nullable', 'exists:E_PIMS_CONNECTION.Divisions,division_id'],
             'position' => ['required'],
             'status' => ['required', 'in:Permanent,Casual,Coterminous,Provisional,Temporary'],
             'item_no' => ['required', 'integer'],
@@ -132,31 +133,45 @@ class PromotionController extends Controller
             ->first();
 
         DB::transaction(function () use ($request, $employeeLatestPlantilla) {
-            /* Creating a new promotion. */
+            /**
+             * CURRENT PLANTILLA *
+             * Blank old_item_no & employee_id
+             */
+            $employeeLatestPlantilla->old_item_no = null;
+            $employeeLatestPlantilla->employee_id = null;
+            $employeeLatestPlantilla->save();
+
+            /**
+             * NEW PLANTILLA
+             * TRANSFER THE CURRENT OLD_ITEM_NO OF PLANTILLA TO NEW
+             * UPDATE OLD_ITEM_NO
+             * UPDATE EMPLOYEE_iD
+             */
+            $this->plantillaPersonnelService->addNewPlantilla($request->all());
+
+            // Promotion add new record.
             $this->promotionService->store($employeeLatestPlantilla->pp_id, $request->all());
 
-            /* Adding a new plantilla for the employee. */
-            $this->plantillaPersonnelService->addNewPlantilla($employeeLatestPlantilla, $request->all());
-
-            /* Removing the current plantilla of the employee. */
-            $this->plantillaPersonnelService->removeCurrentPlantilla($employeeLatestPlantilla);
 
             /* Updating the current service record of the employee soon to be previous record. */
             $currentServiceRecord = $this->promotionService->getCurrentServiceRecord($request->employee);
-            $currentServiceRecord->service_to_date = Carbon::parse($request->last_promotion)->subDays(1);
-            $currentServiceRecord->save();
+
+            if($currentServiceRecord) {
+                $currentServiceRecord->service_to_date = Carbon::parse($request->last_promotion)->subDays(1);
+                $currentServiceRecord->save();
+            }
 
             /* Creating a new record in the service_record table. */
             $plantillaPosition = PlantillaPosition::find($request->position);
 
             /* Creating a new record in the service_record table. */
             $this->promotionService->addNewRecord([
-                'employee_id' => $request->employee,
+                'employee_id'       => $request->employee,
                 'service_from_date' => $request->last_promotion,
-                'PosCode' => $plantillaPosition->PosCode,
-                'status' => $request->status,
-                'salary' => Str::remove(',', $request->salary_amount),
-                'office_code' => $plantillaPosition->office_code,
+                'PosCode'           => $plantillaPosition->PosCode,
+                'status'            => $request->status,
+                'salary'            => Str::remove(',', $request->salary_amount),
+                'office_code'       => $plantillaPosition->office_code,
             ]);
         });
 
@@ -166,17 +181,11 @@ class PromotionController extends Controller
     public function edit(int $promotionID)
     {
         $offices = Office::get();
-
         $positions = Position::get();
-
         $promotion = Promotion::with(['employee', 'new_plantilla_position', 'new_plantilla_position.plantillas', 'new_plantilla_position.plantillas.plantilla_positions', 'new_plantilla_position.plantillas.plantilla_positions.position'])->find($promotionID);
-
         $employeeStatus = ['Permanent', 'Casual', 'Coterminous', 'Provisional', 'Temporary'];
-
         $areaCode = Plantilla::REGIONS;
-
         $areaType = Plantilla::AREA_TYPES;
-
         $areaLevel = Plantilla::AREA_LEVELS;
 
         return view('promotion.edit', [
@@ -194,8 +203,8 @@ class PromotionController extends Controller
     public function update(Request $request, int $promotionID)
     {
         $this->validate($request, [
-            'office' => ['required', 'exists:Offices,office_code'],
-            'division' => ['required', 'exists:Divisions,division_id'],
+            'office' => ['required', 'exists:E_PIMS_CONNECTION.Offices,office_code'],
+            'division' => ['required', 'exists:E_PIMS_CONNECTION.Divisions,division_id'],
             'status' => ['required', 'in:Permanent,Casual,Coterminous,Provisional,Temporary'],
             'item_no' => ['required', 'integer'],
             'old_item_no' => ['required', 'integer'],
@@ -209,6 +218,7 @@ class PromotionController extends Controller
             'area_type' => ['required', 'in:'.implode(',', Plantilla::AREA_TYPES)],
             'area_level' => ['required', 'in:'.implode(',', Plantilla::AREA_LEVELS)],
         ]);
+
 
         $promotion = Promotion::with(['new_plantilla_position', 'new_plantilla_position.plantillas'])->find($promotionID);
 
@@ -236,11 +246,8 @@ class PromotionController extends Controller
         return back()->with('success', 'You successfully update a promotion');
     }
 
-    public function destroy(Request $request, int $promotionID)
-    {
-        $promotion = Promotion::find($promotionID);
-        $promotion->delete();
-
-        return response()->json(['success' => true]);
-    }
+    // public function destroy(Request $request, int $promotionID)
+    // {
+    //     return response()->json(['success' => true]);
+    // }
 }

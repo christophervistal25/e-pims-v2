@@ -22,14 +22,14 @@ class PromotionService extends ServiceRecordService
     public function store(int $oldPlantillaID, array $data = [])
     {
         Promotion::create([
-            'promotion_id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
-            'promotion_date' => Carbon::now(),
-            'employee_id' => $data['employee'],
-            'oldpp_id' => $oldPlantillaID,
-            'sg_no' => $data['salary_grade'],
-            'step_no' => $data['step'],
-            'sg_year' => $data['current_salary_grade_year'],
-            'newpp_id' => $data['position'],
+            'promotion_id'   => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
+            'promotion_date' => Carbon     ::now(),
+            'employee_id'    => $data['employee'],
+            'oldpp_id'       => $oldPlantillaID,
+            'sg_no'          => $data['salary_grade'],
+            'step_no'        => $data['step'],
+            'sg_year'        => $data['current_salary_grade_year'],
+            'newpp_id'       => $data['position'],
         ]);
     }
 
@@ -46,7 +46,7 @@ class PromotionService extends ServiceRecordService
 
         DB::transaction(function () use ($data, &$promotion, &$promotionUpdate, &$plantillaUpdate) {
             $plantillaPosition = PlantillaPosition::find($data['position']);
-            $promotion->promotion_date = Carbon::now();
+            $promotion->promotion_date = $data['last_promotion'];
             $promotion->newpp_id = $plantillaPosition->pp_id;
             $promotion->sg_no = $data['salary_grade'];
             $promotion->step_no = $data['step'];

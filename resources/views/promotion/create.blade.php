@@ -37,7 +37,7 @@
                         @endforeach
                     </select>
                     @error('employee')
-                        <span class="text-danger">{{ $message }}</span>  
+                        <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
 
@@ -96,7 +96,7 @@
                     @enderror
                 </div>
             </div>
-            
+
             <div class="row">
                 <div class="col-lg-6">
                     <label class='text-uppercase h6'>Item No</label>
@@ -169,7 +169,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <label class='text-uppercase h6'>Original Appointment</label>
-                    <input type="date" class='form-control form-control-xs {{ $errors->has('original_appointment') ? 'is-invalid' : '' }}' name="original_appointment">
+                    <input type="date" id="original_appointment" class='form-control form-control-xs {{ $errors->has('original_appointment') ? 'is-invalid' : '' }}' name="original_appointment">
                     @error('original_appointment')
                         <span class='text-danger'>{{ $message }}</span>
                     @enderror
@@ -287,7 +287,7 @@
                     $('#division').children().remove();
                     response.divisions.forEach((division) => $(`#division`).append(
                         `<option value="${division.division_id}">${division.division_name}</option>`
-                        ));
+                    ));
                 }
             });
 
@@ -298,7 +298,7 @@
                     $('#position').append(`<option value=""></option>`);
                     response.positions.forEach((position) => $(`#position`).append(
                         `<option value="${position.pp_id}">${position.position.Description}</option>`
-                        ));
+                    ));
                     $('#position').selectpicker('refresh');
                 }
             });
@@ -336,7 +336,7 @@
                     employeePlantilla = currentPlantilla;
                     $('#btnViewOldItem').removeClass('d-none');
                     $('#old_item_no').val(currentPlantilla.item_no);
-                    // $('#last_promotion').val(currentPlantilla.date_last_promotion);
+                    $('#original_appointment').val(currentPlantilla.date_original_appointment);
                 }
             });
         } else {
@@ -369,7 +369,7 @@
             let selectedEmployeeID = $('#employee').val();
             let selectedEmployeeFullname = $('#employee').find(":selected").attr('data-fullname');
             $('#oldItemModalTitle').html(`<strong>${selectedEmployeeID} - ${selectedEmployeeFullname}</strong> Current Plantilla`);
-            
+
             $('#employee-current-plantilla-container').html(``).append(`
                   <tr>
                         <td>${employeePlantilla?.plantilla_positions?.position?.Description || ''}</td>

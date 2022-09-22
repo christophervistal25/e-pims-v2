@@ -138,7 +138,6 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
     Route::post('promotion/store', [PromotionController::class, 'store'])->name('promotion.store');
     Route::get('promotion/{id}/edit', [PromotionController::class, 'edit'])->name('promotion.edit');
     Route::put('promotion/{id}/edit', [PromotionController::class, 'update'])->name('promotion.update');
-    Route::delete('promotion/{id}/delete', [PromotionController::class, 'destroy'])->name('promotion.destroy');
     Route::get('see-more/promotions', [StepPromotionController::class, 'upcomingStep'])->name('promotion.see-more');
 
     Route::get('step-increment/list', 'StepIncrementController@list');
