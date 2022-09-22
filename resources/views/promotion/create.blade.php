@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Add New Promotion')
 @prepend('page-css')
+<link rel="stylesheet" href="/assets/css/style.css" />
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <style>
@@ -22,7 +23,7 @@
   {{ Session::get('success') }}
 </div>
 @endif
-<div class="card rounded-0 shadow-none border-none">
+<div class="card rounded-0 shadow-none">
     <div class="card-body">
         <form action="{{ route('promotion.store') }}" method="POST">
             @csrf
@@ -61,18 +62,6 @@
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-
-                <div class="col-lg-6">
-                    <label class='text-uppercase h6'>Division</label>
-                    <select class="form-control form-control-xs {{ $errors->has('division') ? 'is-invalid' : '' }}" name="division" id="division" >
-                    </select>
-                    @error('division')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-            </div>
-
-            <div class="row">
                 <div class="col-lg-6">
                     <label class='text-uppercase h6'>Position</label>
                     <select data-style="{{ $errors->has('position') ? 'border-danger' : 'border form-select' }}" class="form-control form-control-xs selectpicker"
@@ -83,14 +72,31 @@
                     @enderror
                 </div>
 
+
+
+
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3">
+                    <label class='text-uppercase h6'>Division</label>
+                    <input type="text" id="division" class="form-control form-control-xs border {{  $errors->has('division') ? 'is-invalid' : '' }}" name="division" readonly>
+                    @error('division')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="col-lg-3">
+                    <label class='text-uppercase h6'>Section</label>
+                    <input class="form-control form-control-xs bordedr {{ $errors->has('section') ? 'is-invalid' : '' }}" name="section" id="section" readonly />
+                    @error('section')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
                 <div class="col-lg-6">
                     <label class='text-uppercase h6'>Status</label>
-                    <select class="form-control form-control-xs {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status"
-                        id="status">
-                        @foreach($employeeStatus as $status)
-                        <option value="{{ $status }}">{{ $status }}</option>
-                        @endforeach
-                    </select>
+                    <input class="form-control form-control-xs {{ $errors->has('status') ? 'is-invalid' : '' }}" name="status" id="status" readonly>
                     @error('status')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -146,11 +152,7 @@
 
                 <div class="col-lg-3">
                     <label class='text-uppercase h6'>Steps</label>
-                    <select class='form-control form-control-xs {{ $errors->has('step') ? 'is-invalid' : '' }}' name="step" id="step">
-                        @foreach(range(1, 8) as $increment)
-                            <option value="{{ $increment }}">{{ $increment }}</option>
-                        @endforeach
-                    </select>
+                    <input class='form-control form-control-xs {{ $errors->has('step') ? 'is-invalid' : '' }}' name="step" id="step" readonly>
                     @error('step')
                         <span class='text-danger'>{{ $message }}</span>
                     @enderror
@@ -187,11 +189,7 @@
             <div class="row">
                 <div class="col-lg-4">
                     <label class='text-uppercase h6'>Area Code</label>
-                    <select name="area_code" id="area_code" class='form-control form-control-xs {{ $errors->has('area_code') ? 'is-invalid' : '' }}'>
-                        @foreach($areaCode as $area)
-                        <option {{ Str::upper($area) === 'CARAGA' ? 'selected' : '' }} value="{{ $area }}">{{ $area }}</option>
-                        @endforeach
-                    </select>
+                    <input type="text" class="form-control" name="area_code" id="area_code" readonly>
                     @error('area_code')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -199,23 +197,15 @@
 
                 <div class="col-lg-4">
                     <label class='text-uppercase h6'>Area Type</label>
-                    <select name="area_type" id="area_type" class='form-control form-control-xs {{ $errors->has('area_type') ? 'is-invalid' : '' }}'>
-                        @foreach($areaType as $areaType)
-                        <option {{ Str::upper($areaType) === 'PROVINCE' ? 'selected' : '' }} value="{{ $areaType }}">{{ $areaType }}</option>
-                        @endforeach
-                    </select>
+                    <input type="text" class="form-control" name="area_type" id="area_type" readonly>
                     @error('area_type')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
 
                 <div class="col-lg-4">
-                    <label class='text-uppercase h6'>Area Level</label>
-                    <select class='form-control form-control-xs {{ $errors->has('area_level') ? 'is-invalid' : '' }}' name="area_level" id="area_level">
-                        @foreach($areaLevel as $level)
-                        <option {{ Str::upper($level) === 'A' ? 'selected' : '' }} value="{{ $level }}">{{ $level }}</option>
-                        @endforeach
-                    </select>
+                    <label class='text-uppercase h6'>Area level</label>
+                    <input type="text" class="form-control" name="area_level" id="area_level" readonly>
                     @error('area_level')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -266,6 +256,7 @@
 </div>
 @push('page-scripts')
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     let employeePlantilla = {};
 
@@ -281,15 +272,15 @@
     $('#office').change(function () {
         let office = $(this).val();
         if (office) {
-            $.get({
-                url: `/api/division-by-office/${office}`,
-                success: function (response) {
-                    $('#division').children().remove();
-                    response.divisions.forEach((division) => $(`#division`).append(
-                        `<option value="${division.division_id}">${division.division_name}</option>`
-                    ));
-                }
-            });
+            // $.get({
+            //     url: `/api/division-by-office/${office}`,
+            //     success: function (response) {
+            //         $('#division').children().remove();
+            //         response.divisions.forEach((division) => $(`#division`).append(
+            //             `<option value="${division.division_id}">${division.division_name}</option>`
+            //         ));
+            //     }
+            // });
 
             $.get({
                 url: `/api/office-plantilla-positions/${office}`,
@@ -316,35 +307,39 @@
             $.get({
                 url: `/api/plantilla-position-details/${plantillaPositionID}`,
                 success: function (response) {
-                    $('#salary_grade').val(response.sg_no);
+                    $('#division').val(response?.division?.division_name || '');
+                    $('#section').val(response?.section?.section_name || '');
+                    $('#status').val(response?.plantillas?.status);
                     $('#item_no').val(response.item_no);
-                    let year = $('#current_salary_grade_year').val();
-
-                    let step = $('#step').val() || 1;
-                    $.get({
-                        url: `/api/salary-amount/${response.sg_no}/${step}/${year}`,
-                        success: function (salary_amount) {
-                            $('#salary_amount').val(salary_amount);
-                        }
-                    });
-                }
-            });
-
-            $.get({
-                url: `/api/personnel-get-current-plantilla/${selectedEmployee}`,
-                success: function (currentPlantilla) {
-                    employeePlantilla = currentPlantilla;
+                    $('#old_item_no').val(response?.plantillas.item_no);
+                    $('#original_appointment').val(response?.plantillas.date_original_appointment);
+                    $('#last_promotion').val(response?.plantillas.date_last_promotion);
+                    $('#current_salary_grade_year').val(response?.plantillas?.year);
+                    $('#salary_grade').val(response?.plantillas.sg_no);
+                    $('#salary_amount').val(response?.plantillas.salary_amount);
+                    $('#step').val(response?.plantillas.step_no);
+                    $('#area_code').val(`${response?.area_code.area_code_id} - ${response.area_code.description}`)
+                    $('#area_type').val(`${response?.area_type.area_type_id} - ${response.area_type.description}`)
+                    $('#area_level').val(`${response?.area_level.area_level_id} - ${response.area_level.description}`)
                     $('#btnViewOldItem').removeClass('d-none');
-                    $('#old_item_no').val(currentPlantilla.item_no);
-                    $('#original_appointment').val(currentPlantilla.date_original_appointment);
+                    employeePlantilla = response;
                 }
             });
         } else {
+            $('#division').val('');
+            $('#section').val('');
+            $('#status').val('');
             $('#item_no').val('');
             $('#old_item_no').val('');
+            $('#original_appointment').val('');
+            $('#last_promotion').val('');
             $('#current_salary_grade_year').val('');
             $('#salary_grade').val('');
             $('#salary_amount').val('');
+            $('#step').val('');
+            $('#area_code').val('')
+            $('#area_type').val('')
+            $('#area_level').val('')
             $('#btnViewOldItem').addClass('d-none');
         }
 
@@ -372,11 +367,11 @@
 
             $('#employee-current-plantilla-container').html(``).append(`
                   <tr>
-                        <td>${employeePlantilla?.plantilla_positions?.position?.Description || ''}</td>
+                        <td>${employeePlantilla?.position?.Description || ''}</td>
                         <td>${employeePlantilla?.office?.office_name || ''}</td>
                         <td>${employeePlantilla.item_no || ''}</td>
-                        <td>${employeePlantilla.status || ''}</td>
-                        <td>${employeePlantilla.year || ''}</td>
+                        <td>${employeePlantilla?.plantillas?.status || ''}</td>
+                        <td>${employeePlantilla?.plantillas?.year || ''}</td>
                   </tr>
             `);
         }

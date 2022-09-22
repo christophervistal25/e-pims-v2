@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Plantilla;
 use App\PlantillaPosition;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -16,9 +17,13 @@ class PlantillaPositionService
      */
     public function positionsByOffice(string $office): Collection
     {
-        return PlantillaPosition::with('position')->whereDoesntHave('plantillas', function ($query) {
-            $query->where('year', date('Y'));
+        // return Plantilla::with('plantilla_positions')->where('office_code', $office)->get();
+        return PlantillaPosition::with(['position'])->whereHas('plantillas', function($query) {
+            $query->whereNull('employee_id');
         })->where('office_code', $office)->get();
+        // return PlantillaPosition::with('position')->whereDoesntHave('plantillas', function ($query) {
+        //     $query->where('year', date('Y'));
+        // })->where('office_code', $office)->get();
     }
 
     /**
@@ -30,7 +35,8 @@ class PlantillaPositionService
      */
     public function getPlantillaPositionDetails(int $plantillaPositionID): PlantillaPosition
     {
-        return PlantillaPosition::find($plantillaPositionID);
+        return PlantillaPosition::with(['plantillas', 'position', 'office', 'areaCode', 'areaType', 'areaLevel', 'division', 'section'])
+                    ->find($plantillaPositionID);
     }
 
     public function positionsWithPlantillasByOfficeAndYear(string $office, int $year): Collection
@@ -46,7 +52,7 @@ class PlantillaPositionService
             'plantilla_history.Employee',
             'salary_grade' => function ($query) use ($year, $previousYear) {
                 $query->where('sg_year', $year)->orWhere('sg_year', $previousYear);
-            }])->where('office_code', $office)
+            }, ])->where('office_code', $office)
             ->get();
     }
 }

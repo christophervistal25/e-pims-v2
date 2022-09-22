@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Promotions')
 @prepend('page-css')
+<link rel="stylesheet" href="/assets/css/style.css" />
 <link rel="stylesheet" href="{{ asset('/assets/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 <script src="https://use.fontawesome.com/78c056906b.js"></script>
@@ -40,7 +41,7 @@
       </div>
 
       <div class="col-5 float-right mb-10">
-            <a href="{{ route('promotion.create') }}" class="btn btn-primarys submit-btn float-right">
+            <a href="{{ route('promotion.create') }}" class="btn btn-primarys float-right">
                   <i class="fas fa-plus-circle"></i>
                   New Promotion
             </a>
@@ -89,19 +90,15 @@
             { data: "sg_no", name: "sg_no", className : 'text-center align-middle' },
             { data: "step_no", name: "step_no", className : 'text-center align-middle' },
             { data: "sg_year", name: "sg_year", className : 'text-center align-middle' },
-            { 
+            {
                   data: "promotion_id",
                   name: "promotion_id",
                   className : 'text-center',
-                  render : function (id, _, _, _) {
+                  render : function (id, _, data, _) {
                         return `
-                              <a class='btn btn-success shadow mr-2' href="/promotion/${id}/edit">
-                                    <i class="las la-user-edit"></i>
+                              <a class='btn btn-info shadow mr-2' href="/promotion/${data.promotion_id}">
+                                    <i class="las la-eye"></i>
                               </a>
-
-                              <button class='btn btn-danger shadow btn-delete-promotion' data-promotion-id="${id}">
-                                    <i class="las la-trash" style="pointer-events:none;"></i>
-                              </button>
                         `;
                   }
             },
@@ -142,7 +139,7 @@
                               success : function (response) {
                                     if(response.success) {
                                           table.ajax.reload();
-                                          
+
                                           swal({
                                                 title : '',
                                                 text : 'You successfully remove a promotion',

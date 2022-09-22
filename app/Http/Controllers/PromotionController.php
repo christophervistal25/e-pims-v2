@@ -2,36 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Employee;
 use App\Office;
-use App\Plantilla;
-use App\PlantillaPosition;
+use App\Division;
+use App\Employee;
 use App\Position;
+use App\Plantilla;
 use App\Promotion;
-use App\Services\PlantillaPersonnelService;
-use App\Services\PromotionService;
-use App\Services\SalaryGradeService;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\PlantillaPosition;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use App\Services\PromotionService;
+use Illuminate\Support\Facades\DB;
+use App\Services\SalaryGradeService;
+use App\Services\PlantillaPositionService;
+use App\Services\PlantillaPersonnelService;
 
 class PromotionController extends Controller
 {
+    private readonly PlantillaPositionService $plantillaPositionService;
+
     public function __construct(public PlantillaPersonnelService $plantillaPersonnelService, public PromotionService $promotionService, public SalaryGradeService $salaryGradeService)
     {
+        $this->plantillaPositionService = app()->make(PlantillaPositionService::class);
     }
 
     public function list(string $office = '*', string $year = '*')
     {
         $promotions = Promotion::with(['employee', 'old_plantilla_position', 'old_plantilla_position.position', 'new_plantilla_position.position']);
-
-        if ($office != '*') {
-            // $promotions->employee', function ($query) use ($office) {
-                // $promotions->where('OfficeCode', $office);
-            // });
-        }
 
         if ($year != '*') {
             $promotions->where('sg_year', $year);
@@ -66,8 +65,20 @@ class PromotionController extends Controller
         rsort($rangeYear);
 
         return view('promotion.index', [
-            'offices' => $offices,
+            'offices'   => $offices,
             'rangeYear' => $rangeYear,
+            'class'     => 'mini-sidebar',
+        ]);
+    }
+
+    public function show(int $promotion)
+    {
+        $promotion = Promotion::find($promotion);
+        $details = $this->plantillaPositionService->getPlantillaPositionDetails($promotion->newpp_id)->load('plantillas.Employee');
+
+        return view('promotion.show', [
+            'promotion' => $promotion,
+            'details' => $details,
         ]);
     }
 
@@ -84,22 +95,10 @@ class PromotionController extends Controller
 
         $offices = Office::get();
 
-        $employeeStatus = ['Permanent', 'Casual', 'Coterminous', 'Provisional', 'Temporary'];
-
-        $areaCode = Plantilla::REGIONS;
-
-        $areaType = Plantilla::AREA_TYPES;
-
-        $areaLevel = Plantilla::AREA_LEVELS;
-
         return view('promotion.create', [
             'employees' => $employees,
             'offices' => $offices,
-            'areaCode' => $areaCode,
-            'areaType' => $areaType,
-            'areaLevel' => $areaLevel,
-            'employeeStatus' => $employeeStatus,
-            // 'class' => 'mini-sidebar',
+            'class' => 'mini-sidebar',
         ]);
     }
 
@@ -110,7 +109,8 @@ class PromotionController extends Controller
         $this->validate($request, [
             'employee' => ['required', 'exists:E_PIMS_CONNECTION.plantillas,employee_id'],
             'office' => ['required', 'exists:E_PIMS_CONNECTION.Offices,office_code'],
-            'division' => ['nullable', 'exists:E_PIMS_CONNECTION.Divisions,division_id'],
+            'division' => ['nullable', 'exists:E_PIMS_CONNECTION.Divisions,division_name'],
+            'section' => ['nullable', 'exists:E_PIMS_CONNECTION.Sections,section_name'],
             'position' => ['required'],
             'status' => ['required', 'in:Permanent,Casual,Coterminous,Provisional,Temporary'],
             'item_no' => ['required', 'integer'],
@@ -121,12 +121,16 @@ class PromotionController extends Controller
             'salary_amount' => ['required'],
             'original_appointment' => ['required', 'date', 'before:last_promotion'],
             'last_promotion' => ['required', 'date', 'after:original_appointment'],
-            'area_code' => ['required', 'in:'.implode(',', Plantilla::REGIONS)],
-            'area_type' => ['required', 'in:'.implode(',', Plantilla::AREA_TYPES)],
-            'area_level' => ['required', 'in:'.implode(',', Plantilla::AREA_LEVELS)],
+            'area_code' => ['required'],
+            'area_type' => ['required'],
+            'area_level' => ['required'],
         ], [], [
             'employee' => 'employee name',
         ]);
+
+        foreach(['area_code','area_type','area_level','division'] as $keyToRemove) {
+            $request->request->remove($keyToRemove);
+        }
 
         $employeeLatestPlantilla = Plantilla::where('employee_id', $request->employee)
             ->orderBy('year', 'DESC')
