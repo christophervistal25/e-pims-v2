@@ -297,6 +297,7 @@
                 </form>
             </div>
 
+
             <div id="table" class="page-header {{  count($errors->all()) == 0 ? '' : 'd-none' }}">
 
                 <div class="row">
@@ -334,7 +335,7 @@
                                 <td scope="col" class="text-center">Employee Name</td>
                                 <td scope="col" class="text-center">Position Title</td>
                                 <td scope="col" class="text-center">Office</td>
-                                <td scope="col" class="text-center">Status</td>
+                                <td scope="col" class="text-center">SG / Step</td>
                                 <td scope="col" class="text-center">Year</td>
                                 <td scope="col" class="text-center">Action</td>
                             </tr>

@@ -65,7 +65,10 @@ $(document).ready(function () {
     ];
 
     // filter list office
-    let selectedOffice = $("#employeeOffice").val();
+    let selectedOffice = localStorage.getItem('SELECTED_OFFICE') || '*';
+        if(selectedOffice !== '*') {
+            $('#employeeOffice').val(localStorage.getItem('SELECTED_OFFICE')).trigger('refresh');
+        }
     let selectedYear = $("#currentYear").val();
 
     let PlantillaTable = $("#plantilla").DataTable({
@@ -106,7 +109,7 @@ $(document).ready(function () {
                 visible: true,
             },
 
-            { data: "status", name: "status", sortable: false },
+            { data: "sg_step", name: "sg_step", sortable: false },
             { data: "year", name: "year", sortable: false },
             {
                 data: "action",
@@ -119,8 +122,8 @@ $(document).ready(function () {
 
     $("#employeeOffice,#currentYear").change(function (e) {
         let selectedOffices = $("#employeeOffice").val();
+        localStorage.setItem('SELECTED_OFFICE', selectedOffices);
         let selectedYears = $("#currentYear").val();
-
         PlantillaTable.ajax
             .url(`/plantilla-list/${selectedOffices}/${selectedYears}`)
             .load();
@@ -187,7 +190,6 @@ $(document).ready(function () {
         $.ajax({
             url: `/api/positionSalaryGrade/${positionTitle}/${currentSgyear}`,
             success: (response) => {
-                console.log();
                 if (response == "") {
                     $("#currentSalarygrade").val("");
                     $("#itemNo").val("");

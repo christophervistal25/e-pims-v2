@@ -294,7 +294,10 @@ $(document).ready(function () {
     // end get values of employees
 
     // display data in datatables
-    let selectedOffice = $("#employeeOffice").val();
+    let selectedOffice = localStorage.getItem('SELECTED_OFFICE') || '*';
+        if(selectedOffice !== '*') {
+            $('#employeeOffice').val(localStorage.getItem('SELECTED_OFFICE')).trigger('refresh');
+        }
     let PlantillaPositiontable = $("#plantillaofposition").DataTable({
         processing: true,
         pagingType: "full_numbers",
@@ -332,9 +335,10 @@ $(document).ready(function () {
 
     //filter plantilla of position datable by office
     $("#employeeOffice").change(function (e) {
-        let selectedOffice = $("#employeeOffice").val();
+        let selectedOffices = $("#employeeOffice").val();
+        localStorage.setItem('SELECTED_OFFICE', selectedOffices);
         PlantillaPositiontable.ajax
-            .url(`/plantilla-of-position-list/${selectedOffice}`)
+            .url(`/plantilla-of-position-list/${selectedOffices}`)
             .load();
     });
     // end filter plantilla
