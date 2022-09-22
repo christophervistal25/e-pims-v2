@@ -65,15 +65,17 @@ class PlantillaController extends Controller
         ->join('EPims.dbo.plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
         ->join('EPims.dbo.Positions', 'plantilla_positions.PosCode', '=', 'Positions.PosCode')
         ->leftJoin('DTRPayroll.dbo.Employees', 'Employees.Employee_id', '=', 'plantillas.employee_id')
-        ->select(
-            DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"),
-            'plantilla_id', 'plantillas.item_no as item_no', 'offices.office_name as office_name', 'plantillas.status as status', 'plantillas.year as year', 'Positions.Description');
+        ->select(DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"),'plantilla_id', 'plantillas.item_no as item_no', 'offices.office_name as office_name', 'plantillas.sg_no as sg_no', 'plantillas.step_no as step_no','plantillas.status as status', 'plantillas.year as year', 'Positions.Description');
         if (request()->ajax()) {
             $PlantillaData = ($office != '*') ? $data->where('plantillas.office_code', $office)->where('plantillas.year', $year)->get()
                 : $data->where('plantillas.year', $year)->get();
             return DataTables::of($PlantillaData)
                 ->addColumn('action', function ($row) {
                     $btn = "<a title='Edit Plantilla' href='".route('plantilla-of-personnel.edit', $row->plantilla_id)."' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil'></i></a>";
+                    return $btn;
+                })
+                ->addColumn('sg_step', function ($row) {
+                    $btn = "$row->sg_no / $row->step_no";
                     return $btn;
                 })
                 ->rawColumns(['action'])

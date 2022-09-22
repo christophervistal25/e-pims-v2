@@ -109,7 +109,7 @@ $(document).ready(function () {
                 visible: true,
             },
 
-            { data: "status", name: "status", sortable: false },
+            { data: "sg_step", name: "sg_step", sortable: false },
             { data: "year", name: "year", sortable: false },
             {
                 data: "action",
@@ -190,7 +190,6 @@ $(document).ready(function () {
         $.ajax({
             url: `/api/positionSalaryGrade/${positionTitle}/${currentSgyear}`,
             success: (response) => {
-                console.log();
                 if (response == "") {
                     $("#currentSalarygrade").val("");
                     $("#itemNo").val("");
