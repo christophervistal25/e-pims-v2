@@ -321,7 +321,7 @@
                     </li>
 
                     <li>
-                        <a class='text-decoration-none' href='{{ route('show-plantilla-report') }}'>
+                        <a class='text-decoration-none' href='{{ route('plantilla.report.index') }}'>
                             <i class="las la-folder"></i> <span>Plantilla</span></a>
                         </a>
                     </li>
