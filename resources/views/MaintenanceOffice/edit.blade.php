@@ -17,11 +17,12 @@
 <div class="kanban-board card shadow mb-0">
       <div class="card-body">
             <div id="add" class="page-header">
-                  <form action="{{ route('maintenance-office.update', $office->office_code) }}" method="post" id="maintenanceOfficeEditForm">
+                  <form id="maintenanceOfficeEditForm">
                         @csrf
                         @method('PUT')
                         <div class="alert alert-secondary text-center font-weight-bold" role="alert">EDIT OFFICE</div>
                         <div class="container">
+                              <input id="editOfficeId" type="text" class="d-none" value="{{$office->office_code}}">
                               <div class="row justify-content-center align-items-center">
                                     <div class="form-group col-12 col-md-6 col-lg-7">
                                           <label class="has-float-label mb-0">
@@ -29,9 +30,6 @@
                                                 <span class="font-weight-bold">Office Name<span class="text-danger">*</span></span>
                                           </label>
                                           <div id='office-name-error-message' class='text-danger text-sm'>
-                                                @error('officeName')
-                                                {{ $errors->first('officeName') }}
-                                                @enderror
                                           </div>
                                     </div>
 
@@ -41,9 +39,6 @@
                                                 <span class="font-weight-bold">Office Short Name<span class="text-danger">*</span></span>
                                           </label>
                                           <div id='office-short-name-error-message' class='text-danger text-sm'>
-                                                @error('officeShortName')
-                                                {{ $errors->first('officeShortName') }}
-                                                @enderror
                                           </div>
                                     </div>
 
@@ -53,9 +48,6 @@
                                                 <span class="font-weight-bold">Office Address</span>
                                           </label>
                                           <div id='office-address-error-message' class='text-danger text-sm'>
-                                                @error('officeAddress')
-                                                {{ $errors->first('officeAddress') }}
-                                                @enderror
                                           </div>
                                     </div>
 
@@ -74,9 +66,6 @@
                                                 <span class="font-weight-bold">Office Head<span class="text-danger">*</span></span>
                                           </label>
                                           <div id='office-head-error-message' class='text-danger text-sm'>
-                                                @error('officeHead')
-                                                {{ $errors->first('officeHead') }}
-                                                @enderror
                                           </div>
                                     </div>
 
@@ -86,9 +75,6 @@
                                                 <span class="font-weight-bold">Position Name<span class="text-danger">*</span></span>
                                           </label>
                                           <div id='position-name-error-message' class='text-danger text-sm'>
-                                                @error('positionName')
-                                                {{ $errors->first('positionName') }}
-                                                @enderror
                                           </div>
                                     </div>
 
@@ -105,7 +91,11 @@
                                     </div>
 
                                     <div class="form-group form-group submit-section col-12">
-                                          <button type="submit" class="btn btn-success text-white submit-btn float-right shadow"><i class="fas fa-check"></i> Update</button>
+                                          <button id="saveBtn" class="btn btn-success submit-btn float-right" type="submit">
+                                                <span id="loading" class="spinner-border spinner-border-sm d-none" role="status"
+                                                    aria-hidden="false"></span>
+                                                    <i style="color:white;" class="fas fa-save"></i> <b style="color:white;" id="saving">Update</b>
+                                            </button>
                                           <a href="/maintenance-office"><button style="margin-right:10px;" type="button" class="text-white btn btn-warning submit-btn float-right shadow"><i class="fas fa-arrow-left"></i> Back</button>
                                     </div>
                               </div>
@@ -121,6 +111,84 @@
                   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
       });
+
+      var arrayErrors = {
+        "officeName": {
+                "#officeName": "#office-name-error-message"
+            },
+            "officeShortName": {
+                "#officeShortName": "#office-short-name-error-message"
+            },
+            "officeHead": {
+                "#officeHead": "#office-head-error-message"
+            },
+            "positionName": {
+                "#positionName": "#position-name-error-message"
+            },
+    };
+
+
+
+    $("#maintenanceOfficeEditForm").submit(function (e) {
+        e.preventDefault();
+        let editOfficeId = $('#editOfficeId').val();
+        let data = $(this).serialize();
+        $("#saveBtn").attr("disabled", true);
+        $("#loading").removeClass("d-none");
+        $("#saving").html("Updating . . .");
+        $.ajax({
+            type: "PUT",
+            url: `/maintenance-office-update/${editOfficeId}`,
+            data: data,
+            success: function (response) {
+                if (response.success) {
+                    swal("Sucessfully Saved!", "", "success");
+                    $("#saveBtn").attr("disabled", false);
+                    $("#loading").addClass("d-none");
+                    $("#saving").html("Update");
+                    $.each(arrayErrors, function (propertyName, arrayErrors) {
+                        $.each(arrayErrors, function (errorClass, errorMessage) {
+                            $(`${errorClass}`).removeClass("is-invalid");
+                            $(`${errorMessage}`).html("");
+                        });
+                    });
+                }
+            },
+            error: function (response) {
+                if (response.status === 422) {
+                    let errors = response.responseJSON.errors;
+                    $.each(arrayErrors, function (propertyName, arrayErrors) {
+                        $.each(arrayErrors, function (errorClass, errorMessage) {
+                            if(errors[propertyName] != undefined){
+                                $(`${errorClass}`).addClass("is-invalid");
+                                $(`${errorMessage}`).html("");
+                                $(`${errorMessage}`).append(
+                                        `<span>${errors[propertyName][0]}</span>`
+                                    );
+                            }
+                        });
+                    });
+                    // Create an parent element
+                    let parentElement = document.createElement("ul");
+                    let errorss = response.responseJSON.errors;
+                    $.each(errorss, function (key, value) {
+                        let errorMessage = document.createElement("li");
+                        let [error] = value;
+                        errorMessage.innerHTML = error;
+                        parentElement.appendChild(errorMessage);
+                    });
+                    swal({
+                        title: "The given data was invalid!",
+                        icon: "error",
+                        content: parentElement,
+                    });
+                    $("#saveBtn").attr("disabled", false);
+                    $("#loading").addClass("d-none");
+                    $("#saving").html("Update");
+                }
+            },
+        });
+    });
 
 </script>
 <script src="{{ asset('/assets/js/custom.js') }}"></script>

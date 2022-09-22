@@ -68,24 +68,50 @@
                     <form action="" method="POST" id="salaryGradeForm">
                          @csrf
 
-                         <div class="form-group col-12 col-lg-4">
-                              <label class="has-float-label sgNo mb-0">
-                                   <select value="" class="form-control selectpicker  {{ $errors->has('sgNo')  ? 'is-invalid' : ''}}" name="sgNo" data-live-search="true" id="sgNo" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                        <option></option>
-                                        @foreach (range(1, 33) as $salarygrade)
-                                        <option {{ old('sgNo') == $salarygrade ? 'selected' : '' }} value="{{ $salarygrade }}">
-                                             {{ $salarygrade }}</option>
-                                        @endforeach
-                                   </select>
-                                   <span class="font-weight-bold">SALARY GRADE<span class="text-danger">*</span></span>
-                              </label>
-                              <div id='salary-grade-error-message' class='text-danger text-sm'>
-                              </div>
-                         </div>
+
 
                          <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <label class="has-float-label sgNo mb-0">
+                                     <select value="" class="form-control selectpicker  {{ $errors->has('sgNo')  ? 'is-invalid' : ''}}" name="sgNo" data-live-search="true" id="sgNo" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                          <option></option>
+                                          @foreach (range(1, 33) as $salarygrade)
+                                          <option {{ old('sgNo') == $salarygrade ? 'selected' : '' }} value="{{ $salarygrade }}">
+                                               {{ $salarygrade }}</option>
+                                          @endforeach
+                                     </select>
+                                     <span class="font-weight-bold">SALARY GRADE<span class="text-danger">*</span></span>
+                                </label>
+                                <div id='salary-grade-error-message' class='text-danger text-sm'>
+                                </div>
+                           </div>
+                           <div class=" col-12 col-lg-6">
+                            <label class="has-float-label sgYear mb-0">
+                                 <select value="" class="form-control selectpicker  {{ $errors->has('sgYear')  ? 'is-invalid' : ''}}" name="sgYear" data-live-search="true" id="sgYear" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                      <option></option>
+                                      {{ $year2 = date("Y",strtotime("-1 year")) }}
+                                      <option {{ old('sgYear') == $year2 ? 'selected' : '' }} value={{ $year2 }}>{{ $year2 }}
+                                      </option>
+                                      {{ $year3 = date("Y",strtotime("-0 year")) }}
+                                      <option {{ old('sgYear') == $year3 ? 'selected' : '' }} value={{ $year3 }}>{{ $year3 }}
+                                      </option>
+                                      @foreach (range(1, 5) as $year)
+                                      {{ $year1 = date("Y",strtotime("$year year")) }}
+                                      <option {{ old('sgYear') == $year1 ? 'selected' : '' }} value={{ $year1 }}>{{ $year1 }}
+                                      </option>
+                                      @endforeach
+                                 </select>
+                                 <span class="font-weight-bold">SALARY YEAR<span class="text-danger">*</span></span>
+                            </label>
+                            <div id='salary-grade-year-error-message' class='text-danger text-sm'>
+                            </div>
+                       </div>
+
+
+
+
                               <div class="col-12 col-md-4">
-                                   <div class="form-group input-group col-12 mb-0 mt-2">
+                                   <div class=" input-group">
                                         <span class="input-group-text">&#8369;</span>
                                         <label class="has-float-label" for="sgStep1">
                                              <input class="form-control text-right" value="{{ old('sgStep1') }}" id="sgStep1" name="sgStep1" type="text" maxlength="12" style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -98,7 +124,7 @@
 
 
                               <div class="col-12 col-md-4">
-                                   <div class="form-group input-group col-12 mb-0 mt-2">
+                                   <div class=" input-group">
                                         <span class="input-group-text">&#8369;</span>
                                         <label class="has-float-label" for="sgStep2">
                                              <input class="form-control text-right" value="{{ old('sgStep2') }}" id="sgStep2" name="sgStep2" type="text" maxlength="12" style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -110,7 +136,7 @@
                               </div>
 
                               <div class="col-12 col-md-4">
-                                   <div class="form-group input-group col-12 mb-0 mt-2">
+                                   <div class=" input-group">
                                         <span class="input-group-text">&#8369;</span>
                                         <label class="has-float-label" for="sgStep3">
                                              <input class="form-control text-right" value="{{ old('sgStep3') }}" id="sgStep3" name="sgStep3" type="text" maxlength="12" style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -122,7 +148,7 @@
                               </div>
 
                               <div class="col-12 col-md-4">
-                                   <div class="form-group input-group col-12 mb-0 mt-3">
+                                   <div class=" input-group ">
                                         <span class="input-group-text">&#8369;</span>
                                         <label class="has-float-label" for="sgStep4">
                                              <input style="outline: none; box-shadow: 0px 0px 0px transparent;" class="form-control text-right {{ $errors->has('sgStep4')  ? 'is-invalid' : ''}}" value="{{ old('sgStep4') }}" id="sgStep4" name="sgStep4" type="text" maxlength="12">
@@ -134,7 +160,7 @@
                               </div>
 
                               <div class="col-12 col-md-4">
-                                   <div class="form-group input-group col-12 mb-0 mt-3">
+                                   <div class=" input-group ">
                                         <span class="input-group-text">&#8369;</span>
                                         <label class="has-float-label" for="sgStep5">
                                              <input class="form-control text-right" value="{{ old('sgStep5') }}" id="sgStep5" name="sgStep5" type="text" maxlength="12" style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -146,7 +172,7 @@
                               </div>
 
                               <div class="col-12 col-md-4">
-                                   <div class="form-group input-group col-12 mb-0 mt-3">
+                                   <div class=" input-group ">
                                         <span class="input-group-text">&#8369;</span>
                                         <label class="has-float-label" for="sgStep6">
                                              <input class="form-control text-right" value="{{ old('sgStep6') }}" id="sgStep6" name="sgStep6" style="outline: none; box-shadow: 0px 0px 0px transparent;" type="text" maxlength="12">
@@ -158,7 +184,7 @@
                               </div>
 
                               <div class="col-12 col-md-4">
-                                   <div class="form-group input-group col-12 mb-0 mt-3">
+                                   <div class=" input-group ">
                                         <span class="input-group-text">&#8369;</span>
                                         <label class="has-float-label" for="sgStep7">
                                              <input class="form-control text-right" value="{{ old('sgStep7') }}" id="sgStep7" style="outline: none; box-shadow: 0px 0px 0px transparent;" name="sgStep7" type="text" maxlength="12">
@@ -170,7 +196,7 @@
                               </div>
 
                               <div class="col-12 col-md-4">
-                                   <div class="form-group input-group col-12 mb-0 mt-3">
+                                   <div class=" input-group ">
                                         <span class="input-group-text">&#8369;</span>
                                         <label class="has-float-label">
                                              <span class="font-weight-bold">Step 8 <span class="text-danger">*</span></span>
@@ -182,27 +208,7 @@
                               </div>
                          </div>
 
-                         <div class="form-group col-12 col-lg-4 mt-4">
-                              <label class="has-float-label sgYear mb-0">
-                                   <select value="" class="form-control selectpicker  {{ $errors->has('sgYear')  ? 'is-invalid' : ''}}" name="sgYear" data-live-search="true" id="sgYear" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                        <option></option>
-                                        {{ $year2 = date("Y",strtotime("-1 year")) }}
-                                        <option {{ old('sgYear') == $year2 ? 'selected' : '' }} value={{ $year2 }}>{{ $year2 }}
-                                        </option>
-                                        {{ $year3 = date("Y",strtotime("-0 year")) }}
-                                        <option {{ old('sgYear') == $year3 ? 'selected' : '' }} value={{ $year3 }}>{{ $year3 }}
-                                        </option>
-                                        @foreach (range(1, 5) as $year)
-                                        {{ $year1 = date("Y",strtotime("$year year")) }}
-                                        <option {{ old('sgYear') == $year1 ? 'selected' : '' }} value={{ $year1 }}>{{ $year1 }}
-                                        </option>
-                                        @endforeach
-                                   </select>
-                                   <span class="font-weight-bold">SALARY YEAR<span class="text-danger">*</span></span>
-                              </label>
-                              <div id='salary-grade-year-error-message' class='text-danger text-sm'>
-                              </div>
-                         </div>
+
 
                          <div class="form-group submit-section col-12">
                               <button id="saveBtn" class="btn btn-primarys submit-btn float-right shadow" type="submit"><span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span> <i class="fas fa-save"></i>

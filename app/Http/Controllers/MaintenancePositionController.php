@@ -108,25 +108,20 @@ class MaintenancePositionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $position_id)
+    public function update(Request $request, $id)
     {
         $this->validate($request, [
             'positionCode' => 'required',
             'positionName' => 'required',
             'salaryGradeNo' => 'required',
-            // 'positionShortName' => 'required',
         ]);
-        $position = Position::where('PosCode', $position_id)->first();
-
-        $position->PosCode = $request['positionCode'];
-        $position->Description = $request['positionName'];
-        $position->sg_no = $request['salaryGradeNo'];
-        $position->position_short_name = $request['positionShortName'];
+        $position = Position::where('PosCode', $id)->first();
+        $position->PosCode = $request->positionCode;
+        $position->Description = $request->positionName;
+        $position->sg_no = $request->salaryGradeNo;
+        $position->position_short_name = $request->positionShortName;
         $position->save();
-
-        Session::flash('alert-success', 'Position Updated Successfully');
-
-        return back();
+        return response()->json(['success' => true]);
     }
 
     /**
