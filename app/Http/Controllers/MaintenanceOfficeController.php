@@ -126,26 +126,20 @@ class MaintenanceOfficeController extends Controller
     {
         $this->validate($request, [
             'officeName' => 'required',
-            'officeAddress' => 'nullable|min:5',
             'officeShortName' => 'required',
             'officeHead' => 'required',
             'positionName' => 'required',
-            'departmentCode' => 'nullable|min:5',
         ]);
 
         DB::transaction(function () use ($request, $OfficeCode) {
             $office = Office::with('desc')->find($OfficeCode);
             $office->office_name = $request['officeName'];
-            // $office->DepartmentCode = $request['departmentCode'];
             $office->office_short_name = $request['officeShortName'];
             $office->office_head = $request['officeHead'];
             $office->position_name = $request['positionName'];
             $office->save();
         });
-
-        Session::flash('alert-success', 'Office Updated Successfully');
-
-        return back()->with('success', 'Updated Successfully');
+        return response()->json(['success' => true]);
     }
 
     /**

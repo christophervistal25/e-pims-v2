@@ -14,30 +14,35 @@
 
                 <div class="alert alert-secondary text-center font-weight-bold" role="alert">EDIT SALARY GRADE</div>
 
-                <form action="{{ route('salary-grade.update', $salaryGrade->id) }}" method="POST">
+                <form id="editSalaryGrade">
                     @csrf
                     @method('PUT')
                     <div class="row">
-                        <div class="form-group col-12 col-lg-12">
-                            <label class="font-weight-bold text-sm">SALARY GRADE<span class="text-danger">*</span></label>
-                            <select name="sgNo" value="{{ old('sgNo')}}"
-                                class="select floating {{ $errors->has('sgNo')  ? 'is-invalid' : ''}}" id="sgNo"
-                                disabled>
-                                <option selected>Please Select</option>
-                                @foreach (range(1, 33) as $salarygrade)
-                                    <option {{ $salaryGrade->sg_no == $salarygrade ? 'selected' : '' }}
-                                        value="{{ $salarygrade }}">{{ $salarygrade }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('sgNo'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('sgNo') }} </small>
-                            @endif
+                        <input class="d-none" id="salaryGradeId" value="{{ $salaryGrade->id }}">
+                        <div class="form-group col-6 col-lg-6">
+                            <label class="has-float-label sgNo mb-0">
+                                    <select value="" class="form-control selectpicker" name="sgNo" data-live-search="true" id="sgNo" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;" disabled>
+                                        <option></option>
+                                        @foreach(range(1, 33) as $salarygrade)
+                                            <option {{ $salaryGrade->sg_no == $salarygrade ? 'selected' : '' }}
+                                            value="{{ $salarygrade }}">{{ $salarygrade }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="font-weight-bold">Salary Grade<span class="text-danger">*</span></span>
+                            </label>
                         </div>
-                    </div>
-                    <div class="row">
+                        <div class="col-6 col-lg-6">
+                            <label class="has-float-label" for="">
+                                <input
+                                    class="form-control text-right {{ $errors->has('')  ? 'is-invalid' : ''}}"
+                                    value="{{ old('') ?? $salaryGrade->sg_year }}" id=""
+                                    name="" type="text" maxlength="12"
+                                    style="outline: none; box-shadow: 0px 0px 0px transparent;" readonly>
+                                <span class="font-weight-bold">Salary Grade Year<span class="text-danger">*</span></span>
+                            </label>
+                        </div>
                         <div class="col-lg-4">
-                            <div class="form-group input-group col-12 mb-0 mt-2">
+                            <div class="input-group">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep1">
                                     <input
@@ -48,14 +53,12 @@
                                     <span class="font-weight-bold">Step 1 <span class="text-danger">*</span></span>
                                 </label>
                             </div>
-                            @if($errors->has('sgStep1'))
-                                <small class="form-text text-danger text-center">
-                                    {{ $errors->first('sgStep1') }} </small>
-                                @endif
+                            <div id='step-1-error-message' class='text-danger text-sm'>
+                            </div>
                         </div>
 
                         <div class="col-lg-4">
-                            <div class="form-group input-group col-12 mt-2 mb-0">
+                            <div class="input-group">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep2">
                                     <input
@@ -66,14 +69,12 @@
                                     <span class="font-weight-bold">Step 2 <span class="text-danger">*</span></span>
                                 </label>
                             </div>
-                            @if($errors->has('sgStep2'))
-                                <small class="form-text text-danger text-center">
-                                    {{ $errors->first('sgStep2') }} </small>
-                                @endif
+                            <div id='step-2-error-message' class='text-danger text-sm'>
+                            </div>
                         </div>
 
                         <div class="col-lg-4">
-                            <div class="form-group input-group col-12 mt-2 mb-0">
+                            <div class="input-group">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep3">
                                     <input
@@ -84,14 +85,12 @@
                                     <span class="font-weight-bold">Step 3 <span class="text-danger">*</span></span>
                                 </label>
                             </div>
-                            @if($errors->has('sgStep3'))
-                                <small class="form-text text-danger text-center">
-                                    {{ $errors->first('sgStep3') }} </small>
-                                @endif
+                            <div id='step-3-error-message' class='text-danger text-sm'>
+                            </div>
                         </div>
 
                         <div class="col-lg-4">
-                            <div class="form-group input-group col-12 mt-3 mb-0">
+                            <div class="input-group">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep4">
                                     <input
@@ -102,14 +101,12 @@
                                     <span class="font-weight-bold">Step 4 <span class="text-danger">*</span></span>
                                 </label>
                             </div>
-                            @if($errors->has('sgStep4'))
-                                <small class="form-text text-danger text-center">
-                                    {{ $errors->first('sgStep4') }} </small>
-                                @endif
+                            <div id='step-4-error-message' class='text-danger text-sm'>
+                            </div>
                         </div>
 
                         <div class="col-lg-4">
-                            <div class="form-group input-group col-12 mt-3 mb-0">
+                            <div class="input-group">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep5">
                                     <input
@@ -120,14 +117,12 @@
                                     <span class="font-weight-bold">Step 5 <span class="text-danger">*</span></span>
                                 </label>
                             </div>
-                            @if($errors->has('sgStep5'))
-                                <small class="form-text text-danger text-center">
-                                    {{ $errors->first('sgStep5') }} </small>
-                                @endif
+                            <div id='step-5-error-message' class='text-danger text-sm'>
+                            </div>
                         </div>
 
                         <div class="col-lg-4">
-                            <div class="form-group input-group col-12 mt-3 mb-0">
+                            <div class="input-group">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label">
                                     <input
@@ -138,14 +133,12 @@
                                     <span class="font-weight-bold">Step 6 <span class="text-danger">*</span></span>
                                 </label>
                             </div>
-                            @if($errors->has('sgStep6'))
-                                <small class="form-text text-danger text-center">
-                                    {{ $errors->first('sgStep6') }} </small>
-                                @endif
+                            <div id='step-6-error-message' class='text-danger text-sm'>
+                            </div>
                         </div>
 
                         <div class="col-lg-4">
-                            <div class="form-group input-group col-12 mt-3 mb-0">
+                            <div class="input-group">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep7">
                                     <input
@@ -156,15 +149,13 @@
                                     <span class="font-weight-bold">Step 7 <span class="text-danger">*</span></span>
                                 </label>
                             </div>
-                            @if($errors->has('sgStep7'))
-                                <small class="form-text text-danger text-center">
-                                    {{ $errors->first('sgStep7') }} </small>
-                                @endif
+                            <div id='step-7-error-message' class='text-danger text-sm'>
+                            </div>
                         </div>
 
 
                         <div class="col-lg-4">
-                            <div class="form-group input-group col-12 mt-3 mb-0">
+                            <div class="input-group">
                                 <span class="input-group-text">&#8369;</span>
                                 <label class="has-float-label" for="sgStep8">
                                     <input
@@ -175,40 +166,17 @@
                                     <span class="font-weight-bold">Step 8 <span class="text-danger">*</span></span>
                                 </label>
                             </div>
-                            @if($errors->has('sgStep8'))
-                                <small class="form-text text-danger text-center">
-                                    {{ $errors->first('sgStep8') }} </small>
-                                @endif
+                            <div id='step-8-error-message' class='text-danger text-sm'>
+                            </div>
                         </div>
                     </div>
 
-                        <div class="row">
-                            <div class="form-group col-12 col-lg-12 mb-0 mt-2">
-                            <label class="font-weight-bold text-sm">SALARY GRADE YEAR<span class="text-danger">*</span></label>
-                            <select name="sgYear" value="{{ old('sgYear') }}" class="select floating" disabled>
-                                <option>Please Select</option>
-                                {{ $year2 = date("Y",strtotime("-1 year")) }}
-                                <option {{ $salaryGrade->sg_year == $year2 ? 'selected' : '' }} value={{ $year2 }}>
-                                    {{ $year2 }}</option>
-                                {{ $year3 = date("Y",strtotime("-0 year")) }}
-                                <option {{ $salaryGrade->sg_year == $year3 ? 'selected' : '' }} value={{ $year3 }}>
-                                    {{ $year3 }}</option>
-                                @foreach (range(1, 5) as $year)
-                                {{ $year1 = date("Y",strtotime("$year year")) }}
-                                <option {{ $salaryGrade->sg_year == $year1 ? 'selected' : '' }} value={{ $year1 }}>
-                                    {{ $year1 }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('sgYear'))
-                            <small class="form-text text-danger">
-                                {{ $errors->first('sgYear') }} </small>
-                            @endif
-                        </div>
-                        </div>
-
                         <div class="form-group submit-section col-12">
-                            <button type="submit" class="btn btn-success text-white submit-btn float-right shadow"><i
-                                    class="fas fa-check"></i> Update</button>
+                            <button id="saveBtn" class="btn btn-success submit-btn float-right" type="submit">
+                                <span id="loading" class="spinner-border spinner-border-sm d-none" role="status"
+                                    aria-hidden="false"></span>
+                                    <i style="color:white;" class="fas fa-save"></i> <b style="color:white;" id="saving">Update</b>
+                            </button>
                             <a href="/salary-grade"><button style="margin-right:10px;" type="button" id="cancelbutton"
                                     class="btn btn-warning submit-btn float-right text-white shadow"><i
                                         class="fas fa-arrow-left"></i> Back</button>
@@ -220,5 +188,102 @@
     </div>
 </div>
 @push('page-scripts')
+<script>
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    var arrayErrors = {
+        "sgStep1": {
+                "#sgStep1": "#step-1-error-message"
+            },
+            "sgStep2": {
+                "#sgStep2": "#step-2-error-message"
+            },
+            "sgStep3": {
+                "#sgStep3": "#step-3-error-message"
+            },
+            "sgStep4": {
+                "#sgStep4": "#step-4-error-message"
+            },
+            "sgStep5": {
+                "#sgStep5": "#step-5-error-message"
+            },
+            "sgStep6": {
+                "#sgStep6": "#step-6-error-message"
+            },
+            "sgStep7": {
+                "#sgStep7": "#step-7-error-message"
+            },
+            "sgStep8": {
+                "#sgStep8": "#step-8-error-message"
+            },
+    };
+
+
+
+    $("#editSalaryGrade").submit(function (e) {
+        e.preventDefault();
+        let salaryGradeId = $('#salaryGradeId').val();
+        let data = $(this).serialize();
+        $("#saveBtn").attr("disabled", true);
+        $("#loading").removeClass("d-none");
+        $("#saving").html("Updating . . .");
+        $.ajax({
+            type: "PUT",
+            url: `/salary-grade/${salaryGradeId}`,
+            data: data,
+            success: function (response) {
+                if (response.success) {
+                    swal("Sucessfully Saved!", "", "success");
+                    $("#saveBtn").attr("disabled", false);
+                    $("#loading").addClass("d-none");
+                    $("#saving").html("Update");
+                    $.each(arrayErrors, function (propertyName, arrayErrors) {
+                        $.each(arrayErrors, function (errorClass, errorMessage) {
+                            $(`${errorClass}`).removeClass("is-invalid");
+                            $(`${errorMessage}`).html("");
+                        });
+                    });
+                }
+            },
+            error: function (response) {
+                if (response.status === 422) {
+                    let errors = response.responseJSON.errors;
+                    $.each(arrayErrors, function (propertyName, arrayErrors) {
+                        $.each(arrayErrors, function (errorClass, errorMessage) {
+                            if(errors[propertyName] != undefined){
+                                $(`${errorClass}`).addClass("is-invalid");
+                                $(`${errorMessage}`).html("");
+                                $(`${errorMessage}`).append(
+                                        `<span>${errors[propertyName][0]}</span>`
+                                    );
+                            }
+                        });
+                    });
+                    // Create an parent element
+                    let parentElement = document.createElement("ul");
+                    let errorss = response.responseJSON.errors;
+                    $.each(errorss, function (key, value) {
+                        let errorMessage = document.createElement("li");
+                        let [error] = value;
+                        errorMessage.innerHTML = error;
+                        parentElement.appendChild(errorMessage);
+                    });
+                    swal({
+                        title: "The given data was invalid!",
+                        icon: "error",
+                        content: parentElement,
+                    });
+                    $("#saveBtn").attr("disabled", false);
+                    $("#loading").addClass("d-none");
+                    $("#saving").html("Update");
+                }
+            },
+        });
+    });
+</script>
 @endpush
 @endsection
