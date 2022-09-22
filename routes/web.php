@@ -1,20 +1,10 @@
 <?php
 
-use App\City;
 use App\User;
-use App\Office;
-use App\Barangay;
 use App\Employee;
-use App\LeaveIncrement;
-use App\PlantillaPosition;
-use Illuminate\Support\Str;
-use App\EmployeeTrainingAttained;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use PhpOffice\PhpSpreadsheet\Style\Fill;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\BirthdayController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PlantillaController;
@@ -29,13 +19,14 @@ use App\Http\Controllers\PersonnelFile201Controller;
 use App\Http\Controllers\PositionScheduleController;
 use App\Http\Controllers\MaintenanceOfficeController;
 use App\Http\Controllers\PersonalDataSheetController;
+use App\Http\Controllers\MaintenanceSectionController;
 use App\Http\Controllers\PrintServiceRecordController;
 use App\Http\Controllers\EmployeeLeave\LeaveController;
 use App\Http\Controllers\MaintenanceDivisionController;
-use App\Http\Controllers\MaintenanceSectionController;
 use App\Http\Controllers\MaintenancePositionController;
 use App\Http\Controllers\PlantillaOfPositionController;
 use App\Http\Controllers\PlantillaOfScheduleController;
+use App\Http\Controllers\Reports\CSCPlantillaController;
 use App\Http\Controllers\Account\Employee\ChatController;
 use App\Http\Controllers\EmployeePersonnelFileController;
 use App\Http\Controllers\EmployeeLeave\LeaveListController;
@@ -55,7 +46,6 @@ use App\Http\Controllers\DownloadSeperateWorkExperienceController;
 use App\Http\Controllers\Account\Employee\LeaveApplicationController;
 use App\Http\Controllers\EmployeeLeave\CompensatoryBuildUpController;
 use App\Http\Controllers\Maintenance\EmployeeLeaveIncrementController;
-use App\Http\Controllers\Account\Employee\LeaveCertificationController;
 use App\Http\Controllers\EmployeeLeave\LeaveForwardedBalanceController;
 use App\Http\Controllers\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Account\Employee\PrintLeaveApplicationController;
@@ -64,7 +54,7 @@ use App\Http\Controllers\Maintenance\LeaveController as MaintenanceLeaveControll
 use App\Http\Controllers\Account\Employee\DashboardController as EmployeeDashboardController;
 
 Route::get('/', function () {
-    $user = Auth::user();
+    $user = auth()->user();
     if ($user && $user->user_type === User::USER_TYPES['ADMINISTRATOR']) {
         return redirect()->to(route('administrator.dashboard'));
     } elseif ($user && $user->user_type === User::USER_TYPES['USER']) {
@@ -229,9 +219,6 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
         Route::resource('leave', MaintenanceLeaveController::class);
     });
 
-    Route::get('holiday/list', [HolidayController::class, 'list']);
-    Route::resource('holiday', HolidayController::class);
-
     Route::get('profile', 'EmployeeController@profile');
 
     Route::get('salary-grade/{year}', [SalaryGradePrintController::class, 'index'])->name('salary-grade-print');
@@ -243,13 +230,13 @@ Auth::routes(['register' => false]);
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'submitLogin'])->name('submit.login');
 
-Route::get('404', function () {
-    return view('errors.423');
-})->name('423-leave-application');
+// Route::get('404', function () {
+//     return view('errors.423');
+// })->name('423-leave-application');
 
-Route::fallback(function () {
-    abort(404);
-});
+// Route::fallback(function () {
+//     abort(404);
+// });
 
 Route::controller(PrintServiceRecordController::class)->group(function () {
     Route::post('service-record-print/{employeeID}/pdf', 'pdf');
@@ -265,12 +252,15 @@ Route::group(['prefix' => 'prints'], function () {
     Route::get('download-personal-data-sheet-work-experience-excel/{employeeID}', [DownloadSeperateWorkExperienceController::class, 'excel']);
 });
 
-Route::controller(CSCPlantillaReportController::class)->group(function () {
-    Route::get('show-plantilla-report', 'index')->name('show-plantilla-report');
-    Route::post('plantilla-report/generate/{office}/{year}', 'generate')->name('generate.plantilla-report');
-    Route::post('export/{office}/{year}', 'export')->name('generate.plantilla-report');
-    Route::post('export/all/office/{year}', 'exportAll')->name('generate-all.plantilla-report');
-    Route::get('download/plantilla-generated-report/{fileName}', 'download')->name('download.generated.plantilla-report');
+Route::controller(CSCPlantillaController::class)->group(function () {
+    Route::get('plantilla-report-history-list/{year}', 'list');
+    Route::get('plantilla-report-history', 'index')->name('show-plantilla-report');
+    Route::post('plantilla-report-history-generate', 'generate');
+    Route::delete('plantilla-report-history-remove/{id}', 'remove');
+    Route::post('plantilla-report-history-checkpoint', 'checkpoint');
+    // Route::get('plantilla-report/generate/{office}/{year}', 'generate')->name('generate.plantilla-report');
+    // Route::post('export/{office}/{year}', 'export')->name('generate.plantilla-report');
+    // Route::get('download/plantilla-generated-report/{fileName}', 'download')->name('download.generated.plantilla-report');
 });
 
 Route::controller(DBMPlantillaReportController::class)->group(function () {
@@ -307,7 +297,6 @@ Route::group(['middleware' => ['auth', 'user']], function () {
 
     Route::get('employee-chat', [ChatController::class, 'index'])->name('employee.chat');
 });
-
 
 Route::get('export-image', function () {
     $employees = Employee::get(['Employee_id', 'ImagePhoto']);
