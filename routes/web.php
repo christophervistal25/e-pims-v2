@@ -254,7 +254,9 @@ Route::group(['prefix' => 'prints'], function () {
 
 Route::controller(CSCPlantillaController::class)->group(function () {
     Route::get('plantilla-report-history-list/{year}', 'list');
-    Route::get('plantilla-report-history', 'index')->name('show-plantilla-report');
+    Route::get('plantilla-report-history', 'index')->name('plantilla.report.index');
+    Route::get('plantilla-report/show/{id}', 'show')->name('plantilla.report.show');
+    Route::get('plantilla-report/show/{id}/list/{office}', 'listShow')->name('plantilla.report.show.list');
     Route::post('plantilla-report-history-generate', 'generate');
     Route::delete('plantilla-report-history-remove/{id}', 'remove');
     Route::post('plantilla-report-history-checkpoint', 'checkpoint');
