@@ -32,6 +32,10 @@ class PromotionController extends Controller
     {
         $promotions = Promotion::with(['employee', 'old_plantilla_position', 'old_plantilla_position.position', 'new_plantilla_position.position']);
 
+        if($office !== '*') {
+            $promotions->whereHas('new_plantilla_position', fn ($query) => $query->where('office_code', $office));
+        }
+
         if ($year != '*') {
             $promotions->where('sg_year', $year);
         }
