@@ -131,13 +131,7 @@ class PromotionController extends Controller
             ->first();
 
         DB::transaction(function () use ($request, $employeeLatestPlantilla) {
-            /**
-             * CURRENT PLANTILLA *
-             * Blank old_item_no & employee_id
-             */
-            $employeeLatestPlantilla->old_item_no = null;
-            $employeeLatestPlantilla->employee_id = null;
-            $employeeLatestPlantilla->save();
+
 
             /**
              * NEW PLANTILLA
@@ -146,6 +140,23 @@ class PromotionController extends Controller
              * UPDATE EMPLOYEE_iD
              */
             $this->plantillaPersonnelService->addNewPlantilla($employeeLatestPlantilla, $request->all());
+
+                /**
+             * CURRENT PLANTILLA *
+             * Blank old_item_no & employee_id
+             */
+            $employeeLatestPlantilla->old_item_no = null;
+            $employeeLatestPlantilla->date_original_appointment = null;
+            $employeeLatestPlantilla->date_last_promotion = null;
+            $employeeLatestPlantilla->date_last_increment = null;
+            $employeeLatestPlantilla->salary_amount_previous_yearly = null;
+            $employeeLatestPlantilla->salary_amount_previous = null;
+            $employeeLatestPlantilla->step_no_previous = null;
+            $employeeLatestPlantilla->sg_no_previous = null;
+            $employeeLatestPlantilla->step_no = 1;
+
+            $employeeLatestPlantilla->employee_id = null;
+            $employeeLatestPlantilla->save();
 
             // Promotion add new record.
             $this->promotionService->store($employeeLatestPlantilla->pp_id, $request->all());
