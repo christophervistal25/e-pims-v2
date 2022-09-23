@@ -23,12 +23,12 @@ class PromotionService extends ServiceRecordService
     {
         Promotion::create([
             'promotion_id'   => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
-            'promotion_date' => Carbon     ::now(),
+            'promotion_date' => $data['date_promotion'],
             'employee_id'    => $data['employee'],
             'oldpp_id'       => $oldPlantillaID,
             'sg_no'          => $data['salary_grade'],
             'step_no'        => $data['step'],
-            'sg_year'        => $data['current_salary_grade_year'],
+            'sg_year'        => $data['salary_grade_year'],
             'newpp_id'       => $data['position'],
         ]);
     }
