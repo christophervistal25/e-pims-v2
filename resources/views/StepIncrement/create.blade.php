@@ -85,6 +85,22 @@
                                     <span><strong>EMPLOYEE ID</strong></span>
                                 </label>
                             </div>
+
+                            <div class="col-12 col-lg-6">
+                                <label class="form-group has-float-label" for="lastAppointment">
+                                <input class="form-control" id="lastAppointment" name="datePromotion"
+                                    type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                    <span><strong>DATE OF LAST APPOINTMENT</strong></span>
+                                </label>
+                            </div>
+
+                            <div class="col-12 col-lg-6">
+                                <label for="positionName" class="form-group has-float-label">
+                                <input class="form-control" id="positionName" data-position="" name="positionName" type="text"
+                                    readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                    <span><strong>POSITION</strong></span>
+                                </label>
+                            </div>
                     </div>
 
                             <div>
@@ -104,21 +120,7 @@
                             </div>
 
                             <div class="row px-4 mt-2">
-                                <div class="col-12 col-lg-6">
-                                    <label class="form-group has-float-label" for="lastAppointment">
-                                    <input class="form-control" id="lastAppointment" name="datePromotion"
-                                        type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                        <span><strong>DATE OF LAST APPOINTMENT</strong></span>
-                                    </label>
-                                </div>
-
-                                <div class="col-12 col-lg-6">
-                                    <label for="positionName" class="form-group has-float-label">
-                                    <input class="form-control" id="positionName" data-position="" name="positionName" type="text"
-                                        readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                        <span><strong>POSITION</strong></span>
-                                    </label>
-                                </div>
+                                
 
                                 <div class="col-12 col-lg-3">
                                     <label for="itemNoFrom" class="form-group has-float-label">
@@ -212,34 +214,39 @@
             {{-- LIST OR DATATABLES --}}
             <div class="card-body">
             <div id="stepIncrementTable" class="page-header">
-                <div class="row align-items-right mb-2">
-                    <div class="col-auto float-right ml-auto">
-                        <button id="addBtn" type="button" class="btn btn-primary float-right shadow text-white"><i class="fa fa-plus"></i>&nbsp;
-                            Add Step Increment </button>
+                <div class="row">
+                    <div class=" col-6 col-md-6 col-lg-6">
+                                <select value="" data-style="btn-primary text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}"
+                                    name="employeeOffice" data-live-search="true" id="employeeOffice" data-size="5">
+                                    <option value="*">All</option>
+                                    @foreach($office as $offices)
+                                        <option {{ '0001' == $offices->office_code ? 'selected' : '' }} value="{{ $offices->office_code }}">{{ $offices->office_name }}</option>
+                                    @endforeach
+                                </select>
+                        <div id='office-error-message' class='text-danger text-sm'>
+                        </div>
+                  </div>
+                  <div class="col-6 col-md-6 col-lg-6">
+                    <div class="row align-items-right mb-2">
+                        <div class="col-auto float-right ml-auto">
+                            <button id="addBtn" type="button" class="btn btn-primary float-right shadow text-white"><i class="fa fa-plus"></i>&nbsp;
+                                Add Step Increment </button>
+                        </div>
                     </div>
+                  </div>
                 </div>
+
                 <div class="table table-responsive">
                     <table class="table table-bordered" id="step-increment-table" style="width:100%;">
                         <thead>
                             <tr>
-                                <th class="font-weight-bold align-middle text-center" rowspan="2">Date of Step Increment
-                                </th>
-                                <th class="font-weight-bold align-middle text-center" rowspan="2">Name</th>
-                                <th class="font-weight-bold align-middle text-center" rowspan="2">Position</th>
-                                <th class="font-weight-bold align-middle" rowspan="2">Item No.</th>
-                                <th class="font-weight-bold align-middle" rowspan="2">Date of Last
-                                    Appointment
-                                </th>
-                                <th class="font-weight-bold align-middle text-center" colspan="2">From</th>
-                                <th class="font-weight-bold align-middle text-center" colspan="2">To</th>
-                                <th class="font-weight-bold align-middle" rowspan="2">Monthly Difference</th>
-                                <th class="font-weight-bold align-middle" rowspan="2">Action</th>
-                                <tr>
-                                    <td class="font-weight-bold align-middle">SG/Step</td>
-                                    <td class="font-weight-bold align-middle">Salary Rate</td>
-                                    <td class="font-weight-bold align-middle">SG/Step</td>
-                                    <td class="font-weight-bold align-middle">Salary Rate</td>
-                                </tr>
+                                <th class="font-weight-bold align-middle text-center">Date of Step Increment</th>
+                                <th class="font-weight-bold align-middle text-center" >Name</th>
+                                <th class="font-weight-bold align-middle text-center" >Position</th>
+                                <th class="font-weight-bold align-middle text-center" >Office</th>
+                                <th class="font-weight-bold align-middle text-center" >SG / Step</th>
+                                <th class="font-weight-bold align-middle" >Salary Amount Yearly</th>
+                                <th class="font-weight-bold align-middle" >Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -272,13 +279,18 @@
     });
 
     $(document).ready( ()=> {
+
+        let selectedOffice = localStorage.getItem('SELECTED_OFFICE') || '*';
+        if(selectedOffice !== '*') {
+            $('#employeeOffice').val(localStorage.getItem('SELECTED_OFFICE')).trigger('refresh');
+        }
         let table = $('#step-increment-table').DataTable({
             processing: true,
             serverSide: true,
             destroy: true,
             retrieve: true,
             pagingType: "full_numbers",
-            ajax: '/step-increment/list',
+            ajax: `/step-increment/list/${selectedOffice}`,
             language: {
                     processing: '<i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
             },
@@ -306,34 +318,9 @@
                     visible: true
                 },
                 {
-                    data: 'item_no',
-                    name: 'item_no',
-                    searchable: true,
-                    sortable: false,
-                    visible: true,
-                    className : 'text-center',
-                },
-                {
-                    data: 'last_latest_appointment',
-                    name: 'last_latest_appointment',
-                    searchable: true,
-                    sortable: false,
-                    visible: true,
-                    className : 'text-center',
-                },
-                {
                     className: 'text-truncate',
-                    data: 'sg_from_and_step_from',
-                    name: 'sg_from_and_step_from',
-                    searchable: true,
-                    sortable: false,
-                    visible: true,
-                    className : 'text-center',
-                },
-                {
-                    className: 'text-truncate',
-                    data: 'salary_amount_from',
-                    name: 'salary_amount_from',
+                    data: 'office_name',
+                    name: 'office_name',
                     searchable: true,
                     sortable: false,
                     visible: true
@@ -344,20 +331,11 @@
                     name: 'sg_to_and_step_to',
                     searchable: true,
                     sortable: false,
-                    visible: true,
-                    className : 'text-center',
+                    visible: true
                 },
                 {
-                    className: 'text-truncate',
-                    data: 'salary_amount_to',
-                    name: 'salary_amount_to',
-                    searchable: true,
-                    sortable: false,
-                    visible: true,
-                },
-                {
-                    data: 'salary_diff',
-                    name: 'salary_diff',
+                    data: 'salaryAmountYearly',
+                    name: 'salaryAmountYearly',
                     searchable: true,
                     sortable: false,
                     visible: true,
@@ -369,6 +347,14 @@
                 },
             ]
         });
+     //filter 
+    $("#employeeOffice").change(function (e) {
+        let selectedOffices = $("#employeeOffice").val();
+        localStorage.setItem('SELECTED_OFFICE', selectedOffices);
+        table.ajax
+            .url(`/step-increment/list/${selectedOffices}`)
+            .load();
+    });
 
         const MAX_NUMBER_OF_STEP_NO = 8;
 
