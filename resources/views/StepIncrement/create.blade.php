@@ -32,25 +32,33 @@
 
 <div class="p-0 m-0 container-fluid">
     <div class="kanban-board card mb-0 shadow-none">
-        <div class="card-body">
+
             <div class="page-header d-none" id="addForm" >
+                <div class="card-body mb-5">
                 <div class="float-right mb-2" id='btnViewTableContainer'>
                     <button class="btn btn-primary shadow"><i class='fa fa-list'></i>&nbsp; Personnel List</button>
                 </div>
-                <br>
-                <br>
-                <br>
+                </div>
 
                 <form action="{{ route('create.step') }}" method="POST" id="formStepIncrement">
                     @csrf
 
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="alert alert-secondary text-center font-weight-bold" role="alert">ADD STEP INCREMENT</div>
+                    <div class="py-3 bg-light my-4 border-bottom border-top text-center">
+                        <span class="px-3 font-weight-bold">
+                            ADD STEP INCREMENT
+                        </span>
+                    </div>
+
+                    <div class="row px-4 mt-2">
+                        <div class="col-12 col-lg-3">
+                            <label class="form-group has-float-label" for="dateStepIncrement">
+                            <input class="form-control" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}"
+                                id="dateIncrement" name="dateStepIncrement" type="date" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <span><strong>DATE<span class="text-danger">*</span></strong></span>
+                            </label>
                         </div>
-                        
-                        <div class="card-body col-12 col-md-6 col-lg-6">
-                            <div class="col-12 col-lg-11 mt-2">
+
+                            <div class="col-12 col-lg-6">
                                 <label class="form-group has-float-label mb-0" for="employeeName">
                                 <select class="form-control employeeName selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" data-live-search="true"
                                     name="employeeName" id="employeeName" data-size="6" style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -70,58 +78,56 @@
                                     <small id="employeeName-error-message" class="text-danger text-sm"></small>
                             </div>
 
-        
-
-                            <div class="col-12 col-lg-4">
+                            <div class="col-12 col-lg-3">
                                 <label class="form-group has-float-label" for="employeeId">
                                 <input  type="text" class="form-control" id="employeeId" name="employeeID"
                                     readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                     <span><strong>EMPLOYEE ID</strong></span>
                                 </label>
                             </div>
-
-                            <div class="col-12 col-lg-11">
-                                <label class="form-group has-float-label" for="dateStepIncrement">
-                                <input class="form-control" value="{{ Carbon\Carbon::now()->format('Y-m-d') }}"
-                                    id="dateIncrement" name="dateStepIncrement" type="date" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                    <span><strong>DATE<span class="text-danger">*</span></strong></span>
-                                </label>
-                            </div>
+                    </div>
 
                             <div>
-                                <input type="hidden" name="officeCode" id="officeCode">
+                                <input class="d-none" type="hidden" name="officeCode" id="officeCode">
                             </div>
+                            <input class="d-none" id="yearNow" type="text" value="{{ now()->year }}">
 
-                            <div class="form-group col-12 col-lg-11">
+
+                            <div class="d-none form-group col-12 col-lg-11">
                                 <input class="form-control d-none" id="positionId" name="positionID" type="hidden" readonly>
                             </div>
 
-                            <div class="col-12 col-lg-11">
-                                <label for="positionName" class="form-group has-float-label">
-                                <input class="form-control" id="positionName" data-position="" name="positionName" type="text"
-                                    readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                    <span><strong>POSITION</strong></span>
-                                </label>
+                            <div class="py-3 bg-light my-4 border-bottom border-top">
+                                <span class="px-3 font-weight-bold">
+                                    CURRENT STEP
+                                </span>
                             </div>
 
-                            <div class="col-12 col-lg-11">
-                                <label for="itemNoFrom" class="form-group has-float-label">
-                                    <input class="form-control" id="itemNo" name="itemNoFrom" type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <span><strong>ITEM NO</strong></span>
-                                </label>
-                            </div>
-
-                            <div class="col-12 col-lg-11">
-                                <label class="form-group has-float-label" for="lastAppointment">
-                                <input class="form-control" id="lastAppointment" name="datePromotion"
-                                    type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                    <span><strong>DATE OF LAST APPOINTMENT</strong></span>
-                                </label>
-                            </div>
-
-                            <div class="form-row col-12">
+                            <div class="row px-4 mt-2">
+                                <div class="col-12 col-lg-6">
+                                    <label class="form-group has-float-label" for="lastAppointment">
+                                    <input class="form-control" id="lastAppointment" name="datePromotion"
+                                        type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                        <span><strong>DATE OF LAST APPOINTMENT</strong></span>
+                                    </label>
+                                </div>
 
                                 <div class="col-12 col-lg-6">
+                                    <label for="positionName" class="form-group has-float-label">
+                                    <input class="form-control" id="positionName" data-position="" name="positionName" type="text"
+                                        readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                        <span><strong>POSITION</strong></span>
+                                    </label>
+                                </div>
+
+                                <div class="col-12 col-lg-3">
+                                    <label for="itemNoFrom" class="form-group has-float-label">
+                                        <input class="form-control" id="itemNo" name="itemNoFrom" type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                    <span><strong>ITEM NO</strong></span>
+                                    </label>
+                                </div>
+
+                                <div class="col-12 col-lg-3">
                                     <label class="form-group has-float-label" for="sgNoFrom">
                                     <input class="form-control" id="salaryGrade" name="sgNoFrom" type="text"
                                         readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -129,7 +135,7 @@
                                     </label>
                                 </div>
 
-                                <div class="col-12 col-lg-5 ml-2">
+                                <div class="col-12 col-lg-3">
                                     <label class="form-group has-float-label mb-0" for="stepNo">
                                     <input class="form-control" id="stepNo" name="stepNoFrom" type="text"
                                         readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -137,77 +143,74 @@
                                     </label>
                                 </div>
 
-                            </div>
-
-                            <div class="col-12 col-lg-11">
-                                <label class="form-group has-float-label" for="amountFrom">
-                                <input class="form-control" id="amount" name="amountFrom" type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <span><strong>AMOUNT</strong></span>
-                            </label>
-                            </div>
-                        </div>
-
-                        {{-- FORM THAT HAS TO BE INPUT --}}
-                        <div class="card-body col-12 col-md-6 col-lg-6">
-                            <div class="col-12 col-lg-12 mt-2">
-                                <label class="form-group has-float-label" for="">
-                                <input type="text" class="form-control" name="sgNo2" id="sgNo2" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <span><strong>SALARY GRADE</strong></span>
-                            </label>
-                                <div id="sgNo2-error-message" class="text-danger">
+                                <div class="col-12 col-lg-3">
+                                    <label class="form-group has-float-label" for="amountFrom">
+                                    <input class="form-control" id="amount" name="amountFrom" type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                    <span><strong>AMOUNT</strong></span>
+                                </label>
                                 </div>
                             </div>
 
-                            <div class="col-12 col-lg-12">
-                                <label class="form-group has-float-label mb-0" for="stepNo2">
-                                <select name="stepNo2" id="stepNo2" style="outline: none; box-shadow: 0px 0px 0px transparent;"
-                                    class="form-control stepNo2 floating {{ $errors->has('stepNo2')  ? 'is-invalid' : ''}}">
-                                    <option>Please Select</option>
-                                </select>
-                                <span><strong>STEP<span class="text-danger">*</span></strong></span>
-                                </label>
-                                @error('stepNo2')
-                                    <div class="text-danger text-sm">{{ $message }}</div>    
-                                @enderror
-                                
-                                <small id="stepNo2-error-message" class="text-danger text-sm"></small>
-                                
+                            <div class="py-3 bg-light my-4 border-bottom border-top">
+                                <span class="px-3 font-weight-bold">
+                                    NEW STEP
+                                </span>
                             </div>
 
-                            <div class="col-12 col-lg-12">
-                                <label class="form-group has-float-label" for="amount2">
-                                <input type="text" class="form-control" id="amount2" name="amount2" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <span><strong>AMOUNT</strong></span>
-                            </label>
-                                <div id="amount2-error-message" class="text-danger">
-                                </div>
-                            </div>
+                            <div class="row px-4 mt-2">
+                                    <div class="col-12 col-lg-3">
+                                        <label class="form-group has-float-label" for="">
+                                        <input type="text" class="form-control" name="sgNo2" id="sgNo2" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                        <span><strong>SALARY GRADE</strong></span>
+                                    </label>
+                                        <div id="sgNo2-error-message" class="text-danger">
+                                        </div>
+                                    </div>
 
-                            <div class="col-12 col-lg-12">
-                                <label class="form-group has-float-label" for="monthlyDifference">
-                                <input class="form-control" id="monthlyDifference" name="monthlyDifference"
-                                    type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                <span><strong>MONTHLY DIFFERENCE</strong></span>
-                                </label>
-                                    <div class='text-center'>
-                                        <button type="submit" id="btnSave" 
-                                            class="p-2 col-5 btn btn-success shadow mx-3 text-white">
-                                            <i class="fas fa-save"></i> Save
-                                        </button>
-                                        <button type="button" id="btnCancel"
-                                            class="p-2 col-5 btn btn-danger shadow text-light">
-                                                <i class="fas fa-ban"></i> Cancel
-                                        </button>
+
+                                    <div class="col-12 col-lg-3">
+                                        <label class="form-group has-float-label" for="stepNo2">
+                                        <input type="text" class="form-control" id="stepNo2" name="stepNo2" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                        <span><strong>STEP NO</strong></span>
+                                    </label>
+                                        <div id="stepNo2-error-message" class="text-danger">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-lg-3">
+                                        <label class="form-group has-float-label" for="amount2">
+                                        <input type="text" class="form-control" id="amount2" name="amount2" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                        <span><strong>AMOUNT</strong></span>
+                                    </label>
+                                        <div id="amount2-error-message" class="text-danger">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-lg-3">
+                                        <label class="form-group has-float-label" for="monthlyDifference">
+                                        <input class="form-control" id="monthlyDifference" name="monthlyDifference"
+                                            type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                        <span><strong>MONTHLY DIFFERENCE</strong></span>
+                                        </label>
+
+                                            <div class='text-center pt-5'>
+                                                <button type="button" id="btnCancel"
+                                                class="p-2 col-5 btn btn-danger shadow text-light">
+                                                    <i class="fas fa-ban"></i> Cancel
+                                            </button>
+                                                <button type="submit" id="btnSave"
+                                                    class="p-2 col-5 btn btn-success shadow mx-3 text-white">
+                                                    <i class="fas fa-save"></i> Save
+                                                </button>
+                                            </div>
+
                                     </div>
                             </div>
-
-                            
-                        </div>
                         <form>
-                    </div>
-            </div>
+</div>
 
             {{-- LIST OR DATATABLES --}}
+            <div class="card-body">
             <div id="stepIncrementTable" class="page-header">
                 <div class="row align-items-right mb-2">
                     <div class="col-auto float-right ml-auto">
@@ -435,14 +438,14 @@
 
             if (plantilla) {
                 plantilla = JSON.parse(plantilla);
-                
+
                 let {plantilla_positions} = plantilla;
                 let {position} = plantilla_positions;
 
 
 
                 // console.log(plantilla)
-                
+
                 $('#employeeId').val(plantilla.employee_id);
                 $('#plantillaId').val(plantilla.plantilla_id);
                 $('#officeCode').val(plantilla.office_code);
@@ -455,36 +458,30 @@
                 $('#stepNo').val(plantilla.step_no);
                 $('#amount').val(plantilla.salary_amount);
 
-                
-
                 $('#stepNo2').html('');
-                // $('#stepNo2').append(`<option readonly>Please select</option>`);
 
-
-                let step = plantilla.step_no;             
-
-            
-                for ( step + 1; step <= MAX_NUMBER_OF_STEP_NO; step++ )
-                {
-                    $('#stepNo2').append(`<option value='${step}'>${step}</option>`);
-
-                    let stepTo = $('#stepNo2').val();
-
-                    $.ajax({
-                    url: `/api/step/${$('#sgNo2').val()}/${stepTo}`,
+                let step = parseInt(plantilla.step_no);
+                if(step != 8){
+                    var steps = step + 1;
+                }else{
+                    var steps = step;
+                }
+                let yearNow = $('#yearNow').val();
+                let sgNo = $('#sgNo2').val();
+                $('#stepNo2').val(steps);
+                $.ajax({
+                    url: `/api/step/${sgNo}/${steps}/${yearNow}`,
                     success: function (response) {
-                        $('#amount2').val(`${response['sg_step' + stepTo]}`);
+                        $().val();
+                        $('#amount2').val(`${response['sg_step' + steps]}`);
 
                         let prevAmt = parseFloat($('#amount').val());
                         let currentAmt = parseFloat($('#amount2').val());
                         let amountDifference = parseFloat(((currentAmt - prevAmt) || ''));
-                        
+
                             $('#monthlyDifference').val(amountDifference || 0);
                         }
                     });
-                                        
-                }
-
             } else {
                 $('#officeCode').val('');
                 $('#status').val('');

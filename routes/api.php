@@ -361,9 +361,8 @@ Route::post('/position/schedule/adjust', function () {
 });
 
 // NOTICE OF STEP INCREMENT ---FETCH SALARY GRADE //
-Route::get('step/{sg_no}/{step}', function ($sgNo, $step) {
-    $salaryGrade = SalaryGrade::where('sg_no', $sgNo)->first(['sg_step'.$step]);
-
+Route::get('step/{sg_no}/{step}/{year}', function ($sgNo, $step, $year) {
+    $salaryGrade = SalaryGrade::where('sg_no', $sgNo)->where('sg_year', $year)->first(['sg_step'.$step]);
     return $salaryGrade;
 });
 
