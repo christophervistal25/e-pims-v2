@@ -38,13 +38,15 @@ class SalaryAdjustmentPerOfficeController extends Controller
 
     public function plantillaWithoutAdjustment(string $office, string $year)
     {
-        $data = Plantilla::whereDoesntHave('salary_adjustment', function ($query) use ($year) {
+        $data = Plantilla::whereDoesntHave('salary_adjustment', function ($query) use ($year) { 
             $query->whereYear('date_adjustment', $year);
-        })->with(['Employee', 'plantilla_positions', 'plantilla_positions.position', 'salary_adjustment' => function ($query) use ($year) {
-            $query->whereYear('date_adjustment', $year);
-        }, 'office'])->where('year', $year)
-            ->where('office_code', $office)
-            ->get();
+        })->with(['Employee', 'plantilla_positions', 'plantilla_positions.position', 'salary_adjustment' 
+        => function($query) use ($year) {$query->whereYear('date_adjustment', $year); },'office'])
+        ->where('Employee_id', '!=', null)
+        ->where('year', $year)
+        ->where('office_code', $office)
+        ->get();
+       
 
         return DataTables::of($data)
             ->editColumn('checkbox', function ($row) {
