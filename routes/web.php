@@ -260,9 +260,12 @@ Route::controller(CSCPlantillaController::class)->group(function () {
     Route::get('plantilla-report-history', 'index')->name('plantilla.report.index');
     Route::get('plantilla-report/show/{id}', 'show')->name('plantilla.report.show');
     Route::get('plantilla-report/show/{id}/list/{office}', 'listShow')->name('plantilla.report.show.list');
+    Route::put('plantilla-report-show/{id}/vacant', 'vacant');
+    Route::post('plantilla-report-show/assign', 'assigned');
     Route::post('plantilla-report-history-generate', 'generate');
     Route::delete('plantilla-report-history-remove/{id}', 'remove');
     Route::post('plantilla-report-history-checkpoint', 'checkpoint');
+    Route::get('plantilla-report-details/view-detials/{id}', 'viewDetails');
     // Route::get('plantilla-report/generate/{office}/{year}', 'generate')->name('generate.plantilla-report');
     // Route::post('export/{office}/{year}', 'export')->name('generate.plantilla-report');
     // Route::get('download/plantilla-generated-report/{fileName}', 'download')->name('download.generated.plantilla-report');
