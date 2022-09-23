@@ -18,7 +18,10 @@ class PlantillaPersonnelService
      */
     public function getPersonnelPlantilla(int $year, string $employeeID): Plantilla
     {
-        return Plantilla::with(['plantilla_positions', 'plantilla_positions.position', 'office'])->where('year', $year)->where('employee_id', $employeeID)->first();
+        return Plantilla::with(['plantilla_positions', 'plantilla_positions.position', 'plantilla_positions.division', 'plantilla_positions.section', 'plantilla_positions.office'])
+                        ->where('year', $year)
+                        ->where('employee_id', $employeeID)
+                        ->first();
     }
 
     /**
@@ -39,26 +42,13 @@ class PlantillaPersonnelService
      * @param array data array of data to be inserted
      * @return Plantilla The newly created Plantilla.
      */
-    public function addNewPlantilla(Plantilla $currentPlantilla, array $data = []): Plantilla
+    public function addNewPlantilla($currentPlantilla, array $data = []): Plantilla
     {
-        return Plantilla::create([
-            'plantilla_id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
-            'old_item_no' => $currentPlantilla->item_no,
-            'item_no' => $data['item_no'],
-            'pp_id' => $data['position'],
-            'sg_no' => $data['salary_grade'],
-            'step_no' => $data['step'],
-            'salary_amount' => Str::remove(',', $data['salary_amount']),
-            'employee_id' => $data['employee'],
-            'area_code' => $data['area_code'],
-            'area_type' => $data['area_type'],
-            'area_level' => $data['area_level'],
-            'date_original_appointment' => $data['original_appointment'],
-            'date_last_promotion' => $data['last_promotion'],
-            'office_code' => $data['office'],
-            'division_id' => $data['division'] ?? 0,
-            'status' => $data['status'],
-            'year' => date('Y'),
+        return tap(Plantilla::where('pp_id', $data['position'])->first())->update([
+            'employee_id'          => $data['employee'],
+            'old_item_no'          => $data['old_item_no'],
+            'original_appointment' => $currentPlantilla->original_appointment,
+            'date_last_promotion'  => $data['date_promotion'],
         ]);
     }
 }
