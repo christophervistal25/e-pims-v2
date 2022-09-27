@@ -1,11 +1,11 @@
 /node_modules
 /public/hot
 /public/storage
-/public/assets/img/profiles
 /public/assets/img/PROFILES-2
 /public/assets/img/profiles-3
 /public/assets/img/thumbnail
 /storage/*.key
+/storage/files/*
 /vendor
 .env
 .env.backup

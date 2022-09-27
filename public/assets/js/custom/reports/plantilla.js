@@ -80,7 +80,7 @@ $(document).on('click', '.btn__export', function () {
         success: function (response) {
             if (response.success) {
                 swal.close();
-                // window.open(`download/plantilla-generated-report/${response.fileName}`);
+                window.open(`download/plantilla-generated-report/${response.fileName}`);
                 $('#btnExport').html(`
                     <i class="las la-file-excel"></i>
                     CSC - EXPORT XLS

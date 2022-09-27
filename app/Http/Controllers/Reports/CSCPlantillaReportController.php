@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Reports;
 
+use ZipArchive;
 use Illuminate\Support\Str;
 use App\Services\OfficeService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Madnest\Madzipper\Facades\Madzipper;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
@@ -41,6 +43,8 @@ final class CSCPlantillaReportController extends Controller
                         )->where('year', $year)->where('R_Id', $id)->get()->groupBy('office_name');
 
         if($type === 'DBM') {
+            $zipName = $report->Plantilla_type . '_' . $report->Year . ".zip";
+            $zipper = Madzipper::make(storage_path() . "\\files\\" . $zipName);
             $sectionCount = 0;
             $startingIndex = 17;
             foreach($positions as $records) {
@@ -189,16 +193,18 @@ final class CSCPlantillaReportController extends Controller
                 $startingIndex = 17;
                 $sectionCount = 0;
 
+
+
                 $writer = new Xlsx($spreadsheet);
                 $writer = IOFactory::createWriter($spreadsheet, 'Xls');
                 $extension = '.xls';
-                $fileName =  $data->first()->first()->office_name  . "(" . time() . ")" . $extension;
+                $fileName =  $data->first()->first()->office_name . $extension;
                 $destination = storage_path() . '\\files\\';
                 $writer->save($destination . $fileName);
+                $zipper->add($destination . $fileName);
             }
-
-
-            $files = [];
+            $zipper->close();
+            $files = storage_path() . "\\files\\" . $zipName;
         } else if($type === 'CSC') {
             $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(public_path() . '\\CSC_PLANTILLA.xlsx');
 
@@ -283,7 +289,7 @@ final class CSCPlantillaReportController extends Controller
             $files = str_replace('\\', '||', $destination . $fileName);
         }
 
-        return response()->json(['success' => true, 'fileName' => $files]);
+        return response()->json(['success' => true, 'fileName' => str_replace("\\", "||", $files)]);
     }
 
     public function download(string $fileName)

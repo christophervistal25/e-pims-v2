@@ -24,6 +24,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0.0",
         "maatwebsite/excel": "^3.1",
+        "madnest/madzipper": "^1.3",
         "opcodesio/log-viewer": "^1.3",
         "phpoffice/phpspreadsheet": "^1.23",
         "psr/simple-cache": "2.0",
