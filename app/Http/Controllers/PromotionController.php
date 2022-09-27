@@ -6,16 +6,16 @@ namespace App\Http\Controllers;
 use App\Promotion;
 use App\Services\OfficeService;
 use App\Pipes\PromotedEmployees;
-use Yajra\DataTables\DataTables;
 use App\Services\EmployeeService;
+use App\Pipes\PromotedFilterByYear;
 use Chefhasteeth\Pipeline\Pipeline;
+use App\Pipes\PromotedFilterByOffice;
+use App\Pipes\PromotedListByDatatables;
 use App\Pipes\AddNewPromotionForEmployee;
 use App\Services\PlantillaPositionService;
 use App\Pipes\CurrentPlantillaMarkAsVacant;
 use App\Http\Requests\StorePromotionRequest;
 use App\Pipes\CreateNewPlantillaForEmployee;
-use App\Pipes\PromotedFilterByOffice;
-use App\Pipes\PromotedFilterByYear;
 
 final class PromotionController extends Controller
 {
@@ -25,27 +25,18 @@ final class PromotionController extends Controller
     public function list()
     {
         return Pipeline::make()
-                    ->send(request()->all())
-                    ->through([
-                        PromotedEmployees::class,
-                        PromotedFilterByOffice::class,
-                        PromotedFilterByYear::class,
-                    ])->then(
-                        fn($promotions) => DataTables::of($promotions->get())
-                                    ->addColumn('promotion_date', fn ($record) => date('F d, Y', strtotime($record->promotion_date)))
-                                    ->addColumn('office', fn ($record) => $record->new_plantilla_position->office->office_name)
-                                    ->addColumn('employee', fn ($record) => $record->employee->fullname)
-                                    ->addColumn('old_plantilla_position', fn ($record) => $record->old_plantilla_position->position->Description)
-                                    ->addColumn('new_plantilla_position', fn ($record) => $record->new_plantilla_position->position->Description)
-                                    ->make(true)
-                );
+                ->send(request()->all())
+                ->through([
+                    PromotedEmployees::class,
+                    PromotedFilterByOffice::class,
+                    PromotedFilterByYear::class,
+                    PromotedListByDatatables::class,
+                ])->then(fn ($records) => $records);
     }
 
     public function index()
     {
-        return view('promotion.index', [
-            'offices' => $this->officeService->offices(),
-        ]);
+        return view('promotion.index')->with('offices', $this->officeService->offices());
     }
 
     public function show(Promotion $promotion, PlantillaPositionService $plantillaPositionService)
