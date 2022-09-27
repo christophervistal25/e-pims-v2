@@ -3,11 +3,10 @@
 namespace App\Services;
 
 use App\Employee;
-use App\EmployeeCivilService;
 use App\Plantilla;
 use App\Promotion;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Cache;
+use App\EmployeeCivilService;
+use Illuminate\Support\Collection;
 
 class EmployeeService
 {
@@ -86,5 +85,17 @@ class EmployeeService
     public function getEmployeeIDS()
     {
         return Employee::get(['Employee_id'])->pluck('Employee_id');
+    }
+
+    public function getEmployeeHavingPlantilla() :Collection
+    {
+        return Employee::without(['position', 'office_charging', 'office_assignment'])
+                        ->with('promotions')
+                        ->has('plantilla')
+                        ->permanent()
+                        ->active()
+                        ->orderBy('LastName')
+                        ->orderBy('FirstName')
+                        ->get(['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'PosCode', 'OfficeCode']);
     }
 }

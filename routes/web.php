@@ -141,7 +141,7 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
     Route::post('promotion/store', [PromotionController::class, 'store'])->name('promotion.store');
     Route::get('promotion/{id}/edit', [PromotionController::class, 'edit'])->name('promotion.edit');
     Route::put('promotion/{id}/edit', [PromotionController::class, 'update'])->name('promotion.update');
-    Route::get('promotion/{employeeID}', [PromotionController::class, 'show'])->name('promotion.show');
+    Route::get('promotion/{promotion}', [PromotionController::class, 'show'])->name('promotion.show');
     Route::get('see-more/promotions', [StepPromotionController::class, 'upcomingStep'])->name('promotion.see-more');
 
     Route::get('step-increment/list/{office_code?}', 'StepIncrementController@list');

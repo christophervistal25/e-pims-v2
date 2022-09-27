@@ -33,9 +33,9 @@
 
       <div class="col-2 mb-2">
             <select data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker" name="currentYear" data-live-search="true" id="year" data-size="5">
-                  <option value="*">All</option>
-                  @foreach($rangeYear as $year)
-                  <option value="{{ $year }}">{{ $year }}</option>
+                  <option selected value="*">All</option>
+                  @foreach(range(date('Y') - 5, date('Y') + 1) as $year)
+                    <option value="{{ $year }}">{{ $year }}</option>
                   @endforeach
             </select>
       </div>

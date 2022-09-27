@@ -18,6 +18,6 @@ class PlantillaPositionController extends Controller
 
     public function getPositionDetails(int $plantillaPositionID)
     {
-        return $this->plantillaPositionService->getPlantillaPositionDetails($plantillaPositionID);
+        return $this->plantillaPositionService->getDetails($plantillaPositionID);
     }
 }
