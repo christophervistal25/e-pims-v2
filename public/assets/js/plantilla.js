@@ -157,6 +157,11 @@ $(document).ready(function () {
             "data-plantilla"
         );
         $("#employeeID").val(plantilla);
+        if(employeeID == ''){
+            $('#employeeImage').attr('src', `/assets/img/placeholder.jpg`)
+        }else{
+            $('#employeeImage').attr('src', `/assets/img/profiles/${employeeID}.jpg`)
+        }
     });
 
     $("#cancelButton").click(function () {

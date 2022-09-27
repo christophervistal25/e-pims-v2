@@ -69,7 +69,8 @@
                 <form action="/plantilla" method="post" id="plantillaForm">
                     @csrf
                     <div class="row">
-
+                        <div class="col-lg-9">
+                            <div class="row">
                             <div class="form-group col-12 col-lg-10">
                                 <label>Employee Name</label>
                                 <select value="" class="form-control employeeName selectpicker" name="employeeName" data-live-search="true" id="employeeName" data-size="5">
@@ -100,8 +101,6 @@
                                 </div>
                             </div>
 
-
-
                             <div class="form-group col-12 col-lg-6">
                                 <label>Position<span class="text-danger">*</span></label>
                                 <select value="" class="form-control positionTitle selectpicker" name="positionTitle" data-live-search="true" id="positionTitle" data-size="5" data-width="100%">
@@ -110,8 +109,18 @@
                                 <div id='position-title-error-message' class='text-danger text-sm'>
                                 </div>
                             </div>
+                        </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="d-flex justify-content-center">
+                                <img src="{{
+                                    asset('/assets/img/placeholder.jpg')
+                                }}" width="200px" height="180px" id="employeeImage" class="border img-responsive border-default float-right rounded cursor-pointer d-md-none d-lg-block" height="360px" />
+                            </div>
+                        </div>
+                    </div>
 
-
+                    <div class="row">
                             <div class="form-group col-12 col-lg-4">
                                 <label>Division</label>
                                 <input value="{{ old('divisionId') }}" class="form-control" name="divisionId" id="divisionId" type="text" placeholder="" readonly>

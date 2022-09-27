@@ -30,7 +30,9 @@
                         VIEW STEP INCREMENT
                     </span>
                 </div>
-
+                <div class="p-3">
+                    <img src="/assets/img/profiles/{{ $stepIncrement->employee_id }}.jpg" width="250px" height="253px" id="employeeImage" class="border img-responsive border-default float-right rounded cursor-pointer d-md-none d-lg-block" height="360px" />
+                </div>
                 <div class="row px-4 mt-2">
                     <div class="col-12 col-lg-3">
                         <label class="form-group has-float-label" for="dateStepIncrement">

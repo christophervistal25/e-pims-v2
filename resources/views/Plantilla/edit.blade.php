@@ -40,13 +40,14 @@
                     <form id="plantillaEditForm">
                          @csrf
                          @method('PUT')
-                         <div class="row">
 
                               <div class="col-12">
                                    <div class="alert alert-secondary text-center font-weight-bold" role="alert">EDIT PLANTILLA
                                         OF PERSONNEL</div>
                               </div>
-
+                              <div class="row">
+                                <div class="col-lg-9">
+                                    <div class="row">
                               <input type="text" value="{{ $plantilla->plantilla_id  }}" id="plantillaId" class="d-none">
 
                               <div class="form-group col-12 col-lg-10">
@@ -92,8 +93,17 @@
                                    <div id='position-title-error-message' class='text-danger text-sm'>
                                    </div>
                               </div>
+                            </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="d-flex justify-content-center">
+                                    <img src="/assets/img/profiles/{{ $plantilla->employee_id }}.jpg" width="200px" height="180px" id="employeeImage" class="border img-responsive border-default float-right rounded cursor-pointer d-md-none d-lg-block" height="360px" />
+                                </div>
+                            </div>
+                         </div>
 
 
+                              <div class="row">
                               <div class="form-group col-12 col-lg-4">
                                 <label>Division</label>
                                 <input
