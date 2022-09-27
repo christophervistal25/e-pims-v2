@@ -37,7 +37,7 @@ class service_record extends Model
 
     public function office()
     {
-        return $this->hasOne(Office::class, 'office_code', 'office_code');
+        return $this->hasOne(Office::class, 'office_code', 'office_code')->orWhereNull('office_code');
     }
 
     public function StepIncrement()
