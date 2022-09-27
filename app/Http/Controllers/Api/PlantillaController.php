@@ -73,7 +73,6 @@ class PlantillaController extends Controller
     public function getEmployeeCurrentPlantilla(string $employeeID)
     {
         $year = date('Y');
-
-        return $this->plantillaPersonnelService->getPersonnelPlantilla($year, $employeeID);
+        return $this->plantillaPersonnelService->getByYearAndEmployeeID($year, $employeeID);
     }
 }

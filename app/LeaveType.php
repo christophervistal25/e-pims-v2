@@ -16,17 +16,6 @@ class LeaveType extends Model
 
     public $keyType = 'string';
 
-    protected $fillable = [
-        'leave_type_id',
-        'description',
-        'description2',
-        'days_period',
-        'convertible_to_cash',
-        'applicable_gender',
-        'required_rendered_service',
-        'category',
-        'editable',
-    ];
 
     public function getRequiredRenderedServiceAttribute($value)
     {

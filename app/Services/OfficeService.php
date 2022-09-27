@@ -19,6 +19,11 @@ class OfficeService
         return OfficeCharging::get();
     }
 
+    public function officeAssignments() :Collection
+    {
+        return $this->office2();
+    }
+
     public function office2(): Collection
     {
         return Office2::get();

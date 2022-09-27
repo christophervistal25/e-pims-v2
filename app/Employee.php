@@ -2,8 +2,8 @@
 
 namespace App;
 
-use Carbon\Carbon;
 use Illuminate\Support\Str;
+use App\Reports\PlantillaDetails;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\EmployeeLaraTablesAction;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -340,5 +340,10 @@ class Employee extends Model
     public function file_records()
     {
         return $this->hasMany(EmployeePersonnelFile::class, 'Employee_id', 'Employee_id');
+    }
+
+    public function plantilla_report()
+    {
+        return $this->hasMany(PlantillaDetails::class, 'employee_id', 'Employee_id');
     }
 }

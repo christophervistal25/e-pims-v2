@@ -35,7 +35,7 @@
 
 {{-- mini-sidebar --}}
 
-<body class="{{ $class ?? '' }}" style="{{ $style ?? '' }}">
+<body class="{{ $class ?? 'mini-sidebar' }}" style="{{ $style ?? '' }}">
     <div id="loader-wrapper">
         <div id="loader">
             <div class="loader-ellips">
@@ -326,11 +326,11 @@
                         </a>
                     </li>
 
-                    <li>
+                    {{-- <li>
                         <a class='text-decoration-none' href='{{ route('trainings-report') }}'>
                             <i class="las la-project-diagram"></i> <span>Trainings</span></a>
                         </a>
-                    </li>
+                    </li> --}}
                     </li>
 
                     </ul>

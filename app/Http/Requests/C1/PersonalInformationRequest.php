@@ -27,7 +27,7 @@ class PersonalInformationRequest extends FormRequest
         $status = ['SINGLE', 'MARRIED', 'WIDOWED', 'SEPARATED', 'OTHERS'];
 
         return [
-            'Employee_id' => ['required', 'unique:Employees,Employee_id,'.request()->idNumber.',Employee_id'],
+            'Employee_id' => ['required', 'unique:DTR_PAYROLL_CONNECTION.Employees,Employee_id,'.request()->idNumber.',Employee_id'],
             'LastName' => 'required|regex:/^[a-zA-Z ].+$/u',
             'FirstName' => 'required|regex:/^[a-zA-Z ].+$/u',
             'MiddleName' => ['nullable', 'regex:/^[a-zA-Z].+$/u', 'min:2'],
@@ -55,16 +55,16 @@ class PersonalInformationRequest extends FormRequest
             'residential_house_no' => ['nullable'],
             'residential_street' => ['nullable'],
             'residential_village' => ['nullable'],
-            'residentialProvince.province_code' => ['required', 'exists:Provinces,province_code'],
-            'residentialCity.city_code' => ['required', 'exists:Cities,city_code'],
-            'residentialBarangay.barangay_code' => ['required', 'exists:Barangays,barangay_code'],
+            'residentialProvince.province_code' => ['required', 'exists:E_PIMS_CONNECTION.Provinces,province_code'],
+            'residentialCity.city_code' => ['required', 'exists:E_PIMS_CONNECTION.Cities,city_code'],
+            'residentialBarangay.barangay_code' => ['required', 'exists:E_PIMS_CONNECTION.Barangays,barangay_code'],
             'residentialZipCode' => ['required', 'min:4', 'max:4'],
             'permanent_house_no' => [],
             'permanent_street' => [],
             'permanent_village' => [],
-            'permanentProvince.province_code' => ['required', 'exists:Provinces,province_code'],
-            'permanentCity.city_code' => ['required', 'exists:Cities,city_code'],
-            'permanentBarangay.barangay_code' => ['required', 'exists:Barangays,barangay_code'],
+            'permanentProvince.province_code' => ['required', 'exists:E_PIMS_CONNECTION.Provinces,province_code'],
+            'permanentCity.city_code' => ['required', 'exists:E_PIMS_CONNECTION.Cities,city_code'],
+            'permanentBarangay.barangay_code' => ['required', 'exists:E_PIMS_CONNECTION.Barangays,barangay_code'],
             'permanentZipCode' => ['required', 'min:4', 'max:4'],
         ];
     }

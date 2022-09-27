@@ -5,15 +5,13 @@ namespace App\Http\Controllers\Account\Employee;
 use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\LeaveRecordRepository;
-use App\Services\MSAccess;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class LeaveCertificationController extends Controller
 {
-    public function __construct(MSAccess $database, LeaveRecordRepository $leaveRecordRepository)
+    public function __construct(LeaveRecordRepository $leaveRecordRepository)
     {
-        $this->database = $database;
         $this->leaveRecordRepository = $leaveRecordRepository;
     }
 

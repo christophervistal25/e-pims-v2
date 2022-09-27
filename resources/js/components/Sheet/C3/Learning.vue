@@ -349,8 +349,7 @@ export default {
                     this.rowErrors = null;
 
                     let message = document.createElement("p");
-                    message.innerHTML =
-                        "<br>You successfully store all data your input in Learning and Development Involvement";
+                    message.innerHTML ="<br>Learning and Development Involvement successfully updated";
                     message.classList.add("text-center");
 
                     if (response.status === 200) {

@@ -6,16 +6,14 @@ use App\Employee;
 use App\EmployeeLeaveRecord;
 use App\Http\Controllers\Controller;
 use App\Http\Repositories\LeaveRecordRepository;
-use App\Services\MSAccess;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LeaveCardController extends Controller
 {
-    public function __construct(LeaveRecordRepository $leaveRecordRepository, MSAccess $database)
+    public function __construct(LeaveRecordRepository $leaveRecordRepository)
     {
         $this->leaveRecordRepository = $leaveRecordRepository;
-        $this->database = $database;
     }
 
     public function index()

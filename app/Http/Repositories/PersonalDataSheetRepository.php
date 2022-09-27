@@ -89,7 +89,7 @@ class PersonalDataSheetRepository implements IPersonalDataSheet
             $employee->save();
         });
 
-        return $employee->exclude(['ImagePhoto'])->first();
+        return $employee->exclude(['ImagePhoto', 'signaturephoto'])->first();
     }
 
     /**

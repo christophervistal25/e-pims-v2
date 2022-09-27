@@ -61,18 +61,12 @@ class LeaveController extends Controller
             $this->validate($request, [
                 'name' => 'required',
                 'code' => 'required|unique:Leave_type,leave_type_id|max:10',
-                'description' => 'nullable|string',
-                'convertible_to_cash' => 'nullable',
-                'applicable_gender' => 'required|in:male,female,female/male',
             ]);
 
             LeaveType::create([
-                'name' => $request->name,
                 'leave_type_id' => $request->code,
-                'description' => $request->description,
-                'description2' => $request->description,
-                'convertible_to_cash' => $request->has('convertible_to_cash') ? 1 : 0,
-                'applicable_gender' => $request->applicable_gender,
+                'description' => $request->name,
+                'isLeave' => 1,
             ]);
 
             return response()->json(['success' => true], 201);

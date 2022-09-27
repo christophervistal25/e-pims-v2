@@ -106,9 +106,9 @@ Route::put('personnel-file/{id}/update', function (Request $request, int $id) {
     $file = PersonnelFile::find($id);
     $file->name = $request->edit_file;
     $file->save();
-
     return response()->json(['success' => true]);
 });
+
 Route::group(['prefix' => 'personal-data-sheet'], function () {
     Route::controller(PersonalDataSheetController::class)->group(function () {
         // BEGINNING OF C1 ROUTES
@@ -170,14 +170,11 @@ Route::group(['namespace' => 'Api'], function () {
         Route::get('offices', 'list');
     });
 
-    Route::group(['prefix' => 'employee', 'controller' => EmployeeController::class], function () {
-        Route::get('list/{charging?}/{assignment?}/{status?}/{active?}', 'list');
-        Route::post('store', 'store');
-        Route::get('find/{employeeID}', 'show');
-        Route::put('{employeeID}/update', 'update');
-        Route::get('find/ids/{employee_id?}', 'ids');
-        Route::delete('retire', 'retire');
-    });
+    Route::get('employee/list/{charging?}/{assignment?}/{status?}/{active?}', [EmployeeController::class, 'list']);
+    Route::post('employee/store', [EmployeeController::class, 'store']);
+    Route::get('employee/find/{employeeID}', [EmployeeController::class, 'show']);
+    Route::put('employee/{employeeID}/update', [EmployeeController::class, 'update']);
+    Route::delete('employee/retire', [EmployeeController::class, 'retire']);
 
     Route::group(['prefix' => 'province', 'controller' => ProvinceController::class], function () {
         Route::get('all', 'provinces');

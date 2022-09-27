@@ -5,13 +5,19 @@ namespace App\Http\Controllers\Api;
 use App\User;
 use App\Employee;
 use Hashids\Hashids;
+use App\Pipes\EditEmployee;
 use Illuminate\Http\Request;
+use App\Pipes\CreateEmployee;
+use App\Pipes\RegisterEmployee;
 use App\Services\EmployeeService;
+use Chefhasteeth\Pipeline\Pipeline;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Pipes\EmployeeLoginCredentials;
 use Freshbitsweb\Laratables\Laratables;
+use App\Pipes\EditEmployeeSocialInsurance;
 use App\Http\Requests\StoreEmployeeRequest;
+use App\Pipes\CreateEmployeeSocialInsurance;
 use App\Http\Requests\Employee\UpdateEmployeeRequest;
 
 class EmployeeController extends Controller
@@ -27,26 +33,41 @@ class EmployeeController extends Controller
             $active === '*' ?: $query->where('isActive', $active);
             $charging === '*' ?: $query->where('OfficeCode', $charging);
             $assignment === '*' ?: $query->where('OfficeCode2', $assignment);
-            $status === '*' ?: $query->where('Work_Status', 'like', '%'.$status.'%');
+            $status == '*' ?: $query->where('Work_Status', $status);
             return $query;
         });
     }
 
     public function store(StoreEmployeeRequest $request)
     {
-        // Store new employee
-        return $this->employeeService->addNewEmployee($request->all());
+        return Pipeline::make()
+            ->withTransaction()
+            ->send($request->all())
+            ->through([
+                CreateEmployee::class,
+                CreateEmployeeSocialInsurance::class,
+                RegisterEmployee::class,
+                EmployeeLoginCredentials::class,
+            ])->then(fn() => response()->json(['success' => true]));
     }
 
-    public function update(UpdateEmployeeRequest $request, string $employeeID): Employee
+    public function update(UpdateEmployeeRequest $request)
     {
-        return $this->employeeService->updateInformation($request->all(), Employee::find($employeeID));
+        return Pipeline::make()
+            ->withTransaction()
+            ->send($request->all())
+            ->through([
+                // Add pipe for ensuring if employeeID is present.
+                EditEmployee::class,
+                EditEmployeeSocialInsurance::class,
+                RegisterEmployee::class,
+                EmployeeLoginCredentials::class,
+            ])->then(fn() => response()->json(['success' => true]));
     }
 
     public function show(string $employeeID): Employee
     {
         $employeeID = (new Hashids())->decode($employeeID)[0];
-
         return $this->employeeService->findByEmployeeID($employeeID);
     }
 
@@ -59,39 +80,18 @@ class EmployeeController extends Controller
             ->get();
     }
 
-    public function ids(string $employee_id = null)
-    {
-        return Employee::where('employee_id', $employee_id)->get(['employee_id', 'firstname', 'middlename', 'lastname', 'extension']);
-    }
-
-    public function records()
-    {
-        return Employee::select(['employee_id', 'lastname', 'firstname', 'middlename', 'extension'])->paginate(10);
-    }
-
-    public function onUploadImage(Request $request)
-    {
-        if ($request->has('image')) {
-            $imageName = time().'_'.$request->file('image')->getClientOriginalName();
-
-            $request->file('image')->storeAs('/public/employee_images', $imageName);
-
-            return $imageName;
-        }
-    }
-
     public function retire(Request $request)
     {
         $user = User::where('username', $request->username)->first();
-        if($user && Hash::check($request->password, $user->password)) {
+        if ($user && Hash::check($request->password, $user->password)) {
             $employee = Employee::find($request->employeeID);
             $employee->isActive = $employee->isActive == Employee::ACTIVE ? Employee::IN_ACTIVE : Employee::ACTIVE;
             $employee->notes = $request->remarks ?? '';
             $employee->save();
+
             return response()->json(['success' => true]);
         } else {
             return response()->json(['success' => false, 'message' => 'Sorry but you can\'t perform this action.'], 422);
         }
-        
     }
 }

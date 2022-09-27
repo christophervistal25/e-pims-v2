@@ -2054,6 +2054,47 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Reports/Plantilla/Create.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Reports/Plantilla/Create.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    years: {
+      required: true,
+      type: Array
+    }
+  },
+  data: function data() {
+    return {
+      data: {
+        year: new Date().getFullYear(),
+        description: '',
+        date_as_of: '',
+        plantilla_type: ''
+      }
+    };
+  },
+  methods: {
+    generate: function generate() {
+      console.log('generate!');
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sheet/C1/EducationalBackground.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sheet/C1/EducationalBackground.vue?vue&type=script&lang=js& ***!
@@ -4136,8 +4177,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         if (response.status === 200) {
           _this4.isLoading = false;
           swal({
-            title: "Awesome",
-            text: "Successfully store all your inputs in educational background",
+            title: "",
+            text: "Educational Background has been updated successfully!",
             icon: "success",
             buttons: false,
             timer: 5000
@@ -6188,8 +6229,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           _this5.errors = {};
           _this5.isLoading = false;
           swal({
-            title: "Awesome",
-            text: "Successfully store all your inputs for personal information",
+            title: "",
+            text: "Personal Information has been updated successfully.",
             icon: "success",
             buttons: false,
             timer: 5000
@@ -6560,7 +6601,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         if (response.status === 200) {
           swal({
             icon: "success",
-            text: "Successfully store all your inputs in civil service eligibility",
+            text: "Civil Service Eligibility has been updated.",
             buttons: false,
             timer: 5000
           });
@@ -7003,7 +7044,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         if (response.status === 200) {
           sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
             icon: "success",
-            text: "Successfully store all your inputs in work experience",
+            text: "Work Experience has been updated successfully!",
             buttons: false,
             timer: 5000
           });
@@ -7447,7 +7488,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         _this2.errors = {};
         _this2.rowErrors = null;
         var message = document.createElement("p");
-        message.innerHTML = "<br>You successfully store all data your input in Learning and Development Involvement";
+        message.innerHTML = "<br>Learning and Development Involvement successfully updated";
         message.classList.add("text-center");
 
         if (response.status === 200) {
@@ -7761,7 +7802,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           _this.isLoading = false;
           swal({
             icon: "success",
-            text: "Successfully store all your inputs in other information",
+            text: 'Other information successfully updated!',
             timer: 5000,
             buttons: false
           });
@@ -8138,7 +8179,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           _this2.rowErrors = null;
           _this2.isComplete = true;
           var message = document.createElement('p');
-          message.innerHTML = 'Successfully store all your inputs in voluntary work or involvement.';
+          message.innerHTML = 'Voluntary work has been updated successfully!';
           message.setAttribute('class', 'text-dark text-center');
           sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
             icon: "success",
@@ -8388,7 +8429,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           _this.isComplete = true;
           _this.isLoading = false;
           swal({
-            text: "Successfully store all your inputs in Government Issued I.D",
+            text: "Government Issued I.D has been updated successfully!",
             icon: "success",
             buttons: false,
             timer: 5000
@@ -10102,7 +10143,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           _this3.errors = {};
           swal({
             icon: "success",
-            text: "Successfully store all your inputs in relevant queries",
+            text: 'Relevant Queries has been updated successfully',
             timer: 5000,
             buttons: false
           });
@@ -10457,8 +10498,8 @@ var submit = function submit(data, errors) {
   return axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/personal-data-sheet/family-background/update/".concat(data.employee_id), data).then(function (response) {
     if (response.status === RESPONSE_SUCCESS) {
       sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
-        title: "Awesome",
-        text: "Successfully store all your inputs for family background",
+        title: "",
+        text: "Family background successfully updated",
         icon: "success",
         buttons: false,
         timer: 5000
@@ -50015,6 +50056,45 @@ module.exports = function (list, options) {
 
 /***/ }),
 
+/***/ "./resources/js/components/Reports/Plantilla/Create.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/Reports/Plantilla/Create.vue ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Create_vue_vue_type_template_id_0c0e007a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Create.vue?vue&type=template&id=0c0e007a& */ "./resources/js/components/Reports/Plantilla/Create.vue?vue&type=template&id=0c0e007a&");
+/* harmony import */ var _Create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Create.vue?vue&type=script&lang=js& */ "./resources/js/components/Reports/Plantilla/Create.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Create_vue_vue_type_template_id_0c0e007a___WEBPACK_IMPORTED_MODULE_0__.render,
+  _Create_vue_vue_type_template_id_0c0e007a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Reports/Plantilla/Create.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Sheet/C1/EducationalBackground.vue":
 /*!********************************************************************!*\
   !*** ./resources/js/components/Sheet/C1/EducationalBackground.vue ***!
@@ -50487,6 +50567,22 @@ component.options.__file = "resources/js/components/Sheet/PersonalDataSheetForm.
 
 /***/ }),
 
+/***/ "./resources/js/components/Reports/Plantilla/Create.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/Reports/Plantilla/Create.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Create.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Reports/Plantilla/Create.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Sheet/C1/EducationalBackground.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************!*\
   !*** ./resources/js/components/Sheet/C1/EducationalBackground.vue?vue&type=script&lang=js& ***!
@@ -50705,6 +50801,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/Reports/Plantilla/Create.vue?vue&type=template&id=0c0e007a&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/Reports/Plantilla/Create.vue?vue&type=template&id=0c0e007a& ***!
+  \*********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_template_id_0c0e007a___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_template_id_0c0e007a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Create_vue_vue_type_template_id_0c0e007a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Create.vue?vue&type=template&id=0c0e007a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Reports/Plantilla/Create.vue?vue&type=template&id=0c0e007a&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Sheet/C1/EducationalBackground.vue?vue&type=template&id=4c2ce81b&":
 /*!***************************************************************************************************!*\
   !*** ./resources/js/components/Sheet/C1/EducationalBackground.vue?vue&type=template&id=4c2ce81b& ***!
@@ -50905,6 +51018,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PersonalDataSheetForm_vue_vue_type_template_id_f1c8c924_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PersonalDataSheetForm_vue_vue_type_template_id_f1c8c924_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PersonalDataSheetForm.vue?vue&type=template&id=f1c8c924&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Sheet/PersonalDataSheetForm.vue?vue&type=template&id=f1c8c924&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Reports/Plantilla/Create.vue?vue&type=template&id=0c0e007a&":
+/*!************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Reports/Plantilla/Create.vue?vue&type=template&id=0c0e007a& ***!
+  \************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div")
+}
+var staticRenderFns = []
+render._withStripped = true
+
 
 
 /***/ }),
@@ -76768,9 +76906,9 @@ var __webpack_exports__ = {};
   !*** ./resources/js/app.js ***!
   \*****************************/
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-select */ "./node_modules/vue-select/dist/vue-select.js");
 /* harmony import */ var vue_select__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_select__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
@@ -76792,6 +76930,7 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].component("relevant-queries", (__web
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].component("references-records", (__webpack_require__(/*! ./components/Sheet/C4/Reference.vue */ "./resources/js/components/Sheet/C4/Reference.vue")["default"]));
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].component("government-issued-id", (__webpack_require__(/*! ./components/Sheet/C4/Government.vue */ "./resources/js/components/Sheet/C4/Government.vue")["default"])); // END OF PERSONAL DATA SHEET CREATE
 
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].component('app-plantilla-report-create', (__webpack_require__(/*! ./components/Reports/Plantilla/Create.vue */ "./resources/js/components/Reports/Plantilla/Create.vue")["default"]));
 var app = new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
   el: "#app"
 });

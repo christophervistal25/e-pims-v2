@@ -47,20 +47,19 @@
             </a>
       </div>
 </div>
-<div class="card rounded-0">
+<div class="card rounded-0 shadow-none border-0">
       <div class="card-body">
             <table class='table table-bordered table-hover' id="promotionTable">
                   <thead>
-                        <tr>
-                              <td>Promotion Date</td>
-                              <td>Employee</td>
-                              <td>Office</td>
-                              <td>Old Position</td>
-                              <td>New Position</td>
-                              <td>Salary Grade</td>
-                              <td>Step</td>
-                              <td>Salary Grade Year</td>
-                              <td>Actions</td>
+                        <tr class="bg-light font-weight-medium">
+                              <th>Promotion Date</th>
+                              <th>Employee</th>
+                              <th>Office</th>
+                              <th>Old Position</th>
+                              <th>New Position</th>
+                              <th>SG / Step</th>
+                              <th>Salary Grade Year</th>
+                              <th>Actions</th>
                         </tr>
                   </thead>
             </table>
@@ -87,8 +86,14 @@
             { data: "office", name: "office", className : 'align-middle' },
             { data: "old_plantilla_position", name: "old_plantilla_position", className : 'align-middle' },
             { data: "new_plantilla_position", name: "new_plantilla_position", className : 'align-middle' },
-            { data: "sg_no", name: "sg_no", className : 'text-center align-middle' },
-            { data: "step_no", name: "step_no", className : 'text-center align-middle' },
+            {
+                className : 'text-center align-middle',
+                data: "sg_no",
+                name: "sg_no",
+                render : function(_,_, row) {
+                    return `<span class="text-center">${row.sg_no} / ${row.step_no}</span>`;
+                }
+            },
             { data: "sg_year", name: "sg_year", className : 'text-center align-middle' },
             {
                   data: "promotion_id",
@@ -96,8 +101,8 @@
                   className : 'text-center',
                   render : function (id, _, data, _) {
                         return `
-                              <a class='btn btn-info shadow mr-2' href="/promotion/${data.promotion_id}">
-                                    <i class="las la-eye"></i>
+                              <a class='btn btn-info mr-2' href="/promotion/${data.promotion_id}">
+                                    <i class="las la-id-card la-lg"></i>
                               </a>
                         `;
                   }

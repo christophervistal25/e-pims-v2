@@ -90,7 +90,7 @@ let table = $("#employees-table").DataTable({
             class: "align-middle text-center",
             orderable : false,
             searchable : false,
-            
+
         },
         {
             name: "position.position_short_name",
@@ -313,6 +313,7 @@ $("#btn-add-back").click(function () {
 
 $("#officeChargingSelect").change(function (e) {
     let charging = e.target.value;
+    console.log(charging);
     let assignment = $("#officeAssignmentSelect").val();
     let status = $("#employeeStatus").val();
     let active = $("#activeStatus").val();
@@ -567,7 +568,7 @@ $(document).on('click', '.btn-mark-as-retire', function () {
         remarksLabel.innerHTML = 'Reasons for retirement <span class="text-info">(optional)</span>';
         remarksLabel.setAttribute('for', 'remarks');
         remarksLabel.setAttribute('class', 'col-form-label');
-        
+
         remarksWrapper.appendChild(remarksLabel);
         remarksWrapper.appendChild(remarksInput);
     }
@@ -580,8 +581,8 @@ $(document).on('click', '.btn-mark-as-retire', function () {
     if(isActive == EMPLOYEE_IS_ACTIVE) {
         formWrapper.appendChild(remarksWrapper);
     }
-    
-    
+
+
     let textContent = `${isActive == EMPLOYEE_IS_ACTIVE ? 'You want to mark this employee as retired?' : 'You want to mark this employee as active?'}`;
     // Ask if the user really want to mark as retired
     swal({
@@ -642,7 +643,7 @@ $(document).on('click', '.btn-mark-as-retire', function () {
             });
         }
     });
-    
+
 
 });
 

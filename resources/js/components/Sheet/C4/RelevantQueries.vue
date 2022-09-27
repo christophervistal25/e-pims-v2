@@ -1365,7 +1365,7 @@ export default {
                         this.errors = {};
                         swal({
                             icon: "success",
-                            text: "Successfully store all your inputs in relevant queries",
+                            text : 'Relevant Queries has been updated successfully',
                             timer: 5000,
                             buttons: false,
                         });

@@ -4,8 +4,6 @@ namespace App\Traits;
 
 use Carbon\Carbon;
 use Hashids\Hashids;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Auth;
 
 trait EmployeeLaraTablesAction
 {
@@ -16,7 +14,7 @@ trait EmployeeLaraTablesAction
      */
     public static function laratablesAdditionalColumns()
     {
-        return ['PosCode', 'OfficeCode', 'OfficeCode2', 'isActive', 'Birthdate'];
+        return ['PosCode', 'OfficeCode', 'OfficeCode2', 'isActive', 'Birthdate', 'Work_Status'];
     }
 
     public static function laratablesCustomImage($employee)

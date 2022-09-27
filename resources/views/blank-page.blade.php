@@ -1,7 +1,8 @@
 ﻿@extends('layouts.app')
 @section('title', 'Dashboard')
 @prepend('page-css')
-<link rel="stylesheet" href="assets/plugins/morris/morris.css">
+<link rel="stylesheet" href="/assets/css/style.css" />
+<link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
       .btn-primary {
@@ -26,7 +27,7 @@
 @endprepend
 @section('content')
 
-<div class="row">
+{{-- <div class="row">
       <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
             <div class="card dash-widget">
                   <div class="card-body">
@@ -71,12 +72,12 @@
                   </div>
             </div>
       </div>
-</div>
+</div> --}}
 
 <div class="row">
       <div class="col-lg-12">
-            <div class="card-group m-b-30">
-                  <div class="card">
+            <div class="card-group">
+                  <div class="card shadow-none">
                         <div class="card-body">
                               <div class="d-flex justify-content-between mb-3">
                                     <div>
@@ -93,7 +94,7 @@
                               <p class="mb-0">Overall Employees {{ $allEmployees }}</p>
                         </div>
                   </div>
-                  <div class="card">
+                  <div class="card shadow-none">
                         <div class="card-body">
                               <div class="d-flex justify-content-between mb-3">
                                     <div>
@@ -110,7 +111,7 @@
                               <p class="mb-0">Overall Employees {{ $allEmployees }}</p>
                         </div>
                   </div>
-                  <div class="card">
+                  <div class="card shadow-none">
                         <div class="card-body">
                               <div class="d-flex justify-content-between mb-3">
                                     <div>
@@ -127,7 +128,7 @@
                               <p class="mb-0">Previous Year {{ $no_of_promoted_prev }}<span class="text-muted"></span></p>
                         </div>
                   </div>
-                  <div class="card">
+                  <div class="card shadow-none">
                         <div class="card-body">
                               <div class="d-flex justify-content-between mb-3">
                                     <div>
@@ -169,7 +170,7 @@
                                           <div class="my-0 font-weight-medium">{{ $employee->position->Description }}</div>
                                           <div class="my-0 font-weight-medium">Office Charging : <strong>{{ $employee->office_charging->Description }}</strong></div>
                                           <div class="my-0 font-weight-medium">Office Assignment : {{ $employee->office_assignment->Description }}</div>
-                                          <div class="my-0 font-weight-medium">First day of service : <strong>{{ date('l F d, Y', strtotime($employee->first_day_of_service)) }}</strong>
+                                          <div class="my-0 font-weight-medium">First day of service : <strong>{{ date('l F d, Y', strtotime($employee->first_day_of_service))}}</strong>
                                                 <div class="my-0 font-weight-medium">Next Increment : <strong>{{ date('l F d, Y', strtotime($employee->first_day_of_service?->addYears(3))) }}</strong>
                                                 </div>
                                           </div>
@@ -198,9 +199,9 @@
 {{-- BIRTHDAYS --}}
 <div class="row">
       <div class="col-md-12 col-lg-12 col-xl-4 d-flex">
-            <div class="card flex-fill">
-                  <div class="card-header">
-                        Today's Birthdays <span class="badge bg-inverse-primary ml-2">{{ $today->count() }}
+            <div class="card rounded-0 border-0 shadow-none flex-fill">
+                  <div class="card-header rounded-0 border-0 text-white h5 bg-primary border-0">
+                        <div class="font-weight-medium">Today's {{ \Str::plural('Birthday', $tomorrow->count()) }}  <span class="badge badge badge-light">{{ $today->count() }}</span></div>
                   </div>
                   <div class="card-body">
                         @foreach($today as $key => $employee)
@@ -213,7 +214,7 @@
                                         <img class="img-fluid bor  der rounded-circle shadow-sm mr-3" width="60" src="{{ $employeeImage }}">
                                     </a>
                                     <div class="media-body">
-                                          <div class="my-0 h6">{{ $employee->fullname }}</div>
+                                          <div class="my-0 font-weight-medium">{{ $employee->fullname }}</div>
                                           <div class="my-0 font-weight-medium">{{ $employee->position?->position_name }}</div>
                                           <div class="my-0 font-weight-medium">{{ $employee->office?->office_short_name }}</div>
                                           <div class="my-0 font-weight-medium">{{ date('l F d, Y', strtotime($employee->Birthdate)) }}
@@ -222,8 +223,8 @@
                               </div>
                         </div>
                         @if($key === 3 && ($today->count() - 4) !== 0)
-                        <a href="{{ route('employees-birthday.index') }}?from={{ date('m-d') }}&to={{ date('m-d') }}" class='btn btn-primary btn-block h6'>See more {{ $today->count() - 4 }} Birthday's</a>
-                        @break
+                            <a href="{{ route('employees-birthday.index') }}?from={{ date('m-d') }}&to={{ date('m-d') }}" class='btn btn-primary btn-sm border-0 float-right'>See more {{ $today->count() - 4 }} {{ \Str::plural('Birthday', $today->count() - 4) }}</a>
+                            @break
                         @endif
                         @endforeach
                   </div>
@@ -232,9 +233,10 @@
 
 
       <div class="col-md-12 col-lg-12 col-xl-4 d-flex">
-            <div class="card flex-fill">
-                  <div class="card-header">
-                        Tomorrow Birthdays <span class="badge bg-inverse-primary ml-2">{{ $tomorrow->count() }}
+            <div class="card flex-fill border-0 rounded-0 shadow-none">
+                  <div class="card-header bg-primary rounded-0">
+                    <div class="font-weight-medium text-white">
+                        Tomorrow {{ \Str::plural('Birthday', $tomorrow->count()) }}  <span class="badge badge badge-light">{{ $tomorrow->count() }}</span></div>
                   </div>
                   <div class="card-body">
                         @foreach($tomorrow as $key => $employee)
@@ -247,16 +249,16 @@
                                         <img class="img-fluid border rounded-circle shadow-sm mr-3" width="60" src="{{ $employeeImage }}">
                                     </a>
                                     <div class="media-body">
-                                          <div class="my-0 h6">{{ $employee->fullname }}</div>
+                                          <div class="my-0">{{ $employee->fullname }}</div>
                                           <div class="my-0 font-weight-medium">{{ $employee->position?->position_name }}</div>
                                           <div class="my-0 font-weight-medium">{{ $employee->office?->office_short_name }}</div>
-                                          <div class="my-0 font-weight-medium">{{ date('l F d, Y', strtotime($employee->Birthdate)) }}
+                                          <div class="my-0 font-weight-mediu">{{ date('l F d, Y', strtotime($employee->Birthdate)) }}
                                           </div>
                                     </div>
                               </div>
                         </div>
                         @if($key === 3 && ($tomorrow->count() - 4) !== 0)
-                        <a href="{{ route('employees-birthday.index') }}?from={{ date('m-d', strtotime($employee->Birthdate)) }}&to={{ date('m-d', strtotime($employee->Birthdate)) }}" class='btn btn-primary btn-block h6'>See more {{ $tomorrow->count() - 4 }} Birthday's</a>
+                            <a href="{{ route('employees-birthday.index') }}?from={{ date('m-d', strtotime($employee->Birthdate)) }}&to={{ date('m-d', strtotime($employee->Birthdate)) }}" class='btn-sm btn-primary btn-sm border-0 float-right'>See more {{ $tomorrow->count() - 4 }} {{ \Str::plural('Birthday', $tomorrow->count() - 4 ) }}</a>
                         @break
                         @endif
                         @endforeach
@@ -266,8 +268,13 @@
 
 
       <div class="col-md-12 col-lg-12 col-xl-4 d-flex">
-            <div class="card flex-fill">
-                  <div class="card-header">One week before Birthdays <span class="badge bg-inverse-primary ml-2">{{ $oneWeekBeforeBirthdays->count() }}</div>
+            <div class="card flex-fill border-0 rounded-0 shadow-nnone">
+                  <div class="card-header bg-primary rounded-0">
+                    <div class="font-weight-medium text-white">
+                        One week before {{ \Str::plural('Birthday', $oneWeekBeforeBirthdays->count()) }}
+                        <span class="badge badge badge-light">{{ $oneWeekBeforeBirthdays->count() }}</span>
+                    </div>
+                    </div>
                   <div class="card-body">
                         @foreach($oneWeekBeforeBirthdays as $key => $employee)
                         @php
@@ -279,7 +286,7 @@
                                         <img class="img-fluid border rounded-circle shadow-sm mr-3" width="60" src="{{ $employeeImage }}">
                                     </a>
                                     <div class="media-body">
-                                          <div class="my-0 h6">{{ $employee->fullname }}</div>
+                                          <div class="my-0">{{ $employee->fullname }}</div>
                                           <div class="my-0 font-weight-medium">{{ $employee->position?->position_name }}</div>
                                           <div class="my-0 font-weight-medium">{{ $employee->office?->office_name }}</div>
                                           <div class="my-0 font-weight-medium">{{ date('l F d, Y', strtotime($employee->Birthdate)) }}
@@ -288,9 +295,9 @@
                               </div>
                         </div>
                         @if($key === 3 && ($oneWeekBeforeBirthdays->count() - 4) !== 0)
-                        <a href="{{ route('employees-birthday.index') }}?from={{ date('m-d', strtotime($employee->Birthdate)) }}&to={{ date('m-d', strtotime($employee->Birthdate)) }}" class='btn btn-primary btn-block h6'>
-                              See more {{ $oneWeekBeforeBirthdays->count() - 4 }} Birthday's
-                        </a>
+                            <a href="{{ route('employees-birthday.index') }}?from={{ date('m-d', strtotime($employee->Birthdate)) }}&to={{ date('m-d', strtotime($employee->Birthdate)) }}" class='font-weight-medium border-0 btn btn-primary btn-sm float-right'>
+                                See more {{ $oneWeekBeforeBirthdays->count() - 4 }} {{ \Str::plural('Birthday', $oneWeekBeforeBirthdays->count() - 4) }}
+                            </a>
                         @break
                         @endif
                         @endforeach
@@ -299,8 +306,6 @@
             </div>
       </div>
 </div>
-
-
 
 
 

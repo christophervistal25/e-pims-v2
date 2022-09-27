@@ -48,7 +48,7 @@
 
 
 </head>
-<body class="mini-sidebar">
+<body class="{{ $class ?? '' }}">
     <div id="loader-wrapper">
         <div id="loader">
             <div class="loader-ellips">
@@ -242,17 +242,11 @@
                                 <i class="las la-file"></i>
                                 <span>Personal Data Sheet</span></a>
                         </li>
-                        <li class="submenu">
-                            <a href="#">
-                                <i class="las la-address-card"></i>
-                                <span> Leaves</span> <span class="menu-arrow"></span></a>
-                            <ul style="display: none;">
-                                <li><a class="" href="{{ route('employee.leave.application.filling') }}">Leave
-                                        Application Filling</a></li>
-                                <li>
-                                    <a class="" href="{{ route('employee.leave.card.index') }}">Leave Card</a>
-                                </li>
-                            </ul>
+                        <li>
+                            <a class="" href="https://lms.phrmosds.ph/" target="_blank">
+                                <i class="las la-suitcase-rolling"></i>
+                                <span>Leave</span>
+                            </a>
                         </li>
                         <li>
                             <a class="" href="{{ route('employee.payslip') }}">

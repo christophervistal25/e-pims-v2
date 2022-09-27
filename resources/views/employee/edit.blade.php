@@ -250,7 +250,7 @@
             </div>
         </div>
 
-        <div class="card shadow-none">
+        <div class="card shadow-none mb-2">
             <div class="card-header h4">
                 LOGIN CREDENTIALS
             </div>
@@ -306,7 +306,7 @@
             </div>
         </div>
 
-        <button class="btn btn-success btn-lg h5 shadow float-right my-3" id="btnUpdateEmployee">
+        <button class="btn btn-success btn-lg h5 shadow float-right" id="btnUpdateEmployee">
             <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true" id='btnUpdateSpinner'></span>
             UPDATE
         </button>

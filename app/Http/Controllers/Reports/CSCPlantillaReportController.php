@@ -2,248 +2,286 @@
 
 namespace App\Http\Controllers\Reports;
 
+use Illuminate\Support\Str;
+use App\Services\OfficeService;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Office;
-use App\PlantillaPosition;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
-class CSCPlantillaReportController extends Controller
+
+final class CSCPlantillaReportController extends Controller
 {
-    public function index()
+    public const EMPTY = ',';
+
+    public function export(int $id, string $type)
     {
-        $offices = Office::get();
-        $years = range(2016, date('Y', strtotime('+1 year')));
-        rsort($years);
+        $report = DB::connection('E_PIMS_CONNECTION')->table('Plantilla_Reports')->where(['Id' => $id])->first();
+        $id = $report->Id;
+        $year = $report->Year;
+        $positions = DB::connection('E_PIMS_CONNECTION')->table('plantilla_positions')
+                        ->join('EPims.dbo.Plantilla_Reports_Details', 'plantilla_positions.pp_id', '=', 'Plantilla_Reports_Details.pp_id')
+                        ->leftJoin('DTRPayroll.dbo.Employees', 'EPims.dbo.Plantilla_Reports_Details.employee_id', '=', 'DTRPayroll.dbo.Employees.Employee_id')
+                        ->join('EPims.dbo.Positions', 'plantilla_positions.PosCode', '=', 'Positions.PosCode')
+                        ->join('EPims.dbo.Offices', 'plantilla_positions.office_code', '=', 'Offices.office_code')
+                        ->leftJoin('EPims.dbo.Sections', 'plantilla_positions.section_id', '=', 'Sections.section_id')
+                        ->leftJoin('EPims.dbo.Divisions', 'plantilla_positions.division_id', '=', 'Divisions.division_id')
+                        ->select(
+                            'plantilla_positions.item_no', 'plantilla_positions.area_code', 'plantilla_positions.area_type', 'plantilla_positions.area_level', 'plantilla_positions.sg_no', 'plantilla_positions.office_code', 'Offices.office_name', 'Offices.office_short_name',
+                            'Plantilla_Reports_Details.employee_id', 'Positions.*',
+                            'Plantilla_Reports_Details.plantilla_id', 'Plantilla_Reports_Details.old_item_no', 'Plantilla_Reports_Details.item_no', 'Plantilla_Reports_Details.pp_id',
+                            'Plantilla_Reports_Details.sg_no', 'Plantilla_Reports_Details.step_no', 'Plantilla_Reports_Details.salary_amount', 'Plantilla_Reports_Details.salary_amount_yearly', 'Plantilla_Reports_Details.sg_no_previous', 'Plantilla_Reports_Details.step_no_previous', 'Plantilla_Reports_Details.salary_amount_previous',
+                            'Plantilla_Reports_Details.salary_amount_previous_yearly', 'Plantilla_Reports_Details.employee_id', 'Plantilla_Reports_Details.date_original_appointment', 'Plantilla_Reports_Details.date_last_promotion', 'Plantilla_Reports_Details.status', 'Plantilla_Reports_Details.year',
+                            DB::raw("CONCAT(FirstName, ', ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"),
+                            'FirstName', 'MiddleName', 'LastName', 'Suffix', 'Birthdate',
+                            'Divisions.division_id', 'Divisions.division_name',
+                            'Sections.section_id', 'Sections.section_name'
+                        )->where('year', $year)->where('R_Id', $id)->get()->groupBy('office_name');
 
-        return view('reports.plantilla', [
-            'offices' => $offices,
-            'years' => $years,
-            'class' => 'mini-sidebar',
-        ]);
-    }
+        if($type === 'DBM') {
+            $sectionCount = 0;
+            $startingIndex = 17;
+            foreach($positions as $records) {
+                $data = $records->groupBy(fn ($record) => $record->division_name ?? $record->section_name ?? 'OFFICE_' . $record->office_name);
 
-    public function generate(string $office, string $year)
-    {
-        $data = PlantillaPosition::with(['plantillas', 'position', 'plantillas.Employee', 'plantillas.division', 'plantilla_history', 'plantilla_history.Employee', 'salary_grade' => function ($query) use ($year) {
-                    $query->where('sg_year', $year)->orWhere('sg_year', $year - 1);
-                }]);
-                
-        if($office != '*') {
-            return $data->where('office_code', $office)->get();
-        }  else {
-            return $data->get();
-        }
+                $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(public_path() . '\\DBM_PLANTILLA.xlsx');
+                $worksheet = $spreadsheet->getActiveSheet();
+                $worksheet->setTitle($year);
+                $worksheet->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_LEGAL);
 
-    }
+                foreach($data as $officeOrDivision => $positions) {
+                    $worksheet->setCellValue('C3', 'PLANTILLA OF LGU PERSONNEL FY ' . $year);
+                    $worksheet->setCellValue('C7', $positions->first()->office_name);
+                    if( Str::contains($officeOrDivision, 'OFFICE_') ) {
+                        foreach($positions as $record) {
+                            $worksheet->insertNewRowBefore($startingIndex);
 
-    public function exportAll(int $year)
-    {
-        $previousYear = $year - 1;
-        $currentYear = $year;
-    
-        $positions = PlantillaPosition::with([
-            'office',
-            'plantillas',
-            'position',
-            'plantillas.Employee',
-            'plantillas.division',
-            'plantilla_history',
-            'plantilla_history.Employee',
-            'salary_grade' => function ($query) use ($currentYear, $previousYear) {
-                $query->where('sg_year', $currentYear)->orWhere('sg_year', $previousYear);
-            }])->get();
+                            if(empty($record->FirstName)) {
+                                $record->fullname = 'VACANT';
+                            }
 
-        $positions = $positions->groupBy(function ($position) {
-            return $position->office->office_short_name;
-        });
-        
-        $sheetIndex = 1;
-
-        $currentSheetIndex = 0;
-        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(public_path().'\\CSC_PLANTILLA.xlsx');
-        $startingIndex = 15;
-
-        foreach($positions as $office => $positionGroup) {
-            $records = $positionGroup->chunk(11);
-
-            foreach($records as $record) {
-                    $clonedWorksheet = clone $spreadsheet->getSheetByName('BLANK_TEMPLATE');
-                    $clonedWorksheet->setTitle($office.'('.$sheetIndex.')');
-                    $spreadsheet->addSheet($clonedWorksheet);
-                    $worksheet = $spreadsheet->getSheetByName($office.'('.$sheetIndex.')');
-                    $worksheet->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_LEGAL);
-
-                    $worksheet->setCellValue('A4', "For the Fiscal Year {$year}");
-                    $worksheet->setCellValue('A7', "(1) Department : {$positionGroup?->first()?->office?->office_name}");
-                    $worksheet->setCellValue('A26', "(19) Total Number of Personnel Items: {$positionGroup->count()}");
-                    $worksheet->setCellValue('K34', date('m/d/Y')); 
-                    $worksheet->setCellValue('Q34', 'ALEXANDER T. PIMENTEL');
-                    $worksheet->setCellValue('A34', 'ACE R. ORCULLO');
-
-                    foreach($positionGroup as $position) {
-                        if($position->plantilla_history->isEmpty()) {
-                            $grades = $position->salary_grade->filter(fn ($grade) => $grade->sg_year == $year || $grade->sg_year == ($currentYear - 1))->toArray();
-                            [$current, $previous] = array_values($grades);
-
-                            $worksheet->setCellValue('A'.$startingIndex, $position->item_no);
-                            $worksheet->setCellValue('F'.$startingIndex, $position->position?->Description);
-                            $worksheet->setCellValue('G'.$startingIndex, $position->sg_no);
-                            $worksheet->setCellValue('N'.$startingIndex, 'P');
-                            $worksheet->setCellValue('H'.$startingIndex, $previous['sg_step1'] * 12);
-                            $worksheet->setCellValue('I'.$startingIndex, $previous['sg_step1']);
-                            $worksheet->setCellValue('J'.$startingIndex, $current['sg_step1']);
-                            $worksheet->setCellValue('K'.$startingIndex, $current['sg_step1'] * 12);
-                            $worksheet->setCellValue('L'.$startingIndex, 1);
-                            $worksheet->setCellValue('O'.$startingIndex, $position->plantillas?->area_level);
-                            $worksheet->setCellValue('M'.$startingIndex, 15)->getStyle('P'.$startingIndex)->applyFromArray([
-                                'fill' => [
-                                    'fillType' => Fill::FILL_SOLID,
-                                    'startColor' => [
-                                        'rgb' => 'FFFF00',
+                            $worksheet->setCellValue('A' . $startingIndex, $record->old_item_no);
+                            $worksheet->setCellValue('B' . $startingIndex, $record->item_no);
+                            $worksheet->setCellValue('C' . $startingIndex, $record->Description);
+                            $worksheet->getStyle('C' . $startingIndex)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT)->setWrapText(true);
+                            $worksheet->setCellValue('D' . $startingIndex, $record->fullname);
+                            $worksheet->getStyle('D' . $startingIndex)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT)->setWrapText(true);
+                            $worksheet->setCellValue('E' . $startingIndex, $record->sg_no)->getStyle('E' . $startingIndex)->applyFromArray([
+                                'borders' => [
+                                    'outline' => [
+                                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
                                     ],
                                 ],
-                            ])->getFont()->setBold(true);
+                            ]);;
+                            $worksheet->setCellValue('F' . $startingIndex, $record->step_no);
+                            $worksheet->setCellValue('G' . $startingIndex, $record->salary_amount_previous_yearly);
+                            $worksheet->setCellValue('H' . $startingIndex, $record->sg_no)->getStyle('H' . $startingIndex)->applyFromArray([
+                                'borders' => [
+                                    'outline' => [
+                                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                                    ],
+                                ],
+                            ]);;
+                            $worksheet->setCellValue('I' . $startingIndex, $record->step_no);
+                            $worksheet->setCellValue('J' . $startingIndex, $record->salary_amount_yearly);
+                            $worksheet->setCellValue('M' . $startingIndex, $record->salary_amount_yearly - $record->salary_amount_previous_yearly);
 
-                            $spreadsheet->getSheetByName($position?->office?->office_short_name.'('.$sheetIndex.')');
-                            $worksheet->setCellValue('P'.$startingIndex, 'Vacant');
-                        } else {
-                            $worksheet->setCellValue('A'.$startingIndex, $position->item_no);
-                            $worksheet->setCellValue('F'.$startingIndex, $position->position?->Description);
-                            $worksheet->setCellValue('G'.$startingIndex, $position->sg_no);
-                            $worksheet->setCellValue('H'.$startingIndex, isset($position->plantilla_history[1]) ? $position->plantilla_history[1]?->salary_amount * 12 : '');
-                            $worksheet->setCellValue('I'.$startingIndex, isset($position->plantilla_history[1]) ? $position->plantilla_history[1]->salary_amount : '');
-                            $worksheet->setCellValue('J'.$startingIndex, $position->plantilla_history[0]?->salary_amount);
-                            $worksheet->setCellValue('K'.$startingIndex, $position->plantilla_history[0]?->salary_amount * 12);
-                            $worksheet->setCellValue('L'.$startingIndex, $position->plantilla_history[0]?->step_no);
-                            $worksheet->setCellValue('M'.$startingIndex, is_null($position->plantilla_history[0]) ? ' ' : 15);
-                            $worksheet->setCellValue('N'.$startingIndex, 'P');
-                            $worksheet->setCellValue('O'.$startingIndex, $position->plantillas?->area_level);
-                            $worksheet->setCellValue('P'.$startingIndex, is_null($position->plantillas) ? 'Vacant' : $position->plantillas?->Employee?->LastName);
+                            $startingIndex++;
                         }
-                        $worksheet->setCellValue('Q'.$startingIndex, $position->plantillas?->Employee?->FirstName);
-                        $worksheet->setCellValue('R'.$startingIndex, $position->plantillas?->Employee?->MiddleName);
-                        $worksheet->setCellValue('S'.$startingIndex, is_null($position->plantillas) ? ' ' : date('m/d/Y', strtotime($position->plantillas?->Employee?->Birthdate)));
+                    } else if( Str::contains(Str::upper($officeOrDivision), 'SECTION')) {
+                        $sectionCount++;
+                        $worksheet->insertNewRowBefore($startingIndex);
+                        $firstCell = "B" . $startingIndex;
+                        $secondCell = ":M" . $startingIndex;
+                        $worksheet->mergecells($firstCell . $secondCell)->getCell("B" . $startingIndex)->setValue('   ' . $officeOrDivision);
+                        $worksheet->getStyle('B' . $startingIndex )->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+                        $worksheet->getStyle('B' . $startingIndex)->getFont()->setBold(true);
 
-                        $worksheet->setCellValue('Z'.$startingIndex, is_null($position->plantillas) ? ' ' : date('m/d/Y', strtotime($position->plantillas?->date_original_appointment)));
-                        $worksheet->setCellValue('AA'.$startingIndex, is_null($position->plantillas) ? ' ' : date('m/d/Y', strtotime($position->plantillas?->date_last_promotion)));
-                        $worksheet->setCellValue('AB'.$startingIndex, $position->plantillas?->Employee?->Work_Status);
-                        $startingIndex++;
+                        foreach($positions as $record) {
+                            $startingIndex++;
+
+                            if(empty($record->FirstName)) {
+                                $record->fullname = 'VACANT';
+                            }
+
+                            $worksheet->insertNewRowBefore($startingIndex);
+
+                            $worksheet->setCellValue('A' . $startingIndex, $record->old_item_no);
+                            $worksheet->setCellValue('B' . $startingIndex, $record->item_no);
+                            $worksheet->setCellValue('C' . $startingIndex, $record->Description);
+                            $worksheet->setCellValue('D' . $startingIndex, $record->fullname);
+                            $worksheet->setCellValue('E' . $startingIndex, $record->sg_no)->getStyle('E' . $startingIndex)->applyFromArray([
+                                'borders' => [
+                                    'outline' => [
+                                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                                    ],
+                                ],
+                            ]);
+                            $worksheet->setCellValue('F' . $startingIndex, $record->step_no);
+                            $worksheet->setCellValue('G' . $startingIndex, $record->salary_amount_previous_yearly);
+                            $worksheet->setCellValue('H' . $startingIndex, $record->sg_no)->getStyle('H' . $startingIndex)->applyFromArray([
+                                'borders' => [
+                                    'outline' => [
+                                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                                    ],
+                                ],
+                            ]);
+                            $worksheet->setCellValue('I' . $startingIndex, $record->step_no);
+                            $worksheet->setCellValue('J' . $startingIndex, $record->salary_amount_yearly);
+                            $worksheet->setCellValue('M' . $startingIndex, $record->salary_amount_yearly - $record->salary_amount_previous_yearly);
+                        }
+                    } else { // Division
+                        $sectionCount++;
+
+                        $worksheet->insertNewRowBefore($startingIndex);
+                        $firstCell = "B" . $startingIndex;
+                        $secondCell = ":M" . $startingIndex;
+                        $worksheet->mergecells($firstCell . $secondCell)->getCell("B" . $startingIndex)->setValue('   ' . $officeOrDivision);
+                        $worksheet->getStyle('B' . $startingIndex )->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+                        $worksheet->getStyle('B' . $startingIndex)->getFont()->setBold(true);
+
+                        foreach($positions as $record) {
+                            $startingIndex++;
+
+                            if(empty($record->FirstName)) {
+                                $record->fullname = 'VACANT';
+                            }
+
+                            $worksheet->insertNewRowBefore($startingIndex);
+
+                            $worksheet->setCellValue('A' . $startingIndex, $record->old_item_no);
+                            $worksheet->setCellValue('B' . $startingIndex, $record->item_no);
+                            $worksheet->setCellValue('C' . $startingIndex, $record->Description);
+                            $worksheet->setCellValue('D' . $startingIndex, $record->fullname);
+                            $worksheet->setCellValue('E' . $startingIndex, $record->sg_no)->getStyle('E' . $startingIndex)->applyFromArray([
+                                'borders' => [
+                                    'outline' => [
+                                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                                    ],
+                                ],
+                            ]);
+                            $worksheet->setCellValue('F' . $startingIndex, $record->step_no);
+                            $worksheet->setCellValue('G' . $startingIndex, $record->salary_amount_previous_yearly);
+                            $worksheet->setCellValue('H' . $startingIndex, $record->sg_no)->getStyle('H' . $startingIndex)->applyFromArray([
+                                'borders' => [
+                                    'outline' => [
+                                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                                    ],
+                                ],
+                            ]);
+                            $worksheet->setCellValue('I' . $startingIndex, $record->step_no);
+                            $worksheet->setCellValue('J' . $startingIndex, $record->salary_amount_yearly);
+                            $worksheet->setCellValue('M' . $startingIndex, $record->salary_amount_yearly - $record->salary_amount_previous_yearly);
+                        }
                     }
-
-                    $startingIndex = 15;
-                    $sheetIndex++;
-                    $currentSheetIndex++;
                 }
+
+                $previousRange = "G17" . ":" . "G" . ($startingIndex + $sectionCount);
+                $currentRange = "J17" . ":" . "J" . ($startingIndex + $sectionCount);
+                $increaseAndDecreaseRange = "M17" . ":" . "M" . ($startingIndex + $sectionCount);
+
+                $worksheet->setCellValue('G' . ($startingIndex + $sectionCount + 1), "=SUM(" . $previousRange . ")");
+                $worksheet->setCellValue('J' . ($startingIndex + $sectionCount + 1), "=SUM(" . $currentRange . ")");
+                $worksheet->setCellValue('M' . ($startingIndex + $sectionCount + 1), "=SUM(" . $increaseAndDecreaseRange . ")");
+
+                $startingIndex = 17;
+                $sectionCount = 0;
+
+                $writer = new Xlsx($spreadsheet);
+                $writer = IOFactory::createWriter($spreadsheet, 'Xls');
+                $extension = '.xls';
+                $fileName =  $data->first()->first()->office_name  . "(" . time() . ")" . $extension;
+                $destination = storage_path() . '\\files\\';
+                $writer->save($destination . $fileName);
             }
 
+
+            $files = [];
+        } else if($type === 'CSC') {
+            $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(public_path() . '\\CSC_PLANTILLA.xlsx');
+
+            $records = $positions->chunk(11);
+            $sheetIndex = 1;
+            $startingIndex = 15;
+            foreach ($records as $record) {
+                foreach ($record as $pos) {
+                    $pos = $pos->chunk(11);
+                    foreach($pos as $p) {
+                        $sheetPageTitle = $pos->first()->first()->office_short_name ?? $pos->first()->first()->office_code;
+                        $clonedWorksheet = clone $spreadsheet->getSheetByName('BLANK_TEMPLATE');
+                        $clonedWorksheet->setTitle($sheetPageTitle . '(' . $sheetIndex . ')');
+                        $spreadsheet->addSheet($clonedWorksheet);
+                        $worksheet = $spreadsheet->getSheetByName($sheetPageTitle . '(' . $sheetIndex . ')');
+                        $worksheet->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_LEGAL);
+                        $worksheet->setCellValue('A4', "For the Fiscal Year {$year}");
+                        $worksheet->setCellValue('A7', "(1) Department : {$pos->first()->first()->office_name}");
+                        $worksheet->setCellValue('A26', "(19) Total Number of Personnel Items: " . $p->count());
+
+                        $worksheet->setCellValue('K34', date('m/d/Y'));
+
+                        $worksheet->setCellValue('Q34', 'ALEXANDER T. PIMENTEL');
+
+                        $worksheet->setCellValue('A34', 'ACE R. ORCULLO');
+                        foreach($p as $position) {
+                            $worksheet->setCellValue('A' . $startingIndex, $position->item_no);
+                            $worksheet->setCellValue('F' . $startingIndex, $position->Description);
+                            $worksheet->setCellValue('G' . $startingIndex, $position->sg_no);
+                            $worksheet->setCellValue('N' . $startingIndex, $position->area_type);
+                            $worksheet->setCellValue('H' . $startingIndex, $position->salary_amount_previous_yearly);
+                            $worksheet->setCellValue('I' . $startingIndex, $position->salary_amount_previous);
+                            $worksheet->setCellValue('J' . $startingIndex, $position->salary_amount);
+                            $worksheet->setCellValue('K' . $startingIndex, $position->salary_amount_yearly);
+                            $worksheet->setCellValue('L' . $startingIndex, $position->step_no ?? 1);
+                            $worksheet->setCellValue('M' . $startingIndex, $position->area_code ?? '');
+                            $worksheet->setCellValue('O' . $startingIndex, $position->area_level ?? '');
+                            $worksheet->setCellValue('P' . $startingIndex, $position->LastName ?? '');
+                            $worksheet->setCellValue('Q' . $startingIndex, $position->FirstName ?? '');
+                            $worksheet->setCellValue('R' . $startingIndex, $position->MiddleName ?? '');
+                            $worksheet->setCellValue('S' . $startingIndex, $position->Birthdate ?? '');
+                            $worksheet->setCellValue('Z' . $startingIndex, $position->date_original_appointment);
+                            $worksheet->setCellValue('AA' . $startingIndex, $position->date_last_promotion);
+                            $worksheet->setCellValue('AB' . $startingIndex, Str::upper($position->status));
+
+                            if (trim($position->fullname) === self::EMPTY) {
+                                $worksheet->setCellValue('M' . $startingIndex, $position->area_code)->getStyle('P' . $startingIndex)->applyFromArray([
+                                    'fill' => [
+                                        'fillType' => Fill::FILL_SOLID,
+                                        'startColor' => [
+                                            'rgb' => 'FFFF00',
+                                        ],
+                                    ],
+                                ])->getFont()->setBold(true);
+                                $worksheet->setCellValue('P' . $startingIndex, 'VACANT');
+                            } else {
+                                $worksheet->setCellValue('M' . $startingIndex, $position->area_code)->getStyle('P' . $startingIndex)->applyFromArray([
+                                    'fill' => [
+                                        'fillType' => Fill::FILL_SOLID,
+                                        'startColor' => [
+                                            'rgb' => '#FFFFFF',
+                                        ],
+                                    ],
+                                ])->getFont()->setBold(true);
+                            }
+                            $startingIndex++;
+                        }
+                        $startingIndex = 15;
+                        $sheetIndex++;
+                    }
+                }
+            }
             // Remove the Blank Template
             $spreadsheet->removeSheetByIndex(0);
 
             $writer = new Xlsx($spreadsheet);
-            $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xls');
+            $writer = IOFactory::createWriter($spreadsheet, 'Xls');
             $extension = '.xls';
-            $fileName = 'GENERATED_PLANTILLA'.$extension;
-            $destination = storage_path().'\\files\\';
-            $writer->save($destination.$fileName);
-            $files = str_replace('\\', '||', $destination.$fileName);
-
-            return response()->json(['success' => true, 'fileName' => $files]);
-    }
-
-    public function export(string $office, string $year)
-    {
-        $officeData = Office::where('office_code', $office)->first();
-
-        $positions = PlantillaPosition::with(['plantillas', 'position', 'plantillas.Employee', 'plantilla_history', 'plantilla_history.Employee', 'salary_grade:sg_no,sg_year,sg_step1'])
-            ->where('office_code', $office)
-            ->get();
-
-        $records = $positions->chunk(11);
-        $sheetIndex = 1;
-
-        $currentSheetIndex = 0;
-        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(public_path().'\\CSC_PLANTILLA.xlsx');
-        $startingIndex = 15;
-
-        foreach ($records as $index => $plantillaPositions) {
-            $clonedWorksheet = clone $spreadsheet->getSheetByName('BLANK_TEMPLATE');
-            $clonedWorksheet->setTitle($officeData->office_short_name.'('.$sheetIndex.')');
-            $spreadsheet->addSheet($clonedWorksheet);
-            $worksheet = $spreadsheet->getSheetByName($officeData->office_short_name.'('.$sheetIndex.')');
-            $worksheet->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_LEGAL);
-
-            $worksheet->setCellValue('A4', "For the Fiscal Year {$year}");
-            $worksheet->setCellValue('A7', "(1) Department : {$officeData->office_name}");
-            $worksheet->setCellValue('A26', "(19) Total Number of Personnel Items: {$plantillaPositions->count()}");
-            $worksheet->setCellValue('K34', date('m/d/Y'));
-            $worksheet->setCellValue('Q34', 'ALEXANDER T. PIMENTEL');
-            $worksheet->setCellValue('A34', 'ACE R. ORCULLO');
-
-            foreach ($plantillaPositions as $data) {
-                if ($data->plantilla_history->isEmpty()) {
-                    $grades = $data->salary_grade->filter(fn ($grade) => $grade->sg_year == $year || $grade->sg_year == ($year - 1))->toArray();
-                    [$current, $previous] = array_values($grades);
-
-                    $worksheet->setCellValue('A'.$startingIndex, $data->item_no);
-                    $worksheet->setCellValue('F'.$startingIndex, $data->position?->Description);
-                    $worksheet->setCellValue('G'.$startingIndex, $data->sg_no);
-                    $worksheet->setCellValue('N'.$startingIndex, 'P');
-                    $worksheet->setCellValue('H'.$startingIndex, $previous['sg_step1'] * 12);
-                    $worksheet->setCellValue('I'.$startingIndex, $previous['sg_step1']);
-                    $worksheet->setCellValue('J'.$startingIndex, $current['sg_step1']);
-                    $worksheet->setCellValue('K'.$startingIndex, $current['sg_step1'] * 12);
-                    $worksheet->setCellValue('L'.$startingIndex, 1);
-                    $worksheet->setCellValue('O'.$startingIndex, $data->plantillas?->area_level);
-                    $worksheet->setCellValue('M'.$startingIndex, 15);
-                    $spreadsheet->getSheetByName($officeData->office_short_name.'('.$sheetIndex.')')->getStyle('P'.$startingIndex)->applyFromArray([
-                        'fill' => [
-                            'fillType' => Fill::FILL_SOLID,
-                            'startColor' => [
-                                'rgb' => 'FFFF00',
-                            ],
-                        ],
-                    ])->getFont()->setBold(true);
-                    $worksheet->setCellValue('P'.$startingIndex, 'Vacant');
-                } else {
-                    $worksheet->setCellValue('A'.$startingIndex, $data->item_no);
-                    $worksheet->setCellValue('F'.$startingIndex, $data->position?->Description);
-                    $worksheet->setCellValue('G'.$startingIndex, $data->sg_no);
-                    $worksheet->setCellValue('H'.$startingIndex, isset($data->plantilla_history[1]) ? $data->plantilla_history[1]?->salary_amount * 12 : '');
-                    $worksheet->setCellValue('I'.$startingIndex, isset($data->plantilla_history[1]) ? $data->plantilla_history[1]->salary_amount : '');
-                    $worksheet->setCellValue('J'.$startingIndex, $data->plantilla_history[0]?->salary_amount);
-                    $worksheet->setCellValue('K'.$startingIndex, $data->plantilla_history[0]?->salary_amount * 12);
-                    $worksheet->setCellValue('L'.$startingIndex, $data->plantilla_history[0]?->step_no);
-                    $worksheet->setCellValue('M'.$startingIndex, is_null($data->plantilla_history[0]) ? ' ' : 15);
-                    $worksheet->setCellValue('N'.$startingIndex, 'P');
-                    $worksheet->setCellValue('O'.$startingIndex, $data->plantillas?->area_level);
-                    $worksheet->setCellValue('P'.$startingIndex, is_null($data->plantillas) ? 'Vacant' : $data->plantillas?->Employee?->LastName);
-                }
-
-                $worksheet->setCellValue('Q'.$startingIndex, $data->plantillas?->Employee?->FirstName);
-                $worksheet->setCellValue('R'.$startingIndex, $data->plantillas?->Employee?->MiddleName);
-                $worksheet->setCellValue('S'.$startingIndex, is_null($data->plantillas) ? ' ' : date('m/d/Y', strtotime($data->plantillas?->Employee?->Birthdate)));
-
-                $worksheet->setCellValue('Z'.$startingIndex, is_null($data->plantillas) ? ' ' : date('m/d/Y', strtotime($data->plantillas?->date_original_appointment)));
-                $worksheet->setCellValue('AA'.$startingIndex, is_null($data->plantillas) ? ' ' : date('m/d/Y', strtotime($data->plantillas?->date_last_promotion)));
-                $worksheet->setCellValue('AB'.$startingIndex, $data->plantillas?->Employee?->Work_Status);
-                $startingIndex++;
-            }
-            $startingIndex = 15;
-            $sheetIndex++;
-            $currentSheetIndex++;
+            $fileName = 'GENERATED_PLANTILLA_CSC' . time() . $extension;
+            $destination = storage_path() . '\\files\\';
+            $writer->save($destination . $fileName);
+            $files = str_replace('\\', '||', $destination . $fileName);
         }
-
-        // Remove the Blank Template
-        $spreadsheet->removeSheetByIndex(0);
-
-        $writer = new Xlsx($spreadsheet);
-        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xls');
-        $extension = '.xls';
-        $fileName = 'GENERATED_PLANTILLA'.$extension;
-        $destination = storage_path().'\\files\\';
-        $writer->save($destination.$fileName);
-        $files = str_replace('\\', '||', $destination.$fileName);
 
         return response()->json(['success' => true, 'fileName' => $files]);
     }
@@ -251,7 +289,6 @@ class CSCPlantillaReportController extends Controller
     public function download(string $fileName)
     {
         $fileName = str_replace('||', '\\', $fileName);
-
         return response()->download($fileName);
     }
 }

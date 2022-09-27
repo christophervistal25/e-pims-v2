@@ -36,9 +36,8 @@ const submit = (data, errors) => {
         .then(response => {
             if (response.status === RESPONSE_SUCCESS) {
                 swal({
-                    title: "Awesome",
-                    text:
-                        "Successfully store all your inputs for family background",
+                    title: "",
+                    text : "Family background successfully updated",
                     icon: "success",
                     buttons: false,
                     timer: 5000

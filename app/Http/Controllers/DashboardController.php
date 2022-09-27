@@ -14,19 +14,19 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $noOfJobOrder = $this->employeeService->getJobOrdersCount();
-        $noOfRegular = $this->employeeService->getRegularsCount();
-        $noOfInActiveEmployee = $this->employeeService->getInActiveEmployees();
-        $overAllEmployees = $noOfJobOrder + $noOfRegular + $noOfInActiveEmployee;
-        
-        $today = $this->employeeBirthdayService->today();
-        $tomorrow = $this->employeeBirthdayService->tomorrow();
-        $oneWeekBeforeBirthdays = $this->employeeBirthdayService->weekBefore();
-        
-        $noOfPromotedPreviousYear = $this->employeeService->getNoOfPromotedEmployees(date('Y') - 1);
-        $noOfPromotedThisYear = $this->employeeService->getNoOfPromotedEmployees(date('Y'));
-        
-        $employeesWithEligibility = $this->employeeService->getNoOfEmployeesWithEligibility();
+        $noOfJobOrder               = $this->employeeService->getJobOrdersCount();
+        $noOfRegular                = $this->employeeService->getRegularsCount();
+        $noOfInActiveEmployee       = $this->employeeService->getInActiveEmployees();
+        $overAllEmployees           = $noOfJobOrder + $noOfRegular + $noOfInActiveEmployee;
+
+        $today                      = $this->employeeBirthdayService->today();
+        $tomorrow                   = $this->employeeBirthdayService->tomorrow();
+        $oneWeekBeforeBirthdays     = $this->employeeBirthdayService->weekBefore();
+
+        $noOfPromotedPreviousYear   = $this->employeeService->getNoOfPromotedEmployees(date('Y') - 1);
+        $noOfPromotedThisYear       = $this->employeeService->getNoOfPromotedEmployees(date('Y'));
+
+        $employeesWithEligibility   = $this->employeeService->getNoOfEmployeesWithEligibility();
         $employeesWithNewPlantillas = $this->employeeService->getNoOfEmployeesWithNewPlantilla();
 
         $on_going_leave = 0;
@@ -43,19 +43,19 @@ class DashboardController extends Controller
         $promotionInSixMonths = $promotionInSixMonths->where('in_range_of_six_months', true);
 
         return view('blank-page', [
-            'today' => $today,
-            'tomorrow' => $tomorrow,
+            'today'                  => $today,
+            'tomorrow'               => $tomorrow,
             'oneWeekBeforeBirthdays' => $oneWeekBeforeBirthdays,
-            'no_of_regular' => $noOfRegular,
-            'no_of_jobOrder' => $noOfJobOrder,
-            'allEmployees' => $overAllEmployees,
-            'no_of_promoted' => $noOfPromotedThisYear,
-            'no_of_promoted_prev' => $noOfPromotedPreviousYear,
-            'no_of_active' => $overAllEmployees,
-            'no_of_inactive' => $noOfInActiveEmployee,
-            'on_going_leave' => $on_going_leave,
-            'plantillas' => $employeesWithNewPlantillas,
-            'eligible' => $employeesWithEligibility,
+            'no_of_regular'          => $noOfRegular,
+            'no_of_jobOrder'         => $noOfJobOrder,
+            'allEmployees'           => $overAllEmployees,
+            'no_of_promoted'         => $noOfPromotedThisYear,
+            'no_of_promoted_prev'    => $noOfPromotedPreviousYear,
+            'no_of_active'           => $overAllEmployees,
+            'no_of_inactive'         => $noOfInActiveEmployee,
+            'on_going_leave'         => $on_going_leave,
+            'plantillas'             => $employeesWithNewPlantillas,
+            'eligible'               => $employeesWithEligibility,
             'promotionInSixMonths' => $promotionInSixMonths,
         ]);
     }

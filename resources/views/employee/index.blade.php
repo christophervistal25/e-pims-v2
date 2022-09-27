@@ -41,7 +41,7 @@
                             <select class="form-control select2" style='width : 100%;' id="officeChargingSelect">
                                 <option value="*" selected>ALL</option>
                                 @foreach($offices as $office)
-                                <option value="{{ $office->OfficeCode }}">{{ $office->Description }}</option>
+                                <option value="{{ $office->OfficeCode2 }}">{{ $office->Description }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -51,7 +51,7 @@
                             <select class="form-control select2" style="width : 100%" id="officeAssignmentSelect">
                                 <option value="*" selected>ALL</option>
                                 @foreach($offices as $office)
-                                <option value="{{ $office->OfficeCode }}">{{ $office->Description }}</option>
+                                    <option value="{{ $office->OfficeCode2 }}">{{ $office->Description }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -60,15 +60,9 @@
                             <label for="#employeeStatus" class='h5'>WORK STATUS</label>
                             <select id="employeeStatus" class="form-control form-select">
                                 <option value="*" selected>ALL</option>
-                                <option value="PERMANENT">PERMANENT</option>
-                                <option value="TEMPORARY">TEMPORARY</option>
-                                <option value="CO-TERMINOUS">CO-TERMINOUS</option>
-                                <option value="CONTRACT OF SERVICE">CONTRACT OF SERVICE</option>
-                                <option value="ELEECTED">ELECTED</option>
-                                <option value="CASUAL">CASUAL</option>
-                                <option value="PROVISIONAL">PROVISIONAL</option>
-                                <option value="COTERMINOUS-TEMPORARY">COTERMINOUS-TEMPORARY</option>
-                                <option value="SUBSTITUTE">SUBSTITUTE</option>
+                                @foreach($workStatuses as $workStatus)
+                                <option value="{{ $workStatus }}">{{ $workStatus }}</option>
+                                @endforeach
                             </select>
                         </div>
 

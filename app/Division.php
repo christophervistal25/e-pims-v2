@@ -27,6 +27,12 @@ class Division extends Model
     {
         return $this->belongsTo(Section::class, 'division_id', 'division_id');
     }
+
+    public function division_sections()
+    {
+        return $this->hasMany(Section::class, 'division_id', 'division_id');
+    }
+
     public function plantillaPosition()
     {
         return $this->hasOne(PlantillaPosition::class, 'division_id', 'division_id');

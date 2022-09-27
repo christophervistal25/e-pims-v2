@@ -1308,8 +1308,8 @@ export default {
                         this.errors = {};
                         this.isLoading = false;
                         swal({
-                            title: "Awesome",
-                            text: "Successfully store all your inputs for personal information",
+                            title: "",
+                            text: "Personal Information has been updated successfully.",
                             icon: "success",
                             buttons: false,
                             timer: 5000,

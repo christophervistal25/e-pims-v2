@@ -33,7 +33,7 @@
     </div>
 </div>
 <div class="card" id="report-wrapper">
-    <div class="card-body">
+    <div class="card-body rounded-0 shadow-none border-0">
         <div class="table-responsive">
             <table class="table table-bordered table-hover" id="reports-table" width="100%">
                 <thead>
@@ -41,7 +41,7 @@
                         <th>ID</th>
                         <th>Year</th>
                         <th>Description</th>
-                        <th>Date</th>
+                        <th>AS OF Date</th>
                         <th>Type</th>
                         <th>Actions</th>
                     </tr>
@@ -79,10 +79,6 @@
                 </div>
 
                 <div class="float-right">
-                    <button class="btn btn-info">
-                        <i class="las la-eye"></i>
-                        Preview
-                    </button>
                     <button class="btn btn-primary" id="formBtnGenerate">
                         <i class="las la-folder-plus"></i>
                         Generate
@@ -100,176 +96,6 @@
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
-<script>
-    $('#create-report-form-wrapper').hide();
-
-    let table = $('#reports-table').DataTable({
-        ajax : `/plantilla-report-history-list/*`,
-        serverSide : true,
-        processing: true,
-        destroy: true,
-        language: {
-            processing: '<i class="text-primary fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span>'
-        },
-        columns : [
-            {
-                class : 'text-center align-middle',
-                name : 'Id',
-                data : 'Id',
-            },
-            {
-                class : 'text-center align-middle',
-                name : 'Year',
-                data : 'Year',
-            },
-            {
-                class : 'align-middle',
-                name : 'Description',
-                data : 'Description',
-            },
-            {
-                class : 'text-center align-middle',
-                name : 'Asof_date',
-                data : 'Asof_date',
-            },
-            {
-                class : 'text-center align-middle',
-                name : 'Plantilla_type',
-                data : 'Plantilla_type',
-            },
-            {
-                class : 'text-center align-middle',
-                name : 'Id',
-                data : 'Id',
-                render : function (Id) {
-                    return `
-                    <button class="btn btn-primary">
-                            <i class="las la-eye"></i>
-                        </button>
-                        <button class="btn btn-danger btn__remove__report" data-id="${Id}">
-                            <i class="las la-trash"></i>
-                        </button>
-                    `;
-                }
-            },
-
-        ]
-    });
-    $('#btnGenerate').click(function() {
-        $('#report-wrapper').fadeOut(300);
-        let year = $('#year').val();
-        let description = $('#description').val();
-        let asOfDate = $('#asOfDate').val();
-        let plantillaType = $('#selectedType').val();
-
-        // Checkpoint before display the form.
-        $.ajax({
-            url : '/plantilla-report-history-checkpoint',
-            method : 'POST',
-             data : {
-                year,
-                description,
-                asOfDate,
-                plantillaType
-             },
-             success : function (response) {
-                if(response.success) {
-                    setTimeout(() => $('#create-report-form-wrapper').show().fadeIn(300), 350);
-                    // Initialize valu  es for form
-                    let year = $('#year').val();
-                    let type = $('#selectedType').val();
-
-                    $('#selectedYear').val(year);
-                    $('#description').val(`${type} PLANTILLA ${year}`);
-                    $('#type').val(type);
-                }
-             },
-             error : function(response) {
-
-             }
-        });
-
-    });
-
-    const clearErrorMessage = (parent, target) => $('#generateReportForm').children().find(parent).each((index, element) => $(element).parent().find(target).remove());
-    const removeIsInvalidClass = (parent) => $('#generateReportForm').children().find(parent).removeClass('is-invalid');
-
-    $('#formBtnGenerate').click(function(e) {
-        e.preventDefault();
-
-        let year = $('#year').val();
-        let description = $('#description').val();
-        let asOfDate = $('#asOfDate').val();
-        let plantillaType = $('#type').val();
-
-
-        clearErrorMessage('input', 'span');
-        clearErrorMessage('textarea', 'span');
-        removeIsInvalidClass('input');
-        removeIsInvalidClass('textarea');
-
-
-
-        $.post({
-            url: '/plantilla-report-history-generate'
-            , data: {
-                year
-                , description
-                , asOfDate
-                , plantillaType
-            }
-            , success: function(response) {
-                if(response.success) {
-                    swal({
-                        title : '',
-                        text : `Successfullye generate a ${plantillaType}  report`,
-                        icon : 'success',
-                        buttons : false,
-                        timer : 5000,
-                    });
-                    table.ajax.reload();
-                    $('#create-report-form-wrapper').fadeOut(300);
-                    setTimeout(() => $('#report-wrapper').show().fadeIn(300), 350);
-                }
-            }
-            , error: function(response) {
-                if (response.status === 422) {
-                    Object.keys(response.responseJSON.errors).map((key) => {
-                        let [errorMessage] = response.responseJSON.errors[key];
-                        let element = `#${key}`;
-                        $(element).addClass('is-invalid').parent().append(`
-                            <span class="text-danger">${errorMessage}</span>
-                        `);
-                    });
-                }
-            }
-        });
-    });
-
-
-    $(document).on('click', '.btn__remove__report', async function () {
-        let id = $(this).attr('data-id');
-        let confirmation = await swal({
-            icon : 'warning',
-            text : 'Are you sure you want to delete this report?',
-            title : '',
-            dangerMode : true,
-            buttons : ["No", "Yes"]
-        });
-
-        if(confirmation) {
-            $.ajax({
-                url : `/plantilla-report-history-remove/${id}`,
-                method : 'DELETE',
-                success : function (response) {
-                    if(response.success) {
-                        table.ajax.reload();
-                    }
-                },
-            });
-        }
-
-    });
-</script>
+<script src="{{ asset('/assets/js/custom/reports/plantilla.js') }}"></script>
 @endpush
 @endsection

@@ -81,7 +81,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-8 col-md-8">
+        {{-- <div class="col-lg-8 col-md-8">
             <section class="dash-section">
                 <h1 class="dash-sec-title">ON-GOING LEAVE</h1>
                 <div class="dash-sec-content cursor-pointer" id="widget--today--leave">
@@ -120,32 +120,11 @@
                         </div>
                     </div>
             </section>
-        </div>
-        <div class="col-lg-4 col-md-4">
-            <div class="dash-sidebar">
-                <section>
-                    <h1 class="dash-sec-title">Holidays for the month of {{ date('F', time()) }}</h5>
-                        @forelse($holidays as $holiday)
-                        <div class="card">
-                            <div class="card-body text-center">
-                                <p class="text-dark mb-0 font-weight-medium">{{ $holiday->dateString }} -
-                                    {{ $holiday->name }}</p>
-                            </div>
-                        </div>
-                        @empty
-                        <div class="card">
-                            <div class="card-body text-center">
-                                <p class="text-dark mb-0 text-danger">No holidays for this {{ date('F', time()) }}</p>
-                            </div>
-                        </div>
-                        @endforelse
-                </section>
-            </div>
-        </div>
+        </div> --}}
 
 
-        <p class="fw-medium dash-sec-title mb-1">PENDING LEAVE APPLICATIONS</p>
-        <div class="col-lg-12">
+        {{-- <p class="fw-medium dash-sec-title mb-1">PENDING LEAVE APPLICATIONS</p> --}}
+        {{-- <div class="col-lg-12">
             <table class='table table-bordered mt-2 bg-white'>
                 <thead>
                     <tr>
@@ -200,7 +179,7 @@
                     @endforelse
                 </tbody>
             </table>
-        </div>
+        </div> --}}
     </div>
 </div>
 

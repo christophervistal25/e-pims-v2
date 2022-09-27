@@ -23,7 +23,6 @@ class DashboardController extends Controller
         $user = Employee::without(['office_charging', 'office_assignment', 'position'])
                   ->find($employeeID);
 
-        $holidays = $this->holidayRepository->thisMonth();
 
         $leaveApplications = EmployeeLeaveApplication::where('Employee_id', $employeeID)->get();
 
@@ -33,7 +32,6 @@ class DashboardController extends Controller
 
         return view('accounts.employee.dashboard', [
             'user' => $user,
-            'holidays' => $holidays,
             'balances' => $balances,
             'leaveApplications' => $leaveApplications,
             'onGoingLeaves' => $onGoingLeaves,

@@ -14,7 +14,7 @@ class ServiceRecordService
      * @param string employeeID The employee's ID
      * @return ServiceRecord A ServiceRecord object
      */
-    public function getCurrentServiceRecord(string $employeeID): ServiceRecord
+    public function getCurrentServiceRecord(string $employeeID): ?ServiceRecord
     {
         return ServiceRecord::where([
             'employee_id' => $employeeID,

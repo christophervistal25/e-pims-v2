@@ -11,6 +11,7 @@
         "php": "^8.1.4",
         "anourvalar/office": "^2.0",
         "barryvdh/laravel-snappy": "^1.0",
+        "chefhasteeth/pipeline": "^1.0",
         "freshbitsweb/laratables": "^2.5",
         "fruitcake/laravel-cors": "^3.0",
         "guzzlehttp/guzzle": "^7.0.1",

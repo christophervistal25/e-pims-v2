@@ -23,4 +23,9 @@ class SalaryGradeService
 
         return number_format($grade->$sg_step, 2, '.', ',');
     }
+
+    public function yearsAvailable()
+    {
+        return SalaryGrade::get(['sg_year'])->pluck('sg_year')->unique()->toArray();
+    }
 }

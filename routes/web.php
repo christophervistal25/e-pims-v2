@@ -175,8 +175,11 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
     Route::get('/service-records-list/{employeeId}', [ServiceRecordsController::class, 'list']);
     Route::resource('service-records', ServiceRecordsController::class);
 
-    Route::get('employees-birthdays/{from}/{to}', [BirthdayController::class, 'range']);
-    Route::resource('employees-birthday', BirthdayController::class);
+    Route::controller(BirthdayController::class)->group(function () {
+        Route::get('employees-birthdays/{from}/{to}', 'range');
+        Route::get('employees-birthday', 'index')->name('employees-birthday.index');
+    });
+
     Route::get('birthday-card/{name}', [BirthdayCardController::class, 'firstCard']);
     Route::get('birthday-card-2/{name}', [BirthdayCardController::class, 'secondCard']);
 
@@ -262,14 +265,15 @@ Route::controller(CSCPlantillaController::class)->group(function () {
     Route::get('plantilla-report/show/{id}/list/{office}', 'listShow')->name('plantilla.report.show.list');
     Route::put('plantilla-report-show/{id}/vacant', 'vacant');
     Route::post('plantilla-report-show/assign', 'assigned');
+    Route::post('plantilla-report-detail-filled', 'filled');
     Route::post('plantilla-report-history-generate', 'generate');
     Route::delete('plantilla-report-history-remove/{id}', 'remove');
     Route::post('plantilla-report-history-checkpoint', 'checkpoint');
     Route::get('plantilla-report-details/view-detials/{id}', 'viewDetails');
-    // Route::get('plantilla-report/generate/{office}/{year}', 'generate')->name('generate.plantilla-report');
-    // Route::post('export/{office}/{year}', 'export')->name('generate.plantilla-report');
-    // Route::get('download/plantilla-generated-report/{fileName}', 'download')->name('download.generated.plantilla-report');
 });
+Route::post('export/{id}/{type}', [CSCPlantillaReportController::class, 'export'])->name('generate.plantilla-report');
+Route::get('download/plantilla-generated-report/{fileName}', [CSCPlantillaReportController::class, 'download'])->name('download.generated.plantilla-report');
+
 
 Route::controller(DBMPlantillaReportController::class)->group(function () {
     Route::post('dbm/plantilla-report/generate/{office}/{year}', 'generate')->name('dbm.generate.plantilla-report');

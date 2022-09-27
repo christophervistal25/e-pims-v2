@@ -229,7 +229,7 @@ export default {
                         this.isLoading = false;
                         swal({
                             icon: "success",
-                            text: "Successfully store all your inputs in other information",
+                            text : 'Other information successfully updated!',
                             timer: 5000,
                             buttons: false,
                         });

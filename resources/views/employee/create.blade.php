@@ -5,8 +5,8 @@
                 <i class="las la-chevron-left"></i>
             </button>
             <div class="card shadow-none">
-                <div class="card-header h4">
-                    BASIC INFORMATION
+                <div class="card-header h4 bg-primary text-white">
+                    Basic Information
                 </div>
                 <div class="card-body">
                     <img src="{{
@@ -17,7 +17,7 @@
                         <div class="col-lg-12 pb-0">
                             <div class="form-group">
                                 <label class="h5 required">EMPLOYEE ID</label>
-                                <input type="number" id='newEmployeeID' name="employeeID" radonly value="{{ $lastEmployeeID }}" class="form-control" />
+                                <input type="number" id='newEmployeeID' name="employeeID" readonly value="{{ $lastEmployeeID }}" class="form-control" />
                                 <span class="text-sm text-danger" id='employeeID-error'></span>
                             </div>
                         </div>
@@ -25,7 +25,7 @@
                         <div class="col-lg-3 pb-0">
                             <div class="form-group">
                                 <label class="text-uppercase h5 required">lastname</label>
-                                <input type="text" name="lastname" class="form-control" />
+                                <input type="text" name="lastname" class="form-control text-uppercase" />
                                 <span class="text-sm text-danger" id='lastname-error'></span>
                             </div>
                         </div>
@@ -33,7 +33,7 @@
                         <div class="col-lg-3 pb-0">
                             <div class="form-group">
                                 <label class="text-uppercase h5 required">firstname</label>
-                                <input type="text" name="firstname" class="form-control" />
+                                <input type="text" name="firstname" class="form-control text-uppercase" />
                                 <span class="text-sm text-danger" id='firstname-error'></span>
                             </div>
                         </div>
@@ -41,15 +41,15 @@
                         <div class="col-lg-3 pb-0">
                             <div class="form-group">
                                 <label class="text-uppercase h5">middlename</label>
-                                <input type="text" name="middlename" class="form-control" />
+                                <input type="text" name="middlename" class="form-control text-uppercase" />
                                 <span class="text-sm text-danger" id='middlename-error'></span>
                             </div>
                         </div>
 
                         <div class="col-lg-3 pb-0">
                             <div class="form-group">
-                                <label class="text-uppercase h5">suffix</label>
-                                <input type="text" name="suffix" class="form-control" />
+                                <label class="text-uppercase h5 text-uppercase">suffix</label>
+                                <input type="text" name="suffix" max="5" class="form-control" />
                                 <span class="text-sm text-danger" id='suffix-error'></span>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                         <div class="col-lg-3 pb-0">
                             <div class="form-group">
                                 <label class="text-uppercase h5 required">birthplace</label>
-                                <input type="text" name="birthplace" class="form-control" />
+                                <input type="text" name="birthplace" class="form-control text-uppercase" />
                                 <span class="text-sm text-danger" id="birthplace-error"></span>
                             </div>
                         </div>
@@ -108,7 +108,7 @@
 
                     <div class="row pb-0">
                         <div class="col-lg-6 pb-0">
-                            <label class="text-uppercase h5 required">Contact #</label>
+                            <label class="text-uppercase h5">Contact #</label>
                             <input type="text" class="form-control" name="contact_no" maxlength="13" />
                             <span class="text-sm text-danger" id="contact_no-error"></span>
                         </div>
@@ -165,24 +165,22 @@
 
                     <div class="row">
                         <div class="col-lg-4">
-                            <label class="h5 required">SALARY GRADE</label>
+                            <label class="h5">SALARY GRADE</label>
                             <select name="salary_grade" class="form-control form-select">
                                 <option selected value="">-</option>
                                 @foreach(range(1, 33) as $grade)
-                                <option value="{{ $grade }}">{{
-                                    $grade
-                                }}</option>
+                                    <option value="{{ $grade }}">{{ $grade }}</option>
                                 @endforeach
                             </select>
                             <span class="text-sm text-danger" id="salary_grade-error"></span>
                         </div>
 
                         <div class="col-lg-4">
-                            <label class="h5 required">STEP INCREMENT</label>
+                            <label class="h5">STEP INCREMENT</label>
                             <select name="step_increment" class="form-control form-select">
                                 <option selected value="">-</option>
                                 @foreach(range(1, 8) as $step)
-                                <option value="{{ $step }}">{{ $step }}</option>
+                                    <option value="{{ $step }}">{{ $step }}</option>
                                 @endforeach
                             </select>
                             <span class="text-sm text-danger" id="step_increment-error"></span>
@@ -190,7 +188,7 @@
 
                         <div class="col-lg-4">
                             <label class="h5 required">SALARY RATE</label>
-                            <input name="salary_rate" class="form-control" />
+                            <input name="salary_rate" class="form-control" type="number" />
                             <span class="text-sm text-danger" id="salary_rate-error"></span>
                         </div>
                     </div>
@@ -199,8 +197,8 @@
         </div>
 
         <div class="card shadow-none">
-            <div class="card-header h4">
-                SOCIAL INSURANCE
+            <div class="card-header text-white bg-primary h4">
+                Social Insurance
             </div>
 
             <div class="card-body">
@@ -250,9 +248,9 @@
             </div>
         </div>
 
-        <div class="card shadow-none">
-            <div class="card-header h4">
-                LOGIN CREDENTIALS
+        <div class="card shadow-none mb-2">
+            <div class="card-header text-white bg-primary h4">
+                Login Credentials
             </div>
 
             <div class="card-body">
@@ -275,7 +273,7 @@
                             <label class="text-uppercase h5">
                                 Password
                             </label>
-                            <input type="text" name="password" class="form-control  {{ $errors->has('password') ? 'is-invalid' : '' }}" value="{{ old('password') }}" />
+                            <input type="password" name="password" class="form-control  {{ $errors->has('password') ? 'is-invalid' : '' }}" value="{{ old('password') }}" />
                             <span class="text-sm text-danger" id='password-error'></span>
                         </div>
                     </div>
@@ -285,7 +283,7 @@
                             <label class="text-uppercase h5">
                                 Re-type Password
                             </label>
-                            <input type="text" name="password_confirmation" class="form-control  {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}" value="{{ old('password_confirmation') }}" />
+                            <input type="password" name="password_confirmation" class="form-control  {{ $errors->has('password_confirmation') ? 'is-invalid' : '' }}" value="{{ old('password_confirmation') }}" />
                         </div>
                     </div>
                 </div>
@@ -293,9 +291,9 @@
         </div>
 
 
-        <button class="btn btn-primary btn-lg h5 shadow float-right my-3" id="submitNewEmployee">
+        <button class="btn btn-primary btn-lg h5 shadow float-right " id="submitNewEmployee">
             <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true" id='btnUpdateSpinner'></span>
-            SUBMIT NEW EMPLOYEE
+            SUBMIT
         </button>
     </div>
 </form>

@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use NumberFormatter;
 
-class EmployeeBirthdayService extends EmployeeService
+class EmployeeBirthdayService
 {
     public const ONE_WEEK = 7;
 
@@ -21,8 +21,8 @@ class EmployeeBirthdayService extends EmployeeService
     private function getByMonthAndDate(string $month, string $date): Collection
     {
         return Employee::whereMonth('Birthdate', $month)
-            ->whereDay('Birthdate', $date)
-            ->get(['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'Birthdate', 'OfficeCode', 'PosCode']);
+                        ->whereDay('Birthdate', $date)
+                        ->get(['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'Birthdate', 'OfficeCode', 'PosCode']);
     }
 
     public function today(): Collection
@@ -52,7 +52,6 @@ class EmployeeBirthdayService extends EmployeeService
     {
         $locale = 'en_US';
         $nf = new NumberFormatter($locale, NumberFormatter::ORDINAL);
-
         return $nf->format($age);
     }
 
@@ -64,15 +63,16 @@ class EmployeeBirthdayService extends EmployeeService
         $toDate    = Carbon::parse($to)->format('d');
 
         return DB::connection('DTR_PAYROLL_CONNECTION')->table('Employees')
-            ->whereMonth('Birthdate', '>=', $fromMonth)
-            ->whereMonth('Birthdate', '<=', $toMonth)
-            ->whereDay('Birthdate', '>=', $fromDate)
-            ->whereDay('Birthdate', '<=', $toDate)
-            ->leftJoin('EPims.dbo.Positions', 'Employees.PosCode', '=', 'EPims.dbo.Positions.PosCode')
-            ->leftJoin('Office', 'Employees.OfficeCode', '=', 'Office.OfficeCode')
-            ->where('isActive', Employee::ACTIVE)
-            ->select(['Employee_id', 'FirstName', 'LastName', 'MiddleName', 'Suffix', 'BirthDate', 'Positions.Description as Position_Description','Office.Description'])
-            ->orderBy('Birthdate', 'ASC')
-            ->get();
+                    ->whereMonth('Birthdate', '>=', $fromMonth)
+                    ->whereMonth('Birthdate', '<=', $toMonth)
+                    ->whereDay('Birthdate', '>=', $fromDate)
+                    ->whereDay('Birthdate', '<=', $toDate)
+                    ->leftJoin('EPims.dbo.Positions', 'Employees.PosCode', '=', 'EPims.dbo.Positions.PosCode')
+                    ->leftJoin('Office', 'Employees.OfficeCode', '=', 'Office.OfficeCode')
+                    ->where('isActive', Employee::ACTIVE)
+                    ->select(['Employee_id', 'FirstName', 'LastName', 'MiddleName', 'Suffix', 'BirthDate', 'Positions.Description as Position_Description', 'Office.Description'])
+                    ->orderBy('Birthdate', 'ASC')
+                    ->get()
+                    ->each(fn($employee) => $employee->age_ordinal = $this->transformToOrdinal(Carbon::parse($employee->BirthDate)->age));
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Plantilla;
 use App\PlantillaPosition;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -17,13 +16,9 @@ class PlantillaPositionService
      */
     public function positionsByOffice(string $office): Collection
     {
-        // return Plantilla::with('plantilla_positions')->where('office_code', $office)->get();
         return PlantillaPosition::with(['position'])->whereHas('plantillas', function($query) {
             $query->whereNull('employee_id');
         })->where('office_code', $office)->get();
-        // return PlantillaPosition::with('position')->whereDoesntHave('plantillas', function ($query) {
-        //     $query->where('year', date('Y'));
-        // })->where('office_code', $office)->get();
     }
 
     /**

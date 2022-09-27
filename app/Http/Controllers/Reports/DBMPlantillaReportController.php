@@ -20,10 +20,9 @@ class DBMPlantillaReportController extends Controller
         $this->plantillaPositionService = app()->make('App\Services\PlantillaPositionService');
     }
 
-    public function setHeader(array $data = [], &$worksheet)
+    public function setHeader(array $data, &$worksheet)
     {
-        foreach($data as $cell => $value) {
-
+        foreach ($data as $cell => $value) {
         }
     }
 
@@ -43,8 +42,7 @@ class DBMPlantillaReportController extends Controller
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(public_path().'\\DBM_PLANTILLA.xlsx');
         $worksheet = $spreadsheet->getActiveSheet();
         $worksheet->getPageSetup()->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_LEGAL);
-        
-        
+
         // $this->setHeader([
         //     'C3' => Str::upper('PLANTILLA OF LGU PERSONNEL FY' . $currentYear),
         //     'C7' => Str::upper($officeData->office_name),
@@ -52,9 +50,9 @@ class DBMPlantillaReportController extends Controller
         //     'J13' => "FY {$currentYear} Amount",
         // ], $worksheet);
 
-        $worksheet->getCell('C3')->setValue(Str::upper("PLANTILLA OF LGU PERSONNEL FY " . $currentYear));
+        $worksheet->getCell('C3')->setValue(Str::upper('PLANTILLA OF LGU PERSONNEL FY '.$currentYear));
         $worksheet->getCell('C7')->setValue(Str::upper($officeData->office_name));
-        $worksheet->getCell('G13')->setValue("FY {$previousYear} Amount (LBC 121) 01-24-" . $previousYear);
+        $worksheet->getCell('G13')->setValue("FY {$previousYear} Amount (LBC 121) 01-24-".$previousYear);
         $worksheet->getCell('J13')->setValue("FY {$currentYear} Amount");
 
         $lastIndex = 0;

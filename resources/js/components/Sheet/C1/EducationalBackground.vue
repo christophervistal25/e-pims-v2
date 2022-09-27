@@ -2019,10 +2019,7 @@ export default {
                 icon: "warning",
             }).then((isClicked) => {
                 if (isClicked) {
-                    this.educationalBackground.additionals.graduate.splice(
-                        index,
-                        1
-                    );
+                    this.educationalBackground.additionals.graduate.splice(index, 1);
                 }
             });
         },
@@ -2071,8 +2068,8 @@ export default {
                     if (response.status === 200) {
                         this.isLoading = false;
                         swal({
-                            title: "Awesome",
-                            text: "Successfully store all your inputs in educational background",
+                            title : "",
+                            text: "Educational Background has been updated successfully!",
                             icon: "success",
                             buttons: false,
                             timer: 5000,

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Division;
 use Illuminate\Database\Eloquent\Model;
 
 class Office extends Model
@@ -60,6 +61,11 @@ class Office extends Model
     public function divisions()
     {
         return $this->belongsTo(Division::class, 'office_code', 'office_code');
+    }
+
+    public function office_divisions()
+    {
+        return $this->hasMany(Division::class, 'office_code', 'office_code');
     }
 
 

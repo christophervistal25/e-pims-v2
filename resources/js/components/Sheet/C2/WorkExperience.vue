@@ -346,7 +346,7 @@ export default {
                     if (response.status === 200) {
                         swal({
                             icon: "success",
-                            text: "Successfully store all your inputs in work experience",
+                            text: "Work Experience has been updated successfully!",
                             buttons: false,
                             timer: 5000,
                         });

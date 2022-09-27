@@ -62,11 +62,11 @@
             </div>
         </div>
         <div class="card-body p-0 m-0">
-            <table class='table table-bordered table-hover' id="employeesTable" width="100%">
-                <thead class='table table-bordered'>
-                    <th>Profile</th>
-                    <th>Fullname</th>
-                    <th>Actions</th>
+            <table class='table table-condensed table-hover' id="employeesTable" width="100%">
+                <thead>
+                    <th>IMAGE</th>
+                    <th>FULLNAME</th>
+                    <th>ACTIONS</th>
                 </thead>
             </table>
         </div>
@@ -175,7 +175,7 @@
 
             </div>
         </div>
-    </div> 
+    </div>
     </div>
 
 

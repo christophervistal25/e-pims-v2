@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Employee;
-use App\Http\Controllers\Controller;
+use Validator;
 use App\Office;
-use App\Services\OfficeService;
+use App\Employee;
 use Illuminate\Http\Request;
+use App\Services\OfficeService;
+use App\Http\Controllers\Controller;
 
 class OfficeController extends Controller
 {
@@ -30,7 +31,7 @@ class OfficeController extends Controller
 
     public function list()
     {
-        return response()->json(['office' => $this->officeService->get(), 'office2' => $this->officeService->office2()]);
+        return response()->json(['office' => $this->officeService->get(), 'office2' => $this->officeService->officeAssignments()]);
     }
 
     public function store(Request $request)

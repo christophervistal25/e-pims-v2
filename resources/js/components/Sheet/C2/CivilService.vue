@@ -271,7 +271,7 @@ export default {
                     if (response.status === 200) {
                         swal({
                             icon: "success",
-                            text: "Successfully store all your inputs in civil service eligibility",
+                            text: "Civil Service Eligibility has been updated.",
                             buttons: false,
                             timer: 5000,
                         });

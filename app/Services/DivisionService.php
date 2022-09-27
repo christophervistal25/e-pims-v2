@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Division;
-use Illuminate\Database\Eloquent\Collection;
 
 class DivisionService
 {

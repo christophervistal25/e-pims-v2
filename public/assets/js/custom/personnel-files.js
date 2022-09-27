@@ -22,7 +22,7 @@ $(document).ready(function () {
     let isFirst = true;
     let isFirstRender = true;
 
-    let tablePersonnelFile = $('#tablePersonnelFile').DataTable({
+    $('#tablePersonnelFile').DataTable({
         processing: true,
         serverSide: true,
         ordering: false,
@@ -271,10 +271,10 @@ $(document).on('click', '.btn-add-file', function () {
     $('#addFileSectionTitle').text(`Add file for ${$(this).attr('data-fullname')}`);
     // Get the employee ID of selected employee
     let id = $(this).attr('data-id');
-    
+
     // add employee id into form action of formAddFile
     $('#formAddFile').attr('action', `/employee-personnel-file/${id}`);
-    
+
     // Add the d-none class of employees table section
     $('#employeesTableSection').fadeOut(500).addClass('d-none');
 
@@ -338,7 +338,7 @@ $(document).on('click', '#tablePersonnelFile tbody tr', function (e) {
                                         <input type="date" name="dates[]" class='form-control' value="{{ date('Y-m-d') }}">
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-lg-4 mt-0">
                                     <div class="form-group mt-0">
                                         <label>Attachment</label>
@@ -349,7 +349,7 @@ $(document).on('click', '#tablePersonnelFile tbody tr', function (e) {
                 `).fadeIn(500);
                 selectedFiles.push(fileType);
             } else {
-                
+
                 // Create an p element with message
                 let p = document.createElement('p');
                 p.innerText = 'Please select an employee first before adding file record';

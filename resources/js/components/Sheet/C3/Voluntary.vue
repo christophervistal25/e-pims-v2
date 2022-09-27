@@ -283,7 +283,7 @@ export default {
                         this.isComplete = true;
 
                         let message = document.createElement('p');
-                        message.innerHTML = 'Successfully store all your inputs in voluntary work or involvement.';
+                        message.innerHTML = 'Voluntary work has been updated successfully!';
                         message.setAttribute('class', 'text-dark text-center');
 
                         swal({

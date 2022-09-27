@@ -25,7 +25,7 @@ class GovernmentIssuedIDRequest extends FormRequest
     {
         return [
             'id_type' => ['required'],
-            'id_no' => ['required', 'unique:employee_issued_i_d_s,id_no,'.request()->employee_id.',employee_id'],
+            'id_no' => ['required', 'unique:E_PIMS_CONNECTION.employee_issued_i_d_s,id_no,'.request()->employee_id.',employee_id'],
             'date' => 'required',
         ];
     }

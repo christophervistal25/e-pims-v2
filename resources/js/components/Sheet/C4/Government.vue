@@ -161,7 +161,7 @@ export default {
                         this.isComplete = true;
                         this.isLoading = false;
                         swal({
-                            text: "Successfully store all your inputs in Government Issued I.D",
+                            text: "Government Issued I.D has been updated successfully!",
                             icon: "success",
                             buttons : false,
                             timer : 5000,
