@@ -95,7 +95,7 @@
                          <div class="form-group col-12 col-lg-6">
                               <label class="has-float-label mb-0">
                                    <input class="form-control" value="" name="toDate" id="toDate" type="date" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                   <span class="font-weight-bold">TO<span class="text-danger">*</span></span>
+                                   <span class="font-weight-bold">TO</span>
                               </label>
                               <div id='to-date-error-message' class='text-danger text-sm'>
                               </div>
@@ -113,7 +113,7 @@
                          <div class="form-group col-12 col-lg-4">
                               <label class="has-float-label mb-0">
                                    <input value="{{ old('leavePay') }}" class="form-control {{ $errors->has('leavePay')  ? 'is-invalid' : ''}}" name="leavePay" id="leavePay" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                   <span class="font-weight-bold">LEAVE WITHOUT PAY<span class="text-danger">*</span></span>
+                                   <span class="font-weight-bold">LEAVE WITHOUT PAY</span>
                               </label>
                               <div id='leave-pay-error-message' class='text-danger text-sm'>
                               </div>
@@ -122,7 +122,7 @@
                          <div class="form-group col-12 col-lg-4">
                               <label class="has-float-label mb-0">
                                    <input class="form-control" value="" name="date" id="date" type="date" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                   <span class="font-weight-bold">DATE<span class="text-danger">*</span></span>
+                                   <span class="font-weight-bold">SEPARATION DATE</span>
                               </label>
                               <div id='date-error-message' class='text-danger text-sm'>
                               </div>
@@ -140,7 +140,7 @@
                                         @endif
                                         @endforeach
                                    </select>
-                                   <span class="font-weight-bold">STATUS<span class="text-danger">*</span></span>
+                                   <span class="font-weight-bold">STATUS</span>
                               </label>
                               <div id='status-error-message' class='text-danger text-sm'>
                               </div>
@@ -169,7 +169,7 @@
                                              <option style="width:350px;" {{ old('officeCode') == $offices->office_code ? 'selected' : '' }} value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
                                         @endforeach
                                    </select>
-                                   <span class="font-weight-bold">OFFICE<span class="text-danger">*</span></span>
+                                   <span class="font-weight-bold">OFFICE</span>
                               </label>
                               <div id='office-error-message' class='text-danger text-sm'>
                               </div>
@@ -178,7 +178,7 @@
                          <div class="form-group col-12 col-lg-6">
                               <label class="has-float-label mb-0">
                                    <textarea value="{{ old('cause') }}" class="form-control {{ $errors->has('cause')  ? 'is-invalid' : ''}}" name="cause" id="cause" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;" role="3"></textarea>
-                                   <span class="font-weight-bold">CAUSE<span class="text-danger">*</span></span>
+                                   <span class="font-weight-bold">CAUSE</span>
                               </label>
                               <div id='cause-error-message' class='text-danger text-sm'>
                               </div>
@@ -192,7 +192,6 @@
                               </button>
                               <button style="margin-right:10px;" type="button" onclick="myFunction()" id="cancelbutton1" class="text-white btn btn-danger submit-btn float-right"><i class="fas fa-ban"></i>
                                    Cancel</button>
-                              {{-- onclick="reset()" --}}
                          </div>
 
                     </div>
@@ -202,7 +201,7 @@
           <div id="table" class="page-header {{  count($errors->all()) == 0 ? '' : 'd-none' }}">
                <div class="row">
                     <div class="col-6 mb-2">
-                         <select data-style="btn-primarys text-white selectpicker" class="form-control form-control-xs selectpicker  {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" name="employeeName" onchange="ValidateDropDown()" data-live-search="true" id="employeeName" data-size="5">
+                         <select data-style="btn-primarys text-white selectpicker" class="form-control form-control-xs selectpicker  {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" name="employeeName" data-live-search="true" id="employeeName" data-size="5">
                               <option value="">Nothing Selected</option>
                               @foreach($plantillas as $plantilla)
                               <option data-plantilla="{{ $plantilla->employee }}" value="{{ $plantilla->employee_id }}">
