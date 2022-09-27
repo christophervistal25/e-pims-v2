@@ -30,7 +30,8 @@ class PlantillaOfPositionController extends Controller
         $arealevel = DB::connection('E_PIMS_CONNECTION')->table('EPims.dbo.Area_level')->get();
         $section = DB::connection('E_PIMS_CONNECTION')->table('Sections')->orderBy('section_name')->get();
         $division = Division::with('offices')->orderBy('division_name')->get();
-        return view('PlantillaOfPosition.PlantillaOfPosition', compact('position', 'office', 'lastId', 'areacode', 'areatype', 'arealevel', 'section', 'division'));
+        $class = 'mini-sidebar';
+        return view('PlantillaOfPosition.PlantillaOfPosition', compact('position', 'office', 'lastId', 'areacode', 'areatype', 'arealevel', 'section', 'division', 'class'));
     }
 
     public function list(string $office = '*')
@@ -163,7 +164,8 @@ class PlantillaOfPositionController extends Controller
         $division_id = $plantillaofposition->division_id;
         $divisionedit = Division::where('office_code', $officeCode)->get(['division_id', 'division_name', 'office_code']);
         $sectionedit = Section::where('division_id', $division_id)->get(['section_id', 'section_name', 'division_id']);
-        return view('PlantillaOfPosition.edit', compact('plantillaofposition', 'position', 'office', 'areacode','areatype','arealevel', 'section', 'division', 'divisionedit', 'sectionedit'));
+        $class = 'mini-sidebar';
+        return view('PlantillaOfPosition.edit', compact('plantillaofposition', 'position', 'office', 'areacode','areatype','arealevel', 'section', 'division', 'divisionedit', 'sectionedit', 'class'));
     }
 
     /**

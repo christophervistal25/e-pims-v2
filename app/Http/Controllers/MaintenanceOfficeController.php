@@ -23,7 +23,8 @@ class MaintenanceOfficeController extends Controller
      */
     public function index()
     {
-        return view('MaintenanceOffice.office');
+        $class = 'mini-sidebar';
+        return view('MaintenanceOffice.office', compact('class'));
     }
 
     /**
@@ -110,8 +111,8 @@ class MaintenanceOfficeController extends Controller
     public function edit($OfficeCode)
     {
         $office = Office::with('desc')->find($OfficeCode);
-
-        return view('MaintenanceOffice.edit', compact('office'));
+        $class = 'mini-sidebar';
+        return view('MaintenanceOffice.edit', compact('office', 'class'));
     }
 
     /**

@@ -67,7 +67,7 @@
                         <label class="has-float-label mb-0">
                             <input class="form-control {{ $errors->has('toDate')  ? 'is-invalid' : ''}}" value="{{ $service_record->service_to_date }}" name="toDate"
                                 id="toDate" type="date" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span class="font-weight-bold">TO<span class="text-danger">*</span></span>
+                            <span class="font-weight-bold">TO</span>
                         </label>
                         @if($errors->has('toDate'))
                         <small class="form-text text-danger">
@@ -93,7 +93,7 @@
                             <input value="{{ $service_record->leave_without_pay ?? old('leavePay') ?? 0 }}"
                                 class="form-control {{ $errors->has('leavePay')  ? 'is-invalid' : ''}}" name="leavePay"
                                 id="leavePay" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span class="font-weight-bold">LEAVE WITHOUT PAY<span class="text-danger">*</span></span>
+                            <span class="font-weight-bold">LEAVE WITHOUT PAY</span>
                         </label>
                         @if($errors->has('leavePay'))
                         <small class="form-text text-danger">
@@ -105,7 +105,7 @@
                         <label class="has-float-label mb-0">
                             <input class="form-control {{ $errors->has('date')  ? 'is-invalid' : ''}}" value="{{ $service_record->separation_date ?? date('Y-m-d') }}" name="date"
                                 id="date" type="date" style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                            <span class="font-weight-bold">DATE<span class="text-danger">*</span></span>
+                            <span class="font-weight-bold">SEPARATION DATE</span>
                         </label>
                         @if($errors->has('date'))
                         <small class="form-text text-danger">
@@ -121,11 +121,15 @@
                             class="form-control selectpicker  {{ $errors->has('status')  ? 'is-invalid' : ''}}"
                             name="status" data-live-search="true" id="status" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                             <option></option>
-                            @foreach($statuses as $status)
-                                <option value="{{ $status }}" {{ Str::upper($status) === Str::upper($service_record->status) }}>{{ $status }}</option>
-                            @endforeach
+                                        @foreach(range(0, 6) as $statuses)
+                                            @if($status[$statuses] == $service_record->status)
+                                                <option value="{{ $status[$statuses]}}" selected>{{ $status[$statuses] }}</option>
+                                                @else
+                                                <option value="{{ $status[$statuses]}}">{{ $status[$statuses] }}</option>
+                                            @endif
+                                        @endforeach
                         </select>
-                        <span class="font-weight-bold">STATUS<span class="text-danger">*</span></span>
+                        <span class="font-weight-bold">STATUS</span>
                     </label>
                     @if($errors->has('status'))
                     <small class="form-text text-danger">
@@ -142,7 +146,9 @@
                             data-width="100%">
                             <option></option>
                             @foreach($positions as $position)
-                            <option style="width:350px;" value="{{ $position->PosCode }}">{{ $position->Description }}</option>
+                            <option style="width:350px;"
+                            {{ $service_record->PosCode == $position->PosCode ? 'selected' : '' }}
+                            value="{{ $position->PosCode }}">{{ $position->Description }}</option>
                             @endforeach
                         </select>
                         <span class="font-weight-bold">POSITION<span class="text-danger">*</span></span>
@@ -165,7 +171,7 @@
                                 value="{{ $offices->office_code}}">{{ $offices->office_name }}</option>
                             @endforeach
                         </select>
-                        <span class="font-weight-bold">OFFICE<span class="text-danger">*</span></span>
+                        <span class="font-weight-bold">OFFICE</span>
                     </label>
                     @if($errors->has('officeCode'))
                     <small class="form-text text-danger">
@@ -179,7 +185,7 @@
                                 class="form-control {{ $errors->has('cause')  ? 'is-invalid' : ''}}" name="cause"
                                 id="cause" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;"
                                 rows="3">{{ $service_record->separation_cause ?? old('cause') ?? 'N/A' }}</textarea>
-                            <span class="font-weight-bold">CAUSE<span class="text-danger">*</span></span>
+                            <span class="font-weight-bold">CAUSE</span>
                         </label>
                         @if($errors->has('cause'))
                             <small class="form-text text-danger">
@@ -213,13 +219,20 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    const SERVICE_RECORD_POSITION = "{{ $service_record->PosCode }}";
-    const SERVICE_RECORD_OFFICE = "{{ $service_record->office_code }}";
-    const SERVICE_RECORD_STATUS = "{{ $service_record->status }}";
 
-    $('#positionTitle').val(SERVICE_RECORD_POSITION).selectpicker('refresh');
-    $('#officeCode').val(SERVICE_RECORD_OFFICE).selectpicker('refresh');
-    $('#status').val(SERVICE_RECORD_STATUS).selectpicker('refresh');
+    var arrayErrors = {
+        "positionCode": {
+                "#positionCode": "#position-code-error-message"
+            },
+            "positionName": {
+                "#positionName": "#position-name-error-message"
+            },
+            "salaryGradeNo": {
+                "#salaryGradeNo": "#salary-grade-no-error-message"
+            },
+    };
+
+
 </script>
 @endpush
 @endsection

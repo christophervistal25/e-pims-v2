@@ -44,7 +44,7 @@ class SalaryAdjustmentController extends Controller
 
         $office = Office::select('office_code', 'office_name')->get();
 
-       
+
 
 
         $employee = Plantilla::select('item_no', 'pp_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id', 'year', 'status', 'office_code')
@@ -57,8 +57,8 @@ class SalaryAdjustmentController extends Controller
 
                    return ! in_array($currentYear, $haystack);
                });
-
-        return view('SalaryAdjustment.SalaryAdjustment', compact('employee', 'position', 'year', 'dates', 'office'));
+        $class = 'mini-sidebar';
+        return view('SalaryAdjustment.SalaryAdjustment', compact('employee', 'position', 'year', 'dates', 'office', 'class'));
     }
 
     public function list(string $office, $year)
@@ -172,28 +172,28 @@ class SalaryAdjustmentController extends Controller
             ]);
 
         /* Updating the current service record of the employee soon to be previous record. */
-        // $serviceToDate = Carbon::parse($request->dateAdjustment)->subDays(1);
-        // DB::table('EPims.dbo.service_records')->select('employee_id', 'service_from_date', 'service_to_date')->where('employee_id', $request->employeeId)->where('service_to_date', null)->latest('service_from_date')
-        // ->update(['service_to_date' => $serviceToDate]);
+        $serviceToDate = Carbon::parse($request->dateAdjustment)->subDays(1);
+        DB::table('EPims.dbo.service_records')->select('employee_id', 'service_from_date', 'service_to_date')->where('employee_id', $request->employeeId)->where('service_to_date', null)->latest('service_from_date')
+        ->update(['service_to_date' => $serviceToDate]);
 
-        // $dateCheck = $request->remarks;
-        // if ($dateCheck == '') {
-        //     $remarks = 'Salary Adjustment';
-        // } else {
-        //     $remarks = $request->remarks;
-        // }
-        // DB::table('EPims.dbo.service_records')->insert(
-        //     [
-        //         'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
-        //         'employee_id' => $request->employeeId,
-        //         'service_from_date' => $request->dateAdjustment,
-        //         'PosCode' => $request->positionCode,
-        //         'status' => $request->status,
-        //         'salary' => $request->salaryNew,
-        //         'office_code' => $request->officeCode,
-        //         'separation_cause' => $remarks,
-        //     ]
-        // );
+        $dateCheck = $request->remarks;
+        if ($dateCheck == '') {
+            $remarks = 'Salary Adjustment';
+        } else {
+            $remarks = $request->remarks;
+        }
+        DB::table('EPims.dbo.service_records')->insert(
+            [
+                'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
+                'employee_id' => $request->employeeId,
+                'service_from_date' => $request->dateAdjustment,
+                'PosCode' => $request->positionCode,
+                'status' => $request->status,
+                'salary' => $request->salaryNew,
+                'office_code' => $request->officeCode,
+                'separation_cause' => $remarks,
+            ]
+        );
 
         return response()->json(['success' => true]);
     }
@@ -220,8 +220,8 @@ class SalaryAdjustmentController extends Controller
         $employee = Employee::select('Employee_id', 'Firstname', 'Lastname', 'Middlename')->get();
         $plantillaPosition = PlantillaPosition::select('pp_id', 'PosCode', 'item_no', 'sg_no', 'office_code', 'old_position_name')->with('position:PosCode,Description')->get();
         $salaryAdjustment = SalaryAdjustment::find($id);
-
-        return view('SalaryAdjustment.edit', compact('salaryAdjustment', 'employee', 'plantillaPosition'));
+        $class = 'mini-sidebar';
+        return view('SalaryAdjustment.edit', compact('salaryAdjustment', 'employee', 'plantillaPosition', 'class'));
     }
 
     /**

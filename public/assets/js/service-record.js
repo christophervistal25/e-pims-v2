@@ -4,38 +4,62 @@ $.ajaxSetup({
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
     },
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 $(function () {
+
+    var errorClass = [
+        "#fromDate",
+        "#toDate",
+        ".positionTitle .dropdown",
+        ".statuss .dropdown",
+        "#salary",
+        ".officeCode .dropdown",
+        "#leavePay",
+        "#date",
+        "#cause",
+    ];
+    var errorMessage = [
+        "#from-date-error-message",
+        "#to-date-error-message",
+        "#position-title-error-message",
+        "#status-error-message",
+        "#salary-error-message",
+        "#office-error-message",
+        "#leave-pay-error-message",
+        "#date-error-message",
+        "#cause-error-message",
+    ];
+
+
     $("#employeeName").change(function () {
         var nameVal = $("#employeeName").val();
         $("input, textarea").val("");
         $("#positionTitle").val("Please Select").trigger("change");
         $("#officeCode").val("Please Select").trigger("change");
         $("#status").val("Please Select").trigger("change");
-        const errorClass = [
-            "#fromDate",
-            "#toDate",
-            ".positionTitle .dropdown",
-            ".statuss .dropdown",
-            "#salary",
-            ".officeCode .dropdown",
-            "#leavePay",
-            "#date",
-            "#cause",
-        ];
         $.each(errorClass, function (index, value) {
             $(`${value}`).removeClass("is-invalid");
         });
-        const errorMessage = [
-            "#from-date-error-message",
-            "#to-date-error-message",
-            "#position-title-error-message",
-            "#status-error-message",
-            "#salary-error-message",
-            "#office-error-message",
-            "#leave-pay-error-message",
-            "#date-error-message",
-            "#cause-error-message",
-        ];
         $.each(errorMessage, function (index, value) {
             $(`${value}`).html("");
         });
@@ -43,6 +67,8 @@ $(function () {
             $("#serviceRecords").DataTable().clear();
             $("#serviceRecords").DataTable().destroy();
         } else {
+            $("#serviceRecords").DataTable().clear();
+            $("#serviceRecords").DataTable().destroy();
             $("#serviceRecords").removeClass("d-none");
             $("#serviceRecords").DataTable({
                 processing: true,
@@ -57,9 +83,6 @@ $(function () {
                 },
                 ajax: {
                     url: `/service-records-list/${nameVal}`,
-                    data: function (d) {
-                        d.employeeName = $("#employeeName").val();
-                    },
                 },
                 columns: [
                     {
@@ -102,6 +125,19 @@ $(function () {
     });
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 // code for show add form
 $(document).ready(function () {
     $("#addbutton").click(function () {
@@ -109,10 +145,6 @@ $(document).ready(function () {
         $("#table").attr("class", "page-header d-none");
     });
 });
-////confirmation in delete
-function myFunction() {
-    if (!confirm("Are You Sure to delete this")) event.preventDefault();
-}
 // {{-- code for show table --}}
 $(document).ready(function () {
     $("#cancelbutton").click(function () {
@@ -120,6 +152,11 @@ $(document).ready(function () {
         $("#table").attr("class", "page-header");
     });
 });
+////confirmation in delete
+function myFunction() {
+    if (!confirm("Are You Sure to delete this")) event.preventDefault();
+}
+
 
 $("#printPreview").click(function () {
     $("#downloadPDSModal").modal("toggle");

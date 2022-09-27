@@ -56,7 +56,7 @@
                             </label>
                         </div>
 
-                        <div class="col-12 col-lg-6">
+                        <div class="col-12 col-lg-4">
                             <label class="form-group has-float-label" for="lastAppointment">
                             <input value="{{$stepIncrement->last_latest_appointment}}" class="form-control" id="lastAppointment" name="datePromotion"
                                 type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -64,7 +64,15 @@
                             </label>
                         </div>
 
-                        <div class="col-12 col-lg-6">
+                        <div class="col-12 col-lg-4">
+                            <label class="form-group has-float-label" for="lastAppointment">
+                            <input value="{{$stepIncrement->last_step_increment}}" class="form-control" id="lastAppointment" name="datePromotion"
+                                type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <span><strong>DATE OF LAST STEP INCREMENT</strong></span>
+                            </label>
+                        </div>
+
+                        <div class="col-12 col-lg-4">
                             <label for="positionName" class="form-group has-float-label">
                             <input value="{{$position->Description}}" class="form-control" id="positionName" data-position="" name="positionName" type="text"
                                 readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -80,7 +88,7 @@
                         </div>
 
                         <div class="row px-4 mt-2">
-                            
+
 
                             <div class="col-12 col-lg-3">
                                 <label for="itemNoFrom" class="form-group has-float-label">

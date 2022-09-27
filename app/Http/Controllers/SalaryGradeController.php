@@ -20,7 +20,8 @@ class SalaryGradeController extends Controller
      */
     public function index()
     {
-        return view('SalaryGrade.SalaryGrade');
+        $class = 'mini-sidebar';
+        return view('SalaryGrade.SalaryGrade', compact('class'));
     }
 
     public function list(Request $request)
@@ -123,8 +124,8 @@ class SalaryGradeController extends Controller
     public function edit($id)
     {
         $salaryGrade = SalaryGrade::find($id);
-
-        return view('SalaryGrade.edit', compact('salaryGrade'));
+        $class = 'mini-sidebar';
+        return view('SalaryGrade.edit', compact('salaryGrade', 'class'));
     }
 
     /**

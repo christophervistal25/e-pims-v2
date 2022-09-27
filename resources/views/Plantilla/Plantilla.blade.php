@@ -1,5 +1,4 @@
 @extends('layouts.app')
-{{-- @section('title', 'Plantilla Of Personnel') --}}
 @section('title', 'PLANTILLA OF PERSONNEL')
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('/assets/css/dataTables.bootstrap4.min.css') }}">
