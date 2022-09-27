@@ -191,6 +191,7 @@
 <script>
     $('#employee').change(function() {
         let employeeID = $(this).val();
+        console.log(employeeID);
         if (employeeID) {
             axios(`/api/personnel-get-current-plantilla/${employeeID}`).then((response) => {
                 $('#employee_id').fadeOut(200).fadeIn(200).val(employeeID);

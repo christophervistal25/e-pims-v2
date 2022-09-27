@@ -49,6 +49,12 @@
                         </span>
                     </div>
 
+                    <div class="p-3">
+                        <img src="{{
+                            asset('/assets/img/placeholder.jpg')
+                        }}" width="250px" height="253px" id="employeeImage" class="border img-responsive border-default float-right rounded cursor-pointer d-md-none d-lg-block" height="360px" />
+                    </div>
+
                     <div class="row px-4 mt-2">
                         <div class="col-12 col-lg-3">
                             <label class="form-group has-float-label" for="dateStepIncrement">
@@ -450,6 +456,11 @@
                 $('#positionId').val(position?.PosCode);
                 $('#positionName').val(position?.Description || 'NO POSITION');
                 $('#itemNo').val(plantilla.item_no);
+                if(plantilla.employee_id == ''){
+                    $('#employeeImage').attr('src', `/assets/img/placeholder.jpg`)
+                }else{
+                    $('#employeeImage').attr('src', `/assets/img/profiles/${plantilla.employee_id}.jpg`)
+                }
                 if(plantilla.date_last_promotion == null){
                     $('#lastAppointment').val(plantilla.date_original_appointment);
                 }else{
