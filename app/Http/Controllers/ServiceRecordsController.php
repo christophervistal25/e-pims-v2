@@ -37,8 +37,8 @@ class ServiceRecordsController extends Controller
         // $plantillas = Plantilla::with(['employee:Employee_id,FirstName,MiddleName,LastName,Suffix,OfficeCode,PosCode', 'employee_record:Employee_id,FirstName,MiddleName,LastName,Suffix,OfficeCode,PosCode'])->where('employee_id', '!=', null)->get(['employee_id', 'plantilla_id']);
         $plantillas = Plantilla::with(['employee:Employee_id,FirstName,MiddleName,LastName,Suffix,OfficeCode,PosCode'])->where('employee_id', '!=', null)->get(['employee_id', 'plantilla_id']);
         $plantillas = $plantillas->unique('employee_id');
-
-        return view('ServiceRecords.ServiceRecords', compact('employee', 'position', 'status', 'office', 'plantillas'));
+        $class = 'mini-sidebar';
+        return view('ServiceRecords.ServiceRecords', compact('employee', 'position', 'status', 'office', 'plantillas', 'class'));
     }
 
     /**
@@ -56,7 +56,7 @@ class ServiceRecordsController extends Controller
 
         $data = DB::table('EPims.dbo.service_records')
         ->leftJoin('EPims.dbo.offices', 'service_records.office_code', '=', 'offices.office_code')
-        ->join('EPims.dbo.Positions', 'service_records.PosCode', '=', 'Positions.PosCode')
+        ->leftJoin('EPims.dbo.Positions', 'service_records.PosCode', '=', 'Positions.PosCode')
         ->select('id', 'employee_id', DB::raw("FORMAT(service_from_date, 'MM-dd-yy') as service_from_date"), DB::raw("FORMAT(service_to_date, 'MM-dd-yy') as service_to_date"), 'Positions.Description as position_name', 'status', 'salary', 'offices.office_name', 'leave_without_pay', DB::raw("FORMAT(separation_date, 'MM-dd-yy') as separation_date"), 'separation_cause')
         ->where('employee_id', $employeeId)
         ->whereNull('service_records.deleted_at')
@@ -141,8 +141,8 @@ class ServiceRecordsController extends Controller
         $status = ['Casual', 'Contractual', 'Coterminous', 'Coterminous-Temporary', 'Permanent', 'Provisional', 'Substitute', 'Temporary', 'Elected'];
 
         $positions = Position::select('PosCode', 'Description')->get();
-
-        return view('ServiceRecords.edit', compact('service_record', 'positions', 'status', 'office'));
+        $class = 'mini-sidebar';
+        return view('ServiceRecords.edit', compact('service_record', 'positions', 'status', 'office', 'class'));
     }
 
     /**

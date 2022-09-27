@@ -17,8 +17,8 @@ class MaintenancePositionController extends Controller
     public function index()
     {
         $lastId = Position::latest('PosCode')->first();
-
-        return view('MaintenancePosition.position', compact('lastId'));
+        $class = 'mini-sidebar';
+        return view('MaintenancePosition.position', compact('lastId', 'class'));
     }
 
     public function list(Request $request)
@@ -97,8 +97,8 @@ class MaintenancePositionController extends Controller
     public function edit($position_id)
     {
         $position = Position::where('PosCode', $position_id)->first();
-
-        return view('MaintenancePosition.edit', compact('position'));
+        $class = 'mini-sidebar';
+        return view('MaintenancePosition.edit', compact('position', 'class'));
     }
 
     /**

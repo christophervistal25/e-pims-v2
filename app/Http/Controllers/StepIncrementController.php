@@ -21,7 +21,7 @@ class StepIncrementController extends Controller
 
     //  SHOW DATA IN YAJRA TABLE //
     public function list(string $office = '*')
-    {   
+    {
         $data = DB::connection('E_PIMS_CONNECTION')->table('EPims.dbo.Step_increments')
             ->leftJoin('DTRPayroll.dbo.Employees', 'Step_increments.employee_id', '=', 'Employees.Employee_id')
             ->leftJoin('EPims.dbo.Positions', 'Step_increments.PosCode', '=', 'Positions.PosCode')
@@ -42,7 +42,7 @@ class StepIncrementController extends Controller
                 'salary_amount_to',
                 'salary_diff'
             );
-        
+
         if (request()->ajax()) {
             $stepIncrementData = ($office != '*') ? $data->where('Step_increments.deleted_at', NULL)->where('Step_increments.office_code', $office)->get()
             : $data->where('Step_increments.deleted_at', NULL)->get();
@@ -62,7 +62,7 @@ class StepIncrementController extends Controller
 
                 return $btnEdit.'&nbsp'.$btnDelete.'&nbsp'.$btnPrint;
             })->make(true);
-        }   
+        }
     }
 
     /**
@@ -75,7 +75,8 @@ class StepIncrementController extends Controller
         ->select('Employee_id', 'LastName', 'FirstName', 'MiddleName')
         ->get();
         $office = Office::select('office_code', 'office_name')->get();
-        return view('StepIncrement.create', compact('employees', 'office'));
+        $class = 'mini-sidebar';
+        return view('StepIncrement.create', compact('employees', 'office', 'class'));
     }
 
     /**
@@ -101,6 +102,7 @@ class StepIncrementController extends Controller
             $stepIncrement->PosCode = $request->positionID;
             $stepIncrement->date_step_increment = $request->dateStepIncrement;
             $stepIncrement->last_latest_appointment = $request->datePromotion;
+            $stepIncrement->last_step_increment = $request->lastStepIncrement;
             $stepIncrement->sg_no_from = $request->sgNoFrom;
             $stepIncrement->step_no_from = $request->stepNoFrom;
             $stepIncrement->salary_amount_from = $request->amountFrom;
@@ -123,19 +125,23 @@ class StepIncrementController extends Controller
             $employee->save();
 
             /* Updating the service record of the employee. */
-        //     $currentServiceRecord = $this->serviceRecordService->getCurrentServiceRecord($request->employeeID);
-        //     $currentServiceRecord->service_to_date = Carbon::parse($request->datePromotion)->format('Y-m-d');
-        //     $currentServiceRecord->save();
+            $serviceToDate = Carbon::parse($request->dateStepIncrement)->subDays(1);
+            DB::table('EPims.dbo.service_records')->select('employee_id', 'service_from_date', 'service_to_date')->where('employee_id', $request->employeeID)->where('service_to_date', null)->latest('service_from_date')
+            ->update(['service_to_date' => $serviceToDate]);
 
         //     /* Adding a new record to the service record table. */
-        //     $this->serviceRecordService->addNewRecord([
-        //         'employee_id' => $request->employeeID,
-        //         'service_from_date' => $request->datePromotion,
-        //         'PosCode' => $request->positionID,
-        //         'status' => $increment->plantilla->status,
-        //         'salary' => $increment->plantilla->salary_amount,
-        //         'office_code' => $request->officeCode,
-        //     ]);
+            DB::table('EPims.dbo.service_records')->insert(
+                [
+                    'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
+                    'employee_id' => $request->employeeID,
+                    'service_from_date' => $request->dateStepIncrement,
+                    'PosCode' => $request->positionID,
+                    'status' => $request->status,
+                    'salary' => $request->amount2,
+                    'office_code' => $request->officeCode,
+                    'separation_cause' => 'Step  Increment',
+                ]
+            );
         });
 
         return redirect('/step-increment')->with('success', true);
@@ -152,8 +158,8 @@ class StepIncrementController extends Controller
         $stepIncrement = StepIncrement::with(['employee:Employee_id,FirstName,MiddleName,LastName,Suffix', 'position'])->find($id);
         $employee = $stepIncrement->employee;
         $position = $stepIncrement->position;
-
-        return view('stepIncrement.edit', compact('stepIncrement', 'employee', 'position'));
+        $class = 'mini-sidebar';
+        return view('stepIncrement.edit', compact('stepIncrement', 'employee', 'position', 'class'));
     }
 
     /**

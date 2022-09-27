@@ -86,7 +86,7 @@
                                 </label>
                             </div>
 
-                            <div class="col-12 col-lg-6">
+                            <div class="col-12 col-lg-4">
                                 <label class="form-group has-float-label" for="lastAppointment">
                                 <input class="form-control" id="lastAppointment" name="datePromotion"
                                     type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -94,7 +94,23 @@
                                 </label>
                             </div>
 
-                            <div class="col-12 col-lg-6">
+                            <div class="col-12 col-lg-4 d-none">
+                                <label class="form-group has-float-label" for="lastAppointment">
+                                <input class="form-control" id="status" name="status"
+                                    type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                    <span><strong>Status</strong></span>
+                                </label>
+                            </div>
+
+                            <div class="col-12 col-lg-4">
+                                <label class="form-group has-float-label" for="lastAppointment">
+                                <input class="form-control" id="lastStepIncrement" name="lastStepIncrement"
+                                    type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                    <span><strong>DATE OF LAST STEP INCREMENT</strong></span>
+                                </label>
+                            </div>
+
+                            <div class="col-12 col-lg-4">
                                 <label for="positionName" class="form-group has-float-label">
                                 <input class="form-control" id="positionName" data-position="" name="positionName" type="text"
                                     readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
@@ -120,7 +136,7 @@
                             </div>
 
                             <div class="row px-4 mt-2">
-                                
+
 
                                 <div class="col-12 col-lg-3">
                                     <label for="itemNoFrom" class="form-group has-float-label">
@@ -347,7 +363,7 @@
                 },
             ]
         });
-     //filter 
+     //filter
     $("#employeeOffice").change(function (e) {
         let selectedOffices = $("#employeeOffice").val();
         localStorage.setItem('SELECTED_OFFICE', selectedOffices);
@@ -424,21 +440,22 @@
 
             if (plantilla) {
                 plantilla = JSON.parse(plantilla);
-
+                console.log(plantilla)
                 let {plantilla_positions} = plantilla;
                 let {position} = plantilla_positions;
-
-
-
-                // console.log(plantilla)
-
                 $('#employeeId').val(plantilla.employee_id);
                 $('#plantillaId').val(plantilla.plantilla_id);
+                $('#status').val(plantilla.status);
                 $('#officeCode').val(plantilla.office_code);
                 $('#positionId').val(position?.PosCode);
                 $('#positionName').val(position?.Description || 'NO POSITION');
                 $('#itemNo').val(plantilla.item_no);
-                $('#lastAppointment').val(plantilla.date_last_promotion);
+                if(plantilla.date_last_promotion == null){
+                    $('#lastAppointment').val(plantilla.date_original_appointment);
+                }else{
+                    $('#lastAppointment').val(plantilla.date_last_promotion);
+                }
+                $('#lastStepIncrement').val(plantilla.date_last_increment);
                 $('#salaryGrade').val(plantilla.sg_no);
                 $("#sgNo2").val(plantilla.sg_no);
                 $('#stepNo').val(plantilla.step_no);
@@ -474,6 +491,7 @@
                 $('#positionName').val('');
                 $('#itemNo').val('');
                 $('#lastAppointment').val('');
+                $('#lastStepIncrement').val('');
                 $('#salaryGrade').val('');
                 $('#stepNo').val('');
                 $('#amount').val('');

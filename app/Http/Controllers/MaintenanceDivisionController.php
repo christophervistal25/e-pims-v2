@@ -19,8 +19,8 @@ class MaintenanceDivisionController extends Controller
     public function index()
     {
         $offices = Office::get(['office_code', 'office_name']);
-
-        return view('MaintenanceDivision.division', compact('offices'));
+        $class = 'mini-sidebar';
+        return view('MaintenanceDivision.division', compact('offices', 'class'));
     }
 
     /**
@@ -101,8 +101,8 @@ class MaintenanceDivisionController extends Controller
     {
         $offices = Office::get(['office_code', 'office_name']);
         $division = Division::find($divisionID);
-
-        return view('MaintenanceDivision.edit', compact('division', 'offices'));
+        $class = 'mini-sidebar';
+        return view('MaintenanceDivision.edit', compact('division', 'offices', 'class'));
     }
 
     /**

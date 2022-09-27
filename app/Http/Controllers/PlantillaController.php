@@ -52,9 +52,9 @@ class PlantillaController extends Controller
         $salarygrade = SalaryGrade::get(['sg_no']);
 
         $status = ['Appointed','Casual', 'Coterminous', 'Permanent', 'Provisional', 'Temporary', 'Elected'];
+        $class = 'mini-sidebar';
 
-
-        return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'office', 'salarygrade', 'plantillaPosition', 'year'));
+        return view('Plantilla.Plantilla', compact('employee', 'status', 'position', 'office', 'salarygrade', 'plantillaPosition', 'year', 'class'));
     }
 
 
@@ -134,17 +134,18 @@ class PlantillaController extends Controller
             $plantilla->year = $request['currentSgyear'];
             $plantilla->save();
 
-            // $plantillaPosition = PlantillaPosition::find($request->positionTitle);
+            $plantillaPosition = PlantillaPosition::find($request->positionTitle);
+
             // /* Creating a new record in the ServiceRecord table. */
-            // ServiceRecord::create([
-            //     'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
-            //     'employee_id' => $request->employeeName,
-            //     'service_from_date' => $request->originalAppointment,
-            //     'PosCode' => $plantillaPosition->PosCode,
-            //     'status' => $request->status,
-            //     'salary' => $request->salaryAmount,
-            //     'office_code' => $request->officeCode,
-            // ]);
+            ServiceRecord::create([
+                'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
+                'employee_id' => $request->employeeName,
+                'service_from_date' => $request->originalAppointment,
+                'PosCode' => $plantillaPosition->PosCode,
+                'status' => $request->status,
+                'salary' => $request->salaryAmount,
+                'office_code' => $request->officeCode,
+            ]);
         });
 
         return response()->json(['success' => true]);
@@ -186,7 +187,8 @@ class PlantillaController extends Controller
         $plantillaPosition = PlantillaPosition::with('position:PosCode,Description')->whereDoesntHave('plantillas', function ($query) {
             $query->where('year', date('Y'));
         })->get();
-        return view('Plantilla.edit', compact('plantilla', 'employee', 'status', 'position',   'office',  'salarygrade', 'plantillaPosition', 'plantillaPositionedit', 'plantillaPositionAll'));
+        $class = 'mini-sidebar';
+        return view('Plantilla.edit', compact('plantilla', 'employee', 'status', 'position',   'office',  'salarygrade', 'plantillaPosition', 'plantillaPositionedit', 'plantillaPositionAll', 'class'));
     }
 
     /**

@@ -29,8 +29,8 @@ class SalaryAdjustmentPerOfficeController extends Controller
             ->pluck('date_adjustment')
             ->map(fn ($adjustment) => $adjustment->format('Y'))
             ->unique();
-
-        return view('SalaryAdjustmentPerOffice.SalaryAdjustmentPerOffice', compact('plantillaOffices', 'dates'));
+        $class = 'mini-sidebar';
+        return view('SalaryAdjustmentPerOffice.SalaryAdjustmentPerOffice', compact('plantillaOffices', 'dates', 'class'));
     }
 
     public function list(Request $request)
@@ -114,8 +114,8 @@ class SalaryAdjustmentPerOfficeController extends Controller
         $employee = Employee::select('Employee_id', 'Firstname', 'Lastname', 'Middlename')->get();
         $plantillaPosition = PlantillaPosition::select('pp_id', 'PosCode', 'item_no', 'sg_no', 'office_code', 'old_position_name')->with('position:PosCode,Description')->get();
         $salaryAdjustment = SalaryAdjustment::find($id);
-
-        return view('SalaryAdjustmentPerOffice.edit', compact('salaryAdjustment', 'employee', 'plantillaPosition'));
+        $class = 'mini-sidebar';
+        return view('SalaryAdjustmentPerOffice.edit', compact('salaryAdjustment', 'employee', 'plantillaPosition', 'class'));
     }
 
     /**
