@@ -22,7 +22,7 @@ final class PromotionController extends Controller
     public function __construct(private readonly OfficeService $officeService)
     {}
 
-    public function list(string $office = '*', string $year = '*')
+    public function list()
     {
         return Pipeline::make()
                     ->send(request()->all())
