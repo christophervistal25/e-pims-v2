@@ -3,13 +3,14 @@
 namespace App\Providers;
 
 use App\Employee;
-use App\EmployeeLeaveForwardedBalance;
-use App\Http\Repositories\LeaveRecordRepository;
-use App\Observers\EmployeeLeaveForwardedBalanceObserver;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
+use App\EmployeeLeaveForwardedBalance;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
+use Lorisleiva\Actions\Facades\Actions;
+use App\Http\Repositories\LeaveRecordRepository;
+use App\Observers\EmployeeLeaveForwardedBalanceObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // Model::preventLazyLoading(!app()->isProduction());
+        Actions::registerRoutes();
 
         EmployeeLeaveForwardedBalance::observe(EmployeeLeaveForwardedBalanceObserver::class);
 

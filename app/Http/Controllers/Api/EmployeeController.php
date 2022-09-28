@@ -20,12 +20,8 @@ use App\Http\Requests\StoreEmployeeRequest;
 use App\Pipes\CreateEmployeeSocialInsurance;
 use App\Http\Requests\Employee\UpdateEmployeeRequest;
 
-class EmployeeController extends Controller
+final class EmployeeController extends Controller
 {
-    public function __construct(public EmployeeService $employeeService)
-    {
-    }
-
     public function list(string $charging = '*', string $assignment = '*', $status = '*', $active = '*')
     {
         return Laratables::recordsOf(Employee::class, function ($filter) use ($charging, $assignment, $status, $active) {
@@ -57,7 +53,6 @@ class EmployeeController extends Controller
             ->withTransaction()
             ->send($request->all())
             ->through([
-                // Add pipe for ensuring if employeeID is present.
                 EditEmployee::class,
                 EditEmployeeSocialInsurance::class,
                 RegisterEmployee::class,
@@ -65,10 +60,9 @@ class EmployeeController extends Controller
             ])->then(fn() => response()->json(['success' => true]));
     }
 
-    public function show(string $employeeID): Employee
+    public function show(string $employeeID, EmployeeService $employeeService): Employee
     {
-        $employeeID = (new Hashids())->decode($employeeID)[0];
-        return $this->employeeService->findByEmployeeID($employeeID);
+        return $employeeService->findByEmployeeID((new Hashids())->decode($employeeID)[0]);
     }
 
     public function search(string $key)

@@ -1,113 +1,41 @@
 <?php
 
+use App\Holiday;
 use App\Division;
 use App\Employee;
-use App\Holiday;
+use Carbon\Carbon;
+use App\SalaryGrade;
+use Carbon\CarbonPeriod;
+use App\PositionSchedule;
+use App\PlantillaPosition;
+use Yajra\Datatables\Datatables;
+use App\Actions\GetPersonnelFile;
+use Illuminate\Support\Facades\DB;
+use App\Actions\StorePersonnelFile;
+use App\Actions\UpdatePersonnelFile;
+use Illuminate\Support\Facades\Route;
+use App\Actions\Employees\GetEmployees;
+use App\Http\Controllers\CountryController;
 use App\Http\Controllers\Api\CityController;
+use App\Http\Controllers\Api\OfficeController;
 use App\Http\Controllers\Api\DivisionController;
 use App\Http\Controllers\Api\EmployeeController;
-use App\Http\Controllers\Api\OfficeController;
-use App\Http\Controllers\Api\PlantillaController;
-use App\Http\Controllers\Api\PlantillaPositionController;
 use App\Http\Controllers\Api\PositionController;
 use App\Http\Controllers\Api\ProvinceController;
+use App\Http\Controllers\Api\PlantillaController;
+use App\Http\Controllers\StepIncrementController;
+use App\Actions\Employees\GetEmployeePersonnelFiles;
+use App\Http\Controllers\PersonalDataSheetController;
+use App\Http\Controllers\Api\PlantillaPositionController;
+use App\Http\Controllers\DownloadPersonalDataSheetController;
 use App\Http\Controllers\Api\SalaryAdjustmentPerOfficeController;
 use App\Http\Controllers\Api\SalaryGradeController as APISalaryGradeController;
-use App\Http\Controllers\CountryController;
-use App\Http\Controllers\DownloadPersonalDataSheetController;
-use App\Http\Controllers\PersonalDataSheetController;
-use App\Http\Controllers\StepIncrementController;
-use App\PersonnelFile;
-use App\Plantilla;
-use App\PlantillaPosition;
-use App\PositionSchedule;
-use App\SalaryGrade;
-use Carbon\Carbon;
-use Carbon\CarbonPeriod;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Validator;
-use Yajra\Datatables\Datatables;
 
-Route::get('employees-for-personnel-files', function () {
-    // Return employees datatables for personnel files
-    $employees = Employee::without(['position', 'office_charging', 'office_assignment'])->get(['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix']);
-
-    return Datatables::of($employees)
-            ->addColumn('image', function ($record) {
-                if (file_exists(public_path('assets/img/thumbnail/'.$record->Employee_id.'.jpg'))) {
-                    return "
-                        <a href='/assets/img/profiles/".$record->Employee_id.".jpg' data-lightbox='image-1'>
-                        <img src='/assets/img/thumbnail/".$record->Employee_id.".jpg' alt='NO IMAGE' class='img-fluid rounded-circle' width='40px'>
-                    </a>
-                    ";
-                }
-
-                return "
-                        <img src='/assets/img/province.png' alt='NO IMAGE' class='img-fluid rounded-circle' width='40px'>
-                    ";
-            })
-            ->addColumn('action', function ($row) {
-                $btn = "
-                    <a title='Edit'  class='btn-sm rounded-circle shadow text-white btn-add-file btn btn-primary mr-1' data-fullname='".$row->fullname."' data-id='".$row->Employee_id."'>
-                            <i class='la la-plus'></i>
-                    </a>
-                ";
-                $btn .= "
-                    <a title='View Records' class='btn-sm rounded-circle shadow text-white btn-view-file btn btn-info mr-1' data-id='".$row->Employee_id."'>
-                        <i class='la la-eye'></i>
-                    </a>
-                ";
-
-                return $btn;
-            })
-            ->rawColumns(['action', 'image'])
-            ->make(true);
-});
-
-Route::get('personnel-file/list', function () {
-    // Return datatables for this route
-    return Datatables::of(PersonnelFile::orderBy('created_at', 'ASC')->get())
-        ->addColumn('action', function ($row) {
-            $btn = "<a title='Edit' class='rounded-circle text-white btn-edit-file btn btn-success btn-sm mr-2' data-name='".$row->name."' data-id='".$row->id."'><i class='la la-pencil'></i></a>";
-            // $btn .= "<a title='Delete' class='rounded-circle text-white edit btn-delete-file btn-danger btn-sm' data-id='".$row->id."'><i class='la la-trash'></i></a>";
-            return $btn;
-        })
-        ->rawColumns(['action'])
-        ->make(true);
-});
-
-Route::get('personnel-file/{employeeID}', function (string $employeeID) {
-    return Employee::with(['file_records', 'file_records.file_details'])->without([
-        'position',
-        'office_charging',
-        'office_assignment',
-    ])->find($employeeID, ['Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix']);
-});
-
-Route::post('personnel-file/store', function (Request $request) {
-    $validator = Validator::make($request->all(), [
-        'name' => 'required|string|max:255',
-    ]);
-
-    if ($validator->fails()) {
-        return response()->json(['error' => $validator->errors()], 422);
-    }
-
-    PersonnelFile::create([
-        'name' => $request->file,
-    ]);
-
-    return response()->json(['success' => true]);
-});
-
-Route::put('personnel-file/{id}/update', function (Request $request, int $id) {
-    $file = PersonnelFile::find($id);
-    $file->name = $request->edit_file;
-    $file->save();
-    return response()->json(['success' => true]);
-});
+Route::get('personnel-file/list', [GetPersonnelFile::class, 'asApi']);
+Route::get('employees-for-personnel-files', [GetEmployees::class, 'asApi']);
+Route::get('personnel-file/{employeeID}', [GetEmployeePersonnelFiles::class, 'asApi']);
+Route::post('personnel-file/store', [StorePersonnelFile::class, 'asController']);
+Route::put('personnel-file/{id}/update', [UpdatePersonnelFile::class, 'asController']);
 
 Route::group(['prefix' => 'personal-data-sheet'], function () {
     Route::controller(PersonalDataSheetController::class)->group(function () {
