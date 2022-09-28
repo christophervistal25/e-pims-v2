@@ -11,7 +11,16 @@ class EmployeePersonnelFile extends Model
 
     public $connection = 'E_PIMS_CONNECTION';
 
-    protected $fillable = ['file_id', 'date', 'file', 'file_size'];
+    protected $fillable = ['file_id', 'date', 'name', 'file'];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->id = tap(Setting::where('Keyname', 'AUTONUMBER')->first())->increment('Keyvalue', 1)->Keyvalue;
+        });
+    }
 
     public function employee()
     {

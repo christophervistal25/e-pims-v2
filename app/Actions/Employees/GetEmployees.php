@@ -18,24 +18,24 @@ final class GetEmployees
         if (file_exists(public_path("assets/img/thumbnail/{$employeeID}.jpg"))) {
             return "
                 <a href='/assets/img/profiles/{$employeeID}.jpg' data-lightbox='image-1'>
-                    <img src='/assets/img/thumbnail/{$employeeID}.jpg' alt='NO IMAGE' class='img-fluid rounded-circle' width='80px'>
+                    <img src='/assets/img/thumbnail/{$employeeID}.jpg' alt='NO IMAGE' class='img-fluid rounded-circle' width='60px'>
                 </a>
             ";
         }
 
-        return "<img src='/assets/img/province.png' alt='NO IMAGE' class='img-fluid rounded-circle' width='80px'>";
+        return "<img src='/assets/img/province.png' alt='NO IMAGE' class='img-fluid rounded-circle' width='60px'>";
     }
 
     private function renderButtons(Employee $record)
     {
         $btn = "
-            <a title='Edit' class='shadow text-white btn-add-file btn btn-primary mr-1' data-fullname='{$record->fullname}' data-id='{$record->Employee_id}'>
+            <a title='Edit' class='text-white btn-add-file btn btn-primary mr-1' data-fullname='{$record->fullname}' data-id='{$record->Employee_id}'>
                     <i class='fas fa-plus'></i>
             </a>
             ";
 
             $btn .= "
-            <a title='View Records' class='shadow text-white btn-view-file btn btn-info mr-1' data-id='{$record->Employee_id}'>
+            <a title='View Records' class='text-white btn-view-file btn btn-info mr-1' data-id='{$record->Employee_id}'>
                 <i class='fas fa-eye'></i>
             </a>
         ";

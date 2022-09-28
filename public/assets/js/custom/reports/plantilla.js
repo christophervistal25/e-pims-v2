@@ -1,10 +1,12 @@
-
 $('#create-report-form-wrapper').hide();
 const clearErrorMessage = (parent, target) => $('#generateReportForm').children().find(parent).each((_, element) => $(element).parent().find(target).remove());
 const removeIsInvalidClass = (parent) => $('#generateReportForm').children().find(parent).removeClass('is-invalid');
 
+
+let year = $('#year').val();
+let type = "DBM";
 let table = $('#reports-table').DataTable({
-    ajax: `/plantilla-report-history-list/*`,
+    ajax: `/plantilla-report-history-list/${year}/${type}`,
     serverSide: true,
     processing: true,
     saveState: true,
@@ -60,6 +62,24 @@ let table = $('#reports-table').DataTable({
     ]
 });
 
+$('#selectedType').change(function () {
+    let year = $('#year').val();
+    let type = $(this).val();
+    table.ajax.url(`/plantilla-report-history-list/${year}/${type}`).load();
+});
+
+$('#year').change(function () {
+    let year = $(this).val();
+    let type = $('#selectedType').val();
+    table.ajax.url(`/plantilla-report-history-list/${year}/${type}`).load();
+});
+
+$('#back').click(function (e) {
+    e.preventDefault();
+    $('#create-report-form-wrapper').fadeOut(300);
+    setTimeout(() => $('#report-wrapper').show().fadeIn(300), 350);
+});
+
 $(document).on('click', '.btn__export', function () {
     let id = $(this).attr('data-id');
     let type = $(this).attr('data-type');
@@ -96,6 +116,17 @@ $('#btnGenerate').click(function () {
     let asOfDate = $('#asOfDate').val();
     let plantillaType = $('#selectedType').val();
 
+    if(year === '*' || plantillaType === '*') {
+        swal({
+            title : '',
+            icon : 'error',
+            text : 'Please select a type or year first',
+            buttons : false,
+            timer : 5000,
+        })
+
+        return;
+    }
     // Checkpoint before display the form.
     $.post({
         url: '/plantilla-report-history-checkpoint',
@@ -140,8 +171,6 @@ $('#btnGenerate').click(function () {
     });
 
 });
-
-
 
 $('#formBtnGenerate').click(function (e) {
     e.preventDefault();
@@ -198,7 +227,6 @@ $('#formBtnGenerate').click(function (e) {
         }
     });
 });
-
 
 $(document).on('click', '.btn__remove__report', async function () {
     let id = $(this).attr('data-id');

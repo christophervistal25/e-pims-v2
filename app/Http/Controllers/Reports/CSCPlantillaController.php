@@ -26,10 +26,19 @@ final class CSCPlantillaController extends Controller
         $this->salaryGradeService = app()->make(SalaryGradeService::class);
     }
 
-    public function list()
+    public function list(int|string $year, string $type)
     {
-        $data = DB::connection('E_PIMS_CONNECTION')->table('Plantilla_Reports')->get();
-        return Datatables::of($data)->make(true);
+        $data = DB::connection('E_PIMS_CONNECTION')->table('Plantilla_Reports');
+
+        if($type != '*') {
+            $data->where('Plantilla_type', $type);
+        }
+
+        if($year != '*') {
+            $data->where('Year', $year);
+        }
+
+        return Datatables::of($data->get())->make(true);
     }
 
     public function listShow(int $reportID, string $office = '*')
@@ -74,9 +83,11 @@ final class CSCPlantillaController extends Controller
 
     public function index()
     {
+        $years = range(date('Y') - 5, date('Y') + 1);
+        rsort($years);
         return view('reports.plantilla.index', [
             'class' => 'mini-sidebar',
-            'years' => range(2015, date('Y') + 1),
+            'years' => $years,
             'reports' => $this->service->getReports(),
         ]);
     }

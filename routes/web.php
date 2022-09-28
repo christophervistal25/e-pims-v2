@@ -2,6 +2,7 @@
 
 use App\User;
 use App\Employee;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -89,7 +90,7 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
     Route::get('salary-grade-list', [SalaryGradeController::class, 'list'])->name('salary-grade-list');
     Route::resource('salary-grade', SalaryGradeController::class);
     Route::put('salary-grade/{id}', [SalaryGradeController::class, 'update']);
-    Route::post('/import-salarygrade', [SalaryGradeController::class, 'ImportSalaryGrade'])->name('import');
+    Route::post('import-salarygrade', [SalaryGradeController::class, 'ImportSalaryGrade'])->name('import');
 
     /* Creating a route for the MaintenancePositionController. */
     Route::get('maintenance-position-list', [MaintenancePositionController::class, 'list'])->name('maintenance-position-list');
@@ -105,14 +106,14 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
 
     /* Creating a route for the MaintenanceDivisionController. */
     // Route::get('maintenance-division-list', [MaintenanceDivisionController::class, 'list'])->name('maintenance-division-list');
-    Route::get('/maintenance-division-list/{office_code?}', 'MaintenanceDivisionController@list')->name('maintenance-division-list');
+    Route::get('maintenance-division-list/{office_code?}', 'MaintenanceDivisionController@list')->name('maintenance-division-list');
     Route::resource('maintenance-division', MaintenanceDivisionController::class);
     Route::get('maintenance-division/{id}', [MaintenanceDivisionController::class, 'destroy'])->name('maintenance-division.delete');
 
     /* Creating a route for the MaintenanceSectionController. */
     Route::resource('maintenance-section', MaintenanceSectionController::class);
-    Route::get('/maintenance-section-list/{sectionId?}', 'MaintenanceSectionController@list')->name('maintenance-section-list');
-    Route::get('/maintenance-section/{id}', [MaintenanceSectionController::class, 'destroy'])->name('maintenance-section.delete');
+    Route::get('maintenance-section-list/{sectionId?}', 'MaintenanceSectionController@list')->name('maintenance-section-list');
+    Route::get('maintenance-section/{id}', [MaintenanceSectionController::class, 'destroy'])->name('maintenance-section.delete');
 
     /* Creating a route for the PlantillaOfScheduleController. */
     Route::get('plantilla-of-schedule-list/{office?}/{year?}', [PlantillaOfScheduleController::class, 'list'])->name('plantilla-of-schedile.lists');
@@ -150,29 +151,29 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
     Route::put('step-increment/{id}', 'StepIncrementController@update')->name('step-increment.update');
     Route::resource('step-increment', 'StepIncrementController');
 
-    Route::get('/print-increment/{id}/previewed', 'PrintIncrementController@print')->name('step-increment.previewed.print');
-    Route::get('/print-increment/{id}', 'PrintIncrementController@printList')->name('print-increment');
-    Route::resource('/print-increment', 'PrintIncrementController');
+    Route::get('print-increment/{id}/previewed', 'PrintIncrementController@print')->name('step-increment.previewed.print');
+    Route::get('print-increment/{id}', 'PrintIncrementController@printList')->name('print-increment');
+    Route::resource('print-increment', 'PrintIncrementController');
 
     /* A route for the salary adjustment. */
-    Route::get('/salary-adjustment/{id}', 'SalaryAdjustmentController@destroy')->name('salary-adjustment.delete');
-    Route::resource('/salary-adjustment', 'SalaryAdjustmentController');
+    Route::get('salary-adjustment/{id}', 'SalaryAdjustmentController@destroy')->name('salary-adjustment.delete');
+    Route::resource('salary-adjustment', 'SalaryAdjustmentController');
 
-    Route::get('/salary-adjustment-list/{employeeOffice?}/{currentSgyear?}', 'SalaryAdjustmentController@list');
-    Route::put('/salary-adjustment/update/{id}', 'SalaryAdjustmentController@update');
-    Route::get('/print-adjustment/{id}/previewed', 'PrintAdjustmentController@print')->name('salary-adjustment.previewed.print');
-    Route::get('/print-adjustment/{id}', 'PrintAdjustmentController@printList')->name('print-adjustment');
+    Route::get('salary-adjustment-list/{employeeOffice?}/{currentSgyear?}', 'SalaryAdjustmentController@list');
+    Route::put('salary-adjustment/update/{id}', 'SalaryAdjustmentController@update');
+    Route::get('print-adjustment/{id}/previewed', 'PrintAdjustmentController@print')->name('salary-adjustment.previewed.print');
+    Route::get('print-adjustment/{id}', 'PrintAdjustmentController@printList')->name('print-adjustment');
 
-    Route::resource('/salary-adjustment-per-office', 'SalaryAdjustmentPerOfficeController');
-    Route::get('/salary-adjustment-per-office-list', 'SalaryAdjustmentPerOfficeController@list');
-    Route::get('/salary-adjustment-per-office-not-selected-list', 'SalaryAdjustmentPerOfficeController@NotSelectedlist');
-    Route::get('/salary-adjustment-per-office/{id}', 'SalaryAdjustmentPerOfficeController@destroy')->name('salary-adjustment-per-office.delete');
-    Route::put('/salary-adjustment-per-office/update/{id}', 'SalaryAdjustmentPerOfficeController@update');
-    Route::delete('/salary-adjustment-per-offices/{id}', 'SalaryAdjustmentPerOfficeController@destroy');
+    Route::resource('salary-adjustment-per-office', 'SalaryAdjustmentPerOfficeController');
+    Route::get('salary-adjustment-per-office-list', 'SalaryAdjustmentPerOfficeController@list');
+    Route::get('salary-adjustment-per-office-not-selected-list', 'SalaryAdjustmentPerOfficeController@NotSelectedlist');
+    Route::get('salary-adjustment-per-office/{id}', 'SalaryAdjustmentPerOfficeController@destroy')->name('salary-adjustment-per-office.delete');
+    Route::put('salary-adjustment-per-office/update/{id}', 'SalaryAdjustmentPerOfficeController@update');
+    Route::delete('salary-adjustment-per-offices/{id}', 'SalaryAdjustmentPerOfficeController@destroy');
 
     // Service Records
     Route::get('service-record/{id}', [ServiceRecordsController::class, 'destroy'])->name('service-records.delete');
-    Route::get('/service-records-list/{employeeId}', [ServiceRecordsController::class, 'list']);
+    Route::get('service-records-list/{employeeId}', [ServiceRecordsController::class, 'list']);
     Route::resource('service-records', ServiceRecordsController::class);
 
     Route::controller(BirthdayController::class)->group(function () {
@@ -236,13 +237,6 @@ Auth::routes(['register' => false]);
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'submitLogin'])->name('submit.login');
 
-// Route::get('404', function () {
-//     return view('errors.423');
-// })->name('423-leave-application');
-
-// Route::fallback(function () {
-//     abort(404);
-// });
 
 Route::controller(PrintServiceRecordController::class)->group(function () {
     Route::post('service-record-print/{employeeID}/pdf', 'pdf');
@@ -259,7 +253,7 @@ Route::group(['prefix' => 'prints'], function () {
 });
 
 Route::controller(CSCPlantillaController::class)->group(function () {
-    Route::get('plantilla-report-history-list/{year}', 'list');
+    Route::get('plantilla-report-history-list/{year}/{type}', 'list');
     Route::get('plantilla-report-history', 'index')->name('plantilla.report.index');
     Route::get('plantilla-report/show/{id}', 'show')->name('plantilla.report.show');
     Route::get('plantilla-report/show/{id}/list/{office}', 'listShow')->name('plantilla.report.show.list');
@@ -274,11 +268,6 @@ Route::controller(CSCPlantillaController::class)->group(function () {
 Route::post('export/{id}/{type}', [CSCPlantillaReportController::class, 'export'])->name('generate.plantilla-report');
 Route::get('download/plantilla-generated-report/{fileName}', [CSCPlantillaReportController::class, 'download'])->name('download.generated.plantilla-report');
 
-
-Route::controller(DBMPlantillaReportController::class)->group(function () {
-    Route::post('dbm/plantilla-report/generate/{office}/{year}', 'generate')->name('dbm.generate.plantilla-report');
-    Route::get('dbm/plantilla-report/download/{fileName}', 'download')->name('dmb.download.plantilla-report');
-});
 
 Route::middleware('auth')->controller(EmployeeTrainingController::class)->group(function () {
     Route::get('trainings-report', 'index')->name('trainings-report');
@@ -305,16 +294,5 @@ Route::group(['middleware' => ['auth', 'user']], function () {
 
     Route::get('employee-payslip', [PaySlipController::class, 'index'])->name('employee.payslip');
 
-    // Route::get('leave-certification-print', [LeaveCertificationController::class, 'index'])->name('print-leave-certification');
-
     Route::get('employee-chat', [ChatController::class, 'index'])->name('employee.chat');
-});
-
-Route::get('export-image', function () {
-    $employees = Employee::get(['Employee_id', 'ImagePhoto']);
-    foreach ($employees as $employee) {
-        file_put_contents(public_path('assets\\images\\'.$employee->Employee_id.'.jpg'), $employee->ImagePhoto);
-    }
-
-    return redirect()->route('');
 });
