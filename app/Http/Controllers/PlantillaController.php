@@ -78,6 +78,12 @@ class PlantillaController extends Controller
                     $btn = "$row->sg_no / $row->step_no";
                     return $btn;
                 })
+                ->addColumn('fullname', function ($record) {
+                    if(!($record->employee_id)) {
+                        return 'VACANT';
+                    }
+                    return $record->fullname;
+                })
                 ->rawColumns(['action'])
                 ->make(true);
         }
