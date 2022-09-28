@@ -4,9 +4,10 @@
 <link rel="stylesheet" href="/assets/css/style.css" />
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/css/dataTables.bootstrap4.min.css') }}" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css"
-    integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA=="
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
+<script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
 <style>
     .required:after {
         content: ' *';
@@ -35,22 +36,22 @@
     </div>
     <div class="col-lg-3 card rounded-0 shadow-none border-right-0 ">
         <div class="card-header">
-            <h4 class='text-uppercase'>
+            <p class='text-uppercase h4'>
                 Files
-                <button class='float-right btn btn-primary  mb-2' id='btnAddNewFile'>
+                <button class='float-right btn btn-primary btn-sm mb-2' id='btnAddNewFile'>
                     <i class="fas fa-plus"></i>
                 </button>
-            </h4>
+            </p>
         </div>
-        <div class="card-body p-0">
-            <table class='table table-hover' id='tablePersonnelFile' width="100%">
+        <div class="card-body p-0" >
+            <table class='table table-hover' id='tablePersonnelFile'  width="100%">
             </table>
         </div>
     </div>
 
     <div class="col-lg-9 card rounded-0 shadow-none border-left" id="employeesTableSection">
         <div class="card-header p-0">
-            <div class="input-group ">
+            <div class="input-group border-0 rounded-0 shadow-none">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">
                         <i class='fa fa-search'></i>
@@ -61,18 +62,17 @@
             </div>
         </div>
         <div class="card-body p-0 m-0">
-            <table class='table table-condensed table-hover' id="employeesTable" width="100%">
+            <table class='table table-hover' id="employeesTable" width="100%">
                 <thead>
-                    <th>IMAGE</th>
-                    <th>FULLNAME</th>
-                    <th>ACTIONS</th>
+                    <th>Image</th>
+                    <th>Fullname</th>
+                    <th>Actions</th>
                 </thead>
             </table>
         </div>
     </div>
-
-    <div class="col-lg-9 card rounded-0 shadow-none d-none" id="addFileSection"
-        data-has-old-values="{{ count(old('attachments') ?? []) }}">
+    <div class="col-lg-9 card rounded-0 shadow-none {{ old('dates') && count(old('dates')) != 0 ? 'show' : 'd-none' }}" style="max-height : 80vh;" data-simplebar id="addFileSection"
+        data-has-old-values="{{ count(old('dates') ?? []) }}">
         <div class="card-header d-flex justify-content-start align-items-center align-middle">
             <button id='btnBack' class='btn btn-sm text-white btn-warning rounded-circle mr-3 shadow'>
                 {{-- add right arrow icon --}}
@@ -82,12 +82,11 @@
             </h4>
         </div>
         <div class="card-body">
-            <form action="{{ route('employee.personnel-file.store', 0) }}" id="formAddFile" method="POST"
-                enctype="multipart/form-data">
+            <form action="{{ route('employee.personnel-file.store', 0) }}" id="formAddFile" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row" id='add-file-dynamic-content'>
-                    @if(count(old('attachments') ?? []) > 0)
-                    @foreach(old('attachments') as $key => $attachment)
+                    @if(count(old('dates') ?? []) > 0)
+                    @foreach(old('dates') as $key => $attachment)
                     <div class='border col-lg-12 row mt-3' data-parent='{{ old(' names.' . $key) }}'>
                         <div class='col-lg-12 text-right float-right p-0 m-0'>
                             <button class='btn btn-danger btn-sm btn-remove-attachment'
@@ -100,7 +99,7 @@
                                 <label>Name</label>
                                 <input type="text" name="names[]" class='form-control'
                                     value="{{ old('names.' . $key) }}" readonly>
-                                <input type="text" name="ids[]" class='form-control' value="{{ old('ids.' . $key) }}"
+                                <input type="hidden" name="ids[]" class='form-control' value="{{ old('ids.' . $key) }}"
                                     readonly>
                             </div>
                         </div>
@@ -234,7 +233,7 @@
 
 @push('page-scripts')
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
+{{-- <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script> --}}
 <script src="/assets/js/jquery.dataTables.min.js"></script>
 <script src="/assets/js/dataTables.bootstrap4.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
