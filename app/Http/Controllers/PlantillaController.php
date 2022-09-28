@@ -65,7 +65,7 @@ class PlantillaController extends Controller
         ->join('EPims.dbo.plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
         ->join('EPims.dbo.Positions', 'plantilla_positions.PosCode', '=', 'Positions.PosCode')
         ->leftJoin('DTRPayroll.dbo.Employees', 'Employees.Employee_id', '=', 'plantillas.employee_id')
-        ->select(DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"),'plantilla_id', 'plantillas.item_no as item_no', 'offices.office_name as office_name', 'plantillas.sg_no as sg_no', 'plantillas.step_no as step_no','plantillas.status as status', 'plantillas.year as year', 'Positions.Description');
+        ->select(DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"), 'plantillas.employee_id as employee_id','plantilla_id', 'plantillas.item_no as item_no', 'offices.office_name as office_name', 'plantillas.sg_no as sg_no', 'plantillas.step_no as step_no','plantillas.status as status', 'plantillas.year as year', 'Positions.Description');
         if (request()->ajax()) {
             $PlantillaData = ($office != '*') ? $data->where('plantillas.office_code', $office)->where('plantillas.year', $year)->get()
                 : $data->where('plantillas.year', $year)->get();
@@ -137,15 +137,18 @@ class PlantillaController extends Controller
             $plantillaPosition = PlantillaPosition::find($request->positionTitle);
 
             // /* Creating a new record in the ServiceRecord table. */
-            ServiceRecord::create([
-                'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
-                'employee_id' => $request->employeeName,
-                'service_from_date' => $request->originalAppointment,
-                'PosCode' => $plantillaPosition->PosCode,
-                'status' => $request->status,
-                'salary' => $request->salaryAmount,
-                'office_code' => $request->officeCode,
-            ]);
+            if($request->employeeName != ""){
+                ServiceRecord::create([
+                    'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
+                    'employee_id' => $request->employeeName,
+                    'service_from_date' => $request->originalAppointment,
+                    'PosCode' => $plantillaPosition->PosCode,
+                    'status' => $request->status,
+                    'salary' => $request->salaryAmount,
+                    'office_code' => $request->officeCode,
+                ]);
+            }
+
         });
 
         return response()->json(['success' => true]);

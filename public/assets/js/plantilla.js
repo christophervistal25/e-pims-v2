@@ -83,6 +83,17 @@ $(document).ready(function () {
         columns: [
             { data: "item_no", name: "item_no" },
             {
+                data: "employee_id",
+                name: "employee_id",
+                render: function (nRow, _, data, row) {
+                    if(data.employee_id == null){
+                        return `<img src="/assets/img/province.png" width="55px" height="55px" class="rounded-circle" alt="">`;
+                    }else{
+                        return `<img src="/assets/img/profiles/${data.employee_id}.jpg" width="55px" height="55px" class="rounded-circle" alt="">`;
+                    }
+                },
+            },
+            {
                 data: "fullname",
                 name: "fullname",
                 searchable: true,
