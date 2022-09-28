@@ -21,9 +21,10 @@ class EmployeePersonnelFileController extends Controller
         $request->merge(array_filter($request->all()));
 
         $this->validate($request, [
-            'names.*' => ['required'],
-            'types.*' => ['required'],
-            'ids.*' => ['required'],
+            'names.*'       => ['required'],
+            'types.*'       => ['required'],
+            'ids.*'         => ['required'],
+            'dates.*'       => ['required'],
             'attachments.*' => ['required'],
         ]);
 
