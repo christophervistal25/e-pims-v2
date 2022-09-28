@@ -40,7 +40,8 @@ class StepIncrementController extends Controller
                 'salary_amount_from',
                 DB::raw("CONCAT(sg_no_to, ' / ' , step_no_to) AS sg_to_and_step_to"),
                 'salary_amount_to',
-                'salary_diff'
+                'salary_diff',
+                'Employees.Employee_id as Employee_id'
             );
 
         if (request()->ajax()) {
