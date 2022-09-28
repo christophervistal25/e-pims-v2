@@ -13,7 +13,16 @@ class PersonnelFile extends Model
 
     public $connection = 'E_PIMS_CONNECTION';
 
-    protected $fillable = ['name'];
+    protected $fillable = ['id', 'name'];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->id = tap(Setting::where('Keyname', 'AUTONUMBER')->first())->increment('Keyvalue', 1)->Keyvalue;
+        });
+    }
 
     protected function name(): Attribute
     {
