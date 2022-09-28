@@ -340,6 +340,7 @@
                         <thead>
                             <tr>
                                 <td scope="col" class="text-center">Item No</td>
+                                <td scope="col" class="text-center">Image</td>
                                 <td scope="col" class="text-center">Employee Name</td>
                                 <td scope="col" class="text-center">Position Title</td>
                                 <td scope="col" class="text-center">Office</td>
