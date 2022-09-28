@@ -36,6 +36,7 @@ class PlantillaController extends Controller
             ->where('Work_Status', 'not like', '%'.'JOB ORDER'.'%')
             ->where('Work_Status', 'not like', '%'.'CONTRACT OF SERVICE'.'%')
             ->where('Work_Status', '!=', '')
+            ->where('isActive', 1)
             ->whereNotIn('Employee_id', $plantillaEmp)
             ->orderBy('LastName', 'ASC')->get();
         $office = Office::select('office_code', 'office_name')->get();
