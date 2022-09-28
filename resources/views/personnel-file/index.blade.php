@@ -38,8 +38,8 @@
         <div class="card-header">
             <h4 class='text-uppercase'>
                 Files
-                <button class='float-right btn btn-primary rounded-circle shadow btn-sm mb-2' id='btnAddNewFile'>
-                    <i class='la la-plus'></i>
+                <button class='float-right btn btn-primary shadow  mb-2' id='btnAddNewFile'>
+                    <i class="fas fa-plus"></i>
                 </button>
             </h4>
         </div>
@@ -184,9 +184,9 @@
     <div class="modal fade" id="modalAddNewFile" tabindex="-1" role="dialog" aria-labelledby="modalAddNewFile"
         aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
+            <div class="modal-content rounded-0">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalAddNewFile">Add New File</h5>
+                    <p class="modal-title h4" id="modalAddNewFile">Add New File</p>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

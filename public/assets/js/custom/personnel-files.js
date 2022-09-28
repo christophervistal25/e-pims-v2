@@ -26,6 +26,11 @@ $(document).ready(function () {
         processing: true,
         serverSide: true,
         ordering: false,
+        retrieve: true,
+        language: {
+            processing:
+                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
+        },
         ajax: {
             url: "/api/personnel-file/list",
         },
@@ -41,7 +46,7 @@ $(document).ready(function () {
                 name: 'name',
                 className: 'cursor-pointer file-record',
                 render: function (data, _, row, _) {
-                    return `<span class='text-uppercase' data-file-id="${row.id}" style='pointer-events:none;'>${data}</span>`;
+                    return `<span class='text-uppercase text-sm' data-file-id="${row.id}" style='pointer-events:none;'>${data}</span>`;
                 }
             },
             {
@@ -246,15 +251,6 @@ $('#btnUpdateFile').click(function () {
                 if (response.success) {
                     // Hide modal
                     $('#modalEditFile').modal('hide');
-                    // Display success message using sweetalert
-                    swal({
-                        title: "Success",
-                        text: "File updated successfully",
-                        icon: "success",
-                        buttons: false,
-                        timer: 5000,
-                    });
-
                     $('#tablePersonnelFile').DataTable().ajax.reload();
                 }
             },
@@ -293,7 +289,7 @@ $('#btnBack').click(function () {
     $('#add-file-dynamic-content').html('');
 
     // Remove class bg-primary class in table cell of personnelFiles table
-    $('#tablePersonnelFile tbody tr').each(function (index, element) {
+    $('#tablePersonnelFile tbody tr').each(function (_, element) {
         // Get element with attribute data-clicked=1
         let elementWithDataClicked = $(element).attr('data-clicked');
         if (elementWithDataClicked == 1) {
