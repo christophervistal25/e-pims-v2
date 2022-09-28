@@ -98,13 +98,14 @@ $(document).ready(function () {
                 name: "fullname",
                 searchable: true,
                 visible: true,
-                render: function (nRow, _, data, row) {
-                    if (data.fullname == "   ") {
-                        return `<span class="badge badge-primary text-white">VACANT</span>`;
-                    } else {
-                        return `${data.fullname}`;
+                render : function(rawData, _, data) {
+                    if(!data.employee_id) {
+                        return `
+                            <span class="badge badge-primary text-white">VACANT</span>
+                        `;
                     }
-                },
+                    return `${rawData}`;
+                }
             },
             {
                 data: "Description",
