@@ -26,7 +26,7 @@ final class CSCPlantillaController extends Controller
         $this->salaryGradeService = app()->make(SalaryGradeService::class);
     }
 
-    public function list($year = '*')
+    public function list()
     {
         $data = DB::connection('E_PIMS_CONNECTION')->table('Plantilla_Reports')->get();
         return Datatables::of($data)->make(true);
@@ -52,12 +52,17 @@ final class CSCPlantillaController extends Controller
             $data->where('Plantilla_Reports_Details.office_code', $office);
         }
 
-        return Datatables::of($data->get())->make(true);
+        return Datatables::of($data->get())->addColumn('fullname', function ($record) {
+            if(!($record->employee_id)) {
+                return 'VACANT';
+            }
+            return $record->fullname;
+        })->make(true);
     }
 
     public function vacant(int $id)
     {
-        $reportDetails = DB::connection('E_PIMS_CONNECTION')->table('Plantilla_Reports_Details')->where('Id', $id)->update([
+        DB::connection('E_PIMS_CONNECTION')->table('Plantilla_Reports_Details')->where('Id', $id)->update([
             'date_original_appointment' => null,
             'date_last_promotion'       => null,
             'date_last_increment'       => null,
