@@ -308,6 +308,7 @@
                         className : 'text-center align-middle',
                         name : 'Id',
                         data : 'Id',
+                        orderable : false,
                         render : function (Id, _, row) {
                             return `<input type="checkbox" class="pointer-events-none record-checkbox" style="transform:scale(1.5)" id="record__checkbox__${Id}" data-employee-id="${row.employee_id}">`;
                         },

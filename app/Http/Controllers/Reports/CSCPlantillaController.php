@@ -44,8 +44,8 @@ final class CSCPlantillaController extends Controller
                             'plantilla_positions.pp_id', 'plantilla_positions.PosCode',
                             'Positions.PosCode', 'Positions.Description',
                             'Offices.office_name', 'Offices.office_short_name',
-                            DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ',  LastName, Suffix) AS fullname"),
-                        );
+                            DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ',  LastName, ' ', Suffix) AS fullname"),
+                        )->orderBy('item_no', 'ASC');
 
 
         if($office !== '*') {
@@ -56,7 +56,7 @@ final class CSCPlantillaController extends Controller
             if(!($record->employee_id)) {
                 return 'VACANT';
             }
-            return $record->fullname;
+            return Str::upper($record->fullname);
         })->make(true);
     }
 
