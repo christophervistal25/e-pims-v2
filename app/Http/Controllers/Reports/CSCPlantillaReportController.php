@@ -48,8 +48,7 @@ final class CSCPlantillaReportController extends Controller
             $sectionCount = 0;
             $startingIndex = 17;
             foreach($positions as $records) {
-                $data = $records->groupBy(fn ($record) => $record->division_name ?? $record->section_name ?? 'OFFICE_' . $record->office_name);
-
+                $data = $records->groupBy(fn ($record) => $record->section_name ?? $record->division_name ?? 'OFFICE_' . $record->office_name);
                 $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(public_path() . '\\DBM_PLANTILLA.xlsx');
                 $worksheet = $spreadsheet->getActiveSheet();
                 $worksheet->setTitle($year);
@@ -58,6 +57,7 @@ final class CSCPlantillaReportController extends Controller
                 foreach($data as $officeOrDivision => $positions) {
                     $worksheet->setCellValue('C3', 'PLANTILLA OF LGU PERSONNEL FY ' . $year);
                     $worksheet->setCellValue('C7', $positions->first()->office_name);
+
                     if( Str::contains($officeOrDivision, 'OFFICE_') ) {
                         foreach($positions as $record) {
                             $worksheet->insertNewRowBefore($startingIndex);
@@ -70,7 +70,7 @@ final class CSCPlantillaReportController extends Controller
                             $worksheet->setCellValue('B' . $startingIndex, $record->item_no);
                             $worksheet->setCellValue('C' . $startingIndex, $record->Description);
                             $worksheet->getStyle('C' . $startingIndex)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT)->setWrapText(true);
-                            $worksheet->setCellValue('D' . $startingIndex, $record->fullname);
+                            $worksheet->setCellValue('D' . $startingIndex, Str::title($record->fullname));
                             $worksheet->getStyle('D' . $startingIndex)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT)->setWrapText(true);
                             $worksheet->setCellValue('E' . $startingIndex, $record->sg_no)->getStyle('E' . $startingIndex)->applyFromArray([
                                 'borders' => [
@@ -94,13 +94,16 @@ final class CSCPlantillaReportController extends Controller
 
                             $startingIndex++;
                         }
-                    } else if( Str::contains(Str::upper($officeOrDivision), 'SECTION')) {
+                    } else if( str_contains(Str::lower($officeOrDivision), 'section') ) {
                         $sectionCount++;
+
+                        $startingIndex++;
                         $worksheet->insertNewRowBefore($startingIndex);
+
                         $firstCell = "B" . $startingIndex;
-                        $secondCell = ":M" . $startingIndex;
+                        $secondCell = ":D" . $startingIndex;
                         $worksheet->mergecells($firstCell . $secondCell)->getCell("B" . $startingIndex)->setValue('   ' . $officeOrDivision);
-                        $worksheet->getStyle('B' . $startingIndex )->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+                        $worksheet->getStyle('B' . $startingIndex )->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
                         $worksheet->getStyle('B' . $startingIndex)->getFont()->setBold(true);
 
                         foreach($positions as $record) {
@@ -115,7 +118,7 @@ final class CSCPlantillaReportController extends Controller
                             $worksheet->setCellValue('A' . $startingIndex, $record->old_item_no);
                             $worksheet->setCellValue('B' . $startingIndex, $record->item_no);
                             $worksheet->setCellValue('C' . $startingIndex, $record->Description);
-                            $worksheet->setCellValue('D' . $startingIndex, $record->fullname);
+                            $worksheet->setCellValue('D' . $startingIndex, Str::title($record->fullname));
                             $worksheet->setCellValue('E' . $startingIndex, $record->sg_no)->getStyle('E' . $startingIndex)->applyFromArray([
                                 'borders' => [
                                     'outline' => [
@@ -136,9 +139,9 @@ final class CSCPlantillaReportController extends Controller
                             $worksheet->setCellValue('J' . $startingIndex, $record->salary_amount_yearly);
                             $worksheet->setCellValue('M' . $startingIndex, $record->salary_amount_yearly - $record->salary_amount_previous_yearly);
                         }
-                    } else { // Division
+                    } else if(str_contains(Str::lower($officeOrDivision), "division")) {
                         $sectionCount++;
-
+                        $startingIndex++;
                         $worksheet->insertNewRowBefore($startingIndex);
                         $firstCell = "B" . $startingIndex;
                         $secondCell = ":M" . $startingIndex;
@@ -158,7 +161,7 @@ final class CSCPlantillaReportController extends Controller
                             $worksheet->setCellValue('A' . $startingIndex, $record->old_item_no);
                             $worksheet->setCellValue('B' . $startingIndex, $record->item_no);
                             $worksheet->setCellValue('C' . $startingIndex, $record->Description);
-                            $worksheet->setCellValue('D' . $startingIndex, $record->fullname);
+                            $worksheet->setCellValue('D' . $startingIndex, Str::title($record->fullname));
                             $worksheet->setCellValue('E' . $startingIndex, $record->sg_no)->getStyle('E' . $startingIndex)->applyFromArray([
                                 'borders' => [
                                     'outline' => [
@@ -182,13 +185,13 @@ final class CSCPlantillaReportController extends Controller
                     }
                 }
 
-                $previousRange = "G17" . ":" . "G" . ($startingIndex + $sectionCount);
-                $currentRange = "J17" . ":" . "J" . ($startingIndex + $sectionCount);
-                $increaseAndDecreaseRange = "M17" . ":" . "M" . ($startingIndex + $sectionCount);
+                $previousRange = "G17" . ":" . "G" . ($startingIndex);
+                $currentRange = "J17" . ":" . "J" . ($startingIndex);
+                $increaseAndDecreaseRange = "M17" . ":" . "M" . ($startingIndex);
 
-                $worksheet->setCellValue('G' . ($startingIndex + $sectionCount + 1), "=SUM(" . $previousRange . ")");
-                $worksheet->setCellValue('J' . ($startingIndex + $sectionCount + 1), "=SUM(" . $currentRange . ")");
-                $worksheet->setCellValue('M' . ($startingIndex + $sectionCount + 1), "=SUM(" . $increaseAndDecreaseRange . ")");
+                $worksheet->setCellValue('G' . ($startingIndex + 1), "=SUM(" . $previousRange . ")");
+                $worksheet->setCellValue('J' . ($startingIndex + 1), "=SUM(" . $currentRange . ")");
+                $worksheet->setCellValue('M' . ($startingIndex + 1), "=SUM(" . $increaseAndDecreaseRange . ")");
 
                 $startingIndex = 17;
                 $sectionCount = 0;
@@ -204,7 +207,7 @@ final class CSCPlantillaReportController extends Controller
                 $zipper->add($destination . $fileName);
             }
             $zipper->close();
-            $files = storage_path() . "\\files\\" . $zipName;
+            // $files = storage_path() . "\\files\\" . $zipName;
         } else if($type === 'CSC') {
             $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(public_path() . '\\CSC_PLANTILLA.xlsx');
 
