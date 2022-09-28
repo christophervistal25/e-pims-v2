@@ -328,7 +328,7 @@
                         name : 'fullname',
                         data : 'fullname',
                         render : function(rawData, _, data) {
-                            if(rawData.trim() === '') {
+                            if(!data.employee_id) {
                                 return `
                                 <center>
                                     <span class="badge badge-primary text-white">VACANT</span>
