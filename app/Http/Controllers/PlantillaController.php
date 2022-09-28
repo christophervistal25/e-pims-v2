@@ -36,6 +36,7 @@ class PlantillaController extends Controller
             ->where('Work_Status', 'not like', '%'.'JOB ORDER'.'%')
             ->where('Work_Status', 'not like', '%'.'CONTRACT OF SERVICE'.'%')
             ->where('Work_Status', '!=', '')
+            ->where('isActive', 1)
             ->whereNotIn('Employee_id', $plantillaEmp)
             ->orderBy('LastName', 'ASC')->get();
         $office = Office::select('office_code', 'office_name')->get();
@@ -77,6 +78,12 @@ class PlantillaController extends Controller
                 ->addColumn('sg_step', function ($row) {
                     $btn = "$row->sg_no / $row->step_no";
                     return $btn;
+                })
+                ->addColumn('fullname', function ($record) {
+                    if(!($record->employee_id)) {
+                        return 'VACANT';
+                    }
+                    return $record->fullname;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
