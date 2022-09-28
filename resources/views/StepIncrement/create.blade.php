@@ -262,13 +262,14 @@
                     <table class="table table-bordered" id="step-increment-table" style="width:100%;">
                         <thead>
                             <tr>
-                                <th class="font-weight-bold align-middle text-center">Date of Step Increment</th>
-                                <th class="font-weight-bold align-middle text-center" >Name</th>
-                                <th class="font-weight-bold align-middle text-center" >Position</th>
-                                <th class="font-weight-bold align-middle text-center" >Office</th>
-                                <th class="font-weight-bold align-middle text-center" >SG / Step</th>
-                                <th class="font-weight-bold align-middle" >Salary Amount Yearly</th>
-                                <th class="font-weight-bold align-middle" >Action</th>
+                                <th scope="col" class="text-center">Date of Step Increment</th>
+                                <th scope="col" class="text-center" >Image</th>
+                                <th scope="col" class="text-center" >Name</th>
+                                <th scope="col" class="text-center" >Position</th>
+                                <th scope="col" class="text-center" >Office</th>
+                                <th scope="col" class="text-center" >SG / Step</th>
+                                <th scope="col" class="text-center" >Salary Amount Yearly</th>
+                                <th scope="col" class="text-center" >Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -322,7 +323,18 @@
                     className : 'text-center',
                 },
                 {
-                    className: 'text-truncate',
+                    data: 'Employee_id',
+                    name: 'Employee_id',
+                    className : 'text-center',
+                    render: function (nRow, _, data, row) {
+                    if(data.Employee_id == null){
+                        return `<img src="/assets/img/province.png" width="55px" height="55px" class="rounded-circle" alt="">`;
+                    }else{
+                        return `<img src="/assets/img/profiles/${data.Employee_id}.jpg" width="55px" height="55px" class="rounded-circle" alt="">`;
+                    }
+                },
+                },
+                {
                     data: null,
                     searchable: true,
                     sortable: false,
@@ -332,7 +344,7 @@
                     }
                 },
                 {
-                    className: 'text-truncate',
+
                     data: 'Description',
                     name: 'Description',
                     searchable: true,
@@ -340,7 +352,7 @@
                     visible: true
                 },
                 {
-                    className: 'text-truncate',
+
                     data: 'office_name',
                     name: 'office_name',
                     searchable: true,
@@ -348,7 +360,7 @@
                     visible: true
                 },
                 {
-                    className: 'text-truncate',
+
                     data: 'sg_to_and_step_to',
                     name: 'sg_to_and_step_to',
                     searchable: true,
@@ -364,6 +376,7 @@
                 },
                 {
                     className: 'text-truncate',
+                    searchable: false,
                     data: 'action',
                     name: 'action'
                 },
