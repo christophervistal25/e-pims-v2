@@ -5,8 +5,8 @@
                 <i class="las la-chevron-left"></i>
             </button>
             <div class="card shadow-none">
-                <div class="card-header h4">
-                    BASIC INFORMATION
+                <div class="card-header h4 bg-primary text-white">
+                    Basic Information
                 </div>
                 <div class="card-body">
                     <img id="employeeImage" src="{{
@@ -199,8 +199,8 @@
         </div>
 
         <div class="card shadow-none">
-            <div class="card-header h4">
-                SOCIAL INSURANCE
+            <div class="card-header h4 bg-primary text-white">
+                Social Insurance
             </div>
 
             <div class="card-body">
@@ -251,8 +251,8 @@
         </div>
 
         <div class="card shadow-none mb-2">
-            <div class="card-header h4">
-                LOGIN CREDENTIALS
+            <div class="card-header h4 bg-primary text-white">
+                Login Credentials
             </div>
 
             <div class="card-body">

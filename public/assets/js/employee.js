@@ -67,58 +67,58 @@ let table = $("#employees-table").DataTable({
         },
         {
             name: "Employee_id",
-            class: "align-middle text-center",
+            class: "align-middle text-xs text-center",
         },
         {
             name: "LastName",
-            class: "align-middle text-truncate",
+            class: "align-middle text-xs text-truncate",
         },
         {
             name: "FirstName",
-            class: "align-middle text-truncate",
+            class: "align-middle text-xs text-truncate",
         },
         {
             name: "MiddleName",
-            class: "align-middle text-truncate",
+            class: "align-middle text-xs text-truncate",
         },
         {
             name: "Suffix",
-            class: "align-middle text-center",
+            class: "align-middle text-xs text-center",
         },
         {
             name: "age",
-            class: "align-middle text-center",
+            class: "align-middle text-xs text-center",
             orderable : false,
             searchable : false,
 
         },
         {
-            name: "position.position_short_name",
-            class: "align-middle text-uppercase text-sm text-truncate",
+            name: "position.position_name",
+            class: "align-middle text-uppercase text-xs text-truncate",
             orderable: false,
             searchable: false,
         },
         {
             name: "office_charging.Description",
             defaultContent: "",
-            class: "align-middle text-uppercase",
+            class: "align-middle text-xs text-uppercase",
             orderable: false,
             searchable: false,
         },
         {
             name: "office_assignment.Description",
-            class: "align-middle text-uppercase",
+            class: "align-middle text-xs text-uppercase",
             orderable: false,
             searchable: false,
         },
         {
             name: "Work_Status",
-            class: "align-middle text-center text-truncate",
+            class: "align-middle text-center text-xs text-truncate",
             orderable: false,
         },
         {
             name: "isActive",
-            class: "align-middle text-center text-truncate",
+            class: "align-middle text-center text-xs text-truncate",
             orderable: false,
             render: function (rawData, _, data, row) {
                 if (rawData == ACTIVE) {
