@@ -207,7 +207,7 @@ final class CSCPlantillaReportController extends Controller
                 $zipper->add($destination . $fileName);
             }
             $zipper->close();
-            // $files = storage_path() . "\\files\\" . $zipName;
+            $files = storage_path() . "\\files\\" . $zipName;
         } else if($type === 'CSC') {
             $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load(public_path() . '\\CSC_PLANTILLA.xlsx');
 
