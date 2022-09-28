@@ -228,7 +228,7 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
     Route::get('profile', 'EmployeeController@profile');
 
     Route::get('salary-grade/{year}', [SalaryGradePrintController::class, 'index'])->name('salary-grade-print');
-    Route::post('leave-increment-job', 'LeaveIncrementJobController');
+
 });
 
 Auth::routes(['register' => false]);
