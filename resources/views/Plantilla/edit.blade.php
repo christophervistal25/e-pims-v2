@@ -297,7 +297,7 @@
                               <div class="form-group form-group submit-section col-12">
                                    <button id="plantillaUpdate" type="submit" class="btn btn-primarys submit-btn float-right shadow"><span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span>
                                         <i style="color:white;" class="fas fa-save"></i> <b style="color:white;" id="saving">Update</b>
-                                        <a href="javascript: history.go(-1)"><button style="margin-right:10px;" type="button" class="text-white btn btn-danger submit-btn float-right shadow"><i class="fas fa-arrow-left"></i> Back</button></a>
+                                        <a href="{{ url('/plantilla-of-personnel') }}"><button style="margin-right:10px;" type="button" class="text-white btn btn-danger submit-btn float-right shadow"><i class="fas fa-arrow-left"></i> Back</button></a>
                               </div>
                          </div>
                     </form>
