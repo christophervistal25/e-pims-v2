@@ -74,6 +74,7 @@ $(document).ready(function () {
     let PlantillaTable = $("#plantilla").DataTable({
         processing: true,
         serverSide: true,
+        pageLength: 100,
         pagingType: "full_numbers",
         language: {
             processing:
