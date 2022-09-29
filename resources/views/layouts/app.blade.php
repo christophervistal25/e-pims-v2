@@ -123,7 +123,7 @@
                         <span class="user-img">
                             <img src="{{ asset('/assets/img/province.png') }}" alt="">
                             <span class="status online"></span></span>
-                        <span>Admin</span>
+                        <span>{{ auth()->user()->username }}</span>
                     </a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ route('administrator.profile') }}">My Profile</a>
