@@ -280,7 +280,7 @@
             const NO_VACANT_SELECTED = -1;
             let selectedRow = [];
             let selectedIds = [];
-            let office = '*';
+            let office = '0001';
             let id = "{{ $reportID }}"
 
             let table = $('#plantilla-personnel-table').DataTable({
@@ -404,8 +404,6 @@
                 office = $(this).val();
                 table.ajax.url(`/plantilla-report/show/${id}/list/${office}`).load();
             });
-
-
 
             $(document).on('click', 'tbody > tr', function (e) {
                 const CHECKBOX_INDEX_CELL = 0;

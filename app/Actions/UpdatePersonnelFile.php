@@ -19,7 +19,7 @@ final class UpdatePersonnelFile
     }
 
 
-    public function asController(PersonnelFileUpdateRequest $request, int $id) :JsonResponse
+    public function asApi(PersonnelFileUpdateRequest $request, int $id) :JsonResponse
     {
         $this->handle($id, $request->all());
         return response()->json(['success' => true]);

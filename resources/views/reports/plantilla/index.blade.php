@@ -12,6 +12,7 @@
         <div class="form-group">
             <label class="text-uppercase font-weight-bold">Select Year</label>
             <select name="selected_year" id="year" class="form-control">
+                <option value="*">All</option>
                 @foreach($years as $year)
                 <option value="{{ $year }}" {{ $year == date('Y') ? 'selected' : '' }}>{{ $year }}</option>
                 @endforeach
@@ -22,6 +23,7 @@
         <div class="form-group">
             <label class="text-uppercase font-weight-bold">Select Type</label>
             <select name="type" class="form-control" id="selectedType">
+                <option value="*">All</option>
                 <option value="CSC">CSC PLANTILLA</option>
                 <option value="DBM">DBM PLANTILLA</option>
             </select>
@@ -79,6 +81,11 @@
                 </div>
 
                 <div class="float-right">
+                    <button class="btn btn-info" id="back">
+                        <i class="fas fa-arrow-left"></i>
+                        Back
+                    </button>
+
                     <button class="btn btn-primary" id="formBtnGenerate">
                         <i class="las la-folder-plus"></i>
                         Generate

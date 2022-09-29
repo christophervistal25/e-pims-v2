@@ -34,8 +34,8 @@ use App\Http\Controllers\Api\SalaryGradeController as APISalaryGradeController;
 Route::get('personnel-file/list', [GetPersonnelFile::class, 'asApi']);
 Route::get('employees-for-personnel-files', [GetEmployees::class, 'asApi']);
 Route::get('personnel-file/{employeeID}', [GetEmployeePersonnelFiles::class, 'asApi']);
-Route::post('personnel-file/store', [StorePersonnelFile::class, 'asController']);
-Route::put('personnel-file/{id}/update', [UpdatePersonnelFile::class, 'asController']);
+Route::post('personnel-file/store', [StorePersonnelFile::class, 'asApi']);
+Route::put('personnel-file/{id}/update', [UpdatePersonnelFile::class, 'asApi']);
 
 Route::group(['prefix' => 'personal-data-sheet'], function () {
     Route::controller(PersonalDataSheetController::class)->group(function () {

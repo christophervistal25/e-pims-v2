@@ -68,6 +68,10 @@ $(document).ready(function () {
         processing: true,
         serverSide: true,
         ordering: false,
+        language: {
+            processing:
+                '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
+        },
         ajax: {
             url: "/api/employees-for-personnel-files",
         },
@@ -136,7 +140,6 @@ $(document).on('click', '.btn-view-file', function () {
                                     <h6 class='text-uppercase' class='filename'>
                                         <a href="#">${file_details.name}</a>
                                     </h6>
-                                    <span class='filesize'>${file.file_size}</span>
                                 </div>
                                 <div class="card-footer" class='file-timestamp'>${file.created_at}</div>
                                 <a class='btn btn-sm btn-primary mt-2 btn-download-file' href="/download-personnel-file/${file.file}">

@@ -19,10 +19,12 @@ class EmployeePersonnelFileController extends Controller
     {
         // Filter associative array remove null values
         $request->merge(array_filter($request->all()));
+
         $this->validate($request, [
-            'names.*' => ['required'],
-            'types.*' => ['required'],
-            'ids.*' => ['required'],
+            'names.*'       => ['required'],
+            'types.*'       => ['required'],
+            'ids.*'         => ['required'],
+            'dates.*'       => ['required'],
             'attachments.*' => ['required'],
         ]);
 
@@ -37,7 +39,8 @@ class EmployeePersonnelFileController extends Controller
                     'date' => $request->dates[$key],
                     'file_id' => $request->ids[$key],
                     'file' => $fileName,
-                    'file_size' => filesize($attachment),
+                    'Employee_id' => $employeeID,
+                    'name' => $request->names[$key],
                 ]);
 
                 // Upload the file in storage employees_file folder
