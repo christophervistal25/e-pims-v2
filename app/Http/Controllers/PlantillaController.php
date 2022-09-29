@@ -180,15 +180,15 @@ class PlantillaController extends Controller
      */
     public function edit($plantilla_id)
     {
-        // $employee = Employee::select('Employee_id', 'LastName', 'FirstName', 'MiddleName')->get();
-        $plantillaEmp = array_filter(Plantilla::get()->pluck('employee_id')->toArray());
-        $employee = Employee::select('Employee_id', 'LastName', 'FirstName', 'MiddleName', 'Work_Status')
-            ->where('Work_Status', 'not like', '%'.'JOB ORDER'.'%')
-            ->where('Work_Status', 'not like', '%'.'CONTRACT OF SERVICE'.'%')
-            ->where('Work_Status', '!=', '')
-            ->where('isActive', 1)
-            ->whereNotIn('Employee_id', $plantillaEmp)
-            ->orderBy('LastName', 'ASC')->get();
+        $employee = Employee::select('Employee_id', 'LastName', 'FirstName', 'MiddleName')->get();
+        // $plantillaEmp = array_filter(Plantilla::get()->pluck('employee_id')->toArray());
+        // $employee = Employee::select('Employee_id', 'LastName', 'FirstName', 'MiddleName', 'Work_Status')
+        //     ->where('Work_Status', 'not like', '%'.'JOB ORDER'.'%')
+        //     ->where('Work_Status', 'not like', '%'.'CONTRACT OF SERVICE'.'%')
+        //     ->where('Work_Status', '!=', '')
+        //     ->where('isActive', 1)
+        //     ->whereNotIn('Employee_id', $plantillaEmp)
+        //     ->orderBy('LastName', 'ASC')->get();
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('PosCode', 'Description')->get();
         $plantillaPositionIDAll = Plantilla::where('plantilla_id', '!=', $plantilla_id)->get()->pluck('pp_id')->toArray();
