@@ -52,10 +52,10 @@
 
                               <div class="form-group col-12 col-lg-10">
                                    <label>Employee Name</label>
-                                   <select value="" class="form-control selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" name="employeeName" data-live-search="true" id="employeeName" data-size="5">
+                                   <select value="" class="form-control selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" name="employeeName" data-live-search="true" id="employeeNameEdit" data-size="5">
                                         <option></option>
                                         @foreach($employee as $employees)
-                                            <option {{ $plantilla->employee_id == $employees->Employee_id ? 'selected' : '' }} value="{{ $employees->employee_id }}">{{ $employees->fullname }}</option>
+                                            <option {{ $plantilla->employee_id == $employees->Employee_id ? 'selected' : '' }} value="{{ $employees->Employee_id }}">{{ $employees->fullname }}</option>
                                         @endforeach
                                    </select>
                                    <div id='employee-name-error-message' class='text-danger text-sm'>
@@ -64,7 +64,7 @@
 
                               <div class="form-group col-12 col-lg-2">
                                    <label>Employee Id</label>
-                                   <input value="{{ old('employeeId') ?? $plantilla->employee_id }}" class="form-control {{ $errors->has ('employeeId')  ? 'is-invalid' : ''}}" name="employeeId" type="text" readonly>
+                                   <input value="{{ old('employeeId') ?? $plantilla->employee_id }}" class="form-control {{ $errors->has ('employeeId')  ? 'is-invalid' : ''}}" id="employeeId" name="employeeId" type="text" readonly>
                               </div>
 
                               <div class="form-group col-12 col-lg-6">

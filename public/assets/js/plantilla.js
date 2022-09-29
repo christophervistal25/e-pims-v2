@@ -171,10 +171,23 @@ $(document).ready(function () {
         $("#employeeID").val(plantilla);
         if(employeeID == ''){
             $('#employeeImage').attr('src', `/assets/img/placeholder.jpg`)
+            $('#employeeId').val('')
         }else{
             $('#employeeImage').attr('src', `/assets/img/profiles/${employeeID}.jpg`)
         }
     });
+
+    $("#employeeNameEdit").change(function (e) {
+        let employeeID = e.target.value;
+        if(employeeID == ''){
+            $('#employeeImage').attr('src', `/assets/img/placeholder.jpg`);
+            $('#employeeId').val('');
+        }else{
+            $('#employeeImage').attr('src', `/assets/img/profiles/${employeeID}.jpg`);
+            $("#employeeId").val(employeeID);
+        }
+    });
+
 
     $("#cancelButton").click(function () {
         $("#add").attr("class", "page-header d-none");

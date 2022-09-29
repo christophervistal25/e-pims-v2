@@ -223,6 +223,7 @@ class PlantillaController extends Controller
         ]);
         DB::transaction(function () use ($request, $plantilla_id) {
             $plantilla = Plantilla::with('plantilla_positions')->find($plantilla_id);
+            $plantilla->employee_id = $request->employeeName;
             $plantilla->item_no = $request->itemNo;
             $plantilla->old_item_no = $request->oldItemNo;
             $plantilla->pp_id = $request->positionTitle;
