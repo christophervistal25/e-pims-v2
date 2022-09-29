@@ -51,11 +51,11 @@
                               <input type="text" value="{{ $plantilla->plantilla_id  }}" id="plantillaId" class="d-none">
 
                               <div class="form-group col-12 col-lg-10">
-                                   <label>Employee Name<span class="text-danger">*</span></label>
-                                   <select value="{{ old('employeeName') }}" class="form-control form-control-xs selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" name="employeeName" data-live-search="true" id="employeeName" data-size="5" disabled>
+                                   <label>Employee Name</label>
+                                   <select value="" class="form-control selectpicker {{ $errors->has('employeeName')  ? 'is-invalid' : ''}}" name="employeeName" data-live-search="true" id="employeeName" data-size="5">
                                         <option></option>
                                         @foreach($employee as $employees)
-                                        <option {{ $plantilla->employee_id == $employees->Employee_id ? 'selected' : '' }} value="{{ $employees->employee_id }}">{{ $employees->fullname }}</option>
+                                            <option {{ $plantilla->employee_id == $employees->Employee_id ? 'selected' : '' }} value="{{ $employees->employee_id }}">{{ $employees->fullname }}</option>
                                         @endforeach
                                    </select>
                                    <div id='employee-name-error-message' class='text-danger text-sm'>
@@ -63,7 +63,7 @@
                               </div>
 
                               <div class="form-group col-12 col-lg-2">
-                                   <label>Employee Id<span class="text-danger">*</span></label>
+                                   <label>Employee Id</label>
                                    <input value="{{ old('employeeId') ?? $plantilla->employee_id }}" class="form-control {{ $errors->has ('employeeId')  ? 'is-invalid' : ''}}" name="employeeId" type="text" readonly>
                               </div>
 
@@ -147,28 +147,28 @@
                               </div>
 
                               <div class="form-group col-12 col-lg-6">
-                                   <label>Item No<span class="text-danger">*</span></label>
+                                   <label>Item No</label>
                                    <input value="{{ old('itemNo') ?? $plantilla->item_no }}" class="form-control {{ $errors->has('itemNo')  ? 'is-invalid' : ''}}" name="itemNo" id="itemNo" type="text" placeholder="Item No." readonly>
                                    <div id='item-no-error-message' class='text-danger text-sm'>
                                    </div>
                               </div>
 
                               <div class="form-group col-12 col-lg-6">
-                                   <label>Old Item No<span class="text-danger">*</span></label>
+                                   <label>Old Item No</label>
                                    <input value="{{ old('oldItemNo') ?? $plantilla->old_item_no }}" class="form-control {{ $errors->has ('oldItemNo')  ? 'is-invalid' : ''}}" name="oldItemNo" id="num-only" type="text" placeholder="Old Item No">
                                    <div id='old_item-no-error-message' class='text-danger'>
                                    </div>
                               </div>
 
                               <div class="form-group col-12 col-lg-3">
-                                   <label>Current Salary Grade Year<span class="text-danger">*</span></label>
+                                   <label>Current Salary Grade Year</label>
                                    <input value="{{ old('currentSgyear') ?? $plantilla->year }}" class="form-control {{ $errors->has('currentSgyear')  ? 'is-invalid' : ''}}" name="currentSgyear" id="currentSgyear" type="text" placeholder="" readonly>
                                    <div id='year-error-message' class='text-danger text-sm'>
                                    </div>
                               </div>
 
                               <div class="form-group col-12 col-lg-2">
-                                   <label>Salary Grade<span class="text-danger">*</span></label>
+                                   <label>Salary Grade</label>
                                    <input value="{{ old('salaryGrade') ?? $plantilla->sg_no}}" class="form-control {{ $errors->has('')  ? 'is-invalid' : ''}}" name="salaryGrade" id="currentSalarygrade" type="text" readonly>
                               </div>
 
@@ -200,7 +200,7 @@
                             </div>
 
                               <div class="form-group col-12 col-lg-3">
-                                <label>Previous Salary Grade<span class="text-danger">*</span></label>
+                                <label>Previous Salary Grade</label>
                                     <select value="" class="form-control salaryGradePrevious selectpicker" name="salaryGradePrevious" data-live-search="true" id="salaryGradePrevious" data-size="5" data-width="100%">
                                         <option></option>
                                         @foreach(range(1, 33) as $sal_grade)
@@ -214,7 +214,7 @@
 
 
                            <div class="form-group col-12 col-lg-3">
-                                <label>Previous Step<span class="text-danger">*</span></label>
+                                <label>Previous Step</label>
                                 <select class="form-control stepNoPrevious selectpicker" name="stepNoPrevious" data-live-search="true" id="stepNoPrevious" data-size="5" data-width="100%">
                                         <option></option>
                                         @foreach(range(1,8) as $step_no)
@@ -242,14 +242,14 @@
                         </div>
 
                               <div class="form-group col-12 col-lg-4">
-                                   <label>Original Appointment<span class="text-danger">*</span></label>
+                                   <label>Original Appointment</label>
                                    <input value="{{ old('originalAppointment') ?? $plantilla->date_original_appointment }}" class="form-control {{ $errors->has('originalAppointment')  ? 'is-invalid' : ''}}" name="originalAppointment" type="date">
                                    <div id='original-appointment-error-message' class='text-danger text-sm'>
                                    </div>
                               </div>
 
                               <div class="form-group col-12 col-lg-4">
-                                   <label>Last Promotion<span class="text-danger">*</span></label>
+                                   <label>Last Promotion</label>
                                    <input value="{{ old('lastPromotion') ?? $plantilla->date_last_promotion }}" class="form-control {{ $errors->has('lastPromotion')  ? 'is-invalid' : ''}}" name="lastPromotion" type="date">
                                    <div id='last-promotion-error-message' class='text-danger text-sm'>
                                    </div>
