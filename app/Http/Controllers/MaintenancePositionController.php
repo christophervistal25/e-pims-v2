@@ -17,8 +17,10 @@ class MaintenancePositionController extends Controller
     public function index()
     {
         $lastId = Position::latest('PosCode')->first();
+        $idNUmber = $lastId->PosCode + 1;
+        $plusId = '0'.$idNUmber;
         $class = 'mini-sidebar';
-        return view('MaintenancePosition.position', compact('lastId', 'class'));
+        return view('MaintenancePosition.position', compact('plusId', 'class'));
     }
 
     public function list(Request $request)

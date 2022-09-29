@@ -66,7 +66,7 @@ class PlantillaController extends Controller
         ->join('EPims.dbo.plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
         ->join('EPims.dbo.Positions', 'plantilla_positions.PosCode', '=', 'Positions.PosCode')
         ->leftJoin('DTRPayroll.dbo.Employees', 'Employees.Employee_id', '=', 'plantillas.employee_id')
-        ->select(DB::raw("CONCAT(FirstName, ' ' , MiddleName , ' ' , LastName, ' ' , Suffix) AS fullname"), 'plantillas.employee_id as employee_id','plantilla_id', 'plantillas.item_no as item_no', 'offices.office_name as office_name', 'plantillas.sg_no as sg_no', 'plantillas.step_no as step_no','plantillas.status as status', 'plantillas.year as year', 'Positions.Description');
+        ->select(DB::raw("CONCAT(LastName, ', ' , FirstName , ' ' , MiddleName, ' ' , Suffix) AS fullname"), 'plantillas.employee_id as employee_id','plantilla_id', 'plantillas.item_no as item_no', 'offices.office_name as office_name', 'plantillas.sg_no as sg_no', 'plantillas.step_no as step_no','plantillas.status as status', 'plantillas.year as year', 'Positions.Description');
         if (request()->ajax()) {
             $PlantillaData = ($office != '*') ? $data->where('plantillas.office_code', $office)->where('plantillas.year', $year)->get()
                 : $data->where('plantillas.year', $year)->get();
@@ -181,6 +181,14 @@ class PlantillaController extends Controller
     public function edit($plantilla_id)
     {
         $employee = Employee::select('Employee_id', 'LastName', 'FirstName', 'MiddleName')->get();
+        // $plantillaEmp = array_filter(Plantilla::get()->pluck('employee_id')->toArray());
+        // $employee = Employee::select('Employee_id', 'LastName', 'FirstName', 'MiddleName', 'Work_Status')
+        //     ->where('Work_Status', 'not like', '%'.'JOB ORDER'.'%')
+        //     ->where('Work_Status', 'not like', '%'.'CONTRACT OF SERVICE'.'%')
+        //     ->where('Work_Status', '!=', '')
+        //     ->where('isActive', 1)
+        //     ->whereNotIn('Employee_id', $plantillaEmp)
+        //     ->orderBy('LastName', 'ASC')->get();
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('PosCode', 'Description')->get();
         $plantillaPositionIDAll = Plantilla::where('plantilla_id', '!=', $plantilla_id)->get()->pluck('pp_id')->toArray();
@@ -223,6 +231,7 @@ class PlantillaController extends Controller
         ]);
         DB::transaction(function () use ($request, $plantilla_id) {
             $plantilla = Plantilla::with('plantilla_positions')->find($plantilla_id);
+            $plantilla->employee_id = $request->employeeName;
             $plantilla->item_no = $request->itemNo;
             $plantilla->old_item_no = $request->oldItemNo;
             $plantilla->pp_id = $request->positionTitle;

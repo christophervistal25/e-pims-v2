@@ -68,7 +68,7 @@
 
                                     <div class="form-group col-12 col-md-6 col-lg-7">
                                           <label class="has-float-label mb-0">
-                                                <input value="{{ old('positionCode') ?? $lastId->PosCode + 1 }}" class="form-control {{ $errors->has('positionCode')  ? 'is-invalid' : ''}}" name="positionCode" id="positionCode" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                                <input value="{{ old('positionCode') ?? $plusId }}" class="form-control {{ $errors->has('positionCode')  ? 'is-invalid' : ''}}" name="positionCode" id="positionCode" type="text" placeholder="" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                                 <span class="font-weight-bold">Position Code<span class="text-danger">*</span></span>
                                           </label>
                                           <div id='position-code-error-message' class='text-danger text-sm'>
