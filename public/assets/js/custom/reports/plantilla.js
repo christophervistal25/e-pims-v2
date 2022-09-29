@@ -4,7 +4,7 @@ const removeIsInvalidClass = (parent) => $('#generateReportForm').children().fin
 
 
 let year = $('#year').val();
-let type = "DBM";
+let type = "*";
 let table = $('#reports-table').DataTable({
     ajax: `/plantilla-report-history-list/${year}/${type}`,
     serverSide: true,
