@@ -73,6 +73,6 @@ class EmployeeBirthdayService
                     ->select(['Employee_id', 'FirstName', 'LastName', 'MiddleName', 'Suffix', 'BirthDate', 'Positions.Description as Position_Description', 'Office.Description'])
                     ->orderBy('Birthdate', 'ASC')
                     ->get()
-                    ->each(fn($employee) => $employee->age_ordinal = $this->transformToOrdinal(Carbon::parse($employee->BirthDate)->age));
+                    ->each(fn($employee) => $employee->age_ordinal = $this->transformToOrdinal(Carbon::now()->format('Y') - Carbon::parse($employee->BirthDate)->format('Y')));
     }
 }

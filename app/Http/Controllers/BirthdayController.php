@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Employee;
-use App\Http\Requests\BirthdaysRangeRequest;
 use App\Services\EmployeeBirthdayService;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class BirthdayController extends Controller
 {
