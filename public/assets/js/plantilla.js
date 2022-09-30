@@ -66,7 +66,7 @@ $(document).ready(function () {
 
     // filter list office
     let selectedOffice = localStorage.getItem('SELECTED_OFFICE') || '*';
-        if(selectedOffice !== '*') {
+        if(selectedOffice !== '0001') {
             $('#employeeOffice').val(localStorage.getItem('SELECTED_OFFICE')).trigger('refresh');
         }
     let selectedYear = $("#currentYear").val();

@@ -295,7 +295,7 @@ $(document).ready(function () {
 
     // display data in datatables
     let selectedOffice = localStorage.getItem('SELECTED_OFFICE') || '*';
-        if(selectedOffice !== '*') {
+        if(selectedOffice !== '0001') {
             $('#employeeOffice').val(localStorage.getItem('SELECTED_OFFICE')).trigger('refresh');
         }
     let PlantillaPositiontable = $("#plantillaofposition").DataTable({
@@ -501,6 +501,19 @@ $(document).ready(function () {
     $("#officeCode").change(function () {
         $("#office-error-message").html("");
         $(".officeCode .dropdown").removeClass("is-invalid");
+        let officeCode = $("#officeCode").val();
+        $.ajax({
+            type: "GET",
+            url: `/api/plantilla-position/item-no-last/${officeCode}`,
+            success: function (response) {
+                $("#itemNo").val(parseInt(response) + 1);
+            },
+            error: function (response) {
+                if (response.status === 404) {
+                    $("#itemNo").val('');
+            }
+        }
+        });
     });
 
     $("#areaLevel").change(function () {
