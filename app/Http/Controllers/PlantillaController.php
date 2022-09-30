@@ -73,6 +73,7 @@ class PlantillaController extends Controller
             return DataTables::of($PlantillaData)
                 ->addColumn('action', function ($row) {
                     $btn = "<a title='Edit Plantilla' href='".route('plantilla-of-personnel.edit', $row->plantilla_id)."' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil'></i></a>";
+                    $btn .= "<a title='Resign' href='' class='rounded-circle text-white edit btn btn-danger btn-sm ml-2'><i class='la la-user-times'></i></a>";
                     return $btn;
                 })
                 ->addColumn('sg_step', function ($row) {
