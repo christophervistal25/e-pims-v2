@@ -259,6 +259,8 @@ Route::get('/position/schedule/{officeCode}/{yearFilter}', function ($office_cod
             ->make(true);
 });
 
+Route::get('/plantilla-position/item-no-last/{office_code}', [PlantillaPositionController::class, 'itemNo']);
+
 // position schedule multiple save
 Route::post('/position/schedule/adjust', function () {
     $PlantillaPositionIds = explode(',', request()->ids);
