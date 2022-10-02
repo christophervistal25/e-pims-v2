@@ -58,10 +58,10 @@ class LoginController extends Controller
 
             if ($type == User::USER_TYPES['ADMINISTRATOR']) {
                 // Redirect to admin dashboard
-                return redirect()->to(route('administrator.dashboard'));
+                return redirect()->intended();
             } elseif ($type == User::USER_TYPES['USER']) {
                 // Redirect to user dashboard
-                return redirect()->intended(route('employee.dashboard'));
+                return redirect()->intended();
             }
         } else {
             return back()->withErrors(['message' => 'Please check your username/password'])->withInput();
