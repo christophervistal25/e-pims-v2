@@ -817,3 +817,12 @@ $("#plantillaEditForm").submit(function (e) {
         },
     });
 });
+
+$(document).on("click", ".btnResign", function () {
+    swal({
+        title: "FOR EDCEL",
+        text: "Ikaw na bahala cel! Kaya mo yan!",
+        icon: "warning",
+        buttons: false,
+    });
+});
