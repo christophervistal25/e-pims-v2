@@ -11,14 +11,15 @@ class EmployeePersonnelFile extends Model
 
     public $connection = 'E_PIMS_CONNECTION';
 
-    protected $fillable = ['file_id', 'date', 'name', 'file'];
+    protected $fillable = ['file_id', 'date', 'name', 'file', 'file_code', 'Employee_id'];
+    public $primaryKey = 'id';
 
     public static function boot()
     {
         parent::boot();
 
         static::creating(function ($model) {
-            $model->id = tap(Setting::where('Keyname', 'AUTONUMBER')->first())->increment('Keyvalue', 1)->Keyvalue;
+            $model->id = tap(Setting::where('Keyname', 'PERSONNEL_FILE_ID')->first())->increment('Keyvalue', 1)->Keyvalue;
         });
     }
 
