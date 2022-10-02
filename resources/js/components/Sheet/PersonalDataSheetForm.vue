@@ -1,11 +1,11 @@
 <template>
     <div>
-        <button
+        <!-- <button
             class="btn btn-primary btn-block text-uppercase mb-3"
             @click="downloadPersonalDataSheet"
         >
             Download Personal Data Sheet
-        </button>
+        </button> -->
         <div class="container-fluid">
             <ul class="nav nav-tabs nav-tabs-solid nav-justified">
                 <li class="nav-item" v-for="(tab, key) in tabs" :key="key">

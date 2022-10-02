@@ -34,31 +34,6 @@
                     <p>Indicate <strong>N/A </strong>if not applicable</p>
                 </div>
                 <div class="row pr-3 pl-3">
-                    <div class="col-lg-12">
-                        <label
-                            class="form-group has-float-label mb-0"
-                            for="employee_id"
-                        >
-                            <input
-                                type="text"
-                                class="form-control"
-                                :disabled="isComplete"
-                                :class="
-                                    !errors.hasOwnProperty('Employee_id')
-                                        ? ''
-                                        : 'is-invalid'
-                                "
-                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
-                                id="Employee_id"
-                                v-model="personal_data.Employee_id"
-                            />
-
-                            <span> <strong>EMPLOYEE ID </strong></span>
-                        </label>
-                        <p class="text-danger text-sm">
-                            {{ errors.Employee_id }}
-                        </p>
-                    </div>
                     <div class="col-lg-3">
                         <label
                             class="form-group has-float-label mb-0"
