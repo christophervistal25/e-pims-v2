@@ -46,7 +46,7 @@
     </style>
 
 </head>
-<body class="mini-sidebar" onbeforeunload="return exitConfirmation()">
+<body class="mini-sidebar">
     <div id="loader-wrapper">
         <div id="loader">
             <div class="loader-ellips">

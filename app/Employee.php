@@ -228,7 +228,7 @@ class Employee extends Model
 
     public function plantilla()
     {
-        return $this->hasOne(Plantilla::class, 'Employee_id', 'employee_id');
+        return $this->hasOne(Plantilla::class, 'employee_id', 'Employee_id');
     }
 
     public function plantillaForStep()

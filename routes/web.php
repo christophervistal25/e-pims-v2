@@ -1,11 +1,22 @@
 <?php
 
 use App\User;
+use App\Office2;
+use App\Section;
+use App\Setting;
+use App\Division;
 use App\Employee;
+use App\Position;
+use Carbon\Carbon;
+use App\PersonnelFile;
+use App\Payslip\Payroll;
+use App\EmployeePersonnelFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\service_record as ServiceRecord;
 use App\Http\Controllers\BirthdayController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PlantillaController;
@@ -20,6 +31,7 @@ use App\Http\Controllers\PersonnelFile201Controller;
 use App\Http\Controllers\PositionScheduleController;
 use App\Http\Controllers\MaintenanceOfficeController;
 use App\Http\Controllers\PersonalDataSheetController;
+use Illuminate\Contracts\Encryption\DecryptException;
 use App\Http\Controllers\MaintenanceSectionController;
 use App\Http\Controllers\PrintServiceRecordController;
 use App\Http\Controllers\EmployeeLeave\LeaveController;
@@ -295,4 +307,98 @@ Route::group(['middleware' => ['auth', 'user']], function () {
     Route::get('employee-payslip', [PaySlipController::class, 'index'])->name('employee.payslip');
 
     Route::get('employee-chat', [ChatController::class, 'index'])->name('employee.chat');
+});
+
+
+Route::get('testing-file/{id}', function ($id) {
+    $employee = Employee::with(['file_records:id,Employee_id,name,date,file,created_at,file_id', 'file_records.file_details', 'plantilla', 'plantilla.plantilla_positions', 'plantilla.plantilla_positions.position', 'account'])->exclude(['ImagePhoto', 'ImagePhoto2', 'signaturephoto'])->findOrFail($id);
+    $file_records = $employee->file_records;
+    $personnelFiles = PersonnelFile::whereNotIn('id', $file_records->pluck('file_id')->toArray())->get();
+
+    $file_records = $employee->file_records->groupBy('file_details.name');
+
+    $payrolls = Payroll::with(['details' => function ($query) use($id) {
+        $query->where('employee_id', $id);
+    }, 'personal_deductions' => function ($query) use($id)  {
+        $query->where('employee_id', $id);
+    }, 'mandatory_deductions' => function ($query) use($id) {
+        $query->where('employee_id', $id);
+    }, 'compensations' => function ($query) use($id) {
+        $query->where('employee_id', $id);
+    }, 'mandatory_deductions.description', 'mandatory_deductions.description.account_chart', 'personal_deductions.description', 'personal_deductions.description.account_chart', 'compensations.description', 'compensations.description.account_chart'])->whereHas('details', function ($query) use($id)  {
+        $query->where('employee_id', $id);
+    })->orderBy('created_at')->get();
+
+    $months = array_map(function ($payroll_no) {
+        [$month, $_] = explode('-', $payroll_no);
+
+        return $month;
+    }, $payrolls->pluck('payroll_no')->toArray());
+
+    $months = array_unique($months);
+
+    $serviceRecords = ServiceRecord::where('Employee_id', $id)->orderBy('service_from_date', 'DESC')->get();
+
+    $charging = Office2::get();
+
+    $assignment = Office2::get();
+
+    $positions = Position::get();
+
+    return view('employee.files.index', [
+        'employee'       => $employee,
+        'charging' => $charging,
+        'personnelFiles' => $personnelFiles,
+        'file_records'   => $file_records,
+        'payrolls'       => $payrolls,
+        'months'         => $months,
+        'serviceRecords' => $serviceRecords,
+        'positions' => $positions,
+        'assignment' => $assignment,
+    ]);
+})->middleware('auth');
+
+Route::post('personnel-file-upload', function () {
+    if(request()->file('file')) {
+        $uploaded = request()->file('file')->store('temp');
+        $uploaded = str_replace('temp/', 'temp\\', $uploaded);
+        $data = file_get_contents(storage_path( "app\\" . $uploaded));
+        $data = Crypt::encryptString($data);
+
+        $record = EmployeePersonnelFile::create([
+            'Employee_id' => request()->emp,
+            'name' => request()->name,
+            'file' => request()->file('file')->getClientOriginalName(),
+            'file_id' => request()->id,
+            'date' => date('Y-m-d'),
+        ]);
+
+        $db = DB::connection("E_PIMS_CONNECTION")->getPdo();
+        $id = Setting::where('Keyname', 'PERSONNEL_FILE_ID')->first()->Keyvalue;
+        $statement = $db->prepare("UPDATE Epims.dbo.Employee_Personnel_Files SET file_code = :file_code WHERE id = :id ");
+        $statement->bindValue(':id', $id);
+        $statement->bindParam(':file_code', $data, PDO::PARAM_LOB, 0, PDO::SQLSRV_ENCODING_BINARY);
+        $statement->execute();
+
+        unlink(storage_path( "app\\" . $uploaded));
+    }
+
+    return response()->json(['success' => true, 'file_id' => request()->id, 'name' => request()->file('file')->getClientOriginalName(), 'created_at' => $record->created_at]);
+});
+
+Route::get('personnel-file-download/{id}', function () {
+    EmployeePersonnelFile::get()->each(function ($row) {
+            $decrypted = Crypt::decryptString($row->file_code);
+            $file = fopen(storage_path("app\\temp\\" . Carbon::parse($row->created_at)->timestamp . '_' . $row->file), "w");
+            fwrite($file, $decrypted);
+            fclose($file);
+    });
+});
+
+Route::get('welcome', function () {
+    $divisions = Division::get();
+    $divisions->each(function ($app) {
+        dump($app->division_name);
+    });
+
 });
