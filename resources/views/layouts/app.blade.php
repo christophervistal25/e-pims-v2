@@ -50,7 +50,7 @@
         <!-- Header -->
         <div class="header">
             <!-- Logo -->
-            <div class="header-left">
+            <div class="header-left" style="background-color:#34444c">
                 <a href="/" class="logo">
                     <img src="/assets/img/logo.png">
                 </a>
