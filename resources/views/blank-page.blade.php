@@ -3,7 +3,7 @@
 @prepend('page-css')
 <link rel="stylesheet" href="/assets/css/style.css" />
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="{{ asset('css/lightbox.min.css') }}">
 <style>
       .btn-primary {
             background: #ff9b44 !important;
@@ -170,9 +170,7 @@
                                           <div class="my-0 font-weight-medium">{{ $employee->position->Description }}</div>
                                           <div class="my-0 font-weight-medium">Office Charging : <strong>{{ $employee->office_charging->Description }}</strong></div>
                                           <div class="my-0 font-weight-medium">Office Assignment : {{ $employee->office_assignment->Description }}</div>
-                                          <div class="my-0 font-weight-medium">First day of service : <strong>{{ date('l F d, Y', strtotime($employee->first_day_of_service))}}</strong>
-                                                <div class="my-0 font-weight-medium">Next Increment : <strong>{{ date('l F d, Y', strtotime($employee->first_day_of_service?->addYears(3))) }}</strong>
-                                                </div>
+                                          <div class="my-0 font-weight-medium">Next Increment : <strong>{{ \Carbon\Carbon::parse($employee->plantilla->date_last_increment)->addYears(3)->format('l F d, Y') }}</strong>
                                           </div>
                                     </div>
                               </div>
@@ -313,7 +311,7 @@
 {{-- JS SCRIPTS HERE --}}
 <script src="/assets/js/popper.min.js"></script>
 <script src="/assets/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{{ asset('js/lightbox.min.js') }}"></script>
 <script src="/assets/js/jquery.slimscroll.min.js"></script>
 
 <script>

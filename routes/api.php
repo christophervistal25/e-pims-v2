@@ -8,14 +8,18 @@ use App\SalaryGrade;
 use Carbon\CarbonPeriod;
 use App\PositionSchedule;
 use App\PlantillaPosition;
+use App\Pipes\MarkAsRetire;
+use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use App\Actions\GetPersonnelFile;
 use Illuminate\Support\Facades\DB;
 use App\Actions\StorePersonnelFile;
+use Chefhasteeth\Pipeline\Pipeline;
 use App\Actions\UpdatePersonnelFile;
 use Illuminate\Support\Facades\Route;
 use App\Actions\Employees\GetEmployees;
 use App\Http\Controllers\CountryController;
+use App\Pipes\CurrentPlantillaMarkAsVacant;
 use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\OfficeController;
 use App\Http\Controllers\Api\DivisionController;
@@ -337,3 +341,14 @@ Route::get('office-plantilla-positions/{office}', [PlantillaPositionController::
 Route::get('plantilla-position-details/{plantillaPositionID}', [PlantillaPositionController::class, 'getPositionDetails']);
 Route::get('salary-amount/{grade}/{step}/{year}', [APISalaryGradeController::class, 'salary']);
 Route::get('personnel-get-current-plantilla/{employeeID}', [PlantillaController::class, 'getEmployeeCurrentPlantilla']);
+
+
+Route::post('mark-as-vacant', function (Request $request) {
+    return Pipeline::make()
+            ->withTransaction()
+            ->send($request->all())
+            ->through([
+                CurrentPlantillaMarkAsVacant::class,
+                MarkAsRetire::class,
+            ])->then(fn() => response()->json(['success' => true]));
+});

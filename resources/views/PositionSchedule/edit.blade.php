@@ -1,11 +1,10 @@
 @extends('layouts.app')
 @section('title', 'Edit Plantilla Of Position')
 @prepend('page-css')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="{{ asset('css/jquery-datatables.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-<link rel="stylesheet"
-    href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="stylesheet" href="{{ asset('css/bootstrap-float-label.css') }}">
+<script src="{{ asset('assets/js/sweetalert.min.js') }}"></script>
 <style>
     .swal-content ul {
         list-style-type: none;
@@ -164,7 +163,7 @@
 
 </script>
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
-<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+<script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('/assets/js/plantillaofposition.js') }}"></script>
 @endpush
 @endsection

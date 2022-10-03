@@ -2,8 +2,7 @@
 @section('title', 'Edit Step Increment')
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-<link rel="stylesheet"
-    href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+<link rel="stylesheet" href="{{ asset('css/bootstrap-float-label.css') }}">
 <link rel="stylesheet" href="/assets/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="/assets/css/style.css">
 
@@ -176,9 +175,9 @@
 
 @push('page-scripts')
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
-<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('assets/js/sweetalert.min.js') }}"></script>
 @endpush
 
 @endsection

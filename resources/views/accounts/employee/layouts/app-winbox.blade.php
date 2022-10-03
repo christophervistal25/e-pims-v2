@@ -85,7 +85,7 @@
     <!-- Custom JS -->
     <script src="{{ asset('assets/js/app.js') }}"></script>
     @stack('page-scripts')
-	<script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/socket.min.js') }}"></script>
     <script>
         const socket = io.connect("{{ env('MIX_SOCKET_IP') }}", { query : "name=e-PIMS" });
         $('#print--certification').click(() => {

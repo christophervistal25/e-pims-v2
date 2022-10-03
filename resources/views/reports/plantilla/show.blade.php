@@ -273,8 +273,7 @@
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="{{ asset('/assets/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('/assets/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
+<script src="{{ asset('js/axios.min.js') }}"></script>
 <script>
     $(document).ready(function () {
             const NO_VACANT_SELECTED = -1;

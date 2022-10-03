@@ -19,7 +19,7 @@ class GetPersonnelFile
     private function renderButtons($record)
     {
         return "
-            <a title='Edit' class='text-white border-0 btn btn-success btn-edit-file mr-2' style='cursor:pointer' data-name='{$record->name}' data-id='{$record->id}'>
+            <a title='Edit' class='text-white border-0 btn btn-success btn-sm btn-edit-file mr-2' style='cursor:pointer' data-name='{$record->name}' data-id='{$record->id}'>
                     <i class='la la-pencil'></i>
             </a>
         ";

@@ -38,7 +38,6 @@ final class CreateNewPlantillaForEmployee
         $plantilla->employee_id                   = request()->employee;
         $plantilla->date_last_promotion           = request()->date_promotion;
         $plantilla->date_last_increment = $current->getOriginal('date_last_increment');
-        $plantilla->save();
         $current->save();
 
         return $current;

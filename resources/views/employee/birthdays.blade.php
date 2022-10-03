@@ -3,7 +3,7 @@
 @prepend('page-css')
 <link rel="stylesheet" href="/assets/css/style.css" />
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="{{ asset('css/lightbox.min.css') }}">
 <style>
     .btn-primary {
         background: #ff9b44 !important;
@@ -44,7 +44,7 @@
 </div>
 
 @push('page-scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js" integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{{ asset('js/lightbox.min.js') }}"></script>
 <script src="{{ asset('/assets/js/custom/birthdays.js') }}"></script>
 @endpush
 @endsection

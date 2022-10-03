@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
     let select = [
         "#positionTitle",
@@ -818,11 +819,38 @@ $("#plantillaEditForm").submit(function (e) {
     });
 });
 
-$(document).on("click", ".btnResign", function () {
-    swal({
-        title: "FOR EDCEL",
-        text: "Ikaw na bahala cel! Kaya mo yan!",
-        icon: "warning",
-        buttons: false,
+$(document).on("click", ".btnResign", async function () {
+    let year = $(this).attr('data-year');
+    let id = $(this).attr('data-employee-id');
+
+    let message = document.createElement('p');
+    message.innerHTML = `
+        <center>
+            Are you sure you want to mark this employee as retire and leave this plantilla as vacant?
+        </center>
+    `;
+    let confirmation = await swal({
+        title : '',
+        content : message,
+        icon : 'warning',
+        dangerMode : true,
+        buttons : ["No", "Yes"],
     });
+
+    if(confirmation) {
+        $.post({
+            url : '/api/mark-as-vacant',
+            data : {
+                employee_id : id,
+                current_salary_grade_year : year,
+            },
+            success : function (response) {
+                if(response.success) {
+                    $('#plantilla').DataTable().ajax.reload(null, false);
+                }
+            }
+        });
+    }
 });
+
+

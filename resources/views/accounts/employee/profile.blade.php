@@ -1,8 +1,7 @@
 @extends('accounts.employee.layouts.app')
 @section('title', 'Your Profile')
 @prepend('page-css')
-<link rel="stylesheet"
-    href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+<link rel="stylesheet" href="{{ asset('assets/css/bootstrap-float-label.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link rel="stylesheet" href="{{ asset('/assets/css/dataTables.bootstrap4.min.css') }}">

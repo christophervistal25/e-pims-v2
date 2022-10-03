@@ -40,7 +40,8 @@ final class CurrentPlantillaMarkAsVacant
         $plantilla->sg_no_previous                = null;
         $plantilla->salary_amount = $this->getSalaryAmountForItemWithStepOne($data['current_salary_grade_year'], $plantilla->sg_no);
         $plantilla->salary_amount_yearly = $plantilla->salary_amount * self::TWELVE_MONTHS;
+        $plantilla->save();
 
-        return $plantilla;
+        return $data;
     }
 }

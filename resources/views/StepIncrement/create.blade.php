@@ -2,7 +2,6 @@
 @section('title', 'Step Increment')
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-{{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css"> --}}
 <link rel="stylesheet" href="/assets/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="/assets/css/style.css">
 <style>
@@ -19,7 +18,7 @@
         border-collapse: collapse;
     }
 </style>
-<link rel="stylesheet" href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+<link rel="stylesheet" href="{{ asset('css/bootstrap-float-label.css') }}">
 <style>
     .swal-button--cancel {
         background: #FEFAE3;

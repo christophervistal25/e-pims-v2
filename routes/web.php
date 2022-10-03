@@ -264,7 +264,7 @@ Route::group(['prefix' => 'prints'], function () {
     Route::get('download-personal-data-sheet-work-experience-excel/{employeeID}', [DownloadSeperateWorkExperienceController::class, 'excel']);
 });
 
-Route::controller(CSCPlantillaController::class)->group(function () {
+Route::controller(CSCPlantillaController::class)->middleware('auth')->group(function () {
     Route::get('plantilla-report-history-list/{year}/{type}', 'list');
     Route::get('plantilla-report-history', 'index')->name('plantilla.report.index');
     Route::get('plantilla-report/show/{id}', 'show')->name('plantilla.report.show');
@@ -277,6 +277,7 @@ Route::controller(CSCPlantillaController::class)->group(function () {
     Route::post('plantilla-report-history-checkpoint', 'checkpoint');
     Route::get('plantilla-report-details/view-detials/{id}', 'viewDetails');
 });
+
 Route::post('export/{id}/{type}', [CSCPlantillaReportController::class, 'export'])->name('generate.plantilla-report');
 Route::get('download/plantilla-generated-report/{fileName}', [CSCPlantillaReportController::class, 'download'])->name('download.generated.plantilla-report');
 
@@ -310,7 +311,7 @@ Route::group(['middleware' => ['auth', 'user']], function () {
 });
 
 
-Route::get('testing-file/{id}', function ($id) {
+Route::get('employee-show/{id}', function ($id) {
     $employee = Employee::with(['file_records:id,Employee_id,name,date,file,created_at,file_id', 'file_records.file_details', 'plantilla', 'plantilla.plantilla_positions', 'plantilla.plantilla_positions.position', 'account'])->exclude(['ImagePhoto', 'ImagePhoto2', 'signaturephoto'])->findOrFail($id);
     $file_records = $employee->file_records;
     $personnelFiles = PersonnelFile::whereNotIn('id', $file_records->pluck('file_id')->toArray())->get();
@@ -356,7 +357,7 @@ Route::get('testing-file/{id}', function ($id) {
         'positions' => $positions,
         'assignment' => $assignment,
     ]);
-})->middleware('auth');
+})->name('employee.profile')->middleware('auth');
 
 Route::post('personnel-file-upload', function () {
     if(request()->file('file')) {

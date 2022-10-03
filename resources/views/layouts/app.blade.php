@@ -9,11 +9,11 @@
 
     @stack('meta-data')
     <title>@yield('title') | {{ config('app.name') }}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="{{ asset('assets/css/all.min.css') }}">
     {{-- <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/assets/img/favicon.png') }}"> --}}
     {{-- <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}"> --}}
     {{-- <link rel="stylesheet" href="{{ asset('/assets/css/all.min.css') }}"> --}}
-    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/line-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/css/font-awesome.min.css') }}">
     {{-- <link rel="stylesheet" href="{{ asset('/assets/css/line-awesome.min.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('/assets/css/style.css') }}">
@@ -412,9 +412,8 @@
     <script src="{{ asset('/assets/js/moment.min.js') }}"></script>
     <script src="{{ asset('/assets/js/bootstrap-datetimepicker.min.js') }}"></script>
     <script src="{{ asset('/assets/js/app.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/push.js/1.0.8/push.min.js" integrity="sha512-eiqtDDb4GUVCSqOSOTz/s/eiU4B31GrdSb17aPAA4Lv/Cjc8o+hnDvuNkgXhSI5yHuDvYkuojMaQmrB5JB31XQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous">
-    </script>
+    <script src="{{ asset('js/push.min.js') }}"></script>
+    <script src="{{ asset('js/socket.min.js') }}"></script>
     <script type="text/javascript">
         $.ajaxSetup({
             headers: {

@@ -3,10 +3,9 @@
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('/assets/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css">
-<link rel="stylesheet" href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
-<link rel="stylesheet" href="https://cdn.datatables.net/fixedcolumns/4.1.0/css/fixedColumns.dataTables.min.css" />
+<link rel="stylesheet" href="{{ asset('css/sweetalert.css') }}">
+<link rel="stylesheet" href="{{ asset('css/bootstrap-float-label.css') }}">
+<link rel="stylesheet" href="{{ asset('css/fixedColumns.dataTables.css') }}">
 <style>
      .swal-content ul {
           list-style-type: none;
@@ -318,10 +317,9 @@
 <script src="{{ asset('/assets/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="{{ asset('/assets/js/dataTables.bootstrap4.min.js') }}"></script>
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script> --}}
-<script src="https://cdn.datatables.net/fixedcolumns/4.1.0/js/dataTables.fixedColumns.min.js"></script>
+<script src="{{ asset('js/fixedColumns.dataTables.js') }}"></script>
 <script src="{{ asset('/assets/js/salary-grade.js') }}"></script>
-<script src="https://cdn.datatables.net/plug-ins/1.10.24/sorting/currency.js"></script>
+<script src="{{ asset('js/currency.js') }}"></script>
 <script>
      $('#btnPrintSalaryGrade').click(function() {
           let selectedCurrentYear = $('#filter_year').val();

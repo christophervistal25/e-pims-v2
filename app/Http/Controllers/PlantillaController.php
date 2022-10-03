@@ -71,9 +71,9 @@ class PlantillaController extends Controller
             $PlantillaData = ($office != '*') ? $data->where('plantillas.office_code', $office)->where('plantillas.year', $year)->get()
                 : $data->where('plantillas.year', $year)->get();
             return DataTables::of($PlantillaData)
-                ->addColumn('action', function ($row) {
+                ->addColumn('action', function ($row) use($year) {
                     $btn = "<a title='Edit Plantilla' href='".route('plantilla-of-personnel.edit', $row->plantilla_id)."' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil'></i></a>";
-                    $btn .= "<a title='Resign' href='#' class='rounded-circle text-white edit btn btn-danger btn-sm ml-2 btnResign'><i class='la la-user-times'></i></a>";
+                    $btn .= "<button title='Resign' class='rounded-circle text-white edit btn btn-danger btn-sm ml-2 btnResign' data-year='{$year}' data-employee-id='{$row->employee_id}'><i class='la la-user-times'></i></button>";
                     return $btn;
                 })
                 ->addColumn('sg_step', function ($row) {
