@@ -3,8 +3,8 @@
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('/assets/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-<script src="https://use.fontawesome.com/78c056906b.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{ asset("js/78c056906b.js") }}"></script>
+<script src="{{ asset("js/sweetalert.min.js") }}"></script>
 <style>
      .swal-content ul {
           list-style-type: none;

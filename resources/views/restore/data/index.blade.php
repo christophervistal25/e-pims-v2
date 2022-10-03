@@ -2,7 +2,6 @@
 @section('title', 'Restore Data')
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
 @endprepend
 @section('content')
 <div class="card">
@@ -51,9 +50,9 @@
 
 @push('page-scripts')
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
-<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{ asset('/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset("js/sweetalert.min.js") }}"></script>
 <script>
     $.ajaxSetup({
         headers: {

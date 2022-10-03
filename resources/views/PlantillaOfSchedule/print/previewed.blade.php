@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap">
+	<link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
+    {{-- <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"> --}}
     <title>Print Step-Increment</title>
     <style>
         @media print {
@@ -21,7 +21,7 @@
     </style>
 </head>
 <body style="font-family: Serif;">
-    
+
 {{-- BUTTONS --}}
 <div id='action-buttons' class="float-right mt-3 mb-2">
     <a href="" class="btn btn-outline-dark" onclick="window.print()" id="printBtn"><i class="la la-print"></i>&nbsp Print</a>
@@ -155,7 +155,7 @@
                             @endforeach
                         </td>
                     </tr>
-                @Endforeach  
+                @Endforeach
                 <tbody id="displayEmptyRows" style="border: 1px solid black !important;">
                 </tbody>
             </tbody>

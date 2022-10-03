@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Edit Plantilla Schedule')
 @prepend('page-css')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="{{ asset('/css/jquery.dataTables.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 @endprepend
 @prepend('meta-data')
@@ -439,7 +439,7 @@ $(document).ready(function() {
 });
 </script>
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
-<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+<script src="{{ asset('/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('/assets/js/plantilla-of-schedule.js') }}"></script>
 @endpush
 @endsection

@@ -19,12 +19,12 @@ class CreateLeaveTypesTable extends Migration
             $table->string('code')->nullable();
             $table->integer('code_number')->nullable();
             $table->text('description')->nullable();
-            // $table->integer('days_period');
+            $table->integer('days_period');
             $table->enum('convertible_to_cash', ['yes', 'no']);
-            // $table->enum('applicable_gender', ['male', 'female', 'female/male']);
-            // $table->integer('required_rendered_service')->default(0);
+            $table->enum('applicable_gender', ['male', 'female', 'female/male']);
+            $table->integer('required_rendered_service')->default(0);
             $table->string('category');
-            // $table->enum('editable', ['yes', 'no']);
+            $table->enum('editable', ['yes', 'no']);
             $table->timestamps();
         });
     }

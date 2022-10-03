@@ -3,9 +3,9 @@
 <link rel="stylesheet" href="/assets/css/style.css" />
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/css/dataTables.bootstrap4.min.css') }}" />
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{ asset("js/sweetalert.min.js") }}"></script>
 <link rel="stylesheet"
-    href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+    href="{{ asset('/css/bootstrap-float-label.min.css') }}" />
 
 @endprepend
 @section('title', 'Employee Leave Increment')
@@ -51,7 +51,7 @@
         <div class="row mb-1">
             <div class="col-lg-auto align-middle text-center d-flex">
                 <div class="font-weight-bold justify-content-center align-self-center">
-                    MONTH : 
+                    MONTH :
                 </div>
             </div>
             <div class="col-lg-11">
@@ -246,7 +246,7 @@
                 if(response.success) {
                     let employeeIDs = [];
                     progressCounter = 0;
-                    
+
                     $('#progress-bar').css('width', `0%`);
                     $('#btn-increment-leave-credits').attr('disabled', true);
                     $('#incrementProgressModal').modal('toggle');

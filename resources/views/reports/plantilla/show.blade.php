@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="{{ asset('/assets/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 <script src="https://use.fontawesome.com/78c056906b.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{ asset("js/sweetalert.min.js") }}"></script>
 <style>
     .pointer-events-none {
         pointer-events: none;
@@ -270,10 +270,11 @@
             }
         });
 </script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> --}}
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="{{ asset('/assets/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('/assets/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{{ asset('/js/axios.min.js') }}"></script>
 
 <script>
     $(document).ready(function () {

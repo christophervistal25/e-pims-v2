@@ -11,10 +11,10 @@ $layouts = 'layouts.app';
 @prepend('page-css')
 <script src="{{ asset('/js/app.js') }}" defer></script>
 <link rel="stylesheet"
-    href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+    href="{{ asset('/css/bootstrap-float-label.min.css') }}" />
 <link rel="stylesheet" href="/assets/css/custom.css" />
 <link rel="stylesheet" href="/assets/css/style.css">
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{ asset("js/sweetalert.min.js") }}"></script>
 <style>
     @media only screen and (max-width: 700px) {
         #button_group {
@@ -177,7 +177,7 @@ $layouts = 'layouts.app';
                                 <h6 class="text-sm text-center">&nbsp;</h6>
                                 <label for="date_applied" class="form-group has-float-label">
                                     <input type="hidden" name="applicationID" id="applicationID" value="{{ $data->application_id }}">
-                                    <input type="date" name="date_applied" id="date_applied" class="form-control" 
+                                    <input type="date" name="date_applied" id="date_applied" class="form-control"
                                         value="{{ Carbon\Carbon::parse($data->date_applied)->format('Y-m-d')}}"
                                         readonly>
                                     <span>
@@ -222,7 +222,7 @@ $layouts = 'layouts.app';
                                         </span>
                                     </label>
                                     <label for="specify" class="form-group has-float-label">
-                                        <input type="text" class="form-control" id="specify" name="specify" 
+                                        <input type="text" class="form-control" id="specify" name="specify"
                                         value="{{ $data->specify }}">
                                         <span id="specify__label"><strong>SPECIFY<span
                                                     class='text-danger'>*</span></strong></span>
@@ -303,7 +303,7 @@ $layouts = 'layouts.app';
                                 </button>
                             </div>
                         </div>
-                        
+
                     </form>
                 </div>
             </div>
@@ -516,7 +516,7 @@ $layouts = 'layouts.app';
         $('#date_to').change(function () {
             let leave_type = $('#leave_type_id').val();
             let employeeID = $('#employeeID').val();
-            
+
             if (leave_type == null) {
                 swal({
                     text: "Select Type of Leave first.",

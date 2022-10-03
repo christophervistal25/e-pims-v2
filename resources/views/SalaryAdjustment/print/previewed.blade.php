@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {{-- <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}"> --}}
 	{{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> --}}
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap">
+    {{-- <link rel="preconnect" href="https://fonts.gstatic.com"> --}}
+    {{-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"> --}}
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+	<link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
     <title>Print Salary-Adjustment</title>
     <style>
         .card {
@@ -69,7 +71,7 @@
                 <br>
             </div>
         </div>
-        
+
         {{-- DATE --}}
         <div class="card-body-p">
             <br>
@@ -119,7 +121,7 @@
             <br><br><br><br>
             <br><br><br><br>
             <div style="font-family: 'Open Sans', sans-serif">
-                <p>Position Title: <b style="text-decoration: underline">{{ $salaryAdjustment->plantilla->plantilla_positions->position->Description }}</b></p> 
+                <p>Position Title: <b style="text-decoration: underline">{{ $salaryAdjustment->plantilla->plantilla_positions->position->Description }}</b></p>
                 <p>Salary Grade: {{ $salaryAdjustment->sg_no }}</p>
                 <p>Item No., FY: 2021 Plantilla of Personnel: 1</p>
             </div>

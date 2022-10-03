@@ -4,16 +4,16 @@
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 {{-- <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}"> --}}
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{ asset("js/sweetalert.min.js") }}"></script>
 <style>
    @media print{
     .header,.sidebar, #action-buttons,.breadcrumb {
         display: none !important;
     }
-    body { 
+    body {
         width : 100vw;
         background :red !important;
-        
+
     }
 
     #main-container {
@@ -54,7 +54,7 @@
         <div class="text-center">
             <h4>NOTICE OF SALARY ADJUSTMENT</h4>
         </div>
-        
+
         {{-- DATE --}}
         <div class="card-body-p">
             <p class="date">{{ Carbon\Carbon::parse($salaryAdjustment->date_adjustment)->format('F d, Y') }}</p>
@@ -102,7 +102,7 @@
             <br><br><br><br>
             <br><br><br><br>
             <div class="mr-5 float-left">
-                <p>Position Title: <b style="text-decoration: underline">{{ $salaryAdjustment->plantilla->plantilla_positions->position->Description }}</b></p> 
+                <p>Position Title: <b style="text-decoration: underline">{{ $salaryAdjustment->plantilla->plantilla_positions->position->Description }}</b></p>
                 <p>Salary Grade: {{ $salaryAdjustment->sg_no }}</p>
                 <p>Item No., FY: 2021 Plantilla of Personnel: 1</p>
             </div>

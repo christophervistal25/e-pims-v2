@@ -3,7 +3,7 @@
 @prepend('page-css')
 <link rel="stylesheet" href="/assets/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="/assets/css/style.css">
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{ asset("js/sweetalert.min.js") }}"></script>
 <style>
     table.dataTable.no-footer {
         border: 1px solid #dee2e6;

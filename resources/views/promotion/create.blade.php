@@ -3,7 +3,7 @@
 @prepend('page-css')
 <link rel="stylesheet" href="/assets/css/style.css" />
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{ asset("js/sweetalert.min.js") }}"></script>
 <style>
     .btn-primarys {
         background-color: #FF9B44;
@@ -187,7 +187,8 @@
 </div>
 @push('page-scripts')
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{{ asset('/js/axios.min.js') }}"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> --}}
 <script>
     $('#employee').change(function() {
         let employeeID = $(this).val();

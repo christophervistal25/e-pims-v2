@@ -10,7 +10,7 @@
     <title>Print Leave Application | {{ config('app.name') }}</title>
 
     <link rel="stylesheet" href="{{ asset('/css/adminlte.css') }}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    {{-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"> --}}
 
     <style type="text/css">
         .rectangle {
@@ -333,11 +333,11 @@
                                                 <!-- <table>
                             <tr>
                                 <td><i>In case of Special Leave Benefits for Women:</i></td>
-                                
+
                             </tr>
                             <tr>
                                 <td>(Specify Illness): &nbsp;&nbsp; <u> </u></td>
-                               
+
                             </tr>
                             </table> -->
 
@@ -517,7 +517,7 @@
 
                                                                                                        number_format(
                                                                                                             number_format($vacationCredit - $application->no_of_days, 3, ".") +
-                                                                                                            number_format($sickCredit - $application->no_of_days, 3, "."), 
+                                                                                                            number_format($sickCredit - $application->no_of_days, 3, "."),
                                                                                                             3,
                                                                                                             ".",
                                                                                                       )

@@ -2,7 +2,7 @@
 @section('title', 'Leave Increment')
 @prepend('page-css')
 <script src="{{ asset('/js/app.js') }}" defer></script>
-<link rel="stylesheet" href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css"/>
+<link rel="stylesheet" href="{{ asset('/css/bootstrap-float-label.min.css') }}"/>
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" />
 <link rel="stylesheet" href="/assets/css/bootstrap-float-label.min.css" />
 <link rel="stylesheet" href="/assets/css/line-awesome.min.css">
@@ -49,8 +49,8 @@ input[type=number] {
                     </div>
                 </div>
             </button>
-        </div>  
-    </div>  
+        </div>
+    </div>
     <div class="col-md-9">
         <div class="card shadow-none" id="sickIncrementCard" >
             <div class="card-body" >
@@ -64,15 +64,15 @@ input[type=number] {
                             <div class="row">
                                 <div class="col-lg-12">
                                     <label for="sick_increment" class="form-group has-float-label edit_availed">
-                                        <input type="number" name="sick_increment" id="sick_increment" class="form-control w-50 border-0" 
-                                            value="" 
+                                        <input type="number" name="sick_increment" id="sick_increment" class="form-control w-50 border-0"
+                                            value=""
                                             readonly
                                             style="outline: none; box-shadow: 0px 0px 0px transparent; height: 80px; font-size:40px; background: white;">
                                         <span class="font-weight-bold">INCREMENT</span>
                                         <div class='text-danger' id="sick_increment__error__element"></div>
                                     </label>
                                 </div>
-                            </div>  
+                            </div>
                             <div class="row">
                                 <div class="col-lg-12">
                                     <label for="sick_description" class="form-group has-float-label">
@@ -104,15 +104,15 @@ input[type=number] {
                             <div class="row">
                                 <div class="col-lg-12">
                                     <label for="vacation_increment" class="form-group has-float-label edit_availed">
-                                        <input type="number" name="vacation_increment" id="vacation_increment" class="form-control w-50 border-0" 
-                                            value="" 
+                                        <input type="number" name="vacation_increment" id="vacation_increment" class="form-control w-50 border-0"
+                                            value=""
                                             readonly
                                             style="outline: none; box-shadow: 0px 0px 0px transparent; height: 80px; font-size:40px; background: white;">
                                         <span class="font-weight-bold">INCREMENT</span>
                                         <div class='text-danger' id="vacation_increment__error__element"></div>
                                     </label>
                                 </div>
-                            </div>  
+                            </div>
 
                             <div class="row">
                                 <div class="col-lg-12">
@@ -135,11 +135,11 @@ input[type=number] {
         </div>
     </div>
     <div class="col-md-2">
-    </div>  
+    </div>
 </div>
 
 @push('page-scripts')
-    <script>    
+    <script>
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -172,7 +172,7 @@ input[type=number] {
                 $('#sick_increment__error__element').html('');
                 errors.sick_increment = false;
             }
-                
+
             //Hours Rendered required
             if (sick_description === "" )  {
                 $('#sick_description__error__element').html('');
@@ -239,7 +239,7 @@ input[type=number] {
                 $('#vacation_increment__error__element').html('');
                 errors.vacation_increment = false;
             }
-                
+
             //Hours Rendered required
             if (vacation_description === "" )  {
                 $('#vacation_description__error__element').html('');
@@ -277,7 +277,7 @@ input[type=number] {
                     },
                 });
             }
-            
+
         });
 
         $(document).on('click', '#sickNav', function () {
@@ -293,7 +293,7 @@ input[type=number] {
            $('#sickNav').removeClass('active');
            $('#vacationNav').addClass('active');
         });
-        
+
         $(document).ready( function () {
             $('#btnSickSave').addClass('d-none');
             $('#btnVacationSave').addClass('d-none');
@@ -301,7 +301,7 @@ input[type=number] {
             $('#sickNav').addClass('active');
         });
 
-        
+
     </script>
     <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
     <script src="/assets/js/jquery.dataTables.min.js"></script>
@@ -309,6 +309,6 @@ input[type=number] {
     <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('/assets/js/custom.js') }}"></script>
     <script src="/assets/js/sweetalert.min.js"></script>
-    
+
 @endpush
 @endsection

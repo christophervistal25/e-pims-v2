@@ -19,7 +19,7 @@
         border-collapse: collapse;
     }
 </style>
-<link rel="stylesheet" href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+<link rel="stylesheet" href="{{ asset('/css/bootstrap-float-label.min.css') }}" />
 <style>
     .swal-button--cancel {
         background: #FEFAE3;
@@ -289,7 +289,7 @@
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="/assets/js/jquery.dataTables.min.js"></script>
 <script src="/assets/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{ asset("js/sweetalert.min.js") }}"></script>
 
 
 <script>

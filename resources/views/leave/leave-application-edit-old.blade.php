@@ -1,11 +1,19 @@
-@extends('layouts.app')
+@php
+    $layouts = '';
+    if (request()->winbox == 1) {
+        $layouts = 'layouts.app-winbox';
+    } else {
+        $layouts = 'layouts.app';
+    }
+@endphp
+@extends($layouts)
 @section('title', 'Submitted Leave Application')
 @prepend('page-css')
 <link rel="stylesheet"
-    href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+    href="{{ asset('/css/bootstrap-float-label.min.css') }}" />
 <link rel="stylesheet" href="/assets/css/style.css">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{ asset("js/sweetalert.min.js") }}"></script>
 @endprepend
 @prepend('meta-data')
 <meta name="holiday-types" content="{{ $types->toJson() }}">
@@ -17,7 +25,7 @@
         <div class="col-lg-12">
             <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('leave-list.update', $data->id) }}" method="POST" id="updateLeaveForm">
+                        <form action="{{ route('leave-list.update', $data->application_id) }}" method="POST" id="updateLeaveForm">
                         @csrf
                         @method('PUT')
 
@@ -30,14 +38,14 @@
 
                                 <label class="has-float-label" for="employeeName">
                                     <input type="text" name="employeeName" class="form-control" id="employeeName"
-                                        value="{{ old('employeeName') ?? $types->LastName }}, {{ old('employeeName') ?? $types->FirstName }} {{ old('employeeName') ?? $types->MiddleName }}" style="color: white; margin-bottom: 15px; background: linear-gradient(90deg, rgba(148,0,132,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%); font-weight: bold;"
+                                        value="{{ $employee->LastName }}, {{ $employee->FirstName }} {{ $employee->MiddleName }}" style="color: white; margin-bottom: 15px; background: linear-gradient(90deg, rgba(148,0,132,1) 0%, rgba(253,29,29,1) 50%, rgba(252,176,69,1) 100%); font-weight: bold;"
                                         readonly >
                                 </label>
 
                                 <label for="date__apply" class="form-group has-float-label">
-                                    <input 
-                                        type="date" 
-                                        name="dateApply" 
+                                    <input
+                                        type="date"
+                                        name="dateApply"
                                         id="dateApplied"
                                         class="form-control"
                                         value="{{ old('dateApply') ?? $data->date_applied->format('Y-m-d') }}">
@@ -48,19 +56,19 @@
                                     </span>
                                 </label>
 
-                
+
                                 <label for="type__of__leave" class="form-group has-float-label">
-                                    <select 
-                                        class="form-control border" 
+                                    <select
+                                        class="form-control border"
                                         id="leaveTypes"
                                         name="selectedLeave"
                                         value=""
                                         data-live-search="true">
                                         {{-- <option selected disabled value="">-------------------------</option> --}}
-                                        @foreach($gender->groupBy('category') as $category => $type)
-                                        <optgroup class="text-uppercase" label="{{ $category }}" value="{{ old('selectedLeave') ?? $data->leave_type_id }}">
+                                        @foreach($types->groupBy('category') as $category => $type)
+                                        <optgroup class="text-uppercase" label="{{ $category }}" value="{{ $data->leave_type_id }}">
                                             @foreach($type as $t)
-                                            <option data-code="{{  $t->code }}" value="{{ $t->id }}">{{ $t->name }}
+                                            <option data-code="{{  $t->leave_type_id }}" value="{{ $t->leave_type_id }}" {{ $t->leave_type_id == $data->leave_type_id ? "selected" : "" }}>{{ $t->description }}
                                             </option>
                                             @endforeach
                                         </optgroup>
@@ -72,30 +80,36 @@
                                         </strong>
                                     </span>
                                 </label>
-                        
+
                                 <label for="incase__of" class="form-group has-float-label">
                                     <input class="form-control" id="incaseOf" name="inCaseOfLeave" value="{{ old('inCaseOfLeave') ?? $data->incase_of }}">
                                     <span id="in__case__of__label"><strong>IN CASE OF<span class="text-danger">*</span></strong></span>
                                 </label>
 
+                                <label for="specify" class="form-group has-float-label">
+                                    <input type="text" class="form-control" id="specify" name="specify" value="{{ $data->specify }}">
+                                    <span id="specify__label"><strong>SPECIFY<span
+                                                class='text-danger'>*</span></strong></span>
+                                </label>
+
                                 <label for="no__of__days" class="form-group has-float-label">
-                                    <input 
-                                    type="number" 
-                                    class="form-control" 
-                                    id="numberOfDays" 
+                                    <input
+                                    type="number"
+                                    class="form-control"
+                                    id="numberOfDays"
                                     name="numberOfDays"
                                     value="{{ old('numberOfDays') ?? $data->no_of_days }}"
                                     readonly>
                                     <span><strong>NUMBER OF DAYS<span class="text-danger">*</span></strong></span>
                                 </label>
                                 <hr>
-                            
+
                                 <div class="col-auto p-0">
                                     <label for="start__date" class="form-group has-float-label">
-                                        <input 
-                                        type="date" 
-                                        class="form-control" 
-                                        id="dateStarted" 
+                                        <input
+                                        type="date"
+                                        class="form-control"
+                                        id="dateStarted"
                                         name="startDate"
                                         value="{{ old('startDate') ?? $data->date_from->format('Y-m-d') }}"
                                         readonly>
@@ -105,57 +119,15 @@
 
                                 <div class="col-auto p-0">
                                     <label for="end__date" class="form-group has-float-label">
-                                        <input 
-                                            type="date" 
-                                            class="form-control" 
-                                            id="dateEnded" 
+                                        <input
+                                            type="date"
+                                            class="form-control"
+                                            id="dateEnded"
                                             name="endDate"
                                             value="{{ old('endDate') ?? $data->date_to->format('Y-m-d') }}"
                                             readonly>
                                         <span id="end__date__Label"><strong>END DATE</strong></span>
                                     </label>
-                                </div>
-
-                                <hr>
-
-                                <div class="row">
-                                    <div class="col-4">
-                                        <label for="earned" class="form-group has-float-label">
-                                            <input 
-                                            type="text"
-                                            id="earned"
-                                            class="form-control"
-                                            name="earnedSickLeave"
-                                            value="{{ $sickLeaveEarned }}"
-                                            readonly>
-                                            <span id="earnedLabel"><strong>EARNED</strong></span>
-                                        </label>
-                                    </div>
-                                    <div class="col-4">
-                                        <label for="earnedLess" class="form-group has-float-label">
-                                            <input 
-                                            type="text" 
-                                            id="lessEarned" 
-                                            class="form-control" 
-                                            name="earned__less"
-                                            value="{{ old('earned_less') ?? $data->no_of_days }}"
-                                            readonly>
-                                            <span id="earnedLessLabel"><strong>LESS</strong></span>
-                                        </label>
-
-                                    </div>
-                                    <div class="col-4">
-                                        <label for="earnedRemain" class="form-group has-float-label">
-                                            <input
-                                            type="text"
-                                            id="remainEarned"
-                                            class="form-control"
-                                            name="earnedRemaing"
-                                            value="{{ $sickLeaveEarned - $data->no_of_days }}"
-                                            readonly>
-                                            <span id="earnedRemainLabel"><strong>REMAINING</strong></span>
-                                        </label>
-                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -163,49 +135,49 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <label for="asOf" class="form-group has-float-label">
-                                            <input 
-                                                type="date" 
-                                                id="dateAsOf" 
-                                                class="form-control" 
+                                            <input
+                                                type="date"
+                                                id="dateAsOf"
+                                                class="form-control"
                                                 disabled
                                                 name="balanceAsOfDate"
-                                                value="{{ old('balanceAsOfDate') ?? $asOfDate }}">
+                                                value="">
                                             <span><strong>AS OF</strong></span>
                                         </label>
                                     </div>
                                     <div class="col-lg-6">
                                         <label for="vacation__leave__earned" class="form-group has-float-label">
-                                            <input 
-                                                type="number" 
-                                                class="form-control" 
+                                            <input
+                                                type="number"
+                                                class="form-control"
                                                 id="vacationLeaveEarned"
                                                 disabled
                                                 name="vacationLeaveEarned"
-                                                value="{{ old('vacationLeaveEarned') ?? $vacationLeave }}">
+                                                value="">
                                             <span><strong>VL EARNED</strong></span>
                                         </label>
                                     </div>
                                     <div class="col-lg-6">
                                         <label for="vacation__leave__used" class="form-group has-float-label">
-                                            <input 
-                                                type="number" 
-                                                class="form-control" 
+                                            <input
+                                                type="number"
+                                                class="form-control"
                                                 id="vacationLeaveUsed"
-                                                disabled 
+                                                disabled
                                                 name="vacationLeaveUsed"
-                                                value="{{ old('vacationLeaveUsed') ?? $vacationLeaveUsed }}">
+                                                value="">
                                             <span><strong>VL USED</strong></span>
                                         </label>
                                     </div>
                                     <div class="col-lg-12">
                                         <label for="vacation__leave__balance" class="form-group has-float-label">
-                                            <input 
-                                                type="number" 
-                                                class="form-control" 
+                                            <input
+                                                type="number"
+                                                class="form-control"
                                                 id="vacationLeaveBalanced"
                                                 disabled
                                                 name="vacationLeaveBalance"
-                                                value="{{ $vacationLeave - $vacationLeaveUsed }}">
+                                                value="">
                                             <span><strong>VL BALANCE</strong></span>
                                         </label>
                                     </div>
@@ -216,50 +188,50 @@
 
                                     <div class="col-lg-6">
                                         <label for="sick__leave__earned" class="form-group has-float-label">
-                                            <input 
-                                                type="number" 
-                                                id="sickLeaveEarned" 
-                                                class="form-control" 
+                                            <input
+                                                type="number"
+                                                id="sickLeaveEarned"
+                                                class="form-control"
                                                 disabled
                                                 name="sickLeaveEarned"
-                                                value="{{ $sickLeaveEarned }}">
+                                                value="">
                                             <span><strong>SL EARNED</strong></span>
                                         </label>
                                     </div>
                                     <div class="col-lg-6">
                                         <label for="sick__leave__used" class="form-group has-float-label">
-                                            <input 
-                                                type="number" 
-                                                class="form-control" 
-                                                id="sickLeaveUsed" 
+                                            <input
+                                                type="number"
+                                                class="form-control"
+                                                id="sickLeaveUsed"
                                                 disabled
                                                 name="sickLeaveUsed"
-                                                value="{{ $sickLeaveUsed }}">
+                                                value="">
                                             <span><strong>SL USED</strong></span>
                                         </label>
                                     </div>
                                     <div class="col-lg-12">
                                         <label for="sick__leave__balance" class="form-group has-float-label">
-                                            <input 
-                                                type="number" 
-                                                class="form-control" 
-                                                id="sickLeaveBalanced" 
+                                            <input
+                                                type="number"
+                                                class="form-control"
+                                                id="sickLeaveBalanced"
                                                 disabled
                                                 name="sickLeaveBalance"
-                                                value="{{ $sickLeaveEarned - $sickLeaveUsed }}">
+                                                value="">
                                             <span><strong>SL BALANCE</strong></span>
                                         </label>
                                     </div>
 
                                     <div class="col-lg-12">
                                         <label for="total__balance" class="form-group has-float-label">
-                                            <input 
-                                                type="number" 
-                                                class="form-control" 
-                                                id="totalLeaveBalance" 
-                                                disabled 
+                                            <input
+                                                type="number"
+                                                class="form-control"
+                                                id="totalLeaveBalance"
+                                                disabled
                                                 name="totalBalance"
-                                                value="{{ ($vacationLeave - $vacationLeaveUsed) }}">
+                                                value="">
                                             <span><strong>TOTAL BALANCE</strong></span>
                                         </label>
                                     </div>
@@ -277,12 +249,12 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                         <div class="col-lg-12 col-sm-12 pl-0 pt-0">
                             <label for="commutation" class="form-group has-float-label">
-                                <select 
-                                    class="form-control" 
+                                <select
+                                    class="form-control"
                                     id="commutation"
                                     name="commutation">
                                     <option readonly selected value="REQUESTED">REQUESTED</option>
@@ -291,25 +263,25 @@
                                 <span><strong>COMMUTATION<span class="text-danger">*</span></strong></span>
                             </label>
                             <label for="recoApproval" class="form-group has-float-label">
-                                <input 
-                                    class="form-control" 
-                                    name="recommendingApproval" 
+                                <input
+                                    class="form-control"
+                                    name="recommendingApproval"
                                     id="recommendingApproval"
                                     value="{{ old('recommendingApproval') ?? $data->recommending_approval }}">
                                 <span><strong>RECOMMENDING APPROVAL<span class="text-danger">*</span></strong></span>
                             </label>
                             <label for="approvedBy" class="form-group has-float-label">
-                                <input 
-                                    class="form-control" 
-                                    name="approvedBy" 
-                                    id="approvedBy" 
+                                <input
+                                    class="form-control"
+                                    name="approvedBy"
+                                    id="approvedBy"
                                     value="{{ old('approvedBy') ?? $data->approved_by }}">
                                 <span><strong>APPROVED BY<span class="text-danger">*</span></strong></span>
                             </label>
                         </div>
                         <div class="row mt-2 float-right">
                             <a href="/employee/leave/leave-list" class="btn btn-md mr-3" style="background-color: orange; color: white;"><i class="la la-list"></i> Go back to List</a>
-                            
+
                             <button class="btn btn-danger btn-md mr-3" id="btnReject"><i class="fas fa-thumbs-down"></i> Decline</button>
 
                             <button type="submit" class="btn btn-success text-white btn-md mr-4" id="btnApproved"><i class="far fa-thumbs-up"></i> Approved</i></button>
@@ -326,10 +298,11 @@
 @push('page-scripts')
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{ asset("js/sweetalert.min.js") }}"></script>
+<script src="{{ asset('/assets/libs/winbox/winbox.bundle.js') }}"></script>
 
 <script>
-     $.ajaxSetup({
+        $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
@@ -337,8 +310,6 @@
 
 
     const ROUTE = "{{ route('employee.leave.application.filling.submit') }}";
-    const VACATION_LEAVE_EARNED = "{{ $vacationLeave }}";
-    const SICK_LEAVE_EARNED = "{{ $sickLeaveEarned }}";
 
 
     let checkEarnedPoints = (period_days, earned_points) => new Promise((resolve, reject) => {
@@ -434,7 +405,7 @@
         });
     });
 
-    
+
 
 
 
@@ -503,7 +474,7 @@
                                 },
                             });
                         });
-                    } 
+                    }
                 });
     });
 
@@ -525,7 +496,7 @@
         let dateEnded = $('#dateEnded');
 
         let getId = "{{ $data->id }}";
-        
+
         swal({
                 title: "Are you sure you want to reject a request?",
                 text : "You are about to reject a leave request",
@@ -545,7 +516,7 @@
                         })
                         .then(reason => {
                             if (!reason) throw null;
-                            
+
                             $.ajax({
                                 url: `/employee/leave/leave-list/${getId}`,
                                 data: {
@@ -569,7 +540,7 @@
                                         title: "Request has been rejected!",
                                         text : "You are rejected a leave request",
                                         icon: "success",
-                                    });  
+                                    });
                                 },
                             });
                         });

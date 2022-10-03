@@ -2,8 +2,8 @@
 @section('title', 'Promotions')
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-<link rel="stylesheet" href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+<link rel="stylesheet" href="{{ asset('/css/bootstrap-float-label.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('/css/all.min.css') }}" />
 <link rel="stylesheet" href="/assets/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="/assets/css/style.css">
 @endprepend
@@ -25,7 +25,7 @@
                               <div class="btn-group dropleft float-right">
                                    {{-- <i class="fa-solid fa-ellipsis-vertical float-right" data-key="edit" id="edit"></i> --}}
                                    <a type="button" class="btn dropdown-toogle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa-solid fa-ellipsis-vertical float-right" title="Edit"></i></a>
-                                  
+
                                    <div class="dropdown-menu">
                                         <div id="hover">
                                              <a href="/step-increment" class="text-dark ml-4 h-2"><i class="fas fa-eye"></i>&nbsp; View Step</a>
@@ -53,7 +53,7 @@
                     </div>
                     @endforeach
                </div>
-               
+
 
 
           </div>

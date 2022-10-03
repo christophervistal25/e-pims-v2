@@ -4,16 +4,16 @@
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 {{-- <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}"> --}}
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{ asset("js/sweetalert.min.js") }}"></script>
 <style>
    @media print{
     .header,.sidebar, #action-buttons,.breadcrumb {
         display: none !important;
     }
-    body { 
+    body {
         width : 100vw;
         background :red !important;
-        
+
     }
 
     #main-container {
@@ -26,7 +26,7 @@
 @section('content')
 
 {{-- BUTTONS --}}
-<div id='action-buttons' class="float-right mb-2"> 
+<div id='action-buttons' class="float-right mb-2">
     <a class="btn btn-outline-dark" href="{{ route('plantilla-of-schedule.previewed.print', $id) }}" id="printBtn"><i class="la la-print"></i>&nbsp Print</a>
     <a class="btn btn-info" data-toggle="modal" data-target="#addEmptyRows"><i class="la la-plus"></i>&nbsp Add Empty Rows</a>
     <a href="/plantilla-of-schedule" class="btn btn-info"><i class="la la-list"></i>&nbsp View Table</a>
@@ -159,7 +159,7 @@
                             @endforeach
                         </td>
                     </tr>
-                @Endforeach  
+                @Endforeach
                 <tbody id="displayEmptyRows" style="border: 1px solid black !important;">
                 </tbody>
             </tbody>

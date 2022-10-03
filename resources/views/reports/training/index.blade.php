@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="{{ asset('/assets/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 <link rel="stylesheet"
-    href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    href="{{ asset('/css/bootstrap-float-label.min.css') }}" />
+<script src="{{ asset("js/sweetalert.min.js") }}"></script>
 <style>
     .swal-content ul {
         list-style-type: none;
@@ -75,7 +75,7 @@
 
 <div class="card mt-3 rounded-0">
     <div class="card-header"
-    
+
     ></div>
     <div class="card-body">
         <div id='training-reports-table' class='mt-2'>

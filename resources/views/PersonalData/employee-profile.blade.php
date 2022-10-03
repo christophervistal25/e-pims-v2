@@ -4,7 +4,7 @@
 @endprepend
 @section('content')
 <link rel="stylesheet"
-    href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+    href="{{ asset('/css/bootstrap-float-label.min.css') }}" />
 <div class="tab-content">
 
     <!-- Profile Info Tab -->

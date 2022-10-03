@@ -5,7 +5,7 @@
 <link rel="stylesheet"
     href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 <link rel="stylesheet"
-    href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+    href="{{ asset('/css/bootstrap-float-label.min.css') }}" />
 @endprepend
 @section('content')
 <div class="row">
@@ -137,7 +137,7 @@
                 </div>
 
 
-                 {{-- BUTTONS --}}   
+                 {{-- BUTTONS --}}
                 <div class="float-left mt-3 col-md g-2">
                     <button type="button" class="text-white shadow btn btn-success"><i class="lar la-save"></i> Save
                         Record</button>

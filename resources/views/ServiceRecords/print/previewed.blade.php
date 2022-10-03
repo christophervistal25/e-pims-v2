@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap">
+	<link rel="stylesheet" href="{{ asset('/css/bootstrap.min.css') }}">
+    {{-- <link rel="preconnect" href="https://fonts.gstatic.com"> --}}
+    {{-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"> --}}
     <title>Print Step-Increment</title>
     <style>
         @media print {
@@ -18,7 +18,7 @@
     </style>
 </head>
 <body style="font-family: Serif;">
-    
+
 {{-- BUTTONS --}}
 <div id='action-buttons' class="float-right mt-3 mb-2">
     <a href="" class="btn btn-outline-dark" onclick="window.print()" id="printBtn"><i class="la la-print"></i>&nbsp Print</a>
@@ -30,7 +30,7 @@
     <div class="card-header pl-0 pr-0" id="headingOne" style="border: 2px solid black;">
         {{-- HEADING --}}
         <div style="padding-left:5px;margin-top: -10px;">
-        <span>GSIS SMRO</span><br>  
+        <span>GSIS SMRO</span><br>
         <span>SM - 01 - 02</span>
         </div>
         <div class="text-center">
@@ -95,7 +95,7 @@
                     </tr>
                     <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;background-color: #CDCDCD !important; -webkit-print-color-adjust: exact;">From</th>
                     <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;background-color: #CDCDCD !important; -webkit-print-color-adjust: exact;">To</th>
-                    
+
             </thead>
             <tbody>
                 @foreach($serviceRecord as $serviceRecords)
@@ -118,7 +118,7 @@
                         <td style="padding: 0;border: 2px solid black !important;font-size: 14px;color: #000000;text-align: center;">{{Carbon\Carbon::parse($serviceRecords->separation_date)->format('m/d/Y')}}</td>
                         <td style="padding: 0;border: 2px solid black !important;font-size: 14px;color: #000000;text-align: center;">{{$serviceRecords->separation_cause}}</td>
                     </tr>
-                @Endforeach  
+                @Endforeach
                 <tbody id="displayEmptyRows">
                 </tbody>
             </tbody>
@@ -139,7 +139,7 @@
             <div class="float-left">
                 <p>IMPORTANT:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
                 <div class="col-md-12">
-                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PRAPARE IN DUPLICATE WITH THE<br> 
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PRAPARE IN DUPLICATE WITH THE<br>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;USE OF PLAIN BOND PAPER</p>
                 </div><br><br>
                 <div class="col-md-9">

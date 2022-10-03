@@ -337,7 +337,7 @@
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="/assets/js/sweetalert.min.js"></script>
 <script src="/assets/js/leaveMonitoring.js"></script>
-<script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
+<script src="{{ asset('/js/simplebar.min.js') }}"></script>
 <script>
      $.ajaxSetup({
           headers: {

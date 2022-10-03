@@ -1,13 +1,14 @@
 @extends('layouts.app-vue')
 @section('title', 'Profile')
 @prepend('page-css')
+{{-- <link rel="stylesheet" href="{{ asset('/css/bootstrap-float-label.min.css') }}" /> --}}
+{{-- <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script> --}}
+{{-- <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" /> --}}
 <link rel="stylesheet" href="/assets/css/style.css" />
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tonystar/bootstrap-float-label@v4.0.2/bootstrap-float-label.min.css" />
-<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
-<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-<style>
-</style>
+<link rel="stylesheet" href="{{ asset('/css/bootstrap-float-label.min.css') }}">
+<link rel="stylesheet" href="{{ asset('/css/dropzone.min.css') }}">
+<script src="{{ asset("/js/dropzone.min.js") }}"></script>
 @endprepend
 @section('content')
 <div class="card mb-0 rounded-0 shadow-none border-0">

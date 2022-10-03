@@ -2,9 +2,9 @@
 @section('title', 'SERVICE RECORDS')
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="{{ asset('/css/jquery.dataTables.min.css') }}">
 <link rel="stylesheet"
-    href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+    href="{{ asset('/css/bootstrap-float-label.min.css') }}" />
 @prepend('page-css')
 <script src="{{ asset('/js/app.js') }}" defer></script>
 @endprepend
@@ -212,7 +212,7 @@
 @push('page-scripts')
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script src="{{ asset('/assets/js/service-record.js') }}"></script>
-<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+<script src="{{ asset('/js/jquery.dataTables.min.js') }}"></script>
 <script>
     $.ajaxSetup({
         headers: {

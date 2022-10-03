@@ -11,7 +11,7 @@
 @section('title', 'Leave Lists')
 @prepend('page-css')
 <link rel="stylesheet"
-    href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+    href="{{ asset('/css/bootstrap-float-label.min.css') }}" />
 <link rel="stylesheet" href="/assets/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="/assets/css/style.css">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
@@ -250,7 +250,7 @@
                                             Leave Type</td>
                                         <td class="font-weight-bold align-middle text-center">Status</td>
                                         <td class="font-weight-bold align-middle text-center" width="25%">Actions</td>
-                                        
+
                                     </tr>
 
                                     </tr>
@@ -271,7 +271,7 @@
 <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
 <script src="/assets/js/jquery.dataTables.min.js"></script>
 <script src="/assets/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{ asset("js/sweetalert.min.js") }}"></script>
 <script src="{{ asset('/assets/libs/winbox/winbox.bundle.js') }}"></script>
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
 <script>
@@ -283,7 +283,7 @@
 
 </script>
 <script>
-    // Display to the yajra data table 
+    // Display to the yajra data table
     let table = $('#leaveListTable').DataTable({
         processing: true,
         serverSide: true,
@@ -361,7 +361,7 @@
                 text: "Are you sure you want to delete this application?",
                 icon: "warning",
                 buttons: ['No', 'Yes'],
-                dangerMode: true,   
+                dangerMode: true,
             })
             .then((willSoftDelete) => {
                 if (willSoftDelete) {
@@ -560,7 +560,7 @@
                 text: "You're about to approve this application. Continue?",
                 icon: "warning",
                 buttons: ['No', 'Yes'] ,
-                dangerMode: true,   
+                dangerMode: true,
             })
             .then((willbeApproved) => {
                 if (willbeApproved) {
@@ -586,7 +586,7 @@
                     });
                 }
             });
-        
+
     });
 
     $(document).on('click', '.btnDecline', function () {
@@ -600,7 +600,7 @@
                 text: "You're about to disapprove this application. Continue?",
                 icon: "warning",
                 buttons: ['No', 'Yes'] ,
-                dangerMode: true,   
+                dangerMode: true,
             })
             .then((willbeApproved) => {
                 if (willbeApproved) {
@@ -626,7 +626,7 @@
                     });
                 }
             });
-        
+
     });
 
     // Search by office, employee name and status

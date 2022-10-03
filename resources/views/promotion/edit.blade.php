@@ -2,7 +2,7 @@
 @section('title',  'Edit ' .  $promotion?->employee?->FirstName . ' ' . $promotion?->employee?->LastName .  ' Promotion')
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{ asset("js/sweetalert.min.js") }}"></script>
 <style>
     .btn-primarys {
         background-color: #FF9B44;
@@ -80,7 +80,7 @@
                     </select>
                 </div>
             </div>
-            
+
             <div class="row">
                 <div class="col-lg-6">
                     <label class='text-uppercase h6'>Item No</label>
@@ -321,7 +321,7 @@
             let selectedEmployeeID = $('#employeeID').val();
             let selectedEmployeeFullname = $('#employeeName').val();
             $('#oldItemModalTitle').html(`<strong>${selectedEmployeeID} - ${selectedEmployeeFullname}</strong> Current Plantilla`);
-            
+
             $('#employee-current-plantilla-container').html(``).append(`
                   <tr>
                         <td>${employeePlantilla?.plantilla_positions?.position?.Description || ''}</td>
@@ -346,7 +346,7 @@
                   $('#changeCurrentPosition').text('Change');
                   isChange = false;
             }
-            
+
     });
 
 </script>

@@ -174,8 +174,9 @@
 @include('employee.create', ['lastEmployeeID' => $lastEmployeeID])
 @include('employee.edit')
 @push('page-scripts')
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{{-- <script src="{{ asset("js/sweetalert.min.js") }}"></script> --}}
 <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('/js/sweetalert.min.js') }}"></script>
 <script src="/assets/js/jquery.dataTables.min.js"></script>
 <script src="/assets/js/dataTables.bootstrap4.min.js"></script>
 <script src="{{ asset('assets/js/dataTables.responsive.min.js') }}"></script>

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Edit Plantilla of Personnel')
 @prepend('page-css')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="{{ asset('/css/jquery.dataTables.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 <style>
      .btn-primarys {
@@ -315,7 +315,7 @@
 
 </script>
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
-<script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+<script src="{{ asset('/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('/assets/js/plantilla.js') }}"></script>
 @endpush
 @endsection

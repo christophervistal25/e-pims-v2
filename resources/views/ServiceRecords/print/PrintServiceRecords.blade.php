@@ -4,16 +4,16 @@
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 {{-- <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}"> --}}
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{ asset("js/sweetalert.min.js") }}"></script>
 <style>
    @media print{
     .header,.sidebar, #action-buttons,.breadcrumb {
         display: none !important;
     }
-    body { 
+    body {
         width : 100vw;
         background :red !important;
-        
+
     }
 
     #main-container {
@@ -26,7 +26,7 @@
 @section('content')
 
 {{-- BUTTONS --}}
-<div id='action-buttons' class="float-right mb-2"> 
+<div id='action-buttons' class="float-right mb-2">
     <a class="btn btn-outline-dark" href="{{ route('service-records.previewed.print', $id) }}" id="printBtn"><i class="la la-print"></i>&nbsp Print</a>
     <a class="btn btn-info" data-toggle="modal" data-target="#addEmptyRows"><i class="la la-plus"></i>&nbsp Add Empty Rows</a>
     <a href="/service-records" class="btn btn-info"><i class="la la-list"></i>&nbsp View Table</a>
@@ -37,7 +37,7 @@
     <div class="card-header pl-5 pr-5" id="headingOne">
         {{-- HEADING --}}
         <div style="padding-left:5px;margin-top: -10px;">
-        <span>GSIS SMRO</span><br>  
+        <span>GSIS SMRO</span><br>
         <span>SM - 01 - 02</span>
         </div>
         <div class="text-center">
@@ -102,7 +102,7 @@
                     </tr>
                     <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;">From</th>
                     <th style="padding: 0;border: 2px solid black !important;font-size: 16px;text-align:center;">To</th>
-                    
+
             </thead>
             <tbody>
                 @foreach($serviceRecord as $serviceRecords)
@@ -125,7 +125,7 @@
                         <td style="padding: 0;border: 2px solid black !important;font-size: 14px;color: #000000;text-align: center;">{{Carbon\Carbon::parse($serviceRecords->separation_date)->format('m/d/Y')}}</td>
                         <td style="padding: 0;border: 2px solid black !important;font-size: 14px;color: #000000;text-align: center;">{{$serviceRecords->separation_cause}}</td>
                     </tr>
-                @Endforeach  
+                @Endforeach
                 <tbody id="displayEmptyRows">
                 </tbody>
             </tbody>
@@ -146,7 +146,7 @@
             <div class="float-left">
                 <p>IMPORTANT:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p><br>
                 <div class="col-md-12">
-                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PRAPARE IN DUPLICATE WITH THE<br> 
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PRAPARE IN DUPLICATE WITH THE<br>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;USE OF PLAIN BOND PAPER</p>
                 </div><br><br>
                 <div class="col-md-9">

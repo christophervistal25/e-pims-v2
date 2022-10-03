@@ -10,10 +10,10 @@ $layouts = 'layouts.app';
 @section('title', 'Leave Application Filing')
 @prepend('page-css')
 <script src="{{ asset('/js/app.js') }}" defer></script>
-<link rel="stylesheet" href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+<link rel="stylesheet" href="{{ asset('/css/bootstrap-float-label.min.css') }}" />
 <link rel="stylesheet" href="/assets/css/custom.css" />
 <link rel="stylesheet" href="/assets/css/style.css">
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="{{ asset("js/sweetalert.min.js") }}"></script>
 <style>
       @media only screen and (max-width: 700px) {
             #button_group {
@@ -50,25 +50,25 @@ $layouts = 'layouts.app';
                                                 <select class="form-control selectpicker" data-live-search="true" name="employeeName" id="employeeName" data-size="6" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                                       <option value="">Search name here</option>
                                                       @foreach($employees as $employee)
-                                                      <option 
-                                                            data-office="{{ $employee->offices->office_name }}" 
-                                                            data-officeHead="{{ $employee->offices->office_head }}" 
-                                                            data-position="{{ $employee?->position?->Description }}" 
+                                                      <option
+                                                            data-office="{{ $employee->offices->office_name }}"
+                                                            data-officeHead="{{ $employee->offices->office_head }}"
+                                                            data-position="{{ $employee?->position?->Description }}"
                                                             data-employeeId="{{ $employee->Employee_id }}"
-                                                            data-leaveRecord="{{  $employee->forwarded_leave_records }}" 
-                                                            data-vlBalance="{{ @$leave_files[$employee->Employee_id]['vlBalance']   }}" 
-                                                            data-slBalance="{{ @$leave_files[$employee->Employee_id]['slBalance']  }}" 
-                                                            data-vawcBalance="{{ @$leave_files[$employee->Employee_id]['vawcBalance'] }}" 
-                                                            data-adoptBalance="{{ @$leave_files[$employee->Employee_id]['adoptBalance'] }}" 
-                                                            data-mandatoryBalance="{{ @$leave_files[$employee->Employee_id]['mandatoryBalance'] }}" 
-                                                            data-maternityBalance="{{ @$leave_files[$employee->Employee_id]['maternityBalance'] }}" 
-                                                            data-paternityBalance="{{ @$leave_files[$employee->Employee_id]['paternityBalance'] }}" 
-                                                            data-soloparentBalance="{{ @$leave_files[$employee->Employee_id]['soloparentBalance'] }}" 
-                                                            data-emergencyBalance="{{ @$leave_files[$employee->Employee_id]['emergencyBalance'] }}" 
-                                                            data-slbBalance="{{ @$leave_files[$employee->Employee_id]['slbBalance'] }}" 
-                                                            data-studyBalance="{{ @$leave_files[$employee->Employee_id]['studyBalance'] }}" 
-                                                            data-splBalance="{{ @$leave_files[$employee->Employee_id]['splBalance'] }}" 
-                                                            data-rehabBalance="{{ @$leave_files[$employee->Employee_id]['rehabBalance'] }}" 
+                                                            data-leaveRecord="{{  $employee->forwarded_leave_records }}"
+                                                            data-vlBalance="{{ @$leave_files[$employee->Employee_id]['vlBalance']   }}"
+                                                            data-slBalance="{{ @$leave_files[$employee->Employee_id]['slBalance']  }}"
+                                                            data-vawcBalance="{{ @$leave_files[$employee->Employee_id]['vawcBalance'] }}"
+                                                            data-adoptBalance="{{ @$leave_files[$employee->Employee_id]['adoptBalance'] }}"
+                                                            data-mandatoryBalance="{{ @$leave_files[$employee->Employee_id]['mandatoryBalance'] }}"
+                                                            data-maternityBalance="{{ @$leave_files[$employee->Employee_id]['maternityBalance'] }}"
+                                                            data-paternityBalance="{{ @$leave_files[$employee->Employee_id]['paternityBalance'] }}"
+                                                            data-soloparentBalance="{{ @$leave_files[$employee->Employee_id]['soloparentBalance'] }}"
+                                                            data-emergencyBalance="{{ @$leave_files[$employee->Employee_id]['emergencyBalance'] }}"
+                                                            data-slbBalance="{{ @$leave_files[$employee->Employee_id]['slbBalance'] }}"
+                                                            data-studyBalance="{{ @$leave_files[$employee->Employee_id]['studyBalance'] }}"
+                                                            data-splBalance="{{ @$leave_files[$employee->Employee_id]['splBalance'] }}"
+                                                            data-rehabBalance="{{ @$leave_files[$employee->Employee_id]['rehabBalance'] }}"
                                                             value="{{ $employee->Employee_id }}">{{ $employee->LastName }},
                                                             {{ $employee->FirstName }} {{ $employee->MiddleName }} </option>
                                                       @endforeach
@@ -340,6 +340,7 @@ $layouts = 'layouts.app';
                   let splBalance = selectedItem.getAttribute('data-splBalance') || '';
                   let rehabBalance = selectedItem.getAttribute('data-rehabBalance') || '';
                   let photo = selectedItem.getAttribute('data-photo') || '';
+
                   $('#office').val(employeeOffice);
                   $('#position').val(employeePosition);
                   $('#vlBal').text(parseFloat(vlBalance).toFixed(2));
@@ -537,7 +538,7 @@ $layouts = 'layouts.app';
                         let from = $('#date_from').val();
                         let to = $('#date_to').val();
                         let includeWeekends = $('#includeWeekends').is(':checked');
-                        
+
                         $.get({
                               url: `/api/generate/periods/${from}/${to}/${includeWeekends}/${employeeID}`
                               , success: function(response) {
@@ -555,8 +556,8 @@ $layouts = 'layouts.app';
                                           $('#btn--apply--for--leave').attr('disabled', false);
                                     }else{
                                           swal({
-                                                text: "Unable to continue. Leave application date already exist.", 
-                                                icon: "error", 
+                                                text: "Unable to continue. Leave application date already exist.",
+                                                icon: "error",
                                           });
                                           $('#btn--apply--for--leave').attr('disabled', true);
                                     }
@@ -568,7 +569,7 @@ $layouts = 'layouts.app';
             $('#date_to').change(function() {
                   let leave_type = $('#leave_type_id').val();
                   let employeeID = $('#employeeName').val();
-                  
+
                   if(leave_type == null){
                         swal({
                               text: "Select Type of Leave first."
@@ -602,8 +603,8 @@ $layouts = 'layouts.app';
                                           $('#btn--apply--for--leave').attr('disabled', false);
                                     }else{
                                           swal({
-                                                text: "Unable to continue. Leave application date already exist.", 
-                                                icon: "error", 
+                                                text: "Unable to continue. Leave application date already exist.",
+                                                icon: "error",
                                           });
                                           $('#btn--apply--for--leave').attr('disabled', true);
                                     }
@@ -693,11 +694,11 @@ $layouts = 'layouts.app';
                                     , };
 
                                     // console.log(leaveDates);
-                                    
+
                                     $.ajax({
-                                          url: ROUTE, 
-                                          method: 'POST', 
-                                          data: data, 
+                                          url: ROUTE,
+                                          method: 'POST',
+                                          data: data,
                                           success: function(response) {
                                                 $('#formErrors').addClass('d-none').html('');
                                                 $('#apply-spinner').addClass('d-none');
@@ -721,7 +722,7 @@ $layouts = 'layouts.app';
                                                       // socket.emit('notify_administrator', { arguments : `${response.fullname}|NOTIFY_ADMINISTRATOR`});
                                                       // socket.emit('service_notify_administrator', { arguments : `${response.fullname}|NOTIFY_ADMINISTRATOR`});
                                                 }
-                                          }, 
+                                          },
                                           error: function(response) {
                                                 $('#apply-spinner').addClass('d-none');
                                                 $('#apply-button-icon').removeClass('d-none');
@@ -753,7 +754,7 @@ $layouts = 'layouts.app';
                                     });
                               }
                         }
-                        
+
                   }
             });
 

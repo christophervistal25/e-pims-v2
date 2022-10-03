@@ -1,7 +1,7 @@
 @extends('accounts.employee.layouts.app')
 @section('title', 'Dashboard')
 @prepend('page-css')
-<link rel="stylesheet" href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
+<link rel="stylesheet" href="{{ asset('/css/bootstrap-float-label.min.css') }}" />
 <style>
     .cursor-pointer {
         cursor: pointer;

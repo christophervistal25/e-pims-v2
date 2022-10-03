@@ -1,7 +1,7 @@
 @extends('layouts.app-vue')
 @section('title', 'Personal Data Sheet')
 @prepend('page-css')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tonystar/bootstrap-float-label@v4.0.2/bootstrap-float-label.min.css" />
+<link rel="stylesheet" href="{{ asset('/css/bootstrap-float-label.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('/assets/css/style.css') }}">
 @endprepend
 @section('content')
