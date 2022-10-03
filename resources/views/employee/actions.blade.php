@@ -1,7 +1,7 @@
 <div class="text-center align-middle">
-     <a href="{{ route('employee.profile', $employee_id) }}" class='btn btn-success shadow' title="View Employee">
+     <button class='btn btn-success btn-edit-employee shadow' title="Edit Employee" data-employee-id="{{ $id }}">
           <i class='las la-pen' style='pointer-events:none;'></i>
-     </a>
+     </button>
 
      <a class='btn btn-info shadow' title="Edit PDS" href="{{ route('employee.personal-data-sheet.edit', $id) }}" target="_blank">
           <i class='las la-file' style='pointer-events:none;'></i>
@@ -11,7 +11,7 @@
           <i class='las la-download' style='pointer-events:none;'></i>
      </button>
 
-     <button
+     <button 
         @class([
             'btn',
             $isActive === '1' ? 'btn-danger' : 'btn-warning',

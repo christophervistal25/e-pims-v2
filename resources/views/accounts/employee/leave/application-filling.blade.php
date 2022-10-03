@@ -2,7 +2,7 @@
 @section('title', 'Leave Application Filing')
 @prepend('page-css')
 <script src="{{ asset('/js/app.js') }}" defer></script>
-<link rel="stylesheet" href="{{ asset('css/bootstrap-float-label.css') }}">
+<link rel="stylesheet" href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 <link rel="stylesheet" href="/assets/css/custom.css" />
 <link rel="stylesheet" href="/assets/css/style.css">
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -282,7 +282,7 @@
 
 @push('page-scripts')
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
-{{-- <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.js"></script> --}}
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.js"></script>
 <script src="{{ asset('/assets/libs/winbox/winbox.bundle.js') }}"></script>
 <script>
     $(function() {

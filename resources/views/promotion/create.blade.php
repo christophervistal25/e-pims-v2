@@ -187,7 +187,7 @@
 </div>
 @push('page-scripts')
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
-<script src="{{ asset('js/axios.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     $('#employee').change(function() {
         let employeeID = $(this).val();

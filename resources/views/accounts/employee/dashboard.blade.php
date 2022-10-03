@@ -1,7 +1,7 @@
 @extends('accounts.employee.layouts.app')
 @section('title', 'Dashboard')
 @prepend('page-css')
-<link rel="stylesheet" href="{{ asset('css/bootstrap-float-label.css') }}">
+<link rel="stylesheet" href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 <style>
     .cursor-pointer {
         cursor: pointer;
@@ -216,7 +216,7 @@
 </div>
 @push('page-scripts')
 <script src="{{ asset('/assets/js/moment.min.js') }}"></script>
-<script src="{{ asset('js/socket.min.js') }}"></script>
+<script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script>
 <script>
     const EMPLOYEE_ID = "{{ Auth::user()->Employee_id }}";
     conectionString = "{{ env('MIX_SOCKET_IP') }}";
