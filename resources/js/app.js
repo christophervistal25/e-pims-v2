@@ -28,8 +28,6 @@ Vue.component("references-records", require("./components/Sheet/C4/Reference.vue
 Vue.component("government-issued-id", require("./components/Sheet/C4/Government.vue").default);
 // END OF PERSONAL DATA SHEET CREATE
 
-Vue.component('app-plantilla-report-create', require('./components/Reports/Plantilla/Create.vue').default);
-
 const app = new Vue({
     el: "#app",
 });

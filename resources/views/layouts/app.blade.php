@@ -9,13 +9,13 @@
 
     @stack('meta-data')
     <title>@yield('title') | {{ config('app.name') }}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" /> --}}
     {{-- <link rel="shortcut icon" type="image/x-icon" href="{{ asset('/assets/img/favicon.png') }}"> --}}
     {{-- <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap.min.css') }}"> --}}
     {{-- <link rel="stylesheet" href="{{ asset('/assets/css/all.min.css') }}"> --}}
-    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    {{-- <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"> --}}
     <link rel="stylesheet" href="{{ asset('/assets/css/font-awesome.min.css') }}">
-    {{-- <link rel="stylesheet" href="{{ asset('/assets/css/line-awesome.min.css') }}"> --}}
+    <link rel="stylesheet" href="{{ asset('/assets/css/line-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/assets/css/bootstrap-datetimepicker.min.css') }}">
@@ -171,11 +171,11 @@
                                 <i class="las la-birthday-cake"></i> <span> Employee's Birthday </span>
                             </a>
                         </li>
-                        <li>
+                        {{-- <li>
                             <a class='text-decoration-none' href="{{ route('employee.personnel-file.index') }}">
                                 <i class="las la-file-archive"></i> <span> Personnel File 201 </span>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="menu-title">
                             <span class="text-capitalize">Human Resource Module</span>
                         </li>
