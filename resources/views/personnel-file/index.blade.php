@@ -4,9 +4,10 @@
 <link rel="stylesheet" href="/assets/css/style.css" />
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/css/dataTables.bootstrap4.min.css') }}" />
-<link rel="stylesheet" href="{{ asset('css/lightbox.min.css') }}">
-<link rel="stylesheet" href="{{ asset('css/simplebar.css') }}">
-<script src="{{ asset('js/simplebar.js') }}"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" integrity="sha512-ZKX+BvQihRJPA8CROKBhDNvoc2aDMOdAlcm7TUQY+35XYtrd3yh95QOOhsPDQY9QnKE0Wqag9y38OIgEvb88cA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
+<script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
 <style>
     .required:after {
         content: ' *';
@@ -235,9 +236,13 @@
 {{-- <script src="{{ asset('/assets/js/bootstrap.min.js') }}"></script> --}}
 <script src="/assets/js/jquery.dataTables.min.js"></script>
 <script src="/assets/js/dataTables.bootstrap4.min.js"></script>
-<script src="{{ asset('assets/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ asset('js/hashids.js') }}"></script>
-<script src="{{ asset('js/lightbox.min.js') }}"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hashids/2.2.10/hashids.min.js"
+    integrity="sha512-c2uJyl0yoZaILXV5QC5s78uT8gQrd0MbmH3t1fXZ7j/2WfC+KJwglzdjVaYVJtfG9k3NTokOR016aP13vWwiiw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"
+    integrity="sha512-k2GFCTbp9rQU412BStrcD/rlwv1PYec9SNrkbQlo6RZCf75l6KcC3UwDY8H5n5hl4v77IDtIPwOk9Dqjs/mMBQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="{{ asset('/assets/js/custom/personnel-files.js') }}"></script>
 @endpush
 @endsection

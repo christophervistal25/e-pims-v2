@@ -3,9 +3,9 @@
 @prepend('page-css')
 <link rel="stylesheet" href="/assets/css/style.css" />
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-<link rel="stylesheet" href="{{ asset('css/bootstrap-float-label.css') }}">
-<link rel="stylesheet" href="{{ asset('css/dropzone.min.css') }}">
-<script src="{{ asset('js/dropzone.min.js') }}"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tonystar/bootstrap-float-label@v4.0.2/bootstrap-float-label.min.css" />
+<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 <style>
 </style>
 @endprepend
@@ -17,7 +17,7 @@
                 <div class="profile-view">
                     <div class="profile-img-wrap mt-4 border rounded-circle">
                         <div class="profile-img">
-                            <img src="{{ asset("/assets/img/profiles/{$employee->Employee_id}.jpg") }}">
+                            <img alt="" src="{{ asset("/assets/img/profiles/{$employee->Employee_id}.jpg") }}">
                         </div>
                     </div>
                     <div class="profile-basic">
@@ -205,18 +205,18 @@
                         <div class="row pb-0">
                             <div class="col-lg-6 pb-0">
                                 <label for="office_charging" class="text-capitalize h5 required">Office Charging</label>
-                                <select name="office_charging" id="office_charging" class="form-control form-select" {{ $employee->plantilla ? 'readonly' : '' }}>
+                                <select name="office_charging" id="office_charging" class="form-control form-select">
                                     @foreach($charging as $office)
-                                    <option {{ old('office_charging', $employee->OfficeCode) == $office->OfficeCode2 ? 'selected' : 'disabled' }} value="{{ $office->OfficeCode2 }}">{{ $office->Description }}</option>
+                                    <option {{ old('office_charging', $employee->OfficeCode) == $office->OfficeCode2 ? 'selected' : '' }} value="{{ $office->OfficeCode2 }}">{{ $office->Description }}</option>
                                     @endforeach
                                 </select>
                                 <span class="text-sm text-danger" id="edit-office_charging-error"></span>
                             </div>
                             <div class="col-lg-6 pb-0">
                                 <label for="office_assignment" class="text-capitalize h5 required">Office Assignment</label>
-                                <select name="office_assignment" id="office_assignment" class="form-control form-select" {{  $employee->plantilla ? 'readonly' : '' }}>
+                                <select name="office_assignment" id="office_assignment" class="form-control form-select">
                                     @foreach($charging as $office)
-                                    <option {{ old('office_assignment', $employee->OfficeCode2) == $office->OfficeCode2 ? 'selected' : 'disabled' }} value="{{ $office->OfficeCode2 }}">{{ $office->Description }}</option>
+                                    <option {{ old('office_assignment', $employee->OfficeCode2) == $office->OfficeCode2 ? 'selected' : '' }} value="{{ $office->OfficeCode2 }}">{{ $office->Description }}</option>
                                     @endforeach
                                 </select>
                                 <span class="text-sm text-danger" id="edit-office_assignment-error"></span>
@@ -237,7 +237,7 @@
 
                             <div class="col-lg-6 pb-0">
                                 <label for="position" class="text-capitalize h5 required">Work Status</label>
-                                <select name="status" style="width : 100%;" id="status" class="form-control form-select" {{ $employee->plantilla ? 'readonly' : '' }}>
+                                <select name="status" style="width : 100%;" id="status" class="form-control form-select">
                                     <option {{ old('status', $employee->Work_Status) == 'JOB ORDER' ? 'selected' : 'disabled'}} value="JOB ORDER">JOB ORDER</option>
                                     <option {{ old('status', $employee->Work_Status) == 'CONTRACT OF SERVICE' ? 'selected' : 'disabled'}} value="CONTRACT OF SERVICE">CONTRACT OF SERVICE</option>
                                     <option {{ old('status', $employee->Work_Status) == 'CASUAL' ? 'selected' : 'disabled'}} value="CASUAL">CASUAL</option>

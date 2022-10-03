@@ -128,7 +128,7 @@
                                 </div>
 
                             </div>
-
+                            
                         </div>
                     </div>
                     <div class="content-full tab-pane show active" id="profile_tab">
@@ -260,9 +260,9 @@
 </div>
 
 @push('page-scripts')
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.10.1/qs.min.js"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.10.1/qs.min.js"></script>
 {{-- <script src="https://cdn.socket.io/3.1.1/socket.io.min.js" integrity="sha384-gDaozqUvc4HTgo8iZjwth73C6dDDeOJsAgpxBcMpZYztUfjHXpzrpdrHRdVp8ySO" crossorigin="anonymous"></script> --}}
-{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.min.js" integrity="sha512-fB746S+jyTdN2LSWbYSGP2amFYId226wpOeV4ApumcDpIttPxvk1ZPOgnwqwQziRAtZkiFJVx9F64GLAtoIlCQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.min.js" integrity="sha512-fB746S+jyTdN2LSWbYSGP2amFYId226wpOeV4ApumcDpIttPxvk1ZPOgnwqwQziRAtZkiFJVx9F64GLAtoIlCQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
 
@@ -272,7 +272,7 @@
 
     //     document.querySelector('#indicator').style.display = 'none';
 
-    // })();
+    // })(); 
 
 
     let messageChat = document.querySelector('#textArea');
@@ -287,7 +287,7 @@
     let roomReverse = false;
 
     let chatContent = document.querySelector('#chatContent');
-
+    
 
 
 
@@ -331,11 +331,11 @@
 
             chatContent.scrollTop = chatContent.scrollHeight;
         }
-
+        
     });
 
 
-
+    
 
     // function outputMessage(data) {
     //     let div = document.createElement('div');
@@ -353,7 +353,7 @@
     //                                         <span class="chat-time">8:30 am</span>
 
     //                                         <p class="meta">${data.username}</p>
-
+                                            
 
     //                                     </div>
     //                                     <div class="chat-action-btns">
@@ -368,7 +368,7 @@
     //                                 </div>
     //                             </div>
     //                         </div>`;
-    //     document.querySelector('#chatLeft').appendChild(div);
+    //     document.querySelector('#chatLeft').appendChild(div); 
     // }
 
 
@@ -381,7 +381,7 @@
             socket.emit(`request_conversation`, data);
         }
     });
-
+    
 
 
     socket.on(`invite_${ID}`, function (data) {
@@ -396,7 +396,7 @@
 
     socket.on(`send_to_receiver`, function (data) {
         let chatPositionClass = "right";
-
+        
         if(data.sender !== ID) {
             chatPositionClass = "left";
         }
@@ -427,6 +427,6 @@
     });
 
 </script>
-
+    
 @endpush
 @endsection

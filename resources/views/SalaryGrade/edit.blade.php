@@ -1,7 +1,8 @@
 @extends('layouts.app')
 @section('title', 'Edit Salary Grade')
 @prepend('page-css')
-<link rel="stylesheet" href="{{ asset('css/bootstrap-float-label.css') }}">
+<link rel="stylesheet"
+    href="https://cdn.rawgit.com/tonystar/bootstrap-float-label/v4.0.2/bootstrap-float-label.min.css" />
 {{-- CSS HERE --}}
 @endprepend
 @section('content')
