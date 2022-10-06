@@ -324,6 +324,7 @@ $(document).ready(function () {
             // { data: "section_name", searchable: false, name: "section_name" },
             { data: "old_position_name", name: "old_position_name" },
             {
+                className: 'text-truncate',
                 data: "action",
                 name: "action",
                 searchable: false,

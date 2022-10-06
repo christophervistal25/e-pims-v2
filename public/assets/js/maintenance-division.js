@@ -51,6 +51,7 @@ $(document).ready(function () {
             { data: "division_name", name: "division_name" },
             { data: "offices", name: "offices" },
             {
+                className: 'text-truncate',
                 data: "action",
                 name: "action",
                 className: "text-center",

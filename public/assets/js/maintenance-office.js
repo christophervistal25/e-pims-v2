@@ -93,11 +93,11 @@ $(document).ready(function () {
                 defaultContent: "",
             },
             {
+                className: 'text-truncate',
                 data: "action",
                 name: "action",
                 searchable: false,
                 sortable: false,
-                class: "align-middle",
             },
         ],
     });

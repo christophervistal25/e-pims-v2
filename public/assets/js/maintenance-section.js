@@ -53,6 +53,7 @@ $(document).ready(function () {
             { data: "division_name", name: "division_name" },
             { data: "office_name", name: "office_name" },
             {
+                className: 'text-truncate',
                 data: "action",
                 name: "action",
                 className: "text-center",

@@ -86,8 +86,8 @@ class SalaryAdjustmentController extends Controller
                     ->orderBy('date_adjustment', 'DESC')->whereNull('deleted_at')->orderBy('id', 'DESC')->get();
                 return DataTables::of($salaryAdjustments)
                         ->addColumn('action', function ($row) {
-                            $btn = "<a title='Edit Salary Adjustment' href='".route('salary-adjustment.edit', $row->id)."' class='rounded-circle edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-                            $btn = $btn."<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                            $btn = "<a title='Edit Salary Adjustment' href='".route('salary-adjustment.edit', $row->id)."' class=' edit btn btn-success mr-1'><i class='la la-pencil'></i></a>";
+                            $btn = $btn."<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete  delete btn btn-danger mr-1'><i class='la la-trash'></i></a>
                     ";
                     return $btn;
                 })

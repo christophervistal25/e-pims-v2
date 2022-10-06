@@ -126,6 +126,7 @@ $(document).ready(function () {
             { data: "sg_step", name: "sg_step", sortable: false },
             { data: "year", name: "year", sortable: false },
             {
+                className: 'text-truncate',
                 data: "action",
                 name: "action",
                 searchable: false,
