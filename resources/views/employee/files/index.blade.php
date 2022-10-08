@@ -704,10 +704,10 @@
                             <tr>
                                 <td class="text-center">{{ $service->service_from_date }}</td>
                                 <td class="text-center">
-                                    @if($loop->index ==0)
+                                    @if($loop->index == 0)
                                         <span class="badge badge-primary">PRESENT</span>
                                     @else
-                                        {{ $service->service_from_to ?? '-' }}
+                                        {{ $service->service_to_date }}
                                     @endif
                                 </td>
                                 <td class="text-center">{{ $service->position->Description }}</td>
@@ -716,9 +716,9 @@
                                 <td class="text-center">-</td>
                                 <td class="text-center">{{ number_format($service->salary, 2, ".", ",") }}</td>
                                 <td class="text-center">{{ $service->office->office_name }}</td>
-                                <td class="text-center">{{ $service->leave_without_pay ?? '-' }}</td>
-                                <td class="text-center">{{ $service->seperation_date ?? '-' }}</td>
-                                <td class="text-center">{{ $service->seperation_cause ?? '-' }}</td>
+                                <td class="text-center">{{ $service->leave_without_pay }}</td>
+                                <td class="text-center">{{ $service->seperation_date }}</td>
+                                <td class="text-center">{{ $service->separation_cause }}</td>
                             </tr>
                         @endforeach
                     </tbody>
