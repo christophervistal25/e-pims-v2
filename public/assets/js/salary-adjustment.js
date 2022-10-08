@@ -36,7 +36,11 @@ $(function () {
                 name: "salary_diff",
                 render: $.fn.dataTable.render.number(",", ".", 2),
             },
-            { data: "action", name: "action" },
+            {
+                className: 'text-truncate',
+                data: "action",
+                name: "action"
+            },
         ],
     });
 

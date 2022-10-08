@@ -339,14 +339,14 @@
                     <table class="table table-bordered table-hover text-center" id="plantilla" style="width:100%;">
                         <thead>
                             <tr>
-                                <td scope="col" class="text-center">Item No</td>
-                                <td scope="col" class="text-center">Image</td>
-                                <td scope="col" class="text-center">Employee Name</td>
-                                <td scope="col" class="text-center">Position Title</td>
-                                <td scope="col" class="text-center">Office</td>
-                                <td scope="col" class="text-center">SG / Step</td>
-                                <td scope="col" class="text-center">Year</td>
-                                <td scope="col" class="text-center">Action</td>
+                                <td scope="col" class="text-center">ITEM NO</td>
+                                <td scope="col" class="text-center">IMAGE</td>
+                                <td scope="col" class="text-center">EMPLOYEE NAME</td>
+                                <td scope="col" class="text-center">POSITION TITLE</td>
+                                <td scope="col" class="text-center">OFFICE</td>
+                                <td scope="col" class="text-center">SG / STEP</td>
+                                <td scope="col" class="text-center">YEAR</td>
+                                <td scope="col" class="text-center">ACTION</td>
                             </tr>
                         </thead>
                     </table>

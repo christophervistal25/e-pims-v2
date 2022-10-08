@@ -37,8 +37,8 @@ class PlantillaOfPositionController extends Controller
     public function list(string $office = '*')
     {
         $data = DB::connection('E_PIMS_CONNECTION')->table('plantilla_positions')
-        // ->join('Divisions', 'plantilla_positions.division_id', '=', 'Divisions.division_id')
-        // ->join('Sections', 'plantilla_positions.section_id', '=', 'Sections.section_id')
+        ->leftJoin('Divisions', 'plantilla_positions.division_id', '=', 'Divisions.division_id')
+        ->leftJoin('Sections', 'plantilla_positions.section_id', '=', 'Sections.section_id')
         ->join('Positions', 'plantilla_positions.PosCode', '=', 'Positions.PosCode')
         ->join('Offices', 'plantilla_positions.office_code', '=', 'Offices.office_code')
         ->orderBy('item_no', 'desc');
@@ -49,8 +49,8 @@ class PlantillaOfPositionController extends Controller
 
             return DataTables::of($PlantillaPositionData)
             ->addColumn('action', function ($row) {
-                $btn = "<a title='Edit Plantilla Of Position' href='".route('plantilla-of-position.edit', $row->pp_id)."' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-                $btn = $btn."<a title='Delete Plantilla Of Position' id='delete' value='$row->pp_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                $btn = "<a title='Edit Plantilla Of Position' href='".route('plantilla-of-position.edit', $row->pp_id)."' class=' text-white edit btn btn-success  mr-1'><i class='la la-pencil'></i></a>";
+                $btn = $btn."<a title='Delete Plantilla Of Position' id='delete' value='$row->pp_id' class='delete  delete btn btn-danger  mr-1'><i class='la la-trash'></i></a>
                             ";
 
             return $btn;

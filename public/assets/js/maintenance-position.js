@@ -58,6 +58,7 @@ $(document).ready(function () {
                 name: "position_short_name",
             },
             {
+                className: 'text-truncate',
                 data: "action",
                 name: "action",
                 className: "text-center",

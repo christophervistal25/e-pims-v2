@@ -70,6 +70,7 @@ let salaryGradeTable = $("#salaryGradeTable").DataTable({
             name: "sg_year",
         },
         {
+            className: 'text-truncate',
             data: "action",
             name: "action",
         },

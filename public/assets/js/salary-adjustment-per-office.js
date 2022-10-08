@@ -80,7 +80,7 @@ $(document).ready(function () {
                             return adjustment.salary_diff;
                         },
                     },
-                    { data: "action", name: "action" },
+                    {  className: 'text-truncate', data: "action", name: "action" },
                 ],
             });
         } else {

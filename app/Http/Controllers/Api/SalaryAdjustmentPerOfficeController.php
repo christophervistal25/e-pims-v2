@@ -26,8 +26,8 @@ class SalaryAdjustmentPerOfficeController extends Controller
 
         return DataTables::of($data)
             ->addColumn('action', function ($row) {
-                $btn = "<a title='Edit Salary Adjustment' href='".route('salary-adjustment-per-office.edit', $row->salary_adjustment[0]->id)."' class='rounded-circle edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-                $btn = $btn."<a title='Delete Salary Adjustment' id='delete' value='".$row->salary_adjustment[0]->id."' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                $btn = "<a title='Edit Salary Adjustment' href='".route('salary-adjustment-per-office.edit', $row->salary_adjustment[0]->id)."' class=' edit btn btn-success mr-1'><i class='la la-pencil'></i></a>";
+                $btn = $btn."<a title='Delete Salary Adjustment' id='delete' value='".$row->salary_adjustment[0]->id."' class='delete delete btn btn-danger mr-1'><i class='la la-trash'></i></a>
         ";
 
                 return $btn;

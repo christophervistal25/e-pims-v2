@@ -31,8 +31,8 @@ class MaintenancePositionController extends Controller
             return Datatables::of($data)
                         ->addIndexColumn()
                         ->addColumn('action', function ($row) {
-                            $btn = "<a title='Edit Position' href='".route('maintenance-position.edit', $row->PosCode)."' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-                            $btn = $btn."<a title='Delete Position' id='delete' value='$row->PosCode' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                            $btn = "<a title='Edit Position' href='".route('maintenance-position.edit', $row->PosCode)."' class=' text-white edit btn btn-success  mr-1'><i class='la la-pencil'></i></a>";
+                            $btn = $btn."<a title='Delete Position' id='delete' value='$row->PosCode' class='delete  delete btn btn-danger  mr-1'><i class='la la-trash'></i></a>
                         ";
 
                             return $btn;

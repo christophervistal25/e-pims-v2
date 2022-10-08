@@ -72,8 +72,8 @@ class PlantillaController extends Controller
                 : $data->where('plantillas.year', $year)->get();
             return DataTables::of($PlantillaData)
                 ->addColumn('action', function ($row) use($year) {
-                    $btn = "<a title='Edit Plantilla' href='".route('plantilla-of-personnel.edit', $row->plantilla_id)."' class='rounded-circle text-white edit btn btn-success btn-sm'><i class='la la-pencil'></i></a>";
-                    $btn .= "<button title='Resign' class='rounded-circle text-white edit btn btn-danger btn-sm ml-2 btnResign' data-year='{$year}' data-employee-id='{$row->employee_id}'><i class='la la-user-times'></i></button>";
+                    $btn = "<a title='Edit Plantilla' href='".route('plantilla-of-personnel.edit', $row->plantilla_id)."' class=' text-white edit btn btn-success '><i class='la la-pencil'></i></a>";
+                    $btn .= "<button title='Mark as Retire or Resign' class=' text-white edit btn btn-danger  ml-2 btnResign' data-year='{$year}' data-employee-id='{$row->employee_id}'><i class='las la-user-alt-slash'></i></button>";
                     return $btn;
                 })
                 ->addColumn('sg_step', function ($row) {

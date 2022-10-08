@@ -49,8 +49,8 @@ class MaintenanceSectionController extends Controller
             : $data->get();
             return Datatables::of($sectionData)
                     ->addColumn('action', function ($row) {
-                        $btn = "<a title='Edit Section' href='".route('maintenance-section.edit', $row->section_id)."' class='rounded-circle text-white edit btn btn-success btn-sm mr-1'><i class='la la-pencil'></i></a>";
-                        $btn = $btn."<a title='Delete Section' id='delete' value='$row->section_id' class='delete rounded-circle delete btn btn-danger btn-sm mr-1'><i class='la la-trash'></i></a>
+                        $btn = "<a title='Edit Section' href='".route('maintenance-section.edit', $row->section_id)."' class=' text-white edit btn btn-success mr-1'><i class='la la-pencil'></i></a>";
+                        $btn = $btn."<a title='Delete Section' id='delete' value='$row->section_id' class='delete  delete btn btn-danger mr-1'><i class='la la-trash'></i></a>
                         ";
                         return $btn;
                     })
