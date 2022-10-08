@@ -12,6 +12,7 @@ use Chefhasteeth\Pipeline\Pipeline;
 use App\Pipes\PromotedFilterByOffice;
 use App\Pipes\PromotedListByDatatables;
 use App\Pipes\AddNewPromotionForEmployee;
+use App\Pipes\AddPromotionToServiceRecord;
 use App\Services\PlantillaPositionService;
 use App\Pipes\CurrentPlantillaMarkAsVacant;
 use App\Http\Requests\StorePromotionRequest;
@@ -64,6 +65,7 @@ final class PromotionController extends Controller
                         CurrentPlantillaMarkAsVacant::class,
                         CreateNewPlantillaForEmployee::class,
                         AddNewPromotionForEmployee::class,
+                        AddPromotionToServiceRecord::class,
                     ])->then(fn() => back()->with('success', 'Employee promoted successfully'));
     }
 

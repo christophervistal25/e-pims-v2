@@ -26,6 +26,8 @@ final class CreateNewPlantillaForEmployee
     private function createNewPlantilla(Plantilla $current)
     {
         $plantilla = Plantilla::where(['year' => request()->salary_grade_year, 'pp_id' => request()->position])->first();
+
+
         $plantilla->step_no                       = 1;
         $plantilla->old_item_no                   = $current->item_no;
         $plantilla->salary_amount                 = $this->getSalaryAmountForItemWithStepOne(request()->salary_grade_year, request()->salary_grade);
@@ -38,8 +40,7 @@ final class CreateNewPlantillaForEmployee
         $plantilla->employee_id                   = request()->employee;
         $plantilla->date_last_promotion           = request()->date_promotion;
         $plantilla->date_last_increment = $current->getOriginal('date_last_increment');
-        $current->save();
 
-        return $current;
+        return ['current' => $current, 'upcoming' => $plantilla];
     }
 }

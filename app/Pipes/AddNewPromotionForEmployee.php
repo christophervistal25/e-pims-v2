@@ -8,22 +8,24 @@ use App\Promotion;
 
 final class AddNewPromotionForEmployee
 {
-    public function handle($old)
+    public function handle($data)
     {
-        return $this->create(plantilla:$old);
+        $promotion = $this->create(plantillas:$data);
+        $data['promotion'] = $promotion->load(['new_plantilla_position', 'new_plantilla']);
+        return $data;
     }
 
-    private function create(Plantilla $plantilla)
+    private function create(array $plantillas)
     {
-        Promotion::create([
-            'promotion_id'   => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
-            'newpp_id'       => request()->position,
-            'promotion_date' => request()->date_promotion,
-            'employee_id'    => request()->employee,
-            'oldpp_id'       => $plantilla->pp_id,
-            'sg_no'          => request()->salary_grade,
-            'step_no'        => 1,
-            'sg_year'        => request()->salary_grade_year,
-        ]);
+        return Promotion::create([
+                'promotion_id'   => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
+                'newpp_id'       => request()->position,
+                'promotion_date' => request()->date_promotion,
+                'employee_id'    => request()->employee,
+                'oldpp_id'       => $plantillas['upcoming']['pp_id'],
+                'sg_no'          => request()->salary_grade,
+                'step_no'        => 1,
+                'sg_year'        => request()->salary_grade_year,
+            ]);
     }
 }

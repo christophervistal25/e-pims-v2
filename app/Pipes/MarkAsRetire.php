@@ -6,10 +6,11 @@ use App\Employee;
 
 final class MarkAsRetire
 {
-    public function handle($data)
+    public function handle($plantilla)
     {
-        $employee = Employee::find($data['employee_id'], ['Employee_id', 'IsActive']);
+        $employee = Employee::find($plantilla->getOriginal('employee_id'), ['Employee_id', 'IsActive']);
         $employee->isActive = 0;
         $employee->save();
+        $plantilla->save();
     }
 }
