@@ -32,4 +32,9 @@ class Promotion extends Model
     {
         return $this->hasOne(PlantillaPosition::class, 'pp_id', 'newpp_id');
     }
+
+    public function new_plantilla()
+    {
+        return $this->hasOne(Plantilla::class, 'pp_id', 'newpp_id');
+    }
 }
