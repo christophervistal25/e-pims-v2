@@ -12,9 +12,9 @@ class service_record extends Model
     public $connection = 'E_PIMS_CONNECTION';
     protected $dates = ['deleted_at'];
 
-    protected $appends = [
-        'service_from_date_year',
-    ];
+    // protected $appends = [
+    //     'service_from_date_year',
+    // ];
 
     protected $fillable = [
         'id',
@@ -29,6 +29,7 @@ class service_record extends Model
         'separation_date',
         'separation_cause',
     ];
+
 
     public function position()
     {
