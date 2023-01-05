@@ -40,7 +40,7 @@ class PlantillaController extends Controller
             ->whereNotIn('Employee_id', $plantillaEmp)
             ->orderBy('LastName', 'ASC')->get();
         $office = Office::select('office_code', 'office_name')->get();
-        $year = Plantilla::select('year')->distinct('year')->where('year', '!=', '2022')->get();
+        $year = Plantilla::select('year')->distinct('year')->orderBy('year','DESC')->get();
 
         $position = Position::select('PosCode', 'Description')->get();
 
@@ -72,7 +72,8 @@ class PlantillaController extends Controller
                 : $data->where('plantillas.year', $year)->get();
             return DataTables::of($PlantillaData)
                 ->addColumn('action', function ($row) use($year) {
-                    $btn = "<a title='Edit Plantilla' href='".route('plantilla-of-personnel.edit', $row->plantilla_id)."' class=' text-white edit btn btn-success '><i class='la la-pencil'></i></a>";
+                    $btn = "<a title='Edit Plantilla' href='".url('plantilla-of-personnel/edit'.'/'.$row->plantilla_id.'/'.$row->year)."' class=' text-white edit btn btn-success '><i class='la la-pencil'></i></a>";
+                    // $btn = "<a title='Edit Plantilla' href='".route('plantilla-of-personnel.edit', $row->plantilla_id)."' class=' text-white edit btn btn-success '><i class='la la-pencil'></i></a>";
                     $btn .= "<button title='Mark as Retire or Resign' class=' text-white edit btn btn-danger  ml-2 btnResign' data-year='{$year}' data-employee-id='{$row->employee_id}'><i class='las la-user-alt-slash'></i></button>";
                     return $btn;
                 })
@@ -179,7 +180,7 @@ class PlantillaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($plantilla_id)
+    public function edit($plantilla_id, $year)
     {
         $activeID = Plantilla::select('plantilla_id', 'employee_id')->where('plantilla_id', $plantilla_id)->first();
         $plantillaEmp = array_filter(Plantilla::where('employee_id', '!=' , $activeID->employee_id)->get()->pluck('employee_id')->toArray());
@@ -193,22 +194,22 @@ class PlantillaController extends Controller
 
         $office = Office::select('office_code', 'office_name')->get();
         $position = Position::select('PosCode', 'Description')->get();
-        $plantillaPositionIDAll = Plantilla::where('plantilla_id', '!=', $plantilla_id)->get()->pluck('pp_id')->toArray();
-        $plantillaPositionAll = PlantillaPosition::select('pp_id', 'PosCode', 'office_code')->with('position:PosCode,Description')->whereNotIn('pp_id', $plantillaPositionIDAll)->get();
+        // $plantillaPositionIDAll = Plantilla::where('plantilla_id', '!=', $plantilla_id)->get()->pluck('pp_id')->toArray();
+        // $plantillaPositionAll = PlantillaPosition::select('pp_id', 'PosCode', 'office_code')->with('position:PosCode,Description')->whereNotIn('pp_id', $plantillaPositionIDAll)->get();
         $salarygrade = SalaryGrade::get(['sg_no']);
         $status = ['Appointed','Casual', 'Coterminous', 'Permanent', 'Provisional', 'Temporary', 'Elected'];
         count($status) - 1;
         $plantilla = Plantilla::with('plantilla_positions.areaType', 'plantilla_positions.areaLevel', 'plantilla_positions.areaCode', 'plantilla_positions.division', 'plantilla_positions.section')->find($plantilla_id);
 
         $officeCode = $plantilla->office_code;
-        $plantillaPositionID = Plantilla::where('plantilla_id', '!=', $plantilla_id)->get()->pluck('pp_id')->toArray();
+        $plantillaPositionID = Plantilla::where('plantilla_id', '!=', $plantilla_id)->where('year', $year)->get()->pluck('pp_id')->toArray();
         $plantillaPositionedit = PlantillaPosition::select('pp_id', 'PosCode', 'office_code')->with('position:PosCode,Description')->where('office_code', $officeCode)->whereNotIn('pp_id', $plantillaPositionID)->get();
 
         $plantillaPosition = PlantillaPosition::with('position:PosCode,Description')->whereDoesntHave('plantillas', function ($query) {
             $query->where('year', date('Y'));
         })->get();
         $class = 'mini-sidebar';
-        return view('Plantilla.edit', compact('plantilla', 'employee', 'status', 'position',   'office',  'salarygrade', 'plantillaPosition', 'plantillaPositionedit', 'plantillaPositionAll', 'class'));
+        return view('Plantilla.edit', compact('plantilla', 'employee', 'status', 'position',   'office',  'salarygrade', 'plantillaPosition', 'plantillaPositionedit', 'class'));
     }
 
     /**
