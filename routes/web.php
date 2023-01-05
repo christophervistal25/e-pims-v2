@@ -141,6 +141,7 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
 
     Route::get('plantilla-list/{office?}/{year?}', [PlantillaController::class, 'list']);
     Route::resource('plantilla-of-personnel', PlantillaController::class);
+    Route::get('plantilla-of-personnel/edit/{id}/{year}', [PlantillaController::class, 'edit']);
     Route::put('plantilla-of-personnel/{id}', [PlantillaController::class, 'update']);
 
     Route::resource('plantilla-of-position', PlantillaOfPositionController::class);

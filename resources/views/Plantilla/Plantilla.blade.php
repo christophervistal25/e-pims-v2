@@ -57,6 +57,7 @@
 <meta id="plantillaPositionMetaData" content="@foreach($plantillaPosition as $plantillaPositions){ |officeCode|:|{{ $plantillaPositions->office_code }}|, |positionId|:|{{ $plantillaPositions->PosCode }}|, |ppId|:|{{ $plantillaPositions->pp_id }}|, |item_no|:|{{ $plantillaPositions->item_no }}|}, @endforeach">
 <meta id="positionMetaData" content="@foreach($position as $positions){ |positionId|:|{{ $positions->PosCode }}|, |positionName|:|{{ $positions->Description }}|}, @endforeach">
 @endprepend
+
 @section('content')
 <div class="kanban-board card shadow mb-0">
     <div class="card-body">
@@ -321,10 +322,9 @@
 
                     <div class="col-2 mb-2">
                         <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker {{ $errors->has('employeeOffice')  ? 'is-invalid' : ''}}" name="currentYear" data-live-search="true" id="currentYear" data-size="5">
-                            <option value="{{ Carbon\Carbon::now()->format('Y') }}">{{ Carbon\Carbon::now()->format('Y') }}</option>
-                            @foreach($year as $years){
+                            {{-- <option value="{{ Carbon\Carbon::now()->format('Y') }}">{{ Carbon\Carbon::now()->format('Y') }}</option> --}}
+                            @foreach($year as $years)
                                 <option value="{{ $years->year }}">{{ $years->year }}</option>
-                            }
                             @endforeach
                         </select>
                     </div>
