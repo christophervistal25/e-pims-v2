@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => 'Electronic Personnel Information Management System(ePims)',
+    // 'name' => env('APP_NAME', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------
