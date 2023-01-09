@@ -247,7 +247,7 @@
                          </div>
                          <div class="col-auto float-right ml-auto">
                             <button class="btn btn-secondary text-white mr-3" id="importExcel" type="button">
-                                <i class="fas fa-file-import"></i>&nbsp; Import Excel
+                                <i class="las la-file-csv"></i>&nbsp; Import Excel
                            </button>
                               <button id="addButton" class="btn btn-primarys submit-btn float-right mx-2"><i class="fa fa-plus"></i>
                                    Add Salary Grade
@@ -298,7 +298,7 @@
                        <div class="row">
                             <div class="col-lg-6 text-center hoverable" style="cursor:pointer;">
                                  <img style="padding-bottom:15px;" src="{{ asset('assets/img/xls.png') }}" class='w-50 img-fluid' alt="">
-                                <input style="margin-bottom:20px;" type="file" name="file" class="form-control {{ $errors->has('file')  ? 'is-invalid' : ''}}" id="file" />
+                                <input style="margin-bottom:20px;" type="file" name="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, .csv" class="form-control {{ $errors->has('file')  ? 'is-invalid' : ''}}" id="file" />
                            </div>
 
                            <div class="col-lg-6 text-center hoverable" style="cursor:pointer;">

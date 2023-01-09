@@ -155,7 +155,7 @@
                     <ul>
                         <li>
                             <a class='text-decoration-none' href='/administrator/dashboard'>
-                                <i class="las la-tachometer-alt"></i> <span>Dashboard</span></a>
+                                <i class="las la-home"></i> <span>Dashboard</span></a>
                             </a>
                         </li>
                         <li class="menu-title">
