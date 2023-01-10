@@ -35,6 +35,7 @@
                                             <div class="text"><a href="">{{ $employee?->office_charging?->Description ??
                                                     '' }}</a></div>
                                         </li>
+
                                         <li>
                                             <div class="title">Office Assignment:</div>
                                             <div class="text"><a href="">{{ $employee?->office_assignment?->Description

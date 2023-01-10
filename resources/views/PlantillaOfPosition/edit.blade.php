@@ -97,7 +97,7 @@
                                     <select value="" class="form-control form-control-xs selectpicker" name="positionTitle" data-live-search="true" id="positionTitle" data-size="4" data-width="100%" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                         <option></option>
                                         @foreach($position as $positions)
-                                            <option data-position="{{ $positions }}" {{ $plantillaofposition->PosCode == $positions->PosCode ? 'selected' : '?? $plantillaofposition->PosCode' }} style="width:350px;" {{ old('positionTitle') == $positions->PosCode ? 'selected' : '' }} value="{{ $positions->PosCode}}">{{ $positions->Description }}</option>
+                                            <option data-position="{{ $positions }}" {{ $plantillaofposition->PosCode == $positions->PosCode ? 'selected' : '?? $plantillaofposition->PosCode' }} style="width:350px;" {{ old('positionTitle') == $positions->PosCode ? 'selected' : '' }} value="{{ $positions->PosCode}}">{{ $positions->PosCode }} - {{ $positions->Description }}</option>
                                         @endforeach
                                   </select>
                                         <span class="font-weight-bold">POSITION<span class="text-danger">*</span></span>
