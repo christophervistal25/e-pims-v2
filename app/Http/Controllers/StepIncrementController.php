@@ -24,7 +24,7 @@ class StepIncrementController extends Controller
     {
         $data = DB::connection('E_PIMS_CONNECTION')->table('EPims.dbo.Step_increments')
             ->leftJoin('DTRPayroll.dbo.Employees', 'Step_increments.employee_id', '=', 'Employees.Employee_id')
-            ->leftJoin('EPims.dbo.Positions', 'Step_increments.PosCode', '=', 'Positions.PosCode')
+            ->leftJoin('DTRPayroll.dbo.Position', 'Step_increments.PosCode', '=', 'Position.PosCode')
             ->leftJoin('EPims.dbo.Offices', 'Step_increments.office_code', '=', 'Offices.office_code')
             ->select(
                 'id',

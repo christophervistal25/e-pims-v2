@@ -30,7 +30,7 @@ class ServiceRecordsController extends Controller
 
         count($status) - 1;
 
-        $position = Position::select('PosCode', 'Description')->get();
+        $position = Position::select('PosCode', 'Description', 'isJocos')->where('isJocos', NULL)->get();
 
         $employee = Employee::exclude(['ImagePhoto'])->select('Employee_id', 'LastName', 'FirstName', 'MiddleName', 'Suffix')->get();
 
@@ -56,8 +56,8 @@ class ServiceRecordsController extends Controller
 
         $data = DB::table('EPims.dbo.service_records')
         ->leftJoin('EPims.dbo.offices', 'service_records.office_code', '=', 'offices.office_code')
-        ->leftJoin('EPims.dbo.Positions', 'service_records.PosCode', '=', 'Positions.PosCode')
-        ->select('id', 'employee_id', DB::raw("FORMAT(service_from_date, 'MM-dd-yy') as service_from_date"), DB::raw("FORMAT(service_to_date, 'MM-dd-yy') as service_to_date"), 'Positions.Description as position_name', 'status', 'salary', 'offices.office_name', 'leave_without_pay', DB::raw("FORMAT(separation_date, 'MM-dd-yy') as separation_date"), 'separation_cause')
+        ->leftJoin('DTRPayroll.dbo.Position', 'service_records.PosCode', '=', 'Position.PosCode')
+        ->select('id', 'employee_id', DB::raw("FORMAT(service_from_date, 'MM-dd-yy') as service_from_date"), DB::raw("FORMAT(service_to_date, 'MM-dd-yy') as service_to_date"), 'Position.Description as position_name', 'status', 'salary', 'offices.office_name', 'leave_without_pay', DB::raw("FORMAT(separation_date, 'MM-dd-yy') as separation_date"), 'separation_cause')
         ->where('employee_id', $employeeId)
         ->whereNull('service_records.deleted_at')
         ->get();
