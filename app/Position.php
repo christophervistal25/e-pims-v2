@@ -10,16 +10,20 @@ class Position extends Model
 {
     use SoftDeletes;
 
-    public $connection = 'E_PIMS_CONNECTION';
+    // public $connection = 'E_PIMS_CONNECTION';
 
     public $incrementing = false;
 
-    public $table = 'Positions';
+    public $table = 'Position';
 
     public $primaryKey = 'PosCode';
 
     protected $fillable = ['PosCode', 'Description', 'sg_no', 'position_short_name'];
 
+    public function __construct()
+    {
+        $this->table = 'DTRPayroll.dbo.Position';
+    }
     public function getPositionNameAttribute($value)
     {
         return Str::upper($value);
@@ -49,6 +53,7 @@ class Position extends Model
     {
         return $this->belongsTo(PlantillaPosition::class, 'PosCode', 'PosCode');
     }
+
 
     public function PlantillaSchedule()
     {

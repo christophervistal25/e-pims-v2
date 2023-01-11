@@ -42,13 +42,15 @@ class PlantillaController extends Controller
         $office = Office::select('office_code', 'office_name')->get();
         $year = Plantilla::select('year')->distinct('year')->orderBy('year','DESC')->get();
 
-        $position = Position::select('PosCode', 'Description')->get();
+        $position = Position::select('PosCode', 'Description', 'isJocos')->where('isJocos', NULL)->get();
 
         $plantillaPositionID = Plantilla::get()->pluck('pp_id')->toArray();
 
         $plantillaPosition = PlantillaPosition::with('position:PosCode,Description')->whereDoesntHave('plantillas', function ($query) {
             $query->where('year', date('Y'));
         })->get();
+
+     
 
         $salarygrade = SalaryGrade::get(['sg_no']);
 
@@ -64,9 +66,9 @@ class PlantillaController extends Controller
         $data = DB::connection('E_PIMS_CONNECTION')->table('EPims.dbo.plantillas')
         ->join('EPims.dbo.offices', 'plantillas.office_code', '=', 'offices.office_code')
         ->join('EPims.dbo.plantilla_positions', 'plantillas.pp_id', '=', 'plantilla_positions.pp_id')
-        ->join('EPims.dbo.Positions', 'plantilla_positions.PosCode', '=', 'Positions.PosCode')
+        ->join('DTRPayroll.dbo.Position', 'plantilla_positions.PosCode', '=', 'Position.PosCode')
         ->leftJoin('DTRPayroll.dbo.Employees', 'Employees.Employee_id', '=', 'plantillas.employee_id')
-        ->select(DB::raw("CONCAT(LastName, ', ' , FirstName , ' ' , MiddleName, ' ' , Suffix) AS fullname"), 'plantillas.employee_id as employee_id','plantilla_id', 'plantillas.item_no as item_no', 'offices.office_name as office_name', 'plantillas.sg_no as sg_no', 'plantillas.step_no as step_no','plantillas.status as status', 'plantillas.year as year', 'Positions.Description');
+        ->select(DB::raw("CONCAT(LastName, ', ' , FirstName , ' ' , MiddleName, ' ' , Suffix) AS fullname"), 'plantillas.employee_id as employee_id','plantilla_id', 'plantillas.item_no as item_no', 'offices.office_name as office_name', 'plantillas.sg_no as sg_no', 'plantillas.step_no as step_no','plantillas.status as status', 'plantillas.year as year', 'Position.Description');
         if (request()->ajax()) {
             $PlantillaData = ($office != '*') ? $data->where('plantillas.office_code', $office)->where('plantillas.year', $year)->get()
                 : $data->where('plantillas.year', $year)->get();
@@ -193,7 +195,7 @@ class PlantillaController extends Controller
             ->orderBy('LastName', 'ASC')->get();
 
         $office = Office::select('office_code', 'office_name')->get();
-        $position = Position::select('PosCode', 'Description')->get();
+        $position = Position::select('PosCode', 'Description', 'isJocos')->where('isJocos', NULL)->get();
         // $plantillaPositionIDAll = Plantilla::where('plantilla_id', '!=', $plantilla_id)->get()->pluck('pp_id')->toArray();
         // $plantillaPositionAll = PlantillaPosition::select('pp_id', 'PosCode', 'office_code')->with('position:PosCode,Description')->whereNotIn('pp_id', $plantillaPositionIDAll)->get();
         $salarygrade = SalaryGrade::get(['sg_no']);
@@ -203,8 +205,9 @@ class PlantillaController extends Controller
 
         $officeCode = $plantilla->office_code;
         $plantillaPositionID = Plantilla::where('plantilla_id', '!=', $plantilla_id)->where('year', $year)->get()->pluck('pp_id')->toArray();
+        
         $plantillaPositionedit = PlantillaPosition::select('pp_id', 'PosCode', 'office_code')->with('position:PosCode,Description')->where('office_code', $officeCode)->whereNotIn('pp_id', $plantillaPositionID)->get();
-
+        
         $plantillaPosition = PlantillaPosition::with('position:PosCode,Description')->whereDoesntHave('plantillas', function ($query) {
             $query->where('year', date('Y'));
         })->get();

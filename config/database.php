@@ -105,61 +105,61 @@ return [
         ],
 
 
-        // itu server connection
-        'DTR_PAYROLL_CONNECTION' => [
-            'driver' => 'sqlsrv',
-            'url' => '',
-            'host' => 'ITU-SERVER',
-            'port' => '',
-            'database' => 'DTRPayroll',
-            'username' => 'sa',
-            'password' => 'nicole',
-            'charset' => 'utf8',
-            'prefix' => '',
-            'prefix_indexes' => true,
-        ],
+    //     // itu server connection
+    //     'DTR_PAYROLL_CONNECTION' => [
+    //         'driver' => 'sqlsrv',
+    //         'url' => '',
+    //         'host' => 'ITU-SERVER',
+    //         'port' => '',
+    //         'database' => 'DTRPayroll',
+    //         'username' => 'sa',
+    //         'password' => 'nicole',
+    //         'charset' => 'utf8',
+    //         'prefix' => '',
+    //         'prefix_indexes' => true,
+    //     ],
 
-        'E_PIMS_CONNECTION' => [
-            'driver' => 'sqlsrv',
-            'url' => '',
-            'host' => 'ITU-SERVER',
-            'port' => '',
-            'database' => 'Epims',
-            'username' => 'sa',
-            'password' => 'nicole',
-            'charset' => 'utf8',
-            'prefix' => '',
-            'prefix_indexes' => true,
-        ],
+    //     'E_PIMS_CONNECTION' => [
+    //         'driver' => 'sqlsrv',
+    //         'url' => '',
+    //         'host' => 'ITU-SERVER',
+    //         'port' => '',
+    //         'database' => 'Epims',
+    //         'username' => 'sa',
+    //         'password' => 'nicole',
+    //         'charset' => 'utf8',
+    //         'prefix' => '',
+    //         'prefix_indexes' => true,
+    //     ],
+    // ],
+
+    // local connection
+    'DTR_PAYROLL_CONNECTION' => [
+        'driver' => 'sqlsrv',
+        'url' => '',
+        'host' => '.',
+        'port' => '',
+        'database' => 'DTRPayroll',
+        'username' => 'sa',
+        'password' => 'nicole',
+        'charset' => 'utf8',
+        'prefix' => '',
+        'prefix_indexes' => true,
     ],
 
-//     // local connection
-//     'DTR_PAYROLL_CONNECTION' => [
-//         'driver' => 'sqlsrv',
-//         'url' => '',
-//         'host' => '.',
-//         'port' => '',
-//         'database' => 'DTRPayroll',
-//         'username' => 'sa',
-//         'password' => 'nicole',
-//         'charset' => 'utf8',
-//         'prefix' => '',
-//         'prefix_indexes' => true,
-//     ],
-
-//     'E_PIMS_CONNECTION' => [
-//         'driver' => 'sqlsrv',
-//         'url' => '',
-//         'host' => '.',
-//         'port' => '',
-//         'database' => 'Epims',
-//         'username' => 'sa',
-//         'password' => 'nicole',
-//         'charset' => 'utf8',
-//         'prefix' => '',
-//         'prefix_indexes' => true,
-//     ],
-// ],
+    'E_PIMS_CONNECTION' => [
+        'driver' => 'sqlsrv',
+        'url' => '',
+        'host' => '.',
+        'port' => '',
+        'database' => 'Epims',
+        'username' => 'sa',
+        'password' => 'nicole',
+        'charset' => 'utf8',
+        'prefix' => '',
+        'prefix_indexes' => true,
+    ],
+],
 
     /*
     |--------------------------------------------------------------------------

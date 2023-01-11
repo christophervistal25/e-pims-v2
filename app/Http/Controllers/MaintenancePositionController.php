@@ -26,7 +26,7 @@ class MaintenancePositionController extends Controller
     public function list(Request $request)
     {
         if ($request->ajax()) {
-            $data = Position::select('PosCode', 'Description', 'sg_no', 'position_short_name')->get();
+            $data = Position::select('PosCode', 'Description', 'sg_no', 'position_short_name', 'isJocos')->where('isJocos', NULL)->get();
 
             return Datatables::of($data)
                         ->addIndexColumn()

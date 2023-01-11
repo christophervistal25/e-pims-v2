@@ -23,7 +23,7 @@ class PlantillaOfPositionController extends Controller
     public function index()
     {
         $office = Office::select('office_code', 'office_name')->get();
-        $position = Position::select('PosCode', 'Description', 'sg_no')->get();
+        $position = Position::select('PosCode', 'Description', 'sg_no', 'isJocos')->where('isJocos', NULL)->get();
         $lastId = Position::latest('PosCode')->first();
         $areacode = DB::connection('E_PIMS_CONNECTION')->table('EPims.dbo.Area_code')->get();
         $areatype = DB::connection('E_PIMS_CONNECTION')->table('EPims.dbo.Area_type')->get();
@@ -36,11 +36,11 @@ class PlantillaOfPositionController extends Controller
 
     public function list(string $office = '*')
     {
-        $data = DB::connection('E_PIMS_CONNECTION')->table('plantilla_positions')
-        ->leftJoin('Divisions', 'plantilla_positions.division_id', '=', 'Divisions.division_id')
-        ->leftJoin('Sections', 'plantilla_positions.section_id', '=', 'Sections.section_id')
-        ->join('Positions', 'plantilla_positions.PosCode', '=', 'Positions.PosCode')
-        ->join('Offices', 'plantilla_positions.office_code', '=', 'Offices.office_code')
+        $data = DB::connection('E_PIMS_CONNECTION')->table('EPims.dbo.plantilla_positions')
+        ->leftJoin('EPims.dbo.Divisions', 'plantilla_positions.division_id', '=', 'Divisions.division_id')
+        ->leftJoin('EPims.dbo.Sections', 'plantilla_positions.section_id', '=', 'Sections.section_id')
+        ->join('DTRPayroll.dbo.Position', 'plantilla_positions.PosCode', '=', 'Position.PosCode')
+        ->join('EPims.dbo.Offices', 'plantilla_positions.office_code', '=', 'Offices.office_code')
         ->orderBy('item_no', 'desc');
 
         if (request()->ajax()) {

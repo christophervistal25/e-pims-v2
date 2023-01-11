@@ -61,6 +61,7 @@ class PlantillaPosition extends Model
         return $this->hasOne(Position::class, 'PosCode', 'PosCode');
     }
 
+
     public function office()
     {
         return $this->hasOne('App\Office', 'office_code', 'office_code');
