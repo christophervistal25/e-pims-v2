@@ -240,13 +240,9 @@
                             <div class="col-lg-6 pb-0">
                                 <label for="position" class="text-capitalize h5 required">Work Status</label>
                                 <select name="status" style="width : 100%;" id="status" class="form-control form-select">
-                                    <option {{ old('status', $employee->Work_Status) == 'JOB ORDER' ? 'selected' : 'disabled'}} value="JOB ORDER">JOB ORDER</option>
+                                    <option {{ old('status', $employee->Work_Status) == 'PLANTILLA' ? 'selected' : 'disabled'}} value="PLANTILLA">PLANTILLA</option>
                                     <option {{ old('status', $employee->Work_Status) == 'CONTRACT OF SERVICE' ? 'selected' : 'disabled'}} value="CONTRACT OF SERVICE">CONTRACT OF SERVICE</option>
-                                    <option {{ old('status', $employee->Work_Status) == 'CASUAL' ? 'selected' : 'disabled'}} value="CASUAL">CASUAL</option>
-                                    <option {{ old('status', $employee->Work_Status) == 'CO-TERMINUS' ? 'selected' : 'disabled'}} value="CO-TERMINUS">CO-TERMINUS</option>
-                                    <option {{ old('status', $employee->Work_Status) == 'COTERMINOUS TEMPORARY' ? 'selected' : 'disabled'}} value="COTERMINOUS TEMPORARY">COTERMINOUS TEMPORARY</option>
-                                    <option {{ old('status', $employee->Work_Status) == 'ELECTED' ? 'selected' : 'disabled'}} value="ELECTED">ELECTED</option>
-                                    <option {{ old('status', $employee->Work_Status) == 'PERMANENT' ? 'selected' : 'disabled'}} value="PERMANENT">PERMANENT</option>
+                                    <option {{ old('status', $employee->Work_Status) == 'JOB ORDER' ? 'selected' : 'disabled'}} value="JOB ORDER">JOB ORDER</option>
                                 </select>
                                 <span class="text-sm text-danger" id="edit-status-error"></span>
                             </div>
