@@ -322,7 +322,7 @@ $(document).ready(function () {
             { data: "office_name", searchable: false, name: "office_name" },
             { data: "division_name", searchable: false, name: "division_name" },
             { data: "section_name", searchable: false, name: "section_name" },
-            { data: "old_position_name", name: "old_position_name" },
+            { data: "position", name: "position" },
             {
                 className: 'text-truncate',
                 data: "action",
