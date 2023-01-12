@@ -41,6 +41,7 @@ class PlantillaOfPositionController extends Controller
         ->leftJoin('EPims.dbo.Sections', 'plantilla_positions.section_id', '=', 'Sections.section_id')
         ->join('DTRPayroll.dbo.Position', 'plantilla_positions.PosCode', '=', 'Position.PosCode')
         ->join('EPims.dbo.Offices', 'plantilla_positions.office_code', '=', 'Offices.office_code')
+        ->select('pp_id', 'office_name', 'Description', 'plantilla_positions.sg_no as sg_no', 'item_no', 'plantilla_positions.old_position_name as position', 'Divisions.division_name as division_name', 'Sections.section_name as section_name')
         ->orderBy('item_no', 'desc');
 
         if (request()->ajax()) {
