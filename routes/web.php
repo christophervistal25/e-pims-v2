@@ -282,6 +282,21 @@ Route::controller(CSCPlantillaController::class)->middleware('auth')->group(func
 Route::post('export/{id}/{type}', [CSCPlantillaReportController::class, 'export'])->name('generate.plantilla-report');
 Route::get('download/plantilla-generated-report/{fileName}', [CSCPlantillaReportController::class, 'download'])->name('download.generated.plantilla-report');
 
+Route::controller(ReportSalaryAdjustmentController::class)->middleware('auth')->group(function () {
+    // Route::get('salaryadjustment-report-list/{office}/{year}', 'list');
+    Route::get('salaryadjustment-report', 'index')->name('salaryadjustment.report.index');
+    Route::get('salaryadjustment-report-with-office/{office}/{year?}', 'withoffice');
+    Route::get('salaryadjustment-report-without-office/{office}/{year?}', 'withoutoffice');
+    // Route::get('plantilla-report/show/{id}', 'show')->name('plantilla.report.show');
+    // Route::get('plantilla-report/show/{id}/list/{office}', 'listShow')->name('plantilla.report.show.list');
+    // Route::put('plantilla-report-show/{id}/vacant', 'vacant');
+    // Route::post('plantilla-report-show/assign', 'assigned');
+    // Route::post('plantilla-report-detail-filled', 'filled');
+    // Route::post('plantilla-report-history-generate', 'generate');
+    // Route::delete('plantilla-report-history-remove/{id}', 'remove');
+    // Route::post('plantilla-report-history-checkpoint', 'checkpoint');
+    // Route::get('plantilla-report-details/view-detials/{id}', 'viewDetails');
+});
 
 Route::middleware('auth')->controller(EmployeeTrainingController::class)->group(function () {
     Route::get('trainings-report', 'index')->name('trainings-report');

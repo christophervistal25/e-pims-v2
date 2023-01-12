@@ -324,6 +324,11 @@
                             <i class="las la-folder"></i> <span>Plantilla</span></a>
                         </a>
                     </li>
+                    <li>
+                        <a class='text-decoration-none' href='{{ route('salaryadjustment.report.index') }}'>
+                            <i class="las la-folder"></i> <span>Salary Adjustment</span></a>
+                        </a>
+                    </li>
 
                     {{-- <li>
                         <a class='text-decoration-none' href='{{ route('trainings-report') }}'>
