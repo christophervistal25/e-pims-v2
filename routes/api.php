@@ -352,3 +352,8 @@ Route::post('mark-as-vacant', function (Request $request) {
                 MarkAsRetire::class,
             ])->then(fn() => response()->json(['success' => true]));
 });
+
+Route::post('mark-as-delete', function (Request $request) {
+    DB::connection('E_PIMS_CONNECTION')->table('plantillas')->where('plantilla_id', $request->plantilla_id)->update(['employee_id' => null, 'date_original_appointment' => null, 'date_last_promotion' => null, 'date_last_increment' => null]);
+    return response()->json(['success' => true]);
+});

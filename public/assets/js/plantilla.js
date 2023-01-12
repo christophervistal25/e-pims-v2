@@ -854,4 +854,36 @@ $(document).on("click", ".btnResign", async function () {
     }
 });
 
+$(document).on("click", ".btnDelete", async function () {
+    let id = $(this).attr('data-employee-plantilla-id');
+
+    let message = document.createElement('p');
+    message.innerHTML = `
+        <center>
+            Are you sure you want to delete this plantilla?
+        </center>
+    `;
+    let confirmation = await swal({
+        title : '',
+        content : message,
+        icon : 'warning',
+        dangerMode : true,
+        buttons : ["No", "Yes"],
+    });
+
+    if(confirmation) {
+        $.post({
+            url : '/api/mark-as-delete',
+            data : {
+                plantilla_id : id,
+            },
+            success : function (response) {
+                if(response.success) {
+                    $('#plantilla').DataTable().ajax.reload(null, false);
+                }
+            }
+        });
+    }
+});
+
 

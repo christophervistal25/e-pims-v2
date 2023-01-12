@@ -76,7 +76,8 @@ class PlantillaController extends Controller
                 ->addColumn('action', function ($row) use($year) {
                     $btn = "<a title='Edit Plantilla' href='".url('plantilla-of-personnel/edit'.'/'.$row->plantilla_id.'/'.$row->year)."' class=' text-white edit btn btn-success '><i class='la la-pencil'></i></a>";
                     // $btn = "<a title='Edit Plantilla' href='".route('plantilla-of-personnel.edit', $row->plantilla_id)."' class=' text-white edit btn btn-success '><i class='la la-pencil'></i></a>";
-                    $btn .= "<button title='Mark as Retire or Resign' class=' text-white edit btn btn-danger  ml-2 btnResign' data-year='{$year}' data-employee-id='{$row->employee_id}'><i class='las la-user-alt-slash'></i></button>";
+                    // $btn .= "<button title='Mark as Retire or Resign' class=' text-white edit btn btn-danger  ml-2 btnResign' data-year='{$year}' data-employee-id='{$row->employee_id}'><i class='las la-user-alt-slash'></i></button>";
+                    $btn .= "<button title='Mark as Delete' class=' text-white edit btn btn-danger  ml-2 btnDelete' data-year='{$year}' data-employee-plantilla-id='{$row->plantilla_id}' data-employee-id='{$row->employee_id}'><i class='las la-trash'></i></button>";
                     return $btn;
                 })
                 ->addColumn('sg_step', function ($row) {
