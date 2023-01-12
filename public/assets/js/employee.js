@@ -93,7 +93,7 @@ let table = $("#employees-table").DataTable({
 
         },
         {
-            name: "position.position_name",
+            name: "position.Description",
             class: "align-middle text-uppercase text-xs text-truncate",
             orderable: false,
             searchable: false,

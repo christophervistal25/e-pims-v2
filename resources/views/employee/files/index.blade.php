@@ -231,7 +231,7 @@
                                 <select name="position" style="width : 100%;" id="position" class="form-control form-select" {{ $employee->plantilla ? 'readonly' : '' }}>
                                     <option selected value="">-</option>
                                     @foreach($positions as $position)
-                                        <option {{ $employee?->plantilla?->plantilla_positions?->position?->PosCode == $position->PosCode ? 'selected' : 'disabled' }} value="{{ $position->PosCode }}">{{ $position->Description }}</option>
+                                        <option {{ $employee?->PosCode == $position->PosCode ? 'selected' : 'disabled' }} value="{{ $position->PosCode }}">{{ $position->Description }}</option>
                                     @endforeach
                                 </select>
                                 <span class="text-sm text-danger" id="edit-position-error"></span>

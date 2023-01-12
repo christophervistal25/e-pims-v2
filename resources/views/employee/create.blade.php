@@ -151,13 +151,9 @@
                         <div class="col-lg-6 pb-0">
                             <label class="h5 required">WORK STATUS</label>
                             <select name="status" style="width : 100%;" class="form-control form-select">
-                                <option value="JOB ORDER">JOB ORDER</option>
+                                <option value="PLANTILLA">PLANTILLA</option>
                                 <option value="CONTRACT OF SERVICE">CONTRACT OF SERVICE</option>
-                                <option value="CASUAL">CASUAL</option>
-                                <option value="CO-TERMINUS">CO-TERMINUS</option>
-                                <option value="COTERMINOUS TEMPORARY">COTERMINOUS TEMPORARY</option>
-                                <option value="ELECTED">ELECTED</option>
-                                <option value="PERMANENT">PERMANENT</option>
+                                <option value="JOB ORDER">JOB ORDER</option>
                             </select>
                             <span class="text-sm text-danger" id="status-error"></span>
                         </div>
