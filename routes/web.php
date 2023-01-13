@@ -294,10 +294,12 @@ Route::controller(ReportSalaryAdjustmentController::class)->middleware('auth')->
     Route::get('salaryadjustment-report', 'index')->name('salaryadjustment.report.index');
     Route::get('salaryadjustment-report-with-office/{office}/{year?}', 'withoffice');
     Route::get('salaryadjustment-report-without-office/{office}/{year?}', 'withoutoffice');
-    Route::get('print-adjustment-report/{office}/{year}/previewed', 'print');
+    Route::get('print-adjustment-report-list/{office}/{year}/previewed', 'printlist');
+    Route::get('print-adjustment-report-individual/{office}/{year}/previewed', 'previewedindividual');
+    Route::get('print-adjustment-report-individual/{office}/{year}/print', 'printindividual');
+    Route::post('print-adjustment-report-individual-editfirstparagraph', 'editfirstparagraph');
     // Route::get('plantilla-report/show/{id}/list/{office}', 'listShow')->name('plantilla.report.show.list');
     // Route::put('plantilla-report-show/{id}/vacant', 'vacant');
-    // Route::post('plantilla-report-show/assign', 'assigned');
     // Route::post('plantilla-report-detail-filled', 'filled');
     // Route::post('plantilla-report-history-generate', 'generate');
     // Route::delete('plantilla-report-history-remove/{id}', 'remove');

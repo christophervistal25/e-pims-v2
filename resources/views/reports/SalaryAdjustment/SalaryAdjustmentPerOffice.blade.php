@@ -90,7 +90,10 @@
 
                <div class="col-5 mb-2">
                     <div style="padding-right:20px;" class="float-right">
-                         <button id="printButton" class="btn btn-primary float-right" disabled><i class="fa fa-print"></i> Reports By List</button>
+                         <button id="printListButton" class="printButton btn btn-primary float-right" disabled><i class="fa fa-print"></i> Reports By List</button>
+                    </div>
+                    <div style="padding-right:20px;" class="float-right">
+                         <button id="printIndividualButton" class="printButton btn btn-primary float-right" disabled><i class="fa fa-print"></i> Reports By Individual</button>
                     </div>
                </div>
           </div>
