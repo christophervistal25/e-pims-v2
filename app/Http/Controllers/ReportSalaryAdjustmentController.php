@@ -9,6 +9,7 @@ use App\SalaryAdjustment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\App;
 
 class ReportSalaryAdjustmentController extends Controller
 {
@@ -110,6 +111,32 @@ class ReportSalaryAdjustmentController extends Controller
     //     return view('SalaryAdjustmentPerOffice.SalaryAdjustmentPerOffice');
     // }
 
+    public function print(string $office, string $year)
+    {
+        if($office == '*'){
+            $salary_adjustment = Plantilla::whereHas('salary_adjustment', function ($query) use ($year) {
+                $query->whereYear('date_adjustment', $year);
+            })->with(['Employee', 'salary_adjustment' => function ($query) use ($year) {
+                $query->whereYear('date_adjustment', $year);
+            }])->where('year', $year)->get();
+            $office_name = 'All Offices';
+        }else{
+            $salary_adjustment = Plantilla::whereHas('salary_adjustment', function ($query) use ($year) {
+                $query->whereYear('date_adjustment', $year);
+            })->with(['Employee', 'salary_adjustment' => function ($query) use ($year) {
+                $query->whereYear('date_adjustment', $year);
+            }, 'office' => function ($query) use ($office) {
+                $query->where('office_code', $office);
+            }])->where('office_code', $office)
+                ->where('year', $year)
+                ->get();
+            $office_name = $salary_adjustment[0]->office->office_name;
+        }
+        $pdf = App::make('snappy.pdf.wrapper');
+        $pdf->loadView('reports.SalaryAdjustment.Print.Previewed', compact('salary_adjustment','year','office_name'))->setPaper('legal')->setOrientation('portrait');
+
+        return $pdf->inline();
+    }
     /**
      * Show the form for creating a new resource.
      *

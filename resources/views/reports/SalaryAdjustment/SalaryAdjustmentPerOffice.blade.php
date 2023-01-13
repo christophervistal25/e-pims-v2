@@ -90,7 +90,7 @@
 
                <div class="col-5 mb-2">
                     <div style="padding-right:20px;" class="float-right">
-                         <button id="downloadButton" class="btn btn-success float-right" disabled><i class="fa fa-arrow-down"></i> Download Reports</button>
+                         <button id="printButton" class="btn btn-primary float-right" disabled><i class="fa fa-print"></i> Reports By List</button>
                     </div>
                </div>
           </div>

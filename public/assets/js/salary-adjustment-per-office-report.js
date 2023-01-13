@@ -82,15 +82,17 @@ $(document).ready(function () {
                     },
                 ],
             });
-            $("#downloadButton").prop("disabled", false);
+            $("#printButton").prop("disabled", false);
         } else {
             $("#salaryAdjustmentPerOffice").DataTable().clear();
             $("#salaryAdjustmentPerOffice").DataTable().destroy();
-            $("#downloadButton").prop("disabled", true);
+            $("#printButton").prop("disabled", true);
         }
     });
 
-    $("#downloadButton").click(function () {
-        
+    $("#printButton").click(function () {
+        let year = $("#yearAdjustment").val();
+        let office = $("#employeeOffice").val();
+        window.open(`print-adjustment-report/${office}/${year}/previewed`, "_blank");
     });
 });

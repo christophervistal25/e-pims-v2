@@ -52,6 +52,7 @@ use App\Http\Controllers\EmployeeLeave\LeaveRecallController;
 use App\Http\Controllers\Account\Employee\LeaveCardController;
 use App\Http\Controllers\Maintenance\LeaveIncrementController;
 use App\Http\Controllers\Reports\CSCPlantillaReportController;
+use App\Http\Controllers\ReportSalaryAdjustmentController;
 use App\Http\Controllers\Reports\DBMPlantillaReportController;
 use App\Http\Controllers\EmployeeLeave\LeaveUndertimeController;
 use App\Http\Controllers\EmployeeLeave\LeaveMonitoringController;
@@ -287,7 +288,7 @@ Route::controller(ReportSalaryAdjustmentController::class)->middleware('auth')->
     Route::get('salaryadjustment-report', 'index')->name('salaryadjustment.report.index');
     Route::get('salaryadjustment-report-with-office/{office}/{year?}', 'withoffice');
     Route::get('salaryadjustment-report-without-office/{office}/{year?}', 'withoutoffice');
-    // Route::get('plantilla-report/show/{id}', 'show')->name('plantilla.report.show');
+    Route::get('print-adjustment-report/{office}/{year}/previewed', 'print');
     // Route::get('plantilla-report/show/{id}/list/{office}', 'listShow')->name('plantilla.report.show.list');
     // Route::put('plantilla-report-show/{id}/vacant', 'vacant');
     // Route::post('plantilla-report-show/assign', 'assigned');
