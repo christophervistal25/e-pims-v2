@@ -82,17 +82,23 @@ $(document).ready(function () {
                     },
                 ],
             });
-            $("#printButton").prop("disabled", false);
+            $(".printButton").prop("disabled", false);
         } else {
             $("#salaryAdjustmentPerOffice").DataTable().clear();
             $("#salaryAdjustmentPerOffice").DataTable().destroy();
-            $("#printButton").prop("disabled", true);
+            $(".printButton").prop("disabled", true);
         }
     });
 
-    $("#printButton").click(function () {
+    $("#printListButton").click(function () {
         let year = $("#yearAdjustment").val();
         let office = $("#employeeOffice").val();
-        window.open(`print-adjustment-report/${office}/${year}/previewed`, "_blank");
+        window.open(`print-adjustment-report-list/${office}/${year}/previewed`, "_blank");
+    });
+    
+    $("#printIndividualButton").click(function () {
+        let year = $("#yearAdjustment").val();
+        let office = $("#employeeOffice").val();
+        window.open(`print-adjustment-report-individual/${office}/${year}/previewed`, "_blank");
     });
 });

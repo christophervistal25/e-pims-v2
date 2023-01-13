@@ -73,7 +73,7 @@ class Plantilla extends Model
 
     public function Employee()
     {
-        return $this->belongsTo(Employee::class, 'employee_id', 'Employee_id')->select('Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode', 'Birthdate', 'Work_Status');
+        return $this->belongsTo(Employee::class, 'employee_id', 'Employee_id')->select('Employee_id', 'FirstName', 'MiddleName', 'LastName', 'Suffix', 'OfficeCode', 'Birthdate', 'Work_Status','Gender');
     }
 
     public function employee_record()
