@@ -170,6 +170,12 @@ Route::group(['middleware' => ['auth', 'administrator']], function () {
     Route::resource('print-increment', 'PrintIncrementController');
 
     /* A route for the salary adjustment. */
+    Route::resource('salary-adjustment-main', 'SalaryAdjustmentMainController');
+    Route::get('salary-adjustment-main/list/all/{office_code}/', 'SalaryAdjustmentMainController@list');
+    Route::post('salary-adjustment-main-adjust-employees', 'SalaryAdjustmentMainController@store');
+
+
+
     Route::get('salary-adjustment/{id}', 'SalaryAdjustmentController@destroy')->name('salary-adjustment.delete');
     Route::resource('salary-adjustment', 'SalaryAdjustmentController');
 

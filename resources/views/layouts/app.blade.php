@@ -247,8 +247,11 @@
                                         <a class='text-decoration-none' href="{{  route('salary-adjustment.index') }}">
                                             <span>Individual</span>
                                         </a>
-                                        <a class='text-decoration-none' href="{{  route('salary-adjustment-per-office.index') }}">
+                                        {{-- <a class='text-decoration-none' href="{{  route('salary-adjustment-per-office.index') }}">
                                             <span>Per Office</span>
+                                        </a> --}}
+                                        <a class='text-decoration-none' href="{{  route('salary-adjustment-main.index') }}">
+                                            <span>All Employees</span>
                                         </a>
                                     </li>
                                 </ul>
