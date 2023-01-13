@@ -88,47 +88,45 @@ class SalaryAdjustmentMainController extends Controller
     public function store(Request $request)
     {
 
-        $currentYear = date('Y');
-        $fetchYear = date('Y') - 1;
+        //copy previous year data in plantilla
 
-        if(request()->office == '*'){
-            $data = Plantilla::with('plantilla_positions');
-        } else {
-            $data = Plantilla::with('plantilla_positions')->where('office_code', request()->office);
-        }
-        $data->where('year', $fetchYear)->get()->each(function ($record) use ($currentYear) {
-            $currentData = $record->getAttributes();
-            $currentData['plantilla_id'] = tap(Setting::where('Keyname', 'AUTONUMBER')->first())->increment('Keyvalue', 1)->Keyvalue;
-            $currentData['year'] = $currentYear;
+        // $currentYear = date('Y');
+        // $fetchYear = date('Y') - 1;
 
-            $getsalaryResult = SalaryGrade::where('sg_no', $currentData['sg_no'])
-                ->where('sg_year', Carbon::now()->format('Y'))
-                ->first(['sg_step'.$currentData['step_no']]);
+        // if(request()->office == '*'){
+        //     $data = Plantilla::with('plantilla_positions');
+        // } else {
+        //     $data = Plantilla::with('plantilla_positions')->where('office_code', request()->office);
+        // }
+        // $data->where('year', $fetchYear)->get()->each(function ($record) use ($currentYear) {
+        //     $currentData = $record->getAttributes();
+        //     $currentData['plantilla_id'] = tap(Setting::where('Keyname', 'AUTONUMBER')->first())->increment('Keyvalue', 1)->Keyvalue;
+        //     $currentData['year'] = $currentYear;
 
-            $currentData['salary_amount_previous'] = $currentData['salary_amount'];
-            $currentData['salary_amount_previous_yearly'] = $currentData['salary_amount_yearly'];
+        //     $getsalaryResult = SalaryGrade::where('sg_no', $currentData['sg_no'])
+        //         ->where('sg_year', Carbon::now()->format('Y'))
+        //         ->first(['sg_step'.$currentData['step_no']]);
 
-            $currentData['salary_amount'] = $getsalaryResult['sg_step'.$currentData['step_no']];
-            $currentData['salary_amount_yearly'] = $getsalaryResult['sg_step'.$currentData['step_no']] * 12;
+        //     $currentData['salary_amount_previous'] = $currentData['salary_amount'];
+        //     $currentData['salary_amount_previous_yearly'] = $currentData['salary_amount_yearly'];
 
+        //     $currentData['salary_amount'] = $getsalaryResult['sg_step'.$currentData['step_no']];
+        //     $currentData['salary_amount_yearly'] = $getsalaryResult['sg_step'.$currentData['step_no']] * 12;
+        //     unset($currentData['created_at']);
+        //     unset($currentData['updated_at']);
 
-
-            unset($currentData['created_at']);
-            unset($currentData['updated_at']);
-
-            Plantilla::updateOrCreate([
-                'year' => $currentData['year'],
-                'status' => $currentData['status'],
-                'office_code' => $currentData['office_code'],
-                'employee_id' => $currentData['employee_id'],
-                'pp_id' => $currentData['pp_id'],
-            ], $currentData);
-        });
+        //     Plantilla::updateOrCreate([
+        //         'year' => $currentData['year'],
+        //         'status' => $currentData['status'],
+        //         'office_code' => $currentData['office_code'],
+        //         'employee_id' => $currentData['employee_id'],
+        //         'pp_id' => $currentData['pp_id'],
+        //     ], $currentData);
+        // });
 
 
         // adjust salary per office
         $yearDeduct = Carbon::now()->subYear(1)->format('Y');
-
         $data = Plantilla::whereDoesntHave('salary_adjustment', function ($query) {
         $query->whereYear('year', '!=', Carbon::now()->format('Y'));
         })->with('Employee', 'plantilla_positions', 'plantilla_positions.position', 'salary_adjustment','office')

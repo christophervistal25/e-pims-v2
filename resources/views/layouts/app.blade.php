@@ -460,6 +460,7 @@
                             , icon: 'success'
                             , buttons: false
                         , });
+                        window.location.href = "/plantilla-of-personnel";
                     }
                 }
             });
