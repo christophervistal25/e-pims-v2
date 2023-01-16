@@ -104,7 +104,7 @@ $(document).ready(function () {
                                     swal("Successfully adjust salary!", "", "success");
                                     $("#salaryAdjustment").DataTable().ajax.reload();
                                  }
-                                 setTimeout(delayFunc,60000);
+                                 setTimeout(delayFunc,20000);
                             }
                         });
                 } else {

@@ -451,16 +451,19 @@
                 , method: 'POST'
                 , success: function(response) {
                     if (response.success) {
-                        $('#plantillaCreateScheduleModal').modal('toggle');
-                        $('#btnCreatePlantillaScheduleModal').removeAttr('disabled');
-                        $('#spinner-create-plantilla-schedule').hide();
-                        swal({
-                            title: ''
-                            , text: 'Successfully generate plantilla schedule for this year'
-                            , icon: 'success'
-                            , buttons: false
-                        , });
-                        window.location.href = "/plantilla-of-personnel";
+                         function delayFunc() {
+                            $('#plantillaCreateScheduleModal').modal('toggle');
+                            $('#btnCreatePlantillaScheduleModal').removeAttr('disabled');
+                            $('#spinner-create-plantilla-schedule').hide();
+                            swal({
+                                title: ''
+                                , text: 'Successfully generate plantilla schedule for this year'
+                                , icon: 'success'
+                                , buttons: false
+                            , });
+                            window.location.href = "/plantilla-of-personnel";
+                         }
+                         setTimeout(delayFunc,20000);
                     }
                 }
             });

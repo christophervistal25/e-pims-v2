@@ -9,6 +9,7 @@ use App\SalaryGrade;
 use App\OfficeCharging;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
+use App\Jobs\PlantillaScheduleJobs;
 
 class PlantillaOfScheduleController extends Controller
 {
@@ -107,30 +108,7 @@ class PlantillaOfScheduleController extends Controller
         $currentYear = date('Y');
         $fetchYear = date('Y') - 1;
         Plantilla::with('plantilla_positions')->where('year', $fetchYear)->get()->each(function ($record) use ($currentYear) {
-            $currentData = $record->getAttributes();
-            $currentData['plantilla_id'] = tap(Setting::where('Keyname', 'AUTONUMBER')->first())->increment('Keyvalue', 1)->Keyvalue;
-            $currentData['year'] = $currentYear;
-
-            $getsalaryResult = SalaryGrade::where('sg_no', $currentData['sg_no'])
-                ->where('sg_year', Carbon::now()->format('Y'))
-                ->first(['sg_step'.$currentData['step_no']]);
-
-            $currentData['salary_amount_previous'] = $currentData['salary_amount'];
-            $currentData['salary_amount_previous_yearly'] = $currentData['salary_amount_yearly'];
-
-            $currentData['salary_amount'] = $getsalaryResult['sg_step'.$currentData['step_no']];
-            $currentData['salary_amount_yearly'] = $getsalaryResult['sg_step'.$currentData['step_no']] * 12;
-
-            unset($currentData['created_at']);
-            unset($currentData['updated_at']);
-
-            Plantilla::updateOrCreate([
-                'year' => $currentData['year'],
-                'status' => $currentData['status'],
-                'office_code' => $currentData['office_code'],
-                'employee_id' => $currentData['employee_id'],
-                'pp_id' => $currentData['pp_id'],
-            ], $currentData);
+            PlantillaScheduleJobs::dispatch($currentYear,$record);
         });
 
         return response()->json(['success' => true]);
