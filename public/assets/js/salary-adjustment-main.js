@@ -99,9 +99,12 @@ $(document).ready(function () {
                                 office: office,
                             },
                             success: function(response) {
+                                function delayFunc() {
                                     swal.close()
                                     swal("Successfully adjust salary!", "", "success");
                                     $("#salaryAdjustment").DataTable().ajax.reload();
+                                 }
+                                 setTimeout(delayFunc,60000);
                             }
                         });
                 } else {

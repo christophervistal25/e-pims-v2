@@ -9,6 +9,7 @@ use App\SalaryGrade;
 use App\SalaryAdjustment;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
+use App\Jobs\SalaryAdjustmentJob;
 use Illuminate\Support\Facades\DB;
 
 class SalaryAdjustmentMainController extends Controller
@@ -37,12 +38,13 @@ class SalaryAdjustmentMainController extends Controller
 
 
     public function list($office){
-            $yearDeduct = Carbon::now()->subYear(1)->format('Y');
+
+            // $yearDeduct = Carbon::now()->subYear(1)->format('Y');
             $data = Plantilla::whereDoesntHave('salary_adjustment', function ($query) {
-            $query->whereYear('year', '!=', Carbon::now()->format('Y'));
+            $query->whereYear('date_adjustment', Carbon::now()->format('Y'));
             })->with('Employee', 'plantilla_positions', 'plantilla_positions.position', 'salary_adjustment','office')
             ->where('Employee_id', '!=', null)
-            ->where('year', $yearDeduct);
+            ->where('year', Carbon::now()->format('Y'));
 
             if (request()->ajax()) {
                 $datas = ($office != '*') ? $data->where('office_code', $office)->get()
@@ -125,73 +127,91 @@ class SalaryAdjustmentMainController extends Controller
         // });
 
 
-        // adjust salary per office
-        $yearDeduct = Carbon::now()->subYear(1)->format('Y');
-        $data = Plantilla::whereDoesntHave('salary_adjustment', function ($query) {
-        $query->whereYear('year', '!=', Carbon::now()->format('Y'));
-        })->with('Employee', 'plantilla_positions', 'plantilla_positions.position', 'salary_adjustment','office')
-        ->where('Employee_id', '!=', null)
-        ->where('year', $yearDeduct);
-        $datas = (request()->office != '*') ? $data->where('office_code', request()->office)->get()
-                : $data->get();
-        $newAdjustment = $datas->toArray();
-        foreach ($newAdjustment as $newAdjustments) {
-            $getsalaryResult = SalaryGrade::where('sg_no', $newAdjustments['sg_no'])
-                ->where('sg_year', Carbon::now()->format('Y'))
-                ->first(['sg_step'.$newAdjustments['step_no']]);
-            $salaryDiff = $getsalaryResult['sg_step'.$newAdjustments['step_no']] - $newAdjustments['salary_amount'];
-            $dateCheck = request()->remarks;
-            if ($dateCheck == '') {
-                $remarks = 'Salary Adjustment';
-            } else {
-                $remarks = request()->remarks;
-            }
-            DB::table('EPims.dbo.salary_adjustments')->insert(
-                [
-                    'id' => tap(Setting::where('Keyname', 'AUTONUMBER')->first())->increment('Keyvalue', 1)->Keyvalue,
-                    'employee_id' => $newAdjustments['employee_id'],
-                    'office_code' => $newAdjustments['office_code'],
-                    'item_no' => $newAdjustments['item_no'],
-                    'pp_id' => $newAdjustments['pp_id'],
-                    'date_adjustment' => request()->dateAdjustment,
-                    'sg_no' => $newAdjustments['sg_no'],
-                    'step_no' => $newAdjustments['step_no'],
-                    'old_sg_no' => $newAdjustments['sg_no'],
-                    'old_step_no' => $newAdjustments['step_no'],
-                    'salary_previous' => $newAdjustments['salary_amount'],
-                    'salary_new' => $getsalaryResult['sg_step'.$newAdjustments['step_no']],
-                    'salary_diff' => $salaryDiff,
-                    'remarks' => $remarks,
-                    'created_at' => Carbon::now(),
-                    'deleted_at' => null,
-                ]
-            );
+        // // adjust salary per office
+        // $yearDeduct = Carbon::now()->subYear(1)->format('Y');
+        // $data = Plantilla::whereDoesntHave('salary_adjustment', function ($query) {
+        // $query->whereYear('year', '!=', Carbon::now()->format('Y'));
+        // })->with('Employee', 'plantilla_positions', 'plantilla_positions.position', 'salary_adjustment','office')
+        // ->where('Employee_id', '!=', null)
+        // ->where('year', $yearDeduct);
+        // $datas = (request()->office != '*') ? $data->where('office_code', request()->office)->get()
+        //         : $data->get();
+        // $newAdjustment = $datas->toArray();
+
+
+        // foreach ($newAdjustment as $newAdjustments) {
+
+
+        //     $getsalaryResult = SalaryGrade::where('sg_no', $newAdjustments['sg_no'])
+        //         ->where('sg_year', Carbon::now()->format('Y'))
+        //         ->first(['sg_step'.$newAdjustments['step_no']]);
+        //     $salaryDiff = $getsalaryResult['sg_step'.$newAdjustments['step_no']] - $newAdjustments['salary_amount'];
+        //     $dateCheck = request()->remarks;
+        //     if ($dateCheck == '') {
+        //         $remarks = 'Salary Adjustment';
+        //     } else {
+        //         $remarks = request()->remarks;
+        //     }
+        //     DB::table('EPims.dbo.salary_adjustments')->insert(
+        //         [
+        //             'id' => tap(Setting::where('Keyname', 'AUTONUMBER')->first())->increment('Keyvalue', 1)->Keyvalue,
+        //             'employee_id' => $newAdjustments['employee_id'],
+        //             'office_code' => $newAdjustments['office_code'],
+        //             'item_no' => $newAdjustments['item_no'],
+        //             'pp_id' => $newAdjustments['pp_id'],
+        //             'date_adjustment' => request()->dateAdjustment,
+        //             'sg_no' => $newAdjustments['sg_no'],
+        //             'step_no' => $newAdjustments['step_no'],
+        //             'old_sg_no' => $newAdjustments['sg_no'],
+        //             'old_step_no' => $newAdjustments['step_no'],
+        //             'salary_previous' => $newAdjustments['salary_amount'],
+        //             'salary_new' => $getsalaryResult['sg_step'.$newAdjustments['step_no']],
+        //             'salary_diff' => $salaryDiff,
+        //             'remarks' => $remarks,
+        //             'created_at' => Carbon::now(),
+        //             'deleted_at' => null,
+        //         ]
+        //     );
 
 
 
-            /* Updating the current service record of the employee soon to be previous record. */
-            $serviceToDate = Carbon::parse(request()->dateAdjustment)->subDays(1);
-            DB::table('EPims.dbo.service_records')->select('employee_id', 'service_from_date', 'service_to_date')->where('employee_id', $newAdjustments['employee_id'])->where('service_to_date', null)->latest('service_from_date')
-            ->update(['service_to_date' => $serviceToDate]);
+        //     /* Updating the current service record of the employee soon to be previous record. */
+        //     $serviceToDate = Carbon::parse(request()->dateAdjustment)->subDays(1);
+        //     DB::table('EPims.dbo.service_records')->select('employee_id', 'service_from_date', 'service_to_date')->where('employee_id', $newAdjustments['employee_id'])->where('service_to_date', null)->latest('service_from_date')
+        //     ->update(['service_to_date' => $serviceToDate]);
 
-            DB::table('EPims.dbo.service_records')->insert(
-                [
-                    'id' => tap(Setting::where('Keyname', 'AUTONUMBER')->first())->increment('Keyvalue', 1)->Keyvalue,
-                    'employee_id' => $newAdjustments['employee']['Employee_id'],
-                    'service_from_date' => request()->dateAdjustment,
-                    'PosCode' => $newAdjustments['plantilla_positions']['PosCode'],
-                    'status' => $newAdjustments['status'],
-                    'salary' => $getsalaryResult['sg_step'.$newAdjustments['step_no']],
-                    'office_code' => $newAdjustments['office_code'],
-                    'separation_cause' => $remarks,
-                    'created_at' => Carbon::now(),
-                ]
-            );
+        //     DB::table('EPims.dbo.service_records')->insert(
+        //         [
+        //             'id' => tap(Setting::where('Keyname', 'AUTONUMBER')->first())->increment('Keyvalue', 1)->Keyvalue,
+        //             'employee_id' => $newAdjustments['employee']['Employee_id'],
+        //             'service_from_date' => request()->dateAdjustment,
+        //             'PosCode' => $newAdjustments['plantilla_positions']['PosCode'],
+        //             'status' => $newAdjustments['status'],
+        //             'salary' => $getsalaryResult['sg_step'.$newAdjustments['step_no']],
+        //             'office_code' => $newAdjustments['office_code'],
+        //             'separation_cause' => $remarks,
+        //             'created_at' => Carbon::now(),
+        //         ]
+        //     );
+        // }
+
+
+        //  $yearDeduct = Carbon::now()->subYear(1)->format('Y');
+         $data = Plantilla::whereDoesntHave('salary_adjustment', function ($query) {
+         $query->whereYear('date_adjustment', Carbon::now()->format('Y'));
+         })->with('Employee', 'plantilla_positions', 'plantilla_positions.position', 'salary_adjustment','office')
+         ->where('Employee_id', '!=', null)
+         ->where('year', Carbon::now()->format('Y'));
+         $datas = (request()->office != '*') ? $data->where('office_code', request()->office)->get()
+                 : $data->get();
+         $newAdjustment = $datas->toArray();
+
+         $remark = request()->remarks;
+
+         $dateAdjustment = request()->dateAdjustment;
+         foreach ($newAdjustment as $newAdjustments) {
+            SalaryAdjustmentJob::dispatch($newAdjustments,$remark,$dateAdjustment);
         }
-
-
-
-
         return response()->json(['success' => true]);
     }
 
