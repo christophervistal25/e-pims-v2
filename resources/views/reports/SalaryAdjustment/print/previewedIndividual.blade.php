@@ -28,7 +28,8 @@
 
 {{-- BUTTONS --}}
 <div id='action-buttons' class="float-right mb-2">
-    <a class="btn btn-outline-dark" href="/print-adjustment-report-individual/{{ $office }}/{{ $year }}/print" id="printBtn"><i class="la la-print"></i>&nbsp Print</a>
+    <a class="btn btn-success" name="{{ $office }}|{{ $year }}" id="downloadBtn"><i class="la la-arrow-down"></i>&nbsp Download</a>
+    <a class="btn btn-outline-dark" name="{{ $office }}|{{ $year }}" id="printBtn"><i class="la la-print"></i>&nbsp Print</a>
 </div>
 <div class="clearfix"></div>
 
@@ -143,6 +144,20 @@
             $(document).click(function () {
                 //console.log("Hello World");
             });
+        });
+        document.getElementById('downloadBtn').addEventListener('click', function(){
+            if(this.name.split('_')[1] == 'individual'){
+                window.open('/print-adjustment-report-individual/' + this.name.split('|')[0] + '_' + this.name.split('|')[1] + `/individual/download`,`_blank`);
+            }else{   
+                window.open('/print-adjustment-report-individual/' + this.name.split('|')[0] + '/' + this.name.split('|')[1] + `/download`,`_blank`);
+            }
+        });
+        document.getElementById('printBtn').addEventListener('click', function(){
+            if(this.name.split('_')[1] == 'individual'){
+                window.open('/print-adjustment-report-individual/' + this.name.split('|')[0] + '_' + this.name.split('|')[1] + `/individual/print`,`_blank`);
+            }else{
+                window.open('/print-adjustment-report-individual/' + this.name.split('|')[0] + '/' + this.name.split('|')[1] + `/print`,`_blank`);
+            }
         });
         document.getElementById('editbtnFirstParagraph').addEventListener('click', function(){
             let spanFirstParagraph = document.getElementById('spanFirstParagraph').innerHTML;

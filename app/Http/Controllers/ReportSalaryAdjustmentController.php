@@ -54,16 +54,15 @@ class ReportSalaryAdjustmentController extends Controller
                 ->where('year', $year)
                 ->get();
         }
-
         return DataTables::of($data)
-        //     ->addColumn('action', function ($row) {
-        //         $btn = "<a title='Edit Salary Adjustment' href='".route('salary-adjustment-per-office.edit', $row->salary_adjustment[0]->id)."' class=' edit btn btn-success mr-1'><i class='la la-pencil'></i></a>";
+            ->addColumn('action', function ($row) {
+                // $btn = "<a title='Print Previewed Salary Adjustment' class=' printpreviewed btn btn-success mr-1'><i class='la la-print'></i></a>";
         //         $btn = $btn."<a title='Delete Salary Adjustment' id='delete' value='".$row->salary_adjustment[0]->id."' class='delete delete btn btn-danger mr-1'><i class='la la-trash'></i></a>
         // ";
 
         //         return $btn;
-        //     })
-        //    ->rawColumns(['action'])
+            })
+           ->rawColumns(['action'])
         ->make(true);
     }
 
@@ -153,56 +152,130 @@ class ReportSalaryAdjustmentController extends Controller
 
     public function previewedindividual(string $office, string $year)
     {
-        if($office == '*'){
+        if($year == 'individual'){
+            $data = explode("_",$office);
+            $plantilla_id = $data[0];
+            $year = $data[1];
             $salaryAdjustments = Plantilla::whereHas('salary_adjustment', function ($query) use ($year) {
                 $query->whereYear('date_adjustment', $year);
-            })->with(['plantilla_positions','Employee', 'salary_adjustment' => function ($query) use ($year) {
+            })->where('plantilla_id', $plantilla_id)->with(['plantilla_positions','Employee', 'salary_adjustment' => function ($query) use ($year) {
                 $query->whereYear('date_adjustment', $year);
-            }])->where('year', $year)->get();
+            // }])->where('year', $year)->first();
+            }])->where('year', $year)->limit(1)->get();
+            $office = $plantilla_id.'_'.$year;
+            $year = 'individual';
         }else{
-            $salaryAdjustments = Plantilla::whereHas('salary_adjustment', function ($query) use ($year) {
-                $query->whereYear('date_adjustment', $year);
-            })->with(['plantilla_positions','Employee', 'salary_adjustment' => function ($query) use ($year) {
-                $query->whereYear('date_adjustment', $year);
-            }, 'office' => function ($query) use ($office) {
-                $query->where('office_code', $office);
-            }])->where('office_code', $office)
-                ->where('year', $year)
-                ->get();
+            if($office == '*'){
+                $salaryAdjustments = Plantilla::whereHas('salary_adjustment', function ($query) use ($year) {
+                    $query->whereYear('date_adjustment', $year);
+                })->with(['plantilla_positions','Employee', 'salary_adjustment' => function ($query) use ($year) {
+                    $query->whereYear('date_adjustment', $year);
+                // }])->where('year', $year)->first();
+                }])->where('year', $year)->limit(1)->get();
+            }else{
+                $salaryAdjustments = Plantilla::whereHas('salary_adjustment', function ($query) use ($year) {
+                    $query->whereYear('date_adjustment', $year);
+                })->with(['plantilla_positions','Employee', 'salary_adjustment' => function ($query) use ($year) {
+                    $query->whereYear('date_adjustment', $year);
+                }, 'office' => function ($query) use ($office) {
+                    $query->where('office_code', $office);
+                }])->where('office_code', $office)
+                    ->where('year', $year)
+                    // ->first();
+                    ->get();
+            }
         }
+        // $key = 0;
         $setting = Setting::find('SALARYADPRINT');
 
+        // return view('reports.SalaryAdjustment.Print.PreviewedIndividual', compact('key','salaryAdjustment','office','year', 'setting'));
+        
         return view('reports.SalaryAdjustment.Print.PreviewedIndividual', compact('salaryAdjustments','office','year', 'setting'));
     }
 
     public function printindividual(string $office, string $year)
     {
-        // dd('asd');
-        if($office == '*'){
+        if($year == 'individual'){
+            $data = explode("_",$office);
+            $plantilla_id = $data[0];
+            $year = $data[1];
             $salaryAdjustments = Plantilla::whereHas('salary_adjustment', function ($query) use ($year) {
                 $query->whereYear('date_adjustment', $year);
-            })->with(['plantilla_positions','Employee', 'salary_adjustment' => function ($query) use ($year) {
+            })->where('plantilla_id', $plantilla_id)->with(['plantilla_positions','Employee', 'salary_adjustment' => function ($query) use ($year) {
                 $query->whereYear('date_adjustment', $year);
-            }])->where('year', $year)->get();
-            $office_name = 'All Offices';
+            // }])->where('year', $year)->first();
+            }])->where('year', $year)->limit(1)->get();
         }else{
-            $salaryAdjustments = Plantilla::whereHas('salary_adjustment', function ($query) use ($year) {
-                $query->whereYear('date_adjustment', $year);
-            })->with(['plantilla_positions','Employee', 'salary_adjustment' => function ($query) use ($year) {
-                $query->whereYear('date_adjustment', $year);
-            }, 'office' => function ($query) use ($office) {
-                $query->where('office_code', $office);
-            }])->where('office_code', $office)
-                ->where('year', $year)
-                ->get();
-            $office_name = $salaryAdjustments[0]->office->office_name;
+            if($office == '*'){
+                $salaryAdjustments = Plantilla::whereHas('salary_adjustment', function ($query) use ($year) {
+                    $query->whereYear('date_adjustment', $year);
+                })->with(['plantilla_positions','Employee', 'salary_adjustment' => function ($query) use ($year) {
+                    $query->whereYear('date_adjustment', $year);
+                }])->where('year', $year)->get();
+                $office_name = 'All Offices';
+            }else{
+                $salaryAdjustments = Plantilla::whereHas('salary_adjustment', function ($query) use ($year) {
+                    $query->whereYear('date_adjustment', $year);
+                })->with(['plantilla_positions','Employee', 'salary_adjustment' => function ($query) use ($year) {
+                    $query->whereYear('date_adjustment', $year);
+                }, 'office' => function ($query) use ($office) {
+                    $query->where('office_code', $office);
+                }])->where('office_code', $office)
+                    ->where('year', $year)
+                    ->get();
+                $office_name = $salaryAdjustments[0]->office->office_name;
+            }
         }
         $setting = Setting::find('SALARYADPRINT');
         $space = '&nbsp;&nbsp;&nbsp;&nbsp;';
         $pdf = App::make('snappy.pdf.wrapper');
         $pdf->loadView('reports.SalaryAdjustment.Print.PrintIndividual', compact('salaryAdjustments','office','year', 'setting','space'))->setPaper('letter')->setOrientation('portrait');
 
+        // return $pdf->download('NOTICE OF SALARY ADJUSTMENT '.date('m-d-Y').'.pdf');
         return $pdf->inline();
+    }
+
+    public function downloadindividual(string $office, string $year)
+    {
+        if($year == 'individual'){
+            $data = explode("_",$office);
+            $plantilla_id = $data[0];
+            $year = $data[1];
+            $salaryAdjustments = Plantilla::whereHas('salary_adjustment', function ($query) use ($year) {
+                $query->whereYear('date_adjustment', $year);
+            })->where('plantilla_id', $plantilla_id)->with(['plantilla_positions','Employee', 'salary_adjustment' => function ($query) use ($year) {
+                $query->whereYear('date_adjustment', $year);
+            // }])->where('year', $year)->first();
+            }])->where('year', $year)->limit(1)->get();
+            $office_name = $salaryAdjustments[0]->employee->fullname;
+        }else{
+            if($office == '*'){
+                $salaryAdjustments = Plantilla::whereHas('salary_adjustment', function ($query) use ($year) {
+                    $query->whereYear('date_adjustment', $year);
+                })->with(['plantilla_positions','Employee', 'salary_adjustment' => function ($query) use ($year) {
+                    $query->whereYear('date_adjustment', $year);
+                }])->where('year', $year)->get();
+                $office_name = 'All Offices';
+            }else{
+                $salaryAdjustments = Plantilla::whereHas('salary_adjustment', function ($query) use ($year) {
+                    $query->whereYear('date_adjustment', $year);
+                })->with(['plantilla_positions','Employee', 'salary_adjustment' => function ($query) use ($year) {
+                    $query->whereYear('date_adjustment', $year);
+                }, 'office' => function ($query) use ($office) {
+                    $query->where('office_code', $office);
+                }])->where('office_code', $office)
+                    ->where('year', $year)
+                    ->get();
+                $office_name = $salaryAdjustments[0]->office->office_name;
+            }
+        }
+        $setting = Setting::find('SALARYADPRINT');
+        $space = '&nbsp;&nbsp;&nbsp;&nbsp;';
+        $pdf = App::make('snappy.pdf.wrapper');
+        $pdf->loadView('reports.SalaryAdjustment.Print.downloadIndividual', compact('salaryAdjustments','office','year', 'setting','space'))->setPaper('letter')->setOrientation('portrait');
+
+        return $pdf->download('NOTICE OF SALARY ADJUSTMENT '.$office_name.date('m-d-Y').'.pdf');
+        // return $pdf->inline();
     }
     
     /**
