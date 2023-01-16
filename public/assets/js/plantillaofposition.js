@@ -303,6 +303,7 @@ $(document).ready(function () {
         pagingType: "full_numbers",
         destroy: true,
         retrieve: true,
+        pageLength: 50,
         columnDefs: [{ width: "10%", targets: 5 }],
         language: {
             processing:

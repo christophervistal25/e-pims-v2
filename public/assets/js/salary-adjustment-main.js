@@ -20,6 +20,7 @@ $(document).ready(function () {
             ).DataTable({
                 processing: true,
                 destroy: true,
+                pageLength: 50,
                 retrieve: true,
                 pagingType: "full_numbers",
                 language: {

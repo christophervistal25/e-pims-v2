@@ -6,6 +6,7 @@ $(function () {
         processing: true,
         destroy: true,
         retrieve: true,
+        pageLength: 50,
         pagingType: "full_numbers",
         language: {
             processing:

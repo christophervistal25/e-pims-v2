@@ -10,8 +10,10 @@ let year = date.getFullYear();
 let salaryGradeTable = $("#salaryGradeTable").DataTable({
     processing: true,
     serverSide: true,
+    pageLength: 50,
     scrollX: true,
     scrollCollapse: true,
+    pageLength: 50,
     fixedColumns: {
         left: 1,
     },
