@@ -80,6 +80,13 @@ $(document).ready(function () {
                             return adjustment.salary_diff;
                         },
                     },
+                    {
+                        data: "action",
+                        name: "action",
+                        render: function (_, _, row) {
+                            return `<a href='print-adjustment-report-individual/${row.plantilla_id}_${row.year}/individual/previewed'  target='_blank' title='Print Previewed Salary Adjustment' class='printpreviewed btn btn-success mr-1'><i class='la la-print'></i></a>`;
+                        },
+                    },
                 ],
             });
             $(".printButton").prop("disabled", false);

@@ -64,7 +64,7 @@
 
      <div id="table" class="page-header ">
           <div class="row">
-               <div style="padding-left:35px;" class="col-5 mb-2">
+               <div class="col-5 mb-2">
                     <select data-style="btn-primarys text-white selectpicker" name="employeeOffice" data-live-search="true" id="employeeOffice" data-size="5"
                          @class([
                               'form-control',
@@ -109,6 +109,7 @@
                               <td scope="col" class="text-center">Previous Salary</td>
                               <td scope="col" class="text-center">New Salary</td>
                               <td scope="col" class="text-center">Salary Difference</td>
+                              <td scope="col" class="text-center">Action</td>
                          </tr>
                     </thead>
                </table>
