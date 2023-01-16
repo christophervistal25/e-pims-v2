@@ -53,8 +53,19 @@ $(document).ready(function () {
                         name: "step_no",
                     },
                     {
+                        data: "salary_amount_previous",
+                        name: "salary_amount_previous",
+                        render: $.fn.dataTable.render.number(",", ".", 2),
+                    },
+                    {
                         data: "salary_amount",
                         name: "salary_amount",
+                        render: $.fn.dataTable.render.number(",", ".", 2),
+                    },
+                    {
+                        data: "salary_difference",
+                        name: "salary_difference",
+                        render: $.fn.dataTable.render.number(",", ".", 2),
                     },
                 ],
             });

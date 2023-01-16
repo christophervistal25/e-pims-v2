@@ -99,7 +99,9 @@
                               <td scope="col" class="text-center">Position</td>
                               <td scope="col" class="text-center">Salary Grade</td>
                               <td scope="col" class="text-center">Step Number</td>
-                              <td scope="col" class="text-center">Current Salary </td>
+                              <td scope="col" class="text-center">Previous Salary </td>
+                              <td scope="col" class="text-center">New Salary </td>
+                              <td scope="col" class="text-center">Salary Difference</td>
                          </tr>
                     </thead>
                </table>

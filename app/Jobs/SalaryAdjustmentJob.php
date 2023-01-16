@@ -40,11 +40,7 @@ class SalaryAdjustmentJob implements ShouldQueue
      */
     public function handle()
     {
-
-        $getsalaryResult = SalaryGrade::where('sg_no', $this->newAdjustments['sg_no'])
-        ->where('sg_year', Carbon::now()->format('Y'))
-        ->first(['sg_step'.$this->newAdjustments['step_no']]);
-        $salaryDiff = $getsalaryResult['sg_step'.$this->newAdjustments['step_no']] - $this->newAdjustments['salary_amount'];
+        $salaryDiff = $this->newAdjustments['salary_amount'] - $this->newAdjustments['salary_amount_previous'];
         $dateCheck = $this->remark;
         if ($dateCheck == '') {
             $remarks = 'Salary Adjustment';
@@ -63,16 +59,14 @@ class SalaryAdjustmentJob implements ShouldQueue
                 'step_no' => $this->newAdjustments['step_no'],
                 'old_sg_no' => $this->newAdjustments['sg_no'],
                 'old_step_no' => $this->newAdjustments['step_no'],
-                'salary_previous' => $this->newAdjustments['salary_amount'],
-                'salary_new' => $getsalaryResult['sg_step'.$this->newAdjustments['step_no']],
+                'salary_previous' => $this->newAdjustments['salary_amount_previous'],
+                'salary_new' => $this->newAdjustments['salary_amount'],
                 'salary_diff' => $salaryDiff,
                 'remarks' => $remarks,
                 'created_at' => Carbon::now(),
                 'deleted_at' => null,
             ]
         );
-
-
 
         /* Updating the current service record of the employee soon to be previous record. */
         $serviceToDate = Carbon::parse($this->dateAdjustment)->subDays(1);
@@ -86,7 +80,7 @@ class SalaryAdjustmentJob implements ShouldQueue
                 'service_from_date' => $this->dateAdjustment,
                 'PosCode' => $this->newAdjustments['plantilla_positions']['PosCode'],
                 'status' => $this->newAdjustments['status'],
-                'salary' => $getsalaryResult['sg_step'.$this->newAdjustments['step_no']],
+                'salary' => $this->newAdjustments['salary_amount'],
                 'office_code' => $this->newAdjustments['office_code'],
                 'separation_cause' => $remarks,
                 'created_at' => Carbon::now(),

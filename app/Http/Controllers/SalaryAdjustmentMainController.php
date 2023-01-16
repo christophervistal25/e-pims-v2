@@ -63,6 +63,10 @@ class SalaryAdjustmentMainController extends Controller
                 ->addColumn('office', function ($row) {
                     return $row->office->office_name;
                 })
+                ->addColumn('salary_difference', function ($row) {
+                    $diff = $row->salary_amount - $row->salary_amount_previous;
+                    return $diff;
+                })
                 ->rawColumns(['action'])
                 ->make(true);
             }
@@ -202,6 +206,7 @@ class SalaryAdjustmentMainController extends Controller
          })->with('Employee', 'plantilla_positions', 'plantilla_positions.position', 'salary_adjustment','office')
          ->where('Employee_id', '!=', null)
          ->where('year', Carbon::now()->format('Y'));
+
          $datas = (request()->office != '*') ? $data->where('office_code', request()->office)->get()
                  : $data->get();
          $newAdjustment = $datas->toArray();
