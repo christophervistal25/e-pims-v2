@@ -136,7 +136,7 @@
             <div class="text" style="font-family: 'Open Sans', sans-serif">
                 <p>Position Title: <b style="text-decoration: underline">{{ $salaryAdjustment->plantilla_positions->position->Description }}</b></p>
                 <p style="margin-top: -18px;">Salary Grade: {{ $salaryAdjustment->salary_adjustment[0]->sg_no }}</p>
-                <p style="margin-top: -18px;">Item No., FY: {{ Carbon\Carbon::parse($salaryAdjustment->salary_adjustment[0]->date_adjustment)->format('Y') }} Plantilla of Personnel: {{ ++$key }}</p>
+                <p style="margin-top: -18px;">Item No., FY: {{ Carbon\Carbon::parse($salaryAdjustment->salary_adjustment[0]->date_adjustment)->format('Y') }} Plantilla of Personnel: {{ $salaryAdjustment->item_no }}</p>
             </div>
 
             {{-- FOOTER --}}

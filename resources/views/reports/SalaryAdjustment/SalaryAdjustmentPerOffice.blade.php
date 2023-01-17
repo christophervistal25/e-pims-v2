@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Salary Adjustment Repots')
+@section('title', 'Salary Adjustment Reports')
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('/assets/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('/css/bootstrap-float-label.min.css') }}" />

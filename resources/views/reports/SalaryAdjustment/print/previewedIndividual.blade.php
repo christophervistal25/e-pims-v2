@@ -115,7 +115,7 @@
             <div class="mr-5 float-left">
                 <p>Position Title: <b style="text-decoration: underline">{{ $salaryAdjustment->plantilla_positions->position->Description }}</b></p>
                 <p>Salary Grade: {{ $salaryAdjustment->salary_adjustment[0]->sg_no }}</p>
-                <p>Item No., FY: {{ Carbon\Carbon::parse($salaryAdjustment->salary_adjustment[0]->date_adjustment)->format('Y') }} Plantilla of Personnel: {{ ++$key }}</p>
+                <p>Item No., FY: {{ Carbon\Carbon::parse($salaryAdjustment->salary_adjustment[0]->date_adjustment)->format('Y') }} Plantilla of Personnel: {{ $salaryAdjustment->item_no }}</p>
             </div>
 
             {{-- FOOTER --}}
