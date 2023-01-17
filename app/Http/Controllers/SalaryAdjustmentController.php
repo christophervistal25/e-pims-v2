@@ -44,11 +44,8 @@ class SalaryAdjustmentController extends Controller
 
         $office = Office::select('office_code', 'office_name')->get();
 
-
-
-
         $employee = Plantilla::select('item_no', 'pp_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id', 'year', 'status', 'office_code')
-        ->with(['Employee:Employee_id,FirstName,MiddleName,LastName,Suffix', 'plantilla_positions', 'plantilla_positions.position', 'plantilla_positions:pp_id,PosCode,office_code,item_no,sg_no', 'salary_adjustment'])
+        ->with(['Employee:Employee_id,FirstName,MiddleName,LastName,Suffix,Birthdate', 'plantilla_positions', 'plantilla_positions.position', 'plantilla_positions:pp_id,PosCode,office_code,item_no,sg_no', 'salary_adjustment'])
         ->where('employee_id', '!=', null)->where('plantillas.year', $currentYear)->get()
                ->filter(function ($record) use ($currentYear) {
                    $haystack = $record->salary_adjustment
@@ -138,38 +135,45 @@ class SalaryAdjustmentController extends Controller
             'itemNo' => 'required',
             'positionId' => 'required',
             'dateAdjustment' => 'required',
-            'salaryGrade' => 'required',
+            'newSalaryGrade' => 'required',
             'stepNo' => 'required',
             'salaryPrevious' => 'required|numeric',
             'salaryNew' => 'required|numeric',
             'salaryDifference' => 'required|numeric',
         ]);
         // insert data to salary adjustment
+
+        $ids = tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue;
         DB::table('EPims.dbo.salary_adjustments')->updateOrInsert(
             [
                 'employee_id' => $request->employeeId,
                 'salary_new' => $request->salaryNew,
             ],
             [
-                'id' => tap(Setting::where('Keyname', 'AUTONUMBER2')->first())->increment('Keyvalue', 1)->Keyvalue,
+                'id' => $ids,
                 'employee_id' => $request->employeeId,
                 'item_no' => $request->itemNo,
                 'office_code' => $request->officeCode,
                 'pp_id' => $request->positionId,
                 'date_adjustment' => $request->dateAdjustment,
-                'sg_no' => $request->salaryGrade,
+                'sg_no' => $request->newSalaryGrade,
                 'step_no' => $request->stepNo,
                 'salary_previous' => $request->salaryPrevious,
                 'salary_new' => $request->salaryNew,
                 'salary_diff' => $request->salaryDifference,
                 'remarks' => $request->remarks,
+                'old_sg_no' => $request->newSalaryGrade,
+                'old_step_no' => $request->stepNo,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
                 'deleted_at' => null,
+                'ismagnacarta' => 1,
             ]
         );
         // insert data to plantillas
-        DB::table('EPims.dbo.plantillas')->where('employee_id', $request->employeeId)->where('year', $request->currentSgyear)
-            ->update(['salary_amount' => $request->salaryNew,
-            ]);
+        // DB::table('EPims.dbo.plantillas')->where('employee_id', $request->employeeId)->where('year', $request->currentSgyear)
+        //     ->update(['salary_amount' => $request->salaryNew,
+        //     ]);
 
         /* Updating the current service record of the employee soon to be previous record. */
         $serviceToDate = Carbon::parse($request->dateAdjustment)->subDays(1);
@@ -178,7 +182,7 @@ class SalaryAdjustmentController extends Controller
 
         $dateCheck = $request->remarks;
         if ($dateCheck == '') {
-            $remarks = 'Salary Adjustment';
+            $remarks = 'Salary Adjustment Magna Carta';
         } else {
             $remarks = $request->remarks;
         }
@@ -195,7 +199,8 @@ class SalaryAdjustmentController extends Controller
             ]
         );
 
-        return response()->json(['success' => true]);
+
+        return response()->json(['success' => true, 'ids' => $ids, 'office_code' => $request->officeCode, 'year' => $request->currentSgyear]);
     }
 
     /**
