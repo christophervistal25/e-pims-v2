@@ -1,11 +1,11 @@
 @extends('layouts.app')
-@section('title', 'SALARY ADJUSTMENT INDIVIDUAL')
+@section('title', 'SALARY ADJUSTMENT MAGNA CARTA')
 @prepend('page-css')
 <link rel="stylesheet" href="{{ asset('/assets/css/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('/css/bootstrap-float-label.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 @prepend('page-css')
-<script src="{{ asset('/js/app.js') }}" defer></script>
+    <script src="{{ asset('/js/app.js') }}" defer></script>
 @endprepend
 <style>
      .swal-content ul {
@@ -57,11 +57,12 @@
 @section('content')
 <div class="kanban-board card mb-0">
      <div class="card-body">
-          <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}">
-               <div style='padding-bottom:50px'>
+          {{-- <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  '' : 'd-none' }}"> --}}
+          <div id="add" class="page-header  {{  count($errors->all())  !== 0 ?  '' : '' }}">
+               {{-- <div style='padding-bottom:50px'>
                     <button id="cancelbutton" class="btn btn-primarys submit-btn float-right shadow"><i class="fa fa-list"></i>
                          Salary Adjusment List</button>
-               </div>
+               </div> --}}
 
                <form action="/salary-adjustment" method="post" id="salaryAdjustmentForm">
                     @csrf
@@ -72,7 +73,7 @@
                               </div>
                          </div>
 
-                         <div class="form-group col-12 col-lg-3">
+                         <div class="form-group col-12 col-lg-4">
                               <label for="dateAdjustment" class="has-float-label">
                                    <input class="form-control" value="{{ Carbon\Carbon::now()->toDateString() }}" name="dateAdjustment" id="dateAdjustment" type="date" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                    <span class="font-weight-bold">DATE ADJUSTMENT<span class="text-danger">*</span></span>
@@ -81,7 +82,7 @@
                               </div>
                          </div>
 
-                         <div class="form-group col-12 col-lg-3">
+                         <div class="form-group col-12 col-lg-4">
                               <label class="has-float-label mb-0 employeeName" for="employeeName">
                                    <select value="" class="form-control form-control-xs selectpicker" name="employeeName" data-live-search="true" id="employeeName" data-size="5" style="outline: none; box-shadow: 0px 0px 0px transparent;" onchange="clickme()">
                                         <option></option>
@@ -101,19 +102,19 @@
                               <input class="form-control" value="" name="employeeId" id="employeeId" type="text" placeholder="Input item No.">
                          </div>
 
-                    <div class="form-group col-2 mt-2 d-none">
+                    <div class="form-group col-2  d-none">
                         <input class="form-control " value="" id="positionCode" name="positionCode" type="text" readonly>
                     </div>
 
-                    <div class="form-group col-12 mt-2 d-none">
+                    <div class="form-group col-12  d-none">
                         <input class="form-control" value="" id="officeCode" name="officeCode" type="text" readonly>
                     </div>
 
-                         <div class="form-group col-2 mt-2 d-none">
+                         <div class="form-group col-2  d-none">
                               <input class="form-control" value="" id="positionId" name="positionId" type="text" readonly>
                          </div>
 
-                         <div class="form-group col-12 mt-2 d-none">
+                         <div class="form-group col-12  d-none">
                               <input class="form-control " value="" id="status" name="status" type="text" readonly>
                          </div>
 
@@ -126,23 +127,32 @@
                               </div>
                          </div>
 
-                         <div class="form-group col-12 col-lg-2">
+                         <div class="form-group col-12 col-lg-3">
                             <label class="has-float-label mb-0" for="itemNo">
                                  <input class="form-control" value="" name="itemNo" id="itemNo" type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                  <span class="font-weight-bold">ITEM NO<span class="text-danger">*</span></span>
                             </label>
                        </div>
 
-                         <div class="form-group col-12 col-lg-3 mt-2">
+                        <div class="form-group col-12 col-lg-3 ">
+                            <label class="has-float-label mb-0" for="salaryGrade">
+                                <input class="form-control" value="" name="previousSalaryGrade" id="previousSalaryGrade" type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                <span class="font-weight-bold">PREVIOUS SALARY GRADE<span class="text-danger">*</span></span>
+                            </label>
+                            <div id='salary-grade-error-message' class='text-danger text-sm'>
+                            </div>
+                    </div>
+
+                         <div class="form-group col-12 col-lg-3 ">
                               <label class="has-float-label mb-0" for="salaryGrade">
-                                   <input class="form-control" value="" name="salaryGrade" id="salaryGrade" type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
-                                   <span class="font-weight-bold">SALARY GRADE<span class="text-danger">*</span></span>
+                                   <input class="form-control" value="" name="newSalaryGrade" id="newSalaryGrade" type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                   <span class="font-weight-bold">NEW SALARY GRADE<span class="text-danger">*</span></span>
                               </label>
                               <div id='salary-grade-error-message' class='text-danger text-sm'>
                               </div>
                          </div>
 
-                         <div class="form-group col-12 col-lg-3 mt-2">
+                         <div class="form-group col-12 col-lg-3 ">
                               <label class="has-float-label mb-0" for="stepNo">
                                    <input class="form-control" value="" name="stepNo" id="stepNo" type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                    <span class="font-weight-bold">STEP NO<span class="text-danger">*</span></span>
@@ -151,7 +161,7 @@
                               </div>
                          </div>
 
-                         <div class="form-group col-12 col-lg-3 mt-2">
+                         <div class="form-group col-12 col-lg-3  d-none">
                               <label class="has-float-label mb-0">
                                    <input class="form-control" value="" name="previousYear" id="previousYear" type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                    <span class="font-weight-bold">PREVIOUS YEAR</span>
@@ -160,7 +170,7 @@
                               </div>
                          </div>
 
-                         <div class="form-group col-12 col-lg-3 mt-2">
+                         <div class="form-group col-12 col-lg-3  d-none">
                               <label class="has-float-label mb-0">
                                    <input class="form-control" value="{{ Carbon\Carbon::now()->format('Y') }}" name="currentSgyear" id="currentSgyear" type="text" readonly style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                    <span class="font-weight-bold">CURRENT YEAR</span>
@@ -213,11 +223,19 @@
                          </div>
 
                          <div class="form-group form-group submit-section col-12">
+
+                            <button id="previewBtn" class="btn btn-secondary text-white submit-btn float-right shadow d-none" type="submit">
+                                    <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span> <i class="fa fa-print"></i>
+                                <b>Preview</b>
+                           </button>
+
                               <button id="saveBtn" class="btn btn-primarys submit-btn float-right shadow" type="submit">
-                                   <span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span> <i class="fas fa-save"></i>
+                                   <span id="loading" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="false"></span> <i class="fa fa-save"></i>
                                    <b id="saving">Save</b>
                               </button>
-                              <button style="margin-right:10px;" type="button" onclick="myFunction()" id="cancelbutton1" class="text-white btn btn-danger submit-btn float-right shadow"><i class="fas fa-ban"></i> Cancel</button>
+
+                              <button style="margin-right:10px;" type="button" onclick="myFunction()" id="cancelbutton1" class="text-white btn btn-danger submit-btn float-right shadow"><i class="fa fa-ban"></i> Cancel</button>
+                              <button style="margin-right:10px;" type="button" id="newBtn" class="text-white btn btn-primary submit-btn float-right shadow d-none"><i class="fa fa-ban"></i> New</button>
                          </div>
 
                     </div>
@@ -225,7 +243,7 @@
                     <form>
           </div>
 
-          <div id="table" class="page-header {{  count($errors->all()) == 0 ? '' : 'd-none' }}">
+          {{-- <div id="table" class="page-header {{  count($errors->all()) == 0 ? '' : 'd-none' }}">
 
                <div class="row">
                 <div class="col-4 mb-2">
@@ -269,7 +287,7 @@
                          </thead>
                     </table>
                </div>
-          </div>
+          </div> --}}
 
      </div>
 </div>

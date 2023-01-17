@@ -65,6 +65,7 @@ class SalaryAdjustmentJob implements ShouldQueue
                 'remarks' => $remarks,
                 'created_at' => Carbon::now(),
                 'deleted_at' => null,
+                'ismagnacarta' => 0,
             ]
         );
 

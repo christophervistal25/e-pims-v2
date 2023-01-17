@@ -245,7 +245,7 @@
                                 <ul style="display: none;">
                                     <li>
                                         <a class='text-decoration-none' href="{{  route('salary-adjustment.index') }}">
-                                            <span>Individual</span>
+                                            <span>Magna Carta</span>
                                         </a>
                                         {{-- <a class='text-decoration-none' href="{{  route('salary-adjustment-per-office.index') }}">
                                             <span>Per Office</span>

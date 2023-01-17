@@ -74,6 +74,7 @@ $(function () {
     });
 });
 // get value of employees sg, sn, sp
+
 $(document).ready(function () {
     $("#employeeName").change(function (e) {
         let employeeID = e.target.value;
@@ -90,7 +91,8 @@ $(document).ready(function () {
             $("#positionId").val(plantilla.pp_id);
             $("#positionCode").val(plantilla.plantilla_positions.PosCode);
             $("#itemNo").val(plantilla.item_no);
-            $("#salaryGrade").val(plantilla.sg_no);
+            $("#previousSalaryGrade").val(plantilla.sg_no);
+            $("#newSalaryGrade").val(parseInt(plantilla.sg_no) + 1);
             $("#stepNo").val(plantilla.step_no);
             $("#officeCode").val(plantilla.office_code);
             $("#previousYear").val(plantilla.year);
@@ -98,7 +100,8 @@ $(document).ready(function () {
         } else {
             $("#positionName").val("");
             $("#itemNo").val("");
-            $("#salaryGrade").val("");
+            $("#previousSalaryGrade").val("");
+            $("#newSalaryGrade").val("");
             $("#stepNo").val("");
             $("#salaryPrevious").val("");
             $("#salaryNew").val("");
@@ -115,7 +118,7 @@ $(document).ready(function () {
 //  position display salary grade
 $(document).ready(function () {
     $("#employeeName").change(function () {
-        let salaryGrade = $("#salaryGrade").val();
+        let salaryGrade = $("#newSalaryGrade").val();
         let stepNo = $("#stepNo").val();
         let currentSgyear = $("#currentSgyear").val();
         $.ajax({
@@ -240,10 +243,34 @@ $(document).ready(function () {
                         $(`${value}`).html("");
                     });
                     $("#salaryAdjustment").DataTable().ajax.reload();
-                    swal("Sucessfully Added!", "", "success");
+
+                    swal("Sucessfully Added!", "", "success")
+                        .then(() => {
+                            swal({ title: "Preview Salary adjustment Magna Carta?"
+                            , icon: "warning"
+                            , buttons: true
+                            , dangerMode: true})
+                              .then((willProceed) => {
+                                if (willProceed) {
+                                    window.open(`/plantilla-of-personnel/${response.ids}_${response.office_code}_${response.year}`);
+                                } else {
+                                  alert('sample2');
+                                }
+                              });
+                          });
+
+
                     $("#saveBtn").attr("disabled", false);
                     $("#loading").addClass("d-none");
                     document.getElementById("saving").innerHTML = "Save";
+
+
+
+                    // $("#previewBtn").removeClass("d-none");
+                    // $("#newBtn").removeClass("d-none");
+                    // $("#cancelbutton1").addClass("d-none");
+                    // $("#saveBtn").addClass("d-none");
+
                 }
             },
             error: function (response) {
