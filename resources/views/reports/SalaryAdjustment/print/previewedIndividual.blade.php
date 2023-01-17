@@ -50,7 +50,7 @@
                 <h3>PROVINCE OF SURIGAO DEL SUR</h3>
                 <h4>TANDAG CITY</h4>
                 <br>
-                <h1>Office of the Governor</h1>
+                <span style="font-size: 40px; font-family: 'Monotype Corsiva'; font-weight: bold;">Office of the Governor</span>
             </div>
             <hr size="8" width="100%" color="black">
             <br>
@@ -67,7 +67,7 @@
         <div class="card-body-p">
             <br>
             {{-- NAME --}}
-            <h4>{{ $salaryAdjustment->employee->FirstName }} {{ $salaryAdjustment->employee->MiddleName[0] }}. {{ $salaryAdjustment->employee->LastName }}</h4>
+            <h4>{{ ($salaryAdjustment->employee->Gender == 'FEMALE') ? "MS." : "MR."; }} {{ $salaryAdjustment->employee->FirstName }} {{ $salaryAdjustment->employee->MiddleName[0] }}. {{ $salaryAdjustment->employee->LastName }}</h4>
             <p>{{ $salaryAdjustment->office->office_name }}</p>
             <p>{{ $salaryAdjustment->office->office_address }}</p>
             <br>

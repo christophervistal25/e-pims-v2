@@ -13,7 +13,7 @@
     <title>Print Salary-Adjustment</title>
     <style>
         .card {
-            padding: 20px 75px;
+            padding: 1px 75px;
             margin: auto;
             overflow: hidden;
             page-break-after: always;
@@ -60,7 +60,8 @@
         {{-- HEADING --}}
         <div class="body-container row">
             <!-- {{-- LOGO --}} -->
-            <div class="header-text w-25 logo" style="margin-top: -20px">
+            <div class="header-text w-25 logo" style="margin-top: -1px">
+                <img src="file:///laragon/www/E-PIMS-v2/public/assets/img/province.png" style="visibility:hidden;" width="25px">
                 <img src="file:///laragon/www/E-PIMS-v2/public/assets/img/province.png" width="140px">
             </div>
             <div class="header-text">
@@ -71,12 +72,12 @@
                 <span style="font-size: 1.2em; font-family: 'Open Sans', sans-serif;">TANDAG CITY</span>
                 <br>
                 <br>
-                <span style="font-size: 2em; font-family: 'Open Sans', sans-serif; font-weight: bold;"><i>Office of the Governor</i></span>
-                <br>
+                <span style="font-size: 2em; font-family: 'Monotype Corsiva'; font-weight: bold;"><i>Office of the Governor</i></span>
                 <hr style="width: 100%;text-align: center; border: 1px solid black;">
+                <br>
                 <span class="float-right" style="font-size: 1.3em; font-family: 'Open Sans', sans-serif;">Annex “B-1”</span>
                 <br><br>
-                <span style="font-size: 1.3em; font-family: 'Open Sans', sans-serif; font-weight: bold;">NOTICE OF SALARY ADJUSTMENT</span>
+                <span style="font-size: 1.3em; font-family: 'Times New Roman'; font-weight: bold;">NOTICE OF SALARY ADJUSTMENT</span>
                 <br>
             </div>
         </div>
@@ -86,11 +87,10 @@
 
         {{-- DATE --}}
         <div class="card-body-p">
-            <br>
-            <p class="text float-right date" style="margin-top: 1rem; font-family: 'Open Sans', sans-serif;">{{ Carbon\Carbon::parse($salaryAdjustment->salary_adjustment[0]->date_adjustment)->format('F d, Y') }}</p>
+            <p class="float-right date" style="margin-top: 1rem; font-size: 1.3em; font-family: 'Times New Roman';">{{ Carbon\Carbon::parse($salaryAdjustment->salary_adjustment[0]->date_adjustment)->format('F d, Y') }}</p>
             <br><br><br>
             {{-- NAME --}}
-            <span style="font-size: 1.1em; font-weight: bold; font-family: 'Open Sans', sans-serif;">{{ $salaryAdjustment->employee->FirstName }} {{ $salaryAdjustment->employee->MiddleName[0] }}. {{ $salaryAdjustment->employee->LastName }}</span>
+            <span style="font-size: 1.3em; font-weight: bold; font-family: 'Times New Roman';">{{ ($salaryAdjustment->employee->Gender == 'FEMALE') ? "MS." : "MR."; }} {{ $salaryAdjustment->employee->FirstName }} {{ $salaryAdjustment->employee->MiddleName[0] }}. {{ $salaryAdjustment->employee->LastName }}</span>
             <br>
             <span class="text" style="font-family: 'Open Sans', sans-serif">{{ $salaryAdjustment->office->office_name }}</span>
             <span class="text" style="font-family: 'Open Sans', sans-serif">{{ $salaryAdjustment->office->office_address }}</span>
@@ -140,8 +140,8 @@
             </div>
 
             {{-- FOOTER --}}
-            <div class="text float-left">
-                <p style="font-family: 'Open Sans', sans-serif;">Copy Furnished: GSIS</p>
+            <div class="float-left">
+                <p style="font-size: 1.3em; font-family: 'Times New Roman';">Copy Furnished: GSIS</p>
                 {{-- <h6 style="font-family: 'Open Sans', sans-serif;">Copy Furnished: GSIS-Tandag, Surigao del Sur</h6>
                 <h6 style="font-family: 'Open Sans', sans-serif;">CSC-Field Office, Tandag City</h6> --}}
             </div>
