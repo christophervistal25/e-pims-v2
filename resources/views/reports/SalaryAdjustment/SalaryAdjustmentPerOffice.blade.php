@@ -64,10 +64,11 @@
 
      <div id="table" class="page-header ">
           <div class="row">
-               <div class="col-5 mb-2">
+               <div class="col-5 mb-2 mt-2">
                     <select data-style="btn-primarys text-white selectpicker" name="employeeOffice" data-live-search="true" id="employeeOffice" data-size="5"
                          @class([
                               'form-control',
+                              'ml-3',
                               'form-control-xs',
                               'selectpicker',
                               'is-invalid'=> $errors->has('employeeOffice'),
@@ -79,8 +80,8 @@
                          @endforeach
                     </select>
                </div>
-               <div class="col-2 mb-2">
-                    <select value="" data-style="btn-primarys text-white" class="form-control form-control-xs selectpicker yearAdjustment" name="yearAdjustment" data-live-search="true" id="yearAdjustment" data-size="5">
+               <div class="col-2 mb-2 mt-2">
+                    <select value="" data-style="btn-primarys text-white" class="ml-3 form-control form-control-xs selectpicker yearAdjustment" name="yearAdjustment" data-live-search="true" id="yearAdjustment" data-size="5">
                          <option value={{ date('Y') }}>{{ date('Y') }}</option>
                          @foreach ($dates as $date)
                          <option value={{ $date }}>{{ $date }}</option>
@@ -88,7 +89,7 @@
                     </select>
                </div>
 
-               <div class="col-5 mb-2">
+               <div class="col-5 mb-2 mt-2">
                     <div style="padding-right:20px;" class="float-right">
                          <button id="printListButton" class="printButton btn btn-primary float-right" disabled><i class="fa fa-print"></i> Reports By List</button>
                     </div>
