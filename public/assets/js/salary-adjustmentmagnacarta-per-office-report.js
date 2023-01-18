@@ -17,15 +17,14 @@ $(document).ready(function () {
                         '<i style="color:#FF9B44" i class="fa fa-spinner fa-spin fa-2x fa-fw"></i><span class="sr-only">Loading...</span> ',
                 },
                 ajax: {
-                    url: `/salaryadjustment-report-with-office/${office}/${year}`,
+                    url: `/salaryadjustmentmagnacarta-report-with-office/${office}/${year}`,
                 },
                 columns: [
                     {
                         data: "date_adjustment",
                         name: "date_adjustment",
                         render: function (_, _, row) {
-                            // console.log(row);
-                            // let [adjustment] = row;
+                            // let [adjustment] = row.salary_adjustment;
                             return row.date_adjustment;
                         },
                     },
@@ -45,7 +44,7 @@ $(document).ready(function () {
                         data: "sg_no",
                         name: "sg_no",
                         render: function (_, _, row) {
-                            // let [adjustment] = row;
+                            // let [adjustment] = row.salary_adjustment;
                             return row.sg_no;
                         },
                     },
@@ -53,7 +52,7 @@ $(document).ready(function () {
                         data: "step_no",
                         name: "step_no",
                         render: function (_, _, row) {
-                            // let [adjustment] = row;
+                            // let [adjustment] = row.salary_adjustment;
                             return row.step_no;
                         },
                     },
@@ -61,7 +60,7 @@ $(document).ready(function () {
                         data: "salary_previous",
                         name: "salary_previous",
                         render: function (_, _, row) {
-                            // let [adjustment] = row;
+                            // let [adjustment] = row.salary_adjustment;
                             return row.salary_previous;
                         },
                     },
@@ -69,7 +68,7 @@ $(document).ready(function () {
                         data: "salary_new",
                         name: "salary_new",
                         render: function (_, _, row) {
-                            // let [adjustment] = row;
+                            // let [adjustment] = row.salary_adjustment;
                             return row.salary_new;
                         },
                     },
@@ -77,7 +76,7 @@ $(document).ready(function () {
                         data: "salary_diff",
                         name: "salary_diff",
                         render: function (_, _, row) {
-                            // let [adjustment] = row;
+                            // let [adjustment] = row.salary_adjustment;
                             return row.salary_diff;
                         },
                     },
@@ -85,7 +84,7 @@ $(document).ready(function () {
                         data: "action",
                         name: "action",
                         render: function (_, _, row) {
-                            return `<a href='print-adjustment-report-individual/${row.id}_${row.date_adjustment_year}/individual/previewed'  target='_blank' title='Print Previewed Salary Adjustment' class='printpreviewed btn btn-success mr-1'><i class='la la-print'></i></a>`;
+                            return `<a href='print-adjustmentmagnacarta-report-individual/${row.id}_${row.year}/individual/previewed'  target='_blank' title='Print Previewed Salary Adjustment' class='printpreviewed btn btn-success mr-1'><i class='la la-print'></i></a>`;
                         },
                     },
                 ],
@@ -101,12 +100,12 @@ $(document).ready(function () {
     $("#printListButton").click(function () {
         let year = $("#yearAdjustment").val();
         let office = $("#employeeOffice").val();
-        window.open(`print-adjustment-report-list/${office}/${year}/previewed`, "_blank");
+        window.open(`print-adjustmentmagnacarta-report-list/${office}/${year}/previewed`, "_blank");
     });
     
     $("#printIndividualButton").click(function () {
         let year = $("#yearAdjustment").val();
         let office = $("#employeeOffice").val();
-        window.open(`print-adjustment-report-individual/${office}/${year}/previewed`, "_blank");
+        window.open(`print-adjustmentmagnacarta-report-individual/${office}/${year}/previewed`, "_blank");
     });
 });

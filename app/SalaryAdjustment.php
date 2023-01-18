@@ -67,4 +67,8 @@ class SalaryAdjustment extends Model
     {
         return $this->hasOne('App\service_record', 'employee_id', 'employee_id');
     }
+    public function office()
+    {
+        return $this->hasOne(Office::class, 'office_code', 'office_code');
+    }
 }
