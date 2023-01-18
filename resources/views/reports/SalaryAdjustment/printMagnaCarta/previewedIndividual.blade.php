@@ -54,7 +54,7 @@
             </div>
             <hr size="8" width="100%" color="black">
             <br>
-            <span class="float-right" style="font-size: 1.3em; font-family: 'Open Sans', sans-serif;">Annex “B-1”</span>
+            <span class="float-right" style="font-size: 1.3em; font-family: 'Open Sans', sans-serif;">Annex “B”</span>
             <br>
         </div>
         <div class="text-center">
@@ -80,22 +80,23 @@
             @if($key == 0) 
                 <i class="la la-pencil" data-toggle="modal" data-target="#editbtnFirstParagraphBtn" id="editbtnFirstParagraph" style="cursor: pointer;"></i>
             @endif
-            &nbsp;&nbsp;&nbsp;<span class="text text-md ml-4 pl-4 spanFirstParagraph" id="spanFirstParagraph">{{ $setting->Keyvalue }}</span>
+            {{-- &nbsp;&nbsp;&nbsp;<span class="text text-md ml-4 pl-4 spanFirstParagraph" id="spanFirstParagraph">{{ $firstparagraph }}</span> --}}
+            &nbsp;&nbsp;&nbsp;<span class="text text-md ml-4 pl-4 spanFirstParagraph" id="spanFirstParagraph">{{ $setting['Keyvalue'] }}</span>
             <br>
             <br>
-                <span class="text text-md ml-4 pl-5">&nbsp 1. Adjusted monthly basic salary effective {{ 'January 1, '.Carbon\Carbon::now('Y')->format('Y') }},</span><span class="col-3 offset-1 float-right">&#8369
+                <span class="text text-md ml-4 pl-5">&nbsp 1. Adjusted monthly basic salary at {{ 'January 1, '.Carbon\Carbon::now('Y')->format('Y') }},</span><span class="col-3 offset-1 float-right">&#8369
                 {{ number_format($salaryAdjustment->salary_new, 2, ".", ",") }}</span>
                 <br>
                 <span class="text text-md ml-4 pl-5">&nbsp&nbsp&nbsp&nbsp under the new Salary Schedule; SG - {{ $salaryAdjustment->sg_no }}, Step {{ $salaryAdjustment->step_no }}</span>
                 <br>
                 <br>
-                <span class="text text-md ml-4 pl-5">&nbsp 2. Actual monthly basic salary as of {{ 'December 31, '.Carbon\Carbon::now()->addYears(-1)->format('Y') }};</span><span class="col-3 offset-1 float-right">&#8369
+                <span class="text text-md ml-4 pl-5">&nbsp 2. Add: one (1) salary grade increase 3 months {{ 'December 31, '.Carbon\Carbon::now()->addYears(-1)->format('Y') }};</span><span class="col-3 offset-1 float-right">&#8369
                 {{ number_format($salaryAdjustment->salary_previous, 2, ".", ",") }}</span>
                 <br>
-                <span class="text text-md ml-4 pl-5">&nbsp&nbsp&nbsp&nbsp SG - {{ $salaryAdjustment->sg_no }}, Step {{ $salaryAdjustment->step_no }}</span>
+                <span class="text text-md ml-4 pl-5">&nbsp&nbsp&nbsp&nbsp Prior to compulsory retirement as Public Health Worker SG - {{ $salaryAdjustment->sg_no }}, Step {{ $salaryAdjustment->step_no }}</span>
                 <br>
                 <br>
-                <span class="text text-md ml-4 pl-5">&nbsp 3. Monthly salary adjustment effective {{ 'January 1, '.Carbon\Carbon::now()->format('Y') }}</span><span class="col-3 offset-1 float-right" style="text-decoration: underline">&#8369
+                <span class="text text-md ml-4 pl-5">&nbsp 3. Adjusted monthly basic salary at {{ 'January 1, '.Carbon\Carbon::now()->format('Y') }}</span><span class="col-3 offset-1 float-right" style="text-decoration: underline">&#8369
                 {{ number_format($salaryAdjustment->salary_diff, 2, ".", ",") }}</span>
                 <br>
                 <span class="text text-md ml-4 pl-5">&nbsp&nbsp&nbsp&nbsp (1-2)</span>
@@ -135,8 +136,7 @@
 
 
 
-
-@include('Reports.SalaryAdjustment.add-ons.salaryadjustmentmodal')
+@include('Reports.SalaryAdjustment.add-onsMagnaCarta.salaryadjustmentmodal')
 @push('page-scripts')
 <script src="{{ asset('/assets/js/custom.js') }}"></script>
     <script>
@@ -147,16 +147,16 @@
         });
         document.getElementById('downloadBtn').addEventListener('click', function(){
             if(this.name.split('_')[1] == 'individual'){
-                window.open('/print-adjustment-report-individual/' + this.name.split('|')[0] + '_' + this.name.split('|')[1] + `/individual/download`,`_blank`);
+                window.open('/print-adjustmentmagnacarta-report-individual/' + this.name.split('|')[0] + '_' + this.name.split('|')[1] + `/individual/download`,`_blank`);
             }else{   
-                window.open('/print-adjustment-report-individual/' + this.name.split('|')[0] + '/' + this.name.split('|')[1] + `/download`,`_blank`);
+                window.open('/print-adjustmentmagnacarta-report-individual/' + this.name.split('|')[0] + '/' + this.name.split('|')[1] + `/download`,`_blank`);
             }
         });
         document.getElementById('printBtn').addEventListener('click', function(){
             if(this.name.split('_')[1] == 'individual'){
-                window.open('/print-adjustment-report-individual/' + this.name.split('|')[0] + '_' + this.name.split('|')[1] + `/individual/print`,`_blank`);
+                window.open('/print-adjustmentmagnacarta-report-individual/' + this.name.split('|')[0] + '_' + this.name.split('|')[1] + `/individual/print`,`_blank`);
             }else{
-                window.open('/print-adjustment-report-individual/' + this.name.split('|')[0] + '/' + this.name.split('|')[1] + `/print`,`_blank`);
+                window.open('/print-adjustmentmagnacarta-report-individual/' + this.name.split('|')[0] + '/' + this.name.split('|')[1] + `/print`,`_blank`);
             }
         });
         document.getElementById('editbtnFirstParagraph').addEventListener('click', function(){
@@ -169,14 +169,14 @@
                 document.querySelectorAll(".spanFirstParagraph")[i].innerHTML = firstParagraph;
             }
             $.ajax({
-                url: '/print-adjustment-report-individual-editfirstparagraph',
+                url: '/print-adjustmentmagnacarta-report-individual-editfirstparagraph',
                 type: "POST",
                 data:{
                     _token:'{{ csrf_token() }}',
                     key_value:firstParagraph
                 },
                 success: function(html){
-                    if(html.success == true){
+                    if(html.success == 'true'){
                         swal("Successfully modify!", "", "success");
                         $('#editbtnFirstParagraphBtn').modal('hide');
                     }

@@ -1,19 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Reports;
 
-use App\Setting;
 use App\Employee;
 use App\Plantilla;
+use App\PlantillaPosition;
+use App\Setting;
 use Carbon\Carbon;
 use App\SalaryAdjustment;
-use App\PlantillaPosition;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
+use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\App;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
-class ReportSalaryAdjustmentController extends Controller
+class ReportSalaryAdjustmentMagnaCartaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,16 +27,17 @@ class ReportSalaryAdjustmentController extends Controller
         $plantillaOffices = SalaryAdjustment::select('office_code')
             ->distinct('office_code')
             ->with(['office', 'office.desc'])
-            ->where('ismagnacarta','0')
+            ->where('ismagnacarta','1')
             ->get();
+
         $dates = SalaryAdjustment::select('date_adjustment')->whereYear('date_adjustment', '!=', date('Y'))
-        ->where('ismagnacarta','0')
+        ->where('ismagnacarta','1')
             ->get()
             ->pluck('date_adjustment')
             ->map(fn ($adjustment) => $adjustment->format('Y'))
             ->unique();
         $class = 'mini-sidebar';
-        return view('reports.SalaryAdjustment.SalaryAdjustmentPerOffice', compact('plantillaOffices', 'dates', 'class'));
+        return view('reports.SalaryAdjustment.SalaryAdjustmentPerOfficeMagnaCarta', compact('plantillaOffices', 'dates', 'class'));
     }
 
     public function withoffice(string $office, string $year = null)
@@ -43,12 +46,12 @@ class ReportSalaryAdjustmentController extends Controller
             $data = SalaryAdjustment::whereYear('date_adjustment', $year)->with(['Employee' => function ($query) use ($office) {
                 $query->select('Employee_id','FirstName', 'MiddleName', 'LastName');
             }])
-            ->where('ismagnacarta','0')->get();
+            ->where('ismagnacarta','1')->get();
         }else{
             $data = SalaryAdjustment::whereYear('date_adjustment', $year)->with(['Employee','office' => function ($query) use ($office) {
                 $query->where('office_code', $office);
             }])->where('office_code', $office)
-            ->where('ismagnacarta','0')
+            ->where('ismagnacarta','1')
                 ->get();
         }
         return DataTables::of($data)
@@ -83,30 +86,7 @@ class ReportSalaryAdjustmentController extends Controller
         //     })->rawColumns(['checkbox'])
         //     ->make(true);
     }
-
     
-    // public function list(Request $request)
-    // {
-    //     $data = DB::table('salary_adjustments')
-    //         ->join('employees', 'salary_adjustments.employee_id', '=', 'employees.employee_id')
-    //         ->join('plantillas', 'salary_adjustments.employee_id', '=', 'plantillas.employee_id')
-    //         ->select('id', DB::raw('CONCAT(firstname, " " , middlename , " " , lastname, " " , extension) AS fullname'), 'salary_adjustments.item_no', 'salary_adjustments.pp_id', DB::raw("DATE_FORMAT(date_adjustment, '%m-%d-%Y') as date_adjustment"), 'salary_adjustments.sg_no', 'salary_adjustments.step_no', 'salary_adjustments.salary_previous', 'salary_new', 'salary_adjustments.salary_diff', 'plantillas.office_code')
-    //         ->whereNull('deleted_at')
-    //         ->get();
-
-    //     return DataTables::of($data)
-    //     ->addColumn('action', function ($row) {
-    //         $btn = "<a title='Edit Salary Adjustment' href='".route('salary-adjustment.edit', $row->id)."' class=' edit btn btn-success mr-1'><i class='la la-pencil'></i></a>";
-    //         $btn = $btn."<a title='Delete Salary Adjustment' id='delete' value='$row->id' class='delete  delete btn btn-danger mr-1'><i class='la la-trash'></i></a>
-    //             ";
-
-    //         return $btn;
-    //     })
-    //    ->rawColumns(['action'])
-    //         ->make(true);
-
-    //     return view('SalaryAdjustmentPerOffice.SalaryAdjustmentPerOffice');
-    // }
 
     public function printlist(string $office, string $year)
     {
@@ -114,43 +94,30 @@ class ReportSalaryAdjustmentController extends Controller
             $salary_adjustment = SalaryAdjustment::whereYear('date_adjustment', $year)->with(['Employee' => function ($query) use ($office) {
                 $query->select('Employee_id','FirstName', 'MiddleName', 'LastName');
             }])
-            ->where('ismagnacarta','0')->get();
+            ->where('ismagnacarta','1')->get();
             $office_name = 'All Offices';
         }else{
             $salary_adjustment = SalaryAdjustment::whereYear('date_adjustment', $year)->with(['Employee','office' => function ($query) use ($office) {
                 $query->where('office_code', $office);
             }])->where('office_code', $office)
-            ->where('ismagnacarta','0')
+            ->where('ismagnacarta','1')
                 ->get();
             $office_name = $salary_adjustment[0]->office->office_name;
         }
         $pdf = App::make('snappy.pdf.wrapper');
-        $pdf->loadView('reports.SalaryAdjustment.Print.PreviewedList', compact('salary_adjustment','year','office_name'))->setPaper('legal')->setOrientation('portrait');
+        $pdf->loadView('reports.SalaryAdjustment.PrintMagnaCarta.PreviewedList', compact('salary_adjustment','year','office_name'))->setPaper('legal')->setOrientation('portrait');
 
         return $pdf->inline();
     }
 
-    // public function print($id)
-    // {
-    //     $salaryAdjustment = SalaryAdjustment::find($id);
-    //     $setting = Setting::find('SALARYADPRINT');
-    //     // return view('salaryAdjustment.print.previewed', compact('salaryAdjustment', 'setting'));
-    //     $space = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-    //     $pdf = App::make('snappy.pdf.wrapper');
-    //     $pdf->loadView('salaryAdjustment.print.previewed', compact('salaryAdjustment', 'setting', 'space'))->setPaper('letter')->setOrientation('portrait');
-
-    //     return $pdf->inline();
-    // }
-
     public function previewedindividual(string $office, string $year)
     {
-        
         if($year == 'individual'){
             $data = explode("_",$office);
             $salaryadjustment_id = $data[0];
             $year = $data[1];
             $salaryAdjustments = SalaryAdjustment::where('id', $salaryadjustment_id)->whereYear('date_adjustment', $year)->with('Employee')
-            ->where('ismagnacarta','0')->get();
+            ->where('ismagnacarta','1')->get();
             $office = $salaryadjustment_id.'_'.$year;
             $year = 'individual';
         }else{
@@ -158,7 +125,7 @@ class ReportSalaryAdjustmentController extends Controller
                 $salaryAdjustments = SalaryAdjustment::whereYear('date_adjustment', $year)->with(['Employee' => function ($query) use ($office) {
                     $query->select('Employee_id','FirstName', 'MiddleName', 'LastName');
                 }])->limit(1)
-                ->where('ismagnacarta','0')->get();
+                ->where('ismagnacarta','1')->get();
                 $office_name = 'All Offices';
                 // $salaryAdjustments = Plantilla::whereHas('salary_adjustment', function ($query) use ($year) {
                 //     $query->whereYear('date_adjustment', $year);
@@ -170,7 +137,7 @@ class ReportSalaryAdjustmentController extends Controller
                 $salaryAdjustments = SalaryAdjustment::whereYear('date_adjustment', $year)->with(['plantillaPosition','Employee','office' => function ($query) use ($office) {
                     $query->where('office_code', $office);
                 }])->where('office_code', $office)
-                ->where('ismagnacarta','0')
+                ->where('ismagnacarta','1')
                     ->get();
                 // dd($salaryAdjustments[0]->plantillaPosition->position->Description);
 
@@ -186,13 +153,13 @@ class ReportSalaryAdjustmentController extends Controller
                 //     ->get();
             }
         }
-        // dd('asd');
         // $key = 0;
-        $setting = Setting::find('SALARYADPRINT');
-
+        $setting = ['Keyvalue' => file_get_contents(public_path('/storage/firstparagraph.txt'))];
+        // dd($setting);
+        // $setting = Setting::find('SALARYMAGNACARTAPRINT');
         // return view('reports.SalaryAdjustment.Print.PreviewedIndividual', compact('key','salaryAdjustment','office','year', 'setting'));
         
-        return view('reports.SalaryAdjustment.Print.PreviewedIndividual', compact('salaryAdjustments','office','year', 'setting'));
+        return view('reports.SalaryAdjustment.PrintMagnaCarta.PreviewedIndividual', compact('salaryAdjustments','office','year', 'setting'));
     }
 
     public function printindividual(string $office, string $year)
@@ -286,9 +253,7 @@ class ReportSalaryAdjustmentController extends Controller
             $array_item_no[$num] = $salaryAdjustment->item_no;
             $num++;
         }
-        // dd($array_Gender);
-        // $employee = Employee::select('Employee_id','firstname', 'middlename', 'lastname')->find('1672');
-        $pdf->loadView('reports.SalaryAdjustment.Print.PrintIndividual', compact('array_date_adjustment','array_Gender','array_FirstName','array_MiddleName','array_LastName','array_office_name','array_office_address','array_salary_new','array_step_no','array_salary_previous','array_sg_no','array_salary_diff','array_Description','array_item_no','count','office_name','salaryAdjustments','office','year', 'setting','space'))->setPaper('letter')->setOrientation('portrait');
+        $pdf->loadView('reports.SalaryAdjustment.PrintMagnaCarta.PrintIndividual', compact('array_date_adjustment','array_Gender','array_FirstName','array_MiddleName','array_LastName','array_office_name','array_office_address','array_salary_new','array_step_no','array_salary_previous','array_sg_no','array_salary_diff','array_Description','array_item_no','count','office_name','salaryAdjustments','office','year', 'setting','space'))->setPaper('letter')->setOrientation('portrait');
 
         // return $pdf->download('NOTICE OF SALARY ADJUSTMENT '.date('m-d-Y').'.pdf');
         return $pdf->inline();
@@ -366,12 +331,12 @@ class ReportSalaryAdjustmentController extends Controller
             $num++;
         }
 
-        $pdf->loadView('reports.SalaryAdjustment.Print.downloadIndividual', compact('array_date_adjustment','array_Gender','array_FirstName','array_MiddleName','array_LastName','array_office_name','array_office_address','array_salary_new','array_step_no','array_salary_previous','array_sg_no','array_salary_diff','array_Description','array_item_no','count','office_name','salaryAdjustments','office','year', 'setting','space'))->setPaper('letter')->setOrientation('portrait');
+        $pdf->loadView('reports.SalaryAdjustment.PrintMagnaCarta.downloadIndividual', compact('array_date_adjustment','array_Gender','array_FirstName','array_MiddleName','array_LastName','array_office_name','array_office_address','array_salary_new','array_step_no','array_salary_previous','array_sg_no','array_salary_diff','array_Description','array_item_no','count','office_name','salaryAdjustments','office','year', 'setting','space'))->setPaper('letter')->setOrientation('portrait');
 
-        return $pdf->download('NOTICE OF SALARY ADJUSTMENT '.$office_name.date('m-d-Y').'.pdf');
+        return $pdf->download('NOTICE OF SALARY ADJUSTMENT MAGNA CARTA '.$office_name.date('m-d-Y').'.pdf');
         // return $pdf->inline();
     }
-    
+
     /**
      * Show the form for creating a new resource.
      *
@@ -422,14 +387,16 @@ class ReportSalaryAdjustmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function editfirstparagraph(Request $request)
-    {
-        $Setting = Setting::where('Keyname','SALARYADPRINT')->first();
-        $Setting->Keyvalue = $request['key_value'];
-        $Setting->save();
-
-        return response()->json(['success' => true]);
-    }
+     public function editfirstparagraph(Request $request)
+     {
+        // dd();
+        Storage::disk('local')->put('public/firstparagraph.txt', $request['key_value']);
+        //  $Setting = Setting::where('Keyname','SALARYMAGNACARTAPRINT')->first();
+        //  $Setting->Keyvalue = $request['key_value'];
+        //  $Setting->save();
+            
+         return response()->json(['success' => 'true']);
+     }
 
     /**
      * Remove the specified resource from storage.

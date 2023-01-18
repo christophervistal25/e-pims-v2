@@ -327,10 +327,21 @@
                             <i class="las la-folder"></i> <span>Plantilla</span></a>
                         </a>
                     </li>
-                    <li>
-                        <a class='text-decoration-none' href='{{ route('salaryadjustment.report.index') }}'>
-                            <i class="las la-folder"></i> <span>Salary Adjustment</span></a>
-                        </a>
+                    <li class="submenu">
+                        <a href="#" class='text-decoration-none'><i class="la la-folder"></i> <span>Salary Adjustment</span>
+                            <span class="menu-arrow"></span></a>
+                        <ul style="display: none;">
+                            <li>
+                                <a class='text-decoration-none' href="{{ route('salaryadjustment.report.index') }}">
+                                    All Employees
+                                </a>
+                            </li>
+                            <li>
+                                <a class='text-decoration-none' href="{{ route('salaryadjustmentmagnacarta.report.index') }}">
+                                    Magna Carta
+                                </a>
+                            </li>
+                        </ul>
                     </li>
 
                     {{-- <li>

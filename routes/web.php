@@ -53,6 +53,7 @@ use App\Http\Controllers\Account\Employee\LeaveCardController;
 use App\Http\Controllers\Maintenance\LeaveIncrementController;
 use App\Http\Controllers\Reports\CSCPlantillaReportController;
 use App\Http\Controllers\ReportSalaryAdjustmentController;
+use App\Http\Controllers\Reports\ReportSalaryAdjustmentMagnaCartaController;
 use App\Http\Controllers\Reports\DBMPlantillaReportController;
 use App\Http\Controllers\EmployeeLeave\LeaveUndertimeController;
 use App\Http\Controllers\EmployeeLeave\LeaveMonitoringController;
@@ -290,7 +291,6 @@ Route::post('export/{id}/{type}', [CSCPlantillaReportController::class, 'export'
 Route::get('download/plantilla-generated-report/{fileName}', [CSCPlantillaReportController::class, 'download'])->name('download.generated.plantilla-report');
 
 Route::controller(ReportSalaryAdjustmentController::class)->middleware('auth')->group(function () {
-    // Route::get('salaryadjustment-report-list/{office}/{year}', 'list');
     Route::get('salaryadjustment-report', 'index')->name('salaryadjustment.report.index');
     Route::get('salaryadjustment-report-with-office/{office}/{year?}', 'withoffice');
     Route::get('salaryadjustment-report-without-office/{office}/{year?}', 'withoutoffice');
@@ -299,13 +299,17 @@ Route::controller(ReportSalaryAdjustmentController::class)->middleware('auth')->
     Route::get('print-adjustment-report-individual/{office}/{year}/print', 'printindividual');
     Route::get('print-adjustment-report-individual/{office}/{year}/download', 'downloadindividual');
     Route::post('print-adjustment-report-individual-editfirstparagraph', 'editfirstparagraph');
-    // Route::get('plantilla-report/show/{id}/list/{office}', 'listShow')->name('plantilla.report.show.list');
-    // Route::put('plantilla-report-show/{id}/vacant', 'vacant');
-    // Route::post('plantilla-report-detail-filled', 'filled');
-    // Route::post('plantilla-report-history-generate', 'generate');
-    // Route::delete('plantilla-report-history-remove/{id}', 'remove');
-    // Route::post('plantilla-report-history-checkpoint', 'checkpoint');
-    // Route::get('plantilla-report-details/view-detials/{id}', 'viewDetails');
+});
+
+Route::controller(ReportSalaryAdjustmentMagnaCartaController::class)->middleware('auth')->group(function () {
+    Route::get('salaryadjustmentmagnacarta-report', 'index')->name('salaryadjustmentmagnacarta.report.index');
+    Route::get('salaryadjustmentmagnacarta-report-with-office/{office}/{year?}', 'withoffice');
+    Route::get('salaryadjustmentmagnacarta-report-without-office/{office}/{year?}', 'withoutoffice');
+    Route::get('print-adjustmentmagnacarta-report-list/{office}/{year}/previewed', 'printlist');
+    Route::get('print-adjustmentmagnacarta-report-individual/{office}/{year}/previewed', 'previewedindividual');
+    Route::get('print-adjustmentmagnacarta-report-individual/{office}/{year}/print', 'printindividual');
+    Route::get('print-adjustmentmagnacarta-report-individual/{office}/{year}/download', 'downloadindividual');
+    Route::post('print-adjustmentmagnacarta-report-individual-editfirstparagraph', 'editfirstparagraph');
 });
 
 Route::middleware('auth')->controller(EmployeeTrainingController::class)->group(function () {
