@@ -129,7 +129,7 @@
                     <br><br>
                     <span class="text text-md">Item No. /Unique Item No., FY {{ Carbon\Carbon::parse($array_date_adjustment[$a])->format('Y') }} Personnel Services Itemization and/or Plantilla of Personnel: {{ $array_item_no[$a] }}</span>
                     <br><br>
-                    <u><span class="text text-md font-weight-bold">Date of Compulsory Retirement as Public Health Worker {{ ($array_retirement_date[$a] == '') ? '' : Carbon\Carbon::parse($array_retirement_date[$a])->format('F d, Y') }}</span>.</u>
+                    <span class="text text-md">Date of Compulsory Retirement as Public Health Worker <u><b>{{ ($array_retirement_date[$a] == '') ? '' : Carbon\Carbon::parse($array_retirement_date[$a])->format('F d, Y') }}.</b></u></span>
                     <br><br>
                     <div class="text mr-5 float-right" style="font-family: 'Open Sans', sans-serif">
                         <p class="mb-5">Very truly yours,</p><br>
@@ -230,7 +230,7 @@
             <br><br>
             <span class="text text-md">Item No. /Unique Item No., FY {{ Carbon\Carbon::parse($salaryAdjustment->date_adjustment)->format('Y') }} Personnel Services Itemization and/or Plantilla of Personnel: {{ $salaryAdjustment->item_no }}</span>
             <br><br>
-            <u><span class="text text-md font-weight-bold">Date of Compulsory Retirement as Public Health Worker {{ ($salaryAdjustment->retirement_date == '') ? '' : Carbon\Carbon::parse($salaryAdjustment->retirement_date)->format('F d, Y') }}</span>.</u>
+            <span class="text text-md">Date of Compulsory Retirement as Public Health Worker <u><b>{{ ($salaryAdjustment->retirement_date == '') ? '' : Carbon\Carbon::parse($salaryAdjustment->retirement_date)->format('F d, Y') }}.</b></u></span>
             {{-- CLOSING, SIGNATURE --}}
             <br><br>
             <div class="text mr-5 float-right" style="font-family: 'Open Sans', sans-serif">
