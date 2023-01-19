@@ -154,7 +154,7 @@ class ReportSalaryAdjustmentMagnaCartaController extends Controller
             }
         }
         // $key = 0;
-        $setting = ['Keyvalue' => file_get_contents(public_path('/storage/firstparagraph.txt'))];
+        $setting = ['Keyvalue1' => file_get_contents(public_path('/storage/Firstparagraph.txt')),'Keyvalue2' => file_get_contents(public_path('/storage/Secondparagraph.txt')),'Keyvalue3' => file_get_contents(public_path('/storage/Thirdparagraph.txt')),'Keyvalue4' => file_get_contents(public_path('/storage/Fourthparagraph.txt'))];
         // dd($setting);
         // $setting = Setting::find('SALARYMAGNACARTAPRINT');
         // return view('reports.SalaryAdjustment.Print.PreviewedIndividual', compact('key','salaryAdjustment','office','year', 'setting'));
@@ -171,24 +171,25 @@ class ReportSalaryAdjustmentMagnaCartaController extends Controller
             $salaryAdjustments = SalaryAdjustment::where('id', $salaryadjustment_id)->whereYear('date_adjustment', $year)->with(['Employee' => function ($query) {
                 $query->select('Employee_id','FirstName', 'MiddleName', 'LastName');
             }])
-            ->where('ismagnacarta','0')->get();
+            ->where('ismagnacarta','1')->get();
+            $office_name = 'one';
         }else{
             if($office == '*'){
                 // dd(SalaryAdjustment::whereYear('date_adjustment', $year)->with(['Employee' => function ($query) {
                 //     $query->select('Employee_id','firstname', 'middlename', 'lastname');
                 // }])->get()[0]);
-
-
-
-
+                
+                
+                
+                
 
                 // dd(SalaryAdjustment::with('Employee:FirstName,MiddleName,LastName,Suffix')->whereYear('date_adjustment', $year)->get()[0]);
-
+                
                 // ->select('FirstName', 'MiddleName', 'LastName', 'Suffix')
-
+                
                 // dd($salaryAdjustments = SalaryAdjustment::whereYear('date_adjustment', $year)->with('Employee:Employee_id,FirstName,MiddleName,LastName,Suffix')->get()[0]);
                 $salaryAdjustments = SalaryAdjustment::whereYear('date_adjustment', $year)
-                ->where('ismagnacarta','0')->get();
+                ->where('ismagnacarta','1')->get();
                 // list($salaryAdjustments1, $salaryAdjustments2) = array_chunk($salaryAdjustments, ceil(count($salaryAdjustments) / 2));      
                 // dd($salaryAdjustments1[0]); //161978
                 // dd($salaryAdjustments1[494]); //282009
@@ -201,22 +202,23 @@ class ReportSalaryAdjustmentMagnaCartaController extends Controller
                 },'office' => function ($query) use ($office) {
                     $query->where('office_code', $office);
                 }])->where('office_code', $office)
-                ->where('ismagnacarta','0')
-                    ->get();
-                    // dd($salaryAdjustments);
+                ->where('ismagnacarta','1')
+                ->get();
+                // dd($salaryAdjustments);
                 // $salaryAdjustments = Plantilla::whereHas('salary_adjustment', function ($query) use ($year) {
-                //     $query->whereYear('date_adjustment', $year);
-                // })->with(['plantilla_positions','Employee', 'salary_adjustment' => function ($query) use ($year) {
-                //     $query->whereYear('date_adjustment', $year);
-                // }, 'office' => function ($query) use ($office) {
-                //     $query->where('office_code', $office);
-                // }])->where('office_code', $office)
-                //     ->where('year', $year)
-                //     ->get();
+                    //     $query->whereYear('date_adjustment', $year);
+                    // })->with(['plantilla_positions','Employee', 'salary_adjustment' => function ($query) use ($year) {
+                        //     $query->whereYear('date_adjustment', $year);
+                        // }, 'office' => function ($query) use ($office) {
+                            //     $query->where('office_code', $office);
+                            // }])->where('office_code', $office)
+                            //     ->where('year', $year)
+                            //     ->get();
                 // $office_name = $salaryAdjustments[0]->office->office_name;
+                $office_name = 'one';
             }
         }
-        $setting = Setting::find('SALARYADPRINT');
+        $setting = ['Keyvalue1' => file_get_contents(public_path('/storage/Firstparagraph.txt')),'Keyvalue2' => file_get_contents(public_path('/storage/Secondparagraph.txt')),'Keyvalue3' => file_get_contents(public_path('/storage/Thirdparagraph.txt')),'Keyvalue4' => file_get_contents(public_path('/storage/Fourthparagraph.txt'))];
         $space = '&nbsp;&nbsp;&nbsp;&nbsp;';
         $pdf = App::make('snappy.pdf.wrapper');
         $count = count($salaryAdjustments);
@@ -229,11 +231,18 @@ class ReportSalaryAdjustmentMagnaCartaController extends Controller
         $array_office_address = [];
         $array_salary_new = [];
         $array_step_no = [];
+        $array_old_step_no = [];
         $array_salary_previous = [];
         $array_sg_no = [];
+        $array_old_sg_no = [];
         $array_salary_diff = [];
         $array_Description = [];
         $array_item_no = [];
+        $array_retirement_date = [];
+        $array_spanminus3months_default = [];
+        $array_spanminus3months_formated = [];
+        $array_spanminus1day_default = [];
+        $array_spanminus1day_formated = [];
         $num = 0;
         foreach($salaryAdjustments as $salaryAdjustment){
             $array_date_adjustment[$num] = Carbon::parse($salaryAdjustment->date_adjustment)->format('F d, Y');
@@ -246,14 +255,22 @@ class ReportSalaryAdjustmentMagnaCartaController extends Controller
             $array_office_address[$num] = $salaryAdjustment->office->office_address;
             $array_salary_new[$num] = number_format($salaryAdjustment->salary_new, 2, ".", ",");
             $array_step_no[$num] = $salaryAdjustment->step_no;
+            $array_old_step_no[$num] = $salaryAdjustment->old_step_no;
             $array_salary_previous[$num] = number_format($salaryAdjustment->salary_previous, 2, ".", ",");
             $array_sg_no[$num] = $salaryAdjustment->sg_no;
+            $array_old_sg_no[$num] = $salaryAdjustment->old_sg_no;
             $array_salary_diff[$num] = number_format($salaryAdjustment->salary_diff, 2, ".", ",");
             $array_Description[$num] = $salaryAdjustment->plantillaPosition->position->Description;
             $array_item_no[$num] = $salaryAdjustment->item_no;
+            $array_retirement_date[$num] = $salaryAdjustment->retirement_date;
+            $array_spanminus3months_default[$num] = date('Y-m-d', strtotime($salaryAdjustment->retirement_date. ' - 3 months'));
+            $array_spanminus3months_formated[$num] = date('F d, Y', strtotime($salaryAdjustment->retirement_date. ' - 3 months'));
+            $array_spanminus1day_default[$num] = date('Y-m-d',(strtotime ( '-1 day' , strtotime ( date('Y-m-d', strtotime($salaryAdjustment->retirement_date. ' - 3 months'))) ) ));
+            $array_spanminus1day_formated[$num] = date('F d, Y',(strtotime ( '-1 day' , strtotime ( date('Y-m-d', strtotime($salaryAdjustment->retirement_date. ' - 3 months'))) ) ));
             $num++;
         }
-        $pdf->loadView('reports.SalaryAdjustment.PrintMagnaCarta.PrintIndividual', compact('array_date_adjustment','array_Gender','array_FirstName','array_MiddleName','array_LastName','array_office_name','array_office_address','array_salary_new','array_step_no','array_salary_previous','array_sg_no','array_salary_diff','array_Description','array_item_no','count','office_name','salaryAdjustments','office','year', 'setting','space'))->setPaper('letter')->setOrientation('portrait');
+        // dd($salaryAdjustments);
+        $pdf->loadView('reports.SalaryAdjustment.PrintMagnaCarta.PrintIndividual', compact('array_date_adjustment','array_Gender','array_FirstName','array_MiddleName','array_LastName','array_office_name','array_office_address','array_salary_new','array_step_no','array_salary_previous','array_sg_no','array_salary_diff','array_Description','array_item_no','count','office_name','salaryAdjustments','office','year', 'setting','space','array_old_step_no','array_old_sg_no','array_spanminus3months_default','array_spanminus3months_formated','array_spanminus1day_default','array_spanminus1day_formated','array_retirement_date'))->setPaper('letter')->setOrientation('portrait');
 
         // return $pdf->download('NOTICE OF SALARY ADJUSTMENT '.date('m-d-Y').'.pdf');
         return $pdf->inline();
@@ -265,35 +282,57 @@ class ReportSalaryAdjustmentMagnaCartaController extends Controller
             $data = explode("_",$office);
             $salaryadjustment_id = $data[0];
             $year = $data[1];
-            $salaryAdjustments = SalaryAdjustment::where('id', $salaryadjustment_id)->whereYear('date_adjustment', $year)->with('Employee')
-            ->where('ismagnacarta','0')->get();
+            $salaryAdjustments = SalaryAdjustment::where('id', $salaryadjustment_id)->whereYear('date_adjustment', $year)->with(['Employee' => function ($query) {
+                $query->select('Employee_id','FirstName', 'MiddleName', 'LastName');
+            }])
+            ->where('ismagnacarta','1')->get();
             $office_name = $salaryAdjustments[0]->employee->fullname;
         }else{
             if($office == '*'){
-                // $salaryAdjustments = SalaryAdjustment::whereYear('date_adjustment', $year)->with(['Employee' => function ($query) use ($office) {
-                //     $query->select('firstname', 'middlename', 'lastname');
-                // }])->get();
-                $salaryAdjustments = SalaryAdjustment::whereYear('date_adjustment', $year)->get();
+                // dd(SalaryAdjustment::whereYear('date_adjustment', $year)->with(['Employee' => function ($query) {
+                //     $query->select('Employee_id','firstname', 'middlename', 'lastname');
+                // }])->get()[0]);
+                
+                
+                
+                
+
+                // dd(SalaryAdjustment::with('Employee:FirstName,MiddleName,LastName,Suffix')->whereYear('date_adjustment', $year)->get()[0]);
+                
+                // ->select('FirstName', 'MiddleName', 'LastName', 'Suffix')
+                
+                // dd($salaryAdjustments = SalaryAdjustment::whereYear('date_adjustment', $year)->with('Employee:Employee_id,FirstName,MiddleName,LastName,Suffix')->get()[0]);
+                $salaryAdjustments = SalaryAdjustment::whereYear('date_adjustment', $year)
+                ->where('ismagnacarta','1')->get();
+                // list($salaryAdjustments1, $salaryAdjustments2) = array_chunk($salaryAdjustments, ceil(count($salaryAdjustments) / 2));      
+                // dd($salaryAdjustments1[0]); //161978
+                // dd($salaryAdjustments1[494]); //282009
+                // dd($salaryAdjustments2[0]); //282011
+                // dd($salaryAdjustments2[493]); //282997
                 $office_name = 'All Offices';
             }else{
-                $salaryAdjustments = SalaryAdjustment::whereYear('date_adjustment', $year)->with(['plantillaPosition','Employee','office' => function ($query) use ($office) {
+                $salaryAdjustments = SalaryAdjustment::whereYear('date_adjustment', $year)->with(['plantillaPosition','Employee' => function ($query) {
+                    $query->select('Employee_id','FirstName', 'MiddleName', 'LastName');
+                },'office' => function ($query) use ($office) {
                     $query->where('office_code', $office);
                 }])->where('office_code', $office)
-                ->where('ismagnacarta','0')
-                    ->get();
+                ->where('ismagnacarta','1')
+                ->get();
+                // dd($salaryAdjustments);
                 // $salaryAdjustments = Plantilla::whereHas('salary_adjustment', function ($query) use ($year) {
-                //     $query->whereYear('date_adjustment', $year);
-                // })->with(['plantilla_positions','Employee', 'salary_adjustment' => function ($query) use ($year) {
-                //     $query->whereYear('date_adjustment', $year);
-                // }, 'office' => function ($query) use ($office) {
-                //     $query->where('office_code', $office);
-                // }])->where('office_code', $office)
-                //     ->where('year', $year)
-                //     ->get();
+                    //     $query->whereYear('date_adjustment', $year);
+                    // })->with(['plantilla_positions','Employee', 'salary_adjustment' => function ($query) use ($year) {
+                        //     $query->whereYear('date_adjustment', $year);
+                        // }, 'office' => function ($query) use ($office) {
+                            //     $query->where('office_code', $office);
+                            // }])->where('office_code', $office)
+                            //     ->where('year', $year)
+                            //     ->get();
+                // $office_name = $salaryAdjustments[0]->office->office_name;
                 $office_name = $salaryAdjustments[0]->office->office_name;
             }
         }
-        $setting = Setting::find('SALARYADPRINT');
+        $setting = ['Keyvalue1' => file_get_contents(public_path('/storage/Firstparagraph.txt')),'Keyvalue2' => file_get_contents(public_path('/storage/Secondparagraph.txt')),'Keyvalue3' => file_get_contents(public_path('/storage/Thirdparagraph.txt')),'Keyvalue4' => file_get_contents(public_path('/storage/Fourthparagraph.txt'))];
         $space = '&nbsp;&nbsp;&nbsp;&nbsp;';
         $pdf = App::make('snappy.pdf.wrapper');
         $count = count($salaryAdjustments);
@@ -306,11 +345,18 @@ class ReportSalaryAdjustmentMagnaCartaController extends Controller
         $array_office_address = [];
         $array_salary_new = [];
         $array_step_no = [];
+        $array_old_step_no = [];
         $array_salary_previous = [];
         $array_sg_no = [];
+        $array_old_sg_no = [];
         $array_salary_diff = [];
         $array_Description = [];
         $array_item_no = [];
+        $array_retirement_date = [];
+        $array_spanminus3months_default = [];
+        $array_spanminus3months_formated = [];
+        $array_spanminus1day_default = [];
+        $array_spanminus1day_formated = [];
         $num = 0;
         foreach($salaryAdjustments as $salaryAdjustment){
             $array_date_adjustment[$num] = Carbon::parse($salaryAdjustment->date_adjustment)->format('F d, Y');
@@ -323,15 +369,22 @@ class ReportSalaryAdjustmentMagnaCartaController extends Controller
             $array_office_address[$num] = $salaryAdjustment->office->office_address;
             $array_salary_new[$num] = number_format($salaryAdjustment->salary_new, 2, ".", ",");
             $array_step_no[$num] = $salaryAdjustment->step_no;
+            $array_old_step_no[$num] = $salaryAdjustment->old_step_no;
             $array_salary_previous[$num] = number_format($salaryAdjustment->salary_previous, 2, ".", ",");
             $array_sg_no[$num] = $salaryAdjustment->sg_no;
+            $array_old_sg_no[$num] = $salaryAdjustment->old_sg_no;
             $array_salary_diff[$num] = number_format($salaryAdjustment->salary_diff, 2, ".", ",");
             $array_Description[$num] = $salaryAdjustment->plantillaPosition->position->Description;
             $array_item_no[$num] = $salaryAdjustment->item_no;
+            $array_retirement_date[$num] = $salaryAdjustment->retirement_date;
+            $array_spanminus3months_default[$num] = date('Y-m-d', strtotime($salaryAdjustment->retirement_date. ' - 3 months'));
+            $array_spanminus3months_formated[$num] = date('F d, Y', strtotime($salaryAdjustment->retirement_date. ' - 3 months'));
+            $array_spanminus1day_default[$num] = date('Y-m-d',(strtotime ( '-1 day' , strtotime ( date('Y-m-d', strtotime($salaryAdjustment->retirement_date. ' - 3 months'))) ) ));
+            $array_spanminus1day_formated[$num] = date('F d, Y',(strtotime ( '-1 day' , strtotime ( date('Y-m-d', strtotime($salaryAdjustment->retirement_date. ' - 3 months'))) ) ));
             $num++;
         }
-
-        $pdf->loadView('reports.SalaryAdjustment.PrintMagnaCarta.downloadIndividual', compact('array_date_adjustment','array_Gender','array_FirstName','array_MiddleName','array_LastName','array_office_name','array_office_address','array_salary_new','array_step_no','array_salary_previous','array_sg_no','array_salary_diff','array_Description','array_item_no','count','office_name','salaryAdjustments','office','year', 'setting','space'))->setPaper('letter')->setOrientation('portrait');
+        // dd($salaryAdjustments);
+        $pdf->loadView('reports.SalaryAdjustment.PrintMagnaCarta.downloadIndividual', compact('array_date_adjustment','array_Gender','array_FirstName','array_MiddleName','array_LastName','array_office_name','array_office_address','array_salary_new','array_step_no','array_salary_previous','array_sg_no','array_salary_diff','array_Description','array_item_no','count','office_name','salaryAdjustments','office','year', 'setting','space','array_old_step_no','array_old_sg_no','array_spanminus3months_default','array_spanminus3months_formated','array_spanminus1day_default','array_spanminus1day_formated','array_retirement_date'))->setPaper('letter')->setOrientation('portrait');
 
         return $pdf->download('NOTICE OF SALARY ADJUSTMENT MAGNA CARTA '.$office_name.date('m-d-Y').'.pdf');
         // return $pdf->inline();
@@ -387,13 +440,43 @@ class ReportSalaryAdjustmentMagnaCartaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function editfirstparagraph(Request $request)
+     public function editFirstparagraph(Request $request)
      {
         // dd();
-        Storage::disk('local')->put('public/firstparagraph.txt', $request['key_value']);
+        Storage::disk('local')->put('public/Firstparagraph.txt', $request['key_value']);
         //  $Setting = Setting::where('Keyname','SALARYMAGNACARTAPRINT')->first();
         //  $Setting->Keyvalue = $request['key_value'];
         //  $Setting->save();
+            
+         return response()->json(['success' => 'true']);
+     }
+     public function editSecondparagraph(Request $request)
+     {
+        // dd();
+        Storage::disk('local')->put('public/Secondparagraph.txt', $request['key_value']);
+        //  $Setting = Setting::where('Keyname','SALARYMAGNACARTAPRINT')->first();
+        //  $Setting->Keyvalue = $request['key_value'];
+        //  $Setting->save();
+            
+         return response()->json(['success' => 'true']);
+     }
+     public function editThirdparagraph(Request $request)
+     {
+        // dd();
+        Storage::disk('local')->put('public/Thirdparagraph.txt', $request['key_value']);
+        //  $Setting = Setting::where('Keyname','SALARYMAGNACARTAPRINT')->first();
+        //  $Setting->Keyvalue = $request['key_value'];
+        //  $Setting->save();
+            
+         return response()->json(['success' => 'true']);
+     }
+     public function editFourthparagraph(Request $request)
+     {
+        // dd();
+        // Storage::disk('local')->put('public/Fourthparagraph.txt', $request['key_value']);
+         $SalaryAdjustment = SalaryAdjustment::find($request['key_id']);
+         $SalaryAdjustment->retirement_date = $request['key_value'];
+         $SalaryAdjustment->save();
             
          return response()->json(['success' => 'true']);
      }
