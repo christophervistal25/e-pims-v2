@@ -46,14 +46,14 @@ class SalaryAdjustmentController extends Controller
 
         $employee = Plantilla::select('item_no', 'pp_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id', 'year', 'status', 'office_code')
         ->with(['Employee:Employee_id,FirstName,MiddleName,LastName,Suffix,Birthdate', 'plantilla_positions', 'plantilla_positions.position', 'plantilla_positions:pp_id,PosCode,office_code,item_no,sg_no', 'salary_adjustment'])
-        ->where('employee_id', '!=', null)->where('plantillas.year', $currentYear)->get()
-               ->filter(function ($record) use ($currentYear) {
-                   $haystack = $record->salary_adjustment
-                         ->pluck('date_adjustment_year')
-                         ->toArray();
+        ->where('employee_id', '!=', null)->where('plantillas.year', $currentYear)->get();
+            //    ->filter(function ($record) use ($currentYear) {
+            //        $haystack = $record->salary_adjustment
+            //              ->pluck('date_adjustment_year')
+            //              ->toArray();
 
-                   return ! in_array($currentYear, $haystack);
-               });
+            //        return ! in_array($currentYear, $haystack);
+            //    });
         $class = 'mini-sidebar';
         return view('SalaryAdjustment.SalaryAdjustment', compact('employee', 'position', 'year', 'dates', 'office', 'class'));
     }
@@ -140,6 +140,7 @@ class SalaryAdjustmentController extends Controller
             'salaryPrevious' => 'required|numeric',
             'salaryNew' => 'required|numeric',
             'salaryDifference' => 'required|numeric',
+            'retirementDate' => 'required',
         ]);
         // insert data to salary adjustment
 
@@ -166,6 +167,7 @@ class SalaryAdjustmentController extends Controller
                 'old_step_no' => $request->stepNo,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
+                'retirement_date' => $request->retirementDate,
                 'deleted_at' => null,
                 'ismagnacarta' => 1,
             ]
