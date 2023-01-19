@@ -162,7 +162,7 @@ class SalaryAdjustmentController extends Controller
                 'salary_new' => $request->salaryNew,
                 'salary_diff' => $request->salaryDifference,
                 'remarks' => $request->remarks,
-                'old_sg_no' => $request->newSalaryGrade,
+                'old_sg_no' => $request->previousSalaryGrade,
                 'old_step_no' => $request->stepNo,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
