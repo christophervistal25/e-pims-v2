@@ -309,7 +309,10 @@ Route::controller(ReportSalaryAdjustmentMagnaCartaController::class)->middleware
     Route::get('print-adjustmentmagnacarta-report-individual/{office}/{year}/previewed', 'previewedindividual');
     Route::get('print-adjustmentmagnacarta-report-individual/{office}/{year}/print', 'printindividual');
     Route::get('print-adjustmentmagnacarta-report-individual/{office}/{year}/download', 'downloadindividual');
-    Route::post('print-adjustmentmagnacarta-report-individual-editfirstparagraph', 'editfirstparagraph');
+    Route::post('print-adjustmentmagnacarta-report-individual-editFirstparagraph', 'editFirstparagraph');
+    Route::post('print-adjustmentmagnacarta-report-individual-editSecondparagraph', 'editSecondparagraph');
+    Route::post('print-adjustmentmagnacarta-report-individual-editThirdparagraph', 'editThirdparagraph');
+    Route::post('print-adjustmentmagnacarta-report-individual-editFourthparagraph', 'editFourthparagraph');
 });
 
 Route::middleware('auth')->controller(EmployeeTrainingController::class)->group(function () {

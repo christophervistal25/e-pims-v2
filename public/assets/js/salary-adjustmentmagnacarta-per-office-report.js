@@ -84,7 +84,7 @@ $(document).ready(function () {
                         data: "action",
                         name: "action",
                         render: function (_, _, row) {
-                            return `<a href='print-adjustmentmagnacarta-report-individual/${row.id}_${row.year}/individual/previewed'  target='_blank' title='Print Previewed Salary Adjustment' class='printpreviewed btn btn-success mr-1'><i class='la la-print'></i></a>`;
+                            return `<a href='print-adjustmentmagnacarta-report-individual/${row.id}_${row.date_adjustment_year}/individual/previewed'  target='_blank' title='Print Previewed Salary Adjustment' class='printpreviewed btn btn-success mr-1'><i class='la la-print'></i></a>`;
                         },
                     },
                 ],
