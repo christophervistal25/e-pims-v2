@@ -243,7 +243,7 @@
                                    <b id="saving">Save</b>
                               </button>
 
-                              <button style="margin-right:10px;" type="button" onclick="myFunction()" id="cancelbutton1" class="text-white btn btn-danger submit-btn float-right shadow"><i class="fa fa-ban"></i> Cancel</button>
+                              <button style="margin-right:10px;" type="button" onclick="myFunction()" id="cancelbutton1" class="text-white btn btn-danger submit-btn float-right shadow"><i class="fa fa-refresh"></i> Reset</button>
                               <button style="margin-right:10px;" type="button" id="newBtn" class="text-white btn btn-primary submit-btn float-right shadow d-none"><i class="fa fa-ban"></i> New</button>
                          </div>
 
