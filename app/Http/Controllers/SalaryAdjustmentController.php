@@ -44,7 +44,9 @@ class SalaryAdjustmentController extends Controller
 
         $office = Office::select('office_code', 'office_name')->get();
 
-        $employee = Plantilla::select('item_no', 'pp_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id', 'year', 'status', 'office_code')
+        $employee = Plantilla::whereDoesntHave('salary_adjustment', function ($query){
+            $query->where('ismagnacarta', 1);
+        })->select('item_no', 'pp_id', 'sg_no', 'step_no', 'salary_amount', 'employee_id', 'year', 'status', 'office_code')
         ->with(['Employee:Employee_id,FirstName,MiddleName,LastName,Suffix,Birthdate', 'plantilla_positions', 'plantilla_positions.position', 'plantilla_positions:pp_id,PosCode,office_code,item_no,sg_no', 'salary_adjustment'])
         ->where('employee_id', '!=', null)->where('plantillas.year', $currentYear)->get();
             //    ->filter(function ($record) use ($currentYear) {

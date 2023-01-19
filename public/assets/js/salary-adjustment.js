@@ -147,12 +147,12 @@ $(document).ready(function () {
     });
 });
 // {{-- code for show table --}}
-$(document).ready(function () {
-    $("#cancelbutton").click(function () {
-        $("#add").attr("class", "page-header d-none");
-        $("#table").attr("class", "page-header");
-    });
-});
+// $(document).ready(function () {
+//     $("#cancelbutton").click(function () {
+//         $("#add").attr("class", "page-header d-none");
+//         $("#table").attr("class", "page-header");
+//     });
+// });
 
 function reset() {
     $("#employeeName").val("Please Select").trigger("change");
@@ -366,8 +366,8 @@ $(document).keyup(function () {
 
 $(document).ready(function () {
     $("#cancelbutton1").click(function () {
-        $("#add").attr("class", "page-header d-none");
-        $("#table").attr("class", "page-header");
+        // $("#add").attr("class", "page-header d-none");
+        // $("#table").attr("class", "page-header");
         let inputId = [
             "#employeeName",
             "#employeeId",

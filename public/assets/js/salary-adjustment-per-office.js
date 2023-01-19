@@ -159,10 +159,10 @@ $(document).ready(function () {
         });
     });
 
-    $("#cancelButton").click(function () {
-        $("#add").attr("class", "page-header d-none");
-        $("#table").attr("class", "page-header");
-    });
+    // $("#cancelButton").click(function () {
+    //     $("#add").attr("class", "page-header d-none");
+    //     $("#table").attr("class", "page-header");
+    // });
 
     $("#selectAll").click(function (e) {
         // Get all rows with search applied
