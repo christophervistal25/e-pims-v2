@@ -23,6 +23,8 @@ class SalaryAdjustment extends Model
         'salary_new',
         'salary_diff',
         'remarks',
+        'ismagnacarta',
+        'retirement_date'
     ];
 
     protected $appends = [

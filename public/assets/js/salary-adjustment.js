@@ -208,6 +208,7 @@ $(document).ready(function () {
                         "#salaryNew",
                         "#salaryDifference",
                         "#remarks",
+                        "#retirementDate",
                     ];
                     $.each(inputId, function (index, value) {
                         $(`${value}`).val("");
@@ -224,6 +225,7 @@ $(document).ready(function () {
                         "#salaryPrevious",
                         "#salaryNew",
                         "#salaryDifference",
+                        "#retirementDate",
                     ];
                     $.each(errorClass, function (index, value) {
                         $(`${value}`).removeClass("is-invalid");
@@ -238,6 +240,7 @@ $(document).ready(function () {
                         "#salary-previous-error-message",
                         "#salary-new-error-message",
                         "#salary-difference-error-message",
+                        "#retirement-date-error-message",
                     ];
                     $.each(errorMessage, function (index, value) {
                         $(`${value}`).html("");
@@ -252,7 +255,7 @@ $(document).ready(function () {
                             , dangerMode: true})
                               .then((willProceed) => {
                                 if (willProceed) {
-                                    window.open(`/plantilla-of-personnel/${response.ids}_${response.office_code}_${response.year}`);
+                                    window.open(`/print-adjustmentmagnacarta-report-individual/${response.ids}_${response.year}/individual/previewed`);
                                 } else {
                                   alert('sample2');
                                 }
@@ -295,6 +298,16 @@ $(document).ready(function () {
                     } else {
                         $("#salaryNew").removeClass("is-invalid");
                         $("#salary-new-error-message").html("");
+                    }
+                    if (errors.hasOwnProperty("retirementDate")) {
+                        $("#retirementDate").addClass("is-invalid");
+                        $("#retirement-date-error-message").html("");
+                        $("#retirement-date-error-message").append(
+                            `<span>${errors.retirementDate[0]}</span>`
+                        );
+                    } else {
+                        $("#retirementDate").removeClass("is-invalid");
+                        $("#retirement-date-error-message").html("");
                     }
 
                     // Create an parent element
@@ -386,6 +399,7 @@ $(document).ready(function () {
             "#salaryPrevious",
             "#salaryNew",
             "#salaryDifference",
+            "#retirementDate",
         ];
         $.each(errorClass, function (index, value) {
             $(`${value}`).removeClass("is-invalid");
@@ -400,6 +414,7 @@ $(document).ready(function () {
             "#salary-previous-error-message",
             "#salary-new-error-message",
             "#salary-difference-error-message",
+             "#retirement-date-error-message",
         ];
         $.each(errorMessage, function (index, value) {
             $(`${value}`).html("");

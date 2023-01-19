@@ -215,7 +215,16 @@
                               </div>
                          </div>
 
-                         <div class="form-group col-12 col-lg-12 mt-4">
+                         <div class="form-group col-12 col-lg-6">
+                            <label for="retirementDate" class="has-float-label">
+                                 <input class="form-control" value="" name="retirementDate" id="retirementDate" type="date" style="outline: none; box-shadow: 0px 0px 0px transparent;">
+                                 <span class="font-weight-bold">RETIREMENT DATE<span class="text-danger">*</span></span>
+                            </label>
+                            <div id='retirement-date-error-message' class='text-danger'>
+                            </div>
+                       </div>
+
+                         <div class="form-group col-12 col-lg-6">
                               <label class="has-float-label mb-0">
                                    <input value="{{ old('remarks') }}" class="form-control {{ $errors->has('remarks')  ? 'is-invalid' : ''}}" name="remarks" id="remarks" type="text" style="outline: none; box-shadow: 0px 0px 0px transparent;">
                                    <span class="font-weight-bold">REMARKS</span>
