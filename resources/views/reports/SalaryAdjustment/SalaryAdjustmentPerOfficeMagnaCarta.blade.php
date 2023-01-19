@@ -91,7 +91,7 @@
 
                <div class="col-5 mb-2 mt-2">
                     <div style="padding-right:20px;" class="float-right">
-                         <button id="printIndividualButton" class="printButton btn btn-primary float-right" disabled><i class="fa fa-print"></i> Reports By Individual</button>
+                         <button id="printIndividualButton" class="printButton btn btn-primary float-right" disabled><i class="fa fa-print"></i> All Reports</button>
                     </div>
                     <div style="padding-right:20px;" class="float-right">
                          <button id="printListButton" class="printButton btn btn-primary float-right" disabled  style="visibility:hidden;"><i class="fa fa-print"></i> Reports By List</button>
