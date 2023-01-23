@@ -28,8 +28,8 @@
 
 {{-- BUTTONS --}}
 <div id='action-buttons' class="float-right mb-2">
-    <a class="btn btn-success" name="{{ $office }}|{{ $year }}" id="downloadBtn"><i class="la la-arrow-down"></i>&nbsp Download</a>
-    <a class="btn btn-outline-dark" name="{{ $office }}|{{ $year }}" id="printBtn"><i class="la la-print"></i>&nbsp Print</a>
+    <a class="btn btn-success" name="{{ $office }}|{{ $year }}"  id="downloadBtn"><i class="las la-download"></i>&nbspDownload</a>
+    <a class="btn btn-primary" name="{{ $office }}|{{ $year }}" id="printBtn"><i class="la la-print"></i>&nbspPrint</a>
 </div>
 <div class="clearfix"></div>
 
@@ -77,7 +77,7 @@
             <p class="text text-md mb-4">{{ ($salaryAdjustment->employee->Gender == 'FEMALE') ? "Ma'am:" : "Sir:"; }}</p>
 
             {{-- BODY --}}
-            @if($key == 0) 
+            @if($key == 0)
                 <i class="la la-pencil" data-toggle="modal" data-target="#editbtnFirstParagraphBtn" id="editbtnFirstParagraph" style="cursor: pointer;"></i>
             @endif
             {{-- &nbsp;&nbsp;&nbsp;<span class="text text-md ml-4 pl-4 spanFirstParagraph" id="spanFirstParagraph">{{ $firstparagraph }}</span> --}}
@@ -114,12 +114,12 @@
                 <span class="text text-md ml-4 pl-5">&nbsp&nbsp&nbsp&nbsp <span class="font-weight-bold" name="{{ date('Y-m-d', strtotime($salaryAdjustment->retirement_date. ' - 3 months')); }}" id="spanminus3months_{{ $salaryAdjustment->id }}">{{ ($salaryAdjustment->retirement_date == '') ? '' : date('F d, Y', strtotime($salaryAdjustment->retirement_date. ' - 3 months')) }}</span></span>
                 <br>
                 <br>
-            @if($key == 0) 
+            @if($key == 0)
                 <i class="la la-pencil" style="margin-left: -30px;" data-toggle="modal" data-target="#editbtnSecondParagraphBtn" id="editbtnSecondParagraph" style="cursor: pointer;"></i>
             @endif
             <span class="text text-md ml-1 spanSecondParagraph" id="spanSecondParagraph">{{ $setting['Keyvalue2'] }}</span>
             <br><br>
-            {{-- @if($key == 0) 
+            {{-- @if($key == 0)
                 <i class="la la-pencil" style="margin-left: -30px;" data-toggle="modal" data-target="#editbtnThirdParagraphBtn" id="editbtnThirdParagraph" style="cursor: pointer;"></i>
             @endif --}}
             <span class="text text-md ml-1">Item No. /Unique Item No., FY {{ Carbon\Carbon::parse($salaryAdjustment->date_adjustment)->format('Y') }} Personnel Services Itemization and/or Plantilla of Personnel: {{ $salaryAdjustment->item_no }}</span>
@@ -178,7 +178,7 @@
         document.getElementById('downloadBtn').addEventListener('click', function(){
             if(this.name.split('_')[1] == 'individual'){
                 window.open('/print-adjustmentmagnacarta-report-individual/' + this.name.split('|')[0] + '_' + this.name.split('|')[1] + `/individual/download`,`_blank`);
-            }else{   
+            }else{
                 window.open('/print-adjustmentmagnacarta-report-individual/' + this.name.split('|')[0] + '/' + this.name.split('|')[1] + `/download`,`_blank`);
             }
         });

@@ -256,8 +256,6 @@ $(document).ready(function () {
                               .then((willProceed) => {
                                 if (willProceed) {
                                     window.open(`/print-adjustmentmagnacarta-report-individual/${response.ids}_${response.year}/individual/previewed`);
-                                } else {
-                                  alert('sample2');
                                 }
                               });
                           });

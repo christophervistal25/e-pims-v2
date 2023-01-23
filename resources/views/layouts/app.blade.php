@@ -332,13 +332,13 @@
                             <span class="menu-arrow"></span></a>
                         <ul style="display: none;">
                             <li>
-                                <a class='text-decoration-none' href="{{ route('salaryadjustment.report.index') }}">
-                                    All Employees
+                                <a class='text-decoration-none' href="{{ route('salaryadjustmentmagnacarta.report.index') }}">
+                                    Magna Carta
                                 </a>
                             </li>
                             <li>
-                                <a class='text-decoration-none' href="{{ route('salaryadjustmentmagnacarta.report.index') }}">
-                                    Magna Carta
+                                <a class='text-decoration-none' href="{{ route('salaryadjustment.report.index') }}">
+                                    All Employees
                                 </a>
                             </li>
                         </ul>
